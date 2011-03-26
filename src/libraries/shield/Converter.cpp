@@ -55,8 +55,6 @@ using namespace shield;
 #define FORWARD( destination, type, accessor ) \
         FORWARD_TO( destination, type, accessor, accessor )
 
-#define DROP
-
 // -----------------------------------------------------------------------------
 // Name: Converter constructor
 // Created: MCO 2010-09-30
@@ -86,11 +84,15 @@ namespace
     {
         if( ! msg.has_message() )
             return msg.GetDescriptor()->full_name();
-        std::vector< const google::protobuf::FieldDescriptor* > fields;
-        msg.message().GetReflection()->ListFields( msg, &fields );
-        if( fields.empty() )
-            return msg.GetDescriptor()->full_name();
-        return fields[0]->name();
+        std::string result;
+        const google::protobuf::Descriptor* pDescriptor = msg.message().GetDescriptor();
+        const google::protobuf::Reflection* pReflection = msg.message().GetReflection();
+        for( int i = 0; i < pDescriptor->field_count(); ++i )
+            if( pReflection->HasField( msg.message(), pDescriptor->field( i ) ) )
+                result += ( result.empty() ? "" : " / " ) + pDescriptor->field( i )->name();
+        if( result.empty() )
+            return pDescriptor->full_name();
+        return result;
     }
 }
 
@@ -104,7 +106,7 @@ void Converter::ReceiveAarToClient( const std::string& /*from*/, const sword::Aa
     FORWARD( client_, AarToClient, aar_information )
     FORWARD( client_, AarToClient, plot_result )
     FORWARD( client_, AarToClient, indicator )
-    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +123,7 @@ void Converter::ReceiveAuthenticationToClient( const std::string& /*from*/, cons
     FORWARD( client_, AuthenticationToClient, profile_update_request_ack )
     FORWARD( client_, AuthenticationToClient, profile_destruction )
     FORWARD( client_, AuthenticationToClient, profile_destruction_request_ack )
-    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +139,7 @@ void Converter::ReceiveDispatcherToClient( const std::string& /*from*/, const sw
         client_.Send( out );
         return;
     }
-    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,7 +179,7 @@ void Converter::ReceiveMessengerToClient( const std::string& /*from*/, const swo
     FORWARD( client_, MessengerToClient, client_object_creation_ack )
     FORWARD( client_, MessengerToClient, client_object_destruction_ack )
     FORWARD( client_, MessengerToClient, client_object_update_ack )
-    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +195,7 @@ void Converter::ReceiveReplayToClient( const std::string& /*from*/, const sword:
     FORWARD( client_, SimulationToClient, control_pause_ack )
     FORWARD( client_, SimulationToClient, control_resume_ack )
     FORWARD( client_, SimulationToClient, control_change_time_factor_ack )
-    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -341,7 +343,7 @@ void Converter::ReceiveSimToClient( const std::string& /*from*/, const sword::Si
     FORWARD( client_, SimulationToClient, population_creation )
     FORWARD( client_, SimulationToClient, population_update )
     FORWARD( client_, SimulationToClient, change_population_magic_action_ack )
-    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -370,7 +372,7 @@ void Converter::ReceiveLauncherToAdmin( const std::string& /*from*/, const sword
     FORWARD( client_, SimulationToClient, control_checkpoint_list_ack )
     FORWARD( client_, SimulationToClient, control_checkpoint_list )
     FORWARD( client_, SimulationToClient, control_checkpoint_delete_ack )
-    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+    listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -391,7 +393,7 @@ void Converter::ReceiveClientToAar( const std::string& from, const MsgsClientToA
             server_.Send( out );
             return;
         }
-        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
     }
 }
 
@@ -408,7 +410,7 @@ void Converter::ReceiveClientToAuthentication( const std::string& from, const Ms
         FORWARD( server_, ClientToAuthentication, profile_creation_request )
         FORWARD( server_, ClientToAuthentication, profile_update_request )
         FORWARD( server_, ClientToAuthentication, profile_destruction_request )
-        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
     }
 }
 
@@ -439,7 +441,7 @@ void Converter::ReceiveClientToMessenger( const std::string& from, const MsgsCli
         FORWARD( server_, ClientToMessenger, client_object_creation_request )
         FORWARD( server_, ClientToMessenger, client_object_update_request )
         FORWARD( server_, ClientToMessenger, client_object_destruction_request )
-        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
     }
 }
 
@@ -464,7 +466,7 @@ void Converter::ReceiveClientToReplay( const std::string& from, const MsgsClient
         FORWARD( server_, ClientToSimulation, control_stop )
         FORWARD( server_, ClientToSimulation, control_pause )
         FORWARD( server_, ClientToSimulation, control_resume )
-        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
     }
 }
 
@@ -498,7 +500,7 @@ void Converter::ReceiveClientToSim( const std::string& from, const MsgsClientToS
         FORWARD( server_, ClientToSimulation, control_checkpoint_list_request )
         FORWARD( server_, ClientToSimulation, control_checkpoint_delete_request )
         FORWARD( server_, ClientToSimulation, change_population_magic_action )
-        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
     }
 }
 
@@ -522,6 +524,6 @@ void Converter::ReceiveAdminToLauncher( const std::string& from, const MsgsAdmin
         FORWARD( server_, ClientToSimulation, control_checkpoint_save_now )
         FORWARD( server_, ClientToSimulation, control_checkpoint_list_request )
         FORWARD( server_, ClientToSimulation, control_checkpoint_delete_request )
-        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
+        listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
     }
 }

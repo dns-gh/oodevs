@@ -27,6 +27,6 @@ BOOST_FIXTURE_TEST_CASE( unknown_message_is_logged_then_dropped, Fixture )
     msg.mutable_message()->mutable_text_message()->mutable_source()->set_profile( "profile" );
     msg.mutable_message()->mutable_text_message()->mutable_target()->set_profile( "profile" );
     msg.mutable_message()->mutable_text_message()->set_message( "message" );
-    MOCK_EXPECT( listener, Info ).once();
+    MOCK_EXPECT( listener, Info ).once().with( "Shield converter dropping unknown 'text_message' message" );
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }
