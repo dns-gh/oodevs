@@ -89,7 +89,7 @@ namespace
         const google::protobuf::Reflection* pReflection = msg.message().GetReflection();
         for( int i = 0; i < pDescriptor->field_count(); ++i )
             if( pReflection->HasField( msg.message(), pDescriptor->field( i ) ) )
-                result += ( result.empty() ? "" : " / " ) + pDescriptor->field( i )->name();
+                result += ( result.empty() ? "" : " / " ) + pDescriptor->field( i )->full_name();
         if( result.empty() )
             return pDescriptor->full_name();
         return result;
