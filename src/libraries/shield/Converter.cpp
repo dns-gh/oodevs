@@ -10,6 +10,7 @@
 #include "Converter.h"
 #include "Client_ABC.h"
 #include "Server_ABC.h"
+#include "ClientListener_ABC.h"
 #include "Tools.h"
 #include "AarToClient.h"
 #include "AuthenticationToClient.h"
@@ -42,20 +43,29 @@
 
 using namespace shield;
 
-#define FORWARD_TO( type, from, to ) \
-        if( msg.message().has_##from() ) \
-            type::Convert( msg.message().from(), out.mutable_message()->mutable_##to() );
-#define FORWARD( type, accessor ) \
-        FORWARD_TO( type, accessor, accessor )
+#define FORWARD_TO( destination, type, from, to ) \
+        if( msg.has_message() && msg.message().has_##from() ) \
+        { \
+            if( msg.has_context() ) \
+                out.set_context( msg.context() ); \
+            type::Convert( msg.message().from(), out.mutable_message()->mutable_##to() ); \
+            destination.Send( out ); \
+            return; \
+        }
+#define FORWARD( destination, type, accessor ) \
+        FORWARD_TO( destination, type, accessor, accessor )
+
+#define DROP
 
 // -----------------------------------------------------------------------------
 // Name: Converter constructor
 // Created: MCO 2010-09-30
 // -----------------------------------------------------------------------------
-Converter::Converter( const std::string& from, Server_ABC& server, Client_ABC& client )
-    : from_  ( from )
-    , server_( server )
-    , client_( client )
+Converter::Converter( const std::string& from, Server_ABC& server, Client_ABC& client, ClientListener_ABC& listener )
+    : from_    ( from )
+    , server_  ( server )
+    , client_  ( client )
+    , listener_( listener )
 {
     // NOTHING
 }
@@ -69,6 +79,21 @@ Converter::~Converter()
     // NOTHING
 }
 
+namespace
+{
+    template< typename T >
+    std::string GetType( const T& msg )
+    {
+        if( ! msg.has_message() )
+            return msg.GetDescriptor()->full_name();
+        std::vector< const google::protobuf::FieldDescriptor* > fields;
+        msg.message().GetReflection()->ListFields( msg, &fields );
+        if( fields.empty() )
+            return msg.GetDescriptor()->full_name();
+        return fields[0]->name();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Converter::ReceiveAarToClient
 // Created: MCO 2010-10-26
@@ -76,15 +101,10 @@ Converter::~Converter()
 void Converter::ReceiveAarToClient( const std::string& /*from*/, const sword::AarToClient& msg )
 {
     MsgsAarToClient::MsgAarToClient out;
-    if( msg.has_context() )
-        out.set_context( msg.context() );
-    if( msg.has_message() )
-    {
-        FORWARD( AarToClient, aar_information )
-        FORWARD( AarToClient, plot_result )
-        FORWARD( AarToClient, indicator )
-    }
-    client_.Send( out );
+    FORWARD( client_, AarToClient, aar_information )
+    FORWARD( client_, AarToClient, plot_result )
+    FORWARD( client_, AarToClient, indicator )
+    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,16 +114,14 @@ void Converter::ReceiveAarToClient( const std::string& /*from*/, const sword::Aa
 void Converter::ReceiveAuthenticationToClient( const std::string& /*from*/, const sword::AuthenticationToClient& msg )
 {
     MsgsAuthenticationToClient::MsgAuthenticationToClient out;
-    if( msg.has_context() )
-        out.set_context( msg.context() );
-    FORWARD( AuthenticationToClient, authentication_response )
-    FORWARD( AuthenticationToClient, profile_creation )
-    FORWARD( AuthenticationToClient, profile_creation_request_ack )
-    FORWARD( AuthenticationToClient, profile_update )
-    FORWARD( AuthenticationToClient, profile_update_request_ack )
-    FORWARD( AuthenticationToClient, profile_destruction )
-    FORWARD( AuthenticationToClient, profile_destruction_request_ack )
-    client_.Send( out );
+    FORWARD( client_, AuthenticationToClient, authentication_response )
+    FORWARD( client_, AuthenticationToClient, profile_creation )
+    FORWARD( client_, AuthenticationToClient, profile_creation_request_ack )
+    FORWARD( client_, AuthenticationToClient, profile_update )
+    FORWARD( client_, AuthenticationToClient, profile_update_request_ack )
+    FORWARD( client_, AuthenticationToClient, profile_destruction )
+    FORWARD( client_, AuthenticationToClient, profile_destruction_request_ack )
+    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,8 +132,12 @@ void Converter::ReceiveDispatcherToClient( const std::string& /*from*/, const sw
 {
     MsgsDispatcherToClient::MsgDispatcherToClient out;
     if( msg.message().has_services_description() )
+    {
         out.mutable_message()->mutable_services_description()->mutable_services()->MergeFrom( msg.message().services_description().services() );
-    client_.Send( out );
+        client_.Send( out );
+        return;
+    }
+    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -125,39 +147,37 @@ void Converter::ReceiveDispatcherToClient( const std::string& /*from*/, const sw
 void Converter::ReceiveMessengerToClient( const std::string& /*from*/, const sword::MessengerToClient& msg )
 {
     MsgsMessengerToClient::MsgMessengerToClient out;
-    if( msg.has_context() )
-        out.set_context( msg.context() );
-    FORWARD( MessengerToClient, limit_creation )
-    FORWARD( MessengerToClient, limit_update )
-    FORWARD( MessengerToClient, limit_destruction )
-    FORWARD( MessengerToClient, limit_creation_request_ack )
-    FORWARD( MessengerToClient, limit_destruction_request_ack )
-    FORWARD( MessengerToClient, limit_update_request_ack )
-    FORWARD_TO( MessengerToClient, phase_line_creation, lima_creation )
-    FORWARD_TO( MessengerToClient, phase_line_update, lima_update )
-    FORWARD_TO( MessengerToClient, phase_line_destruction, lima_destruction )
-    FORWARD_TO( MessengerToClient, phase_line_creation_request_ack, lima_creation_request_ack )
-    FORWARD_TO( MessengerToClient, phase_line_destruction_request_ack, lima_destruction_request_ack )
-    FORWARD_TO( MessengerToClient, phase_line_update_request_ack, lima_update_request_ack )
-    FORWARD( MessengerToClient, intelligence_creation )
-    FORWARD( MessengerToClient, intelligence_update )
-    FORWARD( MessengerToClient, intelligence_destruction )
-    FORWARD( MessengerToClient, shape_creation )
-    FORWARD( MessengerToClient, shape_update )
-    FORWARD( MessengerToClient, shape_destruction )
-    FORWARD( MessengerToClient, shape_creation_request_ack )
-    FORWARD( MessengerToClient, shape_destruction_request_ack )
-    FORWARD( MessengerToClient, shape_update_request_ack )
-    FORWARD( MessengerToClient, marker_creation )
-    FORWARD( MessengerToClient, marker_update )
-    FORWARD( MessengerToClient, marker_destruction )
-    FORWARD( MessengerToClient, client_object_creation )
-    FORWARD( MessengerToClient, client_object_update )
-    FORWARD( MessengerToClient, client_object_destruction )
-    FORWARD( MessengerToClient, client_object_creation_ack )
-    FORWARD( MessengerToClient, client_object_destruction_ack )
-    FORWARD( MessengerToClient, client_object_update_ack )
-    client_.Send( out );
+    FORWARD( client_, MessengerToClient, limit_creation )
+    FORWARD( client_, MessengerToClient, limit_update )
+    FORWARD( client_, MessengerToClient, limit_destruction )
+    FORWARD( client_, MessengerToClient, limit_creation_request_ack )
+    FORWARD( client_, MessengerToClient, limit_destruction_request_ack )
+    FORWARD( client_, MessengerToClient, limit_update_request_ack )
+    FORWARD_TO( client_, MessengerToClient, phase_line_creation, lima_creation )
+    FORWARD_TO( client_, MessengerToClient, phase_line_update, lima_update )
+    FORWARD_TO( client_, MessengerToClient, phase_line_destruction, lima_destruction )
+    FORWARD_TO( client_, MessengerToClient, phase_line_creation_request_ack, lima_creation_request_ack )
+    FORWARD_TO( client_, MessengerToClient, phase_line_destruction_request_ack, lima_destruction_request_ack )
+    FORWARD_TO( client_, MessengerToClient, phase_line_update_request_ack, lima_update_request_ack )
+    FORWARD( client_, MessengerToClient, intelligence_creation )
+    FORWARD( client_, MessengerToClient, intelligence_update )
+    FORWARD( client_, MessengerToClient, intelligence_destruction )
+    FORWARD( client_, MessengerToClient, shape_creation )
+    FORWARD( client_, MessengerToClient, shape_update )
+    FORWARD( client_, MessengerToClient, shape_destruction )
+    FORWARD( client_, MessengerToClient, shape_creation_request_ack )
+    FORWARD( client_, MessengerToClient, shape_destruction_request_ack )
+    FORWARD( client_, MessengerToClient, shape_update_request_ack )
+    FORWARD( client_, MessengerToClient, marker_creation )
+    FORWARD( client_, MessengerToClient, marker_update )
+    FORWARD( client_, MessengerToClient, marker_destruction )
+    FORWARD( client_, MessengerToClient, client_object_creation )
+    FORWARD( client_, MessengerToClient, client_object_update )
+    FORWARD( client_, MessengerToClient, client_object_destruction )
+    FORWARD( client_, MessengerToClient, client_object_creation_ack )
+    FORWARD( client_, MessengerToClient, client_object_destruction_ack )
+    FORWARD( client_, MessengerToClient, client_object_update_ack )
+    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,15 +187,13 @@ void Converter::ReceiveMessengerToClient( const std::string& /*from*/, const swo
 void Converter::ReceiveReplayToClient( const std::string& /*from*/, const sword::ReplayToClient& msg )
 {
     MsgsReplayToClient::MsgReplayToClient out;
-    if( msg.has_context() )
-        out.set_context( msg.context() );
-    FORWARD( ReplayToClient, control_replay_information )
-    FORWARD( ReplayToClient, control_skip_to_tick_ack )
-    FORWARD( SimulationToClient, control_stop_ack )
-    FORWARD( SimulationToClient, control_pause_ack )
-    FORWARD( SimulationToClient, control_resume_ack )
-    FORWARD( SimulationToClient, control_change_time_factor_ack )
-    client_.Send( out );
+    FORWARD( client_, ReplayToClient, control_replay_information )
+    FORWARD( client_, ReplayToClient, control_skip_to_tick_ack )
+    FORWARD( client_, SimulationToClient, control_stop_ack )
+    FORWARD( client_, SimulationToClient, control_pause_ack )
+    FORWARD( client_, SimulationToClient, control_resume_ack )
+    FORWARD( client_, SimulationToClient, control_change_time_factor_ack )
+    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,141 +203,145 @@ void Converter::ReceiveReplayToClient( const std::string& /*from*/, const sword:
 void Converter::ReceiveSimToClient( const std::string& /*from*/, const sword::SimToClient& msg )
 {
     MsgsSimToClient::MsgSimToClient out;
-    if( msg.has_context() )
-        out.set_context( msg.context() );
     if( msg.message().has_order_ack() )
+    {
+        if( msg.has_context() )
+            out.set_context( msg.context() );
         SimulationToClient::ConvertOrderAckToSpecificOrderAck( msg.message().order_ack(), out.mutable_message() );
-    FORWARD( SimulationToClient, frag_order_ack )
-    FORWARD( SimulationToClient, set_automat_mode_ack )
-    FORWARD( SimulationToClient, unit_creation_request_ack )
-    FORWARD( SimulationToClient, magic_action_ack )
-    FORWARD( SimulationToClient, unit_magic_action_ack )
-    FORWARD( SimulationToClient, object_magic_action_ack )
-    FORWARD( SimulationToClient, crowd_magic_action_ack )
-    FORWARD( SimulationToClient, change_diplomacy_ack )
-    FORWARD( SimulationToClient, automat_change_knowledge_group_ack )
-    FORWARD( SimulationToClient, automat_change_logistic_links_ack )
-    FORWARD( SimulationToClient, automat_change_superior_ack )
-    FORWARD( SimulationToClient, unit_change_superior_ack )
-    FORWARD( SimulationToClient, log_supply_push_flow_ack )
-    FORWARD( SimulationToClient, log_supply_pull_flow_ack )
-    FORWARD( SimulationToClient, log_supply_change_quotas_ack )
-    FORWARD( SimulationToClient, control_information )
-    FORWARD( SimulationToClient, control_profiling_information )
-    FORWARD( SimulationToClient, control_begin_tick )
-    FORWARD( SimulationToClient, control_end_tick )
-    FORWARD( SimulationToClient, control_stop_ack )
-    FORWARD( SimulationToClient, control_pause_ack )
-    FORWARD( SimulationToClient, control_resume_ack )
-    FORWARD( SimulationToClient, control_change_time_factor_ack )
-    FORWARD( SimulationToClient, control_date_time_change_ack )
-    FORWARD( SimulationToClient, control_checkpoint_save_end )
-    FORWARD( SimulationToClient, formation_creation )
-    FORWARD( SimulationToClient, party_creation )
-    FORWARD( SimulationToClient, automat_creation )
-    FORWARD( SimulationToClient, automat_attributes )
-    FORWARD( SimulationToClient, unit_creation )
-    FORWARD( SimulationToClient, unit_attributes )
-    FORWARD( SimulationToClient, unit_pathfind )
-    FORWARD( SimulationToClient, unit_destruction )
-    FORWARD( SimulationToClient, unit_environment_type )
-    FORWARD( SimulationToClient, change_diplomacy )
-    FORWARD( SimulationToClient, unit_change_superior )
-    FORWARD( SimulationToClient, automat_change_logistic_links )
-    FORWARD( SimulationToClient, automat_change_knowledge_group )
-    FORWARD( SimulationToClient, automat_change_superior )
-    FORWARD( SimulationToClient, unit_knowledge_creation )
-    FORWARD( SimulationToClient, unit_knowledge_update )
-    FORWARD( SimulationToClient, unit_knowledge_destruction )
-    FORWARD( SimulationToClient, start_unit_fire )
-    FORWARD( SimulationToClient, stop_unit_fire )
-    FORWARD( SimulationToClient, start_crowd_fire )
-    FORWARD( SimulationToClient, stop_crowd_fire )
-    FORWARD( SimulationToClient, explosion )
-    FORWARD( SimulationToClient, start_fire_effect )
-    FORWARD( SimulationToClient, stop_fire_effect )
-    FORWARD( SimulationToClient, report )
-    FORWARD( SimulationToClient, invalidate_report )
-    FORWARD( SimulationToClient, decisional_state )
-    FORWARD( SimulationToClient, debug_points )
-    FORWARD( SimulationToClient, unit_vision_cones )
-    FORWARD( SimulationToClient, unit_detection )
-    FORWARD( SimulationToClient, object_detection )
-    FORWARD( SimulationToClient, crowd_concentration_detection )
-    FORWARD( SimulationToClient, crowd_flow_detection )
-    FORWARD( SimulationToClient, unit_order )
-    FORWARD( SimulationToClient, automat_order )
-    FORWARD( SimulationToClient, crowd_order )
-    FORWARD( SimulationToClient, object_creation )
-    FORWARD( SimulationToClient, object_destruction )
-    FORWARD( SimulationToClient, object_update )
-    FORWARD( SimulationToClient, object_knowledge_creation )
-    FORWARD( SimulationToClient, object_knowledge_update )
-    FORWARD( SimulationToClient, object_knowledge_destruction )
-    FORWARD( SimulationToClient, log_medical_handling_creation )
-    FORWARD( SimulationToClient, log_medical_handling_update )
-    FORWARD( SimulationToClient, log_medical_handling_destruction )
-    FORWARD( SimulationToClient, log_medical_state )
-    FORWARD( SimulationToClient, log_maintenance_handling_creation )
-    FORWARD( SimulationToClient, log_maintenance_handling_update )
-    FORWARD( SimulationToClient, log_maintenance_handling_destruction )
-    FORWARD( SimulationToClient, log_maintenance_state )
-    FORWARD( SimulationToClient, log_supply_handling_creation )
-    FORWARD( SimulationToClient, log_supply_handling_update )
-    FORWARD( SimulationToClient, log_supply_handling_destruction )
-    FORWARD( SimulationToClient, log_supply_state )
-    FORWARD( SimulationToClient, log_supply_quotas )
-    FORWARD( SimulationToClient, crowd_creation )
-    FORWARD( SimulationToClient, crowd_update )
-    FORWARD( SimulationToClient, crowd_concentration_creation )
-    FORWARD( SimulationToClient, crowd_concentration_destruction )
-    FORWARD( SimulationToClient, crowd_concentration_update )
-    FORWARD( SimulationToClient, crowd_flow_creation )
-    FORWARD( SimulationToClient, crowd_flow_destruction )
-    FORWARD( SimulationToClient, crowd_flow_update )
-    FORWARD( SimulationToClient, crowd_knowledge_creation )
-    FORWARD( SimulationToClient, crowd_knowledge_update )
-    FORWARD( SimulationToClient, crowd_knowledge_destruction )
-    FORWARD( SimulationToClient, crowd_concentration_knowledge_creation )
-    FORWARD( SimulationToClient, crowd_concentration_knowledge_destruction )
-    FORWARD( SimulationToClient, crowd_concentration_knowledge_update )
-    FORWARD( SimulationToClient, crowd_flow_knowledge_creation )
-    FORWARD( SimulationToClient, crowd_flow_knowledge_destruction )
-    FORWARD( SimulationToClient, crowd_flow_knowledge_update )
-    FORWARD( SimulationToClient, folk_creation )
-    FORWARD( SimulationToClient, folk_graph_update )
-    FORWARD( SimulationToClient, control_global_weather_ack )
-    FORWARD( SimulationToClient, control_local_weather_ack )
-    FORWARD( SimulationToClient, control_checkpoint_save_begin )
-    FORWARD( SimulationToClient, control_checkpoint_set_frequency_ack )
-    FORWARD( SimulationToClient, control_checkpoint_save_now_ack )
-    FORWARD( SimulationToClient, control_send_current_state_begin )
-    FORWARD( SimulationToClient, control_send_current_state_end )
-    FORWARD( SimulationToClient, urban_creation )
-    FORWARD( SimulationToClient, urban_update )
-    FORWARD( SimulationToClient, urban_knowledge_creation )
-    FORWARD( SimulationToClient, urban_knowledge_update )
-    FORWARD( SimulationToClient, stock_resource )
-    FORWARD( SimulationToClient, urban_detection )
-    FORWARD( SimulationToClient, knowledge_group_magic_action_ack )
-    FORWARD( SimulationToClient, knowledge_group_creation )
-    FORWARD( SimulationToClient, knowledge_group_update )
-    FORWARD( SimulationToClient, knowledge_group_creation_ack )
-    FORWARD( SimulationToClient, knowledge_group_destruction )
-    FORWARD( SimulationToClient, action_create_fire_order_ack )
-    FORWARD( SimulationToClient, control_global_weather )
-    FORWARD( SimulationToClient, control_local_weather_creation )
-    FORWARD( SimulationToClient, control_local_weather_destruction )
-    FORWARD( SimulationToClient, control_checkpoint_list_ack )
-    FORWARD( SimulationToClient, control_checkpoint_list )
-    FORWARD( SimulationToClient, control_checkpoint_delete_ack )
-    FORWARD( SimulationToClient, formation_destruction )
-    FORWARD( SimulationToClient, automat_destruction )
-    FORWARD( SimulationToClient, crowd_destruction )
-    FORWARD( SimulationToClient, population_creation )
-    FORWARD( SimulationToClient, population_update )
-    FORWARD( SimulationToClient, change_population_magic_action_ack )
-    client_.Send( out );
+        client_.Send( out );
+        return;
+    }
+    FORWARD( client_, SimulationToClient, frag_order_ack )
+    FORWARD( client_, SimulationToClient, set_automat_mode_ack )
+    FORWARD( client_, SimulationToClient, unit_creation_request_ack )
+    FORWARD( client_, SimulationToClient, magic_action_ack )
+    FORWARD( client_, SimulationToClient, unit_magic_action_ack )
+    FORWARD( client_, SimulationToClient, object_magic_action_ack )
+    FORWARD( client_, SimulationToClient, crowd_magic_action_ack )
+    FORWARD( client_, SimulationToClient, change_diplomacy_ack )
+    FORWARD( client_, SimulationToClient, automat_change_knowledge_group_ack )
+    FORWARD( client_, SimulationToClient, automat_change_logistic_links_ack )
+    FORWARD( client_, SimulationToClient, automat_change_superior_ack )
+    FORWARD( client_, SimulationToClient, unit_change_superior_ack )
+    FORWARD( client_, SimulationToClient, log_supply_push_flow_ack )
+    FORWARD( client_, SimulationToClient, log_supply_pull_flow_ack )
+    FORWARD( client_, SimulationToClient, log_supply_change_quotas_ack )
+    FORWARD( client_, SimulationToClient, control_information )
+    FORWARD( client_, SimulationToClient, control_profiling_information )
+    FORWARD( client_, SimulationToClient, control_begin_tick )
+    FORWARD( client_, SimulationToClient, control_end_tick )
+    FORWARD( client_, SimulationToClient, control_stop_ack )
+    FORWARD( client_, SimulationToClient, control_pause_ack )
+    FORWARD( client_, SimulationToClient, control_resume_ack )
+    FORWARD( client_, SimulationToClient, control_change_time_factor_ack )
+    FORWARD( client_, SimulationToClient, control_date_time_change_ack )
+    FORWARD( client_, SimulationToClient, control_checkpoint_save_end )
+    FORWARD( client_, SimulationToClient, formation_creation )
+    FORWARD( client_, SimulationToClient, party_creation )
+    FORWARD( client_, SimulationToClient, automat_creation )
+    FORWARD( client_, SimulationToClient, automat_attributes )
+    FORWARD( client_, SimulationToClient, unit_creation )
+    FORWARD( client_, SimulationToClient, unit_attributes )
+    FORWARD( client_, SimulationToClient, unit_pathfind )
+    FORWARD( client_, SimulationToClient, unit_destruction )
+    FORWARD( client_, SimulationToClient, unit_environment_type )
+    FORWARD( client_, SimulationToClient, change_diplomacy )
+    FORWARD( client_, SimulationToClient, unit_change_superior )
+    FORWARD( client_, SimulationToClient, automat_change_logistic_links )
+    FORWARD( client_, SimulationToClient, automat_change_knowledge_group )
+    FORWARD( client_, SimulationToClient, automat_change_superior )
+    FORWARD( client_, SimulationToClient, unit_knowledge_creation )
+    FORWARD( client_, SimulationToClient, unit_knowledge_update )
+    FORWARD( client_, SimulationToClient, unit_knowledge_destruction )
+    FORWARD( client_, SimulationToClient, start_unit_fire )
+    FORWARD( client_, SimulationToClient, stop_unit_fire )
+    FORWARD( client_, SimulationToClient, start_crowd_fire )
+    FORWARD( client_, SimulationToClient, stop_crowd_fire )
+    FORWARD( client_, SimulationToClient, explosion )
+    FORWARD( client_, SimulationToClient, start_fire_effect )
+    FORWARD( client_, SimulationToClient, stop_fire_effect )
+    FORWARD( client_, SimulationToClient, report )
+    FORWARD( client_, SimulationToClient, invalidate_report )
+    FORWARD( client_, SimulationToClient, decisional_state )
+    FORWARD( client_, SimulationToClient, debug_points )
+    FORWARD( client_, SimulationToClient, unit_vision_cones )
+    FORWARD( client_, SimulationToClient, unit_detection )
+    FORWARD( client_, SimulationToClient, object_detection )
+    FORWARD( client_, SimulationToClient, crowd_concentration_detection )
+    FORWARD( client_, SimulationToClient, crowd_flow_detection )
+    FORWARD( client_, SimulationToClient, unit_order )
+    FORWARD( client_, SimulationToClient, automat_order )
+    FORWARD( client_, SimulationToClient, crowd_order )
+    FORWARD( client_, SimulationToClient, object_creation )
+    FORWARD( client_, SimulationToClient, object_destruction )
+    FORWARD( client_, SimulationToClient, object_update )
+    FORWARD( client_, SimulationToClient, object_knowledge_creation )
+    FORWARD( client_, SimulationToClient, object_knowledge_update )
+    FORWARD( client_, SimulationToClient, object_knowledge_destruction )
+    FORWARD( client_, SimulationToClient, log_medical_handling_creation )
+    FORWARD( client_, SimulationToClient, log_medical_handling_update )
+    FORWARD( client_, SimulationToClient, log_medical_handling_destruction )
+    FORWARD( client_, SimulationToClient, log_medical_state )
+    FORWARD( client_, SimulationToClient, log_maintenance_handling_creation )
+    FORWARD( client_, SimulationToClient, log_maintenance_handling_update )
+    FORWARD( client_, SimulationToClient, log_maintenance_handling_destruction )
+    FORWARD( client_, SimulationToClient, log_maintenance_state )
+    FORWARD( client_, SimulationToClient, log_supply_handling_creation )
+    FORWARD( client_, SimulationToClient, log_supply_handling_update )
+    FORWARD( client_, SimulationToClient, log_supply_handling_destruction )
+    FORWARD( client_, SimulationToClient, log_supply_state )
+    FORWARD( client_, SimulationToClient, log_supply_quotas )
+    FORWARD( client_, SimulationToClient, crowd_creation )
+    FORWARD( client_, SimulationToClient, crowd_update )
+    FORWARD( client_, SimulationToClient, crowd_concentration_creation )
+    FORWARD( client_, SimulationToClient, crowd_concentration_destruction )
+    FORWARD( client_, SimulationToClient, crowd_concentration_update )
+    FORWARD( client_, SimulationToClient, crowd_flow_creation )
+    FORWARD( client_, SimulationToClient, crowd_flow_destruction )
+    FORWARD( client_, SimulationToClient, crowd_flow_update )
+    FORWARD( client_, SimulationToClient, crowd_knowledge_creation )
+    FORWARD( client_, SimulationToClient, crowd_knowledge_update )
+    FORWARD( client_, SimulationToClient, crowd_knowledge_destruction )
+    FORWARD( client_, SimulationToClient, crowd_concentration_knowledge_creation )
+    FORWARD( client_, SimulationToClient, crowd_concentration_knowledge_destruction )
+    FORWARD( client_, SimulationToClient, crowd_concentration_knowledge_update )
+    FORWARD( client_, SimulationToClient, crowd_flow_knowledge_creation )
+    FORWARD( client_, SimulationToClient, crowd_flow_knowledge_destruction )
+    FORWARD( client_, SimulationToClient, crowd_flow_knowledge_update )
+    FORWARD( client_, SimulationToClient, folk_creation )
+    FORWARD( client_, SimulationToClient, folk_graph_update )
+    FORWARD( client_, SimulationToClient, control_global_weather_ack )
+    FORWARD( client_, SimulationToClient, control_local_weather_ack )
+    FORWARD( client_, SimulationToClient, control_checkpoint_save_begin )
+    FORWARD( client_, SimulationToClient, control_checkpoint_set_frequency_ack )
+    FORWARD( client_, SimulationToClient, control_checkpoint_save_now_ack )
+    FORWARD( client_, SimulationToClient, control_send_current_state_begin )
+    FORWARD( client_, SimulationToClient, control_send_current_state_end )
+    FORWARD( client_, SimulationToClient, urban_creation )
+    FORWARD( client_, SimulationToClient, urban_update )
+    FORWARD( client_, SimulationToClient, urban_knowledge_creation )
+    FORWARD( client_, SimulationToClient, urban_knowledge_update )
+    FORWARD( client_, SimulationToClient, stock_resource )
+    FORWARD( client_, SimulationToClient, urban_detection )
+    FORWARD( client_, SimulationToClient, knowledge_group_magic_action_ack )
+    FORWARD( client_, SimulationToClient, knowledge_group_creation )
+    FORWARD( client_, SimulationToClient, knowledge_group_update )
+    FORWARD( client_, SimulationToClient, knowledge_group_creation_ack )
+    FORWARD( client_, SimulationToClient, knowledge_group_destruction )
+    FORWARD( client_, SimulationToClient, action_create_fire_order_ack )
+    FORWARD( client_, SimulationToClient, control_global_weather )
+    FORWARD( client_, SimulationToClient, control_local_weather_creation )
+    FORWARD( client_, SimulationToClient, control_local_weather_destruction )
+    FORWARD( client_, SimulationToClient, control_checkpoint_list_ack )
+    FORWARD( client_, SimulationToClient, control_checkpoint_list )
+    FORWARD( client_, SimulationToClient, control_checkpoint_delete_ack )
+    FORWARD( client_, SimulationToClient, formation_destruction )
+    FORWARD( client_, SimulationToClient, automat_destruction )
+    FORWARD( client_, SimulationToClient, crowd_destruction )
+    FORWARD( client_, SimulationToClient, population_creation )
+    FORWARD( client_, SimulationToClient, population_update )
+    FORWARD( client_, SimulationToClient, change_population_magic_action_ack )
+    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -329,28 +351,26 @@ void Converter::ReceiveSimToClient( const std::string& /*from*/, const sword::Si
 void Converter::ReceiveLauncherToAdmin( const std::string& /*from*/, const sword::LauncherToAdmin& msg )
 {
     MsgsLauncherToAdmin::MsgLauncherToAdmin out;
-    if( msg.has_context() )
-        out.set_context( msg.context() );
-    FORWARD( LauncherToAdmin, connection_ack )
-    FORWARD( LauncherToAdmin, exercise_list_response )
-    FORWARD( LauncherToAdmin, control_start_ack )
-    FORWARD( LauncherToAdmin, control_stop_ack )
-    FORWARD( SimulationToClient, control_checkpoint_set_frequency_ack )
-    FORWARD( SimulationToClient, unit_change_superior )
-    FORWARD( SimulationToClient, automat_change_superior )
-    FORWARD( SimulationToClient, unit_creation )
-    FORWARD( SimulationToClient, automat_creation )
-    FORWARD( LauncherToAdmin, connected_profile_list )
-    FORWARD( LauncherToAdmin, profiles_description )
-    FORWARD( AuthenticationToClient, profile_creation )
-    FORWARD( AuthenticationToClient, profile_update )
-    FORWARD( AuthenticationToClient, profile_destruction )
-    FORWARD( LauncherToAdmin, simulation_component_state )
-    FORWARD( SimulationToClient, control_checkpoint_save_now_ack )
-    FORWARD( SimulationToClient, control_checkpoint_list_ack )
-    FORWARD( SimulationToClient, control_checkpoint_list )
-    FORWARD( SimulationToClient, control_checkpoint_delete_ack )
-    client_.Send( out );
+    FORWARD( client_, LauncherToAdmin, connection_ack )
+    FORWARD( client_, LauncherToAdmin, exercise_list_response )
+    FORWARD( client_, LauncherToAdmin, control_start_ack )
+    FORWARD( client_, LauncherToAdmin, control_stop_ack )
+    FORWARD( client_, SimulationToClient, control_checkpoint_set_frequency_ack )
+    FORWARD( client_, SimulationToClient, unit_change_superior )
+    FORWARD( client_, SimulationToClient, automat_change_superior )
+    FORWARD( client_, SimulationToClient, unit_creation )
+    FORWARD( client_, SimulationToClient, automat_creation )
+    FORWARD( client_, LauncherToAdmin, connected_profile_list )
+    FORWARD( client_, LauncherToAdmin, profiles_description )
+    FORWARD( client_, AuthenticationToClient, profile_creation )
+    FORWARD( client_, AuthenticationToClient, profile_update )
+    FORWARD( client_, AuthenticationToClient, profile_destruction )
+    FORWARD( client_, LauncherToAdmin, simulation_component_state )
+    FORWARD( client_, SimulationToClient, control_checkpoint_save_now_ack )
+    FORWARD( client_, SimulationToClient, control_checkpoint_list_ack )
+    FORWARD( client_, SimulationToClient, control_checkpoint_list )
+    FORWARD( client_, SimulationToClient, control_checkpoint_delete_ack )
+    listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
 }
 
 // -----------------------------------------------------------------------------
@@ -362,11 +382,16 @@ void Converter::ReceiveClientToAar( const std::string& from, const MsgsClientToA
     if( from == from_ )
     {
         sword::ClientToAar out;
-        if( msg.has_context() )
-            out.set_context( msg.context() );
-        out.mutable_message()->mutable_plot_request()->set_identifier( msg.message().plot_request().identifier() );
-        out.mutable_message()->mutable_plot_request()->set_request( msg.message().plot_request().request() );
-        server_.Send( out );
+        if( msg.message().has_plot_request() )
+        {
+            if( msg.has_context() )
+                out.set_context( msg.context() );
+            out.mutable_message()->mutable_plot_request()->set_identifier( msg.message().plot_request().identifier() );
+            out.mutable_message()->mutable_plot_request()->set_request( msg.message().plot_request().request() );
+            server_.Send( out );
+            return;
+        }
+        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
     }
 }
 
@@ -379,13 +404,11 @@ void Converter::ReceiveClientToAuthentication( const std::string& from, const Ms
     if( from == from_ )
     {
         sword::ClientToAuthentication out;
-        if( msg.has_context() )
-            out.set_context( msg.context() );
-        FORWARD( ClientToAuthentication, authentication_request )
-        FORWARD( ClientToAuthentication, profile_creation_request )
-        FORWARD( ClientToAuthentication, profile_update_request )
-        FORWARD( ClientToAuthentication, profile_destruction_request )
-        server_.Send( out );
+        FORWARD( server_, ClientToAuthentication, authentication_request )
+        FORWARD( server_, ClientToAuthentication, profile_creation_request )
+        FORWARD( server_, ClientToAuthentication, profile_update_request )
+        FORWARD( server_, ClientToAuthentication, profile_destruction_request )
+        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
     }
 }
 
@@ -398,27 +421,25 @@ void Converter::ReceiveClientToMessenger( const std::string& from, const MsgsCli
     if( from == from_ )
     {
         sword::ClientToMessenger out;
-        if( msg.has_context() )
-            out.set_context( msg.context() );
-        FORWARD( ClientToMessenger, limit_creation_request )
-        FORWARD( ClientToMessenger, limit_update_request )
-        FORWARD( ClientToMessenger, limit_destruction_request )
-        FORWARD_TO( ClientToMessenger, lima_creation_request, phase_line_creation_request )
-        FORWARD_TO( ClientToMessenger, lima_update_request, phase_line_update_request )
-        FORWARD_TO( ClientToMessenger, lima_destruction_request, phase_line_destruction_request )
-        FORWARD( ClientToMessenger, intelligence_creation_request )
-        FORWARD( ClientToMessenger, intelligence_update_request )
-        FORWARD( ClientToMessenger, intelligence_destruction_request )
-        FORWARD( ClientToMessenger, shape_creation_request )
-        FORWARD( ClientToMessenger, shape_update_request )
-        FORWARD( ClientToMessenger, shape_destruction_request )
-        FORWARD( ClientToMessenger, marker_creation_request )
-        FORWARD( ClientToMessenger, marker_update_request )
-        FORWARD( ClientToMessenger, marker_destruction_request )
-        FORWARD( ClientToMessenger, client_object_creation_request )
-        FORWARD( ClientToMessenger, client_object_update_request )
-        FORWARD( ClientToMessenger, client_object_destruction_request )
-        server_.Send( out );
+        FORWARD( server_, ClientToMessenger, limit_creation_request )
+        FORWARD( server_, ClientToMessenger, limit_update_request )
+        FORWARD( server_, ClientToMessenger, limit_destruction_request )
+        FORWARD_TO( server_, ClientToMessenger, lima_creation_request, phase_line_creation_request )
+        FORWARD_TO( server_, ClientToMessenger, lima_update_request, phase_line_update_request )
+        FORWARD_TO( server_, ClientToMessenger, lima_destruction_request, phase_line_destruction_request )
+        FORWARD( server_, ClientToMessenger, intelligence_creation_request )
+        FORWARD( server_, ClientToMessenger, intelligence_update_request )
+        FORWARD( server_, ClientToMessenger, intelligence_destruction_request )
+        FORWARD( server_, ClientToMessenger, shape_creation_request )
+        FORWARD( server_, ClientToMessenger, shape_update_request )
+        FORWARD( server_, ClientToMessenger, shape_destruction_request )
+        FORWARD( server_, ClientToMessenger, marker_creation_request )
+        FORWARD( server_, ClientToMessenger, marker_update_request )
+        FORWARD( server_, ClientToMessenger, marker_destruction_request )
+        FORWARD( server_, ClientToMessenger, client_object_creation_request )
+        FORWARD( server_, ClientToMessenger, client_object_update_request )
+        FORWARD( server_, ClientToMessenger, client_object_destruction_request )
+        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
     }
 }
 
@@ -431,15 +452,19 @@ void Converter::ReceiveClientToReplay( const std::string& from, const MsgsClient
     if( from == from_ )
     {
         sword::ClientToReplay out;
-        if( msg.has_context() )
-            out.set_context( msg.context() );
         if( msg.message().has_control_skip_to_tick() )
+        {
+            if( msg.has_context() )
+                out.set_context( msg.context() );
             out.mutable_message()->mutable_control_skip_to_tick()->set_tick( msg.message().control_skip_to_tick().tick() );
-        FORWARD( ClientToSimulation, control_change_time_factor )
-        FORWARD( ClientToSimulation, control_stop )
-        FORWARD( ClientToSimulation, control_pause )
-        FORWARD( ClientToSimulation, control_resume )
-        server_.Send( out );
+            server_.Send( out );
+            return;
+        }
+        FORWARD( server_, ClientToSimulation, control_change_time_factor )
+        FORWARD( server_, ClientToSimulation, control_stop )
+        FORWARD( server_, ClientToSimulation, control_pause )
+        FORWARD( server_, ClientToSimulation, control_resume )
+        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
     }
 }
 
@@ -452,30 +477,28 @@ void Converter::ReceiveClientToSim( const std::string& from, const MsgsClientToS
     if( from == from_ )
     {
         sword::ClientToSim out;
-        if( msg.has_context() )
-            out.set_context( msg.context() );
-        FORWARD( ClientToSimulation, control_change_time_factor )
-        FORWARD( ClientToSimulation, control_stop )
-        FORWARD( ClientToSimulation, control_pause )
-        FORWARD( ClientToSimulation, control_resume )
-        FORWARD( ClientToSimulation, control_date_time_change )
-        FORWARD( ClientToSimulation, control_checkpoint_save_now )
-        FORWARD( ClientToSimulation, control_checkpoint_set_frequency )
-        FORWARD( ClientToSimulation, control_toggle_vision_cones )
-        FORWARD( ClientToSimulation, unit_order )
-        FORWARD( ClientToSimulation, automat_order )
-        FORWARD( ClientToSimulation, crowd_order )
-        FORWARD( ClientToSimulation, frag_order )
-        FORWARD( ClientToSimulation, set_automat_mode )
-        FORWARD( ClientToSimulation, unit_creation_request )
-        FORWARD( ClientToSimulation, unit_magic_action )
-        FORWARD( ClientToSimulation, object_magic_action )
-        FORWARD( ClientToSimulation, knowledge_magic_action )
-        FORWARD( ClientToSimulation, magic_action )
-        FORWARD( ClientToSimulation, control_checkpoint_list_request )
-        FORWARD( ClientToSimulation, control_checkpoint_delete_request )
-        FORWARD( ClientToSimulation, change_population_magic_action )
-        server_.Send( out );
+        FORWARD( server_, ClientToSimulation, control_change_time_factor )
+        FORWARD( server_, ClientToSimulation, control_stop )
+        FORWARD( server_, ClientToSimulation, control_pause )
+        FORWARD( server_, ClientToSimulation, control_resume )
+        FORWARD( server_, ClientToSimulation, control_date_time_change )
+        FORWARD( server_, ClientToSimulation, control_checkpoint_save_now )
+        FORWARD( server_, ClientToSimulation, control_checkpoint_set_frequency )
+        FORWARD( server_, ClientToSimulation, control_toggle_vision_cones )
+        FORWARD( server_, ClientToSimulation, unit_order )
+        FORWARD( server_, ClientToSimulation, automat_order )
+        FORWARD( server_, ClientToSimulation, crowd_order )
+        FORWARD( server_, ClientToSimulation, frag_order )
+        FORWARD( server_, ClientToSimulation, set_automat_mode )
+        FORWARD( server_, ClientToSimulation, unit_creation_request )
+        FORWARD( server_, ClientToSimulation, unit_magic_action )
+        FORWARD( server_, ClientToSimulation, object_magic_action )
+        FORWARD( server_, ClientToSimulation, knowledge_magic_action )
+        FORWARD( server_, ClientToSimulation, magic_action )
+        FORWARD( server_, ClientToSimulation, control_checkpoint_list_request )
+        FORWARD( server_, ClientToSimulation, control_checkpoint_delete_request )
+        FORWARD( server_, ClientToSimulation, change_population_magic_action )
+        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
     }
 }
 
@@ -488,19 +511,17 @@ void Converter::ReceiveAdminToLauncher( const std::string& from, const MsgsAdmin
     if( from == from_ )
     {
         sword::AdminToLauncher out;
-        if( msg.has_context() )
-            out.set_context( msg.context() );
-        FORWARD( AdminToLauncher, connection_request )
-        FORWARD( AdminToLauncher, control_start )
-        FORWARD( AdminToLauncher, control_stop )
-        FORWARD( AdminToLauncher, exercise_list_request )
-        FORWARD( AdminToLauncher, profile_list_request )
-        FORWARD( AdminToLauncher, connected_profile_list_request )
-        FORWARD( AdminToLauncher, notification )
-        FORWARD( ClientToSimulation, control_checkpoint_set_frequency )
-        FORWARD( ClientToSimulation, control_checkpoint_save_now )
-        FORWARD( ClientToSimulation, control_checkpoint_list_request )
-        FORWARD( ClientToSimulation, control_checkpoint_delete_request )
-        server_.Send( out );
+        FORWARD( server_, AdminToLauncher, connection_request )
+        FORWARD( server_, AdminToLauncher, control_start )
+        FORWARD( server_, AdminToLauncher, control_stop )
+        FORWARD( server_, AdminToLauncher, exercise_list_request )
+        FORWARD( server_, AdminToLauncher, profile_list_request )
+        FORWARD( server_, AdminToLauncher, connected_profile_list_request )
+        FORWARD( server_, AdminToLauncher, notification )
+        FORWARD( server_, ClientToSimulation, control_checkpoint_set_frequency )
+        FORWARD( server_, ClientToSimulation, control_checkpoint_save_now )
+        FORWARD( server_, ClientToSimulation, control_checkpoint_list_request )
+        FORWARD( server_, ClientToSimulation, control_checkpoint_delete_request )
+        listener_.Info( "Shield converter dropping unknown " + GetType( msg ) + " message" );
     }
 }

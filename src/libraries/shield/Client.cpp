@@ -38,7 +38,7 @@ Client::Client( const std::string& host, const std::string& from, tools::Message
     , from_     ( from )
     , sender_   ( sender )
     , listener_ ( listener )
-    , converter_( from, *this, *this )
+    , converter_( from, *this, *this, listener )
 {
     RegisterMessage( converter_, &Converter::ReceiveSimToClient );
     RegisterMessage( converter_, &Converter::ReceiveAuthenticationToClient );
@@ -72,7 +72,7 @@ void Client::ConnectionSucceeded( const std::string& host )
 {
     host_ = host;
     tools::ClientNetworker::ConnectionSucceeded( host );
-    listener_.Info( from_, "Shield proxy connected to " + host );
+    listener_.Info( "Shield proxy connected to " + host );
     std::for_each( callbacks_.begin(), callbacks_.end(), boost::apply< void >() );
     callbacks_.clear();
 }

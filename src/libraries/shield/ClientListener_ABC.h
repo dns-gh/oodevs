@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Info( const std::string& from, const std::string& message ) = 0;
+    virtual void Info( const std::string& message ) = 0;
     virtual void Error( const std::string& from, const std::string& message ) = 0;
     //@}
 };

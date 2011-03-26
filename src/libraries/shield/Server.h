@@ -47,7 +47,7 @@ private:
     virtual void ConnectionFailed( const std::string& from, const std::string& error );
     virtual void ConnectionError( const std::string& from, const std::string& error );
 
-    virtual void Info( const std::string& from, const std::string& message );
+    virtual void Info( const std::string& message );
     virtual void Error( const std::string& from, const std::string& message );
     //@}
 

@@ -88,7 +88,7 @@ void Server::ConnectionError( const std::string& from, const std::string& error 
 // Name: Server::Info
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void Server::Info( const std::string& /*from*/, const std::string& message )
+void Server::Info( const std::string& message )
 {
     listener_.Info( message );
 }

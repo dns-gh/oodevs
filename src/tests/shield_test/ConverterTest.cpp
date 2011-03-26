@@ -20,3 +20,13 @@ BOOST_FIXTURE_TEST_CASE( message_from_client_is_not_converted_when_endpoints_do_
     converter.ReceiveClientToReplay( "mismatch endpoint", MsgsClientToReplay::MsgClientToReplay() );
     converter.ReceiveClientToSim( "mismatch endpoint", MsgsClientToSim::MsgClientToSim() );
 }
+
+BOOST_FIXTURE_TEST_CASE( unknown_message_is_logged_then_dropped, Fixture )
+{
+    sword::MessengerToClient msg;
+    msg.mutable_message()->mutable_text_message()->mutable_source()->set_profile( "profile" );
+    msg.mutable_message()->mutable_text_message()->mutable_target()->set_profile( "profile" );
+    msg.mutable_message()->mutable_text_message()->set_message( "message" );
+    MOCK_EXPECT( listener, Info ).once();
+    converter.ReceiveMessengerToClient( "unused endpoint", msg );
+}

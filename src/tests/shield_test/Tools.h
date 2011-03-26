@@ -12,6 +12,7 @@
 
 #include "shield/Client_ABC.h"
 #include "shield/Server_ABC.h"
+#include "shield/ClientListener_ABC.h"
 #include "shield/Converter.h"
 #include "shield/proto/AarToClient.pb.h"
 #include "shield/proto/AuthenticationToClient.pb.h"
@@ -60,14 +61,20 @@ namespace shield
         MOCK_METHOD_EXT( Send, 1, void( const sword::ClientToMessenger& ), SendClientToMessenger )
         MOCK_METHOD_EXT( Send, 1, void( const sword::AdminToLauncher& ), SendAdminToLauncher )
     };
+    MOCK_BASE_CLASS( MockClientListener, ClientListener_ABC )
+    {
+        MOCK_METHOD( Info, 1 )
+        MOCK_METHOD( Error, 2 )
+    };
 
     struct Fixture
     {
         Fixture()
-            : converter( "client endpoint", server, client )
+            : converter( "client endpoint", server, client, listener )
         {}
         MockServer server;
         MockClient client;
+        MockClientListener listener;
         Converter converter;
     };
 
