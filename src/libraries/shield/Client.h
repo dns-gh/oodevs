@@ -58,11 +58,24 @@ private:
     virtual void Send( const MsgsLauncherToAdmin::MsgLauncherToAdmin& message );
     //@}
 
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void DoSend( const T& message );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    typedef std::vector< boost::function< void() > > T_Callbacks;
+    //@}
+
 private:
     //! @name Member data
     //@{
     std::string host_;
     const std::string from_;
+    T_Callbacks callbacks_;
     tools::MessageSender_ABC& sender_;
     ClientListener_ABC& listener_;
     Converter converter_;

@@ -73,6 +73,8 @@ void Client::ConnectionSucceeded( const std::string& host )
     host_ = host;
     tools::ClientNetworker::ConnectionSucceeded( host );
     listener_.Info( from_, "Shield proxy connected to " + host );
+    std::for_each( callbacks_.begin(), callbacks_.end(), boost::apply< void >() );
+    callbacks_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -96,12 +98,25 @@ void Client::ConnectionError( const std::string& host, const std::string& error 
 }
 
 // -----------------------------------------------------------------------------
+// Name: Client::DoSend
+// Created: MCO 2010-10-27
+// -----------------------------------------------------------------------------
+template< typename T >
+void Client::DoSend( const T& message )
+{
+    if( host_.empty() )
+        callbacks_.push_back( boost::bind( &tools::MessageSender_ABC::Send< T >, this, boost::cref( host_ ), message ) );
+    else
+        tools::MessageSender_ABC::Send( host_, message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------
 void Client::Send( const sword::ClientToSim& message )
 {
-    tools::MessageSender_ABC::Send( host_, message );
+    DoSend( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +125,7 @@ void Client::Send( const sword::ClientToSim& message )
 // -----------------------------------------------------------------------------
 void Client::Send( const sword::ClientToAuthentication& message )
 {
-    tools::MessageSender_ABC::Send( host_, message );
+    DoSend( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +134,7 @@ void Client::Send( const sword::ClientToAuthentication& message )
 // -----------------------------------------------------------------------------
 void Client::Send( const sword::ClientToReplay& message )
 {
-    tools::MessageSender_ABC::Send( host_, message );
+    DoSend( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +143,7 @@ void Client::Send( const sword::ClientToReplay& message )
 // -----------------------------------------------------------------------------
 void Client::Send( const sword::ClientToAar& message )
 {
-    tools::MessageSender_ABC::Send( host_, message );
+    DoSend( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +152,7 @@ void Client::Send( const sword::ClientToAar& message )
 // -----------------------------------------------------------------------------
 void Client::Send( const sword::ClientToMessenger& message )
 {
-    tools::MessageSender_ABC::Send( host_, message );
+    DoSend( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +161,7 @@ void Client::Send( const sword::ClientToMessenger& message )
 // -----------------------------------------------------------------------------
 void Client::Send( const sword::AdminToLauncher& message )
 {
-    tools::MessageSender_ABC::Send( host_, message );
+    DoSend( message );
 }
 
 // -----------------------------------------------------------------------------
