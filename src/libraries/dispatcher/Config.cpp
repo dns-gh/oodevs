@@ -73,7 +73,6 @@ void Config::Parse( int argc, char** argv )
                         >> xml::end
                         >> xml::optional >>xml::start( "shield" )
                             >> xml::attribute( "server", networkShieldParameters_ );
-    //networkShieldParameters_ = 30001;
     if( ! networkClientsParameters_ )
         networkClientsParameters_ = port;
 }

@@ -114,7 +114,16 @@ int SIM_App::Initialize()
     }
     MT_Profiler::Initialize();
     MIL_Random::Initialize( startupConfig_->GetRandomSeed(), startupConfig_->GetRandomGaussian(), startupConfig_->GetRandomDeviation(), startupConfig_->GetRandomMean() );
-    MIL_AgentServer::CreateWorkspace( *startupConfig_ );
+    try
+    {
+        MIL_AgentServer::CreateWorkspace( *startupConfig_ );
+    }
+    catch( MT_ScipioException& exception )
+    {
+        MT_LOG_ERROR_MSG( MT_FormatString( "Error initializing workspace : '%s'", exception.GetMsg().c_str() ) );
+        throw exception;
+        //return EXIT_FAILURE;
+    }
     return EXIT_SUCCESS;
 }
 
@@ -174,11 +183,6 @@ void SIM_App::RunDispatcher()
     {
         dispatcherOk_ = false;
         MT_LOG_ERROR_MSG( "The dispatcher has crashed: " << e.what() << "." );
-    }
-    catch( ... )
-    {
-        dispatcherOk_ = false;
-        MT_LOG_ERROR_MSG( "The dispatcher has crashed for an unknown reason." );
     }
     Stop();
 }

@@ -44,18 +44,7 @@ Saver::Saver( const dispatcher::Config& config )
 // -----------------------------------------------------------------------------
 Saver::~Saver()
 {
-    try
-    {
-        Flush();
-    }
-    catch( std::exception& exception )
-    {
-        MT_LOG_ERROR_MSG( exception.what() );
-    }
-    catch( ... )
-    {
-        MT_LOG_ERROR_MSG( "Saver flush failed !" );
-    }
+    Flush();
 }
 
 // -----------------------------------------------------------------------------
@@ -154,12 +143,19 @@ void Saver::SaveKeyFrame( const Savable_ABC& message )
 // -----------------------------------------------------------------------------
 void Saver::Flush()
 {
-    current_.size_ = static_cast< long >( update_.tellp() ) - current_.offset_;
-    tools::OutputBinaryWrapper wrapper( index_ );
-    wrapper << current_;
-    current_.Reset();
-    index_.flush(); keyIndex_.flush(); key_.flush(); update_.flush();
-    GenerateInfoFile();
+    try
+    {
+        current_.size_ = static_cast< long >( update_.tellp() ) - current_.offset_;
+        tools::OutputBinaryWrapper wrapper( index_ );
+        wrapper << current_;
+        current_.Reset();
+        index_.flush(); keyIndex_.flush(); key_.flush(); update_.flush();
+        GenerateInfoFile();
+    }
+    catch( std::exception& exception )
+    {
+      MT_LOG_ERROR_MSG( exception.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
