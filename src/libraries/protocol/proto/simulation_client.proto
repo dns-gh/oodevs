@@ -2440,7 +2440,7 @@ message SimToClient {
         optional PopulationUpdate                       population_update                         = 135; //!< @copybrief PopulationUpdate
         optional ChangePopulationMagicActionAck         change_population_magic_action_ack        = 136; //!< @copybrief ChangePopulationMagicActionAck
         optional FragOrder                              frag_order                                = 137; //!< @copybrief FragOrder
-        optional BurningCellRequestAck                  burning_cell_request_ack                  = 139;
+        optional BurningCellRequestAck                  burning_cell_request_ack                  = 139; //!< @copybrief BurningCellRequestAck
     }
     /** @property context
         @brief Identifies the request matching the response
