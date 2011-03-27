@@ -44,16 +44,22 @@
 using namespace shield;
 
 #define FORWARD_TO( destination, type, from, to ) \
-        if( msg.has_message() && msg.message().has_##from() ) \
-        { \
-            if( msg.has_context() ) \
-                out.set_context( msg.context() ); \
-            type::Convert( msg.message().from(), out.mutable_message()->mutable_##to() ); \
-            destination.Send( out ); \
-            return; \
-        }
+    if( msg.has_message() && msg.message().has_##from() ) \
+    { \
+        if( msg.has_context() ) \
+            out.set_context( msg.context() ); \
+        type::Convert( msg.message().from(), out.mutable_message()->mutable_##to() ); \
+        destination.Send( out ); \
+        return; \
+    }
 #define FORWARD( destination, type, accessor ) \
-        FORWARD_TO( destination, type, accessor, accessor )
+    FORWARD_TO( destination, type, accessor, accessor )
+
+#define IGNORE( from ) \
+    if( msg.has_message() && msg.message().has_##from() ) \
+    { \
+          return; \
+    }
 
 // -----------------------------------------------------------------------------
 // Name: Converter constructor
@@ -170,6 +176,7 @@ void Converter::ReceiveMessengerToClient( const std::string& /*from*/, const swo
     FORWARD( client_, MessengerToClient, shape_creation_request_ack )
     FORWARD( client_, MessengerToClient, shape_destruction_request_ack )
     FORWARD( client_, MessengerToClient, shape_update_request_ack )
+    IGNORE( text_message )
     FORWARD( client_, MessengerToClient, marker_creation )
     FORWARD( client_, MessengerToClient, marker_update )
     FORWARD( client_, MessengerToClient, marker_destruction )
@@ -264,6 +271,7 @@ void Converter::ReceiveSimToClient( const std::string& /*from*/, const sword::Si
     FORWARD( client_, SimulationToClient, stop_fire_effect )
     FORWARD( client_, SimulationToClient, report )
     FORWARD( client_, SimulationToClient, invalidate_report )
+    IGNORE( trace )
     FORWARD( client_, SimulationToClient, decisional_state )
     FORWARD( client_, SimulationToClient, debug_points )
     FORWARD( client_, SimulationToClient, unit_vision_cones )

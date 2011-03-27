@@ -760,6 +760,13 @@ BOOST_FIXTURE_TEST_CASE( invalidate_report_to_client_is_converted, ContextFixtur
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
+BOOST_FIXTURE_TEST_CASE( trace_to_client_is_ignored, ContextFixture< sword::SimToClient > )
+{
+    FillTasker( content.mutable_trace()->mutable_source() );
+    content.mutable_trace()->set_message( "message" );
+    converter.ReceiveSimToClient( "unused endpoint", msg );
+}
+
 BOOST_FIXTURE_TEST_CASE( decisional_state_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     FillTasker( content.mutable_decisional_state()->mutable_source() );

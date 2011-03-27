@@ -23,10 +23,8 @@ BOOST_FIXTURE_TEST_CASE( message_from_client_is_not_converted_when_endpoints_do_
 
 BOOST_FIXTURE_TEST_CASE( unknown_message_is_logged_then_dropped, Fixture )
 {
-    sword::MessengerToClient msg;
-    msg.mutable_message()->mutable_text_message()->mutable_source()->set_profile( "profile" );
-    msg.mutable_message()->mutable_text_message()->mutable_target()->set_profile( "profile" );
-    msg.mutable_message()->mutable_text_message()->set_message( "message" );
-    MOCK_EXPECT( listener, Info ).once().with( "Shield converter dropping unknown 'sword.MessengerToClient.Content.text_message' message" );
-    converter.ReceiveMessengerToClient( "unused endpoint", msg );
+    sword::SimToClient msg;
+    msg.mutable_message()->mutable_burning_cell_request_ack()->set_error_code( sword::BurningCellRequestAck::no_error );
+    MOCK_EXPECT( listener, Info ).once().with( "Shield converter dropping unknown 'sword.SimToClient.Content.burning_cell_request_ack' message" );
+    converter.ReceiveSimToClient( "unused endpoint", msg );
 }
