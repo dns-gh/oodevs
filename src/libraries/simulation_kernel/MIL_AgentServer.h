@@ -174,6 +174,7 @@ private:
     unsigned int nSimTime_;
     unsigned int nInitialRealTime_;
     unsigned int nRealTime_;
+    std::string localTime_;
     MIL_EffectManager* pEffectManager_;
     MIL_EntityManager* pEntityManager_;
     DEC_Workspace* pWorkspaceDIA_;

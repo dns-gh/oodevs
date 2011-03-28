@@ -220,6 +220,7 @@ message MsgControlInformation {
    required Common.EnumSimulationState status               = 7;
    required bool                       send_vision_cones    = 8;
    required bool                       profiling_enabled    = 9;
+   optional Common.MsgDateTime         reload_real_time     = 10;
 }
 
 message MsgControlProfilingInformation {

@@ -44,33 +44,35 @@ public:
 
     //! @name Operations
     //@{
-    void Update       ( const sword::ControlInformation&         msg );
-    void Update       ( const sword::ControlBeginTick&           msg );
-    void Update       ( const sword::ControlEndTick&             msg );
-    void Update_Stop  ( const sword::ControlStopAck&             msg ); //$$$
-    void Update_Pause ( const sword::ControlPauseAck&            msg ); //$$$
-    void Update_Resume( const sword::ControlResumeAck&           msg ); //$$$
-    void Update       ( const sword::ControlChangeTimeFactorAck& msg );
-//    void Update        ( const ControlCheckPointSetFrequencyAck& msg );
-    void Send          ( ClientPublisher_ABC& publisher ) const;
+    void Update( const sword::ControlInformation& msg );
+    void Update( const sword::ControlBeginTick& msg );
+    void Update( const sword::ControlEndTick& msg );
+    void Update_Stop( const sword::ControlStopAck& msg );
+    void Update_Pause( const sword::ControlPauseAck& msg );
+    void Update_Resume( const sword::ControlResumeAck& msg );
+    void Update( const sword::ControlChangeTimeFactorAck& msg );
+//    void Update ( const ControlCheckPointSetFrequencyAck& msg );
+    void Send( ClientPublisher_ABC& publisher ) const;
     void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, sword::EnumSimulationState status, unsigned factor ) const;
-    void Reset         ();
-
+    void Reset();
     void SendFirstTick( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:
-   unsigned int      nCurrentTick_;
-   std::string       initialDate_;
-   std::string       date_;
-   unsigned int      nTickDuration_;
-   unsigned int      nTimeFactor_;
-   unsigned int      nCheckpointFrequency_;
+    //! @name Member data
+    //@{
+   unsigned int nCurrentTick_;
+   std::string initialDate_;
+   std::string date_;
+   unsigned int nTickDuration_;
+   unsigned int nTimeFactor_;
+   unsigned int nCheckpointFrequency_;
    sword::EnumSimulationState nSimState_;
-
    //$$$ BULLSHIT
-   bool         bSendVisionCones_;
-   bool         bProfilingEnabled_;
+   bool bSendVisionCones_;
+   bool bProfilingEnabled_;
+   std::string localTime_;
+   //@}
 };
 
 }

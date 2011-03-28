@@ -31,6 +31,9 @@
 #include <urban/model.h>
 #include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
+#pragma warning( push, 1 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 
@@ -301,6 +304,7 @@ void MIL_AgentServer::SendStateToNewClient() const
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
 {
+    const std::string localTime = boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() );
     file << nSimState_
          << nTimeFactor_
          << nCurrentTimeStep_
@@ -315,7 +319,8 @@ void MIL_AgentServer::save( MIL_CheckPointOutArchive& file ) const
          << pCheckPointManager_
 //         << pAgentServer_         // moi-même ( static )
          << nInitialRealTime_
-         << nRealTime_;
+         << nRealTime_
+         << localTime;
 
     pBurningCells_->save( file );
 }
@@ -341,8 +346,8 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
          >> pCheckPointManager_
 //         >> pAgentServer_
          >> nInitialRealTime_
-         >> nRealTime_;
-
+         >> nRealTime_
+         >> localTime_;
     pBurningCells_->load( file );
     pBurningCells_->finalizeLoad( GetEntityManager() );
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
@@ -377,6 +382,8 @@ void MIL_AgentServer::SendControlInformation() const
     message().set_checkpoint_frequency( GetCheckPointManager().GetCheckPointFrequency() );
     message().set_send_vision_cones( GetAgentServer().MustSendUnitVisionCones() );
     message().set_profiling_enabled( GetProfilerManager().IsProfilingEnabled() );
+    if( localTime_ != "" )
+        message().mutable_reload_real_time()->set_data( localTime_ );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 

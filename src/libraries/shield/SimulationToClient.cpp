@@ -242,6 +242,7 @@ void SimulationToClient::Convert( const sword::ControlInformation& from, MsgsSim
     CONVERT_SIMULATION_STATE( status );
     CONVERT( send_vision_cones );
     CONVERT( profiling_enabled );
+    CONVERT_DATE( reload_real_time );
 }
 
 // -----------------------------------------------------------------------------
