@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __3a_test_pch_h_
-#define __3a_test_pch_h_
+#ifndef __tools_test_pch_h_
+#define __tools_test_pch_h_
 
 #pragma warning( disable: 4996 )
 
@@ -27,4 +27,4 @@ std::string BOOST_RESOLVE( const std::string& filename );
 
 void BOOST_CHECK_XML_EQUAL( const std::string& expected, const std::string& actual );
 
-#endif // __3a_test_pch_h_
+#endif // __tools_test_pch_h_
