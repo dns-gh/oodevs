@@ -164,16 +164,6 @@ unsigned int MIL_AgentServer::GetTimeStepDuration() const
     return nTimeStepDuration_;
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetSimState
-// Created: NLD 2003-05-23
-//-----------------------------------------------------------------------------
-inline
-MIL_AgentServer::E_SimState MIL_AgentServer::GetSimState() const
-{
-    return nSimState_;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetEntityManager
 // Created: NLD 2004-08-11

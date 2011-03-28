@@ -116,7 +116,6 @@ public:
     MIL_CheckPointManager& GetCheckPointManager() const;
     resource::ResourceNetworkModel& GetResourceNetworkModel() const;
     resource::ResourceTools_ABC& GetResourceTools() const;
-    E_SimState GetSimState() const;
     MIL_Config& GetConfig();
     MIL_BurningCells& GetBurningCells() const;
     MIL_PropagationManager& GetPropagationManager() const;
