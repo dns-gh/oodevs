@@ -20,6 +20,7 @@ using namespace tools;
 // -----------------------------------------------------------------------------
 NullFileLoaderObserver::NullFileLoaderObserver()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,6 +29,7 @@ NullFileLoaderObserver::NullFileLoaderObserver()
 // -----------------------------------------------------------------------------
 NullFileLoaderObserver::~NullFileLoaderObserver()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

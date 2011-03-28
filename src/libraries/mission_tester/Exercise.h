@@ -10,8 +10,11 @@
 #ifndef mission_tester_exercise_h
 #define mission_tester_exercise_h
 
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include <boost/noncopyable.hpp>
+#include <memory>
+#include <string>
+
+class SwordMessagePublisher_ABC;
 
 namespace actions
 {
@@ -21,41 +24,43 @@ namespace actions
 
 namespace kernel
 {
-    class Controller;
-    class StaticModel;
-    class EntityResolver_ABC;
-    class Time_ABC;
     class AgentKnowledgeConverter_ABC;
+    class Controller;
+    class CoordinateConverter_ABC;
+    class EntityResolver_ABC;
     class ObjectKnowledgeConverter_ABC;
-}
-
-namespace tools
-{
-    class RealFileLoaderObserver_ABC;
-    class ExerciseConfig;
+    class StaticModel;
+    class Time_ABC;
 }
 
 namespace mission_tester
 {
+    class Client;
 
+// =============================================================================
+/** @class  Exercise
+    @brief  Exercise
+*/
+// Created: PHC 2011-03-28
+// =============================================================================
 class Exercise : private boost::noncopyable
 {
 public:
     //! @name Constructors / Destructors
     //@{
-             Exercise( const std::string& exercise, const std::string& rootDir );
+             Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel );
     virtual ~Exercise();
+    //@}
+
+    //! @name operations
+    //@{
+    void SendOrder( const std::string& message, Client& client ) const;
     //@}
 
 private:
     //! @name members data
     //@{
-    std::auto_ptr< tools::RealFileLoaderObserver_ABC > observer_;
-    std::auto_ptr< tools::ExerciseConfig > config_;
-    std::auto_ptr< kernel::StaticModel > staticModel_;
     std::auto_ptr< kernel::Controller > controller_;
-    std::auto_ptr< kernel::EntityResolver_ABC > entities_;
-    std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     std::auto_ptr< kernel::Time_ABC > time_;
     std::auto_ptr< kernel::AgentKnowledgeConverter_ABC > agentKnowledgeConverter_;
     std::auto_ptr< kernel::ObjectKnowledgeConverter_ABC > objectKnowledgeConverter_;
@@ -63,6 +68,7 @@ private:
     std::auto_ptr< actions::ActionFactory > factory_;
     //@}
 };
+
 }
 
 #endif // mission_tester_exercise_h

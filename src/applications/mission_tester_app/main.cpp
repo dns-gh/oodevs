@@ -8,51 +8,36 @@
 // *****************************************************************************
 
 #include "mission_tester/Exercise.h"
-#include "client_proxy/SwordProxy.h"
-#include "client_proxy/SwordConnectionHandler_ABC.h"
-#include "client_proxy/SwordMessageHandler_ABC.h"
-#include "actions/actionFactory.h"
+#include "mission_tester/Client.h"
+#include "mission_tester/Model.h"
+#include "clients_kernel/StaticModel.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/NullFileLoaderObserver.h"
 #pragma warning( push )
 #pragma warning( disable: 4512 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
+#pragma warning( push, 0 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
 
 namespace
 {
-    class MessageHandler : public SwordMessageHandler_ABC
+    struct Timeout
     {
-        virtual void OnReceiveMessage( const sword::SimToClient& /*message*/ )
+        explicit Timeout( unsigned int duration ) : duration_( duration ) { Start(); }
+        void Start()
         {
-            std::cout << "simulation message received" << std::endl;
+            start_ = boost::posix_time::microsec_clock::universal_time();
         }
-        virtual void OnReceiveMessage( const sword::MessengerToClient& /*message*/ )
+        bool Expired() const
         {
-            std::cout << "messenger message received" << std::endl;
+            return ( boost::posix_time::microsec_clock::universal_time() - start_ ).total_milliseconds() > duration_;
         }
+        unsigned int duration_;
+        boost::posix_time::ptime start_;
     };
-    class ConnectionHandler : public SwordConnectionHandler_ABC
-    {
-        virtual void OnConnectionSucceeded( const std::string& /*endpoint*/ )
-        {
-            std::cout << "connection succeeded" << std::endl;
-        }
-        virtual void OnConnectionFailed( const std::string& /*endpoint*/, const std::string& /*reason*/ )
-        {
-            std::cout << "connection failed" << std::endl;
-        }
-        virtual void OnConnectionError( const std::string& /*endpoint*/, const std::string& /*reason*/ )
-        {
-            std::cout << "connection error" << std::endl;
-        };
-        virtual void OnAuthenticationSucceeded( const std::string& /*profile*/ )
-        {
-            std::cout << "authentication succeeded" << std::endl;
-        }
-        virtual void OnAuthenticationFailed( const std::string& /*profile*/, const std::string& /*reason*/ )
-        {
-            std::cout << "authentication failed" << std::endl;
-        }
-    };
+
     const boost::program_options::variables_map ParseCommandLine( int argc, char* argv[] )
     {
         boost::program_options::options_description desc( "Allowed options" );
@@ -77,18 +62,37 @@ int main( int argc, char* argv[] )
 {
     try
     {
-        const boost::program_options::variables_map vm = ParseCommandLine( argc, argv );
-        if( vm.count( "help" ) )
-            return EXIT_SUCCESS;
-        mission_tester::Exercise exercise( vm[ "exercise" ].as< std::string >(), vm[ "root-dir" ].as< std::string >() );
-        SwordProxy proxy( "localhost", 10001, "Admin", "" );
-        std::auto_ptr< MessageHandler > messageHandler( new MessageHandler() );
-        std::auto_ptr< ConnectionHandler > connectionHandler( new ConnectionHandler() );
-        proxy.RegisterMessageHandler( messageHandler.get() );
-        proxy.Connect( connectionHandler.get() );
-        for( unsigned int i = 0; i < 1000; ++i )
-            proxy.Update();
-        proxy.Disconnect();
+        tools::NullFileLoaderObserver observer;
+        tools::ExerciseConfig config( observer );
+        config.Parse( argc, argv );
+
+        kernel::StaticModel staticModel;
+        staticModel.Load( config );
+
+        mission_tester::Model model( staticModel );
+        mission_tester::Exercise exercise( model, staticModel );
+        
+        mission_tester::Client client( model, "localhost", 10001, "Supervisor", "" );
+        Timeout timeout( 1000 );
+        while( !timeout.Expired() )
+            client.Update();
+        
+        std::cout << std::endl << "Launch mission" << std::endl;
+        const std::string mission = "<action id='131' name='Faire Mouvement' target='33' time='2009-05-05T12:49:34' type='mission'>"
+                                    "  <parameter name='direction dangereuse' type='heading' value='360'/>"
+                                    "  <parameter name='Limas' type='phaseline'/>"
+                                    "  <parameter name='Limit 1' type='limit'/>"
+                                    "  <parameter name='Limit 2' type='limit'/>"
+                                    "  <parameter name='Itineraire' type='path'>"
+                                    "    <parameter name='Destination' type='pathpoint'>"
+                                    "      <location type='point'>"
+                                    "        <point coordinates='31UEQ0337626262'/>"
+                                    "      </location>"
+                                    "    </parameter>"
+                                    "  </parameter>"
+                                    "</action>";
+        exercise.SendOrder( mission , client );
+        client.Disconnect();
     }
     catch( std::exception& e )
     {
