@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>Evacuated</source>
-        <translationEvacué</translation>
+        <translation>Evacué</translation>
     </message>
 </context>
 <context>
