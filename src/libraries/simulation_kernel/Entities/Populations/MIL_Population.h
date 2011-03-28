@@ -83,6 +83,9 @@ public:
     bool HasFlow() const;
     const std::string& GetCriticalIntelligence() const;
     float GetAffinity( unsigned long teamID ) const;
+
+    bool HasReachedDestination          ( const MT_Vector2D& destination ) const;
+    bool HasReachedDestinationCompletely( const MT_Vector2D& destination ) const;
     //@}
 
     //! @name Geometry

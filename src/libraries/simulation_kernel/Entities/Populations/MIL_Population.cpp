@@ -1420,3 +1420,37 @@ float MIL_Population::GetAffinity( unsigned long teamID ) const
 {
     return pAffinities_->GetAffinity( teamID );
 }
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::HasReachedDestination
+// Created: NLD 2011-03-18
+// -----------------------------------------------------------------------------
+bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) const
+{
+    BOOST_FOREACH( const MIL_PopulationConcentration* concentration, concentrations_ )
+    {
+        if( concentration->GetPosition() == destination )
+            return true;
+    }
+
+    BOOST_FOREACH( const MIL_PopulationFlow* flow, flows_ )
+    {
+        if( flow->GetPosition() == destination )
+            return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::HasReachedDestinationCompletely
+// Created: NLD 2011-03-18
+// -----------------------------------------------------------------------------
+bool MIL_Population::HasReachedDestinationCompletely( const MT_Vector2D& destination ) const
+{
+    if( !flows_.empty() )
+        return false;
+
+    if( concentrations_.size() != 1 )
+        return false;
+
+    return concentrations_.front()->GetPosition() == destination;
+}

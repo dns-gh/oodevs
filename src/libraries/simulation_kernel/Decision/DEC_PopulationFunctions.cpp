@@ -295,3 +295,23 @@ void DEC_PopulationFunctions::ReintegrateUrbanBlock( MIL_Population& callerPopul
     callerPopulation.GetOrderManager().CancelMission();
     callerPopulation.ChangeComposition( 0, 0, 0, 0 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::HasReachedDestination
+// Created: NLD 2011-03-21
+// -----------------------------------------------------------------------------
+bool DEC_PopulationFunctions::HasReachedDestination( const MIL_Population& callerPopulation, const MT_Vector2D* destination )
+{
+    assert( destination ); 
+    return callerPopulation.HasReachedDestination( *destination );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::HasReachedDestinationCompletely
+// Created: NLD 2011-03-21
+// -----------------------------------------------------------------------------
+bool DEC_PopulationFunctions::HasReachedDestinationCompletely( const MIL_Population& callerPopulation, const MT_Vector2D* destination )
+{
+    assert( destination ); 
+    return callerPopulation.HasReachedDestinationCompletely( *destination );
+}

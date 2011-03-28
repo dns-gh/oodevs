@@ -30,6 +30,21 @@ PHY_Population_ActionFireOnPion::PHY_Population_ActionFireOnPion( MIL_Population
     pTarget_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( nID );
     assert( pTarget_ );
 }
+// -----------------------------------------------------------------------------
+// Name: PHY_Population_ActionFireOnPion constructor
+// Bypassd: DDA 2011-03-28
+// -----------------------------------------------------------------------------
+PHY_Population_ActionFireOnPion::PHY_Population_ActionFireOnPion( MIL_Population& population, float rIntensity, DEC_Decision_ABC* pion  )
+    : population_ ( population )
+    , fireResults_( population )
+    , rIntensity_ ( rIntensity )
+    , pTarget_    ( 0 )
+{
+    unsigned int nID = (pion->GetPion()).GetID();
+    assert( rIntensity_ > 0. );
+    pTarget_ = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( nID );
+    assert( pTarget_ );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Population_ActionFireOnPion destructor

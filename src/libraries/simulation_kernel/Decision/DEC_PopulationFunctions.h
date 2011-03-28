@@ -54,6 +54,10 @@ public:
     static int IsEnemy( const MIL_Population& callerPopulation, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
     static int GetMovingState( MIL_Population& population );
     static bool HasFlow( MIL_Population& population );
+    
+    // Move
+    static bool HasReachedDestination          ( const MIL_Population& callerPopulation, const MT_Vector2D* destination );
+    static bool HasReachedDestinationCompletely( const MIL_Population& callerPopulation, const MT_Vector2D* destination );
 
     // Etat decisionnel
     static void NotifyDominationStateChanged( MIL_Population& callerPopulation, double dominationState );
