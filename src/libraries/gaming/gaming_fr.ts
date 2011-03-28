@@ -291,7 +291,7 @@
     </message>
     <message>
         <source>Critical intelligence:</source>
-        <translation>Renseignement critique</translation>
+        <translation>Renseignement critique:</translation>
     </message>
 </context>
 <context>
@@ -435,7 +435,7 @@
     </message>
     <message>
         <source>Critical intelligence:</source>
-        <translation>Renseignement critique</translation>
+        <translation>Renseignement critique:</translation>
     </message>
     <message>
         <source>Armed individuals:</source>
