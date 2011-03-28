@@ -39,6 +39,7 @@
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Recueillir"/>
         <mission name="MELEE Relever"/>
+        <mission name="MELEE Renseigner sur foule"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
@@ -152,6 +153,7 @@
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Reduire"/>
         <mission name="MELEE Relever"/>
+        <mission name="MELEE Renseigner sur foule"/>
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE S'emparer De"/>
@@ -201,6 +203,7 @@
         </mission>
         <mission name="MELEE Surveiller"/>
         <mission name="COMMUNES Interroger"/>
+        <mission name="MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -261,6 +264,7 @@
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Relever"/>
+        <mission name="MELEE Renseigner sur foule"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
@@ -310,6 +314,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Interroger"/>
+        <mission name="MELEE Renseigner sur foule"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -11399,4 +11404,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1040383052" -->
+<!-- signature="0773292734" -->
