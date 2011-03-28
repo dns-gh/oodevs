@@ -161,7 +161,7 @@ BOOST_AUTO_TEST_CASE( Transformat_old_to_new_schema )
             "</action>"
         "</actions>" );
     xml::xistringstream xis( input );
-    xsl::xstringtransform xst( "resources/ordCompatibility.xsl" );
+    xsl::xstringtransform xst( "resources/schemas/4.2.0/xsl/ordCompatibility.xsl" );
     xst << xis;
     BOOST_CHECK_XML_EQUAL( expected, xst.str() );
 }
