@@ -42,6 +42,7 @@
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_CommunicationFunctions.h"
 #include "Decision/DEC_MedicalTreatmentFunctions.h"
+#include "Entities/Actions/PHY_ActionInterrogate.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendCollectionComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendHaulerComposantes.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionConstructObject.h"
@@ -310,7 +311,6 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_ObtenirRenseignementCritiqueSurPion" ] = &DEC_KnowledgeAgentFunctions::GetCriticalIntelligence;
     brain[ "DEC_ObtenirRenseignementCritiqueSurFoule" ] =
          boost::function< std::string( int ) >(boost::bind( &DEC_KnowledgePopulationFunctions::GetCriticalIntelligence, boost::cref( GetPion() ), _1 ) );
-   
 }
 
 // -----------------------------------------------------------------------------
@@ -399,6 +399,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_ActionFunctions::Orientate, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartExtinguishObject" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionExtinguishObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_StartInterrogateCrowd" ] =
+        boost::function< unsigned int( int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionInterrogate, int >, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_StartInterrogateUnit" ] =
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionInterrogate, boost::shared_ptr< DEC_Knowledge_Agent > >, boost::ref( GetPion() ), _1 ) );
 
     // Embarquement / debarquement
     brain[ "DEC_Agent_EstEmbarquable" ] =

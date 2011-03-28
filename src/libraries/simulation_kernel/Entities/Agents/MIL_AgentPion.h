@@ -92,6 +92,7 @@ public:
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
     virtual double Distance( const MIL_Agent_ABC& pion ) const;
     virtual const std::string& GetCriticalIntelligence() const;
+    virtual float GetAffinity( unsigned long teamID ) const;
 
     bool IsAutonomous() const; // Drones
     //@}

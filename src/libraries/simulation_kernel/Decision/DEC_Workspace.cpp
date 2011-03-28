@@ -31,8 +31,10 @@
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
-#include "tools/InputBinaryStream.h"
-#include "tools/Loader_ABC.h"
+#include "Tools/InputBinaryStream.h"
+#include "Tools/Loader_ABC.h"
+#include "Tools/xmlcodecs.h"
+#include "Tools/MIL_AffinitiesMap.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
 #include <xeumeuleu/xml.hpp>
@@ -124,8 +126,17 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional )
                   >> xml::end;
 
     xisDecisional >> xml::optional() >> xml::start( "urban-combat" )
-        >> xml::attribute( "hit-factor", firing::PHY_DirectFireData::nUrbanCoefficient_ )
+                      >> xml::attribute( "hit-factor", firing::PHY_DirectFireData::nUrbanCoefficient_ )
                   >> xml::end;
+
+    xisDecisional >> xml::start( "critical-intelligence-delay" );
+    tools::ReadTimeAttribute( xisDecisional, "minimum-affinity", MIL_AffinitiesMap::interrogateDelayForMinimumAffinity_ );
+    tools::ReadTimeAttribute( xisDecisional, "neutral-affinity", MIL_AffinitiesMap::interrogateDelayForNeutralAffinity_ );
+    tools::ReadTimeAttribute( xisDecisional, "maximum-affinity", MIL_AffinitiesMap::interrogateDelayForMaximumAffinity_ );
+    xisDecisional >> xml::end;
+    MIL_AffinitiesMap::interrogateDelayForMinimumAffinity_ = MIL_Tools::ConvertSecondsToSim( MIL_AffinitiesMap::interrogateDelayForMinimumAffinity_ );
+    MIL_AffinitiesMap::interrogateDelayForNeutralAffinity_ = MIL_Tools::ConvertSecondsToSim( MIL_AffinitiesMap::interrogateDelayForNeutralAffinity_ );
+    MIL_AffinitiesMap::interrogateDelayForMaximumAffinity_ = MIL_Tools::ConvertSecondsToSim( MIL_AffinitiesMap::interrogateDelayForMaximumAffinity_ );
 
     if( PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ < 0 || PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ > 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "operational-state-weights: component not in [0..1]" );

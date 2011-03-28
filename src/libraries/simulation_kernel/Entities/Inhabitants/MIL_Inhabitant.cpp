@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_Inhabitant.h"
 #include "MIL_InhabitantType.h"
-#include "MIL_AffinitiesMap.h"
 #include "MIL_AgentServer.h"
 #include "MIL_InhabitantSatisfactions.h"
 #include "Entities/Objects/CrowdCapacity.h"
@@ -33,7 +32,8 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "tools/MIL_IDManager.h"
+#include "Tools/MIL_IDManager.h"
+#include "Tools/MIL_AffinitiesMap.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
@@ -553,4 +553,13 @@ void MIL_Inhabitant::DestroyInhabitantMovingObject()
 void MIL_Inhabitant::ReStartMotivation()
 {
     pSchedule_->RestartLastEvent();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::GetAffinity
+// Created: ABR 2011-03-28
+// -----------------------------------------------------------------------------
+float MIL_Inhabitant::GetAffinity( unsigned long teamID ) const
+{
+    return pAffinities_->GetAffinity( teamID );
 }

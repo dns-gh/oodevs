@@ -54,6 +54,7 @@ public:
     //@{
     unsigned int GetID() const;
     virtual MIL_Army_ABC& GetArmy() const;
+    float GetAffinity( unsigned long teamID ) const;
     //@}
 
     //! @name Network

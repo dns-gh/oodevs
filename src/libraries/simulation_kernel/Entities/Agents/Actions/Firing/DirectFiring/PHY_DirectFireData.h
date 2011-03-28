@@ -123,7 +123,7 @@ private:
     const PHY_AmmoDotationClass* pAmmoDotationClass_;
     const E_ComposanteFiringType nComposanteFiringType_;
     const E_FiringMode           nFiringMode_;
-    const double               rPercentageComposantesToUse_;
+    const double                 rPercentageComposantesToUse_;
           T_ComposanteWeaponsMap composantesWeapons_;
           bool                   bHasWeaponsReady_;
           bool                   bHasWeaponsNotReady_;

@@ -55,6 +55,7 @@ public:
     void UpdateNetwork( T& msg );
     void OnReceiveMsgChangeAffinities( const sword::UnitMagicAction& msg );
     bool HasChanged() const;
+    float GetAffinity( unsigned long teamID ) const;
     //@}
 
     //! @name CheckPoints
@@ -82,6 +83,11 @@ private:
     //@{
     T_Affinities affinities_;
     bool hasChanged_;
+
+public:
+    static double interrogateDelayForMinimumAffinity_;
+    static double interrogateDelayForNeutralAffinity_;
+    static double interrogateDelayForMaximumAffinity_;
     //@}
 };
 

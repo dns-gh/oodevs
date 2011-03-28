@@ -63,7 +63,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
-#include "MIL_AffinitiesMap.h"
+#include "Tools/MIL_AffinitiesMap.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
@@ -1208,4 +1208,13 @@ double MIL_AgentPion::Distance( const MIL_Agent_ABC& target ) const
 const std::string& MIL_AgentPion::GetCriticalIntelligence() const
 {
     return criticalIntelligence_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetAffinity
+// Created: ABR 2011-03-16
+// -----------------------------------------------------------------------------
+float MIL_AgentPion::GetAffinity( unsigned long teamID ) const
+{
+    return pAffinities_->GetAffinity( teamID );
 }

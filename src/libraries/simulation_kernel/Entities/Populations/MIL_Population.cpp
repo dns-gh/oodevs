@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Population.h"
-#include "MIL_AffinitiesMap.h"
 #include "MIL_PopulationType.h"
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationFlow.h"
@@ -24,6 +23,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "Tools/MIL_AffinitiesMap.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -1412,3 +1412,11 @@ void MIL_Population::SetUrbanBlockAngriness( double u )
     urbanBlockAngriness_ = u;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetAffinity
+// Created: ABR 2011-03-28
+// -----------------------------------------------------------------------------
+float MIL_Population::GetAffinity( unsigned long teamID ) const
+{
+    return pAffinities_->GetAffinity( teamID );
+}

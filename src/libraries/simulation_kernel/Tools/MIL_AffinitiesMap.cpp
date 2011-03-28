@@ -14,6 +14,10 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AffinitiesMap )
 
+double MIL_AffinitiesMap::interrogateDelayForMinimumAffinity_ = 7200.; // 2h
+double MIL_AffinitiesMap::interrogateDelayForNeutralAffinity_ = 3600.; // 1h
+double MIL_AffinitiesMap::interrogateDelayForMaximumAffinity_ = 1800.; // 30m
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AffinitiesMap constructor
 // Created: ABR 2011-02-03
@@ -130,4 +134,16 @@ void MIL_AffinitiesMap::save( MIL_CheckPointOutArchive& file, const unsigned int
 bool MIL_AffinitiesMap::HasChanged() const
 {
     return hasChanged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AffinitiesMap::GetAffinity
+// Created: ABR 2011-03-28
+// -----------------------------------------------------------------------------
+float MIL_AffinitiesMap::GetAffinity( unsigned long teamID ) const
+{
+    CIT_Affinities it = affinities_.find( teamID );
+    if( it == affinities_.end() )
+        return 0.f;
+    return it->second;
 }

@@ -82,6 +82,7 @@ public:
     unsigned int GetDeadHumans() const;
     bool HasFlow() const;
     const std::string& GetCriticalIntelligence() const;
+    float GetAffinity( unsigned long teamID ) const;
     //@}
 
     //! @name Geometry
