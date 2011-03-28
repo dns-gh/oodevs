@@ -387,3 +387,45 @@ void Profile::SetRight( const kernel::Automat_ABC& entity, bool readonly, bool r
     Send( *updatemessage().mutable_profile() );
     updatemessage.Send( clients_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Profile::SerializeProfile
+// Created: LGY 2011-03-25
+// -----------------------------------------------------------------------------
+void Profile::SerializeProfile( xml::xostream& xos ) const
+{
+    xos << xml::start( "profile" );
+    if( roleId_ != -1 )
+        xos << xml::attribute( "role", roleId_ );
+    xos     << xml::attribute( "name", strLogin_ )
+            << xml::attribute( "password", strPassword_ )
+            << xml::attribute( "supervision", bSupervision_ )
+            << xml::start( "rights" )
+                << xml::start( "readonly" );
+    SerializeRights( xos, "side", readOnlySides_ );
+    SerializeRights( xos, "formation", readOnlyFormations_ );
+    SerializeRights( xos, "automat", readOnlyAutomats_ );
+    SerializeRights( xos, "crowd", readOnlyPopulations_ );
+    xos         << xml::end
+                << xml::start( "readwrite" );
+    SerializeRights( xos, "side", readWriteSides_ );
+    SerializeRights( xos, "formation", readWriteFormations_ );
+    SerializeRights( xos, "automat", readWriteAutomats_ );
+    SerializeRights( xos, "crowd", readWritePopulations_ );
+    xos         << xml::end
+            << xml::end
+        << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::SerializeRights
+// Created: LGY 2011-03-25
+// -----------------------------------------------------------------------------
+template< typename T >
+void Profile::SerializeRights( xml::xostream& xos, const std::string& tag, const T& list ) const
+{
+    for( T::const_iterator it = list.begin(); it != list.end(); ++it )
+        xos << xml::start( tag )
+            << xml::attribute( "id", (*it)->GetId() )
+        << xml::end;
+}

@@ -25,6 +25,11 @@ namespace sword
     class ProfileUpdateRequest;
 }
 
+namespace tools
+{
+    class SchemaWriter;
+}
+
 namespace xml
 {
     class xistream;
@@ -76,8 +81,9 @@ private:
 
     //! @name Helpers
     //@{
+    void ReadProfiles( xml::xistream& xis );
     void ReadProfile( xml::xistream& xis );
-
+    void Save( const std::string& path );
     virtual void RegisterIn( directia::brain::Brain& brain );
     void SetAutomatRight( const std::string& profile, unsigned int automat, bool readonly, bool readwrite );
     //@}
@@ -85,15 +91,16 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, Profile* >           T_ProfileMap;
-    typedef T_ProfileMap::const_iterator                CIT_ProfileMap;
+    typedef std::map< std::string, Profile* > T_ProfileMap;
+    typedef T_ProfileMap::const_iterator    CIT_ProfileMap;
     //@}
 
 private:
-    const Config&           config_;
-    Model&                  model_;
-    ClientPublisher_ABC&    clients_;
-    T_ProfileMap            profiles_;
+    const Config& config_;
+    Model& model_;
+    ClientPublisher_ABC& clients_;
+    T_ProfileMap profiles_;
+    std::auto_ptr< tools::SchemaWriter > pSchemaWriter_;
 };
 
 }

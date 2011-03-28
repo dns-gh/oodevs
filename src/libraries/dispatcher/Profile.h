@@ -26,6 +26,7 @@ namespace sword
 namespace xml
 {
     class xistream;
+    class xostream;
 }
 
 namespace kernel
@@ -82,6 +83,7 @@ public:
     //@{
     void Update( const sword::ProfileUpdateRequest& message );
     void SetRight( const kernel::Automat_ABC& entity, bool readonly, bool readwrite );
+    void SerializeProfile( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -107,6 +109,9 @@ private:
     void ReadFormationRights( xml::xistream& xis, T_FormationSet& container );
     void ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container );
     void ReadRights( const sword::Profile& message );
+
+    template< typename T >
+    void SerializeRights( xml::xostream& xos, const std::string& tag, const T& list ) const;
     //@}
 
 private:
