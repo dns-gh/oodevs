@@ -28,6 +28,13 @@
             <xs:attribute name="hit-factor" type="xs:nonNegativeInteger" use="required"/>
           </xs:complexType>
         </xs:element>
+        <xs:element name="critical-intelligence-delay">
+          <xs:complexType>
+            <xs:attribute name="maximum-affinity" type="T_Time" use="required"/>
+            <xs:attribute name="minimum-affinity" type="T_Time" use="required"/>
+            <xs:attribute name="neutral-affinity" type="T_Time" use="required"/>
+          </xs:complexType>
+        </xs:element>
       </xs:sequence>
             <xs:attribute name="model-version" type="T_Version"/>
     </xs:complexType>

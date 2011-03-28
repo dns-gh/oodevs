@@ -26,6 +26,7 @@
 #include "ADN_FileChooser.h"
 #include "ADN_Project_Data.h"
 #include "ADN_GuiBuilder.h"
+#include "ADN_TimeField.h"
 
 #include <qframe.h>
 #include <qlabel.h>
@@ -86,14 +87,20 @@ void ADN_AiEngine_GUI::Build()
 
     // Urban area effect on fire
     QGroupBox* pUrbanStateBox = new QGroupBox( 3, Qt::Horizontal, tr( "Urban combat computation" ), pMainWidget_ );
-
     builder.AddField<ADN_EditLine_Double>( pUrbanStateBox, tr( "Urban combat hit ratio" ), data_.rUrbanCombatWeight_, tr( "%" ), ePercentage );
+
+    // Critical Intelligence
+    QGroupBox* pCriticalIntelligenceBox = new QGroupBox( 3, Qt::Horizontal, tr( "Time to acquire critical intelligence" ), pMainWidget_ );
+    builder.AddField<ADN_TimeField>( pCriticalIntelligenceBox, tr( "Minimum affinity" ), data_.rMinimumAffinity_ );
+    builder.AddField<ADN_TimeField>( pCriticalIntelligenceBox, tr( "Neutral affinity" ), data_.rNeutralAffinity_ );
+    builder.AddField<ADN_TimeField>( pCriticalIntelligenceBox, tr( "Maximum affinity" ), data_.rMaximumAffinity_ );
 
     // Layout
     QVBoxLayout* pMainLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pDangerBox );
     pMainLayout->addWidget( pOpStateBox );
     pMainLayout->addWidget( pUrbanStateBox );
+    pMainLayout->addWidget( pCriticalIntelligenceBox );
 
     builder.AddStretcher( pMainWidget_, Qt::Vertical );
 }

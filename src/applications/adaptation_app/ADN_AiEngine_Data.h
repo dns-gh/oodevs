@@ -51,6 +51,9 @@ public:
     ADN_Type_Double rHumanWeight_;
     ADN_Type_Double rUrbanCombatWeight_;
     ADN_Type_Time rDefaultFeedbackTime_;
+    ADN_Type_Time rMinimumAffinity_;
+    ADN_Type_Time rNeutralAffinity_;
+    ADN_Type_Time rMaximumAffinity_;
 };
 
 

@@ -162,6 +162,22 @@ Voulez vous sauvegarder malgré tout ?</translation>
         <source>Urban combat hit ratio</source>
         <translation>Proportion d&apos;équipements pouvant tirer �chaque pas de temps</translation>
     </message>
+    <message>
+        <source>Time to acquire critical intelligence</source>
+        <translation>Délai d’obtention du renseignement critique</translation>
+    </message>
+    <message>
+        <source>Minimum affinity</source>
+        <translation>Adhésion minimale</translation>
+    </message>
+    <message>
+        <source>Neutral affinity</source>
+        <translation>Adhésion neutre</translation>
+    </message>
+    <message>
+        <source>Maximum affinity</source>
+        <translation>Adhésion maximale</translation>
+    </message>
 </context>
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>

@@ -4,5 +4,6 @@
   <operational-state-weights component="0.3" crew="0.25" major-component="0.7"/>
   <force-ratio default-feedback-time="600s"/>
   <urban-combat hit-factor="100"/>
+  <critical-intelligence-delay maximum-affinity="30m" minimum-affinity="2h" neutral-affinity="1h"/>
 </decisional>
-<!-- signature="2432686726" -->
+<!-- signature="0270530587" -->

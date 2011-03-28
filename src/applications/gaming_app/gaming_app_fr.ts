@@ -2408,7 +2408,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Stop evacuate</source>
-        <translation>Fin de l'évacuation</translation>
+        <translation>Fin de l&apos;évacuation</translation>
     </message>
 </context>
 <context>
