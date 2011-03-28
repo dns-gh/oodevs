@@ -30,7 +30,7 @@ using namespace kernel;
 // Created: SLG 2010-11-25
 // -----------------------------------------------------------------------------
 InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const AgentTypes& types, AgentsModel& agentsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
-    : InfoPanel_ABC( parent, panel, tr( "Inhabitants" ), "InhabitantCreationPanel" )
+    : InfoPanel_ABC( parent, panel, tr( "Populations" ), "InhabitantCreationPanel" )
     , controllers_( controllers )
     , tools_      ( tools )
     , resolver_   ( types )

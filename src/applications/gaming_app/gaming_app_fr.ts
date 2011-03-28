@@ -2028,7 +2028,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Show population display tool</source>
-        <translation>Options d'affichage de la population</translation>
+        <translation>Options d&apos;affichage de la population</translation>
     </message>
 </context>
 <context>

@@ -503,7 +503,7 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::InhabitantListView</name>
     <message>
-        <source>Inhabitants</source>
+        <source>Populations</source>
         <translation>Populations</translation>
     </message>
 </context>

@@ -346,7 +346,7 @@ Merci de sélectionner un autre fichier à importer.</translation>
         <translation>Créer</translation>
     </message>
     <message>
-        <source>Inhabitants</source>
+        <source>Populations</source>
         <translation>Populations</translation>
     </message>
 </context>

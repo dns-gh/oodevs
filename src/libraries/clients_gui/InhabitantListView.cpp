@@ -32,7 +32,7 @@ InhabitantListView::InhabitantListView( QWidget* pParent, Controllers& controlle
     , factory_    ( factory )
     , profile_    ( profile )
 {
-    addColumn( tr( "Inhabitants" ) );
+    addColumn( tr( "Populations" ) );
     setAcceptDrops( true );
     controllers_.Register( *this );
 }

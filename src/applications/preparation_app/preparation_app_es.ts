@@ -346,8 +346,8 @@ Por favor seleccione un archivo de orden de batalla para importar.</translation>
         <translation type="unfinished">Crear</translation>
     </message>
     <message>
-        <source>Inhabitants</source>
-        <translation type="unfinished"></translation>
+        <source>Populations</source>
+        <translation type="unfinished">Poblaciones</translation>
     </message>
 </context>
 <context>
