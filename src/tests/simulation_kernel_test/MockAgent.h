@@ -32,6 +32,7 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
     MOCK_METHOD( IsPC, 0 );
     MOCK_METHOD( IsAutonomous, 0 );
     MOCK_METHOD( GetCriticalIntelligence, 0 );
+    MOCK_METHOD( GetAffinity, 1 );
 
 //    MOCK_METHOD_EXT( GetAutomate, 0, const MIL_Automate&(), GetAutomatConstRef );
     MOCK_METHOD_EXT( GetAutomate, 0, MIL_Automate&(), GetAutomatRef );
