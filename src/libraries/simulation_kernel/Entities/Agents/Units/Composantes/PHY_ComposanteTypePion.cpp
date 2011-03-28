@@ -995,7 +995,9 @@ double PHY_ComposanteTypePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
     const BypassableCapacity* bypass = object.Retrieve< BypassableCapacity >();
     if( bypass && bypass->IsBypassed( object ) )
         return bypass->GetBypassSpeed();
-    return object.Get< MobilityCapacity >().GetDefaultSpeed();
+    if( const MobilityCapacity* mobility = object.Retrieve< MobilityCapacity >() )
+        return mobility->GetDefaultSpeed();
+    return std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
