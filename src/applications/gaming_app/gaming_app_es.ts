@@ -2022,6 +2022,14 @@ Motivo: %3
         <source>Selected: outgoing links</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Population</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show population display tool</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>

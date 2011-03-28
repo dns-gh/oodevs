@@ -34,8 +34,6 @@ namespace gui
 // Created: LGY 2010-12-31
 // =============================================================================
 class InhabitantPanel : public PreferencePanel_ABC
-                      , public tools::Observer_ABC
-                      , public kernel::OptionsObserver_ABC
 {
     Q_OBJECT;
 
@@ -46,23 +44,11 @@ public:
     virtual ~InhabitantPanel();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnChanged( bool value );
-    //@}
-
 private:
     //! @name Member Data
     //@{
     kernel::Controllers& controllers_;
     kernel::Options& options_;
-    CheckBox* density_;
     DensityWidget* widget_;
     //@}
 };

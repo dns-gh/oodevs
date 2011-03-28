@@ -36,7 +36,6 @@ namespace gui
     class LocationCreator;
     class ParametersLayer;
     class RichLabel;
-    class ObjectPreviewIcon;
     class SymbolIcons;
 
 // =============================================================================

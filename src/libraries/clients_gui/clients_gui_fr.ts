@@ -234,6 +234,10 @@
         <source>Reset</source>
         <translation>Réinitialiser</translation>
     </message>
+    <message>
+        <source>Unoccupied:</source>
+        <translation>Inoccupé</translation>
+    </message>
 </context>
 <context>
     <name>gui::DiplomacyDialog_ABC</name>
@@ -438,7 +442,7 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Set water height limit</source>
-        <translation>Défini l&apos;altitude limite de l&apos;eau</translation>
+        <translation>Définit l&apos;altitude limite de l&apos;eau</translation>
     </message>
     <message>
         <source>Change watershed color</source>
@@ -510,12 +514,12 @@ Please check access permissions or write protection.</source>
         <translation>Couleurs</translation>
     </message>
     <message>
-        <source>Change urban blocks color based on population density</source>
-        <translation>Changez la couleur des blocs urbains en fonction de la densité de population</translation>
+        <source>Density Gradient map</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gradient map</source>
-        <translation>Dégradé</translation>
+        <source>Occupation Gradient map</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -234,6 +234,10 @@
         <source>Reset</source>
         <translation>Réinitialiser</translation>
     </message>
+    <message>
+        <source>Unoccupied:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::DiplomacyDialog_ABC</name>
@@ -510,12 +514,12 @@ Please check access permissions or write protection.</source>
         <translation>Colores</translation>
     </message>
     <message>
-        <source>Change urban blocks color based on population density</source>
+        <source>Density Gradient map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Gradient map</source>
-        <translation type="unfinished">Dégradé</translation>
+        <source>Occupation Gradient map</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

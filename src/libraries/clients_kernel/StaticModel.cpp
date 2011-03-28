@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "StaticModel.h"
+#include "AccommodationTypes.h"
 #include "AgentTypes.h"
 #include "AtlasNatures.h"
 #include "CoordinateConverter.h"
@@ -32,6 +33,7 @@ StaticModel::StaticModel()
     , levels_             ( *new FormationLevels() )
     , extensionTypes_     ( *new ExtensionTypes() )
     , atlasNatures_       ( *new AtlasNatures() )
+    , accomodationTypes_  ( *new AccommodationTypes() )
 {
     // NOTHING
 }
@@ -49,6 +51,7 @@ StaticModel::~StaticModel()
     delete &types_;
     delete &coordinateConverter_;
     delete &coordinateSystems_;
+    delete &accomodationTypes_;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,6 +62,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 {
     Purge();
     types_.Load( config );
+    accomodationTypes_.Load( config );
     objectTypes_.Load( config );
     extensionTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ) );
     static_cast< kernel::CoordinateConverter& >( coordinateConverter_ ).Load( config );

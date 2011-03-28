@@ -13,6 +13,7 @@
 #include "ExerciseMenu.h"
 #include "ConnectionMenu.h"
 #include "EfficientRangeDialog.h"
+#include "PopulationOptionChooser.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/FourStateOption.h"
@@ -22,10 +23,10 @@
 #include "clients_gui/AboutDialog.h"
 #include "clients_gui/HelpSystem.h"
 #include "gaming/Tools.h"
+#include "gaming/StaticModel.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
 
-using namespace kernel;
 using namespace gui;
 
 namespace
@@ -33,7 +34,7 @@ namespace
     template< typename T >
     struct CompositeMenu
     {
-        CompositeMenu( QPopupMenu* menu, QToolBar* toolBar, const QString& label, const QIconSet& icons, Options& options, const std::string& option )
+        CompositeMenu( QPopupMenu* menu, QToolBar* toolBar, const QString& label, const QIconSet& icons, kernel::Options& options, const std::string& option )
             : menu_( new OptionMenu< T >( menu, options, option ) )
         {
             {
@@ -60,25 +61,25 @@ namespace
     };
 
 
-    void Populate( OptionMenu< TristateOption >& menu )
+    void Populate( OptionMenu< kernel::TristateOption >& menu )
     {
-        menu.AddItem( TristateOption::AutoName(), TristateOption::Auto() );
-        menu.AddItem( TristateOption::OnName(), TristateOption::On() );
-        menu.AddItem( TristateOption::OffName(), TristateOption::Off() );
+        menu.AddItem( kernel::TristateOption::AutoName(), kernel::TristateOption::Auto() );
+        menu.AddItem( kernel::TristateOption::OnName(), kernel::TristateOption::On() );
+        menu.AddItem( kernel::TristateOption::OffName(), kernel::TristateOption::Off() );
     }
-    void Populate( OptionMenu< FourStateOption >& menu )
+    void Populate( OptionMenu< kernel::FourStateOption >& menu )
     {
-        menu.AddItem( FourStateOption::SelectedName(), FourStateOption::Selected() );
-        menu.AddItem( FourStateOption::SuperiorSelectedName(), FourStateOption::SuperiorSelected() );
-        menu.AddItem( FourStateOption::OnName(), FourStateOption::On() );
-        menu.AddItem( FourStateOption::OffName(), FourStateOption::Off() );
+        menu.AddItem( kernel::FourStateOption::SelectedName(), kernel::FourStateOption::Selected() );
+        menu.AddItem( kernel::FourStateOption::SuperiorSelectedName(), kernel::FourStateOption::SuperiorSelected() );
+        menu.AddItem( kernel::FourStateOption::OnName(), kernel::FourStateOption::On() );
+        menu.AddItem( kernel::FourStateOption::OffName(), kernel::FourStateOption::Off() );
     }
 
-    void AddSubMenu3( QToolBar* toolBar, QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )
+    void AddSubMenu3( QToolBar* toolBar, QPopupMenu* parent, const QString& label, const QIconSet& iconSet, kernel::Options& options, const std::string& option )
     {
         {
             QToolButton* button = new QToolButton( toolBar );
-            OptionMenu< TristateOption >* optionMenu = new OptionMenu< TristateOption >( button, options, option );
+            OptionMenu< kernel::TristateOption >* optionMenu = new OptionMenu< kernel::TristateOption >( button, options, option );
             Populate( *optionMenu );
             button->setIconSet( iconSet );
             button->setTextLabel( label );
@@ -86,17 +87,17 @@ namespace
             button->setPopupDelay( 1 );
         }
         {
-            OptionMenu< TristateOption >* optionMenu = new OptionMenu< TristateOption >( parent, options, option );
+            OptionMenu< kernel::TristateOption >* optionMenu = new OptionMenu< kernel::TristateOption >( parent, options, option );
             Populate( *optionMenu );
             parent->insertItem( iconSet, label, optionMenu );
         }
     }
 
-    void AddSubMenu4( QToolBar* toolBar, QPopupMenu* parent, const QString& label, const QIconSet& iconSet, Options& options, const std::string& option )
+    void AddSubMenu4( QToolBar* toolBar, QPopupMenu* parent, const QString& label, const QIconSet& iconSet, kernel::Options& options, const std::string& option )
     {
         {
             QToolButton* button = new QToolButton( toolBar );
-            OptionMenu< FourStateOption >* optionMenu = new OptionMenu< FourStateOption >( button, options, option );
+            OptionMenu< kernel::FourStateOption >* optionMenu = new OptionMenu< kernel::FourStateOption >( button, options, option );
             Populate( *optionMenu );
             button->setIconSet( iconSet );
             button->setTextLabel( label );
@@ -104,7 +105,7 @@ namespace
             button->setPopupDelay( 1 );
         }
         {
-            OptionMenu< FourStateOption >* optionMenu = new OptionMenu< FourStateOption >( parent, options, option );
+            OptionMenu< kernel::FourStateOption >* optionMenu = new OptionMenu< kernel::FourStateOption >( parent, options, option );
             Populate( *optionMenu );
             parent->insertItem( iconSet, label, optionMenu );
         }
@@ -120,7 +121,7 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, kernel::ObjectTypes& objectTypes, QDialog& prefDialog, UserProfileDialog& profileDialog, ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help, gui::LinkInterpreter_ABC& interpreter, Network& network, kernel::Logger_ABC& logger )
+Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel& staticModel, QDialog& prefDialog, UserProfileDialog& profileDialog, ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help, gui::LinkInterpreter_ABC& interpreter, Network& network, kernel::Logger_ABC& logger )
     : QMenuBar( pParent )
     , controllers_( controllers )
     , profileDialog_( profileDialog )
@@ -142,7 +143,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, kernel::ObjectTypes&
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Vision surfaces" ), MakePixmap( "vision_surfaces" ), controllers.options_, "VisionSurfaces" );
     subMenu->insertSeparator();
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Weapon ranges" ) , MakePixmap( "weapon_ranges" ), controllers.options_, "WeaponRanges" );
-    subMenu->insertItem( tools::translate( "Menu", "Efficient Range" ), new EfficientRangeDialog( this, controllers, objectTypes, controllers.options_ ), SLOT( exec() ) );
+    subMenu->insertItem( tools::translate( "Menu", "Efficient Range" ), new EfficientRangeDialog( this, controllers, staticModel.objectTypes_, controllers.options_ ), SLOT( exec() ) );
     subMenu->insertSeparator();
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Routes" )        , MakePixmap( "path_ahead" ) , controllers.options_, "Paths" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Covered routes" ), MakePixmap( "path_behind" ), controllers.options_, "OldPaths" );
@@ -192,6 +193,15 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, kernel::ObjectTypes&
         composite.AddItem( tools::translate( "Menu", "2.5km"  ),  2.5f );
         composite.AddItem( tools::translate( "Menu", "5km"  ),  5.0f );
         composite.AddItem( tools::translate( "Menu", "10km" ), 10.0f );
+    }
+    
+    {
+        QHBox* populationBox = new QHBox( toolBar );
+        QCheckBox* populationEnabled = new QCheckBox( tools::translate( "Menu", "Population" ), populationBox );
+        QToolTip::add( populationEnabled, tools::translate( "Menu", "Show population display tool" ) );
+        QDockWindow* populationOptions = new PopulationOptionChooser( pParent, controllers, staticModel );
+        connect( populationEnabled, SIGNAL( toggled( bool ) ), populationOptions, SLOT( setShown( bool ) ) );
+        connect( populationOptions, SIGNAL( visibilityChanged( bool ) ), populationEnabled, SLOT( setChecked( bool ) ) );        
     }
 
     menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu );

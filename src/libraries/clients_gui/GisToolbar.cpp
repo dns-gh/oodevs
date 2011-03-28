@@ -38,21 +38,21 @@ namespace
 // -----------------------------------------------------------------------------
 GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
     : QToolBar( parent, "gis tools" )
-    , controllers_    ( controllers )
-    , detection_      ( detection )
-    , terrainProfiler_( new TerrainProfiler( parent, controllers, detection, layer ) )
+    , controllers_      ( controllers )
+    , detection_        ( detection )
+    , terrainProfiler_  ( new TerrainProfiler( parent, controllers, detection, layer ) )
 {
     setLabel( tools::translate( "gui::GisToolBar", "GIS tools" ) );
     {
-        QHBox* box = new QHBox( this );
-        enabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Watershed" ), box );
-        QToolTip::add( enabled_, tools::translate( "gui::GisToolBar", "Enable/disable watershed display" ) );
-        mode_ = new QComboBox( box );
+        QHBox* waterShedBox = new QHBox( this );
+        watershedEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Watershed" ), waterShedBox );
+        QToolTip::add( watershedEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable watershed display" ) );
+        mode_ = new QComboBox( waterShedBox );
         mode_->insertItem( tools::translate( "gui::GisToolBar", "<" ) );
         mode_->insertItem( tools::translate( "gui::GisToolBar", ">" ) );
         mode_->setMaximumWidth( 30 );
         QToolTip::add( mode_, tools::translate( "gui::GisToolBar", "Display water below or above specified height" ) );
-        height_ = new QSpinBox( 0, 10000, 1, box );
+        height_ = new QSpinBox( 0, 10000, 1, waterShedBox );
         height_->setSuffix( kernel::Units::meters.AsString() );
         height_->setEnabled( false );
         QToolTip::add( height_, tools::translate( "gui::GisToolBar", "Set water height limit" ) );
@@ -60,7 +60,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         color_->SetColor( QColor( 20, 164, 218 ) ); // $$$$ SBO 2010-03-23: default from layer
         QToolTip::add( color_, tools::translate( "gui::GisToolBar", "Change watershed color" ) );
 
-        connect( enabled_, SIGNAL( toggled( bool ) ), SLOT( OnToggleEnabled( bool ) ) );
+        connect( watershedEnabled_, SIGNAL( toggled( bool ) ), SLOT( OnToggleWatershedEnabled( bool ) ) );
         connect( mode_, SIGNAL( activated( int ) ), SLOT( OnModeChanged( int ) ) );
         connect( height_, SIGNAL( valueChanged( int ) ), SLOT( OnHeightChanged( int ) ) );
         connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
@@ -73,7 +73,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         connect( button, SIGNAL( toggled( bool ) ), SLOT( OnToggleCut( bool ) ) );
         connect( terrainProfiler_, SIGNAL( visibilityChanged( bool ) ), button, SLOT( setOn( bool ) ) );
     }
-    OnToggleEnabled( false );
+    OnToggleWatershedEnabled( false );
     controllers_.Register( *this );
 }
 
@@ -104,8 +104,8 @@ void GisToolbar::OptionChanged( const std::string& name, const kernel::OptionVar
     if( name == "WatershedEnabled" )
     {
         const bool val = value.To< bool >();
-        if( val != enabled_->isChecked() )
-            enabled_->setChecked( val );
+        if( val != watershedEnabled_->isChecked() )
+            watershedEnabled_->setChecked( val );
     }
     else if( name == "WatershedHeight" )
     {
@@ -129,10 +129,10 @@ void GisToolbar::OptionChanged( const std::string& name, const kernel::OptionVar
 }
 
 // -----------------------------------------------------------------------------
-// Name: GisToolbar::OnToggleEnabled
+// Name: GisToolbar::OnToggleWatershedEnabled
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
-void GisToolbar::OnToggleEnabled( bool toggled )
+void GisToolbar::OnToggleWatershedEnabled( bool toggled )
 {
     mode_->setEnabled( toggled );
     height_->setEnabled( toggled );

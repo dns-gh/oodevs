@@ -41,7 +41,7 @@ class DensityWidget : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             DensityWidget( QWidget* parent, kernel::Controllers& controllers );
+             DensityWidget( QWidget* parent, kernel::Controllers& controllers, const std::string& category );
     virtual ~DensityWidget();
     //@}
 
@@ -62,6 +62,7 @@ private slots:
     //@{
     void OnSelectionChanged( const QColor& color );
     void OnColorChanged( const QColor& color );
+    void OnUnoccupiedColorChanged( const QColor& color );
     void OnGradientEdited( Gradient& gradient );
     void Reset();
     void OnMinChanged( const QString& value );
@@ -71,6 +72,7 @@ private slots:
 private:
     //! @name Member Data
     //@{
+    const std::string category_;
     std::auto_ptr< Painter_ABC > pPainter_;
     kernel::Controllers& controllers_;
     kernel::Options& options_;
@@ -78,6 +80,7 @@ private:
     QLineEdit* min_;
     GradientButton* densityEditor_;
     ColorButton* color_;
+    ColorButton* unoccupiedColor_;
     bool blockLoaded_;
     bool minLoaded_;
     bool maxLoaded_;

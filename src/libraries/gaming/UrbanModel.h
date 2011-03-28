@@ -10,6 +10,7 @@
 #ifndef __Gaming_UrbanModel_h_
 #define __Gaming_UrbanModel_h_
 
+#include "clients_gui/UrbanDisplayOptions.h"
 #include "tools/Resolver.h"
 
 namespace gui
@@ -84,6 +85,7 @@ public:
     std::auto_ptr< urban::Model > urbanModel_;
     const kernel::DetectionMap& map_;
     UrbanBlockDetectionMap& urbanBlockDetectionMap_;
+    gui::UrbanDisplayOptions urbanDisplayOptions_;
     //@}
 };
 

@@ -31,11 +31,10 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controll
 {
     QGroupBox* box = new QGroupBox( 2, Qt::Horizontal, tr( "Colors" ), this );
     QVBox* hBox = new QVBox( box );
-    density_ = new CheckBox( tr( "Change urban blocks color based on population density" ), hBox );
-    connect( density_, SIGNAL( toggled( bool ) ), SLOT( OnChanged( bool ) ) );
-    QGroupBox* group = new QGroupBox( 1, Qt::Horizontal, tr( "Gradient map" ), hBox );
-    widget_ = new DensityWidget( group, controllers );
-    controllers_.Register( *this );
+    QGroupBox* densityGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Density Gradient map" ), hBox );
+    new DensityWidget( densityGroup, controllers, "Density" );
+    QGroupBox* occupationGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Occupation Gradient map" ), hBox );
+    new DensityWidget( occupationGroup, controllers, "Accommodation" );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,24 +43,5 @@ InhabitantPanel::InhabitantPanel( QWidget* parent, kernel::Controllers& controll
 // -----------------------------------------------------------------------------
 InhabitantPanel::~InhabitantPanel()
 {
-    controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InhabitantPanel::OnChanged
-// Created: LGY 2010-12-31
-// -----------------------------------------------------------------------------
-void InhabitantPanel::OnChanged( bool value )
-{
-    options_.Change( "UrbanDensityColor", value );
-}
-
-// -----------------------------------------------------------------------------
-// Name: InhabitantPanel::OptionChanged
-// Created: LGY 2011-01-11
-// -----------------------------------------------------------------------------
-void InhabitantPanel::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "UrbanDensityColor" )
-        density_->setChecked( value.To< bool >() );
+    // NOTHING
 }

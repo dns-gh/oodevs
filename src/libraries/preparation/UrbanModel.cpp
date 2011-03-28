@@ -50,10 +50,11 @@ namespace
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
 UrbanModel::UrbanModel( kernel::Controllers& controllers, const StaticModel& staticModel, const tools::Resolver< kernel::Object_ABC >& objects )
-    : controllers_      ( controllers )
-    , static_           ( staticModel )
-    , objects_          ( objects )
-    , urbanStateVersion_( ::defaultUrbanStateVersion )
+    : controllers_        ( controllers )
+    , static_             ( staticModel )
+    , objects_            ( objects )
+    , urbanStateVersion_  ( ::defaultUrbanStateVersion )
+    , urbanDisplayOptions_( controllers )
 {
     // NOTHING
 }
@@ -209,7 +210,7 @@ void UrbanModel::Purge()
 // -----------------------------------------------------------------------------
 void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
 {
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject, static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ) );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject, static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ), urbanDisplayOptions_ );
     kernel::PropertiesDictionary& dico = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dico ) );
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( urbanObject ) );

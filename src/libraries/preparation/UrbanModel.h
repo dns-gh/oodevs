@@ -11,6 +11,7 @@
 #define __preparation_UrbanModel_h_
 
 #include "tools/Resolver.h"
+#include "clients_gui/UrbanDisplayOptions.h"
 #include <urban/Model.h>
 
 namespace kernel
@@ -83,6 +84,7 @@ private:
     const StaticModel& static_;
     const tools::Resolver< kernel::Object_ABC >& objects_;
     std::string urbanStateVersion_;
+    gui::UrbanDisplayOptions urbanDisplayOptions_;
     //@}
 };
 

@@ -49,7 +49,7 @@ public:
 private slots:
     //! @name Operations
     //@{
-    void OnToggleEnabled( bool toggled );
+    void OnToggleWatershedEnabled( bool toggled );
     void OnModeChanged( int mode );
     void OnHeightChanged( int height );
     void OnColorChanged( const QColor& color );
@@ -75,7 +75,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::DetectionMap& detection_;
     QDockWindow* terrainProfiler_;
-    QCheckBox* enabled_;
+    QCheckBox* watershedEnabled_;
     QComboBox* mode_;
     QSpinBox* height_;
     ColorButton* color_;

@@ -16,6 +16,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 #include <memory>
 
 namespace kernel
@@ -41,7 +42,7 @@ namespace urban
 
 namespace gui
 {
-    class Gradient;
+    class UrbanDisplayOptions;
 
 // =============================================================================
 /** @class  TerrainObjectProxy
@@ -54,7 +55,7 @@ class TerrainObjectProxy : public kernel::Extension_ABC
                          , public kernel::Updatable_ABC< sword::UrbanUpdate >
                          , public kernel::Creatable< TerrainObjectProxy >
                          , public tools::Observer_ABC
-                         , public kernel::OptionsObserver_ABC
+                         , public tools::ElementObserver_ABC< gui::UrbanDisplayOptions >
 {
 public:
     //! @name Static
@@ -65,8 +66,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const kernel::ObjectType& type );
-             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, const kernel::ObjectType& type );
+             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const kernel::ObjectType& type, gui::UrbanDisplayOptions& options );
+             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, const kernel::ObjectType& type, gui::UrbanDisplayOptions& options );
     virtual ~TerrainObjectProxy();
     //@}
 
@@ -101,10 +102,10 @@ public:
     virtual void Activate( kernel::ActionController& /*controller*/ ) const {}
     virtual void SetSelected( bool selected ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     void UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted, bool confined, bool evacuated );
     unsigned int GetHumans() const;
+    void NotifyUpdated( const gui::UrbanDisplayOptions& );
     //@}
 
 private:
@@ -112,9 +113,9 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     void AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary );
-    void UpdateColor();
     void Restore();
     float GetDensity() const;
+    void UpdateColor();
     //@}
 
     //! @name Types
@@ -146,12 +147,9 @@ private:
     kernel::Controllers& controllers_;
     T_Humans humans_;
     T_BaseColor color_;
-    bool densityColor_;
-    float minDensity_;
-    float maxDensity_;
-    std::auto_ptr< Gradient > pGradient_;
     const kernel::ObjectType& type_;
     T_Motivations motivations_;
+    gui::UrbanDisplayOptions& options_;
     //@}
 };
 

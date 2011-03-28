@@ -19,13 +19,14 @@ namespace tools
 
 namespace kernel
 {
+    class AccommodationTypes;
     class AgentTypes;
-    class ObjectTypes;
+    class AtlasNatures;
     class CoordinateConverter_ABC;
     class CoordinateSystems;
-    class FormationLevels;
     class ExtensionTypes;
-    class AtlasNatures;
+    class FormationLevels;
+    class ObjectTypes;
 
 // =============================================================================
 /** @class  StaticModel
@@ -58,6 +59,7 @@ public:
     kernel::FormationLevels&         levels_;
     kernel::ExtensionTypes&          extensionTypes_;
     kernel::AtlasNatures&            atlasNatures_;
+    kernel::AccommodationTypes&      accomodationTypes_;
     //@}
 };
 

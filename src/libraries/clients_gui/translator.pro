@@ -46,7 +46,6 @@ MiniViews.cpp \
 NBCPrototype_ABC.cpp \
 ObjectListView.cpp \
 ObjectPanel.cpp \
-ObjectPreviewIcon.cpp \
 ObjectPrototype_ABC.cpp \
 ObstaclePrototype_ABC.cpp \
 OptionsPanel.cpp \

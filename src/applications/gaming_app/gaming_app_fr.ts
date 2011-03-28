@@ -2022,6 +2022,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Selected: outgoing links</source>
         <translation>Sélectionné: liens sortants</translation>
     </message>
+    <message>
+        <source>Population</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show population display tool</source>
+        <translation>Options d'affichage de la population</translation>
+    </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>

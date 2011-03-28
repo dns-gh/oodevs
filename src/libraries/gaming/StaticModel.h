@@ -14,14 +14,8 @@
 
 namespace kernel
 {
-    class AgentTypes;
-    class ObjectTypes;
     class DetectionMap;
     class Controllers;
-    class CoordinateConverter_ABC;
-    class CoordinateSystems;
-    class FormationLevels;
-    class AtlasNatures;
     class Time_ABC;
 }
 
