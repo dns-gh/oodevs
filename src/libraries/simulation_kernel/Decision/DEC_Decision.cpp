@@ -97,10 +97,14 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_CopieEtRotateDirection" ] = &DEC_GeometryFunctions::CopyAndRotateDirection;
     brain[ "DEC_Geometrie_CalculerDistanceLigneMoyenne" ] = &DEC_GeometryFunctions::ComputeDistanceFromMiddleLine;
     brain[ "DEC_Geometrie_CalculerBarycentreLocalisation" ] = &DEC_GeometryFunctions::ComputeLocalisationBarycenter;
+    brain[ "DEC_Geometrie_ListePointsLocalisation" ] = &DEC_GeometryFunctions::ListLocalisationPoints;
     brain[ "DEC_Geometrie_DirectionMoyenne" ] = &DEC_GeometryFunctions::ComputeMeanDirection;
     brain[ "DEC_Geometrie_PositionAleatoireSurCercle" ] = &DEC_GeometryFunctions::ComputeRandomPointOnCircle;
     brain[ "DEC_Geometrie_PositionAleatoireDansCercle" ] = &DEC_GeometryFunctions::ComputeRandomPointInCircle;
     brain[ "DEC_Geometrie_CreerLocalisationCercle" ] = &DEC_GeometryFunctions::CreateCircleLocalisation;
+    brain[ "DEC_Geometrie_CreerLocalisationLigne" ] = &DEC_GeometryFunctions::CreateLineLocalisation;
+    brain[ "DEC_Geometrie_CreerLocalisationPolygone" ] = &DEC_GeometryFunctions::CreatePolygonLocalisation;
+    brain[ "DEC_Geometrie_AgrandirLocalisation" ] = &DEC_GeometryFunctions::CreateScaledLocalisation;
     brain[ "DEC_Geometrie_PionEstCoordonne" ] = &DEC_GeometryFunctions::ListUncoordinatedPawns;
     brain[ "DEC_Geometrie_PourcentageTerrainCompartimente" ] = &DEC_GeometryFunctions::ComputeClosedTerrainRatioInFuseau;
     brain[ "DEC_Geometrie_PourcentageTerrainOuvert" ] = &DEC_GeometryFunctions::ComputeOpenTerrainRatioInFuseau;

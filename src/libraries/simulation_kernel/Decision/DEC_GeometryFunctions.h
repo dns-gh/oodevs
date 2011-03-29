@@ -66,10 +66,14 @@ public:
     static double Distance( const MT_Vector2D* p1, const MT_Vector2D* p2 );
     static boost::shared_ptr< TER_Localisation > ConvertPointToLocalisation( const MT_Vector2D* pPos );
     static boost::shared_ptr< TER_Localisation > CreateCircleLocalisation( const MT_Vector2D* pCenter, const double );
+    static boost::shared_ptr< TER_Localisation > CreateLineLocalisation( const MT_Vector2D* pPoint1, const MT_Vector2D* pPoint2 );
+    static boost::shared_ptr< TER_Localisation > CreatePolygonLocalisation( const std::vector< boost::shared_ptr< MT_Vector2D > >& points );
+    static boost::shared_ptr< TER_Localisation > CreateScaledLocalisation( TER_Localisation* location, double length );
     static boost::shared_ptr< MT_Vector2D > ComputeMeanDirection( const std::vector< MT_Vector2D* >& selection );
     static boost::shared_ptr< MT_Vector2D > ComputeAgentsBarycenter( const std::vector< DEC_Decision_ABC* >& selection ); //$$$ Pourri
     static float ComputeDistanceFromMiddleLine( const std::vector< DEC_Decision_ABC*>& selPions, DEC_Decision_ABC* pReferencePion );
     static boost::shared_ptr< MT_Vector2D > ComputeLocalisationBarycenter( TER_Localisation* pLocalisation );
+    static std::vector< boost::shared_ptr< MT_Vector2D > > ListLocalisationPoints( TER_Localisation* pLocalisation );
 
     static std::vector< boost::shared_ptr< MT_Vector2D > > ComputeUrbanBlockLocalisations( UrbanObjectWrapper* pUrbanObject );
     static void ComputeLocalisationsInsideBlock( const UrbanObjectWrapper& terrainObject, bool onlyInsideBlock, std::vector< boost::shared_ptr< MT_Vector2D > >& result );

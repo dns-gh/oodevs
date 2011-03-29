@@ -1326,6 +1326,56 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateCircleLocalis
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateLineLocalisation
+// Created: LDC 2011-03-29
+// -----------------------------------------------------------------------------
+boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateLineLocalisation( const MT_Vector2D* pPoint1, const MT_Vector2D* pPoint2 )
+{
+    T_PointVector pointVector;
+    pointVector.push_back( *pPoint1 );
+    pointVector.push_back( *pPoint2 );
+    boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( TER_Localisation::eLine, pointVector ) );
+    return pResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolygonLocalisation
+// Created: LDC 2011-03-29
+// -----------------------------------------------------------------------------
+boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolygonLocalisation( const std::vector< boost::shared_ptr< MT_Vector2D > >& points )
+{
+    std::vector< MT_Vector2D > pointsVector;
+    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
+        pointsVector.push_back( **it );
+    boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( TER_Localisation::ePolygon, pointsVector ) );
+    return pResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateScaledLocalisation
+// Created: LDC 2011-03-29
+// -----------------------------------------------------------------------------
+boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateScaledLocalisation( TER_Localisation* location, double length )
+{
+    boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( *location ) );
+    pResult->Scale( length );
+    return pResult;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ListLocalisationPoints
+// Created: LDC 2011-03-29
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ListLocalisationPoints( TER_Localisation* pLocalisation )
+{
+    const std::vector< MT_Vector2D >& points = pLocalisation->GetPoints();
+    std::vector< boost::shared_ptr< MT_Vector2D > > result;
+    for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
+        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it ) ) );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ListUncoordinatedPawns
 // Created: NLD 2005-03-18
 // -----------------------------------------------------------------------------
