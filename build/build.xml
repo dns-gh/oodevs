@@ -1186,6 +1186,57 @@
 
     <!--
     ============================================================================
+    otpacks
+    ============================================================================
+    -->
+    <macrodef name="generate-otpack">
+        <attribute name="name"/>
+        <attribute name="desc"/>
+        <element name="otpack-include" implicit="yes"/>
+        <sequential>
+            <echoxml file="${out.dir}/content.xml">
+                <content>
+                    <name>@{name}</name>
+                    <description>@{desc}</description>
+                </content>
+            </echoxml>
+            <zip destfile="${dist.dir}/SWORD_@{name}_${version.major}.otpak">
+                <fileset dir="${data.dir}" excludes="**/.svn/**">
+                    <otpack-include/>
+                </fileset>
+                <fileset dir="${out.dir}" includes="content.xml"/>
+            </zip>
+            <delete file="${out.dir}/content.xml"/>
+        </sequential>
+    </macrodef>
+ 
+    <target name="otpacks" depends="otpacks.lossc, otpacks.cetac, otpacks.tutosw" description="otpacks creation"/>
+ 
+    <target name="otpacks.lossc" description="LOSSC exercises package">
+        <generate-otpack name="LOSSC" desc="LOSSC exercises package">
+            <include name="exercises/LOSSC Scenario 1/**"/>
+            <include name="exercises/LOSSC Scenario 2/**"/>
+            <include name="exercises/LOSSC Scenario 3/**"/>
+            <include name="data/terrains/afghan_kabuldist/**"/>
+        </generate-otpack>
+    </target>
+
+    <target name="otpacks.cetac" description="CETAC exercise package">
+        <generate-otpack name="CETAC" desc="CETAC exercise package">
+            <include name="exercises/CETAC_worldwide/**"/>
+            <include name="data/terrains/CETAC_dted1/**"/>
+        </generate-otpack>
+    </target>
+
+    <target name="otpacks.tutosw" description="tuto_sw exercises package">
+        <generate-otpack name="tutosw" desc="tuto_sw exercises package">
+            <include name="exercises/Tuto_sw/**"/>
+            <include name="data/terrains/Sw_terrain2/**"/>
+        </generate-otpack>
+    </target>
+
+    <!--
+    ============================================================================
     main
     ============================================================================
     -->
@@ -1243,6 +1294,6 @@
 
     <target name="build" depends="libraries,applications"/>
 
-    <target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
+    <target name="all" depends="configure,build,test,documentation,package,otpacks" description="build and package distribution"/>
 
 </project>
