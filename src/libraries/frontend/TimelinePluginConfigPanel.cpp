@@ -136,7 +136,7 @@ void TimelinePluginConfigPanel::Commit( const std::string& exercise, const std::
         frontend::CreateSession action( config_, exercise, session );
         action.SetOption( "session/config/dispatcher/plugins/timeline/@host", host_->text() );
         if( ssl_->isChecked() )
-            action.SetOption( "session/config/dispatcher/plugins/timeline/@ssl", "https" );
+            action.SetOption( "session/config/dispatcher/plugins/timeline/@ssl", "true" );
         if( log_->isChecked() )
             action.SetOption( "session/config/dispatcher/plugins/timeline/@log", "true" );
         action.SetOption( "session/config/dispatcher/plugins/timeline/scenario/@id", scenarioId_->text() );

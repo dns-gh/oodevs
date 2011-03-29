@@ -29,10 +29,9 @@ Publisher::Publisher( xml::xistream& xis )
     : log_ ( false )
     , useSsl_ ( false )
 {
-    std::string type;
     xis >> xml::start( "services" ) >> xml::attribute( "host", host_ )
                                     >> xml::optional >> xml::attribute( "log", log_ )
-                                    >> xml::optional >> xml::attribute( "type", type )
+                                    >> xml::optional >> xml::attribute( "ssl", useSsl_ )
             >> xml::start( "initialization" ) >> xml::attribute( "serviceURI", getURI_ ) >> xml::end
             >> xml::start( "update" )
                 >> xml::attribute( "serviceURI", postURI_ )
@@ -43,11 +42,8 @@ Publisher::Publisher( xml::xistream& xis )
         MT_LOG_INFO_MSG( "Edxl-Have service loaded on : " << host_ << std::endl
                           << " - initialize : " << getURI_ << std::endl
                           << " - update : " << postURI_ )
-    if ( type == "https" )
-    {
+    if ( useSsl_ )
         MT_LOG_INFO_MSG( " - connecting using SSL" )
-        useSsl_ = true;
-    }
 }
 
 // -----------------------------------------------------------------------------

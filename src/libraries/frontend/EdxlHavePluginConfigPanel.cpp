@@ -96,8 +96,10 @@ void EdxlHavePluginConfigPanel::Commit( const std::string& exercise, const std::
     {
         frontend::CreateSession action( config_, exercise, session );
         action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/@host", host_->text() );
-        action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/@type", ssl_->isChecked() ? "https" : "http" );
-        action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/@log", log_->isChecked() ? "true" : "false" );
+        if( ssl_->isChecked() )
+            action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/@ssl", "true" );
+        if( log_->isChecked() )
+            action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/@log", "true" );
         action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/initialization/@serviceURI", initializeServiceURI_->text() );
         action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/update/@serviceURI", updateServiceURI_->text() );
         action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/update/@frequency", QString( "%1s" ).arg( QTime().secsTo( frequency_->time() ) ).ascii() );

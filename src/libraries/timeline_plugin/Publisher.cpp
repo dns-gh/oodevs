@@ -29,7 +29,7 @@ Publisher::Publisher( xml::xistream& xis )
     std::string type;
     xis >> xml::attribute( "host", host_ )
         >> xml::optional >> xml::attribute( "log", log_ )
-        >> xml::optional >> xml::attribute( "type", type )
+        >> xml::optional >> xml::attribute( "ssl", useSsl_ )
         >> xml::start( "scenario" )
             >> xml::attribute( "id", scenario_ )
         >> xml::end;
@@ -37,11 +37,8 @@ Publisher::Publisher( xml::xistream& xis )
     postURI_ = "/scenario/" + boost::lexical_cast<std::string>( scenario_ ) + "/update";
     if( log_ )
         MT_LOG_INFO_MSG( "Timeline service loaded on : " << host_ )
-    if( type == "https" )
-    {
+    if( useSsl_ )
         MT_LOG_INFO_MSG( " - connecting using SSL" )
-        useSsl_ = true;
-    }
 }
 
 // -----------------------------------------------------------------------------
