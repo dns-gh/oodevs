@@ -789,8 +789,8 @@ Reason: %3
         <translation>Impossible de sauver le fichier des indicateurs</translation>
     </message>
     <message>
-        <source>Error message</source>
-        <translation>Message d&apos;erreur</translation>
+        <source>Impossible to create file in specified directory</source>
+        <translation>Impossible de créer le fichier à l&apos;endroit spécifié</translation>
     </message>
 </context>
 <context>
