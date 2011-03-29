@@ -348,8 +348,9 @@
     <structural value="100"/>
   </object>
   <object geometry="polygon" name="Zone bouclee" symbol="G*MPOGZ---****X" type="seal off area">
-    <avoidable distance="100"/>
-    <delay/>
+    <avoidable distance="10"/>
+    <interact-with-enemy/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <sealoff/>
     <workable max-animator="10"/>
   </object>
@@ -375,4 +376,4 @@
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="4266371541" -->
+<!-- signature="1832330936" -->

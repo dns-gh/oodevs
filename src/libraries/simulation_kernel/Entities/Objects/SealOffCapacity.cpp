@@ -12,6 +12,8 @@
 #include "AnimatorAttribute.h"
 #include "SealOffAttribute.h"
 #include "MIL_Object_ABC.h"
+#include "MIL_Random.h"
+#include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( SealOffCapacity )
@@ -97,4 +99,15 @@ void SealOffCapacity::Update( MIL_Object_ABC& object, unsigned int /*time*/ )
     }
     sealOffLevel.SetSealOffLevel( currentLevel );
 
+}
+
+// -----------------------------------------------------------------------------
+// Name: SealOffCapacity::ApplySpeedPolicy
+// Created: EVH 2011-03-24
+// -----------------------------------------------------------------------------
+double SealOffCapacity::ApplySpeedPolicy( const MIL_Agent_ABC& agent, const MIL_Object_ABC& object ) const
+{
+    if( agents_.find( &agent ) == agents_.end() )
+        agents_[ &agent ] = MIL_Random::rand_io( MIL_Random::eFire );
+    return ( agents_[ &agent ] > object.GetAttribute< SealOffAttribute >().GetSealOffLevel() ) ? 0. : 1.;
 }

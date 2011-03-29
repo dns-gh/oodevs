@@ -15,6 +15,7 @@
 class MIL_AgentPion;
 class MT_Vector2D;
 class UrbanObjectWrapper;
+class TER_Localisation;
 
 // =============================================================================
 /** @class  DEC_UrbanObjectFunctions
@@ -34,6 +35,7 @@ public:
     static float GetRapForLocal( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
     static T_ConstKnowledgeAgentVector GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
     static void DestroyUrbanBlock( UrbanObjectWrapper* pUrbanObject, double percentage );
+    static boost::shared_ptr< TER_Localisation > GetPolygonFromUrbanBlock( const UrbanObjectWrapper* pUrbanObject );
     //@}
 };
 

@@ -54,6 +54,7 @@ public:
     //! @name Operations
     //@{
     void SetSealOffLevel( float level );
+    float GetSealOffLevel() const;
     //@}
 
     //! @name Copy

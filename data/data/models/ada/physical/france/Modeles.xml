@@ -35,7 +35,6 @@
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Barrer"/>
         <mission name="MELEE Neutraliser"/>
-        <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Recueillir"/>
         <mission name="MELEE Relever"/>
@@ -261,7 +260,6 @@
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Barrer"/>
-        <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Relever"/>
         <mission name="MELEE Renseigner sur foule"/>
@@ -11404,4 +11402,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1893657154" -->
+<!-- signature="0980727633" -->

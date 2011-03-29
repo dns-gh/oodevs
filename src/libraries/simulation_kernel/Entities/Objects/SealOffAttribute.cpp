@@ -96,3 +96,12 @@ void SealOffAttribute::SetSealOffLevel( float level )
     rSealOffLevel_ = std::max( 0.f, std::min( 1.f, level ) );
     NotifyAttributeUpdated( eOnUpdate );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SealOffAttribute::GetSealOffLevel
+// Created: EVH 2011-03-24
+// -----------------------------------------------------------------------------
+float SealOffAttribute::GetSealOffLevel() const
+{
+    return rSealOffLevel_;
+}

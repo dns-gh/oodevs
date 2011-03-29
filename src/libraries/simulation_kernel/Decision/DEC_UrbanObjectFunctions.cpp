@@ -149,3 +149,13 @@ void DEC_UrbanObjectFunctions::DestroyUrbanBlock( UrbanObjectWrapper* pUrbanObje
             pCapacity->Build( -percentage );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock
+// Created: EVH 2011-03-25
+// -----------------------------------------------------------------------------
+boost::shared_ptr< TER_Localisation > DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock( const UrbanObjectWrapper* pUrbanObject )
+{
+    boost::shared_ptr< TER_Localisation > location( new TER_Localisation( pUrbanObject->GetLocalisation() ) );
+    return location;
+}

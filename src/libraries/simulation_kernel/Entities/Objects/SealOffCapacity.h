@@ -17,6 +17,8 @@ namespace xml
     class xistream;
 }
 
+class MIL_Agent_ABC;
+
 // =============================================================================
 /** @class  SealOffCapacity
     @brief  SealOffCapacity
@@ -44,12 +46,19 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Register( MIL_Object_ABC& object );
     virtual void Update( MIL_Object_ABC& object, unsigned int time );
+    double ApplySpeedPolicy( const MIL_Agent_ABC& agent, const MIL_Object_ABC& object ) const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
     SealOffCapacity& operator=( const SealOffCapacity& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    mutable std::map< const MIL_Agent_ABC*, double > agents_;
     //@}
 };
 
