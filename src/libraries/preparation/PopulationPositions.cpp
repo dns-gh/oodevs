@@ -144,10 +144,10 @@ void PopulationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // Name: PopulationPositions::Draw
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-void PopulationPositions::Draw( const geometry::Point2f&, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+void PopulationPositions::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     const_cast< PopulationPositions* >( this )->UpdatePosition(); // $$$$ SBO 2006-11-09:
-    if( viewport.IsVisible( boundingBox_ ) )
+    if( viewport.IsVisible( where ) )
         tools.DrawDisc( center_, radius_ );
 }
 
