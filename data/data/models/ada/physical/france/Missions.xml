@@ -2494,7 +2494,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="objective" name="Face à " optional="false" type="LocationComposite">
+      <parameter dia-name="objective" name="Face à" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
