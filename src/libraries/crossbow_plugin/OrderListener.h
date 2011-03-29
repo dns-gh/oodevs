@@ -26,7 +26,6 @@ namespace plugins
 namespace crossbow
 {
     class Workspace_ABC;
-    class OrderDispatcher;
     class WorkingSession_ABC;
     class ActionSerializer_ABC;
 
@@ -43,7 +42,7 @@ class OrderListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderListener( const dispatcher::Model_ABC& model, Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session );
+             OrderListener( Workspace_ABC& workspace, ActionSerializer_ABC& serializer, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession_ABC& session );
     virtual ~OrderListener();
     //@}
 
@@ -61,9 +60,8 @@ private:
 
     //! @name Helpers
     //@{
-    bool ListenRow( const Row_ABC& row );
+    bool SendCreation( const Row_ABC& row );
     void Clean();
-    void MarkProcessed( long orderid ) const;
     //@}
 
 private:
@@ -72,8 +70,7 @@ private:
     std::auto_ptr< Publisher_ABC >      publisher_;
     Workspace_ABC&                      workspace_;
     const WorkingSession_ABC&           session_;
-    std::auto_ptr< OrderDispatcher >    dispatcher_;
-    long                                ref_;
+    const ActionSerializer_ABC&         serializer_;
     //@}
 };
 

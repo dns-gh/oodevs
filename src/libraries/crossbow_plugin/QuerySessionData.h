@@ -10,6 +10,11 @@
 #ifndef __crossbow_QuerySessionData_h_
 #define __crossbow_QuerySessionData_h_
 
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
 namespace plugins
 {
 namespace crossbow
@@ -33,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    int CreateExercise( const std::string& name );
+    int CreateExercise( const std::string& name, const kernel::CoordinateConverter_ABC& converter );
     int FindExercise( const std::string& name ) const;
 
     int CreateSession( const std::string& name, int exercise_id );

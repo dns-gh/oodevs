@@ -15,21 +15,114 @@
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 #include "WorkingSession_ABC.h"
+#include <gdal/ogr_core.h>
 #include <boost/noncopyable.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins;
 using namespace plugins::crossbow;
+
+class ObjectAttributeUpdater::RowUpdater_ABC
+{
+public:
+    virtual long GetReferenceId( const std::string& attribute ) const = 0;
+    virtual void SetProperty( long paramId, const std::string& type, const std::string& field, const std::string& value ) = 0;
+};
+
+namespace 
+{
+    long GetRowId( Table_ABC& table, long objectId, const std::string& attribute )
+    {
+        Row_ABC* row = table.Find( "object_id=" + boost::lexical_cast< std::string >( objectId ) + 
+                                    " AND name='" + attribute + "' AND parameter_id is null" );
+        if( row )
+            return row->GetID();
+        return OGRNullFID;
+    }
+
+    class RowInserter : public ObjectAttributeUpdater::RowUpdater_ABC
+                      , boost::noncopyable
+    {
+    public:
+        RowInserter( Workspace_ABC& workspace, long objectId )
+            : workspace_ ( workspace )
+            , objectId_ ( objectId )
+        {
+        }
+
+        long GetReferenceId( const std::string& attribute ) const
+        {
+            std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "objectparameters" ) );
+            Row_ABC& row = table->CreateRow();
+            row.SetField( "object_id", FieldVariant( objectId_ ) );
+            row.SetField( "type", FieldVariant( std::string( "List" ) ) );
+            row.SetField( "name", FieldVariant( attribute ) );
+            table->InsertRow( row );
+            return GetRowId( *table, objectId_, attribute );
+        }
+
+        void SetProperty( long paramId, const std::string& type, const std::string& field, const std::string& value )
+        {
+            std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "objectparameters" ) );
+            Row_ABC& row = table->CreateRow();
+            row.SetField( "object_id", FieldVariant( objectId_ ) );
+            row.SetField( "parameter_id", FieldVariant( paramId ) );
+            row.SetField( "type", FieldVariant( type ) );
+            row.SetField( "name", FieldVariant( field ) );
+            row.SetField( "value", FieldVariant( value ) );
+            table->InsertRow( row );
+        }
+
+    private:
+        Workspace_ABC& workspace_;
+        long objectId_;
+    };
+
+    class RowUpdater : public ObjectAttributeUpdater::RowUpdater_ABC
+                     , boost::noncopyable
+    {
+    public:
+        RowUpdater( Workspace_ABC& workspace, long objectId )
+            : workspace_ ( workspace )
+            , objectId_ ( objectId )
+        {
+            // NOTHING
+        }
+        
+        long GetReferenceId( const std::string& attribute ) const
+        {
+            std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "objectparameters" ) );
+            return GetRowId( *table, objectId_, attribute );
+        }
+        
+        void SetProperty( long paramId, const std::string& /*type*/, const std::string& field, const std::string& value )
+        {
+            std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "objectparameters" ) );
+            
+            Row_ABC* row = table->Find( "object_id=" + boost::lexical_cast< std::string >( objectId_ ) + 
+                                        " AND parameter_id=" + boost::lexical_cast< std::string >( paramId ) + 
+                                        " AND name='" + field + "'" );
+            if( row )
+            {
+                row->SetField( "value", FieldVariant( value ) );
+                table->UpdateRow( *row );
+            }
+        }
+    
+    private:
+        Workspace_ABC& workspace_;
+        long objectId_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributeUpdater constructor
 // Created: JCR 2010-06-08
 // -----------------------------------------------------------------------------
-ObjectAttributeUpdater::ObjectAttributeUpdater( Workspace_ABC& workspace, const WorkingSession_ABC& session, long objectId )
-    : workspace_( workspace )
-    , session_ ( session )
-    , objectId_ ( objectId )
+ObjectAttributeUpdater::ObjectAttributeUpdater( Workspace_ABC& workspace, long objectId )
 {
-    // NOTHING
+    updater_.reset( new RowUpdater( workspace, objectId ) );
+    inserter_.reset( new RowInserter( workspace, objectId ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,6 +145,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributes& msg )
     CHECK_ATTRIBUTE_UPDATE( bypass          );
     CHECK_ATTRIBUTE_UPDATE( construction    );
     CHECK_ATTRIBUTE_UPDATE( crossing_site   );
+    CHECK_ATTRIBUTE_UPDATE( effect_delay    );
     CHECK_ATTRIBUTE_UPDATE( fire            );
     CHECK_ATTRIBUTE_UPDATE( interaction_height );
     CHECK_ATTRIBUTE_UPDATE( logistic        );
@@ -60,59 +154,54 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributes& msg )
     CHECK_ATTRIBUTE_UPDATE( nbc             );
     CHECK_ATTRIBUTE_UPDATE( nbc_agent       );
     CHECK_ATTRIBUTE_UPDATE( obstacle        );
+    CHECK_ATTRIBUTE_UPDATE( resource_networks );
+    CHECK_ATTRIBUTE_UPDATE( seal_off        );
     CHECK_ATTRIBUTE_UPDATE( stock           );
     CHECK_ATTRIBUTE_UPDATE( supply_route    );
     CHECK_ATTRIBUTE_UPDATE( toxic_cloud     );
+    CHECK_ATTRIBUTE_UPDATE( burn            );
+    CHECK_ATTRIBUTE_UPDATE( burn_surface    );
+    CHECK_ATTRIBUTE_UPDATE( flood           );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ObjectAttributeUpdater::OpenTable
-// Created: JCR 2010-06-08
-// -----------------------------------------------------------------------------
-Table_ABC* ObjectAttributeUpdater::OpenTable( const std::string& name )
-{
-    return workspace_.GetDatabase( "flat" ).OpenTable( name );
-}
+/*
+  select * from sword.objectparameters a, 
+   ( select distinct id from sword.objectparameters 
+        where object_id = 1 and name='Obstacle' and parameter_id is null ) b
+     where a.parameter_id = b.id;
+*/
 
 namespace
 {
     class RowManipulator : boost::noncopyable
     {
     public:
-        RowManipulator( Table_ABC& table, const WorkingSession_ABC& session, int objectId )
-            : table_ ( table )
-            , updating_ ( true )
+        RowManipulator( ObjectAttributeUpdater::RowUpdater_ABC& updater, ObjectAttributeUpdater::RowUpdater_ABC& inserter, const std::string& attribute )
+            : updater_ ( &updater )
+            , rowId_ ( updater.GetReferenceId( attribute ) )
         {
-            std::stringstream query;
-            query << "object_id=" << objectId << " AND session_id=" << session.GetId();
-            row_ = table_.Find( query.str() );
-            if( !row_ )
+            if( rowId_ == OGRNullFID )
             {
-                row_ = &table_.CreateRow();
-                row_->SetField( "object_id", FieldVariant( objectId ) );
-                row_->SetField( "session_id", FieldVariant( session.GetId() ) );
-                updating_ = false;
+                rowId_ = inserter.GetReferenceId( attribute );
+                updater_ = &inserter;
             }
         }
 
-        ~RowManipulator()
+        void SetProperty( const std::string& type, const std::string& field, const std::string& value )
         {
-            if( updating_ )
-                table_.UpdateRow( *row_ );
-            else
-                table_.InsertRow( *row_ );
-        }
-
-        void SetField( const std::string& field, const FieldVariant& value )
-        {
-            row_->SetField( field, value );
+            updater_->SetProperty( rowId_, type, field, value );
         }
 
     private:
-        Table_ABC&  table_;
-        Row_ABC*    row_;
-        bool        updating_;
+        long rowId_;
+        ObjectAttributeUpdater::RowUpdater_ABC* updater_;
     };
+
+    template< typename T >
+    std::string ToString( const T& value )
+    {
+        return boost::lexical_cast< std::string >( value );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -121,18 +210,16 @@ namespace
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeConstruction& construction )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Construction" ) );
-
-    RowManipulator row( *table, session_, objectId_ );
+    RowManipulator row( *updater_, *inserter_, "Construction" );
 
     if( construction.density() )
-        row.SetField( "density", FieldVariant( construction.density() ) ); //real
+        row.SetProperty( "Numeric", "density", ToString( construction.density() ) );
     if( construction.has_percentage() )
-        row.SetField( "percentage", FieldVariant( construction.percentage() ) ); //int
+        row.SetProperty( "Quantity", "percentage", ToString( construction.percentage() ) ); //int
     if( construction.has_resource() )
-        row.SetField( "dotation_type", FieldVariant( static_cast< long >( construction.resource().id() ) ) ); //int
+        row.SetProperty( "Identifier", "resource_type", ToString( construction.resource().id() ) ); //int
     if( construction.has_dotation() )
-        row.SetField( "dotation_nbr", FieldVariant( construction.dotation() ) ); //int
+        row.SetProperty( "Identifier", "dotation_type", ToString( construction.dotation() ) ); //int
 }
 
 // -----------------------------------------------------------------------------
@@ -141,11 +228,14 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeConstruction& c
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeObstacle& obstacle )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Obstacle" ) );
-
-    RowManipulator row( *table, session_, objectId_ );
-    row.SetField( "activated", FieldVariant( obstacle.activated() ) ); // bool
-    row.SetField( "type", FieldVariant( std::string( obstacle.type() == sword::ObstacleType_DemolitionTargetType_preliminary ? "preliminary" : "reserved" ) ) );
+    RowManipulator row( *updater_, *inserter_, "Obstacle" );
+    
+    if( obstacle.has_activated() )
+        row.SetProperty( "Bool", "activated", ToString( obstacle.activated() ) ); // bool
+    if( obstacle.has_activation_time() )
+        row.SetProperty( "Quantity", "activation_time", ToString( obstacle.activation_time() ) ); // DateTime
+    if( obstacle.has_type() )
+        row.SetProperty( "String", "type", std::string( obstacle.type() == sword::ObstacleType_DemolitionTargetType_preliminary ? "preliminary" : "reserved" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,17 +244,16 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeObstacle& obsta
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeMine& mine )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Mine" ) );
-
-    RowManipulator row( *table, session_, objectId_ );
+    RowManipulator row( *updater_, *inserter_, "Mine" );
+    
     if( mine.has_density() )
-        row.SetField( "density", FieldVariant( mine.density() ) );
+        row.SetProperty( "Numeric", "density", ToString( mine.density() ) );
     if( mine.has_percentage() )
-        row.SetField( "percentage", FieldVariant( mine.percentage() ) );
+        row.SetProperty( "Quantity", "percentage", ToString( mine.percentage() ) );
     if( mine.has_resource() )
-        row.SetField( "dotation_type", FieldVariant( (long)mine.resource().id() ) );
+        row.SetProperty( "Identifier", "dotation_type", ToString( mine.resource().id() ) );
     if( mine.has_dotation() )
-        row.SetField( "dotation_nbr", FieldVariant( mine.dotation() ) );
+        row.SetProperty( "Quantity", "dotation_nbr", ToString( mine.dotation() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,10 +262,10 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeMine& mine )
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeActivityTime& activity_time )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Activity_Time" ) );
+    RowManipulator row( *updater_, *inserter_, "ActivityTime" );
 
-    RowManipulator row( *table, session_, objectId_ );
-    row.SetField( "activity_time", FieldVariant( activity_time.value() ) ); // int
+    if( activity_time.has_value() )
+        row.SetProperty( "Quantity", "activity_time", ToString( activity_time.value() ) ); // DateTime
 }
 
 // -----------------------------------------------------------------------------
@@ -185,11 +274,10 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeActivityTime& a
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeBypass& bypass )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Bypass" ) );
+    RowManipulator row( *updater_, *inserter_, "Bypass" );
 
-    RowManipulator row( *table, session_, objectId_ );
     if( bypass.has_percentage() )
-        row.SetField( "percentage", FieldVariant( bypass.percentage() ) ); //int
+        row.SetProperty( "Quantity", "percentage", ToString( bypass.percentage() ) ); //int
 }
 
 // -----------------------------------------------------------------------------
@@ -198,10 +286,9 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeBypass& bypass 
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeLogistic& logistic )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Logistic" ) );
+    RowManipulator row( *updater_, *inserter_, "Logistic" );
 
-    RowManipulator row( *table, session_, objectId_ );
-    row.SetField( "tc2", FieldVariant( static_cast< long >( logistic.combat_train().id() ) ) ); // automat id
+    row.SetProperty( "Identifier", "tc2", ToString( logistic.combat_train().id() ) ); // automat id
 }
 
 // -----------------------------------------------------------------------------
@@ -210,10 +297,9 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeLogistic& logis
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeNBC& nbc )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_NBC" ) );
+    RowManipulator row( *updater_, *inserter_, "NBC" );
 
-    RowManipulator row( *table, session_, objectId_ );
-    row.SetField( "danger_level", FieldVariant( nbc.danger_level() ) ); // int
+    row.SetProperty( "Quantity", "danger_level", ToString( nbc.danger_level() ) ); // int
     // nbc.nbc_agents // list object: TODO
 }
 
@@ -223,14 +309,12 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeNBC& nbc )
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeCrossingSite& crossing_site )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Crossing_Site" ) );
+    RowManipulator row( *updater_, *inserter_, "CrossingSite" );
 
-    RowManipulator row( *table, session_, objectId_ );
-    row.SetField( "banks_require_fitting", FieldVariant( crossing_site.banks_require_fitting() ) ); // int
-    // nbc.nbc_agents // list object: TODO
-    row.SetField( "depth", FieldVariant( crossing_site.depth() ) ); //int
-    row.SetField( "flow_rate", FieldVariant( crossing_site.flow_rate() ) ); //int
-    row.SetField( "width", FieldVariant( crossing_site.width() ) ); //int
+    row.SetProperty( "Bool", "banks_require_fitting", ToString( crossing_site.banks_require_fitting() ) );
+    row.SetProperty( "Quantity", "depth", ToString( crossing_site.depth() ) );
+    row.SetProperty( "Quantity", "flow_rate", ToString( crossing_site.flow_rate() ) );
+    row.SetProperty( "Quantity", "width", ToString( crossing_site.width() ) ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -239,14 +323,13 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeCrossingSite& c
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeSupplyRoute& supply_route )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_SupplyRoute" ) );
+    RowManipulator row( *updater_, *inserter_, "SupplyRoute" );
 
-    RowManipulator row( *table, session_, objectId_ );
-    row.SetField( "equipped", FieldVariant( supply_route.equipped() ) ); // boolean
-    row.SetField( "flow_rate", FieldVariant( supply_route.flow_rate() ) ); // int
-    row.SetField( "length", FieldVariant( supply_route.length() ) ); // int
-    row.SetField( "max_weight", FieldVariant( supply_route.max_weight() ) ); // int
-    row.SetField( "width", FieldVariant( supply_route.width() ) ); // int
+    row.SetProperty( "Bool", "equipped", ToString( supply_route.equipped() ) ); // boolean
+    row.SetProperty( "Quantity", "flow_rate", ToString( supply_route.flow_rate() ) ); // int
+    row.SetProperty( "Quantity", "length", ToString( supply_route.length() ) ); // int
+    row.SetProperty( "Quantity", "max_weight", ToString( supply_route.max_weight() ) ); // int
+    row.SetProperty( "Quantity", "width", ToString( supply_route.width() ) ); // int
 }
 
 // -----------------------------------------------------------------------------
@@ -255,9 +338,8 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeSupplyRoute& su
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeToxicCloud& /*toxic_cloud*/ )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Toxic_Cloud" ) );
+    RowManipulator row( *updater_, *inserter_, "ToxicCloud" );
 
-    RowManipulator row( *table, session_, objectId_ );
     //toxic_cloud.quantities // list: todo
 }
 
@@ -267,11 +349,10 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeToxicCloud& /*t
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeFire& fire )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Fire" ) );
-    RowManipulator row( *table, session_, objectId_ );
-
-    row.SetField( "class_name", FieldVariant( fire.class_name() ) ); // string
-    row.SetField( "max_combustion_energy", FieldVariant( fire.max_combustion_energy() ) ); // int
+    RowManipulator row( *updater_, *inserter_, "Fire" );
+        
+    row.SetProperty( "Identifier", "class_name", ToString( fire.class_name() ) ); // int
+    row.SetProperty( "Quantity", "combustion_energy", ToString( fire.max_combustion_energy() ) ); // int
 }
 
 namespace
@@ -288,9 +369,10 @@ namespace
         for ( int i = 0; i < medical_treatment.bed_capacities_size(); ++i )
         {
             const sword::MedicalTreatmentBedCapacity& capacity = medical_treatment.bed_capacities( i );
-            // $$$$ JCR - HACK : Do not take into account NegativeFlowIsolation which is a subset of MedicalSurgical and the last registered element!!
+            
+            // $$$$ JCR - HACK : Do not take into account NegativeFlowIsolation which is a subset of MedicalSurgical and the last registered element!! 
             // $$$$ TODO: ADD this information in the MedicalTreatment definition and the ASN message.
-            if ( capacity.type_id() == 7 ) // SKIP
+            if ( capacity.type_id() == 7 ) // SKIP NegativeFlowIsolation
                 continue;
             if( capacity.has_available_count() )
             {
@@ -304,9 +386,9 @@ namespace
             }
         }
         if( baselineUpdated )
-            row.SetField( "beds", FieldVariant( baseline ) ); // int
+            row.SetProperty( "Quantity", "beds", ToString( baseline ) ); // int
         if( availableUpdated )
-            row.SetField( "available_beds", FieldVariant( available ) ); // int
+            row.SetProperty( "Quantity", "available_beds", ToString( available ) ); // int
     }
 }
 
@@ -316,14 +398,12 @@ namespace
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeMedicalTreatment& medical_treatment )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Medical_Treatment" ) );
-
-    RowManipulator row( *table, session_, objectId_ );
+    RowManipulator row( *updater_, *inserter_, "MedicalTreatment" );
 
     if( medical_treatment.has_doctors() )
-        row.SetField( "doctors", FieldVariant( static_cast< int >( medical_treatment.doctors() ) ) ); // int
+        row.SetProperty( "Quantity", "doctors", ToString( medical_treatment.doctors() ) ); // int
     if( medical_treatment.has_available_doctors() )
-        row.SetField( "available_doctors", FieldVariant( static_cast< int >( medical_treatment.available_doctors() ) ) ); // int
+        row.SetProperty( "Quantity", "available_doctors", ToString( medical_treatment.available_doctors() ) ); // int
     UpdateBedCapacities( row, medical_treatment );
 }
 
@@ -333,10 +413,9 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeMedicalTreatmen
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeInteractionHeight& interaction_height )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Interaction_Height" ) );
+    RowManipulator row( *updater_, *inserter_, "InteractionHeight" );
 
-    RowManipulator row( *table, session_, objectId_ );
-    row.SetField( "height", FieldVariant( interaction_height.height() ) ); //
+    row.SetProperty( "Numeric", "height", ToString( interaction_height.height() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -345,12 +424,11 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeInteractionHeig
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeNBCType& nbc_agent )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_NBC_Type" ) );
+    RowManipulator row( *updater_, *inserter_, "NBCType" );
 
-    RowManipulator row( *table, session_, objectId_ );
-    row.SetField( "agent_id", FieldVariant( static_cast< long >( nbc_agent.agent().id() ) ) ); // int
-    row.SetField( "concentration", FieldVariant( nbc_agent.concentration() ) ); // int
-    row.SetField( "source_life_duration", FieldVariant( nbc_agent.source_life_duration() ) ); // int
+    row.SetProperty( "Identifier", "agent_id", ToString( nbc_agent.agent().id() ) ); // int
+    row.SetProperty( "Quantity", "concentration", ToString( nbc_agent.concentration() ) ); // float
+    row.SetProperty( "Quantity", "source_life_duration", ToString( nbc_agent.source_life_duration() ) ); // int
 }
 
 // -----------------------------------------------------------------------------
@@ -359,8 +437,64 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeNBCType& nbc_ag
 // -----------------------------------------------------------------------------
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeStock& /*stock*/ )
 {
-    std::auto_ptr< Table_ABC > table( OpenTable( "TacticalObject_Attribute_Stock" ) );
+    RowManipulator row( *updater_, *inserter_, "Stock" );
 
-    RowManipulator row( *table, session_, objectId_ );
     //todo: list : stock.resources
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2011-01-24
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeEffectDelay& /*delay*/ )
+{
+    RowManipulator row( *updater_, *inserter_, "EffectDelay" );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2011-01-24
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeSealOff& /*sealoff*/ )
+{
+    RowManipulator row( *updater_, *inserter_, "SealOff" );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2011-01-24
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeResourceNetwork& /*network*/ )
+{
+    RowManipulator row( *updater_, *inserter_, "ResourceNetwork" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2011-01-26
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeBurn& burn )
+{
+    RowManipulator row( *updater_, *inserter_, "Burn" );
+
+    row.SetProperty( "Quantity", "heat", ToString( burn.current_heat() ) ); // int
+    row.SetProperty( "Quantity", "combustion_energy", ToString( burn.combustion_energy() ) ); // int
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2011-01-26
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeBurnSurface& /*burn_surface*/ )
+{
+    RowManipulator row( *updater_, *inserter_, "BurnSurface" );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JCR 2011-01-26
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeFlood& /*flood*/ )
+{
+    RowManipulator row( *updater_, *inserter_, "Flood" );
 }

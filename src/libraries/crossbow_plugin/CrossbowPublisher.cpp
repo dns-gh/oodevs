@@ -14,7 +14,6 @@
 #include "WorkingSession.h"
 #include "DatabaseUpdater.h"
 #include "ReportUpdater.h"
-#include "FolkUpdater.h"
 #include "ActionSerializer.h"
 #include "OrderListener.h"
 #include "StatusListener.h"
@@ -23,7 +22,8 @@
 #include "dispatcher/Model_ABC.h"
 #include "dispatcher/Config.h"
 #include "clients_kernel/Controller.h"
-
+#include "clients_kernel/CoordinateConverter.h"
+#include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 
 using namespace plugins;
@@ -37,7 +37,8 @@ using namespace plugins::crossbow;
 CrossbowPublisher::CrossbowPublisher( const dispatcher::Config& config, dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& publisher, xml::xistream& xis )
     : model_           ( model )
     , workspace_       ( new OGR_Workspace() )
-    , serializer_      ( new ActionSerializer( config, model, staticModel, *workspace_ ) )
+    , converter_       ( new kernel::CoordinateConverter( config ) )
+    , serializer_      ( new ActionSerializer( *converter_, model, staticModel ) )
     , extensions_      ( new ExtensionFactory() )
     , modelLoaded_     ( false )
 {
@@ -45,15 +46,15 @@ CrossbowPublisher::CrossbowPublisher( const dispatcher::Config& config, dispatch
 
     workspace_->Initialize( xis, config );
 
-    session_.reset          ( new WorkingSession( *workspace_, config ) );
+    session_.reset          ( new WorkingSession( *workspace_, config, *converter_ ) );
     databaseUpdater_.reset  ( new DatabaseUpdater( *workspace_, model, *session_ ) );
     reportUpdater_.reset    ( new ReportUpdater( *workspace_, config, model, *session_ ) );
-    folkUpdater_.reset      ( new FolkUpdater( *workspace_, *session_ ) );
 
     // activate listeners
-    listeners_.push_back( T_SharedListener( new OrderListener( model, *workspace_, *serializer_, publisher, *session_ ) ) );
+    listeners_.push_back( T_SharedListener( new OrderListener( *workspace_, *serializer_, publisher, *session_ ) ) );
     listeners_.push_back( T_SharedListener( new ObjectListener( *workspace_, *serializer_, publisher, *session_ ) ) );
     // listeners_.push_back( T_SharedListener( new StatusListener( *workspace_, publisher, *session_ ) ) );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -73,9 +74,6 @@ bool CrossbowPublisher::IsRelevant( const sword::SimToClient& wrapper ) const
 {
     if( wrapper.message().has_control_begin_tick() ||
         wrapper.message().has_control_end_tick() ||
-        wrapper.message().has_object_update() ||
-        wrapper.message().has_object_destruction() ||
-        wrapper.message().has_unit_knowledge_update() ||
         wrapper.message().has_object_destruction() ||
         wrapper.message().has_unit_knowledge_update() ||
         wrapper.message().has_unit_knowledge_destruction() ||
@@ -83,7 +81,9 @@ bool CrossbowPublisher::IsRelevant( const sword::SimToClient& wrapper ) const
         wrapper.message().has_object_knowledge_destruction() ||
         wrapper.message().has_unit_destruction() ||
         wrapper.message().has_report() ||
-        wrapper.message().has_folk_graph_update() )
+        wrapper.message().has_folk_graph_update() ||
+        wrapper.message().has_urban_update() )
+        
         return modelLoaded_;
 
     if( wrapper.message().has_control_send_current_state_begin() ||
@@ -94,11 +94,15 @@ bool CrossbowPublisher::IsRelevant( const sword::SimToClient& wrapper ) const
         wrapper.message().has_unit_knowledge_creation() ||
         wrapper.message().has_object_knowledge_creation() ||
         wrapper.message().has_unit_creation() ||
-        wrapper.message().has_folk_creation() )
+        wrapper.message().has_folk_creation() ||
+        wrapper.message().has_urban_creation() ||
+        wrapper.message().has_party_creation() )
         return true;
 
     if( wrapper.message().has_automat_attributes() )
         return ( wrapper.message().automat_attributes().has_mode() == 1 );
+    if( wrapper.message().has_object_update() )
+        return true;
 
     if( wrapper.message().has_unit_attributes() )
     {
@@ -181,11 +185,10 @@ void CrossbowPublisher::Receive( const sword::SimToClient& asn )
 
         UpdateOnTick( asn );
         UpdateDatabase( asn );
-        UpdateFolkDatabase( asn );
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "ERROR CATCHED (" << __FUNCTION__ << ") : " << std::string( e.what() ) );
+        MT_LOG_ERROR_MSG( "ERROR CAUGHT (" << __FUNCTION__ << ") : " << std::string( e.what() ) );
     }
 }
 
@@ -203,7 +206,7 @@ void CrossbowPublisher::Receive( const sword::MessengerToClient& asn )
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "ERROR CATCHED :" << __FUNCTION__ << std::string( e.what() ) );
+        MT_LOG_ERROR_MSG( "ERROR CAUGHT :" << __FUNCTION__ << std::string( e.what() ) );
     }
 }
 
@@ -230,7 +233,6 @@ void CrossbowPublisher::UpdateOnTick( const sword::SimToClient& wrapper )
     }
     else if( wrapper.message().has_control_end_tick() )
     {
-        folkUpdater_->Flush();
         databaseUpdater_->Flush( /*false*/ );
     }
 }
@@ -283,6 +285,11 @@ void CrossbowPublisher::UpdateDatabase( const sword::SimToClient& wrapper )
     else if( wrapper.message().has_object_knowledge_destruction() )
         databaseUpdater_->Update( wrapper.message().object_knowledge_destruction() );
 
+    else if( wrapper.message().has_urban_creation() )
+        databaseUpdater_->Update( wrapper.message().urban_creation() );
+    else if( wrapper.message().has_urban_update() )
+        databaseUpdater_->Update( wrapper.message().urban_update() );
+
     else if( wrapper.message().has_party_creation() )
         databaseUpdater_->Update( wrapper.message().party_creation() );
 
@@ -307,19 +314,6 @@ void CrossbowPublisher::UpdateDatabase( const sword::MessengerToClient& wrapper 
         databaseUpdater_->Update( wrapper.message().limit_creation() );
 //  else if( wrapper.message().has_limit_destruction() )
 //      databaseUpdater_->Update( wrapper.message().phase_line_destruction() );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: CrossbowPublisher::UpdateFolkDatabase
-// Created: JCR 2008-01-11
-// -----------------------------------------------------------------------------
-void CrossbowPublisher::UpdateFolkDatabase( const sword::SimToClient& wrapper )
-{
-    if( wrapper.message().has_folk_creation() )
-        folkUpdater_->Update( wrapper.message().folk_creation() );
-    else if( wrapper.message().has_folk_graph_update() )
-        folkUpdater_->Update( wrapper.message().folk_graph_update() );
 }
 
 // -----------------------------------------------------------------------------

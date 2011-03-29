@@ -28,6 +28,12 @@ namespace sword
     class ObjectAttributeInteractionHeight;
     class ObjectAttributeNBCType;
     class ObjectAttributeStock;
+    class ObjectAttributeEffectDelay;
+    class ObjectAttributeSealOff;
+    class ObjectAttributeResourceNetwork;
+    class ObjectAttributeBurn;
+    class ObjectAttributeBurnSurface;
+    class ObjectAttributeFlood;    
 }
 
 namespace plugins
@@ -43,7 +49,7 @@ class ObjectAttributeUpdater
 public:
     //! @name Constructor / desctructor
     //@{
-     ObjectAttributeUpdater( Workspace_ABC& workspace, const WorkingSession_ABC& session, long objectId );
+     ObjectAttributeUpdater( Workspace_ABC& workspace, long objectId );
     ~ObjectAttributeUpdater();
     //@}
 
@@ -76,17 +82,20 @@ private:
     void Update( const sword::ObjectAttributeInteractionHeight& interaction_height );
     void Update( const sword::ObjectAttributeNBCType& nbc_agent );
     void Update( const sword::ObjectAttributeStock& stock );
+    void Update( const sword::ObjectAttributeEffectDelay& delay );
+    void Update( const sword::ObjectAttributeSealOff& sealoff );
+    void Update( const sword::ObjectAttributeResourceNetwork& network );
+    void Update( const sword::ObjectAttributeBurn& burn );
+    void Update( const sword::ObjectAttributeBurnSurface& burn_surface );
+    void Update( const sword::ObjectAttributeFlood& flood );
     //@}
 
-    //! @name
-    //@{
-    Table_ABC* OpenTable( const std::string& name );
-    //@}
+public:
+    class RowUpdater_ABC;
 
 private:
-    Workspace_ABC&              workspace_;
-    const WorkingSession_ABC&   session_;
-    long           objectId_;
+    std::auto_ptr< RowUpdater_ABC > updater_;
+    std::auto_ptr< RowUpdater_ABC > inserter_;
 };
 
 }

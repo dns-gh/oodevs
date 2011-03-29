@@ -11,6 +11,7 @@
 #include "protocol/Protocol.h"
 #include "DatabaseUpdater.h"
 #include "ObjectAttributeUpdater.h"
+#include "ResourceNetworkUpdater.h"
 #include "Database_ABC.h"
 #include "Workspace_ABC.h"
 #include "Table_ABC.h"
@@ -30,7 +31,6 @@
 #include "dispatcher/Side.h"
 #include "clients_kernel/ObjectType.h"
 #include "tools/App6Symbol.h"
-#include "QueryBuilder.h"
 #include "WorkingSession_ABC.h"
 
 #include <boost/lexical_cast.hpp>
@@ -73,10 +73,6 @@ namespace crossbow
             return *geometry_;
         }
 
-        Database_ABC& GetFlat()
-        {
-            return workspace_.GetDatabase( "flat" );
-        }
     private:
         Workspace_ABC& workspace_;
         Database_ABC* geometry_;
@@ -151,35 +147,19 @@ void DatabaseUpdater::Clean()
         database_->GetGeometry().ClearTable( "KnowledgeUnits", clause );
         database_->GetGeometry().ClearTable( "BoundaryLimits", clause );
         database_->GetGeometry().ClearTable( "TacticalLines", clause );
-        database_->GetGeometry().ClearTable( "TacticalObject_Area", clause );
-        database_->GetGeometry().ClearTable( "TacticalObject_Line", clause );
-        database_->GetGeometry().ClearTable( "TacticalObject_Point", clause );
+        
+        database_->GetGeometry().ClearTable( "Objects", clause );
+        database_->GetGeometry().ClearTable( "KnowledgeObjects", clause );
 
-        database_->GetFlat().ClearTable( "KnowledgeObjects", clause );
-        database_->GetFlat().ClearTable( "Reports", clause );
-        database_->GetFlat().ClearTable( "Formations", clause );
-        database_->GetFlat().ClearTable( "SimulationClock", clause );
-        database_->GetFlat().ClearTable( "Teams", clause );
-
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_activity_time", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_bypass", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_construction", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_crossing_site", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_fire", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_interaction_height", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_logistic", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_medical_treatment", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_mine", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_nbc", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_nbc_type", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_obstacle", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_stock", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_supplyroute", clause );
-        database_->GetFlat().ClearTable( "TacticalObject_Attribute_toxic_cloud", clause );
+        database_->GetGeometry().ClearTable( "Formations", clause );
+        database_->GetGeometry().ClearTable( "SimulationClock", clause );
+        database_->GetGeometry().ClearTable( "Teams", clause );
+        database_->GetGeometry().ClearTable( "urban_blocks", clause );
+        database_->GetGeometry().ClearTable( "resource_network", clause );
     }
     catch ( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "QueryDatabaseUpdater is not correctly loaded : " + std::string( e.what() ) );
+        MT_LOG_ERROR_MSG( "DatabaseUpdater is not correctly loaded : " + std::string( e.what() ) );
     }
 }
 
@@ -240,7 +220,7 @@ void DatabaseUpdater::Update( const sword::UnitKnowledgeCreation& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const sword::ObjectKnowledgeCreation& msg )
 {
-    std::auto_ptr< Table_ABC > table( database_->GetFlat().OpenTable( "KnowledgeObjects" ) );
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "KnowledgeObjects" ) );
 
     const dispatcher::ObjectKnowledge_ABC* knowledge = model_.ObjectKnowledges().Find( msg.knowledge().id() );
     const kernel::Object_ABC* entity = knowledge->GetEntity();
@@ -302,28 +282,6 @@ void DatabaseUpdater::Update( const sword::PhaseLineCreation& msg )
 
 namespace
 {
-    std::string GetObjectTable( const sword::Location& location )
-    {
-        std::string className = "TacticalObject_Area";
-        switch ( location.type() )
-        {
-        case sword::Location::point: className = "TacticalObject_Point"; break;
-        case sword::Location::line:  className = "TacticalObject_Line"; break;
-        }
-        return className;
-    }
-
-    std::string GetObjectKnowledgeTable( const sword::Location& location )
-    {
-        std::string className = "KnowledgeObjects_Area";
-        switch ( location.type() )
-        {
-        case sword::Location::point: className = "KnowledgeObjects_Point"; break;
-        case sword::Location::line:  className = "KnowledgeObjects_Line"; break;
-        }
-        return className;
-    }
-
     // -----------------------------------------------------------------------------
     // Name: QueryDatabaseUpdater::UpdateGeometry
     // Created: JCR 2009-11-02
@@ -355,9 +313,9 @@ namespace
 // Name: DatabaseUpdater::UpdateObjectAttributes
 // Created: JCR 2010-07-21
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::UpdateObjectAttributes( unsigned long oid, const sword::ObjectAttributes& msg )
+void DatabaseUpdater::UpdateObjectAttributes( long objectId, const sword::ObjectAttributes& msg )
 {
-    ObjectAttributeUpdater updater( workspace_, session_, oid );
+    ObjectAttributeUpdater updater( workspace_, objectId );
 
     updater.Update( msg );
 }
@@ -368,7 +326,7 @@ void DatabaseUpdater::UpdateObjectAttributes( unsigned long oid, const sword::Ob
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const sword::ObjectCreation& msg )
 {
-    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( GetObjectTable( msg.location() ) ) );
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "Objects" ) );
     Row_ABC& row = table->CreateRow();
     row.SetField( "public_oid", FieldVariant( (long) msg.object().id() ) );
     row.SetField( "name" , FieldVariant( std::string( msg.name() ) ) );
@@ -376,8 +334,18 @@ void DatabaseUpdater::Update( const sword::ObjectCreation& msg )
     row.SetField( "session_id", FieldVariant( session_.GetId() ) );
     UpdateSymbol( row, model_.Objects(), msg.object().id() );
     UpdateGeometry( row, msg.location() );
-    UpdateObjectAttributes( msg.object().id(), msg.attributes() );
     table->InsertRow( row );
+    
+    long rowId = row.GetID();
+    if( rowId == OGRNullFID )
+    {
+        Row_ABC* row = table->Find( "public_oid=" + boost::lexical_cast< std::string >( (long) msg.object().id() ) + " AND session_id=" +
+                                     boost::lexical_cast< std::string >( session_.GetId() ) );
+        if( row )
+            rowId = row->GetID();
+    }
+    if( msg.has_attributes() )
+        UpdateObjectAttributes( rowId, msg.attributes() );
 }
 
 // -----------------------------------------------------------------------------
@@ -386,22 +354,22 @@ void DatabaseUpdater::Update( const sword::ObjectCreation& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const sword::ObjectUpdate& msg )
 {
-    if ( msg.has_location() )
-    {
-        std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( GetObjectTable( msg.location() ) ) );
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "Objects" ) );
 
-        std::stringstream query;
-        query << "public_oid=" << msg.object().id() << " AND session_id=" << session_.GetId();
-        if( Row_ABC* row = table->Find( query.str() ) )
+    std::stringstream query;
+    query << "public_oid=" << msg.object().id() << " AND session_id=" << session_.GetId();
+    Row_ABC* row = table->Find( query.str() );
+    
+    if( row )
+    {
+        if( msg.has_location() && msg.location().coordinates().elem_size() > 0 )
         {
-            if( msg.location().coordinates().elem_size() > 0 )
-            {
-                if( UpdateGeometry( *row, msg.location() ) )
-                    table->UpdateRow( *row );
-            }
+            if( UpdateGeometry( *row, msg.location() ) )
+                table->UpdateRow( *row );
         }
+        if( msg.has_attributes() )
+            UpdateObjectAttributes( row->GetID(), msg.attributes() );
     }
-    UpdateObjectAttributes( msg.object().id(), msg.attributes() );
 }
 
 // -----------------------------------------------------------------------------
@@ -411,7 +379,7 @@ void DatabaseUpdater::Update( const sword::ObjectUpdate& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const sword::ObjectKnowledgeUpdate& msg )
 {
-    std::auto_ptr< Table_ABC > table( database_->GetFlat().OpenTable( "KnowledgeObjects" ) );
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "KnowledgeObjects" ) );
 
     std::stringstream query;
     query << "public_oid=" << msg.knowledge().id() << " AND session_id=" << session_.GetId();
@@ -441,31 +409,11 @@ void DatabaseUpdater::Update( const sword::ObjectKnowledgeUpdate& msg )
         row->SetField( "symbol_id", FieldVariant( FormatSymbol( symbol ) ) );
         //Geometry
         if( msg.has_location() )
-            UpdateObjectKnowledgeGeometry( GetObjectKnowledgeTable( msg.location() ), msg );
+            UpdateGeometry( *row, msg.location() );
+
+        table->UpdateRow( *row );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: DatabaseUpdater::UpdateObjectKnowledgeGeometry
-// Created: JCR 2009-11-02
-// -----------------------------------------------------------------------------
-void DatabaseUpdater::UpdateObjectKnowledgeGeometry( const std::string& tablename, const sword::ObjectKnowledgeUpdate& msg )
-{
-    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( tablename ) );
-    std::stringstream query;
-    query << "public_oid=" << msg.knowledge().id() << " AND session_id=" << session_.GetId();
-
-    Row_ABC* row = table->Find( query.str() );
-    if( row == NULL )
-    {
-        row = &table->CreateRow();
-        row->SetField( "public_oid", FieldVariant( (long) msg.knowledge().id() ) );
-        row->SetField( "session_id", FieldVariant( session_.GetId() ) );
-    }
-    UpdateGeometry( *row, msg.location() );
-}
-
-
 
 // -----------------------------------------------------------------------------
 // Name: DatabaseUpdater::Update
@@ -473,7 +421,7 @@ void DatabaseUpdater::UpdateObjectKnowledgeGeometry( const std::string& tablenam
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const sword::FormationCreation& message )
 {
-    std::auto_ptr< Table_ABC > table( database_->GetFlat().OpenTable( "Formations" ) );
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "Formations" ) );
 
     Row_ABC& row = table->CreateRow();
     row.SetField( "public_oid", FieldVariant( ( long ) message.formation().id() ) );
@@ -495,7 +443,7 @@ void DatabaseUpdater::Update( const sword::FormationCreation& message )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const sword::AutomatCreation& message )
 {
-    std::auto_ptr< Table_ABC > table( database_->GetFlat().OpenTable( "Formations" ) );
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "Formations" ) );
     Row_ABC& row = table->CreateRow();
     row.SetField( "public_oid", FieldVariant( ( long ) message.automat().id() ) );
     if( message.parent().has_formation() )
@@ -516,11 +464,10 @@ void DatabaseUpdater::Update( const sword::AutomatCreation& message )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const sword::AutomatAttributes& msg )
 {
-    std::auto_ptr< Table_ABC > table( database_->GetFlat().OpenTable( "Formations" ) );
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "Formations" ) );
     std::stringstream query;
     query << "public_oid=" << msg.automat().id() << " AND session_id=" << session_.GetId();
 
-    table->EndTransaction();
     if( Row_ABC* row = table->Find( query.str() ) )
     {
         if( msg.has_mode() )
@@ -611,21 +558,10 @@ void DatabaseUpdater::Update( const sword::UnitDestruction& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const sword::ObjectDestruction& msg )
 {
-    std::stringstream ssQuery;
-    ssQuery << "public_oid=" << msg.object().id() << " AND session_id=" << session_.GetId();
-    std::string query( ssQuery.str() );
-    {
-        std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "TacticalObject_Point" ) );
-        table->DeleteRows( query );
-    }
-    {
-        std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "TacticalObject_Line" ) );
-        table->DeleteRows( query );
-    }
-    {
-        std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "TacticalObject_Area" ) );
-        table->DeleteRows( query );
-    }
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "Objects" ) );
+    std::stringstream query;
+    query << "public_oid=" << msg.object().id() << " AND session_id=" << session_.GetId();
+    table->DeleteRows( query.str()  );
 }
 
 // -----------------------------------------------------------------------------
@@ -646,7 +582,7 @@ void DatabaseUpdater::Update( const sword::UnitKnowledgeDestruction& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const sword::ObjectKnowledgeDestruction& msg )
 {
-    std::auto_ptr< Table_ABC > table( database_->GetFlat().OpenTable( "KnowledgeObjects" ) );
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "KnowledgeObjects" ) );
     std::stringstream query;
     query << "public_oid=" << msg.knowledge().id() << " AND session_id=" << session_.GetId();
     table->DeleteRows( query.str() );
@@ -662,19 +598,21 @@ void DatabaseUpdater::Update( const sword::ControlBeginTick& msg )
 
     query << "session_id=" << session_.GetId();
 
-    std::auto_ptr< Table_ABC > table( database_->GetFlat().OpenTable( "SimulationClock" ) );
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "SimulationClock" ) );
 
     Row_ABC* row = table->Find( query.str() );
+    std::string datetime = msg.date_time().data();
     if( !row ) // Do not exist yet
     {
         Row_ABC& insert = table->CreateRow();
-        insert.SetField( "clock", FieldVariant( std::string( msg.date_time().data(), 15 ) ) );
+
+        insert.SetField( "clock", FieldVariant( datetime ) );
         insert.SetField( "session_id", session_.GetId() );
         table->InsertRow( insert );
     }
     else
     {
-        row->SetField( "clock", FieldVariant( std::string( msg.date_time().data(), 15 ) ) );
+        row->SetField( "clock", FieldVariant( datetime ) );
         table->UpdateRow( *row );
     }
 }
@@ -686,7 +624,7 @@ void DatabaseUpdater::Update( const sword::ControlBeginTick& msg )
 // -----------------------------------------------------------------------------
 void DatabaseUpdater::Update( const sword::PartyCreation& msg )
 {
-    std::auto_ptr< Table_ABC > table( database_->GetFlat().OpenTable( "Teams" ) );
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "Teams" ) );
 
     Row_ABC& row = table->CreateRow();
 
@@ -705,6 +643,124 @@ void DatabaseUpdater::Update( const sword::PartyCreation& msg )
           neutre = 3
        } ;
     } ;*/
+}
+
+namespace 
+{
+    std::string MakeColor( const sword::RgbaColor& color )
+    {
+        return "(" + boost::lexical_cast< std::string >( color.red() ) + ","
+                   + boost::lexical_cast< std::string >( color.green() ) + ","
+                   + boost::lexical_cast< std::string >( color.blue() ) + ","
+                   + boost::lexical_cast< std::string >( color.alpha() ) + ")";
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::UpdateUrbanBlockAttributes
+// Created: JCR 2011-01-25
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::UpdateUrbanBlockAttributes( Row_ABC& row, const sword::UrbanAttributes& attributes )
+{
+    if( attributes.has_structure() )
+        row.SetField( "structure_state", FieldVariant( static_cast< int >( attributes.structure().state() ) ) );
+    if( attributes.has_architecture() )
+    {
+        row.SetField( "archi_height",  FieldVariant( attributes.architecture().height() ) );
+        row.SetField( "archi_floor_number",  FieldVariant( attributes.architecture().floor_number() ) );
+        row.SetField( "archi_roof_shape",  FieldVariant( attributes.architecture().roof_shape() ) );
+        row.SetField( "archi_material",  FieldVariant( attributes.architecture().material() ) );
+        row.SetField( "archi_occupation",  FieldVariant( attributes.architecture().occupation() ) );
+        row.SetField( "archi_trafficability",  FieldVariant( attributes.architecture().trafficability() ) );
+        // 4.2.2 row.SetField( "archi_parking_available",  FieldVariant( msg.attributes().architecture().parking_available() ) );
+    }
+    if( attributes.has_color() )
+        row.SetField( "color", FieldVariant( MakeColor( attributes.color() ) ) );
+
+    //4.2.2
+    /*if( attributes.has_infrastructures() )
+    {
+        
+        row.SetField( "infra_type", FieldVariant( attributes.) );
+        row.SetField( "infra_active", FieldVariant() );
+        row.SetField( "infra_threshold", FieldVariant() );
+        row.SetField( "usage_role", FieldVariant() );
+        row.SetField( "usage_percentage", FieldVariant() );
+    }*/
+    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::UpdateResourceNetworks
+// Created: JCR 2011-01-25
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::UpdateResourceNetworks( const sword::UrbanAttributes_Infrastructures& infra, long oid, bool creation )
+{
+    if( infra.resource_network_size() != 0 )
+    {
+        for( int i = 0; i < infra.resource_network_size(); i++ )
+            UpdateResourceNetwork( infra.resource_network( i ), oid, session_.GetId(), creation );
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::Update
+// Created: JCR 2011-01-25
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::UpdateResourceNetwork( const sword::ResourceNetwork& net, long oid, int session_id, bool creation )
+{
+    ResourceNetworkUpdater netUpdater( workspace_, oid, session_id, creation );
+    netUpdater.Update( net );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::Update
+// Created: JCR 2011-01-25
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::Update( const sword::UrbanCreation& msg )
+{
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "urban_blocks" ) );
+
+    Row_ABC& row = table->CreateRow();
+    row.SetField( "public_oid", FieldVariant( static_cast< long >( msg.object().id() ) ) );
+    row.SetField( "session_id", FieldVariant( session_.GetId() ) );
+    if( msg.has_parent() )
+        row.SetField( "parent_oid", FieldVariant( static_cast< long >( msg.parent().id() ) ) );
+    if( msg.has_name() )
+        row.SetField( "name", FieldVariant( msg.name() ) );
+    if( msg.has_attributes() )
+        UpdateUrbanBlockAttributes( row, msg.attributes() );
+    if( msg.has_location() )
+        UpdateGeometry( row, msg.location() );
+    table->InsertRow( row );
+    table.reset();
+    //create network resource (one table per instance can be open ) 
+    if( msg.attributes().has_infrastructures() )
+        UpdateResourceNetworks( msg.attributes().infrastructures(), static_cast< long >( msg.object().id() ), true );
+
+}
+    
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::Update
+// Created: JCR 2011-01-25
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::Update( const sword::UrbanUpdate& msg )
+{
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "urban_blocks" ) );
+    
+    Row_ABC* row = table->Find( "public_oid=" + boost::lexical_cast< std::string >( msg.object().id() ) + 
+                                   " AND session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
+    if( row )
+    {
+        if( msg.has_attributes() )
+            UpdateUrbanBlockAttributes( *row, msg.attributes() );
+        if( msg.has_location() )
+            UpdateGeometry( *row, msg.location() );
+        table->UpdateRow( *row );
+        table.reset();
+        //create network resource (one table per instance can be open ) 
+        if( msg.attributes().has_infrastructures() )
+            UpdateResourceNetworks( msg.attributes().infrastructures(), static_cast< long >( msg.object().id() ), false );
+    }
 }
 
 // -----------------------------------------------------------------------------

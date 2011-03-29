@@ -32,6 +32,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual const geometry::Rectangle2f& GetExtent() const = 0;
     virtual bool IsInBoundaries                     ( const geometry::Point2f& point ) const = 0;
     virtual std::string       ConvertToMgrs         ( const geometry::Point2f& pos ) const = 0;
     virtual geometry::Point2d ConvertToGeo          ( const geometry::Point2f& pos ) const = 0;

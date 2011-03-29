@@ -34,8 +34,6 @@ namespace
         CPLSetConfigOption( "OGR_SDE_SEARCHORDER", "ATTRIBUTE_FIRST" );
         MT_LOG_INFO_MSG( "OGR/GDAL path: " << bfs::current_path().string() )
         OGRRegisterAll();
-        if( argc > 0 && GDALGeneralCmdLineProcessor( argc, &argv, 0 ) < 1 )
-            throw std::runtime_error( "error while processing gdal commands." );
     }
 }
 

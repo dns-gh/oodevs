@@ -11,6 +11,12 @@
 #define __crossbow_ActionDispatcher_h_
 
 #include "ActionSerializer_ABC.h"
+#include "tools/Resolver_ABC.h"
+
+namespace xml
+{
+    class xistream;
+}
 
 namespace dispatcher
 {
@@ -28,7 +34,6 @@ namespace kernel
     class EntityResolver_ABC;
     class StaticModel;
     class Controller;
-    class OrderParameter;
     class Entity_ABC;
 }
 
@@ -49,8 +54,6 @@ namespace plugins
 {
 namespace crossbow
 {
-    class Workspace_ABC;
-    class ActionParameterSerializer;
     class Row_ABC;
 
 // =============================================================================
@@ -65,16 +68,13 @@ class ActionSerializer : public ActionSerializer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionSerializer( const dispatcher::Config& config, dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, Workspace_ABC& workspace );
+             ActionSerializer( const kernel::CoordinateConverter_ABC& converter, dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel );
     virtual ~ActionSerializer();
     //@}
 
-    //! @name Operations
+    //! @name 
     //@{
-    virtual void SerializeMission( const dispatcher::Agent_ABC& agent, const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action );
-    virtual void SerializeMission( const dispatcher::Automat_ABC& automat, const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action );
-    virtual void SerializeFragOrder( const kernel::Entity_ABC& target, const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action );
-    virtual void SerializeObjectMagicCreation( const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action );
+    virtual void SerializeCreation( const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action ) const;
     //@}
 
 private:
@@ -84,32 +84,20 @@ private:
     ActionSerializer& operator=( const ActionSerializer& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    void                    SetParameters( unsigned long actionId, const kernel::Entity_ABC* entity, actions::Action_ABC& mission );
-    actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& type, const std::string& value, const kernel::Entity_ABC* entity ) const;
-    //@}
+    void ReadAction(  xml::xistream& xis, std::auto_ptr< actions::Action_ABC >& action ) const;
 
 private:
-
-    //! @name Reference member data
-    //@{
-    Workspace_ABC& workspace_;
-
-    //@}
-
     //! @name Member data
     //@{
     std::auto_ptr< kernel::Controller > controller_;
     std::auto_ptr< tools::Observer_ABC > observer_;
     std::auto_ptr< kernel::EntityResolver_ABC > entities_;
-    std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    const kernel::CoordinateConverter_ABC& converter_;
     std::auto_ptr< kernel::Time_ABC > time_;
     std::auto_ptr< kernel::AgentKnowledgeConverter_ABC > agentsKnowledges_;
     std::auto_ptr< kernel::ObjectKnowledgeConverter_ABC > objectsKnowledges_;
-    std::auto_ptr< actions::ParameterFactory_ABC > nullParameters_;
+    std::auto_ptr< actions::ParameterFactory_ABC > parameters_;
     std::auto_ptr< actions::ActionFactory_ABC > factory_;
-    std::auto_ptr< ActionParameterSerializer > serializer_;
     //@}
 };
 

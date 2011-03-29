@@ -19,8 +19,6 @@ namespace plugins
 {
 namespace crossbow
 {
-
-
 // =============================================================================
 /** @class  OGR_Database
     @brief  OGR_Database
@@ -48,11 +46,6 @@ public:
     Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true );
     Table_ABC*  OpenTable( const std::string& name );
     void        ClearTable( const std::string& name, const std::string& filter );
-    //@}
-
-    //! @name
-    //@{
-    void Execute( const QueryBuilder_ABC& builder );
     //@}
 
     //! @name

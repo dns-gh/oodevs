@@ -63,7 +63,7 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 std::string ReportFactory::CreateMessage( const sword::Report& message ) const
 {
-    CIT_Templates it = templates_.find( message.report().id() );
+    CIT_Templates it = templates_.find( message.type().id() );
     if( it == templates_.end() )
         return "Unknown report";
     if( message.has_parameters() )

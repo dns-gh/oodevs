@@ -18,6 +18,7 @@ namespace kernel
 {
     class StaticModel;
     class Controller;
+    class CoordinateConverter;
 }
 
 namespace dispatcher
@@ -41,7 +42,6 @@ namespace crossbow
 
     class DatabaseUpdater;
     class ReportUpdater;
-    class FolkUpdater;
     class Listener_ABC;
     class ExtensionFactory;
     class WorkingSession_ABC;
@@ -84,7 +84,6 @@ private:
     void UpdateOnAcknowledge( const sword::SimToClient& asn );
     void UpdateDatabase( const sword::SimToClient& asn );
     void UpdateDatabase( const sword::MessengerToClient& asn );
-    void UpdateFolkDatabase( const sword::SimToClient& asn );
     void UpdateListeners();
     //@}
 
@@ -98,17 +97,17 @@ private:
 private:
     //! @name Member data
     //@{
-    dispatcher::Model_ABC&                  model_;
-    std::auto_ptr< OGR_Workspace >          workspace_;
-    std::auto_ptr< DatabaseUpdater >        databaseUpdater_;
-    std::auto_ptr< ReportUpdater >          reportUpdater_;
-    std::auto_ptr< FolkUpdater >            folkUpdater_;
-    T_Listeners                             listeners_;
-    bool                                    modelLoaded_;
-    std::auto_ptr< kernel::Controller >     controller_;
-    std::auto_ptr< ActionSerializer_ABC >   serializer_;
-    std::auto_ptr< ExtensionFactory >       extensions_;
-    std::auto_ptr< WorkingSession_ABC >     session_;
+    dispatcher::Model_ABC&                          model_;
+    std::auto_ptr< OGR_Workspace >                  workspace_;
+    std::auto_ptr< kernel::CoordinateConverter >    converter_;
+    std::auto_ptr< DatabaseUpdater >                databaseUpdater_;
+    std::auto_ptr< ReportUpdater >                  reportUpdater_;
+    T_Listeners                                     listeners_;
+    bool                                            modelLoaded_;
+    std::auto_ptr< kernel::Controller >             controller_;
+    std::auto_ptr< ActionSerializer_ABC >           serializer_;
+    std::auto_ptr< ExtensionFactory >               extensions_;
+    std::auto_ptr< WorkingSession_ABC >             session_;
     //@}
 };
 

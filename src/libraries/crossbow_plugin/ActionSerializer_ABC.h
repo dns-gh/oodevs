@@ -52,10 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SerializeMission( const dispatcher::Agent_ABC& agent, const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action ) = 0;
-    virtual void SerializeMission( const dispatcher::Automat_ABC& automat, const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action ) = 0;
-    virtual void SerializeFragOrder( const kernel::Entity_ABC& target, const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action ) = 0;
-    virtual void SerializeObjectMagicCreation( const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action ) = 0;
+    virtual void SerializeCreation( const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action ) const = 0;
     //@}
 };
 

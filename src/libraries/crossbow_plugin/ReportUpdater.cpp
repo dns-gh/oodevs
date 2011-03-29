@@ -28,7 +28,7 @@ ReportUpdater::ReportUpdater( Workspace_ABC& workspace, const dispatcher::Config
     , reportFactory_ ( new ReportFactory( config, model ) )
     , session_ ( session )
 {
-    // NOTHING
+    Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void ReportUpdater::Clean()
     try
     {
         const std::string clause( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
-        workspace_.GetDatabase( "flat" ).ClearTable( "Reports", clause );
+        workspace_.GetDatabase( "geometry" ).ClearTable( "Reports", clause );
     }
     catch ( std::exception& e )
     {
@@ -63,10 +63,15 @@ void ReportUpdater::Clean()
 // -----------------------------------------------------------------------------
 void ReportUpdater::Update( const sword::Report& msg )
 {
-    std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "flat" ).OpenTable( "Reports" ) );
-
+    std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "Reports" ) );
     Row_ABC& row = table->CreateRow();
-    row.SetField( "unit_id", FieldVariant( (long)msg.report().id() ) );
+    if( msg.has_source() )
+    {
+        if( msg.source().has_automat() )
+            row.SetField( "unit_id", FieldVariant( static_cast<long>( msg.source().automat().id() ) ) );
+        else if( msg.source().has_unit() )
+            row.SetField( "unit_id", FieldVariant( static_cast<long>( msg.source().unit().id() ) ) );
+    }
     row.SetField( "message", FieldVariant( reportFactory_->CreateMessage( msg ) ) );
     row.SetField( "session_id", FieldVariant( session_.GetId() ) );
     table->InsertRow( row );

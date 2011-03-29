@@ -124,6 +124,15 @@ void OGR_FeatureClass::Clear()
     // $$$$ TODO ?
 }
 
+// -----------------------------------------------------------------------------
+// Name: OGR_FeatureClass::Flush
+// Created: JCR 2011-01-24
+// -----------------------------------------------------------------------------
+void OGR_FeatureClass::Flush()
+{
+    if( OGRERR_NONE != layer_.SyncToDisk() )
+        MT_LOG_ERROR_MSG( "Crossbow plugin : OGR_Database::SyncToDisk failed" )
+}
 
 // -----------------------------------------------------------------------------
 // Name: OGR_FeatureClass::BeginTransaction

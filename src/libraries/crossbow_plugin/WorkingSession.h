@@ -12,6 +12,11 @@
 
 #include "WorkingSession_ABC.h"
 
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
 namespace tools
 {
     class ExerciseConfig;
@@ -36,7 +41,7 @@ namespace crossbow
 public:
     //! @name Constructors/Destructor
     //@{
-            WorkingSession( Workspace_ABC& database, const tools::SessionConfig& config );
+            WorkingSession( Workspace_ABC& database, const tools::SessionConfig& config, const kernel::CoordinateConverter_ABC& converter );
     virtual ~WorkingSession();
     //@}
 
@@ -70,6 +75,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& converter_;
     T_Information exercise_;
     T_Information session_;
     //@}

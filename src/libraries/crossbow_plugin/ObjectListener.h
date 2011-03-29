@@ -49,7 +49,6 @@ public:
     //! @name Operations
     //@{
     virtual void Listen();
-
     //@}
 
 private:
@@ -62,7 +61,7 @@ private:
     //! @name Helpers
     //@{
     void Clean();
-    void SendCreation( const Row_ABC& row );
+    bool SendCreation( const Row_ABC& row );
     //@}
 
 private:

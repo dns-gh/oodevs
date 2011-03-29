@@ -105,15 +105,6 @@ void OGR_Database::ClearTable( const std::string& name, const std::string& filte
 }
 
 // -----------------------------------------------------------------------------
-// Name: OGR_Database::Execute
-// Created: JCR 2010-02-27
-// -----------------------------------------------------------------------------
-void OGR_Database::Execute( const QueryBuilder_ABC& /*builder*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: OGR_Database::Flush
 // Created: JCR 2010-02-27
 // -----------------------------------------------------------------------------

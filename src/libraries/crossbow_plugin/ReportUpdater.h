@@ -45,11 +45,6 @@ public:
     virtual ~ReportUpdater();
     //@}
 
-    //! @name
-    //@{
-    void Clean();
-    //@}
-
     //! @name Operations
     //@{
     void Update( const sword::Report& msg );
@@ -60,6 +55,11 @@ private:
     //@{
     ReportUpdater( const ReportUpdater& );            //!< Copy constructor
     ReportUpdater& operator=( const ReportUpdater& ); //!< Assignment operator
+    //@}
+
+    //! @name
+    //@{
+    void Clean();
     //@}
 
 private:

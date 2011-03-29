@@ -223,3 +223,12 @@ std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& pos
 
     return positionStr;
 }
+
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::GetExtent
+// Created: AME 2011-02-03
+// -----------------------------------------------------------------------------
+const geometry::Rectangle2f& CoordinateConverter::GetExtent() const
+{
+    return extent_;
+}

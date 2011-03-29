@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Listener_ABC_h_
-#define __Listener_ABC_h_
+#ifndef __crossbow_Listener_ABC_h_
+#define __crossbow_Listener_ABC_h_
 
 namespace plugins
 {
@@ -38,4 +38,4 @@ public:
 }
 }
 
-#endif // __Listener_ABC_h_
+#endif // __crossbow_Listener_ABC_h_

@@ -13,7 +13,7 @@
 #include "QuerySessionData.h"
 #include "tools/SessionConfig.h"
 #include <boost/filesystem/path.hpp>
-
+#include "clients_kernel/CoordinateConverter_ABC.h"
 using namespace plugins;
 using namespace plugins::crossbow;
 namespace bfs = boost::filesystem;
@@ -22,7 +22,8 @@ namespace bfs = boost::filesystem;
 // Name: Constructor
 // Created: MPT 2009-07-27
 // -----------------------------------------------------------------------------
-WorkingSession::WorkingSession( Workspace_ABC& workspace, const tools::SessionConfig& config )
+WorkingSession::WorkingSession( Workspace_ABC& workspace, const tools::SessionConfig& config, const kernel::CoordinateConverter_ABC& converter )
+: converter_( converter )
 {
     QuerySessionData querySession( workspace.GetDatabase( "flat" ) );
 
@@ -70,7 +71,7 @@ void WorkingSession::LoadExercise( const tools::ExerciseConfig& config, QuerySes
     {
         exercise_.second = database.FindExercise( exercise_.first );
         if( exercise_.second < 0 )
-            exercise_.second = database.CreateExercise( exercise_.first );
+            exercise_.second = database.CreateExercise( exercise_.first, converter_ );
     }
     else
         MT_LOG_ERROR_MSG( "CrossbowPlugin : can't retrieve exercise name" );

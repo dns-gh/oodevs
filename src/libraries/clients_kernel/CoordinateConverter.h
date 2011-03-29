@@ -50,7 +50,7 @@ public:
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const;
 
     virtual bool IsInBoundaries( const geometry::Point2f& point ) const;
-
+    virtual const geometry::Rectangle2f& GetExtent() const;
     virtual std::string       ConvertToMgrs     ( const geometry::Point2f& pos ) const;
     virtual geometry::Point2d ConvertToGeo      ( const geometry::Point2f& pos ) const;
     virtual geometry::Point2d ConvertToGeo      ( const geometry::Point2d& pos ) const;

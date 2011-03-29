@@ -82,8 +82,8 @@ std::string ReportTemplate::RenderMessage( const MissionParameters& message ) co
     std::string content( GetMessage() );
     unsigned int enums = 0;
     for( int i = 0; i < message.elem_size(); ++i )
-        if( message.elem(i).value().Get(0).has_enumeration() )
-            SetParameter( content, i + 1, enumerations_[enums++][message.elem(i).value().Get(0).enumeration()] );
+        if( message.elem(i).value().Get( 0 ).has_enumeration() )
+            SetParameter( content, i + 1, enumerations_[enums++][message.elem(i).value().Get( 0 ).enumeration()] );
         else
             SetParameter( content, i + 1, factory_.RenderParameter( message.elem(i) ) );
     return content;

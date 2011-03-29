@@ -13,7 +13,7 @@
 #include "Database_ABC.h"
 #include "Row_ABC.h"
 #include "Table_ABC.h"
-
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
 #include <boost/filesystem/path.hpp>
@@ -47,11 +47,19 @@ QuerySessionData::~QuerySessionData()
 // Name: QuerySessionData::CreateExercise
 // Created: MPT 2009-07-27
 // -----------------------------------------------------------------------------
-int QuerySessionData::CreateExercise( const std::string& name )
+int QuerySessionData::CreateExercise( const std::string& name, const kernel::CoordinateConverter_ABC& converter )
 {
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "Exercises" ) );
     Row_ABC& row = table->CreateRow();
     row.SetField( "name", FieldVariant( name ) );
+
+    geometry::Rectangle2f extent( converter.GetExtent() );
+    geometry::Point2d bottomLeft( converter.ConvertToGeo( extent.BottomLeft() ) );
+    geometry::Point2d topRight( converter.ConvertToGeo( extent.TopRight() ) );
+    row.SetField( "extent_xmin", FieldVariant( bottomLeft.X() ) );
+    row.SetField( "extent_ymin", FieldVariant( bottomLeft.Y() ) );
+    row.SetField( "extent_xmax", FieldVariant( topRight.X() ) );
+    row.SetField( "extent_ymax", FieldVariant( topRight.Y() ) );
     table->InsertRow( row );
     // return row.GetID();
     return FindExercise( name );

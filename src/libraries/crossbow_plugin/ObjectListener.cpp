@@ -13,7 +13,6 @@
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
-
 #include "WorkingSession_ABC.h"
 #include "ActionSerializer_ABC.h"
 #include "actions/Action_ABC.h"
@@ -77,23 +76,10 @@ void ObjectListener::Clean()
 {
     try
     {
-        std::string query( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
-        /*
-        {
-            std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "create_tacticalobject" ) );
-            table->DeleteRows(
-                "EXISTS ( SELECT 1 FROM sword.create_tacticalobject WHERE"
-                          "order_id=sword.create_tacticalobject.id AND sword.create_tacticalobject.session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) + ")" );
-        }
-        {
-            std::auto_ptr< Table_ABC > table( GetDatabase( workspace_ ).OpenTable( "Orders" ) );
-            table->DeleteRows( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
-        }
-        */
-        {
-            std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "flat" ).OpenTable( "create_objects" ) );
-            table->DeleteRows( query );
-        }
+        std::string query( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );    
+        std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "flat" ).OpenTable( "create_object" ) );
+
+        table->DeleteRows( query );
     }
     catch ( std::exception& e )
     {
@@ -109,18 +95,19 @@ void ObjectListener::Listen()
 {
     try
     {
-        std::string query( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
-        std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "flat" ).OpenTable( "create_objects" ) );
+        std::string query( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) + " AND checked_xbow=0" );
+        std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "flat" ).OpenTable( "create_object" ) );
 
         Row_ABC* row = table->Find( query );
-        bool bHasUpdates = row != 0;
         while( row )
         {
-            SendCreation( *row );
+            if( SendCreation( *row ) ) 
+            {
+                row->SetField( "checked_xbow", FieldVariant( true ) );
+                table->UpdateRow( *row );
+            }
             row = table->GetNextRow();
         }
-        if( bHasUpdates )
-            table->DeleteRows( query );
     }
     catch ( std::exception& e )
     {
@@ -135,7 +122,7 @@ namespace
         xml::xostringstream xos;
         xos << xml::start( "action" );
             action.Serialize( xos );
-        MT_LOG_ERROR_MSG( xos.str() );
+        MT_LOG_ERROR_MSG( "(" << __FUNCTION__ << ")" << xos.str() );
     }
 }
 
@@ -143,14 +130,28 @@ namespace
 // Name: ObjectListener::SendCreation
 // Created: SBO 2007-09-23
 // -----------------------------------------------------------------------------
-void ObjectListener::SendCreation( const Row_ABC& row )
+bool ObjectListener::SendCreation( const Row_ABC& row )
 {
-    std::auto_ptr< actions::Action_ABC > magic;
+    long orderid = -1;
+    try
+    {
+        orderid = row.GetID();
+        if( orderid != -1 )
+        {
+            std::auto_ptr< actions::Action_ABC > magic;
 
-    serializer_.SerializeObjectMagicCreation( row, magic );
-    if ( !magic.get() )
-        throw std::runtime_error( "Unable to resolve object creation." );
-    if ( magic->IsValid() )
-        magic->Publish( *publisher_ );
-    DebugAction( *magic );
+            serializer_.SerializeCreation( row, magic );
+            if ( !magic.get() )
+                throw std::runtime_error( "Unable to resolve object creation." );
+            if ( magic->IsValid() )
+                magic->Publish( *publisher_ );
+            else
+                DebugAction( *magic );
+        }
+    }
+    catch ( std::exception& ex )
+    {
+        MT_LOG_ERROR_MSG( "crossbow::ObjectListener - unable to build object correctly: " << ex.what() );
+    }
+    return orderid >= 0;
 }

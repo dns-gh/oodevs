@@ -49,6 +49,8 @@ public:
     Row_ABC* Find( const std::string& query, bool forceUpdate = false );
     Row_ABC* GetNextRow();
 
+    void Flush();
+
     void BeginTransaction();
     void EndTransaction();
     //@}

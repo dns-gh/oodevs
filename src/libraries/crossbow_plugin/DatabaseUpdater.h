@@ -15,6 +15,10 @@
 namespace sword
 {
     class ObjectAttributes;
+    class UrbanAttributes_Infrastructures;
+    class UrbanAttributes;
+    class ResourceNetwork;
+
     enum ObjectMagicActionAck_ErrorCode;
 }
 
@@ -30,6 +34,7 @@ namespace crossbow
     class Workspace_ABC;
     class Database_ABC;
     class WorkingSession_ABC;
+    class Row_ABC;
 
 // =============================================================================
 /** @class  DatabaseUpdater
@@ -85,6 +90,9 @@ public:
     void Update( const sword::ControlBeginTick& msg );
     void Update( const sword::PartyCreation& msg );
 
+    void Update( const sword::UrbanCreation& msg );
+    void Update( const sword::UrbanUpdate& msg );
+
     void Log( const sword::ObjectMagicActionAck& msg );
     //@}
 
@@ -97,11 +105,11 @@ private:
 
     //! @name Objects
     //@{
-    void UpdateObjectKnowledgeGeometry( const std::string& tablename, const sword::ObjectKnowledgeUpdate& msg );
-    void UpdateObjectAttributes( unsigned long oid, const sword::ObjectAttributes& msg );
+    void UpdateObjectAttributes( long oid, const sword::ObjectAttributes& msg );
 
-    // void Update( const sword::ObjectAttributes& msg );
-
+    void UpdateUrbanBlockAttributes( Row_ABC& row, const sword::UrbanAttributes& msg );
+    void UpdateResourceNetworks( const sword::UrbanAttributes_Infrastructures& infra, long oid, bool creation );
+    void UpdateResourceNetwork( const sword::ResourceNetwork& net, long oid, int session_id, bool creation );
     //@}
 
     //! @name Error

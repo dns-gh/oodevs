@@ -57,6 +57,11 @@ namespace
             feature_.SetField( index_, value );
         }
 
+        void operator()( long value ) const
+        {
+            feature_.SetField( index_, static_cast< int >( value ) );
+        }
+
         void operator()( double value ) const
         {
             feature_.SetField( index_, value );
@@ -64,7 +69,7 @@ namespace
 
         void operator()( bool value ) const
         {
-            feature_.SetField( index_, ( value ) ? 0 : -1 );
+            feature_.SetField( index_, ( value ) ? 1 : 0 );
         }
 
         void operator()( const std::string& value ) const
@@ -202,14 +207,43 @@ long OGR_FeatureRow::GetID() const
     return feature_->GetFID();
 }
 
+#include <fstream>
+
+namespace 
+{
+    void Dump( OGRFeature* feature, OGRLayer& layer )
+    {
+       std::stringstream ss;
+       
+       for( int iField = 0; iField < layer.GetLayerDefn()->GetFieldCount(); iField++ )
+       {
+            OGRFieldDefn *poFieldDefn = layer.GetLayerDefn()->GetFieldDefn( iField );
+            ss << "Name '" << poFieldDefn->GetNameRef() << "': ";
+            if( poFieldDefn->GetType() == OFTInteger )
+                ss << feature->GetFieldAsInteger(iField) << ", ";
+            else if( poFieldDefn->GetType() == OFTReal )
+                ss << feature->GetFieldAsDouble(iField) << ", ";
+            else 
+                ss << feature->GetFieldAsString(iField) << ", ";
+       }
+       ss << std::endl;
+       MT_LOG_INFO_MSG( ss.str() );
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: OGR_FeatureRow::Insert
 // Created: JCR 2010-02-25
 // -----------------------------------------------------------------------------
 void OGR_FeatureRow::Insert( OGRLayer& layer ) const
 {
-    if( feature_.get() && layer.CreateFeature( feature_.get() ) != OGRERR_NONE )
+    if( feature_.get() )
+        feature_->SetFID( OGRNullFID );
+    OGRErr err = layer.CreateFeature( feature_.get() );
+    if( feature_.get() && err != OGRERR_NONE )
+    {
+        Dump( feature_.get(), layer );
         throw std::runtime_error( "unable to insert feature to the layer" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -218,6 +252,10 @@ void OGR_FeatureRow::Insert( OGRLayer& layer ) const
 // -----------------------------------------------------------------------------
 void OGR_FeatureRow::Update( OGRLayer& layer ) const
 {
-    if( feature_.get() && layer.SetFeature( feature_.get() ) != OGRERR_NONE )
+    OGRErr err = layer.SetFeature( feature_.get() );
+    if( feature_.get() && err != OGRERR_NONE )
+    {
+        Dump( feature_.get(), layer );
         throw std::runtime_error( "unable to update feature to the layer" );
+    }
 }

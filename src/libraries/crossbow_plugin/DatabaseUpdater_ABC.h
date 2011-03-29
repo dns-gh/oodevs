@@ -33,6 +33,8 @@ namespace sword
     class ObjectMagicActionAck;
     class LimitCreation;
     class PhaseLineCreation;
+    class UrbanCreation;
+    class UrbanUpdate;
 }
 
 namespace plugins
@@ -86,6 +88,9 @@ public:
     virtual void Update( const sword::ObjectKnowledgeCreation& msg ) = 0;
     virtual void Update( const sword::ObjectKnowledgeUpdate& msg ) = 0;
     virtual void Update( const sword::ObjectKnowledgeDestruction& msg ) = 0;
+
+    virtual void Update( const sword::UrbanCreation& msg ) = 0;
+    virtual void Update( const sword::UrbanUpdate& msg ) = 0;
 
     virtual void Update( const sword::FormationCreation& message ) = 0;
 
