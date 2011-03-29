@@ -9,6 +9,7 @@
 
 #include "script_plugin_pch.h"
 #include "Actions.h"
+#include "ActionScheduler.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionFactory.h"
 #include "actions/ActionParameterFactory.h"
@@ -65,6 +66,7 @@ struct Actions::Publisher : public Publisher_ABC
 // -----------------------------------------------------------------------------
 Actions::Actions( kernel::Controller& controller, const tools::ExerciseConfig& config, const dispatcher::Model_ABC& model, const kernel::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& sim )
     : config_           ( config )
+    , controller_       ( controller )
     , entities_         ( new dispatcher::ModelAdapter( model ) )
     , publisher_        ( new Publisher( sim ) )
     , converter_        ( new kernel::CoordinateConverter( config ) )
@@ -96,6 +98,8 @@ void Actions::RegisterIn( directia::brain::Brain& brain )
     brain.Register( "IssueOrder", &Actions::IssueOrder );
     brain.Register( "IssueOrderFromFile", &Actions::IssueOrderFromFile );
     brain.Register( "IssueXmlOrder", &Actions::IssueXmlOrder );
+    brain.Register( "StartScheduler", &Actions::StartScheduler );
+    brain.Register( "StopScheduler", &Actions::StopScheduler );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,4 +153,29 @@ void Actions::IssueXmlOrder( const std::string& name )
     {
         MT_LOG_ERROR_MSG( "Error in script: " << e.what() )
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Actions::StartScheduler
+// Created: SBO 2011-03-29
+// -----------------------------------------------------------------------------
+void Actions::StartScheduler( const std::string& filename )
+{
+    try
+    {
+        scheduler_.reset( new ActionScheduler( config_, filename, controller_, *factory_, *publisher_ ) );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "Error in script: " << e.what() )
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Actions::StopScheduler
+// Created: SBO 2011-03-29
+// -----------------------------------------------------------------------------
+void Actions::StopScheduler()
+{
+    scheduler_.reset();
 }

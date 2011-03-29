@@ -44,6 +44,7 @@ namespace plugins
 {
 namespace script
 {
+    class ActionScheduler;
 // =============================================================================
 /** @class  Actions
     @brief  Actions
@@ -76,6 +77,8 @@ private:
     void IssueOrder( const std::string& name );
     void IssueOrderFromFile( const std::string& name, const std::string& filename );
     void IssueXmlOrder( const std::string& name );
+    void StartScheduler( const std::string& filename );
+    void StopScheduler();
     //@}
 
     //! @name Types
@@ -87,6 +90,7 @@ private:
     //! @name Member data
     //@{
     const tools::ExerciseConfig& config_;
+    kernel::Controller& controller_;
     std::auto_ptr< kernel::EntityResolver_ABC > entities_;
     std::auto_ptr< Publisher > publisher_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
@@ -95,6 +99,7 @@ private:
     std::auto_ptr< kernel::ObjectKnowledgeConverter_ABC > objectsKnowledges_;
     std::auto_ptr< actions::ParameterFactory_ABC > parameters_;
     std::auto_ptr< actions::ActionFactory_ABC > factory_;
+    std::auto_ptr< ActionScheduler > scheduler_;
     //@}
 };
 

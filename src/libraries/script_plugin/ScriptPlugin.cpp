@@ -94,14 +94,18 @@ ScriptPlugin::~ScriptPlugin()
 void ScriptPlugin::Receive( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_information() )
+    {
         if( wrapper.message().control_information().has_tick_duration() )
             tickDuration_ = wrapper.message().control_information().tick_duration();
-    if( wrapper.message().has_control_send_current_state_begin() )
+    }
+    else if( wrapper.message().has_control_send_current_state_begin() )
     {
         loaded_ = true;
         Update();
     }
-    if( wrapper.message().has_control_end_tick() )
+    else if( wrapper.message().has_control_begin_tick() )
+        controller_->Update( events::SimulationTimeChanged( wrapper.message().control_begin_tick().date_time().data() ) );
+    else if( wrapper.message().has_control_end_tick() )
         controller_->Update( events::TickEnded( wrapper.message().control_end_tick().current_tick(), tickDuration_ ) );
 }
 

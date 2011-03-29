@@ -45,7 +45,6 @@ namespace plugins
 namespace script
 {
     class Script;
-    class Actions;
     class ExtensionFactory;
 
 // =============================================================================
@@ -106,7 +105,6 @@ private:
     std::auto_ptr< kernel::Controller > controller_;
     std::auto_ptr< kernel::CoordinateConverter > converter_;
     std::auto_ptr< ExtensionFactory > factory_;
-    std::auto_ptr< Actions > actions_;
     boost::ptr_vector< Script > scripts_;
     boost::ptr_vector< directia::tools::binders::ScriptRef > pending_;
     long time_;
