@@ -134,9 +134,6 @@ void DEC_Workspace::LoadDecisional( xml::xistream& xisDecisional )
     tools::ReadTimeAttribute( xisDecisional, "neutral-affinity", MIL_AffinitiesMap::interrogateDelayForNeutralAffinity_ );
     tools::ReadTimeAttribute( xisDecisional, "maximum-affinity", MIL_AffinitiesMap::interrogateDelayForMaximumAffinity_ );
     xisDecisional >> xml::end;
-    MIL_AffinitiesMap::interrogateDelayForMinimumAffinity_ = MIL_Tools::ConvertSecondsToSim( MIL_AffinitiesMap::interrogateDelayForMinimumAffinity_ );
-    MIL_AffinitiesMap::interrogateDelayForNeutralAffinity_ = MIL_Tools::ConvertSecondsToSim( MIL_AffinitiesMap::interrogateDelayForNeutralAffinity_ );
-    MIL_AffinitiesMap::interrogateDelayForMaximumAffinity_ = MIL_Tools::ConvertSecondsToSim( MIL_AffinitiesMap::interrogateDelayForMaximumAffinity_ );
 
     if( PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ < 0 || PHY_RoleInterface_Composantes::rOpStateWeightNonMajorComposante_ > 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "operational-state-weights: component not in [0..1]" );

@@ -17,6 +17,9 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_Population.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Tools/MIL_AffinitiesMap.h"
 
 // -----------------------------------------------------------------------------
@@ -44,11 +47,11 @@ PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, int knowled
     , rTimeToWait_ ( 0 )
 {
     unsigned int callerTeamID = caller.GetArmy().GetID();
-    MIL_Population* crowd = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( knowledgeCrowdId );
-
-    if( !crowd )
-        throw std::runtime_error( __FUNCTION__ " Unknown crowd" );
-    ComputeTimeToWait( crowd->GetAffinity( callerTeamID ) );
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeCrowdId );
+    if( !pKnowledge )
+        throw std::runtime_error( __FUNCTION__ " Unknown crowd knowledge" );
+    MIL_Population& crowd = pKnowledge->GetPopulationKnown();
+    ComputeTimeToWait( crowd.GetAffinity( callerTeamID ) );
     Callback( static_cast< int >( eRunning ) );
 }
 
