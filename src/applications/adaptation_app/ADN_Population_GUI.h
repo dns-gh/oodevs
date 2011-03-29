@@ -48,9 +48,12 @@ public:
         eFireEffectProtection,
         eFireEffectIntensityDensity,
         eFireEffectIntensityFactor,
-        eFireEffectDestruction,
-        eFireEffectFixableWithEvacuation,
-        eFireEffectFixableWithoutEvacuation,
+        eFireEffectUnarmedDestruction,
+        eFireEffectUnarmedFixableWithEvacuation,
+        eFireEffectUnarmedFixableWithoutEvacuation,
+        eFireEffectArmedDestruction,
+        eFireEffectArmedFixableWithEvacuation,
+        eFireEffectArmedFixableWithoutEvacuation,
         eFireEffectRoe,
         eNbrGuiElements
     };
@@ -65,6 +68,7 @@ public:
     //! @name Operations
     //@{
     void Build();
+    void UpdatePopulationFireEffectValidator( ADN_Type_Double& destruUnarmed, ADN_Type_Double& evacUnarmed, ADN_Type_Double& withoutEvacUnarmed, ADN_Type_Double& destruArmed, ADN_Type_Double& evacArmed, ADN_Type_Double& withoutEvacArmed );
     //@}
 
 private:
@@ -72,6 +76,14 @@ private:
     //@{
     ADN_Population_Data& data_;
     ADN_Population_ListView* pPopulationList_;
+
+    ADN_PercentageValidator* pValidatorDestruUnarmed_;
+    ADN_PercentageValidator* pValidatorEvacUnarmed_;
+    ADN_PercentageValidator* pValidatorWithoutUnarmed_;
+    ADN_PercentageValidator* pValidatorDestruArmed_;
+    ADN_PercentageValidator* pValidatorEvacArmed_;
+    ADN_PercentageValidator* pValidatorWithoutArmed_;
+
     //@}
 };
 

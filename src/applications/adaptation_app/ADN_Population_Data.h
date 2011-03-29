@@ -46,9 +46,12 @@ public:
     public:
         ADN_Type_String                                           strName_;
         ADN_TypePtr_InVector_ABC<helpers::ArmorInfos> ptrProtection_;
-        ADN_Type_Double                                           rDestruction_;
-        ADN_Type_Double                                           rFixableWithEvacuation_;
-        ADN_Type_Double                                           rFixableWithoutEvacuation_;
+        ADN_Type_Double                                           rUnarmedDestruction_;
+        ADN_Type_Double                                           rUnarmedFixableWithEvacuation_;
+        ADN_Type_Double                                           rUnarmedFixableWithoutEvacuation_;
+        ADN_Type_Double                                           rArmedDestruction_;
+        ADN_Type_Double                                           rArmedFixableWithEvacuation_;
+        ADN_Type_Double                                           rArmedFixableWithoutEvacuation_;
 
     public:
         typedef helpers::ArmorInfos T_Item;

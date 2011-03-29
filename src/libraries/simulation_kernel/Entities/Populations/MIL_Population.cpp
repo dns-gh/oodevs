@@ -802,6 +802,15 @@ unsigned int MIL_Population::GetDeadHumans() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::GetArmedIndividuals
+// Created: MMC 2011-03-28
+// -----------------------------------------------------------------------------
+double MIL_Population::GetArmedIndividuals() const
+{
+    return rArmedIndividuals_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::Move
 // Created: NLD 2005-09-29
 // -----------------------------------------------------------------------------

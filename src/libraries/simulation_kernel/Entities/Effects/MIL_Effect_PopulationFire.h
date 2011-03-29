@@ -27,7 +27,7 @@ class PHY_FireResults_ABC;
 class MIL_Effect_PopulationFire : public MIL_Effect_ABC
 {
 public:
-             MIL_Effect_PopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult );
+             MIL_Effect_PopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, double armedIndividuals );
     virtual ~MIL_Effect_PopulationFire();
 
     //! @name Operations
@@ -36,11 +36,12 @@ public:
     //@}
 
 private:
-    const MIL_PopulationType&     populationType_;
+    const MIL_PopulationType& populationType_;
     const MIL_PopulationAttitude& populationAttitude_;
-          MIL_Agent_ABC&          target_;
-          PHY_Composante_ABC&     compTarget_;
-          PHY_FireResults_ABC&    fireResult_;
+    MIL_Agent_ABC& target_;
+    PHY_Composante_ABC& compTarget_;
+    PHY_FireResults_ABC& fireResult_;
+    double armedIndividuals_;
 };
 
 #endif // __MIL_Effect_PopulationFire_h_

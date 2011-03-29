@@ -789,7 +789,7 @@ Motivo: %3
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error message</source>
+        <source>Impossible to create file in specified directory</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

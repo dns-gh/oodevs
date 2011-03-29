@@ -31,12 +31,14 @@ public:
               PHY_AttritionData();
      explicit PHY_AttritionData( xml::xistream& xis );
               PHY_AttritionData( const PHY_AttritionData& rhs );
+              PHY_AttritionData( const PHY_AttritionData& armedAttritionData, const PHY_AttritionData& unarmedAttritionData, double armedIndividuals );
      virtual ~PHY_AttritionData();
+              
 
     //! @name Operations
     //@{
-    PHY_AttritionData&         operator=             ( const PHY_AttritionData& rhs );
-    double                   GetScore              () const;
+    PHY_AttritionData& operator=( const PHY_AttritionData& rhs );
+    double GetScore() const;
     const PHY_ComposanteState& ComputeComposanteState( double urbanProtection ) const;
     //@}
 

@@ -80,6 +80,7 @@ public:
     unsigned int GetWoundedHumans() const;
     unsigned int GetContaminatedHumans() const;
     unsigned int GetDeadHumans() const;
+    double GetArmedIndividuals() const;
     bool HasFlow() const;
     const std::string& GetCriticalIntelligence() const;
     float GetAffinity( unsigned long teamID ) const;

@@ -66,7 +66,7 @@ public:
     //@{
     double GetPionMaxSpeed( const MIL_PopulationAttitude& populationAttitude, double rPopulationDensity, const PHY_Volume& pionVolume ) const;
     double GetPionReloadingTimeFactor( double rPopulationDensity ) const;
-    const PHY_AttritionData& GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
+    const PHY_AttritionData& GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection, double armedIndividuals ) const;
     double GetPH( const MIL_PopulationAttitude& attitude, double rDensity ) const;
     double GetDamageSurface( const PHY_RoePopulation& roeFirer ) const;
     double GetDamagePH( const PHY_RoePopulation& roeFirer ) const;

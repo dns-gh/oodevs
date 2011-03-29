@@ -72,9 +72,20 @@ void ADN_Population_FireEffect_Protection_ListView::ConnectItem( bool bConnect )
 {
     if( pCurData_ == 0 )
         return;
+
     FireEffectProtectionInfos* pInfos = (FireEffectProtectionInfos*)pCurData_;
+
+    ADN_Workspace::GetWorkspace().GetPopulation().GetGui().UpdatePopulationFireEffectValidator( 
+        pInfos->rUnarmedDestruction_, pInfos->rUnarmedFixableWithEvacuation_, pInfos->rUnarmedFixableWithoutEvacuation_, 
+        pInfos->rArmedDestruction_, pInfos->rArmedFixableWithEvacuation_, pInfos->rArmedFixableWithoutEvacuation_ );
+
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Population_GUI::eNbrGuiElements );
-    vItemConnectors_[ADN_Population_GUI::eFireEffectDestruction]->Connect( &pInfos->rDestruction_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eFireEffectFixableWithEvacuation]->Connect( &pInfos->rFixableWithEvacuation_, bConnect );
-    vItemConnectors_[ADN_Population_GUI::eFireEffectFixableWithoutEvacuation]->Connect( &pInfos->rFixableWithoutEvacuation_, bConnect );
+    
+    vItemConnectors_[ADN_Population_GUI::eFireEffectUnarmedDestruction]->Connect( &pInfos->rUnarmedDestruction_, bConnect );
+    vItemConnectors_[ADN_Population_GUI::eFireEffectUnarmedFixableWithEvacuation]->Connect( &pInfos->rUnarmedFixableWithEvacuation_, bConnect );
+    vItemConnectors_[ADN_Population_GUI::eFireEffectUnarmedFixableWithoutEvacuation]->Connect( &pInfos->rUnarmedFixableWithoutEvacuation_, bConnect );
+
+    vItemConnectors_[ADN_Population_GUI::eFireEffectArmedDestruction]->Connect( &pInfos->rArmedDestruction_, bConnect );
+    vItemConnectors_[ADN_Population_GUI::eFireEffectArmedFixableWithEvacuation]->Connect( &pInfos->rArmedFixableWithEvacuation_, bConnect );
+    vItemConnectors_[ADN_Population_GUI::eFireEffectArmedFixableWithoutEvacuation]->Connect( &pInfos->rArmedFixableWithoutEvacuation_, bConnect );
 }

@@ -39,13 +39,22 @@ void ADN_PercentageValidator::AddLinkedValue( ADN_Type_Double& value )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_PercentageValidator::ClearLinkedValues
+// Created: MMC 2011-03-29
+// -----------------------------------------------------------------------------
+void ADN_PercentageValidator::ClearLinkedValues()
+{
+    linkedValues_.clear();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_PercentageValidator::fixup
 // Created: APE 2005-04-15
 // -----------------------------------------------------------------------------
 void ADN_PercentageValidator::fixup( QString& strInput ) const
 {
     double rSum = 0;
-    for( CIT_ValuesVector it = linkedValues_.begin(); it != linkedValues_.end(); ++it )
+     for( CIT_ValuesVector it = linkedValues_.begin(); it != linkedValues_.end(); ++it )
         rSum += ( *it )->GetData();
     if( rSum >= 100.0 )
     {
@@ -60,6 +69,77 @@ void ADN_PercentageValidator::fixup( QString& strInput ) const
         strInput = QString::number( 100.f - rSum );
 }
 
+//-----------------------------------------------------------------------------
+// Name: ADN_DoubleValidator::validate
+/** Copied from Qt.
+*/
+// Created: JDY 03-09-04
+//-----------------------------------------------------------------------------
+QValidator::State ADN_PercentageValidator::validate( QString& input, int& nPos ) const
+{
+    double rSum = 0;
+    for( CIT_ValuesVector it = linkedValues_.begin(); it != linkedValues_.end(); ++it )
+        rSum += ( *it )->GetData();
+
+    double b = bottom();
+    double t = 100.f - rSum;
+    int d = decimals();
+    QRegExp empty( QString::fromLatin1( " *-?\\.? *" ) );
+    if( b >= 0 && input.stripWhiteSpace().startsWith( QString::fromLatin1( "-" ) ) )
+        return Invalid;
+    if( input.stripWhiteSpace() == "." )
+        return Invalid;
+    if( empty.exactMatch( input ) )
+        return Intermediate;
+    bool ok = TRUE;
+    double entered = input.toDouble( &ok );
+    int nume = input.contains( 'e', FALSE );
+    if( !ok )
+    {
+        // explicit exponent regexp
+        QRegExp expexpexp( QString::fromLatin1( "[Ee][+-]?\\d*$" ) );
+        int eeePos = expexpexp.search( input );
+        if( eeePos > 0 && nume == 1 )
+        {
+            QString mantissa = input.left( eeePos );
+            entered = mantissa.toDouble( &ok );
+            if( !ok )
+                return Invalid;
+        }
+        else if( eeePos == 0 )
+            return Intermediate;
+        else
+            return Invalid;
+    }
+
+    int i = input.find( '.' );
+    if( i >= 0 )
+    {
+        if( d == 0 )
+            return Invalid;
+        else if( nume == 0 )
+        {
+            // has decimal point (but no E), now count digits after that
+            ++i;
+            int j = i;
+            while( input[ j ].isDigit() )
+                ++j;
+            if( j - i > d )
+                return Invalid;
+        }
+    }
+
+    if( entered > t )
+    {
+        this->fixup( input );
+        nPos = input.length();
+        return Acceptable;
+    }
+    else if( entered < b )
+        return Intermediate;
+    else
+        return Acceptable;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_DoubleValidator::ADN_DoubleValidator
@@ -150,6 +230,7 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
 
     int i = input.find( '.' );
     if( i >= 0 )
+    {
         if( d == 0 )
             return Invalid;
         else if( nume == 0 )
@@ -162,14 +243,16 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
             if( j - i > d )
                 return Invalid;
         }
-        if( entered > t )
-        {
-            this->fixup( input );
-            nPos = input.length();
-            return Acceptable;
-        }
-        else if( entered < b )
-            return Intermediate;
-        else
-            return Acceptable;
+    }
+
+    if( entered > t )
+    {
+        this->fixup( input );
+        nPos = input.length();
+        return Acceptable;
+    }
+    else if( entered < b )
+        return Intermediate;
+    else
+        return Acceptable;
 }

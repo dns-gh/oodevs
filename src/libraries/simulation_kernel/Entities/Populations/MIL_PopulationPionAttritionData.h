@@ -39,7 +39,7 @@ public:
 
     //! @name Accessors
     //@{
-    const PHY_AttritionData& GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const;
+    const PHY_AttritionData GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection, double armedIndividuals ) const;
     double GetPH ( const MIL_PopulationAttitude& attitude, double rDensity ) const;
     //@}
 
@@ -58,7 +58,8 @@ private:
     struct sAttritionData
     {
         sAttritionData();
-        T_AttritionVector attritions_; // Per protection
+        T_AttritionVector unarmedAttritions_; // Per protection
+        T_AttritionVector armedAttritions_; // Per protection
         double rPopulationDensity_;
         double rIntensity_;
     };

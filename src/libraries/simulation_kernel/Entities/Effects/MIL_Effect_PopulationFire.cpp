@@ -19,12 +19,13 @@
 // Name: MIL_Effect_PopulationFire constructor
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-MIL_Effect_PopulationFire::MIL_Effect_PopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult )
+MIL_Effect_PopulationFire::MIL_Effect_PopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, double armedIndividuals )
     : populationType_    ( populationType )
     , populationAttitude_( populationAttitude )
     , target_            ( target )
     , compTarget_        ( compTarget )
     , fireResult_        ( fireResult )
+    , armedIndividuals_  ( armedIndividuals )
 {
     // NOTHING
 }
@@ -44,7 +45,7 @@ MIL_Effect_PopulationFire::~MIL_Effect_PopulationFire()
 // -----------------------------------------------------------------------------
 bool MIL_Effect_PopulationFire::Execute()
 {
-    target_.GetRole< PHY_RoleInterface_Composantes >().ApplyPopulationFire( compTarget_, populationType_, populationAttitude_, fireResult_ );
+    target_.GetRole< PHY_RoleInterface_Composantes >().ApplyPopulationFire( compTarget_, populationType_, populationAttitude_, fireResult_, armedIndividuals_ );
     delete this;
     return false; // Effect must be stopped
 }

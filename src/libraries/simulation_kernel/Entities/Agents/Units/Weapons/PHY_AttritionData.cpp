@@ -64,6 +64,22 @@ PHY_AttritionData::PHY_AttritionData( const PHY_AttritionData& rhs )
     // NOTHING
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: PHY_AttritionData constructor
+// Created: MMC 2011-03-28
+// -----------------------------------------------------------------------------
+PHY_AttritionData::PHY_AttritionData( const PHY_AttritionData& armedAttritionData, const PHY_AttritionData& unarmedAttritionData, double armedIndividuals )
+{
+    rDestroyed_ = unarmedAttritionData.rDestroyed_ + ( armedAttritionData.rDestroyed_ - unarmedAttritionData.rDestroyed_ ) * armedIndividuals;
+    rReparableWithEvacuation_ = unarmedAttritionData.rReparableWithEvacuation_ + ( armedAttritionData.rReparableWithEvacuation_ - unarmedAttritionData.rReparableWithEvacuation_ ) * armedIndividuals;
+    rReparableWithoutEvacuation_ = unarmedAttritionData.rReparableWithoutEvacuation_ + ( armedAttritionData.rReparableWithoutEvacuation_ - unarmedAttritionData.rReparableWithoutEvacuation_ ) * armedIndividuals;
+
+    // Score
+    rScore_ = rDestroyed_ + ( rReparableWithEvacuation_ / 2. ) + ( rReparableWithoutEvacuation_ / 4. );
+    assert( rScore_ <= 1. );
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_AttritionData destructor
 // Created: NLD 2004-08-05

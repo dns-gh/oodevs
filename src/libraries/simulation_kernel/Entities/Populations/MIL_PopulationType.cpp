@@ -402,9 +402,9 @@ double MIL_PopulationType::GetMaxSpeed() const
 // Name: MIL_PopulationType::GetAttritionData
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-const PHY_AttritionData& MIL_PopulationType::GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const
+const PHY_AttritionData& MIL_PopulationType::GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection, double armedIndividuals ) const
 {
-    return attritionData_.GetAttritionData( attitude, protection );
+    return attritionData_.GetAttritionData( attitude, protection, armedIndividuals );
 }
 
 // -----------------------------------------------------------------------------

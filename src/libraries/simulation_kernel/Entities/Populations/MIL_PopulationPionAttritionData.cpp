@@ -18,7 +18,8 @@
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
 MIL_PopulationPionAttritionData::sAttritionData::sAttritionData()
-    : attritions_        ( PHY_Protection::GetProtections().size(), PHY_AttritionData() )
+    : armedAttritions_   ( PHY_Protection::GetProtections().size(), PHY_AttritionData() )
+    , unarmedAttritions_ ( PHY_Protection::GetProtections().size(), PHY_AttritionData() )
     , rPopulationDensity_( 0. )
     , rIntensity_        ( 0. )
 {
@@ -79,8 +80,8 @@ void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAtti
     if( attitudeData.rPopulationDensity_ < 0 )
         xis.error( "attrition-effect: population-density < 0" );
     if( attitudeData.rIntensity_ < 0 || attitudeData.rIntensity_ > 1 )
-        xis.error( "attrition-effetc: intensity not in [0..1]" );
-    xis >> xml::list( "unit", *this, &MIL_PopulationPionAttritionData::ReadAttritionUnitEffect, attitudeData );
+        xis.error( "attrition-effect: intensity not in [0..1]" );
+    xis >> xml::list( "protection", *this, &MIL_PopulationPionAttritionData::ReadAttritionUnitEffect, attitudeData );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,24 +90,35 @@ void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAtti
 // -----------------------------------------------------------------------------
 void MIL_PopulationPionAttritionData::ReadAttritionUnitEffect( xml::xistream& xis, sAttritionData& attitudeData )
 {
-    std::string strProtection = xis.attribute< std::string >( "protection" );
+    std::string strProtection = xis.attribute< std::string >( "name" );
+    
     const PHY_Protection* pProtection = PHY_Protection::Find( strProtection );
     if( !pProtection )
         xis.error( "Unknown protection '" + strProtection + "'" );
-    assert( attitudeData.attritions_.size() > pProtection->GetID() );
-    attitudeData.attritions_[ pProtection->GetID() ] = PHY_AttritionData( xis );
+
+    xis >> xml::start( "armed" );
+    assert( attitudeData.armedAttritions_.size() > pProtection->GetID() );
+    attitudeData.armedAttritions_[ pProtection->GetID() ] = PHY_AttritionData( xis );
+    xis >> xml::end;
+    xis >> xml::start( "unarmed" );
+    assert( attitudeData.unarmedAttritions_.size() > pProtection->GetID() );
+    attitudeData.unarmedAttritions_[ pProtection->GetID() ] = PHY_AttritionData( xis );
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationPionAttritionData::GetAttritionData
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-const PHY_AttritionData& MIL_PopulationPionAttritionData::GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection ) const
+const PHY_AttritionData MIL_PopulationPionAttritionData::GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection, double armedIndividuals ) const
 {
     assert( attitudeAttritionData_.size() > attitude.GetID() );
     const sAttritionData& attitudeData = attitudeAttritionData_[ attitude.GetID() ];
-    assert( attitudeData.attritions_.size() > protection.GetID() );
-    return attitudeData.attritions_[ protection.GetID() ];
+    assert( attitudeData.armedAttritions_.size() > protection.GetID() );
+    assert( attitudeData.unarmedAttritions_.size() > protection.GetID() );
+    //return attitudeData.attritions_[ protection.GetID() ];
+
+    return PHY_AttritionData( attitudeData.armedAttritions_[ protection.GetID() ], attitudeData.unarmedAttritions_[ protection.GetID() ], armedIndividuals );
 }
 
 // -----------------------------------------------------------------------------

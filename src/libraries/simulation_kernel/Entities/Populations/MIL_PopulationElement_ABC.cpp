@@ -67,7 +67,7 @@ double MIL_PopulationElement_ABC::GetDangerosity( const MIL_AgentPion& target ) 
         return 0.;
 
     const double rPH = pPopulation_->GetType().GetPH( *pAttitude_, rDensity_ );
-    const PHY_AttritionData& attritionData = pPopulation_->GetType().GetAttritionData( *pAttitude_, pTargetComposante->GetType().GetProtection() );
+    const PHY_AttritionData& attritionData = pPopulation_->GetType().GetAttritionData( *pAttitude_, pTargetComposante->GetType().GetProtection(), pPopulation_->GetArmedIndividuals() );
 
     return rPH * attritionData.GetScore();
 }
@@ -94,7 +94,7 @@ void MIL_PopulationElement_ABC::FireOnPion( double rIntensity, MIL_Agent_ABC& ta
     if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH * rIntensity ) )
         return;
 
-    MIL_Effect_PopulationFire* pEffect = new MIL_Effect_PopulationFire( GetPopulation().GetType(), GetAttitude(), target, *compTargets.front(), fireResult );
+    MIL_Effect_PopulationFire* pEffect = new MIL_Effect_PopulationFire( GetPopulation().GetType(), GetAttitude(), target, *compTargets.front(), fireResult, GetPopulation().GetArmedIndividuals() );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
 }
 

@@ -29,6 +29,10 @@ public:
 
     void fixup( QString& strInput ) const;
 
+    void ClearLinkedValues();
+
+    virtual QValidator::State validate( QString& input, int& nPos ) const;
+
 private:
     typedef std::vector<ADN_Type_Double*>    T_ValuesVector;
     typedef T_ValuesVector::const_iterator CIT_ValuesVector;

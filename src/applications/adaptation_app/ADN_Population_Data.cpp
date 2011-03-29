@@ -35,9 +35,12 @@ ADN_Population_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( helpe
     , ADN_DataTreeNode_ABC()
     , strName_                  ( ptr->strName_.GetData() )
     , ptrProtection_            ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), ptr )
-    , rDestruction_             ( 0. )
-    , rFixableWithEvacuation_   ( 0. )
-    , rFixableWithoutEvacuation_( 0. )
+    , rUnarmedDestruction_              ( 0. )
+    , rUnarmedFixableWithEvacuation_    ( 0. )
+    , rUnarmedFixableWithoutEvacuation_ ( 0. )
+    , rArmedDestruction_                ( 0. )
+    , rArmedFixableWithEvacuation_      ( 0. )
+    , rArmedFixableWithoutEvacuation_   ( 0. )
 {
     BindExistenceTo( &ptrProtection_ );
 }
@@ -48,9 +51,27 @@ ADN_Population_Data::FireEffectProtectionInfos::FireEffectProtectionInfos( helpe
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::FireEffectProtectionInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "destruction", rDestruction_ )
-          >> xml::attribute( "repairable-with-evacuation", rFixableWithEvacuation_ )
-          >> xml::attribute( "repairable-without-evacuation", rFixableWithoutEvacuation_ );
+    double rArmedDestruction = 0.0, rArmedFixableWithEvacuation = 0.0, rArmedFixableWithoutEvacuation = 0.0;
+    double rUnarmedDestruction = 0.0, rUnarmedFixableWithEvacuation = 0.0, rUnarmedFixableWithoutEvacuation = 0.0;
+
+    input >> xml::start( "armed" )
+              >> xml::attribute( "destruction", rArmedDestruction )
+              >> xml::attribute( "repairable-with-evacuation", rArmedFixableWithEvacuation )
+              >> xml::attribute( "repairable-without-evacuation", rArmedFixableWithoutEvacuation )
+          >> xml::end;
+
+    input >> xml::start( "unarmed" )
+              >> xml::attribute( "destruction", rUnarmedDestruction )
+              >> xml::attribute( "repairable-with-evacuation", rUnarmedFixableWithEvacuation )
+              >> xml::attribute( "repairable-without-evacuation", rUnarmedFixableWithoutEvacuation )
+          >> xml::end;
+
+    rArmedDestruction_                  = 100.0 * rArmedDestruction;
+    rArmedFixableWithEvacuation_        = 100.0 * rArmedFixableWithEvacuation;
+    rArmedFixableWithoutEvacuation_     = 100.0 * rArmedFixableWithoutEvacuation;
+    rUnarmedDestruction_                = 100.0 * rUnarmedDestruction;
+    rUnarmedFixableWithEvacuation_      = 100.0 * rUnarmedFixableWithEvacuation;
+    rUnarmedFixableWithoutEvacuation_   = 100.0 * rUnarmedFixableWithoutEvacuation;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,18 +80,19 @@ void ADN_Population_Data::FireEffectProtectionInfos::ReadArchive( xml::xistream&
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::FireEffectProtectionInfos::WriteArchive( xml::xostream& output ) const
 {
-    // do not save unspecified protection hit factor
-    if( rDestruction_.GetData()                 == 0.
-        && rFixableWithEvacuation_.GetData()    == 0.
-        && rFixableWithoutEvacuation_.GetData() == 0. )
-        return;
-
-    output << xml::start( "unit" )
-             << xml::attribute( "protection", ptrProtection_.GetData()->strName_ )
-             << xml::attribute( "destruction",                   rDestruction_ )
-             << xml::attribute( "repairable-with-evacuation",    rFixableWithEvacuation_ )
-             << xml::attribute( "repairable-without-evacuation", rFixableWithoutEvacuation_ )
-           << xml::end;
+    output << xml::start( "protection" )
+                << xml::attribute( "name", ptrProtection_.GetData()->strName_ )
+                << xml::start( "unarmed" )
+                    << xml::attribute( "destruction",                   rUnarmedDestruction_.GetData() /100.0 )
+                    << xml::attribute( "repairable-with-evacuation",    rUnarmedFixableWithEvacuation_.GetData() /100.0 )
+                    << xml::attribute( "repairable-without-evacuation", rUnarmedFixableWithoutEvacuation_.GetData() /100.0 )
+                << xml::end
+                << xml::start( "armed" )
+                    << xml::attribute( "destruction",                   rArmedDestruction_.GetData() /100.0 )
+                    << xml::attribute( "repairable-with-evacuation",    rArmedFixableWithEvacuation_.GetData() /100.0 )
+                    << xml::attribute( "repairable-without-evacuation", rArmedFixableWithoutEvacuation_.GetData() /100.0 )
+                << xml::end
+            << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +146,7 @@ void ADN_Population_Data::FireEffectInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "population-density", rIntensityDensity_ )
           >> xml::attribute( "intensity", rIntensityFactor_ )
-          >> xml::list( "unit", *this, &ADN_Population_Data::FireEffectInfos::ReadProtection );
+          >> xml::list( "protection", *this, &ADN_Population_Data::FireEffectInfos::ReadProtection );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +156,7 @@ void ADN_Population_Data::FireEffectInfos::ReadArchive( xml::xistream& input )
 void ADN_Population_Data::FireEffectInfos::ReadProtection( xml::xistream& input )
 {
     std::string strProtection;
-    input >> xml::attribute( "protection", strProtection );
+    input >> xml::attribute( "name", strProtection );
     IT_FireEffectProtectionInfosVector itProtection = std::find_if( vProtectionInfos_.begin(), vProtectionInfos_.end(),
                                                                     ADN_Tools::NameCmp<FireEffectProtectionInfos>(strProtection) );
     assert( itProtection != vProtectionInfos_.end() );
@@ -560,8 +582,7 @@ void ADN_Population_Data::PopulationInfos::ReadSlowingEffect( xml::xistream& inp
 // -----------------------------------------------------------------------------
 void ADN_Population_Data::PopulationInfos::ReadAttritionEffect( xml::xistream& input )
 {
-    std::string strAttitude;
-    input >> xml::attribute( "population-attitude", strAttitude );
+    std::string strAttitude = input.attribute< std::string >( "population-attitude" );
     uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
     if( nAttitude == (E_PopulationAttitude)-1 )
         throw ADN_DataException( "Invalid data", tools::translate( "Population_Data",  "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).ascii() );

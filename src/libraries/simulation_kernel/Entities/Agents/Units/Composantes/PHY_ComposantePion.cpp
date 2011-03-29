@@ -311,10 +311,10 @@ void PHY_ComposantePion::ApplyExplosion( const AttritionCapacity& capacity, PHY_
 // Name: PHY_ComposantePion::ApplyPopulationFire
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyPopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages )
+void PHY_ComposantePion::ApplyPopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages, double armedIndividuals )
 {
     assert( pType_ );
-    ApplyFire( populationType.GetAttritionData( populationAttitude, pType_->GetProtection() ), 0, fireDamages );
+    ApplyFire( populationType.GetAttritionData( populationAttitude, pType_->GetProtection(), armedIndividuals ), 0, fireDamages );
 }
 
 // -----------------------------------------------------------------------------
