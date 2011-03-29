@@ -349,6 +349,14 @@ Por favor seleccione un archivo de orden de batalla para importar.</translation>
         <source>Populations</source>
         <translation type="unfinished">Poblaciones</translation>
     </message>
+    <message>
+        <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>---</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InitialStateDialog</name>

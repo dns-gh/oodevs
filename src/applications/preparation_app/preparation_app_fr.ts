@@ -349,6 +349,14 @@ Merci de sélectionner un autre fichier à importer.</translation>
         <source>Populations</source>
         <translation>Populations</translation>
     </message>
+    <message>
+        <source>Location:</source>
+        <translation>Position:</translation>
+    </message>
+    <message>
+        <source>---</source>
+        <translation>---</translation>
+    </message>
 </context>
 <context>
     <name>InitialStateDialog</name>

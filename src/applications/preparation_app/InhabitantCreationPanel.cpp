@@ -11,7 +11,6 @@
 #include "InhabitantCreationPanel.h"
 #include "moc_InhabitantCreationPanel.cpp"
 #include "clients_kernel/Controllers.h"
-#include "tools/GeneralConfig.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/Team_ABC.h"
@@ -53,7 +52,13 @@ InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent, gui::PanelSta
     number_ = new QLineEdit( QString::number( 1000 ), groupBox );
     number_->setValidator( new QIntValidator( 1, 1000000000, number_ ) );
 
-    locationCreator_ = new gui::LocationCreator( 0, tr( "New Population" ), layer, *this );
+    position_ = new gui::RichLabel( tr( "Location:" ), groupBox );
+    locationLabel_ = new QLabel( tr( "---" ), groupBox );
+    locationLabel_->setMinimumWidth( 100 );
+    locationLabel_->setAlignment( Qt::AlignCenter );
+    locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+
+    locationCreator_ = new gui::LocationCreator( position_, tr( "New Population" ), layer, *this );
 
     connect( inhabitantTypes_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
 
@@ -91,6 +96,8 @@ void InhabitantCreationPanel::Handle( Location_ABC& location )
     delete location_;
     location_ = 0;
     location_ = &location;
+    if( location.IsValid() )
+        locationLabel_->setText( location.GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +162,10 @@ bool InhabitantCreationPanel::CheckValidity() const
     if( !inhabitantTypes_->count() || !inhabitantTypes_->GetValue() )
         return false;
     if( ! location_ )
+    {
+        position_->Warn( 3000 );
         return false;
+    }
     return true;
 }
 
@@ -236,4 +246,5 @@ void InhabitantCreationPanel::OnTypeChanged()
 void InhabitantCreationPanel::ResetLocation()
 {
     delete location_; location_ = 0;
+    locationLabel_->setText( tr( "---" ) );
 }

@@ -21,8 +21,6 @@ namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
-    class Inhabitant_ABC;
-    class Location_ABC;
     class Team_ABC;
     class InhabitantType;
     class ModelLoaded;
@@ -38,7 +36,6 @@ namespace gui
     class RichLabel;
 }
 
-class StaticModel;
 class AgentsModel;
 
 // =============================================================================
@@ -59,7 +56,8 @@ class InhabitantCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    InhabitantCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& types, AgentsModel& agentsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+             InhabitantCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& types,
+                                      AgentsModel& agentsModel, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
     virtual ~InhabitantCreationPanel();
     //@}
 
@@ -114,6 +112,8 @@ private:
     gui::ValuedComboBox< const kernel::InhabitantType* >* inhabitantTypes_;
     QLineEdit* name_;
     QLineEdit* number_;
+    gui::RichLabel* position_;
+    QLabel* locationLabel_;
     gui::LocationCreator* locationCreator_;
     //@}
 };
