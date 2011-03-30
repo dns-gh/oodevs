@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="es_PE">
+<!DOCTYPE TS><TS>
 <context>
     <name>@default</name>
     <message>
@@ -13,40 +11,23 @@
     </message>
 </context>
 <context>
+    <name>ADNDatabaseWarnings</name>
+    <message>
+        <source>Database Work in progress</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Database Work in progress. 
+ Convoy unit type not defined. 
+ Do you want to save anyway ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_ActiveProtectionsListView</name>
     <message>
         <source>active Protection</source>
         <translation>Protecciones activas</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ActiveProtections_Data::ActiveProtectionsInfos</name>
-    <message>
-        <source>Active Protection</source>
-        <translation>Protecciones activas</translation>
-    </message>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
-        <translation>Protección activa &apos;%1&apos; – Tipo de munición inválido &apos;%2&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons</name>
-    <message>
-        <source>Active Protection weapons</source>
-        <translation>Armes de protection active</translation>
-    </message>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
-        <translation>Equipo – munición inválida &apos;%1/%2&apos;</translation>
     </message>
 </context>
 <context>
@@ -134,33 +115,6 @@
     </message>
 </context>
 <context>
-    <name>ADN_AiEngine_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</source>
-        <translation>Indicadores Op.  – Gestor de hilos  - El valor de efecto de relevancia es inválido (debe ser &gt;=0 y &lt;= 100)</translation>
-    </message>
-    <message>
-        <source>Op. Indicators - Thread management - Invalid operational state effect value (must be &gt;=0 and &lt;= 100)</source>
-        <translation>Indicadores Op.  – Gestor de hilos  - El valor de efecto de estado operacional es inválido (debe ser &gt;=0 y &lt;= 100)</translation>
-    </message>
-    <message>
-        <source>Op. Indicators - Thread management - Invalid neutralization state effect value (must be &gt;=0 and &lt;= 100)</source>
-        <translation>Indicadores Op.  – Gestor de hilos  - El valor de efecto de estado de neutralización es inválido (debe ser &gt;=0 y &lt;= 100)</translation>
-    </message>
-    <message>
-        <source>Op. Indicators - Op. state computation - Invalid equipment weight sum (must be &gt;=0 and &lt;= 1)</source>
-        <translation>Indicadores Op.  – Gestor de cálculos  - La suma de pesos de equipos es inválido (debe ser &gt;=0 y &lt;= 1)</translation>
-    </message>
-    <message>
-        <source>Op. Indicators - Op. state computation - Invalid crew state weight (must be &gt;=0 and &lt;= 1)</source>
-        <translation>Indicadores Op.  – Gestor de cálculos  - El peso de la tripulación es inválido (debe ser &gt;=0 y &lt;= 1)</translation>
-    </message>
-</context>
-<context>
     <name>ADN_AiEngine_GUI</name>
     <message>
         <source>%</source>
@@ -197,6 +151,30 @@
     <message>
         <source>Crew state weight</source>
         <translation>Peso de la tripulación</translation>
+    </message>
+    <message>
+        <source>Urban combat computation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban combat hit ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time to acquire critical intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum affinity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neutral affinity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum affinity</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -319,28 +297,6 @@ Estacionado con motor encendido</translation>
 Parked engine running</source>
         <translation>Autonomía
 estacionado con motor encendido</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Automata_Data::AutomatonInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
-        <translation>Autómata  - modelo de doctrina inválido &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Automata_Data::UnitInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Automat - Invalid unit type &apos;%1&apos;</source>
-        <translation>Autómata – Tipo de unidad inválido &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -498,32 +454,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Breakdowns_Data::BreakdownInfo</name>
-    <message>
-        <source>New breakdown</source>
-        <translation>Nueva Falla</translation>
-    </message>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
-        <translation>Fallas - tipo de falla inválido  &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Breakdowns_Data::RepairPartInfo</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Breakdowns - Invalid part &apos;%1&apos;</source>
-        <translation>Fallas – Parte inválida &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Breakdowns_GUI</name>
     <message>
         <source>Breakdown</source>
@@ -604,41 +534,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Categories_Data</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
-        <translation>Categorías - Nombre de tipo de volúmen duplicado &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
-        <translation>Categorías - Nombre de tipo de recurso natural duplicado &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated volume type names</source>
-        <translation>Categorias - Nombre de tipo de volúmen duplicado</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid volume type name</source>
-        <translation>Categorías - Tipo de volumen inválido</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated armor type names</source>
-        <translation>Categorías - nombre de tipo de blindaje duplicado</translation>
-    </message>
-    <message>
-        <source>Categories - Duplicated resource nature names</source>
-        <translation>Categorías - Nombre de recurso natural duplicado</translation>
-    </message>
-    <message>
-        <source>Categories - Invalid resource nature</source>
-        <translation>Categorías - Recurso naural inválido</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Categories_GUI</name>
     <message>
         <source>Name</source>
@@ -694,7 +589,6 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Maintenance support needed</source>
-        <translatorcomment>Réparable avec évacuation</translatorcomment>
         <translation>Requiere mantenimiento</translation>
     </message>
     <message>
@@ -817,129 +711,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Composantes_Data::ActiveProtectionsInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
-        <translation>Equipos - Tipo de protección activa &apos;%1&apos; inválida</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::BreakdownGroupInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid breakdown data : sum != 100</source>
-        <translation>Equipo - La suma de probabilidades de falla debe ser igual a 100%</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::BreakdownInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de falla &apos;%1&apos; inválido</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::CategoryInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::ComposanteInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid armor and/or volume</source>
-        <translation>Equipo - Blindaje y/o volumen inválido</translation>
-    </message>
-    <message>
-        <source>Missing breakdown</source>
-        <translation>Falla faltante</translation>
-    </message>
-    <message>
-        <source>Equipment - Shall contain at least one breakdown for </source>
-        <translation>Equipo - Debe tener al menos una falla</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::ConsumptionsInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid activty &apos;%1&apos;</source>
-        <translation>Equipo - Actividad inválida &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::LogSupplyInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation>Equipo - Naturaleza de recurso inválida &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::ObjectInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid object type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de objeto inválido &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::RadarInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid radar type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de rada inválido &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Composantes_Data::WeaponInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
-        <translatorcomment>Catégories - Système d&apos;armes invalide &apos;%1/%2&apos;</translatorcomment>
-        <translation>Equipo - Sistema de armas inválido &apos;%1/%2&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Composantes_Dotations_GUI</name>
     <message>
         <source>Category</source>
@@ -1018,7 +789,6 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Troop/Crew</source>
-        <translatorcomment>Transport/Equipage</translatorcomment>
         <translation>Tropa/Tripulación</translation>
     </message>
     <message>
@@ -1035,7 +805,6 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Cargo transport</source>
-        <translatorcomment>Transport de pions</translatorcomment>
         <translation>Transpote de carga</translation>
     </message>
     <message>
@@ -1124,7 +893,6 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Mining time</source>
-        <translatorcomment>Temps de valorisation</translatorcomment>
         <translation>Tiempo de minado</translation>
     </message>
     <message>
@@ -1133,7 +901,6 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Bypass coefficient</source>
-        <translatorcomment>Coefficient de contournement</translatorcomment>
         <translation>Coeficiente de bypass</translation>
     </message>
     <message>
@@ -1376,6 +1143,14 @@ estacionado con motor encendido</translation>
         <source>Active protection</source>
         <translation>Protección activa</translation>
     </message>
+    <message>
+        <source>Extinguishing time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extinguishing duration</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>
@@ -1473,6 +1248,25 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Consumptions_Table</name>
+    <message>
+        <source>Resource network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_DataException</name>
     <message>
         <source>Data error</source>
@@ -1531,7 +1325,6 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>% maintenance support needed</source>
-        <translatorcomment>% réparable avec évacuation</translatorcomment>
         <translation>% requiere mantenimiento</translation>
     </message>
     <message>
@@ -1567,17 +1360,6 @@ estacionado con motor encendido</translation>
     <message>
         <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
         <translation>Equipo - Tipo de material urbano inválido &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Equipement_Data::CategoryInfo</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
-        <translation>Equipo - Naturaleza de recurso inválido &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -1790,17 +1572,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Equipement_UrbanAttritionTable</name>
-    <message>
-        <source>Material</source>
-        <translation>Material</translation>
-    </message>
-    <message>
-        <source>Modifiers</source>
-        <translation>Modificadores</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Equipement_Wizard</name>
     <message>
         <source>New resource creation</source>
@@ -1817,6 +1588,164 @@ estacionado con motor encendido</translation>
     <message>
         <source>Click &quot;Done&quot; to create the new resource category.</source>
         <translation>Hacer click en &quot;Hecho&quot; para crear una nueva categoría de recurso.</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ExtinguisherAgentInfos_Table</name>
+    <message>
+        <source>Agent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heat decrease rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FireClass_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Fire - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire - Invalid wound type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire &apos;%1&apos; - Injuries data sum &gt; 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FireClass_Data::FireClassInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Fire class - Invalid extinguisher agent &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire class - Invalid urban Material type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire - Location type not found &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FireClass_GUI</name>
+    <message>
+        <source>Global fire parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cell size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire</source>
+        <translation>Fuego</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <source>Initial heat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max heat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Increase rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decrease rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Injuries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 1</source>
+        <translation>Herido gravedad nivel 1</translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 2</source>
+        <translation>Herido gravedad nivel 2</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded extreme seriousness</source>
+        <translation>Herido gravedad extrema</translation>
+    </message>
+    <message>
+        <source>Killed</source>
+        <translation>Muerto</translation>
+    </message>
+    <message>
+        <source>Urban attrition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extinguisher agents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather fire effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Surface</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FireClass_ListView</name>
+    <message>
+        <source>Fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_FireClass_Wizard</name>
+    <message>
+        <source>New fire creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire</source>
+        <translation>Fuego</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation>Creación terminada</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new fire.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1843,14 +1772,18 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Health_Data</name>
+    <name>ADN_FragOrder_WizardSecondPage</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
+        <source>Add for all Units</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
-        <translation>Sistema logístico médico - Tipo de herido inválido&apos;%1&apos;</translation>
+        <source>Add for all Automata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add for all Crowds</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1998,8 +1931,8 @@ estacionado con motor encendido</translation>
         <translation>Tiempo de extrapolación</translation>
     </message>
     <message>
-        <source>Parameters on known populations</source>
-        <translation>Parámetros en poblaciones conocidas</translation>
+        <source>Parameters on known crowds</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2225,8 +2158,8 @@ tirador</translation>
         <translation>Autómata</translation>
     </message>
     <message>
-        <source>Population</source>
-        <translation>Población</translation>
+        <source>Crowd</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2263,6 +2196,13 @@ tirador</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_ResourceNetworks</name>
+    <message>
+        <source>Resource networks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_Sensors</name>
     <message>
         <source>Sensors</source>
@@ -2282,6 +2222,28 @@ tirador</translation>
     <message>
         <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
         <translation>&lt;b&gt;Usado por:&lt;/b&gt;&lt;br&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_UrbanAccommodation_Type</name>
+    <message>
+        <source>New</source>
+        <translation>Nuevo</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Eliminar</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ListView_UrbanMaterial_Type</name>
+    <message>
+        <source>New</source>
+        <translation>Nuevo</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Eliminar</translation>
     </message>
 </context>
 <context>
@@ -2405,6 +2367,10 @@ tirador</translation>
         <source>Save changes to project %1?</source>
         <translation>Guardar cambios al proyecto %1?</translation>
     </message>
+    <message>
+        <source>The signatures for the following files do not exist or are invalid : </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>
@@ -2486,6 +2452,18 @@ tirador</translation>
         <source>New parameter</source>
         <translation>Nuevo parámetro</translation>
     </message>
+    <message>
+        <source>DirectIA name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Range min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Range max</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Mission_ConfigurationDlg</name>
@@ -2536,10 +2514,6 @@ tirador</translation>
         <translation>Misiones de autómata</translation>
     </message>
     <message>
-        <source>Population missions</source>
-        <translation>Misiones de población</translation>
-    </message>
-    <message>
         <source>Fragmentary orders</source>
         <translation>Ordenes parciales</translation>
     </message>
@@ -2575,6 +2549,30 @@ tirador</translation>
         <source>Available without mission</source>
         <translation>Disponible sin misión</translation>
     </message>
+    <message>
+        <source>Type</source>
+        <translation>Tipo</translation>
+    </message>
+    <message>
+        <source>Allowed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd missions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MRT Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CDT Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Model_Wizard</name>
@@ -2592,28 +2590,6 @@ tirador</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Models_Data::MissionInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
-        <translation>Modelos de doctrina - Misión inválida &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Models_Data::OrderInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
-        <translation>Modelos de doctrina - Orden parcial inválida &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Models_GUI</name>
     <message>
         <source>Unit models</source>
@@ -2622,10 +2598,6 @@ tirador</translation>
     <message>
         <source>Automata models</source>
         <translation>Modelos de autómata</translation>
-    </message>
-    <message>
-        <source>Population models</source>
-        <translation>Modelos de población</translation>
     </message>
     <message>
         <source>Model</source>
@@ -2651,24 +2623,24 @@ tirador</translation>
         <source>FragOrders</source>
         <translation>Orden parcial</translation>
     </message>
+    <message>
+        <source>Crowds models</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Masalife</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
-    <name>ADN_NBC_Datas::NbcIntoxInfos</name>
+    <name>ADN_MultiPercentage</name>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
+        <source>%</source>
+        <translation>%</translation>
     </message>
     <message>
-        <source>NBC - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
-        <translation>NBC - Herido &apos;%1&apos; valores &lt; 0 or &gt; 1</translation>
-    </message>
-    <message>
-        <source>NBC - Invalid wound type &apos;%1&apos;</source>
-        <translation>NBC - Tipo de herido inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
-        <translation>NBC - Agente &apos;%1&apos; - Sumatoria de efectos de envenenamiento &lt; 100</translation>
+        <source>Warning: only %1% set, need 100% or you won&apos;t be able to save.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2734,7 +2706,7 @@ tirador</translation>
         <translation>Angulo de preparación</translation>
     </message>
     <message>
-        <source>°</source>
+        <source>&#xb0;</source>
         <translation>°</translation>
     </message>
 </context>
@@ -2801,6 +2773,17 @@ tirador</translation>
     <message>
         <source>Click &quot;Done&quot; to create the new NBC.</source>
         <translation>Hacer click en &quot;Hecho&quot; para crear nuevo NBC.</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Fire propagation modifier - Invalid fire class &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2982,10 +2965,6 @@ tirador</translation>
         <translation>Extinguible</translation>
     </message>
     <message>
-        <source>Healable</source>
-        <translation>Curable</translation>
-    </message>
-    <message>
         <source>Interference</source>
         <translation>Interferencia</translation>
     </message>
@@ -3065,6 +3044,94 @@ tirador</translation>
         <source>SealOff</source>
         <translation>Sellar</translation>
     </message>
+    <message>
+        <source>Population</source>
+        <translation>Población</translation>
+    </message>
+    <message>
+        <source>Density: </source>
+        <translation>Densidad: </translation>
+    </message>
+    <message>
+        <source>Medical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doctor night rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emergency doctor rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emergency bed rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height interaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Interaction max height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fire propagation modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flood</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 1</source>
+        <translation>Herido gravedad nivel 1</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 2</source>
+        <translation>Herido gravedad nivel 2</translation>
+    </message>
+    <message>
+        <source>Wounded seriousness level 3</source>
+        <translation>Herido gravedad nivel 3</translation>
+    </message>
+    <message>
+        <source>Wounded extreme seriousness</source>
+        <translation>Herido gravedad extrema</translation>
+    </message>
+    <message>
+        <source>Killed</source>
+        <translation>Muerto</translation>
+    </message>
+    <message>
+        <source>Burn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Universal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource network element</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects/</source>
+        <translation>Objetos/</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation>Objetos</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tipo</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>
@@ -3126,6 +3193,103 @@ Asegúrese que el archivo existe.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_People_GUI</name>
+    <message>
+        <source>Population</source>
+        <translation>Población</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Detalles</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <source>Associated Crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angry crowd mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Security satisfaction level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loss on fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Gain per hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Health satisfaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of people per medical infrastructure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moving weekly schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Consumptions</source>
+        <translation>Consumos</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_People_ListView</name>
+    <message>
+        <source>Population</source>
+        <translation>Población</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_People_Wizard</name>
+    <message>
+        <source>New population creation</source>
+        <translation>Creación de nueva población</translation>
+    </message>
+    <message>
+        <source>Population</source>
+        <translation>Población</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation>Creación terminada</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new population.</source>
+        <translation>Hacer click en &quot;Hecho&quot; para crear nueva población.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Point_GUI</name>
     <message>
         <source>Ground Type</source>
@@ -3145,28 +3309,13 @@ Asegúrese que el archivo existe.</translation>
     </message>
 </context>
 <context>
-    <name>ADN_Population_Data::PopulationInfos</name>
-    <message>
-        <source>Population types - Invalid behavior model &apos;%1&apos;</source>
-        <translation>Tipo de población - modelo de comportamiento inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Population types - Invalid population attitude &apos;%1&apos;</source>
-        <translation>Tipo de población - Actitud de población inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Population types - Invalid population &apos;rules of engagment&apos; &apos;%1&apos;</source>
-        <translation>Tipo de población - &apos;reglas de enfrentamiento&apos; inválidas &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
     <name>ADN_Population_FireEffectRoe_GUI</name>
     <message>
         <source>ROE</source>
         <translation>ROE</translation>
     </message>
     <message>
-        <source>Attrition Surface (m²)</source>
+        <source>Attrition Surface (m&#xb2;)</source>
         <translation>Superficie de atrición (m2)</translation>
     </message>
     <message>
@@ -3195,24 +3344,16 @@ Asegúrese que el archivo existe.</translation>
         <translation>Parámetros globales</translation>
     </message>
     <message>
-        <source>Population effects on units firing capability</source>
-        <translation>Efectos de población en unidades con capacidad de fuego</translation>
-    </message>
-    <message>
         <source>Density</source>
         <translation>Densidad</translation>
     </message>
     <message>
-        <source>people/m²</source>
+        <source>people/m&#xb2;</source>
         <translation>personas/m2</translation>
     </message>
     <message>
         <source>Modifier</source>
         <translation>Modificadores</translation>
-    </message>
-    <message>
-        <source>Population</source>
-        <translation>Poblacion</translation>
     </message>
     <message>
         <source>Details</source>
@@ -3239,10 +3380,6 @@ Asegúrese que el archivo existe.</translation>
         <translation>km/h</translation>
     </message>
     <message>
-        <source>Population effects on units movement capability</source>
-        <translation>Efectos de población en unidades con capacidad de movimiento</translation>
-    </message>
-    <message>
         <source>Effect</source>
         <translation>Efecto</translation>
     </message>
@@ -3253,10 +3390,6 @@ Asegúrese que el archivo existe.</translation>
     <message>
         <source>Attritions</source>
         <translation>Atriciones</translation>
-    </message>
-    <message>
-        <source>Population -&gt; Units</source>
-        <translation>Población -&gt; unidades</translation>
     </message>
     <message>
         <source>Intensity</source>
@@ -3275,15 +3408,63 @@ Asegúrese que el archivo existe.</translation>
         <translation>Reparable sin evacuación</translation>
     </message>
     <message>
-        <source>Units -&gt; Population</source>
-        <translation>Unidades -&gt; Población</translation>
+        <source>Crowd effects on units firing capability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time between two NBC applications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Armed individuals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd effects on units movement capability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd -&gt; Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unarmed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Armed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units -&gt; Crowd</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Population_ListView</name>
     <message>
-        <source>Populations</source>
-        <translation>Poblaciones</translation>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3303,46 +3484,20 @@ Asegúrese que el archivo existe.</translation>
 <context>
     <name>ADN_Population_Wizard</name>
     <message>
-        <source>New population creation</source>
-        <translation>Creación de nueva población</translation>
-    </message>
-    <message>
-        <source>Population</source>
-        <translation>Poblacion</translation>
-    </message>
-    <message>
         <source>Creation finished</source>
         <translation>Creación terminada</translation>
     </message>
     <message>
-        <source>Click &quot;Done&quot; to create the new population.</source>
-        <translation>Hacer click en &quot;Hecho&quot; para crear nueva población.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Radars_Data::DetectTimes</name>
-    <message>
-        <source>Sensors - Invalid level &apos;%1&apos;</source>
-        <translation>Sensores - nivel inválido &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Radars_Data::RadarInfos</name>
-    <message>
-        <source>New special sensor</source>
-        <translation>Nuevo sensor especial</translation>
+        <source>New crowd creation</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sensors - Invalid radar type &apos;%1&apos;</source>
-        <translation>Sensores - Tipo de rada inválido &apos;%1&apos;</translation>
+        <source>Crowd</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid activity &apos;%1&apos;</source>
-        <translation>Sensores - Actividad inválida &apos;%1&apos;</translation>
+        <source>Click &quot;Done&quot; to create the new crowd.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3448,6 +3603,48 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
     </message>
 </context>
 <context>
+    <name>ADN_ResourceNetworks_GUI</name>
+    <message>
+        <source>Resource network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation>Categoría</translation>
+    </message>
+    <message>
+        <source>Default production</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ResourceNetworks_Wizard</name>
+    <message>
+        <source>New resource network creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource networks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation>Creación terminada</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new resource network.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_SaveFile_Exception</name>
     <message>
         <source>File error</source>
@@ -3458,6 +3655,61 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
 Make sure that the file is not write-protected.</source>
         <translation>No se puede grabar archivo &apos;%1&apos;.
 Asegúrese que el archivo no esta protegido contra escritura.</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Schedule_Table</name>
+    <message>
+        <source>Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity</source>
+        <translation>Actividad</translation>
+    </message>
+    <message>
+        <source>monday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tuesday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>wednesday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>thursday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>friday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>saturday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sunday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3477,40 +3729,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <message>
         <source>Click &quot;Done&quot; to create the new sensor.</source>
         <translation>Hacer click en &quot;Hecho&quot; para crear nuevo sensor.</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Sensors_Data::SensorInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid unit volume &apos;%1&apos;</source>
-        <translation>Sensores - Volumen de unidad inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid weather &apos;%1&apos;</source>
-        <translation>Sensores - Clima inválido &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid stance &apos;%1&apos;</source>
-        <translation>Sensores - posturas inválidas &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Sensors_Data::TargetInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Datos inválidos</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid stance &apos;%1&apos;</source>
-        <translation>Sensores - Postura inválida &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Sensors - Invalid object &apos;%1&apos;</source>
-        <translation>Sensores - Objeto inválido &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -3552,10 +3770,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation>Material urbano</translation>
     </message>
     <message>
-        <source>Population Value</source>
-        <translation>Importancia de población</translation>
-    </message>
-    <message>
         <source>Urban Height Ratio</source>
         <translation>Ratio de altura urbana</translation>
     </message>
@@ -3574,6 +3788,26 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <message>
         <source>Cannot be selected.</source>
         <translation>No puede seleccionarse.</translation>
+    </message>
+    <message>
+        <source>Identified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recognized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unseen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd Value</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3614,7 +3848,7 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation>Angulo</translation>
     </message>
     <message>
-        <source>°</source>
+        <source>&#xb0;</source>
         <translation>°</translation>
     </message>
     <message>
@@ -3666,15 +3900,11 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation>Postura de blanco</translation>
     </message>
     <message>
-        <source>Population modifiers</source>
-        <translation>Modificadores de población</translation>
-    </message>
-    <message>
         <source>Density</source>
         <translation>Densidad</translation>
     </message>
     <message>
-        <source>people/m²</source>
+        <source>people/m&#xb2;</source>
         <translation>personas/m2</translation>
     </message>
     <message>
@@ -3753,6 +3983,10 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <source>Object detection</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Crowd modifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>
@@ -3763,6 +3997,25 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <message>
         <source>Modifiers</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Sensors_LimitedToSensorsListView</name>
+    <message>
+        <source>Sensors</source>
+        <translation>Sensores</translation>
+    </message>
+    <message>
+        <source>Add sensor</source>
+        <translation>Agregar un sensor</translation>
+    </message>
+    <message>
+        <source>Add special sensor</source>
+        <translation>Agregar sensor especial</translation>
+    </message>
+    <message>
+        <source>Remove item</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3851,40 +4104,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
 </context>
 <context>
-    <name>ADNDatabaseWarnings</name>
-    <message>
-        <source>Database Work in progress. \n Convoy unit type not defined. \n Do you want to save anyway ?</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Database Work in progress</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Supply_Data::SupplyDataInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Logistic supply systems - Convoy unit type not defined</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Logistic supply system - Invalid unit type for convoy units</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>ADN_Supply_GUI</name>
     <message>
         <source>Supply system data</source>
@@ -3958,6 +4177,21 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_SurfaceFireInfos_Table</name>
+    <message>
+        <source>Ground type</source>
+        <translation>Tipo de terreno</translation>
+    </message>
+    <message>
+        <source>Ignition threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max combustion energy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_TableDialog</name>
     <message>
         <source>Print</source>
@@ -3966,6 +4200,21 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <message>
         <source>Close</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Table_Objects_FirePropagationModifier</name>
+    <message>
+        <source>Fire model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignition threshold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max combustion energy</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4039,116 +4288,20 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation>effet</translation>
     </message>
     <message>
-        <source>unknown</source>
-        <translation>inconnu</translation>
-    </message>
-    <message>
         <source>forest</source>
         <translation>forêt</translation>
-    </message>
-    <message>
-        <source>orchard</source>
-        <translation>verger</translation>
-    </message>
-    <message>
-        <source>swamp</source>
-        <translation>marais</translation>
-    </message>
-    <message>
-        <source>dune</source>
-        <translation></translation>
     </message>
     <message>
         <source>urban area</source>
         <translation>zone urbaine</translation>
     </message>
     <message>
-        <source>lake</source>
-        <translation>lac</translation>
-    </message>
-    <message>
-        <source>glacier</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>forest edge</source>
-        <translation>lisière</translation>
-    </message>
-    <message>
-        <source>suburb</source>
-        <translation>banlieue</translation>
-    </message>
-    <message>
-        <source>waterfront</source>
-        <translation>côte</translation>
-    </message>
-    <message>
-        <source>orchard edge</source>
-        <translation>lisière de verger</translation>
-    </message>
-    <message>
-        <source>swamp edge</source>
-        <translation>bord de marais</translation>
-    </message>
-    <message>
-        <source>dune edge</source>
-        <translation>bord de dune</translation>
-    </message>
-    <message>
-        <source>glacier edge</source>
-        <translation>bord de glacier</translation>
-    </message>
-    <message>
-        <source>country road</source>
-        <translation>route de campagne</translation>
-    </message>
-    <message>
-        <source>highway</source>
-        <translation>autoroute</translation>
-    </message>
-    <message>
-        <source>main road</source>
-        <translation>route principale</translation>
-    </message>
-    <message>
-        <source>secondary road</source>
-        <translation>route secondaire</translation>
-    </message>
-    <message>
-        <source>stream</source>
-        <translation>ruisseau</translation>
-    </message>
-    <message>
-        <source>river</source>
-        <translation>rivière</translation>
-    </message>
-    <message>
-        <source>main river</source>
-        <translation>fleuve</translation>
-    </message>
-    <message>
         <source>bridge</source>
         <translation>pont</translation>
     </message>
     <message>
-        <source>cliff</source>
-        <translation>falaise</translation>
-    </message>
-    <message>
-        <source>railroad</source>
-        <translation>chemin de fer</translation>
-    </message>
-    <message>
         <source>crossroad</source>
         <translation>carrefour</translation>
-    </message>
-    <message>
-        <source>mountain</source>
-        <translation>montagne</translation>
-    </message>
-    <message>
-        <source>mountain edge</source>
-        <translation>bord de montagne</translation>
     </message>
     <message>
         <source></source>
@@ -4611,56 +4764,8 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation></translation>
     </message>
     <message>
-        <source>AgentBM</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>AgentList</source>
-        <translation>Liste d&apos;Agent</translation>
-    </message>
-    <message>
-        <source>AgentListBM</source>
-        <translation>Liste d&apos;AgentBM</translation>
-    </message>
-    <message>
-        <source>Automate</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>AutomateBM</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>AutomateList</source>
-        <translation>Liste d&apos;Automate</translation>
-    </message>
-    <message>
-        <source>AutomateListBM</source>
-        <translation>Liste d&apos;AutomatBM</translation>
-    </message>
-    <message>
-        <source>Bool</source>
-        <translation>Booléen</translation>
-    </message>
-    <message>
-        <source>Numeric</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
         <source>String</source>
         <translation>Chaîne de caractères</translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>DirectionBM</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Datetime</source>
-        <translation>Date/heure</translation>
     </message>
     <message>
         <source>Enumeration</source>
@@ -4675,124 +4780,32 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation>Connaissance Agent</translation>
     </message>
     <message>
-        <source>AgentKnowledgeBM</source>
-        <translation>Connaissance Agent BM</translation>
-    </message>
-    <message>
-        <source>AgentKnowledgeList</source>
-        <translation>Liste de Connaissance Agent</translation>
-    </message>
-    <message>
-        <source>AgentKnowledgeListBM</source>
-        <translation>Liste de Connaissance Agent BM</translation>
-    </message>
-    <message>
         <source>ObjectKnowledge</source>
         <translation>Connaissance Objet</translation>
-    </message>
-    <message>
-        <source>ObjectKnowledgeBM</source>
-        <translation>Connaissance Objet BM</translation>
-    </message>
-    <message>
-        <source>ObjectKnowledgeList</source>
-        <translation>Liste de Connaissance Objet</translation>
-    </message>
-    <message>
-        <source>ObjectKnowledgeListBM</source>
-        <translation>Liste de Connaissance Objet BM</translation>
-    </message>
-    <message>
-        <source>PopulationKnowledge</source>
-        <translation>Connaissance de Population</translation>
-    </message>
-    <message>
-        <source>PopulationKnowledgeBM</source>
-        <translation>Connaissance de Population BM</translation>
-    </message>
-    <message>
-        <source>GenObject</source>
-        <translation>Objet génie</translation>
-    </message>
-    <message>
-        <source>GenObjectBM</source>
-        <translation>Objet génie BM</translation>
-    </message>
-    <message>
-        <source>GenObjectList</source>
-        <translation>Liste d&apos;Objet génie</translation>
-    </message>
-    <message>
-        <source>GenObjectListBM</source>
-        <translation>Liste d&apos;Objet génie BM</translation>
     </message>
     <message>
         <source>Objective</source>
         <translation>Objectif</translation>
     </message>
     <message>
-        <source>ObjectiveList</source>
-        <translation>Liste d&apos;Objectif</translation>
-    </message>
-    <message>
         <source>Path</source>
         <translation>Itinéraire</translation>
-    </message>
-    <message>
-        <source>PathBM</source>
-        <translation>Itinéraire BM</translation>
-    </message>
-    <message>
-        <source>PathList</source>
-        <translation>Liste d&apos;Itinéraire</translation>
     </message>
     <message>
         <source>Point</source>
         <translation></translation>
     </message>
     <message>
-        <source>PointBM</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>PointList</source>
-        <translation>Liste de Point</translation>
-    </message>
-    <message>
-        <source>PointListBM</source>
-        <translation>Liste de PointBM</translation>
-    </message>
-    <message>
         <source>Polygon</source>
         <translation>Polygone</translation>
-    </message>
-    <message>
-        <source>AreaBM</source>
-        <translation>Surface BM</translation>
-    </message>
-    <message>
-        <source>PolygonList</source>
-        <translation>Liste de Polygone</translation>
-    </message>
-    <message>
-        <source>AreaListBM</source>
-        <translation>Liste de Surface BM</translation>
     </message>
     <message>
         <source>Location</source>
         <translation>Localisation</translation>
     </message>
     <message>
-        <source>LocationList</source>
-        <translation>Liste de Localisation</translation>
-    </message>
-    <message>
         <source>EquipmentType</source>
         <translation>Type d&apos;Equipement</translation>
-    </message>
-    <message>
-        <source>DotationType</source>
-        <translation>Type de Dotation</translation>
     </message>
     <message>
         <source>MaintenancePriorities</source>
@@ -4811,20 +4824,83 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation>Limite</translation>
     </message>
     <message>
-        <source>PhaseLineList</source>
-        <translation>Liste de lima</translation>
-    </message>
-    <message>
-        <source>IntelligenceList</source>
-        <translation>Liste de Renseignement</translation>
-    </message>
-    <message>
-        <source>UrbanBlockBM</source>
-        <translation>Bloc urbain</translation>
-    </message>
-    <message>
         <source>LocationComposite</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Organization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Journalist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Civilian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&gt;1m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Boolean</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Integer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heading</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DateTime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CrowdKnowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PlannedWork</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ResourceType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PhaseLine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UrbanKnowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Type_Repartition</name>
+    <message>
+        <source>Invalid repartition on tab &apos;%1&apos; - Males/Females/Children repartition doesn&apos;t fit 100%.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4878,59 +4954,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Remove equipment</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Units_Data::ComposanteInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid equipment &apos;%1&apos;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Unit has no crew in equipment &apos;%1&apos;</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Units_Data::StockLogThresholdInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid resource &apos;%1&apos;</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Units_Data::UnitInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid stance &apos;%1&apos;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid unit type &apos;%1&apos;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Unit types - Invalid &apos;Atlas&apos; attribute &apos;%1&apos;</source>
         <translation></translation>
     </message>
 </context>
@@ -5040,12 +5063,104 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Stock</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Crossing height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skills</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
+        <translation>%</translation>
+    </message>
+    <message>
+        <source>Combat support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Combat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mobility support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Counter mobility support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Protection support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Engineering recon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Efficiencies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban area efficiency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power indicators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direct fire</source>
+        <translation>Fuego directo</translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close combat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Engineering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Civilian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Males</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Females</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Children</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units/</source>
+        <translation>Unidades/</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Unidades</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
     <message>
         <source>Category</source>
-        <translation>Catégorie</translation>
+        <translation>Categoría</translation>
     </message>
     <message>
         <source>Log threshold (%)</source>
@@ -5064,6 +5179,17 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
 </context>
 <context>
+    <name>ADN_UrbanModifiersTable</name>
+    <message>
+        <source>Material</source>
+        <translation>Material</translation>
+    </message>
+    <message>
+        <source>Modifiers</source>
+        <translation>Modificadores</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Urban_AttritionTable</name>
     <message>
         <source>% destroyed</source>
@@ -5079,26 +5205,14 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
 </context>
 <context>
-    <name>ADN_Urban_Data</name>
+    <name>ADN_Urban_Data::UrbanMaterialInfos</name>
     <message>
         <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
+        <translation>Datos inválidos</translation>
     </message>
     <message>
-        <source>Facade - Duplicated material type name &apos;%1&apos;</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Material - Duplicated volume type names</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Facade - Invalid volume type name</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>RoofShape - Invalid volume type name</source>
-        <translation></translation>
+        <source>Equipment - Invalid armor type &apos;%1&apos;</source>
+        <translation>Equipo - Tipo de blindaje inválido &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -5126,6 +5240,62 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>RoofShape</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Activities</source>
+        <translation>Actividas</translation>
+    </message>
+    <message>
+        <source>Default nominal capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default maximal capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity</source>
+        <translation>Actividad</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tipo</translation>
+    </message>
+    <message>
+        <source>Nominal capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximal capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infrastructures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infrastructure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symbol</source>
+        <translation>Simbolo</translation>
+    </message>
+    <message>
+        <source>Medical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doctor night rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emergency doctor rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Emergency bed rate</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5170,25 +5340,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>New weapon creation</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_Weapons_Data::WeaponInfos</name>
-    <message>
-        <source>Invalid data</source>
-        <translation>Donnée invalide</translation>
-    </message>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
         <translation></translation>
     </message>
 </context>
@@ -5358,6 +5509,17 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Delete Ph</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_WeatherFireEffects_Table</name>
+    <message>
+        <source>Weather</source>
+        <translation>Clima</translation>
+    </message>
+    <message>
+        <source>Heat decrease rate</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5552,12 +5714,341 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>ADN - Data export</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Resource networks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fires</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ActiveProtections_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
+        <translation>Equipo – munición inválida &apos;%1/%2&apos;</translation>
+    </message>
+    <message>
+        <source>Active Protection</source>
+        <translation>Protecciones activas</translation>
+    </message>
+    <message>
+        <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
+        <translation>Protección activa &apos;%1&apos; – Tipo de munición inválido &apos;%2&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>AiEngine_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Thread management - Invalid relevance effect value(must be &gt;=0 and &lt;= 100)</source>
+        <translation>Indicadores Op.  – Gestor de hilos  - El valor de efecto de relevancia es inválido (debe ser &gt;=0 y &lt;= 100)</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Thread management - Invalid operational state effect value (must be &gt;=0 and &lt;= 100)</source>
+        <translation>Indicadores Op.  – Gestor de hilos  - El valor de efecto de estado operacional es inválido (debe ser &gt;=0 y &lt;= 100)</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Thread management - Invalid neutralization state effect value (must be &gt;=0 and &lt;= 100)</source>
+        <translation>Indicadores Op.  – Gestor de hilos  - El valor de efecto de estado de neutralización es inválido (debe ser &gt;=0 y &lt;= 100)</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Op. state computation - Invalid equipment weight sum (must be &gt;=0 and &lt;= 1)</source>
+        <translation>Indicadores Op.  – Gestor de cálculos  - La suma de pesos de equipos es inválido (debe ser &gt;=0 y &lt;= 1)</translation>
+    </message>
+    <message>
+        <source>Op. Indicators - Op. state computation - Invalid crew state weight (must be &gt;=0 and &lt;= 1)</source>
+        <translation>Indicadores Op.  – Gestor de cálculos  - El peso de la tripulación es inválido (debe ser &gt;=0 y &lt;= 1)</translation>
+    </message>
 </context>
 <context>
     <name>Application</name>
     <message>
         <source>SWORD</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>ArmorInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid armor type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AttritionEffectOnHuman</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid equipment state &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Automata_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Automat - Invalid unit type &apos;%1&apos;</source>
+        <translation>Autómata – Tipo de unidad inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Automat - Invalid doctrine model &apos;%1&apos;</source>
+        <translation>Autómata  - modelo de doctrina inválido &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Breakdown_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Breakdowns - Invalid part &apos;%1&apos;</source>
+        <translation>Fallas – Parte inválida &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>New breakdown</source>
+        <translation>Nueva Falla</translation>
+    </message>
+    <message>
+        <source>Breakdowns - Invalid breakdown type &apos;%1&apos;</source>
+        <translation>Fallas - tipo de falla inválido  &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Categories_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated volume type name &apos;%1&apos;</source>
+        <translation>Categorías - Nombre de tipo de volúmen duplicado &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated resource nature type name &apos;%1&apos;</source>
+        <translation>Categorías - Nombre de tipo de recurso natural duplicado &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated volume type names</source>
+        <translation>Categorias - Nombre de tipo de volúmen duplicado</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid volume type name</source>
+        <translation>Categorías - Tipo de volumen inválido</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated armor type names</source>
+        <translation>Categorías - nombre de tipo de blindaje duplicado</translation>
+    </message>
+    <message>
+        <source>Categories - Duplicated resource nature names</source>
+        <translation>Categorías - Nombre de recurso natural duplicado</translation>
+    </message>
+    <message>
+        <source>Categories - Invalid resource nature</source>
+        <translation>Categorías - Recurso naural inválido</translation>
+    </message>
+</context>
+<context>
+    <name>Composante_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid breakdown type &apos;%1&apos;</source>
+        <translation>Equipo - Tipo de falla &apos;%1&apos; inválido</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid breakdown data : sum != 100</source>
+        <translation>Equipo - La suma de probabilidades de falla debe ser igual a 100%</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid radar type &apos;%1&apos;</source>
+        <translation>Equipo - Tipo de rada inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid weapon system &apos;%1/%2&apos;</source>
+        <translation>Equipo - Sistema de armas inválido &apos;%1/%2&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
+        <translation>Equipos - Tipo de protección activa &apos;%1&apos; inválida</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource type &apos;%1&apos;</source>
+        <translation>Equipo - Tipo de recurso inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid object type &apos;%1&apos;</source>
+        <translation>Equipo - Tipo de objeto inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid activty &apos;%1&apos;</source>
+        <translation>Equipo - Actividad inválida &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid armor and/or volume</source>
+        <translation>Equipo - Blindaje y/o volumen inválido</translation>
+    </message>
+    <message>
+        <source>Missing breakdown</source>
+        <translation>Falla faltante</translation>
+    </message>
+    <message>
+        <source>Equipment - Shall contain at least one breakdown for </source>
+        <translation>Equipo - Debe tener al menos una falla</translation>
+    </message>
+</context>
+<context>
+    <name>Equipment_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Health_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Logistic medical system - Invalid wound type &apos;%1&apos;</source>
+        <translation>Sistema logístico médico - Tipo de herido inválido&apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Models_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Doctrine models - Invalid frag order &apos;%1&apos;</source>
+        <translation>Modelos de doctrina - Orden parcial inválida &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Doctrine models - Invalid mission &apos;%1&apos;</source>
+        <translation>Modelos de doctrina - Misión inválida &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>NBC_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>NBC - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
+        <translation>NBC - Herido &apos;%1&apos; valores &lt; 0 or &gt; 1</translation>
+    </message>
+    <message>
+        <source>NBC - Invalid wound type &apos;%1&apos;</source>
+        <translation>NBC - Tipo de herido inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
+        <translation>NBC - Agente &apos;%1&apos; - Sumatoria de efectos de envenenamiento &lt; 100</translation>
+    </message>
+</context>
+<context>
+    <name>Object_Data</name>
+    <message>
+        <source>Flood - Injuries data sum &gt; 100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flood - Wound &apos;%1&apos; data &lt; 0 or &gt; 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flood - Invalid wound type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects - Invalid level &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd types - Invalid crowd attitude &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>People_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Population - Invalid resource &apos;%1/%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population</source>
+        <translation type="unfinished">Población</translation>
+    </message>
+    <message>
+        <source>Invalid schedule - You have already an appointment on the same moment :</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Population_Data</name>
+    <message>
+        <source>Population types - Invalid Population type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd types - Invalid behavior model &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd types - Invalid crowd attitude &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd types - Invalid crowd &apos;rules of engagment&apos; &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5581,6 +6072,164 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>s</source>
         <comment>ADN_Rich_ListViewItem</comment>
         <translation>s</translation>
+    </message>
+</context>
+<context>
+    <name>Radars_Data</name>
+    <message>
+        <source>Sensors - Invalid level &apos;%1&apos;</source>
+        <translation>Sensores - nivel inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>New special sensor</source>
+        <translation>Nuevo sensor especial</translation>
+    </message>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid radar type &apos;%1&apos;</source>
+        <translation>Sensores - Tipo de rada inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid activity &apos;%1&apos;</source>
+        <translation>Sensores - Actividad inválida &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Sensor_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid object &apos;%1&apos;</source>
+        <translation>Sensores - Objeto inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid unit volume &apos;%1&apos;</source>
+        <translation>Sensores - Volumen de unidad inválido &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Sensors - Invalid weather &apos;%1&apos;</source>
+        <translation>Sensores - Clima inválido &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>Supply_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Logistic supply system - Invalid unit type for convoy units</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Units_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid equipment &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit has no crew in equipment &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid resource &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid stance &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid unit type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid doctrine model &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid hierarchical level &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid &apos;Atlas&apos; attribute &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit types - Invalid crossing height &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Urban_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Facade - Duplicated material type name &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Material - Duplicated volume type names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Facade - Invalid volume type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape - Duplicated roofShape type name &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape - Duplicated roofShape type names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape - Invalid roofShape type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban types - Invalid infrastructure symbol type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Weapons_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid launcher type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon systems &apos;%1&apos;/&apos;%2&apos; - Invalid ammunition type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weapon %1 - Indirect fire - max range &lt; min range</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
