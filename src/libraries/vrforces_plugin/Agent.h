@@ -20,11 +20,21 @@ class DtSimulationAddress;
 class DtString;
 class DtVrfRemoteController;
 
+namespace dispatcher
+{
+    class SimulationPublisher_ABC;
+}
+
 namespace kernel
 {
     class Agent_ABC;
     class AgentType;
     class ComponentType;
+}
+
+namespace rpr
+{
+    class EntityTypeResolver;
 }
 
 namespace sword
@@ -55,7 +65,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message
-                  , const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation );
+                  , const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation
+                  , const rpr::EntityTypeResolver& entityTypes, dispatcher::SimulationPublisher_ABC& simulation );
     virtual ~Agent();
     //@}
 
@@ -96,6 +107,7 @@ private:
     void SetAggregated( bool aggregated );
     bool IsTrueAggregate() const;
     void DestroyPseudoAggregate();
+    void CancelMission();
     //@}
 
     //! @name Types
@@ -107,15 +119,17 @@ private:
     //! @name Member data
     //@{
     const DisaggregationStrategy_ABC& disaggregation_;
+    dispatcher::SimulationPublisher_ABC& swordPublisher_;
     DtExerciseConn& connection_;
     Facade& vrForces_;
     const unsigned long id_;
     unsigned short heading_;
-    std::auto_ptr< DtAggregatePublisher > publisher_;
+    std::auto_ptr< DtAggregatePublisher > aggregatePublisher_;
     DtEntityIdentifier reflectedId_;
     const DtReflectedAggregate* reflected_;
     T_Subordinates subordinates_;
     const kernel::AgentType& type_;
+    const rpr::EntityTypeResolver& entityTypes_;
     //@}
 };
 

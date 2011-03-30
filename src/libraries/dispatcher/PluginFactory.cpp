@@ -122,7 +122,7 @@ namespace
         return boost::filesystem::basename( p ) + EXTENSION + boost::filesystem::extension( p );
     }
 
-    typedef dispatcher::Plugin_ABC* (*CreateFunctor)( dispatcher::Model_ABC&, const dispatcher::Config&, xml::xistream& );
+    typedef dispatcher::Plugin_ABC* (*CreateFunctor)( dispatcher::Model_ABC&, dispatcher::SimulationPublisher_ABC&, const dispatcher::Config&, xml::xistream& );
     typedef void (*DestroyFunctor)( dispatcher::Plugin_ABC* );
 
     template< typename T >
@@ -149,7 +149,7 @@ void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
             throw std::runtime_error( "failed to load library: '" + library + "'" );
         CreateFunctor createFunction = LoadFunction< CreateFunctor >( module, "CreateInstance" );
         DestroyFunctor destroyFunction = LoadFunction< DestroyFunctor >( module, "DestroyInstance" );
-        handler_.Add( boost::shared_ptr< Plugin_ABC >( createFunction( model_, config_, xis ), destroyFunction ) );
+        handler_.Add( boost::shared_ptr< Plugin_ABC >( createFunction( model_, simulation_, config_, xis ), destroyFunction ) );
         MT_LOG_INFO_MSG( "Plugin '" << name << "' loaded (file: " << library << ")" );
     }
     catch( std::exception& e )

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Plugin_h_
-#define __Plugin_h_
+#ifndef __vrforces_Plugin_h_
+#define __vrforces_Plugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
 #include <boost/noncopyable.hpp>
@@ -23,6 +23,12 @@ namespace dispatcher
 {
     class Config;
     class Model_ABC;
+    class SimulationPublisher_ABC;
+}
+
+namespace rpr
+{
+    class EntityTypeResolver;
 }
 
 namespace sword
@@ -58,7 +64,7 @@ class Plugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis );
+             Plugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, xml::xistream& xis );
     virtual ~Plugin();
     //@}
 
@@ -89,16 +95,18 @@ private:
     //! @name Member data
     //@{
     dispatcher::Model_ABC& model_;
+    dispatcher::SimulationPublisher_ABC& simulation_;
     T_Agents agents_;
     std::auto_ptr< DtExerciseConn > connection_;
     std::auto_ptr< DtFilePrinter > logger_;
     std::auto_ptr< Facade > vrForces_;
     std::auto_ptr< ForceResolver_ABC > forceResolver_;
     std::auto_ptr< DisaggregationStrategy_ABC > disaggregator_;
+    std::auto_ptr< rpr::EntityTypeResolver > typeResolver_;
     //@}
 };
 
 }
 }
 
-#endif // __Plugin_h_
+#endif // __vrforces_Plugin_h_

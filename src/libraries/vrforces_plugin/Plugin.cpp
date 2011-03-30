@@ -17,6 +17,7 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/Model_ABC.h"
 #include "protocol/Protocol.h"
+#include "rpr/EntityTypeResolver.h"
 #pragma warning( push, 0 )
 #include <vl/exConnInit.h>
 #include <vl/exerciseConn.h>
@@ -30,14 +31,17 @@ using namespace plugins::vrforces;
 // Name: Plugin constructor
 // Created: SBO 2011-01-19
 // -----------------------------------------------------------------------------
-Plugin::Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& /*xis*/ )
+Plugin::Plugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, xml::xistream& /*xis*/ )
     : model_        ( model )
-    , connection_   ( new DtExerciseConn( DtVrlApplicationInitializer( 0, 0, "VR-Link Plugin" ) ) )
+    , simulation_   ( simulation )
+    , connection_   ( new DtExerciseConn( DtVrlApplicationInitializer( 0, 0, "VR-Forces Plugin" ) ) )
     , logger_       ( new DtFilePrinter( config.BuildSessionChildFile( "vrforces.log" ).c_str() ) )
     , vrForces_     ( new Facade( *connection_ ) )
     , forceResolver_( new ForceResolver( model_ ) )
     , disaggregator_( new DisaggregationStrategy( *vrForces_ ) )
+    , typeResolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
 {
+    connection_->setDestroyFedExecFlag( false );
     DtWarn.attachPrinter( logger_.get() );
     DtInfo.attachPrinter( logger_.get() );
     DtVerbose.attachPrinter( logger_.get() );
@@ -51,7 +55,7 @@ Plugin::Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, 
 // -----------------------------------------------------------------------------
 Plugin::~Plugin()
 {
-    // NOTHING
+    agents_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +116,7 @@ void Plugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
 // -----------------------------------------------------------------------------
 void Plugin::Create( const sword::UnitCreation& message )
 {
-    agents_[ message.unit().id() ].reset( new Agent( model_.Agents().Get( message.unit().id() ), *connection_, *vrForces_, message, *forceResolver_, *disaggregator_ ) );
+    agents_[ message.unit().id() ].reset( new Agent( model_.Agents().Get( message.unit().id() ), *connection_, *vrForces_, message, *forceResolver_, *disaggregator_, *typeResolver_, simulation_ ) );
 }
 
 // -----------------------------------------------------------------------------

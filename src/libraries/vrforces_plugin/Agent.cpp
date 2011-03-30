@@ -16,7 +16,12 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/ComponentType.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
 #include "protocol/Protocol.h"
+#include "protocol/SimulationSenders.h"
+#include "rpr/EntityType.h"
+#include "rpr/EntityTypeResolver.h"
 #include <boost/lexical_cast.hpp>
 #pragma warning( push, 0 )
 #include <matrix/geodcoord.h>
@@ -30,12 +35,39 @@
 
 using namespace plugins::vrforces;
 
+namespace
+{
+    struct Serializer
+    {
+        explicit Serializer( const std::string& separator ) : separator_( separator ) {}
+
+        template< typename T >
+        Serializer& operator<<( const T& value )
+        {
+            if( !result_.empty() )
+                result_ += separator_;
+            result_ += boost::lexical_cast< std::string >( static_cast< unsigned int >( value ) );
+            return *this;
+        }
+        std::string separator_;
+        std::string result_;
+    };
+
+    std::string ToString( const rpr::EntityType& type )
+    {
+        Serializer serializer( ":" );
+        type.Serialize( serializer );
+        return serializer.result_;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
 // Created: SBO 2011-01-21
 // -----------------------------------------------------------------------------
-Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message, const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation )
+Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message, const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation, const rpr::EntityTypeResolver& entityTypes, dispatcher::SimulationPublisher_ABC& simulation )
     : disaggregation_( disaggregation )
+    , swordPublisher_( simulation )
     , connection_    ( connection )
     , vrForces_      ( vrForces )
     , id_            ( message.unit().id() )
@@ -43,14 +75,16 @@ Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade
     , reflectedId_   ( DtEntityIdentifier::nullId() )
     , reflected_     ( 0 )
     , type_          ( agent.GetType() )
+    , entityTypes_   ( entityTypes )
 {
     std::stringstream name;
     name << message.automat().id() << ":"<< id_ << "/" << message.name().c_str();
-    DtEntityType type( DtPlatform, DtPlatformDomainLand, DtFrance, 3 /* platoon */, 2 /* armor */, message.pc(), 0 );
-    publisher_.reset( new DtAggregatePublisher( type, &connection_, DtDrStatic, forces.Resolve( id_ ), name.str().c_str() ) );
-    publisher_->asr()->setMarkingText( name.str().c_str() );
+    DtEntityType type( ToString( entityTypes.Find( agent.GetType().GetName() ) ).c_str() );
+    type.setCategory( 3 /* platoon */ );
+    aggregatePublisher_.reset( new DtAggregatePublisher( type, &connection_, DtDrStatic, forces.Resolve( id_ ), name.str().c_str() ) );
+    aggregatePublisher_->asr()->setMarkingText( name.str().c_str() );
     CreateSubordinates( type_ );
-    publisher_->tick();
+    aggregatePublisher_->tick();
 }
 
 // -----------------------------------------------------------------------------
@@ -88,7 +122,7 @@ namespace
 // -----------------------------------------------------------------------------
 void Agent::CreateSubordinates( const kernel::AgentType& type )
 {
-    publisher_->asr()->setNumberOfSilentEntities( CountSubordinates( type ) );
+    aggregatePublisher_->asr()->setNumberOfSilentEntities( CountSubordinates( type ) );
     tools::Iterator< const kernel::AgentComposition& > it = type.CreateIterator();
     for( unsigned int index = 0; it.HasMoreElements(); ++index )
     {
@@ -104,9 +138,9 @@ void Agent::CreateSubordinates( const kernel::AgentType& type )
 void Agent::AddSubordinates( unsigned int index, unsigned int count, const kernel::ComponentType& type )
 {
     DtSilentEntityList* list = new DtSilentEntityList();
-    list->setEntityType( publisher_->asr()->entityType() ); // $$$$ SBO 2011-03-22: resolve component type
+    list->setEntityType( ToString( entityTypes_.Find( type.GetName() ) ).c_str() );
     list->setNumberOfEntities( count );
-    publisher_->asr()->setSilentEntityList( index, *list );
+    aggregatePublisher_->asr()->setSilentEntityList( index, *list );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +152,7 @@ void Agent::Update( const sword::UnitAttributes& message )
     if( IsTrueAggregate() )
     {
         UpdateLocation( message );
-        publisher_->tick();
+        aggregatePublisher_->tick();
     }
     if( message.has_position() )
         SetAggregated( disaggregation_.IsAggregatedLocation( message.position().latitude(), message.position().longitude() ) );
@@ -131,7 +165,7 @@ void Agent::Update( const sword::UnitAttributes& message )
 void Agent::UpdateLocation( const sword::UnitAttributes& message )
 {
     DtGeodeticCoord coord;
-    const DtVector& vector = publisher_->asr()->location();
+    const DtVector& vector = aggregatePublisher_->asr()->location();
     if( vector != DtVector::zero() )
         coord.setGeocentric( vector );
     if( message.has_altitude() )
@@ -148,9 +182,9 @@ void Agent::UpdateLocation( const sword::UnitAttributes& message )
         DtLatLon_to_TopoToGeoc( coord, topoToGeoc );
         DtTaitBryan geocOrient;
         DtEulerToEuler( DtTaitBryan( DtDeg2Rad( heading_ ), 0, 0 ), topoToGeoc, &geocOrient );
-        publisher_->asr()->setOrientation( geocOrient );
+        aggregatePublisher_->asr()->setOrientation( geocOrient );
     }
-    publisher_->asr()->setLocation( coord.geocentric() );
+    aggregatePublisher_->asr()->setLocation( coord.geocentric() );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +203,10 @@ void Agent::SetAggregated( bool aggregated )
             }
     }
     else if( IsTrueAggregate() && ! aggregated )
+    {
+        CancelMission();
         vrForces_.CreatePseudoAggregate( *this );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +215,7 @@ void Agent::SetAggregated( bool aggregated )
 // -----------------------------------------------------------------------------
 bool Agent::IsTrueAggregate() const
 {
-    return publisher_.get() != 0;
+    return aggregatePublisher_.get() != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -187,21 +224,21 @@ bool Agent::IsTrueAggregate() const
 // -----------------------------------------------------------------------------
 void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSimulationAddress& address )
 {
-    DtEntityType type = publisher_->asr()->entityType();
+    DtEntityType type = aggregatePublisher_->asr()->entityType();
     type.setKind( type.kind() + 10 );
     vrForces_.RegisterReflectedCreationListener( *this );
     controller.createAggregate( &Agent::OnCreatePseudoAggregate, this
                               , type
-                              , publisher_->asr()->location()
-                              , publisher_->asr()->forceId()
+                              , aggregatePublisher_->asr()->location()
+                              , aggregatePublisher_->asr()->forceId()
                               , heading_
-                              , publisher_->asr()->entityId().string()
-                              , publisher_->asr()->markingText()
+                              , aggregatePublisher_->asr()->entityId().string()
+                              , aggregatePublisher_->asr()->markingText()
                               , address );
-    for( int type = 0; type < publisher_->asr()->numberOfSilentEntities(); ++type )
+    for( int type = 0; type < aggregatePublisher_->asr()->numberOfSilentEntities(); ++type )
     {
         DtSilentEntityList list;
-        if( publisher_->asr()->getSilentEntityList( type, list ) )
+        if( aggregatePublisher_->asr()->getSilentEntityList( type, list ) )
             for( int entity = 0; entity < list.numberOfEntities(); ++entity )
             {
                 const std::string id = boost::lexical_cast< std::string >( type * 1000 + entity );
@@ -216,7 +253,7 @@ void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSi
 // -----------------------------------------------------------------------------
 void Agent::AddSubordinateEntity( DtVrfRemoteController& controller, const DtSimulationAddress& address, const DtEntityType& type, const std::string& identifier )
 {
-    subordinates_.push_back( boost::shared_ptr< Subordinate >( new Subordinate( type, *publisher_, heading_, identifier, controller, address ) ) );
+    subordinates_.push_back( boost::shared_ptr< Subordinate >( new Subordinate( type, *aggregatePublisher_, heading_, identifier, controller, address ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -230,12 +267,12 @@ void Agent::DestroyPseudoAggregate()
         subordinates_.clear();
         DtEntityType type( reflected_->asr()->entityType() );
         type.setKind( type.kind() - 10 );
-        publisher_.reset( new DtAggregatePublisher( type, &connection_, reflected_->asr()->algorithm(), reflected_->asr()->forceId() ) );
-        publisher_->asr()->setMarkingText( reflected_->asr()->markingText() );
-        publisher_->asr()->setLocation( reflected_->asr()->location() );
-        publisher_->asr()->setOrientation( reflected_->asr()->orientation() );
+        aggregatePublisher_.reset( new DtAggregatePublisher( type, &connection_, reflected_->asr()->algorithm(), reflected_->asr()->forceId() ) );
+        aggregatePublisher_->asr()->setMarkingText( reflected_->asr()->markingText() );
+        aggregatePublisher_->asr()->setLocation( reflected_->asr()->location() );
+        aggregatePublisher_->asr()->setOrientation( reflected_->asr()->orientation() );
         CreateSubordinates( type_ );
-        publisher_->tick();
+        aggregatePublisher_->tick();
         reflectedId_ = DtEntityIdentifier::nullId();
         reflected_ = 0;
     }
@@ -266,9 +303,35 @@ void Agent::OnCreatePseudoAggregate( const DtString& /*name*/, const DtEntityIde
 {
     if( Agent* that = static_cast< Agent* >( usr ) )
     {
-        that->publisher_.reset();
+        that->aggregatePublisher_.reset();
         that->reflectedId_ = id;
         if( !that->reflected_ )
             that->reflected_ = that->vrForces_.Find( id );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::CancelMission
+// Created: SBO 2011-03-25
+// -----------------------------------------------------------------------------
+void Agent::CancelMission()
+{
+    if( IsTrueAggregate() )
+    {
+        simulation::UnitMagicAction message;
+        message().mutable_tasker()->mutable_unit()->set_id( id_ );
+        message().set_type( sword::UnitMagicAction_Type_move_to );
+        sword::Point point;
+        sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
+        parameter.set_null_value( false );
+        sword::Location& location = *parameter.mutable_value()->Add()->mutable_point()->mutable_location();
+        location.set_type( sword::Location::point );
+        sword::CoordLatLong& coord = *location.mutable_coordinates()->add_elem();
+        DtGeodeticCoord converter;
+        converter.setGeocentric( aggregatePublisher_->asr()->location() );
+        coord.set_latitude( DtRad2Deg( converter.lat() ) );
+        coord.set_longitude( DtRad2Deg( converter.lon() ) );
+        DtInfo << "coordinates: " << coord.latitude() << ", " << coord.longitude() << std::endl;
+        message.Send( swordPublisher_ );
     }
 }

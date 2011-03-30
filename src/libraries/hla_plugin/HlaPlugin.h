@@ -21,8 +21,8 @@ namespace xml
 
 namespace dispatcher
 {
-    class Model_ABC;
     class Config;
+    class Model_ABC;
 }
 
 namespace plugins

@@ -15,9 +15,9 @@
 // Name: CreateInstance
 // Created: SBO 2011-01-28
 // -----------------------------------------------------------------------------
-VRFORCES_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis )
+VRFORCES_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, xml::xistream& xis )
 {
-    return new plugins::vrforces::Plugin( model, config, xis );
+    return new plugins::vrforces::Plugin( model, simulation, config, xis );
 }
 
 // -----------------------------------------------------------------------------

@@ -137,7 +137,7 @@
         </build-lib>
     </target>
 
-    <target name="library.vrforces_plugin" depends="library.protocol" description="build vrforces_plugin static library">
+    <target name="library.vrforces_plugin" depends="library.protocol,library.rpr" description="build vrforces_plugin static library">
         <build-lib name="vrforces_plugin" pattern="lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/vrforces"/>
             <includepath path="${include.dir}/vrlink"/>
@@ -157,6 +157,7 @@
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+                  lib${ant.project.name}_rpr-${platform}-mt@{suffix},
                   lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}">
             <syslibset libs="shell32,user32"/>
             <defineset define="VRFORCES_PLUGIN_DLL_EXPORTS"/>
