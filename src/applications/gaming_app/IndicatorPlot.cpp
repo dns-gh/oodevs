@@ -27,7 +27,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock,
                               IndicatorExportDialog& exportDialog, bool interactive, const IndicatorRequest& request, double currentTick,
-                              QHBox* hbox)
+                              QHBox* hbox )
     : gui::GQ_Plot( parent, "IndicatorPlot" )
     , controllers_ ( controllers )
     , publisher_   ( publisher )
@@ -60,7 +60,6 @@ IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publish
     plotNames_ = new QLabel( hbox );
     plotNames_->setMinimumWidth( 200 );
     plotNames_->setIndent( 10 );
-    plotNames_->show();
     Add( request );
     SetTickData( currentTick );
 }
@@ -77,7 +76,6 @@ IndicatorPlot::~IndicatorPlot()
         UnregisterPlotData( *tickData_, true );
     for( T_Datas::iterator it = datas_.begin(); it != datas_.end(); ++it )
         UnregisterPlotData( **it, true );
-    delete plotNames_;
 }
 
 namespace
@@ -97,7 +95,7 @@ namespace
                 case 3: col = Qt::gray; break;
                 case 4: col = Qt::green; break;
                 case 5: col = Qt::cyan; break;
-                default : assert( false ); break;
+                default : assert( false );
             }
             if( dividend == 1 )
                 col = col.light( 166 );
