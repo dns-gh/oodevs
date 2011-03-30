@@ -11,6 +11,7 @@
 #define __Actions_h_
 
 #include "dispatcher/Registrable_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 namespace actions
 {
@@ -84,6 +85,7 @@ private:
     //! @name Types
     //@{
     struct Publisher;
+    typedef std::vector< boost::shared_ptr< ActionScheduler > > T_Schedulers;
     //@}
 
 private:
@@ -99,7 +101,7 @@ private:
     std::auto_ptr< kernel::ObjectKnowledgeConverter_ABC > objectsKnowledges_;
     std::auto_ptr< actions::ParameterFactory_ABC > parameters_;
     std::auto_ptr< actions::ActionFactory_ABC > factory_;
-    std::auto_ptr< ActionScheduler > scheduler_;
+    T_Schedulers schedulers_;
     //@}
 };
 

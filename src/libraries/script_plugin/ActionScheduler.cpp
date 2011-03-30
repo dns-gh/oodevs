@@ -35,8 +35,8 @@ bool ActionScheduler::sTimingComparator::operator()( const actions::Action_ABC* 
 // -----------------------------------------------------------------------------
 ActionScheduler::ActionScheduler( const tools::ExerciseConfig& config, const std::string& filename, kernel::Controller& controller, actions::ActionFactory_ABC& factory, Publisher_ABC& publisher )
     : controller_( controller )
-    , publisher_( publisher )
-    , model_( new actions::ActionsModel( factory, publisher_, publisher_ ) )
+    , publisher_ ( publisher )
+    , model_     ( new actions::ActionsModel( factory, publisher_, publisher_ ) )
 {
     model_->Load( config.BuildExerciseChildFile( "scripts/resources/" + filename + ".ord" ), config.GetLoader() );
     tools::Iterator< const actions::Action_ABC& > it = model_->CreateIterator();

@@ -29,9 +29,9 @@ using namespace actions;
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 ActionsModel::ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher, Publisher_ABC& defaultPublisher )
-    : factory_( factory )
-    , publisher_( publisher )
-    , defaultPublisher_ ( defaultPublisher )
+    : factory_         ( factory )
+    , publisher_       ( publisher )
+    , defaultPublisher_( defaultPublisher )
 {
     // NOTHING
 }

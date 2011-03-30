@@ -163,7 +163,7 @@ void Actions::StartScheduler( const std::string& filename )
 {
     try
     {
-        scheduler_.reset( new ActionScheduler( config_, filename, controller_, *factory_, *publisher_ ) );
+        schedulers_.push_back( boost::shared_ptr< ActionScheduler >( new ActionScheduler( config_, filename, controller_, *factory_, *publisher_ ) ) );
     }
     catch( std::exception& e )
     {
@@ -177,5 +177,5 @@ void Actions::StartScheduler( const std::string& filename )
 // -----------------------------------------------------------------------------
 void Actions::StopScheduler()
 {
-    scheduler_.reset();
+    schedulers_.clear();
 }
