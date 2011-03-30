@@ -232,7 +232,7 @@ void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSi
                               , aggregatePublisher_->asr()->location()
                               , aggregatePublisher_->asr()->forceId()
                               , heading_
-                              , aggregatePublisher_->asr()->entityId().string()
+                              , DtString::nullString()
                               , aggregatePublisher_->asr()->markingText()
                               , address );
     for( int type = 0; type < aggregatePublisher_->asr()->numberOfSilentEntities(); ++type )
@@ -287,7 +287,7 @@ bool Agent::OnCreateReflected( DtReflectedAggregate* obj )
     if( reflected_ )
         return true;
     if( reflectedId_ != DtEntityIdentifier::nullId() )
-        if( obj->aggregateStateRep()->entityId() == reflectedId_ )
+        if( obj->asr()->entityId() == reflectedId_ )
         {
             reflected_ = obj;
             return true;

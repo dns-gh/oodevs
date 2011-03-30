@@ -32,7 +32,7 @@ Subordinate::Subordinate( const DtEntityType& type, DtAggregatePublisher& publis
                             , publisher.asr()->location()
                             , publisher.asr()->forceId()
                             , heading
-                            , identifier_.c_str()
+                            , DtString::nullString()
                             , publisher.asr()->markingText()
                             , address_ );
 }
@@ -51,7 +51,7 @@ Subordinate::~Subordinate()
 // Name: Subordinate::OnCreate
 // Created: SBO 2011-03-23
 // -----------------------------------------------------------------------------
-void Subordinate::OnCreate( const DtString& name, const DtEntityIdentifier& id, void* usr )
+void Subordinate::OnCreate( const DtString& /*name*/, const DtEntityIdentifier& id, void* usr )
 {
     if( Subordinate* that = static_cast< Subordinate* >( usr ) )
         that->entityId_ = id;
