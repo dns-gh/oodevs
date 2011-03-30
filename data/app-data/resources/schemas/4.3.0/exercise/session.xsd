@@ -197,7 +197,7 @@
                             </xs:element>
                         </xs:sequence>
                         <xs:attribute name="host" type="xs:string" use="required"/>
-                        <xs:attribute name="log" type="xs:boolean" use="optional"
+                        <xs:attribute name="log" type="xs:boolean" use="optional"/>
                         <xs:attribute name="ssl" type="xs:boolean" use="optional"/>
                     </xs:complexType>
                 </xs:element>
