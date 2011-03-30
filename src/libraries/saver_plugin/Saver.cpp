@@ -14,6 +14,7 @@
 #include "tools/InputBinaryWrapper.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
+#include <boost/algorithm/string.hpp>
 #pragma warning( push )
 #pragma warning( disable: 4127 )
 #include <boost/filesystem/convenience.hpp>
@@ -23,6 +24,8 @@
 namespace bfs = boost::filesystem;
 
 using namespace plugins::saver;
+
+const std::string Saver::currentFolderName_( "current" );
 
 // -----------------------------------------------------------------------------
 // Name: Saver constructor
@@ -45,6 +48,39 @@ Saver::Saver( const dispatcher::Config& config )
 Saver::~Saver()
 {
     Flush();
+    TerminateFragment();
+}
+
+namespace
+{
+    std::string CreateFolderName( unsigned int frame )
+    {
+        std::string foldername;
+        std::string number = boost::lexical_cast< std::string >( frame );
+        foldername.assign( 8 - number.size(), '0' );
+        foldername.append( number );
+        return foldername;
+    }
+}
+
+namespace
+{
+    void DeleteFilesRecursive( const bfs::path& path )
+    {
+        bfs::directory_iterator endItr;
+        for( bfs::directory_iterator itr( path ); itr != endItr; ++itr )
+            if( bfs::is_directory( itr->status() ) )
+                DeleteFilesRecursive( itr->path() );
+            else
+                try
+                {
+                    bfs::remove( itr->path() );
+                }
+                catch( ... )
+                {
+                    // NOTHING
+                }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +97,14 @@ void Saver::ControlInformation( const sword::ControlInformation& controlInformat
     {
         const bfs::path recorderDirectory( recorderDirectory_, bfs::native );
         if( bfs::exists( recorderDirectory ) )
-            bfs::remove_all( recorderDirectory );
+            try
+            {
+                bfs::remove_all( recorderDirectory );
+            }
+            catch( ... )
+            {
+                DeleteFilesRecursive( recorderDirectory );
+            }
     }
     CreateNewFragment( true );
 }
@@ -72,13 +115,11 @@ void Saver::ControlInformation( const sword::ControlInformation& controlInformat
 // -----------------------------------------------------------------------------
 void Saver::CreateNewFragment( bool first /*= false*/ )
 {
+    const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
+    if( !bfs::exists( currentDirectory ) )
+        bfs::create_directories( currentDirectory );
     if( !first )
         TerminateFragment();
-    std::string number = boost::lexical_cast< std::string >( currentFolder_++ );
-    currentFolderName_.assign( 8 - number.size(), '0' );
-    currentFolderName_.append( number );
-    const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
-    bfs::create_directories( currentDirectory );
     index_   .open( ( currentDirectory / "index"    ).string().c_str(), std::ios_base::binary | std::ios_base::out );
     keyIndex_.open( ( currentDirectory / "keyindex" ).string().c_str(), std::ios_base::binary | std::ios_base::out );
     key_     .open( ( currentDirectory / "key"      ).string().c_str(), std::ios_base::binary | std::ios_base::out );
@@ -159,16 +200,35 @@ void Saver::Flush()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Saver::CopyFromCurrentToFolder
+// Created: JSR 2011-03-30
+// -----------------------------------------------------------------------------
+void Saver::CopyFromCurrentToFolder()
+{
+    const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
+    const bfs::path newDirectory = bfs::path( recorderDirectory_, bfs::native ) / CreateFolderName( currentFolder_++ );
+    bfs::create_directories( newDirectory );
+    bfs::directory_iterator endItr;
+    for( bfs::directory_iterator itr( currentDirectory ); itr != endItr; ++itr )
+    {
+        std::string destPath = itr->path().string();
+        boost::algorithm::replace_first( destPath, currentDirectory.string(), newDirectory.string() );
+        bfs::copy_file( itr->path(), bfs::path( destPath ) );
+        bfs::remove( itr->path() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: Saver::TerminateFragment
 // Created: JSR 2010-10-27
 // -----------------------------------------------------------------------------
 void Saver::TerminateFragment()
 {
-    const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
     index_.close();
     keyIndex_.close();
     key_.close();
     update_.close();
+    CopyFromCurrentToFolder();
     fragmentFirstFrame_ = frameCount_;
 }
 
@@ -214,7 +274,14 @@ void Saver::UpdateFragments()
                     wrapper >> end;
                     stream.close();
                     if( start >= frameCount_ )
-                        bfs::remove_all( it->path() );
+                        try
+                        {
+                            bfs::remove_all( it->path() );
+                        }
+                        catch( ... )
+                        {
+                            DeleteFilesRecursive( it->path() );
+                        }
                     else if( frameCount_ > start && frameCount_ <= end )
                     {
                         std::ofstream stream;
@@ -223,7 +290,10 @@ void Saver::UpdateFragments()
                         wrapper << start;
                         wrapper << frameCount_ - 1;
                         stream.close();
-                        currentFolder_ = boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1;
+                        if( it->path().leaf() == Saver::currentFolderName_ )
+                            CopyFromCurrentToFolder();
+                        else
+                            currentFolder_ = boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1;
                     }
                     else
                         currentFolder_ = std::max( currentFolder_, boost::lexical_cast< unsigned int >( it->path().leaf() ) + 1 );

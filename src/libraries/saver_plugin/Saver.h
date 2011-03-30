@@ -64,6 +64,7 @@ private:
     //! @name Helpers
     //@{
     void Flush();
+    void CopyFromCurrentToFolder();
     void TerminateFragment();
     void GenerateInfoFile() const;
     void UpdateFragments();
@@ -72,7 +73,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string currentFolderName_;
+    static const std::string currentFolderName_;
     std::string recorderDirectory_;
     dispatcher::Frame current_;
     std::ofstream index_;
