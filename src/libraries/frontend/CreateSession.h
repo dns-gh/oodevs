@@ -31,6 +31,7 @@ class CreateSession
 public:
     //! @name Constructors/Destructor
     //@{
+             CreateSession();
              CreateSession( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
     virtual ~CreateSession();
     //@}
@@ -39,6 +40,8 @@ public:
     //@{
     template< typename T >
     void SetOption( const std::string& path, const T& value );
+    bool HasOption( const std::string& path );
+    bool RemoveOption( const std::string& path );
     template< typename T >
     T GetOption( const std::string& path ) const;
     void SetDefaultValues();

@@ -77,3 +77,21 @@ void ConfigurationManipulator::Commit()
         tools::WriteXmlCrc32Signature( outputPath_ );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ConfigurationManipulator::RemoveNode
+// Created: RPD 2011-03-29
+// -----------------------------------------------------------------------------
+bool ConfigurationManipulator::RemoveNode( const std::string& path )
+{
+    return document_->RemoveNode( path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConfigurationManipulator::HasNode
+// Created: RPD 2011-03-30
+// -----------------------------------------------------------------------------
+bool ConfigurationManipulator::HasNode( const std::string& path )
+{
+    return document_->HasNode( path );
+}

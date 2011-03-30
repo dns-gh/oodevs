@@ -209,3 +209,29 @@ bool XmlNode::GetValue<bool>( const std::string& path ) const
     else
         throw std::exception( "XmlNode impossible to find path" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: XmlNode::RemoveNode
+// Created: RPD 2011-03-29
+// -----------------------------------------------------------------------------
+bool XmlNode::RemoveNode( const std::string& path )
+{
+    std::string element = NextElement( path );
+    T_Nodes::iterator it = children_.find( element ) ;
+    if( it == children_.end() )
+        return false;
+    delete it->second;
+    children_.erase( it );
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: XmlNode::HasNode
+// Created: RPD 2011-03-30
+// -----------------------------------------------------------------------------
+bool XmlNode::HasNode( const std::string& path )
+{
+    std::string element = NextElement( path );
+    T_Nodes::iterator it = children_.find( element ) ;
+    return it != children_.end();
+}

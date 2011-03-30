@@ -27,6 +27,16 @@ using namespace frontend;
 
 // -----------------------------------------------------------------------------
 // Name: CreateSession constructor
+// Created: RPD 2011-03-30
+// -----------------------------------------------------------------------------
+CreateSession::CreateSession()
+    : setter_ ( new ConfigurationManipulator( "dummy" ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateSession constructor
 // Created: SBO 2008-02-27
 // -----------------------------------------------------------------------------
 CreateSession::CreateSession( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
@@ -109,4 +119,22 @@ void CreateSession::SetDefaultValues()
         setter_->SetValue( "session/config/gaming/network/@server", "localhost:" +  // $$$$ AGE 2007-10-09:
                                     boost::lexical_cast< std::string >( DispatcherPort( 1 ) ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateSession::RemoveOption
+// Created: RPD 2011-03-29
+// -----------------------------------------------------------------------------
+bool CreateSession::RemoveOption( const std::string& path )
+{
+    return setter_->RemoveNode( path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateSession::HasOption
+// Created: RPD 2011-03-30
+// -----------------------------------------------------------------------------
+bool CreateSession::HasOption( const std::string& path )
+{
+    return setter_->HasNode( path );
 }

@@ -93,6 +93,8 @@ sword::ControlStartExerciseAck::ErrorCode ProcessService::StartExercise( const s
         action.SetDefaultValues();
         if( message.has_use_after_action_analysis() && message.use_after_action_analysis() )
             action.SetOption( "session/config/dispatcher/plugins/recorder", "" );
+        else
+            action.RemoveOption( "session/config/dispatcher/plugins/recorder" );
         action.Commit();
     }
     boost::shared_ptr< frontend::SpawnCommand > command;
