@@ -32,11 +32,11 @@
    !verbose ${UNINST_LOG_VERBOSE}
 
 !ifdef EXO_PACK
-	!define UNINST_EXE     "$INSTDATADIR\${UNINSTALL_LOG}.exe"
-	!define UNINST_DAT     "$INSTDATADIR\${UNINSTALL_LOG}.dat"
+    !define UNINST_EXE     "$INSTDATADIR\${UNINSTALL_LOG}.exe"
+    !define UNINST_DAT     "$INSTDATADIR\${UNINSTALL_LOG}.dat"
 !else
-	!define UNINST_EXE     "$INSTDIR\${UNINSTALL_LOG}.exe"
-	!define UNINST_DAT     "$INSTDIR\${UNINSTALL_LOG}.dat"
+    !define UNINST_EXE     "$INSTDIR\${UNINSTALL_LOG}.exe"
+    !define UNINST_DAT     "$INSTDIR\${UNINSTALL_LOG}.dat"
 !endif
 
 !define UNLOG_PART     "$PLUGINSDIR\part."
@@ -127,21 +127,21 @@
 
    !define ID ${__LINE__}
 
-	${un.Locate} "${TargetDir}" "/L=F" "${UninstCallBackFunc}"
+    ${un.Locate} "${TargetDir}" "/L=F" "${UninstCallBackFunc}"
 
     loop_${ID}:
 
-	StrCpy $unlog_tmp_1 0
+    StrCpy $unlog_tmp_1 0
 
-	${un.Locate} "${TargetDir}" "/L=DE" "${UninstCallBackFunc}"
-	StrCmp $unlog_tmp_1 "0" 0 loop_${ID}
+    ${un.Locate} "${TargetDir}" "/L=DE" "${UninstCallBackFunc}"
+    StrCmp $unlog_tmp_1 "0" 0 loop_${ID}
 
         ${un.DirState} "${TargetDir}" $unlog_tmp_0
         StrCmp "$unlog_tmp_0" "0" 0 +2
         RmDir "${TargetDir}"
 
-	IfErrors 0 +2
-	MessageBox MB_ICONEXCLAMATION|MB_OK "${UNINSTALL_LOG} Log error" /SD IDOK
+    IfErrors 0 +2
+    MessageBox MB_ICONEXCLAMATION|MB_OK "${UNINSTALL_LOG} Log error" /SD IDOK
 
    !undef ID
 
@@ -282,7 +282,7 @@
 
     isdir:
         RmDir "$R9"
-	IntOp $unlog_tmp_1 $unlog_tmp_1 + 1
+    IntOp $unlog_tmp_1 $unlog_tmp_1 + 1
         goto end
 
     nolog:
@@ -292,7 +292,7 @@
 
     end:
         FileSeek $unlog_tmp_2 0 SET
-	Push $unlog_tmp_0
+    Push $unlog_tmp_0
   FunctionEnd
 
 !macroend
@@ -317,12 +317,12 @@
 
     isdir:
         RmDir "$R9"
-	IntOp $unlog_tmp_1 $unlog_tmp_1 + 1
+    IntOp $unlog_tmp_1 $unlog_tmp_1 + 1
         goto end
 
     nolog:
         ClearErrors
-	FileSeek $unlog_tmp_4 0 SET
+    FileSeek $unlog_tmp_4 0 SET
     read:
         FileRead $unlog_tmp_4 "$unlog_tmp_3"
         ${un.TrimNewLines} "$unlog_tmp_3" "$unlog_tmp_3"
@@ -334,7 +334,7 @@
         StrCmp "$R9" "${UNINST_DAT}" isfile
         IfFileExists "$R9\*.*" msgdir
 
-	MessageBox MB_ICONQUESTION|MB_YESNO \
+    MessageBox MB_ICONQUESTION|MB_YESNO \
         'Delete File "$R9"?' /SD IDNO IDYES isfile IDNO nodel
 
     msgdir:
@@ -342,12 +342,12 @@
         'Delete Directory "$R9"?' /SD IDNO IDYES isdir IDNO nodel
 
     nodel:
-	FileSeek $unlog_tmp_4 0 END
-	FileWrite $unlog_tmp_4 "$R9$\r$\n"
+    FileSeek $unlog_tmp_4 0 END
+    FileWrite $unlog_tmp_4 "$R9$\r$\n"
 
     end:
         FileSeek $unlog_tmp_2 0 SET
-	Push $unlog_tmp_0
+    Push $unlog_tmp_0
   FunctionEnd
 
 !macroend
@@ -434,11 +434,11 @@
         Rename "${UNLOG_TEMP}" "${UNINST_DAT}"
         WriteUninstaller "${UNINST_EXE}"
         WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}.dat" "${UNINST_DAT}"
-		!ifdef EXO_PACK
-			WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory" "$INSTDATADIR"
-		!else
-			WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory" "$INSTDIR"
-		!endif
+        !ifdef EXO_PACK
+            WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory" "$INSTDATADIR"
+        !else
+            WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory" "$INSTDIR"
+        !endif
 
   !verbose pop
 !macroend
@@ -450,19 +450,19 @@
   !verbose push
      !verbose ${UNINST_LOG_VERBOSE}
 
-	FileOpen $unlog_tmp_1 "${FileOpenWrite}" w
-	FileOpen $unlog_tmp_2 "${FileOpenRead}" r
+    FileOpen $unlog_tmp_1 "${FileOpenWrite}" w
+    FileOpen $unlog_tmp_2 "${FileOpenRead}" r
 
-	${Locate} "${TargetDir}" "/L=FD" "${UnLog_Install_Func_CallBack}"
+    ${Locate} "${TargetDir}" "/L=FD" "${UnLog_Install_Func_CallBack}"
 
         StrCmp $unlog_error "error" 0 +2
         ClearErrors
 
-	IfErrors 0 +2
-	MessageBox MB_ICONEXCLAMATION|MB_OK "Error creating ${UNINSTALL_LOG} Log." /SD IDOK
+    IfErrors 0 +2
+    MessageBox MB_ICONEXCLAMATION|MB_OK "Error creating ${UNINSTALL_LOG} Log." /SD IDOK
 
-	FileClose $unlog_tmp_1
-	FileClose $unlog_tmp_2
+    FileClose $unlog_tmp_1
+    FileClose $unlog_tmp_2
 
   !verbose pop
 !macroend

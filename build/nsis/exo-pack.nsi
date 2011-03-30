@@ -204,7 +204,7 @@ Function .onInit
     
     !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
-	!insertmacro OT.ParseCommandLine
+    !insertmacro OT.ParseCommandLine
 FunctionEnd
 
 ; ------------------------------------------------------------------------------

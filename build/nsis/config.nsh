@@ -34,14 +34,14 @@ Var /GLOBAL INSTDATADIR
 ; Base register
 !define INSTDIR_REG_ROOT "SHELL_CONTEXT"
 !ifdef EXO_PACK
-	!define INSTDIR_REG_KEY  "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}\${EXO_PACK}"
+    !define INSTDIR_REG_KEY  "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}\${EXO_PACK}"
 !else
-	!define INSTDIR_REG_KEY  "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+    !define INSTDIR_REG_KEY  "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !endif
 ;........................................
 ; MultiUser config
 !define MULTIUSER_MUI
-!define MULTIUSER_EXECUTIONLEVEL 							Highest
+!define MULTIUSER_EXECUTIONLEVEL                             Highest
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY          "Software\${COMPANY_NAME}\${PRODUCT_NAME}"
 !define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME    "InstallLocation"
@@ -78,7 +78,7 @@ Var /GLOBAL INSTDATADIR
 !insertmacro MULTIUSER_PAGE_INSTALLMODE
 ; Program directory page if needed
 !ifndef EXO_PACK
-	!insertmacro MUI_PAGE_DIRECTORY
+    !insertmacro MUI_PAGE_DIRECTORY
 !endif
 ; Data directory page if needed
 !define MUI_DIRECTORYPAGE_VARIABLE         $INSTDATADIR

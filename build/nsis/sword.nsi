@@ -117,10 +117,6 @@ Section "!${PRODUCT_NAME}"
     ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
     CreateShortcut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_UNINSTALL).lnk" "${UNINST_EXE}"
 
-    !insertmacro OT.AddUninstallEntry
-    !insertmacro OT.AddFileAssoc
-    !insertmacro OT.AddCommonConfig
-
     SetOutPath $TEMP
     File "${OUTDIR}\vcredist_${PLATFORM}.exe"
     ExecWait '"vcredist_${PLATFORM}.exe" /S /NCRC'
@@ -129,14 +125,14 @@ SectionEnd
 
 ; ------------------------------------------------------------------------------
 SectionGroup "Additional components"
-        !insertmacro OT.AddOptionalComponent "Terrain"
-        !insertmacro OT.AddMasaLifeIde
+    !insertmacro OT.AddOptionalComponent "Terrain"
+    !insertmacro OT.AddMasaLifeIde
 SectionGroupEnd
 
 ; ------------------------------------------------------------------------------
 SectionGroup "Models" s_mod
-        !insertmacro OT.AddDecisionalModels "ada"
-        ;!insertmacro OT.AddDecisionalModelSources "ada"
+    !insertmacro OT.AddDecisionalModels "ada"
+    ;!insertmacro OT.AddDecisionalModelSources "ada"
 SectionGroupEnd
 
 ; ------------------------------------------------------------------------------
@@ -183,13 +179,19 @@ Function .onInit
 
     !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
-	!insertmacro OT.ParseCommandLine
+    !insertmacro OT.ParseCommandLine
 FunctionEnd
 
 ; ------------------------------------------------------------------------------
 Function .onInstSuccess
+
+    !insertmacro OT.AddUninstallEntry
+    !insertmacro OT.AddFileAssoc
+    !insertmacro OT.AddCommonConfig
+
     ;create/update log always within .onInstSuccess function
     !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
+
 FunctionEnd
 
 ; ------------------------------------------------------------------------------
