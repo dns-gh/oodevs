@@ -7,19 +7,8 @@
 ;
 ; ------------------------------------------------------------------------------
 
-!include "AdvUninstLog.nsh"
-!include "lang.nsh"
 !include "tools.nsh"
-
 !insertmacro OT.Initialize
-!insertmacro OT.CheckPrompt
-;..................................................................................................
-
-!ifdef EVALUATION
-    !define PRODUCT_EVALUATION "_eval"
-!else
-    !define PRODUCT_EVALUATION ""
-!endif
 !ifndef PRODUCT_SUFFIX
     !define PRODUCT_SUFFIX ${EXO_PACK}
 !endif
@@ -27,17 +16,8 @@
 Name "${PRODUCT_NAME}"
 OutFile "${DISTDIR}\${PRODUCT_NAME}_${PRODUCT_SUFFIX}_${APP_VERSION_MAJOR}.exe"
 
-!insertmacro UNATTENDED_UNINSTALL
-
-!include "version.nsh"
-
-;--------------------------------
-;Section "!${PRODUCT_NAME}"
-;SectionEnd
-    
-;--------------------------------
+; ------------------------------------------------------------------------------
 SectionGroup "Models" s_mod
-
     !if "${EXO_PACK}" == "defense-worldwide"
         !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phymod1"
     !else if "${EXO_PACK}" == "defense-france"
@@ -47,14 +27,12 @@ SectionGroup "Models" s_mod
     !else if "${EXO_PACK}" == "security-worldwide"
         !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phymod1"
     !endif
-    
-    !insertmacro OT.AddPropagation "propagation"
 
+    !insertmacro OT.AddPropagation "propagation"
 SectionGroupEnd    
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 SectionGroup "Exercises" s_exo
-
     !ifdef STRESS
         !insertmacro OT.AddExercise "Charge" "Cabourg" "s_exo1"
     !else if "${EXO_PACK}" == "defense-worldwide"
@@ -157,10 +135,9 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "lehavre" "lehavre" "s_exo2"        
         !insertmacro OT.AddExercise "montereycross" "montereycross" "s_exo3"
     !endif
-
 SectionGroupEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 SectionGroup "Terrains" s_ter
     !if "${EXO_PACK}" == "defense-worldwide"
         !insertmacro OT.AddTerrain "Nord egypt" "s_ter1"
@@ -195,7 +172,7 @@ SectionGroup "Terrains" s_ter
     !endif
 SectionGroupEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 SectionGroup "Populations" s_pop
     !if "${EXO_PACK}" == "security-worldwide"   
         !insertmacro OT.AddPopulation "bruxelles" "s_pop1"
@@ -207,14 +184,14 @@ SectionGroup "Populations" s_pop
     !endif    
 SectionGroupEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 Section "Uninstall"
     !insertmacro OT.KillRunning
     !insertmacro OT.UninstallAdditionalComponent "Terrain"
     !insertmacro OT.Uninstall
 SectionEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 Function .onInit
     !insertmacro OT.CheckRunning
     !insertmacro OT.ChooseLanguage
@@ -230,19 +207,18 @@ Function .onInit
 	!insertmacro OT.ParseCommandLine
 FunctionEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 Function .onInstSuccess
     ;create/update log always within .onInstSuccess function
     !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 FunctionEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 Function un.onInit
     !insertmacro MULTIUSER_UNINIT
-    !insertmacro OT.ReadDataDirectoryFromRegister
 FunctionEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 Function .onSelChange
     !if "${EXO_PACK}" == "defense-worldwide"
         !insertmacro OT.CheckDependency "s_exo1" "s_ter1"

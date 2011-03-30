@@ -7,28 +7,13 @@
 ;
 ; ------------------------------------------------------------------------------
 
-!include "AdvUninstLog.nsh"
-!include "lang.nsh"
 !include "tools.nsh"
-
 !insertmacro OT.Initialize
-!insertmacro OT.CheckPrompt
-;..................................................................................................
-
-!ifdef EVALUATION
-    !define PRODUCT_EVALUATION "_eval"
-!else
-    !define PRODUCT_EVALUATION ""
-!endif
 
 Name "${PRODUCT_NAME}"
 OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}${PRODUCT_EVALUATION}.exe"
 
-!insertmacro UNATTENDED_UNINSTALL
-
-!include "version.nsh"
-
-;--------------------------------
+; ------------------------------------------------------------------------------
 Section "!${PRODUCT_NAME}"
     SectionIn RO
 
@@ -142,24 +127,24 @@ Section "!${PRODUCT_NAME}"
     Delete "vcredist_${PLATFORM}.exe"
 SectionEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 SectionGroup "Additional components"
         !insertmacro OT.AddOptionalComponent "Terrain"
         !insertmacro OT.AddMasaLifeIde
 SectionGroupEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 SectionGroup "Models" s_mod
         !insertmacro OT.AddDecisionalModels "ada"
         ;!insertmacro OT.AddDecisionalModelSources "ada"
 SectionGroupEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 Section "Documentation" s_doc
     !insertmacro OT.AddDocumentation
 SectionEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 SectionGroup "Shortcuts" s_sc
     ;----------------------------
     Section "Desktop" s_desktop
@@ -174,7 +159,7 @@ SectionGroup "Shortcuts" s_sc
     SectionEnd
 SectionGroupEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 Section "Uninstall"
     !insertmacro OT.KillRunning
     !insertmacro OT.UninstallAdditionalComponent "Terrain"
@@ -182,7 +167,7 @@ Section "Uninstall"
     !insertmacro OT.Uninstall
 SectionEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 Function .onInit
     !insertmacro OT.CheckRunning
     !insertmacro OT.ChooseLanguage
@@ -201,18 +186,17 @@ Function .onInit
 	!insertmacro OT.ParseCommandLine
 FunctionEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 Function .onInstSuccess
     ;create/update log always within .onInstSuccess function
     !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
 FunctionEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 Function un.onInit
     !insertmacro MULTIUSER_UNINIT
-    !insertmacro OT.ReadDataDirectoryFromRegister
 FunctionEnd
 
-;--------------------------------
+; ------------------------------------------------------------------------------
 Function .onSelChange
 FunctionEnd

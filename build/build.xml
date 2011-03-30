@@ -1044,56 +1044,7 @@
     -->
     <target name="package" depends="package.app,package.exo,package.debug,package.wise-driver" description="package the installers"/>
 
-    <!-- standard packages -->
-    <target name="package.defense" description="package the standard installer : worldwide, no license">
-        <nsis name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_MODEL=worldwide"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.security" description="create the installer">
-        <nsis name="sword-security" script="sword-security.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_MODEL=worldwide"/>
-            <arg value="/DPRODUCT_SUFFIX=security"/>
-            <arg value="/X!include sword-security.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.security.demo" description="create the security installer with all demo exercices">
-        <nsis name="sword-security" script="sword-security.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_MODEL=worldwide"/>
-            <arg value="/DMASADEMO=1"/>
-            <arg value="/DPRODUCT_SUFFIX=security"/>
-            <arg value="/X!include sword-security.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.eval" description="package the standard installer : worlwide, 3 months license">
-        <nsis name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DEVALUATION=1"/>
-            <arg value="/DAPP_MODEL=worldwide"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.france" description="package the french version of installer : france, no license">
-        <nsis name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DAPP_MODEL=france"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
+    <!-- Package misc -->
     <target name="package.patch" description="create a patch installer">
         <nsis name="sword-patch" script="patchs/sword-patch.nsi" license="true">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
@@ -1136,7 +1087,6 @@
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEXO_PACK=defense-worldwide"/>
             <arg value="/DUNINSTALL_LOG=uninstall-defense-worldwide"/>
-            <arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
@@ -1147,7 +1097,6 @@
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEXO_PACK=defense-france"/>
             <arg value="/DUNINSTALL_LOG=uninstall-defense-france"/>
-            <arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
@@ -1158,7 +1107,6 @@
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEXO_PACK=defense-scipio"/>
             <arg value="/DUNINSTALL_LOG=uninstall-defense-scipio"/>
-            <arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
@@ -1169,7 +1117,6 @@
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEXO_PACK=security-worldwide"/>
             <arg value="/DUNINSTALL_LOG=uninstall-security-worldwide"/>
-            <arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
             <arg value="/X!include sword-security.nsh"/>
         </nsis>
     </target>
@@ -1180,7 +1127,6 @@
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEXO_PACK=security-masa"/>
             <arg value="/DUNINSTALL_LOG=uninstall-security-masa"/>
-            <arg value="/DNO_PROMPT_PROGRAM_DIRECTORY=1"/>
             <arg value="/X!include sword-security.nsh"/>
         </nsis>
     </target>

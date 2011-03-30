@@ -31,7 +31,7 @@
 !verbose push
    !verbose ${UNINST_LOG_VERBOSE}
 
-!ifdef NO_PROMPT_PROGRAM_DIRECTORY
+!ifdef EXO_PACK
 	!define UNINST_EXE     "$INSTDATADIR\${UNINSTALL_LOG}.exe"
 	!define UNINST_DAT     "$INSTDATADIR\${UNINSTALL_LOG}.dat"
 !else
@@ -91,7 +91,6 @@
         FileClose $unlog_tmp_2
         DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}.dat"
         DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory"
-        DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}DataDirectory"
 
   !verbose pop
 !macroend
@@ -435,8 +434,11 @@
         Rename "${UNLOG_TEMP}" "${UNINST_DAT}"
         WriteUninstaller "${UNINST_EXE}"
         WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}.dat" "${UNINST_DAT}"
-        WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory" "$INSTDIR"
-        WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}DataDirectory" "$INSTDATADIR"
+		!ifdef EXO_PACK
+			WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory" "$INSTDATADIR"
+		!else
+			WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory" "$INSTDIR"
+		!endif
 
   !verbose pop
 !macroend

@@ -4,12 +4,15 @@
 ;
 ;------------------------------------------------------------------------------
 
+!include "AdvUninstLog.nsh"
+!include "lang.nsh"
+!include "Sections.nsh"
+!include "FileFunc.nsh"
+
 !ifndef locate::RMDirEmpty
     !include "Locate.nsh"
 !endif
 
-!include "Sections.nsh"
-!include "FileFunc.nsh"
 !insertmacro GetParameters
 !insertmacro GetOptions
 
@@ -53,6 +56,14 @@
     !ifndef APPLICATIONSDIR
         !define APPLICATIONSDIR "..\..\src\applications"
     !endif
+
+	!ifdef EVALUATION
+		!define PRODUCT_EVALUATION "_eval"
+	!else
+		!define PRODUCT_EVALUATION ""
+	!endif
+
+	!insertmacro UNATTENDED_UNINSTALL
 
 !macroend
 
@@ -162,7 +173,7 @@
     SetOutPath "$INSTDATADIR\data\import_lto"
     !insertmacro UNINSTALL.LOG_OPEN_INSTALL
     File "${DATADIR}\tests\import_lto\*.xml"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
 !macroend
 
@@ -228,10 +239,11 @@
 ;------------------------------------------------------------------------------
 !macro OT.AddUninstallEntry
 
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallLocation" "$INSTDIR"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${PRODUCT_NAME}"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayVersion" "${APP_VERSION_MINOR}"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE}"
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "Publisher" "${COMPANY_NAME}"
     WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoModify" 1
     WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoRepair" 1
 
@@ -333,6 +345,8 @@ FunctionEnd
     Push A ; auto count languages
     LangDLL::LangDialog "Installer Language" "Please select the language of the installer"
     Pop $LANGUAGE
+	StrCmp $LANGUAGE "cancel" 0 +2
+		Abort
 
 !macroend
 
@@ -343,7 +357,9 @@ FunctionEnd
 
     Section "${ComponentName}"
         SetOutPath "$INSTDIR\installation files"
+		!insertmacro UNINSTALL.LOG_OPEN_INSTALL
         File "${OUTDIR}\terraintools_${PLATFORM}.zip"
+		!insertmacro UNINSTALL.LOG_CLOSE_INSTALL
         WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${ComponentName}\applications"
         nsisunz::Unzip "$INSTDIR\installation files\terraintools_${PLATFORM}.zip" "$INSTDIR\${ComponentName}"
     SectionEnd
@@ -412,31 +428,57 @@ FunctionEnd
 ; Uninstallation helper
 ;------------------------------------------------------------------------------
 !macro OT.Uninstall
-
+	
+	; Uninstall
     !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
     !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
     !insertmacro UNINSTALL.LOG_END_UNINSTALL
 
+	; Clean repository
     StrCmp $INSTDIR "" +2 0
     ${locate::RMDirEmpty} "$INSTDIR" "/M=*.* /G=1 /B=1" $R1
     StrCmp $INSTDATADIR "" +2 0
     ${locate::RMDirEmpty} "$INSTDATADIR" "/M=*.* /G=1 /B=1" $R1
     ${locate::Unload}
-
     Delete "${UNINST_DAT}"
     Delete "${UNINST_EXE}"
-
     Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
     Delete "$QUICKLAUNCH\${PRODUCT_NAME}.lnk"
     RmDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
-    DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
-    ; TODO: prompt keep / delete preferences
-    DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}"
-    DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}"
+	!ifndef EXO_PACK
+		RMDir $INSTDIR
+	!endif
+	RMDir $INSTDATADIR
+
+	; Clean registery
+	!ifdef EXO_PACK
+		DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
+
+		ReadRegStr $R1 ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}" "Publisher"
+		StrCmp $R1 "" 0 +2
+			DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
+	!else
+	    DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallLocation"
+		DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName"
+		DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayVersion"
+		DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString"
+		DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "Publisher"
+		DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoModify"
+		DeleteRegValue ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoRepair"
+	
+		DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
+
+		; Prompt keep / delete preferences -> uncomment if wanted
+		; MessageBox MB_YESNO|MB_ICONQUESTION "Do you want to delete preferences ?" /SD IDYES IDNO false
+			DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}"
+			DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}"
+		;false:
+
+	!endif
 
     ; unregister .otpak extension association
     DeleteRegKey HKCR ".otpak"
-
+	
 !macroend
 
 ;------------------------------------------------------------------------------
@@ -453,58 +495,56 @@ Function adobeReader
 FunctionEnd
 
 ;------------------------------------------------------------------------------
-; Check directory prompt
-;------------------------------------------------------------------------------
-!macro OT.CheckPrompt
-	!ifdef NO_PROMPT_DATA_DIRECTORY & NO_PROMPT_PROGRAM_DIRECTORY
-        !error "You must insert either NO_PROMPT_DATA or NO_PROMPT_PROGRAM neither both."
-	!endif
-!macroend
-
-;------------------------------------------------------------------------------
 ; Parse command line
 ;------------------------------------------------------------------------------
 !macro OT.ParseCommandLine
 	${GetParameters} $R0
 
-	${GetOptions} $R0 "/SILENT=" $R1 ; Check SILENT option
+	${GetOptions} $R0 "/SILENT=" $R1 ; Check for optional SILENT option
 	IfErrors +3 0
 	StrCmp $R1 "yes" 0 +2
 		SetSilent silent
-
 	IfSilent 0 CommandLineExit
 		
-	!ifndef NO_PROMPT_PROGRAM_DIRECTORY
+	!ifndef EXO_PACK
 		${GetOptions} $R0 "/INSTALLDIRECTORY=" $R1 ; Check INSTALLDIRECTORY option
 		IfErrors +2 0
 		StrCpy $INSTDIR $R1
 	!endif
 
-	!ifndef NO_PROMPT_DATA_DIRECTORY
-		${GetOptions} $R0 "/DATADIRECTORY=" $R1 ; Check DATADIRECTORY option
-		IfErrors 0 +3
-		StrCpy $INSTDATADIR "$DOCUMENTS\${PRODUCT_NAME}"
-		Goto CommandLineExit
-		StrCpy $INSTDATADIR $R1
-	!endif
+	${GetOptions} $R0 "/DATADIRECTORY=" $R1 ; Check DATADIRECTORY option
+	IfErrors 0 +3
+	StrCpy $INSTDATADIR "$DOCUMENTS\${PRODUCT_NAME}"
+	Goto CommandLineExit
+	StrCpy $INSTDATADIR $R1
 
-CommandLineExit:
-
+	CommandLineExit:
 !macroend
 
-!macro OT.ReadDataDirectoryFromRegister
+;------------------------------------------------------------------------------
+; Init data directory for installer
+;------------------------------------------------------------------------------
+Function OT.InitDataDirectory
+	StrCpy $INSTDATADIR "$DOCUMENTS\${PRODUCT_NAME}"
+FunctionEnd
 
-    ;Hack pour faire marcher les desinstall, 
-    ;TODO: faire un gros refactor de tous les installeur
+;------------------------------------------------------------------------------
+; Init register for uninstaller
+;------------------------------------------------------------------------------
+Function un.OT.InitRegister
 
-    !ifdef NO_PROMPT_PROGRAM_DIRECTORY
-        StrCpy $INSTDATADIR $INSTDIR 
+    !ifdef EXO_PACK
+		ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory"
+		StrCmp $INSTDATADIR "" 0 +2
+			Call un.MultiUser.InstallMode.CurrentUser
+		ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory"
     !else
-        ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory"
-        StrCmp $INSTDATADIR "" 0 +2
-            ReadRegStr $INSTDATADIR HKCU "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory"
+		ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory"
+		StrCmp $INSTDATADIR "" 0 +2
+			Call un.MultiUser.InstallMode.CurrentUser
+		ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory"		
     !endif
-
-!macroend
+	
+FunctionEnd
 
 

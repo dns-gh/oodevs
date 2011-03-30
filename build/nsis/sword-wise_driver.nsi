@@ -9,7 +9,6 @@
 
 !define PRODUCT_NAME "SWORD-WISE Driver"
 !define COMPANY_NAME "MASA Group"
-
 !define WISE_VERSION "WISE Connectivity 3.9"
 
 ;........................................
@@ -69,12 +68,10 @@ Section "!${PRODUCT_NAME}"
     File "${OUTDIR}\vcredist_${PLATFORM}.exe"
     ExecWait '"vcredist_${PLATFORM}.exe" /S /NCRC'
     Delete "vcredist_${PLATFORM}.exe"
-    
 SectionEnd
 
 ;--------------------------------
 Section "Uninstall"
-   
     !insertmacro UNINSTALL.LOG_BEGIN_UNINSTALL
     !insertmacro UNINSTALL.LOG_UNINSTALL_ALL
     !insertmacro UNINSTALL.LOG_END_UNINSTALL
@@ -106,11 +103,12 @@ FunctionEnd
 
 ;--------------------------------
 Function .onInstSuccess
-    ; Add uninstall information
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
+    ; Add uninstall information == tools.nsh -> OT.AddUninstallEntry
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallLocation" "$INSTDIR"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${PRODUCT_NAME}"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayVersion" "${APP_VERSION_MINOR}"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE}"
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "Publisher" "${COMPANY_NAME}"
     WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoModify" 1
     WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoRepair" 1
 
