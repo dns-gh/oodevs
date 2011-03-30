@@ -114,10 +114,7 @@ void PHY_Dotation::ReadValue( xml::xistream& xis )
     if( rValue < 0. )
         xis.error( "rValue is not greater or equal to 0." );
     if( rValue > rCapacity_ )
-    {
-        rValue = rCapacity_;
-        MT_LOG_WARNING_MSG( "PHY_DotationGroup::ReadValues XXX truncation" );
-    }
+        rCapacity_ = rValue;
     SetValue( rValue );
 }
 
