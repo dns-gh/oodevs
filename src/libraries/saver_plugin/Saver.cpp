@@ -67,6 +67,8 @@ namespace
 {
     void DeleteFilesRecursive( const bfs::path& path )
     {
+        if( !bfs::exists( path ) )
+            return;
         bfs::directory_iterator endItr;
         for( bfs::directory_iterator itr( path ); itr != endItr; ++itr )
             if( bfs::is_directory( itr->status() ) )
@@ -206,6 +208,8 @@ void Saver::Flush()
 void Saver::CopyFromCurrentToFolder()
 {
     const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
+    if( !bfs::exists( currentDirectory ) )
+        return;
     const bfs::path newDirectory = bfs::path( recorderDirectory_, bfs::native ) / CreateFolderName( currentFolder_++ );
     bfs::create_directories( newDirectory );
     bfs::directory_iterator endItr;
