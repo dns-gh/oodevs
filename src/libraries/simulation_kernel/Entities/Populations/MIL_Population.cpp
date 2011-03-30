@@ -26,6 +26,7 @@
 #include "Tools/MIL_AffinitiesMap.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
+#include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
@@ -1435,15 +1436,18 @@ float MIL_Population::GetAffinity( unsigned long teamID ) const
 // -----------------------------------------------------------------------------
 bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) const
 {
+    /// Pb de precision .. BOF
+    static const double rSquareWeldValue = TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue();
+
     BOOST_FOREACH( const MIL_PopulationConcentration* concentration, concentrations_ )
     {
-        if( concentration->GetPosition() == destination )
+        if( destination.SquareDistance( concentration->GetPosition() ) <= rSquareWeldValue )
             return true;
     }
 
     BOOST_FOREACH( const MIL_PopulationFlow* flow, flows_ )
     {
-        if( flow->GetPosition() == destination )
+        if( destination.SquareDistance( flow->GetPosition() ) <= rSquareWeldValue )
             return true;
     }
     return false;
@@ -1455,11 +1459,14 @@ bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) con
 // -----------------------------------------------------------------------------
 bool MIL_Population::HasReachedDestinationCompletely( const MT_Vector2D& destination ) const
 {
+    /// Pb de precision .. BOF
+    static const double rSquareWeldValue = TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue();
+
     if( !flows_.empty() )
         return false;
 
     if( concentrations_.size() != 1 )
         return false;
 
-    return concentrations_.front()->GetPosition() == destination;
+    return destination.SquareDistance( concentrations_.front()->GetPosition() ) <= rSquareWeldValue;
 }
