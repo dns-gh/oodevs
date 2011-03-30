@@ -26,7 +26,8 @@ using namespace kernel;
 // Created: AGE 2007-09-26
 // -----------------------------------------------------------------------------
 IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock,
-                              IndicatorExportDialog& exportDialog, bool interactive, const IndicatorRequest& request, double currentTick )
+                              IndicatorExportDialog& exportDialog, bool interactive, const IndicatorRequest& request, double currentTick,
+                              QHBox* hbox)
     : gui::GQ_Plot( parent, "IndicatorPlot" )
     , controllers_ ( controllers )
     , publisher_   ( publisher )
@@ -56,6 +57,10 @@ IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publish
     setMinimumWidth( 320 );
     setMinimumHeight( 200 );
     controllers_.Register( *this );
+    plotNames_ = new QLabel( hbox );
+    plotNames_->setMinimumWidth( 200 );
+    plotNames_->setIndent( 10 );
+    plotNames_->show();
     Add( request );
     SetTickData( currentTick );
 }
@@ -72,23 +77,36 @@ IndicatorPlot::~IndicatorPlot()
         UnregisterPlotData( *tickData_, true );
     for( T_Datas::iterator it = datas_.begin(); it != datas_.end(); ++it )
         UnregisterPlotData( **it, true );
+    delete plotNames_;
 }
 
 namespace
 {
     QColor GetPlotColor( unsigned i )
     {
-        switch( i % 7 )
+        QColor col;
+        const int nColors = 6;
+        int dividend = i / nColors;
+        if( dividend < 3 )
         {
-        default:
-        case 0: return Qt::black;
-        case 1: return Qt::green;
-        case 2: return Qt::blue;
-        case 3: return Qt::cyan;
-        case 4: return Qt::magenta;
-        case 5: return Qt::yellow;
-        case 6: return Qt::darkYellow;
+            switch( i % nColors )
+            {
+                case 0: col = Qt::blue; break;
+                case 1: col = Qt::red; break;
+                case 2: col = Qt::magenta; break;
+                case 3: col = Qt::gray; break;
+                case 4: col = Qt::green; break;
+                case 5: col = Qt::cyan; break;
+                default : assert( false ); break;
+            }
+            if( dividend == 1 )
+                col = col.light( 166 );
+            else if( dividend == 2 )
+                col = col.light( 33 );
         }
+        else
+            col.setHsv( ( i * 43 ) % 360, 100, 100 );
+        return col;
     }
 }
 
@@ -102,7 +120,7 @@ void IndicatorPlot::Add( const IndicatorRequest& request )
     if( it != plots_.end() )
         return;
     gui::GQ_PlotData* data = new gui::GQ_PlotData( datas_.size() + 1, *this );
-    data->SetName( request.GetName() );
+    plotNames_->setText( plotNames_->text() + "<font color='" + GetPlotColor( datas_.size() ).name() + "'>" + request.GetName() + "</font>" + "<br />" );
     data->SetLinePen( GetPlotColor( datas_.size() ) );
     UpdatePlot( data, request, 0 );
     RegisterPlotData( *data );

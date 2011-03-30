@@ -40,7 +40,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              IndicatorPlot( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock,
-                            IndicatorExportDialog& exportDialog, bool interactive, const IndicatorRequest& request, double currentTick );
+                            IndicatorExportDialog& exportDialog, bool interactive, const IndicatorRequest& request, double currentTick,
+                            QHBox* plotNames );
     virtual ~IndicatorPlot();
     //@}
 
@@ -95,6 +96,7 @@ private:
     T_PlottedRequests plots_;
     double min_;
     double max_;
+    QLabel* plotNames_;
     //@}
 };
 
