@@ -104,8 +104,8 @@
                   <xs:documentation xml:lang="en">Activates session recorder for later use of data in after action review.</xs:documentation>
                 </xs:annotation>
                     <xs:complexType>
-                        <xs:attribute name="fragmentfreq" type="xs:string" use="required"/>
-                        <xs:attribute name="keyframesfreq" type="xs:string" use="required"/>
+                        <xs:attribute name="fragmentfreq" type="xs:string" use="optional"/>
+                        <xs:attribute name="keyframesfreq" type="xs:string" use="optional"/>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="crossbow" minOccurs="0">
