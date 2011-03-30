@@ -56,7 +56,7 @@ int main( int argc, char* argv[] )
         po::notify( values );
         if( values.count( "install" ) )
         {
-            const std::string command = "frontend_app.exe --install=\"" + package + "\"";
+            const std::string command = "selftraining_app.exe --install=\"" + package + "\"";
             Execute( command );
         }
     }

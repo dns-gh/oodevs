@@ -313,18 +313,7 @@ void ImportWidget::AddTerrainChoice( QGroupBox* box )
 void ImportWidget::PackageBrowseClicked()
 {
     const QString filename = QFileDialog::getOpenFileName( "", "Officer Training packages (*.otpak)", this, "", tools::translate( "ImportWidget", "Select a package" ) );
-    package_->setText( filename );
-    if( !filename.isEmpty() )
-    {
-        packageName_->setText( "" );
-        packageDescription_->setText( "" );
-        packageContent_->clear();
-        if( ReadPackageContentFile() )
-            packageContent_->insertStringList( frontend::commands::ListPackageFiles( package_->text().ascii() ) );
-        else
-            packageName_->setText( tools::translate( "ImportWidget", "otpak corrupted: unable to load content properly" ) );
-    }
-    page_.UpdateEditButton();
+    SelectPackage( filename );
 }
 
 // -----------------------------------------------------------------------------
@@ -369,5 +358,25 @@ void ImportWidget::OnChangeScenario()
 {
     const QString filename = QFileDialog::getOpenFileName( QString::null, "*.xml", this );
     inputEdit_->setText( filename );
+    page_.UpdateEditButton();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ImportWidget::SelectPackage
+// Created: SBO 2011-03-30
+// -----------------------------------------------------------------------------
+void ImportWidget::SelectPackage( const QString& filename )
+{
+    package_->setText( filename );
+    if( !filename.isEmpty() )
+    {
+        packageName_->setText( "" );
+        packageDescription_->setText( "" );
+        packageContent_->clear();
+        if( ReadPackageContentFile() )
+            packageContent_->insertStringList( frontend::commands::ListPackageFiles( package_->text().ascii() ) );
+        else
+            packageName_->setText( tools::translate( "ImportWidget", "otpak corrupted: unable to load content properly" ) );
+    }
     page_.UpdateEditButton();
 }

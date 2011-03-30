@@ -24,6 +24,7 @@
 #include "frontend/ProcessWrapper.h"
 #include <qtabbar.h>
 #include <qtabwidget.h>
+#include <qtimer.h>
 
 namespace
 {
@@ -256,4 +257,15 @@ void ScenarioEditPage::LaunchPreparation( const QString& outputScenario )
     progressPage_->Attach( process );
     process->Start();
     progressPage_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::ShowPackageInstallation
+// Created: SBO 2011-03-30
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::ShowPackageInstallation( const QString& package )
+{
+    importWidget_->SelectPackage( package );
+    mainTabs_->showPage( importWidget_ );
+    QTimer::singleShot( 1, this, SLOT( show() ) );
 }

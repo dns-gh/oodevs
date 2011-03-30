@@ -28,7 +28,8 @@ HomePage::HomePage( QWidgetStack* pages, Config& config, const tools::Loader_ABC
     , optionsPage_( new OptionsPage( pages, *this, config ) )
 {
     adapt_ = AddLink( tools::translate( "HomePage", "Adapt" ), *new AuthoringPage( pages, *this, config, controllers ), tools::translate( "HomePage", "Start authoring, terrain generation or terrain workshop" ) );
-    prepare_ = AddLink( tools::translate( "HomePage", "Prepare" ), *new ScenarioEditPage( pages, *this, config, fileLoader, controllers, launcher ), tools::translate( "HomePage", "Edit scenario" ) );
+    editPage_ = new ScenarioEditPage( pages, *this, config, fileLoader, controllers, launcher );
+    prepare_ = AddLink( tools::translate( "HomePage", "Prepare" ), *editPage_, tools::translate( "HomePage", "Edit scenario" ) );
     play_ = AddLink( tools::translate( "HomePage", "Play" ), *new SelfTrainingPage( pages, *this, config, fileLoader, controllers, launcher, interpreter ), tools::translate( "HomePage", "Start single player or multiplayer training session" ) );
     replay_ = AddLink( tools::translate( "HomePage", "Replay" ), *new ReplayPage( pages, *this , config, fileLoader, controllers, launcher ), tools::translate( "HomePage", "Replay scenario" ) );
 }
@@ -88,4 +89,14 @@ void HomePage::show()
 void HomePage::OnOptions()
 {
     optionsPage_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: HomePage::InstallPackage
+// Created: SBO 2011-03-30
+// -----------------------------------------------------------------------------
+void HomePage::InstallPackage( const QString& package )
+{
+    if( prepare_->isEnabled() )
+        editPage_->ShowPackageInstallation( package );
 }

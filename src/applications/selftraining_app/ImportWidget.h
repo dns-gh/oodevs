@@ -45,6 +45,7 @@ public:
     //@{
     void InstallExercise();
     bool EnableEditButton();
+    void SelectPackage( const QString& filename );
     //@}
 
 private:

@@ -35,6 +35,7 @@ namespace tools
 class Config;
 class MenuButton;
 class OptionsPage;
+class ScenarioEditPage;
 class QuitPage;
 
 // =============================================================================
@@ -57,6 +58,7 @@ public:
     //@{
     virtual void show();
     virtual void OnOptions();
+    void InstallPackage( const QString& package );
     //@}
 
 private:
@@ -64,6 +66,7 @@ private:
     //@{
     Config& config_;
     OptionsPage* optionsPage_;
+    ScenarioEditPage* editPage_;
     MenuButton* adapt_;
     MenuButton* prepare_;
     MenuButton* play_;

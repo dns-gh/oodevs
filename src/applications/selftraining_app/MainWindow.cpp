@@ -38,9 +38,11 @@ MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, ker
     setMinimumHeight( 600 );
     SetStyle();
     pages_ = new QWidgetStack( this );
-    new HomePage( pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );
+    HomePage* home = new HomePage( pages_, config, fileLoader, controllers, launcherClient, *interpreter_ );
     setCentralWidget( pages_ );
     CenterWindow();
+    if( !config.GetPackageFile().empty() )
+        home->InstallPackage( config.GetPackageFile().c_str() );
 }
 
 // -----------------------------------------------------------------------------

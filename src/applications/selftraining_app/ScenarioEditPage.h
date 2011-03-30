@@ -58,6 +58,7 @@ public:
     void Edit( const QString& exercise );
     bool ExerciceExists( const QString& string );
     void LaunchScenarioImport( const QString& inputScenario, const QString& outputScenario );
+    void ShowPackageInstallation( const QString& package );
     void LaunchPreparation( const QString& outputScenario );
     void UpdateEditButton();
     //@}
