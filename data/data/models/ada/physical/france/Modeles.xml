@@ -34,6 +34,7 @@
         <mission name="MELEE Intercepter"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Barrer"/>
+        <mission name="MELEE Controler foule"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Recueillir"/>
@@ -145,6 +146,7 @@
         <mission name="MELEE Freiner"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Barrer"/>
+        <mission name="MELEE Controler foule"/>
         <mission name="MELEE Jalonner">
           <fragorder name="Decrocher"/>
         </mission>
@@ -195,6 +197,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Controler"/>
+        <mission name="MELEE Controler foule"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Jalonner">
@@ -248,6 +251,7 @@
           <fragorder name="Deboucher"/>
         </mission>
         <mission name="MELEE Controler"/>
+        <mission name="MELEE Controler foule"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
@@ -11402,4 +11406,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0980727633" -->
+<!-- signature="2865818489" -->

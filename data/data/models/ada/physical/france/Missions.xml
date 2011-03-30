@@ -2535,6 +2535,13 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="crowd" name="Foule" optional="false" type="CrowdKnowledge"/>
     </mission>
+    <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.tasks.ControlerFoule" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.tasks.ControlerFoule" id="2131" name="MELEE Controler foule">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="177" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="ALAT Aller Se Recompleter">
@@ -4387,4 +4394,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1662534701" -->
+<!-- signature="3881975784" -->
