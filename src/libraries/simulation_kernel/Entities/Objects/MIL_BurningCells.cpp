@@ -237,15 +237,7 @@ void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Ob
 // -----------------------------------------------------------------------------
 void MIL_BurningCells::FindTerrainData( const geometry::Point2d& center, double radius, TerrainData& data )
 {
-    // $$$$ BCI 2011-03-04: FindTerrainDataWithinCircle c'est de la daube
-     //data = TER_PathFindManager::GetPathFindManager().FindTerrainDataWithinCircle( MT_Vector2D( pCell->center_.X(), pCell->center_.Y() ), (float)radius );
-
-    // $$$$ BCI 2011-03-04: en attendant de pouvoir corriger FindTerrainDataWithinCircle...
-    data = TER_PathFindManager::GetPathFindManager().Pick( MT_Vector2D( center.X(), center.Y() ) );
-    data.Merge( TER_PathFindManager::GetPathFindManager().Pick( MT_Vector2D( center.X() + radius, center.Y() + radius ) ) );
-    data.Merge( TER_PathFindManager::GetPathFindManager().Pick( MT_Vector2D( center.X() - radius, center.Y() + radius ) ) );
-    data.Merge( TER_PathFindManager::GetPathFindManager().Pick( MT_Vector2D( center.X() - radius, center.Y() - radius ) ) );
-    data.Merge( TER_PathFindManager::GetPathFindManager().Pick( MT_Vector2D( center.X() - radius, center.Y() - radius ) ) );
+    data = TER_PathFindManager::GetPathFindManager().FindTerrainDataWithinCircle( MT_Vector2D( center.X(), center.Y() ), (float)radius );
 }
 
 // -----------------------------------------------------------------------------

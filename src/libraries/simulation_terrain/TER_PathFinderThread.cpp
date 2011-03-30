@@ -237,25 +237,19 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindSafety
     return points;
 }
 
-struct FindTerrainDataWithinCircleFunctor
-{
-    bool operator()( const pathfind::Node< TerrainData >& node )
-    {
-        result.Merge( TerrainHeuristic::BuildData( node ) );
-        return true;
-    }
-    TerrainData result;
-};
-
 // -----------------------------------------------------------------------------
 // Name: std::vector< TerrainData > TER_PathFinderThread::FindTerrainDataWithinCircle
 // Created: BCI 2010-12-20
 // -----------------------------------------------------------------------------
 TerrainData TER_PathFinderThread::FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius )
 {
-    FindTerrainDataWithinCircleFunctor functor;
-    pPathfinder_->ApplyOnNodesInCircle( MakePoint( center ), radius, functor );
-    return functor.result;
+    TerrainData result;
+    std::vector< pathfind::Node< TerrainData >* > nodes = pPathfinder_->FindNodesWithinCircle( MakePoint( center ), radius );
+    for( std::vector< pathfind::Node< TerrainData >* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
+    {
+        result.Merge( TerrainHeuristic::BuildData( **iterator ) );
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
