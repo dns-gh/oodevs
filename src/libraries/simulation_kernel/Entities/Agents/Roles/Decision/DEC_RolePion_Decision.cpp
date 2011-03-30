@@ -239,21 +239,9 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_DebugPointXY" ] = &DEC_MiscFunctions::GetPointXY;
 
     // Pion accessors
-    brain.Register( "DEC_Agent_EstPC", &DEC_Decision_ABC::IsPC );
-    brain.Register( "DEC_Agent_EstTransporte", &DEC_Decision_ABC::IsTransported );
-    brain.Register( "DEC_Agent_EstEnVol", &DEC_Decision_ABC::IsFlying );
-    brain.Register( "DEC_Agent_EstEnMouvement", &DEC_Decision_ABC::IsMoving );
 
     brain[ "DEC_Agent_PeutActiverObjet" ] = &DEC_AgentFunctions::CanActivateObject;
-
-    brain.Register( "DEC_Agent_EstNeutralise", &DEC_Decision_ABC::IsNeutralized );
-    brain.Register( "DEC_Agent_AutomateEstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
-    brain.Register( "DEC_Agent_Position", &DEC_Decision_ABC::GetPosition );
-    brain.Register( "DEC_Agent_EstMort", &DEC_Decision_ABC::IsDead );
     brain[ "DEC_Agent_PeutIllumine" ] = &DEC_AgentFunctions::CanIlluminate;
-
-    // NBC
-    brain.Register( "DEC_Agent_EstContamine", &DEC_Decision_ABC::IsContaminated );
 
     //agent knowledge accessors
     brain[ "DEC_ConnaissanceAgent_EstIllumine" ] = &DEC_KnowledgeAgentFunctions::IsIlluminated;
@@ -291,9 +279,6 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_Geometrie_PionDevant" ] = &DEC_GeometryFunctions::GetFrontestPion;
     brain[ "DEC_Geometrie_PionDerriere" ] = &DEC_GeometryFunctions::ComputeBackestAgent;
     brain[ "DEC_Geometrie_CalculerLocalisationsBU" ] = &DEC_GeometryFunctions::ComputeUrbanBlockLocalisations;
-
-    // Hierarchie
-    brain.Register( "DEC_Pion_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
 
     // Logistique
     brain[ "DEC_DemandeDeRavitaillement" ] = &DEC_LogisticFunctions::PionRequestSupply;

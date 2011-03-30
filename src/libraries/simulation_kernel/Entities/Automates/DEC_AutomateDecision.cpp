@@ -133,12 +133,6 @@ void DEC_AutomateDecision::EndCleanStateAfterCrash()
 // -----------------------------------------------------------------------------
 void DEC_AutomateDecision::RegisterUserArchetypeFunctions ( directia::brain::Brain& brain )
 {
-    // Accessors
-    brain.Register( "DEC_Automate_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
-
-    // State
-    brain.Register( "DEC_Automate_EstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
-
     // Objets
     brain[ "DEC_ActiverObjet" ] = &DEC_ObjectFunctions::ActivateObject;
 

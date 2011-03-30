@@ -67,6 +67,18 @@ namespace DEC_DecisionImpl
 void RegisterUnitFunctions( directia::brain::Brain& brain)
 {
     brain.Register( "DEC_Agent_EtatOpsMajeur", &DEC_Decision_ABC::GetMajorOperationalState );
+    brain.Register( "DEC_Agent_EstPC", &DEC_Decision_ABC::IsPC );
+    brain.Register( "DEC_Agent_EstTransporte", &DEC_Decision_ABC::IsTransported );
+    brain.Register( "DEC_Agent_EstEnVol", &DEC_Decision_ABC::IsFlying );
+    brain.Register( "DEC_Agent_EstEnMouvement", &DEC_Decision_ABC::IsMoving );
+    brain.Register( "DEC_Agent_EstNeutralise", &DEC_Decision_ABC::IsNeutralized );
+    brain.Register( "DEC_Agent_AutomateEstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
+    brain.Register( "DEC_Agent_Position", &DEC_Decision_ABC::GetPosition );
+    brain.Register( "DEC_Agent_EstMort", &DEC_Decision_ABC::IsDead );
+    brain.Register( "DEC_Agent_EstContamine", &DEC_Decision_ABC::IsContaminated );
+    brain.Register( "DEC_Pion_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
+    brain.Register( "DEC_Automate_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC ); 
+    brain.Register( "DEC_Automate_EstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
 }
 
 // -----------------------------------------------------------------------------
