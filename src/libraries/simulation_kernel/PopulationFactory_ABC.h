@@ -43,7 +43,7 @@ public:
     //@{
     virtual MIL_Population& Create( xml::xistream& xis, MIL_Army_ABC& army ) = 0;
     virtual MIL_Population& Create( const std::string& type, const MT_Vector2D& point, int number, const std::string& name, MIL_Army_ABC& formation, UrbanObjectWrapper* pUrbanObject = 0 ) = 0;
-    MIL_Population* FindByUrbanObject( UrbanObjectWrapper& urbanObject ) const;
+    MIL_Population* FindByUrbanObject( UrbanObjectWrapper* urbanObject ) const;
     //@}
 
     //! @name CheckPoint
@@ -59,6 +59,7 @@ protected:
         // NOTHING
     }
 
+    // $$$$ _RC_ JSR 2011-03-23: A nettoyer, trouver un meilleur moyen pour faire ça
     tools::Resolver< MIL_Population, UrbanObjectWrapper* > populationFromUrbanObjectResolver_;
     //@}
 };
@@ -78,9 +79,9 @@ void PopulationFactory_ABC::serialize( Archive& file, const unsigned int )
 // Created: BCI 2011-03-17
 // -----------------------------------------------------------------------------
 inline
-MIL_Population* PopulationFactory_ABC::FindByUrbanObject( UrbanObjectWrapper& urbanObject ) const
+MIL_Population* PopulationFactory_ABC::FindByUrbanObject( UrbanObjectWrapper* urbanObject ) const
 {
-    return populationFromUrbanObjectResolver_.Find( &urbanObject );
+    return populationFromUrbanObjectResolver_.Find( urbanObject );
 }
 
 #endif // __PopulationFactory_ABC_h_

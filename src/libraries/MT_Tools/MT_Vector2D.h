@@ -66,7 +66,7 @@ MT_Vector2D  operator +( const MT_Vector2D& v1, const MT_Vector2D& v2 );
 MT_Vector2D  operator -( const MT_Vector2D& v1, const MT_Vector2D& v2 );
 bool         operator <( const MT_Vector2D& v1, const MT_Vector2D& v2 );
 
-MT_Vector2D  CrossProduct( const MT_Vector2D& v1, const MT_Vector2D& v2 );
+double  CrossProduct( const MT_Vector2D& v1, const MT_Vector2D& v2 );
 double     DotProduct  ( const MT_Vector2D& v1, const MT_Vector2D& v2 );
 double     Angle       ( const MT_Vector2D& v1, const MT_Vector2D& v2 ); // Retourne l'angle (orienté) de v1 vers v2, dans le sens trigo, [0, 2*PI]
 

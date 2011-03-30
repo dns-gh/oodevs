@@ -116,7 +116,7 @@ private:
     const unsigned int female_;
     const unsigned int children_;
     kernel::OptionalValue< std::string > criticalIntelligence_;
-    kernel::OptionalValue< float > armedIndividuals_;
+    kernel::OptionalValue< unsigned int > armedIndividuals_;
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f center_;
     kernel::OptionalValue< int > nDomination_;

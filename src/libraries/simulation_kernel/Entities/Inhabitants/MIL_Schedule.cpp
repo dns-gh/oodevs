@@ -171,7 +171,7 @@ bool MIL_Schedule::Check( Event& event, const bpt::ptime& pdate, unsigned int du
         pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, 900 * event.occurence_ ) &&
         pdate.time_of_day() < event.from_ + bpt::time_duration( 0, 0, 900 * event.occurence_ ) + bpt::time_duration( 0, 0, duration ) )
     {
-        livingArea_.MovePeople( 1 + static_cast< unsigned int >( event.transfertTime_ / 900 ) );
+        livingArea_.MovePeople( event.motivation_, 1 + static_cast< unsigned int >( event.transfertTime_ / 900 ) );
         event.occurence_++;
         result = true;
     }
@@ -179,7 +179,7 @@ bool MIL_Schedule::Check( Event& event, const bpt::ptime& pdate, unsigned int du
         pdate.time_of_day() >= event.from_ + bpt::time_duration( 0, 0, boost::posix_time::time_duration::sec_type( event.transfertTime_ ) ) &&
         pdate.time_of_day() < event.from_ + bpt::time_duration( 0, 0, boost::posix_time::time_duration::sec_type( event.transfertTime_ ) ) + bpt::time_duration( 0, 0, duration ) )
     {
-        livingArea_.FinishMoving();
+        livingArea_.FinishMoving( event.motivation_ );
         event.occurence_ = 0;
         isMoving_ = false;
         result = true;
@@ -224,7 +224,7 @@ void MIL_Schedule::Initialize( unsigned int date )
         if( !motivation )
             motivation = events_.back().motivation_;
         livingArea_.StartMotivation( *motivation );
-        livingArea_.FinishMoving();
+        livingArea_.FinishMoving( *motivation );
     }
     initialized_ = true;
 }

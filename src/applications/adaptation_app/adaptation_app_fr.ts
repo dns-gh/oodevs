@@ -3453,6 +3453,14 @@ Assurez vous que le fichier existe.</translation>
         <source>Armed individuals</source>
         <translation>Individus armés</translation>
     </message>
+    <message>
+        <source>Unarmed</source>
+        <translation>Désarmé</translation>
+    </message>
+    <message>
+        <source>Armed</source>
+        <translation>Armé</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Population_ListView</name>

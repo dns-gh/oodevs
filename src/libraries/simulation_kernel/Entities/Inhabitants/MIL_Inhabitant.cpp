@@ -13,29 +13,17 @@
 #include "MIL_AgentServer.h"
 #include "MIL_InhabitantSatisfactions.h"
 #include "Entities/Objects/CrowdCapacity.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
-#include "Entities/Populations/MIL_PopulationType.h"
-#include "Entities/Populations/MIL_PopulationAttitude.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Orders/MIL_PopulationMissionType.h"
-#include "Entities/Objects/MIL_ObjectFilter.h"
-#include "Entities/Populations/MIL_Population.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
+#include "Entities/Inhabitants/MIL_LivingAreaBlock.h"
 #include "MIL_LivingArea.h"
 #include "MIL_Schedule.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Entities/Objects/MedicalCapacity.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_AffinitiesMap.h"
-#include <xeumeuleu/xml.hpp>
-#include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Inhabitant )
@@ -79,7 +67,6 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , nNbrWoundedHumans_      ( 0 )
     , healthStateChanged_     ( false )
 {
-    float totalArea = 0.f;
     idManager_.Lock( nID_ );
     xis >> xml::start( "composition" )
             >> xml::attribute( "healthy", nNbrHealthyHumans_ )
@@ -93,9 +80,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
             >> xml::list( "entry", *this, &MIL_Inhabitant::ReadExtension )
         >> xml::end;
 
-    unsigned long population = nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_;
-    pLivingArea_.reset( new MIL_LivingArea( xis, population, *this ) );
-    pLivingArea_->Register( *this );
+    pLivingArea_.reset( new MIL_LivingArea( xis, nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_, *this ) );
     pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
     type_.InitializeSchedule( *pSchedule_ );
     pSatisfactions_.reset( new MIL_InhabitantSatisfactions( xis ) );
@@ -289,6 +274,7 @@ void MIL_Inhabitant::SendFullState() const
 void MIL_Inhabitant::UpdateState()
 {
     pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
+    // $$$$ _RC_ JSR 2011-03-23: L'objet doit être créé dans le livingarea, dans startmoving, et détruit dans finishmoving!!!
     if ( pSchedule_->IsMoving() && !pPopulationMovingObject_ )
         CreateInhabitantMovingObject();
     if( !pSchedule_->IsMoving() && pPopulationMovingObject_ )
@@ -309,44 +295,8 @@ void MIL_Inhabitant::UpdateState()
 
     // $$$$ BCI 2011-03-18: gestion des foules en colère => comment faire pour ne pas mettre ça en dur dans la sim?
     if( !type_.GetAngryCrowdMissionType().empty() )
-    {
-        MIL_EntityManager& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
-        BOOST_FOREACH( const MIL_LivingArea::T_Block& block, angryBlocks )
-        {
-            MIL_Population* pAngryCrowd = entityManager.FindPopulation( *block.pUrbanObject_ );
-            if( !pAngryCrowd )
-            {
-                pLivingArea_->SetOutsideAngry( true, block.pUrbanObject_ );
-                std::string name = "Angry crowd";
-                std::string urbanObjectName = block.pUrbanObject_->GetName();
-                if( !urbanObjectName.empty() )
-                    name += " from " + urbanObjectName;
-                pAngryCrowd = entityManager.CreateCrowd( type_.GetAssociatedCrowdType().GetName(), block.pUrbanObject_->GetLocalisation().ComputeBarycenter(), 0, name, *pArmy_, block.pUrbanObject_ );
-
-            }
-            if( !type_.GetAngryCrowdMissionType().empty() && pAngryCrowd->GetAllHumans() == 0 ) // $$$$ BCI 2011-03-21: bidouille parce qu'on ne peut pas supprimer une foule
-            {
-                if( block.angriness_ < 1.f )// $$$$ BCI 2011-03-21: bidouille parce qu'on ne peut pas supprimer une foule
-                    pLivingArea_->SetOutsideAngry( false, block.pUrbanObject_ );// $$$$ BCI 2011-03-21: bidouille parce qu'on ne peut pas supprimer une foule
-                else
-                {
-                pAngryCrowd->ChangeComposition( block.person_, 0, 0, 0 );
-                pAngryCrowd->Move( block.pUrbanObject_->GetLocalisation().ComputeBarycenter() );
-
-                const  MIL_MissionType_ABC* pMissionType = MIL_PopulationMissionType::Find( type_.GetAngryCrowdMissionType() );
-                if( !pMissionType )
-                    throw std::runtime_error( "Unknow angry crowd mission type " + type_.GetAngryCrowdMissionType() );
-
-                // $$$$ BCI 2011-03-18: comment faire plus simple pour démarrer une tâche?
-                sword::CrowdOrder msg;
-                msg.mutable_tasker()->set_id( pAngryCrowd->GetID() );
-                msg.mutable_type()->set_id( pMissionType->GetID() );
-                msg.mutable_parameters();
-                pAngryCrowd->OnReceiveOrder( msg );
-                }
-            }            
-        }
-    }
+        BOOST_FOREACH( MIL_LivingAreaBlock* block, angryBlocks )
+            block->ManageAngryCrowd( type_, *pArmy_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -431,7 +381,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
 
     nNbrHealthyHumans_ = healthy.value().Get( 0 ).quantity();
     nNbrWoundedHumans_ = wounded.value().Get( 0 ).quantity();
-    nNbrDeadHumans_    = dead.value().Get( 0 ).quantity();
+    nNbrDeadHumans_ = dead.value().Get( 0 ).quantity();
     healthStateChanged_ = true;
     pLivingArea_->DistributeHumans( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ );
     if( pPopulationMovingObject_ )
@@ -447,8 +397,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeAlertedState( const sword::UnitMagicActio
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
         throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
 
-    bool alerted = msg.parameters().elem( 0 ).value( 0 ).booleanvalue();
-    pLivingArea_->SetAlerted( alerted );
+    pLivingArea_->SetAlerted( msg.parameters().elem( 0 ).value( 0 ).booleanvalue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -460,8 +409,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeConfinedState( const sword::UnitMagicActi
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
         throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
 
-    bool confined = msg.parameters().elem( 0 ).value( 0 ).booleanvalue();
-    pLivingArea_->SetConfined( confined );
+    pLivingArea_->SetConfined( msg.parameters().elem( 0 ).value( 0 ).booleanvalue() );
 }
 
 // -----------------------------------------------------------------------------
@@ -525,13 +473,12 @@ bool MIL_Inhabitant::IsAlerted( const TER_Localisation& localisation ) const
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::CreateInhabitantMovingObject()
 {
-    geometry::Polygon2f::T_Vertices hull = pLivingArea_->ComputeMovingArea().Vertices();
-    T_PointVector finalPoints;
-    BOOST_FOREACH( const geometry::Point2f& point, hull )
-        finalPoints.push_back( MT_Vector2D( point.X(), point.Y() ) );
-    TER_Localisation( TER_Localisation::ePolygon, finalPoints );
+    if( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ )
+        return;
 
-    pPopulationMovingObject_ = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "populationMoving", *pArmy_, TER_Localisation( TER_Localisation( TER_Localisation::ePolygon, finalPoints ) ) );
+    T_PointVector hull = pLivingArea_->ComputeMovingArea();
+
+    pPopulationMovingObject_ = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "populationMoving", *pArmy_, TER_Localisation( TER_Localisation::ePolygon, hull ) );
     CrowdCapacity* capacity = new CrowdCapacity( type_.GetAssociatedCrowdType(), static_cast< double >( nNbrHealthyHumans_ ) /( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ ) );
     capacity->Register( *pPopulationMovingObject_ );
 }

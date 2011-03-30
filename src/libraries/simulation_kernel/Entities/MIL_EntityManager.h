@@ -116,7 +116,7 @@ public:
     virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
     
-    MIL_Population* FindPopulation( UrbanObjectWrapper& urbanObject ) const;
+    MIL_Population* FindPopulation( UrbanObjectWrapper* urbanObject ) const;
 
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
     const bool HasInfiniteDotations() const;

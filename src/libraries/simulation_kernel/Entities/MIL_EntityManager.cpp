@@ -1940,7 +1940,7 @@ MIL_Population* MIL_EntityManager::CreateCrowd( const std::string& type, const M
 // Name: MIL_EntityManager::FindPopulation
 // Created: BCI 2011-03-17
 // -----------------------------------------------------------------------------
-MIL_Population* MIL_EntityManager::FindPopulation( UrbanObjectWrapper& urbanObject ) const
+MIL_Population* MIL_EntityManager::FindPopulation( UrbanObjectWrapper* urbanObject ) const
 {
     return populationFactory_->FindByUrbanObject( urbanObject );
 }

@@ -1157,7 +1157,7 @@ void MIL_Population::OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicA
     const sword::MissionParameter& parametre = msg.parameters().elem( 0 );
     if( parametre.value_size() != 1 || !parametre.value().Get( 0 ).has_quantity() )
         throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
-    rArmedIndividuals_ = parametre.value().Get( 0 ).quantity();
+    rArmedIndividuals_ = 0.01 * parametre.value().Get( 0 ).quantity();
     armedIndividualsChanged_ = true;
 }
 

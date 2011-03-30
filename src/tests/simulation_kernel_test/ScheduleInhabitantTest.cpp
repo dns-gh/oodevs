@@ -139,15 +139,15 @@ BOOST_FIXTURE_TEST_CASE( schedule_notifies_living_area, Fixture )
         schedule.Update( Convert( 2011, 1, 17, 22, 0, 0 ), 1u );
     }
     {
-        MOCK_EXPECT( livingArea, MovePeople ).once().with( 3 );
+        MOCK_EXPECT( livingArea, MovePeople ).once().with( "leisure", 3 );
         schedule.Update( Convert( 2011, 1, 17, 22, 15, 0 ), 1u );
     }
     {
-        MOCK_EXPECT( livingArea, MovePeople ).once().with( 3 );
+        MOCK_EXPECT( livingArea, MovePeople ).once().with( "leisure", 3 );
         schedule.Update( Convert( 2011, 1, 17, 22, 30, 0 ), 1u );
     }
     {
-        MOCK_EXPECT( livingArea, FinishMoving ).once();
+        MOCK_EXPECT( livingArea, FinishMoving ).once().with( "leisure" );
         schedule.Update( Convert( 2011, 1, 17, 22, 40, 0 ), 1u );
     }
 }
@@ -171,7 +171,7 @@ BOOST_FIXTURE_TEST_CASE( every_week_schedule_notifies_living_area, Fixture )
         schedule.Update( Convert( 2011, 1, 3, 22, 0, 0 ), 1u );
     }
     {
-        MOCK_EXPECT( livingArea, FinishMoving );
+        MOCK_EXPECT( livingArea, FinishMoving ).with( "leisure" );
         schedule.Update( Convert( 2011, 1, 3, 22, 40, 0 ), 1u );
     }
     MOCK_EXPECT( livingArea, StartMotivation ).once().with( "leisure" );

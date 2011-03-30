@@ -10,8 +10,8 @@
 #ifndef __MIL_LivingArea_h
 #define __MIL_LivingArea_h
 
-#include "MIL_LivingArea_ABC.h"
 #include "MIL.h"
+#include "MIL_LivingArea_ABC.h"
 #include <vector>
 #include <map>
 
@@ -28,6 +28,7 @@ namespace client
 }
 
 class MIL_Inhabitant;
+class MIL_LivingAreaBlock;
 class MIL_StructuralStateNotifier_ABC;
 class PHY_ResourceNetworkType;
 class UrbanObjectWrapper;
@@ -42,30 +43,14 @@ class TER_Localisation;
 class MIL_LivingArea : public MIL_LivingArea_ABC
 {
 public:
-    struct T_Block
-    {
-        T_Block( UrbanObjectWrapper* pUrbanObject, unsigned int person = 0, bool alerted = false, bool confined = false, bool evacuated = false )
-            : pUrbanObject_( pUrbanObject )
-            , person_      ( person )
-            , angriness_   ( 0.f )
-            , alerted_     ( alerted )
-            , confined_    ( confined )
-            , evacuated_   ( evacuated )
-            , outsideAngry_( false )
-        {}
-
-        UrbanObjectWrapper* pUrbanObject_;
-        unsigned int person_;
-        float angriness_;
-        bool alerted_;
-        bool confined_;
-        bool evacuated_;
-        bool outsideAngry_;
-    };
-
-    typedef std::vector< T_Block >     T_Blocks;
-    typedef T_Blocks::iterator        IT_Blocks;
-    typedef T_Blocks::const_iterator CIT_Blocks;
+    // $$$$ _RC_ JSR 2011-03-24: à passer en private
+    //! @name Types
+    //@{
+    // $$$$ _RC_ JSR 2011-03-24: mettre un std::set avec la fonction de comparaison?
+    typedef std::vector< MIL_LivingAreaBlock* > T_Blocks;
+    typedef T_Blocks::iterator                 IT_Blocks;
+    typedef T_Blocks::const_iterator          CIT_Blocks;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -78,12 +63,11 @@ public:
     //! @name Operations
     //@{
     virtual void StartMotivation( const std::string& motivation );
-    virtual void MovePeople( int occurence );
-    virtual void FinishMoving();
-    virtual geometry::Polygon2f ComputeMovingArea() const;
+    virtual void MovePeople( const std::string& motivation, int occurence );
+    virtual void FinishMoving( const std::string& motivation );
+    virtual T_PointVector ComputeMovingArea() const;
 
     void DistributeHumans( unsigned long population );
-    void Register( MIL_StructuralStateNotifier_ABC& structural );
     void WriteODB( xml::xostream& xos ) const;
     float HealthCount() const;
     void SendCreation( client::PopulationCreation& msg ) const;
@@ -97,37 +81,38 @@ public:
     void Confine( const TER_Localisation& localisation );
     void SetConfined( bool, UrbanObjectWrapper* pUrbanObject = 0 );
     void SetEvacuated( bool, UrbanObjectWrapper* pUrbanObject = 0 );
-    void SetOutsideAngry( bool, UrbanObjectWrapper* pUrbanObject );
     float Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption, T_Blocks& angryBlocks );
     //@}
 
     //! @name CheckPoints
     //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive& file, const unsigned int );
-    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
+    template< typename Archive >
+    void serialize( Archive& file, const unsigned int );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< unsigned long, unsigned int > T_Identifiers;
-    typedef T_Identifiers::const_iterator         CIT_Identifiers;
+    typedef std::map< std::string, unsigned int >      T_PersonsPerAccomodation;
+    typedef T_PersonsPerAccomodation::iterator        IT_PersonsPerAccomodation;
+    typedef T_PersonsPerAccomodation::const_iterator CIT_PersonsPerAccomodation;
 
-    typedef std::map< std::string, float >     T_Accommodations;
-    typedef T_Accommodations::const_iterator CIT_Accommodations;
+    typedef std::map< MIL_LivingAreaBlock*, T_PersonsPerAccomodation > T_BlockCompositions;
+    typedef T_BlockCompositions::iterator                             IT_BlockCompositions;
+    typedef T_BlockCompositions::const_iterator                      CIT_BlockCompositions;
+
+    typedef std::map< MIL_LivingAreaBlock*, float > T_BlockRatio;
+    typedef T_BlockRatio::iterator                 IT_BlockRatio;
+    typedef T_BlockRatio::const_iterator          CIT_BlockRatio;
     //@}
 
 private:
     //! @name Helpers
     //@{
     void ReadUrbanBlock( xml::xistream& xis );
-    void LoadAccommodations();
-    float GetProportion( const T_Block& block, const std::string& motivation ) const;
     T_Blocks GetBlockUsage( const std::string& motivation ) const;
-    unsigned int GetOccupation( const T_Block& block, const std::string& motivation ) const;
     const T_Blocks GetNonConfinedBlocks() const;
-    unsigned long ComputeNonConfinedPopulation() const;
+    void Clean();
     //@}
 
 private:
@@ -135,12 +120,11 @@ private:
     //@{
     MIL_Inhabitant* pInhabitant_;
     unsigned long population_;
-    T_Accommodations accommodations_;
     T_Blocks blocks_;
-    T_Identifiers peopleMovingBlock_;
-    T_Identifiers identifiers_;
+    T_BlockCompositions startingBlocks_;
+    T_BlockCompositions currentStartingState_;
+    T_BlockRatio finalBlocks_;
     mutable bool hasChanged_;
-    float area_;
     //@}
 };
 

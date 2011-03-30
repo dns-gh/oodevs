@@ -242,7 +242,7 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
     if( message.has_critical_intelligence() )
         criticalIntelligence_ = message.critical_intelligence();
     if( message.has_armed_individuals() )
-        armedIndividuals_ = message.armed_individuals();
+        armedIndividuals_ = static_cast< unsigned int >( 100 * message.armed_individuals() + 0.5f );
     controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }
 

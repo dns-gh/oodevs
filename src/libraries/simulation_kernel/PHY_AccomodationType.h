@@ -38,13 +38,14 @@ public:
 
     //! @name Accessors
     //@{
-    float GetCapacity() const;
+    float GetNominalCapacity() const;
+    float GetMaxCapacity() const;
     //@}
 
 private:
     //! @name Constructors/Destructor
     //@{
-             PHY_AccomodationType( const std::string& role, float capacity );
+             PHY_AccomodationType( const std::string& role, float nominalCapacity, float maxCapacity );
     virtual ~PHY_AccomodationType();
     //@}
 
@@ -59,7 +60,8 @@ private:
     //@{
     static T_AccomodationMap accomodations_;
     std::string role_;
-    float capacity_;
+    float nominalCapacity_;
+    float maxCapacity_;
     //@}
 };
 

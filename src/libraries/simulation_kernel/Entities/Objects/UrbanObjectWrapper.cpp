@@ -14,7 +14,6 @@
 #include "ResourceNetworkCapacity.h"
 #include "MaterialAttribute.h"
 #include "MedicalCapacity.h"
-#include "MedicalTreatmentAttribute.h"
 #include "InfrastructureCapacity.h"
 #include "StructuralCapacity.h"
 #include "PHY_InfrastructureType.h"
@@ -117,6 +116,9 @@ void UrbanObjectWrapper::load( MIL_CheckPointInArchive& file, const unsigned int
     file >> boost::serialization::base_object< MIL_Object >( *this );
     file >> urbanId;
     object_ = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( urbanId );
+    file >> inhabitants_
+         >> livingAreas_;
+
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +129,9 @@ void UrbanObjectWrapper::save( MIL_CheckPointOutArchive& file, const unsigned in
 {
     unsigned long urbanId = object_->GetId();
     file << boost::serialization::base_object< MIL_Object >( *this );
-    file << urbanId;
+    file << urbanId
+         << inhabitants_
+         << livingAreas_;
 }
 
 // -----------------------------------------------------------------------------
@@ -242,14 +246,14 @@ void UrbanObjectWrapper::SendCreation() const
         }
         if( pPhysical->GetMotivations() )
         {
-            T_Motivations motivations;
+            std::map< std::string, float > motivations;
             MotivationsVisitor visitor( motivations );
             pPhysical->GetMotivations()->Accept( visitor );
-            BOOST_FOREACH( const T_Motivations::value_type& motivation, motivations )
+            for( std::map< std::string, float >::const_iterator it = motivations.begin(); it != motivations.end(); ++it )
             {
                 sword::UrbanUsage& usage = *message().mutable_attributes()->add_usages();
-                usage.set_role( motivation.first );
-                usage.set_percentage( static_cast< unsigned int >( motivation.second * 100 ) );
+                usage.set_role( it->first );
+                usage.set_percentage( static_cast< unsigned int >( it->second * 100 ) );
             }
         }
     }
@@ -396,11 +400,18 @@ const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject() const
 // Name: UrbanObjectWrapper::UpdateInhabitants
 // Created: JSR 2011-02-02
 // -----------------------------------------------------------------------------
-void UrbanObjectWrapper::UpdateInhabitants( MIL_LivingArea& livingArea, unsigned int number )
+void UrbanObjectWrapper::UpdateInhabitants( MIL_LivingArea& livingArea, const std::string& motivation, unsigned int number )
 {
-    inhabitants_[ &livingArea ] = number;
+    inhabitants_[ &livingArea ][ motivation ] = number;
     if( number == 0 )
-        inhabitants_.erase( &livingArea );
+    {
+        inhabitants_[ &livingArea ].erase( motivation );
+        unsigned int total = 0;
+        for( CIT_Motivations it = inhabitants_[ &livingArea ].begin(); it != inhabitants_[ &livingArea ].end(); ++it )
+            total += it->second;
+        if( total == 0 )
+            inhabitants_.erase( &livingArea );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -411,7 +422,22 @@ unsigned int UrbanObjectWrapper::GetTotalInhabitants() const
 {
     unsigned int ret = 0;
     for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
-        ret += it->second;
+        for( CIT_Motivations it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+            ret += it2->second;
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetTotalInhabitantsForMotivation
+// Created: JSR 2011-03-23
+// -----------------------------------------------------------------------------
+unsigned int UrbanObjectWrapper::GetTotalInhabitantsForMotivation( const std::string& motivation ) const
+{
+    unsigned int ret = 0;
+    for( CIT_Inhabitants it = inhabitants_.begin(); it != inhabitants_.end(); ++it )
+        for( CIT_Motivations it2 = it->second.begin(); it2 != it->second.end(); ++it2 )
+            if( it2->first == motivation )
+                ret += it2->second;
     return ret;
 }
 

@@ -18,9 +18,7 @@ class MIL_ObjectBuilder_ABC;
 
 namespace sword
 {
-    enum UrbanMagicActionAck_ErrorCode;
     class UrbanAttributes;
-    class UrbanMagicAction_Infrastructure;
 }
 
 namespace urban
@@ -93,8 +91,9 @@ public:
 
     //! @name Inhabitants
     //@{
-    void UpdateInhabitants( MIL_LivingArea& livingArea, unsigned int number );
+    void UpdateInhabitants( MIL_LivingArea& livingArea, const std::string& motivation, unsigned int number );
     unsigned int GetTotalInhabitants() const;
+    unsigned int GetTotalInhabitantsForMotivation( const std::string& motivation ) const;
     void AddLivingArea( MIL_LivingArea& livingArea );
     //@}
 
@@ -114,13 +113,15 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, float >                  T_Motivations;
+    typedef std::vector< MIL_LivingArea* > T_LivingAreas;
+    typedef T_LivingAreas::iterator       IT_LivingAreas;
 
-    typedef std::vector< MIL_LivingArea* >                  T_LivingAreas;
-    typedef T_LivingAreas::iterator                        IT_LivingAreas;
+    typedef std::map< std::string, unsigned int > T_Motivations;
+    typedef T_Motivations::iterator              IT_Motivations;
+    typedef T_Motivations::const_iterator       CIT_Motivations;
 
-    typedef std::map< MIL_LivingArea*, unsigned int >       T_Inhabitants;
-    typedef T_Inhabitants::const_iterator                 CIT_Inhabitants;
+    typedef std::map< MIL_LivingArea*, T_Motivations > T_Inhabitants;
+    typedef T_Inhabitants::const_iterator            CIT_Inhabitants;
     //@}
 
 private:

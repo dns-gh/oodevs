@@ -69,21 +69,31 @@ const PHY_AccomodationType::T_AccomodationMap& PHY_AccomodationType::GetAccomoda
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_AccomodationType::GetCapacity
-// Created: JSR 2011-02-17
+// Name: PHY_AccomodationType::GetNominalCapacity
+// Created: JSR 2011-03-22
 // -----------------------------------------------------------------------------
-float PHY_AccomodationType::GetCapacity() const
+float PHY_AccomodationType::GetNominalCapacity() const
 {
-    return capacity_;
+    return nominalCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_AccomodationType::GetMaxCapacity
+// Created: JSR 2011-03-22
+// -----------------------------------------------------------------------------
+float PHY_AccomodationType::GetMaxCapacity() const
+{
+    return maxCapacity_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_AccomodationType constructor
 // Created: JSR 2011-02-17
 // -----------------------------------------------------------------------------
-PHY_AccomodationType::PHY_AccomodationType( const std::string& role, float capacity )
-    : role_    ( role )
-    , capacity_( capacity )
+PHY_AccomodationType::PHY_AccomodationType( const std::string& role, float nominalCapacity, float maxCapacity )
+    : role_           ( role )
+    , nominalCapacity_( nominalCapacity )
+    , maxCapacity_    ( maxCapacity )
 {
     // NOTHING
 }
@@ -107,5 +117,5 @@ void PHY_AccomodationType::ReadAccomodation( xml::xistream& xis )
     const PHY_AccomodationType*& pAccomodation = accomodations_[ strRole ];
     if( pAccomodation )
         xis.error( "Accomodation " + strRole + " already defined" );
-    pAccomodation = new PHY_AccomodationType( strRole, xis.attribute< float >( "nominal-capacity" ) );
+    pAccomodation = new PHY_AccomodationType( strRole, xis.attribute< float >( "nominal-capacity" ), xis.attribute< float >( "max-capacity" ) );
 }

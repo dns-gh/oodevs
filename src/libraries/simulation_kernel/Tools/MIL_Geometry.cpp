@@ -15,15 +15,39 @@
 
 namespace bg = boost::geometry;
 
+using namespace geometry;
+
 namespace
 {
-    bool FindOuterPoint( const geometry::Polygon2f::T_Vertices& vertices, const geometry::Point2f& from, const geometry::Vector2f& direction, geometry::Point2f& worst )
+    // $$$$ _RC_ JSR 2011-03-29: Essayer de passer FindOuterPoint en template?
+
+    bool FindOuterPoint( const Polygon2f::T_Vertices& vertices, const Point2f& from, const Vector2f& direction, Point2f& worst )
     {
         bool bFound = false;
         float rMaxProjection = 0;
-        for( geometry::Polygon2f::T_Vertices::const_iterator it = vertices.begin(); it != vertices.end(); ++it )
+        for( Polygon2f::CIT_Vertices it = vertices.begin(); it != vertices.end(); ++it )
         {
-            const float rProjection = direction.CrossProduct( geometry::Vector2f( from, *it ) );
+            const float rProjection = direction.CrossProduct( Vector2f( from, *it ) );
+            if( rProjection < -1 ) // epsilon
+            {
+                bFound = true;
+                if( rMaxProjection > rProjection )
+                {
+                    rMaxProjection = rProjection;
+                    worst = *it;
+                }
+            }
+        }
+        return bFound;
+    }
+
+    bool FindOuterPoint( const T_PointVector& vertices, const MT_Vector2D& from, const MT_Vector2D& direction, MT_Vector2D& worst )
+    {
+        bool bFound = false;
+        float rMaxProjection = 0;
+        for( CIT_PointVector it = vertices.begin(); it != vertices.end(); ++it )
+        {
+            const float rProjection = CrossProduct( direction, MT_Vector2D( *it - from ) );
             if( rProjection < -1 ) // epsilon
             {
                 bFound = true;
@@ -42,87 +66,48 @@ namespace
 // Name: MIL_Geometry::Scale
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-void MIL_Geometry::Scale( geometry::Polygon2f& result, const geometry::Polygon2f& polygon, float distance )
+void MIL_Geometry::Scale( Polygon2f& result, const Polygon2f& polygon, float distance )
 {
-    geometry::Polygon2f hull;
+    Polygon2f hull;
     ComputeHull( hull, polygon );
-    geometry::Point2f barycenter = hull.Barycenter();
-    const std::vector< geometry::Point2f >& vertices = hull.Vertices();
-    for( std::vector< geometry::Point2f >::const_iterator it = vertices.begin(); it != vertices.end(); ++it )
+    Point2f barycenter = hull.Barycenter();
+    const std::vector< Point2f >& vertices = hull.Vertices();
+    for( std::vector< Point2f >::const_iterator it = vertices.begin(); it != vertices.end(); ++it )
     {
-        geometry::Vector2f scaleVector( *it, barycenter );
+        Vector2f scaleVector( *it, barycenter );
         result.Add( barycenter + scaleVector + scaleVector.Normalized() * distance );
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_Geometry::ComputeHull
-// Created: SLG 2011-02-02
-// -----------------------------------------------------------------------------
-void MIL_Geometry::ComputeHull( geometry::Polygon2f::T_Vertices& hull, const geometry::Polygon2f::T_Vertices& vertices )
-{
-    std::vector< geometry::Point2f >::const_iterator maxLeft = vertices.begin();
-    std::vector< geometry::Point2f >::const_iterator maxRight = vertices.begin();
-    for( std::vector< geometry::Point2f >::const_iterator it = vertices.begin(); it != vertices.end() ; ++it )
-    {
-        if( it->X() < maxLeft->X() )
-            maxLeft = it;
-        if( it->X() > maxRight->X() )
-            maxRight = it;
-    }
-    hull.push_back( *maxLeft );
-    hull.push_back( *maxRight );
-    unsigned int nPoint = 0;
-    geometry::Point2f worst;
-    while( nPoint != hull.size() )
-    {
-        unsigned int nFollowingPoint = ( nPoint + 1 ) % hull.size();
-        geometry::Vector2f direction( hull[ nPoint ], hull[ nFollowingPoint ] );
-        direction.Normalize();
-        if( FindOuterPoint( vertices, hull[ nPoint ], direction, worst ) )
-        {
-            hull.insert( hull.begin() + nFollowingPoint, worst );
-            nPoint = 0;
-        }
-        else
-            ++nPoint;
-    }
-}
+// $$$$ _RC_ JSR 2011-03-29: Essayer de passer ComputeHull en template?
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Geometry::ComputeHull
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-void MIL_Geometry::ComputeHull( geometry::Polygon2f& result, const geometry::Polygon2f& polygon )
+void MIL_Geometry::ComputeHull( Polygon2f& result, const Polygon2f& polygon )
 {
-    const geometry::Polygon2f::T_Vertices& vertices = polygon.Vertices();
-    ComputeHull( result, vertices );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Geometry::ComputeHull
-// Created: SLG 2011-02-01
-// -----------------------------------------------------------------------------
-void MIL_Geometry::ComputeHull( geometry::Polygon2f& result, const geometry::Polygon2f::T_Vertices& vertices )
-{
-    std::vector< geometry::Point2f >::const_iterator maxLeft = vertices.begin();
-    std::vector< geometry::Point2f >::const_iterator maxRight = vertices.begin();
-    for( std::vector< geometry::Point2f >::const_iterator it = vertices.begin(); it != vertices.end() ; ++it )
+    const Polygon2f::T_Vertices& vertices = polygon.Vertices();
+    if( vertices.empty() )
+        return;
+    Polygon2f::CIT_Vertices maxLeft = vertices.begin();
+    Polygon2f::CIT_Vertices maxRight = vertices.begin();
+    for( Polygon2f::CIT_Vertices it = vertices.begin(); it != vertices.end() ; ++it )
     {
         if( it->X() < maxLeft->X() )
             maxLeft = it;
         if( it->X() > maxRight->X() )
             maxRight = it;
     }
-    std::vector< geometry::Point2f > hull;
+    Polygon2f::T_Vertices hull;
     hull.push_back( *maxLeft );
     hull.push_back( *maxRight );
     unsigned int nPoint = 0;
-    geometry::Point2f worst;
+    Point2f worst;
     while( nPoint != hull.size() )
     {
         unsigned int nFollowingPoint = ( nPoint + 1 ) % hull.size();
-        geometry::Vector2f direction( hull[ nPoint ], hull[ nFollowingPoint ] );
+        Vector2f direction( hull[ nPoint ], hull[ nFollowingPoint ] );
         direction.Normalize();
         if( FindOuterPoint( vertices, hull[ nPoint ], direction, worst ) )
         {
@@ -132,9 +117,44 @@ void MIL_Geometry::ComputeHull( geometry::Polygon2f& result, const geometry::Pol
         else
             ++nPoint;
     }
-    result = geometry::Polygon2f( hull );
+    result = Polygon2f( hull );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Geometry::ComputeHull
+// Created: JSR 2011-03-29
+// -----------------------------------------------------------------------------
+void MIL_Geometry::ComputeHull( T_PointVector& hull, const T_PointVector& vertices )
+{
+    if( vertices.empty() )
+        return;
+    CIT_PointVector maxLeft = vertices.begin();
+    CIT_PointVector maxRight = vertices.begin();
+    for( CIT_PointVector it = vertices.begin(); it != vertices.end() ; ++it )
+    {
+        if( it->rX_ < maxLeft->rX_ )
+            maxLeft = it;
+        if( it->rX_ > maxRight->rX_ )
+            maxRight = it;
+    }
+    hull.push_back( *maxLeft );
+    hull.push_back( *maxRight );
+    unsigned int nPoint = 0;
+    MT_Vector2D worst;
+    while( nPoint != hull.size() )
+    {
+        unsigned int nFollowingPoint = ( nPoint + 1 ) % hull.size();
+        MT_Vector2D direction( hull[ nFollowingPoint ] - hull[ nPoint ] );
+        direction.Normalize();
+        if( FindOuterPoint( vertices, hull[ nPoint ], direction, worst ) )
+        {
+            hull.insert( hull.begin() + nFollowingPoint, worst );
+            nPoint = 0;
+        }
+        else
+            ++nPoint;
+    }
+}
 
 namespace
 {
@@ -181,22 +201,22 @@ double MIL_Geometry::IntersectionArea( const TER_Localisation& localisation1, co
 // Name: MIL_Geometry::IntersectionArea
 // Created: SLG 2010-06-18
 // -----------------------------------------------------------------------------
-float MIL_Geometry::IntersectionArea( const geometry::Polygon2f& polygon1, const geometry::Polygon2f& polygon2 )
+float MIL_Geometry::IntersectionArea( const Polygon2f& polygon1, const Polygon2f& polygon2 )
 {
     bg::polygon< bg::point_xy< float > > poly1;
     bg::polygon< bg::point_xy< float > > poly2;
     {
-        const geometry::Polygon2f::T_Vertices& vertices1 = polygon1.Vertices();
+        const Polygon2f::T_Vertices& vertices1 = polygon1.Vertices();
         std::vector< bg::point_xy< float > > vectorTemp;
-        for( geometry::Polygon2f::CIT_Vertices it = vertices1.begin(); it != vertices1.end(); ++it )
+        for( Polygon2f::CIT_Vertices it = vertices1.begin(); it != vertices1.end(); ++it )
             vectorTemp.push_back( bg::point_xy< float >( it->X(), it->Y() ) );
         bg::assign( poly1, vectorTemp );
         bg::correct( poly1 );
     }
     {
-        const geometry::Polygon2f::T_Vertices& vertices2 = polygon2.Vertices();
+        const Polygon2f::T_Vertices& vertices2 = polygon2.Vertices();
         std::vector< bg::point_xy< float > > vectorTemp;
-        for( geometry::Polygon2f::CIT_Vertices it = vertices2.begin(); it != vertices2.end(); ++it )
+        for( Polygon2f::CIT_Vertices it = vertices2.begin(); it != vertices2.end(); ++it )
             vectorTemp.push_back( bg::point_xy< float >( it->X(), it->Y() ) );
         bg::assign( poly2, vectorTemp );
         bg::correct( poly2 );
