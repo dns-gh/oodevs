@@ -29,7 +29,6 @@ namespace sword
     class ObjectAttributeNBCType;
     class ObjectAttributeStock;
     class ObjectAttributeEffectDelay;
-    class ObjectAttributeSealOff;
     class ObjectAttributeResourceNetwork;
     class ObjectAttributeBurn;
     class ObjectAttributeBurnSurface;
@@ -83,7 +82,6 @@ private:
     void Update( const sword::ObjectAttributeNBCType& nbc_agent );
     void Update( const sword::ObjectAttributeStock& stock );
     void Update( const sword::ObjectAttributeEffectDelay& delay );
-    void Update( const sword::ObjectAttributeSealOff& sealoff );
     void Update( const sword::ObjectAttributeResourceNetwork& network );
     void Update( const sword::ObjectAttributeBurn& burn );
     void Update( const sword::ObjectAttributeBurnSurface& burn_surface );

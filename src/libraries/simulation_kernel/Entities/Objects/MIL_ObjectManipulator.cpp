@@ -16,7 +16,6 @@
 #include "ActivableCapacity.h"
 #include "AttritionCapacity.h"
 #include "CrowdCapacity.h"
-#include "SealOffCapacity.h"
 #include "MobilityCapacity.h"
 #include "ExtinguishableCapacity.h"
 #include "WorkableCapacity.h"
@@ -372,9 +371,6 @@ double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, 
     const CrowdCapacity* crowdcapacity = object_.Retrieve< CrowdCapacity >();
     if ( crowdcapacity )
         speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( agent ) );
-    const SealOffCapacity* sealOffCapacity = object_.Retrieve< SealOffCapacity >();
-    if ( sealOffCapacity )
-        speed = std::min( speed, sealOffCapacity->ApplySpeedPolicy( agent, object_ ) );
     return speed;
 }
 

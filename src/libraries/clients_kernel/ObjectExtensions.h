@@ -55,7 +55,6 @@ namespace kernel
     class MedicalTreatmentAttribute_ABC : public ObjectExtension {};
     class OccupantAttribute_ABC : public ObjectExtension {};
     class DelayAttribute_ABC : public ObjectExtension {};
-    class SealOffAttribute_ABC : public ObjectExtension {};
     class FloodAttribute_ABC : public ObjectExtension {};
 }
 

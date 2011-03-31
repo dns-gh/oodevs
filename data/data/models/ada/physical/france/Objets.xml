@@ -321,6 +321,7 @@
   </object>
   <object geometry="polygon" name="Zone de mouvement interdit" symbol="G*MPOGZ---****X" type="movement forbidden area">
     <interaction-height height="6000"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <population-filter density="0.5"/>
   </object>
   <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation">
@@ -347,11 +348,11 @@
     <resources/>
     <structural value="100"/>
   </object>
-  <object geometry="polygon" name="Zone bouclee" symbol="G*MPOGZ---****X" type="seal off area">
+  <object geometry="line" name="Zone bouclee" symbol="G*MPOGZ---****X" type="seal off area">
     <avoidable distance="10"/>
     <interact-with-enemy/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
-    <sealoff/>
+    <population-filter density="0"/>
     <workable max-animator="10"/>
   </object>
   <object geometry="point" name="Inondation" symbol="G*MPORC---****X" type="flood">
@@ -376,4 +377,4 @@
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="1832330936" -->
+<!-- signature="4003206825" -->

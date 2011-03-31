@@ -42,7 +42,6 @@
 #include "TimeLimitedCapacity.h"
 #include "UniversalCapacity.h"
 #include "WorkableCapacity.h"
-#include "SealOffCapacity.h"
 #include "SupplyCapacity.h"
 #include "InteractIfHeightCapacity.h"
 #include "PopulationFilterCapacity.h"
@@ -159,7 +158,6 @@ CapacityFactory::CapacityFactory()
     DoRegister( "perception", boost::bind( &AddBuilder< PerceptionCapacity >::Add, _1, _2 ) );
     DoRegister( "attitude-modifier", boost::bind( &AddBuilder< AttitudeModifierCapacity >::Add, _1, _2 ) );
     DoRegister( "scattering", boost::bind( &AddBuilder< ScatteringCapacity >::Add, _1, _2 ) );
-    DoRegister( "sealoff", boost::bind( &AddBuilder< SealOffCapacity >::Add, _1, _2 ) );
     DoRegister( "structural-state", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
     // $$$$ JSR 2010-09-08: on garde l'attribut "structural" en double emploi de "structural-state" : il est utilisé par les objets et on ne peut pas changer les xsd pour l'instant.
     // Ca sera à supprimer quand les xml des objets seront à jour (voire avec RPD).

@@ -1260,8 +1260,6 @@ namespace
         CONVERT_CB( nbc_agent, ConvertObjectAttributeNBCType );
         if( from.has_effect_delay() )
             to->mutable_effect_delay()->set_value( from.effect_delay().value() );
-        if( from.has_seal_off() )
-            to->mutable_seal_off()->set_level( from.seal_off().level() );
         CONVERT_LIST( resource_networks, network, ConvertResourceNetwork );
     }
 }

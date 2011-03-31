@@ -660,8 +660,17 @@ bool DEC_Knowledge_Object::IsReservedObstacleActivated() const
 // -----------------------------------------------------------------------------
 bool DEC_Knowledge_Object::CanCollideWith( const MIL_Agent_ABC& agent ) const
 {
-    return ( !IsReservedObstacle() || IsReservedObstacleActivated() ) && !IsBypassed()
+    return ( !IsReservedObstacle() || IsReservedObstacleActivated() ) && !IsBypassed() && CanInteractWith( agent )
          && agent.GetRole< PHY_RoleInterface_Location >().GetHeight() <= GetMaxInteractionHeight();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::CanInteractWith
+// Created: LDC 2011-03-30
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::CanInteractWith( const MIL_Agent_ABC& agent ) const
+{
+    return !pObjectKnown_ || pObjectKnown_->CanInteractWith( agent );
 }
 
 // -----------------------------------------------------------------------------

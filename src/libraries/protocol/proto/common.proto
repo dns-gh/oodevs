@@ -1209,13 +1209,6 @@ message ObjectAttributeNBCType {
    required int32        source_life_duration = 3; //!< The life duration of the source @todo unit ? @todo rename to duration
 }
 
-/** @struct ObjectAttributeSealOff
-    @brief Defines an object attribute seal off
-*/
-message ObjectAttributeSealOff {
-   required int32 level = 1; //!< @todo What's this ?
-}
-
 /** @struct ObjectAttributes
     @brief Encapsulates an object attribute
 */
@@ -1236,11 +1229,10 @@ message ObjectAttributes {
    optional ObjectAttributeStock             stock              = 14; //!< @copybrief ObjectAttributeStock
    optional ObjectAttributeNBCType           nbc_agent          = 15; //!< @copybrief ObjectAttributeNBCType
    optional ObjectAttributeEffectDelay       effect_delay       = 16; //!< @copybrief ObjectAttributeEffectDelay
-   optional ObjectAttributeSealOff           seal_off           = 17; //!< @copybrief ObjectAttributeSealOff
-   optional ObjectAttributeResourceNetwork   resource_networks  = 18; //!< @copybrief ObjectAttributeResourceNetwork
-   optional ObjectAttributeBurn              burn               = 19; //!< @copybrief ObjectAttributeBurn
-   optional ObjectAttributeFlood             flood              = 20; //!< @copybrief ObjectAttributeFlood
-   optional ObjectAttributeBurnSurface       burn_surface       = 21; //!< @copybrief ObjectAttributeBurnSurface
+   optional ObjectAttributeResourceNetwork   resource_networks  = 17; //!< @copybrief ObjectAttributeResourceNetwork
+   optional ObjectAttributeBurn              burn               = 18; //!< @copybrief ObjectAttributeBurn
+   optional ObjectAttributeFlood             flood              = 19; //!< @copybrief ObjectAttributeFlood
+   optional ObjectAttributeBurnSurface       burn_surface       = 20; //!< @copybrief ObjectAttributeBurnSurface
 }
 
 /** @struct Marker

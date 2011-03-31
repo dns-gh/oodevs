@@ -115,6 +115,7 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_PositionAleatoireDansCercle" ] = &DEC_GeometryFunctions::ComputeRandomPointInCircle;
     brain[ "DEC_Geometrie_CreerLocalisationCercle" ] = &DEC_GeometryFunctions::CreateCircleLocalisation;
     brain[ "DEC_Geometrie_CreerLocalisationLigne" ] = &DEC_GeometryFunctions::CreateLineLocalisation;
+    brain[ "DEC_Geometrie_CreerLocalisationPolyligne" ] = &DEC_GeometryFunctions::CreatePolylineLocalisation;
     brain[ "DEC_Geometrie_CreerLocalisationPolygone" ] = &DEC_GeometryFunctions::CreatePolygonLocalisation;
     brain[ "DEC_Geometrie_AgrandirLocalisation" ] = &DEC_GeometryFunctions::CreateScaledLocalisation;
     brain[ "DEC_Geometrie_PionEstCoordonne" ] = &DEC_GeometryFunctions::ListUncoordinatedPawns;

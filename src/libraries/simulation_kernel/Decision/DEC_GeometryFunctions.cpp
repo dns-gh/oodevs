@@ -1339,6 +1339,19 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreateLineLocalisat
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolylineLocalisation
+// Created: LDC 2011-03-29
+// -----------------------------------------------------------------------------
+boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolylineLocalisation( const std::vector< boost::shared_ptr< MT_Vector2D > >& points )
+{
+    std::vector< MT_Vector2D > pointsVector;
+    for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
+        pointsVector.push_back( **it );
+    boost::shared_ptr< TER_Localisation > pResult( new TER_Localisation( TER_Localisation::eLine, pointsVector ) );
+    return pResult;
+}
+
+// -----------------------------------------------------------------------------
 // Name: boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::CreatePolygonLocalisation
 // Created: LDC 2011-03-29
 // -----------------------------------------------------------------------------

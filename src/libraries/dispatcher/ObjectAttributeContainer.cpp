@@ -31,7 +31,6 @@
 #include "ToxicCloudAttribute.h"
 #include "InteractionHeightAttribute.h"
 #include "StockAttribute.h"
-#include "SealOffAttribute.h"
 #include "ResourceNetworkAttribute.h"
 #include "NBCTypeAttribute.h"
 #include "protocol/ClientSenders.h"
@@ -130,8 +129,6 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
         CreateOrUpdate< InteractionHeightAttribute >( message );
     if( message.has_stock() )
         CreateOrUpdate< StockAttribute >( message );
-    if( message.has_seal_off() )
-        CreateOrUpdate< SealOffAttribute >( message );
     if( message.has_resource_networks() )
         CreateOrUpdate< ResourceNetworkAttribute >( message );
     if( message.has_nbc_agent() )

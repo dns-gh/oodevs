@@ -155,7 +155,6 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributes& msg )
     CHECK_ATTRIBUTE_UPDATE( nbc_agent       );
     CHECK_ATTRIBUTE_UPDATE( obstacle        );
     CHECK_ATTRIBUTE_UPDATE( resource_networks );
-    CHECK_ATTRIBUTE_UPDATE( seal_off        );
     CHECK_ATTRIBUTE_UPDATE( stock           );
     CHECK_ATTRIBUTE_UPDATE( supply_route    );
     CHECK_ATTRIBUTE_UPDATE( toxic_cloud     );
@@ -450,16 +449,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeEffectDelay& /*
 {
     RowManipulator row( *updater_, *inserter_, "EffectDelay" );
 }
-    
-// -----------------------------------------------------------------------------
-// Name: ObjectAttributeUpdater::Update
-// Created: JCR 2011-01-24
-// -----------------------------------------------------------------------------
-void ObjectAttributeUpdater::Update( const sword::ObjectAttributeSealOff& /*sealoff*/ )
-{
-    RowManipulator row( *updater_, *inserter_, "SealOff" );
-}
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2011-01-24
