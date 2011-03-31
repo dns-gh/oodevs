@@ -431,6 +431,79 @@ std::string ADN_Population_Data::SpeedEffectInfos::GetItemName()
     return strName_.GetData();
 }
 
+// =============================================================================
+// ADN_Population_Data::UrbanEffectInfos
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::UrbanEffectInfos::UrbanEffectInfos
+// Created: MMC 2011-03-30
+// -----------------------------------------------------------------------------
+ADN_Population_Data::UrbanEffectInfos::UrbanEffectInfos( E_PopulationAttitude nAttitude )
+: ADN_Ref_ABC()
+, ADN_DataTreeNode_ABC()
+, nAttitude_   ( nAttitude )
+, strName_     ( ENT_Tr::ConvertFromPopulationAttitude( nAttitude, ENT_Tr::eToTr ) )
+, rDensity_    ( 0.0 )
+, rTime_       ( "0s" )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::UrbanEffectInfos::~UrbanEffectInfos
+// Created: MMC 2011-03-30
+// -----------------------------------------------------------------------------
+ADN_Population_Data::UrbanEffectInfos::~UrbanEffectInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::UrbanEffectInfos::GetNodeName
+// Created: MMC 2011-03-30
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::UrbanEffectInfos::GetNodeName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::UrbanEffectInfos::GetItemName
+// Created: MMC 2011-03-30
+// -----------------------------------------------------------------------------
+std::string ADN_Population_Data::UrbanEffectInfos::GetItemName()
+{
+    return strName_.GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::UrbanEffectInfos::ReadArchive
+// Created: MMC 2011-03-30
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::UrbanEffectInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::attribute( "density", rDensity_ )
+        >> xml::attribute( "time", rTime_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::UrbanEffectInfos::WriteArchive
+// Created: MMC 2011-03-30
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::UrbanEffectInfos::WriteArchive( xml::xostream& output ) const
+{
+    output  << xml::start( "urban-destruction-effect" )
+                << xml::attribute( "attitude", ENT_Tr::ConvertFromPopulationAttitude( nAttitude_ ) )
+                << xml::attribute( "density", rDensity_ )
+                << xml::attribute( "time", rTime_ )
+            << xml::end;
+}
+
+// =============================================================================
+// ADN_Population_Data::PopulationInfos
+// =============================================================================
+
 // -----------------------------------------------------------------------------
 // Name: PopulationInfos::PopulationInfos
 // Created: APE 2004-12-02
@@ -457,6 +530,10 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
         FireEffectInfos* pFireNew = new FireEffectInfos( ( E_PopulationAttitude )i );
         std::auto_ptr< FireEffectInfos > spFireNew( pFireNew );
         vFireEffectInfos_.AddItem( spFireNew.release() );
+
+        UrbanEffectInfos* pUrbanNew = new UrbanEffectInfos( ( E_PopulationAttitude )i );
+        std::auto_ptr< UrbanEffectInfos > spUrbanNew( pUrbanNew );
+        vUrbanEffectInfos_.AddItem( spUrbanNew.release() );
     }
     for( int i = 2; i < eNbrPopulationRoe; ++i )
     {
@@ -550,6 +627,9 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( xml::xistream& input )
           >> xml::end
           >> xml::start( "unit-fire-effects" )
             >> xml::list( "unit", *this, &ADN_Population_Data::PopulationInfos::ReadFireEffect )
+          >> xml::end
+          >> xml::start( "urban-destruction-effects" )
+            >> xml::list( "urban-destruction-effect", *this, &ADN_Population_Data::PopulationInfos::ReadUrbanEffect )
           >> xml::end;
 
     if( input.has_child("repartition") )
@@ -606,6 +686,20 @@ void ADN_Population_Data::PopulationInfos::ReadFireEffect( xml::xistream& input 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Population_Data::PopulationInfos::ReadUrbanEffect
+// Created: MMC 2011-03-30
+// -----------------------------------------------------------------------------
+void ADN_Population_Data::PopulationInfos::ReadUrbanEffect( xml::xistream& input )
+{
+    std::string strAttitude = input.attribute< std::string >( "attitude" );
+    uint nAttitude = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
+    if( nAttitude == (E_PopulationAttitude)-1 )
+        throw ADN_DataException( "Invalid data", tools::translate( "Population_Data",  "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).ascii() );
+    
+    vUrbanEffectInfos_[ nAttitude ]->ReadArchive( input );  
+}
+
+// -----------------------------------------------------------------------------
 // Name: PopulationInfos::WriteArchive
 // Created: APE 2004-12-02
 // -----------------------------------------------------------------------------
@@ -634,6 +728,11 @@ void ADN_Population_Data::PopulationInfos::WriteArchive( xml::xostream& output, 
 
     output << xml::start( "unit-fire-effects" );
     for( CIT_FireEffectRoeInfosVector it = vFireEffectRoeInfos_.begin(); it != vFireEffectRoeInfos_.end(); ++it )
+        ( *it )->WriteArchive( output );
+    output << xml::end;
+
+    output << xml::start( "urban-destruction-effects" );
+    for( CIT_UrbanEffectInfosVector it = vUrbanEffectInfos_.begin(); it != vUrbanEffectInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
     output << xml::end;
 
@@ -769,7 +868,7 @@ void ADN_Population_Data::WriteArchive( xml::xostream& output )
             << xml::attribute( "delay", timeBetweenNbcApplication_.GetData() )
            << xml::end;
     int n = 0;
-    for( CIT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(    ); ++it, ++n )
+    for( CIT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(); ++it, ++n )
         (*it)->WriteArchive( output, n );
     output << xml::end;
 }

@@ -64,6 +64,7 @@ void ADN_Population_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Population_GUI::eSpeedEffectAttitude]->Connect( &pInfos->vSpeedEffectInfos_  , bConnect );
     vItemConnectors_[ADN_Population_GUI::eFireEffectAttitude] ->Connect( &pInfos->vFireEffectInfos_   , bConnect );
     vItemConnectors_[ADN_Population_GUI::eFireEffectRoe]      ->Connect( &pInfos->vFireEffectRoeInfos_, bConnect );
+    vItemConnectors_[ADN_Population_GUI::eUrbanBlocDestructionAttitude] ->Connect( &pInfos->vUrbanEffectInfos_, bConnect );
 }
 
 // -----------------------------------------------------------------------------

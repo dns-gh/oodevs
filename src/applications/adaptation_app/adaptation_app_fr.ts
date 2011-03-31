@@ -3461,6 +3461,18 @@ Assurez vous que le fichier existe.</translation>
         <source>Armed</source>
         <translation>Armé</translation>
     </message>
+    <message>
+        <source>Urban area destruction</source>
+        <translation>Destruction de zone urbaine</translation>
+    </message>
+    <message>
+        <source>Time to destruct a urban block</source>
+        <translation>Temps pour détruire un bloc urbain</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Temps</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Population_ListView</name>

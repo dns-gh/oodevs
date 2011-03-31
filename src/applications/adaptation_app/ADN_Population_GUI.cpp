@@ -22,6 +22,7 @@
 #include "ADN_Population_SpeedEffect_Volume_ListView.h"
 #include "ADN_Population_FireEffect_Attitude_ListView.h"
 #include "ADN_Population_FireEffect_Protection_ListView.h"
+#include "ADN_Population_UrbanEffect_Attitude_ListView.h"
 #include "ADN_Population_FireEffectRoe_GUI.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GroupBox.h"
@@ -193,6 +194,17 @@ void ADN_Population_GUI::Build()
     vInfosConnectors[eFireEffectRoe] = &pFireEffectRoe->GetConnector();
     //@}
 
+    // Urban area destruction
+    //@{
+    QGroupBox* pUrbanAreaDestructionlGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Urban area destruction" ), pGroup );
+    ADN_Population_UrbanEffect_Attitude_ListView* pUrbanEffectAttitudeList = new ADN_Population_UrbanEffect_Attitude_ListView( pUrbanAreaDestructionlGroup );
+    vInfosConnectors[eUrbanBlocDestructionAttitude] = &pUrbanEffectAttitudeList->GetConnector();
+
+    QGroupBox* pTimeDestructUrbanGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Time to destruct a urban block" ), pUrbanAreaDestructionlGroup );
+    builder.AddField< ADN_EditLine_Double >( pTimeDestructUrbanGroup, tr( "Density" ), vInfosConnectors[eUrbanBlocDestructionDensity], tr( "people/m²" ), eGreaterEqualZero );
+    builder.AddField< ADN_TimeField >( pTimeDestructUrbanGroup, tr( "Time" ), vInfosConnectors[ eUrbanBlocDestructionTime ] );
+    //@}
+
     builder.AddStretcher( pGroup, Qt::Vertical );
 
     pPopulationList_->SetItemConnectors( vInfosConnectors );
@@ -200,6 +212,7 @@ void ADN_Population_GUI::Build()
     pVolumeList->SetItemConnectors( vInfosConnectors );
     pFireEffectAttitudeList->SetItemConnectors( vInfosConnectors );
     pProtectionList->SetItemConnectors( vInfosConnectors );
+    pUrbanEffectAttitudeList->SetItemConnectors( vInfosConnectors );
 
     // Layout
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );

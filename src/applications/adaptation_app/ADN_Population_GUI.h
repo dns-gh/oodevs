@@ -54,6 +54,9 @@ public:
         eFireEffectArmedDestruction,
         eFireEffectArmedFixableWithEvacuation,
         eFireEffectArmedFixableWithoutEvacuation,
+        eUrbanBlocDestructionAttitude,
+        eUrbanBlocDestructionDensity,
+        eUrbanBlocDestructionTime,
         eFireEffectRoe,
         eNbrGuiElements
     };

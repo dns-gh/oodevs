@@ -193,6 +193,28 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<SpeedEffectInfos>, SpeedEffectInfosVector )
 
 // *****************************************************************************
+    class UrbanEffectInfos : public ADN_Ref_ABC
+                            , public ADN_DataTreeNode_ABC
+    {
+    public:
+        explicit UrbanEffectInfos( E_PopulationAttitude nAttitude );
+        virtual ~UrbanEffectInfos();
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output ) const;
+
+    public:
+        E_PopulationAttitude    nAttitude_;
+        ADN_Type_String         strName_;
+        ADN_Type_Double         rDensity_;
+        ADN_Type_Time           rTime_;
+    };
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<UrbanEffectInfos>, UrbanEffectInfosVector )
+
+// *****************************************************************************
     class PopulationInfos : public ADN_Ref_ABC
                           , public ADN_DataTreeNode_ABC
     {
@@ -209,6 +231,7 @@ public:
         void ReadSlowingEffect( xml::xistream& input );
         void ReadAttritionEffect( xml::xistream& input );
         void ReadFireEffect( xml::xistream& input );
+        void ReadUrbanEffect( xml::xistream& input );
         void WriteArchive( xml::xostream& output, int nMosId ) const;
 
     public:
@@ -223,6 +246,7 @@ public:
         T_SpeedEffectInfosVector                              vSpeedEffectInfos_;
         T_FireEffectInfosVector                               vFireEffectInfos_;
         T_FireEffectRoeInfosVector                            vFireEffectRoeInfos_;
+        T_UrbanEffectInfosVector                              vUrbanEffectInfos_;
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<PopulationInfos>, PopulationInfosVector )
 

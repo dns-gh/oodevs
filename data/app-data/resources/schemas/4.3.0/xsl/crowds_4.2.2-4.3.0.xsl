@@ -15,7 +15,10 @@
                 </xsl:element>
             </xsl:if>
             <xsl:apply-templates select="node()"/>
-        </xsl:copy>
+			<xsl:if test="not(./urban-destruction-effects)">
+				<xsl:element name="urban-destruction-effects"/>
+			</xsl:if>             
+        </xsl:copy>       
     </xsl:template>
 	
 	<xsl:template match="attrition-effect/unit">

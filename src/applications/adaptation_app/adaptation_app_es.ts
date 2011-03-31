@@ -3459,6 +3459,18 @@ Asegúrese que el archivo existe.</translation>
         <source>Units -&gt; Crowd</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Urban area destruction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time to destruct a urban block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Population_ListView</name>
