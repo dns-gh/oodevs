@@ -327,7 +327,7 @@ const PHY_HumanWound* MIL_FireClass::ChooseRandomWound() const
 // -----------------------------------------------------------------------------
 void MIL_FireClass::GetSurfaceFirePotentials( const TerrainData& terrainData, int& ignitionThreshold, int& maxCombustionEnergy ) const
 {
-    ignitionThreshold = 0;
+    ignitionThreshold = -1;
     maxCombustionEnergy = std::numeric_limits< int >::max();
     for( T_Surfaces::const_iterator it = surfaces_.begin(); it != surfaces_.end(); ++it )
     {
@@ -339,6 +339,8 @@ void MIL_FireClass::GetSurfaceFirePotentials( const TerrainData& terrainData, in
     }
     if( maxCombustionEnergy == std::numeric_limits< int >::max() )
         maxCombustionEnergy = 0;
+    if( ignitionThreshold < 0 )
+        ignitionThreshold = std::numeric_limits< int >::max();
 }
 
 // -----------------------------------------------------------------------------
