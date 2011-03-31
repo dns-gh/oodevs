@@ -144,6 +144,8 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
         boost::function< unsigned int( float, DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, DEC_Decision_ABC* >, boost::ref( GetPopulation() ), _1, _2 ) );
     brain[ "DEC_DetruireBlocUrbain" ] =
         boost::function< void( UrbanObjectWrapper*, double )>( boost::bind( &DEC_UrbanObjectFunctions::DestroyUrbanBlock, _1,_2 ) );
+   brain[ "DEC_EtatBlocUrbain" ] =
+        boost::function< float( UrbanObjectWrapper* )>( boost::bind( &DEC_UrbanObjectFunctions::GetStateUrbanBlock, _1 ) );
 
     // Self
     brain[ "DEC_GetPosition" ] =
@@ -221,8 +223,6 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     brain[ "DEC_IsPointInUrbanBlockTrafficable" ] = boost::function< bool( MT_Vector2D&, bool ) >( boost::lambda::constant( true ) ); // $$$$ _RC_ LGY 2010-12-27: Pour une population, un point dans un block urbain est toujours accessible?
     brain[ "DEC_Agent_NiveauInstallation" ] = boost::bind( &DEC_PopulationFunctions::GetMovingState, boost::ref( GetPopulation() ) );
     brain[ "DEC_HasFlow" ] = boost::function< bool() >( boost::bind( &DEC_PopulationFunctions::HasFlow, boost::ref( GetPopulation() ) ) );
-
-    // $$ in progress
     brain[ "DEC_Population_HasReachedDestination" ] = boost::function< bool( const MT_Vector2D* ) >( boost::bind( &DEC_PopulationFunctions::HasReachedDestination, boost::ref( GetPopulation() ), _1 ) );
     brain[ "DEC_Population_HasReachedDestinationCompletely" ] = boost::function< bool( const MT_Vector2D* ) >( boost::bind( &DEC_PopulationFunctions::HasReachedDestinationCompletely, boost::ref( GetPopulation() ), _1 ) );
 

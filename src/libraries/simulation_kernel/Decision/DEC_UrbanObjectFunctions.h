@@ -35,6 +35,7 @@ public:
     static float GetRapForLocal( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
     static T_ConstKnowledgeAgentVector GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
     static void DestroyUrbanBlock( UrbanObjectWrapper* pUrbanObject, double percentage );
+    static float GetStateUrbanBlock( UrbanObjectWrapper* pUrbanObject );
     static boost::shared_ptr< TER_Localisation > GetPolygonFromUrbanBlock( const UrbanObjectWrapper* pUrbanObject );
     //@}
 };

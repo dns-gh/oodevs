@@ -151,6 +151,20 @@ void DEC_UrbanObjectFunctions::DestroyUrbanBlock( UrbanObjectWrapper* pUrbanObje
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_UrbanObjectFunctions::GetStateUrbanBlock
+// Created: DDA 2011-03-30
+// -----------------------------------------------------------------------------
+float DEC_UrbanObjectFunctions::GetStateUrbanBlock( UrbanObjectWrapper* pUrbanObject )
+{
+    if( pUrbanObject )
+    {
+        StructuralCapacity* pCapacity = pUrbanObject->Retrieve< StructuralCapacity >();
+        if( pCapacity )
+            return pCapacity->GetStructuralState();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock
 // Created: EVH 2011-03-25
 // -----------------------------------------------------------------------------
