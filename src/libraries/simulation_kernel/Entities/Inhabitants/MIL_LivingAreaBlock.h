@@ -49,6 +49,7 @@ public:
     //! @name Network
     //@{
     void SendFullState( client::PopulationUpdate& msg ) const;
+    void UpdateNetwork( client::PopulationUpdate& msg ) const;
     //@}
 
     //! @name Operations
@@ -98,6 +99,7 @@ private:
     bool confined_;
     bool evacuated_;
     bool outsideAngry_;
+    mutable bool hasChanged_;
     //@}
 };
 

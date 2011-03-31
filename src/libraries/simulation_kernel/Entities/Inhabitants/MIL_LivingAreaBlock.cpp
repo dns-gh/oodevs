@@ -38,6 +38,7 @@ MIL_LivingAreaBlock::MIL_LivingAreaBlock( UrbanObjectWrapper& urbanObject )
     , confined_    ( false )
     , evacuated_   ( false )
     , outsideAngry_( false )
+    , hasChanged_ ( true )
 {
     // NOTHING
 }
@@ -81,6 +82,20 @@ void MIL_LivingAreaBlock::SendFullState( client::PopulationUpdate& msg ) const
     block.set_alerted( alerted_ );
     block.set_confined( confined_ );
     block.set_evacuated( evacuated_ );
+    block.set_angriness( angriness_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingAreaBlock::UpdateNetwork
+// Created: BCI 2011-03-30
+// -----------------------------------------------------------------------------
+void MIL_LivingAreaBlock::UpdateNetwork( client::PopulationUpdate& msg ) const
+{
+    if( hasChanged_ )
+    {
+        SendFullState( msg );
+        hasChanged_ = false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +113,11 @@ const UrbanObjectWrapper& MIL_LivingAreaBlock::GetObject() const
 // -----------------------------------------------------------------------------
 void MIL_LivingAreaBlock::SetAlerted( bool alerted )
 {
-    alerted_ = alerted;
+    if( alerted_ != alerted )
+    {
+        alerted_ = alerted;
+        hasChanged_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +126,11 @@ void MIL_LivingAreaBlock::SetAlerted( bool alerted )
 // -----------------------------------------------------------------------------
 void MIL_LivingAreaBlock::SetEvacuated( bool evacuated )
 {
-    evacuated_ = evacuated;
+    if( evacuated_ != evacuated )
+    {
+        evacuated_ = evacuated;
+        hasChanged_ = true;
+    } 
 }
 
 // -----------------------------------------------------------------------------
@@ -116,7 +139,11 @@ void MIL_LivingAreaBlock::SetEvacuated( bool evacuated )
 // -----------------------------------------------------------------------------
 void MIL_LivingAreaBlock::SetConfined( bool confined )
 {
-    confined_ = confined;
+    if( confined_ != confined )
+    {
+        confined_ = confined;
+        hasChanged_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -228,6 +255,8 @@ void MIL_LivingAreaBlock::DistributeHumans( unsigned int persons, MIL_LivingArea
 
     for( CIT_Persons it = persons_.begin(); it != persons_.end(); ++it )
         const_cast< UrbanObjectWrapper& >( urbanObject_ ).UpdateInhabitants( livingArea, it->first, it->second );
+
+    hasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -295,6 +324,7 @@ void MIL_LivingAreaBlock::DecreasePeopleWhenMoving( const std::string& motivatio
     int newValue = persons_[ motivation ] - number;
     persons_[ motivation ] = std::max( 0, newValue );
     const_cast< UrbanObjectWrapper& >( urbanObject_ ).UpdateInhabitants( livingArea, motivation, persons_[ motivation ] );
+    hasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -314,6 +344,7 @@ unsigned int MIL_LivingAreaBlock::IncreasePeopleWhenMoving( const std::string& m
     else 
         persons_[ motivation ] = newValue;
     const_cast< UrbanObjectWrapper& >( urbanObject_ ).UpdateInhabitants( livingArea, motivation, persons_[ motivation ] );
+    hasChanged_ = true;
     return remaining;
 }
 
@@ -332,10 +363,16 @@ float MIL_LivingAreaBlock::Consume( const PHY_ResourceNetworkType& resource, uns
         float blockSatisfaction = totalPersons * capacity->GetConsumptionState( resource.GetId() );
         capacity->AddConsumption( resource.GetId(), totalPersons * consumption );
 
+        float newAngriness;
         if( ( alerted_ || outsideAngry_ ) && blockSatisfaction < 0.1f && totalPersons > 0 )
-            angriness_ = std::min( angriness_ + 0.001f, 1.f );
+            newAngriness = std::min( angriness_ + 0.001f, 1.f );
         else
-            angriness_ = std::max( angriness_ - 0.001f, 0.f );
+            newAngriness = std::max( angriness_ - 0.001f, 0.f );
+        if( newAngriness != angriness_ )
+        {
+            angriness_ = newAngriness;
+            hasChanged_ = true;
+        }
 
         if( MIL_Population* pAngryCrowd = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( &urbanObject_ ) )
             pAngryCrowd->SetUrbanBlockAngriness( angriness_ );
@@ -343,6 +380,7 @@ float MIL_LivingAreaBlock::Consume( const PHY_ResourceNetworkType& resource, uns
         angry = ( outsideAngry_ || angriness_ >= 1.f );
         return blockSatisfaction;
     }
+    hasChanged_ = true;
     return 0;
 }
 

@@ -2293,6 +2293,7 @@ message PopulationUpdate {
          required bool     alerted   = 3; //!< Whether the population has been alerted or not
          required bool     confined  = 4; //!< Whether the population is confined into this block or not
          required bool     evacuated = 5; //!< Whether the population is evacuated into this block or not
+         required float    angriness = 6; //!< Angriness of persons in this block because of lack of resources.
      }
     required PopulationId    id           = 1; //!< The population identifier
     optional int32           healthy      = 2; //!< The number of healthy persons

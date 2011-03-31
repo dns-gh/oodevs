@@ -221,6 +221,8 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDiction
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyConfined, human.second.confined_ );
         const QString keyEvacuated = keyBase + tools::translate( "Block", "Evacuated" );
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyEvacuated, human.second.evacuated_ );
+        const QString keyAngriness = keyBase + tools::translate( "Block", "Angriness" );
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAngriness, human.second.angriness_ );
     }
 }
 
@@ -246,13 +248,14 @@ void TerrainObjectProxy::DisplayInSummary( kernel::Displayer_ABC& displayer ) co
 // Name: TerrainObjectProxy::UpdateHumans
 // Created: LGY 2010-12-30
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted, bool confined, bool evacuated )
+void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted, bool confined, bool evacuated, float angriness )
 {
     T_Human& mutableHuman = humans_[ inhabitant ];
     mutableHuman.number_ = number;
     mutableHuman.alerted_ = alerted;
     mutableHuman.confined_ = confined;
     mutableHuman.evacuated_ = evacuated;
+    mutableHuman.angriness_ = angriness;
     const T_Human& human = mutableHuman;
     const QString keyBase = tools::translate( "Block", "Populations/" ) + inhabitant.c_str() + "/";
     kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
@@ -268,6 +271,9 @@ void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned i
     const QString keyEvacuated = keyBase + tools::translate( "Block", "Evacuated" );
     if( !dictionary.HasKey( keyEvacuated ) )
         dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyEvacuated, human.evacuated_ );
+    const QString keyAngriness = keyBase + tools::translate( "Block", "Angriness" );
+    if( !dictionary.HasKey( keyAngriness ) )
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAngriness, human.angriness_ );
     if( human.number_ == 0u )
     {
         dictionary.Remove( keyNumber );

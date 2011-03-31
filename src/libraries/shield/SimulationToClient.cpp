@@ -2311,6 +2311,7 @@ namespace
 #ifdef SHIELD_CLIENT
         CONVERT( alerted )
         CONVERT( confined )
+        CONVERT( angriness )
 #endif
     }
 }

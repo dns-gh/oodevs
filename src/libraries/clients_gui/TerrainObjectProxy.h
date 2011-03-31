@@ -103,7 +103,7 @@ public:
     virtual void SetSelected( bool selected ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
 
-    void UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted, bool confined, bool evacuated );
+    void UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted, bool confined, bool evacuated, float angriness );
     unsigned int GetHumans() const;
     void NotifyUpdated( const gui::UrbanDisplayOptions& );
     //@}
@@ -128,6 +128,7 @@ private:
         bool alerted_;
         bool confined_;
         bool evacuated_;
+        float angriness_;
     };
     typedef std::map< std::string, T_Human > T_Humans;
     typedef T_Humans::const_iterator       CIT_Humans;

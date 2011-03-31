@@ -1321,7 +1321,7 @@ void AgentServerMsgMgr::OnReceiveChangePopulationMagicActionAck( const sword::Ch
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveBurningCellRequestAck( const sword::BurningCellRequestAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message.error_code(), "BurningCellRequestAck" );
+    // $$$$ BCI 2011-03-31: commenté, car trop de messages affichés dans gaming... CheckAcknowledge( logger_, message.error_code(), "BurningCellRequestAck" );
 }
 
 // -----------------------------------------------------------------------------

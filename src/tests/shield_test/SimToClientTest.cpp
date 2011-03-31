@@ -1811,6 +1811,7 @@ namespace
         o->set_alerted( true ); // $$$$ SBO 2011-02-04: in sword but not in shield
         o->set_confined( true ); // $$$$ BCI 2011-02-23: in sword but not in shield
         o->set_evacuated( true ); // $$$$ ABR 2011-03-25: in sword but not in shield
+        o->set_angriness( 0.0f ); // $$$$ ABR 2011-03-25: in sword but not in shield
     }
 }
 

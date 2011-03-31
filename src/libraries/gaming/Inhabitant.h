@@ -107,6 +107,7 @@ private:
         bool alerted_;
         bool confined_;
         bool evacuated_;
+        float angriness_;
     };
     typedef std::map< unsigned int/*occupation object id*/, T_Human > T_Humans;
     //@}

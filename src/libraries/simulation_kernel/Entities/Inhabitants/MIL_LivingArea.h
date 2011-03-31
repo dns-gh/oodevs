@@ -124,7 +124,6 @@ private:
     T_BlockCompositions startingBlocks_;
     T_BlockCompositions currentStartingState_;
     T_BlockRatio finalBlocks_;
-    mutable bool hasChanged_;
     //@}
 };
 

@@ -80,6 +80,10 @@
         <source>Evacuated</source>
         <translation>Evacué</translation>
     </message>
+    <message>
+        <source>Angriness</source>
+        <translation>Colère</translation>
+    </message>
 </context>
 <context>
     <name>FormationLayer</name>

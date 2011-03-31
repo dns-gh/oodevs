@@ -32,7 +32,6 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LivingArea )
 MIL_LivingArea::MIL_LivingArea()
     : pInhabitant_( 0 )
     , population_ ( 0 )
-    , hasChanged_ ( false )
 {
     // NOTHING
 }
@@ -44,7 +43,6 @@ MIL_LivingArea::MIL_LivingArea()
 MIL_LivingArea::MIL_LivingArea( xml::xistream& xis, unsigned long population, MIL_Inhabitant& inhabitant )
     : pInhabitant_( &inhabitant )
     , population_ ( population )
-    , hasChanged_ ( false )
 {
     xis >> xml::start( "living-area" )
             >> xml::list( "urban-block", *this, &MIL_LivingArea::ReadUrbanBlock )
@@ -129,7 +127,6 @@ void MIL_LivingArea::DistributeHumans( unsigned long population )
             ( *it )->DistributeHumans( person, *this );
         tmp -= person;
     }
-    hasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -148,11 +145,8 @@ void MIL_LivingArea::SendFullState( client::PopulationUpdate& msg ) const
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::UpdateNetwork( client::PopulationUpdate& msg ) const
 {
-    if( hasChanged_ )
-    {
-        SendFullState( msg );
-        hasChanged_ = false;
-    }
+    BOOST_FOREACH( const MIL_LivingAreaBlock* urbanBlock, blocks_ )
+        urbanBlock->UpdateNetwork( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -320,7 +314,6 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
     if( !startingBlocks_.empty() || !finalBlocks_.empty() )
     {
         currentStartingState_ = startingBlocks_;
-        hasChanged_ = true;
     }
 }
 
@@ -349,7 +342,6 @@ void MIL_LivingArea::MovePeople( const std::string& motivation, int occurence )
         tmp -= arriving;
         it->first->IncreasePeopleWhenMoving( motivation, arriving, *this );
     }
-    hasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -380,7 +372,6 @@ void MIL_LivingArea::FinishMoving( const std::string& motivation )
     for( CIT_BlockRatio it = finalBlocks_.begin(); it != finalBlocks_.end() && remaining > 0; ++it )
         remaining = it->first->IncreasePeopleWhenMoving( motivation, remaining, *this );
     Clean();
-    hasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -422,7 +413,6 @@ void MIL_LivingArea::Alert( const TER_Localisation& localisation )
         if( block->GetObject().Intersect2DWithLocalisation( localisation ) )
         {
             block->SetAlerted( true );
-            hasChanged_ = true;
             hasBeenAlerted = true;
         }
     assert( pInhabitant_ );
@@ -453,7 +443,6 @@ void MIL_LivingArea::SetAlerted( bool alerted, UrbanObjectWrapper* pUrbanObject 
         if( pUrbanObject == 0 || pUrbanObject == &block->GetObject() )
         {
             block->SetAlerted( alerted );
-            hasChanged_ = true;
             hasBeenAlerted = true;
         }
     assert( pInhabitant_ );
@@ -472,7 +461,6 @@ void MIL_LivingArea::SetConfined( bool confined, UrbanObjectWrapper* pUrbanObjec
         if( pUrbanObject == 0 || pUrbanObject == &block->GetObject() )
         {
             block->SetConfined( confined );
-            hasChanged_ = true;
             hasBeenConfined = true;
         }
     assert( pInhabitant_ );
@@ -491,7 +479,6 @@ void MIL_LivingArea::Confine( const TER_Localisation& localisation )
         if( block->GetObject().IsContainedByLocalisation( localisation ) )
         {
             block->SetConfined( true );
-            hasChanged_ = true;
             hasBeenConfined = true;
         }
     assert( pInhabitant_ );
@@ -510,7 +497,6 @@ void MIL_LivingArea::SetEvacuated( bool evacuated, UrbanObjectWrapper* pUrbanObj
         if( pUrbanObject == 0 || pUrbanObject == &block->GetObject() )
         {
             block->SetEvacuated( evacuated );
-            hasChanged_ = true;
             hasBeenEvacuated = true;
         }
     assert( pInhabitant_ );
