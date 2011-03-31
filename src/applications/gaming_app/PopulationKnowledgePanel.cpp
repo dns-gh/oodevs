@@ -19,6 +19,7 @@
 #include "gaming/PopulationKnowledge.h"
 #include "gaming/PopulationConcentrationKnowledge.h"
 #include "gaming/PopulationFlowKnowledge.h"
+#include "gaming/Tools.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_gui/GroupDisplayer.h"
 #include "clients_gui/LabelDisplayer.h"
@@ -32,36 +33,36 @@ using namespace gui;
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
 PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tr( "Crowd knowledges" ) )
+    : InfoPanel_ABC( parent, panel, tools::translate( "PopulationKnowledgePanel", "Crowd knowledges" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )
     , selectedPart_( controllers )
 {
     knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this, factory );
-    knowledgeList_->AddColumn( tr( "Known crowds" ) );
+    knowledgeList_->AddColumn( tools::translate( "PopulationKnowledgePanel", "Known crowds" ) );
 
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( tr( "Details" ) )
-                .AddLabel( tr( "Identifier:" ) )
-                .AddLabel( tr( "Associated crowd:" ) )
-                .AddLabel( tr( "Side:" ) )
-                .AddLabel( tr( "Critical intelligence:" ) );
+    display_->AddGroup( tools::translate( "PopulationKnowledgePanel", "Details" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Identifier:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Associated crowd:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Side:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Critical intelligence:" ) );
 
-    display_->AddGroup( tr( "Concentration" ) )
-                .AddLabel( tr( "Alive people:" ) )
-                .AddLabel( tr( "Dead people:" ) )
-                .AddLabel( tr( "Mood:" ) )
-                .AddLabel( tr( "Perceived:" ) )
-                .AddLabel( tr( "Relevance:" ) );
+    display_->AddGroup( tools::translate( "PopulationKnowledgePanel", "Concentration" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Alive people:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Dead people:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Mood:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Perceived:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Relevance:" ) );
 
-    display_->AddGroup( tr( "Flow" ) )
-                .AddLabel( tr( "Heading:" ) )
-                .AddLabel( tr( "Speed:" ) )
-                .AddLabel( tr( "Alive people:" ) )
-                .AddLabel( tr( "Dead people:" ) )
-                .AddLabel( tr( "Mood:" ) )
-                .AddLabel( tr( "Perceived:" ) );
+    display_->AddGroup( tools::translate( "PopulationKnowledgePanel", "Flow" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Heading:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Speed:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Alive people:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Dead people:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Mood:" ) )
+                .AddLabel( tools::translate( "PopulationKnowledgePanel", "Perceived:" ) );
 
     connect( knowledgeList_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( knowledgeList_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
@@ -70,10 +71,10 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
 }
 
 // $$$$ AGE 2006-02-27: ajouter
-//    pFlowPartBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Portions de flux" ), this );
+//    pFlowPartBox_ = new QGroupBox( 1, Qt::Horizontal, tools::translate( "PopulationKnowledgePanel", "Portions de flux" ), this );
 //    pFlowPartTable_ = new QTable( 0, 2, pFlowPartBox_ );
-//    pFlowPartTable_->horizontalHeader()->setLabel( 0, tr( "#" ) );
-//    pFlowPartTable_->horizontalHeader()->setLabel( 1, tr( "Pertinence" ) );
+//    pFlowPartTable_->horizontalHeader()->setLabel( 0, tools::translate( "PopulationKnowledgePanel", "#" ) );
+//    pFlowPartTable_->horizontalHeader()->setLabel( 1, tools::translate( "PopulationKnowledgePanel", "Pertinence" ) );
 //    pFlowPartTable_->setColumnWidth   ( 0, 20 );
 //    pFlowPartTable_->setColumnReadOnly( 0, true );
 //    pFlowPartTable_->setColumnReadOnly( 1, true );
@@ -122,8 +123,8 @@ void PopulationKnowledgePanel::OnContextMenuRequested( QListViewItem* i, const Q
 void PopulationKnowledgePanel::OnSelectionChanged( QListViewItem* i )
 {
     ValuedListItem* item = (ValuedListItem*)( i );
-    display_->Group( tr( "Flow" ) ).Hide();
-    display_->Group( tr( "Concentration" ) ).Hide();
+    display_->Group( tools::translate( "PopulationKnowledgePanel", "Flow" ) ).Hide();
+    display_->Group( tools::translate( "PopulationKnowledgePanel", "Concentration" ) ).Hide();
     if( item && item->IsA< const PopulationKnowledge_ABC >() )
     {
         subSelected_ = item->GetValue< const PopulationKnowledge_ABC >();
@@ -195,7 +196,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationFlowKnowledge& ele
 {
     if( ! IsVisible() || selectedPart_ != &element )
         return;
-    display_->Group( tr( "Concentration" ) ).Hide();
+    display_->Group( tools::translate( "PopulationKnowledgePanel", "Concentration" ) ).Hide();
     element.Display( *display_ );
 }
 
@@ -207,7 +208,7 @@ void PopulationKnowledgePanel::NotifyUpdated( const PopulationConcentrationKnowl
 {
     if( ! IsVisible() || selectedPart_ != &element )
         return;
-    display_->Group( tr( "Flow" ) ).Hide();
+    display_->Group( tools::translate( "PopulationKnowledgePanel", "Flow" ) ).Hide();
     element.Display( *display_ );
 }
 

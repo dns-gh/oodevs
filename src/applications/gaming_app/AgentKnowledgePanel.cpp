@@ -20,6 +20,7 @@
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "gaming/AgentKnowledges.h"
 #include "gaming/PerceptionMap.h"
+#include "gaming/Tools.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_gui/GroupDisplayer.h"
 #include "clients_gui/LabelDisplayer.h"
@@ -33,7 +34,7 @@ using namespace gui;
 // Created: APE 2004-05-03
 // -----------------------------------------------------------------------------
 AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tr( "Unit knowledge" ) )
+    : InfoPanel_ABC( parent, panel, tools::translate( "AgentKnowledgePanel", "Unit knowledge" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )
@@ -41,31 +42,31 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
     , display_     ( 0 )
 {
     pKnowledgeListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn( tr( "Known units" ) );
+    pKnowledgeListView_->AddColumn( tools::translate( "AgentKnowledgePanel", "Known units" ) );
 
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( tr( "Details" ) )
-                .AddLabel( tr( "Identifier:" ) )
-                .AddLabel( tr( "Associated agent:" ) )
-                .AddLabel( tr( "Location:" ) )
-                .AddLabel( tr( "Heading:" ) )
-                .AddLabel( tr( "Speed:" ) )
-                .AddLabel( tr( "Operational state:" ) )
-                .AddLabel( tr( "Perception level:" ) )
-                .AddLabel( tr( "Max perception level:" ) )
-                .AddLabel( tr( "Side:" ) )
-                .AddLabel( tr( "Level:" ) )
-                .AddLabel( tr( "Nature:" ) )
-                .AddLabel( tr( "Surrender:" ) )
-                .AddLabel( tr( "Prisoner:" ) )
-                .AddLabel( tr( "Refugees picked up:" ) )
-                .AddLabel( tr( "Command post:" ) )
-                .AddLabel( tr( "Relevance:" ) )
-                .AddLabel( tr( "Critical intelligence:" ) );
+    display_->AddGroup( tools::translate( "AgentKnowledgePanel", "Details" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Identifier:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Associated agent:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Location:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Heading:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Speed:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Operational state:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Perception level:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Max perception level:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Side:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Level:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Nature:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Surrender:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Prisoner:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Refugees picked up:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Command post:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Relevance:" ) )
+                .AddLabel( tools::translate( "AgentKnowledgePanel",  "Critical intelligence:" ) );
 
     pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( tr( "Unit" ) ).
-                          AddColumn( tr( "Perception level" ) );
+    pPerceptionListView_->AddColumn( tools::translate( "AgentKnowledgePanel", "Unit" ) ).
+                          AddColumn( tools::translate( "AgentKnowledgePanel", "Perception level" ) );
 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );
@@ -129,7 +130,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledges& knowledges )
 void AgentKnowledgePanel::Display( const AgentKnowledge_ABC& k, Displayer_ABC& displayer, ValuedListItem* item )
 {
     item->SetValue( &k );
-    displayer.Display( tr( "Known units" ), k.GetEntity() );
+    displayer.Display( tools::translate( "AgentKnowledgePanel", "Known units" ), k.GetEntity() );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,7 +252,7 @@ void AgentKnowledgePanel::NotifyUpdated( const AgentKnowledge_ABC& k )
     if( ! IsVisible() || subSelected_ != & k )
         return;
 
-    k.Display( display_->Group( tr( "Details" ) ) );
+    k.Display( display_->Group( tools::translate( "AgentKnowledgePanel", "Details" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -275,6 +276,6 @@ void AgentKnowledgePanel::NotifyUpdated( const PerceptionMap& perceptions )
 void AgentKnowledgePanel::Display( const Perception& perception, Displayer_ABC& displayer, ValuedListItem* item )
 {
     item->SetValue( perception.detected_ );
-    displayer.Display( tr( "Unit" ), perception.detected_->GetName() ); // to prevent link
-    displayer.Display( tr( "Perception level" ), perception.level_ );
+    displayer.Display( tools::translate( "AgentKnowledgePanel", "Unit" ), perception.detected_->GetName() ); // to prevent link
+    displayer.Display( tools::translate( "AgentKnowledgePanel", "Perception level" ), perception.level_ );
 }

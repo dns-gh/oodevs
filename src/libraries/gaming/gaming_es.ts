@@ -65,7 +65,7 @@
     </message>
     <message>
         <source>Prisoner:</source>
-        <translation>Prisioneros:</translation>
+        <translation>Prisionero:</translation>
     </message>
     <message>
         <source>Refugees picked up:</source>
@@ -89,7 +89,7 @@
     </message>
     <message>
         <source>Critical intelligence:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -395,7 +395,7 @@
     </message>
     <message>
         <source>Details</source>
-        <translation type="unfinished">Detalles</translation>
+        <translation>Detalles</translation>
     </message>
     <message>
         <source>Identifier:</source>

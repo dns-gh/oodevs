@@ -153,10 +153,6 @@
         <translation>Unidades reconocidas</translation>
     </message>
     <message>
-        <source>Details</source>
-        <translation>Detalles</translation>
-    </message>
-    <message>
         <source>Identifier:</source>
         <translation>Identificador:</translation>
     </message>
@@ -174,7 +170,7 @@
     </message>
     <message>
         <source>Operational state:</source>
-        <translation>estado operacional:</translation>
+        <translation>Estado operacional:</translation>
     </message>
     <message>
         <source>Perception level:</source>
@@ -182,7 +178,7 @@
     </message>
     <message>
         <source>Max perception level:</source>
-        <translation>Nivel máximo de percepción:</translation>
+        <translation>Máximo nivel de percepción:</translation>
     </message>
     <message>
         <source>Side:</source>
@@ -194,7 +190,7 @@
     </message>
     <message>
         <source>Surrender:</source>
-        <translation>Rendido:</translation>
+        <translation>Rendidos:</translation>
     </message>
     <message>
         <source>Prisoner:</source>
@@ -202,7 +198,7 @@
     </message>
     <message>
         <source>Refugees picked up:</source>
-        <translation>Refugiados acogidos:</translation>
+        <translation>Refugiados recogidos:</translation>
     </message>
     <message>
         <source>Command post:</source>
@@ -226,7 +222,11 @@
     </message>
     <message>
         <source>Critical intelligence:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Detalles</translation>
     </message>
 </context>
 <context>
