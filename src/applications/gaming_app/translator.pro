@@ -7,7 +7,6 @@ ActionsToolbar.cpp \
 AfterAction.cpp \
 AfterActionFunctionList.cpp \
 AfterActionRequestList.cpp \
-AgentKnowledgePanel.cpp \
 AgentListView.cpp \
 AlarmsWidget.cpp \
 Application.cpp \
