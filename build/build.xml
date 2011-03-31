@@ -1147,7 +1147,7 @@
                     <description>@{desc}</description>
                 </content>
             </echoxml>
-            <zip destfile="${dist.dir}/SWORD_@{name}_${version.major}.otpak">
+            <zip destfile="${dist.dir}/SWORD_@{name}_${version.major}.otpak" filesonly="true">
                 <fileset dir="${data.dir}" excludes="**/.svn/**">
                     <otpack-include/>
                 </fileset>
