@@ -547,15 +547,6 @@ public:
         ADN_Type_Int humanByTimeStep_;
     };
 
-    class ADN_CapacityInfos_SealOff : public helpers::ADN_CapacityInfos_Default< helpers::eSealOffCapacity >
-    {
-    public:
-        ADN_CapacityInfos_SealOff();
-
-        void ReadArchive( xml::xistream& xis );
-        void WriteArchive( xml::xostream& xos );
-    };
-
     class ADN_CapacityInfos_FirePropagationModifier : public helpers::ADN_CapacityInfos_Default< helpers::eFirePropagationModifierCapacity >
     {
     public:

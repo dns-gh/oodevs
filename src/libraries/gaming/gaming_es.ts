@@ -1145,14 +1145,6 @@
         <translation>Tiempo de retardo:</translation>
     </message>
     <message>
-        <source>Decisionnal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sealing level:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Logistic route</source>
         <translation type="unfinished"></translation>
     </message>

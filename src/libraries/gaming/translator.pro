@@ -52,7 +52,6 @@ Profile.cpp \
 Reinforcements.cpp \
 ResourceNetwork.cpp \
 Score.cpp \
-SealOffAttribute.cpp \
 StockAttribute.cpp \
 StructuralStateAttribute.cpp \
 SupplyRouteAttribute.cpp \

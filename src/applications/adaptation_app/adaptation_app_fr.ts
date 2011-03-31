@@ -3043,10 +3043,6 @@ du tireur</translation>
         <translation>Valeur initiale</translation>
     </message>
     <message>
-        <source>SealOff</source>
-        <translation>Boucler</translation>
-    </message>
-    <message>
         <source>Medical</source>
         <translation>Médical</translation>
     </message>

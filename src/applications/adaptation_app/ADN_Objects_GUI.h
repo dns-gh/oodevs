@@ -101,7 +101,6 @@ public:
         eDelayCapacityPresent,
         eStructuralStateCapacityPresent,
         eStructuralStateCapacity_Value,
-        eSealOffCapacityPresent,
         eFirePropagationModifierPresent,
         eFirePropagationModifier_Modifiers,
         eBurnCapacityPresent,

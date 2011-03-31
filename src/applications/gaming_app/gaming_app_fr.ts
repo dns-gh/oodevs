@@ -2577,14 +2577,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Fire temperature:</source>
         <translation>Température du feu:</translation>
     </message>
-    <message>
-        <source>Decisionnal</source>
-        <translation>Décisionnel</translation>
-    </message>
-    <message>
-        <source>Sealing level:</source>
-        <translation>Niveau de bouclage:</translation>
-    </message>
 </context>
 <context>
     <name>OrbatAttributesDialog</name>

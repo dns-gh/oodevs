@@ -107,7 +107,6 @@ void ObjectPanel::NotifySelected( const Object_ABC* object )
             UpdateExtension< CrossingSiteAttribute_ABC >( *selected_ );
             UpdateExtension< SupplyRouteAttribute_ABC >( *selected_ );
             UpdateExtension< ActivityTimeAttribute_ABC >( *selected_ );
-            UpdateExtension< SealOffAttribute_ABC >( *selected_ );
             UpdateExtension< StockAttribute_ABC >( *selected_ );
         }
         else
@@ -266,16 +265,6 @@ void ObjectPanel::NotifyUpdated( const MedicalTreatmentAttribute_ABC& attributes
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
 void ObjectPanel::NotifyUpdated( const ActivityTimeAttribute_ABC& attributes )
-{
-    DisplayIfNeeded( attributes );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ObjectPanel::NotifyUpdated
-// Created: MGD 2010-08-26
-// -----------------------------------------------------------------------------
-void ObjectPanel::NotifyUpdated( const SealOffAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }

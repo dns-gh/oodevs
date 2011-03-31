@@ -69,7 +69,6 @@ enum E_Capacities
     ePerceptionCapacity,
     eScatteringCapacity,
     eDelayCapacity,
-    eSealOffCapacity,
     eFirePropagationModifierCapacity,
     eFloodCapacity,
     eBurnCapacity,

@@ -1145,14 +1145,6 @@
         <translation>Temps de retard:</translation>
     </message>
     <message>
-        <source>Decisionnal</source>
-        <translation>Décisionnel</translation>
-    </message>
-    <message>
-        <source>Sealing level:</source>
-        <translation>Niveau de bouclage:</translation>
-    </message>
-    <message>
         <source>Logistic route</source>
         <translation>Route logistique</translation>
     </message>

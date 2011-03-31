@@ -2577,14 +2577,6 @@ Motivo: %3
         <source>Fire temperature:</source>
         <translation>Temperatura de fuego:</translation>
     </message>
-    <message>
-        <source>Decisionnal</source>
-        <translation>Decisional</translation>
-    </message>
-    <message>
-        <source>Sealing level:</source>
-        <translation>Nivel de sellado:</translation>
-    </message>
 </context>
 <context>
     <name>OrbatAttributesDialog</name>

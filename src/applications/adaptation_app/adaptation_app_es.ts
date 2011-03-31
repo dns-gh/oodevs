@@ -3041,10 +3041,6 @@ tirador</translation>
         <translation>Valor inicial</translation>
     </message>
     <message>
-        <source>SealOff</source>
-        <translation>Sellar</translation>
-    </message>
-    <message>
         <source>Population</source>
         <translation>Población</translation>
     </message>

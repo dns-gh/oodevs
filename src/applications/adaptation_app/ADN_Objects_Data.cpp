@@ -1031,33 +1031,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_Scattering::WriteArchive( xml::xostream
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::ADN_CapacityInfos_SealOff
-// Created: MGD 2010-08-27
-// -----------------------------------------------------------------------------
-ADN_Objects_Data::ADN_CapacityInfos_SealOff::ADN_CapacityInfos_SealOff()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::ADN_CapacityInfos_SealOff
-// Created: MGD 2010-08-27
-// -----------------------------------------------------------------------------
-void ADN_Objects_Data::ADN_CapacityInfos_SealOff::ReadArchive( xml::xistream& xis )
-{
-    helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::ADN_CapacityInfos_SealOff
-// Created: MGD 2010-08-27
-// -----------------------------------------------------------------------------
-void ADN_Objects_Data::ADN_CapacityInfos_SealOff::WriteArchive( xml::xostream& /*xos*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::ADN_CapacityInfos_FirePropagationModifier::ADN_CapacityInfos_FirePropagationModifier
 // Created: BCI 2010-12-03
 // -----------------------------------------------------------------------------
@@ -1186,7 +1159,6 @@ INIT_DATA( ADN_CapacityInfos_Structural,              "Structural",             
 INIT_DATA( ADN_CapacityInfos_AttitudeModifier,        "AttitudeModifier",        "attitude-modifier" );
 INIT_DATA( ADN_CapacityInfos_Perception,              "Perception",              "perception" );
 INIT_DATA( ADN_CapacityInfos_Scattering,              "Scattering",              "scattering" );
-INIT_DATA( ADN_CapacityInfos_SealOff,                 "SealOff",                 "sealoff" );
 INIT_DATA( ADN_CapacityInfos_FirePropagationModifier, "FirePropagationModifier", "fire-propagation-modifier" );
 INIT_DATA( ADN_CapacityInfos_Burn,                    "Burn",                    "burn" );
 INIT_DATA( ADN_CapacityInfos_Flood,                   "Flood",                   "flood" );
@@ -1266,7 +1238,6 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_AttitudeModifier::TAG ].reset( new ADN_CapacityInfos_AttitudeModifier() );
     capacities_[ ADN_CapacityInfos_Perception::TAG ].reset( new ADN_CapacityInfos_Perception() );
     capacities_[ ADN_CapacityInfos_Scattering::TAG ].reset( new ADN_CapacityInfos_Scattering() );
-    capacities_[ ADN_CapacityInfos_SealOff::TAG ].reset( new ADN_CapacityInfos_SealOff() );
     capacities_[ ADN_CapacityInfos_FirePropagationModifier::TAG ].reset( new ADN_CapacityInfos_FirePropagationModifier() );
     capacities_[ ADN_CapacityInfos_Burn::TAG ].reset( new ADN_CapacityInfos_Burn() );
     capacities_[ ADN_CapacityInfos_Flood::TAG ].reset( new ADN_CapacityInfos_Flood() );

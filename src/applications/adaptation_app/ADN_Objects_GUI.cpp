@@ -363,11 +363,6 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eDelayCapacityPresent ] = & delay->GetConnector();
     }
 
-    ADN_GroupBox* sealOff = new ADN_GroupBox( 3, Qt::Horizontal, tr( "SealOff" ), hBox );
-    {
-        vInfosConnectors[ eSealOffCapacityPresent ] = & sealOff->GetConnector();
-    }
-
     ADN_GroupBox* firePropagationModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Fire propagation modifier" ), hBox );
     {
         vInfosConnectors[ eFirePropagationModifierPresent ] = & firePropagationModifier->GetConnector();
