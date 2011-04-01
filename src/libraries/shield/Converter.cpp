@@ -507,7 +507,6 @@ void Converter::ReceiveClientToSim( const std::string& from, const MsgsClientToS
         FORWARD( server_, ClientToSimulation, magic_action )
         FORWARD( server_, ClientToSimulation, control_checkpoint_list_request )
         FORWARD( server_, ClientToSimulation, control_checkpoint_delete_request )
-        FORWARD( server_, ClientToSimulation, change_population_magic_action )
         listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
     }
 }

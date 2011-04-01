@@ -48,7 +48,6 @@ public:
     static void Convert( const MsgsClientToSim::MsgMagicAction& from, sword::MagicAction* to );
     static void Convert( const MsgsClientToSim::MsgControlCheckPointListRequest& from, sword::ControlCheckPointListRequest* to );
     static void Convert( const MsgsClientToSim::MsgControlCheckPointDeleteRequest& from, sword::ControlCheckPointDeleteRequest* to );
-    static void Convert( const MsgsClientToSim::MsgChangePopulationMagicAction& from, sword::ChangePopulationMagicAction* to );
     //@}
 };
 

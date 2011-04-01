@@ -251,16 +251,3 @@ BOOST_FIXTURE_TEST_CASE( control_checkpoint_delete_request_from_client_is_conver
     MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { control_checkpoint_delete_request { checkpoint: \"checkpoint\" } }" ) );
     converter.ReceiveClientToSim( "client endpoint", msg );
 }
-
-BOOST_FIXTURE_TEST_CASE( change_population_magic_action_from_client_is_converted, ContextFixture< MsgsClientToSim::MsgClientToSim > )
-{
-    content.mutable_change_population_magic_action()->mutable_tasker()->set_id( 7 );
-    FillPartyAdhesion( content.mutable_change_population_magic_action()->add_adhesions() );
-    FillPartyAdhesion( content.mutable_change_population_magic_action()->add_adhesions() );
-    content.mutable_change_population_magic_action()->set_healthy( 20 );
-    content.mutable_change_population_magic_action()->set_wounded( 21 );
-    content.mutable_change_population_magic_action()->set_dead( 22 );
-    content.mutable_change_population_magic_action()->set_motivation( "office" );
-    MOCK_EXPECT( server, SendClientToSim ).once().with( constraint( msg, "context: 42 message { change_population_magic_action { tasker { id: 7 } adhesions { party { id: 20 } value: 21 } adhesions { party { id: 20 } value: 21 } healthy: 20 wounded: 21 dead: 22 motivation: \"office\" } }" ) );
-    converter.ReceiveClientToSim( "client endpoint", msg );
-}

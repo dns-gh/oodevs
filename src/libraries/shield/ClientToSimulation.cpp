@@ -248,18 +248,3 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgControlCheckPointDel
 {
     CONVERT( checkpoint );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ClientToSimulation::Convert
-// Created: MCO 2010-11-25
-// -----------------------------------------------------------------------------
-void ClientToSimulation::Convert( const MsgsClientToSim::MsgChangePopulationMagicAction& from, sword::ChangePopulationMagicAction* to )
-{
-    CONVERT_ID( tasker );
-    for( int i = 0; i < from.adhesions().size(); ++i )
-        ConvertPartyAdhesion( from.adhesions( i ), to->add_adhesions() );
-    CONVERT( healthy );
-    CONVERT( wounded );
-    CONVERT( dead );
-    CONVERT( motivation );
-}
