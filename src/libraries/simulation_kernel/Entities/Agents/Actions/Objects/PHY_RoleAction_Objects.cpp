@@ -340,7 +340,7 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
     MIL_Object_ABC& object = *pObject;
     ExtinguishableCapacity* capacity = object.Retrieve< ExtinguishableCapacity >();
     if( !capacity )
-        return eImpossible;
+        return eNoCapacity;
 
     FireAttribute* fireAttribute = object.RetrieveAttribute< FireAttribute >();
     if( !fireAttribute )
@@ -353,7 +353,7 @@ int PHY_RoleAction_Objects::Extinguish( boost::shared_ptr< DEC_Knowledge_Object 
     PHY_RoleAction_Objects_DataComputer dataComputer( pion_, eExtinguish, object );
     const PHY_DotationCategory* pExtinguisherAgent = fireAttribute->FindBestExtinguisherAgent( boost::bind( &PHY_RoleAction_Objects_DataComputer::HasDotations, &dataComputer, _1, 1 ) );
     if( !pExtinguisherAgent )
-        return eImpossible;
+        return eNoMoreDotation;
 
     burnAttribute->Extinguish( object, *pExtinguisherAgent );
     dataComputer.ConsumeDotations( *pExtinguisherAgent, 1  );

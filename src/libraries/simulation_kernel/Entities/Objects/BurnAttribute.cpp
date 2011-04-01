@@ -23,9 +23,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( BurnAttribute )
 // -----------------------------------------------------------------------------
 BurnAttribute::BurnAttribute()
     : currentHeat_( 0 )
-    , combustionEnergySum_( 0 )
-    , combustionEnergyCount_( 0 )
-    , currentCombustionEnergy_( 0 )
+    , combustionEnergy_( 0 )
 {
     //NOTHING
 }
@@ -36,9 +34,7 @@ BurnAttribute::BurnAttribute()
 // -----------------------------------------------------------------------------
 BurnAttribute::BurnAttribute( const BurnAttribute& other )
 : currentHeat_( other.currentHeat_ )
-, combustionEnergySum_( other.combustionEnergySum_ )
-, combustionEnergyCount_( other.combustionEnergyCount_ )
-, currentCombustionEnergy_( other.currentCombustionEnergy_ )
+, combustionEnergy_( other.combustionEnergy_ )
 {
     // NOTHING
 }
@@ -59,9 +55,7 @@ BurnAttribute::~BurnAttribute()
 BurnAttribute& BurnAttribute::operator=( const BurnAttribute& other )
 {
     currentHeat_ = other.currentHeat_;
-    combustionEnergySum_ = other.combustionEnergySum_;
-    combustionEnergyCount_ = other.combustionEnergyCount_;
-    currentCombustionEnergy_ = other.currentCombustionEnergy_;
+    combustionEnergy_ = other.combustionEnergy_;
 
     NotifyAttributeUpdated( eOnUpdate );
     return *this;
@@ -76,8 +70,7 @@ void BurnAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
     std::string className;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar >> currentHeat_
-       >> combustionEnergySum_
-       >> combustionEnergyCount_;
+       >> combustionEnergy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -88,8 +81,7 @@ void BurnAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << currentHeat_
-       << combustionEnergySum_
-       << combustionEnergyCount_;
+       << combustionEnergy_;
 }
 
 
@@ -120,7 +112,7 @@ void BurnAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
 //    asn.set_firePresent( 1 );
     asn.mutable_burn()->set_current_heat( currentHeat_ );
-    asn.mutable_burn()->set_combustion_energy( combustionEnergyCount_ > 0 ? combustionEnergySum_ / combustionEnergyCount_ : 0 );
+    asn.mutable_burn()->set_combustion_energy( combustionEnergy_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,8 +136,7 @@ void BurnAttribute::WriteODB( xml::xostream& xos ) const
 {
     xos << xml::start( "burn" )
             << xml::attribute( "current-heat", currentHeat_ )
-            << xml::attribute( "combustion-energy-sum", combustionEnergySum_ )
-            << xml::attribute( "combustion-energy-count", combustionEnergyCount_ )
+            << xml::attribute( "combustion-energy", combustionEnergy_ )
         << xml::end;
 }
 
@@ -156,9 +147,7 @@ void BurnAttribute::WriteODB( xml::xostream& xos ) const
 void BurnAttribute::StartBurn( MIL_Object_ABC& object )
 {
     currentHeat_ = object.GetAttribute< FireAttribute >().GetInitialHeat();
-    combustionEnergySum_ = 0;
-    combustionEnergyCount_ = 0;
-    currentCombustionEnergy_ = 0;
+    combustionEnergy_ = 0;
 }
 
 namespace
@@ -178,12 +167,10 @@ void BurnAttribute::Burn( MIL_Object_ABC& object )
 {
     FireAttribute& fireAttribute = object.GetAttribute< FireAttribute >();
     int weatherDecreateRate = fireAttribute.GetWeatherDecreateRate( object );
-    if( currentCombustionEnergy_ < fireAttribute.GetMaxCombustionEnergy() )
+    if( combustionEnergy_ < fireAttribute.GetMaxCombustionEnergy() )
     {
         currentHeat_ = bound( 0, currentHeat_ + fireAttribute.GetIncreaseRate() - weatherDecreateRate, fireAttribute.GetMaxHeat() );
-        combustionEnergySum_ += currentHeat_;
-        ++combustionEnergyCount_;
-        currentCombustionEnergy_ = combustionEnergySum_ / combustionEnergyCount_;
+        combustionEnergy_ += currentHeat_;
         NotifyAttributeUpdated( eOnUpdate );
     }
     else

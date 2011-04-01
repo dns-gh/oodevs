@@ -71,9 +71,7 @@ private:
     //! @name Member data
     //@{
     int currentHeat_;
-    int combustionEnergySum_;
-    int combustionEnergyCount_;
-    int currentCombustionEnergy_;
+    int combustionEnergy_;
     //@}
 };
 
