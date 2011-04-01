@@ -15,6 +15,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/lexical_cast.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( StockAttribute )
 
@@ -34,6 +35,26 @@ StockAttribute::StockAttribute()
 StockAttribute::StockAttribute( xml::xistream& xis )
 {
     xis >> xml::list( "resource", *this, &StockAttribute::LoadDotation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StockAttribute::StockAttribute
+// Created: BCI 2011-03-31
+// -----------------------------------------------------------------------------
+StockAttribute::StockAttribute( const sword::MissionParameter_Value& attributes )
+{
+    std::string debugString = attributes.DebugString();
+    const sword::MissionParameter_Value& parameterDotations = attributes.list( 1 );
+    for( int i=0; i<parameterDotations.list_size(); ++i )
+    {
+        const sword::MissionParameter_Value& parameterDotation = parameterDotations.list( i );
+        const PHY_DotationCategory* dotationType = PHY_DotationType::FindDotationCategory( parameterDotation.list( 0 ).identifier() );
+        if( !dotationType )
+            throw std::runtime_error( "Unknow dotation type id " + boost::lexical_cast< std::string >( parameterDotation.list( 0 ).identifier() ) );
+        StockDotation& dotation = stockDotations_[ dotationType ];
+        dotation.stock_ = parameterDotation.list( 1 ).quantity();
+        dotation.maxStock_ = parameterDotation.list( 2 ).quantity();
+    }
 }
 
 // -----------------------------------------------------------------------------

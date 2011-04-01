@@ -221,6 +221,9 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
             case ObjectMagicAction::interaction_height:
                 object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( attributes );
                 break;
+            case ObjectMagicAction::stock:
+                object.GetAttribute< StockAttribute >() = StockAttribute( attributes );
+                break;
             case ObjectMagicAction::flood:
                 object.GetAttribute< FloodAttribute >() = FloodAttribute( attributes, object.GetLocalisation() );
                 break;

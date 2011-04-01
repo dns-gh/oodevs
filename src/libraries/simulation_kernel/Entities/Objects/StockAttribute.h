@@ -19,6 +19,7 @@ namespace sword
 {
     class ObjectAttributes;
     class ObjectAttributeStock;
+    class MissionParameter_Value;
 }
 
 namespace xml
@@ -42,6 +43,7 @@ public:
     //@{
              StockAttribute();
     explicit StockAttribute( xml::xistream& xis );
+    explicit StockAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~StockAttribute();
     //@}
 

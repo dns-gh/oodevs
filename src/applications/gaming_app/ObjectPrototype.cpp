@@ -22,6 +22,7 @@
 #include "DelayPrototype.h"
 #include "FloodPrototype.h"
 #include "ResourceNetworkPrototype.h"
+#include "StockPrototype.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Location.h"
@@ -107,6 +108,11 @@ namespace
         container.push_back( new FirePrototype( parent, resolver, attributesList ) );
     }
 
+    void StockAttribute( xml::xistream& /*xis*/, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
+    {
+        container.push_back( new StockPrototype( parent, resolver, attributesList ) );
+    }
+
     void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         int toxic = xis.attribute< int >( "max-toxic" );
@@ -149,6 +155,7 @@ namespace
         factory->Register( "burn"                      , boost::bind( &BurnAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "resources"                 , boost::bind( &ResourceNetworkAttribute, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "stock"                     , boost::bind( &StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         return factory;
     }
 }
