@@ -1015,7 +1015,7 @@
   <automat decisional-model="GTIA" id="665" name="GTIA" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton LECLERC CDT ESC"/>
   </automat>
-  <automat decisional-model="net.masagroup.sword.france.military.company.roles.SGTIA" id="666" name="SGTIA" type="Automate SGTIA">
+  <automat decisional-model="france.military.company.roles.SGTIA" id="666" name="SGTIA" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Section . CBT INF VAB CDS OFF"/>
     <unit max-occurs="2" min-occurs="2" type="Section . CDT CIE INF VAB"/>
     <unit max-occurs="2" min-occurs="2" type="Peloton . LECLERC CDP OFF"/>
@@ -1032,20 +1032,20 @@
     <unit max-occurs="3" min-occurs="3" type="Section CBT INF VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Section CBT INF VAB CDS SOFF"/>
   </automat>
-  <automat decisional-model="net.masagroup.sword.military.company.combat.support.artillery.roles.Company" id="669" name="Batterie ASS . AUF1" type="Automate ASS">
+  <automat decisional-model="sword.military.company.combat.support.artillery.roles.Company" id="669" name="Batterie ASS . AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC . Batterie ASS"/>
     <unit max-occurs="2" min-occurs="2" type="Section de Tir . AUF1 CDS OFF"/>
   </automat>
-  <automat decisional-model="net.masagroup.sword.military.company.terrorism.roles.SniperCompany" id="670" name="Tireurs" type="Automate ASY">
+  <automat decisional-model="sword.military.company.terrorism.roles.SniperCompany" id="670" name="Tireurs" type="Automate ASY">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Tireur"/>
   </automat>
-  <automat decisional-model="net.masagroup.sword.france.military.company.roles.SGTIA" id="671" name="SGTIA PIA" type="Automate SGTIA">
+  <automat decisional-model="france.military.company.roles.SGTIA" id="671" name="SGTIA PIA" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC SGTIA"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante ABC"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante INF"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante Reco"/>
   </automat>
-  <automat decisional-model="net.masagroup.sword.france.military.company.roles.SGTIA" id="672" name="SGTIA INF" type="Automate SGTIA">
+  <automat decisional-model="france.military.company.roles.SGTIA" id="672" name="SGTIA INF" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Section . CDT CIE INF VAB"/>
     <unit max-occurs="2" min-occurs="2" type="Section . CBT INF VAB CDS SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="Section . CBT INF VAB CDS OFF"/>
@@ -1056,7 +1056,7 @@
     <unit max-occurs="3" type="PIA Dominante INF"/>
     <unit max-occurs="3" type="PIA Dominante Reco"/>
   </automat>
-  <automat decisional-model="net.masagroup.sword.france.military.company.roles.SGTIA" id="673" name="SGTIA ABC" type="Automate SGTIA">
+  <automat decisional-model="france.military.company.roles.SGTIA" id="673" name="SGTIA ABC" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton . LECLERC CDT ESC"/>
     <unit max-occurs="2" min-occurs="2" type="Peloton . LECLERC CDP SOFF"/>
     <unit max-occurs="2" min-occurs="1" type="Peloton . LECLERC CDP OFF"/>
@@ -1068,4 +1068,4 @@
     <unit max-occurs="3" type="PIA Dominante Reco"/>
   </automat>
 </automats>
-<!-- signature="4081430270" -->
+<!-- signature="4166574355" -->

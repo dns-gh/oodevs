@@ -1539,70 +1539,70 @@
       <parameter dia-name="dotation_" name="Munition" optional="false" type="ResourceType"/>
       <parameter dia-name="installationCible_" name="Installation cible" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" id="2010" name="TEST MoveToAgentKnowledgeList">
+    <mission dia-behavior="test.military.platoon.tasks.MoveTowardCrossroad" dia-type="test.military.platoon.tasks.MoveTowardCrossroad" id="2010" name="TEST MoveToAgentKnowledgeList">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadAgentList" id="2009" name="TEST MoveToAgentList">
+    <mission dia-behavior="test.military.platoon.tasks.MoveTowardCrossroad" dia-type="test.military.platoon.tasks.MoveTowardCrossroadAgentList" id="2009" name="TEST MoveToAgentList">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadPointList" id="2006" name="TEST MoveToPointList">
+    <mission dia-behavior="test.military.platoon.tasks.MoveTowardCrossroad" dia-type="test.military.platoon.tasks.MoveTowardCrossroadPointList" id="2006" name="TEST MoveToPointList">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadPolygonList" id="2007" name="TEST MoveToPolygonList">
+    <mission dia-behavior="test.military.platoon.tasks.MoveTowardCrossroad" dia-type="test.military.platoon.tasks.MoveTowardCrossroadPolygonList" id="2007" name="TEST MoveToPolygonList">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroad" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardCrossroadObjectKnowledgeList" id="2011" name="TEST MoveToObjectKnowledgeList">
+    <mission dia-behavior="test.military.platoon.tasks.MoveTowardCrossroad" dia-type="test.military.platoon.tasks.MoveTowardCrossroadObjectKnowledgeList" id="2011" name="TEST MoveToObjectKnowledgeList">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" id="2012" name="TEST MoveAlongAgentKnowledgeList">
+    <mission dia-behavior="test.military.platoon.tasks.MoveAlong" dia-type="test.military.platoon.tasks.MoveAlong" id="2012" name="TEST MoveAlongAgentKnowledgeList">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongPointList" id="2055" name="TEST MoveAlongPointList">
+    <mission dia-behavior="test.military.platoon.tasks.MoveAlong" dia-type="test.military.platoon.tasks.MoveAlongPointList" id="2055" name="TEST MoveAlongPointList">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongPolygonList" id="2060" name="TEST MoveAlongPolygonList">
+    <mission dia-behavior="test.military.platoon.tasks.MoveAlong" dia-type="test.military.platoon.tasks.MoveAlongPolygonList" id="2060" name="TEST MoveAlongPolygonList">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAlong" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAlongObjectKnowledgeList" id="2066" name="TEST MoveAlongObjectKnowledgeList">
+    <mission dia-behavior="test.military.platoon.tasks.MoveAlong" dia-type="test.military.platoon.tasks.MoveAlongObjectKnowledgeList" id="2066" name="TEST MoveAlongObjectKnowledgeList">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Destroy" dia-type="net.masagroup.sword.test.military.platoon.tasks.Destroy" id="2094" name="TEST Destroy">
+    <mission dia-behavior="test.military.platoon.tasks.Destroy" dia-type="test.military.platoon.tasks.Destroy" id="2094" name="TEST Destroy">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1616,21 +1616,21 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveAndReconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveAndReconnoiter" id="2014" name="TEST ObserveAndReconnoiterPoint">
+    <mission dia-behavior="test.military.platoon.tasks.ObserveAndReconnoiter" dia-type="test.military.platoon.tasks.ObserveAndReconnoiter" id="2014" name="TEST ObserveAndReconnoiterPoint">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" name="destination" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiterBU" id="2015" name="TEST ObserveAndReconnoiterUrbanBlock">
+    <mission dia-behavior="test.military.platoon.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiterBU" id="2015" name="TEST ObserveAndReconnoiterUrbanBlock">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" name="destination" optional="false" type="UrbanKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.StayClose" dia-type="net.masagroup.sword.test.military.platoon.tasks.StayClose" id="2016" name="TEST StayClose">
+    <mission dia-behavior="test.military.platoon.tasks.StayClose" dia-type="test.military.platoon.tasks.StayClose" id="2016" name="TEST StayClose">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1652,7 +1652,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" dia-type="net.masagroup.sword.test.military.platoon.tasks.ObserveToward" id="2017" name="TEST Observe">
+    <mission dia-behavior="test.military.platoon.tasks.ObserveToward" dia-type="test.military.platoon.tasks.ObserveToward" id="2017" name="TEST Observe">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1674,7 +1674,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.NeutralizeAgents" dia-type="net.masagroup.sword.test.military.platoon.tasks.NeutralizeAgents" id="2025" name="TEST Neutralize">
+    <mission dia-behavior="test.military.platoon.tasks.NeutralizeAgents" dia-type="test.military.platoon.tasks.NeutralizeAgents" id="2025" name="TEST Neutralize">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1688,28 +1688,28 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveAndObserve" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveAndObserve" id="2026" name="TEST MoveAndObserve">
+    <mission dia-behavior="test.military.platoon.tasks.MoveAndObserve" dia-type="test.military.platoon.tasks.MoveAndObserve" id="2026" name="TEST MoveAndObserve">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.SeekAndDestroy" dia-type="net.masagroup.sword.test.military.platoon.tasks.SeekAndDestroy" id="2027" name="TEST SeekAndDestroy">
+    <mission dia-behavior="test.military.platoon.tasks.SeekAndDestroy" dia-type="test.military.platoon.tasks.SeekAndDestroy" id="2027" name="TEST SeekAndDestroy">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.EngageAgents" dia-type="net.masagroup.sword.test.military.platoon.tasks.EngageAgents" id="2029" name="TEST EngageAgents">
+    <mission dia-behavior="test.military.platoon.tasks.EngageAgents" dia-type="test.military.platoon.tasks.EngageAgents" id="2029" name="TEST EngageAgents">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.TakeCover" dia-type="net.masagroup.sword.test.military.platoon.tasks.TakeCover" id="2031" name="TEST TakeCover">
+    <mission dia-behavior="test.military.platoon.tasks.TakeCover" dia-type="test.military.platoon.tasks.TakeCover" id="2031" name="TEST TakeCover">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1717,55 +1717,55 @@
       <parameter dia-name="units" max-occurs="unbounded" min-occurs="1" name="units" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="positions" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Flee" dia-type="net.masagroup.sword.test.military.platoon.tasks.Flee" id="2032" name="TEST Flee">
+    <mission dia-behavior="test.military.platoon.tasks.Flee" dia-type="test.military.platoon.tasks.Flee" id="2032" name="TEST Flee">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.SelfProtect" dia-type="net.masagroup.sword.test.military.platoon.tasks.SelfProtect" id="2033" name="TEST SelfProtect">
+    <mission dia-behavior="test.military.platoon.tasks.SelfProtect" dia-type="test.military.platoon.tasks.SelfProtect" id="2033" name="TEST SelfProtect">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Build" dia-type="net.masagroup.sword.test.military.platoon.tasks.Build" id="2034" name="TEST BuildObjects">
+    <mission dia-behavior="test.military.platoon.tasks.Build" dia-type="test.military.platoon.tasks.Build" id="2034" name="TEST BuildObjects">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="PlannedWork"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Valorize" dia-type="net.masagroup.sword.test.military.platoon.tasks.Valorize" id="2035" name="TEST ValorizeObjects">
+    <mission dia-behavior="test.military.platoon.tasks.Valorize" dia-type="test.military.platoon.tasks.Valorize" id="2035" name="TEST ValorizeObjects">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Activate" dia-type="net.masagroup.sword.test.military.platoon.tasks.Activate" id="2037" name="TEST ActivateObjects">
+    <mission dia-behavior="test.military.platoon.tasks.Activate" dia-type="test.military.platoon.tasks.Activate" id="2037" name="TEST ActivateObjects">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Bypass" dia-type="net.masagroup.sword.test.military.platoon.tasks.Bypass" id="2038" name="TEST BypassObjects">
+    <mission dia-behavior="test.military.platoon.tasks.Bypass" dia-type="test.military.platoon.tasks.Bypass" id="2038" name="TEST BypassObjects">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveObserveReconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveObserveReconnoiter" id="2039" name="TEST MoveObserveReconnoiter">
+    <mission dia-behavior="test.military.platoon.tasks.MoveObserveReconnoiter" dia-type="test.military.platoon.tasks.MoveObserveReconnoiter" id="2039" name="TEST MoveObserveReconnoiter">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="destination" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" dia-type="net.masagroup.sword.test.military.platoon.tasks.Reconnoiter" id="2043" name="TEST Reconnoiter" package="intelligence">
+    <mission dia-behavior="test.military.platoon.tasks.Reconnoiter" dia-type="test.military.platoon.tasks.Reconnoiter" id="2043" name="TEST Reconnoiter" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1778,7 +1778,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Search" dia-type="net.masagroup.sword.test.military.platoon.tasks.Search" id="2098" name="TEST Search">
+    <mission dia-behavior="test.military.platoon.tasks.Search" dia-type="test.military.platoon.tasks.Search" id="2098" name="TEST Search">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1790,14 +1790,14 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Observe" dia-type="net.masagroup.sword.test.military.platoon.tasks.Observe" id="2100" name="TEST Observe ligne">
+    <mission dia-behavior="test.military.platoon.tasks.Observe" dia-type="test.military.platoon.tasks.Observe" id="2100" name="TEST Observe ligne">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="objectif" optional="false" type="PhaseLine"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Identify" dia-type="net.masagroup.sword.test.military.platoon.tasks.Identify" id="2024" name="TEST Identify" package="intelligence">
+    <mission dia-behavior="test.military.platoon.tasks.Identify" dia-type="test.military.platoon.tasks.Identify" id="2024" name="TEST Identify" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1811,35 +1811,35 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" dia-type="net.masagroup.sword.test.military.platoon.tasks.RemoveObstacle" id="2045" name="TEST RemoveObstacle">
+    <mission dia-behavior="test.military.platoon.tasks.RemoveObstacle" dia-type="test.military.platoon.tasks.RemoveObstacle" id="2045" name="TEST RemoveObstacle">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="TEST AnimateObjects">
+    <mission dia-behavior="test.military.platoon.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="TEST AnimateObjects">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="entities" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Support" dia-type="net.masagroup.sword.test.military.platoon.tasks.Support" id="2051" name="TEST Support">
+    <mission dia-behavior="test.military.platoon.tasks.Support" dia-type="test.military.platoon.tasks.Support" id="2051" name="TEST Support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Advance" dia-type="net.masagroup.sword.test.military.platoon.tasks.Advance" id="2052" name="TEST Advance">
+    <mission dia-behavior="test.military.platoon.tasks.Advance" dia-type="test.military.platoon.tasks.Advance" id="2052" name="TEST Advance">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.SealOff" dia-type="net.masagroup.sword.test.military.platoon.tasks.SealOff" id="2064" name="TEST Seal Off">
+    <mission dia-behavior="test.military.platoon.tasks.SealOff" dia-type="test.military.platoon.tasks.SealOff" id="2064" name="TEST Seal Off">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1847,42 +1847,42 @@
       <parameter dia-name="objectives" name="objectifs" optional="false" type="Polygon"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="PlannedWork"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Control" dia-type="net.masagroup.sword.test.military.platoon.tasks.Control" id="2074" name="TEST Control">
+    <mission dia-behavior="test.military.platoon.tasks.Control" dia-type="test.military.platoon.tasks.Control" id="2074" name="TEST Control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" name="zone" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.GetDecon" dia-type="net.masagroup.sword.test.military.platoon.tasks.GetDecon" id="2080" name="TEST GetDecon">
+    <mission dia-behavior="test.military.platoon.tasks.GetDecon" dia-type="test.military.platoon.tasks.GetDecon" id="2080" name="TEST GetDecon">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="site de decontamination" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.GuideAndLoad" dia-type="net.masagroup.sword.test.military.platoon.tasks.GuideAndLoad" id="2081" name="TEST GuideAndLoad">
+    <mission dia-behavior="test.military.platoon.tasks.GuideAndLoad" dia-type="test.military.platoon.tasks.GuideAndLoad" id="2081" name="TEST GuideAndLoad">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entity" name="unité" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Open" dia-type="net.masagroup.sword.test.military.platoon.tasks.Open" id="2082" name="TEST Open">
+    <mission dia-behavior="test.military.platoon.tasks.Open" dia-type="test.military.platoon.tasks.Open" id="2082" name="TEST Open">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="itinéraire" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.WaitTransport" dia-type="net.masagroup.sword.test.military.platoon.tasks.WaitTransport" id="2088" name="TEST WaitTransport">
+    <mission dia-behavior="test.military.platoon.tasks.WaitTransport" dia-type="test.military.platoon.tasks.WaitTransport" id="2088" name="TEST WaitTransport">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.Reinforce" dia-type="net.masagroup.sword.test.military.platoon.tasks.Reinforce" id="2103" name="TEST Reinforce">
+    <mission dia-behavior="test.military.platoon.tasks.Reinforce" dia-type="test.military.platoon.tasks.Reinforce" id="2103" name="TEST Reinforce">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1895,21 +1895,21 @@
       </parameter>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="positions de renforcement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.test.military.platoon.tasks.MoveTowardLima" dia-type="net.masagroup.sword.test.military.platoon.tasks.MoveTowardLima" id="2106" name="TEST MoveToWithLima">
+    <mission dia-behavior="test.military.platoon.tasks.MoveTowardLima" dia-type="test.military.platoon.tasks.MoveTowardLima" id="2106" name="TEST MoveToWithLima">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="objectives" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.platoon.tasks.FaireMouvement" id="2046" name="COMMUNES Faire Mouvement" package="move">
+    <mission dia-behavior="france.military.platoon.tasks.FaireMouvement" dia-type="france.military.platoon.tasks.FaireMouvement" id="2046" name="COMMUNES Faire Mouvement" package="move">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Suivre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Suivre" id="2053" name="COMMUNES Suivre">
+    <mission dia-behavior="france.military.platoon.tasks.Suivre" dia-type="france.military.platoon.tasks.Suivre" id="2053" name="COMMUNES Suivre">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1921,14 +1921,14 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Stationner" dia-type="net.masagroup.sword.france.military.platoon.tasks.Stationner" id="2054" name="COMMUNES Stationner">
+    <mission dia-behavior="france.military.platoon.tasks.Stationner" dia-type="france.military.platoon.tasks.Stationner" id="2054" name="COMMUNES Stationner">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="position" name="Position" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.SeFaireDecontaminer" dia-type="net.masagroup.sword.france.military.platoon.tasks.SeFaireDecontaminer" id="2056" name="COMMUNES Se Faire Decontaminer">
+    <mission dia-behavior="france.military.platoon.tasks.SeFaireDecontaminer" dia-type="france.military.platoon.tasks.SeFaireDecontaminer" id="2056" name="COMMUNES Se Faire Decontaminer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1936,14 +1936,14 @@
       <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="destination" name="Destination" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.SeFaireTransporter" dia-type="net.masagroup.sword.france.military.platoon.tasks.SeFaireTransporter" id="2057" name="COMMUNES Se Faire Transporter" package="move">
+    <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.SeFaireTransporter" id="2057" name="COMMUNES Se Faire Transporter" package="move">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OrienterRefugies" dia-type="net.masagroup.sword.france.military.platoon.tasks.OrienterRefugies" id="2058" name="COMMUNES Orienter Refugies">
+    <mission dia-behavior="france.military.platoon.tasks.OrienterRefugies" dia-type="france.military.platoon.tasks.OrienterRefugies" id="2058" name="COMMUNES Orienter Refugies">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1951,7 +1951,7 @@
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="camp" name="Camp de refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Decrocher" dia-type="net.masagroup.sword.france.military.platoon.tasks.Decrocher" id="2059" name="COMMUNES Decrocher">
+    <mission dia-behavior="france.military.platoon.tasks.Decrocher" dia-type="france.military.platoon.tasks.Decrocher" id="2059" name="COMMUNES Decrocher">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1964,7 +1964,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.PrendreEnComptePrisonniers" dia-type="net.masagroup.sword.france.military.platoon.tasks.PrendreEnComptePrisonniers" id="2063" name="COMMUNES Prendre En Compte Prisonniers">
+    <mission dia-behavior="france.military.platoon.tasks.PrendreEnComptePrisonniers" dia-type="france.military.platoon.tasks.PrendreEnComptePrisonniers" id="2063" name="COMMUNES Prendre En Compte Prisonniers">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1972,7 +1972,7 @@
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Prisonniers" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="camp" name="Camp de prisonniers" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Franchir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Franchir" id="2071" name="COMMUNES Franchir">
+    <mission dia-behavior="france.military.platoon.tasks.Franchir" dia-type="france.military.platoon.tasks.Franchir" id="2071" name="COMMUNES Franchir">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1980,7 +1980,7 @@
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Destination" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Soutenir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Soutenir" id="2062" name="MELEE Soutenir" package="support">
+    <mission dia-behavior="france.military.platoon.tasks.Soutenir" dia-type="france.military.platoon.tasks.Soutenir" id="2062" name="MELEE Soutenir" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1993,14 +1993,14 @@
       </parameter>
       <parameter dia-name="context" name="Contexte retrograde" optional="false" type="Integer"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Detruire" id="2013" name="MELEE Detruire" package="defence">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Detruire" dia-type="france.military.platoon.combat.tasks.Detruire" id="2013" name="MELEE Detruire" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Illuminer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Illuminer" id="2065" name="MELEE Illuminer">
+    <mission dia-behavior="france.military.platoon.tasks.Illuminer" dia-type="france.military.platoon.tasks.Illuminer" id="2065" name="MELEE Illuminer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2008,14 +2008,14 @@
       <parameter dia-name="entity" name="Cible" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="ally" name="Tireur allie" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Escorter" dia-type="net.masagroup.sword.france.military.platoon.tasks.Escorter" id="2069" name="MELEE Escorter">
+    <mission dia-behavior="france.military.platoon.tasks.Escorter" dia-type="france.military.platoon.tasks.Escorter" id="2069" name="MELEE Escorter">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Unite a escorter" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" dia-type="net.masagroup.sword.military.platoon.terrorism.tasks.Ambush" id="2067" name="Embuscade" package="attack">
+    <mission dia-behavior="sword.military.platoon.terrorism.tasks.Ambush" dia-type="sword.military.platoon.terrorism.tasks.Ambush" id="2067" name="Embuscade" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2023,7 +2023,7 @@
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.IlluminationTirIndirect" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.IlluminationTirIndirect" id="2068" name="ASS Coordonner le Tir et l'Ilumination">
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.IlluminationTirIndirect" dia-type="france.military.platoon.combat.support.artillery.tasks.IlluminationTirIndirect" id="2068" name="ASS Coordonner le Tir et l'Ilumination">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2034,7 +2034,7 @@
       <parameter dia-name="interventionType" name="Type d'intervention" optional="false" type="Integer"/>
       <parameter dia-name="allie" max-occurs="unbounded" min-occurs="1" name="Illuminateur allie" optional="true" type="Agent"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Surveiller" dia-type="net.masagroup.sword.france.military.platoon.tasks.Surveiller" id="2070" name="MELEE Surveiller" package="control">
+    <mission dia-behavior="france.military.platoon.tasks.Surveiller" dia-type="france.military.platoon.tasks.Surveiller" id="2070" name="MELEE Surveiller" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2054,7 +2054,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Semparer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Semparer" id="2072" name="MELEE S'emparer De" package="attack">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Semparer" dia-type="france.military.platoon.combat.tasks.Semparer" id="2072" name="MELEE S'emparer De" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2067,7 +2067,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Controler" dia-type="net.masagroup.sword.france.military.platoon.tasks.Controler" id="2075" name="MELEE Controler" package="control">
+    <mission dia-behavior="france.military.platoon.tasks.Controler" dia-type="france.military.platoon.tasks.Controler" id="2075" name="MELEE Controler" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2081,7 +2081,7 @@
       </parameter>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.tasks.Boucler" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.tasks.Boucler" id="2102" name="MELEE Boucler" package="control">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.Boucler" dia-type="france.military.platoon.stabilisation.tasks.Boucler" id="2102" name="MELEE Boucler" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2093,7 +2093,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Tenir" dia-type="net.masagroup.sword.france.military.platoon.tasks.Tenir" id="2079" name="MELEE Tenir" package="defence">
+    <mission dia-behavior="france.military.platoon.tasks.Tenir" dia-type="france.military.platoon.tasks.Tenir" id="2079" name="MELEE Tenir" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2107,7 +2107,7 @@
       </parameter>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="obstacles" optional="true" type="PlannedWork"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interdire" dia-type="net.masagroup.sword.france.military.platoon.tasks.Interdire" id="2083" name="MELEE Interdire" package="defence">
+    <mission dia-behavior="france.military.platoon.tasks.Interdire" dia-type="france.military.platoon.tasks.Interdire" id="2083" name="MELEE Interdire" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2134,7 +2134,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Defendre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Defendre" id="2084" name="MELEE Defendre" package="defence">
+    <mission dia-behavior="france.military.platoon.tasks.Defendre" dia-type="france.military.platoon.tasks.Defendre" id="2084" name="MELEE Defendre" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2148,7 +2148,7 @@
       </parameter>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.ContreAttaquer" id="2089" name="MELEE Contre Attaquer" package="attack">
+    <mission dia-behavior="france.military.platoon.combat.tasks.ContreAttaquer" dia-type="france.military.platoon.combat.tasks.ContreAttaquer" id="2089" name="MELEE Contre Attaquer" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2161,7 +2161,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Attaquer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Attaquer" id="2115" name="MELEE Attaquer" package="attack">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Attaquer" dia-type="france.military.platoon.combat.tasks.Attaquer" id="2115" name="MELEE Attaquer" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2174,14 +2174,14 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Neutraliser" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Neutraliser" id="2090" name="MELEE Neutraliser" package="attack">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Neutraliser" dia-type="france.military.platoon.combat.tasks.Neutraliser" id="2090" name="MELEE Neutraliser" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.platoon.tasks.Reconnaitre" id="2099" name="MELEE Reconnaitre" package="intelligence">
+    <mission dia-behavior="france.military.platoon.tasks.Reconnaitre" dia-type="france.military.platoon.tasks.Reconnaitre" id="2099" name="MELEE Reconnaitre" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2194,7 +2194,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Eclairer" dia-type="france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2207,7 +2207,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Harceler" id="2097" name="MELEE Harceler" package="attack">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Harceler" dia-type="france.military.platoon.combat.tasks.Harceler" id="2097" name="MELEE Harceler" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2227,7 +2227,7 @@
       </parameter>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Intercepter" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Intercepter" id="2128" name="MELEE Intercepter" package="attack">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Intercepter" dia-type="france.military.platoon.combat.tasks.Intercepter" id="2128" name="MELEE Intercepter" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2247,21 +2247,21 @@
       </parameter>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Relever" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Relever" id="2105" name="MELEE Relever" package="support">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Relever" dia-type="france.military.platoon.combat.tasks.Relever" id="2105" name="MELEE Relever" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Unite a relever" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Reduire" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Reduire" id="2107" name="MELEE Reduire" package="attack">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Reduire" dia-type="france.military.platoon.combat.tasks.Reduire" id="2107" name="MELEE Reduire" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Couvrir" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Couvrir" id="2108" name="MELEE Couvrir" package="defence">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Couvrir" dia-type="france.military.platoon.combat.tasks.Couvrir" id="2108" name="MELEE Couvrir" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2270,7 +2270,7 @@
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
       <parameter dia-name="directionPoints" max-occurs="unbounded" min-occurs="1" name="Face à" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.FlancGarder" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.FlancGarder" id="2109" name="MELEE Flanc-Garder" package="support">
+    <mission dia-behavior="france.military.platoon.combat.tasks.FlancGarder" dia-type="france.military.platoon.combat.tasks.FlancGarder" id="2109" name="MELEE Flanc-Garder" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2285,14 +2285,14 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Jalonner" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Jalonner" id="2110" name="MELEE Jalonner" package="defence">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Jalonner" dia-type="france.military.platoon.combat.tasks.Jalonner" id="2110" name="MELEE Jalonner" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Freiner" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Freiner" id="2111" name="MELEE Freiner" package="defence">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Freiner" dia-type="france.military.platoon.combat.tasks.Freiner" id="2111" name="MELEE Freiner" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2304,7 +2304,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" id="2030" name="ASS Assurer la Mise En Oeuvre">
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" id="2030" name="ASS Assurer la Mise En Oeuvre">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2312,7 +2312,7 @@
       <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="false" type="Point"/>
       <parameter dia-name="retreatPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="T_Mission_Pion_MiseEnOeuvre" id="2061" name="ASS Deploy">
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.AssurerMiseEnOeuvre" dia-type="T_Mission_Pion_MiseEnOeuvre" id="2061" name="ASS Deploy">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2320,14 +2320,14 @@
       <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Zones de tir" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="retreatPositions" max-occurs="unbounded" min-occurs="1" name="Positions de sauvegarde" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" id="2047" name="GENIE OuvrirItineraire">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" dia-type="france.military.platoon.combat.support.engineer.tasks.OuvrirItineraire" id="2047" name="GENIE OuvrirItineraire">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.Construire" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.Construire" id="2076" name="GENIE Realiser Travaux">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.Construire" dia-type="france.military.platoon.combat.support.engineer.tasks.Construire" id="2076" name="GENIE Realiser Travaux">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2335,7 +2335,7 @@
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" id="2122" name="GENIE Reprendre Travaux">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" dia-type="france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" id="2122" name="GENIE Reprendre Travaux">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2343,7 +2343,7 @@
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" id="2050" name="GENIE Realiser Camps">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" dia-type="france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" id="2050" name="GENIE Realiser Camps">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2351,56 +2351,56 @@
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Camps a construire" optional="false" type="PlannedWork"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" id="2104" name="GENIE ActiverObstacles">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" dia-type="france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" id="2104" name="GENIE ActiverObstacles">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DegagerObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DegagerObstacles" id="2112" name="GENIE Degager Obstacles">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.DegagerObstacles" dia-type="france.military.platoon.combat.support.engineer.tasks.DegagerObstacles" id="2112" name="GENIE Degager Obstacles">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DepolluerZone" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.DepolluerZone" id="2113" name="GENIE Depolluer zone">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.DepolluerZone" dia-type="france.military.platoon.combat.support.engineer.tasks.DepolluerZone" id="2113" name="GENIE Depolluer zone">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Zone" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" id="2114" name="GENIE Contourner obstacle">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" dia-type="france.military.platoon.combat.support.engineer.tasks.ContournerObstacles" id="2114" name="GENIE Contourner obstacle">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.RetablirItineraire" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.RetablirItineraire" id="2118" name="GENIE Retablir Itineraire">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.RetablirItineraire" dia-type="france.military.platoon.combat.support.engineer.tasks.RetablirItineraire" id="2118" name="GENIE Retablir Itineraire">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.AppuiMobilite" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.AppuiMobilite" id="2119" name="GENIE Appui Mobilite">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.AppuiMobilite" dia-type="france.military.platoon.combat.support.engineer.tasks.AppuiMobilite" id="2119" name="GENIE Appui Mobilite">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unités à appuyer" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ReconnaitreSite" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.ReconnaitreSite" id="2120" name="GENIE Reconnaitre Site de franchissement">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ReconnaitreSite" dia-type="france.military.platoon.combat.support.engineer.tasks.ReconnaitreSite" id="2120" name="GENIE Reconnaitre Site de franchissement">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Sites de franchissement" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.EquiperExploiter" dia-type="net.masagroup.sword.france.military.platoon.combat.support.engineer.tasks.EquiperExploiter" id="2121" name="GENIE Equiper Exploiter Site Franchissement">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.EquiperExploiter" dia-type="france.military.platoon.combat.support.engineer.tasks.EquiperExploiter" id="2121" name="GENIE Equiper Exploiter Site Franchissement">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2412,21 +2412,21 @@
         <value id="1" name="discontinu"/>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Animer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Animer" id="2077" name="Animer">
+    <mission dia-behavior="france.military.platoon.tasks.Animer" dia-type="france.military.platoon.tasks.Animer" id="2077" name="Animer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Objets" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" id="2101" name="STABILISATION Animer Poste De Controle">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" dia-type="france.military.platoon.stabilisation.tasks.AnimerPosteDeControle" id="2101" name="STABILISATION Animer Poste De Controle">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="obstacle" name="Poste de contrôle" optional="false" type="PlannedWork"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Fixer" id="2116" name="MELEE Fixer" package="attack">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Fixer" dia-type="france.military.platoon.combat.tasks.Fixer" id="2116" name="MELEE Fixer" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2434,7 +2434,7 @@
       <parameter dia-name="objectives" name="Cible" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.combat.tasks.Recueillir" dia-type="net.masagroup.sword.france.military.platoon.combat.tasks.Recueillir" id="2117" name="MELEE Recueillir" package="support">
+    <mission dia-behavior="france.military.platoon.combat.tasks.Recueillir" dia-type="france.military.platoon.combat.tasks.Recueillir" id="2117" name="MELEE Recueillir" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2442,7 +2442,7 @@
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unite amie" optional="false" type="Agent"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Barrer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Barrer" id="2123" name="MELEE Barrer" package="defence">
+    <mission dia-behavior="france.military.platoon.tasks.Barrer" dia-type="france.military.platoon.tasks.Barrer" id="2123" name="MELEE Barrer" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2451,7 +2451,7 @@
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.OrganiserAccueilColonneRefugies" dia-type="net.masagroup.sword.france.military.platoon.tasks.OrganiserAccueilColonneRefugies" id="2127" name="MELEE Organiser Accueil Colonne Refugies" package="control">
+    <mission dia-behavior="france.military.platoon.tasks.OrganiserAccueilColonneRefugies" dia-type="france.military.platoon.tasks.OrganiserAccueilColonneRefugies" id="2127" name="MELEE Organiser Accueil Colonne Refugies" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2464,7 +2464,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.AllerA" dia-type="net.masagroup.sword.france.military.platoon.tasks.AllerA" id="2124" name="COMMUNES AllerA">
+    <mission dia-behavior="france.military.platoon.tasks.AllerA" dia-type="france.military.platoon.tasks.AllerA" id="2124" name="COMMUNES AllerA">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2482,7 +2482,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Appuyer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Appuyer" id="2125" name="MELEE Appuyer" package="support">
+    <mission dia-behavior="france.military.platoon.tasks.Appuyer" dia-type="france.military.platoon.tasks.Appuyer" id="2125" name="MELEE Appuyer" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2503,7 +2503,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Renforcer" dia-type="net.masagroup.sword.france.military.platoon.tasks.Renforcer" id="2126" name="COMMUNES Renforcer">
+    <mission dia-behavior="france.military.platoon.tasks.Renforcer" dia-type="france.military.platoon.tasks.Renforcer" id="2126" name="COMMUNES Renforcer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2516,7 +2516,7 @@
       </parameter>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.tasks.Interroger" dia-type="net.masagroup.sword.france.military.platoon.tasks.Interroger" id="2129" name="COMMUNES Interroger">
+    <mission dia-behavior="france.military.platoon.tasks.Interroger" dia-type="france.military.platoon.tasks.Interroger" id="2129" name="COMMUNES Interroger">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2528,14 +2528,14 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.tasks.RenseignerSurFoule" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.tasks.RenseignerSurFoule" id="2130" name="MELEE Renseigner sur foule">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.RenseignerSurFoule" dia-type="france.military.platoon.stabilisation.tasks.RenseignerSurFoule" id="2130" name="MELEE Renseigner sur foule">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="crowd" name="Foule" optional="false" type="CrowdKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.platoon.stabilisation.tasks.ControlerFoule" dia-type="net.masagroup.sword.france.military.platoon.stabilisation.tasks.ControlerFoule" id="2131" name="MELEE Controler foule">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.ControlerFoule" dia-type="france.military.platoon.stabilisation.tasks.ControlerFoule" id="2131" name="MELEE Controler foule">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3810,7 +3810,7 @@
       <parameter dia-name="MedicalPriorities_" name="MedicalPrioritiesParam" optional="true" type="MedicalPriorities"/>
       <parameter dia-name="ObjectiveList_" max-occurs="unbounded" min-occurs="1" name="ObjectiveListParam" optional="true" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvement" dia-type="net.masagroup.sword.france.military.company.tasks.FaireMouvement" id="1010" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.FaireMouvement" name="COMMUNES FaireMouvement" package="move">
+    <mission cdt-dia-behavior="france.military.company.tasks.FaireMouvement" dia-type="france.military.company.tasks.FaireMouvement" id="1010" mrt-dia-behavior="france.military.company.tasks.FaireMouvement" name="COMMUNES FaireMouvement" package="move">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3818,7 +3818,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Decrocher" dia-type="net.masagroup.sword.france.military.company.tasks.Decrocher" id="1011" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Decrocher" name="COMMUNES Decrocher">
+    <mission cdt-dia-behavior="france.military.company.tasks.Decrocher" dia-type="france.military.company.tasks.Decrocher" id="1011" mrt-dia-behavior="france.military.company.tasks.Decrocher" name="COMMUNES Decrocher">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3832,7 +3832,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" dia-type="net.masagroup.sword.france.military.company.tasks.Suivre" id="1012" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Suivre" name="COMMUNES Suivre">
+    <mission cdt-dia-behavior="france.military.company.tasks.Suivre" dia-type="france.military.company.tasks.Suivre" id="1012" mrt-dia-behavior="france.military.company.tasks.Suivre" name="COMMUNES Suivre">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3840,7 +3840,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Unite a suivre" optional="false" type="Agent"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" dia-type="net.masagroup.sword.france.military.company.tasks.Stationner" id="1013" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Stationner" name="COMMUNES Stationner">
+    <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.Stationner" id="1013" mrt-dia-behavior="france.military.company.tasks.Stationner" name="COMMUNES Stationner">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3848,7 +3848,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="position" name="Position" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" dia-type="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" id="1014" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrienterRefugies" name="COMMUNES Orienter Refugies">
+    <mission cdt-dia-behavior="france.military.company.tasks.OrienterRefugies" dia-type="france.military.company.tasks.OrienterRefugies" id="1014" mrt-dia-behavior="france.military.company.tasks.OrienterRefugies" name="COMMUNES Orienter Refugies">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3857,7 +3857,7 @@
       <parameter dia-name="peoples" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="camp" name="Camp de refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" dia-type="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" id="1015" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.PrendreEnComptePrisonniers" name="COMMUNES Prendre en compte Prisonniers">
+    <mission cdt-dia-behavior="france.military.company.tasks.PrendreEnComptePrisonniers" dia-type="france.military.company.tasks.PrendreEnComptePrisonniers" id="1015" mrt-dia-behavior="france.military.company.tasks.PrendreEnComptePrisonniers" name="COMMUNES Prendre en compte Prisonniers">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3866,7 +3866,7 @@
       <parameter dia-name="prisoners" max-occurs="unbounded" min-occurs="1" name="Prisonniers" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="camp" name="Camp de prisonniers" optional="false" type="ObjectKnowledge"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" id="1016" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireDecontaminer" name="COMMUNES Se Faire Decontaminer">
+    <mission cdt-dia-behavior="france.military.company.tasks.SeFaireDecontaminer" dia-type="france.military.company.tasks.SeFaireDecontaminer" id="1016" mrt-dia-behavior="france.military.company.tasks.SeFaireDecontaminer" name="COMMUNES Se Faire Decontaminer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3875,7 +3875,7 @@
       <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="destination" name="Destination" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Interdire" dia-type="net.masagroup.sword.france.military.company.tasks.Interdire" id="1017" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Interdire" name="MELEE Interdire" package="defence">
+    <mission cdt-dia-behavior="france.military.company.tasks.Interdire" dia-type="france.military.company.tasks.Interdire" id="1017" mrt-dia-behavior="france.military.company.tasks.Interdire" name="MELEE Interdire" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3904,7 +3904,7 @@
       </parameter>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" dia-type="net.masagroup.sword.france.military.company.tasks.Reconnaitre" id="1019" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Reconnaitre" name="MELEE Reconnaitre" package="intelligence">
+    <mission cdt-dia-behavior="france.military.company.tasks.Reconnaitre" dia-type="france.military.company.tasks.Reconnaitre" id="1019" mrt-dia-behavior="france.military.company.tasks.Reconnaitre" name="MELEE Reconnaitre" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3918,7 +3918,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" dia-type="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" id="1018" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeFaireTransporter" name="COMMUNES Se Faire Transporter">
+    <mission cdt-dia-behavior="france.military.company.tasks.SeFaireTransporter" dia-type="france.military.company.tasks.SeFaireTransporter" id="1018" mrt-dia-behavior="france.military.company.tasks.SeFaireTransporter" name="COMMUNES Se Faire Transporter">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3926,7 +3926,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" name="Point d'embarquement" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" dia-type="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" id="1008" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.SeDeployer" name="ASS SeDeployer">
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.SeDeployer" dia-type="france.military.company.combat.support.artillery.tasks.SeDeployer" id="1008" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.SeDeployer" name="ASS SeDeployer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3934,7 +3934,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeRecompleter" dia-type="net.masagroup.sword.france.military.company.tasks.SeRecompleter" id="1021" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.SeRecompleter" name="COMMUNES Se Recompleter">
+    <mission cdt-dia-behavior="france.military.company.tasks.SeRecompleter" dia-type="france.military.company.tasks.SeRecompleter" id="1021" mrt-dia-behavior="france.military.company.tasks.SeRecompleter" name="COMMUNES Se Recompleter">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3942,7 +3942,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Zone" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" dia-type="net.masagroup.sword.france.military.company.tasks.Franchir" id="1023" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Franchir" name="COMMUNES Franchir">
+    <mission cdt-dia-behavior="france.military.company.tasks.Franchir" dia-type="france.military.company.tasks.Franchir" id="1023" mrt-dia-behavior="france.military.company.tasks.Franchir" name="COMMUNES Franchir">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3951,7 +3951,7 @@
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="objective" name="Destination" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" dia-type="net.masagroup.sword.france.military.company.tasks.Controler" id="1024" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Controler" name="MELEE Controler" package="control">
+    <mission cdt-dia-behavior="france.military.company.tasks.Controler" dia-type="france.military.company.tasks.Controler" id="1024" mrt-dia-behavior="france.military.company.tasks.Controler" name="MELEE Controler" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3967,7 +3967,7 @@
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.SEmparer" dia-type="net.masagroup.sword.france.military.company.combat.tasks.SEmparer" id="1027" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.SEmparer" name="MELEE S'emparer" package="attack">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.SEmparer" dia-type="france.military.company.combat.tasks.SEmparer" id="1027" mrt-dia-behavior="france.military.company.combat.tasks.SEmparer" name="MELEE S'emparer" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3981,7 +3981,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Detruire" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Detruire" id="1025" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Detruire" name="MELEE Detruire" package="attack">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Detruire" dia-type="france.military.company.combat.tasks.Detruire" id="1025" mrt-dia-behavior="france.military.company.combat.tasks.Detruire" name="MELEE Detruire" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3989,7 +3989,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" id="1026" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Neutraliser" name="MELEE Neutraliser" package="attack">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Neutraliser" dia-type="france.military.company.combat.tasks.Neutraliser" id="1026" mrt-dia-behavior="france.military.company.combat.tasks.Neutraliser" name="MELEE Neutraliser" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3997,7 +3997,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" dia-type="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" id="1028" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" name="ASS Illumination et Tir Synchronisé">
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" dia-type="france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" id="1028" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.IlluminationTirSynchronise" name="ASS Illumination et Tir Synchronisé">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4010,7 +4010,7 @@
       <parameter dia-name="munition" name="Munitions" optional="false" type="ResourceType"/>
       <parameter dia-name="interventionType" name="Type d'intervention" optional="false" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Harceler" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Harceler" id="1029" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Harceler" name="MELEE Harceler" package="attack">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Harceler" dia-type="france.military.company.combat.tasks.Harceler" id="1029" mrt-dia-behavior="france.military.company.combat.tasks.Harceler" name="MELEE Harceler" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4026,14 +4026,14 @@
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" id="1030" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Attaquer" name="MELEE Attaquer" package="attack">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Attaquer" dia-type="france.military.company.combat.tasks.Attaquer" id="1030" mrt-dia-behavior="france.military.company.combat.tasks.Attaquer" name="MELEE Attaquer" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Soutenir" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Soutenir" id="1031" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Soutenir" name="MELEE Soutenir" package="support">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Soutenir" dia-type="france.military.company.combat.tasks.Soutenir" id="1031" mrt-dia-behavior="france.military.company.combat.tasks.Soutenir" name="MELEE Soutenir" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4041,7 +4041,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Compagnie à soutenir" optional="false" type="Automat"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Ratisser" dia-type="net.masagroup.sword.france.military.company.tasks.Ratisser" id="1032" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Ratisser" name="MELEE Ratisser">
+    <mission cdt-dia-behavior="france.military.company.tasks.Ratisser" dia-type="france.military.company.tasks.Ratisser" id="1032" mrt-dia-behavior="france.military.company.tasks.Ratisser" name="MELEE Ratisser">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4054,7 +4054,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Defendre" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Defendre" id="1033" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Defendre" name="MELEE Defendre" package="defence">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Defendre" dia-type="france.military.company.combat.tasks.Defendre" id="1033" mrt-dia-behavior="france.military.company.combat.tasks.Defendre" name="MELEE Defendre" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4070,7 +4070,7 @@
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Barrer" dia-type="net.masagroup.sword.france.military.company.tasks.Barrer" id="1034" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Barrer" name="MELEE Barrer" package="defence">
+    <mission cdt-dia-behavior="france.military.company.tasks.Barrer" dia-type="france.military.company.tasks.Barrer" id="1034" mrt-dia-behavior="france.military.company.tasks.Barrer" name="MELEE Barrer" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4081,7 +4081,7 @@
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Couvrir" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Couvrir" id="1035" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Couvrir" name="MELEE Couvrir" package="support">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Couvrir" dia-type="france.military.company.combat.tasks.Couvrir" id="1035" mrt-dia-behavior="france.military.company.combat.tasks.Couvrir" name="MELEE Couvrir" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4091,7 +4091,7 @@
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
       <parameter dia-name="directionPoints" max-occurs="unbounded" min-occurs="1" name="Face à" optional="true" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Surveiller" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Surveiller" id="1036" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Surveiller" name="MELEE Surveiller" package="control">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Surveiller" dia-type="france.military.company.combat.tasks.Surveiller" id="1036" mrt-dia-behavior="france.military.company.combat.tasks.Surveiller" name="MELEE Surveiller" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4112,7 +4112,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Freiner" dia-type="net.masagroup.sword.france.military.company.tasks.Freiner" id="1037" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Freiner" name="MELEE Freiner" package="defence">
+    <mission cdt-dia-behavior="france.military.company.tasks.Freiner" dia-type="france.military.company.tasks.Freiner" id="1037" mrt-dia-behavior="france.military.company.tasks.Freiner" name="MELEE Freiner" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4121,7 +4121,7 @@
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Relever" dia-type="net.masagroup.sword.france.military.company.combat.tasks.Relever" id="1038" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.Relever" name="MELEE Relever" package="support">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Relever" dia-type="france.military.company.combat.tasks.Relever" id="1038" mrt-dia-behavior="france.military.company.combat.tasks.Relever" name="MELEE Relever" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4129,7 +4129,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Compagnie a relever" optional="false" type="Automat"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.EffectuerRaid" dia-type="net.masagroup.sword.france.military.company.combat.tasks.EffectuerRaid" id="1039" mrt-dia-behavior="net.masagroup.sword.france.military.company.combat.tasks.EffectuerRaid" name="MELEE Effectuer un raid" package="attack">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.EffectuerRaid" dia-type="france.military.company.combat.tasks.EffectuerRaid" id="1039" mrt-dia-behavior="france.military.company.combat.tasks.EffectuerRaid" name="MELEE Effectuer un raid" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4143,7 +4143,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Escorter" dia-type="net.masagroup.sword.france.military.company.tasks.Escorter" id="1040" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.Escorter" name="MELEE Escorter" package="support">
+    <mission cdt-dia-behavior="france.military.company.tasks.Escorter" dia-type="france.military.company.tasks.Escorter" id="1040" mrt-dia-behavior="france.military.company.tasks.Escorter" name="MELEE Escorter" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4151,7 +4151,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Compagnie a escorter" optional="false" type="Automat"/>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrganiserAccueilColonneRefugies" dia-type="net.masagroup.sword.france.military.company.tasks.OrganiserAccueilColonneRefugies" id="1042" mrt-dia-behavior="net.masagroup.sword.france.military.company.tasks.OrganiserAccueilColonneRefugies" name="MELEE Organiser accueil colonne refugies" package="control">
+    <mission cdt-dia-behavior="france.military.company.tasks.OrganiserAccueilColonneRefugies" dia-type="france.military.company.tasks.OrganiserAccueilColonneRefugies" id="1042" mrt-dia-behavior="france.military.company.tasks.OrganiserAccueilColonneRefugies" name="MELEE Organiser accueil colonne refugies" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4165,7 +4165,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="net.masagroup.sword.france.military.company.stabilisation.tasks.AnimerPosteDeControle" dia-type="net.masagroup.sword.france.military.company.stabilisation.tasks.AnimerPosteDeControle" id="1041" mrt-dia-behavior="net.masagroup.sword.france.military.company.stabilisation.tasks.AnimerPosteDeControle" name="STABILISATION Animer Postes De Controle" package="support">
+    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.AnimerPosteDeControle" dia-type="france.military.company.stabilisation.tasks.AnimerPosteDeControle" id="1041" mrt-dia-behavior="france.military.company.stabilisation.tasks.AnimerPosteDeControle" name="STABILISATION Animer Postes De Controle" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4184,10 +4184,10 @@
     <mission dia-behavior="MIS_Population_CommettreExactions" dia-type="T_Mission_Population_CommettreExactions" id="334" name="Commettre Exactions">
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.crowd.tasks.Deteriorer" dia-type="net.masagroup.sword.france.military.crowd.tasks.Deteriorer" id="335" name="Deteriorer">
+    <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="335" name="Deteriorer">
       <parameter dia-name="objectif" name="objectif" optional="false" type="UrbanKnowledge"/>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.crowd.tasks.AllerA" dia-type="net.masagroup.sword.france.military.platoon.tasks.FaireMouvementFoule" id="3000" name="COMMUNES AllerA">
+    <mission dia-behavior="france.military.crowd.tasks.AllerA" dia-type="france.military.platoon.tasks.FaireMouvementFoule" id="3000" name="COMMUNES AllerA">
       <parameter dia-name="objectif" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -4196,7 +4196,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="net.masagroup.sword.france.military.crowd.tasks.Agresser" dia-type="net.masagroup.sword.france.military.crowd.tasks.Agresser" id="3001" name="Agresser">
+    <mission dia-behavior="france.military.crowd.tasks.Agresser" dia-type="france.military.crowd.tasks.Agresser" id="3001" name="Agresser">
       <parameter dia-name="objectif" name="Cible" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Agent"/>
@@ -4356,7 +4356,7 @@
         <value id="3" name="tir_interdit"/>
       </parameter>
     </fragorder>
-    <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Illuminer" id="382" name="Illuminer">
+    <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Illuminer" id="382" name="Illuminer">
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="agent_" name="Tireur Allie" optional="false" type="Agent"/>
     </fragorder>
@@ -4367,19 +4367,19 @@
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="ResourceType"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserToutesMunitions" id="387" name="Pion Autoriser Toutes Munitions"/>
-    <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.UtiliserALR" id="388" name="Utiliser ALR">
+    <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.UtiliserALR" id="388" name="Utiliser ALR">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
       <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Integer"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="389" name="Passer En Silence Radio Partiel"/>
-    <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Observer" id="390" name="Pion Observer">
+    <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Observer" id="390" name="Pion Observer">
       <parameter dia-name="pointCible_" name="Objectif" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Orienter" id="391" name="Pion Orienter Capteurs">
+    <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Orienter" id="391" name="Pion Orienter Capteurs">
       <parameter dia-name="pointCible_" name="Face à" optional="false" type="Point"/>
     </fragorder>
-    <fragorder available-without-mission="false" dia-type="net.masagroup.sword.france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Appliquer les feux">
+    <fragorder available-without-mission="false" dia-type="france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Appliquer les feux">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
       <parameter dia-name="nbIT_" name="Type d'intervention" optional="false" type="Integer"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="LocationComposite">
@@ -4389,12 +4389,12 @@
         </choice>
       </parameter>
     </fragorder>
-    <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Embarquer" id="394" name="Embarquer"/>
-    <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.Debarquer" id="395" name="Debarquer"/>
-    <fragorder available-without-mission="true" dia-type="net.masagroup.sword.france.military.platoon.tasks.RejoindreAToutPrix" id="396" name="Rejoindre">
+    <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Embarquer" id="394" name="Embarquer"/>
+    <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Debarquer" id="395" name="Debarquer"/>
+    <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.RejoindreAToutPrix" id="396" name="Rejoindre">
       <parameter dia-name="pointCible_" name="Objectif" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1819874112" -->
+<!-- signature="3649846579" -->

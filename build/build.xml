@@ -553,20 +553,20 @@
         </sequential>
     </macrodef>
 
-    <target name="generate-data" description="generate data">
-        <generate-database name="net.masagroup.military" core="${models.dir}/directia.core/directia.core.bml"/>
-        <generate-database name="net.masagroup.sword" core="${models.dir}/directia.core/directia.core.bml;${models.dir}/net.masagroup.military/src"/>
-        <generate-database name="net.masagroup.sword.test" core="${models.dir}/directia.core/directia.core.bml;${models.dir}/net.masagroup.military/src;${models.dir}/net.masagroup.sword/src"/>
-        <generate-database name="net.masagroup.sword.france" core="${models.dir}/directia.core/directia.core.bml;${models.dir}/net.masagroup.military/src;${models.dir}/net.masagroup.sword/src"/>
-        <generate-database name="net.masagroup.sword.security" core="${models.dir}/directia.core/directia.core.bml;${models.dir}/net.masagroup.military/src;${models.dir}/net.masagroup.sword/src"/>
-        <generate-database name="net.masagroup.sword.worldwide" core="${models.dir}/directia.core/directia.core.bml;${models.dir}/net.masagroup.military/src;${models.dir}/net.masagroup.sword/src"/>
-    </target>
-
     <target name="generate-symbols" description="generate symbols">
         <zip destfile="${run.dir}/resources/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
         </zip>
     </target>
+
+    <target name="generate-database" description="compile behavior model database">
+        <delete>
+            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
+        </delete>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml"/>
+    </target>
+
+    <target name="generate-data" depends="generate-database" description="generate data"/>
 
     <target name="deploy-application-data" description="deploy applications data to run directory">
         <copy todir="${run.dir}">
