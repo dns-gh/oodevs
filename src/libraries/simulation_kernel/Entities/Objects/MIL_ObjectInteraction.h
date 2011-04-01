@@ -18,7 +18,6 @@ class MIL_CheckPointOutArchive;
 class MIL_CheckPointInArchive;
 class MIL_Object_ABC;
 class MIL_PopulationElement_ABC;
-class TER_Localisation;
 
 // =============================================================================
 /** @class  MIL_ObjectInteraction
@@ -44,7 +43,6 @@ public:
 
     //! @name Operations
     //@{
-    void Initialize( const TER_Localisation& location );
     void UpdateInteraction( MIL_Object_ABC& object, const TER_Localisation& location );
     void ClearInteraction( MIL_Object_ABC& object );
     void ProcessInteractionEvents( MIL_Object_ABC& object );
@@ -69,8 +67,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_Agent_ABC* >  T_AgentSet;
-    typedef T_AgentSet::const_iterator  CIT_AgentSet;
+    typedef std::set< MIL_Agent_ABC* >   T_AgentSet;
+    typedef T_AgentSet::const_iterator CIT_AgentSet;
 
     typedef std::set< MIL_PopulationElement_ABC* > T_PopulationSet;
     typedef T_PopulationSet::const_iterator      CIT_PopulationSet;
@@ -94,9 +92,6 @@ private:
     T_AgentSet agentDelayedEnteringSet_;
     // link with population
     T_PopulationSet populationInsideSet_;
-    //@}
-    //! @name Member data
-    //@{
     double height_;
     //@}
 };

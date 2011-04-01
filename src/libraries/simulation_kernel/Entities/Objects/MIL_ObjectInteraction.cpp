@@ -23,7 +23,7 @@
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 MIL_ObjectInteraction::MIL_ObjectInteraction()
-    : height_ ( 0 )
+    : height_( 0 )
 {
     // NOTHING
 }
@@ -59,15 +59,6 @@ void MIL_ObjectInteraction::save( MIL_CheckPointOutArchive& file, const unsigned
          << agentEnteringSet_
          << agentExitingSet_
          << agentMovingInsideSet_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectInteraction::Initialize
-// Created: JCR 2008-05-30
-// -----------------------------------------------------------------------------
-void MIL_ObjectInteraction::Initialize( const TER_Localisation& /*location*/ )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +128,7 @@ void MIL_ObjectInteraction::NotifyAgentMovingInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::NotifyAgentMovingOutside( MIL_Agent_ABC& agent )
 {
-    if( agentInsideSet_.erase ( &agent ) == 1 )
+    if( agentInsideSet_.erase( &agent ) == 1 )
         agentExitingSet_.insert( &agent );
     agentDelayedEnteringSet_.erase( &agent );
 }
@@ -157,7 +148,7 @@ void MIL_ObjectInteraction::NotifyAgentPutInside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_ObjectInteraction::NotifyAgentPutOutside( MIL_Agent_ABC& agent )
 {
-    if( agentInsideSet_ .erase( &agent ) == 1 )
+    if( agentInsideSet_.erase( &agent ) == 1 )
         agentExitingSet_.insert( &agent );
     agentDelayedEnteringSet_.erase( &agent );
 }
@@ -220,7 +211,8 @@ void MIL_ObjectInteraction::ProcessInteractionEvents( MIL_Object_ABC& object )
             object.ProcessPopulationInside( **it );
     }
 
-    agentEnteringSet_    .clear();
-    agentExitingSet_     .clear();
+    agentEnteringSet_.clear();
+    agentExitingSet_.clear();
     agentMovingInsideSet_.clear();
+    populationInsideSet_.clear();
 }
