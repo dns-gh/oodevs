@@ -10,6 +10,7 @@
 #ifndef __Subordinate_h_
 #define __Subordinate_h_
 
+#include "ReflectedCreationListener_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <vlpi/entityidentifier.h>
 #include <vlutil/vlmachinetypes.h>
@@ -17,6 +18,7 @@
 class DtAggregatePublisher;
 class DtEntityIdentifier;
 class DtEntityType;
+class DtReflectedEntity;
 class DtSimulationAddress;
 class DtString;
 class DtVrfRemoteController;
@@ -25,6 +27,7 @@ namespace plugins
 {
 namespace vrforces
 {
+    class Facade;
 
 // =============================================================================
 /** @class  Subordinate
@@ -33,24 +36,28 @@ namespace vrforces
 // Created: SBO 2011-03-23
 // =============================================================================
 class Subordinate : private boost::noncopyable
+                  , public ReflectedCreationListener_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Subordinate( const DtEntityType& type, DtAggregatePublisher& publisher, DtReal heading, const std::string& identifier, DtVrfRemoteController& controller, const DtSimulationAddress& address );
+             Subordinate( const DtEntityType& type, DtAggregatePublisher& publisher, DtReal heading, const std::string& identifier
+                        , DtVrfRemoteController& controller, const DtSimulationAddress& address, Facade& vrForces );
     virtual ~Subordinate();
     //@}
 
     //! @name Callbacks
     //@{
     void SetSuperior( const DtEntityIdentifier& identifier );
+    virtual bool NotifyCreated( DtReflectedEntity& entity );
     //@}
 
 private:
     //! @name Helpers
     //@{
     static void OnCreate( const DtString& name, const DtEntityIdentifier& id, void* usr );
+    static void OnUpdate( DtReflectedEntity* obj, void* userData );
     //@}
 
 private:
@@ -60,6 +67,8 @@ private:
     DtEntityIdentifier entityId_;
     DtVrfRemoteController& controller_;
     const DtSimulationAddress& address_;
+    Facade& vrForces_;
+    DtReflectedEntity* reflected_;
     DtEntityIdentifier superiorId_;
     //@}
 };

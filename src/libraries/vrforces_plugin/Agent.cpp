@@ -307,7 +307,7 @@ void Agent::OnCreatePseudoAggregate( const DtString& /*name*/, const DtEntityIde
         that->aggregatePublisher_.reset();
         that->reflectedId_ = id;
         if( !that->reflected_ )
-            that->reflected_ = that->vrForces_.Find( id );
+            that->vrForces_.Lookup( id, *that );
         for( T_Subordinates::iterator it = that->subordinates_.begin(); it != that->subordinates_.end(); ++it )
             (*it)->SetSuperior( id );
         DtInfo << "Pseudo aggregate created with identifier: " << id.string() << std::endl;

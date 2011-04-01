@@ -19,6 +19,8 @@ class DtEntityIdentifier;
 class DtList;
 class DtReflectedAggregate;
 class DtReflectedAggregateList;
+class DtReflectedEntity;
+class DtReflectedEntityList;
 class DtReflectedObject;
 class DtString;
 class DtVrfRemoteController;
@@ -50,7 +52,7 @@ public:
     //@{
     void CreatePseudoAggregate( Agent& agent );
     void DestroyPseudoAggregate( const DtEntityIdentifier& reflected );
-    const DtReflectedAggregate* Find( const DtEntityIdentifier& id ) const;
+    void Lookup( const DtEntityIdentifier& id, ReflectedCreationListener_ABC& listener );
     void AddListener( ReflectedCreationListener_ABC& listener );
     void RemoveListener( ReflectedCreationListener_ABC& listener );
     void CreateDisaggregationArea( const DtString& name, const DtList& vertices ) const;
@@ -62,16 +64,19 @@ private:
     void StartScenario( const DtSimulationAddress& address );
     bool IsConnected() const;
 
-    static void OnBackendDiscovery( const DtSimulationAddress& addr, void* usr );
-    static void OnBackendRemoval( const DtSimulationAddress& addr, void* usr );
-    static void OnAggregateAddition( DtReflectedAggregate* obj, void* userData );
-    static void OnAggregateRemoval( DtReflectedAggregate* obj, void* userData );
-    static bool CheckAggregateDiscoveryCondition( DtReflectedObject* refObj, void* usr );
+    static void OnBackendDiscovery( const DtSimulationAddress& address, void* userData );
+    static void OnBackendRemoval( const DtSimulationAddress& address, void* userData );
+    static void OnAggregateAddition( DtReflectedAggregate* aggregate, void* userData );
+    static void OnAggregateRemoval( DtReflectedAggregate* aggregate, void* userData );
+    static void OnEntityAddition( DtReflectedEntity* entity, void* userData );
+    static void OnEntityRemoval( DtReflectedEntity* entity, void* userData );
+    static bool CheckDiscoveryCondition( DtReflectedObject* reflected, void* userData );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< std::string, DtReflectedAggregate* > T_Reflected;
+    typedef std::map< std::string, DtReflectedAggregate* > T_AggregateResolver;
+    typedef std::map< std::string, DtReflectedEntity* > T_EntityResolver;
     typedef std::list< ReflectedCreationListener_ABC* > T_ReflectedCreationListeners;
     //@}
 
@@ -80,9 +85,11 @@ private:
     //@{
     std::auto_ptr< DtVrfRemoteController > controller_;
     std::auto_ptr< DtReflectedAggregateList > reflectedAggregates_;
-    T_Reflected reflected_;
+    std::auto_ptr< DtReflectedEntityList > reflectedEntities_;
     DtSimulationAddress address_;
     T_ReflectedCreationListeners listeners_;
+    T_AggregateResolver addedAggregates_;
+    T_EntityResolver addedEntities_;
     //@}
 };
 

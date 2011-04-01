@@ -13,6 +13,7 @@
 #include "ReflectedCreationListener_ABC.h"
 #pragma warning( push, 0 )
 #include <vl/reflAggList.h>
+#include <vl/reflEntList.h>
 #include <vrforces/vrfBeListener.h>
 #include <vrforces/vrfController.h>
 #pragma warning( pop )
@@ -27,12 +28,16 @@ Facade::Facade( DtExerciseConn& connection )
     : controller_( createVrfRemoteController() )
 {
     controller_->init( &connection );
-    reflectedAggregates_.reset( new DtReflectedAggregateList( &connection ) );
     controller_->backendListener()->addBackendDiscoveryCallback( &Facade::OnBackendDiscovery, this );
     controller_->backendListener()->addBackendRemovalCallback( &Facade::OnBackendRemoval, this );
+    reflectedAggregates_.reset( new DtReflectedAggregateList( &connection ) );
     reflectedAggregates_->addAggregateAdditionCallback( &Facade::OnAggregateAddition, this );
     reflectedAggregates_->addAggregateRemovalCallback( &Facade::OnAggregateRemoval, this );
-    reflectedAggregates_->setDiscoveryCondition( &Facade::CheckAggregateDiscoveryCondition, 0 );
+    reflectedAggregates_->setDiscoveryCondition( &Facade::CheckDiscoveryCondition, 0 );
+    reflectedEntities_.reset( new DtReflectedEntityList( &connection ) );
+    reflectedEntities_->addEntityAdditionCallback( &Facade::OnEntityAddition, this );
+    reflectedEntities_->addEntityRemovalCallback( &Facade::OnEntityRemoval, this );
+    reflectedEntities_->setDiscoveryCondition( &Facade::CheckDiscoveryCondition, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,6 +46,8 @@ Facade::Facade( DtExerciseConn& connection )
 // -----------------------------------------------------------------------------
 Facade::~Facade()
 {
+    reflectedEntities_->removeEntityRemovalCallback( &Facade::OnEntityRemoval, this );
+    reflectedEntities_->removeEntityAdditionCallback( &Facade::OnEntityAddition, this );
     reflectedAggregates_->removeAggregateRemovalCallback( &Facade::OnAggregateRemoval, this );
     reflectedAggregates_->removeAggregateAdditionCallback( &Facade::OnAggregateAddition, this );
     controller_->backendListener()->removeBackendRemovalCallback( &Facade::OnBackendRemoval, this );
@@ -107,7 +114,7 @@ void Facade::OnAggregateAddition( DtReflectedAggregate* obj, void* userData )
 {
     if( Facade* that = static_cast< Facade* >( userData ) )
     {
-        that->reflected_[ obj->asr()->entityId().string() ] = obj;
+        that->addedAggregates_[ obj->asr()->entityId().string() ] = obj;
         for( T_ReflectedCreationListeners::iterator it = that->listeners_.begin(); it != that->listeners_.end(); )
             if( (*it)->NotifyCreated( *obj ) )
                 it = that->listeners_.erase( it );
@@ -124,32 +131,70 @@ void Facade::OnAggregateRemoval( DtReflectedAggregate* obj, void* userData )
 {
     if( Facade* that = static_cast< Facade* >( userData ) )
     {
-        T_Reflected::iterator it = that->reflected_.find( obj->aggregateStateRep()->entityId().string() );
-        that->reflected_.erase( it );
+        T_AggregateResolver::iterator it = that->addedAggregates_.find( obj->asr()->entityId().string() );
+        that->addedAggregates_.erase( it );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade::CheckAggregateDiscoveryCondition
+// Name: Facade::OnEntityAddition
+// Created: SBO 2011-04-01
+// -----------------------------------------------------------------------------
+void Facade::OnEntityAddition( DtReflectedEntity* obj, void* userData )
+{
+    if( Facade* that = static_cast< Facade* >( userData ) )
+    {
+        that->addedEntities_[ obj->esr()->entityId().string() ] = obj;
+        for( T_ReflectedCreationListeners::iterator it = that->listeners_.begin(); it != that->listeners_.end(); )
+            if( (*it)->NotifyCreated( *obj ) )
+                it = that->listeners_.erase( it );
+            else
+                ++it;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::OnEntityRemoval
+// Created: SBO 2011-04-01
+// -----------------------------------------------------------------------------
+void Facade::OnEntityRemoval( DtReflectedEntity* obj, void* userData )
+{
+    if( Facade* that = static_cast< Facade* >( userData ) )
+    {
+        T_EntityResolver::iterator it = that->addedEntities_.find( obj->esr()->entityId().string() );
+        that->addedEntities_.erase( it );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::CheckDiscoveryCondition
 // Created: SBO 2011-01-21
 // -----------------------------------------------------------------------------
-bool Facade::CheckAggregateDiscoveryCondition( DtReflectedObject* refObj, void* usr )
+bool Facade::CheckDiscoveryCondition( DtReflectedObject* reflected, void* usr )
 {
-    if( DtReflectedAggregate* aggregate = static_cast< DtReflectedAggregate* >( refObj ) )
+    if( DtReflectedAggregate* aggregate = dynamic_cast< DtReflectedAggregate* >( reflected ) )
         return aggregate->asr()->entityId() != DtEntityIdentifier::nullId();
+    if( DtReflectedEntity* entity = dynamic_cast< DtReflectedEntity* >( reflected ) )
+        return entity->esr()->entityId() != DtEntityIdentifier::nullId();
     return false;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade::Find
-// Created: SBO 2011-01-21
+// Name: Facade::Lookup
+// Created: SBO 2011-04-01
 // -----------------------------------------------------------------------------
-const DtReflectedAggregate* Facade::Find( const DtEntityIdentifier& id ) const
+void Facade::Lookup( const DtEntityIdentifier& id, ReflectedCreationListener_ABC& listener )
 {
-    T_Reflected::const_iterator it = reflected_.find( id.string() );
-    if( it != reflected_.end() )
-        return it->second;
-    return 0;
+    {
+        T_AggregateResolver::const_iterator it = addedAggregates_.find( id.string() );
+        if( it != addedAggregates_.end() )
+            listener.NotifyCreated( *it->second );
+    }
+    {
+        T_EntityResolver::const_iterator it = addedEntities_.find( id.string() );
+        if( it != addedEntities_.end() )
+            listener.NotifyCreated( *it->second );
+    }
 }
 
 // -----------------------------------------------------------------------------

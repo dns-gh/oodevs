@@ -11,6 +11,7 @@
 #define __ReflectedCreationListener_ABC_h_
 
 class DtReflectedAggregate;
+class DtReflectedEntity;
 
 namespace plugins
 {
@@ -19,7 +20,7 @@ namespace vrforces
 
 // =============================================================================
 /** @class  ReflectedCreationListener_ABC
-    @brief  ReflectedCreationListener_ABC
+    @brief  Reflected creation listener base class
 */
 // Created: SBO 2011-04-01
 // =============================================================================
@@ -35,7 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool NotifyCreated( DtReflectedAggregate& aggregate ) = 0;
+    virtual bool NotifyCreated( DtReflectedAggregate& /*aggregate*/ ) { return false; };
+    virtual bool NotifyCreated( DtReflectedEntity& /*entity*/ ) { return false; };
     //@}
 };
 }
