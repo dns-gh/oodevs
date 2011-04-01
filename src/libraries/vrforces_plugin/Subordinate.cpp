@@ -54,5 +54,21 @@ Subordinate::~Subordinate()
 void Subordinate::OnCreate( const DtString& /*name*/, const DtEntityIdentifier& id, void* usr )
 {
     if( Subordinate* that = static_cast< Subordinate* >( usr ) )
+    {
         that->entityId_ = id;
+        if( that->superiorId_ != DtEntityIdentifier::nullId() )
+            that->SetSuperior( that->superiorId_ );
+        DtInfo << "Subordinate created with identifier: " << id.string() << std::endl;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Subordinate::SetSuperior
+// Created: SBO 2011-04-01
+// -----------------------------------------------------------------------------
+void Subordinate::SetSuperior( const DtEntityIdentifier& identifier )
+{
+    superiorId_ = identifier;
+    if( entityId_ != DtEntityIdentifier::nullId() )
+        controller_.addToOrganization( entityId_, superiorId_, address_ );
 }

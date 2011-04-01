@@ -42,6 +42,11 @@ public:
     virtual ~Subordinate();
     //@}
 
+    //! @name Callbacks
+    //@{
+    void SetSuperior( const DtEntityIdentifier& identifier );
+    //@}
+
 private:
     //! @name Helpers
     //@{
@@ -55,6 +60,7 @@ private:
     DtEntityIdentifier entityId_;
     DtVrfRemoteController& controller_;
     const DtSimulationAddress& address_;
+    DtEntityIdentifier superiorId_;
     //@}
 };
 
