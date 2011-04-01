@@ -211,6 +211,7 @@ void ScoresModel::Export() const
             const unsigned int size = AddHeader( file );
             for( unsigned int index = 0; index < size; ++index )
                 AddLine( file, index );
+            file.close();
         }
         catch ( exception* e )
         {
@@ -235,6 +236,7 @@ void ScoresModel::SimplifiedExport( const std::string& path ) const
                 AddLine( file, 0 );
                 AddLine( file, size - 1 );
             }
+            file.close();
         }
         catch ( exception* e )
         {
