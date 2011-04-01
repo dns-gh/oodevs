@@ -226,7 +226,7 @@ void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSi
 {
     DtEntityType type = aggregatePublisher_->asr()->entityType();
     type.setKind( type.kind() + 10 );
-    vrForces_.RegisterReflectedCreationListener( *this );
+    vrForces_.AddListener( *this );
     controller.createAggregate( &Agent::OnCreatePseudoAggregate, this
                               , type
                               , aggregatePublisher_->asr()->location()
@@ -245,6 +245,7 @@ void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSi
                 AddSubordinateEntity( controller, address, list.entityType(), id );
             }
     }
+    DtInfo << "Request pseudo aggregate with id: " << aggregatePublisher_->asr()->entityId() << "type: " << type.string() << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -279,17 +280,17 @@ void Agent::DestroyPseudoAggregate()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::OnCreateReflected
+// Name: Agent::NotifyCreated
 // Created: SBO 2011-01-21
 // -----------------------------------------------------------------------------
-bool Agent::OnCreateReflected( DtReflectedAggregate* obj )
+bool Agent::NotifyCreated( DtReflectedAggregate& aggregate )
 {
     if( reflected_ )
         return true;
     if( reflectedId_ != DtEntityIdentifier::nullId() )
-        if( obj->asr()->entityId() == reflectedId_ )
+        if( aggregate.asr()->entityId() == reflectedId_ )
         {
-            reflected_ = obj;
+            reflected_ = &aggregate;
             return true;
         }
     return false;
@@ -307,6 +308,7 @@ void Agent::OnCreatePseudoAggregate( const DtString& /*name*/, const DtEntityIde
         that->reflectedId_ = id;
         if( !that->reflected_ )
             that->reflected_ = that->vrForces_.Find( id );
+        DtInfo << "Pseudo aggregate created with identifier: " << id.string() << std::endl;
     }
 }
 

@@ -10,6 +10,7 @@
 #include "vrforces_plugin_pch.h"
 #include "Facade.h"
 #include "Agent.h"
+#include "ReflectedCreationListener_ABC.h"
 #pragma warning( push, 0 )
 #include <vl/reflAggList.h>
 #include <vrforces/vrfBeListener.h>
@@ -40,7 +41,10 @@ Facade::Facade( DtExerciseConn& connection )
 // -----------------------------------------------------------------------------
 Facade::~Facade()
 {
-    // NOTHING
+    reflectedAggregates_->removeAggregateRemovalCallback( &Facade::OnAggregateRemoval, this );
+    reflectedAggregates_->removeAggregateAdditionCallback( &Facade::OnAggregateAddition, this );
+    controller_->backendListener()->removeBackendRemovalCallback( &Facade::OnBackendRemoval, this );
+    controller_->backendListener()->removeBackendDiscoveryCallback( &Facade::OnBackendDiscovery, this );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,14 +107,10 @@ void Facade::OnAggregateAddition( DtReflectedAggregate* obj, void* userData )
 {
     if( Facade* that = static_cast< Facade* >( userData ) )
     {
-        that->reflected_[ obj->aggregateStateRep()->entityId().string() ] = obj;
-        for( T_ReflectedCreationListeners::iterator it = that->reflectedCreationListeners_.begin(); it != that->reflectedCreationListeners_.end(); )
-            if( (*it)->OnCreateReflected( obj ) )
-            {
-                T_ReflectedCreationListeners::iterator itDelete = it;
-                ++it;
-                that->reflectedCreationListeners_.erase( itDelete );
-            }
+        that->reflected_[ obj->asr()->entityId().string() ] = obj;
+        for( T_ReflectedCreationListeners::iterator it = that->listeners_.begin(); it != that->listeners_.end(); )
+            if( (*it)->NotifyCreated( *obj ) )
+                it = that->listeners_.erase( it );
             else
                 ++it;
     }
@@ -162,22 +162,22 @@ bool Facade::IsConnected() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade::RegisterReflectedCreationListener
+// Name: Facade::AddListener
 // Created: SBO 2011-01-21
 // -----------------------------------------------------------------------------
-void Facade::RegisterReflectedCreationListener( Agent& agent )
+void Facade::AddListener( ReflectedCreationListener_ABC& listener )
 {
-    reflectedCreationListeners_.push_back( &agent );
+    listeners_.push_back( &listener );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade::UnregisterReflectedCreationListener
+// Name: Facade::RemoveListener
 // Created: SBO 2011-01-21
 // -----------------------------------------------------------------------------
-void Facade::UnregisterReflectedCreationListener( Agent& agent )
+void Facade::RemoveListener( ReflectedCreationListener_ABC& listener )
 {
-    T_ReflectedCreationListeners::iterator it = std::find( reflectedCreationListeners_.begin(), reflectedCreationListeners_.end(), &agent );
-    reflectedCreationListeners_.erase( it );
+    T_ReflectedCreationListeners::iterator it = std::find( listeners_.begin(), listeners_.end(), &listener );
+    listeners_.erase( it );
 }
 
 // -----------------------------------------------------------------------------

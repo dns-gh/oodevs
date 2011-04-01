@@ -10,6 +10,8 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
+#include "ReflectedCreationListener_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vlpi/entityidentifier.h>
 
@@ -58,7 +60,8 @@ namespace vrforces
 */
 // Created: SBO 2011-01-21
 // =============================================================================
-class Agent
+class Agent : private boost::noncopyable
+            , public ReflectedCreationListener_ABC
 {
 
 public:
@@ -83,16 +86,10 @@ public:
 
     //! @name Callbacks
     //@{
-    bool OnCreateReflected( DtReflectedAggregate* obj );
+    virtual bool NotifyCreated( DtReflectedAggregate& aggregate );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Agent( const Agent& );            //!< Copy constructor
-    Agent& operator=( const Agent& ); //!< Assignment operator
-    //@}
-
     //! @name Callbacks
     //@{
     static void OnCreatePseudoAggregate( const DtString& name, const DtEntityIdentifier& id, void* usr );
