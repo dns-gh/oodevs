@@ -60,7 +60,7 @@ private:
     //@{
     struct T_Block
     {
-        unsigned int number_;
+        std::map< std::string, unsigned int > persons_;
         bool alerted_;
         bool confined_;
         bool evacuated_;

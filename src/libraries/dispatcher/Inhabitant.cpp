@@ -83,7 +83,8 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
     {
         const sword::PopulationUpdate::BlockOccupation& occupation = msg.occupations( i );
         T_Block& block = urbanBlocks_[ occupation.object().id() ];
-        block.number_ = occupation.number();
+        for( int j = 0; j < occupation.persons_size(); ++j )
+            block.persons_[ occupation.persons( j ).usage() ] = occupation.persons( j ).number();
         block.alerted_ = occupation.alerted();
         block.confined_ = occupation.confined();
         block.evacuated_ = occupation.evacuated();
@@ -151,7 +152,12 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     {
         sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
         block.mutable_object()->set_id( urbanBlock.first );
-        block.set_number( urbanBlock.second.number_ );
+        for( std::map< std::string, unsigned int >::const_iterator it = urbanBlock.second.persons_.begin(); it != urbanBlock.second.persons_.end(); ++it )
+        {
+            sword::PopulationUpdate_BlockOccupation_UsageOccupation* occupation = block.add_persons();
+            occupation->set_usage( it->first );
+            occupation->set_number( it->second );
+        }
         block.set_alerted( urbanBlock.second.alerted_ );
         block.set_confined( urbanBlock.second.confined_ );
         block.set_evacuated( urbanBlock.second.evacuated_ );

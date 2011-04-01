@@ -2304,10 +2304,17 @@ namespace
         CONVERT( percentage );
     }
     template< typename From, typename To >
+    void ConvertUsageOccupation( const From& from, To* to )
+    {
+        CONVERT( usage );
+        CONVERT( number );
+    }
+    template< typename From, typename To >
     void ConvertBlockOccupation( const From& from, To* to )
     {
         CONVERT_ID( object );
-        CONVERT( number );
+        for( int i = 0; i < from.persons().size(); ++i )
+            ConvertUsageOccupation( from.persons( i ), to->add_persons() );
 #ifdef SHIELD_CLIENT
         CONVERT( alerted )
         CONVERT( confined )

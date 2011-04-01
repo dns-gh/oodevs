@@ -101,9 +101,12 @@ private:
     typedef std::map< const kernel::DotationType*, unsigned int > T_ResourceSatisfactions;
     typedef T_ResourceSatisfactions::const_iterator             CIT_ResourceSatisfactions;
 
+    typedef std::map< QString, unsigned int >   T_BlockOccupation;
+    typedef T_BlockOccupation::const_iterator CIT_BlockOccupation;
+
     struct T_Human
     {
-        unsigned int number_;
+        T_BlockOccupation persons_;
         bool alerted_;
         bool confined_;
         bool evacuated_;

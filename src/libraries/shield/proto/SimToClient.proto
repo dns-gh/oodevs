@@ -1282,8 +1282,12 @@ message MsgPopulationUpdate {
         optional float                  safety      = 5;
     }
     message BlockOccupation {
-         required Common.ObjectId object = 1;
-         required int32           number = 2;
+         message UsageOccupation {
+             required string usage  = 1;
+             required int32  number = 2;
+         }
+         required Common.ObjectId object  = 1;
+         repeated UsageOccupation persons = 2;
      }
 
     required Common.PopulationId   id           = 1;

@@ -1803,11 +1803,18 @@ namespace
         s->set_health( 50.f );
         s->set_safety( 50.f );
     }
+    template< typename S >
+    void FillUsageOccupation( S* s )
+    {
+        s->set_usage( "office" );
+        s->set_number( 42 );
+    }
     template< typename O >
     void FillBlockOccupation( O* o )
     {
         o->mutable_object()->set_id( 12 );
-        o->set_number( 13 );
+        FillUsageOccupation( o->add_persons() );
+        FillUsageOccupation( o->add_persons() );
         o->set_alerted( true ); // $$$$ SBO 2011-02-04: in sword but not in shield
         o->set_confined( true ); // $$$$ BCI 2011-02-23: in sword but not in shield
         o->set_evacuated( true ); // $$$$ ABR 2011-03-25: in sword but not in shield
@@ -1827,7 +1834,7 @@ BOOST_FIXTURE_TEST_CASE( population_update_to_client_is_converted, ContextFixtur
     content.mutable_population_update()->set_motivation( "office" );
     FillBlockOccupation( content.mutable_population_update()->add_occupations() );
     FillBlockOccupation( content.mutable_population_update()->add_occupations() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { population_update { id { id: 7 } healthy: 8 wounded: 9 dead: 10 adhesions { party { id: 20 } value: 21 } adhesions { party { id: 20 } value: 21 } satisfaction { resources { resource { id: 30 } value: 31 } resources { resource { id: 30 } value: 31 } motivations { motivation: \"office\" percentage: 41 } motivations { motivation: \"office\" percentage: 41 } lodging: 50 health: 50 safety: 50 } motivation: \"office\" occupations { object { id: 12 } number: 13 } occupations { object { id: 12 } number: 13 } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { population_update { id { id: 7 } healthy: 8 wounded: 9 dead: 10 adhesions { party { id: 20 } value: 21 } adhesions { party { id: 20 } value: 21 } satisfaction { resources { resource { id: 30 } value: 31 } resources { resource { id: 30 } value: 31 } motivations { motivation: \"office\" percentage: 41 } motivations { motivation: \"office\" percentage: 41 } lodging: 50 health: 50 safety: 50 } motivation: \"office\" occupations { object { id: 12 } persons { usage: \"office\" number: 42 } persons { usage: \"office\" number: 42 } } occupations { object { id: 12 } persons { usage: \"office\" number: 42 } persons { usage: \"office\" number: 42 } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 

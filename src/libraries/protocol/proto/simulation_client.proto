@@ -2288,13 +2288,20 @@ message PopulationUpdate {
         @brief Defines a block occupation
     */
     message BlockOccupation {
-         required ObjectId object    = 1; //!< The block object identifier
-         required int32    number    = 2; //!< The number of persons
-         required bool     alerted   = 3; //!< Whether the population has been alerted or not
-         required bool     confined  = 4; //!< Whether the population is confined into this block or not
-         required bool     evacuated = 5; //!< Whether the population is evacuated into this block or not
-         required float    angriness = 6; //!< Angriness of persons in this block because of lack of resources.
-     }
+         /** @struct UsageOccupation
+             @brief Defines the number of persons by usage
+         */
+         message UsageOccupation {
+             required string usage  = 1; //!< The usage type ("home, "office", ...)
+             required int32  number = 2; //!< The number of persons for this usage
+         }
+         required ObjectId        object    = 1; //!< The block object identifier
+         repeated UsageOccupation persons   = 2; //!< The number of persons by usage
+         required bool            alerted   = 3; //!< Whether the population has been alerted or not
+         required bool            confined  = 4; //!< Whether the population is confined into this block or not
+         required bool            evacuated = 5; //!< Whether the population is evacuated into this block or not
+         required float           angriness = 6; //!< Angriness of persons in this block because of lack of resources.
+    }
     required PopulationId    id           = 1; //!< The population identifier
     optional int32           healthy      = 2; //!< The number of healthy persons
     optional int32           wounded      = 3; //!< The number of wounded persons

@@ -11,19 +11,14 @@
 #define __TerrainObjectProxy_h_
 
 #include "clients_kernel/Creatable.h"
-#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include <memory>
 
 namespace kernel
 {
-    class GlTools_ABC;
     class PropertiesDictionary;
-    class Viewport_ABC;
     class ObjectType;
     class Displayer_ABC;
     class Controllers;
@@ -31,12 +26,12 @@ namespace kernel
 
 namespace sword
 {
+    class PopulationUpdate_BlockOccupation;
     class UrbanUpdate;
 }
 
 namespace urban
 {
-    class Drawer_ABC;
     class TerrainObject_ABC;
 }
 
@@ -55,7 +50,7 @@ class TerrainObjectProxy : public kernel::Extension_ABC
                          , public kernel::Updatable_ABC< sword::UrbanUpdate >
                          , public kernel::Creatable< TerrainObjectProxy >
                          , public tools::Observer_ABC
-                         , public tools::ElementObserver_ABC< gui::UrbanDisplayOptions >
+                         , public tools::ElementObserver_ABC< UrbanDisplayOptions >
 {
 public:
     //! @name Static
@@ -66,8 +61,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const kernel::ObjectType& type, gui::UrbanDisplayOptions& options );
-             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, const kernel::ObjectType& type, gui::UrbanDisplayOptions& options );
+             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const kernel::ObjectType& type, UrbanDisplayOptions& options );
+             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, const kernel::ObjectType& type, UrbanDisplayOptions& options );
     virtual ~TerrainObjectProxy();
     //@}
 
@@ -90,8 +85,8 @@ public:
     geometry::Point2f Barycenter() const;
     const geometry::Polygon2f* GetFootprint() const;
     const urban::TerrainObject_ABC* GetObject() const;
-    virtual void Display( kernel::Displayer_ABC& ) const{};
-    virtual const kernel::ObjectType& GetType() const{ return type_; }
+    virtual void Display( kernel::Displayer_ABC& ) const {}
+    virtual const kernel::ObjectType& GetType() const { return type_; }
     virtual QString GetTypeName() const;
     //@}
 
@@ -103,9 +98,8 @@ public:
     virtual void SetSelected( bool selected ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
 
-    void UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted, bool confined, bool evacuated, float angriness );
-    unsigned int GetHumans() const;
-    void NotifyUpdated( const gui::UrbanDisplayOptions& );
+    void UpdateHumans( const std::string& inhabitant, const std::map< QString, unsigned int >& occupations, bool alerted, bool confined, bool evacuated, float angriness );
+    void NotifyUpdated( const UrbanDisplayOptions& );
     //@}
 
 private:
@@ -115,6 +109,7 @@ private:
     void AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary );
     void Restore();
     float GetDensity() const;
+    unsigned int GetHumans() const;
     void UpdateColor();
     //@}
 
@@ -122,9 +117,12 @@ private:
     //@{
     typedef std::map< std::string, float > T_Motivations;
 
+    typedef std::map< QString, unsigned int >   T_BlockOccupation;
+    typedef T_BlockOccupation::const_iterator CIT_BlockOccupation;
+
     struct T_Human
     {
-        unsigned int number_;
+        T_BlockOccupation persons_;
         bool alerted_;
         bool confined_;
         bool evacuated_;
@@ -135,6 +133,13 @@ private:
 
     struct T_BaseColor
     {
+        T_BaseColor()
+            : red_  ( 0 )
+            , green_( 0 )
+            , blue_ ( 0 )
+        {
+            // NOTHING
+        }
         unsigned short red_;
         unsigned short green_;
         unsigned short blue_;
@@ -150,7 +155,7 @@ private:
     T_BaseColor color_;
     const kernel::ObjectType& type_;
     T_Motivations motivations_;
-    gui::UrbanDisplayOptions& options_;
+    UrbanDisplayOptions& options_;
     //@}
 };
 

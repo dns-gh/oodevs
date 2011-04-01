@@ -12,17 +12,18 @@
 #include "Tools.h"
 #include "UrbanDisplayOptions.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "protocol/Simulation.h"
 #include <urban/PhysicalAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/MotivationsVisitor_ABC.h>
 #include <boost/foreach.hpp>
-#include <boost/lexical_cast.hpp>
 #include <urban/ColorAttribute.h>
 
 using namespace gui;
+using namespace kernel;
+using namespace urban;
 
 const QString TerrainObjectProxy::typeName_ = "terrainObjectProxy";
 
@@ -32,18 +33,18 @@ const QString TerrainObjectProxy::typeName_ = "terrainObjectProxy";
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id,
-                                        const QString& name, const kernel::ObjectType& type, gui::UrbanDisplayOptions& options )
-    : EntityImplementation< kernel::Object_ABC >( controllers.controller_, id, name )
+TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, TerrainObject_ABC& object, unsigned int id
+                                      , const QString& name, const ObjectType& type, UrbanDisplayOptions& options )
+    : EntityImplementation< Object_ABC >( controllers.controller_, id, name )
     , Creatable< TerrainObjectProxy >( controllers.controller_, this )
-    , object_      ( object )
-    , controllers_ ( controllers )
-    , type_        ( type )
-    , options_     ( options )
+    , object_     ( object )
+    , controllers_( controllers )
+    , type_       ( type )
+    , options_    ( options )
 {
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
-    urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
+    ColorAttribute* colorAttribute = object_.Retrieve< ColorAttribute >();
     if( colorAttribute )
     {
         color_.red_ = colorAttribute->Red();
@@ -58,17 +59,17 @@ TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban:
 // Name: TerrainObjectProxy constructor
 // Created: JSR 2010-06-21
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, const kernel::ObjectType& type, gui::UrbanDisplayOptions& options )
-    : EntityImplementation< kernel::Object_ABC >( controllers.controller_, object.GetId(), QString( object.GetName().c_str() ) )
+TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, TerrainObject_ABC& object, const ObjectType& type, UrbanDisplayOptions& options )
+    : EntityImplementation< Object_ABC >( controllers.controller_, object.GetId(), object.GetName().c_str() )
     , Creatable< TerrainObjectProxy >( controllers.controller_, this )
-    , object_      ( object )
-    , controllers_ ( controllers )
-    , type_        ( type )
-    , options_     ( options )
+    , object_     ( object )
+    , controllers_( controllers )
+    , type_       ( type )
+    , options_    ( options )
 {
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
-    urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
+    ColorAttribute* colorAttribute = object_.Retrieve< ColorAttribute >();
     if( colorAttribute )
     {
         color_.red_ = colorAttribute->Red();
@@ -96,7 +97,7 @@ TerrainObjectProxy::~TerrainObjectProxy()
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::Restore()
 {
-    urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
+    ColorAttribute* colorAttribute = object_.Retrieve< ColorAttribute >();
     if( colorAttribute )
     {
         colorAttribute->SetRed( color_.red_ );
@@ -129,10 +130,10 @@ void TerrainObjectProxy::DoUpdate( const sword::UrbanUpdate& /*msg*/ )
 // -----------------------------------------------------------------------------
 QString TerrainObjectProxy::GetName() const
 {
-    std::string name = object_.GetName();
+    const std::string& name = object_.GetName();
     if ( name.empty() )
         return QString( tools::translate( "Urban", "Urban block[%1]" ).arg( object_.GetId() ) );
-    return object_.GetName().c_str();
+    return name.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +149,7 @@ QString TerrainObjectProxy::GetTypeName() const
 // Name: TerrainObjectProxy::Select
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::Select( kernel::ActionController& controller ) const
+void TerrainObjectProxy::Select( ActionController& controller ) const
 {
     controller.Select( *this, *static_cast< const Entity_ABC* >( this ) );
 }
@@ -157,18 +158,18 @@ void TerrainObjectProxy::Select( kernel::ActionController& controller ) const
 // Name: TerrainObjectProxy::CreateDictionary
 // Created: SLG 2009-12-08
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
+void TerrainObjectProxy::CreateDictionary( Controller& controller )
 {
-    kernel::PropertiesDictionary& dictionary = *new kernel::PropertiesDictionary( controller );
-    EntityImplementation< kernel::Object_ABC >::Attach( dictionary );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), EntityImplementation< kernel::Object_ABC >::id_ );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), EntityImplementation< kernel::Object_ABC >::name_ );
+    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
+    EntityImplementation< Object_ABC >::Attach( dictionary );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), EntityImplementation< Object_ABC >::id_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), EntityImplementation< Object_ABC >::name_ );
     AddDictionaryForArchitecture( dictionary );
 }
 
 namespace
 {
-    class MotivationsVisitor : public urban::MotivationsVisitor_ABC
+    class MotivationsVisitor : public MotivationsVisitor_ABC
     {
     public:
         explicit MotivationsVisitor( std::map< std::string, float >& motivations )
@@ -188,41 +189,28 @@ namespace
 // Name: TerrainObjectProxy::AddDictionaryForArchitecture
 // Created: SLG 2009-12-09
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary )
+void TerrainObjectProxy::AddDictionaryForArchitecture( PropertiesDictionary& dictionary )
 {
-    const urban::PhysicalAttribute* pPhysical = object_.Retrieve< urban::PhysicalAttribute >();
+    const PhysicalAttribute* pPhysical = object_.Retrieve< PhysicalAttribute >();
+    const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
     if( pPhysical )
     {
         if( pPhysical->GetArchitecture() )
         {
-            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), pPhysical->GetArchitecture()->GetHeight() );
-            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), pPhysical->GetArchitecture()->GetFloorNumber() );
-            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), pPhysical->GetArchitecture()->GetRoofShape() );
-            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), pPhysical->GetArchitecture()->GetMaterial() );
-            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), pPhysical->GetArchitecture()->GetOccupation() );
-            dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), pPhysical->GetArchitecture()->GetTrafficability() );
+            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), pPhysical->GetArchitecture()->GetHeight() );
+            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), pPhysical->GetArchitecture()->GetFloorNumber() );
+            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), pPhysical->GetArchitecture()->GetRoofShape() );
+            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), pPhysical->GetArchitecture()->GetMaterial() );
+            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), pPhysical->GetArchitecture()->GetOccupation() );
+            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), pPhysical->GetArchitecture()->GetTrafficability() );
         }
         if( pPhysical->GetMotivations() )
         {
             MotivationsVisitor visitor( motivations_ );
             object_.Accept( visitor );
             BOOST_FOREACH( const T_Motivations::value_type& motivation, motivations_ )
-                dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + QString( motivation.first.c_str() ), motivation.second );
+                dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + QString( motivation.first.c_str() ), motivation.second );
         }
-    }
-    BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
-    {
-        const QString keyBase = tools::translate( "Block", "Populations/" ) + human.first.c_str() + "/";
-        const QString keyNumber = keyBase + tools::translate( "Block", "Resident" );
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyNumber, human.second.number_ );
-        const QString keyAlerted = keyBase + tools::translate( "Block", "Alerted" );
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.second.alerted_ );
-        const QString keyConfined = keyBase + tools::translate( "Block", "Confined" );
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyConfined, human.second.confined_ );
-        const QString keyEvacuated = keyBase + tools::translate( "Block", "Evacuated" );
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyEvacuated, human.second.evacuated_ );
-        const QString keyAngriness = keyBase + tools::translate( "Block", "Angriness" );
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAngriness, human.second.angriness_ );
     }
 }
 
@@ -239,7 +227,7 @@ void TerrainObjectProxy::SetSelected( bool selected ) const
 // Name: TerrainObjectProxy::DisplayInSummary
 // Created: LGY 2010-12-30
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+void TerrainObjectProxy::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Block", "Density:" ), GetDensity() );
 }
@@ -248,40 +236,38 @@ void TerrainObjectProxy::DisplayInSummary( kernel::Displayer_ABC& displayer ) co
 // Name: TerrainObjectProxy::UpdateHumans
 // Created: LGY 2010-12-30
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, unsigned int number, bool alerted, bool confined, bool evacuated, float angriness )
+void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, const T_BlockOccupation& occupations, bool alerted, bool confined, bool evacuated, float angriness  )
 {
     T_Human& mutableHuman = humans_[ inhabitant ];
-    mutableHuman.number_ = number;
+    for( CIT_BlockOccupation it = occupations.begin(); it != occupations.end(); ++it )
+        mutableHuman.persons_[ it->first ] = it->second;
     mutableHuman.alerted_ = alerted;
     mutableHuman.confined_ = confined;
     mutableHuman.evacuated_ = evacuated;
     mutableHuman.angriness_ = angriness;
     const T_Human& human = mutableHuman;
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+    const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
     const QString keyBase = tools::translate( "Block", "Populations/" ) + inhabitant.c_str() + "/";
-    kernel::PropertiesDictionary& dictionary = Get< kernel::PropertiesDictionary >();
-    const QString keyNumber = keyBase + tools::translate( "Block", "Resident" );
-    if( !dictionary.HasKey( keyNumber ) )
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyNumber, human.number_ );
+    for( CIT_BlockOccupation it = human.persons_.begin(); it != human.persons_.end(); ++ it )
+    {
+        const QString keyOccupation = keyBase + it->first + "/"; 
+        const QString keyNumber = keyOccupation + tools::translate( "Block", "Resident" );
+        if( !dictionary.HasKey( keyNumber ) )
+            dictionary.Register( constEntity, keyNumber, it->second );
+    }
     const QString keyAlerted = keyBase + tools::translate( "Block", "Alerted" );
-    if( !dictionary.HasKey( keyAlerted ) )
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.alerted_ );
     const QString keyConfined = keyBase + tools::translate( "Block", "Confined" );
-    if( !dictionary.HasKey( keyConfined ) )
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyConfined, human.confined_ );
     const QString keyEvacuated = keyBase + tools::translate( "Block", "Evacuated" );
+    if( !dictionary.HasKey( keyAlerted ) )
+        dictionary.Register( constEntity, keyAlerted, human.alerted_ );
+    if( !dictionary.HasKey( keyConfined ) )
+        dictionary.Register( constEntity, keyConfined, human.confined_ );
     if( !dictionary.HasKey( keyEvacuated ) )
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyEvacuated, human.evacuated_ );
+        dictionary.Register( constEntity, keyEvacuated, human.evacuated_ );
     const QString keyAngriness = keyBase + tools::translate( "Block", "Angriness" );
     if( !dictionary.HasKey( keyAngriness ) )
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAngriness, human.angriness_ );
-    if( human.number_ == 0u )
-    {
-        dictionary.Remove( keyNumber );
-        dictionary.Remove( keyAlerted );
-        dictionary.Remove( keyConfined );
-        dictionary.Remove( keyEvacuated );
-        humans_.erase( inhabitant );
-    }
+        dictionary.Register( constEntity, keyAngriness, human.angriness_ );
     UpdateColor();
 }
 
@@ -316,7 +302,7 @@ const geometry::Polygon2f* TerrainObjectProxy::GetFootprint() const
 // Name: TerrainObjectProxy::GetObject
 // Created: JSR 2010-11-30
 // -----------------------------------------------------------------------------
-const urban::TerrainObject_ABC* TerrainObjectProxy::GetObject() const
+const TerrainObject_ABC* TerrainObjectProxy::GetObject() const
 {
     // $$$$ JSR 2010-11-30: Utilisé pour le display dans UrbanKnowledge pour kernel::Formatter< TerrainObject_ABC >
     // A supprimer quand TerrainObjectProxy sera passé dans clients_kernel
@@ -327,7 +313,7 @@ const urban::TerrainObject_ABC* TerrainObjectProxy::GetObject() const
 // Name: TerrainObjectProxy::NotifyUpdated
 // Created: LDC 2011-03-25
 // -----------------------------------------------------------------------------
-void TerrainObjectProxy::NotifyUpdated( const gui::UrbanDisplayOptions& )
+void TerrainObjectProxy::NotifyUpdated( const UrbanDisplayOptions& )
 {
     UpdateColor();
 }
@@ -338,7 +324,7 @@ void TerrainObjectProxy::NotifyUpdated( const gui::UrbanDisplayOptions& )
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::UpdateColor()
 {
-    urban::ColorAttribute* colorAttribute = object_.Retrieve< urban::ColorAttribute >();
+    ColorAttribute* colorAttribute = object_.Retrieve< ColorAttribute >();
     if( !options_.SetColor( colorAttribute, GetDensity(), motivations_ ) )
         Restore();
 }
@@ -360,6 +346,7 @@ unsigned int TerrainObjectProxy::GetHumans() const
 {
     unsigned int humans = 0;
     BOOST_FOREACH( const T_Humans::value_type& human, humans_ )
-        humans += human.second.number_;
+        for( CIT_BlockOccupation it = human.second.persons_.begin(); it != human.second.persons_.end(); ++ it )
+            humans += it->second;
     return humans;
 }

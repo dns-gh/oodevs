@@ -78,7 +78,12 @@ void MIL_LivingAreaBlock::SendFullState( client::PopulationUpdate& msg ) const
 {
     sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
     block.mutable_object()->set_id( urbanObject_.GetID() );
-    block.set_number( GetTotalNumberOfPersons() );
+    for( CIT_Persons it = persons_.begin(); it != persons_.end(); ++it )
+    {
+        sword::PopulationUpdate_BlockOccupation_UsageOccupation* occupation = block.add_persons();
+        occupation->set_usage( it->first );
+        occupation->set_number( it->second );
+    }
     block.set_alerted( alerted_ );
     block.set_confined( confined_ );
     block.set_evacuated( evacuated_ );
