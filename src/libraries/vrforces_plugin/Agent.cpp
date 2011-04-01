@@ -80,7 +80,6 @@ Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade
     std::stringstream name;
     name << message.automat().id() << ":"<< id_ << "/" << message.name().c_str();
     DtEntityType type( ToString( entityTypes.Find( agent.GetType().GetName() ) ).c_str() );
-    type.setCategory( 3 /* platoon */ );
     aggregatePublisher_.reset( new DtAggregatePublisher( type, &connection_, DtDrStatic, forces.Resolve( id_ ), name.str().c_str() ) );
     aggregatePublisher_->asr()->setMarkingText( name.str().c_str() );
     CreateSubordinates( type_ );
@@ -225,7 +224,8 @@ bool Agent::IsTrueAggregate() const
 void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSimulationAddress& address )
 {
     DtEntityType type = aggregatePublisher_->asr()->entityType();
-    type.setKind( type.kind() + 10 );
+    if( type.kind() < 10 )
+        type.setKind( type.kind() + 10 );
     vrForces_.AddListener( *this );
     controller.createAggregate( &Agent::OnCreatePseudoAggregate, this
                               , type
