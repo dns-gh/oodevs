@@ -23,7 +23,7 @@
             <xsl:when test=".='AutomateBM' or .='Automate' or .='automatebm' or .='automate'"><xsl:attribute name="type">Automat</xsl:attribute></xsl:when>
             <xsl:when test=".='PopulationKnowledge' or .='populationknowledge'"><xsl:attribute name="type">CrowdKnowledge</xsl:attribute></xsl:when>
             <xsl:when test=".='DotationType' or .='dotationtype'"><xsl:attribute name="type">ResourceType</xsl:attribute></xsl:when>
-            <xsl:when test=".='genobject' or .='genobjectBM' or .='genobjectbm'"><xsl:attribute name="type">Plannedwork</xsl:attribute></xsl:when>
+            <xsl:when test=".='genobject' or .='GenObjectList' or .='genobjectBM' or .='genobjectbm'"><xsl:attribute name="type">Plannedwork</xsl:attribute></xsl:when>
             <xsl:when test=".='obstacle'"><xsl:attribute name="type">Plannedwork</xsl:attribute></xsl:when>
             <xsl:when test=".='UrbanBlock' or .='UrbanBlockBM' or .='urbanblock' or .='urbanblockbm'"><xsl:attribute name="type">UrbanKnowledge</xsl:attribute></xsl:when>
             <xsl:when test=".='Numeric' or .='numeric'"><xsl:attribute name="type">Integer</xsl:attribute></xsl:when>
