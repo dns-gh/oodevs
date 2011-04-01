@@ -213,6 +213,34 @@
 !macroend
 
 ;------------------------------------------------------------------------------
+; Adds OTPacks Section
+;------------------------------------------------------------------------------
+!macro OT.AddOTPacks
+
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+
+    FindFirst $0 $1 "$EXEDIR\*.otpak"
+    loop:
+        StrCmp $1 "" done
+        IfFileExists "$INSTDATADIR" +2
+            CreateDirectory "$INSTDATADIR"
+        nsisunz::UnzipToLog "$EXEDIR\$1" "$INSTDATADIR"
+        Pop $3
+        StrCmp $3 "success" +2
+            DetailPrint "$3"
+        FindNext $0 $1
+        Goto loop
+    done:
+    IfFileExists "$INSTDATADIR\content.xml" 0 +2
+        Delete "$INSTDATADIR\content.xml"
+    FindClose $0
+
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
+    
+!macroend
+
+;------------------------------------------------------------------------------
 ; Checks dependency between two sections
 ;------------------------------------------------------------------------------
 !macro OT.CheckDependency FromSection ToSection

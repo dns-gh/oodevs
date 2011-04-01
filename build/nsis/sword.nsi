@@ -141,6 +141,11 @@ Section "Documentation" s_doc
 SectionEnd
 
 ; ------------------------------------------------------------------------------
+Section /o "OTPacks" s_otpacks
+    !insertmacro OT.AddOTPacks
+SectionEnd
+
+; ------------------------------------------------------------------------------
 SectionGroup "Shortcuts" s_sc
     ;----------------------------
     Section "Desktop" s_desktop
@@ -173,6 +178,7 @@ Function .onInit
     SectionSetText ${s_decmod} $(OT_SECTION_DECISIONAL_MODELS)
     ;SectionSetText ${s_decmodsrc} $(OT_SECTION_DECISIONAL_MODELS_SOURCES)
     SectionSetText ${s_doc} $(OT_SECTION_DOCUMENTATION)
+    SectionSetText ${s_otpacks} $(OT_SECTION_OTPACKS)
     SectionSetText ${s_sc} $(OT_SECTION_SHORTCUTS)
     SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
     SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
