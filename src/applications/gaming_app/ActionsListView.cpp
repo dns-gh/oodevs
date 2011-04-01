@@ -24,8 +24,8 @@ ActionsListView::ActionsListView( QWidget* parent, kernel::Controllers& controll
     , controllers_( controllers )
     , parameter_  ( MAKE_PIXMAP( parameter2 ) )
 {
-    AddColumn( tools::translate( "ActionsListView", "Parameter" ) );
-    AddColumn( tools::translate( "ActionsListView", "Value" ) );
+    AddColumn( tools::translate( "Parameter", "Parameter" ) );
+    AddColumn( tools::translate( "Parameter", "Value" ) );
     setResizeMode( QListView::LastColumn );
     controllers_.Register( *this );
 }
