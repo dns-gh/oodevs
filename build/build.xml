@@ -375,6 +375,7 @@
                   lib${ant.project.name}_saver_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_score_plugin-${platform}-mt,
+                  lib${ant.project.name}_shield-${platform}-mt@{suffix},
                   lib${ant.project.name}_indicators-${platform}-mt">
             <syslibset libs="dbghelp,psapi,iphlpapi,user32,shell32,advapi32"/>
         </build-app>
@@ -1208,9 +1209,7 @@
         <update name="rti"/>
         <update name="masalife/brain" version="${masalife.version}"/>
         <update name="masalife/brain" version="${masalife.version}" package="bmc" todir="${bin.dir}"/>
-        <!-- $$$$ MCO : doesn't exist anymore, we need to bump an official request to masalife explaining why we need it, I'm on it
         <update name="masalife/brain" version="${masalife.version}" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
-        -->
         <update name="hla"/>
         <update name="hla" package="federation_app_${platform}" todir="${bin.dir}"/>
         <update name="tools"/>
