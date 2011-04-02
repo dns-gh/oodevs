@@ -16,6 +16,7 @@
 #include "Loader.h"
 #include "Services.h"
 #include "StaticModel.h"
+#include "Shield.h"
 #include "aar_plugin/AarPlugin.h"
 #include "replay_plugin/ReplayPlugin.h"
 #include "rights_plugin/RightsPlugin.h"
@@ -47,6 +48,7 @@ Replayer::Replayer( const Config& config )
     , simulation_      ( CreateSimulation( *clientsNetworker_, *model_, handler_ ) )
     , loader_          ( new Loader( *simulation_, handler_, config ) )
     , plugin_          ( new plugins::replay::ReplayPlugin( *model_, *clientsNetworker_, *clientsNetworker_, *loader_, *simulation_ ) )
+    , shield_          ( new Shield( config ) )
 {
     handler_.AddHandler( model_ );
     handler_.AddHandler( clientsNetworker_ );
@@ -78,4 +80,5 @@ void Replayer::Update()
 {
     clientsNetworker_->Update();
     handler_.Update();
+    shield_->Update();
 }

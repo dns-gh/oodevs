@@ -36,6 +36,7 @@ namespace dispatcher
     class SimulationDispatcher;
     class Loader;
     class Services;
+    class Shield;
 
 // =============================================================================
 /** @class  Replayer
@@ -76,6 +77,7 @@ private:
     boost::shared_ptr< SimulationDispatcher >          simulation_;
     std::auto_ptr< Loader >                            loader_;
     boost::shared_ptr< plugins::replay::ReplayPlugin > plugin_;
+    std::auto_ptr< Shield >                            shield_;
     //@}
 };
 
