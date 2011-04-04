@@ -94,13 +94,11 @@ AdvancedConfigPanel::~AdvancedConfigPanel()
 void AdvancedConfigPanel::Commit( const std::string& exercise, const std::string& session )
 {
     frontend::CreateSession action( config_, exercise, session );
-    {
-        action.SetOption( "session/config/simulation/time/@step", stepSpin_->value() );
-        action.SetOption( "session/config/simulation/time/@factor", factorSpin_->value() );
-        action.SetOption( "session/config/simulation/time/@end-tick", endtickSpin_->value() );
-        action.SetOption( "session/config/simulation/time/@paused", pausedCheckBox_->isChecked() );
-        action.SetOption( "session/config/simulation/pathfinder/@threads", pathThreads_->value() );
-        action.SetOption( "session/config/dispatcher/plugins/recorder/@fragmentfreq", fragmentsFrequency_->value() );
-    }
+    action.SetOption( "session/config/simulation/time/@step", stepSpin_->value() );
+    action.SetOption( "session/config/simulation/time/@factor", factorSpin_->value() );
+    action.SetOption( "session/config/simulation/time/@end-tick", endtickSpin_->value() );
+    action.SetOption( "session/config/simulation/time/@paused", pausedCheckBox_->isChecked() );
+    action.SetOption( "session/config/simulation/pathfinder/@threads", pathThreads_->value() );
+    action.SetOption( "session/config/dispatcher/plugins/recorder/@fragmentfreq", fragmentsFrequency_->value() );
     action.Commit();
 }
