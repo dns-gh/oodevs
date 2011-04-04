@@ -39,6 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual void Update( const DtEntityIdentifier& identifier, const DtVector& position );
+    virtual void Clear();
     //@}
 
 private:

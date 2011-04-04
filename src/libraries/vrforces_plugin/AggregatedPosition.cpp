@@ -51,12 +51,22 @@ void AggregatedPosition::Update( const DtEntityIdentifier& identifier, const DtV
 }
 
 // -----------------------------------------------------------------------------
+// Name: AggregatedPosition::Clear
+// Created: SBO 2011-04-04
+// -----------------------------------------------------------------------------
+void AggregatedPosition::Clear()
+{
+    points_.clear();
+    barycenter_.Set( 0, 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AggregatedPosition::ComputeBarycenter
 // Created: SBO 2011-04-04
 // -----------------------------------------------------------------------------
 void AggregatedPosition::ComputeBarycenter()
 {
-    barycenter_.Set( 0., 0. );
+    barycenter_.Set( 0, 0 );
     for( std::map< const DtEntityIdentifier, geometry::Point2d >::const_iterator it = points_.begin(); it != points_.end(); ++it )
         barycenter_ += geometry::Vector2d( it->second.X(), it->second.Y() );
     barycenter_.Set( barycenter_.X() / points_.size(), barycenter_.Y() / points_.size() );

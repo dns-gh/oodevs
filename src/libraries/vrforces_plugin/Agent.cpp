@@ -81,7 +81,7 @@ Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade
 {
     std::stringstream name;
     name << message.automat().id() << ":"<< id_ << "/" << message.name().c_str();
-    DtEntityType type( ToString( entityTypes.Find( agent.GetType().GetName() ) ).c_str() );
+    DtEntityType type( ToString( entityTypes_.Find( agent.GetType().GetName() ) ).c_str() );
     aggregatePublisher_.reset( new DtAggregatePublisher( type, &connection_, DtDrStatic, forces.Resolve( id_ ), name.str().c_str() ) );
     aggregatePublisher_->asr()->setMarkingText( name.str().c_str() );
     CreateSubordinates( type_ );
@@ -267,17 +267,16 @@ void Agent::DestroyPseudoAggregate()
 {
     if( reflected_ )
     {
+        position_->Clear();
         subordinates_.clear();
-        DtEntityType type( reflected_->asr()->entityType() );
-        type.setKind( type.kind() - 10 );
-        aggregatePublisher_.reset( new DtAggregatePublisher( type, &connection_, reflected_->asr()->algorithm(), reflected_->asr()->forceId() ) );
-        aggregatePublisher_->asr()->setMarkingText( reflected_->asr()->markingText() );
-        aggregatePublisher_->asr()->setLocation( reflected_->asr()->location() );
-        aggregatePublisher_->asr()->setOrientation( reflected_->asr()->orientation() );
+        DtAggregateStateRepository* copy = new DtAggregateStateRepository( *reflected_->asr() );
+        DtEntityType type( ToString( entityTypes_.Find( type_.GetName() ) ).c_str() );
+        copy->setAggregateType( type );
+        aggregatePublisher_.reset( new DtAggregatePublisher( copy, &connection_ ) );
         CreateSubordinates( type_ );
-        aggregatePublisher_->tick();
         reflectedId_ = DtEntityIdentifier::nullId();
         reflected_ = 0;
+        aggregatePublisher_->tick();
     }
 }
 
@@ -348,7 +347,6 @@ void Agent::MoveTo( const geometry::Point2d& position ) const
     sword::CoordLatLong& coord = *location.mutable_coordinates()->add_elem();
     coord.set_latitude( position.X() );
     coord.set_longitude( position.Y() );
-    DtInfo << "coordinates: " << coord.latitude() << ", " << coord.longitude() << std::endl;
     message.Send( swordPublisher_ );
 }
 
