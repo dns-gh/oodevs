@@ -108,99 +108,99 @@
                         <xs:attribute name="keyframesfreq" type="xs:string" use="optional"/>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="crossbow" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="flat">
-                                <xs:complexType>
-                                        <xs:annotation>
-                                            <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
-                                        </xs:annotation>
-                                    <xs:attribute name="connection" type="xs:string" use="required"/>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="geometry">
-                                <xs:complexType>
-                                        <xs:annotation>
-                                            <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
-                                        </xs:annotation>
-                                    <xs:attribute name="connection" type="xs:string" use="required"/>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="edxl-have" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="services">
-                                <xs:complexType>
-                                    <xs:annotation>
-                                        <xs:documentation xml:lang="en">Defines connection information to the EDXL server.</xs:documentation>
-                                    </xs:annotation>
-                                    <xs:sequence>
-                                        <xs:element name="initialization">
-                                            <xs:complexType>
-                                                <xs:annotation>
-                                                    <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
-                                                </xs:annotation>
-                                                <xs:attribute name="serviceURI" type="xs:string" use="required"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="update">
-                                            <xs:complexType>
-                                                <xs:annotation>
-                                                    <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
-                                                </xs:annotation>
-                                                <xs:attribute name="frequency" type="T_SimulationTime" use="required"/>
-                                                <xs:attribute name="serviceURI" type="xs:string" use="required"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                    <xs:attribute name="host" type="xs:string" use="required"/>
-                                    <xs:attribute name="ssl" type="xs:boolean" use="optional"/>
-                                    <xs:attribute name="log" type="xs:boolean" use="optional"/>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="timeline" minOccurs="0">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="orders">
-                                <xs:complexType>
-                                    <xs:annotation>
-                                        <xs:documentation xml:lang="en">Recorded orders.</xs:documentation>
-                                    </xs:annotation>
-                                    <xs:attribute name="file" type="xs:string" use="required"/>
-                                </xs:complexType>
-                            </xs:element>
-                            <xs:element name="scenario">
-                                <xs:complexType>
-                                    <xs:annotation>
-                                        <xs:documentation xml:lang="en">Recorded orders.</xs:documentation>
-                                    </xs:annotation>
-                                    <xs:sequence>
-                                        <xs:element name="actor">
-                                            <xs:complexType>
-                                                <xs:annotation>
-                                                    <xs:documentation xml:lang="en">Actor reference in the timeline scenario who will play the recorded orders.</xs:documentation>
-                                                </xs:annotation>
-                                                <xs:attribute name="id" type="xs:string" use="required"/>
-                                                <xs:attribute name="name" type="xs:string" use="required"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                    <xs:attribute name="id" type="xs:string" use="required"/>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                        <xs:attribute name="host" type="xs:string" use="required"/>
-                        <xs:attribute name="log" type="xs:boolean" use="optional"/>
-                        <xs:attribute name="ssl" type="xs:boolean" use="optional"/>
-                    </xs:complexType>
-                </xs:element>
+              <xs:element name="crossbow" minOccurs="0">
+                  <xs:complexType>
+                      <xs:sequence>
+                          <xs:element name="flat">
+                              <xs:complexType>
+                                      <xs:annotation>
+                                          <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
+                                      </xs:annotation>
+                                  <xs:attribute name="connection" type="xs:string" use="required"/>
+                              </xs:complexType>
+                          </xs:element>
+                          <xs:element name="geometry">
+                              <xs:complexType>
+                                      <xs:annotation>
+                                          <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
+                                      </xs:annotation>
+                                  <xs:attribute name="connection" type="xs:string" use="required"/>
+                              </xs:complexType>
+                          </xs:element>
+                      </xs:sequence>
+                  </xs:complexType>
+              </xs:element>
+              <xs:element name="edxl-have" minOccurs="0">
+                  <xs:complexType>
+                      <xs:sequence>
+                          <xs:element name="services">
+                              <xs:complexType>
+                                  <xs:annotation>
+                                      <xs:documentation xml:lang="en">Defines connection information to the EDXL server.</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:sequence>
+                                      <xs:element name="initialization">
+                                          <xs:complexType>
+                                              <xs:annotation>
+                                                  <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
+                                              </xs:annotation>
+                                              <xs:attribute name="serviceURI" type="xs:string" use="required"/>
+                                          </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="update">
+                                          <xs:complexType>
+                                              <xs:annotation>
+                                                  <xs:documentation xml:lang="en">Defines connection url to a non geometric database.</xs:documentation>
+                                              </xs:annotation>
+                                              <xs:attribute name="frequency" type="T_SimulationTime" use="required"/>
+                                              <xs:attribute name="serviceURI" type="xs:string" use="required"/>
+                                          </xs:complexType>
+                                      </xs:element>
+                                  </xs:sequence>
+                                  <xs:attribute name="host" type="xs:string" use="required"/>
+                                  <xs:attribute name="ssl" type="xs:boolean" use="optional"/>
+                                  <xs:attribute name="log" type="xs:boolean" use="optional"/>
+                              </xs:complexType>
+                          </xs:element>
+                      </xs:sequence>
+                  </xs:complexType>
+              </xs:element>
+              <xs:element name="timeline" minOccurs="0">
+                  <xs:complexType>
+                      <xs:sequence>
+                          <xs:element name="orders">
+                              <xs:complexType>
+                                  <xs:annotation>
+                                      <xs:documentation xml:lang="en">Recorded orders.</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:attribute name="file" type="xs:string" use="required"/>
+                              </xs:complexType>
+                          </xs:element>
+                          <xs:element name="scenario">
+                              <xs:complexType>
+                                  <xs:annotation>
+                                      <xs:documentation xml:lang="en">Recorded orders.</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:sequence>
+                                      <xs:element name="actor">
+                                          <xs:complexType>
+                                              <xs:annotation>
+                                                  <xs:documentation xml:lang="en">Actor reference in the timeline scenario who will play the recorded orders.</xs:documentation>
+                                              </xs:annotation>
+                                              <xs:attribute name="id" type="xs:string" use="required"/>
+                                              <xs:attribute name="name" type="xs:string" use="required"/>
+                                          </xs:complexType>
+                                      </xs:element>
+                                  </xs:sequence>
+                                  <xs:attribute name="id" type="xs:string" use="required"/>
+                              </xs:complexType>
+                          </xs:element>
+                      </xs:sequence>
+                      <xs:attribute name="host" type="xs:string" use="required"/>
+                      <xs:attribute name="log" type="xs:boolean" use="optional"/>
+                      <xs:attribute name="ssl" type="xs:boolean" use="optional"/>
+                  </xs:complexType>
+              </xs:element>
               <xs:element name="shield" minOccurs="0">
                 <xs:annotation>
                   <xs:documentation xml:lang="en">Activates a Shield dispatcher proxy.</xs:documentation>
@@ -209,6 +209,15 @@
                   <xs:attribute name="server" type="T_NetworkPort" use="required">
                     <xs:annotation>
                       <xs:documentation xml:lang="en">Defines network port on which dispatcher proxy is to accept client connections.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="position-saver" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="frequency" type="T_SimulationTime" use="required">
+                    <xs:annotation>
+                      <xs:documentation xml:lang="en">Defines the time between two saves of the unit positions exports.</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
                 </xs:complexType>

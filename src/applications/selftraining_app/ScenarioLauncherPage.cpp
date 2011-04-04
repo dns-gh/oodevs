@@ -27,6 +27,7 @@
 #include "frontend/HlaPluginConfigPanel.h"
 #include "frontend/JoinAnalysis.h"
 #include "frontend/JoinExercise.h"
+#include "frontend/PositionsPluginConfigPanel.h"
 #include "frontend/ProcessWrapper.h"
 #include "frontend/RandomPluginConfigPanel.h"
 #include "frontend/SessionConfigPanel.h"
@@ -185,6 +186,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
                 AddPlugin< frontend::CrossbowPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "Crossbow" ) );
                 AddPlugin< frontend::EdxlHavePluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "EDXL-HAVE" ) );
                 AddPlugin< frontend::TimelinePluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "ERP/Timeline" ) );
+                AddPlugin< frontend::PositionsPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "Positions Saver" ) );
             }
         }
     }

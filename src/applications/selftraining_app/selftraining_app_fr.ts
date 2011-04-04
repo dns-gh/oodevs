@@ -613,6 +613,10 @@
         <source>ERP/Timeline</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Positions Saver</source>
+        <translation>Enregistreur de positions</translation>
+    </message>
 </context>
 <context>
     <name>ScenarioPage</name>
