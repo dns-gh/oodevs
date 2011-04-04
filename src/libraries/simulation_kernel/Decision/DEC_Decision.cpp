@@ -94,6 +94,7 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_CalculerBarycentreAgents" ] = &DEC_GeometryFunctions::ComputeAgentsBarycenter;
     brain[ "DEC_Geometrie_PositionTranslate" ] = &DEC_GeometryFunctions::TranslatePosition;
     brain[ "DEC_Geometrie_PositionTranslateDir" ] = &DEC_GeometryFunctions::TranslatePositionInDirection;
+    brain[ "DEC_Geometrie_PositionTranslateVector" ] = &DEC_GeometryFunctions::TranslatePositionInVector;
     brain[ "DEC_Geometrie_PositionsEgales" ] = &DEC_GeometryFunctions::ComparePositions;
     brain[ "DEC_Geometrie_Distance" ] = &DEC_GeometryFunctions::Distance;//@TODO MGD Replace by ComputeDistance on shared_ptr
     brain[ "DEC_Geometrie_ConvertirPointEnLocalisation" ] = &DEC_GeometryFunctions::ConvertPointToLocalisation;
@@ -103,6 +104,7 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_CreerPoint" ] = &DEC_GeometryFunctions::CreatePoint;
     brain[ "DEC_Geometrie_CopiePoint" ] = &DEC_GeometryFunctions::CopyPoint;
     brain[ "DEC_Geometrie_CreerDirection" ] = &DEC_GeometryFunctions::CreateDirection;
+    brain[ "DEC_Geometrie_CreerVecteur" ] = &DEC_GeometryFunctions::CreateVector;
     brain[ "DEC_Geometrie_CreerDirectionPerpendiculaire" ] = &DEC_GeometryFunctions::CreateOrthoDirection;
     brain[ "DEC_Geometrie_InverseDirection" ] = &DEC_GeometryFunctions::ReverseDirection;
     brain[ "DEC_Geometrie_CopieEtInverseDirection" ] = &DEC_GeometryFunctions::CopyAndReverseDirection;
@@ -110,6 +112,7 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_CalculerDistanceLigneMoyenne" ] = &DEC_GeometryFunctions::ComputeDistanceFromMiddleLine;
     brain[ "DEC_Geometrie_CalculerBarycentreLocalisation" ] = &DEC_GeometryFunctions::ComputeLocalisationBarycenter;
     brain[ "DEC_Geometrie_ListePointsLocalisation" ] = &DEC_GeometryFunctions::ListLocalisationPoints;
+    brain[ "DEC_Geometrie_OffsetItinerary" ] = &DEC_GeometryFunctions::ListLocalisationPoints;
     brain[ "DEC_Geometrie_DirectionMoyenne" ] = &DEC_GeometryFunctions::ComputeMeanDirection;
     brain[ "DEC_Geometrie_PositionAleatoireSurCercle" ] = &DEC_GeometryFunctions::ComputeRandomPointOnCircle;
     brain[ "DEC_Geometrie_PositionAleatoireDansCercle" ] = &DEC_GeometryFunctions::ComputeRandomPointInCircle;

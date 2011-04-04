@@ -3086,6 +3086,7 @@
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="Strategic Bomber Squadron">
       <missions>
         <mission name="move"/>
+        <mission name="move parallel"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3107,6 +3108,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
@@ -3134,6 +3136,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="resupply"/>
@@ -3167,6 +3170,7 @@
         <mission name="Air Defense Artillery - monitor"/>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="resupply"/>
@@ -3207,6 +3211,10 @@
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
         <mission name="move">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="move parallel">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -3304,6 +3312,10 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
+        <mission name="move parallel">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
         <mission name="go through decontamination process">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
@@ -3365,6 +3377,7 @@
         <mission name="resupply"/>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
@@ -3403,6 +3416,7 @@
         <mission name="resupply"/>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
@@ -3441,6 +3455,7 @@
         <mission name="resupply"/>
         <mission name="follow"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3485,6 +3500,7 @@
       <missions>
         <mission name="resupply"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -3515,6 +3531,7 @@
       <missions>
         <mission name="resupply"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="Logistics - monitor"/>
         <mission name="Logistics - support mobility (in an area)"/>
@@ -3552,6 +3569,7 @@
       <missions>
         <mission name="Field Artillery - deploy"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -3580,6 +3598,7 @@
       <missions>
         <mission name="Field Artillery - recon deployment areas"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -3608,6 +3627,7 @@
       <missions>
         <mission name="Field Artillery - collect intelligence on objectives"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -3637,6 +3657,7 @@
       <missions>
         <mission name="Field Artillery - deploy"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -3666,6 +3687,7 @@
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="go through decontamination process"/>
         <mission name="resupply"/>
         <mission name="park"/>
@@ -3694,6 +3716,7 @@
         <mission name="adopt transportation posture"/>
         <mission name="resupply"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3715,6 +3738,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -3743,6 +3767,7 @@
     <automat dia-type="T_AutomateModeleDEC" file="Melee\Inf\Automates\Son Commando\Model.bms" masalife="false" name="Commando platoon">
       <missions>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -3772,6 +3797,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="resupply"/>
@@ -3801,6 +3827,7 @@
     <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.bms" masalife="false" name="Terroristes">
       <missions>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="resupply"/>
       </missions>
       <fragorders>
@@ -3823,6 +3850,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
@@ -3876,6 +3904,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
@@ -3928,6 +3957,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
@@ -3966,6 +3996,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -4001,6 +4032,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -4036,6 +4068,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -4071,6 +4104,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -4106,6 +4140,7 @@
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="Imagery Intelligence (real time UAV) - report information"/>
         <mission name="go through decontamination process"/>
@@ -4134,6 +4169,7 @@
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="Electronic Intelligence - report information"/>
         <mission name="go through decontamination process"/>
@@ -4159,6 +4195,7 @@
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="Electronic Intelligence - report information"/>
         <mission name="go through decontamination process"/>
@@ -4187,6 +4224,7 @@
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="Electronic Intelligence - report information"/>
         <mission name="go through decontamination process"/>
@@ -4215,6 +4253,7 @@
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="resupply"/>
@@ -4243,6 +4282,7 @@
       <missions>
         <mission name="adopt transportation posture"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="Human Intelligence - exfiltrate"/>
         <mission name="Human Intelligence - guide"/>
@@ -4273,6 +4313,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
@@ -4303,6 +4344,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
@@ -4333,6 +4375,7 @@
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="cross"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
@@ -4361,6 +4404,7 @@
       <missions>
         <mission name="Field Artillery - deploy"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -4392,6 +4436,7 @@
       <missions>
         <mission name="Field Artillery - recon deployment areas"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="withdraw"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -4421,6 +4466,7 @@
         <mission name="Emergency - evacuate area"/>
         <mission name="Emergency - alert"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="park"/>
       </missions>
       <fragorders>
@@ -4443,6 +4489,7 @@
       <missions>
         <mission name="Emergency - evacuate area"/>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="park"/>
       </missions>
       <fragorders>
@@ -4464,6 +4511,7 @@
     <automat dia-type="HS_Safety_HQ" file="Emergency\Automates\Safety\Model.bms" masalife="false" name="HS - Safety HQ">
       <missions>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="park"/>
       </missions>
       <fragorders>
@@ -4485,6 +4533,7 @@
     <automat dia-type="HS_Medical_HQ" file="Emergency\Automates\Medical\Model.bms" masalife="false" name="HS - Medical HQ">
       <missions>
         <mission name="move"/>
+        <mission name="move parallel"/>
         <mission name="park"/>
       </missions>
       <fragorders>
@@ -4542,6 +4591,10 @@
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
         <mission name="move">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
+        <mission name="move parallel">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
@@ -4625,6 +4678,10 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
         </mission>
+        <mission name="move parallel">
+          <fragorder name="Cancel maneuver"/>
+          <fragorder name="Army Aviation - Change mission type"/>
+        </mission>
         <mission name="go through decontamination process">
           <fragorder name="Cancel maneuver"/>
           <fragorder name="Army Aviation - Change mission type"/>
@@ -4675,4 +4732,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1456457051" -->
+<!-- signature="3352115109" -->

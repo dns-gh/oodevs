@@ -147,6 +147,21 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateDirection( MT_Vect
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateVector
+// Created: LDC 2011-04-01
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreateVector( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest )
+{
+    assert( pPosSource );
+    assert( pPosDest   );
+
+    boost::shared_ptr< MT_Vector2D > pResult;
+    MT_Vector2D* pVect = new MT_Vector2D( (*pPosDest) - (*pPosSource) );
+    pResult.reset( pVect );
+    return pResult;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::CreateOrthoDirection
 // Created: JVT 2005-01-03
 // -----------------------------------------------------------------------------
@@ -374,6 +389,18 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInDirec
 
     boost::shared_ptr< MT_Vector2D > res( new MT_Vector2D() );
     *res = *p1 + d * (*p2);
+    return res;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInVector
+// Created: LDC 2011-04-01
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::TranslatePositionInVector( MT_Vector2D* position, MT_Vector2D* offset )
+{
+    assert( position && offset );
+    boost::shared_ptr< MT_Vector2D > res( new MT_Vector2D() );
+    *res = *position + *offset;
     return res;
 }
 

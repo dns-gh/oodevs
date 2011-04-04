@@ -14,6 +14,11 @@ include "Common/Automates/Missions/FaireMouvement/MRT - FaireMouvement.bms"
 include "Common/Automates/Missions/FaireMouvement/CDT - FaireMouvement.bms"
 
 
+include "Common/Automates/Missions/FaireMouvement/MRT - FaireMouvementParallel.bms"
+
+include "Common/Automates/Missions/FaireMouvement/CDT - FaireMouvementParallel.bms"
+
+
 include "Common/Automates/Missions/Transporter/Transporter - MRT.bms"
 
 include "Common/Automates/Missions/Transporter/Transporter - CDT.bms"

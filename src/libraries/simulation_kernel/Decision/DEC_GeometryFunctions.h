@@ -53,6 +53,7 @@ public:
     static boost::shared_ptr< MT_Vector2D > CreatePoint();
     static boost::shared_ptr< MT_Vector2D > CopyPoint( boost::shared_ptr< MT_Vector2D > point );
     static boost::shared_ptr< MT_Vector2D > CreateDirection( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest );
+    static boost::shared_ptr< MT_Vector2D > CreateVector( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest );
     static boost::shared_ptr< MT_Vector2D > CreateOrthoDirection( MT_Vector2D* pDir, bool bCounterClockwise );
 
     static float ComputeDistance( boost::shared_ptr< MT_Vector2D > pos1, boost::shared_ptr< MT_Vector2D > pos2 );
@@ -63,6 +64,7 @@ public:
     static bool ComparePositions(  MT_Vector2D* p1, MT_Vector2D* p2 );
     static boost::shared_ptr< MT_Vector2D > TranslatePosition( MT_Vector2D* p1, MT_Vector2D* p2, double d );
     static boost::shared_ptr< MT_Vector2D > TranslatePositionInDirection( MT_Vector2D* p1, MT_Vector2D* p2, double d );
+    static boost::shared_ptr< MT_Vector2D > TranslatePositionInVector( MT_Vector2D* position, MT_Vector2D* offset );
     static double Distance( const MT_Vector2D* p1, const MT_Vector2D* p2 );
     static boost::shared_ptr< TER_Localisation > ConvertPointToLocalisation( const MT_Vector2D* pPos );
     static boost::shared_ptr< TER_Localisation > CreateCircleLocalisation( const MT_Vector2D* pCenter, const double );
