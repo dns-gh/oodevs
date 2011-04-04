@@ -133,6 +133,8 @@ std::string MergingTacticalHierarchies::MaxLevel( const std::string& lhs, const 
 // -----------------------------------------------------------------------------
 std::string MergingTacticalHierarchies::IncreaseLevel( const std::string& value )
 {
+    if( value.empty() )
+        return std::string( "o" );
     const unsigned count = Count( value );
     const char level = Level( value );
     if( count < 3 || level == 'x' )
@@ -147,6 +149,8 @@ std::string MergingTacticalHierarchies::IncreaseLevel( const std::string& value 
 // -----------------------------------------------------------------------------
 char MergingTacticalHierarchies::Level( const std::string& value )
 {
+    if( value.empty() )
+        return 'o';
     return *value.rbegin();
 }
 
@@ -156,6 +160,8 @@ char MergingTacticalHierarchies::Level( const std::string& value )
 // -----------------------------------------------------------------------------
 unsigned MergingTacticalHierarchies::Count( const std::string& value )
 {
+    if( value.empty() )
+        return 0;
     char level = Level( value );
     unsigned count = 0;
     while( value[ value.size() - count - 1 ] == level )
