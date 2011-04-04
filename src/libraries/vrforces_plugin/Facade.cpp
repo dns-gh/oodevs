@@ -222,7 +222,8 @@ void Facade::AddListener( ReflectedCreationListener_ABC& listener )
 void Facade::RemoveListener( ReflectedCreationListener_ABC& listener )
 {
     T_ReflectedCreationListeners::iterator it = std::find( listeners_.begin(), listeners_.end(), &listener );
-    listeners_.erase( it );
+    if( it != listeners_.end() )
+        listeners_.erase( it );
 }
 
 // -----------------------------------------------------------------------------

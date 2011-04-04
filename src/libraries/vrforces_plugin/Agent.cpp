@@ -9,6 +9,7 @@
 
 #include "vrforces_plugin_pch.h"
 #include "Agent.h"
+#include "AggregatedPosition.h"
 #include "DisaggregationStrategy_ABC.h"
 #include "Facade.h"
 #include "ForceResolver_ABC.h"
@@ -76,6 +77,7 @@ Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade
     , reflected_     ( 0 )
     , type_          ( agent.GetType() )
     , entityTypes_   ( entityTypes )
+    , position_      ( new AggregatedPosition( *this ) )
 {
     std::stringstream name;
     name << message.automat().id() << ":"<< id_ << "/" << message.name().c_str();
@@ -254,7 +256,7 @@ void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSi
 // -----------------------------------------------------------------------------
 void Agent::AddSubordinateEntity( DtVrfRemoteController& controller, const DtSimulationAddress& address, const DtEntityType& type, const std::string& identifier )
 {
-    subordinates_.push_back( boost::shared_ptr< Subordinate >( new Subordinate( type, *aggregatePublisher_, heading_, identifier, controller, address ) ) );
+    subordinates_.push_back( boost::shared_ptr< Subordinate >( new Subordinate( type, *aggregatePublisher_, heading_, identifier, controller, address, vrForces_, *this ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,20 +324,39 @@ void Agent::CancelMission()
 {
     if( IsTrueAggregate() )
     {
-        simulation::UnitMagicAction message;
-        message().mutable_tasker()->mutable_unit()->set_id( id_ );
-        message().set_type( sword::UnitMagicAction_Type_move_to );
-        sword::Point point;
-        sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
-        parameter.set_null_value( false );
-        sword::Location& location = *parameter.mutable_value()->Add()->mutable_point()->mutable_location();
-        location.set_type( sword::Location::point );
-        sword::CoordLatLong& coord = *location.mutable_coordinates()->add_elem();
         DtGeodeticCoord converter;
         converter.setGeocentric( aggregatePublisher_->asr()->location() );
-        coord.set_latitude( DtRad2Deg( converter.lat() ) );
-        coord.set_longitude( DtRad2Deg( converter.lon() ) );
-        DtInfo << "coordinates: " << coord.latitude() << ", " << coord.longitude() << std::endl;
-        message.Send( swordPublisher_ );
+        geometry::Point2d position( DtRad2Deg( converter.lat() ), DtRad2Deg( converter.lon() ) );
+        MoveTo( position );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::MoveTo
+// Created: SBO 2011-04-04
+// -----------------------------------------------------------------------------
+void Agent::MoveTo( const geometry::Point2d& position ) const
+{
+    simulation::UnitMagicAction message;
+    message().mutable_tasker()->mutable_unit()->set_id( id_ );
+    message().set_type( sword::UnitMagicAction_Type_move_to );
+    sword::Point point;
+    sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
+    parameter.set_null_value( false );
+    sword::Location& location = *parameter.mutable_value()->Add()->mutable_point()->mutable_location();
+    location.set_type( sword::Location::point );
+    sword::CoordLatLong& coord = *location.mutable_coordinates()->add_elem();
+    coord.set_latitude( position.X() );
+    coord.set_longitude( position.Y() );
+    DtInfo << "coordinates: " << coord.latitude() << ", " << coord.longitude() << std::endl;
+    message.Send( swordPublisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::NotifyUpdated
+// Created: SBO 2011-04-04
+// -----------------------------------------------------------------------------
+void Agent::NotifyUpdated( const Subordinate& subordinate )
+{
+    subordinate.Update( *position_ );
 }

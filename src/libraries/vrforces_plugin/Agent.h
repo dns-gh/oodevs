@@ -49,6 +49,7 @@ namespace plugins
 {
 namespace vrforces
 {
+    class AggregatedPosition_ABC;
     class DisaggregationStrategy_ABC;
     class Facade;
     class ForceResolver_ABC;
@@ -82,11 +83,13 @@ public:
     //@{
     void Update( const sword::UnitAttributes& message );
     void CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSimulationAddress& address );
+    void MoveTo( const geometry::Point2d& position ) const;
     //@}
 
     //! @name Callbacks
     //@{
     virtual bool NotifyCreated( DtReflectedAggregate& aggregate );
+    virtual void NotifyUpdated( const Subordinate& subordinate );
     //@}
 
 private:
@@ -127,6 +130,7 @@ private:
     T_Subordinates subordinates_;
     const kernel::AgentType& type_;
     const rpr::EntityTypeResolver& entityTypes_;
+    std::auto_ptr< AggregatedPosition_ABC > position_;
     //@}
 };
 

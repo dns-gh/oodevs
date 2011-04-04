@@ -9,6 +9,8 @@
 
 #include "vrforces_plugin_pch.h"
 #include "Subordinate.h"
+#include "Agent.h"
+#include "AggregatedPosition.h"
 #include "Facade.h"
 #pragma warning( push, 0 )
 #include <vl/aggPub.h>
@@ -23,12 +25,13 @@ using namespace plugins::vrforces;
 // Name: Subordinate constructor
 // Created: SBO 2011-03-23
 // -----------------------------------------------------------------------------
-Subordinate::Subordinate( const DtEntityType& type, DtAggregatePublisher& publisher, DtReal heading, const std::string& identifier, DtVrfRemoteController& controller, const DtSimulationAddress& address, Facade& vrForces )
+Subordinate::Subordinate( const DtEntityType& type, DtAggregatePublisher& publisher, DtReal heading, const std::string& identifier, DtVrfRemoteController& controller, const DtSimulationAddress& address, Facade& vrForces, Agent& superior )
     : identifier_( std::string( publisher.asr()->entityId().string() ) + identifier )
     , entityId_  ( DtEntityIdentifier::nullId() )
     , controller_( controller )
     , address_   ( address )
     , vrForces_  ( vrForces )
+    , superior_  ( superior )
     , reflected_ ( 0 )
 {
     vrForces_.AddListener( *this );
@@ -65,7 +68,11 @@ void Subordinate::OnCreate( const DtString& /*name*/, const DtEntityIdentifier& 
         if( that->superiorId_ != DtEntityIdentifier::nullId() )
             that->SetSuperior( that->superiorId_ );
         if( !that->reflected_ )
+        {
             that->vrForces_.Lookup( id, *that );
+            if( that->reflected_ )
+                that->vrForces_.RemoveListener( *that );
+        }
         DtInfo << "Subordinate created with identifier: " << id.string() << std::endl;
     }
 }
@@ -98,7 +105,7 @@ void Subordinate::OnUpdate( DtReflectedEntity* obj, void* userData )
     if( Subordinate* that = static_cast< Subordinate* >( userData ) )
         if( obj && that->reflected_ == obj )
         {
-            // $$$$ SBO 2011-04-01: TODO: feedback location change notification to parent
+            that->superior_.NotifyUpdated( *that );
             DtInfo << "Subordinate '" << that->entityId_.string() << "' updated." << std::endl;
         }
 }
@@ -112,4 +119,13 @@ void Subordinate::SetSuperior( const DtEntityIdentifier& identifier )
     superiorId_ = identifier;
     if( entityId_ != DtEntityIdentifier::nullId() )
         controller_.addToOrganization( entityId_, superiorId_, address_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Subordinate::Update
+// Created: SBO 2011-04-04
+// -----------------------------------------------------------------------------
+void Subordinate::Update( AggregatedPosition_ABC& position ) const
+{
+    position.Update( entityId_, reflected_->esr()->location() );
 }

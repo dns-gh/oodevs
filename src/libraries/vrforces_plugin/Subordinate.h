@@ -27,6 +27,8 @@ namespace plugins
 {
 namespace vrforces
 {
+    class Agent;
+    class AggregatedPosition_ABC;
     class Facade;
 
 // =============================================================================
@@ -43,7 +45,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Subordinate( const DtEntityType& type, DtAggregatePublisher& publisher, DtReal heading, const std::string& identifier
-                        , DtVrfRemoteController& controller, const DtSimulationAddress& address, Facade& vrForces );
+                        , DtVrfRemoteController& controller, const DtSimulationAddress& address, Facade& vrForces, Agent& superior );
     virtual ~Subordinate();
     //@}
 
@@ -51,6 +53,7 @@ public:
     //@{
     void SetSuperior( const DtEntityIdentifier& identifier );
     virtual bool NotifyCreated( DtReflectedEntity& entity );
+    void Update( AggregatedPosition_ABC& position ) const;
     //@}
 
 private:
@@ -68,6 +71,7 @@ private:
     DtVrfRemoteController& controller_;
     const DtSimulationAddress& address_;
     Facade& vrForces_;
+    Agent& superior_;
     DtReflectedEntity* reflected_;
     DtEntityIdentifier superiorId_;
     //@}
