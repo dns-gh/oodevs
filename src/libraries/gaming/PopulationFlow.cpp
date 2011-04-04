@@ -12,6 +12,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include "tools.h"
 
 using namespace geometry;
@@ -105,6 +106,12 @@ void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& message )
             rDensity_ = ( nHealthyHumans_ + nWoundedHumans_ + nContaminatedHumans_ ) / rLength;
         else
             rDensity_ = 0.;
+    }
+    if( message.has_path() )
+    {
+        path_.clear();
+        for( int i = 0; i < message.path().location().coordinates().elem_size(); ++i )
+            path_.push_back( converter_.ConvertToXY( message.path().location().coordinates().elem(i) ) );
     }
 }
 
@@ -201,6 +208,19 @@ void PopulationFlow::Draw( const Point2f& /*where*/, const Viewport_ABC& , const
         glLineWidth( 8.f );
         tools.DrawLines( flow_ );
     glPopAttrib();
+
+    const bool displayPath = /*viewport.IsVisible( plannedBox_ )  && */tools.ShouldDisplay( "Paths" );
+    if( displayPath )
+    {
+        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT );
+            glColor4f( COLOR_PATH );
+            glLineWidth( 3 );
+            glEnable( GL_LINE_STIPPLE );
+            glLineStipple( 1, tools.StipplePattern() );
+            tools.DrawLines( path_ );
+            glDisable( GL_LINE_STIPPLE );
+        glPopAttrib();
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -589,6 +589,8 @@ void MIL_PopulationFlow::SendFullState() const
     client::CrowdFlowUpdate asnMsg;
     asnMsg().mutable_flow()->set_id( GetID() );
     asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
+    if( !SerializeCurrentPath( *asnMsg().mutable_path() ) )
+        asnMsg().clear_path();
     NET_ASN_Tools::WritePath( flowShape_, *asnMsg().mutable_parts() );
     NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     asnMsg().set_speed( static_cast< unsigned int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
@@ -611,12 +613,15 @@ void MIL_PopulationFlow::SendChangedState() const
     client::CrowdFlowUpdate asnMsg;
     asnMsg().mutable_flow()->set_id( GetID() );
     asnMsg().mutable_crowd()->set_id( GetPopulation().GetID() );
+    if( bPathUpdated_ && !SerializeCurrentPath( *asnMsg().mutable_path() ) )
+        asnMsg().clear_path();
     if( bFlowShapeUpdated_ )
         NET_ASN_Tools::WritePath( flowShape_, *asnMsg().mutable_parts() );
     if( bDirectionUpdated_ )
         NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     if( bSpeedUpdated_ )
         asnMsg().set_speed( static_cast< unsigned int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
+
     if( HasHumansChanged() )
     {
         asnMsg().set_healthy( GetHealthyHumans() );
@@ -743,7 +748,8 @@ bool MIL_PopulationFlow::HasChanged() const
         || HasAttitudeChanged()
         || bFlowShapeUpdated_
         || bDirectionUpdated_
-        || bSpeedUpdated_;
+        || bSpeedUpdated_
+        || bPathUpdated_;
 }
 
 // -----------------------------------------------------------------------------

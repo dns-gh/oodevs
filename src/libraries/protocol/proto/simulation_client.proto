@@ -1778,14 +1778,15 @@ message CrowdFlowDestruction {
 message CrowdFlowUpdate {
    required CrowdFlowId       flow         = 1;  //!< The crowd flow identifier
    required CrowdId           crowd        = 2;  //!< The crowd identifier
-   optional Path              parts        = 3;  //!< @todo What's this ?
-   optional Heading           direction    = 4;  //!< @todo What's this ?
-   optional int32             speed        = 5;  //!< The flow speed
-   optional int32             healthy      = 6;  //!< The number of healthy persons
-   optional int32             wounded      = 7;  //!< The number of wounded persons
-   optional int32             contaminated = 8;  //!< The number of contaminated persons
-   optional int32             dead         = 9;  //!< The number of dead persons
-   optional EnumCrowdAttitude attitude     = 10; //!< The crowd attitude
+   optional Path              parts        = 3;  //!< The crowd shape
+   optional Path              path         = 4;  //!< The crowd path
+   optional Heading           direction    = 5;  //!< @todo What's this ?
+   optional int32             speed        = 6;  //!< The flow speed
+   optional int32             healthy      = 7;  //!< The number of healthy persons
+   optional int32             wounded      = 8;  //!< The number of wounded persons
+   optional int32             contaminated = 9;  //!< The number of contaminated persons
+   optional int32             dead         = 10;  //!< The number of dead persons
+   optional EnumCrowdAttitude attitude     = 11; //!< The crowd attitude
 }
 
 /** @struct CrowdKnowledgeCreation

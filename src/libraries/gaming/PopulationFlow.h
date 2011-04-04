@@ -84,6 +84,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     uint nID_;
     T_PointVector flow_;
+    T_PointVector path_;
     geometry::Rectangle2f boundingBox_;
     int nDirection_;
     int nSpeed_;
