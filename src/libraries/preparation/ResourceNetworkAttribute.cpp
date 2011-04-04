@@ -32,7 +32,7 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
     , urbans_     ( urbans )
     , objects_    ( objects )
     , resources_  ( resources )
-    , needSaving_ ( false )
+    , needSaving_ ( true )
 {
     xis >> xml::list( "node", *this, &ResourceNetworkAttribute::ReadNode );
 }
