@@ -16,6 +16,7 @@
 #define BOOST_LIB_NAME boost_unit_test_framework
 #include <boost/config/auto_link.hpp>
 
+#pragma warning( disable: 4505 )
 #include <turtle/mock.hpp>
 
 std::string BOOST_RESOLVE( const std::string& filename );

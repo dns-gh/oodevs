@@ -10,6 +10,7 @@
 #include "mission_tester_pch.h"
 #include "Model.h"
 #include "Agent.h"
+#include "Scheduler_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/StaticModel.h"
 #include "protocol/Protocol.h"
@@ -21,8 +22,9 @@ using namespace mission_tester;
 // Name: Model constructor
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-Model::Model( const kernel::StaticModel& staticModel )
+Model::Model( const kernel::StaticModel& staticModel, Scheduler_ABC& scheduler )
     : staticModel_( staticModel )
+    , scheduler_  ( scheduler )
 {
     // NOTHING
 }
@@ -44,6 +46,8 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
 {
     if( message.message().has_unit_creation() )
         CreateAgent( message.message().unit_creation() );
+//    if( message.message().has_control_begin_tick() )
+//        scheduler_.Tick( message.message().control_begin_tick() );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +65,12 @@ void Model::OnReceiveMessage( const sword::MessengerToClient& /*message*/ )
 // -----------------------------------------------------------------------------
 void Model::CreateAgent( const sword::UnitCreation& message )
 {
-    agents_[ message.unit().id() ] = boost::shared_ptr< Agent >( new Agent( message, staticModel_.types_ ) );
+    boost::shared_ptr< Agent > agent( new Agent( message, staticModel_.types_ ) );
+    if( agent.get() )
+    {
+        agents_[ message.unit().id() ] = agent;
+        scheduler_.Schedule( *agent );
+    }
 }
 
 // -----------------------------------------------------------------------------

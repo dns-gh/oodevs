@@ -10,6 +10,7 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
+#include "Schedulable_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "tools/Resolver_ABC.h"
 #pragma warning( push, 0 )
@@ -23,13 +24,15 @@ namespace sword
 
 namespace mission_tester
 {
+    class Criterion_ABC;
 // =============================================================================
 /** @class  Agent
     @brief  Agent
 */
 // Created: PHC 2011-03-28
 // =============================================================================
-class Agent : public kernel::Agent_ABC
+class Agent : public Schedulable_ABC
+            , public kernel::Agent_ABC
 {
 
 public:
@@ -45,6 +48,8 @@ public:
     virtual unsigned long GetId() const;
     virtual const kernel::AgentType& GetType() const;
     virtual bool IsCommandPost() const;
+    virtual bool Matches( const Criterion_ABC& criterion ) const;
+    virtual bool Trigger( State_ABC& state );
     //@}
 
 private:

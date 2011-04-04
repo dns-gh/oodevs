@@ -101,7 +101,7 @@ void Client::Disconnect()
 // Name: Client::OnConnectionSucceeded
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-void Client::OnConnectionSucceeded( const std::string& endpoint )
+void Client::OnConnectionSucceeded( const std::string& /*endpoint*/ )
 {
     std::cout << "connection succeeded" << std::endl; 
 }
@@ -110,7 +110,7 @@ void Client::OnConnectionSucceeded( const std::string& endpoint )
 // Name: Client::OnConnectionFailed
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-void Client::OnConnectionFailed( const std::string& endpoint, const std::string& reason )
+void Client::OnConnectionFailed( const std::string& /*endpoint*/, const std::string& /*reason*/ )
 {
     std::cerr << "connection failed" << std::endl;
 }
@@ -119,7 +119,7 @@ void Client::OnConnectionFailed( const std::string& endpoint, const std::string&
 // Name: Client::OnConnectionError
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-void Client::OnConnectionError( const std::string& endpoint, const std::string& reason )
+void Client::OnConnectionError( const std::string& /*endpoint*/, const std::string& /*reason*/ )
 {
     std::cerr << "connection error" << std::endl;
 }
@@ -128,7 +128,7 @@ void Client::OnConnectionError( const std::string& endpoint, const std::string& 
 // Name: Client::OnAuthenticationSucceeded
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-void Client::OnAuthenticationSucceeded( const std::string& profile )
+void Client::OnAuthenticationSucceeded( const std::string& /*profile*/ )
 {
     std::cout << "authentication succeeded" << std::endl;
 }
@@ -137,7 +137,7 @@ void Client::OnAuthenticationSucceeded( const std::string& profile )
 // Name: Client::OnAuthenticationFailed
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-void Client::OnAuthenticationFailed( const std::string& profile, const std::string& reason )
+void Client::OnAuthenticationFailed( const std::string& /*profile*/, const std::string& /*reason*/ )
 {
     std::cerr << "authentication failed" << std::endl;
 }

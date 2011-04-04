@@ -19,9 +19,9 @@ using namespace mission_tester;
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
 Agent::Agent( const sword::UnitCreation& message, const tools::Resolver_ABC< kernel::AgentType >& resolver )
-    : id_( message.unit().id() )
-    , name_( message.name().c_str() )
-    , type_( resolver.Get( message.type().id() ) )
+    : id_         ( message.unit().id() )
+    , name_       ( message.name().c_str() )
+    , type_       ( resolver.Get( message.type().id() ) )
     , commandPost_( message.pc() )
 {
     // NOTHING
@@ -97,4 +97,22 @@ void Agent::ContextMenu( kernel::ActionController& /*controller*/, const QPoint&
 void Agent::Activate( kernel::ActionController& /*controller*/ ) const
 {
     throw std::runtime_error( __FUNCTION__ ": not to be called" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Matches
+// Created: PHC 2011-03-31
+// -----------------------------------------------------------------------------
+bool Agent::Matches( const Criterion_ABC& /*criterion*/ ) const
+{
+    return true;// &criterion_ == &criterion; // $$$$ PHC 2011-03-31: TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Trigger
+// Created: PHC 2011-04-04
+// -----------------------------------------------------------------------------
+bool Agent::Trigger( State_ABC& /*state*/ )
+{
+    return true; // $$$$ PHC 2011-04-04: TODO
 }

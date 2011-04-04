@@ -10,8 +10,9 @@
 #ifndef __mission_tester_pch_h_
 #define __mission_tester_pch_h_
 
-#include <string>
 #include <map>
 #include <memory>
+#include <string>
+#include <vector>
 
 #endif // __mission_tester_pch_h_

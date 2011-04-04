@@ -29,6 +29,7 @@ namespace sword
 namespace mission_tester
 {
     class Agent;
+    class Scheduler_ABC;
 // =============================================================================
 /** @class  Model
     @brief  Model
@@ -43,7 +44,7 @@ class Model : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Model( const kernel::StaticModel& staticModel );
+    explicit Model( const kernel::StaticModel& staticModel, Scheduler_ABC& scheduler );
     virtual ~Model();
     //@}
 
@@ -89,6 +90,7 @@ private:
     //@{
     const kernel::StaticModel& staticModel_;
     T_Agents agents_;
+    Scheduler_ABC& scheduler_;
     //@}
 };
 }
