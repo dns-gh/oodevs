@@ -16,6 +16,7 @@
 #include "edxlhave_plugin/EdxlHavePluginFactory.h"
 #include "timeline_plugin/TimelinePluginFactory.h"
 #include "crossbow_plugin/CrossbowPluginFactory.h"
+#include "positions_plugin/PositionsPluginFactory.h"
 #include "tools/NullFileLoaderObserver.h"
 #include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FileLogger.h"
@@ -43,6 +44,7 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
         dispatcher_->RegisterPluginFactory( *new timeline::TimelinePluginFactory() );
         dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new bml::BmlPluginFactory() );
+        dispatcher_->RegisterPluginFactory( *new positions::PositionsPluginFactory() );
         dispatcher_->CreatePlugins();
     }
     catch( std::exception& e )

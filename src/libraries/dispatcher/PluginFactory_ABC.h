@@ -11,6 +11,7 @@
 #define __PluginFactory_ABC_h_
 
 #include <memory>
+#include <string>
 
 namespace kernel
 {
