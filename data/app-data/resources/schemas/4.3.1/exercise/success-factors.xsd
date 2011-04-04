@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="common.xsd"/>
+	<xs:simpleType name="T_CompositionOperator">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the list of available operators for composing conditions.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="or">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Condition is true if any of the conditions is verified.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="and">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Condition is true if all the conditions are verified.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_ComparisonOperator">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the list of available comparisons for individual condition computation.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="eq">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Equals</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ne">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Not equal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="lt">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Lower than</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="le">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Lower or equal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="gt">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Greater than</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ge">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Greater or equal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="T_ActionFunction">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the list of available script commands for use in actions.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="sim:Pause">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Pauses the simulation.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Display">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Displays a text message to the client application.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="condition">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines a condition: property to check (left value), comparison operator and right value.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="property" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Property to check (left value).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="operator" type="T_ComparisonOperator" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Comparison operator.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="value" type="xs:float" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Value to compare the property to (right value).</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="conditions">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines the list of conditions, composed according to specified operator.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="condition" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="operator" type="T_CompositionOperator" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the composition operator to be used for combining conditions.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="parameter">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines an action parameter.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the name of the action parameter.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="value" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the value to set the named action parameter to.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="action">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines an action to be executed of specified type with given parameters.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="parameter" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="type" type="T_ActionFunction" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the type of the action to be executed.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="actions">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines a list of actions, to be executed sequentially.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="action" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="profile">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines a profile for which the factor is to be processed.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Defines the name of the profile.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="profiles">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines a list of profiles for which the factor is to be processed.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="profile" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="factor">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Defines a success factor: triggering conditions and actions to be executed.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="profiles"/>
+				<xs:element ref="conditions"/>
+				<xs:element ref="actions"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Identifies the factor.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="success" type="xs:boolean" default="false">
+				<xs:annotation>
+					<xs:appinfo>not implemented</xs:appinfo>
+					<xs:documentation xml:lang="en">Defines whether the factor is a success or failure factor.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="factors">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Root element, defines a list of factors.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="factor" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="model-version" type="T_Version"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
