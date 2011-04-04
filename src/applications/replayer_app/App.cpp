@@ -10,6 +10,7 @@
 #include "App.h"
 #include "dispatcher/Replayer.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_FileLogger.h"
 #include "tools/WinArguments.h"
 #include "resource.h"
 #include "dispatcher/Config.h"
@@ -27,7 +28,7 @@ static int IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1};
 // Name: App constructor
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/ ,LPSTR lpCmdLine, int /* nCmdShow */ )
+App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/, LPSTR lpCmdLine, int /* nCmdShow */ )
     : observer_( new tools::NullFileLoaderObserver() )
     , config_  ( new dispatcher::Config( *observer_ ) )
 {
@@ -38,6 +39,7 @@ App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/ ,LPSTR lpCmdLine, in
     // win32 argument parsing
     WinArguments winArgs( lpCmdLine );
     config_->Parse( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
+    MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Replayer.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, true ) );
     MT_LOG_INFO_MSG( "Loading record " << config_->GetSessionFile() );
     replayer_.reset( new Replayer( *config_ ) );
     guiThread_.reset( new boost::thread( boost::bind( &App::RunGUI, this, hinstance ) ) );
