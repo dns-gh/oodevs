@@ -33,7 +33,7 @@ namespace
 // Created: ABR 2011-04-01
 // -----------------------------------------------------------------------------
 PositionsPlugin::PositionsPlugin( const dispatcher::Config& config, int exportFrequency )
-    : filepath_       ( config.BuildSessionChildFile( "Positions.csv" ).c_str() )
+    : filepath_       ( config.BuildSessionChildFile( "positions.csv" ).c_str() )
     , exportFrequency_( exportFrequency )
     , firstTick_      ( true )
     , lastExportTime_ ()
