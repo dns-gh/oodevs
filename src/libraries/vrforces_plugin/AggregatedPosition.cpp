@@ -44,10 +44,12 @@ void AggregatedPosition::Update( const DtEntityIdentifier& identifier, const DtV
     DtGeodeticCoord converter;
     converter.setGeocentric( position );
     points_[ identifier ] = geometry::Point2d( DtRad2Deg( converter.lat() ), DtRad2Deg( converter.lon() ) );
-    const geometry::Point2d last( barycenter_ );
     ComputeBarycenter();
-    if( last.Distance( barycenter_ ) > 0.001 )
+    if( last_.Distance( barycenter_ ) > 0.001 )
+    {
         agent_.MoveTo( barycenter_ );
+        last_ = barycenter_;
+    }
 }
 
 // -----------------------------------------------------------------------------

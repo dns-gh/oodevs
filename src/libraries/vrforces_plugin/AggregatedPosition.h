@@ -54,6 +54,7 @@ private:
     const Agent& agent_;
     std::map< const DtEntityIdentifier, geometry::Point2d > points_;
     geometry::Point2d barycenter_;
+    geometry::Point2d last_;
     //@}
 };
 }
