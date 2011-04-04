@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "mission_tester_pch.h"
-#include "Model.h"
 #include "Agent.h"
+#include "Model.h"
 #include "Scheduler_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/StaticModel.h"
@@ -23,8 +23,8 @@ using namespace mission_tester;
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
 Model::Model( const kernel::StaticModel& staticModel, Scheduler_ABC& scheduler )
-    : staticModel_( staticModel )
-    , scheduler_  ( scheduler )
+    : staticModel_   ( staticModel )
+    , scheduler_     ( scheduler )
 {
     // NOTHING
 }

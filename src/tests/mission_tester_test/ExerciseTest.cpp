@@ -8,10 +8,10 @@
 // *****************************************************************************
 
 #include "mission_tester_test_pch.h"
-#include "mission_tester/Scheduler.h"
-#include "mission_tester/Scheduler_ABC.h"
-#include "mission_tester/Model.h"
 
+#include "mission_tester/Scheduler_ABC.h"
+#include "mission_tester/Scheduler.h"
+#include "mission_tester/Model.h"
 
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentType.h"
@@ -23,6 +23,7 @@
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/SymbolFactory.h"
+
 #include "protocol/ClientSenders.h"
 #pragma warning( push, 0 )
 #include <qstring.h>

@@ -10,11 +10,12 @@
 #ifndef __Schedulable_ABC_h_
 #define __Schedulable_ABC_h_
 
+#include "Filter_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace mission_tester
 {
-    class Criterion_ABC;
+    class Criteria;
     class State_ABC;
 // =============================================================================
 /** @class  Schedulable_ABC
@@ -35,7 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual bool Trigger( State_ABC& state ) = 0;
-    virtual bool Matches( const Criterion_ABC& criterion ) const = 0;
+    virtual bool Matches( const Criteria& criteria ) const = 0;
     //@}
 };
 }

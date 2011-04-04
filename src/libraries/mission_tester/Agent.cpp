@@ -9,6 +9,8 @@
 
 #include "mission_tester_pch.h"
 #include "Agent.h"
+#include "Criteria.h"
+#include "Filter_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "protocol/Protocol.h"
 
@@ -103,9 +105,9 @@ void Agent::Activate( kernel::ActionController& /*controller*/ ) const
 // Name: Agent::Matches
 // Created: PHC 2011-03-31
 // -----------------------------------------------------------------------------
-bool Agent::Matches( const Criterion_ABC& /*criterion*/ ) const
+bool Agent::Matches( const Criteria& criteria ) const
 {
-    return true;// &criterion_ == &criterion; // $$$$ PHC 2011-03-31: TODO
+    return criteria.Matches( "agent" );
 }
 
 // -----------------------------------------------------------------------------

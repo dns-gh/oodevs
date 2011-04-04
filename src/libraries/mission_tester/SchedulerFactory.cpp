@@ -8,13 +8,12 @@
 // *****************************************************************************
 
 #include "mission_tester_pch.h"
-#include "SchedulerFactory.h"
-#include "AgentFilter.h"
+#include "Criteria.h"
+#include "Filter.h"
 #include "Scheduler.h"
+#include "SchedulerFactory.h"
 
 using namespace mission_tester;
-
-
 
 // -----------------------------------------------------------------------------
 // Name: SchedulerFactory constructor
@@ -40,7 +39,8 @@ SchedulerFactory::~SchedulerFactory()
 // -----------------------------------------------------------------------------
 Scheduler_ABC* SchedulerFactory::CreateAgentScheduler()
 {
-    std::auto_ptr< Filter_ABC > filter ( new AgentFilter( agentCriterion_ ) );
+    std::auto_ptr< Criteria > criteria( new Criteria( "agent" ) );
+    std::auto_ptr< Filter_ABC > filter ( new Filter( *criteria ) );
     boost::shared_ptr< Scheduler_ABC > scheduler( new Scheduler( *filter ) );
     schedulers_.push_back( scheduler );
     return scheduler.get();

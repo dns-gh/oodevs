@@ -7,35 +7,41 @@
 //
 // *****************************************************************************
 
-#ifndef __CompositeSchedulable_h_
-#define __CompositeSchedulable_h_
+#ifndef __Filter_h_
+#define __Filter_h_
 
-#include "Schedulable_ABC.h"
+#include "Filter_ABC.h"
 
 namespace mission_tester
 {
-    class State_ABC;
+    class Criteria;
 // =============================================================================
-/** @class  CompositeSchedulable
-    @brief  CompositeSchedulable
+/** @class  Filter
+    @brief  Filter
 */
-// Created: PHC 2011-03-30
+// Created: PHC 2011-03-31
 // =============================================================================
-class CompositeSchedulable : private Schedulable_ABC
+class Filter : public Filter_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             CompositeSchedulable();
-    virtual ~CompositeSchedulable();
+    explicit Filter( const Criteria& criteria );
+    virtual ~Filter();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool Trigger( State_ABC& state );
+    virtual bool Accepts( const Schedulable_ABC& schedulable ) const;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    const Criteria& criteria_;
     //@}
 };
 }
 
-#endif // __CompositeSchedulable_h_
+#endif // __Filter_h_

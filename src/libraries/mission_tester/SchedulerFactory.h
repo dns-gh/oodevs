@@ -10,7 +10,6 @@
 #ifndef __SchedulerFactory_h_
 #define __SchedulerFactory_h_
 
-#include "Criterion_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -48,7 +47,6 @@ private:
     //! @name Member data
     //@{
     T_Schedulers schedulers_;
-    const AgentCriterion agentCriterion_;
     //@}
 };
 }

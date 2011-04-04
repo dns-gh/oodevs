@@ -8,35 +8,36 @@
 // *****************************************************************************
 
 #include "mission_tester_pch.h"
-#include "AgentFilter.h"
+#include "Filter.h"
 #include "Schedulable_ABC.h"
+#include "SchedulerFactory.h"
 
 using namespace mission_tester;
 
 // -----------------------------------------------------------------------------
-// Name: AgentFilter constructor
+// Name: Filter constructor
 // Created: PHC 2011-03-31
 // -----------------------------------------------------------------------------
-AgentFilter::AgentFilter( const Criterion_ABC& criterion )
-    : criterion_( criterion )
+Filter::Filter( const Criteria& criteria )
+    : criteria_( criteria )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFilter destructor
+// Name: Filter destructor
 // Created: PHC 2011-03-31
 // -----------------------------------------------------------------------------
-AgentFilter::~AgentFilter()
+Filter::~Filter()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentFilter::Accepts
+// Name: Filter::Accepts
 // Created: PHC 2011-03-31
 // -----------------------------------------------------------------------------
-bool AgentFilter::Accepts( const Schedulable_ABC& schedulable ) const
+bool Filter::Accepts( const Schedulable_ABC& schedulable ) const
 {
-    return schedulable.Matches( criterion_ );
+    return schedulable.Matches( criteria_ );
 }

@@ -11,6 +11,7 @@
 #include "mission_tester/Client.h"
 #include "mission_tester/Exercise.h"
 #include "mission_tester/Model.h"
+#include "mission_tester/Scheduler.h"
 #include "mission_tester/SchedulerFactory.h"
 #include "clients_kernel/StaticModel.h"
 #include "tools/ExerciseConfig.h"

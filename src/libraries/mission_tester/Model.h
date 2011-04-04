@@ -14,7 +14,6 @@
 #include "clients_kernel/EntityResolver_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
-#include <map>
 
 namespace kernel
 {

@@ -24,7 +24,7 @@ namespace sword
 
 namespace mission_tester
 {
-    class Criterion_ABC;
+    class Criteria;
 // =============================================================================
 /** @class  Agent
     @brief  Agent
@@ -48,19 +48,8 @@ public:
     virtual unsigned long GetId() const;
     virtual const kernel::AgentType& GetType() const;
     virtual bool IsCommandPost() const;
-    virtual bool Matches( const Criterion_ABC& criterion ) const;
+    virtual bool Matches( const Criteria& criteria ) const;
     virtual bool Trigger( State_ABC& state );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Agent( const Agent& );            //!< Copy constructor
-    Agent& operator=( const Agent& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
