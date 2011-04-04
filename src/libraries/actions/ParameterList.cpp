@@ -72,7 +72,7 @@ std::string ParameterList::GetType() const
 // -----------------------------------------------------------------------------
 void ParameterList::Display( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Item( tools::translate( "ParameterList", "Parameter" ) ).Display( GetName() );
+    displayer.Item( tools::translate( "Action", "Parameter" ) ).Display( GetName() );
 }
 
 // -----------------------------------------------------------------------------

@@ -153,6 +153,10 @@ void MedicalTreatmentAttribute::Display( Displayer_ABC& displayer ) const
 
     displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment" ) )
          .Display( tools::translate( "MedicalTreatment", "Hospital ID:" ), referenceID_ );
+    
+    // $$$$ LDC 2011-04-04 FIXME: These are displayed in ObjectPanel but not here???
+    tools::translate( "MedicalTreatment", "Total number of beds:" );
+    tools::translate( "MedicalTreatment", "Number of available beds:" );
 
     displayer.Group( tools::translate( "MedicalTreatment", "Medical Treatment services (Available(Baseline)):" ) );
     for( T_TreatmentCapacities::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )

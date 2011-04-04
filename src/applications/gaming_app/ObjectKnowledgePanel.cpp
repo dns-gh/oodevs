@@ -26,66 +26,68 @@
 using namespace kernel;
 using namespace gui;
 
+// $$$$ LDC 2011-04-04 FIXME ObjectKnowledgePanel.inl has been created to hold the translations specific to this file
+// in order to avoid lupdate from duplicating the "Object" context used in gaming. This file is only useful for translator.pro
+
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePanel constructor
 // Created: AGE 2006-02-24
 // -----------------------------------------------------------------------------
 ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, ItemFactory_ABC& factory )
-    : InfoPanel_ABC( parent, panel, tr( "Object knowledges" ) )
+    : InfoPanel_ABC( parent, panel, tools::translate( "ObjectKnowledgePanel", "Object knowledges" ) )
     , controllers_ ( controllers )
     , selected_    ( controllers )
     , subSelected_ ( controllers )
 {
     pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn( tools::translate( "Object", "Known objects" ) );
+    pKnowledgeListView_->AddColumn(  tools::translate( "ObjectKnowledgePanel", "Known objects" ) );
 
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( tr( "Information" ) )
-                .AddLabel( tr( "Identifier:" ) )
-                .AddLabel( tr( "Associated object:" ) )
-                .AddLabel( tr( "Location:" ) )
-                .AddLabel( tr( "Type:" ) )
-                .AddLabel( tr( "Construction:" ) )
-                .AddLabel( tr( "Construction dotation:" ) )
-                .AddLabel( tr( "Mining:" ) )
-                .AddLabel( tr( "Development dotation:" ) )
-                .AddLabel( tr( "Bypass:" ) )
-                .AddLabel( tr( "Obstacle type:" ) )
-                .AddLabel( tr( "Reserved obstacle activated:" ) )
-                .AddLabel( tr( "Prepared:" ) )
-                .AddLabel( tr( "Perceived:" ) )
-                .AddLabel( tr( "Relevance:" ) );
+    display_->AddGroup( tools::translate( "Object", "Information" ) )
+                .AddLabel( tools::translate( "Object", "Identifier:" ) )
+                .AddLabel( tools::translate( "Object", "Associated object:" ) )
+                .AddLabel( tools::translate( "Object", "Location:" ) )
+                .AddLabel( tools::translate( "Object", "Type:" ) )
+                .AddLabel( tools::translate( "Object", "Construction:" ) )
+                .AddLabel( tools::translate( "Object", "Construction dotation:" ) )
+                .AddLabel( tools::translate( "Object", "Mining:" ) )
+                .AddLabel( tools::translate( "Object", "Development dotation:" ) )
+                .AddLabel( tools::translate( "Object", "Bypass:" ) )
+                .AddLabel( tools::translate( "Object", "Obstacle type:" ) )
+                .AddLabel( tools::translate( "Object", "Reserved obstacle activated:" ) )
+                .AddLabel( tools::translate( "Object", "Perceived:" ) )
+                .AddLabel( tools::translate( "Object", "Relevance:" ) );
 
-    display_->AddGroup( tr( "Crossing site" ) )
-                .AddLabel( tr( "Width:" ) )
-                .AddLabel( tr( "Depth:" ) )
-                .AddLabel( tr( "Stream speed:" ) )
-                .AddLabel( tr( "Build river banks:" ) );
+    display_->AddGroup( tools::translate( "Object", "Crossing site" ) )
+                .AddLabel( tools::translate( "Object", "Width:" ) )
+                .AddLabel( tools::translate( "Object", "Depth:" ) )
+                .AddLabel( tools::translate( "Object", "Stream speed:" ) )
+                .AddLabel( tools::translate( "Object", "Build river banks:" ) );
 
-    display_->AddGroup( tr( "Camp" ) )
-                .AddLabel( tr( "TC2:" ) );
+    display_->AddGroup( tools::translate( "Object", "Camp" ) )
+                .AddLabel( tools::translate( "Object", "TC2:" ) );
 
-    display_->AddGroup( tr( "NBC" ) )
-                .AddLabel( tr( "Danger:" ) )
-                .AddLabel( tr( "NBC agent(s):" ) );
+    display_->AddGroup( tools::translate( "NBC", "NBC" ) )
+                .AddLabel( tools::translate( "NBC", "Danger:" ) )
+                .AddLabel( tools::translate( "NBC", "NBC agent(s):" ) );
 
-    display_->AddGroup( tr( "Logistic route" ) )
-                .AddLabel( tr( "Equipped:" ) )
-                .AddLabel( tr( "Flow:" ) )
-                .AddLabel( tr( "Width:" ) )
-                .AddLabel( tr( "Length:" ) )
-                .AddLabel( tr( "Maximum weight:" ) );
+    display_->AddGroup( tools::translate( "Object", "Logistic route" ) )
+                .AddLabel( tools::translate( "Object", "Equipped:" ) )
+                .AddLabel( tools::translate( "Object", "Flow:" ) )
+                .AddLabel( tools::translate( "Object", "Width:" ) )
+                .AddLabel( tools::translate( "Object", "Length:" ) )
+                .AddLabel( tools::translate( "Object", "Maximum weight:" ) );
 
-    display_->AddGroup( tr( "Mine parameters" ) )
-                .AddLabel( tr( "Activity time:" ) )
-                .AddLabel( tr( "Density:" ) );
+    display_->AddGroup( tools::translate( "Object", "Mine parameters" ) )
+                .AddLabel( tools::translate( "Object", "Activity time:" ) )
+                .AddLabel( tools::translate( "Object", "Density:" ) );
 
-    display_->AddGroup( tr( "Fire" ) )
-                .AddLabel( tr( "Fire class:" ) )
-                .AddLabel( tr( "Fire temperature:" ) );
+    display_->AddGroup( tools::translate( "Object", "Fire" ) )
+                .AddLabel( tools::translate( "Object", "Fire class:" ) )
+                .AddLabel( tools::translate( "Object", "Fire temperature:" ) );
 
     pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
-    pPerceptionListView_->AddColumn( tr( "Agent" ) );
+    pPerceptionListView_->AddColumn( tools::translate( "ObjectKnowledgePanel", "Agent" ) );
 
     connect( pKnowledgeListView_, SIGNAL( selectionChanged( QListViewItem* ) ), this, SLOT( OnSelectionChanged( QListViewItem* ) ) );
     connect( pKnowledgeListView_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint& ) ) );

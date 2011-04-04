@@ -205,6 +205,7 @@ void Note::WriteNote( std::ofstream& file, int parentLine ) const
          << parentLine;
     std::string desc = description_;
     boost::algorithm::replace_all( desc, "\n", "<br>" );
+    boost::algorithm::replace_all( desc, "\"", "\\\"" );
     file << ";\"" + number_ + "\";\"" + desc + "\""
          << ";\"" + creationTime_+ "\";\"" + lastUpdateTime_ + "\"" << std::endl;
 }

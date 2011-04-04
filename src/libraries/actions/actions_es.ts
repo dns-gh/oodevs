@@ -184,13 +184,6 @@
     </message>
 </context>
 <context>
-    <name>ParameterList</name>
-    <message>
-        <source>Parameter</source>
-        <translation>Parametro</translation>
-    </message>
-</context>
-<context>
     <name>gaming_app::Action</name>
     <message>
         <source>Object Update</source>

@@ -62,8 +62,8 @@ WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC
 
     QHBox* box = new QHBox( this );
     box->setMaximumHeight( 30 );
-    QButton* okBtn     = new QPushButton( tools::translate( "WeatherCreationPanel", "Save" )  , box );
-    QButton* cancelBtn = new QPushButton( tools::translate( "WeatherCreationPanel", "Cancel" ), box );
+    QButton* okBtn     = new QPushButton( tools::translate( "CreationPanel", "Apply" )  , box );
+    QButton* cancelBtn = new QPushButton( tools::translate( "CreationPanel", "Cancel" ), box );
 
     connect( positionBtn_, SIGNAL( clicked() ), this, SLOT( StartEditingLocation() ) );
     connect( okBtn, SIGNAL( clicked() ), this, SLOT( Commit() ) );

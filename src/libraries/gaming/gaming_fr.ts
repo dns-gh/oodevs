@@ -931,6 +931,14 @@
         <source>Medical Treatment services (Available(Baseline)):</source>
         <translation>Service de traitement médical (Disponible( Base)):</translation>
     </message>
+    <message>
+        <source>Total number of beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of available beds:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NBC</name>

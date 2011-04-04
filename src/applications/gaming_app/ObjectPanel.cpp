@@ -44,68 +44,67 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
     // $$$$ AGE 2006-08-23: tous ces trucs doivent etre identiques au labels utilisés
     // $$$$ AGE 2006-08-23: par le modèle correspondant et pire : traduits de la même maniere.
     // $$$$ AGE 2006-08-23: Faire des fichiers avec un tas de statics référencés par les 2 ?
-    GetBuilder().AddGroup( tr( "Information" ) )
-                .AddLabel( tr( "Identifier:" ) )
-                .AddLabel( tr( "Name:" ) )
-                .AddLabel( tr( "Type:" ) )
-                .AddLabel( tr( "Location:" ) );
+    GetBuilder().AddGroup( tools::translate( "Object", "Information" ) )
+                .AddLabel( tools::translate( "Object", "Identifier:" ) )
+                .AddLabel( tools::translate( "Object", "Name:" ) )
+                .AddLabel( tools::translate( "Object", "Type:" ) )
+                .AddLabel( tools::translate( "Object", "Location:" ) );
 
-    GetBuilder().Group( tr( "Information" ) )
-                .AddSpinBox( tr( "Construction:" ), 0, 100, 1 )
-                .AddLabel( tr( "Construction dotation:" ) )
-                .AddSpinBox( tr( "Mining:" ), 0, 100, 1 )
-                .AddLabel( tr( "Development dotation:" ) )
-                .AddSpinBox( tr( "Bypass:" ), 0, 100, 1 )
-                .AddLabel( tr( "Obstacle type:" ) )
-                .AddCheckBox( tr( "Reserved obstacle activated:" ) );
+    GetBuilder().Group( tools::translate( "Object", "Information" ) )
+                .AddSpinBox( tools::translate( "Object", "Construction:" ), 0, 100, 1 )
+                .AddLabel( tools::translate( "Object", "Construction dotation:" ) )
+                .AddSpinBox( tools::translate( "Object", "Mining:" ), 0, 100, 1 )
+                .AddLabel( tools::translate( "Object", "Development dotation:" ) )
+                .AddSpinBox( tools::translate( "Object", "Bypass:" ), 0, 100, 1 )
+                .AddLabel( tools::translate( "Object", "Obstacle type:" ) )
+                .AddCheckBox( tools::translate( "Object", "Reserved obstacle activated:" ) );
 
-    GetBuilder().AddGroup( tr( "Crossing site" ) )
-                .AddLabel( tr( "Width:" ) )
-                .AddLabel( tr( "Depth:" ) )
-                .AddLabel( tr( "Stream speed:" ) )
-                .AddLabel( tr( "Build river banks:" ) );
+    GetBuilder().AddGroup( tools::translate( "Object", "Crossing site" ) )
+                .AddLabel( tools::translate( "Object", "Width:" ) )
+                .AddLabel( tools::translate( "Object", "Depth:" ) )
+                .AddLabel( tools::translate( "Object", "Stream speed:" ) )
+                .AddLabel( tools::translate( "Object", "Build river banks:" ) );
 
-    GetBuilder().AddGroup( tr( "Camp" ) )
-                .AddLabel( tr( "TC2:" ) );
+    GetBuilder().AddGroup( tools::translate( "Object", "Camp" ) )
+                .AddLabel( tools::translate( "Object", "TC2:" ) );
 
-    GetBuilder().AddGroup( tr( "NBC" ) )
-                .AddLabel( tr( "NBC agent state:" ) )
-                .AddLabel( tr( "Danger:" ) )
-                .AddLabel( tr( "NBC agent(s):" ) );
+    GetBuilder().AddGroup( tools::translate( "NBC", "NBC" ) )
+                .AddLabel( tools::translate( "NBCPrototype_ABC", "NBC agent state:" ) )
+                .AddLabel( tools::translate( "NBC", "Danger:" ) )
+                .AddLabel( tools::translate( "NBCPrototype_ABC", "NBC agent(s):" ) );
 
-    GetBuilder().AddGroup( tr( "Medical Treatment" ) )
-                .AddLabel( tr( "Total number of beds:" ) )
-                .AddLabel( tr( "Number of available beds:" ) )
-                .AddLabel( tr( "Total number of doctors:" ) )
-                .AddLabel( tr( "Number of available doctors:" ) );
+    GetBuilder().AddGroup( tools::translate( "MedicalTreatment", "Medical Treatment" ) )
+                .AddLabel( tools::translate( "MedicalTreatment", "Total number of beds:" ) )
+                .AddLabel( tools::translate( "MedicalTreatment", "Number of available beds:" ) )
+                .AddLabel( tools::translate( "MedicalTreatment", "Total number of doctors:" ) )
+                .AddLabel( tools::translate( "MedicalTreatment", "Number of available doctors:" ) );
 
-    GetBuilder().AddGroup( tr( "Logistic route" ) )
-                .AddLabel( tr( "Equipped:" ) )
-                .AddLabel( tr( "Flow:" ) )
-                .AddLabel( tr( "Width:" ) )
-                .AddLabel( tr( "Length:" ) )
-                .AddLabel( tr( "Maximum weight:" ) );
+    GetBuilder().AddGroup( tools::translate( "Object", "Logistic route" ) )
+                .AddLabel( tools::translate( "Object", "Equipped:" ) )
+                .AddLabel( tools::translate( "Object", "Flow:" ) )
+                .AddLabel( tools::translate( "Object", "Width:" ) )
+                .AddLabel( tools::translate( "Object", "Length:" ) )
+                .AddLabel( tools::translate( "Object", "Maximum weight:" ) );
 
-    GetBuilder().AddGroup( tr( "Mine parameters" ) )
-                .AddLabel( tr( "Density:" ) )
-                .AddLabel( tr( "Activity time:" ) );
+    GetBuilder().AddGroup( tools::translate( "Object", "Mine parameters" ) )
+                .AddLabel( tools::translate( "Object", "Density:" ) )
+                .AddLabel( tools::translate( "Object", "Activity time:" ) );
 
-    GetBuilder().AddGroup( tr( "Fire" ) )
-                .AddLabel( tr( "Fire class:" ) )
-                .AddLabel( tr( "Fire temperature:" ) );
+    GetBuilder().AddGroup( tools::translate( "Object", "Fire" ) )
+                .AddLabel( tools::translate( "Object", "Fire class:" ) )
+                .AddLabel( tools::translate( "Object", "Fire temperature:" ) );
 
-    Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
-    construction_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tr( "Construction:" ) ) );
-    valorisation_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tr( "Mining:" ) ) );
-    contournement_ = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tr( "Bypass:" ) ) );
-//    prepared_      = dynamic_cast< CheckBoxDisplayer* >( & infos.Item( tr( "Prepared:" ) ) );
+    Displayer_ABC& infos = GetBuilder().Group( tools::translate( "Object", "Information" ) );
+    construction_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::translate( "Object", "Construction:" ) ) );
+    valorisation_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::translate( "Object", "Mining:" ) ) );
+    contournement_ = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::translate( "Object", "Bypass:" ) ) );
 
     QWidget* pSpacer = new QWidget( this );
     pSpacer->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Expanding );
 
     QHBox* pHBox  = new QHBox( this );
-    QPushButton* pApplyButton_  = new QPushButton( tr( "Apply" ), pHBox );
-    QPushButton* pCancelButton_ = new QPushButton( tr( "Cancel" )  , pHBox );
+    QPushButton* pApplyButton_  = new QPushButton( tools::translate( "CreationPanel", "Apply" ), pHBox );
+    QPushButton* pCancelButton_ = new QPushButton( tools::translate( "CreationPanel", "Cancel" ), pHBox );
 
     connect( pApplyButton_,  SIGNAL( clicked() ), this, SLOT( OnApply() ) );
     connect( pCancelButton_, SIGNAL( clicked() ), this, SLOT( OnCancel() ) );
@@ -140,8 +139,8 @@ void ObjectPanel::OnApply()
         action->AddParameter( *attributesList );
 
         // add attributes
-        Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
-        gui::CheckBoxDisplayer* pCheckBox = dynamic_cast< gui::CheckBoxDisplayer* > ( & infos.Item( tools::translate( "ObjectPanel", "Reserved obstacle activated:" ) ) );
+        Displayer_ABC& infos = GetBuilder().Group( tools::translate( "Object", "Information" ) );
+        gui::CheckBoxDisplayer* pCheckBox = dynamic_cast< gui::CheckBoxDisplayer* > ( & infos.Item( tools::translate( "Object", "Reserved obstacle activated:" ) ) );
         if( pCheckBox && pCheckBox->IsChecked() )
         {
             ParameterList& obstacleList = attributesList->AddList( "Obstacle" );

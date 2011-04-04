@@ -18,24 +18,6 @@
     </message>
 </context>
 <context>
-    <name>ActionTiming</name>
-    <message>
-        <source>Time</source>
-        <translation>Temps</translation>
-    </message>
-</context>
-<context>
-    <name>ActionsListView</name>
-    <message>
-        <source>Value</source>
-        <translation>Valeur</translation>
-    </message>
-    <message>
-        <source>Parameter</source>
-        <translation>Paramètre</translation>
-    </message>
-</context>
-<context>
     <name>ActionsToolbar</name>
     <message>
         <source>Load</source>
@@ -465,6 +447,17 @@ Reason: %3
     <message>
         <source>Create formation</source>
         <translation>Créer une formation</translation>
+    </message>
+</context>
+<context>
+    <name>CreationPanel</name>
+    <message>
+        <source>Apply</source>
+        <translation>Appliquer</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -903,17 +896,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Equipment availabilities</source>
         <translation>Disponibilités d&apos;équipements</translation>
-    </message>
-</context>
-<context>
-    <name>InfoMissionsTab</name>
-    <message>
-        <source>Value</source>
-        <translation>Valeur</translation>
-    </message>
-    <message>
-        <source>Parameter</source>
-        <translation>Paramètre</translation>
     </message>
 </context>
 <context>
@@ -2069,21 +2051,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>Object</name>
-    <message>
-        <source>Known objects</source>
-        <translation>Objets connus</translation>
-    </message>
-</context>
-<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
-        <translation>Objets</translation>
+        <translation type="unfinished">Objets</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Créer</translation>
+        <translation type="unfinished">Créer</translation>
     </message>
 </context>
 <context>
@@ -2093,152 +2068,12 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Connaissances d&apos;objet</translation>
     </message>
     <message>
-        <source>Identifier:</source>
-        <translation>Identifiant:</translation>
-    </message>
-    <message>
-        <source>Associated object:</source>
-        <translation>Objet associé:</translation>
-    </message>
-    <message>
-        <source>Location:</source>
-        <translation>Position:</translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation>Type:</translation>
-    </message>
-    <message>
-        <source>Construction:</source>
-        <translation>Construction:</translation>
-    </message>
-    <message>
-        <source>Mining:</source>
-        <translation>Valorisation:</translation>
-    </message>
-    <message>
-        <source>Bypass:</source>
-        <translation>Contournement:</translation>
-    </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation>Type d&apos;obstacle:</translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation>Obstacle de manoeuvre activé:</translation>
-    </message>
-    <message>
-        <source>Prepared:</source>
-        <translation>Préparé:</translation>
-    </message>
-    <message>
-        <source>Perceived:</source>
-        <translation>Perçu:</translation>
-    </message>
-    <message>
-        <source>Relevance:</source>
-        <translation>Pertinence:</translation>
-    </message>
-    <message>
-        <source>Crossing site</source>
-        <translation>Site de franchissement</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Largeur:</translation>
-    </message>
-    <message>
-        <source>Depth:</source>
-        <translation>Profondeur:</translation>
-    </message>
-    <message>
-        <source>Stream speed:</source>
-        <translation>Débit du courant:</translation>
-    </message>
-    <message>
-        <source>Build river banks:</source>
-        <translation>Aménagement des rives:</translation>
-    </message>
-    <message>
-        <source>Camp</source>
-        <translation>Camp</translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation>TC2:</translation>
-    </message>
-    <message>
-        <source>NBC agent(s):</source>
-        <translation>Agent(s) NBC:</translation>
-    </message>
-    <message>
-        <source>Logistic route</source>
-        <translation>Itinéraire logistique</translation>
-    </message>
-    <message>
-        <source>Equipped:</source>
-        <translation>Equipé:</translation>
-    </message>
-    <message>
-        <source>Flow:</source>
-        <translation>Débit:</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation>Longueur:</translation>
-    </message>
-    <message>
-        <source>Maximum weight:</source>
-        <translation>Poids maximum:</translation>
-    </message>
-    <message>
-        <source>Mine parameters</source>
-        <translation>Paramètres des mines</translation>
-    </message>
-    <message>
-        <source>Activity time:</source>
-        <translation>Temps d&apos;activité:</translation>
-    </message>
-    <message>
-        <source>Density:</source>
-        <translation>Densité:</translation>
-    </message>
-    <message>
         <source>Agent</source>
         <translation>Agent</translation>
     </message>
     <message>
-        <source>NBC</source>
-        <translation>NBC</translation>
-    </message>
-    <message>
-        <source>Danger:</source>
-        <translation>Danger:</translation>
-    </message>
-    <message>
-        <source>Information</source>
-        <translation>Information</translation>
-    </message>
-    <message>
-        <source>Fire</source>
-        <translation>Feu</translation>
-    </message>
-    <message>
-        <source>Fire class:</source>
-        <translation>Type de feu:</translation>
-    </message>
-    <message>
-        <source>Fire temperature:</source>
-        <translation>Température du feu:</translation>
-    </message>
-    <message>
-        <source>Development dotation:</source>
-        <translation>Dotation de valorisation:</translation>
-    </message>
-    <message>
-        <source>Construction dotation:</source>
-        <translation>Dotation de construction:</translation>
+        <source>Known objects</source>
+        <translation type="unfinished">Objets connus</translation>
     </message>
 </context>
 <context>
@@ -2321,173 +2156,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>ObjectPanel</name>
-    <message>
-        <source>Information</source>
-        <translation>Information</translation>
-    </message>
-    <message>
-        <source>Identifier:</source>
-        <translation>Identifiant:</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation>Nom:</translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation>Type:</translation>
-    </message>
-    <message>
-        <source>Location:</source>
-        <translation>Position:</translation>
-    </message>
-    <message>
-        <source>Construction:</source>
-        <translation>Construction:</translation>
-    </message>
-    <message>
-        <source>Mining:</source>
-        <translation>Valorisation:</translation>
-    </message>
-    <message>
-        <source>Bypass:</source>
-        <translation>Contournement:</translation>
-    </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation>Type d&apos;obstacle:</translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation>Obstacle de manoeuvre activé:</translation>
-    </message>
-    <message>
-        <source>Construction dotation:</source>
-        <translation>Dotation de construction:</translation>
-    </message>
-    <message>
-        <source>Development dotation:</source>
-        <translation>Dotation de valorisation:</translation>
-    </message>
-    <message>
-        <source>Crossing site</source>
-        <translation>Site de franchissement</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation>Largeur:</translation>
-    </message>
-    <message>
-        <source>Depth:</source>
-        <translation>Profondeur:</translation>
-    </message>
-    <message>
-        <source>Stream speed:</source>
-        <translation>Débit du courant:</translation>
-    </message>
-    <message>
-        <source>Build river banks:</source>
-        <translation>Aménagement des rives:</translation>
-    </message>
-    <message>
-        <source>Camp</source>
-        <translation>Camp</translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation>TC2:</translation>
-    </message>
-    <message>
-        <source>NBC agent(s):</source>
-        <translation>Agent(s) NBC:</translation>
-    </message>
-    <message>
-        <source>Logistic route</source>
-        <translation>Itinéraire logistique</translation>
-    </message>
-    <message>
-        <source>Equipped:</source>
-        <translation>Equipé:</translation>
-    </message>
-    <message>
-        <source>Flow:</source>
-        <translation>Débit:</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation>Longueur:</translation>
-    </message>
-    <message>
-        <source>Maximum weight:</source>
-        <translation>Poids maximum:</translation>
-    </message>
-    <message>
-        <source>Mine parameters</source>
-        <translation>Paramètres des mines</translation>
-    </message>
-    <message>
-        <source>Activity time:</source>
-        <translation>Temps d&apos;activité:</translation>
-    </message>
-    <message>
-        <source>Density:</source>
-        <translation>Densité:</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation>Appliquer</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>NBC</source>
-        <translation>NBC</translation>
-    </message>
-    <message>
-        <source>NBC agent state:</source>
-        <translation>Etat agent NBC:</translation>
-    </message>
-    <message>
-        <source>Danger:</source>
-        <translation>Danger:</translation>
-    </message>
-    <message>
-        <source>Medical Treatment</source>
-        <translation>Traitement médical</translation>
-    </message>
-    <message>
-        <source>Total number of beds:</source>
-        <translation>Nombre total de lits:</translation>
-    </message>
-    <message>
-        <source>Number of available beds:</source>
-        <translation>Nombre de lits disponibles:</translation>
-    </message>
-    <message>
-        <source>Total number of doctors:</source>
-        <translation>Nombre total de médecins:</translation>
-    </message>
-    <message>
-        <source>Number of available doctors:</source>
-        <translation>Nombre de médecins disponibles:</translation>
-    </message>
-    <message>
-        <source>Fire</source>
-        <translation>Feu</translation>
-    </message>
-    <message>
-        <source>Fire class:</source>
-        <translation>Type de feu:</translation>
-    </message>
-    <message>
-        <source>Fire temperature:</source>
-        <translation>Température du feu:</translation>
-    </message>
-</context>
-<context>
     <name>OrbatAttributesDialog</name>
     <message>
         <source>Extensions</source>
@@ -2511,6 +2179,17 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Disaggregate all</source>
         <translation>Désagréger</translation>
+    </message>
+</context>
+<context>
+    <name>Parameter</name>
+    <message>
+        <source>Parameter</source>
+        <translation type="unfinished">Paramètre</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished">Valeur</translation>
     </message>
 </context>
 <context>
@@ -3321,14 +3000,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Définir la localisation</translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation>Sauvegarder</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
         <source>Change Global Weather</source>
         <translation>Changement de météo globale</translation>
     </message>
@@ -3361,10 +3032,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 </context>
 <context>
     <name>gaming_app::Action</name>
-    <message>
-        <source>Object Update</source>
-        <translation>Modification d&apos;objet</translation>
-    </message>
     <message>
         <source>Object Creation</source>
         <translation>Création d&apos;objet</translation>

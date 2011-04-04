@@ -47,7 +47,6 @@ InfoEventsWidget.cpp \
 InfoLendingsDialog.cpp \
 InfoMaintenanceDialog.cpp \
 InfoMedicalDialog.cpp \
-InfoMissionsTab.cpp \
 InfoStancesWidget.cpp \
 InfoStatusWidget.cpp \
 InfoSupplyDialog.cpp \
@@ -77,9 +76,8 @@ MissionPanel.cpp \
 NoteDialog.cpp \
 NotesPanel.cpp \
 ObjectCreationPanel.cpp \
-ObjectKnowledgePanel.cpp \
+ObjectKnowledgePanel.inl \
 ObjectMagicOrdersInterface.cpp \
-ObjectPanel.cpp \
 ObjectPrototype.cpp \
 OrbatAttributesDialog.cpp \
 OrbatToolbar.cpp \
