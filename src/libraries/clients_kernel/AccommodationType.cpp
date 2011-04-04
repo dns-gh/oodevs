@@ -16,7 +16,7 @@ using namespace kernel;
 // Name: AccommodationType constructor
 // Created: LDC 2011-03-25
 // -----------------------------------------------------------------------------
-AccommodationType::AccommodationType( const std::string& role, double maxCapacity, double nominalCapacity )
+AccommodationType::AccommodationType( const std::string& role, double /*maxCapacity*/, double /*nominalCapacity*/ )
     : role_( role )
 {
     // NOTHING

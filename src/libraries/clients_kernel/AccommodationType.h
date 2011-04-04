@@ -20,7 +20,6 @@ namespace kernel
 // =============================================================================
 class AccommodationType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -38,10 +37,6 @@ private:
     //@{
     AccommodationType( const AccommodationType& );            //!< Copy constructor
     AccommodationType& operator=( const AccommodationType& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:
