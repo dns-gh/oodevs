@@ -123,9 +123,7 @@ void PositionsPlugin::SaveTime()
     if( ! currentTime_.isValid() )
         return;
     lastExportTime_ = currentTime_;
-    const QString s = lastExportTime_.toString();
-    const std::string time = lastExportTime_.toString().ascii();
-    times_.push_back( time );
+    times_.push_back( lastExportTime_.toString().ascii() );
 }
 
 // -----------------------------------------------------------------------------

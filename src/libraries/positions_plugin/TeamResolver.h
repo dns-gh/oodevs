@@ -46,7 +46,9 @@ public:
     void AddTeam( unsigned int teamId, const std::string& teamName );
     void AddAutomat( unsigned int teamId, unsigned int automatId );
     void AddUnit( unsigned int automatId, unsigned int unitId, const std::string& name, unsigned int timePreviouslyExported );
+
     void UpdatePosition( unsigned int unitId, const sword::CoordLatLong& coord );
+
     void Export( boost::filesystem::ofstream& file ) const;
     //@}
 
