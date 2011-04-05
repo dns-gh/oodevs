@@ -28,7 +28,7 @@
 // -----------------------------------------------------------------------------
 PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
     : PHY_DecisionCallbackAction_ABC( caller )
-    , rBaseTime_   ( MIL_AgentServer::GetWorkspace().GetSimTime() )
+    , rBaseTime_   ( MIL_AgentServer::GetWorkspace().GetRealTime() )
     , rTimeToWait_ ( 0 )
 {
     unsigned int callerTeamID = caller.GetArmy().GetID();
@@ -43,7 +43,7 @@ PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, boost::shar
 // -----------------------------------------------------------------------------
 PHY_ActionInterrogate::PHY_ActionInterrogate( MIL_AgentPion& caller, int knowledgeCrowdId )
     : PHY_DecisionCallbackAction_ABC( caller )
-    , rBaseTime_   ( MIL_AgentServer::GetWorkspace().GetSimTime() )
+    , rBaseTime_   ( MIL_AgentServer::GetWorkspace().GetRealTime() )
     , rTimeToWait_ ( 0 )
 {
     unsigned int callerTeamID = caller.GetArmy().GetID();
@@ -82,7 +82,7 @@ void PHY_ActionInterrogate::ComputeTimeToWait( float affinity )
 // -----------------------------------------------------------------------------
 void PHY_ActionInterrogate::Execute()
 {
-    if( MIL_AgentServer::GetWorkspace().GetSimTime() - rBaseTime_ < rTimeToWait_ )
+    if( MIL_AgentServer::GetWorkspace().GetRealTime() - rBaseTime_ < rTimeToWait_ )
         Callback( static_cast< int >( eRunning ) );
     else
         Callback( static_cast< int >( eFinished ) );

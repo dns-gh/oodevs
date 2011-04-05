@@ -1247,7 +1247,8 @@ void MIL_Population::SendFullState() const
     client::CrowdUpdate asnMsg;
     asnMsg().mutable_crowd()->set_id( nID_ );
     GetRole< DEC_PopulationDecision >().SendFullState( asnMsg );
-    asnMsg().set_critical_intelligence( criticalIntelligence_ );
+    if( !criticalIntelligence_.empty() )
+        asnMsg().set_critical_intelligence( criticalIntelligence_ );
     asnMsg().set_armed_individuals( rArmedIndividuals_ );
     pAffinities_->SendFullState( asnMsg );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );

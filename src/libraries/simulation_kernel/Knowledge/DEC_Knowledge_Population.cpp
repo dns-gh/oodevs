@@ -398,7 +398,7 @@ void DEC_Knowledge_Population::SendMsgDestruction() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::UpdateOnNetwork() const
 {
-    if( bReconAttributesValid_ && ( bDecStateUpdated_ || bCriticalIntelligenceUpdated_ ) )
+    if( bCriticalIntelligenceUpdated_ || bReconAttributesValid_ && bDecStateUpdated_ )
     {
         client::CrowdKnowledgeUpdate asnMsg;
         asnMsg().mutable_knowledge()->set_id( nID_ );
@@ -527,4 +527,5 @@ void DEC_Knowledge_Population::CopyFrom( const DEC_Knowledge_Population& knowled
     rDominationState_ = knowledge.rDominationState_;
     criticalIntelligence_ = knowledge.criticalIntelligence_;
     bDecStateUpdated_ = true;
+    bCriticalIntelligenceUpdated_ = true;
 }
