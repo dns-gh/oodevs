@@ -18,8 +18,6 @@ class MIL_Mission_ABC;
 class TER_Localisation;
 class MT_Vector2D;
 class DEC_Knowledge_Object;
-class UrbanObjectWrapper;
-
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -59,7 +57,6 @@ public:
     
     // Move
     static bool HasReachedDestination          ( const MIL_Population& callerPopulation, const MT_Vector2D* destination );
-    static bool HasReachedBlockBorder( const MIL_Population& callerPopulation, const UrbanObjectWrapper* pUrbanKnowledge );
     static bool HasReachedDestinationCompletely( const MIL_Population& callerPopulation, const MT_Vector2D* destination );
 
     // Etat decisionnel

@@ -161,8 +161,7 @@ float DEC_UrbanObjectFunctions::GetStateUrbanBlock( UrbanObjectWrapper* pUrbanOb
         StructuralCapacity* pCapacity = pUrbanObject->Retrieve< StructuralCapacity >();
         if( pCapacity )
             return pCapacity->GetStructuralState();
-    } 
-    return -1.f;
+    }
 }
 
 // -----------------------------------------------------------------------------
