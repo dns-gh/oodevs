@@ -11399,7 +11399,9 @@
         <mission name="Agresser">
           <fragorder name="Population Changer Attitude"/>
         </mission>
-        <mission name="Deteriorer"/>
+        <mission name="Deteriorer">
+          <fragorder name="Population Changer Attitude"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Population Changer Attitude"/>
@@ -11407,4 +11409,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1515128003" -->
+<!-- signature="1732113338" -->
