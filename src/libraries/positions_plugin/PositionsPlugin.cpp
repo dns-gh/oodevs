@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "PositionsPlugin.h"
-#include "dispatcher/Config.h"
 #include "protocol/Protocol.h"
 #include <boost/filesystem.hpp>
 
@@ -32,8 +31,8 @@ namespace
 // Name: PositionsPlugin constructor
 // Created: ABR 2011-04-01
 // -----------------------------------------------------------------------------
-PositionsPlugin::PositionsPlugin( const dispatcher::Config& config, int exportFrequency )
-    : filepath_       ( config.BuildSessionChildFile( "positions.csv" ).c_str() )
+PositionsPlugin::PositionsPlugin( const std::string& filename, int exportFrequency )
+    : filepath_       ( filename )
     , exportFrequency_( exportFrequency )
     , firstTick_      ( true )
 {
@@ -46,7 +45,14 @@ PositionsPlugin::PositionsPlugin( const dispatcher::Config& config, int exportFr
 // -----------------------------------------------------------------------------
 PositionsPlugin::~PositionsPlugin()
 {
-    Export(); // $$$$ MCO : try catch to prevent exceptions from leaving the destructor !
+    try
+    {
+        Export(); // $$$$ MCO : try catch to prevent exceptions from leaving the destructor !
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -114,8 +120,12 @@ void PositionsPlugin::Export()
 // -----------------------------------------------------------------------------
 void PositionsPlugin::SaveTime()
 {
+    if( ! currentTime_.isValid() )
+        return;
     lastExportTime_ = currentTime_;
-    times_.push_back( lastExportTime_.toString().ascii() );
+    const QString s = lastExportTime_.toString();
+    const std::string time = lastExportTime_.toString().ascii();
+    times_.push_back( time );
 }
 
 // -----------------------------------------------------------------------------

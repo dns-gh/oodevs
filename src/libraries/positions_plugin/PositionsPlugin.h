@@ -41,7 +41,7 @@ class PositionsPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PositionsPlugin( const dispatcher::Config& config, int exportFrequency );
+             PositionsPlugin( const std::string& filename, int exportFrequency );
     virtual ~PositionsPlugin();
     //@}
 

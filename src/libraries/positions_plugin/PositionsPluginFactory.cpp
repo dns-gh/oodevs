@@ -9,6 +9,7 @@
 
 #include "PositionsPluginFactory.h"
 #include "PositionsPlugin.h"
+#include "dispatcher/Config.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -46,10 +47,9 @@ std::auto_ptr< dispatcher::Plugin_ABC > PositionsPluginFactory::Create( const st
     if( name == "position-saver" )
     {
         int frequency;
-        std::string frequencyStr = xis.attribute< std::string >( "frequency" );
-        if( !tools::DecodeTime( frequencyStr, frequency ) )
+        if( !tools::DecodeTime( xis.attribute< std::string >( "frequency" ), frequency ) )
             xis.error( "Invalid time specified for position export frequency" );
-        result.reset( new PositionsPlugin( config, frequency ) );
+        result.reset( new PositionsPlugin( config.BuildSessionChildFile( "positions.csv" ), frequency ) );
     }
     return result;
 }
