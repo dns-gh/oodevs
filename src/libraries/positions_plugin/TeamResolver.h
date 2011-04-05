@@ -10,9 +10,9 @@
 #ifndef __TeamResolver_h_
 #define __TeamResolver_h_
 
+#include "tools/Resolver.h"
 #include <boost/noncopyable.hpp>
 #include <boost/filesystem/fstream.hpp>
-#include "tools/Resolver.h"
 
 namespace sword
 {
@@ -64,8 +64,7 @@ private:
     //@}
 };
 
-} // Namespace positions
-
-} // Namespace plugins
+}
+}
 
 #endif // __TeamResolver_h_

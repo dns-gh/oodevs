@@ -13,6 +13,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <vector>
+#include <string>
 
 namespace sword
 {
@@ -60,8 +61,7 @@ private:
     //@}
 };
 
-} // Namespace positions
-
-} // Namespace plugins
+}
+}
 
 #endif // __Unit_h_

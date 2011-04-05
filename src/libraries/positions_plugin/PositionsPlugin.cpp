@@ -9,8 +9,8 @@
 
 #include "PositionsPlugin.h"
 #include "dispatcher/Config.h"
-#include <boost/filesystem.hpp>
 #include "protocol/Protocol.h"
+#include <boost/filesystem.hpp>
 
 using namespace plugins::positions;
 
@@ -36,8 +36,6 @@ PositionsPlugin::PositionsPlugin( const dispatcher::Config& config, int exportFr
     : filepath_       ( config.BuildSessionChildFile( "positions.csv" ).c_str() )
     , exportFrequency_( exportFrequency )
     , firstTick_      ( true )
-    , lastExportTime_ ()
-    , currentTime_    ()
 {
     // NOTHING
 }
@@ -48,7 +46,7 @@ PositionsPlugin::PositionsPlugin( const dispatcher::Config& config, int exportFr
 // -----------------------------------------------------------------------------
 PositionsPlugin::~PositionsPlugin()
 {
-    Export(); // Final export
+    Export(); // $$$$ MCO : try catch to prevent exceptions from leaving the destructor !
 }
 
 // -----------------------------------------------------------------------------
@@ -80,12 +78,12 @@ void PositionsPlugin::Receive( const sword::SimToClient& message )
         currentTime_ = MakeDate( message.message().control_begin_tick().date_time().data() );
         if( firstTick_ )
         {
-            Export(); // First export
+            Export();
             firstTick_ = false;
         }
         else if( lastExportTime_.secsTo( currentTime_ ) >= exportFrequency_ )
         {
-            Export(); // Common export
+            Export();
         }
     }
     else if( message.message().has_party_creation() )
@@ -112,23 +110,12 @@ void PositionsPlugin::Receive( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void PositionsPlugin::Export()
 {
-    // Save Time
-    {
-        lastExportTime_ = currentTime_;
-        times_.push_back( lastExportTime_.toString().ascii() );
-    }
-    // Export Data
-    {
-        boost::filesystem::ofstream file( filepath_ );
-
-        // Header
-        file << "Team (id)" << separator_ << "Unit (id)";
-        for( CIT_Times it = times_.begin(); it != times_.end(); ++it )
-            file << separator_ << *it;
-        file << std::endl;
-        // Content
-        teams_.Export( file );
-
-        file.close();
-    }
+    lastExportTime_ = currentTime_;
+    times_.push_back( lastExportTime_.toString().ascii() );
+    boost::filesystem::ofstream file( filepath_ );
+    file << "Team (id)" << separator_ << "Unit (id)";
+    for( CIT_Times it = times_.begin(); it != times_.end(); ++it )
+        file << separator_ << *it;
+    file << std::endl;
+    teams_.Export( file );
 }

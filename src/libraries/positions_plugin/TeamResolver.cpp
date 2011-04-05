@@ -9,8 +9,8 @@
 
 #include "TeamResolver.h"
 #include "Team.h"
-#include <boost/bind/bind.hpp>
 #include "protocol/Protocol.h"
+#include <boost/bind.hpp>
 
 using namespace plugins::positions;
 
@@ -50,7 +50,7 @@ void TeamResolver::AddAutomat( unsigned int teamId, unsigned int automatId )
 {
     Team* team = Find( teamId );
     if( !team )
-        throw std::runtime_error( __FUNCTION__ "unknown team." );
+        throw std::runtime_error( __FUNCTION__ " : unknown team" );
     automats_[ automatId ] = team;
 }
 
@@ -61,10 +61,8 @@ void TeamResolver::AddAutomat( unsigned int teamId, unsigned int automatId )
 void TeamResolver::AddUnit( unsigned int automatId, unsigned int unitId, const std::string& name, unsigned int timePreviouslyExported )
 {
     CIT_Automats it = automats_.find( automatId );
-
     if( it == automats_.end() )
-        throw std::runtime_error( __FUNCTION__ "unknown automat." );
-
+        throw std::runtime_error( __FUNCTION__ " : unknown automat" );
     it->second->AddUnit( unitId, name, timePreviouslyExported );
 }
 
@@ -75,10 +73,7 @@ void TeamResolver::AddUnit( unsigned int automatId, unsigned int unitId, const s
 void TeamResolver::UpdatePosition( unsigned int unitId, const sword::CoordLatLong& coord )
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        Team* team = it->second;
-        team->UpdatePosition( unitId, coord );
-    }
+        it->second->UpdatePosition( unitId, coord );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,9 +10,8 @@
 #ifndef __Team_h_
 #define __Team_h_
 
-#include <boost/noncopyable.hpp>
-#include <boost/filesystem/fstream.hpp>
 #include "tools/Resolver.h"
+#include <boost/filesystem/fstream.hpp>
 
 namespace sword
 {
@@ -32,7 +31,6 @@ namespace positions
 // Created: ABR 2011-04-01
 // =============================================================================
 class Team : public tools::Resolver< Unit >
-           , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,13 +42,10 @@ public:
     //! @name Operations
     //@{
     void AddUnit( unsigned int unitId, const std::string& name, unsigned int timePreviouslyExported );
-    void Export( boost::filesystem::ofstream& file ) const;
-    void UpdatePosition( unsigned int unitId, const sword::CoordLatLong& coord );
-    //@}
 
-private:
-    //! @name Helpers
-    //@{
+    void Export( boost::filesystem::ofstream& file ) const;
+
+    void UpdatePosition( unsigned int unitId, const sword::CoordLatLong& coord );
     //@}
 
 private:
@@ -61,8 +56,7 @@ private:
     //@}
 };
 
-} // Namespace positions
-
-} // Namespace plugins
+}
+}
 
 #endif // __Team_h_

@@ -18,7 +18,7 @@ using namespace plugins::positions;
 // Created: ABR 2011-04-01
 // -----------------------------------------------------------------------------
 Unit::Unit( unsigned int id, const std::string& name, unsigned int timePreviouslyExported )
-    : id_( id )
+    : id_  ( id )
     , name_( name )
 {
     for( unsigned int i = 0; i <= timePreviouslyExported; ++i )

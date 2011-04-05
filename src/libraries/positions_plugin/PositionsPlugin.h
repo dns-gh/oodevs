@@ -10,19 +10,19 @@
 #ifndef __PositionsPlugin_h_
 #define __PositionsPlugin_h_
 
-#pragma warning( disable: 4996 )
+#include "TeamResolver.h"
 #include "dispatcher/Plugin_ABC.h"
-#include <boost/noncopyable.hpp>
-#include <boost/filesystem/fstream.hpp>
+#pragma warning( push, 0 )
+#include <qdatetime.h>
+#pragma warning( pop )
+#include <boost/filesystem/path.hpp>
 #include <string>
 #include <vector>
-#include <qdatetime.h>
-#include "TeamResolver.h"
 
 class QDateTime;
 
 namespace dispatcher
-{ 
+{
     class Config;
 }
 
@@ -30,7 +30,6 @@ namespace plugins
 {
 namespace positions
 {
-
 // =============================================================================
 /** @class  PositionsPlugin
     @brief  PositionsPlugin
@@ -38,9 +37,7 @@ namespace positions
 // Created: ABR 2011-04-01
 // =============================================================================
 class PositionsPlugin : public dispatcher::Plugin_ABC
-                      , private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -52,6 +49,7 @@ public:
     //@{
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft( dispatcher::ClientPublisher_ABC& client );
+
     virtual void Receive( const sword::SimToClient& message );
     //@}
 
@@ -61,6 +59,7 @@ private:
     void Export();
     //@}
 
+private:
     //! @name Types
     //@{
     typedef std::vector< std::string >  T_Times;
@@ -70,24 +69,23 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::filesystem::path     filepath_;
-    int                         exportFrequency_;
-    bool                        firstTick_;
-    QDateTime                   lastExportTime_;
-    QDateTime                   currentTime_;
-    TeamResolver                teams_;
-    T_Times                     times_;
+    boost::filesystem::path filepath_;
+    int                     exportFrequency_;
+    bool                    firstTick_;
+    QDateTime               lastExportTime_;
+    QDateTime               currentTime_;
+    TeamResolver            teams_;
+    T_Times                 times_;
     //@}
 
 public:
-    //! @name Public Static Member data
+    //! @name Member data
     //@{
-    static const std::string    separator_;
+    static const std::string separator_;
     //@}
 };
 
-} // Namespace positions
-
-} // Namespace plugins
+}
+}
 
 #endif // __PositionsPlugin_h_

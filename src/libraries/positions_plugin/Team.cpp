@@ -62,12 +62,7 @@ void Team::Export( boost::filesystem::ofstream& file ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
-        //file << name_ << " (" << id_ << ")" << PositionsPlugin::separator_;
-        file << name_;
-        file << " (";
-        file << id_;
-        file << ")";
-        file << PositionsPlugin::separator_;
+        file << name_ << " (" << id_ << ")" << PositionsPlugin::separator_;
         it->second->Export( file );
         file << std::endl;
     }
