@@ -11,6 +11,7 @@
 #include "ParamUrbanBlock.h"
 #include "actions/UrbanBlock.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectType.h"
 
 using namespace actions::gui;
 using namespace kernel;
@@ -44,6 +45,16 @@ ParamUrbanBlock::ParamUrbanBlock( QObject* parent, const OrderParameter& paramet
 ParamUrbanBlock::~ParamUrbanBlock()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamUrbanBlock::NotifyContextMenu
+// Created: LGY 2011-04-05
+// -----------------------------------------------------------------------------
+void ParamUrbanBlock::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+{
+    if( entity.GetType().IsUrban() )
+        EntityParameter< Object_ABC >::NotifyContextMenu( entity, menu );
 }
 
 // -----------------------------------------------------------------------------

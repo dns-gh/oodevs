@@ -35,6 +35,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 

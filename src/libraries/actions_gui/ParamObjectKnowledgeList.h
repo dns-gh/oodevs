@@ -37,7 +37,8 @@ class ParamObjectKnowledgeList : public EntityListParameter< kernel::ObjectKnowl
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObjectKnowledgeList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamObjectKnowledgeList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller,
+                                       kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent );
     virtual ~ParamObjectKnowledgeList();
     //@}
 
@@ -63,8 +64,7 @@ private:
     unsigned int count_;
     //@}
 };
-
-    }
+}
 }
 
 #endif // __ParamObjectKnowledgeList_h_

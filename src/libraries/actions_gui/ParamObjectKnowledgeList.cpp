@@ -16,6 +16,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
+#include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_gui/Tools.h"
 
@@ -25,12 +26,13 @@ using namespace actions::gui;
 // Name: ParamObjectKnowledgeList constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-ParamObjectKnowledgeList::ParamObjectKnowledgeList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
+ParamObjectKnowledgeList::ParamObjectKnowledgeList( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& actions, kernel::Controller& controller,
+                                                    kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent )
     : EntityListParameter< kernel::ObjectKnowledge_ABC >( parent, parameter, actions, controller )
     , parameter_( parameter )
     , converter_( converter )
-    , agent_( agent )
-    , count_( 0 )
+    , agent_    ( agent )
+    , count_    ( 0u )
 {
     // NOTHING
 }
@@ -68,13 +70,16 @@ EntityParameter< kernel::ObjectKnowledge_ABC >* ParamObjectKnowledgeList::Create
 // -----------------------------------------------------------------------------
 void ParamObjectKnowledgeList::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
 {
-    const kernel::Hierarchies* hierarchies = agent_.Retrieve< kernel::CommunicationHierarchies >();
-    if( ! hierarchies )
-        hierarchies = agent_.Retrieve< kernel::TacticalHierarchies >();
-    const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( hierarchies->GetTop() );
-    const kernel::ObjectKnowledge_ABC* knowledge = converter_.Find( entity, team );
-    if( knowledge )
-        EntityListParameter< kernel::ObjectKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
+    if( !entity.GetType().IsUrban() )
+    {
+        const kernel::Hierarchies* hierarchies = agent_.Retrieve< kernel::CommunicationHierarchies >();
+        if( ! hierarchies )
+            hierarchies = agent_.Retrieve< kernel::TacticalHierarchies >();
+        const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( hierarchies->GetTop() );
+        const kernel::ObjectKnowledge_ABC* knowledge = converter_.Find( entity, team );
+        if( knowledge )
+            EntityListParameter< kernel::ObjectKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
+    }
 }
 
 // -----------------------------------------------------------------------------
