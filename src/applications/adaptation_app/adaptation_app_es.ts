@@ -5785,7 +5785,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <name>Application</name>
     <message>
         <source>SWORD</source>
-        <translation></translation>
+        <translation>SWORD</translation>
     </message>
 </context>
 <context>
