@@ -1,3 +1,5 @@
+require "math"
+
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/pions/common/missions/Capture.bms"] = true
 
@@ -29,7 +31,7 @@ node "MIS_Pion_MELEE_Capture"
             do return end
         end
 
-        Activate( self.activations.BEH_Mission_Pion_MELEE_Capture, 1, { self._namedParams.mission.area_, self._namedParams.mission.object_ } )
+        Activate( self.activations.BEH_Mission_Pion_MELEE_Capture, 1, { self._namedParams.mission.zone_, self._namedParams.mission.knowledge_ } )
         self.done_BEH_Mission_Pion_MELEE_Capture = function( self, _, v ) self.eEtat = v[1] end
     end,
 }
@@ -68,8 +70,10 @@ node "MIS_Pion_MELEE_Capture"
             Halt( self )
             do return end
         end
-        self.offsetArea = self.offsetArea or DEC_XXX_GrowArea( self.area, offsetToBeDefinedInXML )
+        local offsetToBeDefinedInXML = 200
+        self.offsetArea = self.offsetArea or DEC_Geometrie_AgrandirLocalisation( self.area, offsetToBeDefinedInXML )
         self.position = self.position or S_Geometrie_BarycentreZone( self.area )
+        DEC_Trace( "Offset created - activated" )
 
 -- Handle fragmentary orders
         Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
@@ -93,28 +97,35 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         end
 
         --[[//-----------------------------------------------------------------------------
-]]--[[// Agressivite // 0 normalement!!!
-]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MAJ_Pion_ABC_AgressiviteTir, 1, { 0.7, } )
-        --[[//-----------------------------------------------------------------------------
 ]]--[[// Ambiance
 ]]--[[//-----------------------------------------------------------------------------
 ]]
         F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
 
+        local myPosition = DEC_Agent_PositionPtr( myself )
         -- If not inside area then move into area.
-        if not DEC_Geometrie_EstPointDansLocalisation( DEC_Agent_PositionPtr(), self.area ) then
-            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionObs, eProgressionDefaut, eTypeItiMouvement, } )
+        if not DEC_Geometrie_EstPointDansLocalisation( myPosition, self.area ) then
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.position, eProgressionDefaut, eTypeItiMouvement, } )
         else
             -- When inside area then attack enemies inside area plus offset
 -- Note the unit should probably still move into the area and not stay on the border, but probably with a low activity weight.
-            Activate( self.activations.BEH_Dep_ProgressionVers, 0.2, { self.positionObs, eProgressionDefaut, eTypeItiMouvement, } )
-            local enemies = nil
+            Activate( self.activations.BEH_Dep_ProgressionVers, 0.2, { self.position, eProgressionDefaut, eTypeItiMouvement, } )
+            local enemies = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
+            local nearestEnemy = nil
+            local distanceToNearest = math.huge
             for _, enemy in pairs( enemies or {} ) do
+                local enemyPosition = DEC_ConnaissanceAgent_Position( enemy )
+                if DEC_Geometrie_EstPointDansLocalisation( enemyPosition, self.offsetArea ) then
+                    if DEC_Geometrie_Distance( myPosition, enemyPosition ) < distanceToNearest then
+                        nearestEnemy = enemy
+                    end
+                end
+            end
+            if nearestEnemy then
                 if meleeAbcPionsCommon() then
-                    Activate( self.activations.BEH_Mission_Pion_ABC_Reduire, 1, { enemy, M_MODELE_PION_ABC_REDUIRE_PH(), M_MODELE_PION_ABC_REDUIRE_ID() } )
+                    Activate( self.activations.BEH_Mission_Pion_ABC_Reduire, 1, { nearestEnemy, M_MODELE_PION_ABC_REDUIRE_PH(), M_MODELE_PION_ABC_REDUIRE_ID() } )
                 elseif meleeInfPionsCommon() then
-                    Activate( self.activations.BEH_Mission_Pion_VAB_Reduire, 1, { enemy } )
+                    Activate( self.activations.BEH_Mission_Pion_VAB_Reduire, 1, { nearestEnemy } )
                 else
                     DEC_Trace( "Unexpected unit model for Capture mission" )
                 end
@@ -128,6 +139,7 @@ eventmanager_plugin = eventmanager_plugin or {}
 eventmanager_plugin.MIS_Pion_MELEE_Capture = { "mission" }
 
 connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MELEE_Capture , "BEH_Mission_Pion_MELEE_Capture", nodes.BEH_Mission_Pion_MELEE_Capture }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_MELEE_Capture, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_MELEE_Capture, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_MELEE_Capture, "BEH_Mission_Pion_ABC_Reduire", nodes.BEH_Mission_Pion_ABC_Reduire }

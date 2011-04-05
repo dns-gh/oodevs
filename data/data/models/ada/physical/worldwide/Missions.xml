@@ -418,8 +418,8 @@ force to protect it from enemy ground observation, direct fire, and surprise att
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area_" name="Unit to reduce" optional="true" type="Polygon"/>
-      <parameter dia-name="object_" name="Crossing site" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="zone_" name="Area" optional="true" type="Polygon"/>
+      <parameter dia-name="knowledge_" name="Predefined area" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Appuyer" dia-type="T_Mission_Pion_ABC_Appuyer" id="44" name="Armor - support">
       <description>
@@ -3286,4 +3286,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="4038574352" -->
+<!-- signature="2225648489" -->
