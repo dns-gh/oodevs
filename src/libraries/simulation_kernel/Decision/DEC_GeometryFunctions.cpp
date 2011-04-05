@@ -1065,7 +1065,7 @@ bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, d
 // Name: DEC_GeometryFunctions::IsPointInUrbanBlock
 // Created: LMT 2011-03-09
 // -----------------------------------------------------------------------------
-bool DEC_GeometryFunctions::IsPionInUrbanBlock( const MT_Vector2D& point, const UrbanObjectWrapper* pUrbanBlock )
+bool DEC_GeometryFunctions::IsPointInUrbanBlock( const MT_Vector2D& point, const UrbanObjectWrapper* pUrbanBlock )
 {
     return pUrbanBlock->GetLocalisation().IsInside( point );
 }
