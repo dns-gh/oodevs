@@ -1739,7 +1739,11 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
     , randomBreakdowns_         ( "random" )
     , bMaxSlope_                ( false )
     , rMaxSlope_                ( 60 )
-{
+    , nPowerDirectFire_         ( 0 )
+    , nPowerIndirectFire_       ( 0 )
+    , nPowerCloseCombat_        ( 0 )
+    , nPowerEngineering_        ( 0 )
+    {
     BindExistenceTo( &ptrArmor_ );
     BindExistenceTo( &ptrSize_ );
 
@@ -1873,6 +1877,11 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
     pCopy->bMaxSlope_ = bMaxSlope_.GetData();
     pCopy->rMaxSlope_ = rMaxSlope_.GetData();
 
+    pCopy->nPowerDirectFire_    = nPowerDirectFire_.GetData();
+    pCopy->nPowerIndirectFire_  = nPowerIndirectFire_.GetData();
+    pCopy->nPowerCloseCombat_   = nPowerCloseCombat_.GetData();
+    pCopy->nPowerEngineering_   = nPowerEngineering_.GetData();
+
     return pCopy;
 }
 
@@ -1965,6 +1974,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "protection", strArmor )
           >> xml::attribute( "size", strSize )
           >> xml::attribute( "weight", rWeight_ );
+    input >> xml::optional >> xml::content( "equipment-category", equipmentCategory_ );
 
     ptrArmor_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindArmor( strArmor );
     ptrSize_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindSize( strSize );
@@ -2015,14 +2025,20 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
           >> xml::start( "objects" )
             >> xml::list( "object", *this, &ADN_Composantes_Data::ComposanteInfos::ReadObject )
           >> xml::end;
-
+    if ( input.has_child( "power-indicators" ) )
+    {
+        input >> xml::start( "power-indicators" )
+                >> xml::attribute( "direct-fire", nPowerDirectFire_ )
+                >> xml::attribute( "indirect-fire", nPowerIndirectFire_ )
+                >> xml::attribute( "close-combat", nPowerCloseCombat_ )
+                >> xml::attribute( "engineering", nPowerEngineering_ )
+              >> xml::end;
+    }
 
     logInfos_.ReadArchive( input );
 
     randomBreakdowns_.ReadArchive( input );
     attritionBreakdowns_.ReadArchive( input );
-
-    input >> xml::optional >> xml::content( "equipment-category", equipmentCategory_ );
 
     input >> xml::optional >> xml::attribute( "max-slope", rMaxSlope_ );
     if( rMaxSlope_ != 60. )
@@ -2121,6 +2137,16 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
         for( CIT_ActiveProtectionsInfos_Vector itActiveProtections = vActiveProtections_.begin(); itActiveProtections != vActiveProtections_.end(); ++itActiveProtections )
             (*itActiveProtections)->WriteArchive( output );
         output << xml::end;
+    }
+
+    if ( nPowerDirectFire_ != 0 || nPowerIndirectFire_ != 0 || nPowerCloseCombat_ != 0 || nPowerEngineering_ != 0 )
+    {
+        output << xml::start( "power-indicators" )
+                 << xml::attribute( "direct-fire", nPowerDirectFire_ )
+                 << xml::attribute( "indirect-fire", nPowerIndirectFire_ )
+                 << xml::attribute( "close-combat", nPowerCloseCombat_ )
+                 << xml::attribute( "engineering", nPowerEngineering_ )
+               << xml::end;
     }
 
     humanProtections_.WriteArchive( output );

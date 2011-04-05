@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef aar_PowerIndicators_h
-#define aar_PowerIndicators_h
+#ifndef __PowerModificator_h_
+#define __PowerModificator_h_
 
 #include <boost/noncopyable.hpp>
 #include "tools/Resolver.h"
@@ -26,40 +26,56 @@ namespace xml
 namespace aar
 {
 
-class PowerIndicator;
+class PowerModificator;
 
 // =============================================================================
-/** @class  PowerIndicators
-    @brief  Resolver on PowerIndicator
+/** @class  PowerModificator
+    @brief  PowerModificator
 */
-// Created: ABR 2011-02-09
+// Created: FPO 2011-04-04
 // =============================================================================
-class PowerIndicators : public tools::Resolver< PowerIndicator >
-                      , public tools::StringResolver< PowerIndicator >
-                      , private boost::noncopyable
+class PowerModificator : private boost::noncopyable
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             PowerIndicators();
-    explicit PowerIndicators( const tools::ExerciseConfig& config );
-    virtual ~PowerIndicators();
+             PowerModificator();
+    explicit PowerModificator( const tools::ExerciseConfig& config );
+    virtual ~PowerModificator();
     //@}
 
     //! @name Operations
     //@{
     void Load( const tools::ExerciseConfig& config );
-    void Purge();
+    //@}
+
+    //! @name 
+    //@{
+    double GetAvailableModificator() const;
+    double GetRepairableModificator() const;
+    double GetRepairingModificator() const;
+    double GetCapturedModificator() const;
+    double GetUnavailableModificator() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ReadEquipment( xml::xistream& xis );
-    void ReadPowerIndicator( xml::xistream& xis );
+    void ReadPowerModificator( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    double available_;
+    double repairable_;
+    double repairing_;
+    double captured_;
+    double unavailable_;
     //@}
 };
 
-} // namespace aar
+} // Namespace aar
 
-#endif // aar_PowerIndicators_h
+#endif // __PowerModificator_h_

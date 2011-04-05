@@ -50,7 +50,7 @@ PowerIndicators::~PowerIndicators()
 void PowerIndicators::Load( const tools::ExerciseConfig& config )
 {
     Purge();
-    config.GetLoader().LoadPhysicalFile( "units", boost::bind( &PowerIndicators::ReadUnit, this, _1 ) );
+    config.GetLoader().LoadPhysicalFile( "components", boost::bind( &PowerIndicators::ReadEquipment, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,13 +64,14 @@ void PowerIndicators::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PowerIndicators::ReadUnit
+// Name: PowerIndicators::ReadEquipment
 // Created: ABR 2011-02-10
 // -----------------------------------------------------------------------------
-void PowerIndicators::ReadUnit( xml::xistream& xis )
+void PowerIndicators::ReadEquipment( xml::xistream& xis )
 {
-    xis >> xml::start( "units" )
-        >> xml::list( "unit", *this, &PowerIndicators::ReadPowerIndicator );
+    xis >> xml::start( "equipments" )
+            >> xml::list( "equipment", *this, &PowerIndicators::ReadPowerIndicator )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

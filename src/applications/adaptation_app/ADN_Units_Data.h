@@ -231,12 +231,6 @@ public:
         ADN_Type_Int                                                nEngineeringReconEfficiency_;
         ADN_Type_Int                                                nUrbanAreaEfficiency_;
 
-        ADN_Type_Bool                                               bHasPowerIndicators_;
-        ADN_Type_Int                                                nPowerDirectFire_;
-        ADN_Type_Int                                                nPowerIndirectFire_;
-        ADN_Type_Int                                                nPowerCloseCombat_;
-        ADN_Type_Int                                                nPowerEngineering_;
-
         ADN_Type_Bool                                               bIsCivilian_;
         ADN_Type_Repartition                                        repartition_;
     };

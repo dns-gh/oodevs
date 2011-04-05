@@ -234,16 +234,27 @@ void ADN_Composantes_GUI::Build()
 
 
     // Log page.
-    QVBox* pLogPage = new QVBox( pTabWidget );
-    pLogPage->layout()->setAlignment( Qt::AlignTop );
-    pLogPage->setMargin( 5 );
-    pLogPage->setSpacing( 5 );
-    pTabWidget->addTab( pLogPage, tr( "Log" ) );
+    {
+        QVBox* pLogPage = new QVBox( pTabWidget );
+        pLogPage->layout()->setAlignment( Qt::AlignTop );
+        pLogPage->setMargin( 5 );
+        pLogPage->setSpacing( 5 );
+        pTabWidget->addTab( pLogPage, tr( "Log" ) );
 
-    BuildHealth     ( pLogPage, vInfosConnectors );
-    BuildSupply     ( pLogPage, vInfosConnectors );
-    BuildMaintenance( pLogPage, vInfosConnectors );
+        BuildHealth         ( pLogPage, vInfosConnectors );
+        BuildSupply         ( pLogPage, vInfosConnectors );
+        BuildMaintenance    ( pLogPage, vInfosConnectors );
+    }
 
+    // Power indicators page
+    {
+        QVBox* pPowerIndicatorsPage = new QVBox( pTabWidget );
+        pPowerIndicatorsPage->setMargin( 5 );
+        pPowerIndicatorsPage->setSpacing( 5 );
+        pTabWidget->addTab( pPowerIndicatorsPage, "Power indicators" );
+
+        BuildPowerIndicators( pPowerIndicatorsPage, vInfosConnectors );
+    }
 
     // Connect the gui to the data.
     pComposanteList_->SetItemConnectors( vInfosConnectors );
@@ -410,6 +421,25 @@ QWidget* ADN_Composantes_GUI::BuildNTI( QWidget* pParent, const char* szName, T_
     return pNTIGroup;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_GUI::BuildPowerIndicators
+// Created: FPO 2011-03-30
+// -----------------------------------------------------------------------------
+QWidget* ADN_Composantes_GUI::BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors )
+{
+    ADN_GuiBuilder builder;
+    QGroupBox* pPowerIndicatorsGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Power indicators" ), pParent );
+
+    pPowerIndicatorsGroup->setMinimumWidth(400);
+    pPowerIndicatorsGroup->setMinimumHeight(130);
+
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Direct fire" ),   vInfosConnectors[ ePowerDirectFire ],   0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Indirect fire" ), vInfosConnectors[ ePowerIndirectFire ], 0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Close combat" ),  vInfosConnectors[ ePowerCloseCombat ],  0, eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Engineering" ),   vInfosConnectors[ ePowerEngineering ],  0, eGreaterEqualZero );
+
+    return pPowerIndicatorsGroup;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_GUI::CreateComposanteSpeedsTable

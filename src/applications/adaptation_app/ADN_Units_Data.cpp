@@ -448,14 +448,9 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     , nCombatEfficiency_                ( 50 )
     , nMobilitySupportEfficiency_       ( 50 )
     , nCounterMobilitySupportEfficiency_( 50 )
-    , bHasPowerIndicators_              ( false )
     , nProtectionSupportEfficiency_     ( 50 )
     , nEngineeringReconEfficiency_      ( 50 )
     , nUrbanAreaEfficiency_             ( 50 )
-    , nPowerDirectFire_                 ( 0 )
-    , nPowerIndirectFire_               ( 0 )
-    , nPowerCloseCombat_                ( 0 )
-    , nPowerEngineering_                ( 0 )
     , bIsCivilian_                      ( false )
     , repartition_                      ( tools::translate( "Units_Data", "Units" ) )
 {
@@ -586,12 +581,6 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->nProtectionSupportEfficiency_ = nProtectionSupportEfficiency_.GetData();
     pCopy->nEngineeringReconEfficiency_ = nEngineeringReconEfficiency_.GetData();
     pCopy->nUrbanAreaEfficiency_ = nUrbanAreaEfficiency_.GetData();
-
-    pCopy->bHasPowerIndicators_ = bHasPowerIndicators_.GetData();
-    pCopy->nPowerDirectFire_    = nPowerDirectFire_.GetData();
-    pCopy->nPowerIndirectFire_  = nPowerIndirectFire_.GetData();
-    pCopy->nPowerCloseCombat_   = nPowerCloseCombat_.GetData();
-    pCopy->nPowerEngineering_   = nPowerEngineering_.GetData();
 
     pCopy->bIsCivilian_        = bIsCivilian_.GetData();
     pCopy->repartition_        = repartition_;
@@ -738,18 +727,6 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
                 >> xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
             >> xml::end;
 
-    if ( input.has_child( "power-indicators" ) )
-    {
-        input >> xml::optional
-                >> xml::start( "power-indicators" )
-                  >> xml::attribute( "direct-fire", nPowerDirectFire_ )
-                  >> xml::attribute( "indirect-fire", nPowerIndirectFire_ )
-                  >> xml::attribute( "close-combat", nPowerCloseCombat_ )
-                  >> xml::attribute( "engineering", nPowerEngineering_ )
-                >> xml::end;
-        bHasPowerIndicators_ = true;
-    }
-
     if( input.has_child("repartition") )
     {
         input >> xml::start( "repartition" );
@@ -861,16 +838,6 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
              << xml::attribute( "engineering-support", nEngineeringReconEfficiency_ )
              << xml::attribute( "urban-area", nUrbanAreaEfficiency_ )
            << xml::end;
-
-    if ( bHasPowerIndicators_.GetData() )
-    {
-        output << xml::start( "power-indicators" )
-                 << xml::attribute( "direct-fire", nPowerDirectFire_ )
-                 << xml::attribute( "indirect-fire", nPowerIndirectFire_ )
-                 << xml::attribute( "close-combat", nPowerCloseCombat_ )
-                 << xml::attribute( "engineering", nPowerEngineering_ )
-               << xml::end;
-    }
 
     if( bIsCivilian_.GetData() )
     {

@@ -166,14 +166,6 @@
 									<xs:attribute name="urban-area" type="T_IntegralPercentage" use="required"/>
 								</xs:complexType>
 							</xs:element>
-              <xs:element name="power-indicators" minOccurs="0">
-                <xs:complexType>
-                  <xs:attribute name="direct-fire" type="xs:nonNegativeInteger" use="required"/>
-                  <xs:attribute name="indirect-fire" type="xs:nonNegativeInteger" use="required"/>
-                  <xs:attribute name="close-combat" type="xs:nonNegativeInteger" use="required"/>
-                  <xs:attribute name="engineering" type="xs:nonNegativeInteger" use="required"/>
-                </xs:complexType>
-              </xs:element>
               <xs:element name="repartition" type="T_Repartition" minOccurs="0"/>
               <xs:element name="crossing-height" minOccurs="0">
 								<xs:complexType>

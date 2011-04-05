@@ -132,13 +132,13 @@ namespace extractors
         explicit PowerExtractor( const aar::StaticModel_ABC& model ) : model_( &model ) {}
         const aar::StaticModel_ABC* model_;
 
-        bool HasFlag( const sword::UnitCreation& message ) const
+        bool HasFlag( const sword::UnitAttributes& message ) const
         {
-            return message.has_type();
+            return message.has_equipment_dotations();
         }
-        NumericValue Extract( const sword::UnitCreation& message ) const
+        NumericValue Extract( const sword::UnitAttributes& message ) const
         {
-            return NumericValue( model_->ComputePower( message.type().id(), *this ) );
+            return NumericValue( model_->ComputePower( message, *this ) );
         }
     };
 

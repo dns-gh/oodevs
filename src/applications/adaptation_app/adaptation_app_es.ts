@@ -176,6 +176,30 @@
         <source>Maximum affinity</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Wound effects on power indicators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repairable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repairing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Captured</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_AutomatLogCategory_ListView</name>
@@ -1149,6 +1173,26 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Extinguishing duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power indicators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direct fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close combat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Engineering</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5117,26 +5161,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Urban area efficiency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Power indicators</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Direct fire</source>
-        <translation>Fuego directo</translation>
-    </message>
-    <message>
-        <source>Indirect fire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close combat</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Engineering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

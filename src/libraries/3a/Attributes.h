@@ -42,6 +42,8 @@ struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
         : extractor_() {}
     explicit UnitAttribute( xml::xistream& xis )
         : extractor_( xis ) {}
+    explicit UnitAttribute( const aar::StaticModel_ABC& model )
+        : extractor_( model ) {}
 
     void Receive( const sword::SimToClient& wrapper )
     {
@@ -56,45 +58,16 @@ struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
     Extractor extractor_;
 };
 
-template< typename Extractor >
-struct UnitCreation : public ContinuousValue< typename Extractor::Type >
-{
-    enum { has_parameter = Extractor::has_parameter };
-
-    UnitCreation()
-        : extractor_() {}
-
-    explicit UnitCreation( const aar::StaticModel_ABC& model )
-        : extractor_( model )
-    {
-    }
-
-    explicit UnitCreation( xml::xistream& xis )
-        : extractor_( xis ) {}
-
-    void Receive( const sword::SimToClient& wrapper )
-    {
-        if( wrapper.message().has_unit_creation() )
-        {
-            const sword::UnitCreation& creation = wrapper.message().unit_creation();
-            if( extractor_.HasFlag( creation ) )
-                Set( extractor_.Extract( creation ) );
-        }
-    }
-
-    Extractor extractor_;
-};
-
 typedef UnitAttribute< extractors::OperationalState >  OperationalState;
 typedef UnitAttribute< extractors::Position >          Position;
 typedef UnitAttribute< extractors::Resources >         Resources;
 typedef UnitAttribute< extractors::Equipments >        Equipments;
 typedef UnitAttribute< extractors::Humans >            Humans;
 typedef UnitAttribute< extractors::Mounted >           Mounted;
-typedef UnitCreation< extractors::DirectFirePower >    DirectFirePower;
-typedef UnitCreation< extractors::IndirectFirePower >  IndirectFirePower;
-typedef UnitCreation< extractors::CloseCombatPower >   CloseCombatPower;
-typedef UnitCreation< extractors::EngineeringPower >   EngineeringPower;
+typedef UnitAttribute< extractors::DirectFirePower >   DirectFirePower;
+typedef UnitAttribute< extractors::IndirectFirePower > IndirectFirePower;
+typedef UnitAttribute< extractors::CloseCombatPower >  CloseCombatPower;
+typedef UnitAttribute< extractors::EngineeringPower >  EngineeringPower;
 
 struct Detections : public ContinuousValue< extractors::UnitDetection::Type >
 {

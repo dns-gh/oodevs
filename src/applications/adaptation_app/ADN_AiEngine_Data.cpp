@@ -35,6 +35,11 @@ ADN_AiEngine_Data::ADN_AiEngine_Data()
     , rMinimumAffinity_            ( "1s" )
     , rNeutralAffinity_            ( "1s" )
     , rMaximumAffinity_            ( "1s" )
+    , rAvailableModificator_       ( 100.f )
+    , rUnavailableModificator_     ( 100.f )
+    , rRepairableModificator_      ( 100.f )
+    , rRepairingModificator_       ( 100.f )
+    , rCapturedModificator_        ( 100.f )
 {
     rMinorEquipmentWeight_.SetDataName( "Poids des composantes non majeures." );
     rMajorEquipmentWeight_.SetDataName( "Poids des composantes majeures." );
@@ -125,6 +130,20 @@ void ADN_AiEngine_Data::ReadArchive( xml::xistream& input )
             >> xml::attribute( "maximum-affinity", rMaximumAffinity_ )
           >> xml::end;
 
+    input >> xml::start( "wound-effects-modificators" )
+            >> xml::attribute( "available", rAvailableModificator_ )
+            >> xml::attribute( "unavailable", rUnavailableModificator_ )
+            >> xml::attribute( "repairable", rRepairableModificator_ )
+            >> xml::attribute( "repairing", rRepairingModificator_ )
+            >> xml::attribute( "captured", rCapturedModificator_ )
+        >> xml::end;
+
+    rAvailableModificator_ = rAvailableModificator_.GetData() * 100.f;
+    rUnavailableModificator_ = rUnavailableModificator_.GetData() * 100.f;
+    rRepairableModificator_ = rRepairableModificator_.GetData() * 100.f;
+    rRepairingModificator_ = rRepairingModificator_.GetData() * 100.f;
+    rCapturedModificator_ = rCapturedModificator_.GetData() * 100.f;
+
     input >> xml::end;
 }
 
@@ -156,6 +175,13 @@ void ADN_AiEngine_Data::WriteArchive( xml::xostream& output )
                 << xml::attribute( "minimum-affinity", rMinimumAffinity_ )
                 << xml::attribute( "neutral-affinity", rNeutralAffinity_ )
                 << xml::attribute( "maximum-affinity", rMaximumAffinity_ )
+            << xml::end
+            << xml::start( "wound-effects-modificators" )
+                << xml::attribute( "available", rAvailableModificator_.GetData() / 100.f )
+                << xml::attribute( "unavailable", rUnavailableModificator_.GetData() / 100.f )
+                << xml::attribute( "repairable", rRepairableModificator_.GetData() / 100.f )
+                << xml::attribute( "repairing", rRepairingModificator_.GetData() / 100.f )
+                << xml::attribute( "captured", rCapturedModificator_.GetData() / 100.f )
             << xml::end
            << xml::end;
 }

@@ -17,6 +17,11 @@ namespace extractors
     struct PowerExtractor_ABC;
 }
 
+namespace sword
+{
+    class UnitAttributes;
+}
+
 namespace aar
 {
 
@@ -38,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual unsigned int ComputePower( unsigned long uid, const extractors::PowerExtractor_ABC& extractor ) const = 0;
+    virtual float ComputePower( const sword::UnitAttributes& message, const extractors::PowerExtractor_ABC& extractor ) const = 0;
     //@}
 };
 

@@ -101,6 +101,7 @@
     <upgrade schema="schemas/4.2.2/physical/Objects.xsd" apply="schemas/4.3.0/xsl/objects_4.2.2-4.3.0.xsl"/>
     <upgrade schema="schemas/4.2.2/physical/Models.xsd" apply="schemas/4.3.0/xsl/models_4.2.2-4.3.0.xsl"/>
     <upgrade schema="schemas/4.2.2/physical/Decisional.xsd" apply="schemas/4.3.0/xsl/decisional_4.2.2-4.3.0.xsl"/>
+	<upgrade schema="schemas/4.2.2/physical/Units.xsd" apply="schemas/4.3.0/xsl/units_4.2.2-4.3.0.xsl"/>
     <upgrade schema="schemas/4.2.2/exercise/orbat.xsd" apply="schemas/4.3.0/xsl/orbat_4.2.2-4.3.0.xsl"/>
   </migration>
 </migrations>

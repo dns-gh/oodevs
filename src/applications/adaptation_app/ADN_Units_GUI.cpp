@@ -217,17 +217,6 @@ void ADN_Units_GUI::Build()
     pEfficienciesGroup->setInsideSpacing( 10 );
     builder.AddField< ADN_EditLine_Int >( pEfficienciesGroup, tr( "Urban area efficiency" ), vInfosConnectors[ eUrbanAreaEfficiency ], tr( "%" ), ePercentage );
 
-    // Power indicators
-    ADN_GroupBox* pPowerIndicatorsGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Power indicators" ), pGroup );
-    vInfosConnectors[eHasPowerIndicators] = &pPowerIndicatorsGroup->GetConnector();
-    pPowerIndicatorsGroup->setInsideMargin( 20 );
-    pPowerIndicatorsGroup->setInsideSpacing( 10 );
-
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Direct fire" ),   vInfosConnectors[ ePowerDirectFire ],   0, eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Indirect fire" ), vInfosConnectors[ ePowerIndirectFire ], 0, eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Close combat" ),  vInfosConnectors[ ePowerCloseCombat ],  0, eGreaterEqualZero );
-    builder.AddField< ADN_EditLine_Int >( pPowerIndicatorsGroup, tr( "Engineering" ),   vInfosConnectors[ ePowerEngineering ],  0, eGreaterEqualZero );
-
     // Civilian
     ADN_GroupBox* pCivilianGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Civilian" ), pGroup );
     vInfosConnectors[ eIsCivilian ] = &pCivilianGroup->GetConnector();
@@ -246,7 +235,7 @@ void ADN_Units_GUI::Build()
     pMainLayout->addWidget( pListUnits_, 1 );
     pMainLayout->addWidget( pGroup, 6 );
 
-    QGridLayout* pGroupLayout = new QGridLayout( pGroup->layout(), 7, 6, 5 );
+    QGridLayout* pGroupLayout = new QGridLayout( pGroup->layout(), 6, 6, 5 );
     pGroupLayout->setAlignment( Qt::AlignTop );
     pGroupLayout->addMultiCellWidget( pParamGroup, 0, 0, 0, 2 );
     pGroupLayout->addMultiCellWidget( pNatureGroup, 0, 0, 3, 5 );
@@ -258,9 +247,8 @@ void ADN_Units_GUI::Build()
     pGroupLayout->addMultiCellWidget( pStockGroup_, 3, 4, 2, 3 );
     pGroupLayout->addMultiCellWidget( pSkillsGroup, 3, 3, 4, 5 );
     pGroupLayout->addMultiCellWidget( pEfficienciesGroup, 4, 4, 4, 5 );
-    pGroupLayout->addMultiCellWidget( pComposantesGroup, 5, 6, 0, 3 );
-    pGroupLayout->addMultiCellWidget( pPowerIndicatorsGroup, 5, 5, 4, 5 );
-    pGroupLayout->addMultiCellWidget( pCivilianGroup, 6, 6, 4, 5 );
+    pGroupLayout->addMultiCellWidget( pComposantesGroup, 5, 5, 0, 3 );
+    pGroupLayout->addMultiCellWidget( pCivilianGroup, 5, 5, 4, 5 );
 }
 
 // -----------------------------------------------------------------------------

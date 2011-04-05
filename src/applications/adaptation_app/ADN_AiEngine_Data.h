@@ -54,6 +54,11 @@ public:
     ADN_Type_Time rMinimumAffinity_;
     ADN_Type_Time rNeutralAffinity_;
     ADN_Type_Time rMaximumAffinity_;
+    ADN_Type_Double rAvailableModificator_;
+    ADN_Type_Double rUnavailableModificator_;
+    ADN_Type_Double rRepairableModificator_;
+    ADN_Type_Double rRepairingModificator_;
+    ADN_Type_Double rCapturedModificator_;
 };
 
 

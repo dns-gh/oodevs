@@ -111,6 +111,10 @@ public:
         eMaintenanceUnloadTime,
         eHasMaxSlope,
         eMaxSlope,
+        ePowerDirectFire,
+        ePowerIndirectFire,
+        ePowerCloseCombat,
+        ePowerEngineering,
         eNTI1,
         eNTI2 = eNTI1 + eNbrNTIGuiElements,
         eNTI3 = eNTI2 + eNbrNTIGuiElements,
@@ -169,6 +173,8 @@ private:
 
     QWidget* BuildMaintenance( QWidget* pParent, T_ConnectorVector& vInfosConnectors );
     QWidget* BuildNTI( QWidget* pParent, const char* szName, T_ConnectorVector& vInfosConnectors, int nIndex );
+
+    QWidget* BuildPowerIndicators( QWidget* pParent, T_ConnectorVector& vInfosConnectors );
     //@}
 
 private slots:

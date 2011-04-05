@@ -10,6 +10,7 @@
 #include "StaticModel.h"
 #include "tools/ExerciseConfig.h"
 #include "PowerIndicators.h"
+#include "PowerModificator.h"
 #include "Extractors.h"
 
 using namespace aar;
@@ -20,8 +21,10 @@ using namespace aar;
 // -----------------------------------------------------------------------------
 StaticModel::StaticModel( const tools::ExerciseConfig& config )
     : powerIndicators_( new PowerIndicators() )
+    , powerModificators_( new PowerModificator() )
 {
     powerIndicators_->Load( config );
+    powerModificators_->Load( config );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +40,22 @@ StaticModel::~StaticModel()
 // Name: StaticModel::ComputePower
 // Created: ABR 2011-02-11
 // -----------------------------------------------------------------------------
-unsigned int StaticModel::ComputePower( unsigned long uid, const extractors::PowerExtractor_ABC& extractor ) const
+float StaticModel::ComputePower( const sword::UnitAttributes& message, const extractors::PowerExtractor_ABC& extractor ) const
 {
-    return extractor.GetPowerValue( powerIndicators_->tools::Resolver< PowerIndicator, unsigned long >::Get( uid ) );
+    float res = 0;
+
+    for( int i = 0; i < message.equipment_dotations().elem().size(); ++i )
+    {
+        const sword::EquipmentDotations_EquipmentDotation equipmentMsg = message.equipment_dotations().elem( i );
+        unsigned int powerValue = extractor.GetPowerValue( powerIndicators_->tools::Resolver< PowerIndicator, unsigned long >::Get( equipmentMsg.type().id() ) );
+        double equipmentRes = 0;        
+        equipmentRes += equipmentMsg.available() * powerModificators_->GetAvailableModificator();
+        equipmentRes += equipmentMsg.repairable() * powerModificators_->GetRepairableModificator();
+        equipmentRes += equipmentMsg.repairing() * powerModificators_->GetRepairingModificator();
+        equipmentRes += equipmentMsg.captured() * powerModificators_->GetCapturedModificator();
+        equipmentRes += equipmentMsg.unavailable() * powerModificators_->GetUnavailableModificator();
+        res += static_cast< float >( equipmentRes * powerValue );
+    }
+
+    return res;
 }

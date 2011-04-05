@@ -26,6 +26,7 @@ namespace tools
 namespace aar
 {
     class PowerIndicators;
+    class PowerModificator;
 
 // =============================================================================
 /** @class  StaticModel
@@ -44,13 +45,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual unsigned int ComputePower( unsigned long uid, const extractors::PowerExtractor_ABC& Extractor ) const;
+    virtual float ComputePower( const sword::UnitAttributes& message, const extractors::PowerExtractor_ABC& Extractor ) const;
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
     std::auto_ptr< aar::PowerIndicators > powerIndicators_;
+    std::auto_ptr< aar::PowerModificator > powerModificators_;
     //@}
 };
 

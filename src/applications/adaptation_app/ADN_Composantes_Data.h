@@ -668,6 +668,10 @@ public:
         ADN_Type_Bool bMaxSlope_;
         ADN_Type_Double rMaxSlope_;
         LogInfos logInfos_;
+        ADN_Type_Int nPowerDirectFire_;
+        ADN_Type_Int nPowerIndirectFire_;
+        ADN_Type_Int nPowerCloseCombat_;
+        ADN_Type_Int nPowerEngineering_;
 
     public:
         class CmpId : public std::unary_function< ComposanteInfos* , bool >
