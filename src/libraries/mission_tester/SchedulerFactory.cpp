@@ -37,11 +37,7 @@ SchedulerFactory::~SchedulerFactory()
 // Name: SchedulerFactory::CreateAgentScheduler
 // Created: PHC 2011-04-04
 // -----------------------------------------------------------------------------
-Scheduler_ABC* SchedulerFactory::CreateAgentScheduler()
+boost::shared_ptr< Scheduler_ABC > SchedulerFactory::CreateAgentScheduler()
 {
-    std::auto_ptr< Criteria > criteria( new Criteria( "agent" ) );
-    std::auto_ptr< Filter_ABC > filter ( new Filter( *criteria ) );
-    boost::shared_ptr< Scheduler_ABC > scheduler( new Scheduler( *filter ) );
-    schedulers_.push_back( scheduler );
-    return scheduler.get();
+    return boost::shared_ptr< Scheduler_ABC >( new Scheduler( "agent" ) );
 }

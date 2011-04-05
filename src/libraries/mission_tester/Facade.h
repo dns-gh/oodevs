@@ -7,36 +7,44 @@
 //
 // *****************************************************************************
 
-#ifndef __SchedulerFactory_h_
-#define __SchedulerFactory_h_
+#ifndef __Facade_h_
+#define __Facade_h_
 
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
 
 namespace mission_tester
 {
-    class Scheduler_ABC;
 // =============================================================================
-/** @class  SchedulerFactory
-    @brief  SchedulerFactory
+/** @class  Facade
+    @brief  Facade
 */
-// Created: PHC 2011-04-04
+// Created: PHC 2011-04-05
 // =============================================================================
-class SchedulerFactory : private boost::noncopyable
+class Facade : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SchedulerFactory();
-    virtual ~SchedulerFactory();
+             Facade();
+    virtual ~Facade();
     //@}
 
     //! @name Operations
     //@{
-    boost::shared_ptr< Scheduler_ABC > CreateAgentScheduler();
+    void Run( int argc, char* argv[] );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    //@}
+
+private:
+    //! @name Member data
+    //@{
     //@}
 };
 }
 
-#endif // __SchedulerFactory_h_
+#endif // __Facade_h_

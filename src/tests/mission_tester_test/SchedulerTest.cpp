@@ -22,15 +22,9 @@ MOCK_BASE_CLASS( MockSchedulable, Schedulable_ABC )
     MOCK_METHOD( Matches, 1 )
 };
 
-MOCK_BASE_CLASS( MockFilter, Filter_ABC )
-{
-    MOCK_METHOD( Accepts, 1 )
-};
-
 BOOST_AUTO_TEST_CASE( scheduler_schedules_a_schedulable )
 {
-    MockFilter filter;
-    Scheduler scheduler( filter );
+    Scheduler scheduler( "any" );
     MockSchedulable schedulable;
     MOCK_EXPECT( filter, Accepts ).once().with( mock::same( schedulable ) ).returns( true );
     scheduler.Schedule( schedulable );
