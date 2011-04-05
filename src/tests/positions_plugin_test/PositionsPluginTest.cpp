@@ -26,16 +26,26 @@ namespace
             throw std::runtime_error( std::string( "File " ) + filename + " not found" );
         return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
     }
+
+    struct Fixture
+    {
+        Fixture()
+        {
+            std::remove( output );
+        }
+        ~Fixture()
+        {
+            std::remove( output );
+        }
+    };
 }
 
-BOOST_AUTO_TEST_CASE( plugin_which_hasnt_received_any_message_outputs_headers_only )
+BOOST_FIXTURE_TEST_CASE( plugin_which_hasnt_received_any_message_outputs_headers_only_upon_destruction, Fixture )
 {
-    std::remove( output );
     {
         plugins::positions::PositionsPlugin plugin( output, frequency );
     }
     BOOST_CHECK_EQUAL( "Team (id);Unit (id)\n", load() );
-    std::remove( output );
 }
 
 namespace
@@ -48,33 +58,25 @@ namespace
     }
 }
 
-BOOST_AUTO_TEST_CASE( plugin_receiving_a_control_begin_tick_message_for_the_first_time_adds_time_to_output )
+BOOST_FIXTURE_TEST_CASE( plugin_receiving_a_control_begin_tick_message_for_the_first_time_adds_time_to_output, Fixture )
 {
-    std::remove( output );
-    {
-        plugins::positions::PositionsPlugin plugin( output, frequency );
-        plugin.Receive( MakeTimeMessage( 0 ) );
-        BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970\n", load() );
-    }
-    std::remove( output );
+    plugins::positions::PositionsPlugin plugin( output, frequency );
+    plugin.Receive( MakeTimeMessage( 0 ) );
+    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970\n", load() );
 }
 
-BOOST_AUTO_TEST_CASE( plugin_being_destroyed_adds_last_received_time_even_if_already_output )
+BOOST_FIXTURE_TEST_CASE( plugin_being_destroyed_adds_last_received_time_to_output_even_if_already_added, Fixture )
 {
-    std::remove( output );
     {
         plugins::positions::PositionsPlugin plugin( output, frequency );
         plugin.Receive( MakeTimeMessage( 0 ) );
-        BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970\n", load() );
         std::remove( output );
     }
     BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:00 1970\n", load() );
-    std::remove( output );
 }
 
-BOOST_AUTO_TEST_CASE( plugin_being_destroyed_adds_last_received_time_to_output )
+BOOST_FIXTURE_TEST_CASE( plugin_being_destroyed_adds_last_received_time_to_output, Fixture )
 {
-    std::remove( output );
     {
         plugins::positions::PositionsPlugin plugin( output, frequency );
         plugin.Receive( MakeTimeMessage( 0 ) );
@@ -83,20 +85,82 @@ BOOST_AUTO_TEST_CASE( plugin_being_destroyed_adds_last_received_time_to_output )
         BOOST_REQUIRE( ! std::ifstream( output ) );
     }
     BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:41 1970\n", load() );
-    std::remove( output );
 }
 
-BOOST_AUTO_TEST_CASE( plugin_receiving_a_control_begin_tick_message_adds_time_to_output_if_frequency_threshold_is_reached )
+BOOST_FIXTURE_TEST_CASE( plugin_receiving_a_control_begin_tick_message_adds_time_to_output_if_frequency_threshold_is_reached, Fixture )
 {
+    plugins::positions::PositionsPlugin plugin( output, frequency );
+    plugin.Receive( MakeTimeMessage( 0 ) );
     std::remove( output );
+    plugin.Receive( MakeTimeMessage( frequency - 1 ) );
+    BOOST_REQUIRE( ! std::ifstream( output ) );
+    plugin.Receive( MakeTimeMessage( frequency ) );
+    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:42 1970\n", load() );
+}
+
+namespace
+{
+    sword::SimToClient MakePartyMessage( unsigned int party, const std::string& name )
     {
-        plugins::positions::PositionsPlugin plugin( output, frequency );
-        plugin.Receive( MakeTimeMessage( 0 ) );
-        std::remove( output );
-        plugin.Receive( MakeTimeMessage( frequency - 1 ) );
-        BOOST_REQUIRE( ! std::ifstream( output ) );
-        plugin.Receive( MakeTimeMessage( frequency ) );
-        BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:42 1970\n", load() );
+        sword::SimToClient message;
+        message.mutable_message()->mutable_party_creation()->mutable_party()->set_id( party );
+        message.mutable_message()->mutable_party_creation()->set_name( name );
+        return message;
     }
-    std::remove( output );
+    sword::SimToClient MakeAutomatMessage( unsigned int party, unsigned int automat )
+    {
+        sword::SimToClient message;
+        message.mutable_message()->mutable_automat_creation()->mutable_party()->set_id( party );
+        message.mutable_message()->mutable_automat_creation()->mutable_automat()->set_id( automat );
+        return message;
+    }
+    sword::SimToClient MakeUnitMessage( unsigned int automat, unsigned int unit, const std::string& name )
+    {
+        sword::SimToClient message;
+        message.mutable_message()->mutable_unit_creation()->mutable_automat()->set_id( automat );
+        message.mutable_message()->mutable_unit_creation()->mutable_unit()->set_id( unit );
+        message.mutable_message()->mutable_unit_creation()->set_name( name );
+        return message;
+    }
+}
+
+BOOST_FIXTURE_TEST_CASE( received_units_are_added_to_output, Fixture )
+{
+    plugins::positions::PositionsPlugin plugin( output, frequency );
+    plugin.Receive( MakePartyMessage( 11u, "party1" ) );
+    plugin.Receive( MakeAutomatMessage( 11u, 21u ) );
+    plugin.Receive( MakeUnitMessage( 21u, 31u, "unit1" ) );
+    plugin.Receive( MakeUnitMessage( 21u, 32u, "unit2" ) );
+    plugin.Receive( MakeTimeMessage( 0 ) );
+    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970\n"
+                       "party1 (11);unit1 (31);NA\n"
+                       "party1 (11);unit2 (32);NA\n", load() );
+}
+
+namespace
+{
+    sword::SimToClient MakePositionMessage( unsigned int unit, double latitude, double longitude )
+    {
+        sword::SimToClient message;
+        message.mutable_message()->mutable_unit_attributes()->mutable_unit()->set_id( unit );
+        message.mutable_message()->mutable_unit_attributes()->mutable_position()->set_latitude( latitude );
+        message.mutable_message()->mutable_unit_attributes()->mutable_position()->set_longitude( longitude );
+        return message;
+    }
+}
+
+BOOST_FIXTURE_TEST_CASE( received_units_with_positions_are_added_to_output_with_positions, Fixture )
+{
+    plugins::positions::PositionsPlugin plugin( output, frequency );
+    plugin.Receive( MakePartyMessage( 11u, "party1" ) );
+    plugin.Receive( MakeAutomatMessage( 11u, 21u ) );
+    plugin.Receive( MakeUnitMessage( 21u, 31u, "unit1" ) );
+    plugin.Receive( MakeUnitMessage( 21u, 32u, "unit2" ) );
+    plugin.Receive( MakeTimeMessage( 0 ) );
+    plugin.Receive( MakePositionMessage( 31u, 17, 42 ) );
+    plugin.Receive( MakePositionMessage( 32u, 23, 51 ) );
+    plugin.Receive( MakeTimeMessage( frequency ) );
+    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:42 1970\n"
+                       "party1 (11);unit1 (31);NA;Lat:17 Long:42\n"
+                       "party1 (11);unit2 (32);NA;Lat:23 Long:51\n", load() );
 }
