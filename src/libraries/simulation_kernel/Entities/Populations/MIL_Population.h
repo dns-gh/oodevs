@@ -14,6 +14,7 @@
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include <map>
 
 namespace sword
@@ -85,6 +86,7 @@ public:
     const std::string& GetCriticalIntelligence() const;
     float GetAffinity( unsigned long teamID ) const;
 
+    bool HasReachedBlockBorder          ( const UrbanObjectWrapper* pUrbanKnowledge ) const;
     bool HasReachedDestination          ( const MT_Vector2D& destination ) const;
     bool HasReachedDestinationCompletely( const MT_Vector2D& destination ) const;
     //@}
@@ -248,6 +250,7 @@ private:
     T_Extensions extensions_;
     std::auto_ptr< MIL_AffinitiesMap > pAffinities_;
     double urbanBlockAngriness_;
+    const double rSquareWeldValue_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );

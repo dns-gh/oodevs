@@ -19,6 +19,7 @@
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_Representations.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -83,6 +84,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
+    , rSquareWeldValue_           ( TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10 )
 {
     idManager_.Lock( nID_ );
     std::string strAttitude;
@@ -137,6 +139,7 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
+    , rSquareWeldValue_           ( TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10 )
 {
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
     vBarycenter_.reset( new MT_Vector2D() );
@@ -165,6 +168,7 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
+    , rSquareWeldValue_           ( TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10 )
 {
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( "calme" );
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
@@ -1430,24 +1434,37 @@ float MIL_Population::GetAffinity( unsigned long teamID ) const
 {
     return pAffinities_->GetAffinity( teamID );
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::HasReachedDestination
 // Created: NLD 2011-03-18
 // -----------------------------------------------------------------------------
 bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) const
 {
-    /// Pb de precision .. BOF
-    static const double rSquareWeldValue = TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue();
 
     BOOST_FOREACH( const MIL_PopulationConcentration* concentration, concentrations_ )
     {
-        if( destination.SquareDistance( concentration->GetPosition() ) <= rSquareWeldValue )
+        if( destination.SquareDistance( concentration->GetPosition() ) <= rSquareWeldValue_ )
             return true;
     }
 
     BOOST_FOREACH( const MIL_PopulationFlow* flow, flows_ )
     {
-        if( destination.SquareDistance( flow->GetPosition() ) <= rSquareWeldValue )
+        if( destination.SquareDistance( flow->GetPosition() ) <= rSquareWeldValue_ )
+            return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::HasReachedBlockBorder
+// Created: DDA 2011-04-04
+// -----------------------------------------------------------------------------
+bool MIL_Population::HasReachedBlockBorder( const UrbanObjectWrapper* pUrbanKnowledge ) const
+{
+    BOOST_FOREACH( const MIL_PopulationFlow* flow, flows_ )
+    {
+        if ( DEC_GeometryFunctions::IsPointInUrbanBlock( flow->GetPosition(), pUrbanKnowledge ) )
             return true;
     }
     return false;
@@ -1459,14 +1476,11 @@ bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) con
 // -----------------------------------------------------------------------------
 bool MIL_Population::HasReachedDestinationCompletely( const MT_Vector2D& destination ) const
 {
-    /// Pb de precision .. BOF
-    static const double rSquareWeldValue = TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue();
-
     if( !flows_.empty() )
         return false;
 
     if( concentrations_.size() != 1 )
         return false;
 
-    return destination.SquareDistance( concentrations_.front()->GetPosition() ) <= rSquareWeldValue;
+    return destination.SquareDistance( concentrations_.front()->GetPosition() ) <= rSquareWeldValue_;
 }
