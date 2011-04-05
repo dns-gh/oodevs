@@ -21,6 +21,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -304,6 +305,15 @@ bool DEC_PopulationFunctions::HasReachedDestination( const MIL_Population& calle
 {
     assert( destination ); 
     return callerPopulation.HasReachedDestination( *destination );
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::HasReachedBlockBorder
+// Created: DDA 2011-04-04
+// -----------------------------------------------------------------------------
+bool DEC_PopulationFunctions::HasReachedBlockBorder( const MIL_Population& callerPopulation, const UrbanObjectWrapper* pUrbanKnowledge )
+{
+    assert( pUrbanKnowledge ); 
+    return callerPopulation.HasReachedBlockBorder( pUrbanKnowledge );
 }
 
 // -----------------------------------------------------------------------------
