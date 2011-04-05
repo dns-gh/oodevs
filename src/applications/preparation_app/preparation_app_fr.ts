@@ -1588,6 +1588,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>User role</source>
         <translation>Rôle de l&apos;utilisateur</translation>
     </message>
+    <message>
+        <source>Role</source>
+        <translation>Rôle</translation>
+    </message>
 </context>
 <context>
     <name>WeatherPanel</name>

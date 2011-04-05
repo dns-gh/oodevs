@@ -49,7 +49,8 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         QHBox* roleBox = new QHBox( userRoleGroup_ );
         userRoleLabel_ = new QLabel( roleBox );
         userRole_ = new QComboBox( roleBox );
-        roleBox->setStretchFactor( userRoleLabel_, 1 );
+        userRoleLabel_->setText( tr( "Role" ));
+       roleBox->setStretchFactor( userRoleLabel_, 1 );
         roleBox->setStretchFactor( userRole_, 1 );
         connect( userRoleGroup_, SIGNAL( toggled( bool ) ), this, SLOT( OnUserRoleActivation( bool ) ) );
         connect( userRole_, SIGNAL( activated( const QString& ) ), this, SLOT( OnUserRole( const QString& ) ) );
@@ -115,7 +116,6 @@ void UserProfileWidget::NotifyUpdated( const kernel::ModelLoaded& )
                 {
                     QStringList list;
                     userRoleDico_->GetStringList( list, dicoKind_, dicoLanguage_ );
-                    userRoleLabel_->setText( attribute.GetLabel( dicoLanguage_, "" ).c_str() );
                     userRole_->insertStringList( list );
                     userRoleGroup_->show();
                 }
