@@ -10,6 +10,8 @@
 #ifndef __MessageHandler_ABC_h_
 #define __MessageHandler_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace sword
 {
     class SimToClient;
@@ -26,7 +28,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-07-05
 // =============================================================================
-class MessageHandler_ABC
+class MessageHandler_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

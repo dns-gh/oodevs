@@ -10,6 +10,8 @@
 #ifndef __SimulationPublisher_ABC_h_
 #define __SimulationPublisher_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace sword
 {
     class DispatcherToSim;
@@ -28,7 +30,7 @@ namespace dispatcher
 */
 // Created: AGE 2007-08-24
 // =============================================================================
-class SimulationPublisher_ABC
+class SimulationPublisher_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
