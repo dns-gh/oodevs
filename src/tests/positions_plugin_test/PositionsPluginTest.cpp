@@ -48,7 +48,18 @@ namespace
     }
 }
 
-BOOST_AUTO_TEST_CASE( plugin_receiving_a_control_begin_tick_message_for_the_first_time_outputs_time )
+BOOST_AUTO_TEST_CASE( plugin_receiving_a_control_begin_tick_message_for_the_first_time_adds_time_to_output )
+{
+    std::remove( output );
+    {
+        plugins::positions::PositionsPlugin plugin( output, frequency );
+        plugin.Receive( MakeTimeMessage( 0 ) );
+        BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970\n", load() );
+    }
+    std::remove( output );
+}
+
+BOOST_AUTO_TEST_CASE( plugin_being_destroyed_adds_last_received_time_even_if_already_output )
 {
     std::remove( output );
     {
@@ -57,11 +68,11 @@ BOOST_AUTO_TEST_CASE( plugin_receiving_a_control_begin_tick_message_for_the_firs
         BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970\n", load() );
         std::remove( output );
     }
-    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:00 1970\n", load() ); // $$$$ MCO : not sure this is really what we want ?
+    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:00 1970\n", load() );
     std::remove( output );
 }
 
-BOOST_AUTO_TEST_CASE( plugin_being_destroyed_outputs_last_received_time )
+BOOST_AUTO_TEST_CASE( plugin_being_destroyed_adds_last_received_time_to_output )
 {
     std::remove( output );
     {
@@ -75,15 +86,17 @@ BOOST_AUTO_TEST_CASE( plugin_being_destroyed_outputs_last_received_time )
     std::remove( output );
 }
 
-BOOST_AUTO_TEST_CASE( plugin_receiving_a_control_begin_tick_message_outputs_time_if_frequency_threshold_is_reached )
+BOOST_AUTO_TEST_CASE( plugin_receiving_a_control_begin_tick_message_adds_time_to_output_if_frequency_threshold_is_reached )
 {
     std::remove( output );
-    plugins::positions::PositionsPlugin plugin( output, frequency );
-    plugin.Receive( MakeTimeMessage( 0 ) );
-    std::remove( output );
-    plugin.Receive( MakeTimeMessage( frequency - 1 ) );
-    BOOST_REQUIRE( ! std::ifstream( output ) );
-    plugin.Receive( MakeTimeMessage( frequency ) );
-    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:42 1970\n", load() );
+    {
+        plugins::positions::PositionsPlugin plugin( output, frequency );
+        plugin.Receive( MakeTimeMessage( 0 ) );
+        std::remove( output );
+        plugin.Receive( MakeTimeMessage( frequency - 1 ) );
+        BOOST_REQUIRE( ! std::ifstream( output ) );
+        plugin.Receive( MakeTimeMessage( frequency ) );
+        BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:42 1970\n", load() );
+    }
     std::remove( output );
 }
