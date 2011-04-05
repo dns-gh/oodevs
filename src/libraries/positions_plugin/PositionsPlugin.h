@@ -57,6 +57,7 @@ private:
     //! @name Helpers
     //@{
     void Export();
+    void SaveTime();
     //@}
 
 private:

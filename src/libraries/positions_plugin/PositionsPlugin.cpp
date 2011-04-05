@@ -76,15 +76,9 @@ void PositionsPlugin::Receive( const sword::SimToClient& message )
     if( message.message().has_control_begin_tick() )
     {
         currentTime_ = MakeDate( message.message().control_begin_tick().date_time().data() );
-        if( firstTick_ )
-        {
+        if( firstTick_ || lastExportTime_.secsTo( currentTime_ ) >= exportFrequency_ )
             Export();
-            firstTick_ = false;
-        }
-        else if( lastExportTime_.secsTo( currentTime_ ) >= exportFrequency_ )
-        {
-            Export();
-        }
+        firstTick_ = false;
     }
     else if( message.message().has_party_creation() )
     {
@@ -110,8 +104,26 @@ void PositionsPlugin::Receive( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void PositionsPlugin::Export()
 {
+    SaveTime();
+    ExportData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PositionsPlugin::SaveTime
+// Created: MCO 2011-04-05
+// -----------------------------------------------------------------------------
+void PositionsPlugin::SaveTime()
+{
     lastExportTime_ = currentTime_;
     times_.push_back( lastExportTime_.toString().ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PositionsPlugin::ExportData
+// Created: MCO 2011-04-05
+// -----------------------------------------------------------------------------
+void PositionsPlugin::ExportData()
+{
     boost::filesystem::ofstream file( filepath_ );
     file << "Team (id)" << separator_ << "Unit (id)";
     for( CIT_Times it = times_.begin(); it != times_.end(); ++it )
