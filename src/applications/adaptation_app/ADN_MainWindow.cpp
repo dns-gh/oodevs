@@ -29,6 +29,7 @@
 #include "ADN_FileLoaderObserver.h"
 #include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
+#include "tools/Version.h"
 #include "qtundo.h"
 #include <qimage.h>
 #include <qpixmap.h>
@@ -516,7 +517,8 @@ void ADN_MainWindow::ConfigureDataTest()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::About()
 {
-    QMessageBox::about( this , tr( "Sword Adaptation Tool" ), "Sword Adaptation Tool - Copyright (c) MASA Group 2011" );
+    QMessageBox::about( this , tr( "Sword Adaptation Tool" ),
+        QString( "Sword Adaptation Tool\n%1\nCopyright (c) MASA Group 2011" ).arg( tools::AppVersion() ) );
 }
 
 //-----------------------------------------------------------------------------
