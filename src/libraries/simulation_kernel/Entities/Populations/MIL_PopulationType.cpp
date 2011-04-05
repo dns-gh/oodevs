@@ -18,6 +18,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Tools/MIL_Tools.h"
+#include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MIL_AgentServer.h"
 #include <xeumeuleu/xml.hpp>
@@ -96,6 +97,7 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     , slowDownData_         ( MIL_PopulationAttitude::GetAttitudes().size(), T_VolumeSlowDownData( PHY_Volume::GetVolumes().size(), sSlowDownData( 0., 0. ) ) )
     , attritionData_        ()
     , damageData_           ( PHY_RoePopulation::GetRoePopulations().size(), sDamageData( 0., 0. ) )
+    , urbanDestructionData_ ( MIL_PopulationAttitude::GetAttitudes().size(), sUrbanDestructionData( 0.0, 0.0 ) )
 {
     xis >> xml::attribute( "id", nID_ )
         >> xml::attribute( "concentration-density", rConcentrationDensity_ )
@@ -215,6 +217,10 @@ void MIL_PopulationType::InitializeFireData( xml::xistream& xis )
     xis >> xml::start( "unit-fire-effects" )
             >> xml::list( "unit", *this, &MIL_PopulationType::ReadUnitFireEffect )
         >> xml::end;
+    
+    xis >> xml::start( "urban-destruction-effects" )
+            >> xml::list( "urban-destruction-effect", *this, &MIL_PopulationType::ReadUrbanDestructionEffect )
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -237,6 +243,29 @@ void MIL_PopulationType::ReadUnitFireEffect( xml::xistream& xis )
         xis.error( "unit-fire-effect: rule-of-engagment < 0" );
     if( damageData_[ pRoe->GetID() ].rPH_ < 0 )
         xis.error( "unit-fire-effect: ph < 0" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::ReadUrbanDestructionEffect
+// Created: MMC 2011-03-31
+// -----------------------------------------------------------------------------
+void MIL_PopulationType::ReadUrbanDestructionEffect( xml::xistream& xis )
+{
+    std::string strAttitude = xis.attribute< std::string >( "attitude" );
+    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( strAttitude );
+    if( !pAttitude )
+        xis.error( "Unknown attitude '" + strAttitude + "'" );
+    assert( urbanDestructionData_.size() > pAttitude->GetID() );
+
+    urbanDestructionData_[ pAttitude->GetID() ].rDensity_ = xis.attribute< double >( "density" );
+    if( urbanDestructionData_[ pAttitude->GetID() ].rDensity_ < 0 )
+        xis.error( "urban-destruction-effect: density < 0" );
+
+    double rTime;
+    tools::ReadTimeAttribute( xis, "time", rTime );
+    if( rTime < 0 )
+        xis.error( "urban-destruction-effect: time < 0" );
+    urbanDestructionData_[ pAttitude->GetID() ].rTime_ = MIL_Tools::ConvertSecondsToSim( rTime );
 }
 
 // -----------------------------------------------------------------------------
@@ -305,6 +334,26 @@ double MIL_PopulationType::GetDamagePH( const PHY_RoePopulation& roeFirer ) cons
 {
     assert( damageData_.size() > roeFirer.GetID() );
     return damageData_[ roeFirer.GetID() ].rPH_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetUrbanDestructionDensity
+// Created: MMC 2011-03-31
+// -----------------------------------------------------------------------------
+double MIL_PopulationType::GetUrbanDestructionDensity( const MIL_PopulationAttitude& attitude ) const
+{
+    assert( urbanDestructionData_.size() > attitude.GetID() );
+    return urbanDestructionData_[ attitude.GetID() ].rDensity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetUrbanDestructionTime
+// Created: MMC 2011-03-31
+// -----------------------------------------------------------------------------
+double MIL_PopulationType::GetUrbanDestructionTime( const MIL_PopulationAttitude& attitude ) const
+{
+    assert( urbanDestructionData_.size() > attitude.GetID() );
+    return urbanDestructionData_[ attitude.GetID() ].rTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -402,7 +451,7 @@ double MIL_PopulationType::GetMaxSpeed() const
 // Name: MIL_PopulationType::GetAttritionData
 // Created: NLD 2005-11-03
 // -----------------------------------------------------------------------------
-const PHY_AttritionData& MIL_PopulationType::GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection, double armedIndividuals ) const
+const PHY_AttritionData MIL_PopulationType::GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection, double armedIndividuals ) const
 {
     return attritionData_.GetAttritionData( attitude, protection, armedIndividuals );
 }

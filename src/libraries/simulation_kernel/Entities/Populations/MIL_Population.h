@@ -141,6 +141,7 @@ public:
     double GetUrbanBlockAngriness() const;
     void SetUrbanBlockAngriness( double );
     void ChangeComposition( unsigned int healthy, unsigned int wounded, unsigned int contaminated, unsigned int dead );
+    double ComputeUrbanBlocDestruction( UrbanObjectWrapper* pUrbanObjet );
     //@}
 
     //! @name Tools

@@ -31,6 +31,8 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
+#include "Tools/MIL_Geometry.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
 
@@ -1149,6 +1151,43 @@ void MIL_Population::ChangeComposition( unsigned int healthy, unsigned int wound
         if( last )
             last->PushHumans( MIL_PopulationHumans( healthy, contaminated, wounded, dead ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::ComputeUrbanBlocDestruction
+// Created: MMC 2011-03-31
+// -----------------------------------------------------------------------------
+double MIL_Population::ComputeUrbanBlocDestruction( UrbanObjectWrapper* pUrbanObjet )
+{
+    double densityRef = pType_->GetUrbanDestructionDensity( GetAttitude() );
+    double timeRef = pType_->GetUrbanDestructionTime( GetAttitude() ) ;
+    if ( densityRef <= 0.0 && timeRef <= 0.0 )
+        return 0.0;
+
+    double coveredArea = 0.0, currentArea = 0.0, areaDensitySum = 0.0;
+    for ( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end();  ++it )
+    {
+        currentArea = MIL_Geometry::IntersectionArea( pUrbanObjet->GetLocalisation(), (*it)->GetLocation() );
+        coveredArea += currentArea;
+        areaDensitySum += currentArea * (*it)->GetDensity();
+    }
+    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    {
+        currentArea = MIL_Geometry::IntersectionArea( pUrbanObjet->GetLocalisation(), (*it)->GetLocation() );
+        coveredArea += currentArea;
+        areaDensitySum += currentArea * (*it)->GetDensity();
+    }
+    if ( coveredArea < 0.00001 /*epsilon*/ )
+        return 0.0;
+
+    double urbanArea = pUrbanObjet->GetLocalisation().GetArea();
+    double areaFactor = std::min< double >( 1.0, coveredArea / urbanArea );
+    if ( densityRef <= 0.0 || timeRef <= 0.0 )
+        return areaFactor;
+
+    double averageDensity = areaDensitySum / coveredArea;
+    double densityTimeFactor = std::min< double >( 1.0, averageDensity / ( densityRef * timeRef ) );
+    return  areaFactor * densityTimeFactor;
 }
 
 // -----------------------------------------------------------------------------

@@ -66,10 +66,12 @@ public:
     //@{
     double GetPionMaxSpeed( const MIL_PopulationAttitude& populationAttitude, double rPopulationDensity, const PHY_Volume& pionVolume ) const;
     double GetPionReloadingTimeFactor( double rPopulationDensity ) const;
-    const PHY_AttritionData& GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection, double armedIndividuals ) const;
+    const PHY_AttritionData GetAttritionData( const MIL_PopulationAttitude& attitude, const PHY_Protection& protection, double armedIndividuals ) const;
     double GetPH( const MIL_PopulationAttitude& attitude, double rDensity ) const;
     double GetDamageSurface( const PHY_RoePopulation& roeFirer ) const;
     double GetDamagePH( const PHY_RoePopulation& roeFirer ) const;
+    double GetUrbanDestructionDensity( const MIL_PopulationAttitude& attitude ) const;
+    double GetUrbanDestructionTime( const MIL_PopulationAttitude& attitude ) const;
     //@}
 
 protected:
@@ -121,6 +123,18 @@ private:
         double rPH_;
     };
     typedef std::vector< sDamageData > T_DamageData;
+    struct sUrbanDestructionData
+    {
+        sUrbanDestructionData( double rDensity, double rTime )
+            : rDensity_( rDensity )
+            , rTime_( rTime )
+        {
+            // NOTHING
+        }
+        double rDensity_;
+        double rTime_;
+    };
+    typedef std::vector< sUrbanDestructionData > T_UrbanDestructionData;
     //@}
 
     //! @name Helpers
@@ -130,6 +144,7 @@ private:
     void ReadSlowingEffect    ( xml::xistream& xis );
     void ReadSlowingUnitEffect( xml::xistream& xis, T_VolumeSlowDownData& volumeSlowDownData );
     void ReadUnitFireEffect   ( xml::xistream& xis );
+    void ReadUrbanDestructionEffect ( xml::xistream& xis );
     //@}
 
 private:
@@ -147,6 +162,7 @@ private:
     T_AttitudeSlowDownData slowDownData_;
     MIL_PopulationPionAttritionData attritionData_;
     T_DamageData damageData_;
+    T_UrbanDestructionData urbanDestructionData_;
     const DEC_Model_ABC* pModel_;
     //@}
 
