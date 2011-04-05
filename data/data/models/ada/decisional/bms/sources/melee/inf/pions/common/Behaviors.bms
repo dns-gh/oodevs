@@ -46,6 +46,8 @@ include "Common/Pions/Missions/PrendreEnComptePrisonniers.bms"
 --[[// Ajout ADA
 ]]include "Common/Pions/Missions/SoutenirEnMesureDe.bms"
 
+include "Melee/Common/Pions/Missions.bms"
+
 --[[//missions populations
 ]]include "Common/Pions/MissionsReactionPopulations.bms"
 

@@ -24,6 +24,7 @@ includedFiles["sources/melee/abc/pions/common/Behaviors.bms"] = true
 --[[// Communs aux pions ABC
 ]]include "Melee/Abc/Pions/Common/Actions.bms"
 
+include "Melee/Common/Pions/Missions.bms"
 
 
 --[[// *****************************************************************************
