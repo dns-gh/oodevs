@@ -45,8 +45,6 @@ public:
 
     void Update();
     void Disconnect();
-    bool IsConnected() const;
-    bool IsAuthentified() const;
     //@}
 
 private:
@@ -63,8 +61,6 @@ private:
     //! @name mermbers data
     //@{
     std::auto_ptr< SwordProxy > proxy_;
-    bool connected_;
-    bool authentified_;
     //@}
 };
 

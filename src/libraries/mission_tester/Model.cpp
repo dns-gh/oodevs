@@ -23,8 +23,8 @@ using namespace mission_tester;
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
 Model::Model( const kernel::StaticModel& staticModel, Scheduler_ABC& scheduler )
-    : staticModel_( staticModel )
-    , scheduler_  ( scheduler )
+    : staticModel_   ( staticModel )
+    , scheduler_     ( scheduler )
 {
     // NOTHING
 }
@@ -46,6 +46,8 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
 {
     if( message.message().has_unit_creation() )
         CreateAgent( message.message().unit_creation() );
+//    if( message.message().has_control_begin_tick() )
+//        scheduler_.Tick( message.message().control_begin_tick() );
 }
 
 // -----------------------------------------------------------------------------

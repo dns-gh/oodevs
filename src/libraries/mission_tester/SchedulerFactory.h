@@ -13,6 +13,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
+
 namespace mission_tester
 {
     class Scheduler_ABC;
@@ -34,7 +35,18 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< Scheduler_ABC > CreateAgentScheduler();
+    Scheduler_ABC* CreateAgentScheduler();
+    //@}
+
+private:
+    //! @name types
+    //@{
+    typedef std::vector< boost::shared_ptr< Scheduler_ABC > > T_Schedulers;
+    //@}
+
+    //! @name Member data
+    //@{
+    T_Schedulers schedulers_;
     //@}
 };
 }

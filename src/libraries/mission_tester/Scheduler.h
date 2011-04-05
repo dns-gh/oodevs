@@ -12,11 +12,9 @@
 
 #include "Scheduler_ABC.h"
 #include <boost/shared_ptr.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace mission_tester
 {
-    class Criteria;
     class Filter_ABC;
     class Schedulable_ABC;
 // =============================================================================
@@ -31,7 +29,7 @@ class Scheduler : public Scheduler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Scheduler( const std::string& criteria );
+    explicit Scheduler( const Filter_ABC& filter );
     virtual ~Scheduler();
     //@}
 
@@ -44,10 +42,8 @@ public:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Criteria > criteria_;
-    std::auto_ptr< Filter_ABC > filter_;
+    const Filter_ABC& filter_;
     std::vector< Schedulable_ABC* > shedulables_;
-    boost::posix_time::ptime last_;
     //@}
 };
 }

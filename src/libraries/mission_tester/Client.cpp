@@ -19,9 +19,7 @@ using namespace mission_tester;
 // Created: PHC 2011-03-24
 // -----------------------------------------------------------------------------
 Client::Client( SwordMessageHandler_ABC& handler, const std::string& host, unsigned short port, const std::string& profile, const std::string& password )
-    : proxy_       ( new SwordProxy( host, port, profile, password ) )
-    , connected_   ( false )
-    , authentified_( false )
+    : proxy_( new SwordProxy( host, port, profile, password ) )
 {
     proxy_->RegisterMessageHandler( &handler );
     proxy_->Connect( this );
@@ -100,30 +98,11 @@ void Client::Disconnect()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Client::IsConnected
-// Created: PHC 2011-04-05
-// -----------------------------------------------------------------------------
-bool Client::IsConnected() const
-{
-    return connected_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::IsAuthentified
-// Created: PHC 2011-04-05
-// -----------------------------------------------------------------------------
-bool Client::IsAuthentified() const
-{
-    return authentified_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Client::OnConnectionSucceeded
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
 void Client::OnConnectionSucceeded( const std::string& /*endpoint*/ )
 {
-    connected_ = true;
     std::cout << "connection succeeded" << std::endl; 
 }
 
@@ -133,9 +112,7 @@ void Client::OnConnectionSucceeded( const std::string& /*endpoint*/ )
 // -----------------------------------------------------------------------------
 void Client::OnConnectionFailed( const std::string& /*endpoint*/, const std::string& /*reason*/ )
 {
-    connected_ = false;
-    authentified_ = false;
-    throw std::runtime_error( "connection failed" );
+    std::cerr << "connection failed" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -144,9 +121,7 @@ void Client::OnConnectionFailed( const std::string& /*endpoint*/, const std::str
 // -----------------------------------------------------------------------------
 void Client::OnConnectionError( const std::string& /*endpoint*/, const std::string& /*reason*/ )
 {
-    connected_ = false;
-    authentified_ = false;
-    throw std::runtime_error( "connection error" );
+    std::cerr << "connection error" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +130,6 @@ void Client::OnConnectionError( const std::string& /*endpoint*/, const std::stri
 // -----------------------------------------------------------------------------
 void Client::OnAuthenticationSucceeded( const std::string& /*profile*/ )
 {
-    authentified_ = true;
     std::cout << "authentication succeeded" << std::endl;
 }
 
@@ -165,6 +139,5 @@ void Client::OnAuthenticationSucceeded( const std::string& /*profile*/ )
 // -----------------------------------------------------------------------------
 void Client::OnAuthenticationFailed( const std::string& /*profile*/, const std::string& /*reason*/ )
 {
-    authentified_ = false;
-    throw std::runtime_error( "authentication failed" );
+    std::cerr << "authentication failed" << std::endl;
 }
