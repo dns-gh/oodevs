@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<missions model-version="4.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/physical/Missions.xsd">
+<missions model-version="4.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Missions.xsd">
   <units>
     <mission dia-behavior="MIS_Pion_SoutenirEnMesureDe" dia-type="T_Mission_Pion_SoutenirEnMesureDe" id="1" name="prepare to">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -408,6 +408,18 @@ force to protect it from enemy ground observation, direct fire, and surprise att
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="uniteAReduire_" name="Unit to reduce" optional="false" type="AgentKnowledge"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_MELEE_Capture" dia-type="T_Mission_Pion_MELEE_Capture" id="412" name="Melee - capture">
+      <description>
+        <doctrine><![CDATA[A tactical mission task that captures an area.]]></doctrine>
+        <usage><![CDATA[Unit moves towards its targeted area and attacks units near the area, within a certain doctrine-defined distance.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area_" name="Unit to reduce" optional="true" type="Polygon"/>
+      <parameter dia-name="object_" name="Crossing site" optional="true" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ABC_Appuyer" dia-type="T_Mission_Pion_ABC_Appuyer" id="44" name="Armor - support">
       <description>
@@ -3274,4 +3286,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="0453493824" -->
+<!-- signature="4038574352" -->
