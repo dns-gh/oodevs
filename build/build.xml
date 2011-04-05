@@ -8,8 +8,7 @@
         <format property="flex.expiration" pattern="d-MMM-yyyy" offset="3" unit="month" locale="en,US"/>
     </tstamp>
 
-    <property environment="env"/>
-    <import file="${env.PONEY_HOME}/poney.xml"/>
+    <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
@@ -308,6 +307,7 @@
                   lib${ant.project.name}_rights_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_reports-${platform}-mt@{suffix},
                   lib${ant.project.name}_replay_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_positions_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_saver_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_logger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
