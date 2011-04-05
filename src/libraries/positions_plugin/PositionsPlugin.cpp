@@ -122,7 +122,7 @@ void PositionsPlugin::SaveTime()
 // Name: PositionsPlugin::ExportData
 // Created: MCO 2011-04-05
 // -----------------------------------------------------------------------------
-void PositionsPlugin::ExportData()
+void PositionsPlugin::ExportData() const
 {
     boost::filesystem::ofstream file( filepath_ );
     file << "Team (id)" << separator_ << "Unit (id)";

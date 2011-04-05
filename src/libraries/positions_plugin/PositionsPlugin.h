@@ -58,6 +58,7 @@ private:
     //@{
     void Export();
     void SaveTime();
+    void ExportData() const;
     //@}
 
 private:
