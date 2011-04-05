@@ -193,6 +193,10 @@
         <build-lib name="replay_plugin" pattern="lib${ant.project.name}_replay_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
 
+    <target name="library.positions_plugin" depends="library.dispatcher" description="build positions saver dispatcher plugin static library">
+        <build-lib name="positions_plugin" pattern="lib${ant.project.name}_positions_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
+    </target>
+
     <target name="library.resource_network" description="build resource network static library">
         <build-lib name="resource_network" pattern="lib${ant.project.name}_resource_network-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
@@ -244,7 +248,7 @@
                                             library.aar_plugin,library.rights_plugin,library.saver_plugin,library.replay_plugin,
                                             library.3a,library.bml_plugin,library.script_plugin,library.score_plugin,
                                             library.crossbow_plugin,library.timeline_plugin,library.edxlhave_plugin,
-                                            library.logger_plugin" description="build all dispatcher plugins"/>
+                                            library.logger_plugin,library.positions_plugin" description="build all dispatcher plugins"/>
 
     <target name="library.mission_tester" depends="library.clients_kernel,library.actions,library.client_proxy" description="build mission tester lib">
         <build-lib name="mission_tester" pattern="lib${ant.project.name}_mission_tester-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
