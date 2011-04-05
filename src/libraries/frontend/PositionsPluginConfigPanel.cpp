@@ -41,7 +41,7 @@ PositionsPluginConfigPanel::PositionsPluginConfigPanel( QWidget* parent, const t
     setBackgroundOrigin( QWidget::WindowOrigin );
 
     {
-        positionsSaverGroup_ = Style( new QGroupBox( 1, Qt::Horizontal, tools::translate( "PositionsPluginConfigPanel", "Positions logger: " ), this ) );
+        positionsSaverGroup_ = Style( new QGroupBox( 1, Qt::Horizontal, tools::translate( "PositionsPluginConfigPanel", "Positions logger:" ), this ) );
         positionsSaverGroup_->setCheckable( true );
         positionsSaverGroup_->setChecked( false );
         {

@@ -240,6 +240,17 @@ Conexión SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
 </context>
 <context>
+    <name>PositionsPluginConfigPanel</name>
+    <message>
+        <source>Frequency:</source>
+        <translation type="unfinished">Frecuencia:</translation>
+    </message>
+    <message>
+        <source>Positions logger:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RandomPluginConfigPanel</name>
     <message>
         <source>Random Generator</source>

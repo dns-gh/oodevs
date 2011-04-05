@@ -11,6 +11,7 @@ EdxlHavePluginConfigPanel.cpp \
 HlaPluginConfigPanel.cpp \
 JoinExercise.cpp \
 LauncherClient.cpp \
+PositionsPluginConfigPanel.cpp \
 RandomPluginConfigPanel.cpp \
 SessionConfigPanel.cpp \
 SpawnCommand.cpp \
