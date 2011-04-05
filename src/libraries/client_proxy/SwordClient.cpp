@@ -26,12 +26,12 @@
 // -----------------------------------------------------------------------------
 SwordClient::SwordClient( const std::string& host, unsigned short port, const std::string& profile, const std::string& password )
     : tools::ClientNetworker( "", false )
-    , host_( host )
-    , port_( port )
-    , profile_( profile )
-    , password_( password )
-    , loggedIn_( false )
-    , connectionHandler_( new ConnectionHandlerProxy() )
+    , host_                 ( host )
+    , port_                 ( port )
+    , profile_              ( profile )
+    , password_             ( password )
+    , loggedIn_             ( false )
+    , connectionHandler_    ( new ConnectionHandlerProxy() )
 {
     RegisterMessage( *this, &SwordClient::HandleAarToClient );
     RegisterMessage( *this, &SwordClient::HandleAuthenticationToClient );

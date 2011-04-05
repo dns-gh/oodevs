@@ -11,7 +11,6 @@
 #define __SwordProxy_h_
 
 #include "SwordMessagePublisher_ABC.h"
-#include <string>
 
 class SwordConnectionHandler_ABC;
 class SwordMessageHandler_ABC;
