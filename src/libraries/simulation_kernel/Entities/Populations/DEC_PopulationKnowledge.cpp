@@ -40,9 +40,8 @@ void load_construct_data( Archive& archive, DEC_PopulationKnowledge* popKn, cons
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
 DEC_PopulationKnowledge::DEC_PopulationKnowledge( const MIL_Population& population )
-    : population_           ( population )
-    , bNewChannelingChanged_( false )
-    , bChannelingChanged_   ( false )
+    : population_        ( population )
+    , bChannelingChanged_( false )
 {
     // NOTHING
 }
@@ -119,10 +118,9 @@ void DEC_PopulationKnowledge::Update()
         std::swap( attackers_, newAttackers_ );
         std::swap( securers_, newSecurers_ );
     }
+    bChannelingChanged_ = ( channelingLocations_ != newChannelingLocations_ );
     channelingLocations_.clear();
     std::swap( channelingLocations_, newChannelingLocations_ );
-    bChannelingChanged_ = bNewChannelingChanged_;
-    bNewChannelingChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -274,8 +272,7 @@ bool DEC_PopulationKnowledge::HasChannelingChanged() const
 // -----------------------------------------------------------------------------
 void DEC_PopulationKnowledge::NotifyChanneled( const TER_Localisation& location )
 {
-    CIT_LocationVector it = std::find( channelingLocations_.begin(), channelingLocations_.end(), location );
-    if( it == channelingLocations_.end() )
-        bNewChannelingChanged_ = true;
-    newChannelingLocations_.push_back( location );
+    CIT_LocationVector it = std::find( newChannelingLocations_.begin(), newChannelingLocations_.end(), location );
+    if( it == newChannelingLocations_.end()) 
+        newChannelingLocations_.push_back( location );
 }

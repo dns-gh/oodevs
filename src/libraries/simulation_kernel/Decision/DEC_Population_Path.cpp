@@ -53,8 +53,7 @@ void DEC_Population_Path::Initialize( const T_PointVector& points )
     // initialize channeling points
     const DEC_PopulationKnowledge::T_LocationVector& channelingLocations = population_.GetKnowledge().GetChannelingLocations();
     channelers_.reserve( channelingLocations.size() );
-    for( DEC_PopulationKnowledge::CIT_LocationVector itChanLocation = channelingLocations.begin();
-        itChanLocation != channelingLocations.end(); ++itChanLocation )
+    for( DEC_PopulationKnowledge::CIT_LocationVector itChanLocation = channelingLocations.begin(); itChanLocation != channelingLocations.end(); ++itChanLocation )
         channelers_.push_back( DEC_Population_Path_Channeler( pathClass_, *itChanLocation ) );
     assert( !points.empty() );
     const MT_Vector2D* pLastPoint = 0;

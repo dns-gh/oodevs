@@ -107,7 +107,6 @@ private:
     T_AgentSet newSecurers_;
     T_LocationVector channelingLocations_;
     T_LocationVector newChannelingLocations_;
-    bool bNewChannelingChanged_;
     bool bChannelingChanged_;
     //@}
 };
