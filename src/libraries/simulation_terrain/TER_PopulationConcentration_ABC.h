@@ -43,10 +43,9 @@ public:
 
     //! @name Operations
     //@{
-//    bool IsInside             ( const MT_Vector2D& vPos ) const;
-//    bool Intersect2D          ( const MT_Line& orientedLine, T_PointSet& collisions ) const;
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const; // NB : return true if the circle is inside
     bool Intersect2DWithLine  ( const MT_Vector2D& vStart, const MT_Vector2D& vEnd ) const;
+    bool IsIntersecting       ( const TER_Localisation& localisation ) const;
     //@}
 
 

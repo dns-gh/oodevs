@@ -60,10 +60,11 @@ void TER_PopulationConcentrationManager::GetListWithinLocalisation( const TER_Lo
     T_PopulationConcentrations::View view = concentrations_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {
-        concentrations.push_back( view.NextElement() );
+        TER_PopulationConcentration_ABC* pConcentration = view.NextElement();
+        if( pConcentration && pConcentration->IsIntersecting( localisation ) )
+            concentrations.push_back( pConcentration );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TER_PopulationConcentrationManager::GetListIntersectingLine

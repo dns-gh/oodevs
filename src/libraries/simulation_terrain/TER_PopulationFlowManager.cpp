@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_terrain_pch.h"
-
 #include "TER_PopulationFlowManager.h"
 #include "TER_PopulationFlow_ABC.h"
 
@@ -96,6 +95,8 @@ void TER_PopulationFlowManager::GetListWithinLocalisation( const TER_Localisatio
     T_PopulationFlows::View view = flows_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {
-        flows.push_back( view.NextElement() );
+        TER_PopulationFlow_ABC* pFlow = view.NextElement();
+        if( pFlow && pFlow->IsIntersecting( localisation ) )
+            flows.push_back( pFlow );
     }
 }

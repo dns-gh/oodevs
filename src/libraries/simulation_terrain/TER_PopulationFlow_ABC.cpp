@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_terrain_pch.h"
-
 #include "TER_PopulationFlow_ABC.h"
-
 #include "TER_World.h"
 #include "TER_PopulationManager.h"
 
@@ -19,7 +17,7 @@
 // Created: NLD 2005-10-07
 // -----------------------------------------------------------------------------
 TER_PopulationFlow_ABC::TER_PopulationFlow_ABC()
-    : hint_     ( 0 )
+    : hint_( 0 )
 {
     // NOTHING
 }
@@ -85,4 +83,13 @@ bool TER_PopulationFlow_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCe
 bool TER_PopulationFlow_ABC::Intersect2DWithLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd ) const
 {
     return GetLocation().Intersect2D( MT_Line( vStart, vEnd ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationFlow_ABC::IsIntersecting
+// Created: LGY 2011-04-04
+// -----------------------------------------------------------------------------
+bool TER_PopulationFlow_ABC::IsIntersecting( const TER_Localisation& localisation ) const
+{
+    return GetLocation().IsIntersecting( localisation );
 }
