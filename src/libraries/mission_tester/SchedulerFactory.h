@@ -15,6 +15,7 @@
 
 namespace mission_tester
 {
+    class FilterFactory_ABC;
     class Scheduler_ABC;
 // =============================================================================
 /** @class  SchedulerFactory
@@ -35,6 +36,12 @@ public:
     //! @name Operations
     //@{
     boost::shared_ptr< Scheduler_ABC > CreateAgentScheduler();
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::auto_ptr< FilterFactory_ABC > filterFactory_;
     //@}
 };
 }

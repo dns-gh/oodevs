@@ -22,9 +22,13 @@ namespace sword
     class UnitCreation;
 }
 
+namespace kernel
+{
+    class Mission;
+}
+
 namespace mission_tester
 {
-    class Criteria;
 // =============================================================================
 /** @class  Agent
     @brief  Agent
@@ -48,13 +52,14 @@ public:
     virtual unsigned long GetId() const;
     virtual const kernel::AgentType& GetType() const;
     virtual bool IsCommandPost() const;
-    virtual bool Matches( const Criteria& criteria ) const;
+    virtual bool Matches( const Filter_ABC& filter ) const;
     virtual bool Trigger( State_ABC& state );
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
 
-    virtual std::string SchedulableName() const;    
+    virtual std::string SchedulableName() const;
+    virtual void StartMission();
     //@}
 
 private:
@@ -64,6 +69,7 @@ private:
     const QString name_;
     const kernel::AgentType& type_;
     const bool commandPost_;
+    std::auto_ptr< tools::Iterator_ABC< const kernel::Mission& > > current_;
     //@}
 };
 }

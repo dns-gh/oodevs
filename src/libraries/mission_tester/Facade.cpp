@@ -69,7 +69,7 @@ namespace
 void Facade::Run( int argc, char* argv[] )
 {
     SchedulerFactory factory;
-    boost::shared_ptr< Scheduler_ABC > scheduler = factory.CreateAgentScheduler();
+    boost::shared_ptr< Scheduler_ABC > scheduler( factory.CreateAgentScheduler() );
     tools::NullFileLoaderObserver observer;
     tools::ExerciseConfig config( observer );
     config.Parse( argc, argv );
@@ -96,6 +96,6 @@ void Facade::Run( int argc, char* argv[] )
                 StartMission( exercise, client );
         }
         client.Update();
-        scheduler->Step( 500 );
+        scheduler->Step( 1 );
     }
 }

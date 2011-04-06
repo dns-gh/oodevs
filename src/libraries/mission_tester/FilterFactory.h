@@ -7,40 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __Filter_h_
-#define __Filter_h_
+#ifndef __FilterFactory_h_
+#define __FilterFactory_h_
 
-#include "Filter_ABC.h"
+#include "FilterFactory_ABC.h"
 
 namespace mission_tester
 {
 // =============================================================================
-/** @class  Filter
-    @brief  Filter
+/** @class  FilterFactory
+    @brief  FilterFactory
 */
-// Created: PHC 2011-03-31
+// Created: PHC 2011-04-06
 // =============================================================================
-class Filter : public Filter_ABC
+class FilterFactory : public FilterFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Filter( const std::string& criterion );
-    virtual ~Filter();
+             FilterFactory();
+    virtual ~FilterFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool Accepts( const std::string& criterion ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const std::string criterion_;
+    virtual boost::shared_ptr< Filter_ABC > Create( const std::string& criteria );
     //@}
 };
 }
 
-#endif // __Filter_h_
+#endif // __FilterFactory_h_

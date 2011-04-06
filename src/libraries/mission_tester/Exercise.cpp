@@ -74,12 +74,7 @@ Exercise::Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticMo
 // -----------------------------------------------------------------------------
 Exercise::~Exercise()
 {
-    controller_.release();
-    time_.release();
-    agentKnowledgeConverter_.release();
-    objectKnowledgeConverter_.release();
-    parameters_.release();
-    factory_.release();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

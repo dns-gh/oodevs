@@ -70,6 +70,18 @@ MOCK_BASE_CLASS( MockScheduler, mission_tester::Scheduler_ABC )
     MOCK_METHOD( Step, 1 )
 };
 
+#include "mission_tester/Agent.h"
+
+namespace
+{
+    bool IsMyAgent( boost::shared_ptr< mission_tester::Schedulable_ABC > schedulable )
+    {
+        if( mission_tester::Agent* agent = dynamic_cast< mission_tester::Agent* >( schedulable.get() ) )
+            return agent->GetId() == 42u;
+        return false;
+    }
+}
+
 BOOST_AUTO_TEST_CASE( model_is_constructed_from_network_messages )
 {
     MockScheduler scheduler;
@@ -85,7 +97,8 @@ BOOST_AUTO_TEST_CASE( model_is_constructed_from_network_messages )
     message.mutable_type()->set_id( agentTypeStub->GetId() );
     message.set_pc( true );
 
-    MOCK_EXPECT( scheduler, Schedule ).once();
+    MOCK_EXPECT( scheduler, Schedule ).once().with( &IsMyAgent );
     model->OnReceiveMessage( container );
     BOOST_CHECK( model->FindAgent( 42u ) );
+    model.release();
 }

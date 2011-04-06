@@ -9,13 +9,55 @@
 
 #include "mission_tester_pch.h"
 #include "Agent.h"
-#include "Criteria.h"
 #include "Filter_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "protocol/Protocol.h"
+#include "clients_kernel/Mission.h"
+#include "clients_kernel/DecisionalModel.h"
+#include "tools/Iterator.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace mission_tester;
+
+namespace
+{
+    template< typename T >
+    unsigned long Count( const tools::Resolver_ABC< T >& resolver )
+    {
+        unsigned long result = 0;
+        for( tools::Iterator< const T& > it( resolver.CreateIterator() ); it.HasMoreElements(); it.NextElement(), ++result );
+        return result;
+    }
+    template< typename T >
+    class InfiniteIterator : private boost::noncopyable
+                           , public tools::Iterator_ABC< const T& >
+    {
+    public:
+        explicit InfiniteIterator( const tools::Resolver_ABC< T >& resolver )
+            : resolver_( resolver )
+            , count_( Count( resolver_ ) )
+            , current_( resolver_.CreateIterator() )
+        {}
+        virtual ~InfiniteIterator() {}
+        virtual bool HasMoreElements() const
+        {
+            return count_ > 0;
+        }
+        virtual const T& NextElement()
+        {
+            if( !current_.HasMoreElements() )
+                current_ = resolver_.CreateIterator();
+            if( current_.HasMoreElements() )
+                return current_.NextElement();
+            throw std::runtime_error( __FUNCTION__ ": trying to access empty resolver!" );
+        }
+
+    private:
+        const tools::Resolver_ABC< T >& resolver_;
+        const unsigned long count_;
+        tools::Iterator< const T& > current_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: Agent constructor
@@ -26,6 +68,7 @@ Agent::Agent( const sword::UnitCreation& message, const tools::Resolver_ABC< ker
     , name_       ( message.name().c_str() )
     , type_       ( resolver.Get( message.type().id() ) )
     , commandPost_( message.pc() )
+    , current_    ( new InfiniteIterator< kernel::Mission >( GetType().GetDecisionalModel() ) )
 {
     // NOTHING
 }
@@ -106,9 +149,9 @@ void Agent::Activate( kernel::ActionController& /*controller*/ ) const
 // Name: Agent::Matches
 // Created: PHC 2011-03-31
 // -----------------------------------------------------------------------------
-bool Agent::Matches( const Criteria& criteria ) const
+bool Agent::Matches( const Filter_ABC& filter ) const
 {
-    return criteria.Matches( "agent" );
+    return filter.Accepts( "agent" );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,4 +170,14 @@ bool Agent::Trigger( State_ABC& /*state*/ )
 std::string Agent::SchedulableName() const
 {
     return " [" + boost::lexical_cast< std::string >( id_ ) + "] " + static_cast< std::string >( name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DoSomething
+// Created: PHC 2011-04-06
+// -----------------------------------------------------------------------------
+void Agent::StartMission()
+{
+    if( current_->HasMoreElements() )
+        std::cout << " -- " << current_->NextElement().GetName() << std::endl;
 }

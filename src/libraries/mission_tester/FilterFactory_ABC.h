@@ -7,48 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __Criteria_h_
-#define __Criteria_h_
+#ifndef __FilterFactory_ABC_h_
+#define __FilterFactory_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace mission_tester
 {
+    class Filter_ABC;
 // =============================================================================
-/** @class  Criteria
-    @brief  Criteria
+/** @class  FilterFactory_ABC
+    @brief  FilterFactory_ABC
 */
-// Created: PHC 2011-04-04
+// Created: PHC 2011-04-06
 // =============================================================================
-class Criteria : private boost::noncopyable
+class FilterFactory_ABC : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Criteria();
-    explicit Criteria( const std::string& value );
-    virtual ~Criteria();
+             FilterFactory_ABC() {}
+    virtual ~FilterFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    void AddCriterion( const std::string& value );
-    bool Matches( const std::string& value ) const;
-    //@}
-
-private:
-    //! @name types
-    //@{
-    typedef std::vector< std::string >   T_Criteria;
-    typedef T_Criteria::const_iterator CIT_Criteria;
-    //@}
-
-    //! @name Member data
-    //@{
-    T_Criteria criteria_;
+    virtual boost::shared_ptr< Filter_ABC > Create( const std::string& criteria ) = 0;
     //@}
 };
 }
 
-#endif // __Criteria_h_
+#endif // __FilterFactory_ABC_h_

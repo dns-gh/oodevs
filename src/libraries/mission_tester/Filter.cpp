@@ -9,8 +9,6 @@
 
 #include "mission_tester_pch.h"
 #include "Filter.h"
-#include "Schedulable_ABC.h"
-#include "SchedulerFactory.h"
 
 using namespace mission_tester;
 
@@ -18,8 +16,8 @@ using namespace mission_tester;
 // Name: Filter constructor
 // Created: PHC 2011-03-31
 // -----------------------------------------------------------------------------
-Filter::Filter( const Criteria& criteria )
-    : criteria_( criteria )
+Filter::Filter( const std::string& criterion )
+    : criterion_( criterion )
 {
     // NOTHING
 }
@@ -37,7 +35,7 @@ Filter::~Filter()
 // Name: Filter::Accepts
 // Created: PHC 2011-03-31
 // -----------------------------------------------------------------------------
-bool Filter::Accepts( const Schedulable_ABC& schedulable ) const
+bool Filter::Accepts( const std::string& criterion ) const
 {
-    return schedulable.Matches( criteria_ );
+    return criterion_ == criterion;
 }

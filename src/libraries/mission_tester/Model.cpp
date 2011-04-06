@@ -67,7 +67,7 @@ void Model::CreateAgent( const sword::UnitCreation& message )
     if( agent.get() )
     {
         agents_[ message.unit().id() ] = agent;
-        scheduler_.Schedule( *agent );
+        scheduler_.Schedule( agent );
     }
 }
 

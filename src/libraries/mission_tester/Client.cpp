@@ -33,7 +33,7 @@ Client::Client( SwordMessageHandler_ABC& handler, const std::string& host, unsig
 // -----------------------------------------------------------------------------
 Client::~Client()
 {
-    proxy_.release();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

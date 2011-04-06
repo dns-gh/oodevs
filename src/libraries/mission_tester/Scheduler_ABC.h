@@ -11,6 +11,7 @@
 #define __Scheduler_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace mission_tester
 {
@@ -33,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Schedule( Schedulable_ABC& schedulable ) = 0;
+    virtual void Schedule( boost::shared_ptr< Schedulable_ABC > schedulable ) = 0;
     virtual void Step( unsigned int delta ) = 0;
     //@}
 };

@@ -8,36 +8,34 @@
 // *****************************************************************************
 
 #include "mission_tester_pch.h"
-#include "SchedulerFactory.h"
 #include "FilterFactory.h"
-#include "Scheduler.h"
+#include "Filter.h"
 
 using namespace mission_tester;
 
 // -----------------------------------------------------------------------------
-// Name: SchedulerFactory constructor
-// Created: PHC 2011-04-04
+// Name: FilterFactory constructor
+// Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-SchedulerFactory::SchedulerFactory()
-    : filterFactory_( new FilterFactory() )
+FilterFactory::FilterFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: SchedulerFactory destructor
-// Created: PHC 2011-04-04
+// Name: FilterFactory destructor
+// Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-SchedulerFactory::~SchedulerFactory()
+FilterFactory::~FilterFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: SchedulerFactory::CreateAgentScheduler
-// Created: PHC 2011-04-04
+// Name: FilterFactory::Create
+// Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Scheduler_ABC > SchedulerFactory::CreateAgentScheduler()
+boost::shared_ptr< Filter_ABC > FilterFactory::Create( const std::string& criteria )
 {
-    return boost::shared_ptr< Scheduler_ABC >( new Scheduler( filterFactory_->Create( "agent" ) ) );
+    return boost::shared_ptr< Filter_ABC >( new Filter( criteria ) );
 }

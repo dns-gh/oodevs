@@ -14,7 +14,6 @@
 
 namespace mission_tester
 {
-    class Schedulable_ABC;
 // =============================================================================
 /** @class  Filter_ABC
     @brief  Filter_ABC
@@ -27,13 +26,13 @@ class Filter_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Filter_ABC() {};
-    virtual ~Filter_ABC() {};
+             Filter_ABC() {}
+    virtual ~Filter_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual bool Accepts( const Schedulable_ABC& schedulable ) const = 0;
+    virtual bool Accepts( const std::string& criterion ) const = 0;
     //@}
 };
 }
