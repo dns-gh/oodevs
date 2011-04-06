@@ -16,6 +16,7 @@
 namespace mission_tester
 {
     class Schedulable_ABC;
+    class Exercise;
 // =============================================================================
 /** @class  Scheduler_ABC
     @brief  Scheduler_ABC
@@ -35,7 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual void Schedule( boost::shared_ptr< Schedulable_ABC > schedulable ) = 0;
-    virtual void Step( unsigned int delta ) = 0;
+    virtual void Step( unsigned int delta, Exercise& exercise ) = 0;
     //@}
 };
 }

@@ -16,6 +16,7 @@
 #include "client_proxy/SwordMessagePublisher_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/MissionType.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/StaticModel.h"
@@ -88,4 +89,20 @@ void Exercise::SendOrder( const std::string& message, Client& client ) const
     std::auto_ptr< actions::Action_ABC > action( factory_->CreateAction( xis ) );
     if( action.get() )
         action->Publish( client );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::CreateAction
+// Created: PHC 2011-04-06
+// -----------------------------------------------------------------------------
+void Exercise::CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
+{
+    //actions::Action_ABC* action( factory_->CreateAction( target, mission ) );
+    tools::Iterator< const kernel::OrderParameter& > params( mission.Resolver< kernel::OrderParameter >::CreateIterator() );
+    std::cout << target.GetName() << " [" << target.GetId() << "] : " << mission.GetName() << std::endl;
+    while( params.HasMoreElements() )
+    {
+        const kernel::OrderParameter& param( params.NextElement() );
+        std::cout << "   > " << param.GetName() << " (" << param.GetType() << ")" << std::endl;
+    }
 }

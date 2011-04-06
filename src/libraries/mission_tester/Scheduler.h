@@ -18,7 +18,6 @@
 namespace mission_tester
 {
     class Filter_ABC;
-    class FilterFactory_ABC;
     class Schedulable_ABC;
 // =============================================================================
 /** @class  Scheduler
@@ -39,7 +38,7 @@ public:
     //! @name Operations
     //@{
     virtual void Schedule( boost::shared_ptr< Schedulable_ABC > schedulable );
-    virtual void Step( unsigned int delta );
+    virtual void Step( unsigned int delta, Exercise& exercise );
     //@}
 
 private:

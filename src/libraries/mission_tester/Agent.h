@@ -29,6 +29,7 @@ namespace kernel
 
 namespace mission_tester
 {
+    class Exercise;
 // =============================================================================
 /** @class  Agent
     @brief  Agent
@@ -58,8 +59,7 @@ public:
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
 
-    virtual std::string SchedulableName() const;
-    virtual void StartMission();
+    virtual void StartMission( Exercise& exercise );
     //@}
 
 private:

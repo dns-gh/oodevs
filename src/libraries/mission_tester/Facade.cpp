@@ -96,6 +96,6 @@ void Facade::Run( int argc, char* argv[] )
                 StartMission( exercise, client );
         }
         client.Update();
-        scheduler->Step( 1 );
+        scheduler->Step( 100, exercise );
     }
 }

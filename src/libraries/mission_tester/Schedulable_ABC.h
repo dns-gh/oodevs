@@ -14,6 +14,7 @@
 
 namespace mission_tester
 {
+    class Exercise;
     class Filter_ABC;
     class State_ABC;
 // =============================================================================
@@ -36,8 +37,7 @@ public:
     //@{
     virtual bool Trigger( State_ABC& state ) = 0;
     virtual bool Matches( const Filter_ABC& filter ) const = 0;
-    virtual void StartMission() = 0;
-    virtual std::string SchedulableName() const = 0;
+    virtual void StartMission( Exercise& exercise ) = 0;
     //@}
 };
 }

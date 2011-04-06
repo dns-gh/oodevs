@@ -19,8 +19,7 @@ MOCK_BASE_CLASS( MockSchedulable, Schedulable_ABC )
 {
     MOCK_METHOD( Trigger, 1 )
     MOCK_METHOD( Matches, 1 )
-    MOCK_METHOD( SchedulableName, 0 )
-    MOCK_METHOD( StartMission, 0 )
+    MOCK_METHOD( StartMission, 1 )
 };
 
 MOCK_BASE_CLASS( MockFactory, FilterFactory_ABC )
@@ -48,7 +47,7 @@ namespace
             return true;
         }
         virtual std::string SchedulableName() const { return "testAgent"; }
-        virtual void StartMission() {}
+        virtual void StartMission( Exercise& /*exercise*/ ) {}
         const std::string type_;
     };
 

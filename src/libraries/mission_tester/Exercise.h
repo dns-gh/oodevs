@@ -11,8 +11,6 @@
 #define mission_tester_exercise_h
 
 #include <boost/noncopyable.hpp>
-#include <memory>
-#include <string>
 
 class SwordMessagePublisher_ABC;
 
@@ -31,6 +29,8 @@ namespace kernel
     class ObjectKnowledgeConverter_ABC;
     class StaticModel;
     class Time_ABC;
+    class Entity_ABC;
+    class MissionType;
 }
 
 namespace mission_tester
@@ -55,6 +55,7 @@ public:
     //! @name operations
     //@{
     void SendOrder( const std::string& message, Client& client ) const;
+    void CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
     //@}
 
 private:

@@ -9,13 +9,13 @@
 
 #include "mission_tester_pch.h"
 #include "Agent.h"
+#include "Exercise.h"
 #include "Filter_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "protocol/Protocol.h"
 #include "clients_kernel/Mission.h"
 #include "clients_kernel/DecisionalModel.h"
-#include "tools/Iterator.h"
-#include <boost/lexical_cast.hpp>
+#include "clients_kernel/MissionType.h"
 
 using namespace mission_tester;
 
@@ -164,20 +164,15 @@ bool Agent::Trigger( State_ABC& /*state*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::ComputeSchedulableName
-// Created: PHC 2011-04-05
-// -----------------------------------------------------------------------------
-std::string Agent::SchedulableName() const
-{
-    return " [" + boost::lexical_cast< std::string >( id_ ) + "] " + static_cast< std::string >( name_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Agent::DoSomething
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-void Agent::StartMission()
+void Agent::StartMission( Exercise& exercise )
 {
     if( current_->HasMoreElements() )
-        std::cout << " -- " << current_->NextElement().GetName() << std::endl;
+    {
+        const kernel::Mission& mission( current_->NextElement() );
+        const kernel::MissionType& missionType( mission.GetType() );
+        exercise.CreateAction( *this, missionType );
+    }
 }

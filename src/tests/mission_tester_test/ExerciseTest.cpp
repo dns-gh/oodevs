@@ -67,7 +67,7 @@ namespace
 MOCK_BASE_CLASS( MockScheduler, mission_tester::Scheduler_ABC )
 {
     MOCK_METHOD( Schedule, 1 )
-    MOCK_METHOD( Step, 1 )
+    MOCK_METHOD( Step, 2 )
 };
 
 #include "mission_tester/Agent.h"

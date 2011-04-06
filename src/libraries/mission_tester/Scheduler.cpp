@@ -10,10 +10,7 @@
 #include "mission_tester_pch.h"
 #include "Scheduler.h"
 #include "Filter.h"
-#include "FilterFactory_ABC.h"
 #include "Schedulable_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
-#include "protocol/protocol.h"
 
 namespace bpt = boost::posix_time;
 using namespace mission_tester;
@@ -55,7 +52,7 @@ void Scheduler::Schedule( boost::shared_ptr< Schedulable_ABC > schedulable )
 // Name: Scheduler::Tick
 // Created: PHC 2011-03-30
 // -----------------------------------------------------------------------------
-void Scheduler::Step( unsigned int delta )
+void Scheduler::Step( unsigned int delta, Exercise& exercise )
 {
     bpt::ptime current( bpt::microsec_clock::local_time() );
     if( last_ + bpt::milliseconds( delta ) < current )
@@ -65,8 +62,7 @@ void Scheduler::Step( unsigned int delta )
         {
             if( next_ == schedulables_.end() )
                 next_ = schedulables_.begin();
-            std::cout << "Launching a new mission for " + (*next_)->SchedulableName() << std::endl;
-            (*next_)->StartMission();
+            (*next_)->StartMission( exercise );
             ++next_;
         }
     }
