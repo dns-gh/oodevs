@@ -4,6 +4,10 @@ includedFiles["sources/common/pions/MissionsGeneriques.bms"] = true
 --[[// Missions
 ]]include "Common/Pions/Missions/FaireMouvement.bms"
 
+include "Common/Pions/Missions/ReconnaissanceArea.bms"
+
+include "Common/Pions/Missions/ReconnaissanceAreaHidden.bms"
+
 include "Common/Pions/Missions/SuivreUnite.bms"
 
 include "Common/Pions/Missions/SeFaireDecontaminer.bms"

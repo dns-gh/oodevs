@@ -409,7 +409,7 @@ force to protect it from enemy ground observation, direct fire, and surprise att
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="uniteAReduire_" name="Unit to reduce" optional="false" type="AgentKnowledge"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_MELEE_Capture" dia-type="T_Mission_Pion_MELEE_Capture" id="412" name="Melee - capture">
+    <mission dia-behavior="MIS_Pion_MELEE_Capture" dia-type="T_Mission_Pion_MELEE_Capture" id="413" name="Melee - capture">
       <description>
         <doctrine><![CDATA[A tactical mission task that captures an area.]]></doctrine>
         <usage><![CDATA[Unit moves towards its targeted area and attacks units near the area, within a certain doctrine-defined distance.]]></usage>
@@ -1861,6 +1861,32 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="itineraire_" name="path" optional="false" type="Path"/>
     </mission>
+    <mission dia-behavior="MIS_Pion_ReconnaissanceArea" dia-type="T_Mission_Pion_Reconnaissance Area" id="504" name="Reconnaissance Area">
+      <description>
+        <doctrine><![CDATA[A tactical mission task that reconnoiters an area.]]></doctrine>
+        <usage><![CDATA[Unit moves towards its targeted area and follows the vertices of the parameter area.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="zone_" name="Area" optional="true" type="Polygon"/>
+      <parameter dia-name="knowledge_" name="Predefined area" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="repeat_" name="Repeat" optional="true" type="Boolean"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_ReconnaissanceAreaHidden" dia-type="T_Mission_Pion_Reconnaissance Area_Hidden" id="505" name="Reconnaissance Area Hidden">
+      <description>
+        <doctrine><![CDATA[A tactical mission task that reconnoiters an area but trying to avoid enemies.]]></doctrine>
+        <usage><![CDATA[Unit moves towards its targeted area and follows the vertices of the parameter area, trying to avoid enemies.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="zone_" name="Area" optional="true" type="Polygon"/>
+      <parameter dia-name="knowledge_" name="Predefined area" optional="true" type="ObjectKnowledge"/>
+      <parameter dia-name="repeat_" name="Repeat" optional="true" type="Boolean"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirEnMesureDe" dia-type="T_Mission_Automate_SoutenirEnMesureDe" id="187" mrt-dia-behavior="MIS_Automate_MRT_SoutenirEnMesureDe" name="prepare to">
@@ -3286,4 +3312,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="2225648489" -->
+<!-- signature="3024553982" -->

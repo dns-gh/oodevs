@@ -594,6 +594,7 @@ assignMission[ "zone_" ] = DEC_AssignMissionLocationParameter
 assignMission[ "zonesAcquisition_" ] = DEC_AssignMissionLocationListParameter
 assignMission[ "positionImplantation_" ] = DEC_AssignMissionPointParameter
 assignMission[ "presenceContreBatterie_" ] = DEC_AssignMissionBoolParameter
+assignMission[ "repeat_" ] = DEC_AssignMissionBoolParameter
 end
 
 function DEC_AssignMissionParameter( missionPion, parameter, value )
