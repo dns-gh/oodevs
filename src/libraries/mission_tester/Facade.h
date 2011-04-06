@@ -7,39 +7,34 @@
 //
 // *****************************************************************************
 
-#ifndef __Schedulable_ABC_h_
-#define __Schedulable_ABC_h_
+#ifndef __Facade_h_
+#define __Facade_h_
 
-#include "Filter_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace mission_tester
 {
-    class Criteria;
-    class State_ABC;
 // =============================================================================
-/** @class  Schedulable_ABC
-    @brief  Schedulable_ABC
+/** @class  Facade
+    @brief  Facade
 */
-// Created: PHC 2011-03-30
+// Created: PHC 2011-04-05
 // =============================================================================
-class Schedulable_ABC : private boost::noncopyable
+class Facade : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Schedulable_ABC() {};
-    virtual ~Schedulable_ABC() {};
+             Facade();
+    virtual ~Facade();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool Trigger( State_ABC& state ) = 0;
-    virtual bool Matches( const Criteria& criteria ) const = 0;
-    virtual std::string SchedulableName() const = 0;
+    void Run( int argc, char* argv[] );
     //@}
 };
 }
 
-#endif // __Schedulable_ABC_h_
+#endif // __Facade_h_

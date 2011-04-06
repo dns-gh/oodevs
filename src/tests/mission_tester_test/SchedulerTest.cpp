@@ -20,6 +20,7 @@ MOCK_BASE_CLASS( MockSchedulable, Schedulable_ABC )
 {
     MOCK_METHOD( Trigger, 1 )
     MOCK_METHOD( Matches, 1 )
+    MOCK_METHOD( SchedulableName, 0 )
 };
 
 MOCK_BASE_CLASS( MockFilter, Filter_ABC )
@@ -50,6 +51,7 @@ namespace
                 throw std::runtime_error( "bad criterion" );
             return true;
         }
+        virtual std::string SchedulableName() const { return "testAgent"; }
         const std::string type_;
     };
 }
@@ -57,15 +59,10 @@ namespace
 struct FilterFixture
 {
     FilterFixture()
-
-        : criteria_            ( "agent" )
-        , agentFilter_         ( criteria_ )
-        , agentScheduler_      ( agentFilter_ )
+        : agentScheduler_      ( "agent" )
         , agentSchedulable_    ( "agent" )
         , automatonSchedulable_( "automaton" )
     {}
-    Criteria criteria_;
-    Filter agentFilter_;
     Scheduler agentScheduler_;
     Schedulable agentSchedulable_;
     Schedulable automatonSchedulable_;

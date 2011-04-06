@@ -68,7 +68,6 @@ private:
     std::auto_ptr< actions::ActionFactory > factory_;
     //@}
 };
-
 }
 
 #endif // mission_tester_exercise_h

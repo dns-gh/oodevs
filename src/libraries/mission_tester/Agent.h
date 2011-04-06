@@ -53,6 +53,8 @@ public:
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
+
+    virtual std::string SchedulableName() const;    
     //@}
 
 private:

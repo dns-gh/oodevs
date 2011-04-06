@@ -13,6 +13,7 @@
 #include "Filter_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "protocol/Protocol.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace mission_tester;
 
@@ -117,4 +118,13 @@ bool Agent::Matches( const Criteria& criteria ) const
 bool Agent::Trigger( State_ABC& /*state*/ )
 {
     return true; // $$$$ PHC 2011-04-04: TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::ComputeSchedulableName
+// Created: PHC 2011-04-05
+// -----------------------------------------------------------------------------
+std::string Agent::SchedulableName() const
+{
+    return " [" + boost::lexical_cast< std::string >( id_ ) + "] " + static_cast< std::string >( name_ );
 }
