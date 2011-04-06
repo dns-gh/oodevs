@@ -1503,7 +1503,14 @@ bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) con
 bool MIL_Population::HasReachedBlockBorder( const UrbanObjectWrapper* pUrbanKnowledge ) const
 {
     const TER_Localisation& localisation = pUrbanKnowledge->GetLocalisation();
+
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+    {
+        if( localisation.IsInside( (*it)->GetPosition() ) )
+            return true;
+    }
+        
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         if( localisation.IsInside( (*it)->GetPosition() ) )
             return true;
