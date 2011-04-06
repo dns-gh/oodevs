@@ -386,5 +386,25 @@
     <universal/>
   </object>
   <object geometry="polygon" name="Moving Population" symbol="" type="populationMoving"/>
+  <object geometry="polygon" name="Mined Area (linear &amp; destructible)" symbol="G*MPOFA---****X" type="Mined Area (linear &amp; destructible)">
+    <activable/>
+    <attrition category="Standard Landmine"/>
+    <avoidable distance="500"/>
+    <bypassable bypass-speed="10"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="density">
+      <buildable>
+        <resources>
+          <resource count="10" name="Standard Landmine"/>
+        </resources>
+      </buildable>
+      <improvable/>
+    </constructor>
+    <interact-with-enemy/>
+    <interaction-height height="1"/>
+    <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <population-filter density="0.1"/>
+    <structural value="100"/>
+    <time-limited/>
+  </object>
 </objects>
-<!-- signature="3774424735" -->
+<!-- signature="2136109519" -->

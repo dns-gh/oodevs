@@ -75,7 +75,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Very Short Range Surface To Air Battery CP" id="3" name="Very Short Range Surface To Air Battery CP" type="Pion ASA">
+  <unit decisional-model="Surface To Air Battery CP" id="3" name="Surface To Air Battery CP" type="Pion ASA">
     <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="3" major="true" type="Light Medium Tactical Vehicle"/>
@@ -104,11 +104,13 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Very Short Range Surface To Air Defense Troop" id="4" name="Very Short Range Surface To Air Defense Troop" type="Pion ASA">
+  <unit decisional-model="Surface To Air Defense Troop" id="4" name="Surface To Air Defense Troop" type="Pion ASA">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
     <equipments>
       <equipment count="6" crew="3" type="Very Short Range Surface To Air System"/>
       <equipment convoyer="true" count="2" crew="4" type="Light Medium Tactical Vehicle"/>
+      <equipment count="2" crew="2" type="Theater Low Altitude Radar Vehicle"/>
+      <equipment count="2" crew="2" type="Theater High Altitude Radar Vehicle"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
@@ -633,36 +635,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Theater High Altitude Defense Troop" id="21" name="Theater High Altitude Defense Troop" type="Pion ASA">
-    <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/h_mad/hawk"/>
-    <equipments>
-      <equipment count="1" crew="3" type="Theater High Altitude Radar Vehicle"/>
-      <equipment count="4" crew="2" major="true" type="Theater High Altitude Aera Defense Device"/>
-      <equipment convoyer="true" count="2" crew="1" type="Light Medium Tactical Vehicle"/>
-    </equipments>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="13" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="600s"/>
-      <posture name="PostePrepareGenie" setup-time="600s"/>
-    </postures>
-    <setup installation-time="600s" uninstallation-time="600s"/>
-    <nbc decontamination-delay="750s"/>
-    <distance-before-points>
-      <distance-before-point type="foret" value="500"/>
-      <distance-before-point type="urbain" value="500"/>
-      <distance-before-point type="carrefour" value="500"/>
-      <distance-before-point type="pont" value="500"/>
-    </distance-before-points>
-    <force-ratio feedback-time="60s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Commando troop" id="22" name="Commando troop" type="Pion INF">
+  <unit decisional-model="Commando troop" id="21" name="Commando troop" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/infantry"/>
     <equipments>
       <equipment count="16" crew="1" loadable="true" major="true" type="Commando"/>
@@ -701,35 +674,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Theater High Altitude Aera Defense CP" id="23" name="Theatre High Altitude Aera Defense CP" type="Pion ASA">
-    <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense"/>
-    <equipments>
-      <equipment count="1" crew="3" type="Theater High Altitude Radar Vehicle"/>
-      <equipment convoyer="true" count="4" crew="1" type="Light Medium Tactical Vehicle"/>
-    </equipments>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="7" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="1800s"/>
-    </postures>
-    <setup installation-time="1800s" uninstallation-time="1800s"/>
-    <nbc decontamination-delay="450s"/>
-    <distance-before-points>
-      <distance-before-point type="foret" value="500"/>
-      <distance-before-point type="urbain" value="500"/>
-      <distance-before-point type="carrefour" value="500"/>
-      <distance-before-point type="pont" value="500"/>
-    </distance-before-points>
-    <force-ratio feedback-time="60s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="PC TC2" id="24" name="Battalion CT" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="22" name="Battalion CT" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply/class iv"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Light Recovery Vehicle"/>
@@ -772,7 +717,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="PC Log" id="25" name="Supply CP (division)" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="PC Log" id="23" name="Supply CP (division)" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Light Armored Vehicle 12.7-mm"/>
@@ -799,7 +744,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="PC Log" id="26" name="Medical CP (division)" type="Pion LOG BLD Sante">
+  <unit decisional-model="PC Log" id="24" name="Medical CP (division)" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Light Armored Vehicle 12.7-mm"/>
@@ -826,7 +771,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="PC Appui Mob" id="27" name="Transportation platoon (transportation squadron)" type="Pion CIRCULATION">
+  <unit decisional-model="PC Appui Mob" id="25" name="Transportation platoon (transportation squadron)" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="3" type="7.62-mm Armed Load Carrying Vehicle"/>
@@ -850,7 +795,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="PC TC2" id="28" name="Logistic CT" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="26" name="Logistic CT" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="8" crew="3" type="MTV12,7"/>
@@ -891,7 +836,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Battery CP" id="29" name="Battery CP" type="Pion ASS">
+  <unit decisional-model="Battery CP" id="27" name="Battery CP" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
@@ -927,7 +872,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Landing Craft" id="30" name="Landing Crafts" type="Pion JOINT">
+  <unit decisional-model="Landing Craft" id="28" name="Landing Crafts" type="Pion JOINT">
     <nature atlas-nature="None" level="ooo" nature-app6="combat support/landing support"/>
     <equipments>
       <equipment count="2" crew="10" major="true" type="Landing Craft"/>
@@ -952,7 +897,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="PC TC2" id="31" name="Combined arms battalion CT" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="29" name="Combined arms battalion CT" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="Armoured Recovery Vehicule"/>
@@ -995,7 +940,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Command post" id="32" name="Battle group command post" type="Pion TRANS">
+  <unit decisional-model="Command post" id="30" name="Battle group command post" type="Pion TRANS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/track"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical Vehicle"/>
@@ -1032,7 +977,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="MRA infantry platoon" id="33" name="MRA troop" type="Pion INF">
+  <unit decisional-model="MRA infantry platoon" id="31" name="MRA troop" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="5" loadable="true" major="true" type="Medium Range Antitank Weapon Team"/>
@@ -1068,7 +1013,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Mortar support troop" id="34" name="Mortar troop" type="Pion INF">
+  <unit decisional-model="Mortar support troop" id="32" name="Mortar troop" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Mortar Troop"/>
@@ -1104,7 +1049,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="SD" id="35" name="Artillery SD" type="Pion ASS">
+  <unit decisional-model="SD" id="33" name="Artillery SD" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Armoured Personnel Carrier Artillery"/>
@@ -1129,7 +1074,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="PC Log" id="36" name="Maintenance CP  (division)" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="PC Log" id="34" name="Maintenance CP  (division)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Light Armored Vehicle 12.7-mm"/>
@@ -1156,7 +1101,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Pion stock" id="37" name="Ammo supply group OFF TT- D" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="35" name="Ammo supply group OFF TT- D" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
@@ -1184,7 +1129,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Pion stock" id="38" name="Ammo supply group SOFF TT - D" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="36" name="Ammo supply group SOFF TT - D" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
@@ -1212,7 +1157,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Pion stock" id="39" name="Water supply group" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="37" name="Water supply group" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class ii"/>
     <equipments>
       <equipment count="1" crew="2" type="Load Carrying Vehicle"/>
@@ -1240,7 +1185,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Pion stock" id="40" name="Ammo supply group" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="38" name="Ammo supply group" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
@@ -1268,7 +1213,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Pion stock" id="41" name="Ammo supply group SOFF TD" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="39" name="Ammo supply group SOFF TD" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class v"/>
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Load Carrying Vehicle"/>
@@ -1296,7 +1241,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Pion stock" id="42" name="Magazin section CAP" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Pion stock" id="40" name="Magazin section CAP" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/supply/class ii"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="3" type="Load Carrying Vehicle"/>
@@ -1316,7 +1261,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="43" name="Supply group 60m3" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="41" name="Supply group 60m3" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="6" crew="2" major="true" type="10m3 Gasoil Tank Trunk"/>
@@ -1337,7 +1282,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="44" name="Supply platoon (PR)" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="42" name="Supply platoon (PR)" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="3" crew="2" major="true" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
@@ -1369,7 +1314,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="45" name="Supply Transportation platoon (PT)" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="43" name="Supply Transportation platoon (PT)" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
@@ -1390,7 +1335,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Groupe Ramassage" id="46" name="Medical group VAB" type="Pion LOG BLD Sante">
+  <unit decisional-model="Groupe Ramassage" id="44" name="Medical group VAB" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="VAB SAN"/>
@@ -1418,7 +1363,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Groupe Ramassage" id="47" name="Casualty evacuation group" type="Pion LOG BLD Sante">
+  <unit decisional-model="Groupe Ramassage" id="45" name="Casualty evacuation group" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="6" major="true" type="Medical Evacuation Helicopter"/>
@@ -1438,7 +1383,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="ACA" id="48" name="Medical section" type="Pion LOG BLD Sante">
+  <unit decisional-model="ACA" id="46" name="Medical section" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="2" crew="1" type="Medical triage team"/>
@@ -1460,7 +1405,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Unite PSY" id="49" name="Psychological section" type="Pion LOG BLD Sante">
+  <unit decisional-model="Unite PSY" id="47" name="Psychological section" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical/psychological"/>
     <equipments>
       <equipment count="3" crew="1" major="true" type="Medical and Psychological Staff"/>
@@ -1480,7 +1425,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Health unit" id="50" name="Surgical section (modular)" type="Pion LOG BLD Sante">
+  <unit decisional-model="Health unit" id="48" name="Surgical section (modular)" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="7" type="TBU15 CLD"/>
@@ -1503,7 +1448,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Decontamination NBC" id="51" name="Logistic decontamination section" type="Pion LOG BLD Sante">
+  <unit decisional-model="Decontamination NBC" id="49" name="Logistic decontamination section" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat support/nbc/decontamination"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Logistic decontamination team"/>
@@ -1532,7 +1477,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Section Triage Modulaire" id="52" name="Casualty assessment section" type="Pion LOG BLD Sante">
+  <unit decisional-model="Section Triage Modulaire" id="50" name="Casualty assessment section" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="1" crew="1" type="Motocycle"/>
@@ -1557,7 +1502,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Health unit" id="53" name="Surgical section HMC" type="Pion LOG BLD Sante">
+  <unit decisional-model="Health unit" id="51" name="Surgical section HMC" type="Pion LOG BLD Sante">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Operative Field"/>
@@ -1579,7 +1524,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="54" name="Mobility repairs section (division)" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="52" name="Mobility repairs section (division)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Mobility repairs team (division)"/>
@@ -1601,7 +1546,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="55" name="Repairs section (division)" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="53" name="Repairs section (division)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment convoyer="true" count="4" crew="3" type="MTV12,7"/>
@@ -1623,7 +1568,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Groupe Maintenance Evacuation" id="56" name="Maintenance evacuation group" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Groupe Maintenance Evacuation" id="54" name="Maintenance evacuation group" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="MTV 2Pers 12.7"/>
@@ -1645,7 +1590,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="57" name="Firing mobility repairs section  (division)" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="55" name="Firing mobility repairs section  (division)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="12.7-mm Armed Load Carrying Vehicle"/>
@@ -1667,7 +1612,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Peloton Transport Blindes" id="58" name="Heavy transportation platoon" type="Pion CIRCULATION">
+  <unit decisional-model="Peloton Transport Blindes" id="56" name="Heavy transportation platoon" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
@@ -1688,7 +1633,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="59" name="Firing mobility repairs section (corps)" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="57" name="Firing mobility repairs section (corps)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="12.7-mm Armed Load Carrying Vehicle"/>
@@ -1710,7 +1655,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="60" name="Mobility repairs section (corps)" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="58" name="Mobility repairs section (corps)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="12.7-mm Armed Load Carrying Vehicle"/>
@@ -1732,7 +1677,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Section Maintenance" id="61" name="Repairs section (corps)" type="Pion LOG BLD Maintenance">
+  <unit decisional-model="Section Maintenance" id="59" name="Repairs section (corps)" type="Pion LOG BLD Maintenance">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment convoyer="true" count="4" crew="3" type="MTV12,7"/>
@@ -1754,7 +1699,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="62" name="Supply Transportation platoon" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="60" name="Supply Transportation platoon" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="2" type="Light Medium Tactical 12.7-mm Armed Vehicle"/>
@@ -1775,7 +1720,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="63" name="Supply group 35m3" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="61" name="Supply group 35m3" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="5" crew="2" major="true" type="5m3 Gasoil Tank Trunk"/>
@@ -1797,7 +1742,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Peloton Transport" id="64" name="Supply group180m3" type="Pion LOG BLT Ravitaillement">
+  <unit decisional-model="Peloton Transport" id="62" name="Supply group180m3" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="6" crew="2" major="true" type="30m3 Semi-Trailer Gasoil Tank Trunk"/>
@@ -1818,7 +1763,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Short Range Surface To Air Defense Battery CP" id="65" name="Short Range Surface To Air Defense Battery CP" type="Pion ASA">
+  <unit decisional-model="Short Range Surface To Air Defense Battery CP" id="63" name="Short Range Surface To Air Defense Battery CP" type="Pion ASA">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/air defense/short range"/>
     <equipments>
       <equipment count="1" crew="1" type="Motocycle"/>
@@ -1846,7 +1791,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Terroriste" id="66" name="Terrorist" type="Pion ASY">
+  <unit decisional-model="Terroriste" id="64" name="Terrorist" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Terrorist"/>
@@ -1871,7 +1816,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Militia" id="67" name="Militia" type="Pion MILICE">
+  <unit decisional-model="Militia" id="65" name="Militia" type="Pion MILICE">
     <nature atlas-nature="None" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Militia 14.5mm Armed Vehicle"/>
@@ -1913,7 +1858,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="MBT platoon" id="68" name="MBT platoon" type="Pion ABC">
+  <unit decisional-model="MBT platoon" id="66" name="MBT platoon" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Main Battle Tank"/>
@@ -1940,7 +1885,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Light armored platoon" id="69" name="Light armored platoon" type="Pion ABC">
+  <unit decisional-model="Light armored platoon" id="67" name="Light armored platoon" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/medium"/>
     <equipments>
       <equipment count="3" crew="4" major="true" type="Medium Tank"/>
@@ -1969,7 +1914,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Armored squadron CP" id="70" name="Armored squadron CP" type="Pion ABC">
+  <unit decisional-model="Armored squadron CP" id="68" name="Armored squadron CP" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/wheeled"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="Armoured Personnel Carrier Command Post"/>
@@ -2003,7 +1948,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Antitank patrol" id="71" name="Antitank patrol" type="Pion ABC">
+  <unit decisional-model="Antitank patrol" id="69" name="Antitank patrol" type="Pion ABC">
     <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="Light Armored Vehicle Antitiank"/>
@@ -2022,7 +1967,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Scout patrol" id="72" name="Scout patrol" type="Pion ABC">
+  <unit decisional-model="Scout patrol" id="70" name="Scout patrol" type="Pion ABC">
     <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="Light Armored Vehicle 12.7-mm"/>
@@ -2041,7 +1986,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Countermobility platoon" id="73" name="Countermobility platoon" type="Pion GEN">
+  <unit decisional-model="Countermobility platoon" id="71" name="Countermobility platoon" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="4" crew="8" major="true" type="Engineer VPC"/>
@@ -2083,7 +2028,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Mobility support platoon" id="74" name="Mobility support platoon" type="Pion GEN">
+  <unit decisional-model="Mobility support platoon" id="72" name="Mobility support platoon" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="4" crew="8" major="true" type="Engineer VPC"/>
@@ -2125,7 +2070,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Bridging troop" id="75" name="Bridging troop" type="Pion GEN">
+  <unit decisional-model="Bridging troop" id="73" name="Bridging troop" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Engineer Bridge Vehicule"/>
@@ -2158,7 +2103,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="LRS troop" id="76" name="LRS troop" type="Pion RENS">
+  <unit decisional-model="LRS troop" id="74" name="LRS troop" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/reconnaissance/marine/light armored reconnaissance"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="Light Armored Vehicle 7.62-mm"/>
@@ -2184,7 +2129,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Drone" id="77" is-autonomous="true" name="Drone (real time)" type="Pion RENS">
+  <unit can-fly="true" decisional-model="Drone" id="75" is-autonomous="true" name="Drone (real time)" type="Pion RENS">
     <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed wing"/>
     <equipments>
       <equipment count="1" crew="0" major="true" type="Real Time Drone"/>
@@ -2209,7 +2154,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Drones station_" id="78" name="Drones station" type="Pion RENS">
+  <unit decisional-model="Drones station_" id="76" name="Drones station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed wing"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="RSV"/>
@@ -2239,7 +2184,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Listening station" id="79" name="Listening Station" type="Pion RENS">
+  <unit decisional-model="Listening station" id="77" name="Listening Station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="5" crew="3" major="true" type="Listening Vehicle"/>
@@ -2270,7 +2215,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Jamming station" id="80" name="Jamming station" type="Pion RENS">
+  <unit decisional-model="Jamming station" id="78" name="Jamming station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/jamming"/>
     <equipments>
       <equipment count="4" crew="3" type="Jammer"/>
@@ -2300,7 +2245,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Radar detection station" id="81" name="Radar detection station" type="Pion RENS">
+  <unit decisional-model="Radar detection station" id="79" name="Radar detection station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="Radar Detection Vehicle"/>
@@ -2331,7 +2276,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Ground radar surveillance" id="82" name="Ground surveillance radar" type="Pion RENS">
+  <unit decisional-model="Ground radar surveillance" id="80" name="Ground surveillance radar" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/target acquisition/radar"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Light Medium Tactical Vehicle (RASIT)"/>
@@ -2361,7 +2306,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="NBC reconnaissance troop" id="83" name="NBC reconnaissance troop" type="Pion NBC">
+  <unit decisional-model="NBC reconnaissance troop" id="81" name="NBC reconnaissance troop" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat support/nbc/chemical/recon"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="RSV reconnaissance NBC"/>
@@ -2387,7 +2332,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="NBC ROTA troop" id="84" name="NBC ROTA troop" type="Pion NBC">
+  <unit decisional-model="NBC ROTA troop" id="82" name="NBC ROTA troop" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat support/nbc/chemical/recon"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="RSV reconnaissance NBC"/>
@@ -2413,7 +2358,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="NBC decontamination troop" id="85" name="NBC decontamination troop" type="Pion NBC">
+  <unit decisional-model="NBC decontamination troop" id="83" name="NBC decontamination troop" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat support/nbc/decontamination"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="RSV decontamination NBC"/>
@@ -2438,7 +2383,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Firing platoon" id="86" name="Artillery firing platoon" type="Pion ASS">
+  <unit decisional-model="Firing platoon" id="84" name="Artillery firing platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="155-mm Artillery Tank"/>
@@ -2476,7 +2421,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Field artillery reconnaissance" id="87" name="Artillery reconnaissance platoon" type="Pion ASS">
+  <unit decisional-model="Field artillery reconnaissance" id="85" name="Artillery reconnaissance platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Artillery Recce Vehicle"/>
@@ -2513,7 +2458,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="MLRS firing platoon" id="88" name="MLRS firing platoon" type="Pion ASS">
+  <unit decisional-model="MLRS firing platoon" id="86" name="MLRS firing platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Multiple Launch Rocket System"/>
@@ -2549,7 +2494,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Field artillery reconnaissance" id="89" name="MLRS reconnaissance platoon" type="Pion ASS">
+  <unit decisional-model="Field artillery reconnaissance" id="87" name="MLRS reconnaissance platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/artillery survey"/>
     <equipments>
       <equipment count="2" crew="6" major="true" type="Artillery Recce Vehicle"/>
@@ -2583,7 +2528,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Firing platoon" id="90" name="Mortar firing platoon" type="Pion ASS">
+  <unit decisional-model="Firing platoon" id="88" name="Mortar firing platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="4" crew="6" loadable="true" major="true" type="Mortar Launcher 120mm"/>
@@ -2617,7 +2562,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Field artillery reconnaissance" id="91" name="Mortar reconnaissance platoon" type="Pion ASS">
+  <unit decisional-model="Field artillery reconnaissance" id="89" name="Mortar reconnaissance platoon" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/artillery survey"/>
     <equipments>
       <equipment count="2" crew="6" major="true" type="Artillery Recce Vehicle"/>
@@ -2651,7 +2596,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="AAC CP" id="92" name="AAC CP" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="AAC CP" id="90" name="AAC CP" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Transport helicopter"/>
@@ -2678,7 +2623,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Air Defence Helicopter Patrol" id="93" name="Air Defence Helicopter Patrol" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Air Defence Helicopter Patrol" id="91" name="Air Defence Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/scout"/>
     <equipments>
       <equipment count="3" crew="6" major="true" type="Air Defence Helicopter"/>
@@ -2710,7 +2655,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Escort And Close Support Helicopter Patrol" id="94" name="Heavy Escort and Close Support Helicopter Patrol" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Escort And Close Support Helicopter Patrol" id="92" name="Heavy Escort and Close Support Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing"/>
     <equipments>
       <equipment count="3" crew="6" major="true" type="Tigre helicopter"/>
@@ -2737,7 +2682,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="General Purpose Helicopter Patrol" id="95" name="General Purpose Helicopter Patrol" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="General Purpose Helicopter Patrol" id="93" name="General Purpose Helicopter Patrol" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Transport helicopter"/>
@@ -2764,7 +2709,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="96" name="Strategic Bomber Patrol" type="Pion JOINT">
+  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="94" name="Strategic Bomber Patrol" type="Pion JOINT">
     <nature atlas-nature="Indefini" level="ooo" nature-app6="combat/aviation/fixed wing/attack"/>
     <equipments>
       <equipment count="3" crew="6" major="true" type="Strategic Bomber"/>
@@ -2791,7 +2736,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Air CP" id="97" name="Air CP" type="Pion JOINT">
+  <unit can-fly="true" decisional-model="Air CP" id="95" name="Air CP" type="Pion JOINT">
     <nature atlas-nature="Indefini" level="ooo" nature-app6="combat/aviation/fixed wing"/>
     <equipments>
       <equipment count="3" crew="6" major="true" type="Strategic Bomber"/>
@@ -2818,7 +2763,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="HS - Firefighter" id="98" name="HS - Fire_Suppression" type="Pion Emergency">
+  <unit decisional-model="HS - Firefighter" id="96" name="HS - Fire_Suppression" type="Pion Emergency">
     <nature atlas-nature="None" level="none" nature-app6="emergency/firefighter/operation/fire suppression"/>
     <equipments>
       <equipment count="1" crew="8" major="true" type="Fire Truck"/>
@@ -2837,7 +2782,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="HS - Police" id="99" name="HS - Law_Police" type="Pion Emergency">
+  <unit decisional-model="HS - Police" id="97" name="HS - Law_Police" type="Pion Emergency">
     <nature atlas-nature="PC" level="none" nature-app6="emergency/police/operation/police"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="Police Car"/>
@@ -2856,7 +2801,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="HS - Medical" id="100" name="HS - Med_Ambulance" type="Pion Emergency">
+  <unit decisional-model="HS - Medical" id="98" name="HS - Med_Ambulance" type="Pion Emergency">
     <nature atlas-nature="PC" level="none" nature-app6="emergency/medical/evacuation/ambulance"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="Ambulance"/>
@@ -2875,7 +2820,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="HS - Firefighter" id="101" name="HS - Fire_Station" type="Pion Emergency">
+  <unit decisional-model="HS - Firefighter" id="99" name="HS - Fire_Station" type="Pion Emergency">
     <nature atlas-nature="None" level="none" nature-app6="emergency/firefighter/fire station"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Fire Engine"/>
@@ -2894,7 +2839,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="102" name="HS - Med_Evacuation_Helicopter" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="100" name="HS - Med_Evacuation_Helicopter" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="emergency/medical/evacuation/helicopter"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="Transport helicopter"/>
@@ -2921,7 +2866,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="NBC decontamination troop" id="103" name="HS - Chemical Decontamination" type="Pion NBC">
+  <unit decisional-model="NBC decontamination troop" id="101" name="HS - Chemical Decontamination" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="emergency/nbc/chemical/recon/wheeled armored vehicle"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="RSV decontamination NBC"/>
@@ -2946,7 +2891,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="NBC reconnaissance troop" id="104" name="HS - Chemical Recognition" type="Pion NBC">
+  <unit decisional-model="NBC reconnaissance troop" id="102" name="HS - Chemical Recognition" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="emergency/nbc/chemical/recon/wheeled armored vehicle"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="RSV reconnaissance NBC"/>
@@ -2972,7 +2917,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="HS - Firefighter" id="105" name="HS - Fire_Station_CP" type="Pion Emergency">
+  <unit decisional-model="HS - Firefighter" id="103" name="HS - Fire_Station_CP" type="Pion Emergency">
     <nature atlas-nature="None" level="none" nature-app6="emergency/firefighter/fire station"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Fire Engine"/>
@@ -2991,7 +2936,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="HS - Firefighter" id="106" name="HS - Fire_Suppression_CP" type="Pion Emergency">
+  <unit decisional-model="HS - Firefighter" id="104" name="HS - Fire_Suppression_CP" type="Pion Emergency">
     <nature atlas-nature="None" level="none" nature-app6="emergency/firefighter/operation/fire suppression"/>
     <equipments>
       <equipment count="1" crew="8" major="true" type="Fire Truck"/>
@@ -3010,7 +2955,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="HS - Police" id="107" name="HS - Law_Police_CP" type="Pion Emergency">
+  <unit decisional-model="HS - Police" id="105" name="HS - Law_Police_CP" type="Pion Emergency">
     <nature atlas-nature="PC" level="none" nature-app6="emergency/police/operation/police"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="Police Car"/>
@@ -3029,7 +2974,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="PC TC2" id="108" name="HS - Logistic Support" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="106" name="HS - Logistic Support" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="ooo" nature-app6="emergency/public safety/operation/operation center"/>
     <equipments>
       <equipment convoyer="true" count="8" crew="3" type="MTV12,7"/>
@@ -3070,7 +3015,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="HS - Disturbance" id="109" name="HS - Disturbance" type="Pion Emergency">
+  <unit decisional-model="HS - Disturbance" id="107" name="HS - Disturbance" type="Pion Emergency">
     <nature atlas-nature="PC" level="none" nature-app6="emergency/police/operation/police"/>
     <equipments>
       <equipment count="5" crew="5" major="true" type="Riot Leader"/>
@@ -3089,7 +3034,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Journalist" id="110" name="Journalist" type="Pion ASY">
+  <unit decisional-model="Journalist" id="108" name="Journalist" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" type="Journalist"/>
@@ -3114,7 +3059,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="MBT platoon" id="111" name="Tank PLT (M1)" type="Pion ABC">
+  <unit decisional-model="MBT platoon" id="109" name="Tank PLT (M1)" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="M1A1 Abrams"/>
@@ -3141,7 +3086,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Armored squadron CP" id="112" name="Tank CO HQ (M1)" type="Pion ABC">
+  <unit decisional-model="Armored squadron CP" id="110" name="Tank CO HQ (M1)" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/track"/>
     <equipments>
       <equipment count="1" crew="4" type="Armoured Personnel Carrier Command Post"/>
@@ -3176,7 +3121,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry platoon" id="113" name="Mech Infantry PLT (BFV)" type="Pion INF">
+  <unit decisional-model="Infantry platoon" id="111" name="Mech Infantry PLT (BFV)" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="20" crew="1" loadable="true" type="Infantry Soldiers"/>
@@ -3221,7 +3166,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry company CP" id="114" name="Mech Infantry CO HQ (BFV)" type="Pion INF">
+  <unit decisional-model="Infantry company CP" id="112" name="Mech Infantry CO HQ (BFV)" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Infantry Soldiers"/>
@@ -3258,7 +3203,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Armored squadron CP" id="115" name="Combined Arms BN HQ" type="Pion ABC">
+  <unit decisional-model="Armored squadron CP" id="113" name="Combined Arms BN HQ" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/armor/wheeled"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="Armoured Personnel Carrier Command Post"/>
@@ -3292,7 +3237,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Firing platoon" id="116" name="FA Firing PLT (Paladin)" type="Pion ASS">
+  <unit decisional-model="Firing platoon" id="114" name="FA Firing PLT (Paladin)" type="Pion ASS">
     <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment count="3" crew="4" major="true" type="M109A6 Paladin"/>
@@ -3331,7 +3276,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Battery CP" id="117" name="FA BTY HQ" type="Pion ASS">
+  <unit decisional-model="Battery CP" id="115" name="FA BTY HQ" type="Pion ASS">
     <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
@@ -3367,7 +3312,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Battery CP" id="118" name="FA BN HQ" type="Pion ASS">
+  <unit decisional-model="Battery CP" id="116" name="FA BN HQ" type="Pion ASS">
     <nature atlas-nature="ASS" level="i" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
@@ -3403,7 +3348,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Light armored platoon" id="119" name="Cavalry PLT (CFV)" type="Pion ABC">
+  <unit decisional-model="Light armored platoon" id="117" name="Cavalry PLT (CFV)" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/reconnaissance/cavalry/armored"/>
     <equipments>
       <equipment count="3" crew="5" major="true" type="M3 Bradley CFV"/>
@@ -3446,7 +3391,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Armored squadron CP" id="120" name="Cavalry TRP HQ (CFV)" type="Pion ABC">
+  <unit decisional-model="Armored squadron CP" id="118" name="Cavalry TRP HQ (CFV)" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/reconnaissance/cavalry/armored"/>
     <equipments>
       <equipment count="1" crew="5" major="true" type="M3 Bradley CFV"/>
@@ -3481,7 +3426,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Armored squadron CP" id="121" name="Cavalry SQDN HQ" type="Pion ABC">
+  <unit decisional-model="Armored squadron CP" id="119" name="Cavalry SQDN HQ" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/reconnaissance/cavalry/armored"/>
     <equipments>
       <equipment count="2" crew="5" major="true" type="M3 Bradley CFV"/>
@@ -3514,7 +3459,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry company CP" id="122" name="Mech Infantry BN HQ" type="Pion INF">
+  <unit decisional-model="Infantry company CP" id="120" name="Mech Infantry BN HQ" type="Pion INF">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="3" crew="1" loadable="true" type="Infantry Soldiers"/>
@@ -3551,7 +3496,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Armored squadron CP" id="123" name="Tank SQDN HQ" type="Pion ABC">
+  <unit decisional-model="Armored squadron CP" id="121" name="Tank SQDN HQ" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/armor/track"/>
     <equipments>
       <equipment count="1" crew="4" type="Armoured Personnel Carrier Command Post"/>
@@ -3586,7 +3531,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="MLRS firing platoon" id="124" name="FA Firing PLT (MLRS)" type="Pion ASS">
+  <unit decisional-model="MLRS firing platoon" id="122" name="FA Firing PLT (MLRS)" type="Pion ASS">
     <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/rocket/multi rocket launcher/self-propelled"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="M270 MLRS"/>
@@ -3621,7 +3566,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Battery CP" id="125" name="FA BTY HQ (MLRS)" type="Pion ASS">
+  <unit decisional-model="Battery CP" id="123" name="FA BTY HQ (MLRS)" type="Pion ASS">
     <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/rocket/multi rocket launcher/self-propelled"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
@@ -3657,7 +3602,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Attack Helicopter Patrol" id="126" name="Attack Helicopter PLT (AH-64)" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Attack Helicopter Patrol" id="124" name="Attack Helicopter PLT (AH-64)" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="AH-64D Apache"/>
@@ -3684,7 +3629,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="127" name="General Support Helicopter PLT (UH-60)" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="125" name="General Support Helicopter PLT (UH-60)" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/utility/medium"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="UH-60M Blackhawk"/>
@@ -3711,7 +3656,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="AAC CP" id="128" name="AHC CP" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="AAC CP" id="126" name="AHC CP" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Transport helicopter"/>
@@ -3738,7 +3683,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="AAC CP" id="129" name="GSHC CP" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="AAC CP" id="127" name="GSHC CP" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/utility/medium"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="UH-60M Blackhawk"/>
@@ -3765,7 +3710,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="AAC CP" id="130" name="GSHB CP" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="AAC CP" id="128" name="GSHB CP" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="i" nature-app6="combat/aviation/rotary wing/utility/undefined"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="UH-60M Blackhawk"/>
@@ -3792,7 +3737,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="131" name="General Support Helicopter PLT (CH-47)" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="129" name="General Support Helicopter PLT (CH-47)" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/utility/heavy"/>
     <equipments>
       <equipment count="8" crew="5" major="true" type="CH-47D Chinook"/>
@@ -3819,7 +3764,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="AAC CP" id="132" name="GSHC CP (HVY)" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="AAC CP" id="130" name="GSHC CP (HVY)" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/utility/heavy"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="UH-60M Blackhawk"/>
@@ -3846,7 +3791,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Very Short Range Surface To Air Defense Troop" id="133" name="Avengert PLT (HVY DIV)" type="Pion ASA">
+  <unit decisional-model="Surface To Air Defense Troop" id="131" name="Avengert PLT (HVY DIV)" type="Pion ASA">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="4" type="Light Medium Tactical Vehicle"/>
@@ -3874,7 +3819,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Very Short Range Surface To Air Battery CP" id="134" name="Avenger BTY CP (HVY DIV)" type="Pion ASA">
+  <unit decisional-model="Surface To Air Battery CP" id="132" name="Avenger BTY CP (HVY DIV)" type="Pion ASA">
     <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="3" major="true" type="Light Medium Tactical Vehicle"/>
@@ -3903,7 +3848,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="MBT platoon" id="135" name="OPFOR Tank PLT" type="Pion ABC">
+  <unit decisional-model="MBT platoon" id="133" name="OPFOR Tank PLT" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="Main Battle Tank (T-72BM)"/>
@@ -3930,7 +3875,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Armored squadron CP" id="136" name="OPFOR Tank CO CP" type="Pion ABC">
+  <unit decisional-model="Armored squadron CP" id="134" name="OPFOR Tank CO CP" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Main Battle Tank (T-72BM)"/>
@@ -3957,7 +3902,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry platoon" id="137" name="OPFOR Mech Infantry PLT" type="Pion INF">
+  <unit decisional-model="Infantry platoon" id="135" name="OPFOR Mech Infantry PLT" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="Infantry Finghting Vehicle (BMP-2)"/>
@@ -3999,7 +3944,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry company CP" id="138" name="OPFOR Mech Infantry CO CP" type="Pion INF">
+  <unit decisional-model="Infantry company CP" id="136" name="OPFOR Mech Infantry CO CP" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Infantry Finghting Vehicle (BMP-2)"/>
@@ -4036,7 +3981,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Firing platoon" id="139" name="OPFOR FA Firing PLT (2S3)" type="Pion ASS">
+  <unit decisional-model="Firing platoon" id="137" name="OPFOR FA Firing PLT (2S3)" type="Pion ASS">
     <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment count="3" crew="6" major="true" type="152-mm Artillery Tank (SO-152)"/>
@@ -4073,7 +4018,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Theater High Altitude Defense Troop" id="140" name="Patriot Launcher PLT" type="Pion ASA">
+  <unit decisional-model="Theater High Altitude Defense Troop" id="138" name="Patriot Launcher PLT" type="Pion ASA">
     <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/h_mad/hawk"/>
     <equipments>
       <equipment count="8" crew="3" major="true" type="MIM-104 Patriot"/>
@@ -4100,7 +4045,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Theater High Altitude Aera Defense CP" id="141" name="Patriot BTY CP" type="Pion ASA">
+  <unit decisional-model="Theater High Altitude Aera Defense CP" id="139" name="Patriot BTY CP" type="Pion ASA">
     <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense"/>
     <equipments>
       <equipment convoyer="true" count="4" crew="1" type="Light Medium Tactical Vehicle"/>
@@ -4129,7 +4074,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="MLRS firing platoon" id="142" name="OPFOR MRL PLT" type="Pion ASS">
+  <unit decisional-model="MLRS firing platoon" id="140" name="OPFOR MRL PLT" type="Pion ASS">
     <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/rocket/multi rocket launcher/truck"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="122-mm Multiple rocket Launcher System (BM-21)"/>
@@ -4164,7 +4109,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Battery CP" id="143" name="OPFOR MRL BTY CP" type="Pion ASS">
+  <unit decisional-model="Battery CP" id="141" name="OPFOR MRL BTY CP" type="Pion ASS">
     <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/rocket/multi rocket launcher/truck"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
@@ -4200,7 +4145,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="144" name="A-10 Sortie" type="Pion JOINT">
+  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="142" name="A-10 Sortie" type="Pion JOINT">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/fixed wing/attack"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="A-10C Thunderbolt II"/>
@@ -4227,7 +4172,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="145" name="F-16 Sortie" type="Pion JOINT">
+  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="143" name="F-16 Sortie" type="Pion JOINT">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/fixed wing/attack"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="F-16D Fighting Falcon"/>
@@ -4254,7 +4199,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Attack Helicopter Patrol" id="146" name="OPFOR Attack Helicopter PLT (Mi-24 Hind)" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Attack Helicopter Patrol" id="144" name="OPFOR Attack Helicopter PLT (Mi-24 Hind)" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="5" crew="2" major="true" type="Attack Helicopter (MI-24)"/>
@@ -4281,7 +4226,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="147" name="Geberal Support Helicopter PLT (HH-60)" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Transport Helicopter Patrol" id="145" name="Geberal Support Helicopter PLT (HH-60)" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/medevac"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="HH-60M"/>
@@ -4308,7 +4253,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Firing platoon" id="148" name="FA Firing PLT (M777)" type="Pion ASS">
+  <unit decisional-model="Firing platoon" id="146" name="FA Firing PLT (M777)" type="Pion ASS">
     <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/howiltzer gun/medium"/>
     <equipments>
       <equipment count="3" crew="4" major="true" type="M777 155mm Towed Howitzer"/>
@@ -4348,7 +4293,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Battery CP" id="149" name="FA BTY HQ (Towed)" type="Pion ASS">
+  <unit decisional-model="Battery CP" id="147" name="FA BTY HQ (Towed)" type="Pion ASS">
     <nature atlas-nature="ASS" level="ooo" nature-app6="combat/field artillery/howiltzer gun/medium"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="2" major="true" type="Light Medium Tactical 7.62-mm Armed Vehicle"/>
@@ -4383,7 +4328,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry platoon" id="150" name="Light Infantry PLT" type="Pion INF">
+  <unit decisional-model="Infantry platoon" id="148" name="Light Infantry PLT" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/light"/>
     <equipments>
       <equipment count="17" crew="1" loadable="true" type="Infantry Soldiers"/>
@@ -4430,7 +4375,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry company CP" id="151" name="Light Infantry CO HQ" type="Pion INF">
+  <unit decisional-model="Infantry company CP" id="149" name="Light Infantry CO HQ" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/light"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="M1114 HMMWV"/>
@@ -4465,7 +4410,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry company CP" id="152" name="Light Infantry BN HQ" type="Pion INF">
+  <unit decisional-model="Infantry company CP" id="150" name="Light Infantry BN HQ" type="Pion INF">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/light"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="M1114 HMMWV"/>
@@ -4498,7 +4443,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry platoon" id="153" name="OPFOR Light Infantry PLT" type="Pion INF">
+  <unit decisional-model="Infantry platoon" id="151" name="OPFOR Light Infantry PLT" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/light"/>
     <equipments>
       <equipment count="21" crew="1" loadable="true" type="OPFOR Infantry Soldiers"/>
@@ -4539,7 +4484,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry company CP" id="154" name="OPFOR Light Infantry CO CP" type="Pion INF">
+  <unit decisional-model="Infantry company CP" id="152" name="OPFOR Light Infantry CO CP" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/light"/>
     <equipments>
       <equipment count="6" crew="3" loadable="true" type="OPFOR Infantry Soldiers"/>
@@ -4576,7 +4521,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Very Short Range Surface To Air Defense Troop" id="155" name="OPFOR SA 7 Team" type="Pion ASA">
+  <unit decisional-model="Surface To Air Defense Troop" id="153" name="OPFOR SA 7 Team" type="Pion ASA">
     <nature atlas-nature="None" level="oo" nature-app6="combat/air defense/missile/light/motorized"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="MANPAD Team"/>
@@ -4603,7 +4548,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="PC TC2" id="156" name="Brigade Support Battalion CT" type="Pion LOG TC2">
+  <unit decisional-model="PC TC2" id="154" name="Brigade Support Battalion CT" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="Armoured Recovery Vehicule"/>
@@ -4647,7 +4592,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="UAV" id="157" is-autonomous="true" name="UAV - Predator" type="Pion RENS">
+  <unit can-fly="true" decisional-model="UAV" id="155" is-autonomous="true" name="UAV - Predator" type="Pion RENS">
     <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
     <equipments>
       <equipment count="1" crew="0" major="true" type="MQ-1 Predator"/>
@@ -4673,7 +4618,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="UAV" id="158" is-autonomous="true" name="UAV - Hunter" type="Pion RENS">
+  <unit can-fly="true" decisional-model="UAV" id="156" is-autonomous="true" name="UAV - Hunter" type="Pion RENS">
     <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
     <equipments>
       <equipment count="1" crew="0" major="true" type="RQ-5 Hunter"/>
@@ -4699,7 +4644,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="UAV" id="159" is-autonomous="true" name="UAV - Shadow" type="Pion RENS">
+  <unit can-fly="true" decisional-model="UAV" id="157" is-autonomous="true" name="UAV - Shadow" type="Pion RENS">
     <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
     <equipments>
       <equipment count="1" crew="0" major="true" type="RQ-7 Shadow"/>
@@ -4725,7 +4670,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Theater High Altitude Defense Troop" id="160" name="OPFOR SA 8 PLT" type="Pion ASS">
+  <unit decisional-model="Theater High Altitude Defense Troop" id="158" name="OPFOR SA 8 PLT" type="Pion ASS">
     <nature atlas-nature="ASS" level="ooo" nature-app6="combat/air defense/missile"/>
     <equipments>
       <equipment count="2" crew="5" major="true" type="SA-8 Gecko TELAR"/>
@@ -4759,7 +4704,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="161" name="OPFOR Su-25 Sortie" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Strategic Bomber Patrol" id="159" name="OPFOR Su-25 Sortie" type="Pion ALAT">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/fixed wing/attack"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Su-25 Frogfoot"/>
@@ -4786,7 +4731,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Terrorist Engineer" id="162" name="Terrorist Bombmaker" type="Pion GEN">
+  <unit decisional-model="Terrorist Engineer" id="160" name="Terrorist Bombmaker" type="Pion GEN">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Terrorist Bombmaker"/>
@@ -4811,7 +4756,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Motorized Inf platoon" id="163" name="Motorized Infantry PLT" type="Pion ABC">
+  <unit decisional-model="Motorized Inf platoon" id="161" name="Motorized Infantry PLT" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="17" crew="1" loadable="true" type="Infantry Soldiers"/>
@@ -4858,7 +4803,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry company CP" id="164" name="Motorized Infantry CO HQ" type="Pion INF">
+  <unit decisional-model="Infantry company CP" id="162" name="Motorized Infantry CO HQ" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="M1114 HMMWV"/>
@@ -4893,7 +4838,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry company CP" id="165" name="Motorized Infantry BN HQ" type="Pion INF">
+  <unit decisional-model="Infantry company CP" id="163" name="Motorized Infantry BN HQ" type="Pion INF">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="M1114 HMMWV"/>
@@ -4926,7 +4871,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Infantry platoon" id="166" name="Light Infantry Eyes" type="Pion INF">
+  <unit decisional-model="Infantry platoon" id="164" name="Light Infantry Eyes" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/light"/>
     <equipments>
       <equipment count="2" crew="1" loadable="true" type="LMG Infantry Soldier"/>
@@ -4970,4 +4915,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0658076313" -->
+<!-- signature="3182343861" -->

@@ -296,7 +296,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
       </fragorders>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" masalife="false" name="Very Short Range Surface To Air Defense Troop">
+    <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" masalife="false" name="Surface To Air Defense Troop">
       <missions>
         <mission name="move"/>
         <mission name="go through decontamination process"/>
@@ -307,7 +307,6 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="Air Defense Artillery (Very Short Range) - defend area"/>
         <mission name="Air Defense Artillery (Very Short Range) - defend area (from a position)"/>
         <mission name="Air Defense Artillery (Very Short Range) - monitor"/>
       </missions>
@@ -330,7 +329,7 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
       </fragorders>
     </unit>
-    <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.bms" masalife="false" name="Very Short Range Surface To Air Battery CP">
+    <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.bms" masalife="false" name="Surface To Air Battery CP">
       <missions>
         <mission name="move"/>
         <mission name="go through decontamination process"/>
@@ -3136,7 +3135,7 @@
         <fragorder name="Change population ROE"/>
       </fragorders>
     </automat>
-    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="Very Short Range Surface To Air Battery">
+    <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="Surface To Air Battery">
       <missions>
         <mission name="withdraw"/>
         <mission name="move"/>
@@ -3147,7 +3146,6 @@
         <mission name="park"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
-        <mission name="Air Defense Artillery - defend a route"/>
         <mission name="Air Defense Artillery (Very Short Range) - defend area"/>
         <mission name="Air Defense Artillery (Very Short Range) - monitor"/>
         <mission name="adopt transportation posture"/>
@@ -4736,4 +4734,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2728356937" -->
+<!-- signature="3526743047" -->

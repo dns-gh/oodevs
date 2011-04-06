@@ -80,6 +80,11 @@
       </detectable-activities>
     </radar>
     <radar action-range="15000" max-height="15000" name="SA-8 Land Roll Low" type="radar"/>
+    <radar action-range="80000" max-height="8000" min-height="3000" name="Theatre High Altitude Radar Part 4" type="radar">
+      <detectable-activities>
+        <detectable-activity type="Deplacement" value="true"/>
+      </detectable-activities>
+    </radar>
   </radars>
   <sensors>
     <sensor detection-delay="0h" name="Eye">
@@ -4061,4 +4066,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="3828975929" -->
+<!-- signature="1572910022" -->
