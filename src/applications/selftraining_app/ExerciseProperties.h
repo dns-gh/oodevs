@@ -47,6 +47,7 @@ public:
 
     //! @name Operations
     //@{
+    void Update();
     void Select( const frontend::Exercise_ABC* exercise );
     void Commit( const frontend::Exercise_ABC& exercise );
     //@}

@@ -76,27 +76,11 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
         {
             terrainList_ = new QComboBox( editBox );
             terrainList_->setBackgroundOrigin( QWidget::WindowOrigin );
-            terrainList_->insertItem( tools::translate( "ExerciseProperties", "Terrain:" ) );
-            terrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
             connect( terrainList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
         }
         {
             modelList_ = new QComboBox( editBox );
             modelList_->setBackgroundOrigin( QWidget::WindowOrigin );
-            {
-                modelList_->insertItem( tools::translate( "ExerciseProperties", "Model:" ) );
-                const QStringList decisionalModels = frontend::commands::ListModels( config_ );
-                int index = 1;
-                for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
-                {
-                    const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
-                    for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
-                        modelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
-                }
-                if( modelList_->count() == 2 )
-                    modelList_->setCurrentItem( 1 );
-                modelList_->setShown( modelList_->count() > 2 );
-            }
             connect( modelList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
         }
     }
@@ -110,6 +94,31 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
 ExerciseProperties::~ExerciseProperties()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseProperties::Update
+// Created: RBA 2011-04-05
+// -----------------------------------------------------------------------------
+void ExerciseProperties::Update()
+{
+    terrainList_->clear();
+    terrainList_->insertItem( tools::translate( "ExerciseProperties", "Terrain:" ) );
+    terrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
+
+    modelList_->clear();
+    modelList_->insertItem( tools::translate( "ExerciseProperties", "Model:" ) );
+    const QStringList decisionalModels = frontend::commands::ListModels( config_ );
+    int index = 1;
+    for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+    {
+        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
+        for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
+            modelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
+    }
+    if( modelList_->count() == 2 )
+        modelList_->setCurrentItem( 1 );
+    modelList_->setShown( modelList_->count() > 2 );
 }
 
 // -----------------------------------------------------------------------------
