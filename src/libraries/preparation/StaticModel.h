@@ -10,8 +10,11 @@
 #ifndef __StaticModel_h_
 #define __StaticModel_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
+    class AccommodationTypes;
     class AgentTypes;
     class Controllers;
     class CoordinateConverter_ABC;
@@ -42,18 +45,13 @@ class IntelligenceKarmas;
 class SuccessFactorActionTypes;
 class TeamKarmas;
 
-namespace prepa
-{
-    class LogisticLevel;
-}
-
 // =============================================================================
 /** @class  StaticModel
     @brief  StaticModel
 */
 // Created: AGE 2006-08-01
 // =============================================================================
-class StaticModel
+class StaticModel : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -78,6 +76,7 @@ public:
     kernel::AgentTypes&              types_;
     kernel::ObjectTypes&             objectTypes_;
     kernel::FormationLevels&         levels_;
+    kernel::AccommodationTypes&      accommodationTypes_;
     kernel::ExtensionTypes&          extensions_;
     TeamKarmas&                      teamKarmas_;
     IntelligenceKarmas&              intelligenceKarmas_;
@@ -85,13 +84,6 @@ public:
     indicators::Primitives&          indicators_;
     indicators::GaugeTypes&          gaugeTypes_;
     SuccessFactorActionTypes&        successFactorActionTypes_;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    StaticModel( const StaticModel& );            //!< Copy constructor
-    StaticModel& operator=( const StaticModel& ); //!< Assignment operator
     //@}
 };
 

@@ -16,8 +16,10 @@ using namespace kernel;
 // Name: AccommodationType constructor
 // Created: LDC 2011-03-25
 // -----------------------------------------------------------------------------
-AccommodationType::AccommodationType( const std::string& role, double /*maxCapacity*/, double /*nominalCapacity*/ )
-    : role_( role )
+AccommodationType::AccommodationType( const std::string& role, float nominalCapacity, float maxCapacity )
+    : role_           ( role )
+    , nominalCapacity_( nominalCapacity )
+    , maxCapacity_    ( maxCapacity )
 {
     // NOTHING
 }
@@ -38,4 +40,22 @@ AccommodationType::~AccommodationType()
 const std::string& AccommodationType::GetRole() const
 {
     return role_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AccommodationType::GetNominalCapacity
+// Created: JSR 2011-04-04
+// -----------------------------------------------------------------------------
+float AccommodationType::GetNominalCapacity() const
+{
+    return nominalCapacity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AccommodationType::GetMaxCapacity
+// Created: JSR 2011-04-04
+// -----------------------------------------------------------------------------
+float AccommodationType::GetMaxCapacity() const
+{
+    return maxCapacity_;
 }

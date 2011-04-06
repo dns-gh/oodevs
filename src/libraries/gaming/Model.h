@@ -11,6 +11,7 @@
 #define __Model_h_
 
 #include "EntityResolverFacade.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -58,6 +59,7 @@ class StaticModel;
 class TacticalLineFactory;
 class TeamFactory_ABC;
 class TeamsModel;
+class UrbanBlockDetectionMap;
 class UserProfileFactory_ABC;
 class UserProfilesModel;
 class WeatherModel;
@@ -74,6 +76,7 @@ class MeteoModel;
 // Created: AGE 2006-02-15
 // =============================================================================
 class Model : public EntityResolverFacade
+            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -90,6 +93,7 @@ public:
 public:
     //! @name Member data
     //@{
+    // $$$$ _RC_ JSR 2011-04-05: Passer en private ce qui peut l'être, voire utiliser des accesseurs.
     kernel::Controllers& controllers_;
     const StaticModel& static_;
     AgentKnowledgeFactory& agentsKnowledgeFactory_;
@@ -97,49 +101,43 @@ public:
     UrbanKnowledgeFactory& urbanKnowledgeFactory_;
     kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
-    TeamFactory_ABC&                teamFactory_;
-    KnowledgeGroupFactory_ABC&      knowledgeGroupFactory_;
-    AgentFactory_ABC&               agentFactory_;
-    ObjectFactory_ABC&              objectFactory_;
-    LogisticConsignFactory_ABC&     logisticFactory_;
-    FireFactory&                    fireFactory_;
-    TacticalLineFactory&            tacticalLineFactory_;
-    FireResultFactory&              fireResultsFactory_;
-    UserProfileFactory_ABC&         userProfileFactory_;
-    actions::ParameterFactory_ABC&  actionParameterFactory_;
-    actions::ActionFactory_ABC&     actionFactory_;
-    IntelligenceFactory&            intelligenceFactory_;
-    DrawingFactory&                 drawingFactory_;
-    AgentsModel&          agents_;
-    ObjectsModel&         objects_;
-    TeamsModel&           teams_;
+    TeamFactory_ABC& teamFactory_;
+    KnowledgeGroupFactory_ABC& knowledgeGroupFactory_;
+    AgentFactory_ABC& agentFactory_;
+    ObjectFactory_ABC& objectFactory_;
+    LogisticConsignFactory_ABC& logisticFactory_;
+    FireFactory& fireFactory_;
+    TacticalLineFactory& tacticalLineFactory_;
+    FireResultFactory& fireResultsFactory_;
+    UserProfileFactory_ABC& userProfileFactory_;
+    actions::ParameterFactory_ABC& actionParameterFactory_;
+    actions::ActionFactory_ABC& actionFactory_;
+    IntelligenceFactory& intelligenceFactory_;
+    DrawingFactory& drawingFactory_;
+    AgentsModel& agents_;
+    ObjectsModel& objects_;
+    TeamsModel& teams_;
     KnowledgeGroupsModel& knowledgeGroups_;
-    LogisticsModel&       logistics_;
-    LimitsModel&          limits_;
-    FiresModel&           fires_;
-    WeatherModel&         weather_;
-    UserProfilesModel&    profiles_;
+    LogisticsModel& logistics_;
+    LimitsModel& limits_;
+    FiresModel& fires_;
+    WeatherModel& weather_;
+    UserProfilesModel& profiles_;
     actions::ActionsModel& actions_;
-    FolkModel&            folk_;
-    AfterActionModel&     aar_;
-    IntelligencesModel&   intelligences_;
-    DrawingsModel&        drawings_;
-    ScoreDefinitions&     scoreDefinitions_;
-    ScoreModel&           scores_;
-    UrbanModel&           urbanObjects_;
+    FolkModel& folk_;
+    AfterActionModel& aar_;
+    IntelligencesModel& intelligences_;
+    DrawingsModel& drawings_;
+    ScoreDefinitions& scoreDefinitions_;
+    ScoreModel& scores_;
+    UrbanBlockDetectionMap& urbanBlockDetectionMap_;
     ResourceNetworkModel& resourceNetwork_;
-    SurfaceFactory&       surfaceFactory_;
-    NotesModel&           notes_;
-    MeteoModel&           meteo_;
+    UrbanModel& urbanObjects_;
+    SurfaceFactory& surfaceFactory_;
+    NotesModel& notes_;
+    MeteoModel& meteo_;
     kernel::FormationLevels& formations_;
     Publisher_ABC& publisher_;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Model( const Model& );            //!< Copy constructor
-    Model& operator=( const Model& ); //!< Assignment operator
     //@}
 };
 

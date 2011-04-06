@@ -113,33 +113,11 @@ namespace
     };
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: GradientButton constructor
-// Created: SBO 2007-07-02
-// -----------------------------------------------------------------------------
-GradientButton::GradientButton( QWidget* parent, const Painter_ABC& painter, bool disableState )
-    : QCanvasView( new GradientCanvas( parent, colors_ ), parent )
-    , painter_     ( painter )
-    , selected_    ( 0 )
-    , disableState_( disableState )
-{
-    setFrameStyle( QFrame::Raised | QFrame::Box );
-
-    setFixedHeight( 80 );
-    setHScrollBarMode( QScrollView::AlwaysOff );
-    setVScrollBarMode( QScrollView::AlwaysOff );
-
-    AddItem( 0, Qt::white );
-    AddItem( 100, Qt::black );
-    setFocusPolicy( QWidget::StrongFocus );
-}
-
 // -----------------------------------------------------------------------------
 // Name: GradientButton constructor
 // Created: LGY 2011-01-06
 // -----------------------------------------------------------------------------
-GradientButton::GradientButton( QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin, QColor end )
+GradientButton::GradientButton( QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin /*= Qt::white*/, QColor end /*= Qt::black*/ )
     : QCanvasView( new GradientCanvas( parent, colors_ ), parent )
     , painter_     ( painter )
     , selected_    ( 0 )
@@ -147,6 +125,7 @@ GradientButton::GradientButton( QWidget* parent, const Painter_ABC& painter, boo
 {
     setFrameStyle( QFrame::Raised | QFrame::Box );
 
+    setMargin( 5 );
     setFixedHeight( 80 );
     setHScrollBarMode( QScrollView::AlwaysOff );
     setVScrollBarMode( QScrollView::AlwaysOff );
@@ -346,6 +325,8 @@ void GradientButton::resizeEvent( QResizeEvent* event )
 {
     QCanvasView::resizeEvent( event );
     canvas()->resize( event->size().width(), event->size().height() );
+    canvas()->setAllChanged();
+    canvas()->update();
 }
 
 // -----------------------------------------------------------------------------

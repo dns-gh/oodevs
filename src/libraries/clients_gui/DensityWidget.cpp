@@ -154,8 +154,8 @@ void DensityWidget::Reset()
     gradient.AddColor( 0, Qt::green );
     gradient.AddColor( 1, Qt::red );
     densityEditor_->LoadGradient( gradient );
-    min_->setText(  "0" );
-    max_->setText(  "1" );
+    min_->setText( "0" );
+    max_->setText( "1" );
 }
 
 // -----------------------------------------------------------------------------

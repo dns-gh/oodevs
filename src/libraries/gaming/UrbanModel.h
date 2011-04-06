@@ -10,12 +10,13 @@
 #ifndef __Gaming_UrbanModel_h_
 #define __Gaming_UrbanModel_h_
 
-#include "clients_gui/UrbanDisplayOptions.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace gui
 {
     class TerrainObjectProxy;
+    class UrbanDisplayOptions;
 }
 
 namespace sword
@@ -33,10 +34,9 @@ namespace urban
 namespace kernel
 {
     class Controllers;
-    class DetectionMap;
 }
 
-class Model;
+class ResourceNetworkModel;
 class StaticModel;
 class UrbanBlockDetectionMap;
 
@@ -48,11 +48,12 @@ class UrbanBlockDetectionMap;
 // Created: SLG 2009-02-10
 // =============================================================================
 class UrbanModel : public tools::Resolver< gui::TerrainObjectProxy >
+                 , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanModel( kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, const kernel::DetectionMap& map );
+             UrbanModel( kernel::Controllers& controllers, ResourceNetworkModel& resourceNetwork, const StaticModel& staticModel, UrbanBlockDetectionMap& map );
     virtual ~UrbanModel();
     //@}
 
@@ -63,29 +64,19 @@ public:
     void Update( const sword::ObjectUpdate& message );
 
     void Purge();
-    const urban::Model& GetModel() const;
-    const UrbanBlockDetectionMap& GetUrbanBlockMap() const;
     gui::TerrainObjectProxy& GetObject( unsigned long id ) const;
     gui::TerrainObjectProxy* FindObject( unsigned long id ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    UrbanModel( const UrbanModel& );            //!< Copy constructor
-    UrbanModel& operator=( const UrbanModel& ); //!< Assignment operator
     //@}
 
 public:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const Model& model_;
+    ResourceNetworkModel& resourceNetwork_;
     const StaticModel& static_;
     std::auto_ptr< urban::Model > urbanModel_;
-    const kernel::DetectionMap& map_;
+    std::auto_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;
     UrbanBlockDetectionMap& urbanBlockDetectionMap_;
-    gui::UrbanDisplayOptions urbanDisplayOptions_;
     //@}
 };
 

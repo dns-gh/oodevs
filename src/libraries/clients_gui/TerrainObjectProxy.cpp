@@ -325,7 +325,7 @@ void TerrainObjectProxy::NotifyUpdated( const UrbanDisplayOptions& )
 void TerrainObjectProxy::UpdateColor()
 {
     ColorAttribute* colorAttribute = object_.Retrieve< ColorAttribute >();
-    if( !options_.SetColor( colorAttribute, GetDensity(), motivations_ ) )
+    if( !options_.SetColor( colorAttribute, object_.GetLivingSpace(), humans_, motivations_ ) )
         Restore();
 }
 

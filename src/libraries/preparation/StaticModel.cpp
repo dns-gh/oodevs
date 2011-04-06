@@ -13,6 +13,7 @@
 #include "SuccessFactorActionTypes.h"
 #include "TeamKarmas.h"
 #include "clients_gui/DrawingTypes.h"
+#include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
@@ -44,6 +45,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , types_                   ( *new AgentTypes() )
     , objectTypes_             ( *new ObjectTypes() )
     , levels_                  ( *new FormationLevels() )
+    , accommodationTypes_      ( *new AccommodationTypes() )
     , extensions_              ( *new ExtensionTypes() )
     , teamKarmas_              ( *new TeamKarmas() )
     , intelligenceKarmas_      ( *new IntelligenceKarmas() )
@@ -69,6 +71,7 @@ StaticModel::~StaticModel()
     delete &teamKarmas_;
     delete &extensions_;
     delete &levels_;
+    delete &accommodationTypes_;
     delete &objectTypes_;
     delete &types_;
     delete &detection_;

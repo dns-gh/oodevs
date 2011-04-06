@@ -36,7 +36,7 @@ class DensityWidget : public QVBox
                     , public tools::Observer_ABC
                     , public kernel::OptionsObserver_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor

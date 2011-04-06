@@ -25,12 +25,6 @@ namespace actions
     class ActionTiming;
 }
 
-namespace gui
-{
-    class Gradient;
-    class GradientItem;
-}
-
 class TimelineRuler;
 
 // =============================================================================

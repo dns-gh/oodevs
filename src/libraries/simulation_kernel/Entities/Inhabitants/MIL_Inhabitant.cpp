@@ -473,7 +473,7 @@ bool MIL_Inhabitant::IsAlerted( const TER_Localisation& localisation ) const
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::CreateInhabitantMovingObject()
 {
-    if( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ )
+    if( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ == 0 )
         return;
 
     T_PointVector hull = pLivingArea_->ComputeMovingArea();

@@ -69,6 +69,6 @@ void AccommodationTypes::ReadAccommodation( xml::xistream& xis )
     xis >> xml::attribute( "role", role )
         >> xml::attribute( "max-capacity", maxCapacity )
         >> xml::attribute( "nominal-capacity", nominalCapacity );
-    AccommodationType* accomodation = new AccommodationType( role, maxCapacity, nominalCapacity );
+    AccommodationType* accomodation = new AccommodationType( role, nominalCapacity, maxCapacity );
     Register( role, *accomodation );
 }

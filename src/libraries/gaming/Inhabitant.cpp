@@ -161,7 +161,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         CIT_UrbanObjectVector it = livingUrbanObject_.find( id );
         if( it != livingUrbanObject_.end() )
         {
-            T_Human& mutableHuman = humans_[ id ];
+            gui::T_Human& mutableHuman = humans_[ id ];
             for( int j = 0; j < occupation.persons_size(); ++j )
                 mutableHuman.persons_[ occupation.persons( j ).usage().c_str() ] = occupation.persons( j ).number();
             mutableHuman.alerted_ = occupation.alerted();
@@ -169,10 +169,10 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             mutableHuman.evacuated_ = occupation.evacuated();
             mutableHuman.angriness_ = occupation.angriness();
             it->second->UpdateHumans( name_.ascii(), mutableHuman.persons_, mutableHuman.alerted_, mutableHuman.confined_, mutableHuman.evacuated_, mutableHuman.angriness_ );
-            const T_Human& human = mutableHuman;
+            const gui::T_Human& human = mutableHuman;
             PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
             const QString keyHuman = tools::translate( "Inhabitant", "Living Area/" ) + it->second->GetName().ascii() + "/";
-            for( CIT_BlockOccupation occupation = human.persons_.begin(); occupation != human.persons_.end(); occupation++ )
+            for( gui::CIT_BlockOccupation occupation = human.persons_.begin(); occupation != human.persons_.end(); occupation++ )
             {
                 const QString keyOccupation = keyHuman + occupation->first + "/";
                 const QString keyNumber = keyOccupation + tools::translate( "Inhabitant", "Resident" );

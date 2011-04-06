@@ -31,8 +31,7 @@ class GradientButton : public QCanvasView
 public:
     //! @name Constructors/Destructor
     //@{
-             GradientButton( QWidget* parent, const Painter_ABC& painter, bool disableState );
-             GradientButton( QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin, QColor end );
+             GradientButton( QWidget* parent, const Painter_ABC& painter, bool disableState, QColor begin = Qt::white, QColor end = Qt::black );
     virtual ~GradientButton();
     //@}
 

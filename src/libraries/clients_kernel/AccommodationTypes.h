@@ -11,6 +11,7 @@
 #define __AccommodationTypes_h_
 
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace tools
 {
@@ -33,8 +34,8 @@ namespace kernel
 // Created: LDC 2011-03-24
 // =============================================================================
 class AccommodationTypes : public tools::StringResolver< AccommodationType >
+                         , private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -48,21 +49,10 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AccommodationTypes( const AccommodationTypes& );            //!< Copy constructor
-    AccommodationTypes& operator=( const AccommodationTypes& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadAccommodations( xml::xistream& xis );
     void ReadAccommodation( xml::xistream& xis );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 

@@ -10,6 +10,8 @@
 #ifndef __AccommodationType_h_
 #define __AccommodationType_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
 // =============================================================================
@@ -18,31 +20,29 @@ namespace kernel
 */
 // Created: LDC 2011-03-25
 // =============================================================================
-class AccommodationType
+class AccommodationType : private boost::noncopyable
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             AccommodationType( const std::string& role, double maxCapacity, double nominalCapacity );
+             AccommodationType( const std::string& role, float nominalCapacity, float maxCapacity );
     virtual ~AccommodationType();
     //@}
 
     //! @name Operations
     //@{
     const std::string& GetRole() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AccommodationType( const AccommodationType& );            //!< Copy constructor
-    AccommodationType& operator=( const AccommodationType& ); //!< Assignment operator
+    float GetNominalCapacity() const;
+    float GetMaxCapacity() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const std::string role_;
+    float nominalCapacity_;
+    float maxCapacity_;
     //@}
 };
 }

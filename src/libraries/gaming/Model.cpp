@@ -43,6 +43,7 @@
 #include "TacticalLineFactory.h"
 #include "TeamFactory.h"
 #include "TeamsModel.h"
+#include "UrbanBlockDetectionMap.h"
 #include "UrbanKnowledgeFactory.h"
 #include "UrbanModel.h"
 #include "UserProfileFactory.h"
@@ -99,9 +100,10 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
     , scoreDefinitions_( *new ScoreDefinitions( staticModel.indicators_, staticModel.gaugeTypes_ ) )
     , scores_( *new ScoreModel( controllers, publisher, scoreDefinitions_ ) )
-    , urbanObjects_( *new UrbanModel( controllers, *this, static_, static_.detection_ ) )
+    , urbanBlockDetectionMap_( *new UrbanBlockDetectionMap( static_.detection_ ) )
     , resourceNetwork_( *new ResourceNetworkModel( controllers, *this, static_ ) )
-    , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanObjects_.GetUrbanBlockMap() ) )
+    , urbanObjects_( *new UrbanModel( controllers, resourceNetwork_, static_, urbanBlockDetectionMap_ ) )
+    , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_ ) )
     , notes_( *new NotesModel( controllers.controller_ ))
     , meteo_( *new MeteoModel( static_.coordinateConverter_ ) )
     , formations_( *new kernel::FormationLevels() )
@@ -121,6 +123,7 @@ Model::~Model()
     delete &notes_;
     delete &surfaceFactory_;
     delete &resourceNetwork_;
+    delete &urbanBlockDetectionMap_;
     delete &urbanObjects_;
     delete &scores_;
     delete &scoreDefinitions_;

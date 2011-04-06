@@ -33,7 +33,7 @@ StaticModel::StaticModel()
     , levels_             ( *new FormationLevels() )
     , extensionTypes_     ( *new ExtensionTypes() )
     , atlasNatures_       ( *new AtlasNatures() )
-    , accomodationTypes_  ( *new AccommodationTypes() )
+    , accommodationTypes_ ( *new AccommodationTypes() )
 {
     // NOTHING
 }
@@ -51,7 +51,7 @@ StaticModel::~StaticModel()
     delete &types_;
     delete &coordinateConverter_;
     delete &coordinateSystems_;
-    delete &accomodationTypes_;
+    delete &accommodationTypes_;
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 {
     Purge();
     types_.Load( config );
-    accomodationTypes_.Load( config );
+    accommodationTypes_.Load( config );
     objectTypes_.Load( config );
     extensionTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ) );
     static_cast< kernel::CoordinateConverter& >( coordinateConverter_ ).Load( config );

@@ -59,7 +59,7 @@ public:
     kernel::FormationLevels&         levels_;
     kernel::ExtensionTypes&          extensionTypes_;
     kernel::AtlasNatures&            atlasNatures_;
-    kernel::AccommodationTypes&      accomodationTypes_;
+    kernel::AccommodationTypes&      accommodationTypes_;
     //@}
 };
 

@@ -10,6 +10,7 @@
 #ifndef __TerrainObjectProxy_h_
 #define __TerrainObjectProxy_h_
 
+#include "HumanDefs.h"
 #include "clients_kernel/Creatable.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
@@ -98,7 +99,7 @@ public:
     virtual void SetSelected( bool selected ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
 
-    void UpdateHumans( const std::string& inhabitant, const std::map< QString, unsigned int >& occupations, bool alerted, bool confined, bool evacuated, float angriness );
+    void UpdateHumans( const std::string& inhabitant, const T_BlockOccupation& occupations, bool alerted, bool confined, bool evacuated, float angriness );
     void NotifyUpdated( const UrbanDisplayOptions& );
     //@}
 
@@ -115,22 +116,6 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, float > T_Motivations;
-
-    typedef std::map< QString, unsigned int >   T_BlockOccupation;
-    typedef T_BlockOccupation::const_iterator CIT_BlockOccupation;
-
-    struct T_Human
-    {
-        T_BlockOccupation persons_;
-        bool alerted_;
-        bool confined_;
-        bool evacuated_;
-        float angriness_;
-    };
-    typedef std::map< std::string, T_Human > T_Humans;
-    typedef T_Humans::const_iterator       CIT_Humans;
-
     struct T_BaseColor
     {
         T_BaseColor()
@@ -144,6 +129,8 @@ private:
         unsigned short green_;
         unsigned short blue_;
     };
+
+    typedef T_HumansStrMap T_Humans;
     //@}
 
 private:

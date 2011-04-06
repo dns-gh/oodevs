@@ -28,8 +28,8 @@ class OptionsObserver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OptionsObserver_ABC() {};
-    virtual ~OptionsObserver_ABC() {};
+             OptionsObserver_ABC() {}
+    virtual ~OptionsObserver_ABC() {}
     //@}
 
     //! @name Operations

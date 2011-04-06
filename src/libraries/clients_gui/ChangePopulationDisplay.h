@@ -10,6 +10,8 @@
 #ifndef __ChangePopulationDisplay_h_
 #define __ChangePopulationDisplay_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace gui
 {
 // =============================================================================
@@ -18,26 +20,26 @@ namespace gui
 */
 // Created: LDC 2011-03-28
 // =============================================================================
-struct ChangePopulationDisplay
+struct ChangePopulationDisplay : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    ChangePopulationDisplay( const std::string& populationName, bool visible ) : populationName_( populationName ), visible_( visible ) {}
+    ChangePopulationDisplay( const std::string& populationName, bool visible )
+        : populationName_( populationName )
+        , visible_       ( visible )
+    {
+        // NOTHING
+    }
+    //@}
+
     //! @name Member data
     //@{
-     const std::string populationName_;
-     const bool visible_;
-    //@}
-     
-private:
-    //! @name Copy/Assignment
-    //@{
-    ChangePopulationDisplay( const ChangePopulationDisplay& );            //!< Copy constructor
-    ChangePopulationDisplay& operator=( const ChangePopulationDisplay& ); //!< Assignment operator
+    const std::string populationName_;
+    const bool visible_;
     //@}
 };
+
 }
 
 #endif // __ChangePopulationDisplay_h_

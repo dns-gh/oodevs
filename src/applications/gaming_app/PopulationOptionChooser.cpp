@@ -27,7 +27,7 @@
 PopulationOptionChooser::PopulationOptionChooser( QMainWindow* parent, kernel::Controllers& controllers, StaticModel& staticModel )
     : QDockWindow( parent, "population-display-option" )
     , controllers_( controllers )
-    , accomodations_( staticModel.accomodationTypes_ )
+    , accomodations_( staticModel.accommodationTypes_ )
 {
     setCaption( tools::translate( "PopulationOptionChooser", "Population Display Options" ) );
     {
@@ -100,6 +100,13 @@ void PopulationOptionChooser::NotifyUpdated( const kernel::ModelLoaded& )
         next->setText( it.NextElement().GetRole().c_str() );
         connect( next, SIGNAL( toggled( bool ) ), this, SLOT( OnAccomodationToggled( bool ) ) );
     }
+    const QObjectList* buttons = activities_->children();
+    for( QObjectList::const_iterator it = buttons->begin(); it != buttons->end(); ++it )
+        if( QButton* button = dynamic_cast< QButton* >( *it ) )
+        {
+            button->toggle();
+            break;
+        }
     activities_->adjustSize();
 }
 
@@ -110,7 +117,7 @@ void PopulationOptionChooser::NotifyUpdated( const kernel::ModelLoaded& )
 void PopulationOptionChooser::NotifyUpdated( const kernel::ModelUnLoaded& )
 {
     hide();
-    const QObjectList * buttons = activities_->children();
+    const QObjectList* buttons = activities_->children();
     for( QObjectList::const_iterator it = buttons->begin(); it != buttons->end(); ++it )
     {
         QButton* button = dynamic_cast< QButton* >( *it );
@@ -131,6 +138,7 @@ void PopulationOptionChooser::NotifyCreated( const kernel::Inhabitant_ABC& inhab
         name = "";
     newPopulation->setText( name );
     connect( newPopulation, SIGNAL( toggled( bool ) ), this, SLOT( OnPopulationToggled( bool ) ) ); 
+    newPopulation->setChecked( true );
 }
 
 // -----------------------------------------------------------------------------

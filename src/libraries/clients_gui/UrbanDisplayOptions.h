@@ -10,11 +10,12 @@
 #ifndef __UrbanDisplayOptions_h_
 #define __UrbanDisplayOptions_h_
 
+#include "HumanDefs.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 #include "Gradient.h"
-#include "urban/Motivations.h"
+#include <boost/noncopyable.hpp>
 
 namespace urban
 {
@@ -23,6 +24,7 @@ namespace urban
 
 namespace kernel
 {
+    class AccommodationTypes;
     class Controllers;
 }
 
@@ -38,38 +40,28 @@ namespace gui
 class UrbanDisplayOptions : public tools::Observer_ABC
                           , public kernel::OptionsObserver_ABC
                           , public tools::ElementObserver_ABC< gui::ChangePopulationDisplay >
+                          , private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanDisplayOptions( kernel::Controllers& controllers );
+             UrbanDisplayOptions( kernel::Controllers& controllers, const kernel::AccommodationTypes& accommodationTypes );
     virtual ~UrbanDisplayOptions();
     //@}
 
     //! @name Operations
     //@{
     void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    bool SetColor( urban::ColorAttribute* attribute, float density, const std::map< std::string, float > & motivations );
+    bool SetColor( urban::ColorAttribute* attribute, float livingSpace, const T_HumansStrMap& humans, const T_Motivations& motivations );
     void ChangePopulationDisplay( const std::string& name, bool visible );
     void NotifyUpdated( const gui::ChangePopulationDisplay& population );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    UrbanDisplayOptions( const UrbanDisplayOptions& );            //!< Copy constructor
-    UrbanDisplayOptions& operator=( const UrbanDisplayOptions& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const kernel::AccommodationTypes& accommodationTypes_;
     bool densityColor_;
     bool accommodationColor_;
     QString accommodationDisplayed_;
@@ -81,8 +73,10 @@ private:
     float minAccommodationDensity_;
     float maxAccommodationDensity_;
     std::auto_ptr< Gradient > pAccommodationGradient_;
+    std::set< std::string > populationsDisplayed_;
     //@}
 };
+
 }
 
 #endif // __UrbanDisplayOptions_h_
