@@ -86,7 +86,6 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
-    , rSquareWeldValue_           ( TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10 )
 {
     idManager_.Lock( nID_ );
     std::string strAttitude;
@@ -141,7 +140,6 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
-    , rSquareWeldValue_           ( TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10 )
 {
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
     vBarycenter_.reset( new MT_Vector2D() );
@@ -170,7 +168,6 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
-    , rSquareWeldValue_           ( TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10 )
 {
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( "calme" );
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
@@ -1484,16 +1481,17 @@ float MIL_Population::GetAffinity( unsigned long teamID ) const
 // -----------------------------------------------------------------------------
 bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) const
 {
+    double weldValue = TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10;
 
     BOOST_FOREACH( const MIL_PopulationConcentration* concentration, concentrations_ )
     {
-        if( destination.SquareDistance( concentration->GetPosition() ) <= rSquareWeldValue_ )
+        if( destination.SquareDistance( concentration->GetPosition() ) <= weldValue )
             return true;
     }
 
     BOOST_FOREACH( const MIL_PopulationFlow* flow, flows_ )
     {
-        if( destination.SquareDistance( flow->GetPosition() ) <= rSquareWeldValue_ )
+        if( destination.SquareDistance( flow->GetPosition() ) <= weldValue )
             return true;
     }
     return false;
@@ -1533,5 +1531,5 @@ bool MIL_Population::HasReachedDestinationCompletely( const MT_Vector2D& destina
     if( concentrations_.size() != 1 )
         return false;
 
-    return destination.SquareDistance( concentrations_.front()->GetPosition() ) <= rSquareWeldValue_;
+    return destination.SquareDistance( concentrations_.front()->GetPosition() ) <= TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10;
 }

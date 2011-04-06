@@ -251,7 +251,6 @@ private:
     T_Extensions extensions_;
     std::auto_ptr< MIL_AffinitiesMap > pAffinities_;
     double urbanBlockAngriness_;
-    const double rSquareWeldValue_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );
