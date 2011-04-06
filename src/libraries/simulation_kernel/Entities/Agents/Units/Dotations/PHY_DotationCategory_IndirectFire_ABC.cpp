@@ -97,3 +97,12 @@ void PHY_DotationCategory_IndirectFire_ABC::ApplyEffect( const MIL_Agent_ABC& /*
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory_IndirectFire_ABC::GetRadius
+// Created: EVH 2011-04-05
+// -----------------------------------------------------------------------------
+double PHY_DotationCategory_IndirectFire_ABC::GetRadius() const
+{
+    return ( rDispersionX_ + rDispersionY_ ) / 2;
+}

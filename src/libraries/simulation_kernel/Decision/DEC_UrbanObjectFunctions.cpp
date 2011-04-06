@@ -12,6 +12,10 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
@@ -137,20 +141,6 @@ float DEC_UrbanObjectFunctions::GetRapForLocal( const MIL_AgentPion& callerAgent
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_UrbanObjectFunctions::DestroyUrbanBlock
-// Created: LGY 2011-03-24
-// -----------------------------------------------------------------------------
-void DEC_UrbanObjectFunctions::DestroyUrbanBlock( UrbanObjectWrapper* pUrbanObject, double percentage )
-{
-    if( pUrbanObject )
-    {
-        StructuralCapacity* pCapacity = pUrbanObject->Retrieve< StructuralCapacity >();
-        if( pCapacity )
-            pCapacity->Build( -percentage );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_UrbanObjectFunctions::GetStateUrbanBlock
 // Created: DDA 2011-03-30
 // -----------------------------------------------------------------------------
@@ -173,4 +163,25 @@ boost::shared_ptr< TER_Localisation > DEC_UrbanObjectFunctions::GetPolygonFromUr
 {
     boost::shared_ptr< TER_Localisation > location( new TER_Localisation( pUrbanObject->GetLocalisation() ) );
     return location;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_UrbanObjectFunctions::DestroyUrbanBlock
+// Created: EVH 2011-04-04
+// -----------------------------------------------------------------------------
+void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject, const PHY_DotationCategory* category )
+{
+    StructuralCapacity* capacity = const_cast< StructuralCapacity* >( pUrbanObject->Retrieve< StructuralCapacity >() );
+    if( capacity )
+    {
+        if (const PHY_DotationCategory_IndirectFire_ABC* firedata = category->GetIndirectFireData()) 
+        {
+            const PHY_RoleInterface_Location& location = callerAgent.Get< PHY_RoleInterface_Location >();
+            TER_Localisation localisation( location.GetPosition(), firedata->GetRadius() );
+            capacity->ApplyIndirectFire( *pUrbanObject, localisation, *category );
+        }
+        else
+            capacity->ApplyIndirectFire( *pUrbanObject, pUrbanObject->GetLocalisation(), *category );
+        callerAgent.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *category, 1 );
+    }
 }

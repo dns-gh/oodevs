@@ -381,7 +381,10 @@ void MIL_Population::Exterminate( const MIL_AgentPion& exterminator, double rSur
         pElement = GetClosestAliveElement( exterminator );
         if( !pElement )
             break;
-        rSurface -= pElement->Exterminate( rSurface );
+        double damage = pElement->Exterminate( rSurface );
+        if( !damage )
+            break;
+        rSurface -= damage;
     }
     NotifyAttackedBy( exterminator );
     MIL_Report::PostEvent( *this, MIL_Report::eReport_TerroristAttackAgainstPopulation );

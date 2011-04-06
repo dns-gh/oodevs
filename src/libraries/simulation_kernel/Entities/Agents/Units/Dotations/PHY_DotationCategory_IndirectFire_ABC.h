@@ -46,6 +46,7 @@ public:
     virtual void ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
     virtual void ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
     virtual bool HasHit( const MIL_Agent_ABC& target, double ) const;
+    double GetRadius() const;
     //@}
 
 protected:

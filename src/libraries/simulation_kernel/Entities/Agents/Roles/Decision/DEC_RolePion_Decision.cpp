@@ -712,6 +712,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< double( boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_PerceptionFunctions::GetPerception, boost::cref( GetPion() ), _1, _2 ) );
     brain[ "DEC_PolygoneBlocUrbain" ] =
         boost::function< boost::shared_ptr< TER_Localisation >( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock, _1 ) );
+   brain[ "DEC_DetruireBlocUrbain" ] =
+        boost::function< void( UrbanObjectWrapper*, const PHY_DotationCategory* )>( boost::bind( &DEC_UrbanObjectFunctions::DestroyUrbanBlock, boost::ref( GetPion() ), _1, _2 ) );
 
     // Global knowledge
     brain[ "DEC_RapportDeForceLocal" ] = boost::bind( &DEC_KnowledgeFunctions::GetRapForLocal, boost::ref( GetPion() ) );
