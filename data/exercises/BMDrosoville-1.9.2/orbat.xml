@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/exercise/orbat.xsd">
+<orbat model-version="4.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/exercise/orbat.xsd">
   <parties>
     <party id="1" name="GoodGuys" type="friend">
       <objects>
@@ -172,6 +172,7 @@
           <automat engaged="false" id="63" knowledge-group="61" name="Refugies x100 [63]" type="REFUGIE - Foule x100">
             <unit command-post="true" id="64" name="Refugies 100 Pers[64]" position="31TCM0967389547" type="Foule 100 Pers"/>
             <unit command-post="false" id="65" name="Refugies 100 Pers[65]" position="31TCM0913989321" type="Foule 100 Pers"/>
+            <unit command-post="false" id="209" name="Terroriste V1STAB" position="31TCM0808387976" type="Terroriste V1STAB"/>
           </automat>
         </formation>
       </tactical>
@@ -272,4 +273,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0694251953" -->
+<!-- signature="4161417427" -->
