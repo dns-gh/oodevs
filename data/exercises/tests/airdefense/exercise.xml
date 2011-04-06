@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<exercise generator-version="V4.0.0">
+  <meta>
+    <briefing/>
+    <resources/>
+  </meta>
+  <profiles file="profiles.xml"/>
+  <orbat file="orbat.xml"/>
+  <urbanstate file="urbanstate.xml"/>
+  <weather file="weather.xml"/>
+  <terrain name="Paris_Est"/>
+  <model dataset="ada" physical="worldwide"/>
+</exercise>
