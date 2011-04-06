@@ -72,7 +72,7 @@ void UserProfileWidget::Display( const UserProfile& profile )
         if( QMessageBox::question( this, tr( "Profile edition" ), tr( "Profile has changed, commit modifications?" )
                                  , QMessageBox::Yes, QMessageBox::No ) == QMessageBox::Yes )
             Commit();
-
+    setEnabled( true );
     editedProfile_.reset( new UserProfile( profile ) );
     login_->setText( editedProfile_->GetLogin() );
     password_->setText( editedProfile_->GetPassword() );
@@ -106,6 +106,16 @@ void UserProfileWidget::Commit()
             populationRights_->Commit( true );
         editedProfile_->RequestUpdate( login_->text() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileWidget::Clean
+// Created: LGY 2011-04-05
+// -----------------------------------------------------------------------------
+void UserProfileWidget::Clean()
+{
+    selectedProfile_ = 0;
+    setDisabled( true );
 }
 
 // -----------------------------------------------------------------------------

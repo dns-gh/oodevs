@@ -48,6 +48,7 @@ public:
     //@{
     void Display( const UserProfile& profile );
     void Commit();
+    void Clean();
     void Reset();
     //@}
 

@@ -53,6 +53,8 @@ void UserProfileList::OnSelectionChanged()
 {
     if( list_->currentItem() != -1 )
         pages_.Display( *userProfiles_.at( list_->currentItem() ) );
+    else
+        pages_.Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,9 +114,8 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
     if( it != userProfiles_.end() )
     {
         const int index = std::distance( userProfiles_.begin(), it );
-        if( index == list_->currentItem() )
-            list_->setSelected( 0, true );
         list_->removeItem( index );
         userProfiles_.erase( it );
+        OnSelectionChanged();
     }
 }
