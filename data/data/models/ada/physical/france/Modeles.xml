@@ -11428,7 +11428,7 @@
         <fragorder name="Population Changer Attitude"/>
       </fragorders>
     </crowd>
-    <crowd dia-type="sword.military.crowd.roles.Crowd" file="BMCrowd.bms" masalife="true" name="sword.military.crowd.roles.Crowd">
+    <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="france.military.crowd.roles.Foule">
       <missions>
         <mission name="COMMUNES AllerA">
           <fragorder name="Population Changer Attitude"/>
@@ -11449,4 +11449,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1860855085" -->
+<!-- signature="1240949642" -->
