@@ -15,6 +15,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/QueryValidity.h"
@@ -141,4 +142,16 @@ std::string DEC_KnowledgePopulationFunctions::GetCriticalIntelligence( const MIL
         pKnowledge->SetCriticalIntelligenceFromPopulationKnown();
         return pKnowledge->GetCriticalIntelligence();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::HasFlow
+// Created: EVH 2011-04-07
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgePopulationFunctions::HasFlow( const MIL_AgentPion& caller, int knowledgeId )
+{
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    if( !pKnowledge )
+        return false;
+    return pKnowledge->GetPopulationKnown().HasFlow();
 }

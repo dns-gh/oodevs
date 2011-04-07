@@ -42,6 +42,7 @@
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_CommunicationFunctions.h"
 #include "Decision/DEC_MedicalTreatmentFunctions.h"
+#include "Decision/DEC_PopulationFunctions.h"
 #include "Entities/Actions/PHY_ActionInterrogate.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendCollectionComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendHaulerComposantes.h"
@@ -696,6 +697,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool (int) >(boost::bind( &DEC_KnowledgePopulationFunctions::IsEnemy, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissancePopulation_Exterminer" ] =
         boost::function< int (int, float, const PHY_DotationCategory*) >(boost::bind( &DEC_KnowledgePopulationFunctions::Exterminate, boost::ref( GetPion() ), _1, _2, _3 ) );
+    brain[ "DEC_ConnaissancePopulation_HasFlow" ] =
+        boost::function< bool (int) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasFlow, boost::ref( GetPion() ), _1 ) );
 
     // Urban knowledges accessors
     brain[ "DEC_Connaissances_BlocUrbain" ] =
