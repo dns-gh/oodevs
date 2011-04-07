@@ -544,6 +544,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="ASY Commettre un Attentat"/>
         <mission name="ASY Commettre un Attentat Suicide"/>
+        <mission name="ASY Se Dissimuler"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -11449,4 +11450,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1240949642" -->
+<!-- signature="3358925900" -->
