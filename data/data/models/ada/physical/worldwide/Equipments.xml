@@ -13372,7 +13372,7 @@
     <radars/>
     <transports>
       <crew man-boarding-time="3s" man-unloading-time="2s"/>
-      <unit capacity="900000" ton-loading-time="1s" ton-unloading-time="1s"/>
+      <unit capacity="900000" ton-loading-time="0s" ton-unloading-time="0s"/>
     </transports>
     <consumptions>
       <consumption status="ArretMoteurEteint">
@@ -13515,4 +13515,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1933066728" -->
+<!-- signature="4176084436" -->

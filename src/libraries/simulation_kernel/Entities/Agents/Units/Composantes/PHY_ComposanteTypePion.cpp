@@ -448,13 +448,19 @@ void PHY_ComposanteTypePion::ReadTransportUnit( xml::xistream& xis )
     if( rPionTransporterWeightCapacity_ <= 0 )
         xis.error( "unit: capacity <= 0" );
     if( !tools::ReadTimeAttribute( xis, "ton-loading-time", rPionTransporterWeightLoadedPerTimeStep_ )
-      || rPionTransporterWeightLoadedPerTimeStep_ <= 0 )
-        xis.error( "unit: ton-loading-time <= 0" );
-    rPionTransporterWeightLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightLoadedPerTimeStep_   );
+      || rPionTransporterWeightLoadedPerTimeStep_ < 0 )
+        xis.error( "unit: ton-loading-time < 0" );
+    if( rPionTransporterWeightLoadedPerTimeStep_ > 0 )
+        rPionTransporterWeightLoadedPerTimeStep_   = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightLoadedPerTimeStep_   );
+    else
+        rPionTransporterWeightLoadedPerTimeStep_ = std::numeric_limits< double >::max();
     if( !tools::ReadTimeAttribute( xis, "ton-unloading-time", rPionTransporterWeightUnloadedPerTimeStep_ )
-      || rPionTransporterWeightUnloadedPerTimeStep_ <= 0 )
-        xis.error( "unit: ton-unloading-time <= 0" );
-    rPionTransporterWeightUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightUnloadedPerTimeStep_ );
+      || rPionTransporterWeightUnloadedPerTimeStep_ < 0 )
+        xis.error( "unit: ton-unloading-time < 0" );
+    if( rPionTransporterWeightUnloadedPerTimeStep_ > 0 )
+        rPionTransporterWeightUnloadedPerTimeStep_ = 1. / MIL_Tools::ConvertSecondsToSim( rPionTransporterWeightUnloadedPerTimeStep_ );
+    else
+        rPionTransporterWeightUnloadedPerTimeStep_ = std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
