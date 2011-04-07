@@ -205,7 +205,7 @@ void MIL_Object_ABC::NotifyPopulationMovingInside( MIL_PopulationElement_ABC& po
 {
     if( !CanCollideWithEntity() )
         return;
-    interaction_.NotifyAgentMovingInside( population );
+    interaction_.NotifyPopulationMovingInside( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -214,7 +214,7 @@ void MIL_Object_ABC::NotifyPopulationMovingInside( MIL_PopulationElement_ABC& po
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::NotifyPopulationMovingOutside( MIL_PopulationElement_ABC& population )
 {
-    interaction_.NotifyAgentMovingOutside( population );
+    interaction_.NotifyPopulationMovingOutside( population );
 }
 
 // -----------------------------------------------------------------------------

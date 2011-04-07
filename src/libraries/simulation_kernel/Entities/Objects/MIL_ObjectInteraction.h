@@ -1,3 +1,4 @@
+
 // *****************************************************************************
 //
 // This file is part of a MASA library or program.
@@ -11,6 +12,7 @@
 #define __MIL_ObjectInteraction_h_
 
 #include <boost/serialization/split_member.hpp>
+#include <boost/function.hpp>
 
 class MIL_Agent_ABC;
 class TER_Localisation;
@@ -50,8 +52,8 @@ public:
 
     //! @name Operations
     //@{
-    void NotifyAgentMovingInside( MIL_PopulationElement_ABC& population );
-    void NotifyAgentMovingOutside( MIL_PopulationElement_ABC& population );
+    void NotifyPopulationMovingInside( MIL_PopulationElement_ABC& population );
+    void NotifyPopulationMovingOutside( MIL_PopulationElement_ABC& population );
 
     void NotifyAgentMovingInside( MIL_Agent_ABC& agent );
     void NotifyAgentMovingOutside( MIL_Agent_ABC& agent );
@@ -72,6 +74,12 @@ private:
 
     typedef std::set< MIL_PopulationElement_ABC* > T_PopulationSet;
     typedef T_PopulationSet::const_iterator      CIT_PopulationSet;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void Update( T_PopulationSet& last, T_PopulationSet& current, boost::function< void( MIL_PopulationElement_ABC& ) > fun );
     //@}
 
 private:
