@@ -139,8 +139,10 @@ void ADN_Composantes_GUI::Build()
     vInfosConnectors[eCanCarryCargo] = &pCargoGroupBox->GetConnector();
 
     builder.AddField<ADN_EditLine_Double>( pCargoGroupBox, tr( "Weight capacity" ), vInfosConnectors[eWeightCapacity], tr( "T" ), eGreaterZero );
-    builder.AddField<ADN_TimeField>( pCargoGroupBox, tr( "Loading time per ton" ), vInfosConnectors[eEmbarkingTimePerTon] );
-    builder.AddField<ADN_TimeField>( pCargoGroupBox, tr( "Unloading time per ton" ), vInfosConnectors[eDisembarkingTimePerTon] );
+    ADN_TimeField* loadTime = builder.AddField<ADN_TimeField>( pCargoGroupBox, tr( "Loading time per ton" ), vInfosConnectors[eEmbarkingTimePerTon] );
+    loadTime->SetMinimumValueInSecond( 1 );
+    ADN_TimeField* unloadTime = builder.AddField<ADN_TimeField>( pCargoGroupBox, tr( "Unloading time per ton" ), vInfosConnectors[eDisembarkingTimePerTon] );
+    unloadTime->SetMinimumValueInSecond( 1 );
 
     // Breakdowns
     pBreakdownsGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ), pDataPage );
