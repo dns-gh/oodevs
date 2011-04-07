@@ -7,16 +7,18 @@
 //
 // *****************************************************************************
 
+#include "mission_tester/mission_tester_pch.h"
+#include "mission_tester/Config.h"
 #include "mission_tester/Facade.h"
 #include <iostream>
-
 
 int main( int argc, char* argv[] )
 {
     try
     {
-        mission_tester::Facade facade;
-        facade.Run( argc, argv );
+        mission_tester::Config config( argc, argv );
+        mission_tester::Facade facade( config );
+        facade.Run();
     }
     catch( std::exception& e )
     {

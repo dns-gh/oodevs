@@ -9,8 +9,9 @@
 
 #include "mission_tester_pch.h"
 #include "Client.h"
+#include "Listener_ABC.h"
 #include "client_proxy/SwordProxy.h"
-#include <iostream>
+#include <boost/foreach.hpp>
 
 using namespace mission_tester;
 
@@ -121,10 +122,11 @@ bool Client::IsAuthentified() const
 // Name: Client::OnConnectionSucceeded
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-void Client::OnConnectionSucceeded( const std::string& /*endpoint*/ )
+void Client::OnConnectionSucceeded( const std::string& endpoint )
 {
     connected_ = true;
-    std::cout << "connection succeeded" << std::endl;
+    BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+        listener->ConnectionSucceeded( endpoint );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,10 +155,11 @@ void Client::OnConnectionError( const std::string& /*endpoint*/, const std::stri
 // Name: Client::OnAuthenticationSucceeded
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-void Client::OnAuthenticationSucceeded( const std::string& /*profile*/ )
+void Client::OnAuthenticationSucceeded( const std::string& profile )
 {
     authentified_ = true;
-    std::cout << "authentication succeeded" << std::endl;
+    BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+        listener->AuthenticationSucceeded( profile );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,4 +170,13 @@ void Client::OnAuthenticationFailed( const std::string& /*profile*/, const std::
 {
     authentified_ = false;
     throw std::runtime_error( "authentication failed" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Register
+// Created: PHC 2011-04-06
+// -----------------------------------------------------------------------------
+void Client::Register( const Listener_ABC& listener )
+{
+    listeners_.push_back( &listener );
 }

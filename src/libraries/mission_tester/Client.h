@@ -12,6 +12,7 @@
 
 #include "client_proxy/SwordConnectionHandler_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
+#include <boost/shared_ptr.hpp>
 
 class SwordMessageHandler_ABC;
 class SwordProxy;
@@ -19,6 +20,7 @@ class SwordProxy;
 namespace mission_tester
 {
     class Model;
+    class Listener_ABC;
 // =============================================================================
 /** @class  Client
     @brief  Client
@@ -47,6 +49,7 @@ public:
     void Disconnect();
     bool IsConnected() const;
     bool IsAuthentified() const;
+    void Register( const Listener_ABC& listener );
     //@}
 
 private:
@@ -63,6 +66,7 @@ private:
     //! @name mermbers data
     //@{
     std::auto_ptr< SwordProxy > proxy_;
+    std::vector< const Listener_ABC* > listeners_;
     bool connected_;
     bool authentified_;
     //@}

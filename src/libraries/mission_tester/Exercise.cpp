@@ -10,6 +10,7 @@
 #include "mission_tester_pch.h"
 #include "Client.h"
 #include "Exercise.h"
+#include "Listener_ABC.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionFactory.h"
 #include "actions/ActionParameterFactory.h"
@@ -22,6 +23,7 @@
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Time_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/foreach.hpp>
 
 using namespace mission_tester;
 
@@ -80,7 +82,7 @@ Exercise::~Exercise()
 
 // -----------------------------------------------------------------------------
 // Name: Exercise::SendOrder
-// Created: PHC 2011-03-23
+// Created: PHC 2011-03-23C'es
 // -----------------------------------------------------------------------------
 void Exercise::SendOrder( const std::string& message, Client& client ) const
 {
@@ -97,12 +99,47 @@ void Exercise::SendOrder( const std::string& message, Client& client ) const
 // -----------------------------------------------------------------------------
 void Exercise::CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
 {
-    //actions::Action_ABC* action( factory_->CreateAction( target, mission ) );
+    std::auto_ptr< actions::Action_ABC > action( factory_->CreateAction( target, mission ) );
     tools::Iterator< const kernel::OrderParameter& > params( mission.Resolver< kernel::OrderParameter >::CreateIterator() );
-    std::cout << target.GetName() << " [" << target.GetId() << "] : " << mission.GetName() << std::endl;
     while( params.HasMoreElements() )
     {
-        const kernel::OrderParameter& param( params.NextElement() );
-        std::cout << "   > " << param.GetName() << " (" << param.GetType() << ")" << std::endl;
+        const kernel::OrderParameter& param = params.NextElement();
+//        if( actions::ActionParameter_ABC* parameter = parameterFactory_->Create( param ) )
+//            action->AddParameter( *parameter );
+//        else
+//        {
+            NotifyInvalidParameter( target, mission, param );
+            return;
+//        }
     }
+//    NotifyMissionCreated( target, mission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::Register
+// Created: PHC 2011-04-06
+// -----------------------------------------------------------------------------
+void Exercise::Register( const Listener_ABC& listener )
+{
+    listeners_.push_back( &listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::NotifyInvalidParameter
+// Created: PHC 2011-04-07
+// -----------------------------------------------------------------------------
+void Exercise::NotifyInvalidParameter( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const
+{
+    BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+        listener->ParameterCreationFailed( target, mission, parameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::NotifyMissionCreated
+// Created: PHC 2011-04-07
+// -----------------------------------------------------------------------------
+void Exercise::NotifyMissionCreated( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
+{
+    BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+        listener->MissionCreated( target, mission );
 }

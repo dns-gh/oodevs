@@ -9,14 +9,17 @@
 
 #include "mission_tester_pch.h"
 #include "Facade.h"
+#include "Logger.h"
+#include "mission_tester/Config.h"
+#include "mission_tester/Logger.h"
 #include "mission_tester/Exercise.h"
 #include "mission_tester/SchedulerFactory.h"
 #include "mission_tester/Scheduler.h"
 #include "mission_tester/Client.h"
 #include "mission_tester/Model.h"
 #include "clients_kernel/StaticModel.h"
-#include "tools/ExerciseConfig.h"
-#include "tools/NullFileLoaderObserver.h"
+#include <boost/shared_ptr.hpp>
+#include <boost/foreach.hpp>
 #include <iostream>
 #include <conio.h>
 
@@ -26,9 +29,12 @@ using namespace mission_tester;
 // Name: Facade constructor
 // Created: PHC 2011-04-05
 // -----------------------------------------------------------------------------
-Facade::Facade()
+Facade::Facade( const Config& config )
+    : staticModel_( new kernel::StaticModel() )
+    , factory_    ( new SchedulerFactory() ) 
 {
-    // NOTHING
+    staticModel_->Load( config );
+    config.ConfigureLogging( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +48,6 @@ Facade::~Facade()
 
 namespace
 {
-    // $$$$ PHC 2011-04-05: While
     void StartMission( mission_tester::Exercise& exercise, mission_tester::Client& client )
     {
         const std::string mission = "<action id='131' name='Faire Mouvement' target='33' time='2009-05-05T12:49:34' type='mission'>"
@@ -66,23 +71,16 @@ namespace
 // Name: Facade::Run
 // Created: PHC 2011-04-05
 // -----------------------------------------------------------------------------
-void Facade::Run( int argc, char* argv[] )
+void Facade::Run()
 {
-    SchedulerFactory factory;
-    boost::shared_ptr< Scheduler_ABC > scheduler( factory.CreateAgentScheduler() );
-    tools::NullFileLoaderObserver observer;
-    tools::ExerciseConfig config( observer );
-    config.Parse( argc, argv );
-    kernel::StaticModel staticModel;
-    staticModel.Load( config );
-    Model model( staticModel, *scheduler );
-    Exercise exercise( model, staticModel );
+    boost::shared_ptr< Scheduler_ABC > scheduler( factory_->CreateAgentScheduler() );
+    Model model( *staticModel_, *scheduler );
+    Exercise exercise( model, *staticModel_ );
     Client client( model, "localhost", 10001, "Supervisor", "" );
-
-    std::cout << "Connecting ..." << std::endl;
+    exercise.Register( *this );
+    client.Register( *this );    
     while( !client.IsConnected() )
         client.Update();
-    std::cout << "Authentifing ..." << std::endl;
     while( !client.IsAuthentified() )
         client.Update();
     while( client.IsConnected() )
@@ -98,4 +96,53 @@ void Facade::Run( int argc, char* argv[] )
         client.Update();
         scheduler->Step( 100, exercise );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::AddListener
+// Created: PHC 2011-04-07
+// -----------------------------------------------------------------------------
+void Facade::AddListener( boost::shared_ptr< Listener_ABC > listener )
+{
+    listeners_.push_back( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::MissionCreated
+// Created: PHC 2011-04-07
+// -----------------------------------------------------------------------------
+void Facade::MissionCreated( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
+{
+    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+        listener->MissionCreated( target, mission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::ConnectionSucceeded
+// Created: PHC 2011-04-07
+// -----------------------------------------------------------------------------
+void Facade::ConnectionSucceeded( const std::string& endpoint ) const
+{
+    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+        listener->ConnectionSucceeded( endpoint );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::AuthenticationSucceeded
+// Created: PHC 2011-04-07
+// -----------------------------------------------------------------------------
+void Facade::AuthenticationSucceeded( const std::string& profile ) const
+{
+    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+        listener->AuthenticationSucceeded( profile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::ParameterCreationFailed
+// Created: PHC 2011-04-07
+// -----------------------------------------------------------------------------
+void Facade::ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const
+{
+    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+        listener->ParameterCreationFailed( target, mission, parameter );
 }

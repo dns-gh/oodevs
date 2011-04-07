@@ -11,6 +11,7 @@
 #define mission_tester_exercise_h
 
 #include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 class SwordMessagePublisher_ABC;
 
@@ -27,6 +28,7 @@ namespace kernel
     class CoordinateConverter_ABC;
     class EntityResolver_ABC;
     class ObjectKnowledgeConverter_ABC;
+    class OrderParameter;
     class StaticModel;
     class Time_ABC;
     class Entity_ABC;
@@ -36,7 +38,7 @@ namespace kernel
 namespace mission_tester
 {
     class Client;
-
+    class Listener_ABC;
 // =============================================================================
 /** @class  Exercise
     @brief  Exercise
@@ -56,11 +58,20 @@ public:
     //@{
     void SendOrder( const std::string& message, Client& client ) const;
     void CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
+    void Register( const Listener_ABC& listener );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void NotifyInvalidParameter( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const;
+    void NotifyMissionCreated( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
     //@}
 
 private:
     //! @name members data
     //@{
+    std::vector< const Listener_ABC* > listeners_;
     std::auto_ptr< kernel::Controller > controller_;
     std::auto_ptr< kernel::Time_ABC > time_;
     std::auto_ptr< kernel::AgentKnowledgeConverter_ABC > agentKnowledgeConverter_;

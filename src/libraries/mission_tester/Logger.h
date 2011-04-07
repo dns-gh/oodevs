@@ -7,46 +7,30 @@
 //
 // *****************************************************************************
 
-#ifndef __Facade_h_
-#define __Facade_h_
+#ifndef __Logger_h_
+#define __Logger_h_
 
 #include "Listener_ABC.h"
-#include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
-
-namespace kernel
-{
-    class StaticModel;
-}
 
 namespace mission_tester
 {
-    class Config;
-    class Listener_ABC;
-    class SchedulerFactory;
 // =============================================================================
-/** @class  Facade
-    @brief  Facade
+/** @class  Logger
+    @brief  Logger
 */
-// Created: PHC 2011-04-05
+// Created: PHC 2011-04-06
 // =============================================================================
-class Facade : public Listener_ABC
+class Logger : public Listener_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Facade( const Config& config );
-    virtual ~Facade();
+    explicit Logger( std::ostream& os );
+    virtual ~Logger();
     //@}
 
     //! @name Operations
-    //@{
-    void AddListener( boost::shared_ptr< Listener_ABC > listener );
-    void Run();
-    //@}
-
-    //! @name Listener
     //@{
     virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
     virtual void ConnectionSucceeded( const std::string& endpoint ) const;
@@ -55,19 +39,11 @@ public:
     //@}
 
 private:
-    //! @name Types
+    //! @name Member data
     //@{
-    typedef std::vector< boost::shared_ptr< Listener_ABC > > T_Listeners;
-    //@}
-
-private:
-    //! @name 
-    //@{
-    std::auto_ptr< kernel::StaticModel > staticModel_;
-    std::auto_ptr< SchedulerFactory > factory_;
-    T_Listeners listeners_;
+    std::ostream& os_;
     //@}
 };
 }
 
-#endif // __Facade_h_
+#endif // __Logger_h_
