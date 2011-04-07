@@ -12,6 +12,8 @@
 
 #include "MIL.h"
 #include "MIL_PopulationHumans.h"
+#include <boost/shared_ptr.hpp>
+#include <map>
 
 class AttritionCapacity;
 class MIL_Agent_ABC;
@@ -21,11 +23,13 @@ class MIL_Injury_ABC;
 class MIL_Population;
 class MIL_PopulationAttitude;
 class MIL_PopulationType;
+class MIL_IntoxicationEffect;
 class MT_Circle;
 class PHY_Volume;
 class PHY_FireResults_ABC;
 class PHY_FireResults_Population;
 class TER_Localisation;
+class MIL_NbcAgentType;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -68,6 +72,8 @@ public:
     void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult );
     void ApplyInjury( MIL_Injury_ABC& injury );
     void ApplyBurn( const MIL_BurnEffectManipulator& burn );
+    void ApplyContamination();
+    void ApplyIntoxication( const MIL_NbcAgentType& type );
     //@}
 
     //! @name Accessors
@@ -129,9 +135,15 @@ private:
     //@{
     typedef std::vector< MIL_Agent_ABC* >   T_AgentVector;
     typedef T_AgentVector::const_iterator CIT_AgentVector;
+
+    typedef boost::shared_ptr< MIL_IntoxicationEffect > T_Effect;
+    typedef std::map< unsigned int, T_Effect >          T_Effects;
+    typedef T_Effects::iterator                        IT_Effects;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const unsigned int nID_;
     MIL_Population* pPopulation_;
     MIL_PopulationHumans humans_;
@@ -141,6 +153,8 @@ private:
     // Network
     bool bAttitudeUpdated_;
     bool bHumansUpdated_;
+    T_Effects effects_;
+    //@}
 };
 
 #endif // __MIL_PopulationElement_ABC_h_

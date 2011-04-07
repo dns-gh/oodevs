@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_PopulationHumans();
-             MIL_PopulationHumans( const MIL_PopulationHumans& );            //!< Copy constructor
+             MIL_PopulationHumans( const MIL_PopulationHumans& );
     explicit MIL_PopulationHumans( xml::xistream& xis );
     explicit MIL_PopulationHumans( unsigned int healthy, unsigned int contaminated = 0, unsigned int wounded = 0, unsigned int dead = 0 );
     virtual ~MIL_PopulationHumans();
@@ -50,6 +50,8 @@ public:
     double GetLivingRatio() const;
     void KillAll();
     unsigned int ApplyNumberOfDead( unsigned int dead );
+    void ApplyContamination();
+    void ApplyIntoxication( double woundedPercentage, double deadPercentage );
     void PullFrom( unsigned int number, MIL_PopulationHumans& humans );
     void ReintegrateUrbanBlock();
     //@}

@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_NbcAgentType.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "Entities/Populations/MIL_IntoxicationEffect.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -20,10 +21,10 @@
 #include <numeric>
 
 MIL_NbcAgentType::T_NbcAgentTypeMap MIL_NbcAgentType::nbcAgentTypes_;
-double                            MIL_NbcAgentType::rCoefMaxSpeedModificator_      = 1.;
-double                            MIL_NbcAgentType::rCoefReloadingTimeModificator_ = 1.;
-double                            MIL_NbcAgentType::rContaminationDistance_        = 100.;
-double                            MIL_NbcAgentType::rContaminationQuantityGiven_    = 0.5;
+double MIL_NbcAgentType::rCoefMaxSpeedModificator_      = 1.;
+double MIL_NbcAgentType::rCoefReloadingTimeModificator_ = 1.;
+double MIL_NbcAgentType::rContaminationDistance_        = 100.;
+double MIL_NbcAgentType::rContaminationQuantityGiven_   = 0.5;
 
 struct MIL_NbcAgentType::LoadingWrapper
 {
@@ -210,7 +211,7 @@ void MIL_NbcAgentType::ReadEffect( xml::xistream& xis, T_HumanPoisonousVector& d
         xis >> xml::attribute( "percentage", percentage );
         if( percentage < 0.f || percentage > 1.f )
             xis.error( "Poisonous percentage is out of bound for NBC Agent type" );
-        data[it->second->GetID()] = percentage;
+        data[ it->second->GetID() ] = percentage;
     }
 }
 
@@ -233,4 +234,28 @@ const PHY_HumanWound& MIL_NbcAgentType::GetRandomWound( const T_HumanPoisonousVe
     }
     assert( false );
     return PHY_HumanWound::killed_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::InitializePopulationEffect
+// Created: LGY 2011-04-01
+// -----------------------------------------------------------------------------
+void MIL_NbcAgentType::InitializePopulationEffect( MIL_IntoxicationEffect& effect ) const
+{
+    if( bLiquidPoisonous_ )
+        ApplyIntoxication( effect, liquidPoisonous_ );
+    if( bGasPoisonous_ )
+        ApplyIntoxication( effect, gasPoisonous_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NbcAgentType::ApplyIntoxication
+// Created: LGY 2011-04-01
+// -----------------------------------------------------------------------------
+void MIL_NbcAgentType::ApplyIntoxication( MIL_IntoxicationEffect& effect, const T_HumanPoisonousVector& data ) const
+{
+    double wounded = liquidPoisonous_[ PHY_HumanWound::woundedU3_.GetID() ] + liquidPoisonous_[ PHY_HumanWound::woundedU2_.GetID() ]
+                   + liquidPoisonous_[ PHY_HumanWound::woundedU1_.GetID() ] + liquidPoisonous_[ PHY_HumanWound::woundedUE_.GetID() ];
+    double killed = liquidPoisonous_[ PHY_HumanWound::killed_.GetID() ];
+    effect.Add( wounded, killed );
 }

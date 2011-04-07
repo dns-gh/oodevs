@@ -18,7 +18,7 @@
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Tools/MIL_Tools.h"
-#include "tools/xmlcodecs.h"
+#include "Tools/xmlcodecs.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MIL_AgentServer.h"
 #include <xeumeuleu/xml.hpp>
@@ -26,6 +26,7 @@
 MIL_PopulationType::T_PopulationMap MIL_PopulationType::populations_;
 double MIL_PopulationType::rEffectReloadingTimeDensity_ = 0.;
 double MIL_PopulationType::rEffectReloadingTimeFactor_  = 0.;
+unsigned int MIL_PopulationType::delay_                 = 0u;
 
 struct MIL_PopulationType::LoadingWrapper
 {
@@ -41,16 +42,24 @@ struct MIL_PopulationType::LoadingWrapper
 // -----------------------------------------------------------------------------
 void MIL_PopulationType::Initialize( xml::xistream& xis )
 {
+    std::string delay;
     MT_LOG_INFO_MSG( "Initializing population types" );
     xis >> xml::start( "populations" )
             >> xml::start( "reloading-time-effect" )
                 >> xml::attribute( "population-density", rEffectReloadingTimeDensity_ )
                 >> xml::attribute( "modifier", rEffectReloadingTimeFactor_ )
-            >> xml::end;
+            >> xml::end
+            >> xml::optional
+                >> xml::start( "time-between-nbc-applications" )
+                    >> xml::attribute( "delay", delay )
+                >> xml::end;
+    if( delay != "" )
+        tools::DecodeTime( delay, delay_ );
     if( rEffectReloadingTimeDensity_ < 0 )
         xis.error( "reloading-time-effet: population-density < 0" );
     if( rEffectReloadingTimeFactor_ < 1 )
         xis.error( "reloading-time-effect: modifier < 1" );
+
     LoadingWrapper loader;
     xis     >> xml::list( "population", loader, &LoadingWrapper::ReadPopulation )
         >> xml::end;
@@ -126,8 +135,6 @@ MIL_PopulationType::MIL_PopulationType( const std::string& strName, xml::xistrea
     pModel_ = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( xis.attribute< std::string >( "decisional-model" ) );
     if( !pModel_ )
         xis.error( "Unknown population model" );
-
-    InitializeDiaFunctions();
 }
 
 // -----------------------------------------------------------------------------
@@ -266,15 +273,6 @@ void MIL_PopulationType::ReadUrbanDestructionEffect( xml::xistream& xis )
     if( rTime < 0 )
         xis.error( "urban-destruction-effect: time < 0" );
     urbanDestructionData_[ pAttitude->GetID() ].rTime_ = MIL_Tools::ConvertSecondsToSim( rTime );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_PopulationType::InitializeDiaFunctions
-// Created: NLD 2004-10-14
-// -----------------------------------------------------------------------------
-void MIL_PopulationType::InitializeDiaFunctions()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -485,4 +483,13 @@ const MIL_PopulationType* MIL_PopulationType::Find( unsigned int nID )
         if( it->second->nID_ == nID )
             return it->second;
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationType::GetDelay
+// Created: LGY 2011-03-31
+// -----------------------------------------------------------------------------
+double MIL_PopulationType::GetDelay() const
+{
+    return delay_;
 }

@@ -227,5 +227,31 @@ void MIL_PopulationHumans::ReintegrateUrbanBlock()
     wounded_ = 0;
     contaminated_ = 0;
     dead_ = 0;
+}
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationHumans::ApplyContamination
+// Created: LGY 2011-03-30
+// -----------------------------------------------------------------------------
+void MIL_PopulationHumans::ApplyContamination()
+{
+    contaminated_ += healthy_;
+    healthy_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationHumans::ApplyIntoxication
+// Created: LGY 2011-04-01
+// -----------------------------------------------------------------------------
+void MIL_PopulationHumans::ApplyIntoxication( double woundedPercentage, double deadPercentage )
+{
+    unsigned int healthy = static_cast< unsigned int >( healthy_ * ( 1.f - woundedPercentage - deadPercentage ) );
+    unsigned int wounded = static_cast< unsigned int >( wounded_ + healthy_ * woundedPercentage );
+    unsigned int dead = static_cast< unsigned int >( dead_ + healthy_ * deadPercentage );
+    unsigned int total = healthy + wounded + dead + contaminated_;
+    if( total != GetAllHumans() )
+        wounded += GetAllHumans() - total;
+    healthy_ = healthy;
+    wounded_ = wounded;
+    dead_ = dead;
 }

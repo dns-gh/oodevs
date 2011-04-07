@@ -54,6 +54,7 @@ public:
     double GetConcentrationDensity() const;
     double GetDefaultFlowDensity() const;
     double GetMaxSpeed() const;
+    double GetDelay() const;
     const DEC_Model_ABC& GetModel() const;
     //@}
 
@@ -92,7 +93,6 @@ private:
     //@{
     void InitializeSlowDownData ( xml::xistream& xis );
     void InitializeFireData     ( xml::xistream& xis );
-    void InitializeDiaFunctions ();
     //@}
 
 private:
@@ -172,6 +172,7 @@ private:
     static T_PopulationMap populations_;
     static double rEffectReloadingTimeDensity_;
     static double rEffectReloadingTimeFactor_;
+    static unsigned int delay_;
     //@}
 };
 

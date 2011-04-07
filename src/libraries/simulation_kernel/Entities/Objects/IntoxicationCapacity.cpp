@@ -17,6 +17,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
 #include <boost/serialization/vector.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -63,7 +64,7 @@ IntoxicationCapacity::~IntoxicationCapacity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void IntoxicationCapacity::serialize
+// Name: IntoxicationCapacity::serialize
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
 template< typename Archive >
@@ -117,6 +118,22 @@ void IntoxicationCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent
             MIL_ToxicEffectManipulator contamination( object.GetAttribute< NBCAttribute >().GetNBCAgents(), 1 );
             agent.GetRole< nbc::PHY_RoleInterface_NBC >().Poison( contamination );
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: IntoxicationCapacity::ProcessPopulationInside
+// Created: LGY 2011-03-30
+// -----------------------------------------------------------------------------
+void IntoxicationCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
+{
+    const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();
+    if( pNBC && pNBC->IsPoisonous() )
+    {
+        const NBCAttribute::T_NBCAgents& agents = pNBC->GetNBCAgents();
+        for( NBCAttribute::CIT_NBCAgents it = agents.begin(); it != agents.end(); ++it )
+            if( (*it)->IsGasPoisonous() || (*it)->IsLiquidPoisonous() )
+                population.ApplyIntoxication( **it );
     }
 }
 

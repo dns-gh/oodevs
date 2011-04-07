@@ -58,7 +58,6 @@ public:
     //@{
     void RegisterPushingFlow( MIL_PopulationFlow& flow );
     void UnregisterPushingFlow( MIL_PopulationFlow& flow );
-
     double GetPullingFlowsDensity() const;
     void SetPullingFlowsDensity( const MIL_Object_ABC& splittingObject );
     //@}
@@ -76,8 +75,8 @@ public:
 
     //! @name Network
     //@{
-    void SendCreation    () const;
-    void SendFullState   () const;
+    void SendCreation() const;
+    void SendFullState() const;
     void SendChangedState() const;
     //@}
 
@@ -100,16 +99,18 @@ private:
     //! @name Tools
     //@{
     void NotifyCollision( MIL_Agent_ABC& agent );
-    void UpdateLocation ();
+    void UpdateLocation();
     //@}
 
     //! @name Network
     //@{
     void SendDestruction() const;
-    bool HasChanged     () const;
+    bool HasChanged() const;
     //@}
 
 private:
+    //! @name Member data
+    //@{
     MT_Vector2D position_;
     TER_Localisation location_;
     MIL_PopulationFlow* pPullingFlow_;
@@ -117,6 +118,7 @@ private:
     const MIL_Object_ABC* pSplittingObject_;
     double rPullingFlowsDensity_;
     static MIL_IDManager idManager_;
+    //@}
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_PopulationConcentration* concentration, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_PopulationConcentration* concentration, const unsigned int /*version*/ );
 };

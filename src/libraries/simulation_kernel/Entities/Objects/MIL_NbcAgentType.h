@@ -21,6 +21,7 @@ namespace xml
 }
 
 class PHY_HumanWound;
+class MIL_IntoxicationEffect;
 
 //*****************************************************************************
 // Created: JVT 03-01-06
@@ -53,6 +54,7 @@ public:
     unsigned int          GetGasLifeTime        () const;
     double                GetGasPropagationAngle() const;
     bool                  CanBeVaporized        () const;
+    void                  InitializePopulationEffect( MIL_IntoxicationEffect& effect ) const;
     //@}
 
     //! @name Accessors
@@ -67,21 +69,26 @@ private:
     //! @name Types
     //@{
     typedef std::map< std::string, const MIL_NbcAgentType*, sCaseInsensitiveLess > T_NbcAgentTypeMap;
-    typedef T_NbcAgentTypeMap::const_iterator                                      CIT_NbcAgentTypeMap;
+    typedef T_NbcAgentTypeMap::const_iterator                                    CIT_NbcAgentTypeMap;
 
-    typedef std::vector< double >                T_HumanPoisonousVector;
+    typedef std::vector< double >                    T_HumanPoisonousVector;
     typedef T_HumanPoisonousVector::const_iterator CIT_HumanPoisonousVector;
     //@}
 
 private:
-     MIL_NbcAgentType( const std::string& strName, xml::xistream& xis );
-    ~MIL_NbcAgentType();
+    //! @name Constructors/Destructor
+    //@{
+             MIL_NbcAgentType( const std::string& strName, xml::xistream& xis );
+    virtual ~MIL_NbcAgentType();
+    //@}
 
     //! @name Tools
     //@{
     bool                  ReadPoisonousData( xml::xistream& xis, T_HumanPoisonousVector& data );
     const PHY_HumanWound& GetRandomWound   ( const T_HumanPoisonousVector& data ) const;
+    void                  ApplyIntoxication( MIL_IntoxicationEffect& effect, const T_HumanPoisonousVector& data ) const;
     //@}
+
     //! @name Helpers
     //@{
     struct LoadingWrapper;
@@ -93,26 +100,25 @@ private:
     //@}
 
 private:
-    const std::string           strName_;
-          unsigned int                  nID_;
-
-          T_HumanPoisonousVector liquidPoisonous_;
-          bool                   bLiquidPoisonous_;
-          bool                   bLiquidContaminating_;
-
-          bool                   bCanBeVaporized_;
-          T_HumanPoisonousVector gasPoisonous_;
-          bool                   bGasPoisonous_;
-          bool                   bGasContaminating_;
-          unsigned int                   nGasLifeTime_;
-          double               rGasPropagationAngle_;
-
-private:
+    //! @name Member data
+    //@{
+    const std::string strName_;
+    unsigned int nID_;
+    T_HumanPoisonousVector liquidPoisonous_;
+    bool bLiquidPoisonous_;
+    bool bLiquidContaminating_;
+    bool bCanBeVaporized_;
+    T_HumanPoisonousVector gasPoisonous_;
+    bool bGasPoisonous_;
+    bool bGasContaminating_;
+    unsigned int nGasLifeTime_;
+    double rGasPropagationAngle_;
     static T_NbcAgentTypeMap nbcAgentTypes_;
-    static double          rCoefMaxSpeedModificator_;
-    static double          rCoefReloadingTimeModificator_;
-    static double          rContaminationDistance_;
-    static double          rContaminationQuantityGiven_;
+    static double rCoefMaxSpeedModificator_;
+    static double rCoefReloadingTimeModificator_;
+    static double rContaminationDistance_;
+    static double rContaminationQuantityGiven_;
+    //@}
 };
 
 #include "MIL_NbcAgentType.inl"

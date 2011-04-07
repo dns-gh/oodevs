@@ -17,8 +17,10 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
 #include <boost/serialization/vector.hpp>
+#include <boost/foreach.hpp>
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ContaminationCapacity )
@@ -38,7 +40,7 @@ ContaminationCapacity::ContaminationCapacity()
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
 ContaminationCapacity::ContaminationCapacity( xml::xistream& xis )
-    : maxToxic_ ( xis.attribute< int >( "max-toxic" ) )
+    : maxToxic_( xis.attribute< int >( "max-toxic" ) )
 {
     // NOTHING
 }
@@ -48,7 +50,7 @@ ContaminationCapacity::ContaminationCapacity( xml::xistream& xis )
 // Created: JCR 2008-06-13
 // -----------------------------------------------------------------------------
 ContaminationCapacity::ContaminationCapacity( const ContaminationCapacity& from )
-    : maxToxic_ ( from.maxToxic_ )
+    : maxToxic_( from.maxToxic_ )
 {
     // NOTHING
 }
@@ -63,7 +65,7 @@ ContaminationCapacity::~ContaminationCapacity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void ContaminationCapacity::serialize
+// Name: ContaminationCapacity::serialize
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
 template< typename Archive >
@@ -117,6 +119,22 @@ void ContaminationCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agen
             MIL_ToxicEffectManipulator contamination( object.GetAttribute< NBCAttribute >().GetNBCAgents(), 1 );
             agent.GetRole< nbc::PHY_RoleInterface_NBC >().Contaminate( contamination );
         }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ContaminationCapacity::ProcessPopulationInside
+// Created: LGY 2011-03-30
+// -----------------------------------------------------------------------------
+void ContaminationCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
+{
+    const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();
+    if( pNBC && pNBC->IsContaminating() )  // $$$$ _RC_ LGY 2011-03-31: a verifier
+    {
+        const NBCAttribute::T_NBCAgents& agents = pNBC->GetNBCAgents();
+        for( NBCAttribute::CIT_NBCAgents it = agents.begin(); it != agents.end(); ++it )
+            if( (*it)->IsGasContaminating() || (*it)->IsLiquidContaminating() )
+                population.ApplyContamination();
     }
 }
 

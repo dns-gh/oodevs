@@ -12,16 +12,21 @@
 #include "MIL_PopulationAttitude.h"
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
+#include "MIL_IntoxicationEffect.h"
 #include "Entities/Populations/Actions/PHY_FireResults_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
+#include "simulation_terrain/TER_ObjectManager.h"
 #include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Effects/MIL_Effect_PopulationFire.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/MIL_Army.h"
+#include "MIL_AgentServer.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "simulation_terrain/TER_World.h"
@@ -194,6 +199,13 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
         MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
         collidingAgents_.push_back( &agent );
         NotifyCollision( agent );
+    }
+    TER_ObjectManager::T_ObjectVector objects;
+    TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( GetLocation(), objects );
+    for( TER_Object_ABC::CIT_ObjectVector it = objects.begin(); it != objects.end(); ++it )
+    {
+        MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
+        object.NotifyPopulationMovingInside( *this );
     }
 }
 
@@ -486,4 +498,33 @@ bool MIL_PopulationElement_ABC::IsInZone( const TER_Localisation& loc ) const
 void MIL_PopulationElement_ABC::ClearCollisions()
 {
     collidingAgents_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::ApplyContamination
+// Created: LGY 2011-03-30
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::ApplyContamination()
+{
+    humans_.ApplyContamination();
+    bHumansUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::ApplyIntoxication
+// Created: LGY 2011-03-31
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::ApplyIntoxication( const MIL_NbcAgentType& type )
+{
+    const MIL_PopulationType& populationType = pPopulation_->GetType();
+    IT_Effects it = effects_.find( type.GetID() );
+    if( it == effects_.end() )
+    {
+        boost::shared_ptr< MIL_IntoxicationEffect > pEffect( new MIL_IntoxicationEffect( humans_, populationType.GetDelay(), MIL_AgentServer::GetWorkspace().GetRealTime() ) );
+        type.InitializePopulationEffect( *pEffect );
+        effects_[ type.GetID() ] = pEffect;
+    }
+    else
+        it->second->Update( MIL_AgentServer::GetWorkspace().GetRealTime() );
+    bHumansUpdated_ = true;
 }
