@@ -11,9 +11,11 @@
 #include "Client.h"
 #include "Exercise.h"
 #include "Listener_ABC.h"
+#include "ParameterFactory.h"
 #include "actions/Action_ABC.h"
 #include "actions/ActionFactory.h"
 #include "actions/ActionParameterFactory.h"
+#include "actions/Parameter_ABC.h"
 #include "client_proxy/SwordMessagePublisher_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -64,9 +66,10 @@ Exercise::Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticMo
     , time_                    ( new SimulationTime() )
     , agentKnowledgeConverter_ ( new AgentKnowledgeConverter() )
     , objectKnowledgeConverter_( new ObjectKnowledgeConverter() )
-    , parameters_              ( new actions::ActionParameterFactory( staticModel.coordinateConverter_, entities, staticModel,
-                                                                     *agentKnowledgeConverter_, *objectKnowledgeConverter_, *controller_ ) )
-    , factory_                 ( new actions::ActionFactory( *controller_, *parameters_, entities, staticModel, *time_ ) )
+    , parameterFactory_        ( new actions::ActionParameterFactory( staticModel.coordinateConverter_, entities, staticModel,
+                                                                      *agentKnowledgeConverter_, *objectKnowledgeConverter_, *controller_ ) )
+    , actionFactory_           ( new actions::ActionFactory( *controller_, *parameterFactory_, entities, staticModel, *time_ ) )
+    , factory_                 ( new ParameterFactory( staticModel.coordinateConverter_ ) )
 {
     // NOTHING
 }
@@ -88,7 +91,7 @@ void Exercise::SendOrder( const std::string& message, Client& client ) const
 {
     xml::xistringstream xis( message );
     xis >> xml::start( "action" );
-    std::auto_ptr< actions::Action_ABC > action( factory_->CreateAction( xis ) );
+    std::auto_ptr< actions::Action_ABC > action( actionFactory_->CreateAction( xis ) );
     if( action.get() )
         action->Publish( client );
 }
@@ -99,20 +102,21 @@ void Exercise::SendOrder( const std::string& message, Client& client ) const
 // -----------------------------------------------------------------------------
 void Exercise::CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
 {
-    std::auto_ptr< actions::Action_ABC > action( factory_->CreateAction( target, mission ) );
+    std::auto_ptr< actions::Action_ABC > action( actionFactory_->CreateAction( target, mission ) );
     tools::Iterator< const kernel::OrderParameter& > params( mission.Resolver< kernel::OrderParameter >::CreateIterator() );
     while( params.HasMoreElements() )
     {
         const kernel::OrderParameter& param = params.NextElement();
-//        if( actions::ActionParameter_ABC* parameter = parameterFactory_->Create( param ) )
-//            action->AddParameter( *parameter );
-//        else
-//        {
+        std::auto_ptr< actions::Parameter_ABC > parameter = factory_->CreateParameter( param );
+        if( parameter.get() )
+            action->AddParameter( *parameter.release() );
+        else
+        {
             NotifyInvalidParameter( target, mission, param );
             return;
-//        }
+        }
     }
-//    NotifyMissionCreated( target, mission );
+    NotifyMissionCreated( target, mission );
 }
 
 // -----------------------------------------------------------------------------

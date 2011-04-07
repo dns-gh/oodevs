@@ -7,43 +7,51 @@
 //
 // *****************************************************************************
 
-#ifndef __SchedulerFactory_h_
-#define __SchedulerFactory_h_
+#ifndef __ParameterFactory_h_
+#define __ParameterFactory_h_
 
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+
+namespace actions
+{
+    class Parameter_ABC;
+}
+
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+    class OrderParameter;
+}
 
 namespace mission_tester
 {
-    class FilterFactory_ABC;
-    class Scheduler_ABC;
 // =============================================================================
-/** @class  SchedulerFactory
-    @brief  SchedulerFactory
+/** @class  ParameterFactory
+    @brief  ParameterFactory
 */
-// Created: PHC 2011-04-04
+// Created: PHC 2011-04-07
 // =============================================================================
-class SchedulerFactory : private boost::noncopyable
+class ParameterFactory : private boost::noncopyable
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             SchedulerFactory();
-    virtual ~SchedulerFactory();
+    explicit ParameterFactory( const kernel::CoordinateConverter_ABC& converter );
+    virtual ~ParameterFactory();
     //@}
 
     //! @name Operations
     //@{
-    std::auto_ptr< Scheduler_ABC > CreateAgentScheduler();
+    std::auto_ptr< actions::Parameter_ABC > CreateParameter( const kernel::OrderParameter& parameter ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< FilterFactory_ABC > filterFactory_;
+    const kernel::CoordinateConverter_ABC& converter_;
     //@}
 };
 }
 
-#endif // __SchedulerFactory_h_
+#endif // __ParameterFactory_h_

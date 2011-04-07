@@ -77,5 +77,5 @@ void Logger::AuthenticationSucceeded( const std::string& profile ) const
 // -----------------------------------------------------------------------------
 void Logger::ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const
 {
-    os_ << "[" << target.GetName() << "][" << mission.GetName() << "][" << parameter.GetName() << "]: failed to create parameter" << std::endl;
+    os_ << "[" << target.GetId() << "][" << mission.GetName() << "][" << parameter.GetName() << "]: failed to create parameter of type '" << parameter.GetType() << "'" << std::endl;
 }

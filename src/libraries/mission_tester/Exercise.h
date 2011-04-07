@@ -19,6 +19,7 @@ namespace actions
 {
     class ActionFactory;
     class ParameterFactory_ABC;
+    class ActionParameterFactory;
 }
 
 namespace kernel
@@ -39,6 +40,7 @@ namespace mission_tester
 {
     class Client;
     class Listener_ABC;
+    class ParameterFactory;
 // =============================================================================
 /** @class  Exercise
     @brief  Exercise
@@ -76,8 +78,9 @@ private:
     std::auto_ptr< kernel::Time_ABC > time_;
     std::auto_ptr< kernel::AgentKnowledgeConverter_ABC > agentKnowledgeConverter_;
     std::auto_ptr< kernel::ObjectKnowledgeConverter_ABC > objectKnowledgeConverter_;
-    std::auto_ptr< actions::ParameterFactory_ABC > parameters_;
-    std::auto_ptr< actions::ActionFactory > factory_;
+    std::auto_ptr< actions::ActionParameterFactory > parameterFactory_;
+    std::auto_ptr< actions::ActionFactory > actionFactory_;
+    std::auto_ptr< ParameterFactory > factory_;
     //@}
 };
 }
