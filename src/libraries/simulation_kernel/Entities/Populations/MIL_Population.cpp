@@ -960,8 +960,7 @@ double MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude, 
     assert( pType_ );
     if( bPionMaxSpeedOverloaded_ )
         return rOverloadedPionMaxSpeed_;
-    else
-        return pType_->GetPionMaxSpeed( attitude, rDensity, pionVolume );
+    return pType_->GetPionMaxSpeed( attitude, rDensity, pionVolume );
 }
 
 // -----------------------------------------------------------------------------
@@ -1484,16 +1483,11 @@ bool MIL_Population::HasReachedDestination( const MT_Vector2D& destination ) con
     double weldValue = TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10;
 
     BOOST_FOREACH( const MIL_PopulationConcentration* concentration, concentrations_ )
-    {
         if( destination.SquareDistance( concentration->GetPosition() ) <= weldValue )
             return true;
-    }
-
     BOOST_FOREACH( const MIL_PopulationFlow* flow, flows_ )
-    {
         if( destination.SquareDistance( flow->GetPosition() ) <= weldValue )
             return true;
-    }
     return false;
 }
 

@@ -47,7 +47,7 @@ public:
         eGas
     };
     typedef std::vector< const MIL_NbcAgentType* > T_NBCAgents;
-    typedef T_NBCAgents::const_iterator CIT_NBCAgents;
+    typedef T_NBCAgents::const_iterator          CIT_NBCAgents;
     //@}
 
 public:

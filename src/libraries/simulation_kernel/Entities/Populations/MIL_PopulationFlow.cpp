@@ -402,30 +402,6 @@ bool MIL_PopulationFlow::ManageObjectSplit()
             MIL_Report::PostEvent( **it, MIL_Report::eReport_InterventionAgainstPopulationStarted, GetAttitude().GetID() );
     }
     return true;
-    /*
-    //$$$$$$$$$$$$$$$$$$$$$
-    // $$$ TEST
-    TER_ObjectManager::T_ObjectVector objects;
-    TER_World::GetWorld().GetObjectManager().GetListWithinLocalisation( GetLocation(), objects );
-    if( new object collision && object has effect on population flow )
-    {
-        ptCollision = GetCollisionPoint()
-        pNewConcentration = GetConcentration( ptCollision );
-        pNewFlow = CopyFlow( *this );
-        pNewFlow->ChangeTail( ptCollision ); // reduction nombre humains
-        ChangeHead( pNewConcentration ); /// reduction nombre humains
-    }
-
-    $$ TEST 2
-    A chaque tick, check collisions objets<->flux
-        => pour toutes nouvelles collisions
-            => application effet (attrition ...)
-            => si effet split sur popu
-                => ptCollision = GetCollisionPoint()
-                => si ptCollision = tête
-
-                => sinon
-*/
 }
 
 // -----------------------------------------------------------------------------
