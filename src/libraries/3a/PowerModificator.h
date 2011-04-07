@@ -50,7 +50,7 @@ public:
     void Load( const tools::ExerciseConfig& config );
     //@}
 
-    //! @name 
+    //! @name
     //@{
     double GetAvailableModificator() const;
     double GetRepairableModificator() const;

@@ -46,7 +46,7 @@ public:
 
 private:
     //! @name Member data
-    //@{    
+    //@{
     std::vector< boost::shared_ptr< Automate > > automates_;
     std::string type_;
     unsigned int current_;

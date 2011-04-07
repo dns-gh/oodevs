@@ -25,7 +25,7 @@ using namespace plugins::crossbow;
 // Name: ResourceNetworkUpdater constructor
 // Created: AME 2011-01-26
 // -----------------------------------------------------------------------------
-ResourceNetworkUpdater::ResourceNetworkUpdater( Workspace_ABC& workspace, long oid, int session_id, bool creation ) 
+ResourceNetworkUpdater::ResourceNetworkUpdater( Workspace_ABC& workspace, long oid, int session_id, bool creation )
     : workspace_( workspace )
     , objectId_( oid )
     , sessionId_( session_id )
@@ -56,8 +56,8 @@ void ResourceNetworkUpdater::Update( const sword::ResourceNetwork& network )
     else
         return;
 
-    query = "object_id=" + boost::lexical_cast< std::string >( objectId_ ) + 
-            " AND session_id=" +  boost::lexical_cast< std::string >( sessionId_ ) + 
+    query = "object_id=" + boost::lexical_cast< std::string >( objectId_ ) +
+            " AND session_id=" +  boost::lexical_cast< std::string >( sessionId_ ) +
             " AND resource_type='" + resource_type + "'";
     std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "resource_network" ) );
     Row_ABC* row = table->Find( query );
@@ -72,7 +72,7 @@ void ResourceNetworkUpdater::Update( const sword::ResourceNetwork& network )
     }
     else
         return;
-    
+
     if( network.has_enabled() )
         row->SetField( "enabled", FieldVariant( network.enabled() ) );
     if( network.has_max_stock() )
@@ -85,7 +85,7 @@ void ResourceNetworkUpdater::Update( const sword::ResourceNetwork& network )
         row->SetField( "consumption", FieldVariant( static_cast< long >( network.consumption() ) ) );
     if( network.has_critical() )
         row->SetField( "critical", FieldVariant( network.critical() ) );
-    
+
     if( !creation_ )
         table->UpdateRow( *row );
     else
@@ -117,15 +117,15 @@ void ResourceNetworkUpdater::UpdateResourceNetworkLinks( const sword::ResourceNe
 void ResourceNetworkUpdater::UpdateResourceNetworkLink( const sword::ResourceNetwork_Link& link, long network_id )
 {
     long target_id = 0;
-    if( link.has_target_id() ) 
+    if( link.has_target_id() )
         target_id = static_cast< long >( link.target_id() );
     else
         return;
 
     std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "resource_network_link" ) );
-    Row_ABC* row = table->Find( "network_id=" +         boost::lexical_cast< std::string >( network_id ) + 
+    Row_ABC* row = table->Find( "network_id=" +         boost::lexical_cast< std::string >( network_id ) +
                                " AND target_oid =" +     boost::lexical_cast< std::string >( target_id ) );
-    
+
     if( !row && creation_ )
     {
         row = &table->CreateRow();
@@ -139,7 +139,7 @@ void ResourceNetworkUpdater::UpdateResourceNetworkLink( const sword::ResourceNet
         row->SetField( "capacity", FieldVariant( static_cast< long >( link.capacity() ) ) );
     if( link.has_flow() )
         row->SetField( "flow", FieldVariant( static_cast< long >( link.flow() ) ) );
-    if( link.has_kind() ) 
+    if( link.has_kind() )
         row->SetField( "target_type", FieldVariant( std::string( ( link.kind() == sword::ResourceNetwork_Link::urban ) ? "urban" : "object" ) ) );
     if( !creation_ )
         table->UpdateRow( *row );

@@ -91,7 +91,7 @@ void MIL_PopulationPionAttritionData::ReadAttitudeData( const MIL_PopulationAtti
 void MIL_PopulationPionAttritionData::ReadAttritionUnitEffect( xml::xistream& xis, sAttritionData& attitudeData )
 {
     std::string strProtection = xis.attribute< std::string >( "name" );
-    
+
     const PHY_Protection* pProtection = PHY_Protection::Find( strProtection );
     if( !pProtection )
         xis.error( "Unknown protection '" + strProtection + "'" );

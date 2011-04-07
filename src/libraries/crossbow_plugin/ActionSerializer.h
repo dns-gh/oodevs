@@ -72,7 +72,7 @@ public:
     virtual ~ActionSerializer();
     //@}
 
-    //! @name 
+    //! @name
     //@{
     virtual void SerializeCreation( const Row_ABC& row, std::auto_ptr< actions::Action_ABC >& action ) const;
     //@}

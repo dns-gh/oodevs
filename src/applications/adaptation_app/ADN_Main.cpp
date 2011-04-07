@@ -115,7 +115,7 @@ int main( uint nArgc, char** ppArgv )
     }
     catch( std::exception& exception )
     {
-        if( !outputFile.empty() )   
+        if( !outputFile.empty() )
             MessageBox( 0, exception.what(), "Sword Adaptation Tool - Exception", MB_ICONERROR | MB_OK );
         else
         {

@@ -76,7 +76,7 @@ void ObjectListener::Clean()
 {
     try
     {
-        std::string query( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );    
+        std::string query( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
         std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "flat" ).OpenTable( "create_object" ) );
 
         table->DeleteRows( query );
@@ -101,7 +101,7 @@ void ObjectListener::Listen()
         Row_ABC* row = table->Find( query );
         while( row )
         {
-            if( SendCreation( *row ) ) 
+            if( SendCreation( *row ) )
             {
                 row->SetField( "checked_xbow", FieldVariant( true ) );
                 table->UpdateRow( *row );

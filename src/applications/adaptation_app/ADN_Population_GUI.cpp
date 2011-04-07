@@ -40,7 +40,7 @@
 // -----------------------------------------------------------------------------
 ADN_Population_GUI::ADN_Population_GUI( ADN_Population_Data& data )
     : ADN_GUI_ABC( "ADN_Population_GUI" )
-    , data_( data ) 
+    , data_( data )
 {
     // NOTHING
 }
@@ -159,7 +159,7 @@ void ADN_Population_GUI::Build()
 
     // Effects
     QGroupBox* pFireEffectProtectionGroup = new QGroupBox( 2, Qt::Vertical, tr( "Effect" ), pFireEffectGroup );
-    
+
     QGroupBox* pFireEffectUnarmedProtectionGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Unarmed" ), pFireEffectProtectionGroup );
     ADN_EditLine_Double* pDestruField       = builder.AddField< ADN_EditLine_Double >( pFireEffectUnarmedProtectionGroup, tr( "Destruction" ), vInfosConnectors[eFireEffectUnarmedDestruction], tr( "%" ) );
     ADN_EditLine_Double* pWithEvacField     = builder.AddField< ADN_EditLine_Double >( pFireEffectUnarmedProtectionGroup, tr( "Fixable with evacuation" ), vInfosConnectors[eFireEffectUnarmedFixableWithEvacuation], tr( "%" ) );
@@ -176,8 +176,8 @@ void ADN_Population_GUI::Build()
     QGroupBox* pFireEffectArmedProtectionGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Armed" ), pFireEffectProtectionGroup );
     pDestruField       = builder.AddField< ADN_EditLine_Double >( pFireEffectArmedProtectionGroup, tr( "Destruction" ), vInfosConnectors[eFireEffectArmedDestruction], tr( "%" ) );
     pWithEvacField     = builder.AddField< ADN_EditLine_Double >( pFireEffectArmedProtectionGroup, tr( "Fixable with evacuation" ), vInfosConnectors[eFireEffectArmedFixableWithEvacuation], tr( "%" ) );
-    pWithoutEvacField  = builder.AddField< ADN_EditLine_Double >( pFireEffectArmedProtectionGroup, tr( "Fixable without evacuation" ), vInfosConnectors[eFireEffectArmedFixableWithoutEvacuation], tr( "%" ) );    
-   
+    pWithoutEvacField  = builder.AddField< ADN_EditLine_Double >( pFireEffectArmedProtectionGroup, tr( "Fixable without evacuation" ), vInfosConnectors[eFireEffectArmedFixableWithoutEvacuation], tr( "%" ) );
+
     pValidatorDestruArmed_  = new ADN_PercentageValidator( pDestruField );
     pValidatorEvacArmed_    = new ADN_PercentageValidator( pWithEvacField );
     pValidatorWithoutArmed_ = new ADN_PercentageValidator( pWithoutEvacField );
@@ -232,7 +232,7 @@ void ADN_Population_GUI::Build()
 // Created: MMC 2011-03-29
 // -----------------------------------------------------------------------------
 void ADN_Population_GUI::UpdatePopulationFireEffectValidator( ADN_Type_Double& destruUnarmed, ADN_Type_Double& evacUnarmed, ADN_Type_Double& withoutEvacUnarmed, ADN_Type_Double& destruArmed, ADN_Type_Double& evacArmed, ADN_Type_Double& withoutEvacArmed )
-{ 
+{
     pValidatorDestruUnarmed_->ClearLinkedValues();
     pValidatorDestruUnarmed_->AddLinkedValue( evacUnarmed );
     pValidatorDestruUnarmed_->AddLinkedValue( withoutEvacUnarmed );

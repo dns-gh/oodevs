@@ -33,7 +33,6 @@ public:
               PHY_AttritionData( const PHY_AttritionData& rhs );
               PHY_AttritionData( const PHY_AttritionData& armedAttritionData, const PHY_AttritionData& unarmedAttritionData, double armedIndividuals );
      virtual ~PHY_AttritionData();
-              
 
     //! @name Operations
     //@{

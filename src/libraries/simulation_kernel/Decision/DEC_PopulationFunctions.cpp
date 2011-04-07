@@ -303,7 +303,7 @@ void DEC_PopulationFunctions::ReintegrateUrbanBlock( MIL_Population& callerPopul
 // -----------------------------------------------------------------------------
 bool DEC_PopulationFunctions::HasReachedDestination( const MIL_Population& callerPopulation, const MT_Vector2D* destination )
 {
-    assert( destination ); 
+    assert( destination );
     return callerPopulation.HasReachedDestination( *destination );
 }
 // -----------------------------------------------------------------------------
@@ -312,7 +312,7 @@ bool DEC_PopulationFunctions::HasReachedDestination( const MIL_Population& calle
 // -----------------------------------------------------------------------------
 bool DEC_PopulationFunctions::HasReachedBlockBorder( const MIL_Population& callerPopulation, const UrbanObjectWrapper* pUrbanKnowledge )
 {
-    assert( pUrbanKnowledge ); 
+    assert( pUrbanKnowledge );
     return callerPopulation.HasReachedBlockBorder( pUrbanKnowledge );
 }
 
@@ -322,6 +322,6 @@ bool DEC_PopulationFunctions::HasReachedBlockBorder( const MIL_Population& calle
 // -----------------------------------------------------------------------------
 bool DEC_PopulationFunctions::HasReachedDestinationCompletely( const MIL_Population& callerPopulation, const MT_Vector2D* destination )
 {
-    assert( destination ); 
+    assert( destination );
     return callerPopulation.HasReachedDestinationCompletely( *destination );
 }

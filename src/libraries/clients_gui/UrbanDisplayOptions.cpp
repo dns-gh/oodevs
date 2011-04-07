@@ -23,7 +23,7 @@ using namespace gui;
 // Name: UrbanDisplayOptions constructor
 // Created: LDC 2011-03-25
 // -----------------------------------------------------------------------------
-UrbanDisplayOptions::UrbanDisplayOptions( kernel::Controllers& controllers, const kernel::AccommodationTypes& accommodationTypes ) 
+UrbanDisplayOptions::UrbanDisplayOptions( kernel::Controllers& controllers, const kernel::AccommodationTypes& accommodationTypes )
     : controllers_            ( controllers )
     , accommodationTypes_     ( accommodationTypes )
     , densityColor_           ( false )
@@ -105,7 +105,7 @@ namespace
 // Created: LDC 2011-03-25
 // -----------------------------------------------------------------------------
 bool UrbanDisplayOptions::SetColor( urban::ColorAttribute* attribute, float livingSpace, const T_HumansStrMap& humans, const T_Motivations& motivations )
-{    
+{
     if( attribute )
     {
         if( densityColor_ )
@@ -154,7 +154,7 @@ bool UrbanDisplayOptions::SetColor( urban::ColorAttribute* attribute, float livi
                 SetUrbanColor( result, *attribute );
             }
             return true;
-        }        
+        }
     }
     return false;
 }

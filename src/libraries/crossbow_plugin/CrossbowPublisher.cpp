@@ -83,7 +83,7 @@ bool CrossbowPublisher::IsRelevant( const sword::SimToClient& wrapper ) const
         wrapper.message().has_report() ||
         wrapper.message().has_folk_graph_update() ||
         wrapper.message().has_urban_update() )
-        
+
         return modelLoaded_;
 
     if( wrapper.message().has_control_send_current_state_begin() ||

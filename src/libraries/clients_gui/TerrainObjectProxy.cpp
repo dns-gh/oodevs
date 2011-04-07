@@ -251,7 +251,7 @@ void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, const T_Bl
     const QString keyBase = tools::translate( "Block", "Populations/" ) + inhabitant.c_str() + "/";
     for( CIT_BlockOccupation it = human.persons_.begin(); it != human.persons_.end(); ++ it )
     {
-        const QString keyOccupation = keyBase + it->first + "/"; 
+        const QString keyOccupation = keyBase + it->first + "/";
         const QString keyNumber = keyOccupation + tools::translate( "Block", "Resident" );
         if( !dictionary.HasKey( keyNumber ) )
             dictionary.Register( constEntity, keyNumber, it->second );

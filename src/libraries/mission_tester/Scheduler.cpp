@@ -42,7 +42,7 @@ Scheduler::~Scheduler()
 void Scheduler::Schedule( boost::shared_ptr< Schedulable_ABC > schedulable )
 {
     if( schedulable->Matches( *filter_ ) )
-    { 
+    {
         schedulables_.push_back( schedulable );
         next_ = schedulables_.begin();
     }

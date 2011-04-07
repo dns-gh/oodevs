@@ -81,11 +81,11 @@ void ActionSerializer::SerializeCreation( const Row_ABC& row, std::auto_ptr< act
     {
         const std::string xmlMessage( GetField< std::string >( row, "data" ) );
         xml::xistringstream xis( xmlMessage );
-        
+
         xis >> xml::start( "actions" )
                 >> xml::list( "action", *this, &ActionSerializer::ReadAction, action )
             >> xml::end;
-        
+
 
     }
     catch ( std::exception& e )

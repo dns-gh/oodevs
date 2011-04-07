@@ -137,7 +137,7 @@ void PopulationOptionChooser::NotifyCreated( const kernel::Inhabitant_ABC& inhab
     if( name.isNull() )
         name = "";
     newPopulation->setText( name );
-    connect( newPopulation, SIGNAL( toggled( bool ) ), this, SLOT( OnPopulationToggled( bool ) ) ); 
+    connect( newPopulation, SIGNAL( toggled( bool ) ), this, SLOT( OnPopulationToggled( bool ) ) );
     newPopulation->setChecked( true );
 }
 

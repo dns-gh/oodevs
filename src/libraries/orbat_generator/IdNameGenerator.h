@@ -58,7 +58,7 @@ private:
 
 private:
     //! @name Member data
-    //@{    
+    //@{
     mutable std::string  crowdName_;
     mutable std::string  pionName_;
     mutable std::string  formationName_;

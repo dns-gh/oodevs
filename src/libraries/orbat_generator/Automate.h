@@ -48,7 +48,7 @@ public:
 
 private:
     //! @name Member data
-    //@{    
+    //@{
     bool engaged_;
     const std::string type_;
     std::vector< boost::shared_ptr< Pion > > pions_;

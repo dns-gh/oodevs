@@ -29,11 +29,11 @@ public:
     virtual void SetProperty( long paramId, const std::string& type, const std::string& field, const std::string& value ) = 0;
 };
 
-namespace 
+namespace
 {
     long GetRowId( Table_ABC& table, long objectId, const std::string& attribute )
     {
-        Row_ABC* row = table.Find( "object_id=" + boost::lexical_cast< std::string >( objectId ) + 
+        Row_ABC* row = table.Find( "object_id=" + boost::lexical_cast< std::string >( objectId ) +
                                     " AND name='" + attribute + "' AND parameter_id is null" );
         if( row )
             return row->GetID();
@@ -88,19 +88,19 @@ namespace
         {
             // NOTHING
         }
-        
+
         long GetReferenceId( const std::string& attribute ) const
         {
             std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "objectparameters" ) );
             return GetRowId( *table, objectId_, attribute );
         }
-        
+
         void SetProperty( long paramId, const std::string& /*type*/, const std::string& field, const std::string& value )
         {
             std::auto_ptr< Table_ABC > table( workspace_.GetDatabase( "geometry" ).OpenTable( "objectparameters" ) );
-            
-            Row_ABC* row = table->Find( "object_id=" + boost::lexical_cast< std::string >( objectId_ ) + 
-                                        " AND parameter_id=" + boost::lexical_cast< std::string >( paramId ) + 
+
+            Row_ABC* row = table->Find( "object_id=" + boost::lexical_cast< std::string >( objectId_ ) +
+                                        " AND parameter_id=" + boost::lexical_cast< std::string >( paramId ) +
                                         " AND name='" + field + "'" );
             if( row )
             {
@@ -108,7 +108,7 @@ namespace
                 table->UpdateRow( *row );
             }
         }
-    
+
     private:
         Workspace_ABC& workspace_;
         long objectId_;
@@ -164,8 +164,8 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributes& msg )
 }
 
 /*
-  select * from sword.objectparameters a, 
-   ( select distinct id from sword.objectparameters 
+  select * from sword.objectparameters a,
+   ( select distinct id from sword.objectparameters
         where object_id = 1 and name='Obstacle' and parameter_id is null ) b
      where a.parameter_id = b.id;
 */
@@ -228,7 +228,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeConstruction& c
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeObstacle& obstacle )
 {
     RowManipulator row( *updater_, *inserter_, "Obstacle" );
-    
+
     if( obstacle.has_activated() )
         row.SetProperty( "Bool", "activated", ToString( obstacle.activated() ) ); // bool
     if( obstacle.has_activation_time() )
@@ -244,7 +244,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeObstacle& obsta
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeMine& mine )
 {
     RowManipulator row( *updater_, *inserter_, "Mine" );
-    
+
     if( mine.has_density() )
         row.SetProperty( "Numeric", "density", ToString( mine.density() ) );
     if( mine.has_percentage() )
@@ -313,7 +313,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeCrossingSite& c
     row.SetProperty( "Bool", "banks_require_fitting", ToString( crossing_site.banks_require_fitting() ) );
     row.SetProperty( "Quantity", "depth", ToString( crossing_site.depth() ) );
     row.SetProperty( "Quantity", "flow_rate", ToString( crossing_site.flow_rate() ) );
-    row.SetProperty( "Quantity", "width", ToString( crossing_site.width() ) ); 
+    row.SetProperty( "Quantity", "width", ToString( crossing_site.width() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -349,7 +349,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeToxicCloud& /*t
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeFire& fire )
 {
     RowManipulator row( *updater_, *inserter_, "Fire" );
-        
+
     row.SetProperty( "Identifier", "class_name", ToString( fire.class_name() ) ); // int
     row.SetProperty( "Quantity", "combustion_energy", ToString( fire.max_combustion_energy() ) ); // int
 }
@@ -368,8 +368,8 @@ namespace
         for ( int i = 0; i < medical_treatment.bed_capacities_size(); ++i )
         {
             const sword::MedicalTreatmentBedCapacity& capacity = medical_treatment.bed_capacities( i );
-            
-            // $$$$ JCR - HACK : Do not take into account NegativeFlowIsolation which is a subset of MedicalSurgical and the last registered element!! 
+
+            // $$$$ JCR - HACK : Do not take into account NegativeFlowIsolation which is a subset of MedicalSurgical and the last registered element!!
             // $$$$ TODO: ADD this information in the MedicalTreatment definition and the ASN message.
             if ( capacity.type_id() == 7 ) // SKIP NegativeFlowIsolation
                 continue;
@@ -470,7 +470,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeBurn& burn )
     row.SetProperty( "Quantity", "heat", ToString( burn.current_heat() ) ); // int
     row.SetProperty( "Quantity", "combustion_energy", ToString( burn.combustion_energy() ) ); // int
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2011-01-26
@@ -479,7 +479,7 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeBurnSurface& /*
 {
     RowManipulator row( *updater_, *inserter_, "BurnSurface" );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectAttributeUpdater::Update
 // Created: JCR 2011-01-26

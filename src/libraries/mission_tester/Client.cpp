@@ -124,7 +124,7 @@ bool Client::IsAuthentified() const
 void Client::OnConnectionSucceeded( const std::string& /*endpoint*/ )
 {
     connected_ = true;
-    std::cout << "connection succeeded" << std::endl; 
+    std::cout << "connection succeeded" << std::endl;
 }
 
 // -----------------------------------------------------------------------------

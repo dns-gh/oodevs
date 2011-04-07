@@ -10,7 +10,7 @@
 #ifndef __crossbow_plugin_ResourceNetworkUpdater_h_
 #define __crossbow_plugin_ResourceNetworkUpdater_h_
 
-namespace sword 
+namespace sword
 {
     class ResourceNetwork;
     class ResourceNetwork_Link;

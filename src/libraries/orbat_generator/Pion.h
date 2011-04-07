@@ -44,13 +44,8 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{    
-    //@}
-
-private:
     //! @name Member data
-    //@{    
+    //@{
     const std::string type_;
     const std::string posi_;
     const bool pc_;

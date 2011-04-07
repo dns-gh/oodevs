@@ -62,7 +62,7 @@ Exercise::Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticMo
     , time_                    ( new SimulationTime() )
     , agentKnowledgeConverter_ ( new AgentKnowledgeConverter() )
     , objectKnowledgeConverter_( new ObjectKnowledgeConverter() )
-    , parameters_              ( new actions::ActionParameterFactory( staticModel.coordinateConverter_, entities, staticModel, 
+    , parameters_              ( new actions::ActionParameterFactory( staticModel.coordinateConverter_, entities, staticModel,
                                                                      *agentKnowledgeConverter_, *objectKnowledgeConverter_, *controller_ ) )
     , factory_                 ( new actions::ActionFactory( *controller_, *parameters_, entities, staticModel, *time_ ) )
 {

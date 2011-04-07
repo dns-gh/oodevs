@@ -25,7 +25,7 @@
 using namespace plugins::crossbow;
 
 namespace
-{   
+{
     class CrossbowPublisher : public Publisher_ABC
                             , private boost::noncopyable
     {
@@ -134,7 +134,7 @@ void OrderListener::Listen()
         Row_ABC* row = table->Find( query );
         while( row != 0 )
         {
-            if( SendCreation( *row ) ) 
+            if( SendCreation( *row ) )
             {
                 row->SetField( "checked_xbow", FieldVariant( true ) );
                 table->UpdateRow( *row );

@@ -48,7 +48,7 @@ void ADN_Population_UrbanEffect_Attitude_ListView::ConnectItem( bool bConnect )
 {
     if( pCurData_ == 0 )
         return;
-    
+
     UrbanEffectInfos* pInfos = (UrbanEffectInfos*)pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Population_GUI::eNbrGuiElements );
     vItemConnectors_[ADN_Population_GUI::eUrbanBlocDestructionDensity]->Connect( &pInfos->rDensity_, bConnect );

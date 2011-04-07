@@ -224,7 +224,7 @@ void MIL_PopulationType::InitializeFireData( xml::xistream& xis )
     xis >> xml::start( "unit-fire-effects" )
             >> xml::list( "unit", *this, &MIL_PopulationType::ReadUnitFireEffect )
         >> xml::end;
-    
+
     xis >> xml::start( "urban-destruction-effects" )
             >> xml::list( "urban-destruction-effect", *this, &MIL_PopulationType::ReadUrbanDestructionEffect )
         >> xml::end;

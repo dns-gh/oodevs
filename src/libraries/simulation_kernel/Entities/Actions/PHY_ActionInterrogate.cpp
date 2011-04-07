@@ -70,7 +70,7 @@ PHY_ActionInterrogate::~PHY_ActionInterrogate()
 // -----------------------------------------------------------------------------
 void PHY_ActionInterrogate::ComputeTimeToWait( float affinity )
 {
-    double diff = ( affinity > 0. ) 
+    double diff = ( affinity > 0. )
         ? MIL_AffinitiesMap::interrogateDelayForNeutralAffinity_ - MIL_AffinitiesMap::interrogateDelayForMaximumAffinity_
         : MIL_AffinitiesMap::interrogateDelayForMinimumAffinity_ - MIL_AffinitiesMap::interrogateDelayForNeutralAffinity_;
     rTimeToWait_ = static_cast< unsigned int >( MIL_AffinitiesMap::interrogateDelayForNeutralAffinity_ - ( affinity * diff ) );

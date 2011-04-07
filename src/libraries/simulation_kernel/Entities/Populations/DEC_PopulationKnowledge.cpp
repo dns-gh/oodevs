@@ -273,6 +273,6 @@ bool DEC_PopulationKnowledge::HasChannelingChanged() const
 void DEC_PopulationKnowledge::NotifyChanneled( const TER_Localisation& location )
 {
     CIT_LocationVector it = std::find( newChannelingLocations_.begin(), newChannelingLocations_.end(), location );
-    if( it == newChannelingLocations_.end()) 
+    if( it == newChannelingLocations_.end())
         newChannelingLocations_.push_back( location );
 }

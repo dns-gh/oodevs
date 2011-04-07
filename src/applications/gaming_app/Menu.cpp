@@ -194,14 +194,14 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
         composite.AddItem( tools::translate( "Menu", "5km"  ),  5.0f );
         composite.AddItem( tools::translate( "Menu", "10km" ), 10.0f );
     }
-    
+
     {
         QHBox* populationBox = new QHBox( toolBar );
         QCheckBox* populationEnabled = new QCheckBox( tools::translate( "Menu", "Population" ), populationBox );
         QToolTip::add( populationEnabled, tools::translate( "Menu", "Show population display tool" ) );
         QDockWindow* populationOptions = new PopulationOptionChooser( pParent, controllers, staticModel );
         connect( populationEnabled, SIGNAL( toggled( bool ) ), populationOptions, SLOT( setShown( bool ) ) );
-        connect( populationOptions, SIGNAL( visibilityChanged( bool ) ), populationEnabled, SLOT( setChecked( bool ) ) );        
+        connect( populationOptions, SIGNAL( visibilityChanged( bool ) ), populationEnabled, SLOT( setChecked( bool ) ) );
     }
 
     menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu );

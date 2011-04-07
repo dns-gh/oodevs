@@ -59,7 +59,7 @@ public:
 
 private:
     //! @name Member data
-    //@{    
+    //@{
     std::vector< boost::shared_ptr< Formation > > formations_;
     const std::string side_;
     unsigned int current_;

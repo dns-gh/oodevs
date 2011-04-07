@@ -41,7 +41,7 @@ public:
 
     virtual Row_ABC* Find( const std::string& query, bool forceUpdate = false ) = 0;
     virtual Row_ABC* GetNextRow() = 0;
-    
+
     virtual void Flush() = 0;
 
     virtual void BeginTransaction() = 0;

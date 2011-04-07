@@ -41,7 +41,7 @@ namespace
         {}
         virtual bool Trigger( State_ABC& /*state*/ ){ return true; }
         virtual bool Matches( const Filter_ABC& filter ) const
-        { 
+        {
             if( !filter.Accepts( type_ ) )
                 throw std::runtime_error( "bad criterion" );
             return true;

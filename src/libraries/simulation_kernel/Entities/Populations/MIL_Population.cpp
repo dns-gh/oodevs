@@ -1504,7 +1504,7 @@ bool MIL_Population::HasReachedBlockBorder( const UrbanObjectWrapper* pUrbanKnow
         if( localisation.IsInside( (*it)->GetPosition() ) )
             return true;
     }
-        
+
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         if( localisation.IsInside( (*it)->GetPosition() ) )

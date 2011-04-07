@@ -134,7 +134,7 @@ void Facade::ReadCrowds( xml::xisubstream xis, unsigned int crowdQuantity )
 // -----------------------------------------------------------------------------
 void Facade::FillCrowds( xml::xistream& xis )
 {
-    const std::string name = xis.attribute< std::string >( "name" );  
+    const std::string name = xis.attribute< std::string >( "name" );
     if( std::find( excludes_.begin(), excludes_.end(), name ) == excludes_.end() )
         crowds_.push_back( name );
 }
@@ -168,7 +168,7 @@ void Facade::ReadAutomates( xml::xisubstream xis, const std::string& type, unsig
 // -----------------------------------------------------------------------------
 void Facade::FillAutomate( xml::xistream& xis, unsigned int& automateQuantity, unsigned int& pionQuantity, const std::string& odbType )
 {
-    const std::string name = xis.attribute< std::string >( "name" );  
+    const std::string name = xis.attribute< std::string >( "name" );
     if( automateQuantity > 0 && std::find( excludes_.begin(), excludes_.end(), name ) == excludes_.end() )
     {
         unsigned int pionsParAutomate = pionQuantity / automateQuantity;
@@ -190,7 +190,7 @@ void Facade::FillAutomate( xml::xistream& xis, unsigned int& automateQuantity, u
 // -----------------------------------------------------------------------------
 void Facade::FillPion( xml::xistream& xis, unsigned int& pionsParAutomate )
 {
-    const std::string name = xis.attribute( "name", "Error" );  
+    const std::string name = xis.attribute( "name", "Error" );
     if( std::find( excludes_.begin(), excludes_.end(), name ) == excludes_.end() )
     {
         std::string posi = defaultPoint_;
@@ -221,7 +221,7 @@ void Facade::CreateOrbat( xml::xostream& xos )
             << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/4.3.0/exercise/orbat.xsd" )
             << xml::start( "parties" );
     int sizeModificator;
-    crowds_.size() > 0 ? sizeModificator = -1 : sizeModificator = 0; 
+    crowds_.size() > 0 ? sizeModificator = -1 : sizeModificator = 0;
     for( unsigned int it = 0; it < parties_.size() + sizeModificator; ++it )
         parties_[ it ]->InsertIntoOrbat( xos, idNameGen_ );
     if( crowds_.size() > 0 )

@@ -72,7 +72,7 @@ namespace
     void CreateFeature( crossbow::Workspace_ABC& workspace, int public_id, int parent_id, const crossbow::Point& point )
     {
         std::auto_ptr< crossbow::Table_ABC > table( workspace.GetDatabase( "feature" ).OpenTable( "UnitForces" ) );
-        
+
         table->BeginTransaction();
         crossbow::Row_ABC& row = table->CreateRow();
         row.SetField( "public_oid", crossbow::FieldVariant( public_id ) );
@@ -91,7 +91,7 @@ namespace
     void UpdateFeature( crossbow::Workspace_ABC& workspace, int public_id, const crossbow::Point& point )
     {
         std::auto_ptr< crossbow::Table_ABC > table( workspace.GetDatabase( "feature" ).OpenTable( "UnitForces" ) );
-        
+
         table->BeginTransaction();
         crossbow::Row_ABC* row = table->Find( "public_oid=" + boost::lexical_cast<std::string>( public_id ) + " AND session_id=2000" );
 

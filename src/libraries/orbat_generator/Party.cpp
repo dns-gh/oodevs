@@ -16,7 +16,7 @@ using namespace orbat_generator;
 
 namespace
 {
-    const std::string PartySideToString( const PartySide& side ) 
+    const std::string PartySideToString( const PartySide& side )
     {
         if( side == Friend )
             return "friend";

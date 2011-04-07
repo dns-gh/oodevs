@@ -167,7 +167,7 @@ void StatusListener::ChangeStatus( const std::string& status )
 void StatusListener::ChangeTimeFactor( int speed )
 {
     simulation::ControlChangeTimeFactor message;
-    
+
     message().set_time_factor( speed );
     message.Send( publisher_ );
 }

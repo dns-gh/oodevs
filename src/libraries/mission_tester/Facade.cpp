@@ -42,7 +42,7 @@ Facade::~Facade()
 
 namespace
 {
-    // $$$$ PHC 2011-04-05: While 
+    // $$$$ PHC 2011-04-05: While
     void StartMission( mission_tester::Exercise& exercise, mission_tester::Client& client )
     {
         const std::string mission = "<action id='131' name='Faire Mouvement' target='33' time='2009-05-05T12:49:34' type='mission'>"

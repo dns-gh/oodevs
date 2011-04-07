@@ -123,7 +123,7 @@ void MIL_LivingArea::DistributeHumans( unsigned long population )
             person = tmp;
         if( ( it + 1 ) == blocks_.end() && tmp > 0 )
             ( *it )->DistributeHumans( tmp, *this );
-        else 
+        else
             ( *it )->DistributeHumans( person, *this );
         tmp -= person;
     }

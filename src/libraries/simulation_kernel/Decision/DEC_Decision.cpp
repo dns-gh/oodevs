@@ -77,7 +77,7 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
     brain.Register( "DEC_Agent_EstMort", &DEC_Decision_ABC::IsDead );
     brain.Register( "DEC_Agent_EstContamine", &DEC_Decision_ABC::IsContaminated );
     brain.Register( "DEC_Pion_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
-    brain.Register( "DEC_Automate_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC ); 
+    brain.Register( "DEC_Automate_PionsAvecPC", &DEC_Decision_ABC::GetPionsWithPC );
     brain.Register( "DEC_Automate_EstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
 }
 

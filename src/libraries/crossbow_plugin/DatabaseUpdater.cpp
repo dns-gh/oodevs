@@ -147,7 +147,7 @@ void DatabaseUpdater::Clean()
         database_->GetGeometry().ClearTable( "KnowledgeUnits", clause );
         database_->GetGeometry().ClearTable( "BoundaryLimits", clause );
         database_->GetGeometry().ClearTable( "TacticalLines", clause );
-        
+
         database_->GetGeometry().ClearTable( "Objects", clause );
         database_->GetGeometry().ClearTable( "KnowledgeObjects", clause );
 
@@ -335,7 +335,7 @@ void DatabaseUpdater::Update( const sword::ObjectCreation& msg )
     UpdateSymbol( row, model_.Objects(), msg.object().id() );
     UpdateGeometry( row, msg.location() );
     table->InsertRow( row );
-    
+
     long rowId = row.GetID();
     if( rowId == OGRNullFID )
     {
@@ -359,7 +359,7 @@ void DatabaseUpdater::Update( const sword::ObjectUpdate& msg )
     std::stringstream query;
     query << "public_oid=" << msg.object().id() << " AND session_id=" << session_.GetId();
     Row_ABC* row = table->Find( query.str() );
-    
+
     if( row )
     {
         if( msg.has_location() && msg.location().coordinates().elem_size() > 0 )
@@ -645,7 +645,7 @@ void DatabaseUpdater::Update( const sword::PartyCreation& msg )
     } ;*/
 }
 
-namespace 
+namespace
 {
     std::string MakeColor( const sword::RgbaColor& color )
     {
@@ -680,14 +680,14 @@ void DatabaseUpdater::UpdateUrbanBlockAttributes( Row_ABC& row, const sword::Urb
     //4.2.2
     /*if( attributes.has_infrastructures() )
     {
-        
+
         row.SetField( "infra_type", FieldVariant( attributes.) );
         row.SetField( "infra_active", FieldVariant() );
         row.SetField( "infra_threshold", FieldVariant() );
         row.SetField( "usage_role", FieldVariant() );
         row.SetField( "usage_percentage", FieldVariant() );
     }*/
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -733,12 +733,12 @@ void DatabaseUpdater::Update( const sword::UrbanCreation& msg )
         UpdateGeometry( row, msg.location() );
     table->InsertRow( row );
     table.reset();
-    //create network resource (one table per instance can be open ) 
+    //create network resource (one table per instance can be open )
     if( msg.attributes().has_infrastructures() )
         UpdateResourceNetworks( msg.attributes().infrastructures(), static_cast< long >( msg.object().id() ), true );
 
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: DatabaseUpdater::Update
 // Created: JCR 2011-01-25
@@ -746,8 +746,8 @@ void DatabaseUpdater::Update( const sword::UrbanCreation& msg )
 void DatabaseUpdater::Update( const sword::UrbanUpdate& msg )
 {
     std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "urban_blocks" ) );
-    
-    Row_ABC* row = table->Find( "public_oid=" + boost::lexical_cast< std::string >( msg.object().id() ) + 
+
+    Row_ABC* row = table->Find( "public_oid=" + boost::lexical_cast< std::string >( msg.object().id() ) +
                                    " AND session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
     if( row )
     {
@@ -757,7 +757,7 @@ void DatabaseUpdater::Update( const sword::UrbanUpdate& msg )
             UpdateGeometry( *row, msg.location() );
         table->UpdateRow( *row );
         table.reset();
-        //create network resource (one table per instance can be open ) 
+        //create network resource (one table per instance can be open )
         if( msg.attributes().has_infrastructures() )
             UpdateResourceNetworks( msg.attributes().infrastructures(), static_cast< long >( msg.object().id() ), false );
     }

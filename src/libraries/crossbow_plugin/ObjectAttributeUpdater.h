@@ -32,7 +32,7 @@ namespace sword
     class ObjectAttributeResourceNetwork;
     class ObjectAttributeBurn;
     class ObjectAttributeBurnSurface;
-    class ObjectAttributeFlood;    
+    class ObjectAttributeFlood;
 }
 
 namespace plugins

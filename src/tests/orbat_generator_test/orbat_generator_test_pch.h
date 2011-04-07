@@ -13,7 +13,7 @@
 #include <boost/test/auto_unit_test.hpp>
 
 #define BOOST_LIB_NAME boost_unit_test_framework
-#include <boost/config/auto_link.hpp> 
+#include <boost/config/auto_link.hpp>
 
 void BOOST_CHECK_XML_EQUAL( const std::string& expected, const std::string& actual );
 

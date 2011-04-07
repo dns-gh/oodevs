@@ -162,7 +162,7 @@ void ADN_TimeField::OnValueChanged( const QString& strValue )
 void ADN_TimeField::OnUnitChanged( const QString& strUnit )
 {
     unsigned int minutesValue = nSecondsValue_ / 60;
-    unsigned int hoursValue = nSecondsValue_ / 3600;   
+    unsigned int hoursValue = nSecondsValue_ / 3600;
 
     bFreezeSlot_ = true;
     if( strUnit == "s" )

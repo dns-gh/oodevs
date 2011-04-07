@@ -135,7 +135,7 @@ void MIL_LivingAreaBlock::SetEvacuated( bool evacuated )
     {
         evacuated_ = evacuated;
         hasChanged_ = true;
-    } 
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -346,7 +346,7 @@ unsigned int MIL_LivingAreaBlock::IncreasePeopleWhenMoving( const std::string& m
         remaining = newValue - maxOccupation;
         persons_[ motivation ] = maxOccupation;
     }
-    else 
+    else
         persons_[ motivation ] = newValue;
     const_cast< UrbanObjectWrapper& >( urbanObject_ ).UpdateInhabitants( livingArea, motivation, persons_[ motivation ] );
     hasChanged_ = true;
@@ -427,5 +427,5 @@ void MIL_LivingAreaBlock::ManageAngryCrowd( const MIL_InhabitantType& type, MIL_
             msg.mutable_parameters();
             pAngryCrowd->OnReceiveOrder( msg );
         }
-    }   
+    }
 }
