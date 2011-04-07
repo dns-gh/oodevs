@@ -151,6 +151,7 @@ void MIL_Formation::InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC&
     catch( std::exception& e )
     {
         MT_LOG_ERROR_MSG( e.what() );
+        throw e;
     }
 }
 
