@@ -80,7 +80,8 @@ private:
     //! @name Helpers
     //@{
     void Create( const sword::UnitCreation& message );
-    void Update( const sword::UnitAttributes& message );
+    template< typename M > 
+    void Update( const M& message );
     void Destroy( const sword::UnitDestruction& message );
     //@}
 

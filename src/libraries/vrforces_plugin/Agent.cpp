@@ -160,6 +160,28 @@ void Agent::Update( const sword::UnitAttributes& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::Update
+// Created: SBO 2011-04-07
+// -----------------------------------------------------------------------------
+void Agent::Update( const sword::UnitPathFind& message )
+{
+    if( message.has_path() )
+    {
+        const sword::CoordLatLongList& points = message.path().location().coordinates();
+        if( points.elem_size() > 0 )
+        {
+            const sword::CoordLatLong& last = points.elem( points.elem_size() - 1 );
+            DtGeodeticCoord coord;
+            coord.setLat( DtDeg2Rad( last.latitude() ) );
+            coord.setLon( DtDeg2Rad( last.longitude() ) );
+            destination_ = coord.geocentric();
+        }
+    }
+    else
+        destination_.setToZero();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::UpdateLocation
 // Created: SBO 2011-03-22
 // -----------------------------------------------------------------------------
@@ -272,6 +294,7 @@ void Agent::DestroyPseudoAggregate()
         DtAggregateStateRepository* copy = new DtAggregateStateRepository( *reflected_->asr() );
         DtEntityType type( ToString( entityTypes_.Find( type_.GetName() ) ).c_str() );
         copy->setAggregateType( type );
+        copy->useDeadReckoner( false );
         aggregatePublisher_.reset( new DtAggregatePublisher( copy, &connection_ ) );
         CreateSubordinates( type_ );
         reflectedId_ = DtEntityIdentifier::nullId();
@@ -310,7 +333,10 @@ void Agent::OnCreatePseudoAggregate( const DtString& /*name*/, const DtEntityIde
         if( !that->reflected_ )
             that->vrForces_.Lookup( id, *that );
         for( T_Subordinates::iterator it = that->subordinates_.begin(); it != that->subordinates_.end(); ++it )
+        {
             (*it)->SetSuperior( id );
+            (*it)->SetDestination( that->destination_ );
+        }
         DtInfo << "Pseudo aggregate created with identifier: " << id.string() << std::endl;
     }
 }

@@ -43,6 +43,7 @@ namespace sword
 {
     class UnitAttributes;
     class UnitCreation;
+    class UnitPathFind;
 }
 
 namespace plugins
@@ -82,6 +83,7 @@ public:
     //! @name Operations
     //@{
     void Update( const sword::UnitAttributes& message );
+    void Update( const sword::UnitPathFind& message );
     void CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSimulationAddress& address );
     void MoveTo( const geometry::Point2d& position ) const;
     //@}
@@ -131,6 +133,7 @@ private:
     const kernel::AgentType& type_;
     const rpr::EntityTypeResolver& entityTypes_;
     std::auto_ptr< AggregatedPosition_ABC > position_;
+    DtVector destination_;
     //@}
 };
 

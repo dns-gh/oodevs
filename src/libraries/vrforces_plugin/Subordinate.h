@@ -21,6 +21,7 @@ class DtEntityType;
 class DtReflectedEntity;
 class DtSimulationAddress;
 class DtString;
+class DtVector;
 class DtVrfRemoteController;
 
 namespace plugins
@@ -52,6 +53,7 @@ public:
     //! @name Callbacks
     //@{
     void SetSuperior( const DtEntityIdentifier& identifier );
+    void SetDestination( const DtVector& location );
     virtual bool NotifyCreated( DtReflectedEntity& entity );
     void Update( AggregatedPosition_ABC& position ) const;
     //@}
@@ -74,6 +76,7 @@ private:
     Agent& superior_;
     DtReflectedEntity* reflected_;
     DtEntityIdentifier superiorId_;
+    DtVector destination_;
     //@}
 };
 

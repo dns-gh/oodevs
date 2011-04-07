@@ -91,6 +91,7 @@ bool Subordinate::NotifyCreated( DtReflectedEntity& entity )
             reflected_ = &entity;
             entityId_ = reflected_->esr()->entityId();
             reflected_->addPostUpdateCallback( &Subordinate::OnUpdate, this );
+            SetDestination( destination_ );
             return true;
         }
     return false;
@@ -122,10 +123,28 @@ void Subordinate::SetSuperior( const DtEntityIdentifier& identifier )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Subordinate::SetDestination
+// Created: SBO 2011-04-07
+// -----------------------------------------------------------------------------
+void Subordinate::SetDestination( const DtVector& location )
+{
+    if( location != DtVector::zero() )
+        if( reflected_ )
+        {
+            controller_.moveToLocation( reflected_->esr()->markingText(), location, true, address_ );
+            DtInfo << "Task 'move to location' assigned to entity '" << reflected_->name() << "'" << std::endl;
+            destination_ = DtVector::zero();
+        }
+        else
+            destination_ = location;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Subordinate::Update
 // Created: SBO 2011-04-04
 // -----------------------------------------------------------------------------
 void Subordinate::Update( AggregatedPosition_ABC& position ) const
 {
-    position.Update( entityId_, reflected_->esr()->location() );
+    if( reflected_ )
+        position.Update( entityId_, reflected_->esr()->location() );
 }

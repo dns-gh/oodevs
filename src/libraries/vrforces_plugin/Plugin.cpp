@@ -76,6 +76,8 @@ void Plugin::Receive( const sword::SimToClient& message )
         Update( message.message().unit_attributes() );
     else if( message.message().has_unit_destruction() )
         Destroy( message.message().unit_destruction() );
+    else if( message.message().has_unit_pathfind() )
+        Update( message.message().unit_pathfind() );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +125,8 @@ void Plugin::Create( const sword::UnitCreation& message )
 // Name: Plugin::Update
 // Created: SBO 2011-01-20
 // -----------------------------------------------------------------------------
-void Plugin::Update( const sword::UnitAttributes& message )
+template< typename M >
+void Plugin::Update( const M& message )
 {
     T_Agents::iterator it = agents_.find( message.unit().id() );
     if( it != agents_.end() )
