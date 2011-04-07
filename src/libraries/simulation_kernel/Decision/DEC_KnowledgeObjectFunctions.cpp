@@ -20,6 +20,7 @@
 #include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/BurnAttribute.h"
 #include "Entities/Objects/FireAttribute.h"
+#include "Entities/Objects/ImprovableCapacity.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Objects/SupplyRouteAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
@@ -446,4 +447,17 @@ float DEC_KnowledgeObjectFunctions::EstimatedWorkTime( MIL_Agent_ABC& pion, boos
             return float( dataComputer.ComputeWorkTime() );
         }
     return -1.0f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::CanBeValorized
+// Created: LMT 2011-04-05
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::CanBeValorized( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
+            if( object->Retrieve< ImprovableCapacity >() )
+                return true;
+    return false;
 }

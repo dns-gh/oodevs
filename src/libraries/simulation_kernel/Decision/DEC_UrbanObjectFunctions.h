@@ -38,6 +38,7 @@ public:
     static void DestroyUrbanBlock(  MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject, const PHY_DotationCategory* category );
     static float GetStateUrbanBlock( UrbanObjectWrapper* pUrbanObject );
     static boost::shared_ptr< TER_Localisation > GetPolygonFromUrbanBlock( const UrbanObjectWrapper* pUrbanObject );
+    static std::string GetType( const UrbanObjectWrapper* pUrbanObject );
     //@}
 };
 

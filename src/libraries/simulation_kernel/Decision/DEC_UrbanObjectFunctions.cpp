@@ -20,6 +20,7 @@
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Objects/StructuralCapacity.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeUrban.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
@@ -151,7 +152,7 @@ float DEC_UrbanObjectFunctions::GetStateUrbanBlock( UrbanObjectWrapper* pUrbanOb
         StructuralCapacity* pCapacity = pUrbanObject->Retrieve< StructuralCapacity >();
         if( pCapacity )
             return pCapacity->GetStructuralState();
-    } 
+    }
     return -1.f;
 }
 
@@ -184,4 +185,13 @@ void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, U
             capacity->ApplyIndirectFire( *pUrbanObject, pUrbanObject->GetLocalisation(), *category );
         callerAgent.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *category, 1 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_UrbanObjectFunctions::GetType
+// Created: LMT 2011-04-05
+// -----------------------------------------------------------------------------
+std::string DEC_UrbanObjectFunctions::GetType( const UrbanObjectWrapper* pUrbanObject )
+{
+    return pUrbanObject->GetType().GetName();
 }

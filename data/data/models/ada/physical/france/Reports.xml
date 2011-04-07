@@ -507,6 +507,10 @@
     <parameter type="String"/>
   </report>
   <report category="operational" id="361" message="La cible ne possède pas de renseignement critique"/>
+  <report category="operational" id="362" message="Renseignement critique recueilli : %1">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="363" message="Le bloc urbain n'est pas traficable"/>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -518,4 +522,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="3910831366" -->
+<!-- signature="2039774651" -->
