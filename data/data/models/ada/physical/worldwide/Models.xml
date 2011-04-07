@@ -7,6 +7,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="Joint Air - Loiter">
           <fragorder name="Execute an air strike"/>
@@ -272,6 +273,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="go through decontamination process"/>
         <mission name="follow"/>
         <mission name="adopt transportation posture"/>
@@ -305,6 +307,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="go through decontamination process"/>
         <mission name="follow"/>
         <mission name="adopt transportation posture"/>
@@ -340,6 +343,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="go through decontamination process"/>
         <mission name="follow"/>
         <mission name="adopt transportation posture"/>
@@ -373,6 +377,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="go through decontamination process"/>
         <mission name="follow"/>
         <mission name="adopt transportation posture"/>
@@ -406,6 +411,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="go through decontamination process"/>
         <mission name="follow"/>
         <mission name="adopt transportation posture"/>
@@ -465,6 +471,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="adopt transportation posture"/>
         <mission name="follow"/>
         <mission name="withdraw"/>
@@ -512,6 +519,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="adopt transportation posture"/>
         <mission name="follow"/>
         <mission name="withdraw"/>
@@ -552,6 +560,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="adopt transportation posture"/>
         <mission name="follow"/>
         <mission name="withdraw"/>
@@ -590,6 +599,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="adopt transportation posture"/>
         <mission name="follow"/>
         <mission name="withdraw"/>
@@ -625,6 +635,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="adopt transportation posture"/>
         <mission name="withdraw"/>
         <mission name="follow"/>
@@ -667,6 +678,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="follow"/>
         <mission name="park"/>
@@ -703,6 +715,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="Logistics - deploy"/>
         <mission name="cross"/>
         <mission name="prepare to"/>
@@ -747,6 +760,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
       </missions>
       <fragorders>
@@ -789,6 +803,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="adopt transportation posture"/>
         <mission name="Logistics - reinforce"/>
       </missions>
@@ -829,6 +844,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="Logistics - reinforce"/>
       </missions>
       <fragorders>
@@ -870,6 +886,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="adopt transportation posture"/>
         <mission name="Logistics - reinforce"/>
@@ -910,6 +927,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="Logistics - reinforce"/>
       </missions>
@@ -948,6 +966,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="adopt transportation posture"/>
         <mission name="Logistics - reinforce"/>
@@ -988,6 +1007,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="Logistics - reinforce"/>
       </missions>
@@ -1032,6 +1052,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="adopt transportation posture"/>
         <mission name="Logistics - reinforce"/>
       </missions>
@@ -1063,6 +1084,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="adopt transportation posture"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
@@ -1099,6 +1121,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="adopt transportation posture"/>
         <mission name="park"/>
@@ -1133,6 +1156,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="adopt transportation posture"/>
         <mission name="park"/>
         <mission name="manage refugees"/>
@@ -1172,6 +1196,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="adopt transportation posture"/>
         <mission name="cross"/>
         <mission name="Logistics - reinforce"/>
@@ -1203,6 +1228,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="withdraw"/>
         <mission name="cross"/>
@@ -1242,6 +1268,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="withdraw"/>
         <mission name="cross"/>
@@ -1276,6 +1303,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -1310,6 +1338,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="withdraw"/>
         <mission name="cross"/>
@@ -1344,6 +1373,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="withdraw"/>
         <mission name="cross"/>
@@ -1379,6 +1409,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="go through decontamination process"/>
         <mission name="withdraw"/>
@@ -1415,6 +1446,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="go through decontamination process"/>
         <mission name="withdraw"/>
@@ -1458,6 +1490,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -1493,6 +1526,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="go through decontamination process"/>
         <mission name="withdraw"/>
@@ -1530,6 +1564,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -1556,6 +1591,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="adopt transportation posture"/>
         <mission name="Infantry - destroy (intervene)"/>
         <mission name="cross"/>
@@ -1597,6 +1633,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="Air Defense Artillery - defend area"/>
         <mission name="Air Defense Artillery - defend area (from a position)"/>
@@ -1626,6 +1663,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="go through decontamination process"/>
         <mission name="withdraw"/>
@@ -1661,6 +1699,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="Asymetric - report information"/>
         <mission name="Asymetric - infiltrate"/>
         <mission name="Asymetric - carry out an attack (against armed forces)"/>
@@ -1696,6 +1735,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="follow"/>
         <mission name="park"/>
@@ -1744,6 +1784,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="follow"/>
         <mission name="park"/>
@@ -1796,6 +1837,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="follow"/>
         <mission name="park"/>
@@ -1832,6 +1874,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="follow"/>
         <mission name="park"/>
@@ -1898,6 +1941,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="follow"/>
         <mission name="park"/>
@@ -1963,6 +2007,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -2010,6 +2055,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -2058,6 +2104,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -2109,6 +2156,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="manage refugees"/>
         <mission name="manage prisoners"/>
         <mission name="follow"/>
@@ -2152,6 +2200,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="Human Intelligence - exfiltrate"/>
         <mission name="Human Intelligence - report information"/>
@@ -2210,6 +2259,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="Imagery Intelligence - operate"/>
         <mission name="go through decontamination process"/>
@@ -2243,6 +2293,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="Electronic Intelligence - report information"/>
         <mission name="go through decontamination process"/>
@@ -2276,6 +2327,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="Electronic Intelligence - support"/>
         <mission name="go through decontamination process"/>
@@ -2309,6 +2361,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="Electronic Intelligence - report information"/>
         <mission name="go through decontamination process"/>
@@ -2342,6 +2395,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="Human Intelligence - exfiltrate"/>
         <mission name="Human Intelligence - report information"/>
@@ -2376,6 +2430,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="follow"/>
         <mission name="park"/>
@@ -2411,6 +2466,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="follow"/>
         <mission name="park"/>
@@ -2446,6 +2502,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="follow"/>
         <mission name="park"/>
@@ -2482,6 +2539,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="withdraw"/>
         <mission name="cross"/>
@@ -2519,6 +2577,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="withdraw"/>
         <mission name="cross"/>
@@ -2900,6 +2959,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="park"/>
         <mission name="Emergency - alert"/>
         <mission name="Emergency - follow population"/>
@@ -2932,6 +2992,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="park"/>
         <mission name="Emergency - evacuate wounded"/>
       </missions>
@@ -2964,6 +3025,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="park"/>
       </missions>
       <fragorders>
@@ -2994,6 +3056,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="park"/>
         <mission name="Emergency - follow population"/>
       </missions>
@@ -3022,6 +3085,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="park"/>
       </missions>
       <fragorders/>
@@ -3033,6 +3097,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3130,6 +3195,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="follow"/>
         <mission name="Joint Air - Loiter"/>
       </missions>
@@ -3141,6 +3207,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="go through decontamination process"/>
         <mission name="adopt transportation posture"/>
@@ -3158,6 +3225,7 @@
         <mission name="move"/>
         <mission name="Reconnaissance Area"/>
         <mission name="Reconnaissance Area Hidden"/>
+        <mission name="Withdraw To Initial Position"/>
         <mission name="cross"/>
         <mission name="follow"/>
         <mission name="park"/>
@@ -4870,4 +4938,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0440695679" -->
+<!-- signature="1076609699" -->
