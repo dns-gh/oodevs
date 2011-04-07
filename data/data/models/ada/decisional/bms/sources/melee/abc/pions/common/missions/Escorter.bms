@@ -3,6 +3,8 @@ includedFiles["sources/melee/abc/pions/common/missions/Escorter.bms"] = true
 
 include "bit.lua"
 
+include "Melee/ABC/Pions/Common/Missions/Protect.bms"
+
 
 --[[// *****************************************************************************
 ]]--[[//

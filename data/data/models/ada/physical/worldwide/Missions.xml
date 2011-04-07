@@ -1896,6 +1896,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
     </mission>
+    <mission dia-behavior="MIS_Pion_ABC_Protect" dia-type="T_Mission_Pion_ABC_Protect" id="507" name="Armor - protect">
+      <description>
+        <doctrine><![CDATA[TBC]]></doctrine>
+        <usage><![CDATA[Unit moves towards the unit to escort and follows it. Unit will engage any detected enemy unit. If the unit to follow has a move mission, this unit will stop and wait for Unit. When close to it, Unit will take its objective and move towards this objective, followed by the unit to escort.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="uniteAEscorter_" name="Unit to escort" optional="false" type="Agent"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirEnMesureDe" dia-type="T_Mission_Automate_SoutenirEnMesureDe" id="187" mrt-dia-behavior="MIS_Automate_MRT_SoutenirEnMesureDe" name="prepare to">
@@ -3321,4 +3332,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1581808025" -->
+<!-- signature="0236974705" -->

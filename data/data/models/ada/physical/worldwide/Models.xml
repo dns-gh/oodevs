@@ -1745,6 +1745,7 @@
         <mission name="Armor - control"/>
         <mission name="Armor - recon"/>
         <mission name="Armor - escort"/>
+        <mission name="Armor - protect"/>
         <mission name="Armor - screen"/>
         <mission name="Armor - open a route"/>
         <mission name="Armor - monitor"/>
@@ -1796,6 +1797,7 @@
         <mission name="Armor - control"/>
         <mission name="Armor - recon"/>
         <mission name="Armor - escort"/>
+        <mission name="Armor - protect"/>
         <mission name="Armor - screen"/>
         <mission name="Armor - monitor"/>
         <mission name="Armor - report information"/>
@@ -1910,6 +1912,7 @@
         <mission name="secure area (against populations assault)"/>
         <mission name="Armor - recon"/>
         <mission name="Armor - escort"/>
+        <mission name="Armor - protect"/>
         <mission name="Armor - escort units"/>
         <mission name="Armor - open a route"/>
         <mission name="Armor - report information"/>
@@ -1957,6 +1960,7 @@
         <mission name="Armor - control"/>
         <mission name="Armor - cover"/>
         <mission name="Armor - escort"/>
+        <mission name="Armor - protect"/>
         <mission name="Armor - fix"/>
         <mission name="Armor - flank-guard"/>
         <mission name="Armor - screen"/>
@@ -3241,6 +3245,7 @@
         <mission name="Armor - control"/>
         <mission name="Armor - cover"/>
         <mission name="Armor - escort"/>
+        <mission name="Armor - protect"/>
         <mission name="Armor - fix"/>
         <mission name="Armor - flank-guard"/>
         <mission name="Armor - screen"/>
@@ -4938,4 +4943,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1076609699" -->
+<!-- signature="2980662289" -->
