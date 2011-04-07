@@ -17,9 +17,6 @@
     <property name="version.version" value="${version.minor}"/><!-- required for version extension -->
     <property name="masalife.version" value="2010-1.0/1.0.6"/>
 
-    <property name="samples.dir" value="${src.dir}/samples"/>
-    <property name="models.dir" value="${data.dir}/data/models/ada/decisional/directia5/models"/>
-
     <!--
     ============================================================================
       libraries
@@ -530,49 +527,18 @@
     ============================================================================
     -->
 
-    <macrodef name="bmc">
-        <attribute name="dir"/>
-        <attribute name="core"/>
-        <sequential>
-            <java taskname="bmc" classname="net.masagroup.sword.bm.tools.bmc.Tool"
-                fork="true" failonerror="true" outputproperty="" logerror="true">
-                <classpath>
-                    <fileset dir="${bin.dir}" includes="*.jar"/>
-                </classpath>
-                <sysproperty key="java.library.path" value="${bin.dir}"/>
-                <arg line="-licpath @build-simu"/>
-                <arg value="-rootpath"/>
-                <arg value="@{core};@{dir}"/>
-                <arg value="@{dir}"/>
-            </java>
-        </sequential>
-    </macrodef>
-
-    <macrodef name="generate-database">
-        <attribute name="name"/>
-        <attribute name="core"/>
-        <sequential>
-            <delete>
-                <fileset dir="${models.dir}/@{name}/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
-            </delete>
-            <bmc dir="${models.dir}/@{name}/src" core="@{core}"/>
-        </sequential>
-    </macrodef>
+    <target name="generate-database" description="compile behavior model database">
+        <delete>
+            <fileset dir="${models.dir}/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
+        </delete>
+        <bmc luac="false" src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml"/>
+    </target>
 
     <target name="generate-symbols" description="generate symbols">
         <zip destfile="${run.dir}/resources/symbols.pak">
             <fileset dir="${libraries.dir}/clients_gui/svg" includes="**/*"/>
         </zip>
     </target>
-
-    <target name="generate-database" description="compile behavior model database">
-        <delete>
-            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
-        </delete>
-        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/src" core="${data.dir}/data/models/ada/decisional/directia5/models/directia.core/directia.core.bml"/>
-    </target>
-
-    <target name="generate-data" depends="generate-database" description="generate data"/>
 
     <target name="deploy-application-data" description="deploy applications data to run directory">
         <copy todir="${run.dir}">
@@ -1238,7 +1204,7 @@
         <update name="wise"/>
         <antcall target="deploy-application-data"/>
         <update-database database="directia.core.bml" dir="${models.dir}/directia.core"/>
-        <antcall target="generate-data"/>
+        <antcall target="generate-database"/>
         <antcall target="generate-symbols"/>
     </target>
 
