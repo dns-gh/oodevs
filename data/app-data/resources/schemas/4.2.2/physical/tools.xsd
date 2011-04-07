@@ -335,6 +335,7 @@
 			<xs:enumeration value="DateTime"/>
 			<xs:enumeration value="Point"/>
 			<xs:enumeration value="Polygon"/>
+			<xs:enumeration value="Location"/>
 			<xs:enumeration value="Path"/>
 			<xs:enumeration value="Limit"/>
 			<xs:enumeration value="PhaseLine"/>
