@@ -14,6 +14,7 @@
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -154,4 +155,15 @@ bool DEC_KnowledgePopulationFunctions::HasFlow( const MIL_AgentPion& caller, int
     if( !pKnowledge )
         return false;
     return pKnowledge->GetPopulationKnown().HasFlow();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals
+// Created: LMT 2011-04-01
+// -----------------------------------------------------------------------------
+void DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals( const MIL_AgentPion& callerAgent, int knowledgeId, const double rArmedIndividuals)
+{
+    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    if( pKnowledge )
+        pKnowledge->GetPopulationKnown().SetNewArmedIndividuals( rArmedIndividuals );
 }

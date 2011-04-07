@@ -776,6 +776,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Connaissances_CollisionsPopulations" ] = boost::bind( &DEC_KnowledgeFunctions::GetPopulationsColliding, boost::ref( GetPion() ) );
     brain[ "DEC_Connaissances_PopulationsPrenantAPartie" ] = boost::bind( &DEC_KnowledgeFunctions::GetPopulationsAttacking, boost::ref( GetPion() ) );
     brain[ "DEC_Connaissances_Populations" ] = boost::bind( &DEC_KnowledgeFunctions::GetPopulations< MIL_AgentPion >, boost::ref( GetPion() ) );
+    brain[ "DEC_Agent_ChangerNombreIndividuArmeDansFoule" ] =
+        boost::function< void( const int, const double ) >( boost::bind( &DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals, boost::ref( GetPion() ), _1, _2 ) );
 
     // Ordres de conduite
     brain[ "DEC_ReleverUnite" ] =

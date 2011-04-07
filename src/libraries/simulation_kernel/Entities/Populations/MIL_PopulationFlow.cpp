@@ -58,17 +58,19 @@ void load_construct_data( Archive& archive, MIL_PopulationFlow* flow, const unsi
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_PopulationConcentration& sourceConcentration )
     : MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
-    , pSourceConcentration_( &sourceConcentration )
-    , pDestConcentration_  ( 0 )
-    , bHeadMoveFinished_   ( false )
-    , flowShape_           ( 2, sourceConcentration.GetPosition() )
-    , direction_           ( 0., 1. )
-    , rSpeed_              ( 0. )
-    , bPathUpdated_        ( true )
-    , bFlowShapeUpdated_   ( true )
-    , bDirectionUpdated_   ( true )
-    , bSpeedUpdated_       ( true )
-    , pSplittingObject_    ( 0 )
+    , pSourceConcentration_       ( &sourceConcentration )
+    , pDestConcentration_         ( 0 )
+    , bHeadMoveFinished_          ( false )
+    , flowShape_                  ( 2, sourceConcentration.GetPosition() )
+    , direction_                  ( 0., 1. )
+    , rSpeed_                     ( 0. )
+    , bPathUpdated_               ( true )
+    , bFlowShapeUpdated_          ( true )
+    , bDirectionUpdated_          ( true )
+    , bSpeedUpdated_              ( true )
+    , pSplittingObject_           ( 0 )
+    , personsPassedThroughObject_ ( 0 )
+    , armedIndividualsBeforeSplit_( 0 )
 {
     SetAttitude( sourceConcentration.GetAttitude() );
     UpdateLocation();
@@ -81,20 +83,22 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, MIL_Populati
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint )
     : MIL_PopulationElement_ABC( population, idManager_.GetFreeId() )
-    , pSourceConcentration_( 0 )
-    , pDestConcentration_  ( 0 )
-    , primaryDestination_  ( source.primaryDestination_ )
-    , alternateDestination_( source.alternateDestination_ )
-    , pHeadPath_           ( source.pHeadPath_ ) //$$$$ Degueu : faire une copie
-    , bHeadMoveFinished_   ( false )
-    , flowShape_           ( source.flowShape_ )
-    , direction_           ( 0., 1. )
-    , rSpeed_              ( 0. )
-    , bPathUpdated_        ( true )
-    , bFlowShapeUpdated_   ( true )
-    , bDirectionUpdated_   ( true )
-    , bSpeedUpdated_       ( true )
-    , pSplittingObject_    ( 0 )
+    , pSourceConcentration_       ( 0 )
+    , pDestConcentration_         ( 0 )
+    , primaryDestination_         ( source.primaryDestination_ )
+    , alternateDestination_       ( source.alternateDestination_ )
+    , pHeadPath_                  ( source.pHeadPath_ ) //$$$$ Degueu : faire une copie
+    , bHeadMoveFinished_          ( false )
+    , flowShape_                  ( source.flowShape_ )
+    , direction_                  ( 0., 1. )
+    , rSpeed_                     ( 0. )
+    , bPathUpdated_               ( true )
+    , bFlowShapeUpdated_          ( true )
+    , bDirectionUpdated_          ( true )
+    , bSpeedUpdated_              ( true )
+    , pSplittingObject_           ( 0 )
+    , personsPassedThroughObject_ ( 0 )
+    , armedIndividualsBeforeSplit_( 0 )
 {
     IT_PointList itSplit = std::find( flowShape_.begin(), flowShape_.end(), splitPoint );
     if( itSplit != flowShape_.end() )
@@ -111,16 +115,18 @@ MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, const MIL_Po
 // -----------------------------------------------------------------------------
 MIL_PopulationFlow::MIL_PopulationFlow( MIL_Population& population, unsigned int nID )
     : MIL_PopulationElement_ABC( population, nID )
-    , pSourceConcentration_( 0 )
-    , pDestConcentration_  ( 0 )
-    , bHeadMoveFinished_   ( false )
-    , direction_           ( 0., 1. )
-    , rSpeed_              ( 0. )
-    , bPathUpdated_        ( true )
-    , bFlowShapeUpdated_   ( true )
-    , bDirectionUpdated_   ( true )
-    , bSpeedUpdated_       ( true )
-    , pSplittingObject_    ( 0 )
+    , pSourceConcentration_       ( 0 )
+    , pDestConcentration_         ( 0 )
+    , bHeadMoveFinished_          ( false )
+    , direction_                  ( 0., 1. )
+    , rSpeed_                     ( 0. )
+    , bPathUpdated_               ( true )
+    , bFlowShapeUpdated_          ( true )
+    , bDirectionUpdated_          ( true )
+    , bSpeedUpdated_              ( true )
+    , pSplittingObject_           ( 0 )
+    , personsPassedThroughObject_ ( 0 )
+    , armedIndividualsBeforeSplit_( 0 )
 {
     // NOTHING
 }
@@ -233,7 +239,11 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
     if( !attr )
         return;
     if( !pSplittingObject_ || attr->GetDensity() < pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity() )
+    {
+        personsPassedThroughObject_ = 0;
+        armedIndividualsBeforeSplit_ = GetPopulation().GetArmedIndividuals();
         pSplittingObject_ = &object;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -438,8 +448,18 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
         pDestConcentration_->RegisterPushingFlow( *this );
     }
+
     if( pDestConcentration_ )
+    {
+        if( pDestConcentration_->GetSplittingObject() )
+        {
+            personsPassedThroughObject_ += nNbrHumans;
+            double proportion = std::min( 1., static_cast< double >( personsPassedThroughObject_ ) / GetPopulation().GetAllHumans() );
+            double newArmed = armedIndividualsBeforeSplit_ * ( 1 - proportion ) +  GetPopulation().GetNewArmedIndividuals() * proportion;
+            GetPopulation().SetArmedIndividuals( newArmed );
+        }
         pDestConcentration_->PushHumans( PullHumans( nNbrHumans ) );
+    }
     // Tail management
     if( pSourceConcentration_ )
         PushHumans( pSourceConcentration_->PullHumans( nNbrHumans ) );

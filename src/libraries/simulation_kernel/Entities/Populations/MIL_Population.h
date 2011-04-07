@@ -82,6 +82,9 @@ public:
     unsigned int GetContaminatedHumans() const;
     unsigned int GetDeadHumans() const;
     double GetArmedIndividuals() const;
+    void SetArmedIndividuals( double armedIndividuals );
+    double GetNewArmedIndividuals() const;
+    void SetNewArmedIndividuals( double armedIndividuals );
     bool HasFlow() const;
     const std::string& GetCriticalIntelligence() const;
     float GetAffinity( unsigned long teamID ) const;
@@ -229,6 +232,7 @@ private:
     MIL_Army_ABC* pArmy_;
     const MIL_PopulationAttitude* pDefaultAttitude_;
     double rArmedIndividuals_;
+    double rNewArmedIndividuals_;
     double rMale_;
     double rFemale_;
     double rChildren_;

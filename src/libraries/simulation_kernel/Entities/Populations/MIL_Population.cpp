@@ -75,6 +75,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , pArmy_                      ( &army )
     , pDefaultAttitude_           ( 0 )
     , rArmedIndividuals_          ( type.GetArmedIndividuals() )
+    , rNewArmedIndividuals_       ( type.GetArmedIndividuals() )
     , rMale_                      ( type.GetMale() )
     , rFemale_                    ( type.GetFemale() )
     , rChildren_                  ( type.GetChildren() )
@@ -815,6 +816,36 @@ unsigned int MIL_Population::GetDeadHumans() const
 double MIL_Population::GetArmedIndividuals() const
 {
     return rArmedIndividuals_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SetArmedIndividuals
+// Created: JSR 2011-04-04
+// -----------------------------------------------------------------------------
+void MIL_Population::SetArmedIndividuals( double armedIndividuals )
+{
+    if( rArmedIndividuals_ != armedIndividuals )
+    {
+        rArmedIndividuals_ = armedIndividuals;
+        armedIndividualsChanged_ = true;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetNewArmedIndividuals
+// Created: LMT 2011-04-04
+// -----------------------------------------------------------------------------
+double MIL_Population::GetNewArmedIndividuals() const
+{
+    return rNewArmedIndividuals_;
+}
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SetNewArmedIndividuals
+// Created: LMT 2011-04-04
+// -----------------------------------------------------------------------------
+void MIL_Population::SetNewArmedIndividuals( double newArmedIndividuals )
+{
+    rNewArmedIndividuals_ = newArmedIndividuals;
 }
 
 // -----------------------------------------------------------------------------

@@ -159,6 +159,8 @@ private:
     bool bSpeedUpdated_;
     // Split
     const MIL_Object_ABC* pSplittingObject_;
+    double armedIndividualsBeforeSplit_;
+    unsigned int personsPassedThroughObject_;
     static MIL_IDManager idManager_;
     //@}
 };
