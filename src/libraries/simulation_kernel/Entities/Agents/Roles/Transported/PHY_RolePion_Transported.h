@@ -81,6 +81,11 @@ public:
     virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
+    //! @name Accessors
+    //@{
+    const MIL_Agent_ABC* GetTransporter() const { return pTransporter_; }
+    //@}
+
 private:
     //! @name Tools
     //@{

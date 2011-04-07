@@ -17,6 +17,7 @@
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RoleInterface_Refugee.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Roles/Transported/PHY_RolePion_Transported.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Objects/StockAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -166,6 +167,39 @@ void DEC_ActionFunctions::Transport_AddPions( MIL_AgentPion& callerAgent, const 
 // Name: DEC_ActionFunctions::Transport_MagicLoadPion
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------
+void DEC_ActionFunctions::Transport_MagicLoadPionInCarrier( MIL_AgentPion& caller, const DEC_Decision_ABC* pCarrier )
+{
+    assert( pCarrier );
+    pCarrier->GetPion().Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, caller, boost::cref( false ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::Transport_MagicLoadPion
+// Created: NLD 2005-04-19
+// -----------------------------------------------------------------------------
+void DEC_ActionFunctions::Transport_MagicUnloadPionFromCarrier( MIL_AgentPion& caller )
+{
+    //$$$ TMP
+    const MIL_Agent_ABC* transporter = caller.GetRole< transport::PHY_RolePion_Transported >().GetTransporter();
+    if( transporter )
+        const_cast< MIL_Agent_ABC* >( transporter )->GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( caller );;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::Transport_MagicLoadPion
+// Created: NLD 2005-04-19
+// -----------------------------------------------------------------------------
+DEC_Decision_ABC* DEC_ActionFunctions::Transport_GetCarrier( const MIL_AgentPion& caller )
+{
+    const MIL_Agent_ABC* transporter = caller.GetRole< transport::PHY_RolePion_Transported >().GetTransporter();
+    if( transporter )
+        return &const_cast< DEC_Decision_ABC& >( transporter->GetDecision() );
+    return 0;
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::Transport_MagicLoadPion
+// Created: NLD 2005-04-19
+// -----------------------------------------------------------------------------
 void DEC_ActionFunctions::Transport_MagicLoadPion( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable  )
 {
     assert( pPion );
@@ -182,6 +216,19 @@ void DEC_ActionFunctions::Transport_MagicLoadPions( MIL_AgentPion& callerAgent, 
     {
         MIL_AgentPion& pion = ( *itPion )->GetPion();
         callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pion, bTransportOnlyLoadable );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::Transport_MagicUnloadPions
+// Created: NLD 2005-04-19
+// -----------------------------------------------------------------------------
+void DEC_ActionFunctions::Transport_MagicUnloadPions( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions )
+{
+    for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )
+    {
+        MIL_AgentPion& pion = ( *itPion )->GetPion();
+        callerAgent.GetRole< transport::PHY_RoleAction_Transport >().MagicUnloadPion( pion );
     }
 }
 

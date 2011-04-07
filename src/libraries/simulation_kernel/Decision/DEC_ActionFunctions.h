@@ -41,11 +41,16 @@ public:
 
     static void Orientate                 ( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > dir );
 
+    static void Transport_MagicLoadPionInCarrier    ( MIL_AgentPion& caller, const DEC_Decision_ABC* pCarrier );
+    static void Transport_MagicUnloadPionFromCarrier( MIL_AgentPion& caller );
+    static DEC_Decision_ABC* Transport_GetCarrier   ( const MIL_AgentPion& caller );
+
     static void Transport_AddPion         ( MIL_AgentPion& callerAgent, DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
     static void Transport_AddPions        ( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable );
     static void Transport_MagicLoadPion   ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );
     static void Transport_MagicLoadPions  ( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable );
     static void Transport_MagicUnloadPion ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pPion );
+    static void Transport_MagicUnloadPions( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions );
     static bool Transport_IsFinished      ( const MIL_AgentPion& callerAgent );
     static bool Transport_IsTransporting  ( const MIL_AgentPion& callerAgent );
     static void Transport_Cancel          ( MIL_AgentPion& callerAgent );
