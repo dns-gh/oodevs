@@ -12,6 +12,8 @@
         <mission name="Joint Air - Loiter">
           <fragorder name="Execute an air strike"/>
         </mission>
+        <mission name="adopt transportation posture"/>
+        <mission name="Joint Air - Bombing"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -42,6 +44,8 @@
         <mission name="transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
+        <mission name="transport embark"/>
+        <mission name="transport disembark"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3293,6 +3297,38 @@
         <fragorder name="Pion Autoriser Toutes Munitions"/>
       </fragorders>
     </unit>
+    <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.bms" masalife="false" name="Aircraft Carrier">
+      <missions>
+        <mission name="withdraw"/>
+        <mission name="park"/>
+        <mission name="manage refugees"/>
+        <mission name="manage prisoners"/>
+        <mission name="follow"/>
+        <mission name="transport">
+          <fragorder name="Modify Disembarking point"/>
+        </mission>
+        <mission name="transport embark"/>
+        <mission name="transport disembark"/>
+      </missions>
+      <fragorders>
+        <fragorder name="NBC suit on"/>
+        <fragorder name="NBC suit off"/>
+        <fragorder name="Radio silence"/>
+        <fragorder name="Radio silence lifted"/>
+        <fragorder name="Radar silence"/>
+        <fragorder name="Radar silence lifted"/>
+        <fragorder name="Get back carriers"/>
+        <fragorder name="Pause maneuver"/>
+        <fragorder name="Resume maneuver"/>
+        <fragorder name="Cancel maneuver"/>
+        <fragorder name="Switch posture"/>
+        <fragorder name="Change ROE"/>
+        <fragorder name="Change population ROE"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+      </fragorders>
+    </unit>
   </units>
   <automats>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="Strategic Bomber Squadron">
@@ -4943,4 +4979,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2980662289" -->
+<!-- signature="0688970167" -->

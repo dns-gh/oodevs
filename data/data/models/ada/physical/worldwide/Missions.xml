@@ -1861,6 +1861,30 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="itineraire_" name="path" optional="false" type="Path"/>
     </mission>
+    <mission dia-behavior="MIS_Pion_TransportEmbarquer" dia-type="T_Mission_Pion_TransportEmbarquer" id="4410" name="transport embark">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="unitesATransporter_" max-occurs="unbounded" min-occurs="1" name="Units to transport" optional="false" type="Agent"/>
+      <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_TransportDebarquer" dia-type="T_Mission_Pion_TransportDebarquer" id="4420" name="transport disembark">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="unitesADebarquer_" max-occurs="unbounded" min-occurs="1" name="Units to disembark" optional="false" type="Agent"/>
+      <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_JOINT_AIR_Bombing" dia-type="T_Mission_Pion_JOINT_AIR_Bombing" id="4430" name="Joint Air - Bombing">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
+      <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
+    </mission>
     <mission dia-behavior="MIS_Pion_ReconnaissanceArea" dia-type="T_Mission_Pion_Reconnaissance Area" id="504" name="Reconnaissance Area">
       <description>
         <doctrine><![CDATA[A tactical mission task that reconnoiters an area.]]></doctrine>
@@ -3332,4 +3356,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="0236974705" -->
+<!-- signature="3014863377" -->

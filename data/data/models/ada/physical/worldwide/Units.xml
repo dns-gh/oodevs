@@ -4914,5 +4914,30 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="Aircraft Carrier" id="165" name="Aircraft Carrier" type="Pion JOINT">
+    <nature atlas-nature="None" level="ooo" nature-app6="combat support/landing support"/>
+    <equipments>
+      <equipment count="1" crew="100" major="true" type="Aircraft Carrier"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="10" type="Officier"/>
+      <crew-rank count="50" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="900s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="3182343861" -->
+<!-- signature="3718013402" -->

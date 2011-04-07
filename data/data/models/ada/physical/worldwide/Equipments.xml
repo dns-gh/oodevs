@@ -5959,7 +5959,7 @@
       <speed terrain="foret" value="0"/>
       <speed terrain="plantation" value="0"/>
       <speed terrain="marais" value="0"/>
-      <speed terrain="dune" value="0"/>
+      <speed terrain="dune" value="3"/>
       <speed terrain="urbain" value="0"/>
       <speed terrain="etendue eau" value="50"/>
       <speed terrain="glace" value="0"/>
@@ -13326,7 +13326,76 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="138" name="Theater High Altitude Radar Vehicle" protection="UnarmouredVehicle" size="Medium" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="aircraft carrier" id="138" name="Aircraft Carrier" protection="ArmouredCarrier" size="Heavy" weight="100000">
+    <speeds max="60">
+      <speed terrain="inconnu" value="0"/>
+      <speed terrain="foret" value="0"/>
+      <speed terrain="plantation" value="0"/>
+      <speed terrain="marais" value="0"/>
+      <speed terrain="dune" value="1"/>
+      <speed terrain="urbain" value="0"/>
+      <speed terrain="etendue eau" value="50"/>
+      <speed terrain="glace" value="0"/>
+      <speed terrain="lisiere" value="0"/>
+      <speed terrain="banlieue" value="0"/>
+      <speed terrain="cote" value="3"/>
+      <speed terrain="bord de plantation" value="0"/>
+      <speed terrain="bord de marais" value="3"/>
+      <speed terrain="bord de dune" value="3"/>
+      <speed terrain="bord de glace" value="3"/>
+      <speed terrain="chemin" value="0"/>
+      <speed terrain="autoroute" value="0"/>
+      <speed terrain="nationale" value="0"/>
+      <speed terrain="departementale" value="0"/>
+      <speed terrain="ruisseau" value="0"/>
+      <speed terrain="riviere" value="0"/>
+      <speed terrain="riviere importante" value="50"/>
+      <speed terrain="pont" value="0"/>
+      <speed terrain="falaise" value="0"/>
+      <speed terrain="voie ferree" value="0"/>
+      <speed terrain="carrefour" value="0"/>
+      <speed terrain="montagne" value="0"/>
+      <speed terrain="bord de montagne" value="0"/>
+    </speeds>
+    <composition>
+      <category name="carburant">
+        <resource capacity="5500" logistic-threshold="30" name="Diesel" normalized-consumption="1000"/>
+      </category>
+      <category name="ration">
+        <resource capacity="180" logistic-threshold="30" name="Water" normalized-consumption="60"/>
+        <resource capacity="30" logistic-threshold="30" name="Food" normalized-consumption="10"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="2" type="Eye"/>
+    </sensors>
+    <radars/>
+    <transports>
+      <crew man-boarding-time="3s" man-unloading-time="2s"/>
+      <unit capacity="900000" ton-loading-time="0s" ton-unloading-time="0s"/>
+    </transports>
+    <consumptions>
+      <consumption status="ArretMoteurEteint">
+        <resource category="ration" name="Water" value="2.5"/>
+        <resource category="ration" name="Food" value="0.41"/>
+      </consumption>
+      <consumption status="ArretMoteurAllume">
+        <resource category="carburant" name="Diesel" value="20"/>
+      </consumption>
+      <consumption status="Deplacement">
+        <resource category="carburant" name="Diesel" value="100"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems/>
+    <human-protections/>
+    <objects/>
+    <breakdowns>
+      <breakdown origin="random" percentage="100" type="DIV Breakdown NTI3"/>
+      <breakdown origin="attrition" percentage="100" type="DIV Breakdown NTI3"/>
+    </breakdowns>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="139" name="Theater High Altitude Radar Vehicle" protection="UnarmouredVehicle" size="Medium" weight="10">
     <speeds max="90">
       <speed terrain="inconnu" value="15"/>
       <speed terrain="foret" value="45"/>
@@ -13446,4 +13515,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2967355334" -->
+<!-- signature="4176084436" -->
