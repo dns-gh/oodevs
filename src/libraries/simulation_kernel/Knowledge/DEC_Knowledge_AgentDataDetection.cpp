@@ -32,13 +32,14 @@ DEC_Knowledge_AgentDataDetection::DEC_Knowledge_AgentDataDetection()
     : nTimeLastUpdate_             ( 0 )
     , rSpeed_                      ( std::numeric_limits< double >::max() )
     , rAltitude_                   ( std::numeric_limits< double >::max() )
+    , rPopulationDensity_          ( 0. )
     , pArmySurrenderedTo_          ( 0 )
-    , bPrisoner_                   ( false )
-    , bRefugeeManaged_             ( false )
-    , bDead_                       ( false )
     , pLastPosture_                ( 0 )
     , pCurrentPosture_             ( 0 )
     , rPostureCompletionPercentage_( 1. )
+    , bPrisoner_                   ( false )
+    , bRefugeeManaged_             ( false )
+    , bDead_                       ( false )
     , bDirectionUpdated_           ( true )
     , bSpeedUpdated_               ( true )
     , bPositionUpdated_            ( true )
@@ -73,7 +74,8 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
          >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
          >> bPrisoner_
          >> bRefugeeManaged_
-         >> bDead_;
+         >> bDead_
+         >> rPopulationDensity_;
     unsigned int nID;
     unsigned int nNbr;
     file >> nNbr;
@@ -110,7 +112,8 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << pArmySurrenderedTo_
          << bPrisoner_
          << bRefugeeManaged_
-         << bDead_;
+         << bDead_
+         << rPopulationDensity_;
     unsigned size = visionVolumes_.size();
     file << size;
     for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
@@ -145,6 +148,7 @@ void DEC_Knowledge_AgentDataDetection::Prepare()
     bSurrenderedUpdated_ = false;
     bRefugeeManagedUpdated_ = false;
     bDeadUpdated_ = false;
+    rPopulationDensity_ = 0.;
 }
 
 // -----------------------------------------------------------------------------
@@ -198,6 +202,7 @@ void DEC_Knowledge_AgentDataDetection::DoUpdate( const T& data )
         bDead_ = bNewDead;
         bDeadUpdated_ = true;
     }
+    rPopulationDensity_ = data.GetPopulationDensity();
     rAltitude_ = data.GetAltitude();
     pLastPosture_ = &data.GetLastPosture();
     pCurrentPosture_ = &data.GetCurrentPosture();
@@ -411,4 +416,13 @@ unsigned int DEC_Knowledge_AgentDataDetection::GetTimeLastUpdate() const
 bool DEC_Knowledge_AgentDataDetection::HasChanged() const
 {
     return bDirectionUpdated_ || bSpeedUpdated_ || bPositionUpdated_ || bPrisonerUpdated_ || bSurrenderedUpdated_ || bRefugeeManagedUpdated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentDataDetection::GetPopulationDensity
+// Created: LDC 2011-04-07
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_AgentDataDetection::GetPopulationDensity() const
+{
+    return rPopulationDensity_;
 }

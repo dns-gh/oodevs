@@ -127,6 +127,7 @@ public:
     const PHY_Posture& GetLastPosture() const;
     const PHY_Posture& GetCurrentPosture() const;
     double GetPostureCompletionPercentage() const;
+    double GetPopulationDensity() const;
     //@}
 
     //! @name Decisional operations

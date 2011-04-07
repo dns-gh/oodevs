@@ -69,6 +69,7 @@ public:
     bool IsPrisoner() const;
     bool IsRefugeeManaged() const;
     bool IsDead() const;
+    double GetPopulationDensity() const;
     //@}
 
     //! @name Network
@@ -92,16 +93,16 @@ private:
     MT_Vector2D vDirection_;
     double rSpeed_;
     double rAltitude_;
-    bool bDead_;
+    double rPopulationDensity_;
     const MIL_Army_ABC* pArmySurrenderedTo_;
-    bool bPrisoner_;
-    bool bRefugeeManaged_;
     // Attributes used by the vision, to see if we see a knowledge which doesn't exist anymore
     T_ComposanteVolumeSet visionVolumes_;
     const PHY_Posture* pLastPosture_;
     const PHY_Posture* pCurrentPosture_;
     double rPostureCompletionPercentage_;
-    // Network
+    bool bDead_;
+    bool bPrisoner_;
+    bool bRefugeeManaged_;
     bool bDirectionUpdated_;
     bool bSpeedUpdated_;
     bool bPositionUpdated_;

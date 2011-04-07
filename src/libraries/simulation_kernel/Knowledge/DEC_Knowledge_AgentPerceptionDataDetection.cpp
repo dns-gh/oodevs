@@ -11,13 +11,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentPerceptionDataDetection.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
-#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
-#include "Entities/Agents/Roles/Refugee/PHY_RoleInterface_Refugee.h"
-#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
+#include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
+#include "Entities/Agents/Roles/Refugee/PHY_RoleInterface_Refugee.h"
+#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -36,7 +37,8 @@ DEC_Knowledge_AgentPerceptionDataDetection::DEC_Knowledge_AgentPerceptionDataDet
     , pLastPosture_                ( 0 )
     , pCurrentPosture_             ( 0 )
     , rPostureCompletionPercentage_( 1. )
-    , pArmySurrenderedTo_          ( false )
+    , rPopulationDensity_          ( 0. )
+    , pArmySurrenderedTo_          ( 0 )
     , bPrisoner_                   ( false )
     , bRefugeeManaged_             ( false )
     , bDead_                       ( false )
@@ -68,7 +70,8 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
          >> bPrisoner_
          >> bRefugeeManaged_
          >> bDead_
-         >> rPostureCompletionPercentage_;
+         >> rPostureCompletionPercentage_
+         >> rPopulationDensity_;
     // Desérialisation des volumes par nom ( données "statiques" )
     unsigned int nNbr;
     unsigned int nID;
@@ -100,7 +103,8 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
          << bPrisoner_
          << bRefugeeManaged_
          << bDead_
-         << rPostureCompletionPercentage_;
+         << rPostureCompletionPercentage_
+         << rPopulationDensity_;
     // Serialisation des volumes par nom ( données "statiques" )
     unsigned size = visionVolumes_.size();
     file << size;
@@ -129,6 +133,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::Prepare( const MIL_Agent_ABC& a
     pLastPosture_ = &rolePosture.GetLastPosture   ();
     pCurrentPosture_ = &rolePosture.GetCurrentPosture();
     rPostureCompletionPercentage_ =  rolePosture.GetPostureCompletionPercentage();
+    rPopulationDensity_ = agentPerceived.GetRole< PHY_RoleInterface_Population >().GetCollidingPopulationDensity();
 }
 
 // -----------------------------------------------------------------------------
@@ -271,4 +276,13 @@ bool DEC_Knowledge_AgentPerceptionDataDetection::IsPrisoner() const
 bool DEC_Knowledge_AgentPerceptionDataDetection::IsRefugeeManaged() const
 {
     return bRefugeeManaged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_AgentPerceptionDataDetection::GetPopulationDensity
+// Created: LDC 2011-04-07
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_AgentPerceptionDataDetection::GetPopulationDensity() const
+{
+    return rPopulationDensity_;
 }

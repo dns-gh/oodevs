@@ -882,6 +882,15 @@ const PHY_Posture& DEC_Knowledge_Agent::GetCurrentPosture() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetPopulationDensity
+// Created: LDC 2011-04-07
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_Agent::GetPopulationDensity() const
+{
+    return dataDetection_.GetPopulationDensity();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Agent::GetMaxPerceptionLevel
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------

@@ -361,19 +361,19 @@ double PHY_SensorTypeAgent::GetSourceFactor( const MIL_Agent_ABC& source ) const
     assert( postureSourceFactors_.size() > nOldPostureIdx );
     assert( postureSourceFactors_.size() > nCurPostureIdx );
 
-    double rModificator =   postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage()
+    double rModifier =   postureSourceFactors_[ nOldPostureIdx ] + sourcePosture.GetPostureCompletionPercentage()
                           * ( postureSourceFactors_[ nCurPostureIdx ] - postureSourceFactors_[ nOldPostureIdx ] );
 
 
     MIL_Agent_ABC& tempSource = const_cast< MIL_Agent_ABC& >( source );//@TODO MGD FIND A BETTER WAY
     std::auto_ptr< detection::PerceptionDistanceComputer_ABC > computer( tempSource.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    rModificator *= tempSource.Execute( *computer ).GetFactor();
+    rModifier *= tempSource.Execute( *computer ).GetFactor();
 
     // Population
     const double rPopulationDensity = source.GetRole< PHY_RoleInterface_Population >().GetCollidingPopulationDensity();
-    rModificator *= GetPopulationFactor( rPopulationDensity );
+    rModifier *= GetPopulationFactor( rPopulationDensity );
 
-    return rModificator;
+    return rModifier;
 }
 
 // -----------------------------------------------------------------------------
@@ -394,7 +394,11 @@ double PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) const
 
     assert( postureTargetFactors_.size() > nOldPostureIdx );
     assert( postureTargetFactors_.size() > nCurPostureIdx );
-    return postureTargetFactors_[ nOldPostureIdx ] + targetPosture.GetPostureCompletionPercentage() * ( postureTargetFactors_[ nCurPostureIdx ] - postureTargetFactors_[ nOldPostureIdx ] );
+    double rModifier = postureTargetFactors_[ nOldPostureIdx ] + targetPosture.GetPostureCompletionPercentage() * ( postureTargetFactors_[ nCurPostureIdx ] - postureTargetFactors_[ nOldPostureIdx ] );
+    
+    // Population
+    const double rPopulationDensity = target.GetRole< PHY_RoleInterface_Population >().GetCollidingPopulationDensity();
+    return rModifier * GetPopulationFactor( rPopulationDensity );
 }
 
 // -----------------------------------------------------------------------------
@@ -413,7 +417,9 @@ double PHY_SensorTypeAgent::GetTargetFactor( const DEC_Knowledge_Agent& target )
 
     assert( postureTargetFactors_.size() > nOldPostureIdx );
     assert( postureTargetFactors_.size() > nCurPostureIdx );
-    return postureTargetFactors_[ nOldPostureIdx ] + target.GetPostureCompletionPercentage() * ( postureTargetFactors_[ nCurPostureIdx ] - postureTargetFactors_[ nOldPostureIdx ] );
+    double rModifier = postureTargetFactors_[ nOldPostureIdx ] + target.GetPostureCompletionPercentage() * ( postureTargetFactors_[ nCurPostureIdx ] - postureTargetFactors_[ nOldPostureIdx ] );
+
+    return rModifier * GetPopulationFactor( target.GetPopulationDensity() );
 }
 
 // -----------------------------------------------------------------------------
