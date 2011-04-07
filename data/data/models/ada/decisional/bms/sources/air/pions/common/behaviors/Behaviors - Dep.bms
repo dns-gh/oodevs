@@ -541,7 +541,8 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
 elseif switch_1 == eItineraire_Invalide then
                     do
                     end
-
+--[[//DEC_Debug( "itineraire" + DEC_ItineraireToString( itineraire ) + " invalide" );
+]]
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
@@ -551,13 +552,15 @@ elseif switch_1 == eItineraire_Invalide then
                 if cases_switch_1[2] or switch_1 == eItineraire_CalculEnCours then
                     do
                     end
-
+--[[//DEC_Debug( "Agent" + " : itineraire " + DEC_ItineraireToString( itineraire ) + " calcul en cours..." );
+]]
                     _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eItineraire_Impossible then
                     do
                     end
-
+--[[//DEC_Debug( "itineraire" + DEC_ItineraireToString( itineraire ) + " impossible" );
+]]
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
