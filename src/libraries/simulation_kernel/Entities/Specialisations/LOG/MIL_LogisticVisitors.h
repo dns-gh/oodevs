@@ -250,10 +250,11 @@ class SupplyStockAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPi
 
         void Visit( const MIL_AgentPion& tmp )
         {
+            // NLD 2011-04-07 : Totally bugged ... 
             // We must not use BL internal TC2 for external use
-            MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
-            if( bExternalTransfert_ && testBrain )
-                return;
+            //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
+            //if( bExternalTransfert_ && testBrain )
+            //    return;
 
             const PHY_RoleInterface_Supply* candidate = tmp.RetrieveRole< PHY_RoleInterface_Supply >();
             const double rNewScore = candidate!=0 ? candidate->GetStockAvailablity( dotationCategory_, rRequestedValue_ ) : 0;
@@ -309,10 +310,11 @@ class SupplyConvoyAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentP
 
         void Visit( const MIL_AgentPion& tmp )
         {
+            // NLD 2011-04-07 : Totally bugged ... 
             // We must not use BL internal TC2 for external use
-            MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
-            if( bExternalTransfert_ && testBrain )
-                return;
+            //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
+            //if( bExternalTransfert_ && testBrain )
+            //    return;
 
             if( pSelected_ )
                 return;
@@ -346,10 +348,11 @@ class SupplyConvoyCapacityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
 
         void Visit( const MIL_AgentPion& tmp )
         {
+            // NLD 2011-04-07 : Totally bugged ... 
             // We must not use BL internal TC2 for external use
-            MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
-            if( bExternalTransfert_ && testBrain )
-                return;
+            // MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
+            // if( bExternalTransfert_ && testBrain )
+            //    return;
 
             PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
             tmp.GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
