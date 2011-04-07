@@ -34,6 +34,14 @@
 					<xs:documentation xml:lang="fr">Catégorie de l'équipement</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="power-indicators" minOccurs="0">
+                <xs:complexType>
+                  <xs:attribute name="direct-fire" type="xs:nonNegativeInteger" use="required"/>
+                  <xs:attribute name="indirect-fire" type="xs:nonNegativeInteger" use="required"/>
+                  <xs:attribute name="close-combat" type="xs:nonNegativeInteger" use="required"/>
+                  <xs:attribute name="engineering" type="xs:nonNegativeInteger" use="required"/>
+                </xs:complexType>
+            </xs:element>
 		</xs:all>
 		<xs:attribute name="comment" type="xs:string" use="required"/>
 		<xs:attribute name="name" type="xs:string" use="required"/>

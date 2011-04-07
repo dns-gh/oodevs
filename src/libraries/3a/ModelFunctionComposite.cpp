@@ -53,7 +53,7 @@ void ModelFunctionComposite::BeginTick()
 // -----------------------------------------------------------------------------
 void ModelFunctionComposite::Receive( const sword::SimToClient& message )
 {
-    std::for_each( functions_.begin(), functions_.end(), boost::bind( &ModelFunction_ABC::Receive, _1, message ) );
+    std::for_each( functions_.begin(), functions_.end(), boost::bind( &ModelFunction_ABC::Receive, _1, boost::cref( message ) ) );
 }
 
 // -----------------------------------------------------------------------------

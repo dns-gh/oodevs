@@ -997,15 +997,6 @@ namespace
     }
 }
 
-namespace
-{
-    bool operator==( const sword::UnitAttributes& lhs, const sword::UnitAttributes& rhs )
-    {
-        BOOST_CHECK_EQUAL( lhs.DebugString(), rhs.DebugString() );
-        return true;
-    }
-}
-/*
 // -----------------------------------------------------------------------------
 // Name: Facade_TestCloseCombatPower
 // Created: ABR 2011-02-14
@@ -1018,7 +1009,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestCloseCombatPower, Fixture )
                              "   <result  function='plot' input='myselect' type='float'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    double variation[5] = { 1, 1, 1, 1, 0 };
+    int variation[5] = { 1, 1, 1, 1, 0 };
     sword::SimToClient  message = MakeEquipementVariation( variation, 42u );
     const sword::UnitAttributes& attributes = message.message().unit_attributes();
     MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes ), &IsCloseCombatPower ).returns( 10.f );
@@ -1048,21 +1039,27 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestProductOnTwoExtractors, Fixture )
                              "   <result  function='plot' input='myselect' type='float'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    MOCK_EXPECT( model, ComputePower ).once().with( 69u, &IsCloseCombatPower ).returns( 10.f );
-    MOCK_EXPECT( model, ComputePower ).once().with( 77u, &IsCloseCombatPower ).returns( 1000.f );
+    int variation[5] = { 1, 1, 1, 1, 0 };
+    sword::SimToClient  message1 = MakeEquipementVariation( variation, 42u );
+    sword::SimToClient  message2 = MakeEquipementVariation( variation, 123u );
+    const sword::UnitAttributes& attributes1 = message1.message().unit_attributes();
+    const sword::UnitAttributes& attributes2 = message2.message().unit_attributes();
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &IsCloseCombatPower ).returns( 10.f );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes2 ), &IsCloseCombatPower ).returns( 1000.f );
     task->Receive( BeginTick() );
-    task->Receive( MakeUnitCreation( 42, 69 ) );
-    task->Receive( MakeUnitCreation( 123, 77 ) );
+    task->Receive( message1 );
+    task->Receive( message2 );
     task->Receive( OperationalState( 50, 42 ) );
     task->Receive( EndTick() ); // expect 10 * 0.5
-    MOCK_EXPECT( model, ComputePower ).once().with( 69u, &IsCloseCombatPower ).returns( 20.f );
+    mock::verify();
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &IsCloseCombatPower ).returns( 20.f );
     task->Receive( BeginTick() );
-    task->Receive( MakeUnitCreation( 42, 69 ) );
+    task->Receive( message1 );
     task->Receive( OperationalState( 25, 42 ) );
     task->Receive( EndTick() ); // expect 20 * 0.25
-    MOCK_EXPECT( model, ComputePower ).once().with( 69u, &IsCloseCombatPower ).returns( 30.f );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &IsCloseCombatPower ).returns( 30.f );
     task->Receive( BeginTick() );
-    task->Receive( MakeUnitCreation( 42, 69 ) );
+    task->Receive( message1 );
     task->Receive( OperationalState( 100, 42 ) );
     task->Receive( EndTick() ); // expect 30 * 1
     task->Receive( BeginTick() );
@@ -1071,7 +1068,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestProductOnTwoExtractors, Fixture )
     MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
-*/
+
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]
 //(

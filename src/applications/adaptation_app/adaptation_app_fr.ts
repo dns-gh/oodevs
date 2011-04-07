@@ -180,27 +180,27 @@ Voulez vous sauvegarder malgré tout ?</translation>
     </message>
     <message>
         <source>Wound effects on power indicators</source>
-        <translation type="unfinished"></translation>
+        <translation>Effets des blessures sur les indicateurs de puissance</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished"></translation>
+        <translation>Disponible</translation>
     </message>
     <message>
         <source>Unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Indisponible</translation>
     </message>
     <message>
         <source>Repairable</source>
-        <translation type="unfinished"></translation>
+        <translation>Réparable avec évacuation</translation>
     </message>
     <message>
         <source>Repairing</source>
-        <translation type="unfinished"></translation>
+        <translation>Réparable sur place</translation>
     </message>
     <message>
         <source>Captured</source>
-        <translation type="unfinished"></translation>
+        <translation>Capturé</translation>
     </message>
 </context>
 <context>
