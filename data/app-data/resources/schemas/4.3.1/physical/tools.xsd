@@ -73,6 +73,10 @@
 			<xs:enumeration value="Automate TRANS"/>
 			<xs:enumeration value="Automate SGTIA"/>
             <xs:enumeration value="Automate Emergency"/>
+			<xs:enumeration value="Automate Organization"/>
+			<xs:enumeration value="Automate Notable"/>
+			<xs:enumeration value="Automate Journalist"/>
+			<xs:enumeration value="Automate Civilian"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_BreakdownsType">
