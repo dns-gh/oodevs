@@ -238,6 +238,21 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindSafety
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindAllPositions
+// Created: BCI 2011-04-01
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindAllPositions( const MT_Vector2D& center, float radius )
+{
+    std::vector< boost::shared_ptr< MT_Vector2D > > result;
+    std::vector< pathfind::Node< TerrainData >* > nodes = pPathfinder_->FindNodesWithinCircle( MakePoint( center ), radius );
+    for( std::vector< pathfind::Node< TerrainData >* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
+    {
+        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( (**iterator).X(), (**iterator).Y() ) ) );
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: std::vector< TerrainData > TER_PathFinderThread::FindTerrainDataWithinCircle
 // Created: BCI 2010-12-20
 // -----------------------------------------------------------------------------

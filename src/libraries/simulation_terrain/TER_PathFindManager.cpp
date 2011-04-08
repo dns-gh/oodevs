@@ -121,6 +121,15 @@ TerrainData TER_PathFindManager::FindTerrainDataWithinCircle( const MT_Vector2D&
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindAllPositions
+// Created: BCI 2011-04-01
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFindManager::FindAllPositions( const MT_Vector2D& center, float radius )
+{
+    return threads_.back()->FindAllPositions( center, radius );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_PathFindManager::Pick
 // Created: BCI 2011-03-04
 // -----------------------------------------------------------------------------

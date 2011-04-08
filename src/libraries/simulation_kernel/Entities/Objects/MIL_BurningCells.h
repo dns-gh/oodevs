@@ -100,7 +100,7 @@ private:
     void PropagateIgnition( const MIL_BurningCellOrigin& fromOrigin, MIL_BurningCell& to, unsigned int timeElapsed );
     void UpdateCombustion( MIL_BurningCell& cell );
     void UpdateDecline( MIL_BurningCell& cell );
-    void FindTerrainData( const geometry::Point2d& center, double radius, TerrainData& data );
+    void FindTerrainData( const geometry::Point2d& center, float radius, TerrainData& data );
 
     void SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& object, MIL_BurningCells::SendStateMode mode ) const;
     //@}

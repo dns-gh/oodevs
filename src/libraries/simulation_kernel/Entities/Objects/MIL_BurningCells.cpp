@@ -26,6 +26,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Meteo/PHY_MeteoDataManager.h"
 #include <pathfind/TerrainData.h>
 #pragma warning( push, 0 )
 #include <boost/geometry/geometry.hpp>
@@ -48,8 +49,6 @@ public:
            << ignitionThreshold_
            << maxCombustionEnergy_
            << ignitionEnergy_
-           << combustionEnergySum_
-           << combustionEnergyCount_
            << currentHeat_
            << currentCombustionEnergy_
            << lastUpdateTime_;
@@ -63,8 +62,6 @@ public:
            >> ignitionThreshold_
            >> maxCombustionEnergy_
            >> ignitionEnergy_
-           >> combustionEnergySum_
-           >> combustionEnergyCount_
            >> currentHeat_
            >> currentCombustionEnergy_
            >> lastUpdateTime_;
@@ -83,8 +80,6 @@ public:
     int ignitionThreshold_;
     int maxCombustionEnergy_;
     int ignitionEnergy_;
-    int combustionEnergySum_;
-    int combustionEnergyCount_;
     int currentHeat_;
     int currentCombustionEnergy_;
     unsigned int lastUpdateTime_;
@@ -187,11 +182,14 @@ void MIL_BurningCells::StartBurn( const MIL_BurningCellOrigin& cellOrigin, MIL_O
 void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Object_ABC& object, sword::EnumBurningCellPhase phase )
 {
     MIL_BurningCell* pCell = FindCell( cellOrigin );
+    bool isNew;
     if( pCell )
     {
         //si la cellule existe déjà, on ne peut que la faire brûler si elle ne brûle pas encore
         if( phase != sword::combustion || pCell->phase_ == sword::combustion )
             return;
+
+        isNew = false;
     }
     else
     {
@@ -202,8 +200,7 @@ void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Ob
         //nouvelle cellule
         pCell = new MIL_BurningCell();
         pCell->origin_ = cellOrigin;
-        burningCellsByCoordinates_[ cellOrigin ] = pCell;
-        burningCellsByObjects_[ object.GetID() ].push_back( pCell );
+        isNew = true;
     }
 
     //initialise la cellule
@@ -220,9 +217,23 @@ void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Ob
         if( (*it)->GetLocalisation().IsInside( MT_Vector2D( pCell->center_.X(), pCell->center_.Y() ) ) )
             (*it)->Get< FirePropagationModifierCapacity >().Modify( fireAttribute.GetClass(), pCell->ignitionThreshold_, pCell->maxCombustionEnergy_ );
     }
+
+    // $$$$ BCI 2011-04-05: avoid useless cell creation
+    if( isNew ) 
+    {
+        if( pCell->maxCombustionEnergy_ > 0 )
+        {
+            burningCellsByCoordinates_[ cellOrigin ] = pCell;
+            burningCellsByObjects_[ object.GetID() ].push_back( pCell );
+        }
+        else
+        {
+            delete pCell;
+            return;
+        }
+    }
+
     pCell->ignitionEnergy_ = 0;
-    pCell->combustionEnergySum_ = 0;
-    pCell->combustionEnergyCount_ = 0;
     pCell->currentHeat_ = phase == sword::combustion ? object.GetAttribute< FireAttribute >().GetInitialHeat() : 0;
     pCell->currentCombustionEnergy_ = 0;
     pCell->lastUpdateTime_ = std::numeric_limits< unsigned int >::max();
@@ -235,9 +246,20 @@ void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Ob
 // Name: MIL_BurningCells::FindTerrainData
 // Created: BCI 2011-03-04
 // -----------------------------------------------------------------------------
-void MIL_BurningCells::FindTerrainData( const geometry::Point2d& center, double radius, TerrainData& data )
+void MIL_BurningCells::FindTerrainData( const geometry::Point2d& center, float radius, TerrainData& data )
 {
-    data = TER_PathFindManager::GetPathFindManager().FindTerrainDataWithinCircle( MT_Vector2D( center.X(), center.Y() ), (float)radius );
+    data = TER_PathFindManager::GetPathFindManager().FindTerrainDataWithinCircle( MT_Vector2D( center.X(), center.Y() ), radius );
+
+    // $$$$ BCI 2011-04-05: grosse bidouille pour trouver un semblant de type de terrain quand le pathfind n'assure pas...
+    const TerrainData unknow;
+    if( data == unknow )
+    {
+        PHY_RawVisionData::envBits e = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData()( center.X(), center.Y() ).GetEnv();
+        if( e & PHY_RawVisionData::eVisionForest )
+            data.Merge( data.Forest() );
+        if( e & PHY_RawVisionData::eVisionUrban )
+            data.Merge( data.Urban() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -351,9 +373,7 @@ void MIL_BurningCells::UpdateCombustion( MIL_BurningCell& cell )
     {
         FireAttribute& fireAttribute = cell.pObject_->GetAttribute< FireAttribute >();
         cell.currentHeat_ = bound( 0, cell.currentHeat_ + fireAttribute.GetIncreaseRate() - fireAttribute.GetWeatherDecreateRate( *cell.pObject_ ), fireAttribute.GetMaxHeat() );
-        cell.combustionEnergySum_ += cell.currentHeat_;
-        ++cell.combustionEnergyCount_;
-        cell.currentCombustionEnergy_ = cell.combustionEnergySum_ / cell.combustionEnergyCount_;
+        cell.currentCombustionEnergy_ += cell.currentHeat_;
     }
     else
     {
@@ -512,7 +532,7 @@ void MIL_BurningCells::SendState( sword::ObjectAttributes& asn, MIL_Object_ABC& 
                     }
                 case sword::combustion:
                     {
-                        asnCell.mutable_combustion()->set_combustion_energy( cell.combustionEnergyCount_ > 0 ? cell.combustionEnergySum_ / cell.combustionEnergyCount_ : 0 );
+                        asnCell.mutable_combustion()->set_combustion_energy( cell.currentCombustionEnergy_ );
                         asnCell.mutable_combustion()->set_current_heat( cell.currentHeat_ );
                         asnCell.mutable_combustion()->set_max_combustion_energy( cell.maxCombustionEnergy_ );
                         break;
