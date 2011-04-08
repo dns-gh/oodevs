@@ -10,6 +10,7 @@
 #ifndef mission_tester_Client_h
 #define mission_tester_Client_h
 
+#include "client_proxy/SwordProxy.h"
 #include "client_proxy/SwordConnectionHandler_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include <boost/shared_ptr.hpp>
@@ -28,7 +29,9 @@ namespace mission_tester
 // Created: PHC 2011-03-28
 // =============================================================================
 class Client : public Publisher_ABC
+             , public SwordProxy
              , private SwordConnectionHandler_ABC
+             
 {
 public:
     //! @name Constructors / Destructors
@@ -37,7 +40,7 @@ public:
     virtual ~Client();
     //@}
 
-    //! @name Operations
+    //! @name Publisher_ABC
     //@{
     virtual void Send( const sword::ClientToSim& message );
     virtual void Send( const sword::ClientToAuthentication& message );
@@ -45,8 +48,6 @@ public:
     virtual void Send( const sword::ClientToAar& message );
     virtual void Send( const sword::ClientToMessenger& message );
 
-    void Update();
-    void Disconnect();
     bool IsConnected() const;
     bool IsAuthentified() const;
     void Register( const Listener_ABC& listener );
@@ -65,7 +66,6 @@ private:
 private:
     //! @name mermbers data
     //@{
-    std::auto_ptr< SwordProxy > proxy_;
     std::vector< const Listener_ABC* > listeners_;
     bool connected_;
     bool authentified_;

@@ -76,12 +76,10 @@ void Facade::Run()
     boost::shared_ptr< Scheduler_ABC > scheduler( factory_->CreateAgentScheduler() );
     Model model( *staticModel_, *scheduler );
     Exercise exercise( model, *staticModel_ );
-    Client client( model, "localhost", 10001, "Supervisor", "" );
+    Client client( model, "localhost", 10001, "Admin", "" );
     exercise.Register( *this );
     client.Register( *this );    
-    while( !client.IsConnected() )
-        client.Update();
-    while( !client.IsAuthentified() )
+    while( !client.IsConnected() || !client.IsAuthentified() )
         client.Update();
     while( client.IsConnected() )
     {

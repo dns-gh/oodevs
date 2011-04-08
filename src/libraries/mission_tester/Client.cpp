@@ -10,7 +10,6 @@
 #include "mission_tester_pch.h"
 #include "Client.h"
 #include "Listener_ABC.h"
-#include "client_proxy/SwordProxy.h"
 #include <boost/foreach.hpp>
 
 using namespace mission_tester;
@@ -20,12 +19,12 @@ using namespace mission_tester;
 // Created: PHC 2011-03-24
 // -----------------------------------------------------------------------------
 Client::Client( SwordMessageHandler_ABC& handler, const std::string& host, unsigned short port, const std::string& profile, const std::string& password )
-    : proxy_       ( new SwordProxy( host, port, profile, password ) )
+    : SwordProxy   ( host, port, profile, password )
     , connected_   ( false )
     , authentified_( false )
 {
-    proxy_->RegisterMessageHandler( &handler );
-    proxy_->Connect( this );
+    RegisterMessageHandler( &handler );
+    Connect( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,11 +38,11 @@ Client::~Client()
 
 // -----------------------------------------------------------------------------
 // Name: Client::Send
-// Created: PHC 2011-03-25
+// Created: PHC 2011-04-08
 // -----------------------------------------------------------------------------
 void Client::Send( const sword::ClientToSim& message )
 {
-    proxy_->Send( message );
+    Send( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,24 +79,6 @@ void Client::Send( const sword::ClientToAar& /*message*/ )
 void Client::Send( const sword::ClientToMessenger& /*message*/ )
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Update
-// Created: PHC 2011-03-25
-// -----------------------------------------------------------------------------
-void Client::Update()
-{
-    proxy_->Update();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Client::Disconnect
-// Created: PHC 2011-03-25
-// -----------------------------------------------------------------------------
-void Client::Disconnect()
-{
-    proxy_->Disconnect();
 }
 
 // -----------------------------------------------------------------------------
