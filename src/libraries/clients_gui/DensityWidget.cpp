@@ -165,7 +165,7 @@ void DensityWidget::Reset()
 void DensityWidget::OnMinChanged( const QString& value )
 {
     if( !value.isEmpty() )
-        options_.Change( category_ + "/min", boost::lexical_cast< float >( value ) );
+        options_.Change( category_ + "/min", value.toFloat() );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +175,7 @@ void DensityWidget::OnMinChanged( const QString& value )
 void DensityWidget::OnMaxChanged( const QString& value )
 {
     if( !value.isEmpty() )
-        options_.Change( category_ + "/max", boost::lexical_cast< float >( value ) );
+        options_.Change( category_ + "/max", value.toFloat() );
 }
 
 // -----------------------------------------------------------------------------
