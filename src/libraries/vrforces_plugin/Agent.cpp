@@ -294,7 +294,7 @@ void Agent::DestroyPseudoAggregate()
         DtAggregateStateRepository* copy = new DtAggregateStateRepository( *reflected_->asr() );
         DtEntityType type( ToString( entityTypes_.Find( type_.GetName() ) ).c_str() );
         copy->setAggregateType( type );
-        copy->useDeadReckoner( false );
+        copy->setAlgorithm( DtDrStatic );
         aggregatePublisher_.reset( new DtAggregatePublisher( copy, &connection_ ) );
         CreateSubordinates( type_ );
         reflectedId_ = DtEntityIdentifier::nullId();
@@ -382,5 +382,6 @@ void Agent::MoveTo( const geometry::Point2d& position ) const
 // -----------------------------------------------------------------------------
 void Agent::NotifyUpdated( const Subordinate& subordinate )
 {
-    subordinate.Update( *position_ );
+    if( !IsTrueAggregate() )
+        subordinate.Update( *position_ );
 }
