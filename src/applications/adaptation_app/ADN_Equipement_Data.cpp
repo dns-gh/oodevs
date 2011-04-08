@@ -6,19 +6,9 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-11-15 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Equipement_Data.cpp $
-// $Author: Nld $
-// $Modtime: 20/07/05 14:16 $
-// $Revision: 17 $
-// $Workfile: ADN_Equipement_Data.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Equipement_Data.h"
-
 #include "ADN_Tools.h"
 #include "ADN_Project_Data.h"
 #include "ADN_OpenFile_Exception.h"
@@ -26,11 +16,8 @@
 #include "ADN_Tr.h"
 #include "ADN_DataException.h"
 #include "ADN_AttritionInfos.h"
-
 #include "ENT/ENT_Tr.h"
-
 #include <memory>
-
 
 ADN_Equipement_Data::ResourceInfos* gpDummyDotationInfos;
 
@@ -43,10 +30,10 @@ ADN_Equipement_Data::ResourceInfos* gpDummyDotationInfos;
 // Created: APE 2005-02-15
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo::CategoryInfo()
-: ADN_Ref_ABC           ( "ADN_Equipement_Data::CategoryInfo" )
-, ADN_DataTreeNode_ABC  ()
-, parentResource_       ( *gpDummyDotationInfos )
-, ptrResourceNature_    ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
+    : ADN_Ref_ABC         ( "ADN_Equipement_Data::CategoryInfo" )
+    , ADN_DataTreeNode_ABC()
+    , parentResource_   ( *gpDummyDotationInfos )
+    , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 {
     assert( 0 );
 }
@@ -56,20 +43,20 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo()
 // Created: APE 2004-11-15
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
-: ADN_Ref_ABC           ( "ADN_Equipement_Data::CategoryInfo" )
-, ADN_DataTreeNode_ABC  ()
-, parentResource_       ( parentDotation )
-, strName_              ()
-, category_             ( ENT_Tr::ConvertFromDotationFamily( parentDotation.nType_ ) )
-, nMosId_               ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNextCatId() )
-, strCodeEMAT6_         ()
-, strCodeEMAT8_         ()
-, strCodeLFRIL_         ()
-, strCodeNNO_           ()
-, ptrResourceNature_    ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
-, rNbrInPackage_        ( 1. )
-, rPackageVolume_       ( 1. )
-, rPackageWeight_       ( 1. )
+    : ADN_Ref_ABC         ( "ADN_Equipement_Data::CategoryInfo" )
+    , ADN_DataTreeNode_ABC()
+    , parentResource_   ( parentDotation )
+    , strName_          ()
+    , category_         ( ENT_Tr::ConvertFromDotationFamily( parentDotation.nType_ ) )
+    , nMosId_           ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNextCatId() )
+    , strCodeEMAT6_     ()
+    , strCodeEMAT8_     ()
+    , strCodeLFRIL_     ()
+    , strCodeNNO_       ()
+    , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
+    , rNbrInPackage_    ( 1. )
+    , rPackageVolume_   ( 1. )
+    , rPackageWeight_   ( 1. )
 {
     strName_.SetDataName( "le nom d'" );
     strName_.SetParentNode( *this );
@@ -100,7 +87,6 @@ std::string ADN_Equipement_Data::CategoryInfo::GetItemName()
 ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::CategoryInfo::CreateCopy()
 {
     CategoryInfo* pCopy = new CategoryInfo( parentResource_ );
-
     pCopy->rNbrInPackage_  = rNbrInPackage_ .GetData();
     pCopy->rPackageVolume_ = rPackageVolume_.GetData();
     pCopy->rPackageWeight_ = rPackageWeight_.GetData();
@@ -170,11 +156,11 @@ void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output ) co
 // Name: ModificatorPostureInfos::ModificatorPostureInfos
 // Created: JDY 03-09-29
 //-----------------------------------------------------------------------------
-ADN_Equipement_Data::ModificatorPostureInfos::ModificatorPostureInfos(const E_UnitPosture& e )
-: ADN_Ref_ABC()
-, ADN_DataTreeNode_ABC()
-, eType_(e)
-, rCoeff_(1.0)
+ADN_Equipement_Data::ModificatorPostureInfos::ModificatorPostureInfos( const E_UnitPosture& e )
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , eType_ ( e )
+    , rCoeff_(1.0)
 {
     rCoeff_.SetDataName( "le modificateur de dégats selon la posture " );
     rCoeff_.SetParentNode( *this );
@@ -224,15 +210,15 @@ void ADN_Equipement_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& 
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
-: nIndirectType_    ( (E_TypeMunitionTirIndirect)0 )
-, nIntervention_    ( 0 )
-, rDispersionX_     ( 0.0 )
-, rDispersionY_     ( 0.0 )
-, rNeutralizationRatio_ ( 0 )
-, vModifStance_     ()
-, deployTime_      ( "0s" )
-, lifeTime_        ( "0s" )
-, nMineNumber_      ( 0 )
+    : nIndirectType_       ( (E_TypeMunitionTirIndirect)0 )
+    , nIntervention_       ( 0 )
+    , rDispersionX_        ( 0.0 )
+    , rDispersionY_        ( 0.0 )
+    , rNeutralizationRatio_( 1 )
+    , vModifStance_        ()
+    , deployTime_          ( "0s" )
+    , lifeTime_            ( "0s" )
+    , nMineNumber_         ( 0 )
 {
     for( int i = 0; i < eNbrUnitPosture; ++i )
     {
@@ -363,18 +349,18 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( ResourceInfos& parentDotation )
-: CategoryInfo          ( parentDotation )
-, bDirect_              ( false )
-, bTrancheD_            ( false )
-, bIndirect_            ( false )
-, bIlluminating_        ( false )
-, fRange_               ( 0 )
-, bMaintainIllumination_( false )
-, bGuided_              ( false )
-, bMaintainGuidance_    ( false )
-, fGuidanceRange_       ( 0 )
-, attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
-, modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
+    : CategoryInfo( parentDotation )
+    , bDirect_              ( false )
+    , bTrancheD_            ( false )
+    , bIndirect_            ( false )
+    , bIlluminating_        ( false )
+    , fRange_               ( 0 )
+    , bMaintainIllumination_( false )
+    , bGuided_              ( false )
+    , bMaintainGuidance_    ( false )
+    , fGuidanceRange_       ( 0 )
+    , attritions_           ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+    , modifUrbanBlocks_     ( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 {
     // NOTHING
 }
@@ -407,7 +393,6 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
     pCopy->bGuided_ = bGuided_.GetData();
     pCopy->bMaintainGuidance_ = bMaintainGuidance_.GetData();
     pCopy->fGuidanceRange_ = fGuidanceRange_.GetData();
-
 
     for( uint n = 0; n < attritions_.size(); ++n )
         pCopy->attritions_[n]->CopyFrom( * attritions_[n] );
@@ -565,12 +550,13 @@ bool ADN_Equipement_Data::AmmoCategoryInfo::HasUrbanAttrition() const
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::ResourceInfos::ResourceInfos( E_DotationFamily nType )
-: ADN_Ref_ABC            ()
-, ADN_DataTreeNode_ABC   ()
-, nType_                 ( nType )
-, strName_               ( ENT_Tr::ConvertFromDotationFamily( nType ) )
-, categories_            ( true, "ADN_Equipement_Data::ResourceInfos::categories_" )
+    : ADN_Ref_ABC()
+    , ADN_DataTreeNode_ABC()
+    , nType_                 ( nType )
+    , strName_               ( ENT_Tr::ConvertFromDotationFamily( nType ) )
+    , categories_            ( true, "ADN_Equipement_Data::ResourceInfos::categories_" )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -627,7 +613,6 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::ResourceInfos::FindCateg
     IT_CategoryInfos_Vector it = std::find_if( categories_.begin(), categories_.end(), ADN_Tools::NameCmp<CategoryInfo>( strName ) );
     if( it == categories_.end() )
         return 0;
-
     return *it;
 }
 
@@ -661,9 +646,9 @@ void ADN_Equipement_Data::ResourceInfos::WriteArchive( xml::xostream& output ) c
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::ADN_Equipement_Data()
-: ADN_Data_ABC()
-, nNextCatId_ ( 1 )
-, resources_  ()
+    : ADN_Data_ABC()
+    , nNextCatId_( 1 )
+    , resources_ ()
 {
     for( int n = 0; n < eNbrDotationFamily; ++n )
         resources_.AddItem( new ResourceInfos( (E_DotationFamily)n ) );
@@ -745,7 +730,6 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::FindEquipementCategory( 
     IT_ResourceInfos_Vector it = std::find_if( resources_.begin(), resources_.end(), ADN_Tools::NameCmp<ResourceInfos>( strDotationName ) );
     if( it == resources_.end() )
         return 0;
-
     return (*it)->FindCategory( strCategoryName );
 }
 
