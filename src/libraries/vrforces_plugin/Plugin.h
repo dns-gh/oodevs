@@ -59,7 +59,6 @@ namespace vrforces
 // Created: SBO 2011-01-19
 // =============================================================================
 class Plugin : public dispatcher::Plugin_ABC
-             , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
