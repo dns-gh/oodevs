@@ -26,6 +26,7 @@
 #include "BurnSurfaceAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "StockAttribute.h"
+#include "ToxicCloudAttribute.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
@@ -105,9 +106,6 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
     if( attributes.has_medical_treatment() && entity.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
         entity.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
-    if( attributes.has_medical_treatment() && entity.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
-        entity.Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
-
     if( attributes.has_resource_networks() && entity.Retrieve< kernel::ResourceNetwork_ABC >() == 0 )
         model_.resourceNetwork_.Create( entity, attributes.resource_networks() );
 
@@ -116,4 +114,7 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
 
     if( attributes.has_stock() && entity.Retrieve< kernel::StockAttribute_ABC >() == 0 )
         entity.Attach< kernel::StockAttribute_ABC >( *new StockAttribute( controllers_.controller_, static_.objectTypes_ ) );
+
+    if( attributes.has_toxic_cloud() && entity.Retrieve< kernel::ToxicCloudAttribute_ABC >() == 0 )
+        entity.Attach< kernel::ToxicCloudAttribute_ABC >( *new ToxicCloudAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
 }
