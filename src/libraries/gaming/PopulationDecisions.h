@@ -13,13 +13,17 @@
 #include "Decisions_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {
     class Controller;
     class Population_ABC;
     class DecisionalModel;
+}
+
+namespace sword
+{
+    class CrowdOrder;
 }
 
 // =============================================================================
@@ -29,7 +33,7 @@ namespace kernel
 // Created: AGE 2006-04-10
 // =============================================================================
 class PopulationDecisions : public kernel::Extension_ABC
-    , public kernel::Updatable_ABC< sword::CrowdOrder >
+                          , public kernel::Updatable_ABC< sword::CrowdOrder >
                           , public Decisions_ABC
 {
 public:

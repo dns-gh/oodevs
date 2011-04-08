@@ -11,6 +11,7 @@
 #define __PopulationPositions_h_
 
 #include "clients_kernel/Positions.h"
+
 class Population;
 
 // =============================================================================

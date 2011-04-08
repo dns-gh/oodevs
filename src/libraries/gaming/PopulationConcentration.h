@@ -43,8 +43,6 @@ public:
 
     //! @name Accessors
     //@{
-    float GetArea() const;
-
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual unsigned int GetHealthyHumans() const;
@@ -82,11 +80,11 @@ private:
     geometry::Point2f position_;
     geometry::Rectangle2f boundingBox_;
     float density_;
-    uint nID_;
-    int   nHealthyHumans_;
-    int   nWoundedHumans_;
-    int   nContaminatedHumans_;
-    int   nDeadHumans_;
+    unsigned int nID_;
+    int nHealthyHumans_;
+    int nWoundedHumans_;
+    int nContaminatedHumans_;
+    int nDeadHumans_;
     float radius_;
     float deadRadius_;
     E_PopulationAttitude attitude_;

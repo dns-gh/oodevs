@@ -12,7 +12,6 @@
 
 #include "clients_kernel/PopulationFlow_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
 
@@ -82,7 +81,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    uint nID_;
+    unsigned int nID_;
     T_PointVector flow_;
     T_PointVector path_;
     geometry::Rectangle2f boundingBox_;

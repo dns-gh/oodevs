@@ -13,6 +13,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/DecisionalModel.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -22,8 +23,8 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 PopulationDecisions::PopulationDecisions( kernel::Controller& controller, const Population_ABC& popu )
     : controller_( controller )
-    , popu_( popu )
-    , current_( 0 )
+    , popu_      ( popu )
+    , current_   ( 0 )
 {
     // NOTHING
 }
