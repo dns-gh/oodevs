@@ -50,7 +50,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         userRoleLabel_ = new QLabel( roleBox );
         userRole_ = new QComboBox( roleBox );
         userRoleLabel_->setText( tr( "Role" ));
-       roleBox->setStretchFactor( userRoleLabel_, 1 );
+        roleBox->setStretchFactor( userRoleLabel_, 1 );
         roleBox->setStretchFactor( userRole_, 1 );
         connect( userRoleGroup_, SIGNAL( toggled( bool ) ), this, SLOT( OnUserRoleActivation( bool ) ) );
         connect( userRole_, SIGNAL( activated( const QString& ) ), this, SLOT( OnUserRole( const QString& ) ) );
@@ -147,21 +147,10 @@ void UserProfileWidget::Display( UserProfile& profile )
     supervisor_->setChecked( profile.IsSupervisor() );
     if( userRoleDico_ )
     {
-        int role = profile_->GetUserRole();
-        userRoleGroup_->setChecked( role != -1 );
-        if( role != -1 )
-        {
-            tools::Iterator< const DictionaryEntryType& > dicoIt = userRoleDico_->CreateIterator();
-            while( dicoIt.HasMoreElements() )
-            {
-                const DictionaryEntryType& entry = dicoIt.NextElement();
-                if( static_cast< int >( entry.GetId() ) == role )
-                {
-                    userRole_->setCurrentText( userRoleDico_->GetLabel( entry.GetKey(), dicoKind_, dicoLanguage_ ).c_str() );
-                    break;
-                }
-            }
-        }
+        const std::string role = profile_->GetUserRole();
+        userRoleGroup_->setChecked( ! role.empty() );
+        if( !role.empty() )
+            userRole_->setCurrentText( userRoleDico_->GetLabel( role, dicoKind_, dicoLanguage_ ).c_str() );
     }
     unitRights_->Display( profile );
     populationRights_->Display( profile );
@@ -214,22 +203,10 @@ void UserProfileWidget::OnUserRoleActivation( bool enable )
 {
     if( userRoleDico_ && profile_ )
     {
-        if( enable && profile_->GetUserRole() == -1 )
-        {
-            std::string key = userRoleDico_->GetKey( userRole_->currentText().ascii(), dicoKind_, dicoLanguage_ );
-            tools::Iterator< const DictionaryEntryType& > dicoIt = userRoleDico_->CreateIterator();
-            while( dicoIt.HasMoreElements() )
-            {
-                const DictionaryEntryType& entry = dicoIt.NextElement();
-                if( entry.GetKey() == key )
-                {
-                    profile_->SetUserRole( entry.GetId() );
-                    break;
-                }
-            }
-        }
+        if( enable && profile_->GetUserRole().empty() )
+            profile_->SetUserRole( userRoleDico_->GetKey( userRole_->currentText().ascii(), dicoKind_, dicoLanguage_ ) );
         else if( !enable )
-            profile_->SetUserRole( -1 );
+            profile_->SetUserRole( "" );
         controllers_.controller_.Update( profile_ );
     }
 }
@@ -241,19 +218,7 @@ void UserProfileWidget::OnUserRoleActivation( bool enable )
 void UserProfileWidget::OnUserRole( const QString& role )
 {
     if( userRoleDico_ && profile_ )
-    {
-        std::string key = userRoleDico_->GetKey( role.ascii(), dicoKind_, dicoLanguage_ );
-        tools::Iterator< const DictionaryEntryType& > dicoIt = userRoleDico_->CreateIterator();
-        while( dicoIt.HasMoreElements() )
-        {
-            const DictionaryEntryType& entry = dicoIt.NextElement();
-            if( entry.GetKey() == key )
-            {
-                profile_->SetUserRole( entry.GetId() );
-                break;
-            }
-        }
-    }
+        profile_->SetUserRole( userRoleDico_->GetKey( role.ascii(), dicoKind_, dicoLanguage_ ) );
     controllers_.controller_.Update( profile_ );
 }
 

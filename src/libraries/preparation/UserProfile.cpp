@@ -29,7 +29,6 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     , model_          ( model )
     , supervisor_     ( false )
     , isClone_        ( false )
-    , userRole_       ( -1 )
 {
     const ExistenceChecker< tools::Resolver< kernel::Team_ABC > >       teamChecker( model_.teams_ );
     const ExistenceChecker< tools::Resolver< kernel::Formation_ABC > >  formationChecker( model_.formations_ );
@@ -71,7 +70,6 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
     , password_       ( "" )
     , supervisor_     ( false )
     , isClone_        ( false )
-    , userRole_       ( -1 )
 {
     controller_.Create( *this );
 }
@@ -117,7 +115,7 @@ UserProfile::~UserProfile()
 void UserProfile::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "profile" );
-    if( userRole_ != -1 )
+    if( !userRole_.empty() )
         xos << xml::attribute( "role", userRole_ );
     xos     << xml::attribute( "name", login_.ascii() )
             << xml::attribute( "password", password_.ascii() )
@@ -228,7 +226,7 @@ bool UserProfile::IsWriteable( const kernel::Entity_ABC& entity ) const
 // Name: UserProfile::GetUserRole
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
-int UserProfile::GetUserRole() const
+std::string UserProfile::GetUserRole() const
 {
     return userRole_;
 }
@@ -317,7 +315,7 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
 // Name: UserProfile::SetUserRole
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
-void UserProfile::SetUserRole( int role )
+void UserProfile::SetUserRole( const std::string& role )
 {
     userRole_ = role;
 }

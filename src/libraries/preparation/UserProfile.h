@@ -48,7 +48,7 @@ public:
     bool IsSupervisor() const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
-    int GetUserRole() const;
+    std::string GetUserRole() const;
     //@}
 
     //! @name Setters
@@ -58,7 +58,7 @@ public:
     void SetSupervisor( bool value );
     void SetReadable( const kernel::Entity_ABC& entity, bool readable );
     void SetWriteable( const kernel::Entity_ABC& entity, bool writeable );
-    void SetUserRole( int role );
+    void SetUserRole( const std::string& role );
     //@}
 
     //! @name Operations
@@ -113,7 +113,7 @@ private:
     T_Ids writeAutomats_;
     T_Ids writePopulations_;
     bool isClone_;
-    int userRole_;
+    std::string userRole_;
     //@}
 };
 
