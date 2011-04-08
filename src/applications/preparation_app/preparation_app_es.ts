@@ -815,6 +815,14 @@ Do you want to save anyway?</source>
         <source>Selected: outgoing links</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Toggle fullscreen mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle dock windows</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>

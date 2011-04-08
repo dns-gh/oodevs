@@ -94,6 +94,8 @@ public slots:
     void Open();
     void Close();
     bool Save();
+    void ToggleFullScreen();
+    void ToggleDocks();
     //@}
 
 private:
@@ -146,6 +148,7 @@ private:
     QDockWindow* pOrbatAttributes_;
     bool loading_;
     bool needsSaving_;
+    QString savedState_;
     //@}
 };
 
