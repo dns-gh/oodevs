@@ -98,6 +98,8 @@ public slots:
     void Close();
     void OnPlanifStateChange();
     void OnNameChanged();
+    void ToggleFullScreen();
+    void ToggleDocks();
     //@}
 
 private:
@@ -150,8 +152,9 @@ private:
     StatusBar* pStatus_;
     bool connected_;
     MissionPanel* pMissionPanel_;
-    QString               planifName_;
-    bool                  onPlanif_;
+    QString planifName_;
+    bool onPlanif_;
+    QString savedState_;
     //@}
 };
 

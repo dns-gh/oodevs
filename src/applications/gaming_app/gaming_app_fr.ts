@@ -1921,6 +1921,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Show population display tool</source>
         <translation>Options d&apos;affichage de la population</translation>
     </message>
+    <message>
+        <source>Toggle fullscreen mode</source>
+        <translation>Basculer mode plein écran</translation>
+    </message>
+    <message>
+        <source>Toggle dock windows</source>
+        <translation>Basculer affichage des fenêtres</translation>
+    </message>
 </context>
 <context>
     <name>MissionInterfaceBuilder</name>

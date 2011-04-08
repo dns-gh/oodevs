@@ -748,3 +748,37 @@ void MainWindow::OnNameChanged()
         setCaption( planifName_ );
 
 }
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::ToggleFullScreen
+// Created: SBO 2011-04-05
+// -----------------------------------------------------------------------------
+void MainWindow::ToggleFullScreen()
+{
+    if( isFullScreen() )
+        showNormal();
+    else
+        showFullScreen();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::ToggleDocks
+// Created: SBO 2011-04-08
+// -----------------------------------------------------------------------------
+void MainWindow::ToggleDocks()
+{
+    if( savedState_.isNull() || savedState_.isEmpty() )
+    {
+        QTextStream stream( &savedState_, IO_WriteOnly );
+        stream << *this;
+        QPtrList< QDockWindow > docks = dockWindows();
+        for( QPtrList< QDockWindow >::iterator it = docks.begin(); it != docks.end(); ++it )
+            (*it)->hide();
+    }
+    else
+    {
+        QTextStream stream( &savedState_, IO_ReadOnly );
+        stream >> *this;
+        savedState_ = QString::null;
+    }
+}

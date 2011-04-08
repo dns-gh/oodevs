@@ -212,6 +212,8 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
         boolMenu->AddItem( tools::translate( "Menu", "2D" ), false );
         boolMenu->AddItem( tools::translate( "Menu", "3D" ), true );
         menu->insertItem( MAKE_ICON( threed ), tools::translate( "Menu", "Display mode" ), boolMenu );
+        menu->insertItem( tools::translate( "Menu", "Toggle fullscreen mode" ), pParent, SLOT( ToggleFullScreen() ), Key_F12 );
+        menu->insertItem( tools::translate( "Menu", "Toggle dock windows" ), pParent, SLOT( ToggleDocks() ), Key_F11 );
     }
 
     menu->insertSeparator();
