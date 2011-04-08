@@ -65,7 +65,9 @@ public:
 
 private:
     MIL_Agent_ABC& pion_;
+    mutable double rPopulationDensity_;
     bool           bHasChanged_;
+    mutable bool   bDensityComputed_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Population* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Population* role, const unsigned int /*version*/ );

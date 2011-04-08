@@ -47,7 +47,9 @@ void load_construct_data( Archive& archive, PHY_RolePion_Population* role, const
 // -----------------------------------------------------------------------------
 PHY_RolePion_Population::PHY_RolePion_Population( MIL_Agent_ABC& pion )
     : pion_                                 ( pion )
+    , rPopulationDensity_                   ( 0. )
     , bHasChanged_                          ( true )
+    , bDensityComputed_                     ( false )
 {
     // NOTHING
 }
@@ -112,23 +114,27 @@ void PHY_RolePion_Population::Execute( firing::WeaponReloadingComputer_ABC& algo
 // -----------------------------------------------------------------------------
 double PHY_RolePion_Population::GetCollidingPopulationDensity() const
 {
-    T_KnowledgePopulationCollisionVector populationsColliding;
-    pion_.GetKnowledge().GetPopulationsColliding( populationsColliding );
-
-    double rPopulationDensity = 0.;
-    for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
-        rPopulationDensity = std::max( rPopulationDensity, (**it).GetMaxPopulationDensity() );
-
-    std::vector< const TER_Object_ABC* > objects;
-    TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), 500, objects );
-    for( std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+    if( !bDensityComputed_ )
     {
-        const MIL_Object_ABC* object = static_cast< const MIL_Object_ABC* >( *it );
-        const CrowdCapacity* capacity = object->Retrieve< CrowdCapacity >();
-        if( capacity )
-            rPopulationDensity = std::max( rPopulationDensity, capacity->GetDensity() );
+        bDensityComputed_ = true;
+        T_KnowledgePopulationCollisionVector populationsColliding;
+        pion_.GetKnowledge().GetPopulationsColliding( populationsColliding );
+
+        rPopulationDensity_ = 0.;
+        for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
+            rPopulationDensity_ = std::max( rPopulationDensity_, (**it).GetMaxPopulationDensity() );
+
+        std::vector< const TER_Object_ABC* > objects;
+        TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), 500, objects );
+        for( std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+        {
+            const MIL_Object_ABC* object = static_cast< const MIL_Object_ABC* >( *it );
+            const CrowdCapacity* capacity = object->Retrieve< CrowdCapacity >();
+            if( capacity )
+                rPopulationDensity_ = std::max( rPopulationDensity_, capacity->GetDensity() );
+        }
     }
-    return rPopulationDensity;
+    return rPopulationDensity_;
 }
 
 // -----------------------------------------------------------------------------
@@ -146,6 +152,7 @@ void PHY_RolePion_Population::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Population::Clean()
 {
+    bDensityComputed_ = false;
     bHasChanged_ = false;
 }
 
@@ -155,7 +162,7 @@ void PHY_RolePion_Population::Clean()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Population::HasChanged() const
 {
-    return bHasChanged_;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
