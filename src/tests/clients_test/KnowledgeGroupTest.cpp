@@ -21,7 +21,6 @@
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "XmlChecks.h"
-#include "MockResolver.h"
 #include <xeumeuleu/xml.hpp>
 #include <qapplication.h>
 #undef max
@@ -45,6 +44,13 @@ namespace
         MOCK_METHOD( IsActivated, 0 );
     };
 
+    template< typename T, typename Identifier >
+    struct MockResolver : tools::Resolver_ABC< T, Identifier >
+    {
+        MOCK_METHOD_EXT_TPL( Find, 1, T*( const Identifier& id ), Find )
+        MOCK_METHOD_EXT_TPL( Get, 1, T&( const Identifier& id ), Get )
+        MOCK_METHOD_EXT_TPL( CreateIterator, 0, tools::Iterator< const T& >(), CreateIterator )
+    };
 
     MOCK_BASE_CLASS( MockKnowledgeGroupsModel, KnowledgeGroupsModel )
     {
