@@ -528,10 +528,7 @@
     -->
 
     <target name="generate-database" description="compile behavior model database">
-        <delete>
-            <fileset dir="${models.dir}/src" includes="**/*.bmt,**/*.bmk,**/*.bmr,**/*.bmq,**/*.bmsk"/>
-        </delete>
-        <bmc luac="false" src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml"/>
+        <bmc src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
     </target>
 
     <target name="generate-symbols" description="generate symbols">
