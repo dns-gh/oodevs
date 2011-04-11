@@ -59,7 +59,7 @@ void ParamObstacleList::CommitTo( actions::ParameterContainer_ABC& action ) cons
 // -----------------------------------------------------------------------------
 Param_ABC* ParamObstacleList::CreateElement()
 {
-    return new ParamObstacle(this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "obstacle", false ), objectTypes_, layer_, converter_, controller_ );
+    return new ParamObstacle(this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "plannedwork", false ), objectTypes_, layer_, converter_, controller_ );
 }
 
 // -----------------------------------------------------------------------------

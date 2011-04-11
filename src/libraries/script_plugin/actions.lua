@@ -200,7 +200,7 @@ function PlannedWork.create( name, point )
     setmetatable( new, PlannedWork )
     new.type = "plannedwork"
     new.name = name
-    new.children = { GenObject.creat( "Travaux (U+00E9lU+00E9ment 1)", "obstacle", "barricade", point ) }
+    new.children = { GenObject.creat( "Travaux (U+00E9lU+00E9ment 1)", "plannedwork", "barricade", point ) }
     return new
 end
 
