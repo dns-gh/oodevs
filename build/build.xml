@@ -731,7 +731,7 @@
         </sequential>
     </macrodef>
 
-    <target name="scripts_test" description="run all tests">
+    <target name="scripts_test" description="run all script tests">
         <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="scipio-1.9.2"/>
         <!--
@@ -1012,7 +1012,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.exo,package.debug,package.wise-driver" description="package the installers"/>
+    <target name="package" depends="package.app,package.exo,package.debug,package.otpacks,package.wise-driver" description="package the installers and packs"/>
 
     <!-- Package misc -->
     <target name="package.patch" description="create a patch installer">
@@ -1101,15 +1101,11 @@
         </nsis>
     </target>
 
-    <!--
-    ============================================================================
-    otpacks
-    ============================================================================
-    -->
-    <macrodef name="generate-otpack">
+    <!-- Package packs -->
+    <macrodef name="pack">
         <attribute name="name"/>
-        <attribute name="desc"/>
-        <element name="otpack-include" implicit="yes"/>
+        <attribute name="description"/>
+        <attribute name="includes"/>
         <sequential>
             <echoxml file="${out.dir}/content.xml">
                 <content>
@@ -1118,38 +1114,26 @@
                 </content>
             </echoxml>
             <zip destfile="${dist.dir}/SWORD_@{name}_${version.major}.otpak" filesonly="true">
-                <fileset dir="${data.dir}" excludes="**/.svn/**">
-                    <otpack-include/>
-                </fileset>
+                <fileset dir="${data.dir}" includes="@{includes}"/>
                 <fileset dir="${out.dir}" includes="content.xml"/>
             </zip>
             <delete file="${out.dir}/content.xml"/>
         </sequential>
     </macrodef>
- 
-    <target name="otpacks" depends="otpacks.lossc, otpacks.cetac, otpacks.tutosw" description="otpacks creation"/>
- 
-    <target name="otpacks.lossc" description="LOSSC exercises package">
-        <generate-otpack name="LOSSC" desc="LOSSC exercises package">
-            <include name="exercises/LOSSC Scenario 1/**"/>
-            <include name="exercises/LOSSC Scenario 2/**"/>
-            <include name="exercises/LOSSC Scenario 3/**"/>
-            <include name="data/terrains/afghan_kabuldist/**"/>
-        </generate-otpack>
+
+    <target name="package.otpacks" depends="package.otpack.lossc,package.otpack.cetac,package.otpack.tutosw" description="package the exercise otpacks"/>
+
+    <target name="package.otpack.lossc" description="package du LOSSC otpack">
+        <pack name="LOSSC" description="LOSSC exercises package"
+              includes="exercises/LOSSC Scenario 1/**,exercises/LOSSC Scenario 2/**,exercises/LOSSC Scenario 3/**,data/terrains/afghan_kabuldist/**"/>
     </target>
 
-    <target name="otpacks.cetac" description="CETAC exercise package">
-        <generate-otpack name="CETAC" desc="CETAC exercise package">
-            <include name="exercises/CETAC_worldwide/**"/>
-            <include name="data/terrains/CETAC_dted1/**"/>
-        </generate-otpack>
+    <target name="package.otpack.cetac" description="package du CETAC otpack">
+        <pack name="CETAC" description="CETAC exercise package" includes="exercises/CETAC_worldwide/**,data/terrains/CETAC_dted1/**"/>
     </target>
 
-    <target name="otpacks.tutosw" description="tuto_sw exercises package">
-        <generate-otpack name="tutosw" desc="tuto_sw exercises package">
-            <include name="exercises/Tuto_sw/**"/>
-            <include name="data/terrains/Sw_terrain2/**"/>
-        </generate-otpack>
+    <target name="package.otpack.tutosw" description="package du Tuto_sw otpack">
+        <pack name="tutosw" description="tuto_sw exercises package" includes="exercises/Tuto_sw/**,data/terrains/Sw_terrain2/**"/>
     </target>
 
     <!--
@@ -1209,6 +1193,6 @@
 
     <target name="build" depends="libraries,applications"/>
 
-    <target name="all" depends="configure,build,test,documentation,package,otpacks" description="build and package distribution"/>
+    <target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
 
 </project>
