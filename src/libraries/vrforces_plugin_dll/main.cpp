@@ -8,7 +8,9 @@
 // *****************************************************************************
 
 #include "DllConfig.h"
+#include "dispatcher/Config.h"
 #include "vrforces_plugin/Plugin.h"
+#include <fstream>
 #include <windows.h>
 
 // -----------------------------------------------------------------------------
@@ -17,7 +19,22 @@
 // -----------------------------------------------------------------------------
 VRFORCES_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, xml::xistream& xis )
 {
-    return new plugins::vrforces::Plugin( model, simulation, config, xis );
+    const std::string logFile( config.BuildSessionChildFile( "vrforces_dll_crash.log" ) );
+    try
+    {
+        return new plugins::vrforces::Plugin( model, simulation, config, xis );
+    }
+    catch( std::exception& e )
+    {
+        std::ofstream log( logFile.c_str() );
+        log << "Initialization failed cause: " << e.what() << std::endl;
+    }
+    catch( ... )
+    {
+        std::ofstream log( logFile.c_str() );
+        log << "Initialization failed (unhandled error)." << std::endl;
+    }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -26,7 +43,11 @@ VRFORCES_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Mode
 // -----------------------------------------------------------------------------
 VRFORCES_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin )
 {
-    delete plugin;
+    try
+    {
+        delete plugin;
+    }
+    catch( ... ) {}
 }
 
 // -----------------------------------------------------------------------------

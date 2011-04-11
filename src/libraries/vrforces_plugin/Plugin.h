@@ -96,13 +96,13 @@ private:
     //@{
     dispatcher::Model_ABC& model_;
     dispatcher::SimulationPublisher_ABC& simulation_;
-    T_Agents agents_;
-    std::auto_ptr< DtExerciseConn > connection_;
-    std::auto_ptr< DtFilePrinter > logger_;
-    std::auto_ptr< Facade > vrForces_;
     std::auto_ptr< ForceResolver_ABC > forceResolver_;
-    std::auto_ptr< DisaggregationStrategy_ABC > disaggregator_;
     std::auto_ptr< rpr::EntityTypeResolver > typeResolver_;
+    std::auto_ptr< DtFilePrinter > logger_;
+    std::auto_ptr< DtExerciseConn > connection_;
+    std::auto_ptr< Facade > vrForces_;
+    std::auto_ptr< DisaggregationStrategy_ABC > disaggregator_;
+    T_Agents agents_;
     //@}
 };
 

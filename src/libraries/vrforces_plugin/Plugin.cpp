@@ -34,19 +34,19 @@ using namespace plugins::vrforces;
 Plugin::Plugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, xml::xistream& /*xis*/ )
     : model_        ( model )
     , simulation_   ( simulation )
-    , connection_   ( new DtExerciseConn( DtVrlApplicationInitializer( 0, 0, "VR-Forces Plugin" ) ) )
-    , logger_       ( new DtFilePrinter( config.BuildSessionChildFile( "vrforces.log" ).c_str() ) )
-    , vrForces_     ( new Facade( *connection_ ) )
     , forceResolver_( new ForceResolver( model_ ) )
-    , disaggregator_( new DisaggregationStrategy( *vrForces_ ) )
     , typeResolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
+    , logger_       ( new DtFilePrinter( config.BuildSessionChildFile( "vrforces.log" ).c_str() ) )
+    , connection_   ( new DtExerciseConn( DtVrlApplicationInitializer( 0, 0, "VR-Forces Plugin" ) ) )
+    , vrForces_     ( new Facade( *connection_ ) )
+    , disaggregator_( new DisaggregationStrategy( *vrForces_ ) )
 {
-    connection_->setDestroyFedExecFlag( false );
     DtWarn.attachPrinter( logger_.get() );
     DtInfo.attachPrinter( logger_.get() );
     DtVerbose.attachPrinter( logger_.get() );
     DtFatal.attachPrinter( logger_.get() );
     DtDebug.attachPrinter( logger_.get() );
+    connection_->setDestroyFedExecFlag( false );
 }
 
 // -----------------------------------------------------------------------------
