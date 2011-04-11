@@ -21,9 +21,9 @@
 template< typename T, typename Identifier >
 struct MockResolver : tools::Resolver_ABC< T,Identifier >, mock::object, mock::detail::base< tools::Resolver_ABC< T,Identifier > >
 {
-    MOCK_METHOD_TPL_EXT( Find, 1 )
-    MOCK_METHOD_TPL_EXT( Get, 1 )
-    MOCK_METHOD_TPL_EXT( CreateIterator, 0 )
+    MOCK_METHOD_TPL_EXT( Find, 1, T*( const Identifier& id ), Find )
+    MOCK_METHOD_TPL_EXT( Get, 1, T&( const Identifier& id ), Get )
+    MOCK_METHOD_TPL_EXT( CreateIterator, 0, Iterator< const T& >(), CreateIterator )
 };
 
 #endif // __MockResolver_h_
