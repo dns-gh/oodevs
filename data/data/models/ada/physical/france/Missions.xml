@@ -4250,7 +4250,7 @@
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="335" name="Deteriorer">
       <parameter dia-name="objectif" name="objectif" optional="false" type="UrbanKnowledge"/>
     </mission>
-    <mission dia-behavior="france.military.crowd.tasks.AllerA" dia-type="france.military.crowd.tasks.AllerA" id="3000" name="COMMUNES AllerA">
+    <mission dia-behavior="france.military.crowd.tasks.AllerA" dia-type="france.military.crowd.tasks.AllerA" id="3000" name="AllerA">
       <parameter dia-name="objectif" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -4268,6 +4268,9 @@
     </mission>
     <mission dia-behavior="france.military.crowd.tasks.Proteger" dia-type="france.military.crowd.tasks.Proteger" id="3002" name="Proteger">
       <parameter dia-name="objectif" name="Cible" optional="false" type="Agent"/>
+    </mission>
+    <mission dia-behavior="france.military.crowd.tasks.FaireMouvement" dia-type="france.military.crowd.tasks.FaireMouvement" id="3003" name="FaireMouvement">
+      <parameter dia-name="objectifs" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
   </populations>
   <fragorders>
@@ -4463,4 +4466,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1134753591" -->
+<!-- signature="3453391723" -->
