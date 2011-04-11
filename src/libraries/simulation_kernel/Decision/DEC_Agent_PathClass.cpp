@@ -259,7 +259,7 @@ void DEC_Agent_PathClass::ReadFuseau( xml::xistream& xis )
 void DEC_Agent_PathClass::ReadAutomataFuseau( xml::xistream& xis )
 {
     xis >> xml::optional
-        >> xml::start( "outter-tolerance " )
+        >> xml::start( "outter-tolerance" )
             >> xml::optional >> xml::attribute( "cost-per-meter" ,rAutomataFuseauCostPerMeterOut_ )
             >> xml::attribute( "distance", rMaximumAutomataFuseauDistance_ )
         >> xml::end;
