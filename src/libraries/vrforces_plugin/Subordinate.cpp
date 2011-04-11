@@ -10,7 +10,8 @@
 #include "vrforces_plugin_pch.h"
 #include "Subordinate.h"
 #include "Agent.h"
-#include "AggregatedPosition.h"
+#include "AggregatedState_ABC.h"
+#include "AggregatedPosition_ABC.h"
 #include "Facade.h"
 #pragma warning( push, 0 )
 #include <vl/aggPub.h>
@@ -106,6 +107,7 @@ void Subordinate::OnUpdate( DtReflectedEntity* obj, void* userData )
     if( Subordinate* that = static_cast< Subordinate* >( userData ) )
         if( obj && that->reflected_ == obj )
         {
+            that->state_ = that->reflected_->esr()->damageState();
             that->superior_.NotifyUpdated( *that );
             DtInfo << "Subordinate '" << that->entityId_.string() << "' updated." << std::endl;
         }
@@ -147,4 +149,23 @@ void Subordinate::Update( AggregatedPosition_ABC& position ) const
 {
     if( reflected_ )
         position.Update( entityId_, reflected_->esr()->location() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Subordinate::Update
+// Created: SBO 2011-04-11
+// -----------------------------------------------------------------------------
+void Subordinate::Update( AggregatedState_ABC& state ) const
+{
+    if( reflected_ )
+        state.Update( entityId_, reflected_->esr()->damageState() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Subordinate::IsUndamaged
+// Created: SBO 2011-04-11
+// -----------------------------------------------------------------------------
+bool Subordinate::IsUndamaged() const
+{
+    return state_ != DtDamageDestroyed;
 }

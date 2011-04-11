@@ -10,6 +10,7 @@
 #include "vrforces_plugin_pch.h"
 #include "Agent.h"
 #include "AggregatedPosition.h"
+#include "AggregatedState.h"
 #include "DisaggregationStrategy_ABC.h"
 #include "Facade.h"
 #include "ForceResolver_ABC.h"
@@ -33,6 +34,8 @@
 #include <vlpi/entitytypes.h>
 #include <vrforces/vrfController.h>
 #pragma warning( pop )
+
+#pragma warning( disable: 4355 )
 
 using namespace plugins::vrforces;
 
@@ -78,6 +81,7 @@ Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade
     , type_          ( agent.GetType() )
     , entityTypes_   ( entityTypes )
     , position_      ( new AggregatedPosition( *this ) )
+    , state_         ( new AggregatedState( *this ) )
 {
     std::stringstream name;
     name << message.automat().id() << ":"<< id_ << "/" << message.name().c_str();
@@ -365,7 +369,6 @@ void Agent::MoveTo( const geometry::Point2d& position ) const
     simulation::UnitMagicAction message;
     message().mutable_tasker()->mutable_unit()->set_id( id_ );
     message().set_type( sword::UnitMagicAction_Type_move_to );
-    sword::Point point;
     sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
     parameter.set_null_value( false );
     sword::Location& location = *parameter.mutable_value()->Add()->mutable_point()->mutable_location();
@@ -383,5 +386,59 @@ void Agent::MoveTo( const geometry::Point2d& position ) const
 void Agent::NotifyUpdated( const Subordinate& subordinate )
 {
     if( !IsTrueAggregate() )
+    {
         subordinate.Update( *position_ );
+        subordinate.Update( *state_ );
+    }
+}
+
+namespace
+{
+    sword::MissionParameter& MakeParameter( simulation::UnitMagicAction& message )
+    {
+        sword::MissionParameter& parameter = *message().mutable_parameters()->add_elem();
+        parameter.set_null_value( true );
+        return parameter;
+    }
+
+    void AddState( unsigned long id, unsigned int available, sword::MissionParameter::Value& parameter )
+    {
+        parameter.mutable_list()->Add()->set_identifier( id );
+        parameter.mutable_list()->Add()->set_quantity( available );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::NotifyStateChanged
+// Created: SBO 2011-04-11
+// -----------------------------------------------------------------------------
+void Agent::NotifyStateChanged() const
+{
+    simulation::UnitMagicAction message;
+    message().mutable_tasker()->mutable_unit()->set_id( id_ );
+    message().set_type( sword::UnitMagicAction_Type_partial_recovery );
+    {
+        // parameter 1: equipments
+        std::map< unsigned long, unsigned int > available;
+        tools::Iterator< const kernel::AgentComposition& > it = type_.CreateIterator();
+        T_Subordinates::const_iterator itSub = subordinates_.begin();
+        for( unsigned int index = 0; it.HasMoreElements(); ++index )
+        {
+            const kernel::AgentComposition& component = it.NextElement();
+            unsigned int& undamaged = available[component.GetType().GetId()] = 0;
+            for( unsigned int i = 0; i < component.GetCount() && itSub != subordinates_.end(); ++i, ++itSub )
+                if( (*itSub)->IsUndamaged() )
+                    ++undamaged;
+        }
+        sword::MissionParameter& parameter = MakeParameter( message );
+        parameter.set_null_value( false );
+        for( std::map< unsigned long, unsigned int >::const_iterator it = available.begin(); it != available.end(); ++it )
+            AddState( it->first, it->second, *parameter.mutable_value()->Add() );
+    }
+    MakeParameter( message ); // parameter 2: personel
+    MakeParameter( message ); // parameter 3: resources
+    MakeParameter( message ); // parameter 4: ammo
+    MakeParameter( message ); // parameter 5: stocks
+    message.Send( swordPublisher_ );
+    DtInfo << message().DebugString();
 }

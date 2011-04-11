@@ -29,6 +29,7 @@ namespace plugins
 namespace vrforces
 {
     class Agent;
+    class AggregatedState_ABC;
     class AggregatedPosition_ABC;
     class Facade;
 
@@ -56,6 +57,8 @@ public:
     void SetDestination( const DtVector& location );
     virtual bool NotifyCreated( DtReflectedEntity& entity );
     void Update( AggregatedPosition_ABC& position ) const;
+    void Update( AggregatedState_ABC& state ) const;
+    bool IsUndamaged() const;
     //@}
 
 private:
@@ -77,6 +80,7 @@ private:
     DtReflectedEntity* reflected_;
     DtEntityIdentifier superiorId_;
     DtVector destination_;
+    DtDamageState state_;
     //@}
 };
 

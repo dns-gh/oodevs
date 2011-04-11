@@ -51,6 +51,7 @@ namespace plugins
 namespace vrforces
 {
     class AggregatedPosition_ABC;
+    class AggregatedState_ABC;
     class DisaggregationStrategy_ABC;
     class Facade;
     class ForceResolver_ABC;
@@ -86,6 +87,7 @@ public:
     void Update( const sword::UnitPathFind& message );
     void CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSimulationAddress& address );
     void MoveTo( const geometry::Point2d& position ) const;
+    void NotifyStateChanged() const;
     //@}
 
     //! @name Callbacks
@@ -133,6 +135,7 @@ private:
     const kernel::AgentType& type_;
     const rpr::EntityTypeResolver& entityTypes_;
     std::auto_ptr< AggregatedPosition_ABC > position_;
+    std::auto_ptr< AggregatedState_ABC > state_;
     DtVector destination_;
     //@}
 };
