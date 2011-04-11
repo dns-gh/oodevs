@@ -252,12 +252,10 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
             continue;
         for( PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().begin(); it != PHY_AccomodationType::GetAccomodations().end(); ++it )
         {
-            if( it->first == motivation )
-                continue;
             unsigned int nbrForAccommodation = block->GetPersonsForAccomodation( it->first );
             if( nbrForAccommodation == 0 )
                 continue;
-            startingBlocks_[ block ][it->first ] = nbrForAccommodation;
+            startingBlocks_[ block ][ it->first ] = nbrForAccommodation;
             movingNumber += nbrForAccommodation;
         }
     }
@@ -271,7 +269,7 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
     T_FreeSpaces blocksFreeSpaces;
     BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
     {
-        if( !block->CanMove() )
+        if( !block->CanMove() || block->IsEvacuated() )
             continue;
         unsigned int people = block->GetObject().GetTotalInhabitantsForMotivation( motivation );
         unsigned int nominalOccupation = block->GetNominalOccupation( motivation );

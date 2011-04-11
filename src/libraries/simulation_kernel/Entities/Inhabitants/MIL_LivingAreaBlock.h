@@ -61,6 +61,7 @@ public:
     bool CanMove() const;
     bool IsUsableForMotivation( const std::string& motivation ) const;
     bool IsAlerted( const TER_Localisation& localisation ) const;
+    bool IsEvacuated() const;
     void SetAlerted( bool alerted );
     void SetEvacuated( bool evacuated );
     void SetConfined( bool confined );

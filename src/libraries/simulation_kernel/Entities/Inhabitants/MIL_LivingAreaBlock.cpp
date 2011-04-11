@@ -179,6 +179,15 @@ bool MIL_LivingAreaBlock::IsAlerted( const TER_Localisation& localisation ) cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_LivingAreaBlock::IsEvacuated
+// Created: ABR 2011-04-11
+// -----------------------------------------------------------------------------
+bool MIL_LivingAreaBlock::IsEvacuated() const
+{
+    return evacuated_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_LivingAreaBlock::GetPersonsForAccomodation
 // Created: JSR 2011-03-23
 // -----------------------------------------------------------------------------
