@@ -39,6 +39,6 @@ BOOST_AUTO_TEST_CASE( SessionOption_RemoveOptionTest )
     session->RemoveOption( "session/config/dispatcher/plugins/recorder" );
     BOOST_CHECK( session->HasOption( "session/config/dispatcher/plugins" ) );
     BOOST_CHECK( !session->HasOption( "session/config/dispatcher/plugins/recorder" ) );
-    session->Commit();
+    s//ession->Commit();
     delete session;
 }
