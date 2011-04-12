@@ -201,15 +201,21 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( PropertiesDictionary& dic
             dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), pPhysical->GetArchitecture()->GetFloorNumber() );
             dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), pPhysical->GetArchitecture()->GetRoofShape() );
             dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), pPhysical->GetArchitecture()->GetMaterial() );
-            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), pPhysical->GetArchitecture()->GetOccupation() );
+            occupation_ = static_cast< unsigned int >( pPhysical->GetArchitecture()->GetOccupation() * 100u );
+            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_ );
             dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), pPhysical->GetArchitecture()->GetTrafficability() );
         }
         if( pPhysical->GetMotivations() )
         {
-            MotivationsVisitor visitor( motivations_ );
+            std::map< std::string, float > motivations;
+            MotivationsVisitor visitor( motivations );
             object_.Accept( visitor );
-            BOOST_FOREACH( const T_Motivations::value_type& motivation, motivations_ )
-                dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + QString( motivation.first.c_str() ), motivation.second );
+            for( std::map< std::string, float >::const_iterator it = motivations.begin(); it != motivations.end(); ++it )
+            {
+                motivations_[ it->first ] = static_cast< unsigned int >( ( it->second + 0.001 ) * 100u );
+                CIT_Motivations cit = motivations_.find( it->first );
+                dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + QString( cit->first.c_str() ), cit->second );
+            }
         }
     }
 }

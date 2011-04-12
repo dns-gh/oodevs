@@ -126,7 +126,6 @@ bool UrbanDisplayOptions::SetColor( urban::ColorAttribute* attribute, float livi
         }
         else if( accommodationColor_ )
         {
-            // $$$$ FIXME Compute density according to motivations
             unsigned int nbrHumans = 0;
             for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
             {
@@ -142,7 +141,7 @@ bool UrbanDisplayOptions::SetColor( urban::ColorAttribute* attribute, float livi
             else
             {
                 CIT_Motivations it = motivations.find( accommodationDisplayed_.ascii() );
-                float proportion = ( it == motivations.end() ) ? 0.f : it->second;
+                float proportion = ( it == motivations.end() ) ? 0.f : ( static_cast< float >( it->second ) / 100.f );
                 const kernel::AccommodationType* accommodationType = accommodationTypes_.Find( accommodationDisplayed_.ascii() );
                 float nominalCapacity = accommodationType ? accommodationType->GetNominalCapacity() : 0.f;
                 float density;

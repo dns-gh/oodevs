@@ -253,7 +253,7 @@ void UrbanObjectWrapper::SendCreation() const
             {
                 sword::UrbanUsage& usage = *message().mutable_attributes()->add_usages();
                 usage.set_role( it->first );
-                usage.set_percentage( static_cast< unsigned int >( it->second * 100 ) );
+                usage.set_percentage( static_cast< unsigned int >( it->second * 100 + 0.5f ) );
             }
         }
     }
