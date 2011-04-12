@@ -25,6 +25,8 @@ MOCK_BASE_CLASS( MockRtiAmbassador, hla::RtiAmbassador_ABC )
     MOCK_METHOD( Tick, 0 );
     MOCK_METHOD( Create, 2 );
     MOCK_METHOD( Destroy, 1 );
+    MOCK_METHOD( Connect, 1 );
+    MOCK_METHOD( Disconnect, 0 );
     MOCK_METHOD( Join, 3 );
     MOCK_METHOD( Resign, 0 );
     MOCK_METHOD_EXT( Subscribe, 2, void( const ClassIdentifier&, const Class_ABC& ), SubscribeClass );
