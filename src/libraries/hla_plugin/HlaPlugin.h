@@ -12,7 +12,6 @@
 
 #include "dispatcher/Plugin_ABC.h"
 #include "protocol/Protocol.h"
-#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -39,7 +38,7 @@ namespace hla
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class HlaPlugin : public dispatcher::Plugin_ABC, private boost::noncopyable
+class HlaPlugin : public dispatcher::Plugin_ABC
 {
 public:
     //! @name Constructors/Destructor

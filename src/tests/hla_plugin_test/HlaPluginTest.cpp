@@ -40,6 +40,7 @@ BOOST_AUTO_TEST_CASE( hla_plugin_initialization_declares_publications )
     hla::SimpleTime target;
     mock::sequence s;
     MOCK_EXPECT( factory, CreateAmbassador ).once().in( s ).with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "localhost", "8989" ).returns( std::auto_ptr< hla::RtiAmbassador_ABC >( rtiAmbassador ) );
+    MOCK_EXPECT( rtiAmbassador, Connect ).once().in( s ).with( mock::retrieve( federateAmbassador ) ).returns( true );
     MOCK_EXPECT( rtiAmbassador, Join ).once().in( s ).with( "name", "federation", mock::retrieve( federateAmbassador ) ).returns( true );
     MOCK_EXPECT( rtiAmbassador, Tick ).calls( boost::bind( &hla::FederateAmbassador_ABC::TimeAdvanceGranted, boost::ref( federateAmbassador ), boost::ref( target ) ) );;
     MOCK_EXPECT( rtiAmbassador, EnableTimeRegulation ).once().in( s ).calls( boost::bind( &hla::FederateAmbassador_ABC::TimeRegulationEnabled, boost::ref( federateAmbassador ), boost::ref( target ) ) );
@@ -48,6 +49,7 @@ BOOST_AUTO_TEST_CASE( hla_plugin_initialization_declares_publications )
     FederateFacade facade( xis, subject, factory, 0u );
     MOCK_EXPECT( subject, Unregister ).once().in( s );
     MOCK_EXPECT( rtiAmbassador, Resign ).once().in( s );
+    MOCK_EXPECT( rtiAmbassador, Disconnect ).once().in( s );
 }
 
 namespace
@@ -62,6 +64,7 @@ namespace
             , listener          ( 0 )
         {
             MOCK_EXPECT( factory, CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "localhost", "8989" ).returns( std::auto_ptr< hla::RtiAmbassador_ABC >( rtiAmbassador ) );
+            MOCK_EXPECT( rtiAmbassador, Connect ).once().with( mock::retrieve( federateAmbassador ) ).returns( true );
             MOCK_EXPECT( rtiAmbassador, Join ).once().with( "name", "federation", mock::retrieve( federateAmbassador ) ).returns( true );
             MOCK_EXPECT( rtiAmbassador, Tick ).calls( boost::bind( &hla::FederateAmbassador_ABC::TimeAdvanceGranted, boost::ref( federateAmbassador ), boost::ref( target ) ) );;
             MOCK_EXPECT( rtiAmbassador, EnableTimeRegulation ).once().calls( boost::bind( &hla::FederateAmbassador_ABC::TimeRegulationEnabled, boost::ref( federateAmbassador ), boost::ref( target ) ) );
@@ -69,6 +72,7 @@ namespace
             MOCK_EXPECT( subject, Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( subject, Unregister ).once();
             MOCK_EXPECT( rtiAmbassador, Resign ).once();
+            MOCK_EXPECT( rtiAmbassador, Disconnect ).once();
         }
         xml::xistringstream xis;
         MockAgentSubject subject;

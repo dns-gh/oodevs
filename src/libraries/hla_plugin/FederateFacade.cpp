@@ -34,6 +34,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject,
     const std::string name = xis.attribute< std::string >( "federation" );
     try
     {
+        federate_->Connect();
         joined_ = federate_->Join( name, false, true );
     }
     catch( ::hla::HLAException& /*e*/ )
@@ -53,6 +54,7 @@ FederateFacade::~FederateFacade()
     agentClass_.reset();
     if( joined_ )
         federate_->Resign();
+    federate_->Disconnect();
 }
 
 // -----------------------------------------------------------------------------
