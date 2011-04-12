@@ -50,8 +50,8 @@ using namespace parameters;
 // Name: LogisticSupplyChangeQuotasDialog::SelectedHolder constructor
 // Created: AHC 2010-10-12
 // -----------------------------------------------------------------------------
-LogisticSupplyChangeQuotasDialog::SelectedHolder::SelectedHolder(kernel::Controllers& controllers)
-    : selectedAutomat_( controllers )
+LogisticSupplyChangeQuotasDialog::SelectedHolder::SelectedHolder( kernel::Controllers& controllers )
+    : selectedAutomat_  ( controllers )
     , selectedFormation_( controllers )
 {
     // NOTHING
@@ -65,9 +65,9 @@ const kernel::Entity_ABC* LogisticSupplyChangeQuotasDialog::SelectedHolder::Sele
 {
     const kernel::Entity_ABC* retval = 0;
     if( selectedAutomat_ )
-        retval = (const kernel::Entity_ABC*)selectedAutomat_;
+        retval = ( const kernel::Entity_ABC* )selectedAutomat_;
     if( selectedFormation_ )
-        retval = (const kernel::Entity_ABC*)selectedFormation_;
+        retval = ( const kernel::Entity_ABC* )selectedFormation_;
     return retval;
 }
 
@@ -104,7 +104,7 @@ LogisticSupplyChangeQuotasDialog::SelectedHolder::operator const kernel::Entity_
 // Name: LogisticSupplyChangeQuotasDialog::SelectedHolder::Reset
 // Created: AHC 2010-10-12
 // -----------------------------------------------------------------------------
-void LogisticSupplyChangeQuotasDialog::SelectedHolder::Reset(  )
+void LogisticSupplyChangeQuotasDialog::SelectedHolder::Reset()
 {
     selectedAutomat_ = 0;
     selectedFormation_ = 0;
@@ -114,14 +114,28 @@ void LogisticSupplyChangeQuotasDialog::SelectedHolder::Reset(  )
 // Name: LogisticSupplyChangeQuotasDialog::SelectedHolder::GetParameter
 // Created: AHC 2010-10-12
 // -----------------------------------------------------------------------------
-actions::Parameter_ABC* LogisticSupplyChangeQuotasDialog::SelectedHolder::GetParameter(const kernel::OrderParameter& parameter, kernel::Controller& controller)
+actions::Parameter_ABC* LogisticSupplyChangeQuotasDialog::SelectedHolder::GetParameter( const kernel::OrderParameter& parameter, kernel::Controller& controller )
 {
     actions::Parameter_ABC* retval = 0;
-    if(selectedAutomat_)
-        retval =  new parameters::Automat(parameter, *selectedAutomat_, controller);
-    else if(selectedFormation_)
-        retval =  new parameters::Formation(parameter, *selectedFormation_, controller);
+    if( selectedAutomat_ )
+        retval =  new parameters::Automat( parameter, *selectedAutomat_, controller );
+    else if( selectedFormation_ )
+        retval =  new parameters::Formation( parameter, *selectedFormation_, controller );
     return retval;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyChangeQuotasDialog::SelectedHolder::GetMagicActionType
+// Created: ABR 2011-04-11
+// -----------------------------------------------------------------------------
+const std::string LogisticSupplyChangeQuotasDialog::SelectedHolder::GetMagicActionType() const
+{
+    if( selectedAutomat_ != 0)
+        return "automat_log_supply_change_quotas";
+    else if( selectedFormation_ )
+        return "formation_log_supply_change_quotas";
+    else
+        throw std::runtime_error( __FUNCTION__ "SelectedHolder: nor automat nor formation set." );
 }
 
 // -----------------------------------------------------------------------------
@@ -266,21 +280,18 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     const Entity_ABC* target = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !target )
         return;
-
     targetCombo_->setFocus();
-
     accept();
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_change_quotas" );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( selected_.GetMagicActionType() );
     UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Change Quotas" ), true );
-
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *selected_.GetParameter( it.NextElement(), controllers_.controller_ ) );
 
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
-
     action->AddParameter( *dotations );
+
     unsigned int index = 0;
     for( int i = 0; i < table_->numRows(); ++i )
     {

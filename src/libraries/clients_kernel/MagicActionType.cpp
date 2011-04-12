@@ -169,9 +169,14 @@ void MagicActionType::Initialize()
     }
     else if( name == "knowledge_group_update_type" )
         CreateOrderParameter( "Type", "string" );
-    else if( name == "log_supply_push_flow" || name == "log_supply_pull_flow" || name == "log_supply_change_quotas" )
+    else if( name == "automat_log_supply_push_flow" || name == "automat_log_supply_pull_flow" || name == "automat_log_supply_change_quotas" )
     {
-        CreateOrderParameter( "Receiver", "RegisterObjectNames" );
+        CreateOrderParameter( "Receiver", "automat" );
+        CreateOrderParameter( "Dotations", "list" );
+    }
+    else if( name == "formation_log_supply_push_flow" || name == "formation_log_supply_pull_flow" || name == "formation_log_supply_change_quotas" )
+    {
+        CreateOrderParameter( "Receiver", "formation" );
         CreateOrderParameter( "Dotations", "list" );
     }
     else if( name == "create_object" )

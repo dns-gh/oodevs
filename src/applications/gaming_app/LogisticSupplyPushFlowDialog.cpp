@@ -174,35 +174,28 @@ namespace
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::Validate()
 {
-
     const Automat_ABC* target = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !target )
         return;
-
     targetCombo_->setFocus();
-
     accept();
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_push_flow" );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( ( selectedAutomat_ ) ? "automat_log_supply_push_flow" : "formation_log_supply_push_flow" );
     UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Push Flow" ), true );
-
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     if( selectedAutomat_ )
     {
         assert( dynamic_cast<const Automat_ABC*>( (const Entity_ABC*)selected_) );
-        action->AddParameter( *new parameters::Automat( it.NextElement(), *dynamic_cast<const Automat_ABC*>( (const Entity_ABC*)selected_),
-                controllers_.controller_ ) );
+        action->AddParameter( *new parameters::Automat( it.NextElement(), *dynamic_cast< const Automat_ABC* >( ( const Entity_ABC* )selected_), controllers_.controller_ ) );
     }
     else
     {
         assert( dynamic_cast<const Formation_ABC*>( (const Entity_ABC*)selected_) );
-        action->AddParameter( *new parameters::Formation( it.NextElement(), *dynamic_cast<const Formation_ABC*>( (const Entity_ABC*)selected_),
-                controllers_.controller_ ) );
+        action->AddParameter( *new parameters::Formation( it.NextElement(), *dynamic_cast< const Formation_ABC* >( ( const Entity_ABC* )selected_), controllers_.controller_ ) );
     }
 
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
-
     action->AddParameter( *dotations );
 
     unsigned int rows = 0;
@@ -218,13 +211,11 @@ void LogisticSupplyPushFlowDialog::Validate()
             const QString text = table_->text( i, 0 );
             if( text.isEmpty() )
                 continue;
-
             ParameterList& dotationList = dotations->AddList( CreateName( "Dotation", index ) );
             dotationList.AddIdentifier( "Type", supplies_[ text ].type_->GetId() );
             dotationList.AddQuantity( "Number", table_->text( i, 1 ).toInt() );
         }
     }
-
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( target, false ) );
     action->RegisterAndPublish( actionsModel_ );

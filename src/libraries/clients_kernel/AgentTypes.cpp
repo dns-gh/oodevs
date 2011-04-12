@@ -386,9 +386,12 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "change_automat_superior", sword::UnitMagicAction::change_automat_superior ) );
     RegisterActionType( *new MagicActionType( "change_formation_superior", sword::UnitMagicAction::change_formation_superior ) );
     RegisterActionType( *new MagicActionType( "change_logistic_links", sword::UnitMagicAction::change_logistic_links ) );
-    RegisterActionType( *new MagicActionType( "log_supply_push_flow", sword::UnitMagicAction::log_supply_push_flow ) );
-    RegisterActionType( *new MagicActionType( "log_supply_pull_flow", sword::UnitMagicAction::log_supply_pull_flow ) );
-    RegisterActionType( *new MagicActionType( "log_supply_change_quotas", sword::UnitMagicAction::log_supply_change_quotas ) );
+    RegisterActionType( *new MagicActionType( "automat_log_supply_push_flow", sword::UnitMagicAction::log_supply_push_flow ) );
+    RegisterActionType( *new MagicActionType( "automat_log_supply_pull_flow", sword::UnitMagicAction::log_supply_pull_flow ) );
+    RegisterActionType( *new MagicActionType( "automat_log_supply_change_quotas", sword::UnitMagicAction::log_supply_change_quotas ) );
+    RegisterActionType( *new MagicActionType( "formation_log_supply_push_flow", sword::UnitMagicAction::log_supply_push_flow ) );
+    RegisterActionType( *new MagicActionType( "formation_log_supply_pull_flow", sword::UnitMagicAction::log_supply_pull_flow ) );
+    RegisterActionType( *new MagicActionType( "formation_log_supply_change_quotas", sword::UnitMagicAction::log_supply_change_quotas ) );
     RegisterActionType( *new MagicActionType( "crowd_total_destruction", sword::UnitMagicAction::crowd_total_destruction ) );
     RegisterActionType( *new MagicActionType( "crowd_change_attitude", sword::UnitMagicAction::crowd_change_attitude ) );
     RegisterActionType( *new MagicActionType( "crowd_change_health_state", sword::UnitMagicAction::crowd_change_health_state ) );

@@ -1372,7 +1372,7 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::ProcessLogSupplyPushFlow
+// Name: MIL_EntityManager::ProcessLogSupplyPullFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message, unsigned int nCtx )
