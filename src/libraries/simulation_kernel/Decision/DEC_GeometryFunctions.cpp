@@ -37,6 +37,7 @@
 #include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
+#include <boost/foreach.hpp>
 
 #define PRECISION 0.0000001
 
@@ -1458,6 +1459,34 @@ std::vector< DEC_Decision_ABC* > DEC_GeometryFunctions::ListUncoordinatedPawns( 
         }
     }
     return notCoordinatedPions;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::SplitLocation
+// Created: NLD 2005-04-04
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation* location, unsigned int nbr )
+{
+    std::vector< boost::shared_ptr< MT_Vector2D > > result;
+    if( !location )
+        return result;
+
+    TER_Localisation::T_LocalisationPtrVector splittedLocations;
+    location->Split( nbr, splittedLocations );
+    BOOST_FOREACH( const boost::shared_ptr< TER_Localisation > splittedLocation, splittedLocations )
+    {
+        MT_Vector2D ptResult;
+        splittedLocation->ComputeNearestPoint( splittedLocation->ComputeBarycenter(), ptResult );
+        result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( ptResult ) ) );
+    }
+
+    if( result.size() < nbr )
+    {
+        MT_Vector2D ptResult;
+        location->ComputeNearestPoint( location->ComputeBarycenter(), ptResult );
+        result.insert( result.end(), nbr - result.size(), boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( ptResult ) ) );
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
