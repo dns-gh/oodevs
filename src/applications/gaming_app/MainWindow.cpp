@@ -570,14 +570,13 @@ void MainWindow::WriteSettings()
     gui::Settings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Gaming" );
-
-    // Pannel configuration
-    QString strDockConfig;
-    QTextStream strDockConfigStream( &strDockConfig, IO_WriteOnly );
-    strDockConfigStream << *this;
-    settings.writeEntry( "/Panels", strDockConfig );
+    if( savedState_.isNull() || savedState_.isEmpty() )
+    {
+        QTextStream stream( &savedState_, IO_WriteOnly );
+        stream << *this;
+    }
+    settings.writeEntry( "/Panels", savedState_ );
     settings.WriteEntry( "/MainWindow", *this );
-
     settings.endGroup(); // gaming
 }
 
