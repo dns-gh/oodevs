@@ -722,7 +722,6 @@ actions::Action_ABC* ActionFactory::CreateAutomatCreationAction( const AutomatTy
         }
     }
     action->AddParameter( *new parameters::Identifier( it.NextElement(), knowledgeGroup ) );
-    action->AddParameter( *new parameters::String( it.NextElement(), std::string() ) );
     return action;
 }
 

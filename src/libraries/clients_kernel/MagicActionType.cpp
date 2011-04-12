@@ -245,7 +245,6 @@ void MagicActionType::Initialize()
     {
         CreateOrderParameter( "AutomatType", "identifier" );
         CreateOrderParameter( "KnowledgeGroup", "identifier" );
-        CreateOrderParameter( "Location", "point" );
     }
     else if( name == "crowd_change_health_state" )
     {

@@ -915,7 +915,7 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
         if( msg.type() != UnitMagicAction::automat_creation )
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
-        if( !msg.has_parameters() || msg.parameters().elem_size() != 3 )
+        if( !msg.has_parameters() || msg.parameters().elem_size() != 2 )
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
         const MissionParameter& id = msg.parameters().elem( 0 );
@@ -930,11 +930,7 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
         if( groupId.value_size() != 1 || !groupId.value().Get( 0 ).has_identifier() )
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
-        const MissionParameter& nameParam = msg.parameters().elem( 2 );
-        if( nameParam.value_size() != 1 || !nameParam.value().Get( 0 ).has_acharstr() )
-            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
-        const std::string name = nameParam.value().Get( 0 ).acharstr();
-        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, groupId.value().Get( 0 ).identifier(), name, entity, nCtx ); // auto-registration
+        MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, groupId.value().Get( 0 ).identifier(), "", entity, nCtx ); // auto-registration
     }
     catch( std::runtime_error& )
     {
