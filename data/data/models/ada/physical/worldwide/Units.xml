@@ -76,7 +76,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Surface To Air Battery CP" id="3" name="Surface To Air Battery CP" type="Pion ASA">
-    <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
+    <nature atlas-nature="ASA" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="3" major="true" type="Light Medium Tactical Vehicle"/>
       <equipment count="1" crew="1" type="Motocycle"/>
@@ -105,7 +105,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Surface To Air Defense Troop" id="4" name="Surface To Air Defense Troop" type="Pion ASA">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="6" crew="3" type="Very Short Range Surface To Air System"/>
       <equipment convoyer="true" count="2" crew="4" type="Light Medium Tactical Vehicle"/>
@@ -135,7 +135,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Short Range Surface To Air Defense Troop" id="5" name="Short Range Surface To Air Defense Troop" type="Pion ASA">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="4" crew="3" type="20-mm Armoured Personnel Carrier"/>
       <equipment count="4" crew="3" major="true" type="Short Range Surface To Air Tank"/>
@@ -564,7 +564,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Refugee" id="18" name="Refugee" type="Pion REFUGIE">
-    <nature atlas-nature="None" level="none" nature-app6="mootw/refugees"/>
+    <nature atlas-nature="None" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="10" crew="100" major="true" type="Refugee"/>
     </equipments>
@@ -2130,7 +2130,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Drone" id="75" is-autonomous="true" name="Drone (real time)" type="Pion RENS">
-    <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed wing"/>
+    <nature atlas-nature="Indefini" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="0" major="true" type="Real Time Drone"/>
     </equipments>
@@ -2155,7 +2155,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Drones station_" id="76" name="Drones station" type="Pion RENS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed wing"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="RSV"/>
     </equipments>
@@ -3711,7 +3711,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="AAC CP" id="128" name="GSHB CP" type="Pion ALAT">
-    <nature atlas-nature="Helicoptere" level="i" nature-app6="combat/aviation/rotary wing/utility/undefined"/>
+    <nature atlas-nature="Helicoptere" level="i" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="UH-60M Blackhawk"/>
     </equipments>
@@ -3792,7 +3792,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Surface To Air Defense Troop" id="131" name="Avengert PLT (HVY DIV)" type="Pion ASA">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment convoyer="true" count="2" crew="4" type="Light Medium Tactical Vehicle"/>
       <equipment count="4" crew="3" major="true" type="AN/TWQ-1 Avenger"/>
@@ -3820,7 +3820,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Surface To Air Battery CP" id="132" name="Avenger BTY CP (HVY DIV)" type="Pion ASA">
-    <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/light/motorized"/>
+    <nature atlas-nature="ASA" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="3" major="true" type="Light Medium Tactical Vehicle"/>
       <equipment count="1" crew="1" type="Motocycle"/>
@@ -4019,7 +4019,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Theater High Altitude Defense Troop" id="138" name="Patriot Launcher PLT" type="Pion ASA">
-    <nature atlas-nature="ASA" level="ooo" nature-app6="combat/air defense/missile/h_mad/hawk"/>
+    <nature atlas-nature="ASA" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="8" crew="3" major="true" type="MIM-104 Patriot"/>
     </equipments>
@@ -4522,7 +4522,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Surface To Air Defense Troop" id="153" name="OPFOR SA 7 Team" type="Pion ASA">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/air defense/missile/light/motorized"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="MANPAD Team"/>
     </equipments>
@@ -4940,4 +4940,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3718013402" -->
+<!-- signature="0612970591" -->
