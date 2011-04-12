@@ -32,17 +32,18 @@ public:
     virtual ~SymbolRule();
     //@}
 
-    //! @name Operations
-    //@{
-    void Evaluate( const std::string& request, std::string& result ) const;
-    void Accept( SymbolVisitor_ABC& visitor ) const;
-    //@}
-
 public:
     //! @name Types
     //@{
     typedef std::map< std::string, SymbolCase* >   T_Cases;
     typedef T_Cases::const_iterator              CIT_Cases;
+    //@}
+
+    //! @name Operations
+    //@{
+    void                       Evaluate( const std::string& request, std::string& result ) const;
+    void                       Accept( SymbolVisitor_ABC& visitor ) const;
+    const SymbolRule::T_Cases& GetCases() const;
     //@}
 
 private:
@@ -57,11 +58,6 @@ private:
     void          ReadCase( xml::xistream& xis );
     //@}
 
-public:
-    //! @name Getters
-    //@{
-    const SymbolRule::T_Cases& GetCases() const;
-    //@}
 
 private:
     //! @name Member data

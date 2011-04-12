@@ -29,7 +29,7 @@ SymbolFactory::SymbolFactory()
         levelRule_ .reset( ReadRule( xis, "levels", levelBase_ ) );
                            ReadRule( xis, "automats", automatSymbol_ );
     xis >> xml::end;
-    //ListSymbols();
+    ListSymbols();
 }
 
 // -----------------------------------------------------------------------------
@@ -47,9 +47,10 @@ SymbolFactory::~SymbolFactory()
 // -----------------------------------------------------------------------------
 void SymbolFactory::ListSymbols()
 {
-    xml::xofstream out("UnitSymbols.xml");
-    out << xml::start("unit-symbols");
-    TraverseTree(out, *symbolRule_.get());
+    //xml::xstream out( "UnitSymbols.xml" );
+    xml::xobufferstream out;
+    out << xml::start( "unit-symbols" );
+    TraverseTree( out, *symbolRule_.get() );
     out << xml::end;
 }
 
@@ -57,17 +58,17 @@ void SymbolFactory::ListSymbols()
 // Name: SymbolFactory::TraverseTree
 // Created: RPD 2011-01-26
 // -----------------------------------------------------------------------------
-void SymbolFactory::TraverseTree( xml::xofstream& out, const SymbolRule& rule )
+void SymbolFactory::TraverseTree( xml::xostream& out, const SymbolRule& rule )
 {
     currentChain_.push_back( new std::string() );
     currentSymbol_.push_back( new std::string() );
     for( SymbolRule::CIT_Cases it = rule.GetCases().begin(); it != rule.GetCases().end(); ++it )
     {
-        out << xml::start("unit-symbol");
+        out << xml::start( "unit-symbol" );
         *currentChain_.back() = it->first;
         *currentSymbol_.back() = it->second->GetValue();
         std::string current;
-        std::string symbol ("s*gpu");
+        std::string symbol ( "s*gpu" );
 
         for( std::vector< std::string* >::iterator iter = currentChain_.begin(); iter != currentChain_.end(); ++iter )
         {
@@ -77,18 +78,19 @@ void SymbolFactory::TraverseTree( xml::xofstream& out, const SymbolRule& rule )
         }
         for( std::vector< std::string* >::iterator iter = currentSymbol_.begin(); iter != currentSymbol_.end(); ++iter )
         {
-            symbol += **(iter);
+            symbol += **( iter );
         }
 
-        std::string tail ("----------*****");
+        std::string tail ( "----------*****" );
         tail = tail.substr( symbol.size(), 15-symbol.size() );
         symbol += tail;
+        availableSymbols_.push_back( current ); 
         out << xml::attribute( "value", current );
         out << xml::attribute( "symbol", symbol );
         out << xml::end;
-        if ( it->second && (it->second)->GetRule() )
+        if ( it->second && ( it->second)->GetRule() )
         {
-            TraverseTree( out, *(it->second)->GetRule() );
+            TraverseTree( out, *( it->second)->GetRule() );
         }
     }
     delete ( currentChain_.back() );
@@ -151,4 +153,17 @@ std::string SymbolFactory::CreateLevelSymbol( const std::string& level ) const
 std::string SymbolFactory::CreateAutomatSymbol() const
 {
     return automatSymbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::IsThisChainAvailable
+// Created: RPD 2011-04-08
+// -----------------------------------------------------------------------------
+bool SymbolFactory::IsThisChainAvailable( const std::string& chain ) const
+{
+    std::vector< std::string >::const_iterator  it;
+    for ( it = availableSymbols_.begin() ; it != availableSymbols_.end() ; ++it )
+        if ( *it == chain )
+            break;
+    return it != availableSymbols_.end();
 }

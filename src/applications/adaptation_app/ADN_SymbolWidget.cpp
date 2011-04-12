@@ -75,7 +75,7 @@ void ADN_SymbolWidget::resizeGL( int w, int h )
 }
 
 // -----------------------------------------------------------------------------
-// Name: GLWidget::paintGL
+// Name: ADN_SymbolWidget::paintGL
 // Created: NLD 2010-12-01
 // -----------------------------------------------------------------------------
 void ADN_SymbolWidget::paintGL()
@@ -106,7 +106,7 @@ void ADN_SymbolWidget::paintGL()
 }
 
 // -----------------------------------------------------------------------------
-// Name: GLWidget::paintGL
+// Name: ADN_SymbolWidget::paintGL
 // Created: NLD 2010-12-01
 // -----------------------------------------------------------------------------
 void ADN_SymbolWidget::DisplaySymbol() const
@@ -127,7 +127,7 @@ void ADN_SymbolWidget::DisplaySymbol() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GLWidget::ComputeViewport
+// Name: ADN_SymbolWidget::ComputeViewport
 // Created: NLD 2010-12-01
 // -----------------------------------------------------------------------------
 void ADN_SymbolWidget::OnNatureChanged( const QString& nature )
@@ -136,4 +136,13 @@ void ADN_SymbolWidget::OnNatureChanged( const QString& nature )
     std::replace( currentSymbol_.begin(), currentSymbol_.end(), '*', 'f' );
     updateGL();
     emit SymbolChanged( QString( currentSymbol_.c_str() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_SymbolWidget::GetSymbolFactory
+// Created: RPD 2011-04-08
+// -----------------------------------------------------------------------------
+kernel::SymbolFactory& ADN_SymbolWidget::GetSymbolFactory() const
+{
+    return *symbolFactory_;
 }

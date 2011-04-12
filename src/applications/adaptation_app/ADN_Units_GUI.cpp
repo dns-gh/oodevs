@@ -373,3 +373,12 @@ void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString
     QString strText = "<a href=\"" + tr( "Units/" ) + "index.htm\">" + tr( "Units" ) + "</a>";
     mainIndexBuilder.ListItem( strText );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_GUI::GetSymbolWidget
+// Created: RPD 2011-04-08
+// -----------------------------------------------------------------------------
+ADN_SymbolWidget* ADN_Units_GUI::GetSymbolWidget() const
+{
+    return pSymbolWidget_;
+}

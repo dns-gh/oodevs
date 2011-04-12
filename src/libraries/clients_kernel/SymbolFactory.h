@@ -12,7 +12,7 @@
 
 namespace xml {
     class xistream;
-    class xofstream;
+    class xostream;
 }
 
 namespace kernel
@@ -40,6 +40,7 @@ public:
     std::string CreateSymbol       ( const std::string& hierarchy ) const;
     std::string CreateLevelSymbol  ( const std::string& level ) const;
     std::string CreateAutomatSymbol() const;
+    bool IsThisChainAvailable( const std::string& chain ) const;
     //@}
 
 private:
@@ -48,7 +49,7 @@ private:
     SymbolFactory( const SymbolFactory& );            //!< Copy constructor
     SymbolFactory& operator=( const SymbolFactory& ); //!< Assignment operator
     void ListSymbols();
-    void TraverseTree( xml::xofstream& xos, const SymbolRule& rule );
+    void TraverseTree( xml::xostream& xos, const SymbolRule& rule );
     //@}
 
     //! @name Helpers
@@ -67,6 +68,7 @@ private:
     std::string automatSymbol_;
     std::vector< std::string* > currentChain_;
     std::vector< std::string* > currentSymbol_;
+    std::vector< std::string > availableSymbols_;
     //@}
 };
 

@@ -14,6 +14,9 @@
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
+#include "ADN_Units_GUI.h"
+#include "ADN_SymbolWidget.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "ADN_DataException.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
@@ -663,7 +666,7 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
             >> xml::attribute( "atlas-nature", atlas )
             >> xml::attribute( "nature-app6", strNature_ )
           >> xml::end;
-
+    CleanupNature();
     E_NatureLevel eNatureLevelType = ENT_Tr::ConvertToNatureLevel( level );
     if( eNatureLevelType == (E_NatureLevel)-1 )
         throw ADN_DataException( tools::translate( "Units_Data", "Invalid data" ).ascii(), tools::translate( "Units_Data", "Unit types - Invalid hierarchical level '%1'" ).arg( level.c_str() ).ascii() );
@@ -858,6 +861,26 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
         output << xml::attribute( "is-autonomous", bIsAutonomous_ );
 
     output << xml::end;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: UnitInfos::CleanupNature
+// Created: RPD 2011-04-11
+// -----------------------------------------------------------------------------
+void ADN_Units_Data::UnitInfos::CleanupNature()
+{   
+    std::string nature = strNature_.GetData();
+    if ( nature.size() > 10 )
+    {
+        if ( nature.compare( nature.size()-10, 10 ,"/undefined") == 0 )
+        {
+            nature.resize( nature.size()-10 );
+            strNature_ = nature;
+        }
+    }
+    if ( !ADN_Workspace::GetWorkspace().GetUnits().GetGui().GetSymbolWidget()->GetSymbolFactory().IsThisChainAvailable( strNature_.GetData() ) )
+        strNature_ = "undefined";
 }
 
 // =============================================================================

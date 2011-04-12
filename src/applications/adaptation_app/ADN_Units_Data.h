@@ -186,6 +186,7 @@ public:
         void ReadPosture( xml::xistream& input );
         void ReadPointDistance( xml::xistream& input );
         void WriteArchive( xml::xostream& output ) const;
+        void CleanupNature();
 
     public:
         ADN_Type_Enum<E_AgentTypePion,eNbrAgentTypePion>            eTypeId_;

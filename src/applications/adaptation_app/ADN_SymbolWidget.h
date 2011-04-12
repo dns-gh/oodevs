@@ -54,6 +54,10 @@ public:
     virtual void paintGL();
     //@}
 
+    //! @getters
+    //@{
+    kernel::SymbolFactory& GetSymbolFactory() const;
+    //@}
 private:
     //! @name Copy/Assignment
     //@{

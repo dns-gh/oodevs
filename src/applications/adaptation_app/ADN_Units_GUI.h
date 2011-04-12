@@ -95,6 +95,7 @@ public:
     //@{
     void Build();
     void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath );
+    ADN_SymbolWidget* GetSymbolWidget() const;
     //@}
 
 private slots:
