@@ -2534,14 +2534,14 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.stabilisation.tasks.RenseignerSurFoule" dia-type="france.military.platoon.stabilisation.tasks.RenseignerSurFoule" id="2130" name="MELEE Renseigner sur foule">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.RenseignerSurFoule" dia-type="france.military.platoon.stabilisation.tasks.RenseignerSurFoule" id="2130" name="STABILISATION Renseigner sur foule">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="crowd" name="Foule" optional="false" type="CrowdKnowledge"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.stabilisation.tasks.ControlerFoule" dia-type="france.military.platoon.stabilisation.tasks.ControlerFoule" id="2131" name="MELEE Controler foule">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.ControlerFoule" dia-type="france.military.platoon.stabilisation.tasks.ControlerFoule" id="2131" name="STABILISATION Controler foule">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2597,12 +2597,19 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.stabilisation.tasks.InterdireFoule" dia-type="france.military.platoon.stabilisation.tasks.InterdireFoule" id="2135" name="MELEE Interdire foule">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.InterdireFoule" dia-type="france.military.platoon.stabilisation.tasks.InterdireFoule" id="2135" name="STABILISATION Interdire foule">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="position" name="Position" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.Canaliser" dia-type="france.military.platoon.tasks.Canaliser" id="2136" name="STABILISATION Canaliser foules">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objective" name="Zone" optional="false" type="Polygon"/>
     </mission>
   </units>
   <automats>
@@ -4250,7 +4257,7 @@
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="335" name="Deteriorer">
       <parameter dia-name="objectif" name="objectif" optional="false" type="UrbanKnowledge"/>
     </mission>
-    <mission dia-behavior="france.military.crowd.tasks.AllerA" dia-type="france.military.crowd.tasks.AllerA" id="3000" name="AllerA">
+    <mission dia-behavior="france.military.crowd.tasks.AllerA" dia-type="france.military.crowd.tasks.AllerA" id="3000" name="COMMUNES AllerA">
       <parameter dia-name="objectif" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -4268,9 +4275,6 @@
     </mission>
     <mission dia-behavior="france.military.crowd.tasks.Proteger" dia-type="france.military.crowd.tasks.Proteger" id="3002" name="Proteger">
       <parameter dia-name="objectif" name="Cible" optional="false" type="Agent"/>
-    </mission>
-    <mission dia-behavior="france.military.crowd.tasks.FaireMouvement" dia-type="france.military.crowd.tasks.FaireMouvement" id="3003" name="FaireMouvement">
-      <parameter dia-name="objectifs" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
   </populations>
   <fragorders>
@@ -4466,4 +4470,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3453391723" -->
+<!-- signature="2288600638" -->

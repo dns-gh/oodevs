@@ -33,14 +33,15 @@
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE Intercepter"/>
         <mission name="MELEE Interdire"/>
-        <mission name="MELEE Interdire foule"/>
+        <mission name="STABILISATION Interdire foule"/>
         <mission name="MELEE Barrer"/>
-        <mission name="MELEE Controler foule"/>
+        <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Recueillir"/>
         <mission name="MELEE Relever"/>
-        <mission name="MELEE Renseigner sur foule"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
@@ -139,6 +140,7 @@
         </mission>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Controler"/>
+        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
@@ -146,9 +148,9 @@
         <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Freiner"/>
         <mission name="MELEE Interdire"/>
-        <mission name="MELEE Interdire foule"/>
+        <mission name="STABILISATION Interdire foule"/>
         <mission name="MELEE Barrer"/>
-        <mission name="MELEE Controler foule"/>
+        <mission name="STABILISATION Controler foule"/>
         <mission name="MELEE Jalonner">
           <fragorder name="Decrocher"/>
         </mission>
@@ -156,7 +158,7 @@
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Reduire"/>
         <mission name="MELEE Relever"/>
-        <mission name="MELEE Renseigner sur foule"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE S'emparer De"/>
@@ -199,7 +201,8 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Controler"/>
-        <mission name="MELEE Controler foule"/>
+        <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Jalonner">
@@ -207,7 +210,7 @@
         </mission>
         <mission name="MELEE Surveiller"/>
         <mission name="COMMUNES Interroger"/>
-        <mission name="MELEE Renseigner sur foule"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -253,7 +256,8 @@
           <fragorder name="Deboucher"/>
         </mission>
         <mission name="MELEE Controler"/>
-        <mission name="MELEE Controler foule"/>
+        <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
@@ -264,12 +268,12 @@
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Intercepter"/>
         <mission name="MELEE Interdire"/>
-        <mission name="MELEE Interdire foule"/>
+        <mission name="STABILISATION Interdire foule"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Barrer"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Relever"/>
-        <mission name="MELEE Renseigner sur foule"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
@@ -319,7 +323,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Interroger"/>
-        <mission name="MELEE Renseigner sur foule"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -11473,10 +11477,7 @@
     </crowd>
     <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="france.military.crowd.roles.Foule">
       <missions>
-        <mission name="AllerA">
-          <fragorder name="Population Changer Attitude"/>
-        </mission>
-        <mission name="FaireMouvement">
+        <mission name="COMMUNES AllerA">
           <fragorder name="Population Changer Attitude"/>
         </mission>
         <mission name="Agresser">
@@ -11495,4 +11496,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2122085013" -->
+<!-- signature="0240890053" -->
