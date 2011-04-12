@@ -45,7 +45,7 @@ MedicalPriorities::MedicalPriorities( const kernel::OrderParameter& parameter, x
     : Parameter< QString >( parameter )
 {
     std::string value;
-    xis >> xml::attribute( "value", value );
+    xis >> xml::optional >> xml::attribute( "value", value );
     QStringList list = QStringList::split( ";", value.c_str() );
     for( unsigned int i = 0; i < list.count(); ++i )
         AddMedicalPriority( E_HumanWound( list[i].toUInt() ) );
@@ -111,7 +111,8 @@ void MedicalPriorities::Serialize( xml::xostream& xos ) const
     QString value( "" );
     for( T_Priorities::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
         value += ( !value.isEmpty() ? ";" : "" ) + QString::number( *it );
-    xos << xml::attribute( "value", value.ascii() );
+    if( !value.isEmpty() )
+        xos << xml::attribute( "value", value.ascii() );
 }
 
 // -----------------------------------------------------------------------------
