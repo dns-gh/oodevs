@@ -23,7 +23,8 @@ namespace hla
 MOCK_BASE_CLASS( MockRtiAmbassador, hla::RtiAmbassador_ABC )
 {
     MOCK_METHOD( Tick, 0 );
-    MOCK_METHOD( Create, 2 );
+    MOCK_METHOD_EXT( Create, 2, bool( const std::string&, const std::string& ), CreateFom )
+    MOCK_METHOD_EXT( Create, 2, bool( const std::string&, const std::vector< std::string >& ), CreateFoms )
     MOCK_METHOD( Destroy, 1 );
     MOCK_METHOD( Connect, 1 );
     MOCK_METHOD( Disconnect, 0 );
