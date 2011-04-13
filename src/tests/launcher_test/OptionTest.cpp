@@ -16,15 +16,13 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SessionOption_SetOptionTest )
 {
-    frontend::CreateSession* session = new frontend::CreateSession( "dummy path" );
-    session->SetDefaultValues();
-    std::string option;
-    session->SetOption( "session/config/dispatcher/plugins/shield", "" );
-    BOOST_CHECK( session->HasOption( "session/config/dispatcher/plugins/shield" ) );
-    session->SetOption( "session/config/dispatcher/plugins/shield/@server", 33001 );
-    BOOST_CHECK( session->HasOption( "session/config/dispatcher/plugins/shield/@server" ) );
-    BOOST_CHECK( session->GetOption< int >( "session/config/dispatcher/plugins/shield/@server" ) == 33001 );
-    delete session;
+    frontend::CreateSession session( "dummy path" );
+    session.SetDefaultValues();
+    session.SetOption( "session/config/dispatcher/plugins/shield", "" );
+    BOOST_CHECK( session.HasOption( "session/config/dispatcher/plugins/shield" ) );
+    session.SetOption( "session/config/dispatcher/plugins/shield/@server", 33001 );
+    BOOST_CHECK( session.HasOption( "session/config/dispatcher/plugins/shield/@server" ) );
+    BOOST_CHECK_EQUAL( 33001, session.GetOption< int >( "session/config/dispatcher/plugins/shield/@server" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,12 +31,10 @@ BOOST_AUTO_TEST_CASE( SessionOption_SetOptionTest )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SessionOption_RemoveOptionTest )
 {
-    frontend::CreateSession* session = new frontend::CreateSession( "c:/tmp/session.xml" );
-    session->SetDefaultValues();
-    BOOST_CHECK( session->HasOption( "session/config/dispatcher/plugins/recorder" ) );
-    session->RemoveOption( "session/config/dispatcher/plugins/recorder" );
-    BOOST_CHECK( session->HasOption( "session/config/dispatcher/plugins" ) );
-    BOOST_CHECK( !session->HasOption( "session/config/dispatcher/plugins/recorder" ) );
-    //session->Commit();
-    delete session;
+    frontend::CreateSession session( "dummy path" );
+    session.SetDefaultValues();
+    BOOST_CHECK( session.HasOption( "session/config/dispatcher/plugins/recorder" ) );
+    session.RemoveOption( "session/config/dispatcher/plugins/recorder" );
+    BOOST_CHECK( session.HasOption( "session/config/dispatcher/plugins" ) );
+    BOOST_CHECK( !session.HasOption( "session/config/dispatcher/plugins/recorder" ) );
 }

@@ -167,7 +167,7 @@ namespace
 // Name: ClientCanStartExercise
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-// $$$$ MCO : this seems to deadlock because for some reason the simulation processus isn't started (but shouldn't deadlock anyway...)
+// $$$$ MCO : this seems to deadlock because for some reason the simulation process isn't started (but shouldn't deadlock anyway...)
 //BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, Fixture )
 //{
 //    BOOST_REQUIRE( client.Connected() );
