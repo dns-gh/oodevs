@@ -2604,7 +2604,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="position" name="Position" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Canaliser" dia-type="france.military.platoon.tasks.Canaliser" id="2136" name="STABILISATION Canaliser foule">
+    <mission dia-behavior="france.military.platoon.stabilisation.tasks.CanaliserFoule" dia-type="france.military.platoon.stabilisation.tasks.CanaliserFoule" id="2136" name="STABILISATION Canaliser foule">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -4470,4 +4470,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="2822569021" -->
+<!-- signature="0552954590" -->
