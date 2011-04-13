@@ -12,6 +12,7 @@
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "protocol/protocol.h"
 #include <iostream>
 #pragma warning( push, 0 )
 #include <qstring.h>
@@ -45,12 +46,39 @@ Logger::~Logger()
 // -----------------------------------------------------------------------------
 void Logger::MissionCreated( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
 {
-    os_ << "===============================================================================" << std::endl
-        << boost::posix_time::second_clock::local_time() << std::endl
-        << "Agent ID: " << target.GetId() << "\t" << "Agent Name: " << target.GetName() << std::endl
-        << "mission ID: " << mission.GetId()<< "\t" << "Mission Name: " << mission.GetName() << std::endl
-        << "===============================================================================" << std::endl
-        << std::endl;
+    os_ << "[" << boost::posix_time::second_clock::local_time() << "] >>>"
+        << " [U" << target.GetId() << "]"
+        << "[M" << mission.GetId()<< "] Mission '" << mission.GetName() << "' sent." << std::endl;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Logger::MissionAknowledged
+// Created: PHC 2011-04-08
+// -----------------------------------------------------------------------------
+void Logger::MissionAcknowledged( const sword::Tasker& tasker ) const
+{
+    os_ << "[" << boost::posix_time::second_clock::local_time() << "] ";
+    if( tasker.has_unit() )
+        os_ << "<<< Mission acknowledged for unit " << tasker.unit().id() << std::endl;
+    else if( tasker.has_automat() )
+        os_ << "<<< Mission acknowledged for automat " << tasker.automat().id() << std::endl;
+    else if( tasker.has_crowd() )
+        os_ << "<<< Mission acknowledged for crowd " << tasker.crowd().id() << std::endl;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Logger::MissionErrorAck
+// Created: PHC 2011-04-08
+// -----------------------------------------------------------------------------
+void Logger::MissionErrorAck( const sword::Tasker& tasker ) const
+{
+    os_ << "[" << boost::posix_time::second_clock::local_time() << "] ";
+    if( tasker.has_unit() )
+        os_ << "<<< Mission ERROR ack for unit " << tasker.unit().id() << std::endl;
+    else if( tasker.has_automat() )
+        os_ << "<<< Mission ERROR ack for automat " << tasker.automat().id() << std::endl;
+    else if( tasker.has_crowd() )
+        os_ << "<<< Mission ERROR ack for crowd " << tasker.crowd().id() << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +87,8 @@ void Logger::MissionCreated( const kernel::Entity_ABC& target, const kernel::Mis
 // -----------------------------------------------------------------------------
 void Logger::ConnectionSucceeded( const std::string& endpoint ) const
 {
-    os_ << "Connection succeeded at " << endpoint << std::endl;
+    os_ << "[" << boost::posix_time::second_clock::local_time() 
+        << "] <<< Connection succeeded at " << endpoint << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +97,8 @@ void Logger::ConnectionSucceeded( const std::string& endpoint ) const
 // -----------------------------------------------------------------------------
 void Logger::AuthenticationSucceeded( const std::string& profile ) const
 {
-    os_ << "Authentication succeeded with profile '" << profile << "'" << std::endl;
+    os_ << "[" << boost::posix_time::second_clock::local_time() 
+        << "] <<< Authentication succeeded with profile '" << profile << "'" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -77,5 +107,6 @@ void Logger::AuthenticationSucceeded( const std::string& profile ) const
 // -----------------------------------------------------------------------------
 void Logger::ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const
 {
-    os_ << "[" << target.GetId() << "][" << mission.GetName() << "][" << parameter.GetName() << "]: failed to create parameter of type '" << parameter.GetType() << "'" << std::endl;
+    os_ << "[" << boost::posix_time::second_clock::local_time() 
+        << "] war [U" << target.GetId() << "][M" << mission.GetId() << "]: paramType unknown '" << parameter.GetType() << "'" << std::endl;
 }

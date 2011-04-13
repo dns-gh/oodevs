@@ -16,6 +16,7 @@
 #include "actions/ActionFactory.h"
 #include "actions/ActionParameterFactory.h"
 #include "actions/Parameter_ABC.h"
+#include "protocol/Protocol.h"
 #include "client_proxy/SwordMessagePublisher_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -61,8 +62,9 @@ namespace
 // Name: Exercise constructor
 // Created: PHC 2011-03-21
 // -----------------------------------------------------------------------------
-Exercise::Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel )
-    : controller_              ( new kernel::Controller() )
+Exercise::Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher )
+    : publisher_               ( publisher )
+    , controller_              ( new kernel::Controller() )
     , time_                    ( new SimulationTime() )
     , agentKnowledgeConverter_ ( new AgentKnowledgeConverter() )
     , objectKnowledgeConverter_( new ObjectKnowledgeConverter() )
@@ -87,7 +89,7 @@ Exercise::~Exercise()
 // Name: Exercise::SendOrder
 // Created: PHC 2011-03-23C'es
 // -----------------------------------------------------------------------------
-void Exercise::SendOrder( const std::string& message, Client& client ) const
+void Exercise::SendOrder( const std::string& message, Client& client ) const // $$$$ PHC 2011-04-12: CODE MORT
 {
     xml::xistringstream xis( message );
     xis >> xml::start( "action" );
@@ -96,27 +98,55 @@ void Exercise::SendOrder( const std::string& message, Client& client ) const
         action->Publish( client );
 }
 
+namespace
+{
+    struct Logger : public Publisher_ABC
+    {
+        Logger() : os_( "output.log" ) {}
+
+        virtual void Send( const sword::ClientToSim& message ) { Log( message ); }
+        virtual void Send( const sword::ClientToAuthentication& message ) { Log( message ); }
+        virtual void Send( const sword::ClientToReplay& message ) { Log( message ); }
+        virtual void Send( const sword::ClientToAar& message ) { Log( message ); }
+        virtual void Send( const sword::ClientToMessenger& message ) { Log( message ); }
+
+        template< typename T >
+        void Log( const T& message )
+        {
+            os_ << "-------------------------" << std::endl
+                << message.DebugString() << std::endl
+                << "-------------------------" << std::endl;
+        }
+
+        std::ofstream os_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: Exercise::CreateAction
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-void Exercise::CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
+bool Exercise::CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
 {
     std::auto_ptr< actions::Action_ABC > action( actionFactory_->CreateAction( target, mission ) );
     tools::Iterator< const kernel::OrderParameter& > params( mission.Resolver< kernel::OrderParameter >::CreateIterator() );
     while( params.HasMoreElements() )
     {
         const kernel::OrderParameter& param = params.NextElement();
-        std::auto_ptr< actions::Parameter_ABC > parameter = factory_->CreateParameter( param );
+        std::auto_ptr< actions::Parameter_ABC > parameter( factory_->CreateParameter( param ) );
         if( parameter.get() )
             action->AddParameter( *parameter.release() );
         else
         {
             NotifyInvalidParameter( target, mission, param );
-            return;
+            return false;
         }
     }
+    Logger logger;
+    action->Publish( logger );
+    action->Publish( publisher_ );
     NotifyMissionCreated( target, mission );
+    return true;
 }
 
 // -----------------------------------------------------------------------------

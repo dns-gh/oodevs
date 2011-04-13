@@ -47,7 +47,7 @@ namespace
             return true;
         }
         virtual std::string SchedulableName() const { return "testAgent"; }
-        virtual void StartMission( Exercise& /*exercise*/ ) {}
+        virtual bool StartMission( Exercise& /*exercise*/ ) { return true; }
         const std::string type_;
     };
 

@@ -11,6 +11,7 @@
 #define __ParameterFactory_h_
 
 #include <boost/noncopyable.hpp>
+#include <vector>
 
 namespace actions
 {
@@ -44,12 +45,28 @@ public:
     //! @name Operations
     //@{
     std::auto_ptr< actions::Parameter_ABC > CreateParameter( const kernel::OrderParameter& parameter ) const;
+    
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    std::auto_ptr< actions::Parameter_ABC > CreatePhaselineParameter( const kernel::OrderParameter& parameter ) const;
+    std::auto_ptr< actions::Parameter_ABC > CreateLimitParameter( const kernel::OrderParameter& parameter ) const;
+    std::auto_ptr< actions::Parameter_ABC > CreatePointParameter( const kernel::OrderParameter& parameter ) const;
+    std::auto_ptr< actions::Parameter_ABC > CreatePathParameter( const kernel::OrderParameter& parameter ) const;
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< std::string > T_Points;
+    typedef T_Points::const_iterator CIT_Points;
+    //@}
+
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
+    T_Points points_;
     //@}
 };
 }

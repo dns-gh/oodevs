@@ -59,7 +59,7 @@ public:
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
 
-    virtual void StartMission( Exercise& exercise );
+    virtual bool StartMission( Exercise& exercise );
     //@}
 
 private:

@@ -9,12 +9,14 @@
 
 #include "mission_tester_pch.h"
 #include "Agent.h"
+#include "Listener_ABC.h"
 #include "Model.h"
 #include "Scheduler_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/StaticModel.h"
 #include "protocol/Protocol.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/foreach.hpp>
 
 using namespace mission_tester;
 
@@ -46,6 +48,13 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
 {
     if( message.message().has_unit_creation() )
          CreateAgent( message.message().unit_creation() );
+    if( message.message().has_order_ack() )
+        if( !message.message().order_ack().error_code() )
+            BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+                listener->MissionAcknowledged( message.message().order_ack().tasker() );
+        else
+            BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+                listener->MissionErrorAck( message.message().order_ack().tasker() );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +64,15 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
 void Model::OnReceiveMessage( const sword::MessengerToClient& /*message*/ )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::Register
+// Created: PHC 2011-04-08
+// -----------------------------------------------------------------------------
+void Model::Register( const Listener_ABC& listener )
+{
+    listeners_.push_back( &listener );
 }
 
 // -----------------------------------------------------------------------------

@@ -75,12 +75,20 @@ void Facade::Run()
 {
     boost::shared_ptr< Scheduler_ABC > scheduler( factory_->CreateAgentScheduler() );
     Model model( *staticModel_, *scheduler );
-    Exercise exercise( model, *staticModel_ );
     Client client( model, "localhost", 10001, "Admin", "" );
+    Exercise exercise( model, *staticModel_, client );
     exercise.Register( *this );
-    client.Register( *this );    
-    while( !client.IsConnected() || !client.IsAuthentified() )
-        client.Update();
+    client.Register( *this );
+    model.Register( *this );
+    try
+    {
+        while( !client.IsConnected() || !client.IsAuthentified() )
+            client.Update();
+    }
+    catch( std::exception& e )
+    {
+        std::cerr << __FUNCTION__ << ": Error Connecting or Authentifying to simulation, '" << e.what() << "'." << std::endl;
+    }
     while( client.IsConnected() )
     {
         if( _kbhit() )
@@ -92,7 +100,7 @@ void Facade::Run()
                 StartMission( exercise, client );
         }
         client.Update();
-        scheduler->Step( 100, exercise );
+        scheduler->Step( 2000, exercise );
     }
 }
 
@@ -113,6 +121,26 @@ void Facade::MissionCreated( const kernel::Entity_ABC& target, const kernel::Mis
 {
     BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
         listener->MissionCreated( target, mission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::MissionAknowledged
+// Created: PHC 2011-04-08
+// -----------------------------------------------------------------------------
+void Facade::MissionAcknowledged( const sword::Tasker& tasker ) const
+{
+    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+        listener->MissionAcknowledged( tasker );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::MissionErrorAck
+// Created: PHC 2011-04-08
+// -----------------------------------------------------------------------------
+void Facade::MissionErrorAck( const sword::Tasker& tasker ) const
+{
+    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+        listener->MissionErrorAck( tasker );
 }
 
 // -----------------------------------------------------------------------------

@@ -29,6 +29,7 @@ namespace mission_tester
 {
     class Agent;
     class Scheduler_ABC;
+    class Listener_ABC;
 // =============================================================================
 /** @class  Model
     @brief  Model
@@ -51,6 +52,8 @@ public:
     //@{
     virtual void OnReceiveMessage( const sword::SimToClient& message );
     virtual void OnReceiveMessage( const sword::MessengerToClient& message );
+
+    void Register( const Listener_ABC& listener );
     //@}
 
     //! @name Resolvers
@@ -87,6 +90,7 @@ private:
 private:
     //! @name Member data
     //@{
+    std::vector< const Listener_ABC* > listeners_;
     const kernel::StaticModel& staticModel_;
     T_Agents agents_;
     Scheduler_ABC& scheduler_;

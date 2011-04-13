@@ -42,7 +42,7 @@ Client::~Client()
 // -----------------------------------------------------------------------------
 void Client::Send( const sword::ClientToSim& message )
 {
-    Send( message );
+    SwordProxy::Send( message );
 }
 
 // -----------------------------------------------------------------------------

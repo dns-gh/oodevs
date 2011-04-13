@@ -167,12 +167,13 @@ bool Agent::Trigger( State_ABC& /*state*/ )
 // Name: Agent::DoSomething
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-void Agent::StartMission( Exercise& exercise )
+bool Agent::StartMission( Exercise& exercise )
 {
     if( current_->HasMoreElements() )
     {
         const kernel::Mission& mission( current_->NextElement() );
         const kernel::MissionType& missionType( mission.GetType() );
-        exercise.CreateAction( *this, missionType );
+        return exercise.CreateAction( *this, missionType );
     }
+    return false;
 }

@@ -19,6 +19,11 @@ namespace kernel
     class OrderParameter;
 }
 
+namespace sword
+{
+    class Tasker;
+}
+
 namespace mission_tester
 {
 // =============================================================================
@@ -40,6 +45,8 @@ public:
     //! @name Operations
     //@{
     virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const = 0;
+    virtual void MissionAcknowledged( const sword::Tasker& tasker ) const = 0;
+    virtual void MissionErrorAck( const sword::Tasker& tasker ) const = 0;
     virtual void ConnectionSucceeded( const std::string& endpoint ) const = 0;
     virtual void AuthenticationSucceeded( const std::string& profile ) const = 0;
     virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const = 0;

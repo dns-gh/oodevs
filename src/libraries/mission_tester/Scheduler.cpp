@@ -49,7 +49,7 @@ void Scheduler::Schedule( boost::shared_ptr< Schedulable_ABC > schedulable )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Scheduler::Tick
+// Name: Scheduler::Step
 // Created: PHC 2011-03-30
 // -----------------------------------------------------------------------------
 void Scheduler::Step( unsigned int delta, Exercise& exercise )
@@ -57,12 +57,13 @@ void Scheduler::Step( unsigned int delta, Exercise& exercise )
     bpt::ptime current( bpt::microsec_clock::local_time() );
     if( last_ + bpt::milliseconds( delta ) < current )
     {
-        last_ = current;
+        
         if( !schedulables_.empty() )
         {
             if( next_ == schedulables_.end() )
                 next_ = schedulables_.begin();
-            (*next_)->StartMission( exercise );
+            if( (*next_)->StartMission( exercise ) )
+                last_ = current;
             ++next_;
         }
     }

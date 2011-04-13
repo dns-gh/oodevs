@@ -14,6 +14,7 @@
 #include <boost/shared_ptr.hpp>
 
 class SwordMessagePublisher_ABC;
+class Publisher_ABC;
 
 namespace actions
 {
@@ -52,14 +53,14 @@ class Exercise : private boost::noncopyable
 public:
     //! @name Constructors / Destructors
     //@{
-             Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel );
+             Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher );
     virtual ~Exercise();
     //@}
 
     //! @name operations
     //@{
     void SendOrder( const std::string& message, Client& client ) const;
-    void CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
+    bool CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
     void Register( const Listener_ABC& listener );
     //@}
 
@@ -73,6 +74,7 @@ private:
 private:
     //! @name members data
     //@{
+    Publisher_ABC& publisher_;
     std::vector< const Listener_ABC* > listeners_;
     std::auto_ptr< kernel::Controller > controller_;
     std::auto_ptr< kernel::Time_ABC > time_;
