@@ -29,8 +29,8 @@ using namespace frontend;
 // Name: CreateSession constructor
 // Created: RPD 2011-03-30
 // -----------------------------------------------------------------------------
-CreateSession::CreateSession(  const std::string& filePath )
-    : setter_ ( new ConfigurationManipulator( filePath ) )
+CreateSession::CreateSession()
+    : setter_ ( new ConfigurationManipulator( "dummy" ) )
 {
     // NOTHING
 }

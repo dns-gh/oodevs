@@ -31,7 +31,7 @@ class CreateSession
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit CreateSession( const std::string& filePath );
+             CreateSession();
              CreateSession( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
     virtual ~CreateSession();
     //@}
