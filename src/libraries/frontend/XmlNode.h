@@ -42,11 +42,12 @@ public:
     //@{
     void Serialize( xml::xostream& xos ) const;
     template< typename T >
-    void SetValue( const std::string& path, const T& value );
-    bool HasNode( const std::string& path );
-    bool RemoveNode( const std::string& path );
+    void     SetValue( const std::string& path, const T& value );
+    bool     HasNode( const std::string& path );
+    XmlNode* GetChildNode( const std::string& path );
+    bool     RemoveNode( const std::string& path );
     template< typename T >
-    T GetValue( const std::string& path ) const ;
+    T        GetValue( const std::string& path ) const ;
     //@}
 
 private:

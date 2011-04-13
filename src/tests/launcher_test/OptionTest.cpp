@@ -16,7 +16,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SessionOption_SetOptionTest )
 {
-    frontend::CreateSession* session = new frontend::CreateSession();
+    frontend::CreateSession* session = new frontend::CreateSession( "dummy path" );
     session->SetDefaultValues();
     std::string option;
     session->SetOption( "session/config/dispatcher/plugins/shield", "" );
@@ -33,11 +33,12 @@ BOOST_AUTO_TEST_CASE( SessionOption_SetOptionTest )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( SessionOption_RemoveOptionTest )
 {
-    frontend::CreateSession* session = new frontend::CreateSession();
+    frontend::CreateSession* session = new frontend::CreateSession( "c:/tmp/session.xml" );
     session->SetDefaultValues();
-    std::string option;
     BOOST_CHECK( session->HasOption( "session/config/dispatcher/plugins/recorder" ) );
     session->RemoveOption( "session/config/dispatcher/plugins/recorder" );
+    BOOST_CHECK( session->HasOption( "session/config/dispatcher/plugins" ) );
     BOOST_CHECK( !session->HasOption( "session/config/dispatcher/plugins/recorder" ) );
+    //session->Commit();
     delete session;
 }
