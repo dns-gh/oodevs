@@ -26,7 +26,6 @@
             <xsl:when test=".='genobject' or .='GenObjectList' or .='genobjectBM' or .='genobjectbm'"><xsl:attribute name="type">Plannedwork</xsl:attribute></xsl:when>
             <xsl:when test=".='obstacle'"><xsl:attribute name="type">Plannedwork</xsl:attribute></xsl:when>
             <xsl:when test=".='UrbanBlock' or .='UrbanBlockBM' or .='urbanblock' or .='urbanblockbm'"><xsl:attribute name="type">UrbanKnowledge</xsl:attribute></xsl:when>
-            <xsl:when test=".='Numeric' or .='numeric'"><xsl:attribute name="type">Integer</xsl:attribute></xsl:when>
             <xsl:when test="contains(.,'AreaBM')"><xsl:attribute name="type">Polygon</xsl:attribute></xsl:when>
             <xsl:when test="contains(.,'areabm')"><xsl:attribute name="type">Polygon</xsl:attribute></xsl:when>
             <xsl:when test="contains(.,'ListBM')"><xsl:attribute name="type"><xsl:value-of select="substring-before(.,'ListBM')"/></xsl:attribute></xsl:when>
