@@ -36,7 +36,7 @@
         <mission name="STABILISATION Interdire foule"/>
         <mission name="MELEE Barrer"/>
         <mission name="STABILISATION Controler foule"/>
-        <mission name="STABILISATION Canaliser foules"/>
+        <mission name="STABILISATION Canaliser foule"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Recueillir"/>
@@ -140,7 +140,7 @@
         </mission>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Controler"/>
-        <mission name="STABILISATION Canaliser foules"/>
+        <mission name="STABILISATION Canaliser foule"/>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
@@ -202,7 +202,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Controler"/>
         <mission name="STABILISATION Controler foule"/>
-        <mission name="STABILISATION Canaliser foules"/>
+        <mission name="STABILISATION Canaliser foule"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Jalonner">
@@ -257,7 +257,7 @@
         </mission>
         <mission name="MELEE Controler"/>
         <mission name="STABILISATION Controler foule"/>
-        <mission name="STABILISATION Canaliser foules"/>
+        <mission name="STABILISATION Canaliser foule"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
@@ -11496,4 +11496,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1461908069" -->
+<!-- signature="3761730121" -->
