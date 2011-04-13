@@ -515,6 +515,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE Realiser Camps"/>
+        <mission name="LOGISTIQUE Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -11496,4 +11497,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1461908069" -->
+<!-- signature="1242364220" -->
