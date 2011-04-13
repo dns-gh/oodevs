@@ -19,6 +19,7 @@
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "simulation_kernel/MIL_Random.h"
 #include "simulation_kernel/Tools/MIL_Config.h"
+#include "MT_Tools/MT_ConsoleLogger.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -32,6 +33,8 @@
 #include <boost/filesystem/convenience.hpp>
 #include <csignal>
 #include <ctime>
+#include <io.h>
+#include <fcntl.h>
 
 bool SIM_App::bCrashWithCoreDump_ = false;
 bool SIM_App::bUserInterrupt_ = false;
@@ -62,6 +65,8 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
 {
     startupConfig_->Parse( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ) );
     logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, true ) );
+    console_.reset( new MT_ConsoleLogger() );
+    MT_LOG_REGISTER_LOGGER( *console_ );
     MT_LOG_REGISTER_LOGGER( *logger_ );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( ( "Sword(tm) Simulation - Version " + std::string( tools::AppVersion() ) + " - " MT_COMPILE_TYPE " - " __TIMESTAMP__ ).c_str() );
@@ -88,6 +93,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
 //-----------------------------------------------------------------------------
 SIM_App::~SIM_App()
 {
+    MT_LOG_UNREGISTER_LOGGER( *console_ );
     MT_LOG_UNREGISTER_LOGGER( *logger_ );
     if( dispatcherThread_.get() && pDispatcher_ )
     {
@@ -152,16 +158,21 @@ LRESULT SIM_App::MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
                 DestroyMenu( hmenu );
              }
             return 0;
-        case WM_CLOSE :
+        case WM_CLOSE:
+            return 0;
         case WM_DESTROY:
-                PostQuitMessage( 0 );
+            PostQuitMessage( 0 );
             return 0;
         case WM_COMMAND:
             if( LOWORD(wParam) == IDM_QUIT )
                 PostQuitMessage( 0 );
+            else if( LOWORD( wParam ) == ID_TRAYMENU_CONSOLE )
+                if( application )
+                    application->CreateConsoleLog();
             return 0;
         case WM_TIMER:
-            application->AnimateIcon();
+            if( application )
+                application->AnimateIcon();
             return 0;
         default:
             return DefWindowProc( hwnd, uMsg, wParam, lParam );
@@ -420,4 +431,39 @@ void SIM_App::CheckpointTest()
         const boost::filesystem::path path( startupConfig_->GetCheckpointDirectory(), boost::filesystem::native );
         boost::filesystem::remove_all( path );
     }
+}
+
+namespace
+{
+    int WINAPI ConsoleHandler( DWORD type )
+    {
+        switch( type )
+        {
+        case CTRL_C_EVENT:
+        case CTRL_BREAK_EVENT:
+            FreeConsole();
+            return TRUE;
+        case CTRL_CLOSE_EVENT:
+        default:
+            return FALSE;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIM_App::CreateConsoleLog
+// Created: SBO 2011-04-12
+// -----------------------------------------------------------------------------
+void SIM_App::CreateConsoleLog()
+{
+    AllocConsole();
+    SetConsoleTitle( "SWORD Console" );
+    HMENU menu = GetSystemMenu( GetConsoleWindow(), false );
+    DeleteMenu( menu, SC_CLOSE, MF_BYCOMMAND );
+    SetConsoleCtrlHandler( &::ConsoleHandler, TRUE );
+    stdout->_file = _open_osfhandle( long( GetStdHandle( STD_OUTPUT_HANDLE ) ), _O_TEXT );
+    setvbuf( stdout, NULL, _IONBF, 0 );
+    stderr->_file = _open_osfhandle( long( GetStdHandle( STD_ERROR_HANDLE ) ), _O_TEXT );
+    setvbuf( stderr, NULL, _IONBF, 0 );
+    std::ios::sync_with_stdio();
 }

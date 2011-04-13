@@ -25,6 +25,7 @@ namespace tools
 }
 
 class MIL_Config;
+class MT_ConsoleLogger;
 class MT_FileLogger;
 class SIM_Dispatcher;
 class SIM_NetworkLogger;
@@ -65,6 +66,7 @@ private:
     void AnimateIcon();
     void StartIconAnimation();
     void StopIconAnimation();
+    void CreateConsoleLog();
 
     static LRESULT CALLBACK MainWndProc( HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
     //@}
@@ -77,6 +79,7 @@ private:
     std::auto_ptr< WinArguments > winArguments_;
     std::auto_ptr< SIM_NetworkLogger > pNetworkLogger_;
     std::auto_ptr< MT_FileLogger > logger_;
+    std::auto_ptr< MT_ConsoleLogger > console_;
 
     static bool     bCrashWithCoreDump_;
     static bool     bUserInterrupt_;
