@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<models model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Models.xsd">
+<models model-version="4.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Models.xsd">
   <units>
     <unit dia-type="france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.PlatoonINF">
       <missions>
@@ -36,7 +36,7 @@
         <mission name="STABILISATION Interdire foule"/>
         <mission name="MELEE Barrer"/>
         <mission name="STABILISATION Controler foule"/>
-        <mission name="STABILISATION Canaliser foule"/>
+        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Recueillir"/>
@@ -140,7 +140,7 @@
         </mission>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Controler"/>
-        <mission name="STABILISATION Canaliser foule"/>
+        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Couvrir"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
@@ -202,7 +202,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Controler"/>
         <mission name="STABILISATION Controler foule"/>
-        <mission name="STABILISATION Canaliser foule"/>
+        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Jalonner">
@@ -257,7 +257,7 @@
         </mission>
         <mission name="MELEE Controler"/>
         <mission name="STABILISATION Controler foule"/>
-        <mission name="STABILISATION Canaliser foule"/>
+        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
@@ -11496,4 +11496,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3761730121" -->
+<!-- signature="0240890053" -->
