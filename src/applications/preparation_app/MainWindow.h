@@ -94,6 +94,7 @@ public slots:
     void Open();
     void Close();
     bool Save();
+    void SaveAs();
     void ToggleFullScreen();
     void ToggleDocks();
     //@}

@@ -257,6 +257,10 @@
         <source>Standard</source>
         <translation>Standard</translation>
     </message>
+    <message>
+        <source>Save As</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ImportOrbatDialog</name>
@@ -591,10 +595,6 @@ Por favor seleccione un archivo de orden de batalla para importar.</translation>
         <translation>Cargar archivo de definición de ejercicio (exercise.xml)</translation>
     </message>
     <message>
-        <source>New ORBAT</source>
-        <translation>Nuevo ORBAT</translation>
-    </message>
-    <message>
         <source>Intelligences</source>
         <translation>Inteligencias</translation>
     </message>
@@ -613,14 +613,6 @@ Do you want to save anyway?</source>
 ¿Desea grabar sin embargo?</translation>
     </message>
     <message>
-        <source>Preparation - [%1]</source>
-        <translation>Preparación - [%1]</translation>
-    </message>
-    <message>
-        <source>No file loaded</source>
-        <translation>No hay archivo cargado</translation>
-    </message>
-    <message>
         <source>Watershed</source>
         <translation>Crecida de agua</translation>
     </message>
@@ -635,6 +627,34 @@ Do you want to save anyway?</source>
     <message>
         <source>Formations</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save exercise as ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type exercise name here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The exercise &apos;%1&apos; already exist. Please, enter a new exercise name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter an exercise name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No file loaded</source>
+        <translation type="unfinished">No hay archivo cargado</translation>
+    </message>
+    <message>
+        <source>New ORBAT</source>
+        <translation type="unfinished">Nuevo ORBAT</translation>
+    </message>
+    <message>
+        <source>Preparation - [%1]</source>
+        <translation type="unfinished">Preparación - [%1]</translation>
     </message>
 </context>
 <context>
@@ -821,6 +841,10 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>Toggle dock windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save &amp;As</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

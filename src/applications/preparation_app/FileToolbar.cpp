@@ -24,6 +24,7 @@ FileToolbar::FileToolbar( QMainWindow* pParent )
     new QToolButton( MAKE_ICON( new )   , tr( "New"  )  , tr( "File" ), pParent, SLOT( New() )   , this );
     new QToolButton( MAKE_ICON( open )  , tr( "Open" )  , tr( "File" ), pParent, SLOT( Open() )  , this );
     saveButton_ = new QToolButton( MAKE_ICON( save )  , tr( "Save" )  , tr( "File" ), pParent, SLOT( Save() )  , this );
+    saveAsButton_ = new QToolButton( MAKE_ICON( saveas )  , tr( "Save As" )  , tr( "File" ), pParent, SLOT( SaveAs() )  , this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,4 +43,5 @@ FileToolbar::~FileToolbar()
 void FileToolbar::EnableSaveItem( bool status )
 {
     saveButton_->setEnabled( status );
+    saveAsButton_->setEnabled( status );
 }

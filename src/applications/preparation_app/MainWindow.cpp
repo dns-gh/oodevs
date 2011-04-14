@@ -99,6 +99,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Options.h"
+#include "frontend/commands.h"
 #include "preparation/AgentsModel.h"
 #include "preparation/FormationModel.h"
 #include "preparation/IntelligencesModel.h"
@@ -110,8 +111,8 @@
 #include "tools/ExerciseConfig.h"
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem.hpp>
+#include <qinputdialog.h>
 
 namespace bfs = boost::filesystem;
 
@@ -542,6 +543,37 @@ bool MainWindow::Save()
             SetWindowTitle( false );
     }
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::SaveAs
+// Created: ABR 2011-04-13
+// -----------------------------------------------------------------------------
+void MainWindow::SaveAs()
+{
+    bool exist = false;
+    QString name;
+    bfs::path exerciseDirectory;
+    do 
+    {
+        bool ok = false;
+        name = QInputDialog::getText( tr( "Save exercise as ..." ),
+                                      ( exist ) ? tr( "The exercise '%1' already exist. Please, enter a new exercise name:" ).arg( name ) : tr( "Enter an exercise name:" ),
+                                      QLineEdit::Normal, tr( "Type exercise name here" ), &ok, this );
+        if( ok && !name.isEmpty() )
+        {
+            exerciseDirectory = bfs::path( tools::GeneralConfig::BuildChildPath( config_.GetExercisesDir(), name.ascii() ), bfs::native );
+            exist = frontend::commands::ExerciseExists( config_, name.ascii() ) || bfs::exists( exerciseDirectory );
+        }
+        else
+            return;
+    } while( exist );
+
+    bfs::create_directories( exerciseDirectory );
+    bfs::path exerciseFile = bfs::path( config_.tools::GeneralConfig::GetExerciseFile( name.ascii() ) );
+    bfs::copy_file( bfs::path( config_.GetExerciseFile() ), exerciseFile );
+    config_.LoadExercise( exerciseFile.string() );
+    Save();
 }
 
 // -----------------------------------------------------------------------------

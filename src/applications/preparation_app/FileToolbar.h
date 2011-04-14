@@ -37,7 +37,8 @@ public:
     private:
     //! @name Member data
     //@{
-    QToolButton* saveButton_;
+        QToolButton* saveButton_;
+        QToolButton* saveAsButton_;
     //@}
 };
 

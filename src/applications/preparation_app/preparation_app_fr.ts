@@ -247,7 +247,7 @@
     </message>
     <message>
         <source>Save</source>
-        <translation>Sauvegarder</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <source>Standard</source>
@@ -256,6 +256,10 @@
     <message>
         <source>New</source>
         <translation>Nouveau</translation>
+    </message>
+    <message>
+        <source>Save As</source>
+        <translation>Enregistrer sous</translation>
     </message>
 </context>
 <context>
@@ -587,10 +591,6 @@ Merci de sélectionner un autre fichier à importer.</translation>
         <translation>Charger un fichier de définition d&apos;exercice (exercise.xml)</translation>
     </message>
     <message>
-        <source>New ORBAT</source>
-        <translation>Nouvel ODB</translation>
-    </message>
-    <message>
         <source>Intelligences</source>
         <translation>Renseignements</translation>
     </message>
@@ -607,14 +607,6 @@ Merci de sélectionner un autre fichier à importer.</translation>
 Do you want to save anyway?</source>
         <translation>
 Voulez-vous sauvegarder malgré tout?</translation>
-    </message>
-    <message>
-        <source>Preparation - [%1]</source>
-        <translation>Préparation - [%1]</translation>
-    </message>
-    <message>
-        <source>No file loaded</source>
-        <translation>Pas de fichier chargé</translation>
     </message>
     <message>
         <source>Watershed</source>
@@ -636,6 +628,34 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Formations</source>
         <translation>Formations</translation>
     </message>
+    <message>
+        <source>Save exercise as ...</source>
+        <translation>Enregistrer l&apos;exercice sous ...</translation>
+    </message>
+    <message>
+        <source>Type exercise name here</source>
+        <translation>Entrer le nom de l&apos;exercice ici</translation>
+    </message>
+    <message>
+        <source>The exercise &apos;%1&apos; already exist. Please, enter a new exercise name:</source>
+        <translation>L&apos;exercice &apos;%1&apos; existe déjà. Merci de saisir un nouveau nom d&apos;exercice:</translation>
+    </message>
+    <message>
+        <source>Enter an exercise name:</source>
+        <translation>Saisir un nom d&apos;exercice:</translation>
+    </message>
+    <message>
+        <source>No file loaded</source>
+        <translation>Pas de fichier chargé</translation>
+    </message>
+    <message>
+        <source>New ORBAT</source>
+        <translation>Nouvel ODB</translation>
+    </message>
+    <message>
+        <source>Preparation - [%1]</source>
+        <translation>Préparation - [%1]</translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>
@@ -653,7 +673,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;Sauvegarder</translation>
+        <translation>&amp;Enregistrer</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -822,6 +842,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Toggle dock windows</source>
         <translation>Basculer affichage des fenêtres</translation>
+    </message>
+    <message>
+        <source>Save &amp;As</source>
+        <translation>Enregistrer &amp;sous</translation>
     </message>
 </context>
 <context>

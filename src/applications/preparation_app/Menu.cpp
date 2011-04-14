@@ -79,7 +79,8 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( tools::translate( "Menu", "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I );
     menu->insertItem( tools::translate( "Menu", "&Export..." ), &exportDialog, SLOT( exec() ), CTRL + Key_E );
     menu->insertSeparator();
-    menu->insertItem( MAKE_ICON( save )  , tools::translate( "Menu", "&Save" )      , parent(), SLOT( Save() ), CTRL + Key_S );
+    menu->insertItem( MAKE_ICON( save ), tools::translate( "Menu", "&Save" )   , parent(), SLOT( Save() ),   CTRL + Key_S );
+    menu->insertItem( MAKE_ICON( saveas ), tools::translate( "Menu", "Save &As" ), parent(), SLOT( SaveAs() ), CTRL + SHIFT + Key_S );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
     insertItem( tools::translate( "Menu", "&File" ), menu );
