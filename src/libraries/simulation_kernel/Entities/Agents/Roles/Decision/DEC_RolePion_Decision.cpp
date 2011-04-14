@@ -263,6 +263,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_ConnaissanceObjet_EstReconnu" ] = &DEC_KnowledgeObjectFunctions::IsRecon;
     brain[ "DEC_ConnaissanceObjet_PeutEtreContourne" ] = &DEC_KnowledgeObjectFunctions::CanBeBypassed;
     brain[ "DEC_ConnaissanceObjet_ChangeDensitePopulationSortante" ] = &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity;
+    brain[ "DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage" ] = &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensityInPercentage;
     brain[ "DEC_ConnaissanceObjet_ResetDensitePopulationSortante" ] = &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity;
     brain[ "DEC_ConnaissanceObjet_PointEstDansZoneEvitement"] = &DEC_KnowledgeObjectFunctions::IsInAvoidanceArea;
     brain[ "DEC_ConnaissanceObjet_BurningLevel" ] = &DEC_KnowledgeObjectFunctions::GetBurningLevel;

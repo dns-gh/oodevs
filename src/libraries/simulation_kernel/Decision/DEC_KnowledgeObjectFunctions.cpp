@@ -195,6 +195,18 @@ void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensity( boost::shared_pt
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::SetExitingPopulationDensityInPercentage
+// Created: LMT 2011-04-14
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeObjectFunctions::SetExitingPopulationDensityInPercentage( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float percentageDensity )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
+            if( PopulationAttribute* pAttribute = pObject->RetrieveAttribute< PopulationAttribute >() )
+                pAttribute->SetDensity( pAttribute->GetDensity() * percentageDensity );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity
 // Created: NLD 2006-03-08
 // -----------------------------------------------------------------------------
