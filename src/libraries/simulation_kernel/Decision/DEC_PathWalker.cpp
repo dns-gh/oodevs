@@ -189,9 +189,8 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
         {
             for( IT_PointSet itPoint = collisions.begin(); itPoint != collisions.end(); ++itPoint )
             {
-                MT_Vector2D& vPoint = *itPoint;
-                assert( object.IsInside( vPoint ) );
-                IT_MoveStepSet itMoveStep = moveStepSet.insert( T_MoveStep( vPoint ) ).first;
+                assert( object.IsInside( *itPoint ) );
+                IT_MoveStepSet itMoveStep = moveStepSet.insert( T_MoveStep( *itPoint ) ).first;
                 itMoveStep->ponctualObjectsOnSet_.insert( &object );
                 // A - C - B ( Le point C ajouté entre A et B contient les mêmes objets que de A -> B)
                 if( itMoveStep != moveStepSet.begin() )
