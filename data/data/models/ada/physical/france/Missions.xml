@@ -2430,7 +2430,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="position" name="Position" optional="false" type="Point"/>
-      <parameter dia-name="percentageToDesarm" name="Pourcentage de foule à désarmer" optional="false" type="Integer"/>
+      <parameter dia-name="bodySearchStrength" name="Pourcentage de foule à désarmer" optional="false" type="Integer"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Fixer" dia-type="france.military.platoon.combat.tasks.Fixer" id="2116" name="MELEE Fixer" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4247,7 +4247,7 @@
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Compagnie a escorter" optional="false" type="Automat"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.OrganiserAccueilColonneRefugies" dia-type="france.military.company.tasks.OrganiserAccueilColonneRefugies" id="1042" mrt-dia-behavior="france.military.company.tasks.OrganiserAccueilColonneRefugies" name="MELEE Organiser accueil colonne refugies" package="control">
+    <mission cdt-dia-behavior="france.military.company.tasks.OrganiserAccueilColonneRefugies" dia-type="france.military.company.tasks.OrganiserAccueilColonneRefugies" id="1041" mrt-dia-behavior="france.military.company.tasks.OrganiserAccueilColonneRefugies" name="MELEE Organiser accueil colonne refugies" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4261,16 +4261,24 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.AnimerPosteDeControle" dia-type="france.military.company.stabilisation.tasks.AnimerPosteDeControle" id="1041" mrt-dia-behavior="france.military.company.stabilisation.tasks.AnimerPosteDeControle" name="STABILISATION Animer Postes De Controle" package="support">
+    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.AnimerPosteDeControle" dia-type="france.military.company.stabilisation.tasks.AnimerPosteDeControle" id="1042" mrt-dia-behavior="france.military.company.stabilisation.tasks.AnimerPosteDeControle" name="STABILISATION Animer Postes De Controle" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
-      <parameter dia-name="percentageToDesarm" name="Pourcentage de foule à désarmer" optional="false" type="Integer"/>
+      <parameter dia-name="bodySearchStrength" name="Pourcentage de foule à désarmer" optional="false" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.ControlerFoule" dia-type="france.military.company.stabilisation.tasks.ControlerFoule" id="1043" mrt-dia-behavior="france.military.company.stabilisation.tasks.ControlerFoule" name="STABILISATION Controler foule" package="control">
+    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.InterdireFoule" dia-type="france.military.company.stabilisation.tasks.InterdireFoule" id="1043" mrt-dia-behavior="france.military.company.stabilisation.tasks.InterdireFoule" name="STABILISATION Interdire foules" package="support">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.ControlerFoule" dia-type="france.military.company.stabilisation.tasks.ControlerFoule" id="1044" mrt-dia-behavior="france.military.company.stabilisation.tasks.ControlerFoule" name="STABILISATION Controler foule" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4505,4 +4513,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3427522464" -->
+<!-- signature="3784157218" -->
