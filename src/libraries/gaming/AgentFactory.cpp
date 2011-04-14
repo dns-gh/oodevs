@@ -45,7 +45,6 @@
 #include "LogisticsModel.h"
 #include "LimitsModel.h"
 #include "AgentFactory.h"
-#include "ObjectFactory.h"
 #include "PopulationDetections.h"
 #include "LogisticConsigns.h"
 #include "Logistics.h"
