@@ -219,4 +219,3 @@ TerrainObjectProxy* UrbanModel::FindObject( unsigned long id ) const
 {
     return Find( id );
 }
-

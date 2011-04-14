@@ -68,7 +68,7 @@ public:
     gui::TerrainObjectProxy* FindObject( unsigned long id ) const;
     //@}
 
-public:
+private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;

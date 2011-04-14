@@ -27,7 +27,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 LocationPositions::LocationPositions( const CoordinateConverter_ABC& converter )
     : converter_( converter )
-    , location_( 0 )
+    , location_ ( 0 )
 {
     // NOTHING
 }
@@ -173,8 +173,8 @@ namespace
 // -----------------------------------------------------------------------------
 void LocationPositions::Update( const sword::Location& message )
 {
-    points_.clear(); points_.reserve( message.coordinates().elem_size());
-    center_ = geometry::Point2f( 0, 0 );
+    points_.clear();
+    points_.reserve( message.coordinates().elem_size());
     boundingBox_.Set( 0, 0, 0, 0 );
     AddLocation( message );
     location_ = BuildLocation( converter_, message );
@@ -187,7 +187,6 @@ void LocationPositions::Update( const sword::Location& message )
 void LocationPositions::Update( const sword::Location& message, const geometry::Point2f& startPoint )
 {
     points_.clear(); points_.reserve( message.coordinates().elem_size()+ 1 );
-    center_ = geometry::Point2f( 0, 0 );
     boundingBox_.Set( 0, 0, 0, 0 );
     AddPoint( startPoint );
     AddLocation( message );
@@ -201,8 +200,6 @@ void LocationPositions::AddLocation( const sword::Location& message )
 {
     for( int i = 0; i < message.coordinates().elem_size(); ++i )
         AddPoint( converter_.ConvertToXY( message.coordinates().elem(i) ) );
-    if( !points_.empty() )
-        center_.Set( center_.X() / points_.size(), center_.Y() / points_.size() );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,7 +209,6 @@ void LocationPositions::AddLocation( const sword::Location& message )
 void LocationPositions::AddPoint( const geometry::Point2f& point )
 {
     points_.push_back( point );
-    center_ += geometry::Vector2f( point.X(), point.Y() );
     boundingBox_.Incorporate( point );
 }
 

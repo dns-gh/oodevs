@@ -39,7 +39,7 @@ public:
     //! @name Operations
     //@{
     virtual geometry::Point2f GetPosition( bool aggregated ) const;
-    virtual float             GetHeight( bool aggregated ) const;
+    virtual float GetHeight( bool aggregated ) const;
     virtual bool IsAt( const geometry::Point2f& pos, float precision, float adaptiveFactor ) const;
     virtual bool IsIn( const geometry::Rectangle2f& rectangle ) const;
     virtual geometry::Rectangle2f GetBoundingBox() const;
@@ -77,7 +77,6 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     T_PointVector points_;
     geometry::Rectangle2f boundingBox_;
-    geometry::Point2f center_;
     std::auto_ptr< kernel::Location_ABC > location_;
     //@}
 };
