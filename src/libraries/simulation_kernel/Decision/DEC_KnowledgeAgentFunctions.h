@@ -51,6 +51,7 @@ public:
     static bool  IsDead                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static int   Lock                                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void  Unlock                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void  UnitDecisionalState                    ( const DEC_Knowledge_Agent& callerAgent, const std::string& key, const std::string& value );
 
     static double            GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Agent > pTarget, UrbanObjectWrapper* pUrbanBlock );
     static const std::string GetCriticalIntelligence              ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

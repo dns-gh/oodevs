@@ -16,6 +16,7 @@
 #include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_DIAFunctions.h"
 #include "Decision/DEC_GeometryFunctions.h"
+#include "Decision/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_MiscFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
@@ -326,6 +327,8 @@ void RegisterReportFunctions( directia::brain::Brain& brain )
     brain[ "DEC_PointToString" ] = &DEC_DIAFunctions::PointToString;
     brain[ "DEC_DirectionToString" ] =  &DEC_DIAFunctions::DirectionToString ;
     brain[ "DEC_ItineraireToString" ] = &DEC_DIAFunctions::PathToString ;
+    brain[ "DEC_UnitDecisionalState" ] = &DEC_KnowledgeAgentFunctions::UnitDecisionalState;
+
 }
 
 // -----------------------------------------------------------------------------

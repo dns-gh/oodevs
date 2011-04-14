@@ -18,8 +18,10 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "Knowledge/QueryValidity.h"
+#include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetNatureAtlas
@@ -332,4 +334,17 @@ const std::string DEC_KnowledgeAgentFunctions::GetCriticalIntelligence( boost::s
 {
     pKnowledge->SetCriticalIntelligenceFromAgentKnown();
     return pKnowledge->GetCriticalIntelligence();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::UnitDecisionalState
+// Created: EVH 2011-04-08
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeAgentFunctions::UnitDecisionalState( const DEC_Knowledge_Agent& callerAgent, const std::string& key, const std::string& value )
+{
+    client::DecisionalState msg;
+    msg().mutable_source()->mutable_unit()->set_id( callerAgent.GetAgentKnown().GetID() );
+    msg().set_key( key.c_str() );
+    msg().set_value( value.c_str() );
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }

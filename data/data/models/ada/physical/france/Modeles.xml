@@ -592,6 +592,7 @@
         <mission name="ASY Commettre un Attentat"/>
         <mission name="ASY Commettre un Attentat Suicide"/>
         <mission name="ASY Se Dissimuler"/>
+        <mission name="ASY Prendre un Otage"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -11497,4 +11498,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1242364220" -->
+<!-- signature="3242166352" -->

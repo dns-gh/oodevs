@@ -2609,7 +2609,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Zone" optional="false" type="Polygon"/>
+      <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.SeDeployer" dia-type="france.military.platoon.tasks.SeDeployer" id="2137" name="LOGISTIQUE Se Deployer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2617,6 +2617,20 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Position" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="france.military.platoon.terrorism.tasks.PrendreOtage" dia-type="france.military.platoon.terrorism.tasks.PrendreOtage" id="2138" name="ASY Prendre un Otage">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="hostage" name="Otage" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="position" name="Position" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -4483,4 +4497,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="2480734183" -->
+<!-- signature="1189309881" -->
