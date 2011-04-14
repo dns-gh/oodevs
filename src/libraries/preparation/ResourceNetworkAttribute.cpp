@@ -160,7 +160,7 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
                     if( !resourceTarget || ( !IsSelected() && !resourceTarget->IsSelected() ) )
                         continue;
                 }
-                Point2f to = link->urban_ ? urbans_.Get( link->id_ ).Barycenter()
+                Point2f to = link->urban_ ? urbans_.Get( link->id_ ).Get< kernel::Positions >().GetPosition()
                                           : objects_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
                     tools.DrawArrow( from, to );

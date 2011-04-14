@@ -81,12 +81,8 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
-
-    virtual bool IsInside( const geometry::Point2f& point ) const;
-    geometry::Point2f Barycenter() const;
     const geometry::Polygon2f* GetFootprint() const;
     const urban::TerrainObject_ABC* GetObject() const;
-    virtual void Display( kernel::Displayer_ABC& ) const {}
     virtual const kernel::ObjectType& GetType() const { return type_; }
     virtual QString GetTypeName() const;
     //@}
@@ -98,7 +94,7 @@ public:
     virtual void Activate( kernel::ActionController& /*controller*/ ) const {}
     virtual void SetSelected( bool selected ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
-
+    virtual void Display( kernel::Displayer_ABC& ) const {}
     void UpdateHumans( const std::string& inhabitant, const T_BlockOccupation& occupations, bool alerted, bool confined, bool evacuated, float angriness );
     void NotifyUpdated( const UrbanDisplayOptions& );
     //@}

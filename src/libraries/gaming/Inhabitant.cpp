@@ -218,7 +218,8 @@ Point2f Inhabitant::GetPosition( bool ) const
 {
     Polygon2f poly;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        poly.Add( it->second->Barycenter() );
+        if( const kernel::Positions* positions = it->second->Retrieve< kernel::Positions >() )
+            poly.Add( positions->GetPosition() );
     return poly.Barycenter();
 }
 

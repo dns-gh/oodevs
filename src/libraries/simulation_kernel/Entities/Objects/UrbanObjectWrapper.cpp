@@ -118,7 +118,6 @@ void UrbanObjectWrapper::load( MIL_CheckPointInArchive& file, const unsigned int
     object_ = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetTerrainObject( urbanId );
     file >> inhabitants_
          >> livingAreas_;
-
 }
 
 // -----------------------------------------------------------------------------

@@ -13,12 +13,6 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
 
-namespace kernel
-{
-    class CoordinateConverter_ABC; // useful?
-    class LocationVisitor_ABC;
-}
-
 namespace urban
 {
     class TerrainObject_ABC;

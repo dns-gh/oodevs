@@ -41,8 +41,9 @@ namespace
             while( it.HasMoreElements() )
             {
                 const gui::TerrainObjectProxy& object = it.NextElement();
-                if( poly.IsInside( object.Barycenter() ) )
-                    vector_.push_back( &object );
+                if( const kernel::Positions* positions = object.Retrieve< kernel::Positions >() )
+                    if( poly.IsInside( positions->GetPosition() ) )
+                        vector_.push_back( &object );
             }
         }
 
@@ -130,7 +131,8 @@ void InhabitantPositions::ComputePosition()
 {
     geometry::Polygon2f poly;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        poly.Add( ( *it )->Barycenter() );
+        if( const kernel::Positions* positions = ( *it )->Retrieve< kernel::Positions >() )
+            poly.Add( positions->GetPosition() );
     if( !poly.IsEmpty() )
         position_ = poly.Barycenter();
 }
@@ -148,7 +150,6 @@ void InhabitantPositions::SerializeAttributes( xml::xostream& xos ) const
                 << xml::attribute( "id", ( *it )->GetId() )
             << xml::end;
     }
-       //TODO
     xos << xml::end;
 }
 
