@@ -91,6 +91,9 @@ sword::ControlStartExerciseAck::ErrorCode ProcessService::StartExercise( const s
     {
         frontend::CreateSession action( config_, exercise, session );
         action.SetDefaultValues();
+        action.SetOption( "session/config/dispatcher/plugins/shield/@server", "30001" );
+        action.SetOption( "session/config/simulation/time/@paused", true );
+        action.SetOption( "session/config/simulation/time/@factor", 1 );
         if( message.has_use_after_action_analysis() && message.use_after_action_analysis() )
             action.SetOption( "session/config/dispatcher/plugins/recorder", "" );
         else
