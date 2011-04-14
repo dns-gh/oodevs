@@ -192,6 +192,7 @@ private:
     MIL_PropagationManager* pPropagationManager_;
     ProcessMonitor* pProcessMonitor_;
     long lastStep_;
+    bool pauseAtStartup_;
     //@}
 
 private:

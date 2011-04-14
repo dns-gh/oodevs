@@ -68,6 +68,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
     , lastStep_             ( clock() )
+    , pauseAtStartup_       ( config_.GetPausedAtStartup() )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
@@ -83,8 +84,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->CreateUrbanObjects( *pUrbanModel_, config_ );
         pEntityManager_->ReadODB( config_ );
-        if( !config_.GetPausedAtStartup() )
-            Resume();
+        Resume();
     }
     timerManager_.Register( *this );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
@@ -224,6 +224,12 @@ void MIL_AgentServer::OnTimer()
     ++nCurrentTimeStep_;
     if( config_.GetEndTick() == nCurrentTimeStep_ )
         nSimState_ = eSimStopped;
+
+    if( pauseAtStartup_ )
+    {
+        pauseAtStartup_ = false;
+        Pause();
+    }
 }
 
 //-----------------------------------------------------------------------------
