@@ -349,15 +349,6 @@ bool UrbanObjectWrapper::HasChild() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::GetFootprint
-// Created: LGY 2011-02-18
-// -----------------------------------------------------------------------------
-const geometry::Polygon2f* UrbanObjectWrapper::GetFootprint() const
-{
-    return object_->GetFootprint();
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::ComputeComplexity
 // Created: JSR 2011-02-18
 // -----------------------------------------------------------------------------

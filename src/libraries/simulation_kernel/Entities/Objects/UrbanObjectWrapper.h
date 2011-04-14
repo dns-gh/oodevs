@@ -80,7 +80,6 @@ public:
     unsigned int GetUrbanId() const;
     const std::string& GetName() const;
     bool HasChild() const;
-    const geometry::Polygon2f* GetFootprint() const;;  // $$$$ _RC_ LGY 2011-02-18: à supprimer
     float ComputeComplexity() const;
     const urban::Architecture* GetArchitecture() const;
     const urban::TerrainObject_ABC& GetObject();  // $$$$ _RC_ LGY 2011-02-18: à supprimer
