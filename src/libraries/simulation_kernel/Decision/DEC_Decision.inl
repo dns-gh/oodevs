@@ -14,6 +14,7 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_Singletons.h"
+#include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision constructor

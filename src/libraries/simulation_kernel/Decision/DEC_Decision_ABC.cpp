@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Decision_ABC.h"
+#include <directia/brain/Brain.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision_ABC constructor
@@ -19,7 +20,6 @@ DEC_Decision_ABC::DEC_Decision_ABC()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision_ABC destructor
 // Created: RDS 2008-04-30
@@ -27,4 +27,13 @@ DEC_Decision_ABC::DEC_Decision_ABC()
 DEC_Decision_ABC::~DEC_Decision_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision_ABC::GetScriptRef
+// Created: MCO 2011-04-30
+// -----------------------------------------------------------------------------
+directia::tools::binders::ScriptRef DEC_Decision_ABC::GetScriptRef( const std::string& id )
+{
+    return GetBrain()[ id ];
 }

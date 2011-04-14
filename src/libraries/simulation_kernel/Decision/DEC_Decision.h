@@ -13,23 +13,11 @@
 #include "MIL.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "MT_Tools/MT_Logger.h"
-#include <directia/brain/Brain.h>
 
 class DEC_Knowledge_Object;
 class DEC_Model_ABC;
 class MIL_Entity_ABC;
 class MIL_Mission_ABC;
-
-namespace directia
-{
-    namespace tools
-    {
-        namespace binders
-        {
-            class ScriptRef;
-        }
-    }
-}
 
 // =============================================================================
 /** @class  DEC_Decision

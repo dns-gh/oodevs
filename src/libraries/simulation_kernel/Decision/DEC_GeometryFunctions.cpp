@@ -37,6 +37,7 @@
 #include <urban/Architecture.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
+#include <directia/brain/Brain.h>
 #include <boost/foreach.hpp>
 
 #define PRECISION 0.0000001

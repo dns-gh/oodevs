@@ -11,7 +11,15 @@
 #define __DEC_Decision_ABC_h_
 
 #include "MT_Tools/Role_ABC.h"
-#include <directia/brain/Brain.h>
+#include <directia/tools/binders/ScriptRef.h>
+
+namespace directia
+{
+namespace brain
+{
+    class Brain;
+}
+}
 
 class DEC_AutomateDecision;
 class DEC_Knowledge_Agent;
@@ -152,6 +160,8 @@ public:
 private:
     //! @name Helpers
     //@{
+    directia::tools::binders::ScriptRef GetScriptRef( const std::string& id );
+
     virtual directia::brain::Brain& GetBrain() = 0;
     template< typename T > static void SetScriptVariable( const T& source, T& dest );
     //@}

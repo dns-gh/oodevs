@@ -14,8 +14,7 @@
 template< typename T >
 void DEC_Decision_ABC::Callback( unsigned int actionId, T value )
 {
-    directia::tools::binders::ScriptRef function = GetBrain()[ "CallbackAction" ];
-    function( actionId, value );
+    GetScriptRef( "CallbackAction" )( actionId, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -25,11 +24,11 @@ void DEC_Decision_ABC::Callback( unsigned int actionId, T value )
 template <typename T>
 void DEC_Decision_ABC::SetVariable( const std::string& name, T value )
 {
-    GetBrain()[ name ] = value;
+    GetScriptRef( name ) = value;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Decision_ABC::SetVariable
+// Name: DEC_Decision_ABC::SetScriptVariable
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------
 template< typename T >
@@ -37,9 +36,6 @@ void DEC_Decision_ABC::SetScriptVariable( const T& source, T& dest )
 {
     dest = source;
 }
-
-#pragma warning( push )
-#pragma warning( disable : 4700 ) // uninitialized local variable 'value' used
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision_ABC::GetVariable
@@ -49,15 +45,13 @@ template< typename T >
 T DEC_Decision_ABC::GetVariable( const std::string& name )
 {
     T value = T();
-    directia::tools::binders::ScriptRef scriptRef = GetBrain()[ name ];
+    directia::tools::binders::ScriptRef scriptRef = GetScriptRef( name );
     if( !scriptRef )
-        GetBrain()[ name ] = value;
-    GetBrain()[ "DEC_SetVariable__" ] = boost::function< void( const T& ) >( boost::bind( &DEC_Decision_ABC::SetScriptVariable<T>, _1, boost::ref( value ) ) );
-    GetBrain()[ "DEC_SetVariable__" ]( GetBrain()[ name ] );
+        scriptRef = value;
+    GetScriptRef( "DEC_SetVariable__" ) = boost::function< void( const T& ) >( boost::bind( &DEC_Decision_ABC::SetScriptVariable<T>, _1, boost::ref( value ) ) );
+    GetScriptRef( "DEC_SetVariable__" )( GetScriptRef( name ) );
     return value;
 }
-
-#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision_ABC::GetScalarVariable
@@ -67,10 +61,10 @@ template< typename T >
 T DEC_Decision_ABC::GetScalarVariable( const std::string& name )
 {
     T value = 0;
-    directia::tools::binders::ScriptRef scriptRef = GetBrain()[ name ];
+    directia::tools::binders::ScriptRef scriptRef = GetScriptRef( name );
     if( !scriptRef )
-        GetBrain()[ name ] = value;
-    GetBrain()[ "DEC_SetVariable__" ] = boost::function< void( const T& ) >( boost::bind( &DEC_Decision_ABC::SetScriptVariable<T>, _1, boost::ref( value ) ) );
-    GetBrain()[ "DEC_SetVariable__" ]( GetBrain()[ name ] );
+        scriptRef = value;
+    GetScriptRef( "DEC_SetVariable__" ) = boost::function< void( const T& ) >( boost::bind( &DEC_Decision_ABC::SetScriptVariable<T>, _1, boost::ref( value ) ) );
+    GetScriptRef( "DEC_SetVariable__" )( GetScriptRef( name ) );
     return value;
 }
