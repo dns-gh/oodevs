@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __UsagesContainer_h_
-#define __UsagesContainer_h_
+#ifndef __Usages_h_
+#define __Usages_h_
 
 #include "clients_kernel/Usages_ABC.h"
 #include "HumanDefs.h"
