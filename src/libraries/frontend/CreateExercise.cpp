@@ -107,9 +107,7 @@ namespace
                 bfs::copy_file( from, to );
         }
     }
-
 }
-
 
 namespace frontend
 {

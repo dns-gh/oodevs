@@ -14,7 +14,6 @@
 #include "clients_gui/Tools.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
-//#include "frontend/Exercise_ABC.h"
 #include "clients_gui/ValuedListItem.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
@@ -41,23 +40,27 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
     , fileLoader_  ( fileLoader )
     , page_( page )
 {
+    Style( this );
     setFrameShape( QFrame::NoFrame );
     setMargin( 5 );
-    setBackgroundOrigin( QWidget::WindowOrigin );
-
     {
         QHBox* saveBox = Style( new QHBox( this ) );
-
         Style( new QLabel( tools::translate( "CreateExerciceWidget", "Create new exercise:" ), saveBox ) );
         editName_ = Style( new QLineEdit( tools::translate( "CreateExerciceWidget", "Enter exercise name" ), saveBox ) );
         connect( editName_, SIGNAL( textChanged( const QString& ) ), &page, SLOT( EditNameChanged( const QString& ) ) );
-        editTerrainList_ = Style( new QComboBox( saveBox ) );
-        connect( editTerrainList_, SIGNAL( activated( int ) ), &page, SLOT( ComboChanged( int ) ) );
-        editModelList_ = Style( new QComboBox( saveBox ) );
-        connect( editModelList_, SIGNAL( activated( int ) ), &page, SLOT( ComboChanged( int ) ) );
+        {
+            QVBox* box = Style( new QVBox( saveBox ) );
+            editTerrainList_ = Style( new QComboBox( box ) );
+            connect( editTerrainList_, SIGNAL( activated( int ) ), &page, SLOT( ComboChanged( int ) ) );
+            editModelList_ = Style( new QComboBox( box ) );
+            connect( editModelList_, SIGNAL( activated( int ) ), &page, SLOT( ComboChanged( int ) ) );
+            editTerrainList_->setMinimumWidth( 210 );
+            editModelList_->setMinimumWidth( 210 );
+        }
     }
     {
         saveAsGroupBox_ = Style( new QGroupBox( 2, Qt::Horizontal, tools::translate( "CreateExerciceWidget", "Create as copy of:" ), this ) );
+        saveAsGroupBox_->setFrameShape( QFrame::NoFrame );
         saveAsGroupBox_->setCheckable( true );
         saveAsGroupBox_->setChecked( false );
         connect( saveAsGroupBox_, SIGNAL( toggled( bool ) ), &page, SLOT( ToggleChanged( bool ) ) );
@@ -203,4 +206,3 @@ void CreateExerciceWidget::UpdateExercises()
     exerciseList_->clear();
     exerciseList_->insertStringList( frontend::commands::ListExercises( config_ ) );
 }
-
