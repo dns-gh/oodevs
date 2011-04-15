@@ -13,13 +13,17 @@
 #include <qcombobox.h>
 #include <qgroupbox.h>
 #include <qlineedit.h>
+#include <boost/noncopyable.hpp>
 
 class ScenarioEditPage;
 
 namespace tools
 {
     class GeneralConfig;
+    class Loader_ABC;
 }
+
+class QCheckBox;
 
 // =============================================================================
 /** @class  CreateExerciceWidget
@@ -28,13 +32,14 @@ namespace tools
 // Created: JSR 2010-07-13
 // =============================================================================
 class CreateExerciceWidget : public QGroupBox
+                           , private boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             CreateExerciceWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config );
+             CreateExerciceWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader );
     virtual ~CreateExerciceWidget();
     //@}
 
@@ -46,20 +51,33 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    CreateExerciceWidget( const CreateExerciceWidget& );            //!< Copy constructor
-    CreateExerciceWidget& operator=( const CreateExerciceWidget& ); //!< Assignment operator
+    void UpdateExercises();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnSelectionChanged( QListBoxItem* item );
     //@}
 
 private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
+    const tools::Loader_ABC& fileLoader_;
     ScenarioEditPage& page_;
     QLineEdit* editName_;
     QComboBox* editTerrainList_;
     QComboBox* editModelList_;
+    QGroupBox* saveAsGroupBox_;
+    QListBox*  exerciseList_;
+    QCheckBox* scriptCheckBox_;
+    QCheckBox* scoresCheckBox_;
+    QCheckBox* metaDataCheckBox_;
+    QCheckBox* drawingsCheckBox_;
+    QCheckBox* successFactorsCheckBox_;
     //@}
 };
 

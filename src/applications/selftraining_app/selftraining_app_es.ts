@@ -144,6 +144,34 @@
         <source>Model:</source>
         <translation>Modelo:</translation>
     </message>
+    <message>
+        <source>Create as copy of:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exercise to copy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy scripts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy scores</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy meta data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy drawings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy success factors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateTerrainPage</name>

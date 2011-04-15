@@ -29,6 +29,13 @@ namespace
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
+
+    template< typename T >
+    T* Style( T* widget )
+    {
+        widget->setBackgroundOrigin( QWidget::WindowOrigin );
+        return widget;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -49,38 +56,30 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
     setSpacing( 5 );
     if( briefing )
     {
-        QVBox* box = new QVBox( this );
+        QVBox* box = Style( new QVBox( this ) );
         box->setMinimumWidth( 200 );
-        box->setBackgroundOrigin( QWidget::WindowOrigin );
         box->setSpacing( 5 );
-        briefingImage_ = new QLabel( box );
-        briefingImage_->setBackgroundOrigin( QWidget::WindowOrigin );
-        briefingText_ = new QTextEdit( box );
-        briefingText_->setBackgroundOrigin( QWidget::WindowOrigin );
+        briefingImage_ = Style( new QLabel( box ) );
+        briefingText_ = Style( new QTextEdit( box ) );
         briefingText_->setFont( QFont( "Georgia", 10, QFont::Normal, true ) );
         briefingText_->setReadOnly( true );
         briefingText_->hide();
     }
     if( models )
     {
-        QGroupBox* box = new QGroupBox( 1, Qt::Vertical, this );
+        QGroupBox* box = Style( new QGroupBox( 1, Qt::Vertical, this ) );
         box->setEnabled( editable );
         box->setMaximumHeight( 100 );
-        box->setBackgroundOrigin( QWidget::WindowOrigin );
-        QVBox* editBox = new QVBox( box );
+        QVBox* editBox = Style( new QVBox( box ) );
         editBox->setMinimumWidth( 200 );
-        editBox->setBackgroundOrigin( QWidget::WindowOrigin );
         editBox->setSpacing( 5 );
-        QLabel* label = new QLabel( tools::translate( "ExerciseProperties", "Exercise parameters:" ), editBox );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
+        QLabel* label = Style( new QLabel( tools::translate( "ExerciseProperties", "Exercise parameters:" ), editBox ) );
         {
-            terrainList_ = new QComboBox( editBox );
-            terrainList_->setBackgroundOrigin( QWidget::WindowOrigin );
+            terrainList_ = Style( new QComboBox( editBox ) );
             connect( terrainList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
         }
         {
-            modelList_ = new QComboBox( editBox );
-            modelList_->setBackgroundOrigin( QWidget::WindowOrigin );
+            modelList_ = Style( new QComboBox( editBox ) );
             connect( modelList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
         }
     }

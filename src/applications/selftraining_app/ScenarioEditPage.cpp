@@ -64,7 +64,7 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
             mainTabs_->addTab( exercises_, tools::translate( "ScenarioEditPage", "Edit" ) );
         }
         {
-            createExerciceWidget_ = new CreateExerciceWidget( *this, box, config );
+            createExerciceWidget_ = new CreateExerciceWidget( *this, box, config, fileLoader );
             mainTabs_->addTab( createExerciceWidget_, tools::translate( "ScenarioEditPage", "Create" ) );
         }
         {
@@ -186,6 +186,15 @@ void ScenarioEditPage::EditNameChanged( const QString& )
 // Created: JSR 2010-06-11
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::ComboChanged( int )
+{
+    UpdateEditButton();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::ToggleChanged
+// Created: ABR 2011-04-14
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::ToggleChanged( bool )
 {
     UpdateEditButton();
 }

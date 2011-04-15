@@ -73,6 +73,7 @@ private slots:
     void EditNameChanged( const QString& string );
     void ComboChanged( int index );
     void UpdateEditButton( QWidget* );
+    void ToggleChanged( bool on );
     //@}
 
 private:

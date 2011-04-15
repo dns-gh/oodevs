@@ -144,6 +144,34 @@
         <source>Model:</source>
         <translation>Modèle:</translation>
     </message>
+    <message>
+        <source>Create as copy of:</source>
+        <translation>Créer en tant que copie:</translation>
+    </message>
+    <message>
+        <source>Exercise to copy:</source>
+        <translation>Exercice à copier:</translation>
+    </message>
+    <message>
+        <source>Copy scripts</source>
+        <translation>Copier les scripts</translation>
+    </message>
+    <message>
+        <source>Copy scores</source>
+        <translation>Copier les scores</translation>
+    </message>
+    <message>
+        <source>Copy meta data</source>
+        <translation>Copier les méta données</translation>
+    </message>
+    <message>
+        <source>Copy drawings</source>
+        <translation>Copier les dessins</translation>
+    </message>
+    <message>
+        <source>Copy success factors</source>
+        <translation>Copier les facteurs de succès</translation>
+    </message>
 </context>
 <context>
     <name>CreateTerrainPage</name>
