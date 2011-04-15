@@ -12,8 +12,8 @@
 
 namespace gui
 {
-    typedef std::map< std::string, unsigned int >  T_Motivations;
-    typedef T_Motivations::const_iterator        CIT_Motivations;
+    typedef std::map< std::string, unsigned int > T_Usages;
+    typedef T_Usages::const_iterator            CIT_Usages;
 
     typedef std::map< QString, unsigned int >   T_BlockOccupation;
     typedef T_BlockOccupation::const_iterator CIT_BlockOccupation;

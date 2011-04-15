@@ -14,10 +14,10 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Usages_ABC.h"
 #include "protocol/Simulation.h"
 #include <urban/PhysicalAttribute.h>
 #include <urban/TerrainObject_ABC.h>
-#include <urban/MotivationsVisitor_ABC.h>
 #include <boost/foreach.hpp>
 #include <urban/ColorAttribute.h>
 
@@ -167,24 +167,6 @@ void TerrainObjectProxy::CreateDictionary( Controller& controller )
     AddDictionaryForArchitecture( dictionary );
 }
 
-namespace
-{
-    class MotivationsVisitor : public MotivationsVisitor_ABC
-    {
-    public:
-        explicit MotivationsVisitor( std::map< std::string, float >& motivations )
-            : motivations_( motivations )
-        {
-            // NOTHING
-        }
-        virtual void Visit( const std::string& motivation, float proportion )
-        {
-            motivations_[ motivation ] = proportion;
-        }
-        std::map< std::string, float >& motivations_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::AddDictionaryForArchitecture
 // Created: SLG 2009-12-09
@@ -204,18 +186,6 @@ void TerrainObjectProxy::AddDictionaryForArchitecture( PropertiesDictionary& dic
             occupation_ = static_cast< unsigned int >( pPhysical->GetArchitecture()->GetOccupation() * 100u );
             dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_ );
             dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), pPhysical->GetArchitecture()->GetTrafficability() );
-        }
-        if( pPhysical->GetMotivations() )
-        {
-            std::map< std::string, float > motivations;
-            MotivationsVisitor visitor( motivations );
-            object_.Accept( visitor );
-            for( std::map< std::string, float >::const_iterator it = motivations.begin(); it != motivations.end(); ++it )
-            {
-                motivations_[ it->first ] = static_cast< unsigned int >( ( it->second + 0.001 ) * 100u );
-                CIT_Motivations cit = motivations_.find( it->first );
-                dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Motivations/" ) + QString( cit->first.c_str() ), cit->second );
-            }
         }
     }
 }
@@ -312,8 +282,9 @@ void TerrainObjectProxy::NotifyUpdated( const UrbanDisplayOptions& )
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::UpdateColor()
 {
-    ColorAttribute* colorAttribute = object_.Retrieve< ColorAttribute >();
-    if( !options_.SetColor( colorAttribute, object_.GetLivingSpace(), humans_, motivations_ ) )
+    ColorAttribute* pColorAttribute = object_.Retrieve< ColorAttribute >();
+    Usages_ABC* pUsages = Retrieve< Usages_ABC >();
+    if( pUsages && !options_.SetColor( pColorAttribute, object_.GetLivingSpace(), humans_, *pUsages ) )
         Restore();
 }
 

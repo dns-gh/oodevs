@@ -26,6 +26,7 @@ namespace kernel
 {
     class AccommodationTypes;
     class Controllers;
+    class Usages_ABC;
 }
 
 namespace gui
@@ -52,7 +53,7 @@ public:
     //! @name Operations
     //@{
     void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    bool SetColor( urban::ColorAttribute* attribute, float livingSpace, const T_HumansStrMap& humans, const T_Motivations& motivations );
+    bool SetColor( urban::ColorAttribute* attribute, float livingSpace, const T_HumansStrMap& humans, const kernel::Usages_ABC& usages );
     void ChangePopulationDisplay( const std::string& name, bool visible );
     void NotifyUpdated( const gui::ChangePopulationDisplay& population );
     //@}

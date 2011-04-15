@@ -68,6 +68,7 @@ TerrainProfiler.cpp \
 UnitListView.cpp \
 UnitPreviewIcon.cpp \
 UnitsPanel.cpp \
+Usages.cpp \
 VisualisationScalesPanel.cpp \
 
 TRANSLATIONS = clients_gui_fr.ts clients_gui_es.ts

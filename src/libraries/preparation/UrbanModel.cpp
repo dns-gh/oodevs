@@ -16,12 +16,15 @@
 #include "StructuralStateAttribute.h"
 #include "InfrastructureAttribute.h"
 #include "UrbanPositions.h"
+#include "Usages.h"
 #include "clients_gui/TerrainObjectProxy.h"
+#include "clients_gui/Usages.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Usages_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <urban/PhysicalAttribute.h>
 #include <urban/InfrastructureAttribute.h>
@@ -30,7 +33,6 @@
 #include <urban/TerrainObjectVisitor_ABC.h>
 #include <xeumeuleu/xml.hpp>
 
-using namespace gui;
 using namespace kernel;
 using namespace tools;
 
@@ -48,7 +50,7 @@ UrbanModel::UrbanModel( Controllers& controllers, const StaticModel& staticModel
     , objectTypes_        ( staticModel.objectTypes_ )
     , objects_            ( objects )
     , urbanStateVersion_  ( ::defaultUrbanStateVersion )
-    , urbanDisplayOptions_( new UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
+    , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
 {
     // NOTHING
 }
@@ -130,7 +132,7 @@ void UrbanModel::Serialize( const std::string& filename, const SchemaWriter_ABC&
     schemaWriter.WriteExerciseSchema( xos, "urbanstate" );
     xos << xml::attribute( "model-version", urbanStateVersion_ )
             << xml::start( "urban-objects" );
-    for( Resolver< TerrainObjectProxy >::CIT_Elements it = Resolver< TerrainObjectProxy >::elements_.begin(); it != Resolver< TerrainObjectProxy >::elements_.end(); ++it )
+    for( Resolver< gui::TerrainObjectProxy >::CIT_Elements it = Resolver< gui::TerrainObjectProxy >::elements_.begin(); it != Resolver< gui::TerrainObjectProxy >::elements_.end(); ++it )
     {
         bool needsUpdate = false;
         it->second->Interface().Apply( & Overridable_ABC::SetOverriden, needsUpdate );// Temp pour serializer l'attribut
@@ -168,7 +170,7 @@ void UrbanModel::LoadUrbanState( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void UrbanModel::ReadUrbanObject( xml::xistream& xis )
 {
-    TerrainObjectProxy* proxy = Resolver< TerrainObjectProxy >::Find( xis.attribute< unsigned int >( "id" ) );
+    gui::TerrainObjectProxy* proxy = Resolver< gui::TerrainObjectProxy >::Find( xis.attribute< unsigned int >( "id" ) );
     if( proxy )
         xis >> xml::list( *this, &UrbanModel::ReadCapacity, *proxy );
 }
@@ -177,7 +179,7 @@ void UrbanModel::ReadUrbanObject( xml::xistream& xis )
 // Name: UrbanModel::ReadCapacity
 // Created: JSR 2010-06-22
 // -----------------------------------------------------------------------------
-void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, TerrainObjectProxy& proxy )
+void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, gui::TerrainObjectProxy& proxy )
 {
     // TODO faire ça proprement et de façon générique avec la factory d'objets quand elle sera implémentée (pour l'instant, c'est une par Team)
     if( capacity == "structural-state" )
@@ -195,7 +197,7 @@ void UrbanModel::ReadCapacity( const std::string& capacity, xml::xistream& xis, 
 // Created: JSR 2010-09-08
 // -----------------------------------------------------------------------------
 template< typename T, typename U >
-void UrbanModel::UpdateCapacity( xml::xistream& xis, TerrainObjectProxy& proxy )
+void UrbanModel::UpdateCapacity( xml::xistream& xis, gui::TerrainObjectProxy& proxy )
 {
     T* capacity = static_cast< T* >( proxy.Retrieve< U >() );
     if( capacity )
@@ -208,7 +210,7 @@ void UrbanModel::UpdateCapacity( xml::xistream& xis, TerrainObjectProxy& proxy )
 // -----------------------------------------------------------------------------
 void UrbanModel::Purge()
 {
-    Resolver< TerrainObjectProxy >::DeleteAll();
+    Resolver< gui::TerrainObjectProxy >::DeleteAll();
     urban::Model::Purge();
     urbanStateVersion_ = ::defaultUrbanStateVersion;
 }
@@ -219,20 +221,21 @@ void UrbanModel::Purge()
 // -----------------------------------------------------------------------------
 void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
 {
-    TerrainObjectProxy* pTerrainObject = new TerrainObjectProxy( controllers_, urbanObject, objectTypes_.StringResolver< ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
-    PropertiesDictionary& dico = pTerrainObject->Get< PropertiesDictionary >();
-    pTerrainObject->Attach< StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dico ) );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject, objectTypes_.StringResolver< ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
+    PropertiesDictionary& dictionary = pTerrainObject->Get< PropertiesDictionary >();
+    pTerrainObject->Attach< StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
     pTerrainObject->Attach< Positions >( *new UrbanPositions( urbanObject ) );
+    pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( urbanObject, std::auto_ptr< Usages_ABC >( new gui::Usages( dictionary ) ) ) );
     const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();
     pTerrainObject->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, resource, pTerrainObject->Get< Positions >(), *this, objects_, objectTypes_ ) );
     if( const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >() )
         if( const InfrastructureType* infraType = objectTypes_.StringResolver< InfrastructureType >::Find( infra->GetType() ) )
         {
-            pTerrainObject->Attach< Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, *infraType, dico ) );
+            pTerrainObject->Attach< Infrastructure_ABC >( *new InfrastructureAttribute( controllers_, *pTerrainObject, *infraType, dictionary ) );
             if( infraType->FindCapacity( "medical" ) )
-                pTerrainObject->Attach< MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( objectTypes_, dico ) );
+                pTerrainObject->Attach< MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( objectTypes_, dictionary ) );
         }
     pTerrainObject->Polish();
-    if( !Resolver< TerrainObjectProxy >::Find( urbanObject.GetId() ) )
-        Resolver< TerrainObjectProxy >::Register( urbanObject.GetId(), *pTerrainObject );
+    if( !Resolver< gui::TerrainObjectProxy >::Find( urbanObject.GetId() ) )
+        Resolver< gui::TerrainObjectProxy >::Register( urbanObject.GetId(), *pTerrainObject );
 }

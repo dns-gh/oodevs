@@ -13,12 +13,14 @@
 #include "ResourceNetwork.h"
 #include "ResourceNetworkModel.h"
 #include "StaticModel.h"
+#include "Usages.h"
 #include "StructuralStateAttribute.h"
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "UrbanBlockDetectionMap.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_gui/UrbanDisplayOptions.h"
+#include "clients_gui/Usages.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include <urban/PhysicalAttribute.h>
@@ -26,8 +28,6 @@
 #include <urban/Model.h>
 #include <urban/UrbanFactory.h>
 #include <urban/TerrainObject_ABC.h>
-
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor
@@ -38,7 +38,7 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, ResourceNetworkModel& 
     , resourceNetwork_       ( resourceNetwork )
     , static_                ( staticModel )
     , urbanModel_            ( new urban::Model() )
-    , urbanDisplayOptions_   ( new UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
+    , urbanDisplayOptions_   ( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
     , urbanBlockDetectionMap_( map )
 {
     // NOTHING
@@ -103,19 +103,6 @@ namespace
             pPhysical->GetArchitecture()->SetOccupation( architecture.occupation() );
             pPhysical->GetArchitecture()->SetTrafficability( architecture.trafficability() );
         }
-        if( message.attributes().usages_size() > 0 )
-        {
-            CheckPhysicalAttribute( object );
-            urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
-            if( !pPhysical->GetMotivations() )
-                pPhysical->CreateMotivations();
-            for( int i = 0; i <  message.attributes().usages_size(); ++i )
-            {
-                const sword::UrbanUsage& usage =  message.attributes().usages( i );
-                float percent = usage.percentage() / 100.f;
-                pPhysical->GetMotivations()->Add( usage.role(), percent );
-            }
-        }
     }
 }
 
@@ -134,8 +121,10 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
         footPrint.Add( static_.coordinateConverter_.ConvertToXY( message.location().coordinates().elem( i ) ) );
     urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
     AttachExtensions( *object, message );
-    TerrainObjectProxy* pTerrainObject = new TerrainObjectProxy( controllers_, *object, id, QString( name.c_str() ), static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, *object, id, QString( name.c_str() ), static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
+    kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
+    pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( message.attributes(), std::auto_ptr< kernel::Usages_ABC >( new gui::Usages( dictionary ) ) ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
     Register( id, *pTerrainObject );
@@ -151,7 +140,7 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
     if( message.has_attributes() )
     {
         // TODO mettre toute cette partie dans une factory comme pour les Objets.
-        TerrainObjectProxy* pTerrainObject = Find( message.object().id() );
+        gui::TerrainObjectProxy* pTerrainObject = Find( message.object().id() );
         if( pTerrainObject )
         {
             if( message.attributes().has_structure() && pTerrainObject->Retrieve< kernel::StructuralStateAttribute_ABC >() == 0 )
@@ -182,7 +171,7 @@ void UrbanModel::Update( const sword::ObjectUpdate& message )
 {
     if( message.has_attributes() )
     {
-        TerrainObjectProxy* pTerrainObject = Find( message.object().id() );
+        gui::TerrainObjectProxy* pTerrainObject = Find( message.object().id() );
         if( pTerrainObject )
         {
             if( message.attributes().has_medical_treatment() && pTerrainObject->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
@@ -206,7 +195,7 @@ void UrbanModel::Purge()
 // Name: UrbanModel::GetObject
 // Created: SLG 2010-03-12
 // -----------------------------------------------------------------------------
-TerrainObjectProxy& UrbanModel::GetObject( unsigned long id ) const
+gui::TerrainObjectProxy& UrbanModel::GetObject( unsigned long id ) const
 {
     return Get( id );
 }
@@ -215,7 +204,7 @@ TerrainObjectProxy& UrbanModel::GetObject( unsigned long id ) const
 // Name: UrbanModel::FindObject
 // Created: SLG 2011-01-03
 // -----------------------------------------------------------------------------
-TerrainObjectProxy* UrbanModel::FindObject( unsigned long id ) const
+gui::TerrainObjectProxy* UrbanModel::FindObject( unsigned long id ) const
 {
     return Find( id );
 }

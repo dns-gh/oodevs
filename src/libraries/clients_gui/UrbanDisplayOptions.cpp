@@ -15,6 +15,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Usages_ABC.h"
 #include <urban/ColorAttribute.h>
 
 using namespace gui;
@@ -104,7 +105,7 @@ namespace
 // Name: UrbanDisplayOptions::SetColor
 // Created: LDC 2011-03-25
 // -----------------------------------------------------------------------------
-bool UrbanDisplayOptions::SetColor( urban::ColorAttribute* attribute, float livingSpace, const T_HumansStrMap& humans, const T_Motivations& motivations )
+bool UrbanDisplayOptions::SetColor( urban::ColorAttribute* attribute, float livingSpace, const T_HumansStrMap& humans, const kernel::Usages_ABC& usages )
 {
     if( attribute )
     {
@@ -140,8 +141,7 @@ bool UrbanDisplayOptions::SetColor( urban::ColorAttribute* attribute, float livi
                 SetUrbanColor( unoccupiedAccommodation_, *attribute );
             else
             {
-                CIT_Motivations it = motivations.find( accommodationDisplayed_.ascii() );
-                float proportion = ( it == motivations.end() ) ? 0.f : ( static_cast< float >( it->second ) / 100.f );
+                float proportion = static_cast< float >( usages.Find( accommodationDisplayed_.ascii() ) ) / 100.f;
                 const kernel::AccommodationType* accommodationType = accommodationTypes_.Find( accommodationDisplayed_.ascii() );
                 float nominalCapacity = accommodationType ? accommodationType->GetNominalCapacity() : 0.f;
                 float density;

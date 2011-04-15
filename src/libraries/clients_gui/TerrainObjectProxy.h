@@ -138,7 +138,6 @@ private:
     T_BaseColor color_;
     const kernel::ObjectType& type_;
     unsigned int occupation_;
-    T_Motivations motivations_;
     UrbanDisplayOptions& options_;
     //@}
 };
