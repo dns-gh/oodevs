@@ -367,6 +367,7 @@ void Agent::DoUpdate( const sword::UnitOrder& message )
 void Agent::DoUpdate( const sword::UnitPathFind& message )
 {
     currentPath_.Update( message.path().location() );
+    Observable< sword::UnitPathFind >::Notify( message );
 }
 
 // -----------------------------------------------------------------------------

@@ -7,11 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef __DisExtensionFactory_h_
-#define __DisExtensionFactory_h_
+#ifndef __dis_plugin_Model_h_
+#define __dis_plugin_Model_h_
 
 #include "dispatcher/ExtensionFactory_ABC.h"
 #include "IdentifierFactory_ABC.h"
+#include <boost/noncopyable.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace kernel
 {
@@ -26,9 +28,6 @@ namespace xml
 namespace dispatcher
 {
     class Agent;
-    class Automat;
-    class Formation;
-    class Side;
 }
 
 namespace rpr
@@ -38,38 +37,44 @@ namespace rpr
 
 namespace plugins
 {
+namespace tic
+{
+    class PlatformDelegateFactory_ABC;
+}
+
 namespace dis
 {
-    class UdpNetwork;
+    class AgentProxy;
     class Time_ABC;
+    class UdpNetwork;
 
 // =============================================================================
-/** @class  DisExtensionFactory
-    @brief  DisExtensionFactory
+/** @class  Model
+    @brief  Model
 */
 // Created: AGE 2008-03-10
 // =============================================================================
-class DisExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
-                          , private IdentifierFactory_ABC
+class Model : private boost::noncopyable
+            , public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
+            , private IdentifierFactory_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver& resolver, xml::xistream& xis );
-    virtual ~DisExtensionFactory();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Create( dispatcher::Agent&     entity );
-    virtual rpr::EntityIdentifier CreateNewIdentifier();
+             Model( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver& resolver, xml::xistream& xis, plugins::tic::PlatformDelegateFactory_ABC& factory );
+    virtual ~Model();
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Operations
     //@{
-    DisExtensionFactory( const DisExtensionFactory& );            //!< Copy constructor
-    DisExtensionFactory& operator=( const DisExtensionFactory& ); //!< Assignment operator
+    virtual void Create( dispatcher::Agent& entity );
+    virtual rpr::EntityIdentifier CreateNewIdentifier();
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< boost::shared_ptr< AgentProxy > > T_Agents;
     //@}
 
 private:
@@ -79,15 +84,17 @@ private:
     const Time_ABC& time_;
     const kernel::CoordinateConverter_ABC& converter_;
     const rpr::EntityTypeResolver& resolver_;
+    plugins::tic::PlatformDelegateFactory_ABC& factory_;
     const unsigned short site_;
     const unsigned short application_;
     const unsigned char  exercise_;
     const bool lag_;
     unsigned short id_;
+    T_Agents agents_;
     //@}
 };
 
 }
 }
 
-#endif // __DisExtensionFactory_h_
+#endif // __dis_plugin_Model_h_

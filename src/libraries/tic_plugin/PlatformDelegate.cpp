@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "tic_plugin_pch.h"
-#include "TicExtension.h"
+#include "PlatformDelegate.h"
 #include "Platform.h"
 #include "RoadFormation.h"
 #include "DiamondFormation.h"
@@ -27,31 +27,34 @@
 using namespace plugins::tic;
 
 // -----------------------------------------------------------------------------
-// Name: TicExtension constructor
+// Name: PlatformDelegate constructor
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-TicExtension::TicExtension( dispatcher::Agent& holder, const kernel::CoordinateConverter_ABC& converter, float timeStep )
-    : holder_   ( holder )
-    , converter_( converter )
-    , onRoad_   ( false )
+PlatformDelegate::PlatformDelegate( dispatcher::Agent& holder, const kernel::CoordinateConverter_ABC& converter, float timeStep )
+    : dispatcher::Observer< sword::UnitAttributes >     ( holder )
+    , dispatcher::Observer< sword::UnitEnvironmentType >( holder )
+    , dispatcher::Observer< sword::UnitPathFind >       ( holder )
+    , holder_                                           ( holder )
+    , converter_                                        ( converter )
+    , onRoad_                                           ( false )
 {
     CreatePlatforms( timeStep );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TicExtension destructor
+// Name: PlatformDelegate destructor
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-TicExtension::~TicExtension()
+PlatformDelegate::~PlatformDelegate()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: TicExtension::DoUpdate
+// Name: PlatformDelegate::Notify
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const sword::UnitAttributes& message )
+void PlatformDelegate::Notify( const sword::UnitAttributes& message )
 {
     if( message.has_equipment_dotations() )
         UpdatePlatforms( message );
@@ -72,10 +75,10 @@ void TicExtension::DoUpdate( const sword::UnitAttributes& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TicExtension::DoUpdate
+// Name: PlatformDelegate::Notify
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const sword::UnitPathFind& message )
+void PlatformDelegate::Notify( const sword::UnitPathFind& message )
 {
     path_.resize( 0 );
     for( int i = 0; i < message.path().location().coordinates().elem_size(); ++i )
@@ -83,10 +86,10 @@ void TicExtension::DoUpdate( const sword::UnitPathFind& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TicExtension::DoUpdate
+// Name: PlatformDelegate::Notify
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const sword::UnitEnvironmentType& message )
+void PlatformDelegate::Notify( const sword::UnitEnvironmentType& message )
 {
     const unsigned int mask = TerrainData::motorway_  | TerrainData::largeroad_  | TerrainData::mediumroad_
                             | TerrainData::smallroad_ | TerrainData::bridge_;
@@ -99,10 +102,10 @@ void TicExtension::DoUpdate( const sword::UnitEnvironmentType& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TicExtension::CreatePlatforms
+// Name: PlatformDelegate::CreatePlatforms
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::CreatePlatforms( float timeStep )
+void PlatformDelegate::CreatePlatforms( float timeStep )
 {
     const kernel::AgentType& type = holder_.GetType();
     tools::Iterator< const kernel::AgentComposition& > it = type.CreateIterator();
@@ -119,30 +122,30 @@ void TicExtension::CreatePlatforms( float timeStep )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TicExtension::UpdatePlatforms
+// Name: PlatformDelegate::UpdatePlatforms
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::UpdatePlatforms( const sword::UnitAttributes& message )
+void PlatformDelegate::UpdatePlatforms( const sword::UnitAttributes& message )
 {
     for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
         UpdatePlatforms( message.equipment_dotations().elem(i) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TicExtension::UpdatePlatforms
+// Name: PlatformDelegate::UpdatePlatforms
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::UpdatePlatforms( const sword::EquipmentDotations_EquipmentDotation& message )
+void PlatformDelegate::UpdatePlatforms( const sword::EquipmentDotations_EquipmentDotation& message )
 {
     sword::EquipmentDotations_EquipmentDotation copy( message );
     std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &Platform::Spread, _1, boost::ref( copy ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TicExtension::UpdateFormation
+// Name: PlatformDelegate::UpdateFormation
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicExtension::UpdateFormation()
+void PlatformDelegate::UpdateFormation()
 {
     RoadFormation road( path_ );
     DiamondFormation diamond;
@@ -152,19 +155,19 @@ void TicExtension::UpdateFormation()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TicExtension::Accept
+// Name: PlatformDelegate::Accept
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicExtension::Accept( PlatformVisitor_ABC& visitor ) const
+void PlatformDelegate::Accept( PlatformVisitor_ABC& visitor ) const
 {
     std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &PlatformVisitor_ABC::AddPlatform, &visitor, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: TicExtension::SortPlatforms
+// Name: PlatformDelegate::SortPlatforms
 // Created: AGE 2008-05-05
 // -----------------------------------------------------------------------------
-void TicExtension::SortPlatforms()
+void PlatformDelegate::SortPlatforms()
 {
     std::sort( sorted_.begin(), sorted_.end(),
         boost::bind( &Formation_ABC::Compare,

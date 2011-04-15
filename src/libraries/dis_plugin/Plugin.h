@@ -7,16 +7,17 @@
 //
 // *****************************************************************************
 
-#ifndef __DisPlugin_h_
-#define __DisPlugin_h_
+#ifndef __dis_Plugin_h_
+#define __dis_Plugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
 #include "Time_ABC.h"
+#include <memory>
 
 namespace dispatcher
 {
-    class Model_ABC;
     class Config;
+    class Model_ABC;
 }
 
 namespace kernel
@@ -29,11 +30,6 @@ namespace rpr
     class EntityTypeResolver;
 }
 
-namespace sword
-{
-    class SimToClient;
-}
-
 namespace xml
 {
     class xistream;
@@ -41,25 +37,31 @@ namespace xml
 
 namespace plugins
 {
+namespace tic
+{
+    class PlatformDelegateFactory_ABC;
+}
+
 namespace dis
 {
-    class UdpNetwork;
-    class DisExtensionFactory;
     class FireManager;
+    class Model;
+    class UdpNetwork;
 
 // =============================================================================
-/** @class  DisPlugin
-    @brief  DisPlugin
+/** @class  Plugin
+    @brief  Plugin
 */
 // Created: AGE 2008-03-10
 // =============================================================================
-class DisPlugin : public dispatcher::Plugin_ABC, public Time_ABC
+class Plugin : public dispatcher::Plugin_ABC
+             , public Time_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DisPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis );
-    virtual ~DisPlugin();
+             Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis );
+    virtual ~Plugin();
     //@}
 
     //! @name Operations
@@ -71,22 +73,16 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DisPlugin( const DisPlugin& );            //!< Copy constructor
-    DisPlugin& operator=( const DisPlugin& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     dispatcher::Model_ABC& model_;
     std::auto_ptr< UdpNetwork > network_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    const unsigned long timeStep_;
+    std::auto_ptr< plugins::tic::PlatformDelegateFactory_ABC > platforms_;
     std::auto_ptr< rpr::EntityTypeResolver > resolver_;
-    std::auto_ptr< DisExtensionFactory > factory_;
+    std::auto_ptr< Model > factory_;
     std::auto_ptr< FireManager > fires_;
-    unsigned long timeStep_;
     unsigned long time_;
     //@}
 };
@@ -94,4 +90,4 @@ private:
 }
 }
 
-#endif // __DisPlugin_h_
+#endif // __dis_Plugin_h_

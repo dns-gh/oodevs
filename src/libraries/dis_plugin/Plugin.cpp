@@ -8,19 +8,20 @@
 // *****************************************************************************
 
 #include "dis_plugin_pch.h"
-#include "DisPlugin.h"
-#include "DisExtensionFactory.h"
+#include "Plugin.h"
 #include "FireManager.h"
+#include "Model.h"
+#include "UdpNetwork.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Model_ABC.h"
 #include "rpr/EntityTypeResolver.h"
+#include "tic_plugin/PlatformDelegateFactory.h"
 #include <xeumeuleu/xml.hpp>
-#include "UdpNetwork.h"
-#pragma warning( disable: 4355 ) // 'this' : used in base member initializer list
+
+#pragma warning( disable: 4355 )
 
 using namespace plugins::dis;
-using namespace dispatcher;
 
 namespace
 {
@@ -36,36 +37,37 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisPlugin constructor
+// Name: Plugin constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisPlugin::DisPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis )
+Plugin::Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis )
     : model_    ( model )
     , network_  ( new UdpNetwork( xis.attribute< std::string >( "server" ), xis.attribute< unsigned short >( "port" ) ) )
     , converter_( new kernel::CoordinateConverter( config ) )
-    , resolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
-    , factory_  ( new DisExtensionFactory( *network_, *this, *converter_, *resolver_, xis ) )
-    , fires_    ( new FireManager( *network_, *this, (unsigned char)xis.attribute< unsigned short >( "exercise"  ) ) )
     , timeStep_ ( ReadTimeStep( config.GetSessionFile() ) )
+    , platforms_( new plugins::tic::PlatformDelegateFactory( *converter_, static_cast< float >( timeStep_ ) ) )
+    , resolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
+    , factory_  ( new Model( *network_, *this, *converter_, *resolver_, xis, *platforms_ ) )
+    , fires_    ( new FireManager( *network_, *this, static_cast< unsigned char >( xis.attribute< unsigned short >( "exercise"  ) ) ) )
     , time_     ( 0 )
 {
     model_.RegisterFactory( *factory_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisPlugin destructor
+// Name: Plugin destructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisPlugin::~DisPlugin()
+Plugin::~Plugin()
 {
     model_.UnregisterFactory( *factory_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisPlugin::Receive
+// Name: Plugin::Receive
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-void DisPlugin::Receive( const sword::SimToClient& wrapper )
+void Plugin::Receive( const sword::SimToClient& wrapper )
 {
     if( wrapper.message().has_control_begin_tick() )
         time_ += timeStep_;
@@ -73,28 +75,28 @@ void DisPlugin::Receive( const sword::SimToClient& wrapper )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisPlugin::NotifyClientAuthenticated
+// Name: Plugin::NotifyClientAuthenticated
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-void DisPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& , Profile_ABC& )
+void Plugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC&, dispatcher::Profile_ABC& )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisPlugin::NotifyClientLeft
+// Name: Plugin::NotifyClientLeft
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-void DisPlugin::NotifyClientLeft( ClientPublisher_ABC& )
+void Plugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisPlugin::GetTime
+// Name: Plugin::GetTime
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-unsigned long DisPlugin::GetTime() const
+unsigned long Plugin::GetTime() const
 {
     // 31MSBs are for the 3600s in the hour
     // LSB is to flag absolute time

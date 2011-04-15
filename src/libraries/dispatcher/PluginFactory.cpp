@@ -93,7 +93,7 @@ void PluginFactory::Instanciate()
 // -----------------------------------------------------------------------------
 void PluginFactory::ReadPlugin( const std::string& name, xml::xistream& xis )
 {
-    if( name == "hla" || name == "vrforces" )
+    if( name == "hla" || name == "vrforces" || name == "dis" )
         LoadPlugin( name, xis );
     else if( name == "recorder" )
         handler_.Add( new plugins::saver::SaverPlugin( model_, config_ ) );

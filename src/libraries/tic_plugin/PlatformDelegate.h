@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef __TicExtension_h_
-#define __TicExtension_h_
+#ifndef __PlatformDelegate_h_
+#define __PlatformDelegate_h_
 
-#include "TicExtension_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
+#include "PlatformDelegate_ABC.h"
+#include "dispatcher/Observer.h"
 #include "protocol/Protocol.h"
 #include <geometry/types.h>
 #pragma warning (disable : 4511 4512 4127 )
@@ -39,32 +39,29 @@ namespace tic
 */
 // Created: AGE 2008-03-31
 // =============================================================================
-class TicExtension : public TicExtension_ABC
-                   , public kernel::Updatable_ABC< sword::UnitAttributes >
-                   , public kernel::Updatable_ABC< sword::UnitEnvironmentType >
-                   , public kernel::Updatable_ABC< sword::UnitPathFind >
+class PlatformDelegate : public PlatformDelegate_ABC
+                       , private dispatcher::Observer< sword::UnitAttributes >
+                       , private dispatcher::Observer< sword::UnitEnvironmentType >
+                       , private dispatcher::Observer< sword::UnitPathFind >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TicExtension( dispatcher::Agent& holder, const kernel::CoordinateConverter_ABC& converter, float timeStep );
-    virtual ~TicExtension();
+             PlatformDelegate( dispatcher::Agent& holder, const kernel::CoordinateConverter_ABC& converter, float timeStep );
+    virtual ~PlatformDelegate();
     //@}
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const sword::UnitPathFind& updateMessage );
-    virtual void DoUpdate( const sword::UnitAttributes& updateMessage );
-    virtual void DoUpdate( const sword::UnitEnvironmentType& updateMessage );
-
     virtual void Accept( PlatformVisitor_ABC& visitor ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Observer
     //@{
-    TicExtension( const TicExtension& );            //!< Copy constructor
-    TicExtension& operator=( const TicExtension& ); //!< Assignment operator
+    virtual void Notify( const sword::UnitPathFind& updateMessage );
+    virtual void Notify( const sword::UnitAttributes& updateMessage );
+    virtual void Notify( const sword::UnitEnvironmentType& updateMessage );
     //@}
 
     //! @name Helpers
@@ -93,4 +90,4 @@ private:
 }
 }
 
-#endif // __TicExtension_h_
+#endif // __PlatformDelegate_h_

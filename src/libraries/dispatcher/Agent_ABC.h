@@ -20,6 +20,7 @@ namespace sword
 {
     class UnitAttributes;
     class UnitEnvironmentType;
+    class UnitPathFind;
 }
 
 namespace dispatcher
@@ -38,6 +39,7 @@ namespace dispatcher
 class Agent_ABC : public Sendable< kernel::Agent_ABC >
                 , public Observable< sword::UnitAttributes >
                 , public Observable< sword::UnitEnvironmentType >
+                , public Observable< sword::UnitPathFind >
 {
 public:
     //! @name Constructors/Destructor

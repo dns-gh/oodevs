@@ -166,6 +166,22 @@
         <build-lib name="dis_plugin" pattern="lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
 
+    <target name="library.dis_plugin_dll" depends="library.dis_plugin,library.dispatcher,library.tic_plugin" description="build dis_plugin dynamic library">
+        <build-lib name="dis_plugin_dll" outtype="shared" depends="boost,qt,terrain,xalan,xerces,protobuf" pattern="dis_plugin-${platform}-mt@{suffix}" suffix="-gd"
+            libs="lib${ant.project.name}_ENT-${platform}-mt@{suffix},
+                  lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
+                  lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+                  lib${ant.project.name}_rpr-${platform}-mt@{suffix},
+                  lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
+            <syslibset libs="shell32,user32"/>
+            <defineset define="DIS_PLUGIN_DLL_EXPORTS"/>
+            <linkerarg value="/FIXED:NO"/>
+        </build-lib>
+    </target>
+    
     <target name="library.tic_plugin" depends="library.dispatcher" description="build tic_plugin static library">
         <build-lib name="tic_plugin" pattern="lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
@@ -241,7 +257,7 @@
         <build-lib name="client_proxy" pattern="lib${ant.project.name}_client_proxy-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-    <target name="library.plugins" depends="library.messenger_plugin,library.tic_plugin,library.dis_plugin,library.hla_plugin_dll,
+    <target name="library.plugins" depends="library.messenger_plugin,library.dis_plugin_dll,library.hla_plugin_dll,
                                             library.aar_plugin,library.rights_plugin,library.saver_plugin,library.replay_plugin,
                                             library.3a,library.bml_plugin,library.script_plugin,library.score_plugin,
                                             library.crossbow_plugin,library.timeline_plugin,library.edxlhave_plugin,
@@ -298,8 +314,6 @@
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_aar_plugin-${platform}-mt@{suffix},
-                  lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_rights_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_reports-${platform}-mt@{suffix},

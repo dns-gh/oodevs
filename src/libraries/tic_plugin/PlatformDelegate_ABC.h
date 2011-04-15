@@ -7,10 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __TicExtension_ABC_h_
-#define __TicExtension_ABC_h_
-
-#include "clients_kernel/Extension_ABC.h"
+#ifndef __PlatformDelegate_ABC_h_
+#define __PlatformDelegate_ABC_h_
 
 namespace plugins
 {
@@ -24,13 +22,13 @@ namespace tic
 */
 // Created: AGE 2008-04-01
 // =============================================================================
-class TicExtension_ABC : public kernel::Extension_ABC
+class PlatformDelegate_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             TicExtension_ABC() {}
-    virtual ~TicExtension_ABC() {}
+             PlatformDelegate_ABC() {}
+    virtual ~PlatformDelegate_ABC() {}
     //@}
 
     //! @name Operations
@@ -42,4 +40,4 @@ public:
 }
 }
 
-#endif // __TicExtension_ABC_h_
+#endif // __PlatformDelegate_ABC_h_

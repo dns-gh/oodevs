@@ -7,39 +7,37 @@
 //
 // *****************************************************************************
 
-#include "dis_plugin_pch.h"
-#include "DisPluginFactory.h"
-#include "DisPlugin.h"
+#include "tic_plugin_pch.h"
+#include "PlatformDelegateFactory.h"
+#include "PlatformDelegate.h"
 
-using namespace plugins::dis;
-using namespace dispatcher;
+using namespace plugins::tic;
 
 // -----------------------------------------------------------------------------
-// Name: DisPluginFactory constructor
-// Created: AGE 2008-03-10
+// Name: PlatformDelegateFactory constructor
+// Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-DisPluginFactory::DisPluginFactory()
+PlatformDelegateFactory::PlatformDelegateFactory( const kernel::CoordinateConverter_ABC& converter, float timeStep )
+    : converter_( converter )
+    , timeStep_ ( timeStep )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisPluginFactory destructor
-// Created: AGE 2008-03-10
+// Name: PlatformDelegateFactory destructor
+// Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-DisPluginFactory::~DisPluginFactory()
+PlatformDelegateFactory::~PlatformDelegateFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisPluginFactory::Create
-// Created: AGE 2008-03-10
+// Name: PlatformDelegateFactory::Create
+// Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-std::auto_ptr< Plugin_ABC > DisPluginFactory::Create( const std::string& name, xml::xistream& xis, const Config& config, Model_ABC& model, const kernel::StaticModel& , SimulationPublisher_ABC& , ClientPublisher_ABC& , tools::MessageDispatcher_ABC& , dispatcher::LinkResolver_ABC&, dispatcher::CompositeRegistrable& /*registrables*/ ) const
+std::auto_ptr< PlatformDelegate_ABC > PlatformDelegateFactory::Create( dispatcher::Agent& entity ) const
 {
-    std::auto_ptr< Plugin_ABC > result;
-    if( name == "dis" )
-        result.reset( new DisPlugin( model, config, xis ) );
-    return result;
+    return std::auto_ptr< PlatformDelegate_ABC >( new PlatformDelegate( entity, converter_, timeStep_ ) );
 }

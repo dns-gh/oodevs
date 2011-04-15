@@ -8,25 +8,28 @@
 // *****************************************************************************
 
 #include "dis_plugin_pch.h"
-#include "DisExtensionFactory.h"
-#include "DisExtension.h"
+#include "Model.h"
+#include "AgentProxy.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
 #include "dispatcher/Formation.h"
 #include "dispatcher/Side.h"
+#include "tic_plugin/PlatformDelegate_ABC.h"
+#include "tic_plugin/PlatformDelegateFactory_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::dis;
 
 // -----------------------------------------------------------------------------
-// Name: DisExtensionFactory constructor
+// Name: Model constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtensionFactory::DisExtensionFactory( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver& resolver, xml::xistream& xis )
+Model::Model( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver& resolver, xml::xistream& xis, plugins::tic::PlatformDelegateFactory_ABC& factory )
     : network_( network )
     , time_( time )
     , converter_( converter )
     , resolver_( resolver )
+    , factory_( factory )
     , site_( xis.attribute< unsigned short >( "site" ) )
     , application_( xis.attribute< unsigned short >( "application" ) )
     , exercise_( (unsigned char)xis.attribute< unsigned short >( "exercise" ) )
@@ -37,29 +40,28 @@ DisExtensionFactory::DisExtensionFactory( UdpNetwork& network, const Time_ABC& t
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisExtensionFactory destructor
+// Name: Model destructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtensionFactory::~DisExtensionFactory()
+Model::~Model()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisExtensionFactory::Create
+// Name: Model::Create
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-void DisExtensionFactory::Create( dispatcher::Agent& entity )
+void Model::Create( dispatcher::Agent& entity )
 {
-    std::auto_ptr< DisExtension > extension( new DisExtension( time_, *this, converter_, network_, resolver_, entity, exercise_, lag_ ) );
-    entity.Attach( *extension.release() );
+    agents_.push_back( boost::shared_ptr< AgentProxy >( new AgentProxy( time_, *this, converter_, network_, resolver_, entity, exercise_, lag_, factory_.Create( entity ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisExtensionFactory::CreateNewIdentifier
+// Name: Model::CreateNewIdentifier
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-rpr::EntityIdentifier DisExtensionFactory::CreateNewIdentifier()
+rpr::EntityIdentifier Model::CreateNewIdentifier()
 {
     rpr::EntityIdentifier id( site_, application_, id_ );
     ++id_;

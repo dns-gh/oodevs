@@ -7,19 +7,14 @@
 //
 // *****************************************************************************
 
-#ifndef __ExtensionFactory_h_
-#define __ExtensionFactory_h_
+#ifndef __PlatformDelegateFactory_h_
+#define __PlatformDelegateFactory_h_
 
-#include "dispatcher/ExtensionFactory_ABC.h"
+#include "PlatformDelegateFactory_ABC.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
-}
-
-namespace dispatcher
-{
-    class Agent;
 }
 
 namespace plugins
@@ -27,40 +22,33 @@ namespace plugins
 namespace tic
 {
 // =============================================================================
-/** @class  ExtensionFactory
-    @brief  Extension Factory
+/** @class  PlatformDelegateFactory
+    @brief  Plaform delegate factory implementation
 */
 // Created: AGE 2008-03-31
 // =============================================================================
-class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Agent >
+class PlatformDelegateFactory : public PlatformDelegateFactory_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionFactory( const kernel::CoordinateConverter_ABC& converter, float timeStep );
-    virtual ~ExtensionFactory();
+             PlatformDelegateFactory( const kernel::CoordinateConverter_ABC& converter, float timeStep );
+    virtual ~PlatformDelegateFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Create( dispatcher::Agent& entity );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ExtensionFactory( const ExtensionFactory& );            //!< Copy constructor
-    ExtensionFactory& operator=( const ExtensionFactory& ); //!< Assignment operator
+    virtual std::auto_ptr< PlatformDelegate_ABC > Create( dispatcher::Agent& entity ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    float timeStep_;
+    const float timeStep_;
     //@}
 };
 }
 }
 
-#endif // __ExtensionFactory_h_
+#endif // __PlatformDelegateFactory_h_

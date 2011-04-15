@@ -7,15 +7,14 @@
 //
 // *****************************************************************************
 
-#ifndef __DisExtension_h_
-#define __DisExtension_h_
+#ifndef __AgentProxy_h_
+#define __AgentProxy_h_
 
-#include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
+#include "dispatcher/Observer.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/ForceIdentifier.h"
 #include "tic_plugin/PlatformVisitor_ABC.h"
-#include "protocol/Protocol.h"
+#include <memory>
 
 namespace kernel
 {
@@ -32,8 +31,18 @@ namespace rpr
     class EntityTypeResolver;
 }
 
+namespace sword
+{
+    class UnitAttributes;
+}
+
 namespace plugins
 {
+namespace tic
+{
+    class PlatformDelegate_ABC;
+}
+
 namespace dis
 {
     class UdpNetwork;
@@ -41,43 +50,33 @@ namespace dis
     class IdentifierFactory_ABC;
 
 // =============================================================================
-/** @class  DisExtension
-    @brief  DisExtension
+/** @class  AgentProxy
+    @brief  AgentProxy
 */
 // Created: AGE 2008-03-10
 // =============================================================================
-class DisExtension : public kernel::Extension_ABC
-                   , public kernel::Updatable_ABC< sword::UnitAttributes >
-                   , private tic::PlatformVisitor_ABC
+class AgentProxy : private dispatcher::Observer< sword::UnitAttributes >
+                 , private tic::PlatformVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame );
-    virtual ~DisExtension();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void DoUpdate( const sword::UnitAttributes& attributes );
+             AgentProxy( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter
+                       , UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder
+                       , unsigned char exercise, bool lagAFrame, std::auto_ptr< plugins::tic::PlatformDelegate_ABC > platforms );
+    virtual ~AgentProxy();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DisExtension( const DisExtension& );            //!< Copy constructor
-    DisExtension& operator=( const DisExtension& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    virtual void Notify( const sword::UnitAttributes& attributes );
     virtual void AddPlatform( const tic::Platform_ABC& platform );
     //@}
 
     //! @name Types
     //@{
     typedef std::map< const plugins::tic::Platform_ABC*, rpr::EntityIdentifier > T_Identifiers;
-    typedef T_Identifiers::iterator                                             IT_Identifiers;
     //@}
 
 private:
@@ -94,6 +93,7 @@ private:
     bool                   lagAFrame_;
     T_Identifiers          ids_;
     std::auto_ptr< tic::Platform_ABC > adapted_;
+    std::auto_ptr< plugins::tic::PlatformDelegate_ABC > platforms_;
     //@}
 };
 

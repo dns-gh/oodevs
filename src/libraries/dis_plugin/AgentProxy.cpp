@@ -8,13 +8,13 @@
 // *****************************************************************************
 
 #include "dis_plugin_pch.h"
-#include "DisExtension.h"
+#include "AgentProxy.h"
 #include "EntityStatePDU.h"
 #include "Time_ABC.h"
 #include "IdentifierFactory_ABC.h"
-#include "tic_plugin/TicExtension_ABC.h"
 #include "tic_plugin/Platform_ABC.h"
 #include "tic_plugin/PlatformAdapter.h"
+#include "tic_plugin/PlatformDelegate_ABC.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat_ABC.h"
 #include "dispatcher/Team_ABC.h"
@@ -30,11 +30,12 @@
 using namespace plugins::dis;
 
 // -----------------------------------------------------------------------------
-// Name: DisExtension constructor
+// Name: AgentProxy constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame )
-    : time_     ( time )
+AgentProxy::AgentProxy( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame, std::auto_ptr< plugins::tic::PlatformDelegate_ABC > platforms )
+    : dispatcher::Observer< sword::UnitAttributes >( holder )
+    , time_     ( time )
     , id_       ( id )
     , converter_( converter )
     , network_  ( network )
@@ -44,15 +45,16 @@ DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, con
     , exercise_ ( exercise )
     , lagAFrame_( lagAFrame )
     , adapted_  ( new plugins::tic::PlatformAdapter( holder_, converter ) )
+    , platforms_( platforms )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisExtension destructor
+// Name: AgentProxy destructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-DisExtension::~DisExtension()
+AgentProxy::~AgentProxy()
 {
     // NOTHING
 }
@@ -73,14 +75,14 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisExtension::DoUpdate
+// Name: AgentProxy::Notify
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-void DisExtension::DoUpdate( const sword::UnitAttributes& )
+void AgentProxy::Notify( const sword::UnitAttributes& )
 {
     forceId_ = GetForce( holder_ ); // $$$$ SBO 2009-12-11: doesn't need to be computed every time
-    if( tic::TicExtension_ABC* extension = holder_.Retrieve< tic::TicExtension_ABC >() )
-        extension->Accept( *this );
+    if( platforms_.get() )
+        platforms_->Accept( *this );
     else
         AddPlatform( *adapted_ );
 }
@@ -96,12 +98,12 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: DisExtension::AddPlatform
+// Name: AgentProxy::AddPlatform
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void DisExtension::AddPlatform( const plugins::tic::Platform_ABC& platform )
+void AgentProxy::AddPlatform( const plugins::tic::Platform_ABC& platform )
 {
-    IT_Identifiers it = ids_.find( &platform );
+    T_Identifiers::iterator it = ids_.find( &platform );
     if( it == ids_.end() )
         it = ids_.insert( std::make_pair( &platform, id_.CreateNewIdentifier() ) ).first;
 

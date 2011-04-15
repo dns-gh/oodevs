@@ -12,6 +12,7 @@
 
 #include "rpr/EntityIdentifier.h"
 #include "protocol/Protocol.h"
+#include <boost/noncopyable.hpp>
 
 namespace plugins
 {
@@ -26,7 +27,7 @@ namespace dis
 */
 // Created: AGE 2008-04-08
 // =============================================================================
-class FireManager
+class FireManager : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -41,12 +42,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FireManager( const FireManager& );            //!< Copy constructor
-    FireManager& operator=( const FireManager& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReceiveFire( const sword::StartUnitFire& message );
@@ -59,7 +54,6 @@ private:
     //! @name Types
     //@{
     typedef std::map< unsigned int, sword::CoordLatLong > T_Fires;
-    typedef T_Fires::const_iterator                         CIT_Fires;
     //@}
 
 private:
