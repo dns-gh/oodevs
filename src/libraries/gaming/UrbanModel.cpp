@@ -14,6 +14,7 @@
 #include "ResourceNetworkModel.h"
 #include "StaticModel.h"
 #include "Usages.h"
+#include "Architecture.h"
 #include "StructuralStateAttribute.h"
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
@@ -21,6 +22,7 @@
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_gui/UrbanDisplayOptions.h"
 #include "clients_gui/Usages.h"
+#include "clients_gui/Architecture.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include <urban/PhysicalAttribute.h>
@@ -89,20 +91,6 @@ namespace
             if( colorAttribute )
                 colorAttribute->SetAlpha( 0.7f );
         }
-        if( message.attributes().has_architecture() )
-        {
-            const sword::UrbanAttributes::Architecture& architecture = message.attributes().architecture();
-            CheckPhysicalAttribute( object );
-            urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
-            if( !pPhysical->GetArchitecture() )
-                pPhysical->CreateArchitecture();
-            pPhysical->GetArchitecture()->SetHeight( architecture.height() );
-            pPhysical->GetArchitecture()->SetFloorNumber( architecture.floor_number() );
-            pPhysical->GetArchitecture()->SetRoofShape( architecture.roof_shape() );
-            pPhysical->GetArchitecture()->SetMaterial( architecture.material() );
-            pPhysical->GetArchitecture()->SetOccupation( architecture.occupation() );
-            pPhysical->GetArchitecture()->SetTrafficability( architecture.trafficability() );
-        }
     }
 }
 
@@ -125,6 +113,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( message.attributes(), std::auto_ptr< kernel::Usages_ABC >( new gui::Usages( dictionary ) ) ) );
+    pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( message.attributes(), std::auto_ptr< kernel::Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
     Register( id, *pTerrainObject );

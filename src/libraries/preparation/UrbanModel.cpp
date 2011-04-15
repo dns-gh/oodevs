@@ -17,14 +17,17 @@
 #include "InfrastructureAttribute.h"
 #include "UrbanPositions.h"
 #include "Usages.h"
+#include "Architecture.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_gui/Usages.h"
+#include "clients_gui/Architecture.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/MaterialCompositionType.h"
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Usages_ABC.h"
+#include "clients_kernel/Architecture_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <urban/PhysicalAttribute.h>
 #include <urban/InfrastructureAttribute.h>
@@ -226,6 +229,7 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
     pTerrainObject->Attach< StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
     pTerrainObject->Attach< Positions >( *new UrbanPositions( urbanObject ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( urbanObject, std::auto_ptr< Usages_ABC >( new gui::Usages( dictionary ) ) ) );
+    pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( urbanObject, std::auto_ptr< Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
     const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();
     pTerrainObject->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, resource, pTerrainObject->Get< Positions >(), *this, objects_, objectTypes_ ) );
     if( const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >() )

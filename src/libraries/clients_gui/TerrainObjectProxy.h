@@ -103,7 +103,6 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
-    void AddDictionaryForArchitecture( kernel::PropertiesDictionary& dictionary );
     void Restore();
     float GetDensity() const;
     unsigned int GetHumans() const;

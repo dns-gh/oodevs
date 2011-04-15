@@ -164,30 +164,6 @@ void TerrainObjectProxy::CreateDictionary( Controller& controller )
     EntityImplementation< Object_ABC >::Attach( dictionary );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), EntityImplementation< Object_ABC >::id_ );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), EntityImplementation< Object_ABC >::name_ );
-    AddDictionaryForArchitecture( dictionary );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::AddDictionaryForArchitecture
-// Created: SLG 2009-12-09
-// -----------------------------------------------------------------------------
-void TerrainObjectProxy::AddDictionaryForArchitecture( PropertiesDictionary& dictionary )
-{
-    const PhysicalAttribute* pPhysical = object_.Retrieve< PhysicalAttribute >();
-    const Entity_ABC& constEntity = *static_cast< const Entity_ABC* >( this );
-    if( pPhysical )
-    {
-        if( pPhysical->GetArchitecture() )
-        {
-            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), pPhysical->GetArchitecture()->GetHeight() );
-            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), pPhysical->GetArchitecture()->GetFloorNumber() );
-            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), pPhysical->GetArchitecture()->GetRoofShape() );
-            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), pPhysical->GetArchitecture()->GetMaterial() );
-            occupation_ = static_cast< unsigned int >( pPhysical->GetArchitecture()->GetOccupation() * 100u );
-            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_ );
-            dictionary.Register( constEntity, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), pPhysical->GetArchitecture()->GetTrafficability() );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
