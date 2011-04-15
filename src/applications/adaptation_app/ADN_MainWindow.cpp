@@ -457,12 +457,8 @@ void ADN_MainWindow::ExportHtml()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::CloseProject()
 {
-    // $$$$ Disabled for ease of testing.
-    /*
     if( ! this->OfferToSave() )
         return;
-    */
-
     workspace_.Reset( ADN_Project_Data::FileInfos::szUntitled_ );
     pTab_->hide();
 }
@@ -528,14 +524,10 @@ void ADN_MainWindow::About()
 void ADN_MainWindow::closeEvent( QCloseEvent * e )
 {
     e->accept();
-
-    // $$$$ Disabled for ease of testing.
-    /*
     if( this->OfferToSave() == true )
         e->accept();
     else
         e->ignore();
-    */
 }
 
 // -----------------------------------------------------------------------------
