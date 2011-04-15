@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Usages_h_
-#define __Usages_h_
+#ifndef gui_Usages_h
+#define gui_Usages_h
 
 #include "clients_kernel/Usages_ABC.h"
 #include "HumanDefs.h"
@@ -51,4 +51,4 @@ private:
 
 }
 
-#endif // __Usages_h_
+#endif // gui_Usages_h
