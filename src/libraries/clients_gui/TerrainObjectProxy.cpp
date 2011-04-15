@@ -16,7 +16,6 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Usages_ABC.h"
 #include "protocol/Simulation.h"
-#include <urban/PhysicalAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <boost/foreach.hpp>
 #include <urban/ColorAttribute.h>

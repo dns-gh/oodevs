@@ -13,11 +13,12 @@
 namespace kernel
 {
     class DetectionMap;
+    class Object_ABC;
 }
 
-namespace urban
+namespace gui
 {
-    class TerrainObject_ABC;
+    class TerrainObjectProxy;
 }
 
 // =============================================================================
@@ -33,7 +34,7 @@ public:
     //@{
     struct UrbanBlockEnvironment
     {
-        urban::TerrainObject_ABC* data_;
+        kernel::Object_ABC* data_;
     };
     //@}
 
@@ -46,8 +47,8 @@ public:
 
     //! @name Operations
     //@{
-    void AddUrbanBlock( urban::TerrainObject_ABC& object );
-    const urban::TerrainObject_ABC* GetUrbanBlock( const geometry::Point2f& point ) const;
+    void AddUrbanBlock( gui::TerrainObjectProxy& object );
+    const kernel::Object_ABC* GetUrbanBlock( const geometry::Point2f& point ) const;
     //@}
 
 private:

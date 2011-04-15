@@ -25,7 +25,6 @@
 #include "clients_gui/Architecture.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include <urban/PhysicalAttribute.h>
 #include <urban/ColorAttribute.h>
 #include <urban/Model.h>
 #include <urban/UrbanFactory.h>
@@ -57,16 +56,6 @@ UrbanModel::~UrbanModel()
 
 namespace
 {
-    void CheckPhysicalAttribute( urban::TerrainObject_ABC& object )
-    {
-        urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
-        if( !pPhysical )
-        {
-            pPhysical = new urban::PhysicalAttribute( object );
-            object.Attach( *pPhysical );
-        }
-    }
-
     void AttachExtensions( urban::TerrainObject_ABC& object, const sword::UrbanCreation& message )
     {
         if( !message.has_attributes() )
@@ -117,7 +106,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
     Register( id, *pTerrainObject );
-    urbanBlockDetectionMap_.AddUrbanBlock( *object );
+    urbanBlockDetectionMap_.AddUrbanBlock( *pTerrainObject );
 }
 
 // -----------------------------------------------------------------------------

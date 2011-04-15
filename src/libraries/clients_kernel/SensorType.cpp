@@ -6,8 +6,8 @@
 #include "SensorType.h"
 #include "Tools.h"
 #include "Agent_ABC.h"
-#include <urban/PhysicalAttribute.h>
-#include <urban/TerrainObject_ABC.h>
+#include "Architecture_ABC.h"
+#include "Object_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -150,7 +150,7 @@ float SensorType::GetPostureSourceFactor( const Agent_ABC& /*agent*/ ) const
 // -----------------------------------------------------------------------------
 float SensorType::GetDistanceModificator( const Agent_ABC& agent ) const
 {
-    return    GetPostureSourceFactor( agent );
+    return GetPostureSourceFactor( agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +184,7 @@ float SensorType::ComputeEnvironementFactor( bool inForest, bool inTown, bool in
 // Name: SensorType::ComputeExtinction
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const urban::TerrainObject_ABC* object ) const
+float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const Object_ABC* object ) const
 {
 //    assert( rCurrentNRJ <= rDetectionDist_ );
 //    assert( rCurrentNRJ > 0 );
@@ -224,7 +224,7 @@ float SensorType::GetAngle() const
 // Name: SensorType::ComputeExtinction
 // Created: JVT 2004-09-28
 // -----------------------------------------------------------------------------
-float SensorType::ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const urban::TerrainObject_ABC* object ) const
+float SensorType::ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const Object_ABC* object ) const
 {
     return ComputeExtinction( distanceModificator, rDetectionDist_, inForest, inTown, inGround, distance, object );
 }
@@ -248,16 +248,16 @@ E_PerceptionResult SensorType::InterpreteNRJ( float rNRJ ) const
 // Name: SensorType::ComputeUrbanExtinction
 // Created: SLG 2010-03-10
 // -----------------------------------------------------------------------------
-bool SensorType::ComputeUrbanExtinction( float& rVisionNRJ, float distance, const urban::TerrainObject_ABC* object ) const
+bool SensorType::ComputeUrbanExtinction( float& rVisionNRJ, float distance, const Object_ABC* object ) const
 {
     bool bIsAroundBU = false;
     if( object )
     {
         bIsAroundBU = true;
-        const urban::PhysicalAttribute* pPhysical = object->Retrieve< urban::PhysicalAttribute >();
-        if( pPhysical && pPhysical->GetArchitecture() )
+        const Architecture_ABC* pArchitecture = object->Retrieve< Architecture_ABC >();
+        if( pArchitecture )
         {
-            float rDistanceModificator = urbanBlockFactors_.find( pPhysical->GetArchitecture()->GetMaterial() )->second;
+            float rDistanceModificator = urbanBlockFactors_.find( pArchitecture->GetMaterial() )->second;
             rDistanceModificator <= 1e-8 ? rVisionNRJ = -1 : rVisionNRJ = rVisionNRJ - distance / rDistanceModificator ;
         }
     }

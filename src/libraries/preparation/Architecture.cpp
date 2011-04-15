@@ -43,3 +43,12 @@ void Architecture::Initialize( float height, unsigned int floorNumber, const std
 {
     pArchitecture_->Initialize( height, floorNumber, roofShape, material, occupation, trafficability );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetMaterial
+// Created: LGY 2011-04-15
+// -----------------------------------------------------------------------------
+std::string Architecture::GetMaterial() const
+{
+    return pArchitecture_->GetMaterial();
+}

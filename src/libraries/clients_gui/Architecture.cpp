@@ -53,3 +53,12 @@ void Architecture::Initialize( float height, unsigned int floorNumber, const std
     dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_ );
     dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), trafficability_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetMaterial
+// Created: LGY 2011-04-15
+// -----------------------------------------------------------------------------
+std::string Architecture::GetMaterial() const
+{
+    return material_;
+}

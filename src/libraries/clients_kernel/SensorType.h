@@ -5,17 +5,15 @@
 #ifndef __SensorType_h_
 #define __SensorType_h_
 
-namespace xml { class xistream; };
-
-namespace urban
+namespace xml
 {
-    class TerrainObject_ABC;
-}
-
+    class xistream;
+};
 
 namespace kernel
 {
     class Agent_ABC;
+    class Object_ABC;
     enum E_PerceptionResult;
 
 //*****************************************************************************
@@ -37,8 +35,8 @@ public:
     //! @name Operations
     //@{
     float GetMaxDistance   ( float distanceModificator ) const;
-    float ComputeExtinction( float distanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const urban::TerrainObject_ABC* object ) const;
-    float ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const urban::TerrainObject_ABC* object ) const;
+    float ComputeExtinction( float distanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const Object_ABC* object ) const;
+    float ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const Object_ABC* object ) const;
 
     E_PerceptionResult InterpreteNRJ( float skyRock ) const;
 
@@ -72,7 +70,7 @@ private:
 
     float GetPostureSourceFactor            ( const Agent_ABC& agent ) const;
     float ComputeEnvironementFactor         ( bool inForest, bool inTown, bool inGround ) const;
-    bool ComputeUrbanExtinction             ( float& skyRock, float distance, const urban::TerrainObject_ABC* object ) const;
+    bool ComputeUrbanExtinction             ( float& skyRock, float distance, const Object_ABC* object ) const;
     //@}
 
 private:
