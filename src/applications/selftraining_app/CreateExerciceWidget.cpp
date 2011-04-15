@@ -60,7 +60,6 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
     }
     {
         saveAsGroupBox_ = Style( new QGroupBox( 2, Qt::Horizontal, tools::translate( "CreateExerciceWidget", "Create as copy of:" ), this ) );
-        saveAsGroupBox_->setFrameShape( QFrame::NoFrame );
         saveAsGroupBox_->setCheckable( true );
         saveAsGroupBox_->setChecked( false );
         connect( saveAsGroupBox_, SIGNAL( toggled( bool ) ), &page, SLOT( ToggleChanged( bool ) ) );
