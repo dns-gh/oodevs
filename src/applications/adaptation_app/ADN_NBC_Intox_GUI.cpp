@@ -15,6 +15,7 @@
 #include "ADN_EditLine.h"
 #include "ADN_NBC_Datas.h"
 #include "ADN_GroupBox.h"
+#include "ADN_MultiPercentage.h"
 
 typedef ADN_NBC_Datas::NbcAgentInfos NbcAgentInfos;
 
@@ -70,12 +71,15 @@ ADN_NBC_Intox_GUI::ADN_NBC_Intox_GUI( QWidget* pParent )
 
     ADN_GroupBox* pIntoxGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Poisoning effect" ), this );
     vInfosConnectors_[eIntoxPresent] = &pIntoxGroup->GetConnector();
-    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Unwounded" ), vInfosConnectors_[eNbrOk]   , tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Wounded seriousness level 1" )    , vInfosConnectors_[eNbrHurt1], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Wounded seriousness level 2" )    , vInfosConnectors_[eNbrHurt2], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Wounded seriousness level 3" )    , vInfosConnectors_[eNbrHurt3], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Wounded extreme seriousness" )    , vInfosConnectors_[eNbrHurt4], tr( "%" ), ePercentage );
-    builder.AddField<ADN_EditLine_Double>( pIntoxGroup, tr( "Killed" ), vInfosConnectors_[eNbrDead] , tr( "%" ), ePercentage );
+
+    ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pIntoxGroup, builder );
+    pMultiPercentage->AddLine( tr( "Unwounded" ),                   vInfosConnectors_[ eNbrOk ] );
+    pMultiPercentage->AddLine( tr( "Wounded seriousness level 1" ), vInfosConnectors_[ eNbrHurt1 ] );
+    pMultiPercentage->AddLine( tr( "Wounded seriousness level 2" ), vInfosConnectors_[ eNbrHurt2 ] );
+    pMultiPercentage->AddLine( tr( "Wounded seriousness level 3" ), vInfosConnectors_[ eNbrHurt3 ] );
+    pMultiPercentage->AddLine( tr( "Wounded extreme seriousness" ), vInfosConnectors_[ eNbrHurt4 ] );
+    pMultiPercentage->AddLine( tr( "Killed" ),                      vInfosConnectors_[ eNbrDead ] );
+    pMultiPercentage->AddWarning();
 
     QWidget* pHolder = builder.AddFieldHolder( this );
     builder.AddField<ADN_CheckBox>( pHolder, tr( "Contamination" ), vInfosConnectors_[eContaminationPresent] );

@@ -2765,10 +2765,6 @@ tirador</translation>
         <translation>Ileso</translation>
     </message>
     <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
         <source>Wounded seriousness level 1</source>
         <translation>Herido gravedad nivel 1</translation>
     </message>

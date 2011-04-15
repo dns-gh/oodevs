@@ -186,6 +186,7 @@ ADN_NBC_Datas::NbcGazInfos::NbcGazInfos()
     , lifeTime_    ( "0s" )
     , rSpreadAngle_( 0.0 )
 {
+    intoxInfos_.SetParentNode( *this );
     lifeTime_.SetDataName( "la durée de vie d'" );
     lifeTime_.SetParentNode( *this );
     rSpreadAngle_.SetDataName( "l'angle de propagation dû au vent d'" );

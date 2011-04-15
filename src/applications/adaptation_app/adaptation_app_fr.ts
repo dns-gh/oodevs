@@ -2759,10 +2759,6 @@ du tireur</translation>
 <context>
     <name>ADN_NBC_Intox_GUI</name>
     <message>
-        <source>%</source>
-        <translation>%</translation>
-    </message>
-    <message>
         <source>Killed</source>
         <translation>Tués</translation>
     </message>
@@ -6026,7 +6022,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>NBC - Agent &apos;%1&apos; - Poisoning effect data sum &lt; 100</source>
-        <translation>NBC - Agent &apos;%1&apos; - La somme des effets d&apos;empoisonnement est &lt;100</translation>
+        <translation>NBC - Agent &apos;%1&apos; - La somme des effets d&apos;empoisonnement est &lt; 100</translation>
     </message>
 </context>
 <context>
