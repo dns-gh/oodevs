@@ -523,7 +523,6 @@ void ADN_MainWindow::About()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::closeEvent( QCloseEvent * e )
 {
-    e->accept();
     if( this->OfferToSave() == true )
         e->accept();
     else
