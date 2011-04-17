@@ -14,7 +14,7 @@
 
 #include "ENT/ENT_Enums_Gen.h"
 #include "protocol/ClientSenders.h"
-#include "MT_Tools/MT_Stl.h"
+#include "MT_Tools/MT_String.h"
 #include <boost/noncopyable.hpp>
 #include <map>
 

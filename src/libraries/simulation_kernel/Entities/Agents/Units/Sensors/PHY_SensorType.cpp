@@ -15,6 +15,7 @@
 #include "PHY_SensorTypeObject.h"
 #include "PHY_Sensor.h"
 #include "Tools/MIL_Tools.h"
+#include "MT_Tools/MT_Stl.h"
 #include <tools/xmlcodecs.h>
 #include <xeumeuleu/xml.hpp>
 

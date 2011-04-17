@@ -76,7 +76,7 @@ public:
 
     //! @name From MIL_StructuralStateNotifier_ABC
     //@{
-    virtual void NotifyStructuralStateChanged( float structuralState, const MIL_Object_ABC& object ) {}
+    virtual void NotifyStructuralStateChanged( float /*structuralState*/, const MIL_Object_ABC& /*object*/ ) {}
     virtual void NotifyFired();
     //@}
 

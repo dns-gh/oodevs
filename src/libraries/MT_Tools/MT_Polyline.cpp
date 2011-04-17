@@ -12,6 +12,7 @@
 #include "MT_Droite.h"
 #include "MT_Circle.h"
 #include <iterator>
+#include <cassert>
 
 //-----------------------------------------------------------------------------
 // Name: MT_Polyline constructor

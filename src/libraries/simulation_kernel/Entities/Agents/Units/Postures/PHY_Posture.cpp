@@ -14,6 +14,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Stl.h"
 
 PHY_Posture::T_PostureMap PHY_Posture::postures_;
 

@@ -126,7 +126,7 @@ void MIL_ObjectInteraction::UpdateInteraction( MIL_Object_ABC& object, const TER
 // Name: MIL_ObjectInteraction::Update
 // Created: LGY 2011-04-06
 // -----------------------------------------------------------------------------
-void MIL_ObjectInteraction::Update( T_PopulationSet& last, T_PopulationSet& current, boost::function< void( MIL_PopulationElement_ABC& ) > fun )
+void MIL_ObjectInteraction::Update( const T_PopulationSet& last, const T_PopulationSet& current, boost::function< void( MIL_PopulationElement_ABC& ) > fun )
 {
     T_PopulationSet result;
     std::set_difference( last.begin(), last.end(),

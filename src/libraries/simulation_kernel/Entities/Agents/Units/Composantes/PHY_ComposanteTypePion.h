@@ -13,10 +13,11 @@
 #define __PHY_ComposanteType_h_
 
 #include "MIL.h"
+#include "MIL_Random.h"
 #include "PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
-#include "MIL_Random.h"
+#include "MT_Tools/MT_String.h"
 
 namespace sword
 {

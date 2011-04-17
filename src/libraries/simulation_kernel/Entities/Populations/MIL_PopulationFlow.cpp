@@ -12,10 +12,7 @@
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
 #include "MIL_PopulationType.h"
-#include "DEC_PopulationKnowledge.h"
 #include "Entities/Objects/AnimatorAttribute.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/PopulationAttribute.h"
@@ -28,7 +25,6 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_terrain/TER_World.h"
-#include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationFlow )

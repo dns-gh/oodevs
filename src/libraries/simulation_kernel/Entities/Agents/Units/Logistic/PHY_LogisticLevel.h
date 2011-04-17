@@ -12,10 +12,9 @@
 #ifndef __PHY_LogisticLevel_h_
 #define __PHY_LogisticLevel_h_
 
-#include <map>
-#include <string>
+#include "MT_Tools/MT_String.h"
 #include <boost/noncopyable.hpp>
-#include "MT_Tools/MT_Stl.h"
+#include <map>
 
 // =============================================================================
 // @class  PHY_LogisticLevel

@@ -10,7 +10,7 @@
 #ifndef __MIL_InhabitantType_h_
 #define __MIL_InhabitantType_h_
 
-#include "MT_Tools/MT_Stl.h"
+#include "MT_Tools/MT_String.h"
 #include <memory>
 
 namespace xml

@@ -774,9 +774,9 @@ void NumericListFunction( const directia::tools::binders::ScriptRef& refMission,
      if( element.ToNumericList( value ) )
          refMission[ name ] = value;
 }
-bool NumericListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool NumericListFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    NumericListFunction(  refMission, name, element );
+    NumericListFunction( refMission, name, element );
     return true;
 }
 void GenObjectFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )

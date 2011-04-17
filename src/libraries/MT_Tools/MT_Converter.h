@@ -16,7 +16,7 @@
 // @class  MT_Converter
 // Created: JVT 2004-08-03
 // =============================================================================
-template< typename KEY, typename VALUE, typename CMP = sCaseInsensitiveLess >
+template< typename KEY, typename VALUE, typename CMP >
 class MT_Converter : private boost::noncopyable
 {
 

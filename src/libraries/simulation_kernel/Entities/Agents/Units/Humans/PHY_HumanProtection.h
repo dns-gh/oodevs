@@ -14,7 +14,7 @@
 
 #include "MIL_Random.h"
 #include "MT_Tools/MT_GaussianRandom.h"
-#include "MT_Tools/MT_Stl.h"
+#include "MT_Tools/MT_String.h"
 
 namespace xml
 {

@@ -13,7 +13,7 @@
 #define __MT_V2D_h_
 
 #include "MT_Tools_Types.h"
-#include "MT_Stl.h"
+#include <functional>
 
 //=============================================================================
 // Created: FBD 02-03-01

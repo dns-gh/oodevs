@@ -154,7 +154,7 @@ float DEC_FireFunctions::GetMaxRangeToIndirectFireWithoutAmmoCheck( const MIL_Ag
     if( rRange < 0. ) // Pas de possibilité de tir
         return -1.f;
     if( pDotationCategory->IsGuided() )
-        rRange = min( rRange, pDotationCategory->GetGuidanceRange() );
+        rRange = std::min( rRange, pDotationCategory->GetGuidanceRange() );
     return MIL_Tools::ConvertSimToMeter( rRange );
 }
 

@@ -183,7 +183,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     T_PointSet collisions( colCmp );
     for( TER_Object_ABC::CIT_ObjectVector itObject = objects.begin(); itObject != objects.end(); ++itObject )
     {
-        MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
+        const MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
         // Ajout des points de collision dans moveStepSet
         if( object.Intersect2D( lineTmp, collisions ) )
         {
@@ -191,12 +191,12 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
             {
                 assert( object.IsInside( *itPoint ) );
                 IT_MoveStepSet itMoveStep = moveStepSet.insert( T_MoveStep( *itPoint ) ).first;
-                itMoveStep->ponctualObjectsOnSet_.insert( &object );
+                const_cast< T_ObjectSet& >( itMoveStep->ponctualObjectsOnSet_ ).insert( &object );
                 // A - C - B ( Le point C ajouté entre A et B contient les mêmes objets que de A -> B)
                 if( itMoveStep != moveStepSet.begin() )
                 {
                     IT_MoveStepSet itPrevMoveStep = itMoveStep;
-                    itMoveStep->objectsToNextPointSet_ = ( --itPrevMoveStep )->objectsToNextPointSet_;
+                    const_cast< T_ObjectSet& >( itMoveStep->objectsToNextPointSet_ ) = ( --itPrevMoveStep )->objectsToNextPointSet_;
                 }
             }
             collisions.clear();
@@ -211,16 +211,16 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
             MT_Vector2D vTmp = ( itMoveStep->vPos_ + itPrevMoveStep->vPos_ ) / 2;
             if( object.IsInside( vTmp ) )
             {
-                itPrevMoveStep->objectsToNextPointSet_.insert( &object );
+                const_cast< T_ObjectSet& >( itPrevMoveStep->objectsToNextPointSet_ ).insert( &object );
                 bInsideObjectOnPrevPoint = true;
-                itPrevMoveStep->ponctualObjectsOnSet_.erase( &object ); // This is not yet a ponctual object
+                const_cast< T_ObjectSet& >( itPrevMoveStep->ponctualObjectsOnSet_ ).erase( &object ); // This is not yet a ponctual object
             }
             else
             {
                 // Stockage des objets desquels on sort
                 if( bInsideObjectOnPrevPoint )
                 {
-                    itMoveStep->objectsOutSet_.insert( &object );
+                    const_cast< T_ObjectSet& >( itMoveStep->objectsOutSet_ ).insert( &object );
                     bInsideObjectOnPrevPoint = false;
                 }
             }

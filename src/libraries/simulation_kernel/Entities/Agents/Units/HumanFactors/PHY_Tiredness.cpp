@@ -13,6 +13,7 @@
 #include "PHY_Tiredness.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Stl.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_Tiredness::T_TirednessMap PHY_Tiredness::tirednesses_;

@@ -79,7 +79,7 @@ private:
 private:
     //! @name Helpers
     //@{
-    void Update( T_PopulationSet& last, T_PopulationSet& current, boost::function< void( MIL_PopulationElement_ABC& ) > fun );
+    void Update( const T_PopulationSet& last, const T_PopulationSet& current, boost::function< void( MIL_PopulationElement_ABC& ) > fun );
     //@}
 
 private:

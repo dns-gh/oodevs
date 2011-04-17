@@ -146,7 +146,8 @@ void DEC_PathFind_Manager::AddPendingJob( boost::shared_ptr< DEC_Path_ABC > pPat
 // -----------------------------------------------------------------------------
 boost::shared_ptr< TER_PathFindRequest_ABC > DEC_PathFind_Manager::GetMessage()
 {
-    for( unsigned int nIndex = 0 ; nIndex < pathFindThreads_.size(); ++nIndex )
+    unsigned int nIndex = 0;
+    for( ; nIndex < pathFindThreads_.size(); ++nIndex )
         if( pathFindThreads_[ nIndex ]->IsCurrent() )
             break;
     return GetMessage( nIndex );

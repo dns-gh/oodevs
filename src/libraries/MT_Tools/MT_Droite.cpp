@@ -9,6 +9,7 @@
 
 #include "MT_Droite.h"
 #include "MT_Line.h"
+#include <cassert>
 
 namespace
 {

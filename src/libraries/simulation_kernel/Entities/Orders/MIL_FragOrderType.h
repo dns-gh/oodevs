@@ -11,7 +11,7 @@
 #define __MIL_FragOrderType_h_
 
 #include "MIL_OrderType_ABC.h"
-#include "MT_Tools/MT_Stl.h"
+#include "MT_Tools/MT_String.h"
 
 namespace xml
 {

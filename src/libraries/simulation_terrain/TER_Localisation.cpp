@@ -830,8 +830,6 @@ namespace
 {
     T_PointVector GetVectorWithAdditionalPoint( const T_PointVector& pointVector )
     {
-        double minDist = 0.;
-        int index = 0;
         T_PointVector result;
         MT_Vector2D midPoint;
         for( int i = 0; i < 3; ++i )

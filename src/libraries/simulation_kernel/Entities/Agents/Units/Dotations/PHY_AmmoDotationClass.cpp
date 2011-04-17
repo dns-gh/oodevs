@@ -13,7 +13,7 @@
 #include "PHY_AmmoDotationClass.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
-#include "MT_Tools/MT_Stl.h"
+#include "MT_Tools/MT_String.h"
 
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , 0 );
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", 1 );

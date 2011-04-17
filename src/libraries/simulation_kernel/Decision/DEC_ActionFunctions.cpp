@@ -337,7 +337,7 @@ bool DEC_ActionFunctions::Stock_IsSupplyPossible( MIL_AgentPion& callerAgent, bo
 // Name: DEC_ActionFunctions::Stock_IsDistributePossible
 // Created: BCI 2011-02-16
 // -----------------------------------------------------------------------------
-bool DEC_ActionFunctions::Stock_IsDistributePossible( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, boost::shared_ptr< DEC_Knowledge_Population > population )
+bool DEC_ActionFunctions::Stock_IsDistributePossible( MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, boost::shared_ptr< DEC_Knowledge_Population > population )
 {
     if( StockAttribute* attribute = pKnowledge->GetObjectKnown()->RetrieveAttribute< StockAttribute >() )
         return !attribute->IsEmpty();

@@ -196,7 +196,7 @@ bool MT_Rect::IsInside( const MT_Vector2D& point, double rPrecision ) const
 inline
 bool MT_Rect::Contains( const MT_Rect& rect ) const
 {
-    return IsInside( GetPointUpLeft() ) && IsInside( GetPointDownRight() );
+    return IsInside( rect.GetPointUpLeft() ) && IsInside( rect.GetPointDownRight() );
 }
 
 //-----------------------------------------------------------------------------

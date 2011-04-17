@@ -13,6 +13,7 @@
 #define __MIL_AutomateType_h_
 
 #include "Tools/MIL_Config.h"
+#include "MT_Tools/MT_String.h"
 #include "MIL.h"
 
 namespace xml

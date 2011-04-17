@@ -11,7 +11,9 @@
 #include "MIL_Geometry.h"
 #include "MT_Tools/Mt_Vector2DTypes.h"
 #include "simulation_terrain/TER_Localisation.h"
+#pragma warning( push, 0 )
 #include <boost/geometry/geometry.hpp>
+#pragma warning( pop )
 
 namespace bg = boost::geometry;
 
@@ -47,6 +49,7 @@ namespace
         float rMaxProjection = 0;
         for( CIT_PointVector it = vertices.begin(); it != vertices.end(); ++it )
         {
+#pragma warning( push, 0 )
             const float rProjection = CrossProduct( direction, MT_Vector2D( *it - from ) );
             if( rProjection < -1 ) // epsilon
             {

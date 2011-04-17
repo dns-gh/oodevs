@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ConsumptionType.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Stl.h"
 
 PHY_ConsumptionType::T_ConsumptionTypeMap PHY_ConsumptionType::consumptionTypes_;
 

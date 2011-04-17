@@ -13,6 +13,7 @@
 #define __PHY_Posture_h_
 
 #include "MT_Tools/MT_Vector2DTypes.h"
+#include "MT_Tools/MT_String.h"
 
 namespace sword
 {

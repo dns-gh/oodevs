@@ -14,6 +14,7 @@
 #include "MT_Tools/MT_Vector2D.h"
 #include <geometry/Types.h>
 #include <boost/noncopyable.hpp>
+#include <cassert>
 
 namespace sword
 {

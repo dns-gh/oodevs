@@ -193,12 +193,12 @@ void Saver::Flush()
         wrapper << current_;
         current_.Reset();
         index_.flush(); keyIndex_.flush(); key_.flush(); update_.flush();
-        GenerateInfoFile();
     }
     catch( std::exception& exception )
     {
-      MT_LOG_ERROR_MSG( exception.what() );
+        MT_LOG_ERROR_MSG( "Saver plugin : " << exception.what() << " : " << (bfs::path( recorderDirectory_ ) / currentFolderName_ / "index") );
     }
+    GenerateInfoFile();
 }
 
 // -----------------------------------------------------------------------------
@@ -243,12 +243,19 @@ void Saver::TerminateFragment()
 void Saver::GenerateInfoFile() const
 {
     const bfs::path currentDirectory = bfs::path( recorderDirectory_, bfs::native ) / currentFolderName_;
-    std::ofstream info;
-    info.open( ( currentDirectory / "info" ).string().c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
-    tools::OutputBinaryWrapper wrapper( info );
-    wrapper << fragmentFirstFrame_;
-    wrapper << frameCount_ - 1;
-    info.close();
+    try
+    {
+        std::ofstream info;
+        info.open( ( currentDirectory / "info" ).string().c_str(), std::ios_base::binary | std::ios_base::out | std::ios_base::trunc );
+        tools::OutputBinaryWrapper wrapper( info );
+        wrapper << fragmentFirstFrame_;
+        wrapper << frameCount_ - 1;
+        info.close();
+    }
+    catch( std::exception& exception )
+    {
+        MT_LOG_ERROR_MSG( "Saver plugin : " << exception.what() << " : " << (currentDirectory / "info") );
+    }
 }
 
 // -----------------------------------------------------------------------------

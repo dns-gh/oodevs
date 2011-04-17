@@ -18,8 +18,9 @@
 #include <graphics/Scale.h>
 #include <graphics/extensions.h>
 #include <qbitmap.h>
-#include <time.h>
 #include <xeumeuleu/xml.hpp>
+#include <iterator>
+#include <ctime>
 
 using namespace geometry;
 using namespace kernel;

@@ -17,6 +17,7 @@
 #include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "MT_Tools/MT_Stl.h"
 #include <boost/serialization/utility.hpp>
 #include <boost/serialization/vector.hpp>
 

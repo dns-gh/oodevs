@@ -10,6 +10,7 @@
 #include "MT_Vector2D.h"
 #include "MT_Vector2DTypes.h"
 #include "MT_Droite.h"
+#include <cassert>
 
 // -----------------------------------------------------------------------------
 // Name: MT_Vector2D::MT_ComputeBarycenter

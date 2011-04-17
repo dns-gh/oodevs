@@ -14,6 +14,7 @@
 
 #include "Entities/MIL_Army_ABC.h"
 #include "MT_Tools/MT_Converter.h"
+#include "MT_Tools/MT_String.h"
 #include "tools/Resolver.h"
 
 namespace sword
@@ -72,7 +73,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory
-                     , PopulationFactory_ABC& populationFactory, InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter );
+                     , PopulationFactory_ABC& populationFactory, InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter );
     virtual ~MIL_Army();
      //@}
 
@@ -160,7 +161,7 @@ private:
 
     //! @name CheckPoint
     //@{
-    MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter );
+    MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter );
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Army* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Army* role, const unsigned int /*version*/ );
     //@}
@@ -175,7 +176,7 @@ private:
     T_KnowledgeGroupMap knowledgeGroups_;
     ArmyFactory_ABC& armyFactory_;
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
-    const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter_;
+    const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter_;
     //@}
 };
 

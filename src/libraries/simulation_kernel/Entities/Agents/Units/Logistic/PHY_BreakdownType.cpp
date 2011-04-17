@@ -16,6 +16,7 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Stl.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;

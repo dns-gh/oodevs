@@ -119,7 +119,7 @@
         <build-lib name="hla_plugin" pattern="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
 
-    <target name="library.hla_plugin_dll" depends="library.hla_plugin" description="build hla_plugin dynamic library">
+    <target name="library.hla_plugin_dll" depends="library.hla_plugin" description="build hla_plugin dynamic library" if="is-vc80">
         <build-lib name="hla_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces,protobuf" pattern="hla_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="HLA,libFedTime1516e,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -147,7 +147,7 @@
         </build-lib>
     </target>
 
-    <target name="library.vrforces_plugin_dll" depends="library.clients_kernel,library.vrforces_plugin" description="build vrforces_plugin dynamic library">
+    <target name="library.vrforces_plugin_dll" depends="library.clients_kernel,library.vrforces_plugin" description="build vrforces_plugin dynamic library" if="is-vc80">
         <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces,protobuf" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="libFedtime,
                   matrixRT,mtlRT,vlHLA13RT,vlRT,vlutilRT,vrfcontrolHLA13RT,

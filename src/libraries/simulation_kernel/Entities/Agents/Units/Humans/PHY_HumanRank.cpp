@@ -11,6 +11,7 @@
 #include "PHY_HumanRank.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Stl.h"
 
 PHY_HumanRank::T_HumanRankMap PHY_HumanRank::humanRanks_;
 

@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Volume.h"
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Stl.h"
 #include <xeumeuleu/xml.hpp>
 
 PHY_Volume::T_VolumeMap PHY_Volume::volumes_;

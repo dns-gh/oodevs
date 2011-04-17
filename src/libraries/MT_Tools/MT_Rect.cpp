@@ -9,6 +9,7 @@
 
 #include "MT_Rect.h"
 #include "MT_Line.h"
+#include <cassert>
 
 //-----------------------------------------------------------------------------
 // Name: MT_Rect constructor

@@ -10,7 +10,7 @@
 #ifndef __PHY_AccomodationType_h_
 #define __PHY_AccomodationType_h_
 
-#include "MT_Tools/MT_Stl.h"
+#include "MT_Tools/MT_String.h"
 
 // =============================================================================
 /** @class  PHY_AccomodationType

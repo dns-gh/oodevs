@@ -53,7 +53,7 @@ class PHY_DotationCategory;
 //=============================================================================
 class MIL_Object_ABC : public TER_Object_ABC
                      , public tools::Extendable< ObjectCapacity_ABC >
-                     , protected tools::Extendable< ObjectAttribute_ABC >
+                     , public tools::Extendable< ObjectAttribute_ABC >
                      , private boost::noncopyable
 {
 public:

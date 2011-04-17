@@ -81,7 +81,7 @@ ArmyFactory::ArmyFactory( AutomateFactory_ABC& automateFactory, AgentFactory_ABC
     , populationFactory_    ( populationFactory )
     , inhabitantFactory_    ( inhabitantFactory )
     , knowledgeGroupFactory_( knowledgeGroupFactory ) // LTO
-    , diplomacyConverter_   ( new MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy >( MIL_Army_ABC::eUnknown ) ) // LTO
+    , diplomacyConverter_   ( new MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy, sCaseInsensitiveLess >( MIL_Army_ABC::eUnknown ) ) // LTO
 {
     InitializeDiplomacies();
 }

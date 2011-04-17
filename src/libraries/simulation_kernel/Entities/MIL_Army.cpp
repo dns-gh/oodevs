@@ -48,7 +48,7 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_Army* army, const unsigned int /*version*/ )
 {
     const ArmyFactory_ABC* const armyFactory = &army->armyFactory_;
-    const MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy >* const diplomacyConverter = &army->diplomacyConverter_;
+    const MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy, sCaseInsensitiveLess >* const diplomacyConverter = &army->diplomacyConverter_;
     archive << armyFactory
             << diplomacyConverter;
 }
@@ -61,7 +61,7 @@ template< typename Archive >
 void load_construct_data( Archive& archive, MIL_Army* army, const unsigned int /*version*/ )
 {
     ArmyFactory_ABC* armyFactory = 0;
-    MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy >* diplomacyConverter = 0;
+    MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy, sCaseInsensitiveLess >* diplomacyConverter = 0;
     archive >> armyFactory
             >> diplomacyConverter;
     ::new( army )MIL_Army( *armyFactory, *diplomacyConverter );
@@ -72,7 +72,7 @@ void load_construct_data( Archive& archive, MIL_Army* army, const unsigned int /
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory, MIL_ObjectManager& objectFactory
-                  , PopulationFactory_ABC& populationFactory, InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter )
+                  , PopulationFactory_ABC& populationFactory, InhabitantFactory_ABC& inhabitantFactory, KnowledgeGroupFactory_ABC& knowledgegroupFactory, const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter )
     : nID_                 ( xis.attribute< unsigned int >( "id" ) )
     , strName_             ( xis.attribute< std::string >( "name") )
     , nType_               ( eUnknown )
@@ -110,7 +110,7 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
 // Name: MIL_Army constructor
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy >& diplomacyConverter )
+MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter )
     : nID_               ( 0 )
     , armyFactory_       ( armyFactory )
     , diplomacyConverter_( diplomacyConverter )

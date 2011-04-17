@@ -10,12 +10,7 @@
 #ifndef __MT_Stl_h_
 #define __MT_Stl_h_
 
-#include <string>
 #include <functional>
-#pragma warning( push, 0 )
-#include <boost/algorithm/string.hpp>
-#pragma warning( push, 0 )
-#undef Yield
 
 //-------------------------------------------------------------------------
 /** @name Définition de {unary/binary}_compose ( officiellement, c'est pas dans la STL ... ) */
@@ -245,60 +240,6 @@ namespace std
             return x.second;
         }
     };
-};
-
-//-------------------------------------------------------------------------
-/** @name Comparaison de chaînes de caractère */
-//-------------------------------------------------------------------------
-struct sCaseInsensitiveEqual : public std::binary_function< std::string, std::string, bool >
-{
-    bool operator () ( const char* lhs, const char* rhs ) const
-    {
-        return boost::iequals( lhs, rhs );
-    }
-
-    bool operator () ( const std::string& lhs, const std::string& rhs ) const
-    {
-        return operator () ( lhs.c_str(), rhs.c_str() );
-    }
-
-    bool operator () ( const char* lhs, const std::string& rhs ) const
-    {
-        return operator () ( lhs, rhs.c_str() );
-    }
-
-    bool operator () ( const std::string& lhs, const char* rhs ) const
-    {
-        return operator () ( lhs.c_str(), rhs );
-    }
-};
-
-struct sCaseInsensitiveLess
-{
-    bool operator () ( const char* lhs, const char* rhs ) const
-    {
-        return boost::ilexicographical_compare(lhs, rhs);
-    }
-
-    bool operator () ( const std::string& lhs, const std::string& rhs ) const
-    {
-        return operator () ( lhs.c_str(), rhs.c_str() );
-    }
-
-    bool operator () ( const char* lhs, const std::string& rhs ) const
-    {
-        return operator () ( lhs, rhs.c_str() );
-    }
-
-    bool operator () ( const std::string& lhs, const char* rhs ) const
-    {
-        return operator () ( lhs.c_str(), rhs );
-    }
-
-    bool operator () ( const std::pair< std::string, std::string >& lhs, const std::pair< std::string, std::string >& rhs ) const
-    {
-        return ( operator()( lhs.first, rhs.first ) || !operator()( rhs.first, lhs.first) &&  operator()( lhs.second,  rhs.second ) );
-    }
 };
 
 #endif // __MT_Stl_h_

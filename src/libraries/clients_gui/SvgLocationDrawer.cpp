@@ -12,6 +12,7 @@
 #include "DrawingTemplate.h"
 #include "clients_kernel/Location_ABC.h"
 #include <svgl/svgl.h>
+#include <iterator>
 
 using namespace gui;
 

@@ -213,9 +213,9 @@ void ScoresModel::Export() const
                 AddLine( file, index );
             file.close();
         }
-        catch ( exception* e )
+        catch( std::exception& e )
         {
-            throw std::runtime_error( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e->what() ) );
+            throw std::runtime_error( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e.what() ) );
         }
 }
 
@@ -238,9 +238,9 @@ void ScoresModel::SimplifiedExport( const std::string& path ) const
             }
             file.close();
         }
-        catch ( exception* e )
+        catch( std::exception& e )
         {
-            throw std::runtime_error( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e->what() ) );
+            throw std::runtime_error( __FUNCTION__ ": Can not save scores.csv file : Error message" + std::string( e.what() ) );
         }
 }
 
