@@ -25,6 +25,7 @@
 #include "clients_gui/Architecture.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 #include <urban/ColorAttribute.h>
 #include <urban/Model.h>
 #include <urban/UrbanFactory.h>
@@ -100,9 +101,10 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     AttachExtensions( *object, message );
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, *object, id, QString( name.c_str() ), static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
-    pTerrainObject->Attach< kernel::Positions >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
+    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( *object, message.location(), static_.coordinateConverter_ ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( message.attributes(), std::auto_ptr< kernel::Usages_ABC >( new gui::Usages( dictionary ) ) ) );
-    pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( message.attributes(), std::auto_ptr< kernel::Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
+    if( message.attributes().has_architecture() )
+        pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( message.attributes(), std::auto_ptr< kernel::Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
     Register( id, *pTerrainObject );

@@ -14,6 +14,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/ResourceNetworkType.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <urban/ResourceNetworkAttribute.h>
@@ -25,7 +26,7 @@ using namespace geometry;
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-09-07
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const kernel::Positions& position
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const geometry::Point2f position
                                                   , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
     : controllers_( controllers )
     , position_   ( position )
@@ -41,7 +42,7 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2010-09-20
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute* network, const kernel::Positions& position
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute* network, const geometry::Point2f position
                                                   , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
     : controllers_( controllers )
     , position_   ( position )
@@ -78,7 +79,7 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& control
 // Name: ResourceNetworkAttribute constructor
 // Created: JSR 2011-02-23
 // -----------------------------------------------------------------------------
-ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const kernel::Positions& position, const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
+ResourceNetworkAttribute::ResourceNetworkAttribute( kernel::Controllers& controllers, const geometry::Point2f position, const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources )
     : controllers_( controllers )
     , position_   ( position )
     , urbans_     ( urbans )
@@ -140,7 +141,7 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
         return;
     if( filter == 3 && !IsSelected() ) // selected outgoing
         return;
-    Point2f from = position_.GetPosition();
+    Point2f from = position_;
 
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 1.f );
@@ -160,7 +161,7 @@ void ResourceNetworkAttribute::Draw( const kernel::Viewport_ABC& viewport, const
                     if( !resourceTarget || ( !IsSelected() && !resourceTarget->IsSelected() ) )
                         continue;
                 }
-                Point2f to = link->urban_ ? urbans_.Get( link->id_ ).Get< kernel::Positions >().GetPosition()
+                Point2f to = link->urban_ ? urbans_.Get( link->id_ ).Get< kernel::UrbanPositions_ABC >().Barycenter()
                                           : objects_.Get( link->id_ ).Get< kernel::Positions >().GetPosition();
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
                     tools.DrawArrow( from, to );

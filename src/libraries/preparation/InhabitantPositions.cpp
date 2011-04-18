@@ -12,6 +12,7 @@
 #include "UrbanModel.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/TerrainObjectProxy.h"
@@ -41,8 +42,8 @@ namespace
             while( it.HasMoreElements() )
             {
                 const gui::TerrainObjectProxy& object = it.NextElement();
-                if( const kernel::Positions* positions = object.Retrieve< kernel::Positions >() )
-                    if( poly.IsInside( positions->GetPosition() ) )
+                if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+                    if( poly.IsInside( positions->Barycenter() ) )
                         vector_.push_back( &object );
             }
         }
@@ -131,8 +132,8 @@ void InhabitantPositions::ComputePosition()
 {
     geometry::Polygon2f poly;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        if( const kernel::Positions* positions = ( *it )->Retrieve< kernel::Positions >() )
-            poly.Add( positions->GetPosition() );
+        if( const kernel::UrbanPositions_ABC* positions = ( *it )->Retrieve< kernel::UrbanPositions_ABC >() )
+            poly.Add( positions->Barycenter() );
     if( !poly.IsEmpty() )
         position_ = poly.Barycenter();
 }
@@ -234,9 +235,8 @@ void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const kernel
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
         const gui::TerrainObjectProxy& object = **it;
-        const geometry::Polygon2f* footprint = object.GetFootprint();
-        if( footprint )
-            tools.DrawConvexPolygon( footprint->Vertices() );
+        if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+            tools.DrawConvexPolygon( positions->Vertices() );
     }
 }
 

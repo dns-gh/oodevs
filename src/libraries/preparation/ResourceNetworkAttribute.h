@@ -24,7 +24,6 @@ namespace kernel
 {
     class Controllers;
     class Object_ABC;
-    class Positions;
     class ResourceNetworkType;
 }
 
@@ -59,11 +58,11 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const kernel::Positions& position
+             ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const geometry::Point2f position
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
-             ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute* network, const kernel::Positions& position
+             ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute* network, const geometry::Point2f position
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
-             ResourceNetworkAttribute( kernel::Controllers& controllers, const kernel::Positions& position
+             ResourceNetworkAttribute( kernel::Controllers& controllers, const geometry::Point2f position
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
     virtual ~ResourceNetworkAttribute();
     //@}
@@ -91,8 +90,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const kernel::Positions& position_;
-    bool isUrban_;
+    const geometry::Point2f position_;
     const T_Urbans& urbans_;
     const T_Objects& objects_;
     const T_Resources& resources_;

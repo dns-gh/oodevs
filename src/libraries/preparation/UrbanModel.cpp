@@ -26,6 +26,7 @@
 #include "clients_kernel/InfrastructureType.h"
 #include "clients_kernel/RoofShapeType.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Usages_ABC.h"
 #include "clients_kernel/Architecture_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
@@ -227,11 +228,11 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject, objectTypes_.StringResolver< ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
     PropertiesDictionary& dictionary = pTerrainObject->Get< PropertiesDictionary >();
     pTerrainObject->Attach< StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
-    pTerrainObject->Attach< Positions >( *new UrbanPositions( urbanObject ) );
+    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( urbanObject ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( urbanObject, std::auto_ptr< Usages_ABC >( new gui::Usages( dictionary ) ) ) );
     pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( urbanObject, std::auto_ptr< Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
     const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();
-    pTerrainObject->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, resource, pTerrainObject->Get< Positions >(), *this, objects_, objectTypes_ ) );
+    pTerrainObject->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, resource, pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(), *this, objects_, objectTypes_ ) );
     if( const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >() )
         if( const InfrastructureType* infraType = objectTypes_.StringResolver< InfrastructureType >::Find( infra->GetType() ) )
         {

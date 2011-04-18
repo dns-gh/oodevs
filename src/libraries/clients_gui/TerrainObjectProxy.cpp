@@ -223,15 +223,6 @@ void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, const T_Bl
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::GetFootprint
-// Created: SLG 2010-11-26
-// -----------------------------------------------------------------------------
-const geometry::Polygon2f* TerrainObjectProxy::GetFootprint() const
-{
-    return object_.GetFootprint();
-}
-
-// -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::GetObject
 // Created: JSR 2010-11-30
 // -----------------------------------------------------------------------------

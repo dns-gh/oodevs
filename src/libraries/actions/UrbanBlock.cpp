@@ -11,7 +11,7 @@
 #include "UrbanBlock.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
-#include "clients_kernel/Positions.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "protocol/Protocol.h"
 #include <windows.h>
@@ -146,8 +146,8 @@ void UrbanBlock::CommitTo( sword::MissionParameter_Value& message ) const
 // -----------------------------------------------------------------------------
 geometry::Point2f UrbanBlock::GetPosition() const
 {
-    if( const kernel::Positions* positions = GetValue()->Retrieve< kernel::Positions >() )
-        return positions->GetPosition();
+    if( const kernel::UrbanPositions_ABC* positions = GetValue()->Retrieve< kernel::UrbanPositions_ABC >() )
+        return positions->Barycenter();
     return Entity< Object_ABC >::GetPosition();
 }
 

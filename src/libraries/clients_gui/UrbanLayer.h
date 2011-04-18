@@ -10,11 +10,8 @@
 #ifndef __UrbanLayer_h_
 #define __UrbanLayer_h_
 
-#include "Layer_ABC.h"
 #include "EntityLayer.h"
 #include "clients_gui/TerrainObjectProxy.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
-#include "clients_kernel/OptionVariant.h"
 
 namespace kernel
 {
@@ -29,7 +26,7 @@ namespace gui
 
 // =============================================================================
 /** @class  UrbanLayer
-@brief  UrbanLayer
+    @brief  UrbanLayer
 */
 // Created: SLG 2006-03-23
 // =============================================================================
@@ -56,12 +53,14 @@ protected:
     virtual void NotifySelected( const TerrainObjectProxy* object );
     virtual void ContextMenu( const kernel::Entity_ABC& entity, const geometry::Point2f& geoPoint, const QPoint& point );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
+    virtual void Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport );
+    virtual bool IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const TerrainObjectProxy*   selectedObject_;
+    const TerrainObjectProxy* selectedObject_;
     //@}
 };
 

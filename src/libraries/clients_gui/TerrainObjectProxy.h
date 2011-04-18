@@ -81,7 +81,6 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
-    const geometry::Polygon2f* GetFootprint() const;
     const urban::TerrainObject_ABC* GetObject() const;
     virtual const kernel::ObjectType& GetType() const { return type_; }
     virtual QString GetTypeName() const;

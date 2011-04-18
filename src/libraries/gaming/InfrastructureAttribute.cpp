@@ -17,7 +17,7 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Positions.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "protocol/Protocol.h"
 
@@ -100,12 +100,12 @@ void InfrastructureAttribute::UpdateData( const T& message )
 void InfrastructureAttribute::Draw( const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
     if( controllers_.options_.GetOption( "Infra", true ).To< bool >() )
-        if( const kernel::Positions* positions = object_.Retrieve< kernel::Positions >() )
+        if( const kernel::UrbanPositions_ABC* positions = object_.Retrieve< kernel::UrbanPositions_ABC >() )
         {
             if( type_ )
-                tools.DrawApp6Symbol( type_->GetSymbol(), positions->GetPosition() , 0.1f, 0.1f );
+                tools.DrawApp6Symbol( type_->GetSymbol(), positions->Barycenter() , 0.1f, 0.1f );
             if( !enabled_ )
-                tools.DrawSvg( "infra.svg", positions->GetPosition(), 0.1f );
+                tools.DrawSvg( "infra.svg", positions->Barycenter(), 0.1f );
         }
 }
 

@@ -12,6 +12,8 @@
 #include "TerrainObjectProxy.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
 #include <boost/noncopyable.hpp>
 
 using namespace gui;
@@ -124,4 +126,29 @@ void UrbanLayer::ContextMenu( const kernel::Entity_ABC& entity, const geometry::
 bool UrbanLayer::ShouldDisplay( const kernel::Entity_ABC& )
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::IsInSelection
+// Created: LGY 2011-04-18
+// -----------------------------------------------------------------------------
+bool UrbanLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const
+{
+    return entity.Get< kernel::UrbanPositions_ABC >().IsInside( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::Draw
+// Created: LGY 2011-04-18
+// -----------------------------------------------------------------------------
+void UrbanLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& viewport )
+{
+    if( ShouldDisplay( entity ) ) // && positions.IsIn( viewport ) )
+    {
+        SelectColor( entity );
+        const kernel::UrbanPositions_ABC& positions = entity.Get< kernel::UrbanPositions_ABC >();
+        const geometry::Point2f position = positions.Barycenter();
+        viewport.SetHotpoint( position );
+        entity.Draw( position, viewport, tools_ );
+    }
 }

@@ -10,22 +10,26 @@
 #include "gaming_pch.h"
 #include "UrbanPositions.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "urban/TerrainObject_ABC.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "protocol/Protocol.h"
+#include <urban/TerrainObject_ABC.h>
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions constructor
-// Created: JSR 2010-09-06
+// Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
 UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& message, const kernel::CoordinateConverter_ABC& converter )
-    : LocationPositions( converter )
-    , object_( object )
+    : object_( object )
 {
-    Update( message );
+    for( int i = 0; i < message.coordinates().elem_size(); ++i )
+        polygon_.Add( converter.ConvertToXY( message.coordinates().elem( i ) ) );
+    boundingBox_ = polygon_.BoundingBox();
+    barycenter_ = polygon_.Barycenter();
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions destructor
-// Created: JSR 2010-09-06
+// Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
 UrbanPositions::~UrbanPositions()
 {
@@ -33,28 +37,46 @@ UrbanPositions::~UrbanPositions()
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanPositions::GetPosition
-// Created: JSR 2011-01-18
+// Name: UrbanPositions::Barycenter
+// Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-geometry::Point2f UrbanPositions::GetPosition( bool /*aggregated*/ ) const
+geometry::Point2f UrbanPositions::Barycenter() const
 {
-    return object_.GetFootprint()->Barycenter();
+    return barycenter_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::BoundingBox
+// Created: LGY 2011-04-15
+// -----------------------------------------------------------------------------
+geometry::Rectangle2f UrbanPositions::BoundingBox() const
+{
+    return boundingBox_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::IsInside
+// Created: LGY 2011-04-15
+// -----------------------------------------------------------------------------
+bool UrbanPositions::IsInside( const geometry::Point2f& point ) const
+{
+    return polygon_.IsInside( point );
 }
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions::Draw
-// Created: JSR 2010-09-06
+// Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawDecoratedPolygon( *object_.GetFootprint(), object_.GetDecoration() );
+    tools.DrawDecoratedPolygon( polygon_, object_.GetDecoration() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanPositions::IsAt
-// Created: JSR 2010-09-06
+// Name: UrbanPositions::Vertices
+// Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-bool UrbanPositions::IsAt( const geometry::Point2f& pos, float /*precision*/, float /*adaptiveFactor*/ ) const
+const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 {
-    return object_.IsInside( pos );
+    return polygon_.Vertices();
 }

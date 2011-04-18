@@ -37,7 +37,7 @@ public:
     //@{
     virtual void Initialize( float height, unsigned int floorNumber, const std::string& roofShape,
                              const std::string& material, float occupation, float trafficability ) = 0;
-    virtual std::string GetMaterial() const = 0;
+    virtual const std::string& GetMaterial() const = 0;
     //@}
 };
 

@@ -17,6 +17,7 @@
 #include "clients_kernel/ResourceNetworkType.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Viewport_ABC.h"
@@ -108,7 +109,7 @@ void ResourceNetwork::Draw( const Viewport_ABC& viewport, const GlTools_ABC& too
     const Entity_ABC* object = FindEntity( id_ );
     if( !object )
         return;
-    Point2f from = object->Get< Positions >().GetPosition();
+    Point2f from = GetPosition( *object );
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 1.f );
     for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
@@ -128,7 +129,7 @@ void ResourceNetwork::Draw( const Viewport_ABC& viewport, const GlTools_ABC& too
                     if( !resourceTarget || ( !IsSelected() && !resourceTarget->IsSelected() ) )
                         continue;
                 }
-                Point2f to = target->Get< Positions >().GetPosition();
+                Point2f to = GetPosition( *target );
                 UpdateStipple( link->flow_ );
                 if( viewport.IsVisible( Rectangle2f( from, to ) ) )
                     tools.DrawLine( from, to );
@@ -291,4 +292,15 @@ void ResourceNetwork::CreateDictionary( PropertiesDictionary& dico ) const
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Needs" ), node->second.needs_ );
         dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Satisfaction" ), node->second.satisfaction_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetwork::GetPosition
+// Created: LGY 2011-04-18
+// -----------------------------------------------------------------------------
+geometry::Point2f ResourceNetwork::GetPosition( const kernel::Entity_ABC& entity ) const
+{
+    if( const UrbanPositions_ABC* positions = entity.Retrieve< UrbanPositions_ABC >() )
+        return positions->Barycenter();
+    return entity.Get< Positions >().GetPosition();
 }

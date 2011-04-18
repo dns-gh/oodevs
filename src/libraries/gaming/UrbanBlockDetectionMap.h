@@ -16,11 +16,6 @@ namespace kernel
     class Object_ABC;
 }
 
-namespace gui
-{
-    class TerrainObjectProxy;
-}
-
 // =============================================================================
 /** @class  UrbanBlockDetectionMap
     @brief  Urban block detection map
@@ -47,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    void AddUrbanBlock( gui::TerrainObjectProxy& object );
+    void AddUrbanBlock( kernel::Object_ABC& object );
     const kernel::Object_ABC* GetUrbanBlock( const geometry::Point2f& point ) const;
     //@}
 

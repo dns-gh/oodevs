@@ -18,12 +18,9 @@
 Architecture::Architecture( const sword::UrbanAttributes& message, std::auto_ptr< kernel::Architecture_ABC > pArchitecture )
     : pArchitecture_( pArchitecture )
 {
-    if( message.has_architecture() )
-    {
-        const sword::UrbanAttributes::Architecture& architecture = message.architecture();
-        Initialize( architecture.height(), architecture.floor_number(), architecture.roof_shape(),
-                    architecture.material(), architecture.occupation(), architecture.trafficability() );
-    }
+    const sword::UrbanAttributes::Architecture& architecture = message.architecture();
+    Initialize( architecture.height(), architecture.floor_number(), architecture.roof_shape(),
+                architecture.material(), architecture.occupation(), architecture.trafficability() );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +46,7 @@ void Architecture::Initialize( float height, unsigned int floorNumber, const std
 // Name: Architecture::GetMaterial
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-std::string Architecture::GetMaterial() const
+const std::string& Architecture::GetMaterial() const
 {
     return pArchitecture_->GetMaterial();
 }

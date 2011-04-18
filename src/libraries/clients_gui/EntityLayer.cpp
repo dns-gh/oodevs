@@ -67,14 +67,16 @@ void EntityLayerBase::Paint( kernel::Viewport_ABC& viewport )
         Draw( *entities_[ selected_ ], viewport );
     if( tooltiped_ < entities_.size() )
     {
-        const Positions& positions = entities_[ tooltiped_ ]->Get< Positions >();
-        const geometry::Point2f position = positions.GetPosition();
-        if( !tooltip_.get() )
+        if( const Positions* positions = entities_[ tooltiped_ ]->Retrieve< Positions >() )
         {
-            std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
-            tooltip_ = tooltip;
+            const geometry::Point2f position = positions->GetPosition();
+            if( !tooltip_.get() )
+            {
+                std::auto_ptr< kernel::GlTooltip_ABC > tooltip = tools_.CreateTooltip();
+                tooltip_ = tooltip;
+            }
+            tooltip_->Draw( position );
         }
-        tooltip_->Draw( position );
     }
 }
 

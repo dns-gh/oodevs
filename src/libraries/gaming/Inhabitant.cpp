@@ -19,6 +19,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/StaticModel.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Styles.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include <boost/foreach.hpp>
@@ -203,11 +204,8 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
 void Inhabitant::Draw( const Point2f& /*where*/, const Viewport_ABC& /*viewport*/, const GlTools_ABC& tools ) const
 {
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-    {
-        const Polygon2f* footprint = it->second->GetFootprint();
-        if( footprint )
-            tools.DrawConvexPolygon( footprint->Vertices() );
-    }
+        if( const kernel::UrbanPositions_ABC* positions = it->second->Retrieve< kernel::UrbanPositions_ABC >() )
+                tools.DrawConvexPolygon( positions->Vertices() );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,8 +216,8 @@ Point2f Inhabitant::GetPosition( bool ) const
 {
     Polygon2f poly;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        if( const kernel::Positions* positions = it->second->Retrieve< kernel::Positions >() )
-            poly.Add( positions->GetPosition() );
+        if( const kernel::UrbanPositions_ABC* positions = it->second->Retrieve< kernel::UrbanPositions_ABC >() )
+            poly.Add( positions->Barycenter() );
     return poly.Barycenter();
 }
 
@@ -258,12 +256,9 @@ Rectangle2f Inhabitant::GetBoundingBox() const
 {
     Rectangle2f box;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-    {
-        const Polygon2f* polygon = it->second->GetFootprint();
-        if( polygon )
-            BOOST_FOREACH( const Polygon2f::T_Vertices::value_type& point, polygon->Vertices() )
+        if( const kernel::UrbanPositions_ABC* positions = it->second->Retrieve< kernel::UrbanPositions_ABC >() )
+            BOOST_FOREACH( const Polygon2f::T_Vertices::value_type& point, positions->Vertices() )
                 box.Incorporate( point );
-    }
     return box;
 }
 

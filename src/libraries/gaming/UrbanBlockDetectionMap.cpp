@@ -9,9 +9,9 @@
 
 #include "gaming_pch.h"
 #include "UrbanBlockDetectionMap.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/DetectionMap.h"
-#include "clients_gui/TerrainObjectProxy.h"
-#include "clients_kernel/Positions.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanBlockDetectionMap constructor
@@ -36,12 +36,12 @@ UrbanBlockDetectionMap::~UrbanBlockDetectionMap()
 // Name: UrbanBlockDetectionMap::AddUrbanBlock
 // Created: SLG 2010-03-12
 // -----------------------------------------------------------------------------
-void UrbanBlockDetectionMap::AddUrbanBlock( gui::TerrainObjectProxy& object )
+void UrbanBlockDetectionMap::AddUrbanBlock( kernel::Object_ABC& object )
 {
     float cellsize = map_.GetCellSize();
-    if( kernel::Positions* positions = object.Retrieve< kernel::Positions >() )
+    if( kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
     {
-        geometry::Rectangle2f boundingBox = positions->GetBoundingBox();
+        geometry::Rectangle2f boundingBox = positions->BoundingBox();
         const unsigned int imin = static_cast< unsigned int >( boundingBox.Left() / cellsize );
         const unsigned int jmin = static_cast< unsigned int >( boundingBox.Bottom() / cellsize );
         const unsigned int imax = static_cast< unsigned int >( boundingBox.Right() / cellsize );
@@ -50,7 +50,7 @@ void UrbanBlockDetectionMap::AddUrbanBlock( gui::TerrainObjectProxy& object )
             for( unsigned int i = imin; i < imax; ++i )
             {
                 geometry::Point2f cellCenter( i * cellsize + cellsize / 2, j * cellsize + cellsize / 2 );
-                if( object.GetFootprint()->IsInside( cellCenter ) )
+                if( positions->IsInside( cellCenter ) )
                     urbanBlockEnvironment_[ std::pair< int, int >( i, j ) ].data_ = &object;
             }
     }

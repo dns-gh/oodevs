@@ -71,6 +71,7 @@ private:
     void SetColor( const std::string& resource ) const;
     void UpdateStipple( int value ) const;
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
+    geometry::Point2f GetPosition( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:
