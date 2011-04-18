@@ -32,6 +32,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool IsAvailable() const { return true; }
     virtual void Commit( const std::string& exercise, const std::string& session ) = 0;
     //@}
 };

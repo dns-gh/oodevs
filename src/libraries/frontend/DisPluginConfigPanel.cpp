@@ -17,6 +17,7 @@
 #include <qgroupbox.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
+#include <boost/filesystem/convenience.hpp>
 
 using namespace frontend;
 
@@ -36,6 +37,7 @@ namespace
 DisPluginConfigPanel::DisPluginConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
     : PluginConfig_ABC( parent )
     , config_( config )
+    , library_( "dis_plugin-vc80-mt.dll" ) // $$$$ SBO 2011-04-18: hard coded library name
 {
     setMargin( 5 );
     setBackgroundOrigin( QWidget::WindowOrigin );
@@ -90,7 +92,7 @@ void DisPluginConfigPanel::Commit( const std::string& exercise, const std::strin
     if( box_->isChecked() )
     {
         frontend::CreateSession action( config_, exercise, session );
-        action.SetOption( "session/config/dispatcher/plugins/dis/@library", "dis_plugin-vc80-mt.dll" ); // $$$$ SBO 2011-04-18: hard coded library name
+        action.SetOption( "session/config/dispatcher/plugins/dis/@library", library_ );
         action.SetOption( "session/config/dispatcher/plugins/dis/@server", server_->text() );
         action.SetOption( "session/config/dispatcher/plugins/dis/@port", port_->value() );
         action.SetOption( "session/config/dispatcher/plugins/dis/@site", site_->value() );
@@ -100,4 +102,13 @@ void DisPluginConfigPanel::Commit( const std::string& exercise, const std::strin
            action.SetOption( "session/config/dispatcher/plugins/tic/@enable", true );
         action.Commit();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisPluginConfigPanel::IsAvailable
+// Created: SBO 2011-04-18
+// -----------------------------------------------------------------------------
+bool DisPluginConfigPanel::IsAvailable() const
+{
+    return boost::filesystem::exists( library_ );
 }

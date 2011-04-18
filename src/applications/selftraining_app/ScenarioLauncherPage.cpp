@@ -348,8 +348,12 @@ void ScenarioLauncherPage::OnSelectCheckpoint( const QString& session, const QSt
 template< typename T >
 T* ScenarioLauncherPage::AddPlugin( QTabWidget* tabs, const QString& name )
 {
-    T* plugin = new T( tabs, config_ );
-    tabs->addTab( plugin, name );
-    plugins_.push_back( plugin );
-    return plugin;
+    std::auto_ptr< T > plugin( new T( tabs, config_ ) );
+    if( plugin.get() && plugin->IsAvailable() )
+    {
+        tabs->addTab( plugin.get(), name );
+        plugins_.push_back( plugin.get() );
+        return plugin.release();
+    }
+    return 0;
 }

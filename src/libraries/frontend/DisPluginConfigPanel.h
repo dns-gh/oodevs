@@ -42,6 +42,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool IsAvailable() const;
     virtual void Commit( const std::string& exercise, const std::string& session );
     //@}
 
@@ -56,6 +57,7 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
+    const std::string library_;
     QGroupBox* box_;
     QCheckBox* tic_;
     QLineEdit* server_;
