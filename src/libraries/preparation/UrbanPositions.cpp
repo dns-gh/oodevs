@@ -12,6 +12,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include <urban/TerrainObject_ABC.h>
+#include <urban/PhysicalAttribute.h>
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions constructor
@@ -19,8 +20,11 @@
 // -----------------------------------------------------------------------------
 UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object )
     : object_( object )
+    , height_( 0u )
 {
-    // NOTHING
+    const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();;
+    if( pPhysical && pPhysical->GetArchitecture() )
+        height_ = static_cast< unsigned int >( pPhysical->GetArchitecture()->GetHeight() );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,5 +78,5 @@ const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawDecoratedPolygon( *object_.GetFootprint(), object_.GetDecoration(), object_.GetName() );
+    tools.DrawDecoratedPolygon( *object_.GetFootprint(), object_.GetDecoration(), object_.GetName(), height_ );
 }

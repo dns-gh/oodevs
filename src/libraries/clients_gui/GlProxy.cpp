@@ -276,9 +276,9 @@ void GlProxy::DrawConvexPolygon( const T_PointVector& points, bool selected ) co
 // Name: GlProxy::DrawDecoratedPolygon
 // Created: SLG 2009-12-14
 // -----------------------------------------------------------------------------
-void GlProxy::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration, const std::string& name ) const
+void GlProxy::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration, const std::string& name, unsigned int height ) const
 {
-    tools_->DrawDecoratedPolygon( polygon, decoration, name );
+    tools_->DrawDecoratedPolygon( polygon, decoration, name, height );
 }
 
 // -----------------------------------------------------------------------------

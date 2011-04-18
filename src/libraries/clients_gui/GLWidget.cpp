@@ -479,7 +479,8 @@ void GlWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
 // Name: GlWidget::DrawDecoratedPolygon
 // Created: RPD 2009-12-15
 // -----------------------------------------------------------------------------
-void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration, const std::string& name ) const
+void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration,
+                                     const std::string& name, unsigned int height ) const
 {
     //TEMP SLG
     if( polygon.Vertices().empty() )
@@ -541,7 +542,7 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
     {
         Point2f& point = roofPoints[ i ];
-        float factor = rZoom_ * decoration->Height();
+        float factor = rZoom_ * height;
         float deltaX = ( point.X() - center_.X() ) * factor;
         float deltaY = ( point.Y() - center_.Y() ) * factor;
         point.Set( point.X() + deltaX, point.Y() + deltaY );

@@ -45,6 +45,7 @@ private:
     //! @name Member data
     //@{
     const urban::TerrainObject_ABC& object_;
+    unsigned int height_;
     //@}
 };
 

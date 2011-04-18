@@ -240,7 +240,7 @@ void Gl3dWidget::DrawConvexPolygon( const T_PointVector& /*points*/, bool /*sele
 // Name: Gl3dWidget::DrawDecoratedPolygon
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& /*polygon*/, const urban::UrbanDecoration* /*decoration*/, const std::string& /*name*/ ) const
+void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& /*polygon*/, const urban::UrbanDecoration* /*decoration*/, const std::string& /*name*/, unsigned int /*height*/ ) const
 {
     //SLG TODO
 }

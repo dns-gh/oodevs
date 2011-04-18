@@ -27,6 +27,7 @@ namespace urban
 namespace sword
 {
     class Location;
+    class UrbanAttributes;
 }
 
 // =============================================================================
@@ -40,7 +41,8 @@ class UrbanPositions : public kernel::UrbanPositions_ABC
 public:
     //! @name Constructors/Destructor
     //@{s
-             UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& message, const kernel::CoordinateConverter_ABC& converter, const std::string& name );
+             UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& location, const sword::UrbanAttributes& attributes,
+                             const kernel::CoordinateConverter_ABC& converter, const std::string& name );
     virtual ~UrbanPositions();
     //@}
 
@@ -58,6 +60,7 @@ private:
     //@{
     const urban::TerrainObject_ABC& object_;
     const std::string name_;
+    unsigned int height_;
     geometry::Polygon2f polygon_;
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f barycenter_;

@@ -18,14 +18,18 @@
 // Name: UrbanPositions constructor
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& message, const kernel::CoordinateConverter_ABC& converter, const std::string& name )
+UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& location, const sword::UrbanAttributes& attributes,
+                                const kernel::CoordinateConverter_ABC& converter, const std::string& name )
     : object_( object )
     , name_  ( name )
+    , height_( 0u )
 {
-    for( int i = 0; i < message.coordinates().elem_size(); ++i )
-        polygon_.Add( converter.ConvertToXY( message.coordinates().elem( i ) ) );
+    for( int i = 0; i < location.coordinates().elem_size(); ++i )
+        polygon_.Add( converter.ConvertToXY( location.coordinates().elem( i ) ) );
     boundingBox_ = polygon_.BoundingBox();
     barycenter_ = polygon_.Barycenter();
+    if( attributes.has_architecture() )
+        height_ = static_cast< unsigned int >( attributes.architecture().height() );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +74,7 @@ bool UrbanPositions::IsInside( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawDecoratedPolygon( polygon_, object_.GetDecoration(), name_ );
+    tools.DrawDecoratedPolygon( polygon_, object_.GetDecoration(), name_, height_ );
 }
 
 // -----------------------------------------------------------------------------
