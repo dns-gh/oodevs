@@ -90,6 +90,7 @@ void DisPluginConfigPanel::Commit( const std::string& exercise, const std::strin
     if( box_->isChecked() )
     {
         frontend::CreateSession action( config_, exercise, session );
+        action.SetOption( "session/config/dispatcher/plugins/dis/@library", "dis_plugin-vc80-mt.dll" ); // $$$$ SBO 2011-04-18: hard coded library name
         action.SetOption( "session/config/dispatcher/plugins/dis/@server", server_->text() );
         action.SetOption( "session/config/dispatcher/plugins/dis/@port", port_->value() );
         action.SetOption( "session/config/dispatcher/plugins/dis/@site", site_->value() );
