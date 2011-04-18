@@ -879,22 +879,19 @@ void ADN_Units_Data::UnitInfos::CleanupNature()
             strNature_ = nature;
         }
     }
-    if ( !ADN_Workspace::GetWorkspace().GetUnits().GetGui().GetSymbolWidget()->GetSymbolFactory().IsThisChainAvailable( strNature_.GetData() ) )
+    if ( !ADN_Workspace::GetWorkspace().GetUnits().GetGui().GetSymbolWidget()->IsAvailable( strNature_.GetData() ) )
         strNature_ = "undefined";
 }
-
-// =============================================================================
-//
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Data constructor
 // Created: JDY 03-07-24
 //-----------------------------------------------------------------------------
 ADN_Units_Data::ADN_Units_Data()
-: ADN_Data_ABC()
-, nNextId_    ( 1 )
+    : ADN_Data_ABC()
+    , nNextId_    ( 1 )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------

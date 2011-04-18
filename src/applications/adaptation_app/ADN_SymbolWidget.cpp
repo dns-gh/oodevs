@@ -139,10 +139,10 @@ void ADN_SymbolWidget::OnNatureChanged( const QString& nature )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_SymbolWidget::GetSymbolFactory
+// Name: ADN_SymbolWidget::IsAvailable
 // Created: RPD 2011-04-08
 // -----------------------------------------------------------------------------
-kernel::SymbolFactory& ADN_SymbolWidget::GetSymbolFactory() const
+bool ADN_SymbolWidget::IsAvailable( const std::string& symbol ) const
 {
-    return *symbolFactory_;
+    return symbolFactory_->IsThisChainAvailable( symbol );
 }

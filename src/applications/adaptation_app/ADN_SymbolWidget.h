@@ -54,9 +54,9 @@ public:
     virtual void paintGL();
     //@}
 
-    //! @getters
+    //! @name Accessors
     //@{
-    kernel::SymbolFactory& GetSymbolFactory() const;
+    bool IsAvailable( const std::string& symbol ) const;
     //@}
 private:
     //! @name Copy/Assignment
