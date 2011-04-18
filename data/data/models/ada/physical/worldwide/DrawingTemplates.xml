@@ -177,6 +177,19 @@
                 </g>
             </marker-end>
         </template>
+        <template name="Disaggregation area" type="polygon">
+            <segment unit="%">
+                <line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
+            </segment>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.08" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.28" y="-0.02">DISAGGREGATION</text>
+                        <text x="-0.08" y="0.07">AREA</text>
+                    </g>
+                </g>
+            </marker>
+        </template>
     </category>
     <category name="Markers">
         <description>Markers</description>
@@ -717,4 +730,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="2971907401" -->
+<!-- signature="2371097007" -->
