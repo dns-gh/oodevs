@@ -189,7 +189,7 @@ end
 function S_Misc_EstDetruitTactique( )
     local _returnValue = false
     _returnValue = false
-    if( DEC_Agent_EtatOpsMajeur() == nil ) then
+    if( DEC_Agent_EtatOpsMajeur() == 0 ) then
         _returnValue = true
     end
 
