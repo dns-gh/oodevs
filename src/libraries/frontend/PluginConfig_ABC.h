@@ -10,6 +10,7 @@
 #ifndef __PluginConfig_ABC_h_
 #define __PluginConfig_ABC_h_
 
+#include <boost/noncopyable.hpp>
 #include <qhbox.h>
 
 namespace frontend
@@ -21,7 +22,8 @@ namespace frontend
 */
 // Created: SBO 2009-12-09
 // =============================================================================
-class PluginConfig_ABC : public QHBox
+class PluginConfig_ABC : private boost::noncopyable
+                       , public QHBox
 {
 public:
     //! @name Constructors/Destructor

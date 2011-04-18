@@ -24,7 +24,6 @@ class QGroupBox;
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  DisPluginConfigPanel
     @brief  DisPluginConfigPanel
@@ -47,13 +46,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DisPluginConfigPanel( const DisPluginConfigPanel& );            //!< Copy constructor
-    DisPluginConfigPanel& operator=( const DisPluginConfigPanel& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
@@ -67,7 +59,6 @@ private:
     QSpinBox*  exercise_;
     //@}
 };
-
 }
 
 #endif // __DisPluginConfigPanel_h_

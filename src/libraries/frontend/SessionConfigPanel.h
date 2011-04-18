@@ -23,7 +23,6 @@ class QTextEdit;
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  SessionConfigPanel
     @brief  SessionConfigPanel
@@ -45,13 +44,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SessionConfigPanel( const SessionConfigPanel& );            //!< Copy constructor
-    SessionConfigPanel& operator=( const SessionConfigPanel& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
@@ -60,7 +52,6 @@ private:
     QSpinBox* exerciseNumber_;
     //@}
 };
-
 }
 
 #endif // __SessionConfigPanel_h_

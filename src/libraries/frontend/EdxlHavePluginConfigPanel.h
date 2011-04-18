@@ -22,10 +22,8 @@ class QGroupBox;
 class QTimeEdit;
 class QCheckBox;
 
-
 namespace frontend
 {
-
 // =============================================================================
 /** @class  EdxlHavePluginConfigPanel
     @brief  EdxlHavePluginConfigPanel
@@ -48,13 +46,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EdxlHavePluginConfigPanel( const EdxlHavePluginConfigPanel& );            //!< Copy constructor
-    EdxlHavePluginConfigPanel& operator=( const EdxlHavePluginConfigPanel& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
@@ -67,7 +58,6 @@ private:
     QTimeEdit* frequency_;
     //@}
 };
-
 }
 
 #endif // __EdxlHavePluginConfigPanel_h_

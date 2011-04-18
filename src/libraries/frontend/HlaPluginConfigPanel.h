@@ -22,7 +22,6 @@ class QGroupBox;
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  HlaPluginConfigPanel
     @brief  HlaPluginConfigPanel
@@ -44,13 +43,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    HlaPluginConfigPanel( const HlaPluginConfigPanel& );            //!< Copy constructor
-    HlaPluginConfigPanel& operator=( const HlaPluginConfigPanel& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
@@ -59,7 +51,6 @@ private:
     QLineEdit* name_;
     //@}
 };
-
 }
 
 #endif // __HlaPluginConfigPanel_h_

@@ -26,7 +26,6 @@ namespace frontend
 {
     class CheckpointList;
     class Exercise_ABC;
-
 // =============================================================================
 /** @class  CheckpointConfigPanel
     @brief  CheckpointConfigPanel
@@ -70,13 +69,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CheckpointConfigPanel( const CheckpointConfigPanel& );            //!< Copy constructor
-    CheckpointConfigPanel& operator=( const CheckpointConfigPanel& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
@@ -89,7 +81,6 @@ private:
     const frontend::Exercise_ABC* exercise_;
     //@}
 };
-
 }
 
 #endif // __CheckpointConfigPanel_h_

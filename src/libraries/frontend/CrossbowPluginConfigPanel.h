@@ -23,7 +23,6 @@ class QGroupBox;
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  CrossbowPluginConfigPanel
     @brief  CrossbowPluginConfigPanel
@@ -45,13 +44,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CrossbowPluginConfigPanel( const CrossbowPluginConfigPanel& );            //!< Copy constructor
-    CrossbowPluginConfigPanel& operator=( const CrossbowPluginConfigPanel& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
@@ -60,7 +52,6 @@ private:
     QLineEdit* featureDb_;
     //@}
 };
-
 }
 
 #endif // __CrossbowPluginConfigPanel_h_

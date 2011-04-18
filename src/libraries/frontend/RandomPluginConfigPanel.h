@@ -24,7 +24,6 @@ class QSpinBox;
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  RandomPluginConfigPanel
     @brief  RandomPluginConfigPanel
@@ -55,13 +54,6 @@ public:
     //! @name Operations
     //@{
     virtual void Commit( const std::string& exercise, const std::string& session );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    RandomPluginConfigPanel( const RandomPluginConfigPanel& );            //!< Copy constructor
-    RandomPluginConfigPanel& operator=( const RandomPluginConfigPanel& ); //!< Assignment operator
     //@}
 
 private:
@@ -96,7 +88,6 @@ private:
     double rMeans_[ eContextsNbr ];
     //@}
 };
-
 }
 
 #endif // __RandomPluginConfigPanel_h_

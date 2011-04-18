@@ -10,7 +10,6 @@
 #ifndef __PositionsPluginConfigPanel_h_
 #define __PositionsPluginConfigPanel_h_
 
-#include <boost/noncopyable.hpp>
 #include "PluginConfig_ABC.h"
 
 class QGroupBox;
@@ -23,7 +22,6 @@ namespace tools
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  PositionsPluginConfigPanel
     @brief  PositionsPluginConfigPanel
@@ -31,7 +29,6 @@ namespace frontend
 // Created: ABR 2011-04-04
 // =============================================================================
 class PositionsPluginConfigPanel : public PluginConfig_ABC
-                                 , private boost::noncopyable
 {
     Q_OBJECT
 
@@ -48,11 +45,6 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
@@ -60,7 +52,6 @@ private:
     QTimeEdit* frequency_;
     //@}
 };
-
-} // namespace frontend
+}
 
 #endif // __PositionsPluginConfigPanel_h_

@@ -22,7 +22,6 @@ class QSpinBox;
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  AdvancedConfigPanel
     @brief  AdvancedConfigPanel
@@ -44,13 +43,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AdvancedConfigPanel( const AdvancedConfigPanel& );            //!< Copy constructor
-    AdvancedConfigPanel& operator=( const AdvancedConfigPanel& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
@@ -62,7 +54,6 @@ private:
     QSpinBox* fragmentsFrequency_;
     //@}
 };
-
 }
 
 #endif // __AdvancedConfigPanel_h_

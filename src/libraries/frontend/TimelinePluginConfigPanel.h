@@ -25,7 +25,6 @@ class QButton;
 
 namespace frontend
 {
-
 // =============================================================================
 /** @class  TimelinePluginConfigPanel
     @brief  TimelinePluginConfigPanel
@@ -46,13 +45,6 @@ public:
     //! @name Operations
     //@{
     virtual void Commit( const std::string& exercise, const std::string& session );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    TimelinePluginConfigPanel( const TimelinePluginConfigPanel& );            //!< Copy constructor
-    TimelinePluginConfigPanel& operator=( const TimelinePluginConfigPanel& ); //!< Assignment operator
     //@}
 
 private slots:
@@ -76,7 +68,6 @@ private:
     QLineEdit* actorId_;
     //@}
 };
-
 }
 
 #endif // __TimelinePluginConfigPanel_h_
