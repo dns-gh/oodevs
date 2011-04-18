@@ -17,6 +17,7 @@ namespace xml
 {
     class xistream;
 }
+
 // =============================================================================
 /** @class  ArmyFactory_ABC
     @brief  Army factory declaration
@@ -29,7 +30,7 @@ class ArmyFactory_ABC : public tools::Resolver< MIL_Army_ABC >
 public:
     //! @name Destructor
     //@{
-    virtual ~ArmyFactory_ABC(){ DeleteAll(); };
+    virtual ~ArmyFactory_ABC() { DeleteAll(); }
     //@}
 
     //! @name Operations
@@ -45,7 +46,7 @@ public:
 protected:
     //! @name Constructor
     //@{
-    ArmyFactory_ABC(){};
+    ArmyFactory_ABC() {}
     //@}
 };
 

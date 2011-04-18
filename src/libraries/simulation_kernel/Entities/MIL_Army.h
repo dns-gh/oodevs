@@ -44,7 +44,6 @@ class MIL_Object_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
 class InhabitantFactory_ABC;
-class MIL_Automate;
 class MIL_AutomateLOG;
 
 // =============================================================================
@@ -61,12 +60,12 @@ class MIL_Army : public MIL_Army_ABC
 public:
     //! @name Types
     //@{
-    typedef std::map< unsigned int, MIL_KnowledgeGroup* >   T_KnowledgeGroupMap;
-    typedef T_KnowledgeGroupMap::iterator                  IT_KnowledgeGroupMap;
-    typedef T_KnowledgeGroupMap::const_iterator           CIT_KnowledgeGroupMap;
+    typedef std::map< unsigned int, MIL_KnowledgeGroup* > T_KnowledgeGroupMap;
+    typedef T_KnowledgeGroupMap::iterator                IT_KnowledgeGroupMap;
+    typedef T_KnowledgeGroupMap::const_iterator         CIT_KnowledgeGroupMap;
 
-    typedef std::map< const MIL_Army_ABC*, E_Diplomacy >   T_DiplomacyMap;
-    typedef T_DiplomacyMap::const_iterator               CIT_DiplomacyMap;
+    typedef std::map< const MIL_Army_ABC*, E_Diplomacy > T_DiplomacyMap;
+    typedef T_DiplomacyMap::const_iterator             CIT_DiplomacyMap;
     //@}
 
 public:

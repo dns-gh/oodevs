@@ -29,16 +29,32 @@ const std::string MIL_LivingAreaBlock::defaultAccomodation_( "default" );
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LivingAreaBlock constructor
-// Created: JSR 2011-03-23
+// Created: JSR 2011-04-18
 // -----------------------------------------------------------------------------
-MIL_LivingAreaBlock::MIL_LivingAreaBlock( UrbanObjectWrapper& urbanObject )
-    : urbanObject_ ( urbanObject )
+MIL_LivingAreaBlock::MIL_LivingAreaBlock()
+    : urbanObject_ ( 0 )
     , angriness_   ( 0.f )
     , alerted_     ( false )
     , confined_    ( false )
     , evacuated_   ( false )
     , outsideAngry_( false )
-    , hasChanged_ ( true )
+    , hasChanged_  ( true )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingAreaBlock constructor
+// Created: JSR 2011-03-23
+// -----------------------------------------------------------------------------
+MIL_LivingAreaBlock::MIL_LivingAreaBlock( UrbanObjectWrapper& urbanObject )
+    : urbanObject_ ( &urbanObject )
+    , angriness_   ( 0.f )
+    , alerted_     ( false )
+    , confined_    ( false )
+    , evacuated_   ( false )
+    , outsideAngry_( false )
+    , hasChanged_  ( true )
 {
     // NOTHING
 }
@@ -52,24 +68,6 @@ MIL_LivingAreaBlock::~MIL_LivingAreaBlock()
     // NOTHING
 }
 
-template< typename Archive >
-void load_construct_data( Archive& archive, MIL_LivingAreaBlock* block, const unsigned int /*version*/ )
-{
-    unsigned int id;
-    archive >> id;
-    UrbanObjectWrapper* object = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( id ) );
-    if( object )
-        ::new( block )MIL_LivingAreaBlock( *object );
-
-}
-
-template< typename Archive >
-void save_construct_data( Archive& archive, const MIL_LivingAreaBlock* block, const unsigned int /*version*/ )
-{
-    unsigned int id = block->GetObject().GetID();
-    archive << id;
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_LivingAreaBlock::SendFullState
 // Created: JSR 2011-03-29
@@ -77,7 +75,7 @@ void save_construct_data( Archive& archive, const MIL_LivingAreaBlock* block, co
 void MIL_LivingAreaBlock::SendFullState( client::PopulationUpdate& msg ) const
 {
     sword::PopulationUpdate_BlockOccupation& block = *msg().mutable_occupations()->Add();
-    block.mutable_object()->set_id( urbanObject_.GetID() );
+    block.mutable_object()->set_id( urbanObject_->GetID() );
     for( CIT_Persons it = persons_.begin(); it != persons_.end(); ++it )
     {
         sword::PopulationUpdate_BlockOccupation_UsageOccupation* occupation = block.add_persons();
@@ -109,7 +107,7 @@ void MIL_LivingAreaBlock::UpdateNetwork( client::PopulationUpdate& msg ) const
 // -----------------------------------------------------------------------------
 const UrbanObjectWrapper& MIL_LivingAreaBlock::GetObject() const
 {
-    return urbanObject_;
+    return *urbanObject_;
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +173,7 @@ bool MIL_LivingAreaBlock::IsUsableForMotivation( const std::string& motivation )
 // -----------------------------------------------------------------------------
 bool MIL_LivingAreaBlock::IsAlerted( const TER_Localisation& localisation ) const
 {
-    return alerted_ && urbanObject_.Intersect2DWithLocalisation( localisation );
+    return alerted_ && urbanObject_->Intersect2DWithLocalisation( localisation );
 }
 
 // -----------------------------------------------------------------------------
@@ -228,7 +226,7 @@ unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motiv
 {
     PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().find( motivation );
     if( it != PHY_AccomodationType::GetAccomodations().end() )
-        return static_cast< unsigned int >( urbanObject_.GetLivingSpace() * GetStructuralState( urbanObject_ ) * GetProportion( motivation ) * it->second->GetNominalCapacity() );
+        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * GetStructuralState( *urbanObject_ ) * GetProportion( motivation ) * it->second->GetNominalCapacity() );
     return 0u;
 }
 
@@ -240,7 +238,7 @@ unsigned int MIL_LivingAreaBlock::GetMaxOccupation( const std::string& motivatio
 {
     PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().find( motivation );
     if( it != PHY_AccomodationType::GetAccomodations().end() )
-        return static_cast< unsigned int >( urbanObject_.GetLivingSpace() * GetStructuralState( urbanObject_ ) * GetProportion( motivation ) * it->second->GetMaxCapacity() );
+        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * GetStructuralState( *urbanObject_ ) * GetProportion( motivation ) * it->second->GetMaxCapacity() );
     return 0u;
 }
 
@@ -268,7 +266,7 @@ void MIL_LivingAreaBlock::DistributeHumans( unsigned int persons, MIL_LivingArea
         persons_[ firstAccommodation ] += blockTmp;
 
     for( CIT_Persons it = persons_.begin(); it != persons_.end(); ++it )
-        const_cast< UrbanObjectWrapper& >( urbanObject_ ).UpdateInhabitants( livingArea, it->first, it->second );
+        urbanObject_->UpdateInhabitants( livingArea, it->first, it->second );
 
     hasChanged_ = true;
 }
@@ -285,7 +283,7 @@ float MIL_LivingAreaBlock::ComputeOccupationFactor() const
     int blockOccupation = 0;
     for( PHY_AccomodationType::CIT_AccomodationMap accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end(); ++accommodation )
         blockOccupation += GetNominalOccupation( accommodation->first );
-    int totalPopulation = urbanObject_.GetTotalInhabitants() - totalPerson;
+    int totalPopulation = urbanObject_->GetTotalInhabitants() - totalPerson;
     return std::min( static_cast< int >( totalPerson ), std::max( 0, blockOccupation - totalPopulation ) );
 }
 
@@ -315,7 +313,7 @@ float MIL_LivingAreaBlock::GetProportion( const std::string& motivation ) const
 {
     std::map< std::string, float > motivations;
     MotivationsVisitor visitor( motivations );
-    urbanObject_.Accept( visitor );
+    urbanObject_->Accept( visitor );
     if( motivation == defaultAccomodation_ )
     {
         float sum = 0;
@@ -337,7 +335,7 @@ void MIL_LivingAreaBlock::DecreasePeopleWhenMoving( const std::string& motivatio
 {
     int newValue = persons_[ motivation ] - number;
     persons_[ motivation ] = std::max( 0, newValue );
-    const_cast< UrbanObjectWrapper& >( urbanObject_ ).UpdateInhabitants( livingArea, motivation, persons_[ motivation ] );
+    urbanObject_->UpdateInhabitants( livingArea, motivation, persons_[ motivation ] );
     hasChanged_ = true;
 }
 
@@ -357,7 +355,7 @@ unsigned int MIL_LivingAreaBlock::IncreasePeopleWhenMoving( const std::string& m
     }
     else
         persons_[ motivation ] = newValue;
-    const_cast< UrbanObjectWrapper& >( urbanObject_ ).UpdateInhabitants( livingArea, motivation, persons_[ motivation ] );
+    urbanObject_->UpdateInhabitants( livingArea, motivation, persons_[ motivation ] );
     hasChanged_ = true;
     return remaining;
 }
@@ -372,7 +370,7 @@ float MIL_LivingAreaBlock::Consume( const PHY_ResourceNetworkType& resource, uns
     unsigned int totalPersons = GetTotalNumberOfPersons();
     if( totalPersons == 0 )
         return 0;
-    if( ResourceNetworkCapacity* capacity = urbanObject_.Retrieve< ResourceNetworkCapacity >() )
+    if( ResourceNetworkCapacity* capacity = urbanObject_->Retrieve< ResourceNetworkCapacity >() )
     {
         float blockSatisfaction = totalPersons * capacity->GetConsumptionState( resource.GetId() );
         capacity->AddConsumption( resource.GetId(), totalPersons * consumption );
@@ -388,7 +386,7 @@ float MIL_LivingAreaBlock::Consume( const PHY_ResourceNetworkType& resource, uns
             hasChanged_ = true;
         }
 
-        if( MIL_Population* pAngryCrowd = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( &urbanObject_ ) )
+        if( MIL_Population* pAngryCrowd = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( urbanObject_ ) )
             pAngryCrowd->SetUrbanBlockAngriness( angriness_ );
 
         angry = ( outsideAngry_ || angriness_ >= 1.f );
@@ -405,16 +403,16 @@ float MIL_LivingAreaBlock::Consume( const PHY_ResourceNetworkType& resource, uns
 void MIL_LivingAreaBlock::ManageAngryCrowd( const MIL_InhabitantType& type, MIL_Army_ABC& army )
 {
     // $$$$ _RC_ JSR 2011-03-23: A nettoyer, le FindPopulation devrait être renommé prendre un id
-    MIL_Population* pAngryCrowd = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( &urbanObject_ );
+    MIL_Population* pAngryCrowd = MIL_AgentServer::GetWorkspace().GetEntityManager().FindPopulation( urbanObject_ );
     if( !pAngryCrowd )
     {
         outsideAngry_ = true;
         // $$$$ _RC_ JSR 2011-03-29: TRADUCTIONS???
         std::string name = "Angry crowd";
-        std::string urbanObjectName = urbanObject_.GetName();
+        std::string urbanObjectName = urbanObject_->GetName();
         if( !urbanObjectName.empty() )
             name += " from " + urbanObjectName;
-        pAngryCrowd = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( type.GetAssociatedCrowdType().GetName(), urbanObject_.GetLocalisation().ComputeBarycenter(), 0, name, army, &urbanObject_ );
+        pAngryCrowd = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( type.GetAssociatedCrowdType().GetName(), urbanObject_->GetLocalisation().ComputeBarycenter(), 0, name, army, urbanObject_ );
     }
     if( pAngryCrowd->GetAllHumans() == 0 ) // $$$$ BCI 2011-03-21: bidouille parce qu'on ne peut pas supprimer une foule
     {
@@ -423,7 +421,7 @@ void MIL_LivingAreaBlock::ManageAngryCrowd( const MIL_InhabitantType& type, MIL_
         else
         {
             pAngryCrowd->ChangeComposition( GetTotalNumberOfPersons(), 0, 0, 0 );
-            pAngryCrowd->Move( urbanObject_.GetLocalisation().ComputeBarycenter() );
+            pAngryCrowd->Move( urbanObject_->GetLocalisation().ComputeBarycenter() );
 
             const  MIL_MissionType_ABC* pMissionType = MIL_PopulationMissionType::Find( type.GetAngryCrowdMissionType() );
             if( !pMissionType )

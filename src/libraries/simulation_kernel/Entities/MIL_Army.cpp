@@ -18,7 +18,6 @@
 #include "Knowledge/KnowledgeVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Inhabitants/MIL_Inhabitant.h"
-#include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
@@ -80,11 +79,9 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
     , diplomacyConverter_  ( diplomacyConverter )
 {
-    std::string strType;
-    xis >> xml::attribute( "type", strType );
     bool trueTC2 (true);
     bool falseTC2 (false);
-    nType_ = diplomacyConverter_.Convert( strType );
+    nType_ = diplomacyConverter_.Convert( xis.attribute< std::string >( "type" ) );
     xis >> xml::start( "communication" )
             >> xml::list( "knowledge-group", *this, &MIL_Army::ReadLogistic, knowledgegroupFactory ) // LTO
         >> xml::end
@@ -392,7 +389,7 @@ void MIL_Army::ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& popula
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Army::ReadPopulation
+// Name: MIL_Army::ReadInhabitant
 // Created: SLG 2010-11-29
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadInhabitant( xml::xistream& xis, InhabitantFactory_ABC& inhabitantFactory )
@@ -406,14 +403,10 @@ void MIL_Army::ReadInhabitant( xml::xistream& xis, InhabitantFactory_ABC& inhabi
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 {
-    unsigned int nTeam;
-    std::string strDiplomacy;
-    xis >> xml::attribute( "party", nTeam )
-        >> xml::attribute( "diplomacy", strDiplomacy );
-    E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( strDiplomacy );
+    E_Diplomacy nDiplomacy = diplomacyConverter_.Convert( xis.attribute< std::string >( "diplomacy" ) );
     if( nDiplomacy == eUnknown )
         xis.error( "Unknown diplomacy relation between armies" );
-    MIL_Army_ABC* pArmy = armyFactory_.Find( nTeam );
+    MIL_Army_ABC* pArmy = armyFactory_.Find( xis.attribute< unsigned int >( "party" ) );
     if( !pArmy )
         xis.error( "Unknown army" );
     if( diplomacies_.find( pArmy ) != diplomacies_.end() )
@@ -438,9 +431,7 @@ void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& know
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadLogisticLink( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, bool isTC2 )
 {
-    unsigned int id;
-    xis >> xml::attribute( "id", id );
-
+    unsigned int id = xis.attribute< unsigned int >( "id" );
     MIL_Automate* pAutomateSuperior = automateFactory.Find( id );
     MIL_Formation* pFormationSuperior = formationFactory.Find( id );
 
@@ -465,9 +456,7 @@ void MIL_Army::ReadLogisticLink( xml::xistream& xis, AutomateFactory_ABC& automa
 void MIL_Army::ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory,
         FormationFactory_ABC& formationFactory, MIL_AutomateLOG* pSuperior, bool isTC2 )
 {
-    unsigned int nSubordinateID;
-    std::string strLink;
-    xis >> xml::attribute( "id", nSubordinateID );
+    unsigned int nSubordinateID = xis.attribute< unsigned int >( "id" );
     MIL_Automate* pAutomateSubordinate = automateFactory.Find( nSubordinateID );
     MIL_Formation* pFormationSubordinate = formationFactory.Find( nSubordinateID );
     if( !pAutomateSubordinate && !pFormationSubordinate )
@@ -475,11 +464,11 @@ void MIL_Army::ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automat
     if( isTC2 )
     {
         if(!pAutomateSubordinate)
-            xis.error( "Unknown automate");
+            xis.error( "Unknown automate" );
         else if(pAutomateSubordinate->GetArmy() != *this)
             xis.error( "Invalid subordinate (not in specified side)" );
         else
-            pAutomateSubordinate->ReadLogisticLink(*pSuperior, xis);
+            pAutomateSubordinate->ReadLogisticLink( *pSuperior, xis );
     }
     else
     {
@@ -490,7 +479,7 @@ void MIL_Army::ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automat
         else if( pLOGSubordinate->GetArmy() != *this )
             xis.error( "Invalid subordinate (not in specified side)" );
         else
-            pLOGSubordinate->ReadLogisticLink(*pSuperior, xis);
+            pLOGSubordinate->ReadLogisticLink( *pSuperior, xis );
     }
 }
 
@@ -685,11 +674,11 @@ void MIL_Army::SendKnowledge() const
 // -----------------------------------------------------------------------------
 void MIL_Army::OnReceiveChangeDiplomacy( const sword::MissionParameters& asnMsg )
 {
-    MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.elem( 1 ).value().Get(0).identifier() );
+    MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.elem( 1 ).value().Get( 0 ).identifier() );
     if( !pArmy2 || *pArmy2 == *this )
         throw NET_AsnException< sword::ChangeDiplomacyAck_ErrorCode >( sword::ChangeDiplomacyAck::error_invalid_party_diplomacy );
     E_Diplomacy nDiplomacy = eUnknown;
-    switch( asnMsg.elem( 2 ).value().Get(0).enumeration() )
+    switch( asnMsg.elem( 2 ).value().Get( 0 ).enumeration() )
     {
     case sword::unknown:
         nDiplomacy = eUnknown;
@@ -862,5 +851,5 @@ const std::string& MIL_Army::GetName() const
 void MIL_Army::ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& fct )
 {
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        fct.visit( *(it->second ) );
+        fct.visit( *it->second );
 }

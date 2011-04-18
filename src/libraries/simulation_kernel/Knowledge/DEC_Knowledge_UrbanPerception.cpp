@@ -9,8 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_UrbanPerception.h"
-#include "Entities/MIL_EntityManager.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -26,7 +24,7 @@ template< typename Archive >
 inline void save_construct_data( Archive& archive, const DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
 {
     const MIL_Agent_ABC* const perceiver = &perception->perceiver_;
-    unsigned long id = perception->object_.GetID();
+    unsigned long id = perception->nUrbanObjectId_;
     archive << perceiver
             << id;
 }
@@ -42,9 +40,7 @@ inline void load_construct_data( Archive& archive, DEC_Knowledge_UrbanPerception
     unsigned long id;
     archive >> perceiver
             >> id;
-    const UrbanObjectWrapper* object = dynamic_cast< const UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( id ) );
-    if( object )
-        ::new( perception )DEC_Knowledge_UrbanPerception( *perceiver, *object );
+    ::new( perception )DEC_Knowledge_UrbanPerception( *perceiver, id );
 }
 
 MIL_IDManager DEC_Knowledge_UrbanPerception::idManager_;
@@ -53,13 +49,14 @@ MIL_IDManager DEC_Knowledge_UrbanPerception::idManager_;
 // Name: DEC_Knowledge_UrbanPerception constructor
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-DEC_Knowledge_UrbanPerception::DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, const UrbanObjectWrapper& object )
-    : perceiver_               ( agentPerceiving )
-    , object_                  ( object )
-    , nID_                     ( idManager_.GetFreeId() )
+DEC_Knowledge_UrbanPerception::DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, unsigned int nUrbanObjectId )
+    : nID_                     ( idManager_.GetFreeId() )
+    , perceiver_               ( agentPerceiving )
+    , nUrbanObjectId_          ( nUrbanObjectId )
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -92,8 +89,8 @@ void DEC_Knowledge_UrbanPerception::load( MIL_CheckPointInArchive& file, const u
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_UrbanPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned current  = pCurrentPerceptionLevel_->GetID(),
-             previous = pPreviousPerceptionLevel_->GetID();
+    unsigned int current  = pCurrentPerceptionLevel_->GetID();
+    unsigned int previous = pPreviousPerceptionLevel_->GetID();
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << nID_
          << current
@@ -148,7 +145,7 @@ void DEC_Knowledge_UrbanPerception::SendStateToNewClient()
 {
     client::UrbanDetection message;
     message().mutable_observer()->set_id( perceiver_.GetID() );
-    message().mutable_object()->set_id( object_.GetID() );
+    message().mutable_object()->set_id( nUrbanObjectId_ );
     message().set_visibility( sword::UnitVisibility::Level( pCurrentPerceptionLevel_->GetID() ) );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -181,12 +178,12 @@ const PHY_PerceptionLevel& DEC_Knowledge_UrbanPerception::GetCurrentPerceptionLe
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_UrbanPerception::GetUrbanPerceived
+// Name: DEC_Knowledge_UrbanPerception::GetUrbanPerceivedId
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-const UrbanObjectWrapper& DEC_Knowledge_UrbanPerception::GetUrbanPerceived() const
+unsigned int DEC_Knowledge_UrbanPerception::GetUrbanPerceivedId() const
 {
-    return object_;
+    return nUrbanObjectId_;
 }
 
 // -----------------------------------------------------------------------------

@@ -35,6 +35,7 @@ class MIL_LivingAreaBlock : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_LivingAreaBlock();
     explicit MIL_LivingAreaBlock( UrbanObjectWrapper& urbanObject );
     virtual ~MIL_LivingAreaBlock();
     //@}
@@ -42,8 +43,6 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > void serialize( Archive& ar, const unsigned int );
-    template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_LivingAreaBlock* block, const unsigned int /*version*/ );
-    template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_LivingAreaBlock* block, const unsigned int /*version*/ );
     //@}
 
     //! @name Network
@@ -93,7 +92,7 @@ private:
     //! @name Member data
     //@{
     static const std::string defaultAccomodation_;
-    UrbanObjectWrapper& urbanObject_;
+    UrbanObjectWrapper* urbanObject_;
     T_Persons persons_;
     float angriness_;
     bool alerted_;
@@ -113,7 +112,8 @@ BOOST_CLASS_EXPORT_KEY( MIL_LivingAreaBlock )
 template< typename Archive >
 void MIL_LivingAreaBlock::serialize( Archive& file, const unsigned int )
 {
-    file & persons_
+    file & urbanObject_
+         & persons_
          & angriness_
          & alerted_
          & confined_

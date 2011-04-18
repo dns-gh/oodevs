@@ -30,7 +30,7 @@ class DEC_Knowledge_UrbanPerception : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, const UrbanObjectWrapper& object );
+             DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, unsigned int nUrbanObjectId );
     virtual ~DEC_Knowledge_UrbanPerception();
     //@}
 
@@ -53,7 +53,7 @@ public:
     //! @name Accessor
     unsigned GetId() const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
-    const UrbanObjectWrapper& GetUrbanPerceived() const;
+    unsigned int GetUrbanPerceivedId() const;
     const MIL_Agent_ABC& GetPerceiver() const;
     bool IsPerceived() const;
     //@}
@@ -75,7 +75,7 @@ private:
     //@{
     const unsigned nID_;
     const MIL_Agent_ABC& perceiver_;
-    const UrbanObjectWrapper& object_;
+    unsigned int nUrbanObjectId_;
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
     static MIL_IDManager idManager_;

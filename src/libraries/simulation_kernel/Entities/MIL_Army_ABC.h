@@ -36,6 +36,7 @@ namespace xml
     class xostream;
     class xistream;
 }
+
 // =============================================================================
 // @class  MIL_Army
 // Created: JVT 2004-08-03
@@ -87,14 +88,14 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendCreation               () const = 0;
-    virtual void SendFullState              () const = 0;
-    virtual void SendKnowledge              () const = 0;
+    virtual void SendCreation () const = 0;
+    virtual void SendFullState() const = 0;
+    virtual void SendKnowledge() const = 0;
     //@}
 
     //! @name Operations
     //@{
-    virtual bool       IsPerceived( const DEC_Knowledge_Object& knowledge ) const = 0;
+    virtual bool IsPerceived( const DEC_Knowledge_Object& knowledge ) const = 0;
 
     virtual E_Tristate IsAFriend( const MIL_Army_ABC& army ) const = 0;
     virtual E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const = 0;

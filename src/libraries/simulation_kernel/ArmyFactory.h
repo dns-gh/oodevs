@@ -11,7 +11,7 @@
 #define __ArmyFactory_h_
 
 #include "ArmyFactory_ABC.h"
-#include "Entities/MIL_Army.h"
+#include "MT_Tools/MT_Converter.h"
 
 class AutomateFactory_ABC;
 class AgentFactory_ABC;
@@ -54,13 +54,11 @@ public:
     template< typename Archive > friend  void load_construct_data( Archive& archive, ArmyFactory* role, const unsigned int /*version*/ );
     //@}
 
-
 private:
     //! @name Helpers
     //@{
     void InitializeDiplomacies();
     //@}
-
 
 private:
     //! @name Data Members
@@ -74,8 +72,6 @@ private:
     KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
     std::auto_ptr< MT_Converter< std::string, MIL_Army_ABC::E_Diplomacy, sCaseInsensitiveLess > > diplomacyConverter_;
     //@}
-
-
 };
 
 BOOST_CLASS_EXPORT_KEY( ArmyFactory )

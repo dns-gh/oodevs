@@ -102,7 +102,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::load( MIL_CheckPointInArchive& fil
         boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge;
         DEC_Knowledge_Urban* knowledge;
         file >> knowledge;
-        urbanMapFromConcrete_[ knowledge->GetTerrainObjectKnown().GetID() ].reset( knowledge );
+        urbanMapFromConcrete_[ knowledge->GetObjectKnownId() ].reset( knowledge );
         urbanKnowledgeMapFromKnowledgeId_[ knowledge->GetID() ].reset( knowledge );
     }
 }
@@ -142,7 +142,7 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrban::DestroyKnowledgeUrban( DEC_Knowledge_Urban& knowledge )
 {
-    if( urbanMapFromConcrete_.erase( knowledge.GetTerrainObjectKnown().GetID() ) < 1 )
+    if( urbanMapFromConcrete_.erase( knowledge.GetObjectKnownId() ) < 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     if( urbanKnowledgeMapFromKnowledgeId_.erase( knowledge.GetID() ) < 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );

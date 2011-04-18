@@ -29,8 +29,8 @@ MIL_IDManager DEC_Knowledge_Urban::idManager_;
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const UrbanObjectWrapper& wrapper )
     : DEC_Knowledge_Object( army, const_cast< UrbanObjectWrapper& >( wrapper ) )
-    , army_                   ( &army )
-    , object_                 ( &wrapper )
+    , armyId_                 ( army.GetID() )
+    , objectId_               ( wrapper.GetID() )
     , rProgressPercent_       ( 0. )
     , rMaxProgressPercent_    ( 0. )
     , nTimeLastUpdate_        ( 0 )
@@ -50,8 +50,8 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const UrbanO
 // -----------------------------------------------------------------------------
 DEC_Knowledge_Urban::DEC_Knowledge_Urban()
     : DEC_Knowledge_Object()
-    , army_                   ( 0 )
-    , object_                 ( 0 )
+    , armyId_                 ( 0 )
+    , objectId_               ( 0 )
     , rProgressPercent_       ( 0. )
     , rMaxProgressPercent_    ( 0. )
     , nTimeLastUpdate_        ( 0 )
@@ -80,12 +80,10 @@ DEC_Knowledge_Urban::~DEC_Knowledge_Urban()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned long urbanId;
     file >> boost::serialization::base_object< DEC_Knowledge_Object >( *this )
          >> nTimeLastUpdate_
-         >> urbanId;
-    object_ = static_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( urbanId ) );
-    file >> const_cast< MIL_Army_ABC*& >( army_ )
+         >> objectId_
+         >> armyId_
          >> rProgressPercent_
          >> rMaxProgressPercent_
          >> bCreatedOnNetwork_
@@ -99,11 +97,10 @@ void DEC_Knowledge_Urban::load( MIL_CheckPointInArchive& file, const unsigned in
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned long urbanId = object_->GetID();
     file << boost::serialization::base_object< DEC_Knowledge_Object >( *this )
          << nTimeLastUpdate_
-         << urbanId
-         << army_
+         << objectId_
+         << armyId_
          << rProgressPercent_
          << rMaxProgressPercent_
          << bCreatedOnNetwork_
@@ -139,12 +136,15 @@ void DEC_Knowledge_Urban::Update( const DEC_Knowledge_UrbanPerception& perceptio
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::ComputeProgress( const MIL_Agent_ABC& agent )
 {
-    float complexity = object_->ComputeComplexity(); // $$$$ ALGO TEMPORAIRE
+    UrbanObjectWrapper* object = 0;
+    if( MIL_AgentServer::IsInitialized() )
+        object = static_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( objectId_ ) );
+    float complexity = object ? object->ComputeComplexity() : 0; // $$$$ ALGO TEMPORAIRE
     float progress = 0.f;
     if( complexity != 0.f )
         progress = 10 / complexity;// $$$$ @TODO MGD Add true physical configuration in ADN
     const UrbanObjectWrapper* urbanBlock = agent.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
-    float maxRecce = ( urbanBlock && object_ == urbanBlock ) ? 1.0f : 0.25f;
+    float maxRecce = ( urbanBlock && object == urbanBlock ) ? 1.0f : 0.25f;
     maxRecce = std::max( maxRecce, rProgressPercent_ );
     SetProgress( std::min( std::max( rProgressPercent_ + progress, rProgressPercent_ + 0.001f ), maxRecce ) );
 }
@@ -237,7 +237,7 @@ void DEC_Knowledge_Urban::SendChangedState()
     {
         nTimeLastUpdate_ = GetCurrentTimeStep();
         message().mutable_knowledge()->set_id( GetID() );
-        message().mutable_party()->set_id( army_->GetID() );
+        message().mutable_party()->set_id( armyId_ );
         message().mutable_object()->set_id( GetObjectKnown()->GetID() );
         message.Send( NET_Publisher_ABC::Publisher() );
     }
@@ -251,7 +251,7 @@ void DEC_Knowledge_Urban::SendFullState()
 {
     client::UrbanKnowledgeUpdate message;
     message().mutable_knowledge()->set_id( GetID() );
-    message().mutable_party()->set_id( army_->GetID() );
+    message().mutable_party()->set_id( armyId_ );
     message().mutable_object()->set_id( GetObjectKnown()->GetID() );
     float rProgress = static_cast< float >( rProgressPercent_ * 100 ) / 5 * 0.05f; // $$$$ MCO : WTF ^c^v bloc from SendChangedState + WTF magic numbers + WTF float computations and casts !
     message().set_progress( static_cast< int >( rProgress * 100 ) );
@@ -300,7 +300,7 @@ void DEC_Knowledge_Urban::SendMsgCreation() const
 {
     client::UrbanKnowledgeCreation message;
     message().mutable_knowledge()->set_id( GetID() );
-    message().mutable_party()->set_id( army_->GetID() );
+    message().mutable_party()->set_id( armyId_ );
     message().mutable_object()->set_id( GetObjectKnown()->GetID() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -313,7 +313,7 @@ void DEC_Knowledge_Urban::SendMsgDestruction() const
 {
     client::UrbanKnowledgeDestruction message;
     message().mutable_knowledge()->set_id( GetID() );
-    message().mutable_party()->set_id( army_->GetID() );
+    message().mutable_party()->set_id( armyId_ );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -336,12 +336,12 @@ float DEC_Knowledge_Urban::GetCurrentRecceProgress() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_Urban::GetTerrainObjectKnown
+// Name: DEC_Knowledge_Urban::GetObjectKnownId
 // Created: MGD 2010-02-01
 // -----------------------------------------------------------------------------
-const UrbanObjectWrapper& DEC_Knowledge_Urban::GetTerrainObjectKnown() const
+unsigned int DEC_Knowledge_Urban::GetObjectKnownId() const
 {
-    return *object_;
+    return objectId_;
 }
 
 // -----------------------------------------------------------------------------

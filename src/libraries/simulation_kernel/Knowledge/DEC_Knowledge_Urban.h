@@ -58,7 +58,7 @@ public:
     void ComputeProgress( const MIL_Agent_ABC& agent );
     bool Clean() const;
     float GetCurrentRecceProgress() const;
-    const UrbanObjectWrapper& GetTerrainObjectKnown() const;
+    unsigned int GetObjectKnownId() const;
     //@}
 
     //! @name Relevance management
@@ -109,9 +109,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_Army_ABC* army_;
-    // $$$$ _RC_ JSR 2011-02-18: à passer en référence
-    const UrbanObjectWrapper* object_;
+    unsigned int armyId_;
+    unsigned int objectId_;
     // Internal attribute
     float rProgressPercent_;
     float rMaxProgressPercent_;

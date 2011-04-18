@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
         MOCK_EXPECT( army, GetID ).returns( 1u );
         MOCK_EXPECT( publisher, Send ).at_least( 1 );
         DEC_Knowledge_Urban kn( army, *pObject );
-        DEC_Knowledge_UrbanPerception perception( *pion.pPion_, *pObject );
+        DEC_Knowledge_UrbanPerception perception( *pion.pPion_, pObject->GetID() );
         perception.SetPerceptionLevel( PHY_PerceptionLevel::detected_ );
 
         kn.Update( perception );

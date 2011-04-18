@@ -17,8 +17,10 @@
 #include "DEC_Knowledge_UrbanPerception.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_UrbanKnowledgeSynthetizer )
 
@@ -86,7 +88,9 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_KS_UrbanKnowledgeSynthetizer::GetKn
 inline
 void DEC_KS_UrbanKnowledgeSynthetizer::UpdateKnowledgesFromUrbanPerception( const DEC_Knowledge_UrbanPerception& perception )
 {
-    GetKnowledgeToUpdate( perception.GetUrbanPerceived() )->Update( perception );
+    const UrbanObjectWrapper* urbanObject = dynamic_cast< UrbanObjectWrapper* >( MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( perception.GetUrbanPerceivedId() ) );
+    if( urbanObject )
+        GetKnowledgeToUpdate( *urbanObject )->Update( perception );
 }
 
 // -----------------------------------------------------------------------------
