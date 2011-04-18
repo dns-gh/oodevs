@@ -33,6 +33,7 @@
 #include "frontend/SessionConfigPanel.h"
 #include "frontend/StartExercise.h"
 #include "frontend/StartReplay.h"
+#include "frontend/VrForcesPluginConfigPanel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "clients_gui/Tools.h"
@@ -187,6 +188,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
                 AddPlugin< frontend::EdxlHavePluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "EDXL-HAVE" ) );
                 AddPlugin< frontend::TimelinePluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "ERP/Timeline" ) );
                 AddPlugin< frontend::PositionsPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "Positions Saver" ) );
+                AddPlugin< frontend::VrForcesPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "VrForces" ) );
             }
         }
     }

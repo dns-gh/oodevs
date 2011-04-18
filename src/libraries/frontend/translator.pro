@@ -18,5 +18,6 @@ SpawnCommand.cpp \
 StartExercise.cpp \
 StartTerrainWorkshop.cpp \
 TimelinePluginConfigPanel.cpp \
+VrForcesPluginConfigPanel.cpp \
 
 TRANSLATIONS = frontend_fr.ts frontend_es.ts

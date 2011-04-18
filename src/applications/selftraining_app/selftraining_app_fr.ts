@@ -499,7 +499,7 @@
     <name>ReadProfile</name>
     <message>
         <source>anonymous</source>
-        <translation type="unfinished"></translation>
+        <translation>anonyme</translation>
     </message>
 </context>
 <context>
@@ -623,27 +623,31 @@
     </message>
     <message>
         <source>DIS</source>
-        <translation type="unfinished"></translation>
+        <translation>DIS</translation>
     </message>
     <message>
         <source>HLA</source>
-        <translation type="unfinished"></translation>
+        <translation>HLA</translation>
     </message>
     <message>
         <source>Crossbow</source>
-        <translation type="unfinished"></translation>
+        <translation>Crossbow</translation>
     </message>
     <message>
         <source>EDXL-HAVE</source>
-        <translation type="unfinished"></translation>
+        <translation>EDXL-HAVE</translation>
     </message>
     <message>
         <source>ERP/Timeline</source>
-        <translation type="unfinished"></translation>
+        <translation>ERP/Timeline</translation>
     </message>
     <message>
         <source>Positions Saver</source>
         <translation>Enregistreur de positions</translation>
+    </message>
+    <message>
+        <source>VrForces</source>
+        <translation>VrForces</translation>
     </message>
 </context>
 <context>

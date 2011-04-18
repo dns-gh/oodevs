@@ -397,4 +397,15 @@ Conexión SDE: sde://user:password@host:port/db_name.sword</translation>
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>VrForcesPluginConfigPanel</name>
+    <message>
+        <source>Enable VrForces integration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOM: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

@@ -645,6 +645,10 @@
         <source>Positions Saver</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>VrForces</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ScenarioPage</name>
