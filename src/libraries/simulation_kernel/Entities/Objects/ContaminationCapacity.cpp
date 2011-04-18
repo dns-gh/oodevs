@@ -129,7 +129,7 @@ void ContaminationCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agen
 void ContaminationCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL_PopulationElement_ABC& population )
 {
     const NBCAttribute* pNBC = object.RetrieveAttribute< NBCAttribute >();
-    if( pNBC && pNBC->IsContaminating() )  // $$$$ _RC_ LGY 2011-03-31: a verifier
+    if( pNBC && pNBC->IsContaminating() )
     {
         const NBCAttribute::T_NBCAgents& agents = pNBC->GetNBCAgents();
         for( NBCAttribute::CIT_NBCAgents it = agents.begin(); it != agents.end(); ++it )
