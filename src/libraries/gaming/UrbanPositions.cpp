@@ -18,8 +18,9 @@
 // Name: UrbanPositions constructor
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& message, const kernel::CoordinateConverter_ABC& converter )
+UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& message, const kernel::CoordinateConverter_ABC& converter, const std::string& name )
     : object_( object )
+    , name_  ( name )
 {
     for( int i = 0; i < message.coordinates().elem_size(); ++i )
         polygon_.Add( converter.ConvertToXY( message.coordinates().elem( i ) ) );
@@ -69,7 +70,7 @@ bool UrbanPositions::IsInside( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawDecoratedPolygon( polygon_, object_.GetDecoration() );
+    tools.DrawDecoratedPolygon( polygon_, object_.GetDecoration(), name_ );
 }
 
 // -----------------------------------------------------------------------------

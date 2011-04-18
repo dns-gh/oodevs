@@ -479,7 +479,7 @@ void GlWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
 // Name: GlWidget::DrawDecoratedPolygon
 // Created: RPD 2009-12-15
 // -----------------------------------------------------------------------------
-void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration ) const
+void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration, const std::string& name ) const
 {
     //TEMP SLG
     if( polygon.Vertices().empty() )
@@ -584,7 +584,7 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     glDrawArrays( GL_LINE_LOOP, 0, roofPoints.size() );
     glDisable( GL_LINE_STIPPLE );
     glPopAttrib();
-    if( decoration->Name().length() > 0 )
+    if( name !=  "" )
         ( ( GlWidget& ) ( *this ) ).DrawTextLabel( decoration->Name(), Polygon2f( roofPoints ).BoundingBoxCenter(), 13 );
 }
 

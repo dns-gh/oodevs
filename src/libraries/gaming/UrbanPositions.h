@@ -40,7 +40,7 @@ class UrbanPositions : public kernel::UrbanPositions_ABC
 public:
     //! @name Constructors/Destructor
     //@{s
-             UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& message, const kernel::CoordinateConverter_ABC& converter );
+             UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& message, const kernel::CoordinateConverter_ABC& converter, const std::string& name );
     virtual ~UrbanPositions();
     //@}
 
@@ -57,6 +57,7 @@ private:
     //! @name Member data
     //@{
     const urban::TerrainObject_ABC& object_;
+    const std::string name_;
     geometry::Polygon2f polygon_;
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f barycenter_;
