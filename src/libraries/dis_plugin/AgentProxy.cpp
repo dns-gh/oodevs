@@ -9,23 +9,23 @@
 
 #include "dis_plugin_pch.h"
 #include "AgentProxy.h"
+#include "DetonationPDU.h"
 #include "EntityStatePDU.h"
-#include "Time_ABC.h"
 #include "IdentifierFactory_ABC.h"
-#include "tic_plugin/Platform_ABC.h"
-#include "tic_plugin/PlatformAdapter.h"
-#include "tic_plugin/PlatformDelegate_ABC.h"
-#include "dispatcher/Agent.h"
-#include "dispatcher/Automat_ABC.h"
-#include "dispatcher/Team_ABC.h"
+#include "Time_ABC.h"
+#include "UdpNetwork.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/Karma.h"
+#include "dispatcher/Agent.h"
+#include "dispatcher/Automat_ABC.h"
+#include "dispatcher/Team_ABC.h"
 #include "rpr/EntityTypeResolver.h"
-#include "UdpNetwork.h"
+#include "tic/Platform_ABC.h"
+#include "tic/PlatformAdapter.h"
+#include "tic/PlatformDelegate_ABC.h"
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
-#include "DetonationPDU.h"
 
 using namespace plugins::dis;
 
@@ -33,7 +33,7 @@ using namespace plugins::dis;
 // Name: AgentProxy constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-AgentProxy::AgentProxy( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame, std::auto_ptr< plugins::tic::PlatformDelegate_ABC > platforms )
+AgentProxy::AgentProxy( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter, UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder, unsigned char exercise, bool lagAFrame, std::auto_ptr< tic::PlatformDelegate_ABC > platforms )
     : dispatcher::Observer< sword::UnitAttributes >( holder )
     , time_     ( time )
     , id_       ( id )
@@ -44,7 +44,7 @@ AgentProxy::AgentProxy( const Time_ABC& time, IdentifierFactory_ABC& id, const k
     , forceId_  ( rpr::Other )
     , exercise_ ( exercise )
     , lagAFrame_( lagAFrame )
-    , adapted_  ( new plugins::tic::PlatformAdapter( holder_, converter ) )
+    , adapted_  ( new tic::PlatformAdapter( holder_, converter ) )
     , platforms_( platforms )
 {
     // NOTHING
@@ -89,7 +89,7 @@ void AgentProxy::Notify( const sword::UnitAttributes& )
 
 namespace
 {
-    std::string MakeName( const dispatcher::Agent& entity, const plugins::tic::Platform_ABC& platform )
+    std::string MakeName( const dispatcher::Agent& entity, const tic::Platform_ABC& platform )
     {
         std::stringstream ss;
         ss << entity.GetId() << "/" << platform.GetType().GetName();
@@ -101,7 +101,7 @@ namespace
 // Name: AgentProxy::AddPlatform
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void AgentProxy::AddPlatform( const plugins::tic::Platform_ABC& platform )
+void AgentProxy::AddPlatform( const tic::Platform_ABC& platform )
 {
     T_Identifiers::iterator it = ids_.find( &platform );
     if( it == ids_.end() )

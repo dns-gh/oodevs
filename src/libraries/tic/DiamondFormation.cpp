@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "tic_plugin_pch.h"
+#include "tic_pch.h"
 #include "DiamondFormation.h"
 #include "Movable_ABC.h"
 
-using namespace plugins::tic;
+using namespace tic;
 
 // -----------------------------------------------------------------------------
 // Name: DiamondFormation constructor

@@ -17,8 +17,6 @@ namespace dispatcher
     class Agent;
 }
 
-namespace plugins
-{
 namespace tic
 {
     class PlatformDelegate_ABC;
@@ -42,7 +40,6 @@ public:
     virtual std::auto_ptr< PlatformDelegate_ABC > Create( dispatcher::Agent& entity ) const = 0;
     //@}
 };
-}
 }
 
 #endif // __PlatformDelegateFactory_ABC_h_

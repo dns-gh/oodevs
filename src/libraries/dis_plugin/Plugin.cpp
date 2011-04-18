@@ -16,7 +16,7 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/Model_ABC.h"
 #include "rpr/EntityTypeResolver.h"
-#include "tic_plugin/PlatformDelegateFactory.h"
+#include "tic/PlatformDelegateFactory.h"
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( disable: 4355 )
@@ -45,7 +45,7 @@ Plugin::Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, 
     , network_  ( new UdpNetwork( xis.attribute< std::string >( "server" ), xis.attribute< unsigned short >( "port" ) ) )
     , converter_( new kernel::CoordinateConverter( config ) )
     , timeStep_ ( ReadTimeStep( config.GetSessionFile() ) )
-    , platforms_( new plugins::tic::PlatformDelegateFactory( *converter_, static_cast< float >( timeStep_ ) ) )
+    , platforms_( new tic::PlatformDelegateFactory( *converter_, static_cast< float >( timeStep_ ) ) )
     , resolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
     , factory_  ( new Model( *network_, *this, *converter_, *resolver_, xis, *platforms_ ) )
     , fires_    ( new FireManager( *network_, *this, static_cast< unsigned char >( xis.attribute< unsigned short >( "exercise"  ) ) ) )

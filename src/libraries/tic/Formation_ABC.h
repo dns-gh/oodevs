@@ -12,8 +12,6 @@
 
 #include <geometry/Types.h>
 
-namespace plugins
-{
 namespace tic
 {
     class Movable_ABC;
@@ -46,7 +44,6 @@ public:
     static void Sort( std::vector< geometry::Point2f >& points, const geometry::Point2f& center, const geometry::Vector2f& towards );
     //@}
 };
-}
 }
 
 #endif // __Formation_ABC_h_

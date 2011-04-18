@@ -27,8 +27,6 @@ namespace dispatcher
     class Agent;
 }
 
-namespace plugins
-{
 namespace tic
 {
     class Platform;
@@ -86,8 +84,6 @@ private:
     bool onRoad_;
     //@}
 };
-
-}
 }
 
 #endif // __PlatformDelegate_h_

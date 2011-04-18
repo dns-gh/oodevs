@@ -7,37 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef __PlatformVisitor_ABC_h_
-#define __PlatformVisitor_ABC_h_
+#ifndef __PlatformDelegate_ABC_h_
+#define __PlatformDelegate_ABC_h_
 
-namespace plugins
-{
 namespace tic
 {
-    class Platform_ABC;
-
+    class PlatformVisitor_ABC;
 // =============================================================================
-/** @class  PlatformVisitor_ABC
-    @brief  Platform visitor definition
+/** @class  TicExtension_ABC
+    @brief  Tic extension definition
 */
 // Created: AGE 2008-04-01
 // =============================================================================
-class PlatformVisitor_ABC
+class PlatformDelegate_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PlatformVisitor_ABC() {}
-    virtual ~PlatformVisitor_ABC() {}
+             PlatformDelegate_ABC() {}
+    virtual ~PlatformDelegate_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void AddPlatform( const Platform_ABC& platform ) = 0;
+    virtual void Accept( PlatformVisitor_ABC& visitor ) const = 0;
     //@}
 };
-
-}
 }
 
-#endif // __PlatformVisitor_ABC_h_
+#endif // __PlatformDelegate_ABC_h_

@@ -13,7 +13,7 @@
 #include "dispatcher/Observer.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/ForceIdentifier.h"
-#include "tic_plugin/PlatformVisitor_ABC.h"
+#include "tic/PlatformVisitor_ABC.h"
 #include <memory>
 
 namespace kernel
@@ -36,13 +36,13 @@ namespace sword
     class UnitAttributes;
 }
 
-namespace plugins
-{
 namespace tic
 {
     class PlatformDelegate_ABC;
 }
 
+namespace plugins
+{
 namespace dis
 {
     class UdpNetwork;
@@ -63,7 +63,7 @@ public:
     //@{
              AgentProxy( const Time_ABC& time, IdentifierFactory_ABC& id, const kernel::CoordinateConverter_ABC& converter
                        , UdpNetwork& network, const rpr::EntityTypeResolver& resolver, dispatcher::Agent& holder
-                       , unsigned char exercise, bool lagAFrame, std::auto_ptr< plugins::tic::PlatformDelegate_ABC > platforms );
+                       , unsigned char exercise, bool lagAFrame, std::auto_ptr< tic::PlatformDelegate_ABC > platforms );
     virtual ~AgentProxy();
     //@}
 
@@ -76,7 +76,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const plugins::tic::Platform_ABC*, rpr::EntityIdentifier > T_Identifiers;
+    typedef std::map< const tic::Platform_ABC*, rpr::EntityIdentifier > T_Identifiers;
     //@}
 
 private:
@@ -93,7 +93,7 @@ private:
     bool                   lagAFrame_;
     T_Identifiers          ids_;
     std::auto_ptr< tic::Platform_ABC > adapted_;
-    std::auto_ptr< plugins::tic::PlatformDelegate_ABC > platforms_;
+    std::auto_ptr< tic::PlatformDelegate_ABC > platforms_;
     //@}
 };
 

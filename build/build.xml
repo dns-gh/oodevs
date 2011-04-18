@@ -166,7 +166,7 @@
         <build-lib name="dis_plugin" pattern="lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
 
-    <target name="library.dis_plugin_dll" depends="library.dis_plugin,library.dispatcher,library.tic_plugin" description="build dis_plugin dynamic library">
+    <target name="library.dis_plugin_dll" depends="library.dis_plugin,library.dispatcher,library.tic" description="build dis_plugin dynamic library">
         <build-lib name="dis_plugin_dll" outtype="shared" depends="boost,qt,terrain,xalan,xerces,protobuf" pattern="dis_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -174,7 +174,7 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}
+                  lib${ant.project.name}_tic-${platform}-mt@{suffix}
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">
             <syslibset libs="shell32,user32"/>
             <defineset define="DIS_PLUGIN_DLL_EXPORTS"/>
@@ -182,8 +182,8 @@
         </build-lib>
     </target>
     
-    <target name="library.tic_plugin" depends="library.dispatcher" description="build tic_plugin static library">
-        <build-lib name="tic_plugin" pattern="lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
+    <target name="library.tic" depends="library.dispatcher" description="build tic static library">
+        <build-lib name="tic" pattern="lib${ant.project.name}_tic-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
 
     <target name="library.messenger_plugin" depends="library.dispatcher" description="build messenger_plugin static library">
@@ -591,14 +591,14 @@
         <build-test name="tools" depends="boost,xerces,xalan" libs="lib${ant.project.name}_tools-${platform}-mt@{suffix}"/>
     </target>
 
-    <target name="plugins_test" depends="library.hla_plugin,library.tic_plugin,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin">
+    <target name="plugins_test" depends="library.hla_plugin,library.tic,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin">
         <build-test name="plugins" depends="xerces,terrain,boost,openssl,protobuf,qt"
             libs="directia-${platform}-mt-4_6,gdal_i
             lib${ant.project.name}_tools-${platform}-mt,
             lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_tic-${platform}-mt@{suffix},
                   lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix},

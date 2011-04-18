@@ -9,10 +9,10 @@
 
 #include "plugins_test_pch.h"
 #include "MockMovable.h"
-#include "tic_plugin/RoadFormation.h"
+#include "tic/RoadFormation.h"
 #include <boost/assign/list_of.hpp>
 
-using namespace plugins::tic;
+using namespace tic;
 
 namespace
 {

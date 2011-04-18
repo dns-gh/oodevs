@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "tic_plugin_pch.h"
+#include "tic_pch.h"
 #include "PlatformDelegate.h"
 #include "Platform.h"
 #include "RoadFormation.h"
@@ -24,7 +24,7 @@
 #include <boost/bind.hpp>
 #pragma warning( pop )
 
-using namespace plugins::tic;
+using namespace tic;
 
 // -----------------------------------------------------------------------------
 // Name: PlatformDelegate constructor

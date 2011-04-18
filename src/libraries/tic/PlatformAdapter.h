@@ -22,8 +22,6 @@ namespace dispatcher
     class Agent;
 }
 
-namespace plugins
-{
 namespace tic
 {
 // =============================================================================
@@ -66,8 +64,6 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     //@}
 };
-
-}
 }
 
 #endif // __PlatformAdapter_h_

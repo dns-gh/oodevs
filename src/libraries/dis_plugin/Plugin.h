@@ -35,13 +35,13 @@ namespace xml
     class xistream;
 }
 
-namespace plugins
-{
 namespace tic
 {
     class PlatformDelegateFactory_ABC;
 }
 
+namespace plugins
+{
 namespace dis
 {
     class FireManager;
@@ -79,7 +79,7 @@ private:
     std::auto_ptr< UdpNetwork > network_;
     std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     const unsigned long timeStep_;
-    std::auto_ptr< plugins::tic::PlatformDelegateFactory_ABC > platforms_;
+    std::auto_ptr< tic::PlatformDelegateFactory_ABC > platforms_;
     std::auto_ptr< rpr::EntityTypeResolver > resolver_;
     std::auto_ptr< Model > factory_;
     std::auto_ptr< FireManager > fires_;

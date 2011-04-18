@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "tic_plugin_pch.h"
+#include "tic_pch.h"
 #include "Platform.h"
 #include "clients_kernel/ComponentType.h"
 
-using namespace plugins::tic;
+using namespace tic;
 
 // -----------------------------------------------------------------------------
 // Name: Platform constructor

@@ -20,8 +20,6 @@ namespace kernel
     class ComponentType;
 }
 
-namespace plugins
-{
 namespace tic
 {
     class PlatformVisitor_ABC;
@@ -89,7 +87,6 @@ private:
     geometry::Point2f position_;
     //@}
 };
-}
 }
 
 #endif // __Platform_h_

@@ -17,8 +17,6 @@ namespace kernel
     class CoordinateConverter_ABC;
 }
 
-namespace plugins
-{
 namespace tic
 {
 // =============================================================================
@@ -48,7 +46,6 @@ private:
     const float timeStep_;
     //@}
 };
-}
 }
 
 #endif // __PlatformDelegateFactory_h_

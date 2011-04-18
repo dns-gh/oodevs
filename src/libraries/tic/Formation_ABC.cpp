@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#include "tic_plugin_pch.h"
+#include "tic_pch.h"
 #include "Formation_ABC.h"
 #include <boost/bind.hpp>
 
-using namespace plugins::tic;
+using namespace tic;
 
 // -----------------------------------------------------------------------------
 // Name: Formation_ABC::Compare

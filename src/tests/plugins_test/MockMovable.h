@@ -10,7 +10,7 @@
 #ifndef __MockMovable_h_
 #define __MockMovable_h_
 
-#include "tic_plugin/Movable_ABC.h"
+#include "tic/Movable_ABC.h"
 
 // =============================================================================
 /** @class  MockMovable
@@ -18,7 +18,7 @@
 */
 // Created: LGY 2010-08-09
 // =============================================================================
-MOCK_BASE_CLASS( MockMovable, plugins::tic::Movable_ABC )
+MOCK_BASE_CLASS( MockMovable, tic::Movable_ABC )
 {
     MOCK_METHOD( Move, 1 );
     MOCK_METHOD( Stop, 0 );

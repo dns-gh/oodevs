@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "tic_plugin_pch.h"
+#include "tic_pch.h"
 #include "PlatformAdapter.h"
 #include "dispatcher/Agent.h"
 #include "clients_kernel/AgentComposition.h"
@@ -15,7 +15,7 @@
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 
-using namespace plugins::tic;
+using namespace tic;
 
 // -----------------------------------------------------------------------------
 // Name: PlatformAdapter constructor

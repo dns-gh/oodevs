@@ -7,38 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef __Movable_ABC_h_
-#define __Movable_ABC_h_
+#ifndef __PlatformVisitor_ABC_h_
+#define __PlatformVisitor_ABC_h_
 
-#include <geometry/Types.h>
-
-namespace plugins
-{
 namespace tic
 {
+    class Platform_ABC;
 // =============================================================================
-/** @class  Movable_ABC
-    @brief  Movable definition
+/** @class  PlatformVisitor_ABC
+    @brief  Platform visitor definition
 */
 // Created: AGE 2008-04-01
 // =============================================================================
-class Movable_ABC
+class PlatformVisitor_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Movable_ABC() {}
-    virtual ~Movable_ABC() {}
+             PlatformVisitor_ABC() {}
+    virtual ~PlatformVisitor_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Move( const geometry::Point2f& to ) = 0;
-    virtual void Stop() = 0;
+    virtual void AddPlatform( const Platform_ABC& platform ) = 0;
     //@}
 };
-
-}
 }
 
-#endif // __Movable_ABC_h_
+#endif // __PlatformVisitor_ABC_h_

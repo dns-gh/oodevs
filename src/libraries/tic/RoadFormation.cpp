@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "tic_plugin_pch.h"
+#include "tic_pch.h"
 #include "RoadFormation.h"
 #include "Movable_ABC.h"
 #include <algorithm>
 
-using namespace plugins::tic;
+using namespace tic;
 
 // -----------------------------------------------------------------------------
 // Name: RoadFormation constructor

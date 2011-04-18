@@ -17,11 +17,8 @@ namespace kernel
     class ComponentType;
 }
 
-namespace plugins
-{
 namespace tic
 {
-
 // =============================================================================
 /** @class  Platform_ABC
     @brief  Platform definition
@@ -59,8 +56,6 @@ public:
     virtual E_State GetState() const = 0;
     //@}
 };
-
-}
 }
 
 #endif // __Platform_ABC_h_

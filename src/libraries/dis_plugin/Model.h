@@ -35,13 +35,13 @@ namespace rpr
     class EntityTypeResolver;
 }
 
-namespace plugins
-{
 namespace tic
 {
     class PlatformDelegateFactory_ABC;
 }
 
+namespace plugins
+{
 namespace dis
 {
     class AgentProxy;
@@ -61,7 +61,7 @@ class Model : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver& resolver, xml::xistream& xis, plugins::tic::PlatformDelegateFactory_ABC& factory );
+             Model( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver& resolver, xml::xistream& xis, tic::PlatformDelegateFactory_ABC& factory );
     virtual ~Model();
     //@}
 
@@ -84,7 +84,7 @@ private:
     const Time_ABC& time_;
     const kernel::CoordinateConverter_ABC& converter_;
     const rpr::EntityTypeResolver& resolver_;
-    plugins::tic::PlatformDelegateFactory_ABC& factory_;
+    tic::PlatformDelegateFactory_ABC& factory_;
     const unsigned short site_;
     const unsigned short application_;
     const unsigned char  exercise_;

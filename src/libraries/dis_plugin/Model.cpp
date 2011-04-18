@@ -14,8 +14,8 @@
 #include "dispatcher/Automat.h"
 #include "dispatcher/Formation.h"
 #include "dispatcher/Side.h"
-#include "tic_plugin/PlatformDelegate_ABC.h"
-#include "tic_plugin/PlatformDelegateFactory_ABC.h"
+#include "tic/PlatformDelegate_ABC.h"
+#include "tic/PlatformDelegateFactory_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::dis;
@@ -24,7 +24,7 @@ using namespace plugins::dis;
 // Name: Model constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-Model::Model( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver& resolver, xml::xistream& xis, plugins::tic::PlatformDelegateFactory_ABC& factory )
+Model::Model( UdpNetwork& network, const Time_ABC& time, const kernel::CoordinateConverter_ABC& converter, const rpr::EntityTypeResolver& resolver, xml::xistream& xis, tic::PlatformDelegateFactory_ABC& factory )
     : network_( network )
     , time_( time )
     , converter_( converter )
