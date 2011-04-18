@@ -125,7 +125,6 @@ void UrbanModel::Update( const sword::UrbanUpdate& message )
         {
             if( message.attributes().has_structure() && pTerrainObject->Retrieve< kernel::StructuralStateAttribute_ABC >() == 0 )
                 pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( *pTerrainObject, controllers_.controller_, pTerrainObject->Get< kernel::PropertiesDictionary >() ) );
-
             if( pTerrainObject->Retrieve< kernel::ResourceNetwork_ABC >() == 0 )
             {
                 if( message.attributes().has_infrastructures() && message.attributes().infrastructures().resource_network_size() > 0 )
@@ -152,11 +151,8 @@ void UrbanModel::Update( const sword::ObjectUpdate& message )
     if( message.has_attributes() )
     {
         gui::TerrainObjectProxy* pTerrainObject = Find( message.object().id() );
-        if( pTerrainObject )
-        {
-            if( message.attributes().has_medical_treatment() && pTerrainObject->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
-                pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
-        }
+        if( pTerrainObject && message.attributes().has_medical_treatment() && pTerrainObject->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() == 0 )
+            pTerrainObject->Attach< kernel::MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
     }
     GetObject( message.object().id() ).Update( message );
 }

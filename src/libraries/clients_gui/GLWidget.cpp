@@ -584,8 +584,8 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     glDrawArrays( GL_LINE_LOOP, 0, roofPoints.size() );
     glDisable( GL_LINE_STIPPLE );
     glPopAttrib();
-    if( name !=  "" )
-        ( ( GlWidget& ) ( *this ) ).DrawTextLabel( decoration->Name(), Polygon2f( roofPoints ).BoundingBoxCenter(), 13 );
+    if( name != "" )
+        ( ( GlWidget& ) ( *this ) ).DrawTextLabel( name, Polygon2f( roofPoints ).BoundingBoxCenter(), 13 );
 }
 
 // -----------------------------------------------------------------------------
