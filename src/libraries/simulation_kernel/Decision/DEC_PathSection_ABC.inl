@@ -58,3 +58,23 @@ double DEC_PathSection_ABC::GetLength() const
 {
     return startPoint_.Distance( endPoint_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathSection_ABC::GetPath
+// Created: CMA 2011-04-18
+// -----------------------------------------------------------------------------
+inline
+const DEC_Path_ABC& DEC_PathSection_ABC::GetPath() const
+{
+    return path_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathSection_ABC::SetPosStart
+// Created: CMA 2011-04-18
+// -----------------------------------------------------------------------------
+inline
+void DEC_PathSection_ABC::SetPosStart( const MT_Vector2D& point )
+{
+    startPoint_ = point;
+}

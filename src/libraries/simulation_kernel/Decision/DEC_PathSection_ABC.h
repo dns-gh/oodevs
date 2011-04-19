@@ -41,9 +41,11 @@ public:
 
     //! @name Accessors
     //@{
-    bool               IsImpossible() const;
-    const MT_Vector2D& GetPosStart () const;
-    const MT_Vector2D& GetPosEnd   () const; // $$$$ AGE 2005-02-25: ...
+    bool                IsImpossible() const;
+    const MT_Vector2D&  GetPosStart () const;
+    const MT_Vector2D&  GetPosEnd   () const; // $$$$ AGE 2005-02-25: ...
+    const DEC_Path_ABC& GetPath     () const;
+    void                SetPosStart ( const MT_Vector2D& point );
     //@}
 
 protected:

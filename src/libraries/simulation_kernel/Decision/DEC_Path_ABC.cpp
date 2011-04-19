@@ -13,6 +13,8 @@
 #include "DEC_Path_ABC.h"
 #include "DEC_PathSection_ABC.h"
 #include "DEC_Pathfind_Manager.h"
+#include "DEC_PathPoint.h"
+#include "DEC_PathResult.h"
 #include "MIL_AgentServer.h"
 
 unsigned int DEC_Path_ABC::nIDIdx_ = 0;
@@ -84,8 +86,12 @@ void DEC_Path_ABC::DoExecute( TerrainPathfinder& pathfind )
         nComputationEndTime = std::numeric_limits< unsigned int >::max();
     else
         nComputationEndTime = static_cast< unsigned int >( time( 0 ) ) + nMaxComputationDuration;
+
+    assert( !pathSections_.empty() );
+    const DEC_PathResult::T_PathPointList& pathPoints = dynamic_cast< const DEC_PathResult* >( &pathSections_.front()->GetPath() )->GetResult( false );
+
     nState_ = eComputing;
-    for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
+    for( T_PathSectionVector::iterator itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
     {
         if( bJobCanceled_ )
         {
@@ -96,12 +102,26 @@ void DEC_Path_ABC::DoExecute( TerrainPathfinder& pathfind )
         if( !pathSection.Execute( pathfind, nComputationEndTime ) )
         {
             if( bJobCanceled_ )
+            {
                 nState_ = eCanceled;
+                return;
+            }
             else if( itPathSection == pathSections_.begin() && pathSection.IsImpossible() )
+            {
                 nState_ = eImpossible;
+                return;
+            }
             else
-                nState_ = ePartial;
-            return;
+            {
+                T_PathSectionVector::iterator itNextPathSection = itPathSection + 1;
+                if( itNextPathSection == pathSections_.end() )
+                {
+                    nState_ = ePartial;
+                    return;
+                }
+                else
+                    (*itNextPathSection)->SetPosStart( pathPoints.back()->GetPos() );
+            }
         }
         NotifySectionEnded();
     }
