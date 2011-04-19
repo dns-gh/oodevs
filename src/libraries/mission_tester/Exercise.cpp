@@ -85,19 +85,6 @@ Exercise::~Exercise()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: Exercise::SendOrder
-// Created: PHC 2011-03-23C'es
-// -----------------------------------------------------------------------------
-void Exercise::SendOrder( const std::string& message, Client& client ) const // $$$$ PHC 2011-04-12: CODE MORT
-{
-    xml::xistringstream xis( message );
-    xis >> xml::start( "action" );
-    std::auto_ptr< actions::Action_ABC > action( actionFactory_->CreateAction( xis ) );
-    if( action.get() )
-        action->Publish( client );
-}
-
 namespace
 {
     struct Logger : public Publisher_ABC

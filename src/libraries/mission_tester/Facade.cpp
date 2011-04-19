@@ -25,6 +25,24 @@
 
 using namespace mission_tester;
 
+namespace
+{
+    struct Timeout
+    {
+        explicit Timeout( unsigned int duration ) : duration_( duration ) { Start(); }
+        void Start()
+        {
+            start_ = boost::posix_time::microsec_clock::universal_time();
+        }
+        bool Expired() const
+        {
+            return ( boost::posix_time::microsec_clock::universal_time() - start_ ).total_milliseconds() > duration_;
+        }
+        unsigned int duration_;
+        boost::posix_time::ptime start_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: Facade constructor
 // Created: PHC 2011-04-05
@@ -46,27 +64,6 @@ Facade::~Facade()
     // NOTHING
 }
 
-namespace
-{
-    void StartMission( mission_tester::Exercise& exercise, mission_tester::Client& client )
-    {
-        const std::string mission = "<action id='131' name='Faire Mouvement' target='33' time='2009-05-05T12:49:34' type='mission'>"
-                                    "  <parameter name='direction dangereuse' type='heading' value='360'/>"
-                                    "  <parameter name='Limas' type='phaseline'/>"
-                                    "  <parameter name='Limit 1' type='limit'/>"
-                                    "  <parameter name='Limit 2' type='limit'/>"
-                                    "  <parameter name='Itineraire' type='path'>"
-                                    "    <parameter name='Destination' type='pathpoint'>"
-                                    "      <location type='point'>"
-                                    "        <point coordinates='31UEQ0337626262'/>"
-                                    "      </location>"
-                                    "    </parameter>"
-                                    "  </parameter>"
-                                    "</action>";
-        exercise.SendOrder( mission , client );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Facade::Run
 // Created: PHC 2011-04-05
@@ -80,10 +77,17 @@ void Facade::Run()
     exercise.Register( *this );
     client.Register( *this );
     model.Register( *this );
+    Timeout timeout( 600000 ); // $$$$ PHC 2011-04-19: 10m
     try
     {
-        while( !client.IsConnected() || !client.IsAuthentified() )
+        while( !timeout.Expired() )
+        {
             client.Update();
+            if( client.IsAuthentified() )
+                break;
+        }
+        if ( timeout.Expired() )
+            throw std::runtime_error( "Timeout exceeded." );
     }
     catch( std::exception& e )
     {
@@ -96,8 +100,6 @@ void Facade::Run()
             const int key = _getch();
             if( key == 'q' )
                 break;
-            else if( key == 's' )
-                StartMission( exercise, client );
         }
         client.Update();
         scheduler->Step( 2000, exercise );

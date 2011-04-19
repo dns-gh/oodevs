@@ -59,7 +59,6 @@ public:
 
     //! @name operations
     //@{
-    void SendOrder( const std::string& message, Client& client ) const;
     bool CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
     void Register( const Listener_ABC& listener );
     //@}
