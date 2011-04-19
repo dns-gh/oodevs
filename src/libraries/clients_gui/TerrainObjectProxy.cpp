@@ -20,7 +20,6 @@
 #include "protocol/Simulation.h"
 #include <urban/TerrainObject_ABC.h>
 #include <boost/foreach.hpp>
-#include <urban/ColorAttribute.h>
 
 using namespace gui;
 using namespace kernel;
@@ -34,30 +33,14 @@ const QString TerrainObjectProxy::typeName_ = "terrainObjectProxy";
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, TerrainObject_ABC& object, unsigned int id
-                                      , const QString& name, const ObjectType& type, UrbanDisplayOptions& options )
-    : EntityImplementation< Object_ABC >( controllers.controller_, id, name )
+TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, TerrainObject_ABC& object, const std::string& name, unsigned int id
+                                      , const ObjectType& type, UrbanDisplayOptions& options )
+    : EntityImplementation< Object_ABC >( controllers.controller_, id, name.c_str() )
     , Creatable< TerrainObjectProxy >( controllers.controller_, this )
     , object_     ( object )
     , controllers_( controllers )
-    , type_       ( type )
-    , options_    ( options )
-{
-    RegisterSelf( *this );
-    CreateDictionary( controllers.controller_ );
-    UpdateColor();
-    controllers_.Register( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy constructor
-// Created: JSR 2010-06-21
-// -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, TerrainObject_ABC& object, const ObjectType& type, UrbanDisplayOptions& options )
-    : EntityImplementation< Object_ABC >( controllers.controller_, object.GetId(), object.GetName().c_str() )
-    , Creatable< TerrainObjectProxy >( controllers.controller_, this )
-    , object_     ( object )
-    , controllers_( controllers )
+    , name_       ( name )
+    , id_         ( id )
     , type_       ( type )
     , options_    ( options )
 {
@@ -79,15 +62,6 @@ TerrainObjectProxy::~TerrainObjectProxy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy operator==
-// Created: MGD 2009-11-2
-// -----------------------------------------------------------------------------
-bool TerrainObjectProxy::operator==( const TerrainObjectProxy& object ) const
-{
-    return &object_ == &object.object_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::Update
 // Created: SLG 2010-06-22
 // -----------------------------------------------------------------------------
@@ -102,10 +76,9 @@ void TerrainObjectProxy::DoUpdate( const sword::UrbanUpdate& /*msg*/ )
 // -----------------------------------------------------------------------------
 QString TerrainObjectProxy::GetName() const
 {
-    const std::string& name = object_.GetName();
-    if ( name.empty() )
-        return QString( tools::translate( "Urban", "Urban block[%1]" ).arg( object_.GetId() ) );
-    return name.c_str();
+    if( name_.empty() )
+        return QString( tools::translate( "Urban", "Urban block[%1]" ).arg( id_ ) );
+    return name_.c_str();
 }
 
 // -----------------------------------------------------------------------------

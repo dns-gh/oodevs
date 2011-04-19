@@ -70,7 +70,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     for( int i = 0; i < message.location().coordinates().elem_size(); ++i )
         footPrint.Add( static_.coordinateConverter_.ConvertToXY( message.location().coordinates().elem( i ) ) );
     urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, *object, id, QString( name.c_str() ), static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, *object, name, id, static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( message.attributes() ) );
     const kernel::UrbanColor_ABC& color = pTerrainObject->Get< kernel::UrbanColor_ABC >();

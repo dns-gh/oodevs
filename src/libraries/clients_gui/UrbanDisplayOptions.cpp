@@ -17,7 +17,6 @@
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Usages_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
-#include <urban/ColorAttribute.h>
 
 using namespace gui;
 

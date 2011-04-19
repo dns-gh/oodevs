@@ -62,8 +62,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, unsigned int id, const QString& name, const kernel::ObjectType& type, UrbanDisplayOptions& options );
-             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, const kernel::ObjectType& type, UrbanDisplayOptions& options );
+             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, const std::string& name,
+                                 unsigned int id, const kernel::ObjectType& type, UrbanDisplayOptions& options );
     virtual ~TerrainObjectProxy();
     //@}
 
@@ -71,11 +71,6 @@ public:
     //@{
     TerrainObjectProxy( const TerrainObjectProxy& );           //!< Copy constructor
     TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignment operator
-    //@}
-
-    //! @name Operators
-    //@{
-    bool operator==( const TerrainObjectProxy& ) const;
     //@}
 
     //! @name Accessors
@@ -130,6 +125,8 @@ private:
     //@{
     urban::TerrainObject_ABC& object_;
     kernel::Controllers& controllers_;
+    const std::string name_;
+    unsigned int id_;
     T_Humans humans_;
     T_BaseColor color_;
     const kernel::ObjectType& type_;

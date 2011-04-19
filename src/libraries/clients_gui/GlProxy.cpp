@@ -14,7 +14,6 @@
 #include "GlWidget.h"
 #include "Layer_ABC.h"
 #include "TooltipsLayer_ABC.h"
-#include <urban/UrbanDecoration.h>
 
 using namespace kernel;
 using namespace gui;
