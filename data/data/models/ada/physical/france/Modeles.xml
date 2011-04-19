@@ -476,6 +476,7 @@
         <mission name="GENIE Reprendre Travaux"/>
         <mission name="GENIE Retablir Itineraire"/>
         <mission name="Animer"/>
+        <mission name="S'Infiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -11500,4 +11501,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2831633015" -->
+<!-- signature="1782363641" -->
