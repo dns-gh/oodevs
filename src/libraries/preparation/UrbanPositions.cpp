@@ -18,9 +18,11 @@
 // Name: UrbanPositions constructor
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object )
-    : object_( object )
-    , height_( 0u )
+UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const kernel::UrbanColor_ABC& color )
+    : object_  ( object )
+    , color_   ( color )
+    , selected_( false )
+    , height_  ( 0u )
 {
     const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();;
     if( pPhysical && pPhysical->GetArchitecture() )
@@ -78,5 +80,14 @@ const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawDecoratedPolygon( *object_.GetFootprint(), object_.GetDecoration(), object_.GetName(), height_ );
+    tools.DrawDecoratedPolygon( *object_.GetFootprint(), color_, object_.GetName(), height_, selected_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::ToggleSelection
+// Created: LGY 2011-04-19
+// -----------------------------------------------------------------------------
+void UrbanPositions::ToggleSelection()
+{
+    selected_ = !selected_;
 }

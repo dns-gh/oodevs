@@ -13,7 +13,7 @@
 #include "Displayable_ABC.h"
 #include "Extension_ABC.h"
 #include "Drawable_ABC.h"
-#include <boost/noncopyable.hpp>
+#include "UrbanSelection_ABC.h"
 
 namespace kernel
 {
@@ -26,7 +26,7 @@ namespace kernel
 class UrbanPositions_ABC : public Extension_ABC
                          , public Displayable_ABC
                          , public Drawable_ABC
-                         , private boost::noncopyable
+                         , public UrbanSelection_ABC
 {
 public:
     //! @name Constructors/Destructor

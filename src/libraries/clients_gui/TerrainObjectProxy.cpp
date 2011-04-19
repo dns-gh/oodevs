@@ -15,6 +15,8 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Usages_ABC.h"
+#include "clients_kernel/UrbanColor_ABC.h"
+#include "clients_kernel/UrbanPositions_ABC.h"
 #include "protocol/Simulation.h"
 #include <urban/TerrainObject_ABC.h>
 #include <boost/foreach.hpp>
@@ -43,13 +45,6 @@ TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, TerrainObject_
 {
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
-    ColorAttribute* colorAttribute = object_.Retrieve< ColorAttribute >();
-    if( colorAttribute )
-    {
-        color_.red_ = colorAttribute->Red();
-        color_.green_ = colorAttribute->Green();
-        color_.blue_ = colorAttribute->Blue();
-    }
     UpdateColor();
     controllers_.Register( *this );
 }
@@ -68,13 +63,6 @@ TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, TerrainObject_
 {
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
-    ColorAttribute* colorAttribute = object_.Retrieve< ColorAttribute >();
-    if( colorAttribute )
-    {
-        color_.red_ = colorAttribute->Red();
-        color_.green_ = colorAttribute->Green();
-        color_.blue_ = colorAttribute->Blue();
-    }
     UpdateColor();
     controllers_.Register( *this );
 }
@@ -85,24 +73,9 @@ TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, TerrainObject_
 // -----------------------------------------------------------------------------
 TerrainObjectProxy::~TerrainObjectProxy()
 {
-    Restore();
+    Get< kernel::UrbanColor_ABC >().Restore();
     controllers_.Unregister( *this );
     Destroy();
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::Restore
-// Created: LGY 2011-01-11
-// -----------------------------------------------------------------------------
-void TerrainObjectProxy::Restore()
-{
-    ColorAttribute* colorAttribute = object_.Retrieve< ColorAttribute >();
-    if( colorAttribute )
-    {
-        colorAttribute->SetRed( color_.red_ );
-        colorAttribute->SetGreen( color_.green_ );
-        colorAttribute->SetBlue( color_.blue_ );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -163,15 +136,6 @@ void TerrainObjectProxy::CreateDictionary( Controller& controller )
     EntityImplementation< Object_ABC >::Attach( dictionary );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), EntityImplementation< Object_ABC >::id_ );
     dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), EntityImplementation< Object_ABC >::name_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::SetSelected
-// Created: FDS 2010-01-15
-// -----------------------------------------------------------------------------
-void TerrainObjectProxy::SetSelected( bool selected ) const
-{
-    object_.SetSelected( selected );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,10 +212,10 @@ void TerrainObjectProxy::NotifyUpdated( const UrbanDisplayOptions& )
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::UpdateColor()
 {
-    ColorAttribute* pColorAttribute = object_.Retrieve< ColorAttribute >();
-    Usages_ABC* pUsages = Retrieve< Usages_ABC >();
-    if( pUsages && !options_.SetColor( pColorAttribute, object_.GetLivingSpace(), humans_, *pUsages ) )
-        Restore();
+    const Usages_ABC* pUsages = Retrieve< Usages_ABC >();
+    UrbanColor_ABC* pColor = Retrieve< UrbanColor_ABC >();
+    if( pUsages && pColor && !options_.SetColor( *pColor, object_.GetLivingSpace(), humans_, *pUsages ) )
+        pColor->Restore();
 }
 
 // -----------------------------------------------------------------------------

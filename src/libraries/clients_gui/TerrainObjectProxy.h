@@ -91,7 +91,6 @@ public:
     virtual void DoUpdate( const sword::UrbanUpdate& msg );
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void Activate( kernel::ActionController& /*controller*/ ) const {}
-    virtual void SetSelected( bool selected ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Display( kernel::Displayer_ABC& ) const {}
     void UpdateHumans( const std::string& inhabitant, const T_BlockOccupation& occupations, bool alerted, bool confined, bool evacuated, float angriness );
@@ -102,7 +101,6 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
-    void Restore();
     float GetDensity() const;
     unsigned int GetHumans() const;
     void UpdateColor();

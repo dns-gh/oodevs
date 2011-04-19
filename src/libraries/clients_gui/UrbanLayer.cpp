@@ -92,10 +92,10 @@ void UrbanLayer::Reset2d()
 void UrbanLayer::NotifySelected( const TerrainObjectProxy* object )
 {
     if( selectedObject_ )
-        selectedObject_->SetSelected( false );
+        selectedObject_->Interface().Apply( &kernel::UrbanPositions_ABC::ToggleSelection );
     selectedObject_ = object;
     if( selectedObject_ )
-        selectedObject_->SetSelected( true );
+        selectedObject_->Interface().Apply( &kernel::UrbanPositions_ABC::ToggleSelection );
     EntityLayer< TerrainObjectProxy >::NotifySelected( object );
 }
 

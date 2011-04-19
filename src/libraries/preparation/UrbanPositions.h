@@ -17,9 +17,14 @@ namespace urban
     class TerrainObject_ABC;
 }
 
+namespace kernel
+{
+    class UrbanColor_ABC;
+}
+
 // =============================================================================
 /** @class  UrbanPositions
-    @brief  Urban oositions
+    @brief  Urban positions
 */
 // Created: JSR 2010-09-06
 // =============================================================================
@@ -28,7 +33,7 @@ class UrbanPositions : public kernel::UrbanPositions_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanPositions( const urban::TerrainObject_ABC& object );
+             UrbanPositions( const urban::TerrainObject_ABC& object, const kernel::UrbanColor_ABC& color );
     virtual ~UrbanPositions();
     //@}
 
@@ -39,12 +44,15 @@ public:
     virtual bool IsInside( const geometry::Point2f& point ) const;
     virtual const std::vector< geometry::Point2f >& Vertices() const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void ToggleSelection();
     //@}
 
 private:
     //! @name Member data
     //@{
     const urban::TerrainObject_ABC& object_;
+    const kernel::UrbanColor_ABC& color_;
+    bool selected_;
     unsigned int height_;
     //@}
 };

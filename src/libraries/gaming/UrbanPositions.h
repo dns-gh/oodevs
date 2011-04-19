@@ -17,11 +17,7 @@ namespace kernel
     class CoordinateConverter_ABC;
     class Viewport_ABC;
     class GlTools_ABC;
-}
-
-namespace urban
-{
-    class TerrainObject_ABC;
+    class UrbanColor_ABC;
 }
 
 namespace sword
@@ -41,8 +37,8 @@ class UrbanPositions : public kernel::UrbanPositions_ABC
 public:
     //! @name Constructors/Destructor
     //@{s
-             UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& location, const sword::UrbanAttributes& attributes,
-                             const kernel::CoordinateConverter_ABC& converter, const std::string& name );
+             UrbanPositions( const sword::Location& location, const sword::UrbanAttributes& attributes,
+                             const kernel::CoordinateConverter_ABC& converter, const std::string& name, const kernel::UrbanColor_ABC& color );
     virtual ~UrbanPositions();
     //@}
 
@@ -53,13 +49,15 @@ public:
     virtual bool IsInside( const geometry::Point2f& point ) const;
     virtual const std::vector< geometry::Point2f >& Vertices() const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void ToggleSelection();
     //@}
 
 private:
     //! @name Member data
     //@{
-    const urban::TerrainObject_ABC& object_;
     const std::string name_;
+    const kernel::UrbanColor_ABC& color_;
+    bool selected_;
     unsigned int height_;
     geometry::Polygon2f polygon_;
     geometry::Rectangle2f boundingBox_;

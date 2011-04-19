@@ -17,6 +17,7 @@
 #include "InfrastructureAttribute.h"
 #include "UrbanPositions.h"
 #include "Usages.h"
+#include "UrbanColor.h"
 #include "Architecture.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_gui/Usages.h"
@@ -228,7 +229,9 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject, objectTypes_.StringResolver< ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
     PropertiesDictionary& dictionary = pTerrainObject->Get< PropertiesDictionary >();
     pTerrainObject->Attach< StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
-    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( urbanObject ) );
+    pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( urbanObject ) );
+    const kernel::UrbanColor_ABC& color = pTerrainObject->Get< kernel::UrbanColor_ABC >();
+    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( urbanObject, color ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( urbanObject, std::auto_ptr< Usages_ABC >( new gui::Usages( dictionary ) ) ) );
     pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( urbanObject, std::auto_ptr< Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
     const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();

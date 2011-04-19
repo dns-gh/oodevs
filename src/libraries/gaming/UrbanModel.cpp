@@ -15,6 +15,7 @@
 #include "StaticModel.h"
 #include "Usages.h"
 #include "Architecture.h"
+#include "UrbanColor.h"
 #include "StructuralStateAttribute.h"
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
@@ -26,7 +27,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
-#include <urban/ColorAttribute.h>
+#include "clients_kernel/UrbanColor_ABC.h"
 #include <urban/Model.h>
 #include <urban/UrbanFactory.h>
 #include <urban/TerrainObject_ABC.h>
@@ -55,35 +56,6 @@ UrbanModel::~UrbanModel()
     Purge();
 }
 
-namespace
-{
-    void AttachExtensions( urban::TerrainObject_ABC& object, const sword::UrbanCreation& message )
-    {
-        if( !message.has_attributes() )
-            return;
-        if( message.attributes().has_color() )
-        {
-            const sword::RgbaColor& color = message.attributes().color();
-            urban::ColorAttribute* colorAttribute = object.Retrieve< urban::ColorAttribute >();
-            if( !colorAttribute )
-            {
-                colorAttribute = new urban::ColorAttribute( object );
-                object.Attach( *colorAttribute );
-            }
-            colorAttribute->SetRed( static_cast< unsigned short >( color.red() ) );
-            colorAttribute->SetGreen( static_cast< unsigned short >( color.green() ) );
-            colorAttribute->SetBlue( static_cast< unsigned short >( color.blue() ) );
-            colorAttribute->SetAlpha( color.alpha() );
-        }
-        else
-        {
-            urban::ColorAttribute* colorAttribute = object.Retrieve< urban::ColorAttribute >();
-            if( colorAttribute )
-                colorAttribute->SetAlpha( 0.7f );
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::Create
 // Created: SLG 2009-10-205
@@ -98,10 +70,11 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     for( int i = 0; i < message.location().coordinates().elem_size(); ++i )
         footPrint.Add( static_.coordinateConverter_.ConvertToXY( message.location().coordinates().elem( i ) ) );
     urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
-    AttachExtensions( *object, message );
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, *object, id, QString( name.c_str() ), static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
-    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( *object, message.location(), message.attributes(), static_.coordinateConverter_, name ) );
+    pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( message.attributes() ) );
+    const kernel::UrbanColor_ABC& color = pTerrainObject->Get< kernel::UrbanColor_ABC >();
+    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), message.attributes(), static_.coordinateConverter_, name, color ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( message.attributes(), std::auto_ptr< kernel::Usages_ABC >( new gui::Usages( dictionary ) ) ) );
     if( message.attributes().has_architecture() )
         pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( message.attributes(), std::auto_ptr< kernel::Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );

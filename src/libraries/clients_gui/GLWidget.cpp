@@ -12,6 +12,7 @@
 #include "GlRenderPass_ABC.h"
 #include "IconLayout.h"
 #include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/UrbanColor_ABC.h"
 #include <urban/UrbanDecoration.h>
 #include <urban/ColorRGBA.h>
 #include <graphics/MapLayer_ABC.h>
@@ -479,8 +480,8 @@ void GlWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
 // Name: GlWidget::DrawDecoratedPolygon
 // Created: RPD 2009-12-15
 // -----------------------------------------------------------------------------
-void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const urban::UrbanDecoration* decoration,
-                                     const std::string& name, unsigned int height ) const
+void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor,
+                                     const std::string& name, unsigned int height, bool selected ) const
 {
     //TEMP SLG
     if( polygon.Vertices().empty() )
@@ -489,24 +490,13 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
     const T_PointVector& footprintPoints = polygon.Vertices();
     if( footprintPoints.empty() )
         return;
-    if( decoration == 0 )
-    {
-        DrawConvexPolygon( footprintPoints );
-        return;
-    }
     float color[ 4 ];
-    color[ 0 ] = 0.8f;
-    color[ 1 ] = 0.8f;
-    color[ 2 ] = 0.8f;
-    float baseAlpha = 0.5f;
-    if( decoration->HasColor() )
-    {
-        color[ 0 ] = decoration->Color().FloatRed();
-        color[ 1 ] = decoration->Color().FloatGreen();
-        color[ 2 ] = decoration->Color().FloatBlue();
-        if ( decoration->Color().TransparencyUsed() )
-            baseAlpha = decoration->Color().Alpha() * 0.9f;
-    }
+    color[ 0 ] = static_cast< float >( urbanColor.Red() ) / 255.f;
+    color[ 1 ] = static_cast< float >( urbanColor.Green() ) / 255.f;
+    color[ 2 ] = static_cast< float >( urbanColor.Blue() ) / 255.f;
+    float baseAlpha = urbanColor.Alpha();
+    if( baseAlpha >= 0 )
+        baseAlpha = urbanColor.Alpha() * 0.9f;
     color[ 3 ] = baseAlpha;
     glEnable( GL_STENCIL_TEST );          // enable stencil test
 
@@ -565,14 +555,14 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const u
         glDrawArrays( GL_LINE_LOOP, 0, face.size() );
     }
 
-    if( decoration->Selected() )
+    if( selected )
         color[ 3 ] = std::min ( 1.f, baseAlpha * 1.6f );
     else
         color[ 3 ] = baseAlpha;
     glColor4fv( color );
     glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &footprintPoints.front() ) );
     glDrawArrays( GL_LINE_LOOP, 0, roofPoints.size() );
-    if( decoration->Selected() )
+    if( selected )
     {
         UpdateStipple();
         glLineWidth( 1.5 );

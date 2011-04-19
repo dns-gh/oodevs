@@ -16,6 +16,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Usages_ABC.h"
+#include "clients_kernel/UrbanColor_ABC.h"
 #include <urban/ColorAttribute.h>
 
 using namespace gui;
@@ -93,11 +94,11 @@ void UrbanDisplayOptions::OptionChanged( const std::string& name, const kernel::
 
 namespace
 {
-    void SetUrbanColor( QColor& color, urban::ColorAttribute& colorAttribute )
+    void SetUrbanColor( QColor& color, kernel::UrbanColor_ABC& urbanColor )
     {
-        colorAttribute.SetRed( static_cast< unsigned short >( color.red() ) );
-        colorAttribute.SetGreen( static_cast< unsigned short >( color.green() ) );
-        colorAttribute.SetBlue( static_cast< unsigned short >( color.blue() ) );
+        urbanColor.SetColor( static_cast< unsigned short >( color.red() ),
+                             static_cast< unsigned short >( color.green() ),
+                             static_cast< unsigned short >( color.blue() ) );
     }
 }
 
@@ -105,55 +106,52 @@ namespace
 // Name: UrbanDisplayOptions::SetColor
 // Created: LDC 2011-03-25
 // -----------------------------------------------------------------------------
-bool UrbanDisplayOptions::SetColor( urban::ColorAttribute* attribute, float livingSpace, const T_HumansStrMap& humans, const kernel::Usages_ABC& usages )
+bool UrbanDisplayOptions::SetColor( kernel::UrbanColor_ABC& color, float livingSpace, const T_HumansStrMap& humans, const kernel::Usages_ABC& usages )
 {
-    if( attribute )
+    if( densityColor_ )
     {
-        if( densityColor_ )
+        unsigned int nbrHumans = 0;
+        for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
+            for( CIT_BlockOccupation it = human->second.persons_.begin(); it != human->second.persons_.end(); ++ it )
+                nbrHumans += it->second;
+        if( nbrHumans == 0 )
+            SetUrbanColor( unoccupiedDensity_, color );
+        else
         {
-            unsigned int nbrHumans = 0;
-            for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
-                for( CIT_BlockOccupation it = human->second.persons_.begin(); it != human->second.persons_.end(); ++ it )
-                    nbrHumans += it->second;
-            if( nbrHumans == 0 )
-                SetUrbanColor( unoccupiedDensity_, *attribute );
-            else
-            {
-                float density = nbrHumans / livingSpace;
-                QColor result = pGradient_->Compute( density, attribute->Alpha(), minDensity_, maxDensity_ );
-                SetUrbanColor( result, *attribute );
-            }
-            return true;
+            float density = nbrHumans / livingSpace;
+            QColor result = pGradient_->Compute( density, color.Alpha(), minDensity_, maxDensity_ );
+            SetUrbanColor( result, color );
         }
-        else if( accommodationColor_ )
+        return true;
+    }
+    else if( accommodationColor_ )
+    {
+        unsigned int nbrHumans = 0;
+        for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
         {
-            unsigned int nbrHumans = 0;
-            for( T_HumansStrMap::const_iterator human = humans.begin(); human != humans.end(); ++human )
+            if( populationsDisplayed_.find( human->first ) != populationsDisplayed_.end() )
             {
-                if( populationsDisplayed_.find( human->first ) != populationsDisplayed_.end() )
-                {
-                    CIT_BlockOccupation occupation = human->second.persons_.find( accommodationDisplayed_ );
-                    if( occupation != human->second.persons_.end() )
-                        nbrHumans += occupation->second;
-                }
+                CIT_BlockOccupation occupation = human->second.persons_.find( accommodationDisplayed_ );
+                if( occupation != human->second.persons_.end() )
+                    nbrHumans += occupation->second;
             }
-            if( nbrHumans == 0.f )
-                SetUrbanColor( unoccupiedAccommodation_, *attribute );
-            else
-            {
-                float proportion = static_cast< float >( usages.Find( accommodationDisplayed_.ascii() ) ) / 100.f;
-                const kernel::AccommodationType* accommodationType = accommodationTypes_.Find( accommodationDisplayed_.ascii() );
-                float nominalCapacity = accommodationType ? accommodationType->GetNominalCapacity() : 0.f;
-                float density;
-                if( livingSpace == 0.f || proportion == 0.f || nominalCapacity == 0.f )
-                    density = std::numeric_limits< float >::infinity();
-                else
-                    density = nbrHumans / ( livingSpace * proportion * nominalCapacity );
-                QColor result = pAccommodationGradient_->Compute( density, attribute->Alpha(), minAccommodationDensity_, maxAccommodationDensity_ );
-                SetUrbanColor( result, *attribute );
-            }
-            return true;
         }
+        if( nbrHumans == 0.f )
+            SetUrbanColor( unoccupiedAccommodation_, color );
+        else
+        {
+            float proportion = static_cast< float >( usages.Find( accommodationDisplayed_.ascii() ) ) / 100.f;
+            const kernel::AccommodationType* accommodationType = accommodationTypes_.Find( accommodationDisplayed_.ascii() );
+            float nominalCapacity = accommodationType ? accommodationType->GetNominalCapacity() : 0.f;
+            float density;
+            if( livingSpace == 0.f || proportion == 0.f || nominalCapacity == 0.f )
+                density = std::numeric_limits< float >::infinity();
+            else
+                density = nbrHumans / ( livingSpace * proportion * nominalCapacity );
+            QColor result = pAccommodationGradient_->Compute( density, color.Alpha(), minAccommodationDensity_, maxAccommodationDensity_ );
+            SetUrbanColor( result, color );
+        }
+        return true;
     }
     return false;
 }

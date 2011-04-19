@@ -12,17 +12,17 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
-#include <urban/TerrainObject_ABC.h>
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions constructor
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const sword::Location& location, const sword::UrbanAttributes& attributes,
-                                const kernel::CoordinateConverter_ABC& converter, const std::string& name )
-    : object_( object )
-    , name_  ( name )
-    , height_( 0u )
+UrbanPositions::UrbanPositions( const sword::Location& location, const sword::UrbanAttributes& attributes,
+                                const kernel::CoordinateConverter_ABC& converter, const std::string& name, const kernel::UrbanColor_ABC& color )
+    : name_    ( name )
+    , color_   ( color )
+    , selected_( false )
+    , height_  ( 0u )
 {
     for( int i = 0; i < location.coordinates().elem_size(); ++i )
         polygon_.Add( converter.ConvertToXY( location.coordinates().elem( i ) ) );
@@ -74,7 +74,7 @@ bool UrbanPositions::IsInside( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawDecoratedPolygon( polygon_, object_.GetDecoration(), name_, height_ );
+    tools.DrawDecoratedPolygon( polygon_, color_, name_, height_, selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,4 +84,13 @@ void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Vie
 const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 {
     return polygon_.Vertices();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::ToggleSelection
+// Created: LGY 2011-04-19
+// -----------------------------------------------------------------------------
+void UrbanPositions::ToggleSelection()
+{
+    selected_ = !selected_;
 }
