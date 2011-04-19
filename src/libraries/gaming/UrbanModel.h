@@ -26,11 +26,6 @@ namespace sword
     class ObjectUpdate;
 }
 
-namespace urban
-{
-    class Model;
-}
-
 namespace kernel
 {
     class Controllers;
@@ -74,7 +69,6 @@ private:
     kernel::Controllers& controllers_;
     ResourceNetworkModel& resourceNetwork_;
     const StaticModel& static_;
-    std::auto_ptr< urban::Model > urbanModel_;
     std::auto_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;
     UrbanBlockDetectionMap& urbanBlockDetectionMap_;
     //@}

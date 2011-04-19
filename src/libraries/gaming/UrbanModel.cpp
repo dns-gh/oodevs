@@ -28,9 +28,6 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
-#include <urban/Model.h>
-#include <urban/UrbanFactory.h>
-#include <urban/TerrainObject_ABC.h>
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor
@@ -40,7 +37,6 @@ UrbanModel::UrbanModel( kernel::Controllers& controllers, ResourceNetworkModel& 
     : controllers_           ( controllers )
     , resourceNetwork_       ( resourceNetwork )
     , static_                ( staticModel )
-    , urbanModel_            ( new urban::Model() )
     , urbanDisplayOptions_   ( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
     , urbanBlockDetectionMap_( map )
 {
@@ -65,11 +61,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     unsigned long id = message.object().id();
     if( Find( id ) )
         return;
-    geometry::Polygon2f footPrint;
     std::string name( message.name() );
-    for( int i = 0; i < message.location().coordinates().elem_size(); ++i )
-        footPrint.Add( static_.coordinateConverter_.ConvertToXY( message.location().coordinates().elem( i ) ) );
-    urban::TerrainObject_ABC* object = urbanModel_->GetFactory().CreateUrbanObject( id, name, &footPrint );
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, name, id, static_.objectTypes_.tools::StringResolver< kernel::ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( message.attributes() ) );
@@ -137,7 +129,6 @@ void UrbanModel::Update( const sword::ObjectUpdate& message )
 void UrbanModel::Purge()
 {
     DeleteAll();
-    urbanModel_->Purge();
 }
 
 // -----------------------------------------------------------------------------
