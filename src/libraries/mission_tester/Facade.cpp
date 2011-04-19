@@ -77,6 +77,7 @@ void Facade::Run()
     exercise.Register( *this );
     client.Register( *this );
     model.Register( *this );
+    client.Connect();
     Timeout timeout( 600000 ); // $$$$ PHC 2011-04-19: 10m
     try
     {

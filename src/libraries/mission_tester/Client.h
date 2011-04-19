@@ -51,6 +51,7 @@ public:
     bool IsConnected() const;
     bool IsAuthentified() const;
     void Register( const Listener_ABC& listener );
+    void Connect();
     //@}
 
 private:

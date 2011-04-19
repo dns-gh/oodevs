@@ -11,6 +11,7 @@
 #include "Client.h"
 #include "Listener_ABC.h"
 #include <boost/foreach.hpp>
+#include <iostream>
 
 using namespace mission_tester;
 
@@ -24,7 +25,6 @@ Client::Client( SwordMessageHandler_ABC& handler, const std::string& host, unsig
     , authentified_( false )
 {
     RegisterMessageHandler( &handler );
-    Connect( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -43,6 +43,15 @@ Client::~Client()
 void Client::Send( const sword::ClientToSim& message )
 {
     SwordProxy::Send( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Client::Connect
+// Created: PHC 2011-04-19
+// -----------------------------------------------------------------------------
+void Client::Connect()
+{
+    SwordProxy::Connect( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,11 +123,11 @@ void Client::OnConnectionSucceeded( const std::string& endpoint )
 // Name: Client::OnConnectionFailed
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-void Client::OnConnectionFailed( const std::string& /*endpoint*/, const std::string& /*reason*/ )
+void Client::OnConnectionFailed( const std::string& endpoint, const std::string& reason )
 {
     connected_ = false;
     authentified_ = false;
-    throw std::runtime_error( "connection failed" );
+    std::cerr << "Connection failed for '" << endpoint << "', :" << reason << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -147,10 +156,10 @@ void Client::OnAuthenticationSucceeded( const std::string& profile )
 // Name: Client::OnAuthenticationFailed
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-void Client::OnAuthenticationFailed( const std::string& /*profile*/, const std::string& /*reason*/ )
+void Client::OnAuthenticationFailed( const std::string& profile, const std::string& reason )
 {
     authentified_ = false;
-    throw std::runtime_error( "authentication failed" );
+    std::cerr << "Authentication failed for '" << profile << "', :" << reason << std::endl;
 }
 
 // -----------------------------------------------------------------------------
