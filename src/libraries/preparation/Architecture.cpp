@@ -52,3 +52,21 @@ const std::string& Architecture::GetMaterial() const
 {
     return pArchitecture_->GetMaterial();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetFloorNumber
+// Created: LGY 2011-04-19
+// -----------------------------------------------------------------------------
+unsigned int Architecture::GetFloorNumber() const
+{
+    return pArchitecture_->GetFloorNumber();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetOccupation
+// Created: LGY 2011-04-19
+// -----------------------------------------------------------------------------
+unsigned int Architecture::GetOccupation() const
+{
+    return pArchitecture_->GetOccupation();
+}

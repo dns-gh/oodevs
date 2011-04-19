@@ -226,7 +226,7 @@ void UrbanModel::Purge()
 // -----------------------------------------------------------------------------
 void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
 {
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject, urbanObject.GetName(), urbanObject.GetId(), objectTypes_.StringResolver< ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject.GetName(), urbanObject.GetId(), objectTypes_.StringResolver< ObjectType >::Get( "urban block" ), *urbanDisplayOptions_ );
     PropertiesDictionary& dictionary = pTerrainObject->Get< PropertiesDictionary >();
     pTerrainObject->Attach< StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( urbanObject ) );

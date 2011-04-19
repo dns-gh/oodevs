@@ -31,11 +31,6 @@ namespace sword
     class UrbanUpdate;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 namespace gui
 {
     class UrbanDisplayOptions;
@@ -62,7 +57,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( kernel::Controllers& controllers, urban::TerrainObject_ABC& object, const std::string& name,
+             TerrainObjectProxy( kernel::Controllers& controllers, const std::string& name,
                                  unsigned int id, const kernel::ObjectType& type, UrbanDisplayOptions& options );
     virtual ~TerrainObjectProxy();
     //@}
@@ -96,6 +91,7 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     float GetDensity() const;
+    float GetLivingSpace() const;
     unsigned int GetHumans() const;
     void UpdateColor();
     //@}
@@ -122,10 +118,10 @@ private:
 private:
     //! @name Member data
     //@{
-    urban::TerrainObject_ABC& object_;
     kernel::Controllers& controllers_;
     const std::string name_;
     unsigned int id_;
+    float density_;
     T_Humans humans_;
     T_BaseColor color_;
     const kernel::ObjectType& type_;

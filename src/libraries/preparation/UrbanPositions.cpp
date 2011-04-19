@@ -91,3 +91,13 @@ void UrbanPositions::ToggleSelection()
 {
     selected_ = !selected_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::ComputeArea
+// Created: LGY 2011-04-19
+// -----------------------------------------------------------------------------
+float UrbanPositions::ComputeArea() const
+{
+    return object_.GetFootprint()->ComputeArea();
+
+}

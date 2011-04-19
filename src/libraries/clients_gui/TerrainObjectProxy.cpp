@@ -17,13 +17,12 @@
 #include "clients_kernel/Usages_ABC.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_kernel/Architecture_ABC.h"
 #include "protocol/Simulation.h"
-#include <urban/TerrainObject_ABC.h>
 #include <boost/foreach.hpp>
 
 using namespace gui;
 using namespace kernel;
-using namespace urban;
 
 const QString TerrainObjectProxy::typeName_ = "terrainObjectProxy";
 
@@ -33,11 +32,10 @@ const QString TerrainObjectProxy::typeName_ = "terrainObjectProxy";
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, TerrainObject_ABC& object, const std::string& name, unsigned int id
+TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, const std::string& name, unsigned int id
                                       , const ObjectType& type, UrbanDisplayOptions& options )
     : EntityImplementation< Object_ABC >( controllers.controller_, id, name.c_str() )
     , Creatable< TerrainObjectProxy >( controllers.controller_, this )
-    , object_     ( object )
     , controllers_( controllers )
     , name_       ( name )
     , id_         ( id )
@@ -117,7 +115,7 @@ void TerrainObjectProxy::CreateDictionary( Controller& controller )
 // -----------------------------------------------------------------------------
 void TerrainObjectProxy::DisplayInSummary( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Block", "Density:" ), GetDensity() );
+    displayer.Display( tools::translate( "Block", "Density:" ), density_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,6 +154,7 @@ void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, const T_Bl
     const QString keyAngriness = keyBase + tools::translate( "Block", "Angriness" );
     if( !dictionary.HasKey( keyAngriness ) )
         dictionary.Register( constEntity, keyAngriness, human.angriness_ );
+    density_ = GetDensity();
     UpdateColor();
 }
 
@@ -176,7 +175,7 @@ void TerrainObjectProxy::UpdateColor()
 {
     const Usages_ABC* pUsages = Retrieve< Usages_ABC >();
     UrbanColor_ABC* pColor = Retrieve< UrbanColor_ABC >();
-    if( pUsages && pColor && !options_.SetColor( *pColor, object_.GetLivingSpace(), humans_, *pUsages ) )
+    if( pUsages && pColor && !options_.SetColor( *pColor, GetLivingSpace(), humans_, *pUsages ) )
         pColor->Restore();
 }
 
@@ -186,7 +185,10 @@ void TerrainObjectProxy::UpdateColor()
 // -----------------------------------------------------------------------------
 float TerrainObjectProxy::GetDensity() const
 {
-    return GetHumans() / object_.GetLivingSpace();
+    float livingSpace = GetLivingSpace();
+    if( livingSpace == 0 )
+        return 0.f;
+    return GetHumans() / GetLivingSpace();
 }
 
 // -----------------------------------------------------------------------------
@@ -200,4 +202,19 @@ unsigned int TerrainObjectProxy::GetHumans() const
         for( CIT_BlockOccupation it = human.second.persons_.begin(); it != human.second.persons_.end(); ++ it )
             humans += it->second;
     return humans;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::GetLivingSpace
+// Created: LGY 2011-04-19
+// -----------------------------------------------------------------------------
+float TerrainObjectProxy::GetLivingSpace() const
+{
+    if( const kernel::UrbanPositions_ABC* positions = Retrieve< kernel::UrbanPositions_ABC >() )
+    {
+        const kernel::Architecture_ABC* architecture = Retrieve< kernel::Architecture_ABC >();
+        float factor = architecture ? ( architecture->GetFloorNumber() + 1 ) * ( static_cast< float >( architecture->GetOccupation() ) / 100.f ) : 1.f;
+        return positions->ComputeArea() * factor;
+    }
+    return 0;
 }
