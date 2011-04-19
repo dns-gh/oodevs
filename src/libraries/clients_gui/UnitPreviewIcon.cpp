@@ -79,7 +79,11 @@ void UnitPreviewIcon::NotifySelected( const AgentType& type )
 void UnitPreviewIcon::NotifySelected( const AutomatType& type )
 {
     symbol_ = type.GetSymbol();
-    level_ = MergingTacticalHierarchies::IncreaseLevel( type.GetTypePC()->GetLevelSymbol() ); // $$$$ SBO 2007-10-16:
+    std::string levelSymbol = type.GetTypePC()->GetLevelSymbol();
+    if ( !levelSymbol.empty() )
+        level_ = MergingTacticalHierarchies::IncreaseLevel( levelSymbol ); // $$$$ SBO 2007-10-16:
+    else
+        level_.erase();
     UpdateSymbol();
 }
 
