@@ -160,17 +160,6 @@ void TerrainObjectProxy::UpdateHumans( const std::string& inhabitant, const T_Bl
 }
 
 // -----------------------------------------------------------------------------
-// Name: TerrainObjectProxy::GetObject
-// Created: JSR 2010-11-30
-// -----------------------------------------------------------------------------
-const TerrainObject_ABC* TerrainObjectProxy::GetObject() const
-{
-    // $$$$ JSR 2010-11-30: Utilisé pour le display dans UrbanKnowledge pour kernel::Formatter< TerrainObject_ABC >
-    // A supprimer quand TerrainObjectProxy sera passé dans clients_kernel
-    return &object_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::NotifyUpdated
 // Created: LDC 2011-03-25
 // -----------------------------------------------------------------------------

@@ -16,7 +16,6 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/TerrainObjectProxy.h"
-#include "urban/TerrainObject_ABC.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -44,7 +43,7 @@ namespace
                 const gui::TerrainObjectProxy& object = it.NextElement();
                 if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
                     if( poly.IsInside( positions->Barycenter() ) )
-                        vector_.push_back( &object );
+                        vector_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
             }
         }
 
@@ -121,7 +120,7 @@ void InhabitantPositions::ReadLivingUrbanBlock( xml::xistream& xis, const UrbanM
     if( !pObject )
         xis.error( "error in loading living urban block for population" );
     else
-        livingUrbanObject_.push_back( pObject );
+        livingUrbanObject_.push_back( boost::make_tuple( pObject->GetId(), pObject->GetName(), pObject ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +131,7 @@ void InhabitantPositions::ComputePosition()
 {
     geometry::Polygon2f poly;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        if( const kernel::UrbanPositions_ABC* positions = ( *it )->Retrieve< kernel::UrbanPositions_ABC >() )
+        if( const kernel::UrbanPositions_ABC* positions = ( *it ).get< 2 >()->Retrieve< kernel::UrbanPositions_ABC >() )
             poly.Add( positions->Barycenter() );
     if( !poly.IsEmpty() )
         position_ = poly.Barycenter();
@@ -148,7 +147,7 @@ void InhabitantPositions::SerializeAttributes( xml::xostream& xos ) const
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
         xos << xml::start( "urban-block" )
-                << xml::attribute( "id", ( *it )->GetId() )
+                << xml::attribute( "id", ( *it ).get< 0 >() )
             << xml::end;
     }
     xos << xml::end;
@@ -234,7 +233,7 @@ void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const kernel
 {
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
-        const gui::TerrainObjectProxy& object = **it;
+        const gui::TerrainObjectProxy& object = *( *it ).get< 2 >();
         if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
             tools.DrawConvexPolygon( positions->Vertices() );
     }
@@ -247,5 +246,5 @@ void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const kernel
 void InhabitantPositions::UpdateDico( kernel::Inhabitant_ABC& inhabitant, kernel::PropertiesDictionary& dico )
 {
     for ( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        dico.Register( inhabitant, tools::translate( "Population", "Living Area/%1" ).arg( ( *it )->GetId() ), ( *it )->GetObject()->GetName() );
+        dico.Register( inhabitant, tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ), ( *it ).get< 1 >() );
 }

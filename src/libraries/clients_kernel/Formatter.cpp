@@ -12,7 +12,6 @@
 #include "Tools.h"
 #include "Units.h"
 #include "UrbanKnowledge_ABC.h"
-#include <urban/TerrainObject_ABC.h>
 
 using namespace kernel;
 
@@ -58,11 +57,6 @@ void Formatter< ValueNotSet >::operator()( const ValueNotSet& , Displayer_ABC& d
 void Formatter< Unit >::operator()( const Unit& value, Displayer_ABC& displayer ) const
 {
     displayer.AddToDisplay( value.AsString() );
-}
-
-void Formatter< urban::TerrainObject_ABC >::operator()( const urban::TerrainObject_ABC& value, Displayer_ABC& displayer ) const
-{
-    displayer.AddToDisplay( QString( value.GetName().c_str() ) );
 }
 
 void Formatter< kernel::UrbanKnowledge_ABC >::operator()( const kernel::UrbanKnowledge_ABC& value, Displayer_ABC& displayer ) const

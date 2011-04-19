@@ -14,6 +14,7 @@
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "geometry/types.h"
+#include <boost/tuple/tuple.hpp>
 
 namespace kernel
 {
@@ -49,9 +50,10 @@ class InhabitantPositions : public kernel::Positions
 public:
     //! @name Types
     //@{
-    typedef std::vector< const gui::TerrainObjectProxy* > T_UrbanObjectVector;
-    typedef T_UrbanObjectVector::iterator                IT_UrbanObjectVector;
-    typedef T_UrbanObjectVector::const_iterator         CIT_UrbanObjectVector;
+    typedef boost::tuple< unsigned long, std::string, const gui::TerrainObjectProxy* > T_UrbanObject;
+    typedef std::vector< T_UrbanObject >                                               T_UrbanObjectVector;
+    typedef T_UrbanObjectVector::iterator                                             IT_UrbanObjectVector;
+    typedef T_UrbanObjectVector::const_iterator                                      CIT_UrbanObjectVector;
     //@}
 
 public:

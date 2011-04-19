@@ -76,7 +76,6 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
-    const urban::TerrainObject_ABC* GetObject() const;
     virtual const kernel::ObjectType& GetType() const { return type_; }
     virtual QString GetTypeName() const;
     //@}
