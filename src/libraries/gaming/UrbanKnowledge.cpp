@@ -63,7 +63,7 @@ void UrbanKnowledge::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Urban", "Details" ) )
                 .Display( tools::translate( "Urban", "Identifier:" ), id_ )
-                .Display( tools::translate( "Urban", "Associated block:" ), pRealUrban_ )
+                .Display( tools::translate( "Urban", "Associated block:" ), static_cast< kernel::Object_ABC* >( pRealUrban_ ) )
                 .Display( tools::translate( "Urban", "Perceived:" ), bIsPerceived_ )
                 .Display( tools::translate( "Urban", "Progress:" ), rProgress_ )
                 .Display( tools::translate( "Urban", "Maximum Progress:" ), rMaxProgress_ ) ;
@@ -77,7 +77,7 @@ void UrbanKnowledge::Display( Displayer_ABC& displayer ) const
 void UrbanKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
     if( pRealUrban_ && pRealUrban_->GetName().length() )
-        displayer.Display( tools::translate( "Urban", "Known blocks" ), pRealUrban_ );
+        displayer.Display( tools::translate( "Urban", "Known blocks" ), static_cast< kernel::Object_ABC* >( pRealUrban_ ) );
     else
         displayer.Display( tools::translate( "Urban", "Known blocks" ), id_ );
 }

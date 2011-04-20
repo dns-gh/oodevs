@@ -37,8 +37,7 @@ class UrbanBlockDetectionMap;
 
 // =============================================================================
 /** @class  UrbanModel
-    @brief  UrbanModel
-    // $$$ FDS 2009-01-11: inherit urban::Model to remove private aggregated model
+    @brief  Urban model
 */
 // Created: SLG 2009-02-10
 // =============================================================================
