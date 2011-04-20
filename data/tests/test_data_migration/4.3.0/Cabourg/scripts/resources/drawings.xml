@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<shapes>
+  <shape category="Divers" color="#000000" template="Polygone de test" type="polygon" name="Zone P1 - support trigger">
+    <point x="52451.1" y="59848.8"/>
+    <point x="53810.1" y="53569.1"/>
+    <point x="45562.1" y="54881.3"/>
+    <point x="37173.5" y="58349.2"/>
+    <point x="26113.6" y="56146.6"/>
+    <point x="24051.6" y="62004.5"/>
+    <point x="37735.8" y="63879.1"/>
+  </shape>
+  <shape category="Divers" color="#000000" template="Polygone de test" type="polygon" name="Zone P1 - P2 trigger">
+    <point x="16395.2" y="86748.7"/>
+    <point x="17191.9" y="83374.5"/>
+    <point x="39264.8" y="83890"/>
+    <point x="39780.3" y="87732.8"/>
+  </shape>
+</shapes>
+<!-- signature="3737872416" -->

@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+
+<!-- Missions de niveau Pion -->
+
+<!-- Commun -->
+
+  <action id="26" name="Load" target="9" time="2009-05-05T18:44:04" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="AgentBM" value="10"/>
+  </action>
+
+  <action id="1" name="Follow1" target="11" time="2009-05-05T18:36:34" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="PointBM">
+      <location type="point">
+        <point coordinates="31TCM1359489668"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="17" name="Follow2" target="12" time="2009-05-05T18:37:34" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="AgentBM" value="11"/>
+  </action>
+
+<!-- Observe & Reco -->
+
+<action id="30" name="MoveAndObserve" target="8" time="2009-05-05T13:37:04" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0708187985"/>
+        <point coordinates="31TCM1050083658"/>
+        <point coordinates="31TCM1528380499"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0924991950"/>
+        <point coordinates="31TCM1368891957"/>
+        <point coordinates="31TCM1754989349"/>
+        <point coordinates="31TCM1994985745"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="PointBM">
+      <location type="point">
+        <point coordinates="31TCM1435687457"/>
+      </location>
+    </parameter>
+  </action>
+
+  <action id="18" name="ObservePoint" target="11" time="2009-05-05T12:55:24" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0708187985"/>
+        <point coordinates="31TCM1050083658"/>
+        <point coordinates="31TCM1528380499"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0924991950"/>
+        <point coordinates="31TCM1368891957"/>
+        <point coordinates="31TCM1754989349"/>
+        <point coordinates="31TCM1994985745"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="target" type="PointBM">
+      <location type="point">
+        <point coordinates="31TCM1287588366"/>
+      </location>
+    </parameter>
+  </action>
+
+  <action id="19" name="ObserveUrbanBlock" target="12" time="2009-05-05T12:48:44" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0708187985"/>
+        <point coordinates="31TCM1050083658"/>
+        <point coordinates="31TCM1528380499"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0924991950"/>
+        <point coordinates="31TCM1368891957"/>
+        <point coordinates="31TCM1754989349"/>
+        <point coordinates="31TCM1994985745"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="target" type="UrbanBlockBM" value="18"/>
+  </action>
+
+  <action id="15" name="ObserveAndReconnoiterPoint" target="9" time="2009-05-05T16:43:24" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0708187985"/>
+        <point coordinates="31TCM1050083658"/>
+        <point coordinates="31TCM1528380499"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0924991950"/>
+        <point coordinates="31TCM1368891957"/>
+        <point coordinates="31TCM1754989349"/>
+        <point coordinates="31TCM1994985745"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="destination" type="PointBM">
+      <location type="point">
+        <point coordinates="31TCM1320186715"/>
+      </location>
+    </parameter>
+  </action>
+
+  <action id="16" name="ObserveAndReconnoiterUrbanBlock" target="10" time="2009-05-05T16:50:44" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0708187985"/>
+        <point coordinates="31TCM1050083658"/>
+        <point coordinates="31TCM1528380499"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0924991950"/>
+        <point coordinates="31TCM1368891957"/>
+        <point coordinates="31TCM1754989349"/>
+        <point coordinates="31TCM1994985745"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="destination" type="UrbanBlockBM" value="13"/>
+  </action>
+
+  <action id="32" name="ReconnoiterPoint" target="11" time="2009-05-05T17:09:04" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0708187985"/>
+        <point coordinates="31TCM1050083658"/>
+        <point coordinates="31TCM1528380499"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0924991950"/>
+        <point coordinates="31TCM1368891957"/>
+        <point coordinates="31TCM1754989349"/>
+        <point coordinates="31TCM1994985745"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="point" type="PointBM">
+      <location type="point">
+        <point coordinates="31TCM1425787991"/>
+      </location>
+    </parameter>
+  </action>
+
+  <action id="22" name="ReconnoiterUrbanBlock" target="12" time="2009-05-05T17:14:54" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0708187985"/>
+        <point coordinates="31TCM1050083658"/>
+        <point coordinates="31TCM1528380499"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31TCM0924991950"/>
+        <point coordinates="31TCM1368891957"/>
+        <point coordinates="31TCM1754989349"/>
+        <point coordinates="31TCM1994985745"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="destination" type="UrbanBlockBM" value="50"/>
+  </action>
+
+<!-- Detruire -->
+
+  <action id="31" name="SeekAndDestroy" target="11" time="2009-05-05T19:53:34" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="PointBM">
+      <location type="point">
+        <point coordinates="31TCM1686885262"/>
+      </location>
+    </parameter>
+  </action>
+
+<!-- Faire Mouvement -->
+
+  <action id="1" name="MoveToPoint" target="11" time="2009-05-05T15:34:14" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="PointBM">
+      <location type="point">
+        <point coordinates="31TCM1190289722"/>
+      </location>
+    </parameter>
+  </action>
+
+  <action id="13" name="MoveToUrbanBlock" target="12" time="2009-05-05T15:51:24" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="UrbanBlockBM" value="13"/>
+  </action>
+
+  <action id="4" name="MoveToAgent" target="9" time="2009-05-05T15:56:14" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="AgentBM" value="11"/>
+  </action>
+
+  <action id="3" name="MoveToAutomat" target="10" time="2009-05-05T16:45:54" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="AutomateBM" value="6"/>
+  </action>
+
+  <action id="2" name="MoveToPolygon" target="8" time="2009-05-05T16:55:24" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="AreaBM">
+      <location type="polygon">
+        <point coordinates="31TCM1457588145"/>
+        <point coordinates="31TCM1397188347"/>
+        <point coordinates="31TCM1386487429"/>
+        <point coordinates="31TCM1462787319"/>
+        <point coordinates="31TCM1457588145"/>
+      </location>
+    </parameter>
+  </action>
+
+  <action id="7" name="MoveToPointList" target="11" time="2009-05-05T17:15:44" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="PointListBM">
+      <parameter name="Location 1" type="location">
+        <location type="point">
+          <point coordinates="31TCM1182987823"/>
+        </location>
+      </parameter>
+      <parameter name="Location 2" type="location">
+        <location type="point">
+          <point coordinates="31TCM1314487808"/>
+        </location>
+      </parameter>
+      <parameter name="Location 3" type="location">
+        <location type="point">
+          <point coordinates="31TCM1390689035"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+  <action id="8" name="MoveToPolygonList" target="12" time="2009-05-05T17:29:34" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="AreaListBM">
+      <parameter name="Location 1" type="location">
+        <location type="polygon">
+          <point coordinates="31TCM1146487566"/>
+          <point coordinates="31TCM1206287460"/>
+          <point coordinates="31TCM1204987052"/>
+          <point coordinates="31TCM1162786944"/>
+          <point coordinates="31TCM1146487566"/>
+        </location>
+      </parameter>
+      <parameter name="Location 2" type="location">
+        <location type="polygon">
+          <point coordinates="31TCM1209885861"/>
+          <point coordinates="31TCM1191686422"/>
+          <point coordinates="31TCM1268486754"/>
+          <point coordinates="31TCM1277286231"/>
+          <point coordinates="31TCM1209885861"/>
+        </location>
+      </parameter>
+      <parameter name="Location 3" type="location">
+        <location type="polygon">
+          <point coordinates="31TCM1414387447"/>
+          <point coordinates="31TCM1366387688"/>
+          <point coordinates="31TCM1417888262"/>
+          <point coordinates="31TCM1479888051"/>
+          <point coordinates="31TCM1414387447"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+
+  <action id="10" name="MoveToAgentList" target="12" time="2009-05-05T18:00:04" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="AgentListBM">
+      <parameter name="Agent 1:ABC 1" type="agent" value="11"/>
+      <parameter name="Agent 2:PC" type="agent" value="8"/>
+      <parameter name="Agent 3:INF 2" type="agent" value="10"/>
+    </parameter>
+  </action>
+
+  <action id="9" name="MoveToAutomateList" target="9" time="2009-05-05T18:06:24" type="mission">
+    <parameter name="Danger direction" type="direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="objectives" type="AutomateListBM">
+      <parameter name="Automat 1" type="automat" value="6"/>
+    </parameter>
+  </action>
+
+</actions>

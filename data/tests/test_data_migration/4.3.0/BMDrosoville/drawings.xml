@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<shapes>
+  <shape category="Lignes" color="#000000" template="-- x --" type="line">
+    <point x="35800" y="37500"/>
+    <point x="44000" y="37200"/>
+  </shape>
+  <shape category="Lignes" color="#000000" template="-- x --" type="line">
+    <point x="35600" y="33400"/>
+    <point x="43600" y="33400"/>
+  </shape>
+</shapes>
+<!-- signature="0884539977" -->

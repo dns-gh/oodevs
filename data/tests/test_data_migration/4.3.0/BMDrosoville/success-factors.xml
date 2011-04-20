@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<factors xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/exercise/success-factors.xsd">
+  <factor name="Dist">
+    <profiles>
+      <profile name="Admin"/>
+    </profiles>
+    <conditions operator="or">
+      <condition operator="ge" property="Distance" value="5000"/>
+    </conditions>
+    <actions>
+      <action type="Display">
+        <parameter name="message" value="Distance > 5000"/>
+      </action>
+      <action type="sim:Pause"/>
+    </actions>
+  </factor>
+</factors>
+<!-- signature="2084767022" -->

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<scores xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/exercise/scores.xsd">
+  <score name="Distance">
+    <formula><![CDATA[distance( select( position(), $unit1), select( position(), $unit2 ) )]]></formula>
+    <gauge type="Smileys">
+      <interval key="0" max="200" min="0"/>
+      <interval key="0.25" max="400" min="200"/>
+      <interval key="0.5" max="600" min="400"/>
+      <interval key="0.75" max="800" min="600"/>
+      <interval key="1" max="1000" min="800"/>
+    </gauge>
+    <constants>
+      <constant id="$unit1" type="unit" value="9"/>
+      <constant id="$unit2" type="unit" value="10"/>
+    </constants>
+    <indicators>
+      <indicator>
+        <extract function="position" id="1"/>
+        <reduce function="select" id="2" input="1" key="9" type="position"/>
+        <extract function="position" id="3"/>
+        <reduce function="select" id="4" input="3" key="10" type="position"/>
+        <transform function="distance" id="5" input="2,4" type="float"/>
+        <result function="indicator" input="5" name="Distance" type="float"/>
+      </indicator>
+    </indicators>
+  </score>
+</scores>
+<!-- signature="3376135135" -->

@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="222" name="ABC Eclairer" target="40" time="2008-12-03T08:24:52" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T024412"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9165644027"/>
+            <point coordinates="30UXV9741744661"/>
+            <point coordinates="30UYV0659544384"/>
+            <point coordinates="30UYV1581645361"/>
+            <point coordinates="30UYV1755947457"/>
+            <point coordinates="31UBQ9008146902"/>
+            <point coordinates="31UCQ0773046845"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T024532"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8206296279"/>
+        <point coordinates="30UYV1696908252"/>
+        <point coordinates="30UYV0824222663"/>
+        <point coordinates="30UYV0187938207"/>
+        <point coordinates="30UYV0040148460"/>
+        <point coordinates="30UYV0589065033"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV0031164701"/>
+        <point coordinates="30UXV9501151195"/>
+        <point coordinates="30UXV9444946360"/>
+        <point coordinates="30UXV9345644778"/>
+        <point coordinates="30UYV0431514558"/>
+        <point coordinates="30UYU2029695236"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="222" name="ABC Eclairer" target="45" time="2008-12-03T08:25:02" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T025022"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9165644027"/>
+            <point coordinates="30UXV9741744661"/>
+            <point coordinates="30UYV0659544384"/>
+            <point coordinates="30UYV1581645361"/>
+            <point coordinates="30UYV1755947457"/>
+            <point coordinates="31UBQ9008146902"/>
+            <point coordinates="31UCQ0773046845"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T025122"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8625597848"/>
+        <point coordinates="31UBQ8457608737"/>
+        <point coordinates="30UYV1577923848"/>
+        <point coordinates="30UYV0921336117"/>
+        <point coordinates="30UYV0828149661"/>
+        <point coordinates="30UYV1087265464"/>
+        <point coordinates="30UYV1087265464"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8206296279"/>
+        <point coordinates="30UYV1696908252"/>
+        <point coordinates="30UYV0824222663"/>
+        <point coordinates="30UYV0187938207"/>
+        <point coordinates="30UYV0040148460"/>
+        <point coordinates="30UYV0589065033"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="222" name="ABC Eclairer" target="50" time="2008-12-03T08:25:02" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T025532"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9165644027"/>
+            <point coordinates="30UXV9741744661"/>
+            <point coordinates="30UYV0659544384"/>
+            <point coordinates="30UYV1581645361"/>
+            <point coordinates="30UYV1755947457"/>
+            <point coordinates="31UBQ9008146902"/>
+            <point coordinates="31UCQ0773046845"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T025622"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV1617768180"/>
+        <point coordinates="30UYV1766747173"/>
+        <point coordinates="30UYV1724534647"/>
+        <point coordinates="31UBQ8429222680"/>
+        <point coordinates="31UBQ9167518761"/>
+        <point coordinates="31UBQ9352011000"/>
+        <point coordinates="31UBP9296095344"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8625597848"/>
+        <point coordinates="31UBQ8457608737"/>
+        <point coordinates="30UYV1577923848"/>
+        <point coordinates="30UYV0921336117"/>
+        <point coordinates="30UYV0828149661"/>
+        <point coordinates="30UYV1087265464"/>
+        <point coordinates="30UYV1087265464"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="208" name="ABC Attaquer" target="92" time="2008-12-03T10:06:12" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9165644027"/>
+            <point coordinates="30UXV9741744661"/>
+            <point coordinates="30UYV0659544384"/>
+            <point coordinates="30UYV1581645361"/>
+            <point coordinates="30UYV1755947457"/>
+            <point coordinates="31UBQ9008146902"/>
+            <point coordinates="31UCQ0773046845"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T034232"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T033352"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV0031164701"/>
+        <point coordinates="30UXV9501151195"/>
+        <point coordinates="30UXV9444946360"/>
+        <point coordinates="30UXV9345644778"/>
+        <point coordinates="30UYV0431514558"/>
+        <point coordinates="30UYU2029695236"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8206296279"/>
+        <point coordinates="30UYV1696908252"/>
+        <point coordinates="30UYV0824222663"/>
+        <point coordinates="30UYV0187938207"/>
+        <point coordinates="30UYV0040148460"/>
+        <point coordinates="30UYV0589065033"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="208" name="ABC Attaquer" target="98" time="2008-12-03T10:06:22" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9165644027"/>
+            <point coordinates="30UXV9741744661"/>
+            <point coordinates="30UYV0659544384"/>
+            <point coordinates="30UYV1581645361"/>
+            <point coordinates="30UYV1755947457"/>
+            <point coordinates="31UBQ9008146902"/>
+            <point coordinates="31UCQ0773046845"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T034232"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T034332"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8206296279"/>
+        <point coordinates="30UYV1696908252"/>
+        <point coordinates="30UYV0824222663"/>
+        <point coordinates="30UYV0187938207"/>
+        <point coordinates="30UYV0040148460"/>
+        <point coordinates="30UYV0589065033"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8516595787"/>
+        <point coordinates="31UBQ8200509980"/>
+        <point coordinates="30UYV1219324804"/>
+        <point coordinates="30UYV0643437084"/>
+        <point coordinates="30UYV0593648587"/>
+        <point coordinates="30UYV0825364967"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="233" name="ABC Soutenir" target="104" time="2008-12-03T10:06:12" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9165644027"/>
+            <point coordinates="30UXV9741744661"/>
+            <point coordinates="30UYV0659544384"/>
+            <point coordinates="30UYV1581645361"/>
+            <point coordinates="30UYV1755947457"/>
+            <point coordinates="31UBQ9008146902"/>
+            <point coordinates="31UCQ0773046845"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T034842"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T035102"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8206296279"/>
+        <point coordinates="30UYV1696908252"/>
+        <point coordinates="30UYV0824222663"/>
+        <point coordinates="30UYV0187938207"/>
+        <point coordinates="30UYV0040148460"/>
+        <point coordinates="30UYV0589065033"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8516595787"/>
+        <point coordinates="31UBQ8200509980"/>
+        <point coordinates="30UYV1219324804"/>
+        <point coordinates="30UYV0643437084"/>
+        <point coordinates="30UYV0593648587"/>
+        <point coordinates="30UYV0825364967"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Compagnie" type="Automate" value="98"/>
+  </action>
+  <action id="208" name="ABC Attaquer" target="132" time="2008-12-03T10:07:02" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T050432"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9165644027"/>
+            <point coordinates="30UXV9741744661"/>
+            <point coordinates="30UYV0659544384"/>
+            <point coordinates="30UYV1581645361"/>
+            <point coordinates="30UYV1755947457"/>
+            <point coordinates="31UBQ9008146902"/>
+            <point coordinates="31UCQ0773046845"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T050512"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8869495615"/>
+        <point coordinates="31UBQ8660810364"/>
+        <point coordinates="31UBQ8069221822"/>
+        <point coordinates="30UYV1232834550"/>
+        <point coordinates="30UYV1300666545"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8516595787"/>
+        <point coordinates="31UBQ8200509980"/>
+        <point coordinates="30UYV1219324804"/>
+        <point coordinates="30UYV0643437084"/>
+        <point coordinates="30UYV0593648587"/>
+        <point coordinates="30UYV0825364967"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="207" name="ABC Appuyer" target="138" time="2008-12-03T10:07:42" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T051112"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9165644027"/>
+            <point coordinates="30UXV9741744661"/>
+            <point coordinates="30UYV0659544384"/>
+            <point coordinates="30UYV1581645361"/>
+            <point coordinates="30UYV1755947457"/>
+            <point coordinates="31UBQ9008146902"/>
+            <point coordinates="31UCQ0773046845"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T051152"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8869495615"/>
+        <point coordinates="31UBQ8660810364"/>
+        <point coordinates="31UBQ8069221822"/>
+        <point coordinates="30UYV1232834550"/>
+        <point coordinates="30UYV1300666545"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8516595787"/>
+        <point coordinates="31UBQ8200509980"/>
+        <point coordinates="30UYV1219324804"/>
+        <point coordinates="30UYV0643437084"/>
+        <point coordinates="30UYV0593648587"/>
+        <point coordinates="30UYV0825364967"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Compagnie" type="Automate" value="132"/>
+  </action>
+  <action id="208" name="ABC Attaquer" target="126" time="2008-12-03T10:07:12" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9165644027"/>
+            <point coordinates="30UXV9741744661"/>
+            <point coordinates="30UYV0659544384"/>
+            <point coordinates="30UYV1581645361"/>
+            <point coordinates="30UYV1755947457"/>
+            <point coordinates="31UBQ9008146902"/>
+            <point coordinates="31UCQ0773046845"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T051642"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T051722"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV1617768180"/>
+        <point coordinates="30UYV1766747173"/>
+        <point coordinates="30UYV1724534647"/>
+        <point coordinates="31UBQ8429222680"/>
+        <point coordinates="31UBQ9167518761"/>
+        <point coordinates="31UBQ9352011000"/>
+        <point coordinates="31UBP9296095344"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8869495615"/>
+        <point coordinates="31UBQ8660810364"/>
+        <point coordinates="31UBQ8069221822"/>
+        <point coordinates="30UYV1232834550"/>
+        <point coordinates="30UYV1300666545"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+  </action>
+  <action id="257" name="INF Appuyer" target="144" time="2008-12-03T10:08:22" type="mission">
+    <parameter name="direction dangereuse" type="Direction" value="360"/>
+    <parameter name="Limas" type="PhaseLineList">
+      <parameter name="Lima 1" type="lima" value="LDM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9165644027"/>
+            <point coordinates="30UXV9741744661"/>
+            <point coordinates="30UYV0659544384"/>
+            <point coordinates="30UYV1581645361"/>
+            <point coordinates="30UYV1755947457"/>
+            <point coordinates="31UBQ9008146902"/>
+            <point coordinates="31UCQ0773046845"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T052212"/>
+      </parameter>
+      <parameter name="Lima 2" type="lima" value="LFM">
+        <parameter name="Position" type="location">
+          <location type="line">
+            <point coordinates="30UXV9807164068"/>
+            <point coordinates="30UYV0670863711"/>
+            <point coordinates="30UYV1766866930"/>
+          </location>
+        </parameter>
+        <parameter name="Horaire" type="datetime" value="20081203T052302"/>
+      </parameter>
+    </parameter>
+    <parameter name="Limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="30UYV1617768180"/>
+        <point coordinates="30UYV1766747173"/>
+        <point coordinates="30UYV1724534647"/>
+        <point coordinates="31UBQ8429222680"/>
+        <point coordinates="31UBQ9167518761"/>
+        <point coordinates="31UBQ9352011000"/>
+        <point coordinates="31UBP9296095344"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="31UBP8869495615"/>
+        <point coordinates="31UBQ8660810364"/>
+        <point coordinates="31UBQ8069221822"/>
+        <point coordinates="30UYV1232834550"/>
+        <point coordinates="30UYV1300666545"/>
+      </location>
+    </parameter>
+    <parameter name="Renseignements" type="IntelligenceList"/>
+    <parameter name="Compagnie" type="Automate" value="126"/>
+  </action>
+</actions>

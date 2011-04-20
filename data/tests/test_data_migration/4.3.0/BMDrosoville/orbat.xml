@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="GoodGuys" type="friend">
+      <objects>
+        <object id="43" name="Poste de contrôle [43]" type="checkpoint">
+          <shape type="point">
+            <points>
+              <point>31TCM1140686277</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="45" name="Position de Tir 1" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>31TCM1007287483</point>
+            </points>
+          </shape>
+          <attributes>
+            <max-size max-size="1"/>
+          </attributes>
+        </object>
+        <object id="52" name="Abattis [52]" type="abattis">
+          <shape type="ligne">
+            <points>
+              <point>31TCM0942588978</point>
+              <point>31TCM0918788724</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="false" type="reserved">
+              <activation-time value="0"/>
+            </obstacle>
+          </attributes>
+        </object>
+        <object id="53" name="Bouchon de mines [53]" type="mines">
+          <shape type="point">
+            <points>
+              <point>31TCM0998090735</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary">
+              <activation-time value="0"/>
+            </obstacle>
+            <activity-time value="36000"/>
+          </attributes>
+        </object>
+        <object id="54" name="Site de décontamination [54]" type="decontamination site">
+          <shape type="polygone">
+            <points>
+              <point>31TCM1025989339</point>
+              <point>31TCM1063289083</point>
+              <point>31TCM1063689444</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="55" name="Site de décontamination [55]" type="decontamination site">
+          <shape type="polygone">
+            <points>
+              <point>31TCM0957490359</point>
+              <point>31TCM0977790191</point>
+              <point>31TCM0944990043</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="60" name="Camp de refugies" type="refugees camp">
+          <shape type="polygone">
+            <points>
+              <point>31TCM0905288878</point>
+              <point>31TCM0789088479</point>
+              <point>31TCM0862288182</point>
+              <point>31TCM0921588466</point>
+            </points>
+          </shape>
+          <attributes>
+            <tc2 id="58"/>
+          </attributes>
+        </object>
+        <object id="80" name="Position de Tir 2" type="gun artillery deployment area">
+          <shape type="point">
+            <points>
+              <point>31TCM0599490571</point>
+            </points>
+          </shape>
+          <attributes>
+            <max-size max-size="1"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="5" level="x" name="Formation [6]">
+          <automat engaged="false" id="6" knowledge-group="2" name="SGTIA Disengaged" type="SGTIA">
+            <unit command-post="true" id="8" name="PC" position="31TCM1064488371" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="9" name="INF 1" position="31TCM1067688353" type="Section . CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="10" name="INF 2" position="31TCM1067688353" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="11" name="ABC 1" position="31TCM1062688116" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="12" name="ABC 2" position="31TCM1063688220" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="47" name="GEN EBG" position="31TCM1063688220" type="Groupe GEN . EBG"/>
+            <unit command-post="false" id="48" name="GEN MPG" position="31TCM1063688220" type="Groupe GEN . MPG"/>
+            <unit command-post="false" id="49" name="Unit test" position="31TCM1063688220" type="Pion de tests"/>
+            <unit command-post="false" id="122" name="Section de Tir AUF1 CDS SOFF[76]" position="31TCM1063688220" type="Section de Tir . AUF1 CDS OFF"/>
+          </automat>
+          <automat engaged="true" id="29" knowledge-group="2" name="SGTIA Engaged" type="SGTIA">
+            <unit command-post="true" id="30" name="Section CBT INF VAB CDS OFF" position="31TCM1135691013" type="Section . CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="31" name="Section CDT CIE INF VAB" position="31TCM1138090952" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="32" name="Section CDT CIE INF VAB" position="31TCM1139391062" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="33" name="Peloton LECLERC CDP OFF" position="31TCM1135391009" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="34" name="Peloton LECLERC CDP OFF" position="31TCM1132490824" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="147" name="GEN EBG" position="31TCM1132490825" type="Groupe GEN . EBG"/>
+          </automat>
+          <automat engaged="true" id="58" knowledge-group="2" logistic-level="tc2" name="TC2 LOG" type="TC2 LOG">
+            <unit command-post="true" id="59" name="TC2" position="31TCM0973787237" type="TC2 LOG"/>
+          </automat>
+          <automat engaged="true" id="67" knowledge-group="2" name="Compagnie INF AMX 10 P [67]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="68" name="Section CDT CIE INF AMX10P" position="31TCM1157789807" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="69" name="Section CBT INF AMX10P CDS OFF" position="31TCM1206289292" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="70" name="Section CBT INF AMX10P CDS OFF" position="31TCM1154588809" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="71" name="Section CBT INF AMX10P CDS OFF" position="31TCM1106089324" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="72" name="Section CBT INF AMX10P CDS SOFF" position="31TCM1207789791" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
+          <automat engaged="true" id="73" knowledge-group="2" name="Batterie de Tir AUF1 [73]" type="Batterie ASS . AUF1">
+            <unit command-post="true" id="74" name="PC Batterie ASS[74]" position="31TCM1413286675" type="PC . Batterie ASS"/>
+            <unit command-post="false" id="75" name="Section de Tir AUF1 CDS OFF[75]" position="31TCM1413286675" type="Section de Tir . AUF1 CDS OFF"/>
+            <unit command-post="false" id="76" name="Section de Tir AUF1 CDS SOFF[76]" position="31TCM1413286675" type="Section de Tir . AUF1 CDS OFF"/>
+          </automat>
+          <automat engaged="true" id="81" knowledge-group="2" name="Section Decontamination [81]" type="Section Decontamination">
+            <unit command-post="true" id="82" name="Equipe CDT deconta NBC" position="31TCM1533688471" type="Equipe CDT deconta NBC"/>
+            <unit command-post="false" id="83" name="Equipe decontamination NBC" position="31TCM1582187957" type="Equipe decontamination NBC"/>
+            <unit command-post="false" id="84" name="Equipe decontamination NBC" position="31TCM1530587473" type="Equipe decontamination NBC"/>
+            <unit command-post="false" id="85" name="Equipe decontamination NBC" position="31TCM1482087988" type="Equipe decontamination NBC"/>
+          </automat>
+          <automat engaged="true" id="86" knowledge-group="2" name="Escadron Transport Blinde [86]" type="Escadron Transport Blinde">
+            <unit command-post="true" id="87" name="Peloton CDT ESC TRPT BLD" position="31TCM1590286880" type="Peloton CDT ESC TRPT BLD"/>
+            <unit command-post="false" id="88" name="Peloton Transport Blindes CL100" position="31TCM1638786365" type="Peloton Transport Blindes CL100"/>
+            <unit command-post="false" id="89" name="Peloton Transport Blindes CL50" position="31TCM1587085882" type="Peloton Transport Blindes CL50"/>
+          </automat>
+          <automat engaged="false" id="200" knowledge-group="2" name="SGTIA PIA" type="SGTIA">
+            <unit command-post="true" id="201" name="PC SGTIA" position="31TCM1027186842" type="PC SGTIA"/>
+            <unit command-post="false" id="202" name="PIA INF 1" position="31TCM1027186842" type="PIA Dominante INF"/>
+            <unit command-post="false" id="203" name="PIA INF 1" position="31TCM1027186842" type="PIA Dominante INF"/>
+            <unit command-post="false" id="204" name="PIA ABC 1" position="31TCM1027186842" type="PIA Dominante ABC"/>
+            <unit command-post="false" id="205" name="PIA RENS 1" position="31TCM1027186842" type="PIA Dominante Reco"/>
+          </automat>
+          <limit name="Limite 35">
+            <point>31TCM0924991950</point>
+            <point>31TCM1368891957</point>
+            <point>31TCM1754989349</point>
+            <point>31TCM1994985745</point>
+          </limit>
+          <limit name="Limite 36">
+            <point>31TCM0708187985</point>
+            <point>31TCM1050083658</point>
+            <point>31TCM1528380499</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Groupe de connaissance [1]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <tc2 id="58">
+          <subordinate id="58"/>
+        </tc2>
+      </logistics>
+    </party>
+    <party id="3" name="NeutralGuys" type="neutral">
+      <objects/>
+      <tactical>
+        <formation id="62" level="ii" name="Formation">
+          <automat engaged="false" id="63" knowledge-group="61" name="Refugies x100 [63]" type="Refugies x100">
+            <unit command-post="true" id="64" name="Refugies 100 Pers[64]" position="31TCM0967389547" type="Refugies 100 Pers"/>
+            <unit command-post="false" id="65" name="Refugies 100 Pers[65]" position="31TCM0913989321" type="Refugies 100 Pers"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="61" name="Groupe de connaissance [61]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="66" name="Population standard [66]" position="31TCM0866089404" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="10001" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="13" value="-1.07374e+008"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="13" name="BadGuys" type="enemy">
+      <objects>
+        <object id="44" name="Barricade [44]" type="barricade">
+          <shape type="point">
+            <points>
+              <point>31TCM1441085124</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="14" level="x" name="Formation [14]">
+          <automat engaged="false" id="23" knowledge-group="17" name="BAD SGTIA Disengaged" type="SGTIA">
+            <unit command-post="true" id="24" name="BAD PC" position="31TCM1300488355" type="Section . CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="25" name="BAD INF 1" position="31TCM1748285728" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="26" name="BAD INF 2" position="31TCM1750785598" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="27" name="BAD ABC 2" position="31TCM1735785794" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="28" name="BAD ABC 1" position="31TCM1739885706" type="Peloton . LECLERC CDP OFF"/>
+          </automat>
+          <automat engaged="true" id="37" knowledge-group="17" name="BAD SGTIA Engaged" type="SGTIA">
+            <unit command-post="true" id="38" name="Section CBT INF VAB CDS OFF" position="31TCM1610284629" type="Section . CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="39" name="Section CDT CIE INF VAB" position="31TCM1619884629" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="40" name="Section CDT CIE INF VAB" position="31TCM1613684624" type="Section . CDT CIE INF VAB"/>
+            <unit command-post="false" id="41" name="Peloton LECLERC CDP OFF" position="31TCM1601284632" type="Peloton . LECLERC CDP OFF"/>
+            <unit command-post="false" id="42" name="Peloton LECLERC CDP OFF" position="31TCM1625784627" type="Peloton . LECLERC CDP OFF"/>
+          </automat>
+          <automat engaged="false" id="90" knowledge-group="17" name="Tireurs [90]" type="Tireurs">
+            <unit command-post="true" id="91" name="Tireur PC" position="31TCM1290083941" type="Tireur"/>
+            <unit command-post="false" id="92" name="Tireur 1" position="31TCM1290083941" type="Tireur"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="17" name="Groupe de connaissance [17]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="77" name="Population bad [77]" position="31TCM0866087404" type="Population standard">
+          <composition contaminated="0" dead="0" healthy="1001" wounded="0"/>
+          <armed-individuals value="0.02"/>
+          <repartition children="0.5" female="0.5" male="0.5"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="3" value="0"/>
+            <adhesion party="13" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="neutral" party="3"/>
+      <relationship diplomacy="enemy" party="13"/>
+    </party>
+    <party id="3">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="neutral" party="13"/>
+    </party>
+    <party id="13">
+      <relationship diplomacy="enemy" party="1"/>
+      <relationship diplomacy="neutral" party="3"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="1735287838" -->

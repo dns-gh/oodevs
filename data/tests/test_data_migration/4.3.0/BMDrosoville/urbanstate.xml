@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<urban-state model-version="4.2.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/exercise/urbanstate.xsd">
+  <urban-objects>
+    <urban-object id="3"/>
+    <urban-object id="4"/>
+    <urban-object id="5"/>
+    <urban-object id="6"/>
+    <urban-object id="7"/>
+    <urban-object id="9"/>
+    <urban-object id="10"/>
+    <urban-object id="11"/>
+    <urban-object id="12"/>
+    <urban-object id="13"/>
+    <urban-object id="14"/>
+    <urban-object id="15"/>
+    <urban-object id="16"/>
+    <urban-object id="17"/>
+    <urban-object id="18"/>
+    <urban-object id="19"/>
+    <urban-object id="20"/>
+    <urban-object id="21"/>
+    <urban-object id="22"/>
+    <urban-object id="23"/>
+    <urban-object id="24"/>
+    <urban-object id="25"/>
+    <urban-object id="26"/>
+    <urban-object id="27"/>
+    <urban-object id="28"/>
+    <urban-object id="29"/>
+    <urban-object id="30"/>
+    <urban-object id="31"/>
+    <urban-object id="32"/>
+    <urban-object id="33"/>
+    <urban-object id="34"/>
+    <urban-object id="35"/>
+    <urban-object id="36"/>
+    <urban-object id="37"/>
+    <urban-object id="38"/>
+    <urban-object id="39"/>
+    <urban-object id="40"/>
+    <urban-object id="41"/>
+    <urban-object id="42"/>
+    <urban-object id="43"/>
+    <urban-object id="44"/>
+    <urban-object id="45"/>
+    <urban-object id="46"/>
+    <urban-object id="47"/>
+    <urban-object id="48"/>
+    <urban-object id="49"/>
+    <urban-object id="50"/>
+    <urban-object id="51"/>
+    <urban-object id="52"/>
+    <urban-object id="53"/>
+    <urban-object id="54"/>
+    <urban-object id="55">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="56">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="57">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="58"/>
+    <urban-object id="59"/>
+    <urban-object id="60">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="61">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="62">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="63">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="64"/>
+    <urban-object id="65"/>
+    <urban-object id="66"/>
+    <urban-object id="67">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="68"/>
+    <urban-object id="69">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="70">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="71">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="72"/>
+    <urban-object id="73"/>
+    <urban-object id="74"/>
+    <urban-object id="75">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="76">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="77">
+      <infrastructure enabled="true" role="" threshold="30"/>
+      <medical-treatment doctors="0">
+        <bed-capacities/>
+      </medical-treatment>
+    </urban-object>
+    <urban-object id="78"/>
+    <urban-object id="79">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="80">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="81"/>
+    <urban-object id="82"/>
+    <urban-object id="83"/>
+    <urban-object id="84"/>
+    <urban-object id="85">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="86">
+      <infrastructure enabled="true" role="" threshold="30"/>
+    </urban-object>
+    <urban-object id="87"/>
+    <urban-object id="88"/>
+    <urban-object id="89"/>
+    <urban-object id="90"/>
+    <urban-object id="91"/>
+    <urban-object id="92"/>
+    <urban-object id="93"/>
+    <urban-object id="94"/>
+    <urban-object id="95"/>
+  </urban-objects>
+</urban-state>
+<!-- signature="0940481700" -->
