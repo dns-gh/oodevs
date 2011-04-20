@@ -84,6 +84,7 @@ void SwordClient::ConnectionSucceeded( const std::string& endpoint )
 // -----------------------------------------------------------------------------
 void SwordClient::ConnectionFailed( const std::string& endpoint, const std::string& error )
 {
+    tools::ClientNetworker::ConnectionFailed( endpoint, error );
     connectionHandler_->OnConnectionFailed( endpoint, error );
 }
 
@@ -93,6 +94,7 @@ void SwordClient::ConnectionFailed( const std::string& endpoint, const std::stri
 // -----------------------------------------------------------------------------
 void SwordClient::ConnectionError( const std::string& endpoint, const std::string& error )
 {
+    tools::ClientNetworker::ConnectionError( endpoint, error );
     connectionHandler_->OnConnectionError( endpoint, error );
 }
 
