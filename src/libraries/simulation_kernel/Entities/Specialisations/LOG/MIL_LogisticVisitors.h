@@ -250,7 +250,7 @@ class SupplyStockAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPi
 
         void Visit( const MIL_AgentPion& tmp )
         {
-            // NLD 2011-04-07 : Totally bugged ... 
+            // NLD 2011-04-07 : Totally bugged ...
             // We must not use BL internal TC2 for external use
             //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
             //if( bExternalTransfert_ && testBrain )
@@ -310,7 +310,7 @@ class SupplyConvoyAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentP
 
         void Visit( const MIL_AgentPion& tmp )
         {
-            // NLD 2011-04-07 : Totally bugged ... 
+            // NLD 2011-04-07 : Totally bugged ...
             // We must not use BL internal TC2 for external use
             //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
             //if( bExternalTransfert_ && testBrain )
@@ -348,7 +348,7 @@ class SupplyConvoyCapacityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
 
         void Visit( const MIL_AgentPion& tmp )
         {
-            // NLD 2011-04-07 : Totally bugged ... 
+            // NLD 2011-04-07 : Totally bugged ...
             // We must not use BL internal TC2 for external use
             // MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
             // if( bExternalTransfert_ && testBrain )

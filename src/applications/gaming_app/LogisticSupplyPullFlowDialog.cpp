@@ -178,8 +178,8 @@ void LogisticSupplyPullFlowDialog::Validate()
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( ( IsAutomat ) ? "automat_log_supply_pull_flow" : "formation_log_supply_pull_flow" );
     UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Log Supply Pull Flow" ), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( ( IsAutomat ) 
-        ? ( Parameter_ABC& ) *new parameters::Automat( it.NextElement(), *dynamic_cast< const Automat_ABC* >( target ), controllers_.controller_ ) 
+    action->AddParameter( ( IsAutomat )
+        ? ( Parameter_ABC& ) *new parameters::Automat( it.NextElement(), *dynamic_cast< const Automat_ABC* >( target ), controllers_.controller_ )
         : ( Parameter_ABC& ) *new parameters::Formation( it.NextElement(), *dynamic_cast< const Formation_ABC* >( target ), controllers_.controller_ ) );
 
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );

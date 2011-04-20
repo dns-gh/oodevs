@@ -670,7 +670,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Object >, float, const PHY_DotationCategory*) >( boost::bind( &DEC_KnowledgeObjectFunctions::DamageObject, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_ConnaissanceObjet_NiveauDePerceptionCourant" ] =
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) );
-    brain[ "DEC_ConnaissanceObjet_PeutEtreValorise" ] = 
+    brain[ "DEC_ConnaissanceObjet_PeutEtreValorise" ] =
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::CanBeValorized, _1 ) );
 
     // Population knowledges accessors
@@ -996,7 +996,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void( const std::vector< DEC_Decision_ABC* >&, bool ) >( boost::bind( &DEC_ActionFunctions::Transport_AddPions, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Start_TransportEmbarquer" ] = boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionTransportLoad >, boost::ref( GetPion() ) );
     brain[ "DEC_Start_TransportDebarquer" ] = boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionTransportUnload >, boost::ref( GetPion() ) );
-    
+
     brain[ "DEC_Transport_EmbarquerDansTransporteurSansDelais" ] = boost::function< void ( const DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::Transport_MagicLoadPionInCarrier, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Transport_DebarquerDeTransporteurSansDelais" ] = boost::function< void () >( boost::bind( &DEC_ActionFunctions::Transport_MagicUnloadPionFromCarrier, boost::ref( GetPion() ) ) );
     brain[ "DEC_Transport_Transporteur" ] = boost::function< DEC_Decision_ABC* () >( boost::bind( &DEC_ActionFunctions::Transport_GetCarrier, boost::ref( GetPion() ) ) );

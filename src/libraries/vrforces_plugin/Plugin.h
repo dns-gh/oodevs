@@ -79,7 +79,7 @@ private:
     //! @name Helpers
     //@{
     void Create( const sword::UnitCreation& message );
-    template< typename M > 
+    template< typename M >
     void Update( const M& message );
     void Destroy( const sword::UnitDestruction& message );
     //@}

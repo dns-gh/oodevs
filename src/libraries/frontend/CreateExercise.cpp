@@ -84,7 +84,7 @@ namespace
                 if( depth != 0 )
                     CopyDirectory( it->path(), bfs::path( to ), baseFrom, baseTo, ( depth > 0 ) ? depth - 1 : depth );
             }
-            else 
+            else
             {
                 std::string fileTo = it->path().string();
                 boost::algorithm::replace_first( fileTo, baseFrom.string(), baseTo.string() );

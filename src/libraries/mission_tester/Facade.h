@@ -63,7 +63,7 @@ private:
     //@}
 
 private:
-    //! @name 
+    //! @name Member Data
     //@{
     std::auto_ptr< kernel::StaticModel > staticModel_;
     std::auto_ptr< SchedulerFactory > factory_;

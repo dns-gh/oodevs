@@ -87,7 +87,7 @@ void Logger::MissionErrorAck( const sword::Tasker& tasker ) const
 // -----------------------------------------------------------------------------
 void Logger::ConnectionSucceeded( const std::string& endpoint ) const
 {
-    os_ << "[" << boost::posix_time::second_clock::local_time() 
+    os_ << "[" << boost::posix_time::second_clock::local_time()
         << "] <<< Connection succeeded at " << endpoint << std::endl;
 }
 
@@ -97,7 +97,7 @@ void Logger::ConnectionSucceeded( const std::string& endpoint ) const
 // -----------------------------------------------------------------------------
 void Logger::AuthenticationSucceeded( const std::string& profile ) const
 {
-    os_ << "[" << boost::posix_time::second_clock::local_time() 
+    os_ << "[" << boost::posix_time::second_clock::local_time()
         << "] <<< Authentication succeeded with profile '" << profile << "'" << std::endl;
 }
 
@@ -107,6 +107,6 @@ void Logger::AuthenticationSucceeded( const std::string& profile ) const
 // -----------------------------------------------------------------------------
 void Logger::ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const
 {
-    os_ << "[" << boost::posix_time::second_clock::local_time() 
+    os_ << "[" << boost::posix_time::second_clock::local_time()
         << "] war [U" << target.GetId() << "][M" << mission.GetId() << "]: paramType unknown '" << parameter.GetType() << "'" << std::endl;
 }

@@ -219,7 +219,7 @@ void MIL_BurningCells::InitCell( const MIL_BurningCellOrigin& cellOrigin, MIL_Ob
     }
 
     // $$$$ BCI 2011-04-05: avoid useless cell creation
-    if( isNew ) 
+    if( isNew )
     {
         if( pCell->maxCombustionEnergy_ > 0 )
         {

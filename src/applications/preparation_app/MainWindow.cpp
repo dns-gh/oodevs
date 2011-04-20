@@ -554,7 +554,7 @@ void MainWindow::SaveAs()
     bool exist = false;
     QString name;
     bfs::path exerciseDirectory;
-    do 
+    do
     {
         bool ok = false;
         name = QInputDialog::getText( tr( "Save exercise as ..." ),

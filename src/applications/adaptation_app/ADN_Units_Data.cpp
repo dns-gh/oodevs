@@ -869,7 +869,7 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 // Created: RPD 2011-04-11
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::UnitInfos::CleanupNature()
-{   
+{
     std::string nature = strNature_.GetData();
     if ( nature.size() > 10 )
     {

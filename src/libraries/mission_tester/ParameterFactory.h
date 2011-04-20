@@ -45,7 +45,6 @@ public:
     //! @name Operations
     //@{
     std::auto_ptr< actions::Parameter_ABC > CreateParameter( const kernel::OrderParameter& parameter ) const;
-    
     //@}
 
 private:

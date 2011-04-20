@@ -49,7 +49,7 @@ namespace
 // -----------------------------------------------------------------------------
 Facade::Facade( const Config& config )
     : staticModel_( new kernel::StaticModel() )
-    , factory_    ( new SchedulerFactory() ) 
+    , factory_    ( new SchedulerFactory() )
 {
     staticModel_->Load( config );
     config.ConfigureLogging( *this );

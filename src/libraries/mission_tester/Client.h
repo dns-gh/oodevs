@@ -31,7 +31,6 @@ namespace mission_tester
 class Client : public Publisher_ABC
              , public SwordProxy
              , private SwordConnectionHandler_ABC
-             
 {
 public:
     //! @name Constructors / Destructors

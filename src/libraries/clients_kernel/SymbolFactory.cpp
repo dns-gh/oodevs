@@ -84,7 +84,7 @@ void SymbolFactory::TraverseTree( xml::xostream& out, const SymbolRule& rule )
         std::string tail ( "----------*****" );
         tail = tail.substr( symbol.size(), 15-symbol.size() );
         symbol += tail;
-        availableSymbols_.push_back( current ); 
+        availableSymbols_.push_back( current );
         out << xml::attribute( "value", current );
         out << xml::attribute( "symbol", symbol );
         out << xml::end;

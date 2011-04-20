@@ -57,7 +57,6 @@ void Scheduler::Step( unsigned int delta, Exercise& exercise )
     bpt::ptime current( bpt::microsec_clock::local_time() );
     if( last_ + bpt::milliseconds( delta ) < current )
     {
-        
         if( !schedulables_.empty() )
         {
             if( next_ == schedulables_.end() )
