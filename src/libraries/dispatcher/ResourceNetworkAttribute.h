@@ -33,8 +33,7 @@ class ResourceNetworkAttribute : public UrbanObjectAttribute_ABC
     {
         struct Link
         {
-            int kind_;
-            unsigned int target_;
+            unsigned int objectId_;
             int capacity_;
             unsigned int flow_;
         };

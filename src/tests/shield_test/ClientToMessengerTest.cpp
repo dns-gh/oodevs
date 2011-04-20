@@ -111,7 +111,7 @@ BOOST_FIXTURE_TEST_CASE( intelligence_destruction_request_from_client_is_convert
 BOOST_FIXTURE_TEST_CASE( shape_creation_request_from_client_is_converted, ContextFixture< MsgsClientToMessenger::MsgClientToMessenger > )
 {
     FillShape( content.mutable_shape_creation_request()->mutable_shape() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_creation_request { shape { category: \"category\" color: \"color\" pattern: \"pattern\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } }" ) );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_creation_request { shape { category: \"category\" color { red: 4 green: 5 blue: 6 } pattern: \"pattern\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } }" ) );
     converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 
@@ -119,11 +119,13 @@ BOOST_FIXTURE_TEST_CASE( shape_update_request_from_client_is_converted, ContextF
 {
     content.mutable_shape_update_request()->mutable_shape()->set_id( 12 );
     content.mutable_shape_update_request()->set_category( "category" );
-    content.mutable_shape_update_request()->set_color( "color" );
+    content.mutable_shape_update_request()->mutable_color()->set_red( 4 );
+    content.mutable_shape_update_request()->mutable_color()->set_green( 5 );
+    content.mutable_shape_update_request()->mutable_color()->set_blue( 6 );
     content.mutable_shape_update_request()->set_template_( "pattern" );
     FillCoordLatLong( content.mutable_shape_update_request()->mutable_points()->add_elem() );
     FillCoordLatLong( content.mutable_shape_update_request()->mutable_points()->add_elem() );
-    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_update_request { shape { id: 12 } category: \"category\" color: \"color\" pattern: \"pattern\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } }" ) );
+    MOCK_EXPECT( server, SendClientToMessenger ).once().with( constraint( msg, "context: 42 message { shape_update_request { shape { id: 12 } category: \"category\" color { red: 4 green: 5 blue: 6 } pattern: \"pattern\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } }" ) );
     converter.ReceiveClientToMessenger( "client endpoint", msg );
 }
 

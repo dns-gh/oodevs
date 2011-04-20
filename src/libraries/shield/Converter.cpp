@@ -350,7 +350,6 @@ void Converter::ReceiveSimToClient( const std::string& /*from*/, const sword::Si
     FORWARD( client_, SimulationToClient, crowd_destruction )
     FORWARD( client_, SimulationToClient, population_creation )
     FORWARD( client_, SimulationToClient, population_update )
-    FORWARD( client_, SimulationToClient, change_population_magic_action_ack )
     listener_.Info( "Shield converter dropping unknown '" + GetType( msg ) + "' message" );
 }
 

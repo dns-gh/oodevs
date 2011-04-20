@@ -90,11 +90,12 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         block.evacuated_ = occupation.evacuated();
         block.angriness_ = occupation.angriness();
     }
-    for( int i = 0; i < msg.adhesions_size(); ++i )
-    {
-        const sword::PartyAdhesion& adhesion = msg.adhesions( i );
-        affinities_[ adhesion.party().id() ] = adhesion.value();
-    }
+    if( msg.has_adhesions() )
+        for( int i = 0; i < msg.adhesions().adhesion_size(); ++i )
+        {
+            const sword::PartyAdhesion& adhesion = msg.adhesions().adhesion( i );
+            affinities_[ adhesion.party().id() ] = adhesion.value();
+        }
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +166,7 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     }
     BOOST_FOREACH( const T_Affinities::value_type& affinity, affinities_ )
     {
-        sword::PartyAdhesion& adhesion = *msg().add_adhesions();
+        sword::PartyAdhesion& adhesion = *msg().mutable_adhesions()->add_adhesion();
         adhesion.mutable_party()->set_id( affinity.first );
         adhesion.set_value( affinity.second );
     }

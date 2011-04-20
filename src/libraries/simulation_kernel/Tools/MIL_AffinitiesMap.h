@@ -102,7 +102,7 @@ void MIL_AffinitiesMap::SendFullState( T& msg ) const
 {
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
     {
-        sword::PartyAdhesion& adhesion = *msg().add_adhesions();
+        sword::PartyAdhesion& adhesion = *msg().mutable_adhesions()->add_adhesion();
         adhesion.mutable_party()->set_id( it->first );
         adhesion.set_value( it->second );
     }
@@ -119,7 +119,7 @@ void MIL_AffinitiesMap::UpdateNetwork( T& msg )
     {
         for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         {
-            sword::PartyAdhesion& adhesion = *msg().add_adhesions();
+            sword::PartyAdhesion& adhesion = *msg().mutable_adhesions()->add_adhesion();
             adhesion.mutable_party()->set_id( it->first );
             adhesion.set_value( it->second );
         }

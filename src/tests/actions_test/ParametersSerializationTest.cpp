@@ -434,9 +434,9 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_Lima )
     kernel::CoordinateConverter converter;
     actions::parameters::Lima parameter( converter, xis );
     std::auto_ptr< sword::MissionParameter > message( new sword::MissionParameter() );
-    parameter.CommitTo( *message->mutable_value()->Add()->mutable_phaselines()->add_elem() );
+    parameter.CommitTo( *message->mutable_value()->Add()->mutable_phaseline()->add_elem() );
     CheckSet( *message );
-    const sword::PhaseLineOrder& lima = message->value().Get( 0 ).phaselines().elem(0);
+    const sword::PhaseLineOrder& lima = message->value().Get( 0 ).phaseline().elem(0);
     BOOST_CHECK_EQUAL( 2, lima.line().location().type() );
     BOOST_CHECK_EQUAL( 5, lima.line().location().coordinates().elem_size() );
     BOOST_CHECK_EQUAL( "20081211T190022", lima.time().data() );

@@ -509,6 +509,17 @@ message Exercise  {
     optional uint32 port    = 3;
 }
 
+// Color
+/** @struct RgbColor
+    @brief Defines a color
+*/
+message RgbColor
+{
+    required int32 red   = 1; //!< The red component between 0 and 255
+    required int32 green = 2; //!< The green component between 0 and 255
+    required int32 blue  = 3; //!< The blue component between 0 and 255
+}
+
 /** @struct CoordLatLong
     @brief Defines coordinates
 */
@@ -758,7 +769,7 @@ message MissionParameter {
         optional Polygon                  area                     = 7;  //!< A polygon
         optional Path                     path                     = 8;  //!< A path
         optional Line                     limit                    = 9;  //!< A limit
-        optional PhaseLinesOrder          phaseLine                = 10; //!< @deprecated use phaseLines
+        optional PhaseLinesOrder          phaseLine                = 10; //!< A phase line list
         optional AutomatId                automat                  = 11; //!< An automat identifier
         optional UnitId                   agent                    = 12; //!< An agent identifier
         optional UnitKnowledgeId          agentKnowledge           = 13; //!< An agent knowledge identifier
@@ -787,15 +798,14 @@ message MissionParameter {
         optional string                   aCharStr                 = 35; //!< A string
         optional MissionObjective         missionObjective         = 36; //!< A mission objective
         optional MissionObjectiveList     missionObjectiveList     = 37; //!< A mission objective list
-        optional PhaseLinesOrder          phaseLines               = 38; //!< A phase line list
-        optional IntelligenceList         intelligenceList         = 39; //!< An intelligence list
-        optional ObjectId                 object                   = 40; //!< An object identifier
-        optional PartyId                  party                    = 41; //!< A party identifier
-        optional FormationId              formation                = 42; //!< A formation identifier
-        optional uint32                   identifier               = 43; //!< @todo What's this ?
-        optional int32                    quantity                 = 44; //!< A quantity
-        optional KnowledgeGroupId         knowledgeGroup           = 45; //!< A knowledge group identifier
-        repeated Value                    list                     = 46; //!< A list of values
+        optional IntelligenceList         intelligenceList         = 38; //!< An intelligence list
+        optional ObjectId                 object                   = 39; //!< An object identifier
+        optional PartyId                  party                    = 40; //!< A party identifier
+        optional FormationId              formation                = 41; //!< A formation identifier
+        optional uint32                   identifier               = 42; //!< @todo What's this ?
+        optional int32                    quantity                 = 43; //!< A quantity
+        optional KnowledgeGroupId         knowledgeGroup           = 44; //!< A knowledge group identifier
+        repeated Value                    list                     = 45; //!< A list of values
     }
     optional bool  null_value = 1; //!< Whether the parameter is a null value or not
     repeated Value value      = 2; //!< The parameter
@@ -895,7 +905,7 @@ message TacticalLine {
 */
 message Shape {
    required string           category = 1; //!< The category
-   required string           color    = 2; //!< The color
+   required RgbColor         color    = 2; //!< The color
    required string           pattern  = 3; //!< The pattern
    required CoordLatLongList points   = 4; //!< The coordinates
 }
@@ -932,17 +942,9 @@ message ResourceNetwork {
         @brief Defines a resource link
     */
     message Link {
-        /** @enum TargetKind
-            @brief Defines the target types
-        */
-        enum TargetKind {
-            urban  = 1; //!< 
-            object = 2; //!< 
-        }
-        required TargetKind kind      = 1; //!< The target type
-        required uint32     target_id = 2; //!< The target identifier
-        required int32      capacity  = 3; //!< The capacity
-        required uint32     flow      = 4; //!< The flow identifier
+        required ObjectId   object   = 1; //!< The target identifier
+        required int32      capacity = 2; //!< The capacity
+        required uint32     flow     = 3; //!< The flow identifier
     }
     required ResourceNetworkType resource            = 1;  //!< The resource network type
     repeated Link                link                = 2;  //!< The link
@@ -1251,4 +1253,20 @@ message Marker {
 message PartyAdhesion {
     required PartyId party = 1; //!< The party identifier
     required float   value = 2; //!< @todo What's this ?
+}
+
+/** @struct PartyAdhesion
+    @brief Defines an adhesion list
+*/
+message PartyAdhesions {
+    repeated PartyAdhesion adhesion = 1; //!< The adhesions
+}
+
+/** @struct HumanRepartition
+    @brief Defines a human repartition
+*/
+message HumanRepartition {
+    required float     male      = 1; //!< Male proportion between 0 and 1
+    required float     female    = 2; //!< Female proportion between 0 and 1
+    required float     children  = 3; //!< Children proportion between 0 and 1
 }

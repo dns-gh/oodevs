@@ -13,6 +13,10 @@
 #include "protocol/MessengerSenders.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include <boost/bind.hpp>
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+#include <qcolor.h>
+#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;
@@ -25,7 +29,7 @@ Drawing::Drawing( unsigned int id, const sword::ShapeCreationRequest& asn, const
     : converter_( converter )
     , id_       ( id )
     , category_ ( asn.shape().category() )
-    , color_    ( asn.shape().color() )
+    , color_    ( QColor( asn.shape().color().red(), asn.shape().color().green(), asn.shape().color().blue() ).name().ascii() )
     , pattern_  ( asn.shape().pattern() )
 {
     for( int i = 0; i < asn.shape().points().elem_size(); ++i )
@@ -108,7 +112,7 @@ void Drawing::Update( const sword::ShapeUpdateRequest& asn )
     if( asn.has_category() )
         category_ = asn.category();
     if( asn.has_color() )
-        color_ = asn.color();
+        color_ = QColor( asn.color().red(), asn.color().green(), asn.color().blue() ).name().ascii();
     if( asn.has_pattern() )
         pattern_ = asn.pattern();
     if( asn.has_points() )
@@ -128,7 +132,11 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     plugins::messenger::ShapeCreation message;
     message().mutable_id()->set_id( id_ );
     message().mutable_shape()->set_category( category_ );
-    message().mutable_shape()->set_color( color_ );
+    QColor color;
+    color.setNamedColor( color_.c_str() );
+    message().mutable_shape()->mutable_color()->set_red( color.red() );
+    message().mutable_shape()->mutable_color()->set_green( color.green() );
+    message().mutable_shape()->mutable_color()->set_blue( color.blue() );
     message().mutable_shape()->set_pattern( pattern_ );
     ::sword::CoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
     for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
@@ -145,11 +153,15 @@ void Drawing::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
     // $$$$ SBO 2008-06-09: keep track of updated fields...
     messenger::ShapeUpdate message;
     message().mutable_id()->set_id( id_ );
-    message().set_category( category_ );
-    message().set_color( color_ );
-    message().set_pattern( pattern_ );
+    message().mutable_shape()->set_category( category_ );
+    QColor color;
+    color.setNamedColor( color_.c_str() );
+    message().mutable_shape()->mutable_color()->set_red( color.red() );
+    message().mutable_shape()->mutable_color()->set_green( color.green() );
+    message().mutable_shape()->mutable_color()->set_blue( color.blue() );
+    message().mutable_shape()->set_pattern( pattern_ );
     for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
-        *message().mutable_points()->add_elem() = *iter;
+        *message().mutable_shape()->mutable_points()->add_elem() = *iter;
     message.Send( publisher );
 }
 

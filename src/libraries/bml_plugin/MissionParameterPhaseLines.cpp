@@ -42,7 +42,7 @@ void MissionParameterPhaseLines::Serialize( sword::MissionParameter& parameter )
     parameter.set_null_value( false );
     unsigned int i = 0;
     for( T_PhaseLines::const_iterator it = phaseLines_.begin(); it != phaseLines_.end(); ++it, ++i )
-        (*it)->Serialize( *parameter.mutable_value()->Add()->mutable_phaselines()->mutable_elem( i ) );
+        (*it)->Serialize( *parameter.mutable_value()->Add()->mutable_phaseline()->mutable_elem( i ) );
 }
 
 // -----------------------------------------------------------------------------

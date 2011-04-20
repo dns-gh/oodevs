@@ -171,9 +171,7 @@ bool ResourceLink::NeedUpdate() const
 // -----------------------------------------------------------------------------
 void ResourceLink::Serialize( sword::ResourceNetwork_Link& msg ) const
 {
-    msg.set_kind( kind_ == eTargetKindUrban ?
-        sword::ResourceNetwork_Link_TargetKind_urban : sword::ResourceNetwork_Link_TargetKind_object );
-    msg.set_target_id( target_ );
+    msg.mutable_object()->set_id( target_ );
     msg.set_capacity( capacity_ );
     msg.set_flow( flow_ );
     needUpdate_ = false;

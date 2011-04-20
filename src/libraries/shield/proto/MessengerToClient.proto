@@ -108,12 +108,10 @@ message MsgShapeCreation {
 }
 
 message MsgShapeUpdate {
-   required Common.DrawingId           id        = 1;
-   optional string                     category  = 2;
-   optional string                     color     = 3;
-   optional string                     template = 4;
-   optional Common.MsgCoordLatLongList points    = 5;
+   required Common.DrawingId id    = 1;
+   required Common.MsgShape  shape = 2;
 }
+
 message MsgShapeDestruction {
    required Common.DrawingId id = 1;
 }

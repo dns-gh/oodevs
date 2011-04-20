@@ -139,19 +139,21 @@ BOOST_FIXTURE_TEST_CASE( shape_creation_to_client_is_converted, ContextFixture< 
 {
     content.mutable_shape_creation()->mutable_id()->set_id( 12 );
     FillShape( content.mutable_shape_creation()->mutable_shape() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_creation { id { id: 12 } shape { category: \"category\" color: \"color\" pattern: \"pattern\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } }" ) );
+    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_creation { id { id: 12 } shape { category: \"category\" color { red: 4 green: 5 blue: 6 } pattern: \"pattern\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } }" ) );
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( shape_update_to_client_is_converted, ContextFixture< sword::MessengerToClient > )
 {
     content.mutable_shape_update()->mutable_id()->set_id( 12 );
-    content.mutable_shape_update()->set_category( "category" );
-    content.mutable_shape_update()->set_color( "color" );
-    content.mutable_shape_update()->set_pattern( "pattern" );
-    FillCoordLatLong( content.mutable_shape_update()->mutable_points()->add_elem() );
-    FillCoordLatLong( content.mutable_shape_update()->mutable_points()->add_elem() );
-    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_update { id { id: 12 } category: \"category\" color: \"color\" template: \"pattern\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } }" ) );
+    content.mutable_shape_update()->mutable_shape()->set_category( "category" );
+    content.mutable_shape_update()->mutable_shape()->mutable_color()->set_red( 4 );
+    content.mutable_shape_update()->mutable_shape()->mutable_color()->set_green( 5 );
+    content.mutable_shape_update()->mutable_shape()->mutable_color()->set_blue( 6 );
+    content.mutable_shape_update()->mutable_shape()->set_pattern( "pattern" );
+    FillCoordLatLong( content.mutable_shape_update()->mutable_shape()->mutable_points()->add_elem() );
+    FillCoordLatLong( content.mutable_shape_update()->mutable_shape()->mutable_points()->add_elem() );
+    MOCK_EXPECT( client, SendMessengerToClient ).once().with( constraint( msg, "context: 42 message { shape_update { id { id: 12 } shape { category: \"category\" color { red: 4 green: 5 blue: 6 } pattern: \"pattern\" points { elem { latitude: 17.23 longitude: 23.17 } elem { latitude: 17.23 longitude: 23.17 } } } } }" ) );
     converter.ReceiveMessengerToClient( "unused endpoint", msg );
 }
 

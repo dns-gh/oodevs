@@ -1252,9 +1252,9 @@ void MIL_Population::SendCreation() const
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
-    asnMsg().set_male( rMale_ );
-    asnMsg().set_female( rFemale_ );
-    asnMsg().set_children( rChildren_ );
+    asnMsg().mutable_repartition()->set_male( rMale_ );
+    asnMsg().mutable_repartition()->set_female( rFemale_ );
+    asnMsg().mutable_repartition()->set_children( rChildren_ );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
     if( asnMsg().has_extension() )
         asnMsg().mutable_extension()->mutable_entries()->Clear();

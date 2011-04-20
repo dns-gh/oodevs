@@ -22,7 +22,7 @@
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
 Drawing::Drawing( kernel::Controller& controller, const sword::ShapeCreation& message, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controller, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ), QColor( QString( message.shape().color().c_str() ) ), proxy, converter )
+    : gui::DrawerShape( controller, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ), QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ), proxy, converter )
     , publisher_( publisher )
     , converter_( converter )
     , publishUpdate_( true )
@@ -87,8 +87,9 @@ void Drawing::Create()
 {
     plugins::messenger::ShapeCreationRequest message;
     message().mutable_shape()->set_category( style_.GetCategory().ascii() );
-    std::string color = color_.name().ascii();
-    message().mutable_shape()->set_color( color.c_str() );
+    message().mutable_shape()->mutable_color()->set_red( color_.red() );
+    message().mutable_shape()->mutable_color()->set_green( color_.green() );
+    message().mutable_shape()->mutable_color()->set_blue( color_.blue() );
     message().mutable_shape()->set_pattern( style_.GetName().ascii() );
     SerializeLocation( *message().mutable_shape()->mutable_points() );
     message.Send( publisher_ );
@@ -107,8 +108,9 @@ void Drawing::Update()
         plugins::messenger::ShapeUpdateRequest message;
         message().mutable_shape()->set_id( GetId() );
         message().set_category( style_.GetCategory().ascii() );
-        std::string color = color_.name().ascii();
-        message().set_color( color.c_str() );
+        message().mutable_color()->set_red( color_.red() );
+        message().mutable_color()->set_green( color_.green() );
+        message().mutable_color()->set_blue( color_.blue() );
         message().set_pattern( style_.GetName().ascii() );
         SerializeLocation( *message().mutable_points() );
         message.Send( publisher_ );
@@ -123,10 +125,10 @@ void Drawing::DoUpdate( const sword::ShapeUpdate& message )
 {
     publishUpdate_ = false;
      // $$$$ SBO 2008-06-09: can only change color and shape
-    if( message.has_color()  )
-        ChangeColor( QString( message.color().c_str() ) );
-    if( message.has_points()  )
-        SetLocation( message.points() );
+    if( message.shape().has_color()  )
+        ChangeColor( QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ) );
+    if( message.shape().has_points()  )
+        SetLocation( message.shape().points() );
     publishUpdate_ = true;
 }
 

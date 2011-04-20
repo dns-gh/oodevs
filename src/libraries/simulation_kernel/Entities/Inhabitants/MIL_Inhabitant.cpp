@@ -316,7 +316,7 @@ void MIL_Inhabitant::UpdateNetwork()
     pAffinities_->UpdateNetwork( msg );
     pLivingArea_->UpdateNetwork( msg );
     pSatisfactions_->UpdateNetwork( msg );
-    if( healthStateChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() || msg().adhesions_size() > 0 )
+    if( healthStateChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() || msg().has_adhesions() > 0 )
         msg.Send( NET_Publisher_ABC::Publisher() );
     healthStateChanged_ = false;
 }

@@ -141,7 +141,7 @@ message ShapeCreationRequest {
 message ShapeUpdateRequest {
     required DrawingId        shape    = 1; //!< The identifier of the shape to update @see DrawingId @todo should be named "id" instead of "shape" (coherence)
     optional string           category = 2; //!< The new category of the shape
-    optional string           color    = 3; //!< The new color of the shape as hexadecimal \#rrggbb @todo should be a Color message
+    optional RgbColor         color    = 3; //!< The new color of the shape
     optional string           pattern  = 4; //!< The new template of the shape
     optional CoordLatLongList points   = 5; //!< The new points of the shape @see CoordLatLongList
 }

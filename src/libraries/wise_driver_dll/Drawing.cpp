@@ -10,6 +10,8 @@
 #include "wise_driver_dll_pch.h"
 #include "Drawing.h"
 #include "protocol/Messenger.h"
+#include <iomanip>
+#include <sstream>
 #pragma warning( push )
 #pragma warning( disable: 4100 4201 )
 #include <wise/iwisedriversink.h>
@@ -28,6 +30,12 @@ namespace
         }
         return points;
     }
+    std::wstring ColorToHex( const sword::RgbColor& color )
+    {
+        std::wstringstream ss;
+        ss << "#" << std::hex << std::setw( 2 ) << std::setfill( L'0' ) << color.red() << color.green() << color.blue();
+        return ss.str();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +45,7 @@ namespace
 Drawing::Drawing( const Model& /*model*/, const sword::ShapeCreation& message )
     : WiseEntity( message.id().id(), L"drawing" )
     , category_( message.shape().category().begin(), message.shape().category().end() )
-    , color_( message.shape().color().begin(), message.shape().color().end() )
+    , color_( ColorToHex( message.shape().color() ) )
     , pattern_( message.shape().pattern().begin(), message.shape().pattern().end() )
     , points_( ReadPoints( message.shape().points() ) )
 {

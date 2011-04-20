@@ -221,7 +221,7 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
     for( int j = 0; j < msg.link_size(); ++j )
     {
         ResourceLink link;
-        link.id_ = msg.link( j ).target_id();
+        link.id_ = msg.link( j ).object().id();
         link.urban_ = ( urbanResolver_.Find( link.id_ ) != 0 );
         link.capacity_ = msg.link( j ).capacity();
         link.flow_ = msg.link( j ).flow();

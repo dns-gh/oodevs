@@ -65,8 +65,8 @@ void SimulationModel::Update( const sword::ControlInformation& msg )
     nSimState_            = msg.status();
     bSendVisionCones_     = msg.send_vision_cones() != 0;
     bProfilingEnabled_    = msg.profiling_enabled() != 0;
-    if( msg.has_reload_real_time() )
-        localTime_ = msg.reload_real_time().data();
+    if( msg.has_checkpoint_real_time() )
+        localTime_ = msg.checkpoint_real_time().data();
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +162,7 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
     msg().set_send_vision_cones    ( bSendVisionCones_ );
     msg().set_profiling_enabled    ( bProfilingEnabled_ );
     if( localTime_ != "" )
-        msg().mutable_reload_real_time()->set_data( localTime_ );
+        msg().mutable_checkpoint_real_time()->set_data( localTime_ );
     msg.Send( publisher );
 }
 

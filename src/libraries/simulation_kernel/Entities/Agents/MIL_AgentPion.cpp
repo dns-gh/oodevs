@@ -477,7 +477,7 @@ void MIL_AgentPion::UpdateNetwork()
         client::UnitAttributes attributesMsg;
         attributesMsg().mutable_unit()->set_id( GetID() );
         pAffinities_->UpdateNetwork( attributesMsg );
-        if( attributesMsg().adhesions_size() > 0 )
+        if( attributesMsg().has_adhesions() )
             attributesMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 }
@@ -635,7 +635,7 @@ void MIL_AgentPion::SendCreation() const
         }
     if( pAffinities_.get() )
         pAffinities_->SendFullState( attributesMsg );
-    if( !criticalIntelligence_.empty() || !extensions_.empty() || attributesMsg().adhesions_size() > 0 )
+    if( !criticalIntelligence_.empty() || !extensions_.empty() || attributesMsg().has_adhesions() )
         attributesMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 

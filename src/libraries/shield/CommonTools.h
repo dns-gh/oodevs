@@ -133,10 +133,17 @@ namespace shield
         ConvertDiffusion( from.tactical_line().diffusion(), to->mutable_tactical_line()->mutable_diffusion() );
     }
     template< typename From, typename To >
+    void ConvertColor( const From& from, To* to )
+    {
+        CONVERT( red );
+        CONVERT( green );
+        CONVERT( blue );
+    }
+    template< typename From, typename To >
     void ConvertShape( const From& from, To* to )
     {
         CONVERT( category );
-        CONVERT( color );
+        CONVERT_CB( color, ConvertColor );
         CONVERT( pattern );
         CONVERT_LIST( points, elem, ConvertCoordLatLong );
     }
@@ -245,7 +252,6 @@ namespace shield
         CONVERT_CB( area, ConvertLocationElem );
         CONVERT_CB( path, ConvertLocationElem );
         CONVERT_CB( limit, ConvertLocationElem );
-        CONVERT_LIST( phaseline, elem, ConvertLimaOrder );
         CONVERT_ID( automat );
         CONVERT_ID( agent );
         CONVERT_ID( agentknowledge );
@@ -283,11 +289,7 @@ namespace shield
         CONVERT( acharstr );
         CONVERT_CB( missionobjective, ConvertObjective );
         CONVERT_LIST( missionobjectivelist, elem, ConvertObjective );
-#ifdef SHIELD_CLIENT
-        CONVERT_LIST_TO( limasorder, phaselines, elem, ConvertLimaOrder );
-#elif defined SHIELD_SIMULATION
-        CONVERT_LIST_TO( phaselines, limasorder, elem, ConvertLimaOrder );
-#endif
+        CONVERT_LIST( phaseline, elem, ConvertLimaOrder );
         CONVERT_LIST( intelligencelist, elem, ConvertIntelligence );
         CONVERT_ID( object );
         CONVERT_ID( party );

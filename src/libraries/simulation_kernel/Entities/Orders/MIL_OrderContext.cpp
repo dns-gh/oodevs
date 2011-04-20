@@ -120,10 +120,10 @@ void MIL_OrderContext::ReadPhaseLines( const sword::MissionParameter& asn )
 {
     if( !asn.null_value() )
     {
-        if( !asn.value_size() || !asn.value().Get( 0 ).has_phaselines() )
+        if( !asn.value_size() || !asn.value().Get( 0 ).has_phaseline() )
             throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
-        for( int i = 0; i < asn.value().Get( 0 ).phaselines().elem_size(); ++i )
-            limas_.push_back( MIL_LimaOrder( asn.value().Get( 0 ).phaselines().elem(i) ) );
+        for( int i = 0; i < asn.value().Get( 0 ).phaseline().elem_size(); ++i )
+            limas_.push_back( MIL_LimaOrder( asn.value().Get( 0 ).phaseline().elem(i) ) );
     }
 }
 
@@ -149,7 +149,7 @@ void MIL_OrderContext::WritePhaseLines( sword::MissionParameter& asn ) const
 {
     asn.set_null_value( limas_.empty() );
     for( CIT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
-        it->Serialize( *asn.mutable_value()->Add()->mutable_phaselines()->add_elem() );
+        it->Serialize( *asn.mutable_value()->Add()->mutable_phaseline()->add_elem() );
 }
 
 // -----------------------------------------------------------------------------

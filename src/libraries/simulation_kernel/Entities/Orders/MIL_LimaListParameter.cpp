@@ -96,6 +96,6 @@ bool MIL_LimaListParameter::ToLimaList( std::vector< boost::shared_ptr< TER_Loca
 // -----------------------------------------------------------------------------
 bool MIL_LimaListParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    return ToLimaList( *elem.mutable_phaselines() );
+    return ToLimaList( *elem.mutable_phaseline() );
 }
 

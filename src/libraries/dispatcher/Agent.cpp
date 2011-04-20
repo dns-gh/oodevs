@@ -286,11 +286,12 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
 
     UPDATE_ASN_ATTRIBUTE( critical_intelligence, criticalIntelligence_ );
 
-    for( int i = 0; i < message.adhesions_size(); ++i )
-    {
-        const sword::PartyAdhesion& adhesion = message.adhesions( i );
-        affinities_[ adhesion.party().id() ] = adhesion.value();
-    }
+    if( message.has_adhesions() )
+        for( int i = 0; i < message.adhesions().adhesion_size(); ++i )
+        {
+            const sword::PartyAdhesion& adhesion = message.adhesions().adhesion( i );
+            affinities_[ adhesion.party().id() ] = adhesion.value();
+        }
 
     Observable< sword::UnitAttributes >::Notify( message );
 }
@@ -487,7 +488,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_critical_intelligence( criticalIntelligence_ );
         BOOST_FOREACH( const T_Affinities::value_type& affinity, affinities_ )
         {
-            sword::PartyAdhesion& adhesion = *asn().add_adhesions();
+            sword::PartyAdhesion& adhesion = *asn().mutable_adhesions()->add_adhesion();
             adhesion.mutable_party()->set_id( affinity.first );
             adhesion.set_value( affinity.second );
         }

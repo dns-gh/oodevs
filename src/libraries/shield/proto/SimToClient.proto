@@ -199,17 +199,6 @@ message MsgActionCreateFireOrderAck {
     required EnumActionCreateFireOrderErrorCode  error_code = 2;
 }
 
-message MsgChangePopulationMagicActionAck {
-    enum ErrorCode {
-       no_error                     = 0;
-       error_invalid_population     = 1;
-       error_invalid_adhesion       = 2; // unknown party for instance
-       error_invalid_number         = 3; // negative number of dead for instance?
-       error_invalid_parameter      = 4; // at least one parameters invalid
-    }
-  required ErrorCode error_code = 1;
-}
-
 message MsgControlInformation {
    required int32                      current_tick         = 1;
    required Common.MsgDateTime         initial_date_time    = 2;
@@ -220,7 +209,7 @@ message MsgControlInformation {
    required Common.EnumSimulationState status               = 7;
    required bool                       send_vision_cones    = 8;
    required bool                       profiling_enabled    = 9;
-   optional Common.MsgDateTime         reload_real_time     = 10;
+   optional Common.MsgDateTime         checkpoint_real_time = 10;
 }
 
 message MsgControlProfilingInformation {
@@ -348,14 +337,14 @@ message MsgAutomatDestruction {
    required Common.AutomatId automat = 1;
 }
 
-
 message MsgUnitCreation {
-   required Common.UnitId    unit      = 1;
-   required Common.UnitType  type      = 2;
-   required string           nom       = 3;
-   required Common.AutomatId automat   = 4;
-   required bool             pc        = 5;
-   optional Common.RgbColor        color       = 6;
+   required Common.UnitId           unit        = 1;
+   required Common.UnitType         type        = 2;
+   required string                  nom         = 3;
+   required Common.AutomatId        automat     = 4;
+   required bool                    pc          = 5;
+   optional Common.RgbColor         color       = 6;
+   optional Common.HumanRepartition repartition = 7;
 }
 
 message BorrowedEquipments {
@@ -448,6 +437,7 @@ message MsgUnitAttributes {
         none_fire_available = 0;
         pret_au_tir         = 1;
         indisponible        = 2;
+        engaged             = 3;
     }
     enum CrowdRoe {
         none                                      = 0;
@@ -455,6 +445,11 @@ message MsgUnitAttributes {
         maintien_a_distance_par_moyens_non_letaux = 2;
         dispersion_par_moyens_de_defense_actifs   = 3;
         armes_letales_autorisees                  = 4;
+    }
+    message Satisfaction {
+        optional float safety                = 1;
+        optional float lodging               = 2;
+        optional float access_to_health_care = 3;
     }
     required Common.UnitId                      unit                          = 1;
     optional HumanDotations                     dotation_eff_personnel        = 2;
@@ -500,9 +495,10 @@ message MsgUnitAttributes {
     optional Common.UnitId                      surrendered_unit              = 42;
     optional bool                               prisonnier                    = 43;
     optional bool                               refugie_pris_en_compte        = 44;
-    optional Extension                          extension                     = 45;
-    optional string                             critical_intelligence         = 46;
-    repeated Common.PartyAdhesion               adhesions                     = 47;
+    optional Satisfaction                       satisfaction                  = 45;
+    optional string                             critical_intelligence         = 46; //implemented in PIV3 
+    optional Common.PartyAdhesions              adhesions                     = 47;
+    optional Extension                          extension                     = 48;
 }
 
 message MsgUnitPathFind {
@@ -561,7 +557,6 @@ message MsgUnitKnowledgeUpdate {
     optional Common.UnitId               surrendered_unit           = 14;
     optional bool                        prisonnier                 = 15;
     optional bool                        refugie_pris_en_compte     = 16;
-    optional string                      critical_intelligence      = 17;
 }
 
 message MsgUnitKnowledgeDestruction {
@@ -951,22 +946,20 @@ message MsgLogSupplyQuotas {
 }
 
 message MsgCrowdCreation {
-   required Common.CrowdId   crowd     = 1;
-   required Common.CrowdType type      = 2;
-   optional string           nom       = 3;
-   required Common.PartyId   party     = 4;
-   optional Extension        extension = 5;
-   required float            male      = 6;
-   required float            female    = 7;
-   required float            children  = 8;
+   required Common.CrowdId          crowd       = 1;
+   required Common.CrowdType        type        = 2;
+   optional string                  nom         = 3;
+   required Common.PartyId          party       = 4;
+   optional Extension               extension   = 5;
+   required Common.HumanRepartition repartition = 6;
 }
 
 message MsgCrowdUpdate {
-   required Common.CrowdId       crowd                 = 1;
-   optional int32                domination            = 2;
-   repeated Common.PartyAdhesion adhesions             = 3;
-   optional string               critical_intelligence = 4;
-   optional float                armed_individuals     = 5;
+   required Common.CrowdId        crowd                 = 1;
+   optional int32                 domination            = 2;
+   optional Common.PartyAdhesions adhesions             = 3;
+   optional string                critical_intelligence = 4;
+   optional float                 armed_individuals     = 5;
 }
 
 message MsgCrowdDestruction {
@@ -1197,6 +1190,7 @@ message MsgKnowledgeGroupCreation {
    optional Common.KnowledgeGroupId parent          = 3;
    required string                  type            = 4;
    optional bool                    jam             = 5;
+   required string                  name            = 6 [default = ""];                    
 }
 
 message MsgKnowledgeGroupUpdate {
@@ -1260,9 +1254,8 @@ message MsgPopulationCreation {
     required Common.PartyId        party     = 2;
     required Common.PopulationType type      = 3;
     required string                name      = 4;
-    required string                text      = 5;
-    optional Extension             extension = 6;
-    repeated Common.ObjectId       objects   = 7;
+    optional Extension             extension = 5;
+    repeated Common.ObjectId       objects   = 6;
 }
 
 message MsgPopulationUpdate {
@@ -1294,7 +1287,7 @@ message MsgPopulationUpdate {
     optional int32                 healthy      = 2;
     optional int32                 wounded      = 3;
     optional int32                 dead         = 4;
-    repeated Common.PartyAdhesion  adhesions    = 5;
+    optional Common.PartyAdhesions adhesions    = 5;
     optional Satisfaction          satisfaction = 6;
     optional string                motivation   = 7; 
     repeated BlockOccupation       occupations  = 8;
@@ -1435,7 +1428,6 @@ message MsgSimToClient {
         optional MsgCrowdDestruction                            crowd_destruction                              = 133;
         optional MsgPopulationCreation                          population_creation                            = 134;
         optional MsgPopulationUpdate                            population_update                              = 135;
-        optional MsgChangePopulationMagicActionAck              change_population_magic_action_ack             = 136;
     }
     optional int32   context = 1;
     required Content message = 2;

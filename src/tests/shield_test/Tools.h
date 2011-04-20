@@ -154,7 +154,9 @@ namespace shield
     void FillShape( S* s )
     {
         s->set_category( "category" );
-        s->set_color( "color" );
+        s->mutable_color()->set_red( 4 );
+        s->mutable_color()->set_green( 5 );
+        s->mutable_color()->set_blue( 6 );
         s->set_pattern( "pattern" );
         FillCoordLatLong( s->mutable_points()->add_elem() );
         FillCoordLatLong( s->mutable_points()->add_elem() );

@@ -159,7 +159,6 @@ public:
     static void Convert( const sword::CrowdDestruction& from, MsgsSimToClient::MsgCrowdDestruction* to );
     static void Convert( const sword::PopulationCreation& from, MsgsSimToClient::MsgPopulationCreation* to );
     static void Convert( const sword::PopulationUpdate& from, MsgsSimToClient::MsgPopulationUpdate* to );
-    static void Convert( const sword::ChangePopulationMagicActionAck& from, MsgsSimToClient::MsgChangePopulationMagicActionAck* to );
     //@}
 };
 

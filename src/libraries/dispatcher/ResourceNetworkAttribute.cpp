@@ -106,12 +106,11 @@ void ResourceNetworkAttribute::Update( const sword::ResourceNetwork& from )
         const sword::ResourceNetwork_Link& linkFrom = from.link( j );
         std::vector< ResourceNetwork::Link >::iterator it = to.links_.begin();
         for( ; it != to.links_.end(); ++it )
-            if( it->kind_ == linkFrom.kind() && it->target_ == linkFrom.target_id() )
+            if( it->objectId_ == linkFrom.object().id() )
                 break;
         if( it == to.links_.end() )
             it = to.links_.insert( it, ResourceNetwork::Link() );
-        it->kind_ = linkFrom.kind();
-        it->target_ = linkFrom.target_id();
+        it->objectId_ = linkFrom.object().id();
         it->capacity_ = linkFrom.capacity();
         it->flow_ = linkFrom.flow();
     }
@@ -143,8 +142,7 @@ void ResourceNetworkAttribute::Send( sword::ResourceNetwork& message, const Reso
     for( std::vector< ResourceNetwork::Link >::const_iterator it = network.links_.begin(); it != network.links_.end(); ++it )
     {
         sword::ResourceNetwork_Link* link = message.add_link();
-        link->set_kind( static_cast< sword::ResourceNetwork_Link_TargetKind >( it->kind_ ) );
-        link->set_target_id( it->target_ );
+        link->mutable_object()->set_id( it->objectId_ );
         link->set_capacity( it->capacity_ );
         link->set_flow( it->flow_ );
     }

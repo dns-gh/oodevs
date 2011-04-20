@@ -117,8 +117,8 @@ void ResourceNetworkUpdater::UpdateResourceNetworkLinks( const sword::ResourceNe
 void ResourceNetworkUpdater::UpdateResourceNetworkLink( const sword::ResourceNetwork_Link& link, long network_id )
 {
     long target_id = 0;
-    if( link.has_target_id() )
-        target_id = static_cast< long >( link.target_id() );
+    if( link.has_object() )
+        target_id = static_cast< long >( link.object().id() );
     else
         return;
 
@@ -139,8 +139,6 @@ void ResourceNetworkUpdater::UpdateResourceNetworkLink( const sword::ResourceNet
         row->SetField( "capacity", FieldVariant( static_cast< long >( link.capacity() ) ) );
     if( link.has_flow() )
         row->SetField( "flow", FieldVariant( static_cast< long >( link.flow() ) ) );
-    if( link.has_kind() )
-        row->SetField( "target_type", FieldVariant( std::string( ( link.kind() == sword::ResourceNetwork_Link::urban ) ? "urban" : "object" ) ) );
     if( !creation_ )
         table->UpdateRow( *row );
     else

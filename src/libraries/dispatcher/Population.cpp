@@ -33,9 +33,9 @@ Population::Population( Model_ABC& model, const sword::CrowdCreation& msg )
     , nType_           ( msg.type().id() )
     , strName_         ( msg.name() )
     , side_            ( model.Sides().Get( msg.party().id() ) )
-    , male_            ( msg.male() )
-    , female_          ( msg.female() )
-    , children_        ( msg.children() )
+    , male_            ( msg.repartition().male() )
+    , female_          ( msg.repartition().female() )
+    , children_        ( msg.repartition().children() )
     , nDominationState_( 0 )
     , order_           ( 0 )
     , decisionalInfos_ ( model )
@@ -74,11 +74,12 @@ void Population::DoUpdate( const sword::CrowdUpdate& msg )
 {
     if( msg.has_domination() )
         nDominationState_ = msg.domination();
-    for( int i = 0; i < msg.adhesions_size(); ++i )
-    {
-        const sword::PartyAdhesion& adhesion = msg.adhesions( i );
-        affinities_[ adhesion.party().id() ] = adhesion.value();
-    }
+    if( msg.has_adhesions() )
+        for( int i = 0; i < msg.adhesions().adhesion_size(); ++i )
+        {
+            const sword::PartyAdhesion& adhesion = msg.adhesions().adhesion( i );
+            affinities_[ adhesion.party().id() ] = adhesion.value();
+        }
     if( msg.has_critical_intelligence() )
         criticalIntelligence_ = msg.critical_intelligence();
     if( msg.has_armed_individuals() )
@@ -200,9 +201,9 @@ void Population::SendCreation( ClientPublisher_ABC& publisher ) const
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
-    asn().set_male( male_ );
-    asn().set_female( female_ );
-    asn().set_children( children_ );
+    asn().mutable_repartition()->set_male( male_ );
+    asn().mutable_repartition()->set_female( female_ );
+    asn().mutable_repartition()->set_children( children_ );
     asn.Send( publisher );
 }
 
@@ -217,7 +218,7 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_domination( nDominationState_ );
     BOOST_FOREACH( const T_Affinities::value_type& affinity, affinities_ )
     {
-        sword::PartyAdhesion& adhesion = *asn().add_adhesions();
+        sword::PartyAdhesion& adhesion = *asn().mutable_adhesions()->add_adhesion();
         adhesion.mutable_party()->set_id( affinity.first );
         adhesion.set_value( affinity.second );
     }

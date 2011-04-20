@@ -437,30 +437,11 @@ message ShapeUpdate {
         @brief Identifier of the updated shape.
         @see DrawingId
     */
-    required DrawingId        id       = 1;
-    /** @property category
-        @brief The updated category of the shape.
-        @note Only set if data has changed.
+    required DrawingId id    = 1;
+    /** @property shape
+        @brief Information about the updated shape.
     */
-    optional string           category = 2;
-    /** @property color
-        @brief The updated color of the shape.
-
-        Format is hexadecimal \#rrggbb.
-        @note Only set if data has changed.
-    */
-    optional string           color    = 3;
-    /** @property pattern
-        @brief The updated pattern of the shape.
-        @note Only set if data has changed.
-    */
-    optional string           pattern = 4;
-    /** @property points
-        @brief The updated points of the shape.
-        @see CoordLatLongList
-        @note Only set if data has changed.
-    */
-    optional CoordLatLongList points   = 5;
+    required Shape     shape = 2;
 }
 
 /** @struct ShapeDestruction

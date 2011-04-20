@@ -46,11 +46,12 @@ Affinities::~Affinities()
 // -----------------------------------------------------------------------------
 void Affinities::DoUpdate( const sword::PopulationUpdate& message )
 {
-    for( int i = 0; i < message.adhesions_size(); ++i )
-    {
-        const sword::PartyAdhesion& adhesion = message.adhesions( i );
-        affinities_[ adhesion.party().id() ] = adhesion.value();
-    }
+    if( message.has_adhesions() )
+        for( int i = 0; i < message.adhesions().adhesion_size(); ++i )
+        {
+            const sword::PartyAdhesion& adhesion = message.adhesions().adhesion( i );
+            affinities_[ adhesion.party().id() ] = adhesion.value();
+        }
     CreateDictionary();
     controller_.Update( *this );
 }
@@ -61,11 +62,12 @@ void Affinities::DoUpdate( const sword::PopulationUpdate& message )
 // -----------------------------------------------------------------------------
 void Affinities::DoUpdate( const sword::CrowdUpdate& message )
 {
-    for( int i = 0; i < message.adhesions_size(); ++i )
-    {
-        const sword::PartyAdhesion& adhesion = message.adhesions( i );
-        affinities_[ adhesion.party().id() ] = adhesion.value();
-    }
+    if( message.has_adhesions() )
+        for( int i = 0; i < message.adhesions().adhesion_size(); ++i )
+        {
+            const sword::PartyAdhesion& adhesion = message.adhesions().adhesion( i );
+            affinities_[ adhesion.party().id() ] = adhesion.value();
+        }
     CreateDictionary();
     controller_.Update( *this );
 }
@@ -76,11 +78,12 @@ void Affinities::DoUpdate( const sword::CrowdUpdate& message )
 // -----------------------------------------------------------------------------
 void Affinities::DoUpdate( const sword::UnitAttributes& message )
 {
-    for( int i = 0; i < message.adhesions_size(); ++i )
-    {
-        const sword::PartyAdhesion& adhesion = message.adhesions( i );
-        affinities_[ adhesion.party().id() ] = adhesion.value();
-    }
+    if( message.has_adhesions() )
+        for( int i = 0; i < message.adhesions().adhesion_size(); ++i )
+        {
+            const sword::PartyAdhesion& adhesion = message.adhesions().adhesion( i );
+            affinities_[ adhesion.party().id() ] = adhesion.value();
+        }
     CreateDictionary();
     controller_.Update( *this );
 }

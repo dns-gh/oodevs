@@ -242,7 +242,7 @@ void SimulationToClient::Convert( const sword::ControlInformation& from, MsgsSim
     CONVERT_SIMULATION_STATE( status );
     CONVERT( send_vision_cones );
     CONVERT( profiling_enabled );
-    CONVERT_DATE( reload_real_time );
+    CONVERT_DATE( checkpoint_real_time );
 }
 
 // -----------------------------------------------------------------------------
@@ -406,6 +406,13 @@ namespace
         CONVERT( green );
         CONVERT( blue );
     }
+    template< typename From, typename To >
+    void ConvertRepartition( const From& from, To* to )
+    {
+        CONVERT( male );
+        CONVERT( female );
+        CONVERT( children );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -517,6 +524,7 @@ void SimulationToClient::Convert( const sword::UnitCreation& from, MsgsSimToClie
     CONVERT_ID( automat );
     CONVERT( pc );
     CONVERT_CB( color, ConvertRgbColor );
+    CONVERT_CB( repartition, ConvertRepartition );
 }
 
 namespace
@@ -577,6 +585,13 @@ namespace
         CONVERT( jammed );
         CONVERT_ID( knowledge_group );
     }
+    template< typename From, typename To >
+    void ConvertUnitSatisfaction( const From& from, To* to )
+    {
+        CONVERT( safety );
+        CONVERT( lodging );
+        CONVERT( access_to_health_care );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -622,7 +637,8 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     ConvertOperationalStatus( from, to );
     CONVERT_ENUM_TO( indirect_fire_availability, disponibilite_au_tir_indirect, ( sword::UnitAttributes::no_fire, MsgsSimToClient::MsgUnitAttributes::none_fire_available )
                                                                                 ( sword::UnitAttributes::fire_ready, MsgsSimToClient::MsgUnitAttributes::pret_au_tir )
-                                                                                ( sword::UnitAttributes::fire_unavailable, MsgsSimToClient::MsgUnitAttributes::indisponible ) );
+                                                                                ( sword::UnitAttributes::fire_unavailable, MsgsSimToClient::MsgUnitAttributes::indisponible )
+                                                                                ( sword::UnitAttributes::engaged, MsgsSimToClient::MsgUnitAttributes::engaged ) );
     ConvertRulesOfEngagement( from, to );
     CONVERT_ENUM( roe_crowd, ( sword::UnitAttributes::no_rule, MsgsSimToClient::MsgUnitAttributes::none )
                              ( sword::UnitAttributes::no_force, MsgsSimToClient::MsgUnitAttributes::emploi_force_interdit )
@@ -644,8 +660,10 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     CONVERT_TO( refugees_managed, refugie_pris_en_compte );
     CONVERT_CB( extension, ConvertExtension );
     CONVERT( critical_intelligence );
-    for( int i = 0; i < from.adhesions().size(); ++i )
-        ConvertPartyAdhesion( from.adhesions( i ), to->add_adhesions() );
+    CONVERT_CB( satisfaction, ConvertUnitSatisfaction );
+    if( from.has_adhesions() )
+        for( int i = 0; i < from.adhesions().adhesion_size(); ++i )
+            ConvertPartyAdhesion( from.adhesions().adhesion( i ), to->mutable_adhesions()->add_adhesion() );
 }
 
 // -----------------------------------------------------------------------------
@@ -788,7 +806,6 @@ void SimulationToClient::Convert( const sword::UnitKnowledgeUpdate& from, MsgsSi
     CONVERT_ID( surrendered_unit );
     CONVERT_TO( prisoner, prisonnier );
     CONVERT_TO( refugees_managed, refugie_pris_en_compte );
-    CONVERT( critical_intelligence );
 }
 
 // -----------------------------------------------------------------------------
@@ -1191,9 +1208,7 @@ namespace
     template< typename From, typename To >
     void ConvertLink( const From& from, To* to )
     {
-        CONVERT_ENUM( kind, ( sword::ResourceNetwork::Link::urban, Common::ResourceNetwork::Link::urban )
-                            ( sword::ResourceNetwork::Link::object, Common::ResourceNetwork::Link::object ) );
-        CONVERT( target_id );
+        CONVERT_ID( object );
         CONVERT( capacity );
         CONVERT( flow );
     }
@@ -1614,9 +1629,7 @@ void SimulationToClient::Convert( const sword::CrowdCreation& from, MsgsSimToCli
     CONVERT_TO( name, nom );
     CONVERT_ID( party );
     CONVERT_CB( extension, ConvertExtension );
-    CONVERT( male );
-    CONVERT( female );
-    CONVERT( children );
+    CONVERT_CB( repartition, ConvertRepartition );
 }
 
 // -----------------------------------------------------------------------------
@@ -1627,8 +1640,9 @@ void SimulationToClient::Convert( const sword::CrowdUpdate& from, MsgsSimToClien
 {
     CONVERT_ID( crowd );
     CONVERT( domination );
-    for( int i = 0; i < from.adhesions().size(); ++i )
-        ConvertPartyAdhesion( from.adhesions( i ), to->add_adhesions() );
+    if( from.has_adhesions() )
+        for( int i = 0; i < from.adhesions().adhesion_size(); ++i )
+            ConvertPartyAdhesion( from.adhesions().adhesion( i ), to->mutable_adhesions()->add_adhesion() );
     CONVERT( critical_intelligence );
     CONVERT( armed_individuals );
 }
@@ -2100,6 +2114,7 @@ void SimulationToClient::Convert( const sword::KnowledgeGroupCreation& from, Msg
     CONVERT_ID( parent );
     CONVERT( type );
     CONVERT( jam );
+    to->set_name( "" );
 }
 
 // -----------------------------------------------------------------------------
@@ -2276,7 +2291,6 @@ void SimulationToClient::Convert( const sword::PopulationCreation& from, MsgsSim
     CONVERT_ID( party );
     CONVERT_ID( type );
     CONVERT( name );
-    CONVERT( text );
     CONVERT_CB( extension, ConvertExtension );
     for( int i = 0; i < from.objects().size(); ++i )
         to->add_objects()->set_id( from.objects( i ).id() );
@@ -2333,25 +2347,13 @@ void SimulationToClient::Convert( const sword::PopulationUpdate& from, MsgsSimTo
     CONVERT( healthy );
     CONVERT( wounded );
     CONVERT( dead );
-    for( int i = 0; i < from.adhesions().size(); ++i )
-        ConvertPartyAdhesion( from.adhesions( i ), to->add_adhesions() );
+    if( from.has_adhesions() )
+        for( int i = 0; i < from.adhesions().adhesion_size(); ++i )
+            ConvertPartyAdhesion( from.adhesions().adhesion( i ), to->mutable_adhesions()->add_adhesion() );
     CONVERT_CB( satisfaction, ConvertSatisfaction );
     CONVERT_LIST( satisfaction, resources, ConvertResourceSatisfaction );
     CONVERT_LIST( satisfaction, motivations, ConvertMotivationSatisfaction );
     CONVERT( motivation );
     for( int i = 0; i < from.occupations().size(); ++i )
         ConvertBlockOccupation( from.occupations( i ), to->add_occupations() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SimulationToClient::Convert
-// Created: MCO 2010-11-24
-// -----------------------------------------------------------------------------
-void SimulationToClient::Convert( const sword::ChangePopulationMagicActionAck& from, MsgsSimToClient::MsgChangePopulationMagicActionAck* to )
-{
-    CONVERT_ENUM( error_code, ( sword::ChangePopulationMagicActionAck::no_error, MsgsSimToClient::MsgChangePopulationMagicActionAck::no_error )
-                              ( sword::ChangePopulationMagicActionAck::error_invalid_population, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_population )
-                              ( sword::ChangePopulationMagicActionAck::error_invalid_adhesion, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_adhesion )
-                              ( sword::ChangePopulationMagicActionAck::error_invalid_number, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_number )
-                              ( sword::ChangePopulationMagicActionAck::error_invalid_parameter, MsgsSimToClient::MsgChangePopulationMagicActionAck::error_invalid_parameter ) );
 }

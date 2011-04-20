@@ -148,8 +148,8 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         return 0;
     if( message.has_limit() )
         return new parameters::Limit( parameter, converter_, message.limit() );
-    if( message.has_phaselines() )
-        return new parameters::LimaList( parameter, converter_, message.phaselines() );
+    if( message.has_phaseline() )
+        return new parameters::LimaList( parameter, converter_, message.phaseline() );
     if( message.has_datetime() )
         return new parameters::DateTime( parameter, message.datetime() );
     if( message.has_urbanknowledge() )  // $$$$ _RC_ LGY 2011-02-24: urban block id

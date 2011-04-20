@@ -63,8 +63,8 @@ message MsgShapeCreationRequest {
 message MsgShapeUpdateRequest {
     required Common.DrawingId           shape     = 1;
     optional string                     category  = 2;
-    optional string                     color     = 3;
-    optional string                     template = 4;
+    optional Common.RgbColor            color     = 3;
+    optional string                     template  = 4;
     optional Common.MsgCoordLatLongList points    = 5;
 }
 
@@ -79,7 +79,7 @@ message MsgMarkerCreationRequest {
 message MsgMarkerUpdateRequest {
     required Common.MarkerId           marker      = 1;
     optional string                    name        = 2;
-    optional string                    number	    = 3;
+    optional string                    number      = 3;
     optional string                    description = 4;
     optional Common.MarkerId           parent      = 5;
 }

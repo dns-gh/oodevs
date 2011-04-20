@@ -160,7 +160,7 @@ void Lima::CommitTo( sword::MissionParameter& message ) const
     message.set_null_value( !IsSet() );
     if( IsSet() )
     {
-        CommitTo( *message.mutable_value()->Add()->mutable_phaselines()->add_elem() );
+        CommitTo( *message.mutable_value()->Add()->mutable_phaseline()->add_elem() );
     }
 }
 // -----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ void Lima::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
     {
-        CommitTo( *message.mutable_phaselines()->add_elem() );
+        CommitTo( *message.mutable_phaseline()->add_elem() );
     }
 }
 

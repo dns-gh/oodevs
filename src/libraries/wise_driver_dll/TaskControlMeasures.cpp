@@ -183,8 +183,8 @@ bool TaskControlMeasures::AddParameter( const sword::MissionParameter& parameter
         CreateLocationList( value.locationlist() );
     else if( value.has_limit() )
         CreateBoundaryLimit( value.limit() );
-    else if( value.has_phaselines() )
-        CreatePhaseLine( value.phaselines() );
+    else if( value.has_phaseline() )
+        CreatePhaseLine( value.phaseline() );
     else
         return false;
     return true;
@@ -530,7 +530,7 @@ namespace
                 wise::FetchObjectAttribute( driver, database, handles.front(), L"Function", function );
                 std::wstring schedule;
                 wise::FetchObjectAttribute( driver, database, handles.front(), L"Schedule", schedule );
-                sword::PhaseLineOrder& phaselines = *parameter.mutable_phaselines()->add_elem();
+                sword::PhaseLineOrder& phaselines = *parameter.mutable_phaseline()->add_elem();
                 FillLocation( *phaselines.mutable_line()->mutable_location(), sword::Location::line, points );
                 phaselines.add_fonctions( sword::PhaseLineOrder::Function( function ) );
                 phaselines.mutable_time()->set_data( std::string( schedule.begin(), schedule.end() ) );

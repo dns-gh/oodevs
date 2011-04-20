@@ -121,9 +121,6 @@ message MsgObjectMagicAction {
         structural_state   = 18;
         infrastructure     = 19;
         usages             = 20;
-        confined           = 21;
-        alerted            = 22;
-        evacuated          = 23;
    }
    
    required Common.ObjectId             object     = 1;

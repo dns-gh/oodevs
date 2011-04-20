@@ -113,7 +113,7 @@ void ClientToMessenger::Convert( const MsgsClientToMessenger::MsgShapeUpdateRequ
 {
     CONVERT_ID( shape );
     CONVERT( category );
-    CONVERT( color );
+    CONVERT_CB( color, ConvertColor );
     CONVERT_TO( template_, pattern );
     CONVERT_LIST( points, elem, ConvertCoordLatLong );
 }
