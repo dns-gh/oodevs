@@ -24,8 +24,12 @@ UrbanPositions::UrbanPositions( const sword::Location& location, const sword::Ur
     , selected_( false )
     , height_  ( 0u )
 {
+    std::vector< geometry::Point2f > positions;
     for( int i = 0; i < location.coordinates().elem_size(); ++i )
-        polygon_.Add( converter.ConvertToXY( location.coordinates().elem( i ) ) );
+        positions.push_back( converter.ConvertToXY( location.coordinates().elem( i ) ) );
+    if( positions.front() == positions.back() )
+        positions.pop_back();
+    polygon_ = geometry::Polygon2f( positions );
     boundingBox_ = polygon_.BoundingBox();
     barycenter_ = polygon_.Barycenter();
     if( attributes.has_architecture() )
