@@ -219,8 +219,21 @@ bool XmlNode::RemoveNode( const std::string& path )
     XmlNode* node = GetChildNode( path );
     if ( !node )
         return false;
-    node->children_.clear();
-    return true;
+    
+    XmlNode* parentNode = GetChildNode( path, true );
+    if ( !parentNode )
+        return false;
+
+    for ( T_Nodes::iterator it = parentNode->children_.begin(); it != parentNode->children_.end(); ++it )
+    {
+        if ( it->second == node )
+        {
+            parentNode->children_.erase( it );
+            return true;
+        }
+    }
+
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +259,7 @@ bool XmlNode::HasNode( const std::string& path )
 // Name: XmlNode::GetChildNode
 // Created: RPD 2011-04-12
 // -----------------------------------------------------------------------------
-XmlNode* XmlNode::GetChildNode( const std::string& path )
+XmlNode* XmlNode::GetChildNode( const std::string& path, bool parent /*= false*/ )
 {
     std::string element = NextElement( path );
     T_Nodes::iterator it = children_.find( element );
@@ -254,8 +267,8 @@ XmlNode* XmlNode::GetChildNode( const std::string& path )
     {
         element = element != path ? path.substr( element.length() + 1 ) : "";
         if ( !element.size() )
-            return this;
-        return it->second->GetChildNode( element );
+            return parent? this : it->second;
+        return it->second->GetChildNode( element, parent );
     }
     return 0;
 }
