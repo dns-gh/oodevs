@@ -61,7 +61,7 @@ namespace
         virtual void DrawConvexPolygon( const T_PointVector& ) const {}
         virtual void DrawConvexPolygon( const geometry::Polygon2f& ) const {}
         virtual void DrawConvexPolygon( const T_PointVector&, bool ) const {}
-        virtual void DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int height, bool selected ) const {}
+        virtual void DrawDecoratedPolygon( const geometry::Polygon2f&, const kernel::UrbanColor_ABC&, const std::string&, unsigned int, bool ) const {}
         virtual void DrawArrow        ( const geometry::Point2f&, const geometry::Point2f&, float, E_Unit ) const {}
         virtual void DrawCurvedArrow  ( const geometry::Point2f&, const geometry::Point2f&, float, float, E_Unit ) const {}
         virtual void DrawArc          ( const geometry::Point2f&, const geometry::Point2f&, const geometry::Point2f& ) const {}
@@ -88,10 +88,10 @@ namespace
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Symbols_Data::SymbolInfo::SymbolInfo
-// Created: SBO 2011-04-18
+// Created: ABR 2011-04-18
 // -----------------------------------------------------------------------------
 ADN_Symbols_Data::SymbolInfo::SymbolInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools )
-    : template_( new gui::DrawingTemplate( xis, "Tactical graphics", renderer ) ) // $$$$ SBO 2011-04-18: hard coded
+    : template_( new gui::DrawingTemplate( xis, "Tactical graphics", renderer ) ) // $$$$ ABR 2011-04-18: hard coded
     , tools_   ( tools )
     , strName_ ( template_->GetName().ascii() )
 {
@@ -311,6 +311,12 @@ ADN_Symbols_Data::ADN_Symbols_Data()
 ADN_Symbols_Data::~ADN_Symbols_Data()
 {
     delete tools_;
+    for( IT_SymbolsMap it = symbolsMap_.begin(); it != symbolsMap_.end(); ++it )
+        it->second.clear();
+    symbolsMap_.clear();
+    for( IT_SymbolInfoVector it = symbols_.begin(); it != symbols_.end(); ++it )
+        delete *it;
+    symbols_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -320,6 +326,15 @@ ADN_Symbols_Data::~ADN_Symbols_Data()
 void ADN_Symbols_Data::FilesNeeded( T_StringList& files ) const
 {
     files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSymbols_.GetData() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Symbols_Data::Save
+// Created: ABR 2011-04-21
+// -----------------------------------------------------------------------------
+void ADN_Symbols_Data::Save()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -348,7 +363,7 @@ void ADN_Symbols_Data::ReadArchive( xml::xistream& xis )
 void ADN_Symbols_Data::ReadCategory( xml::xistream& xis )
 {
     const std::string name = xis.attribute< std::string >( "name" );
-    if( name == "Tactical graphics" ) // $$$$ SBO 2011-04-18: hard coded
+    if( name == "Tactical graphics" || name == "Objets tactiques graphiques" || name == "Objects tactiques graphiques" ) // $$$$ SBO 2011-04-18: hard coded
         xis >> xml::list( "template", *this, &ADN_Symbols_Data::ReadTemplate );
 }
 
@@ -367,7 +382,7 @@ void ADN_Symbols_Data::ReadTemplate( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 ADN_Symbols_Data::SymbolInfo* const ADN_Symbols_Data::GetSymbol( const std::string& code ) const
 {
-    for( T_SymbolInfoVector::const_iterator it = symbols_.begin(); it != symbols_.end(); ++it )
+    for( CIT_SymbolInfoVector it = symbols_.begin(); it != symbols_.end(); ++it )
         if( (*it)->GetCode() == code )
             return *it;
     return 0;
@@ -385,7 +400,7 @@ ADN_Symbols_Data::T_SymbolInfoVector& ADN_Symbols_Data::GetSymbols( const std::s
     {
         QStringList qlist = QStringList::split( ',', geometries.c_str() );
 
-        for( T_SymbolInfoVector::iterator it = symbols_.begin(); it != symbols_.end(); ++it )
+        for( IT_SymbolInfoVector it = symbols_.begin(); it != symbols_.end(); ++it )
             if( (*it)->GetGeometry() == geometries )
                 currentVector.AddItem( *it );
     }

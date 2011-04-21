@@ -378,7 +378,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
     /////////////////////////////////////
     // Copy Tmp Files To Real Files
     for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
-        if( !ADN_Tools::CopyFileToFile( dirInfos.GetTempDirectory().GetData() + *it, dirInfos.GetWorkingDirectory().GetData() + *it ) )
+        if( *it != "DrawingTemplates.xml" && !ADN_Tools::CopyFileToFile( dirInfos.GetTempDirectory().GetData() + *it, dirInfos.GetWorkingDirectory().GetData() + *it ) ) // $$$$ ABR 2011-04-21: hard coded for build fix, should do something nicer
         {
             dirInfos.SetWorkingDirectory( szOldWorkDir );
             ResetProgressIndicator();

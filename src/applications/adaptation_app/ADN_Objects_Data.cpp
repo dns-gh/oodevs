@@ -1304,10 +1304,11 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& xos )
 {
+    std::string code = ( symbol_.GetData() ) ? symbol_.GetData()->GetCode() : "";
     xos << xml::start( "object" )
         << xml::attribute( "name", strName_ )
         << xml::attribute( "geometry", geometries_.GetData() )
-        << xml::attribute( "symbol", symbol_.GetData()->GetCode() );
+        << xml::attribute( "symbol", code );
     if( strType_ == "" )
         xos << xml::attribute( "type", strName_ );
     else

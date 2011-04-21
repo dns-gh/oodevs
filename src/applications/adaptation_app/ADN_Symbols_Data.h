@@ -103,12 +103,17 @@ public:
 
     //! @name Types
     //@{
-    typedef ADN_Type_Vector_ABC< SymbolInfo > T_SymbolInfoVector;
+    typedef ADN_Type_Vector_ABC< SymbolInfo >            T_SymbolInfoVector;
+    typedef T_SymbolInfoVector::iterator                IT_SymbolInfoVector;
+    typedef T_SymbolInfoVector::const_iterator         CIT_SymbolInfoVector;
+    typedef std::map< std::string, T_SymbolInfoVector >  T_SymbolsMap;
+    typedef T_SymbolsMap::iterator                      IT_SymbolsMap;
     //@}
 
     //! @name Operations
     //@{
     virtual void FilesNeeded( T_StringList& files ) const;
+    virtual void Save();
     virtual void Reset();
     SymbolInfo* const GetSymbol( const std::string& code ) const;
     T_SymbolInfoVector& GetSymbols( const std::string geometries );
@@ -125,7 +130,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::map< std::string, T_SymbolInfoVector > symbolsMap_;
+    T_SymbolsMap symbolsMap_;
     T_SymbolInfoVector symbols_;
     svg::TextRenderer  renderer_;
     ::GlToolsSymbols*  tools_;
