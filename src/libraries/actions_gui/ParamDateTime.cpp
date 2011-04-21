@@ -99,7 +99,7 @@ void ParamDateTime::OnChanged( const QDateTime& date )
 // -----------------------------------------------------------------------------
 void ParamDateTime::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& tools ) const
 {
-    if( !date_.isNull() )
+    if( date_.isValid() )
         tools.Print( date_.toString( "dd-MM-yy hh:mm:ss" ).ascii(), point
                    , QFont( "Arial", 12, QFont::Bold ) ); // $$$$ SBO 2007-05-15: gather fonts somewhere
 }
