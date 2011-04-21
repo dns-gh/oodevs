@@ -19,9 +19,10 @@ using namespace mission_tester;
 // Name: Scheduler constructor
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-Scheduler::Scheduler( boost::shared_ptr< Filter_ABC > filter )
+Scheduler::Scheduler( boost::shared_ptr< Filter_ABC > filter, unsigned int delta )
     : filter_( filter )
     , last_  ( bpt::second_clock::local_time() )
+    , delta_ ( delta )
 {
     // NOTHING
 }
@@ -52,10 +53,12 @@ void Scheduler::Schedule( boost::shared_ptr< Schedulable_ABC > schedulable )
 // Name: Scheduler::Step
 // Created: PHC 2011-03-30
 // -----------------------------------------------------------------------------
-void Scheduler::Step( unsigned int delta, Exercise& exercise )
+void Scheduler::Step( Exercise& exercise, unsigned int delta /*=0*/ )
 {
+    if ( delta )
+        delta_ = delta;
     bpt::ptime current( bpt::microsec_clock::local_time() );
-    if( last_ + bpt::milliseconds( delta ) < current )
+    if( last_ + bpt::milliseconds( delta_ ) < current )
     {
         if( !schedulables_.empty() )
         {

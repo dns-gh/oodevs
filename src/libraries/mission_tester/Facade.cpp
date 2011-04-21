@@ -10,6 +10,7 @@
 #include "mission_tester_pch.h"
 #include "Facade.h"
 #include "Logger.h"
+#include "Timeout.h"
 #include "mission_tester/Config.h"
 #include "mission_tester/Logger.h"
 #include "mission_tester/Exercise.h"
@@ -25,34 +26,17 @@
 
 using namespace mission_tester;
 
-namespace
-{
-    struct Timeout
-    {
-        explicit Timeout( unsigned int duration ) : duration_( duration ) { Start(); }
-        void Start()
-        {
-            start_ = boost::posix_time::microsec_clock::universal_time();
-        }
-        bool Expired() const
-        {
-            return ( boost::posix_time::microsec_clock::universal_time() - start_ ).total_milliseconds() > duration_;
-        }
-        unsigned int duration_;
-        boost::posix_time::ptime start_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: Facade constructor
 // Created: PHC 2011-04-05
 // -----------------------------------------------------------------------------
-Facade::Facade( const Config& config )
-    : staticModel_( new kernel::StaticModel() )
-    , factory_    ( new SchedulerFactory() )
+Facade::Facade( const tools::ExerciseConfig& config, const MainFactory_ABC& mainFactory )
+    : mainFactory_ ( mainFactory ) 
+    , staticModel_( new kernel::StaticModel() )
 {
+    factory_ = mainFactory_.CreateSchedulerFactory();
     staticModel_->Load( config );
-    config.ConfigureLogging( *this );
+    mainFactory_.ConfigureLogging( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,29 +56,29 @@ void Facade::Run()
 {
     boost::shared_ptr< Scheduler_ABC > scheduler( factory_->CreateAgentScheduler() );
     Model model( *staticModel_, *scheduler );
-    Client client( model, "localhost", 10001, "Admin", "" );
-    Exercise exercise( model, *staticModel_, client );
+    std::auto_ptr< Client > client = mainFactory_.CreateClient( model );
+    Exercise exercise( model, *staticModel_, *client );
     exercise.Register( *this );
-    client.Register( *this );
+    client->Register( *this );
     model.Register( *this );
-    client.Connect();
-    Timeout timeout( 600000 ); // $$$$ PHC 2011-04-19: 10m
+    client->Connect();
+    std::auto_ptr< Timeout > timeout =  mainFactory_.CreateTimeout();
     try
     {
-        while( !timeout.Expired() )
+        while( !timeout->Expired() )
         {
-            client.Update();
-            if( client.IsAuthentified() )
+            client->Update();
+            if( client->IsAuthentified() )
                 break;
         }
-        if ( timeout.Expired() )
+        if ( timeout->Expired() )
             throw std::runtime_error( "Timeout exceeded." );
     }
     catch( std::exception& e )
     {
         std::cerr << __FUNCTION__ << ": Error Connecting or Authentifying to simulation, '" << e.what() << "'." << std::endl;
     }
-    while( client.IsConnected() )
+    while( client->IsConnected() )
     {
         if( _kbhit() )
         {
@@ -102,8 +86,8 @@ void Facade::Run()
             if( key == 'q' )
                 break;
         }
-        client.Update();
-        scheduler->Step( 2000, exercise );
+        client->Update();
+        scheduler->Step( exercise );
     }
 }
 

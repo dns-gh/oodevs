@@ -10,6 +10,7 @@
 #ifndef __Config_h_
 #define __Config_h_
 
+#include "MainFactory_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include <boost/utility/base_from_member.hpp>
 
@@ -21,6 +22,9 @@ namespace tools
 namespace mission_tester
 {
     class Facade;
+    class Client;
+    class Timeout;
+
 // =============================================================================
 /** @class  Config
     @brief  Config
@@ -28,7 +32,8 @@ namespace mission_tester
 // Created: PHC 2011-04-07
 // =============================================================================
 class Config : private boost::base_from_member< std::auto_ptr< tools::RealFileLoaderObserver_ABC > >
-             , public tools::ExerciseConfig
+             , public tools::ExerciseConfig 
+             , public MainFactory_ABC
 {
 
 public:
@@ -40,7 +45,11 @@ public:
 
     //! @name Operations
     //@{
-    void ConfigureLogging( Facade& facade ) const;
+    virtual void ConfigureLogging( Facade& facade ) const;
+    virtual std::auto_ptr< Client > CreateClient( SwordMessageHandler_ABC& handler ) const;
+    virtual std::auto_ptr< SchedulerFactory > CreateSchedulerFactory() const;
+    virtual std::auto_ptr< Timeout > CreateTimeout() const;
+
     //@}
 
 private:
@@ -52,7 +61,14 @@ private:
 private:
     //! @name Member data
     //@{
+    std::string configurationFile_;
+    std::string host_;
+    unsigned short port_;
+    std::string login_;
+    std::string password_;
     std::string logFile_;
+    unsigned int timeout_;
+    unsigned int scheduler_;
     //@}
 };
 }

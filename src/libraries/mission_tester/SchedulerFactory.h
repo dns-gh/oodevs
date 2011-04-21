@@ -29,7 +29,7 @@ class SchedulerFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             SchedulerFactory();
+    explicit SchedulerFactory( unsigned int delta );
     virtual ~SchedulerFactory();
     //@}
 
@@ -42,6 +42,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< FilterFactory_ABC > filterFactory_;
+    unsigned int                       delta_;
     //@}
 };
 }

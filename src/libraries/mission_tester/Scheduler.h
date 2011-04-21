@@ -31,14 +31,14 @@ class Scheduler : public Scheduler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Scheduler( boost::shared_ptr< Filter_ABC > filter );
+    	     Scheduler( boost::shared_ptr< Filter_ABC > filter, unsigned int delta  );
     virtual ~Scheduler();
     //@}
 
     //! @name Operations
     //@{
     virtual void Schedule( boost::shared_ptr< Schedulable_ABC > schedulable );
-    virtual void Step( unsigned int delta, Exercise& exercise );
+    virtual void Step( Exercise& exercise, unsigned int delta = 0 );
     //@}
 
 private:
@@ -54,6 +54,7 @@ private:
     T_Schedulables schedulables_;
     T_Schedulables::iterator next_;
     boost::posix_time::ptime last_;
+    unsigned int delta_;
     //@}
 };
 }

@@ -13,17 +13,25 @@
 #include "Listener_ABC.h"
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
+#include <vector>
 
 namespace kernel
 {
     class StaticModel;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
 namespace mission_tester
 {
     class Config;
     class Listener_ABC;
+    class MainFactory_ABC;
+    class Scheduler_ABC;
     class SchedulerFactory;
+
 // =============================================================================
 /** @class  Facade
     @brief  Facade
@@ -36,7 +44,7 @@ class Facade : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Facade( const Config& config );
+             Facade( const tools::ExerciseConfig& config, const MainFactory_ABC& factory );
     virtual ~Facade();
     //@}
 
@@ -65,9 +73,12 @@ private:
 private:
     //! @name Member Data
     //@{
+    const MainFactory_ABC& mainFactory_;
     std::auto_ptr< kernel::StaticModel > staticModel_;
     std::auto_ptr< SchedulerFactory > factory_;
     T_Listeners listeners_;
+    boost::shared_ptr< Scheduler_ABC > scheduler_;
+
     //@}
 };
 }

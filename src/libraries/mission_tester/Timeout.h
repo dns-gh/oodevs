@@ -7,38 +7,48 @@
 //
 // *****************************************************************************
 
-#ifndef __Scheduler_ABC_h_
-#define __Scheduler_ABC_h_
-
-#include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#ifndef __Timeout_h_
+#define __Timeout_h_
+#include "boost/date_time/posix_time/posix_time.hpp" 
 
 namespace mission_tester
 {
-    class Schedulable_ABC;
-    class Exercise;
-// =============================================================================
-/** @class  Scheduler_ABC
-    @brief  Scheduler_ABC
-*/
-// Created: PHC 2011-03-28
-// =============================================================================
-class Scheduler_ABC : private boost::noncopyable
-{
 
+// =============================================================================
+/** @class  Timeout
+    @brief  Timeout
+*/
+// Created: HBD 2011-04-21
+// =============================================================================
+class Timeout
+{
 public:
     //! @name Constructors/Destructor
     //@{
-             Scheduler_ABC() {}
-    virtual ~Scheduler_ABC() {}
+              explicit Timeout( unsigned int duration );
+    virtual ~Timeout();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Schedule( boost::shared_ptr< Schedulable_ABC > schedulable ) = 0;
-    virtual void Step( Exercise& exercise, unsigned int delta = 0 ) = 0;
+    void Start();
+    bool Expired() const;
     //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    Timeout( const Timeout& );            //!< Copy constructor
+    Timeout& operator=( const Timeout& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    unsigned int duration_;
+    boost::posix_time::ptime start_;
+   //@}
 };
 }
 
-#endif // __Scheduler_ABC_h_
+#endif // __Timeout_h_

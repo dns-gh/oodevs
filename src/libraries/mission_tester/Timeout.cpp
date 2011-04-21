@@ -8,37 +8,43 @@
 // *****************************************************************************
 
 #include "mission_tester_pch.h"
-#include "SchedulerFactory.h"
-#include "FilterFactory.h"
-#include "Scheduler.h"
+#include "Timeout.h"
 
 using namespace mission_tester;
 
 // -----------------------------------------------------------------------------
-// Name: SchedulerFactory constructor
-// Created: PHC 2011-04-04
+// Name: Timeout constructor
+// Created: HBD 2011-04-21
 // -----------------------------------------------------------------------------
-SchedulerFactory::SchedulerFactory( unsigned int delta )
-    : filterFactory_( new FilterFactory() )
-    , delta_ ( delta )
+Timeout::Timeout( unsigned int duration )
+    : duration_( duration ) 
+{ 
+    Start();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Timeout destructor
+// Created: HBD 2011-04-21
+// -----------------------------------------------------------------------------
+Timeout::~Timeout()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: SchedulerFactory destructor
-// Created: PHC 2011-04-04
+// Name: Timeout::Start
+// Created: HBD 2011-04-21
 // -----------------------------------------------------------------------------
-SchedulerFactory::~SchedulerFactory()
+void Timeout::Start()
 {
-    // NOTHING
+    start_ = boost::posix_time::microsec_clock::universal_time();
 }
 
 // -----------------------------------------------------------------------------
-// Name: SchedulerFactory::CreateAgentScheduler
-// Created: PHC 2011-04-04
+// Name: Timeout::Expired
+// Created: HBD 2011-04-21
 // -----------------------------------------------------------------------------
-std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAgentScheduler()
+bool Timeout::Expired() const
 {
-    return std::auto_ptr< Scheduler_ABC >( new Scheduler( filterFactory_->Create( "agent" ), delta_ ) );
+    return ( boost::posix_time::microsec_clock::universal_time() - start_ ).total_milliseconds() > duration_;
 }
