@@ -11,6 +11,7 @@
 #define __DrawerStyle_h_
 
 #include <qpixmap.h>
+#include "clients_kernel/Types.h"
 
 namespace xml
 {
@@ -34,7 +35,6 @@ namespace svg
 
 namespace gui
 {
-    class DrawingCategory;
 
 // =============================================================================
 /** @class  DrawingTemplate
@@ -46,9 +46,20 @@ namespace gui
 class DrawingTemplate
 {
 public:
+    //! @name Types
+    //@{
+    enum Unit
+    {
+        eMeter,
+        ePixel,
+        ePercent,
+        eNone
+    };
+    //@}
+
     //! @name Constructors/Destructor
     //@{
-             DrawingTemplate( xml::xistream& xis, const DrawingCategory& category, svg::TextRenderer& renderer );
+             DrawingTemplate( xml::xistream& xis, const QString& category, svg::TextRenderer& renderer );
     virtual ~DrawingTemplate();
     //@}
 
@@ -60,6 +71,7 @@ public:
     QString GetDescription() const;
     QString GetCategory() const;
     QPixmap GetPixmap() const;
+    Unit    GetUnit() const;
     void Draw( const T_PointVector& points, svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools ) const;
     void Draw( const geometry::Point2f& point, svg::RenderingContext_ABC& context, const kernel::GlTools_ABC& tools ) const;
     void Serialize( xml::xostream& xos ) const;
@@ -71,17 +83,6 @@ private:
     //@{
     DrawingTemplate( const DrawingTemplate& );            //!< Copy constructor
     DrawingTemplate& operator=( const DrawingTemplate& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
-    // $$$$ AGE 2006-09-01:
-    enum Unit
-    {
-        eMeter,
-        ePixel,
-        ePercent,
-    };
     //@}
 
     //! @name Helpers
@@ -100,7 +101,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const DrawingCategory& category_;
+    const QString category_;
     svg::TextRenderer& renderer_;
     QString name_;
     QString type_;

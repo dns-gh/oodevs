@@ -70,12 +70,13 @@ public:
         ADN_Type_String szMissions_;
         ADN_Type_String szResourceNetworks_;
         ADN_Type_String szFireClasses_;
-
         // $$$$ NLD 2007-01-15: files not loaded!
         ADN_Type_String szPathfinder_;
         ADN_Type_String szObjectNames_;
         ADN_Type_String szHumanProtections_;
         ADN_Type_String szMedicalTreatment_;
+        // $$$$ SBO 2011-04-18: files not visible/editable
+        ADN_Type_String szSymbols_;
     };
 
 //*****************************************************************************

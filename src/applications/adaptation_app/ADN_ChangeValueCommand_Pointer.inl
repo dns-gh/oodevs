@@ -43,7 +43,7 @@ ADN_ChangeValueCommand_Pointer< PointedClass >::ADN_ChangeValueCommand_Pointer( 
 template< class PointedClass >
 ADN_ChangeValueCommand_Pointer< PointedClass >::~ADN_ChangeValueCommand_Pointer()
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------

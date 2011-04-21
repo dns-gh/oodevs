@@ -5754,6 +5754,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Fires</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Symbols</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActiveProtections_Data</name>

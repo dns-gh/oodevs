@@ -134,16 +134,3 @@ static StaticInitImages_example staticImages;
 #include "res/filenew.xpm"
 #include "res/testdata.xpm"
 #include "res/application.xpm"
-
-QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] )
-{
-    QPixmap enabledPixmap ( pEnabledXpm );
-    QPixmap disabledPixmap( pDisabledXpm );
-
-    QIconSet iconset  ( enabledPixmap );
-    QIconSet iconset_x( disabledPixmap );
-
-    iconset.setPixmap( iconset_x.pixmap(), QIconSet::Automatic, QIconSet::Disabled );
-
-    return iconset;
-}

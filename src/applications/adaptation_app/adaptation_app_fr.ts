@@ -5765,6 +5765,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Log</source>
         <translation>Log</translation>
     </message>
+    <message>
+        <source>Symbols</source>
+        <translation>Symboles</translation>
+    </message>
 </context>
 <context>
     <name>ActiveProtections_Data</name>

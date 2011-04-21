@@ -12,15 +12,11 @@
 
 class QIconSet;
 
-QIconSet MakeExtendedIcon( const char* pEnabledXpm[], const char* pDisabledXpm[] );
-
 #define MAKE_PIXMAP( name ) QPixmap( xpm_##name )
 #define MAKE_ICON( name )   QIconSet( QPixmap( xpm_##name ) )
-#define MAKE_ICON_X( name, name_disabled ) MakeExtendedIcon( xpm_##name, xpm_##name_disabled )
 #define DECLARE_ICON( name ) extern const char *xpm_##name[]
 
 // Declaration
-
 DECLARE_ICON( fileopen );
 DECLARE_ICON( filesave );
 DECLARE_ICON( filenew  );
@@ -28,6 +24,5 @@ DECLARE_ICON( testdata );
 DECLARE_ICON( application );
 
 #include "XmlResources.cpp"
-
 
 #endif // __ADN_Resources_h_

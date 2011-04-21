@@ -50,8 +50,8 @@ public:
     virtual void                DisconnectItem();
     virtual void                setCurrentItem ( int index );
 
-    void                        insertItem ( ADN_ComboBoxItem* item, int index = -1 );
-    void                        insertItem ( const QString& txt, int index = -1 );
+    virtual void                insertItem ( ADN_ComboBoxItem* item, int index = -1 );
+    virtual void                insertItem ( const QString& txt, int index = -1 );
     void                        removeItem ( int index );
     void                        clear();
     int                         FindNdx( const ADN_ComboBoxItem* item ) const;

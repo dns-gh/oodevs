@@ -62,6 +62,8 @@
 #include "ADN_Health_Data.h"
 #include "ADN_Supply_GUI.h"
 #include "ADN_Supply_Data.h"
+#include "ADN_Symbols_Data.h"
+#include "ADN_Symbols_GUI.h"
 #include "ADN_Reports_Data.h"
 #include "ADN_Reports_GUI.h"
 #include "ADN_HtmlBuilder.h"
@@ -121,6 +123,7 @@ ADN_Workspace::ADN_Workspace()
     pWorkspace_ = this;
 
     projectData_ = new ADN_Project_Data();
+    elements_[eSymbols]           = new ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI>( tr( "Symbols" ) );
     elements_[eCategories]        = new ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >( tr( "Categories" ) );
     elements_[eUrban]             = new ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >( tr( "Urban" ) );
     elements_[eNBC]               = new ADN_WorkspaceElement< ADN_NBC_Datas, ADN_NBC_GUI >( tr( "NBC" ) );

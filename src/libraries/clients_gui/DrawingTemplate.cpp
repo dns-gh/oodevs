@@ -24,18 +24,23 @@ using namespace gui;
 // Name: DrawingTemplate constructor
 // Created: AGE 2006-08-31
 // -----------------------------------------------------------------------------
-DrawingTemplate::DrawingTemplate( xml::xistream& input, const DrawingCategory& category, svg::TextRenderer& renderer )
-    : category_    ( category )
-    , references_  ( new svg::References() )
-    , renderer_    ( renderer )
-    , line_        ( 0 )
-    , markerStart_ ( 0 )
-    , markerMiddle_( 0 )
-    , markerEnd_   ( 0 )
-    , marker_      ( 0 )
-    , linePixmap_( MAKE_PIXMAP( line ) )
-    , pointPixmap_( MAKE_PIXMAP( point ) )
+DrawingTemplate::DrawingTemplate( xml::xistream& input, const QString& category, svg::TextRenderer& renderer )
+    : category_     ( category )
+    , references_   ( new svg::References() )
+    , renderer_     ( renderer )
+    , line_         ( 0 )
+    , markerStart_  ( 0 )
+    , markerMiddle_ ( 0 )
+    , markerEnd_    ( 0 )
+    , marker_       ( 0 )
+    , linePixmap_   ( MAKE_PIXMAP( line ) )
+    , pointPixmap_  ( MAKE_PIXMAP( point ) )
     , polygonPixmap_( MAKE_PIXMAP( polygon ) )
+    , lineUnit      ( eNone )
+    , startUnit     ( eNone )
+    , middleUnit    ( eNone )
+    , endUnit       ( eNone )
+    , markerUnit    ( eNone )
 {
     SVGFactory factory( renderer_ );
 
@@ -119,6 +124,21 @@ QPixmap DrawingTemplate::GetPixmap() const
            type_ == "point"   ? pointPixmap_ :
            type_ == "polygon" ? polygonPixmap_ :
            QPixmap();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawingTemplate::GetUnit
+// Created: ABR 2011-04-20
+// -----------------------------------------------------------------------------
+DrawingTemplate::Unit DrawingTemplate::GetUnit() const
+{
+    if( lineUnit == ePercent || startUnit == ePercent || middleUnit == ePercent || endUnit == ePercent || markerUnit == ePercent )
+        return ePercent;
+    else if( lineUnit == ePixel || startUnit == ePixel || middleUnit == ePixel || endUnit == ePixel || markerUnit == ePixel )
+        return ePixel;
+    else if( lineUnit == eMeter || startUnit == eMeter || middleUnit == eMeter || endUnit == eMeter || markerUnit == eMeter )
+        return eMeter;
+    return eNone;
 }
 
 // -----------------------------------------------------------------------------
@@ -310,7 +330,7 @@ void DrawingTemplate::Align( geometry::Vector2f u ) const
 void DrawingTemplate::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "template", code_ )
-        << xml::attribute( "category", category_.GetName() )
+        << xml::attribute( "category", category_ )
         << xml::attribute( "type", type_ );
 }
 
@@ -320,5 +340,5 @@ void DrawingTemplate::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 QString DrawingTemplate::GetCategory() const
 {
-    return category_.GetName();
+    return category_;
 }

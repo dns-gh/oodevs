@@ -32,8 +32,8 @@ public:
     void            setText(const QString& txt);
     QString         text() const;
     void            setEnabled(bool);
-private:
 
+protected:
     ADN_ComboBox&   combo_;
     void*           pData_;
     QString         szTmpTxt_;

@@ -53,7 +53,7 @@ protected:
     virtual void InvalidatePrivate( void* pObj, bool bDel = false );
     virtual void push_back( T* const & x );
 
-private:
+public:
     //! @name Assignment/Copy constructor
     //@{
     ADN_Type_Vector_ABC< T >( const ADN_Type_Vector_ABC< T >& o );

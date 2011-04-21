@@ -1175,7 +1175,10 @@ INIT_DATA( ADN_CapacityInfos_ResourceNetwork,         "ResourceNetwork",        
 ADN_Objects_Data::ObjectInfos::ObjectInfos( const std::string& type )
     : ADN_Ref_ABC()
     , strType_   ( type )
+    , geometries_ ( "polygon" )
 {
+    symbol_.SetParentNode( *this );
+    geometries_.SetParentNode( *this );
     InitializeCapacities();
 }
 
@@ -1184,11 +1187,13 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( const std::string& type )
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ObjectInfos::ObjectInfos()
-    : ADN_Ref_ABC()
-    , strType_   ()
+    : ADN_Ref_ABC ()
+    , strType_    ()
+    , geometries_ ( "polygon" )
 {
+    symbol_.SetParentNode( *this );
+    geometries_.SetParentNode( *this );
     InitializeCapacities();
-    InitializeDefaultParameters();
 }
 
 // -----------------------------------------------------------------------------
@@ -1247,16 +1252,6 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Objects_Data::InitializeDefaultParameters
-// Created: SLG 2010-06-09
-// -----------------------------------------------------------------------------
-void ADN_Objects_Data::ObjectInfos::InitializeDefaultParameters()
-{
-    geometries_ = "polygon";
-    symbol_ = "G*GPGAL---****X";
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectInfos::GetNodeName
 // Created: AGN 2004-05-18
 // -----------------------------------------------------------------------------
@@ -1291,11 +1286,16 @@ void ADN_Objects_Data::ObjectInfos::ReadCapacityArchive( const std::string& type
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& xis )
 {
+    std::string code = "";
     xis >> xml::attribute( "name", strName_ )
         >> xml::attribute( "type", strType_ )
         >> xml::attribute( "geometry", geometries_ )
-        >> xml::optional >> xml::attribute( "symbol", symbol_ )
+        >> xml::optional >> xml::attribute( "symbol", code )
         >> xml::list( *this, &ADN_Objects_Data::ObjectInfos::ReadCapacityArchive );
+
+    ADN_Symbols_Data& symbolsData = ADN_Workspace::GetWorkspace().GetSymbols().GetData();
+    symbol_.SetVector( symbolsData.GetSymbols( geometries_.GetData() ) );
+    symbol_.SetData( symbolsData.GetSymbol( code ), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -1307,7 +1307,7 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& xos )
     xos << xml::start( "object" )
         << xml::attribute( "name", strName_ )
         << xml::attribute( "geometry", geometries_.GetData() )
-        << xml::attribute( "symbol", symbol_ );
+        << xml::attribute( "symbol", symbol_.GetData()->GetCode() );
     if( strType_ == "" )
         xos << xml::attribute( "type", strName_ );
     else

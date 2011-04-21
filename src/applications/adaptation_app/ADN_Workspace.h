@@ -64,6 +64,8 @@ class ADN_Health_Data;
 class ADN_Health_GUI;
 class ADN_Supply_Data;
 class ADN_Supply_GUI;
+class ADN_Symbols_Data;
+class ADN_Symbols_GUI;
 class ADN_KnowledgeGroups_Data;
 class ADN_KnowledgeGroups_GUI;
 class ADN_ResourceNetworks_Data;
@@ -127,6 +129,7 @@ public:
     ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& GetKnowledgeGroups();
     ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& GetResourceNetworks();
     ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& GetFireClasses();
+    ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& GetSymbols() const;
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
@@ -151,6 +154,7 @@ private:
         eLaunchers,
         eEquipement,
         eFireClasses,
+        eSymbols, // Must be befor eObjects
         eObjects,
         eWeapons,
         eActiveProtections,
@@ -458,6 +462,16 @@ inline
 ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& ADN_Workspace::GetFireClasses()
 {
     return static_cast< ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& >( *elements_[ eFireClasses ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& ADN_Workspace::GetSymbols
+// Created: ABR 2011-04-18
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& ADN_Workspace::GetSymbols() const
+{
+    return static_cast< ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& >( *elements_[ eSymbols ] );
 }
 
 // -----------------------------------------------------------------------------

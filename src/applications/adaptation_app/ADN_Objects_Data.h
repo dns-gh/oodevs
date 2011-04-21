@@ -19,6 +19,7 @@
 #include "ADN_DataTreeNode_ABC.h"
 #include "ADN_Type_Choice.h"
 #include "ADN_FireClass_Data.h"
+#include "ADN_Symbols_Data.h"
 #include <string>
 #include <map>
 #include <memory>
@@ -28,7 +29,6 @@
 #include <boost/shared_ptr.hpp>
 #include "ADN_CapacityInfos.h"
 namespace xml { class xistream; }
-
 
 //*****************************************************************************
 // Created: JDY 03-06-25
@@ -117,7 +117,7 @@ public:
     typedef helpers::ADN_CapacityInfos_Default< helpers::eBurnCapacity >              ADN_CapacityInfos_Burn;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eUniversalCapacity >         ADN_CapacityInfos_Universal;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eStockCapacity >             ADN_CapacityInfos_Stock;
-    typedef helpers::ADN_CapacityInfos_Default< helpers::eResourceNetworkCapacity >  ADN_CapacityInfos_ResourceNetwork;
+    typedef helpers::ADN_CapacityInfos_Default< helpers::eResourceNetworkCapacity >   ADN_CapacityInfos_ResourceNetwork;
 
     class ADN_CapacityInfos_Attrition
         : public helpers::ADN_CapacityInfos_Default< helpers::eAttritionCapacity >
@@ -630,13 +630,12 @@ public:
     private:
         void ReadCapacityArchive( const std::string& type, xml::xistream& input );
         void InitializeCapacities();
-        void InitializeDefaultParameters();
 
     public:
         ADN_Type_String strName_;
         ADN_Type_String strType_;
         ADN_Type_String geometries_;
-        ADN_Type_String symbol_;
+        ADN_TypePtr_InVector_ABC< ADN_Symbols_Data::SymbolInfo > symbol_;
 
         typedef std::map< std::string, boost::shared_ptr< helpers::ADN_TypeCapacity_Infos > > T_CapacityMap;
         typedef T_CapacityMap::iterator                                                      IT_CapacityMap;

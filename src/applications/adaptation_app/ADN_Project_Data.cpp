@@ -96,6 +96,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "urban", szUrban_ );
     ReadFile( input, "resource-networks", szResourceNetworks_ );
     input >> xml::end;
+    szSymbols_ = "DrawingTemplates.xml"; // $$$$ SBO 2011-04-18: hard coded, should use physical
 }
 
 

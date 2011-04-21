@@ -48,7 +48,7 @@ public:
     virtual ~ADN_CBV_Connector()
     {}
 
-    ADN_ComboBoxItem* CreateItem( void * obj )
+    virtual ADN_ComboBoxItem* CreateItem( void * obj )
     {
         // Create the new combo item.
         ADN_ComboBoxItem* pItem = new ADN_ComboBoxItem(*pCombo_,obj);

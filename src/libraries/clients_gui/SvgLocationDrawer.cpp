@@ -144,7 +144,6 @@ void SvgLocationDrawer::DrawShape( const T& shape )
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glLineWidth( 1 );
 
-        std::string color = color_.name().ascii();
         const geometry::BoundingBox box( viewport_.Left(), viewport_.Bottom(), viewport_.Right(), viewport_.Top() );
         context_->SetViewport( box, 320, 200 ); // $$$$ AGE 2006-09-04:
         svg::Color svgColor( color_.name().ascii() );
