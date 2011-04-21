@@ -1032,7 +1032,7 @@
     <unit max-occurs="3" min-occurs="3" type="Section CBT INF VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Section CBT INF VAB CDS SOFF"/>
   </automat>
-  <automat decisional-model="sword.military.company.combat.support.artillery.roles.Company" id="670" name="Batterie ASS . AUF1" type="Automate ASS">
+  <automat decisional-model="france.military.company.combat.support.artillery.roles.Battery" id="670" name="Batterie ASS . AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC . Batterie ASS"/>
     <unit max-occurs="2" min-occurs="2" type="Section de Tir . AUF1 CDS OFF"/>
   </automat>
@@ -1068,4 +1068,4 @@
     <unit max-occurs="3" type="PIA Dominante Reco"/>
   </automat>
 </automats>
-<!-- signature="1149576044" -->
+<!-- signature="0729795941" -->

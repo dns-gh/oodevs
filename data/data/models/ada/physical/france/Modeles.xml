@@ -7693,7 +7693,7 @@
         <fragorder name="Embarquer"/>
       </fragorders>
     </automat>
-    <automat dia-type="sword.military.company.combat.support.artillery.roles.Company" file="BMAutomat.bms" masalife="true" name="sword.military.company.combat.support.artillery.roles.Company">
+    <automat dia-type="france.military.company.combat.support.artillery.roles.Battery" file="BMAutomat.bms" masalife="true" name="france.military.company.combat.support.artillery.roles.Battery">
       <missions>
         <mission name="ASS SeDeployer"/>
         <mission name="ASS Illumination et Tir Synchronisé"/>
@@ -11558,4 +11558,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1822542164" -->
+<!-- signature="1527790797" -->
