@@ -17,6 +17,8 @@
 #include "svgl/Color.h"
 #include "svgl/RenderingContext.h"
 #include "svgl/TextRenderer.h"
+#include "tools/Loader_ABC.h"
+#include <boost/bind.hpp>
 #include <qbitmap.h>
 #include <qgl.h>
 
@@ -278,7 +280,7 @@ void ADN_Symbols_Data::SymbolInfo::DrawItem( const T_PointVector& points )
 {
     svg::RenderingContext context;
     context.SetViewport( geometry::BoundingBox( 0, 0, SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE ), SYMBOL_ICON_SIZE, SYMBOL_ICON_SIZE );
-    svg::Color svgColor( "red" );
+    svg::Color svgColor( "blue" );
     context.PushProperty( svg::RenderingContext_ABC::color, svgColor );
     if( points.size() == 1 )
         template_->Draw( points[ 0 ], context, tools_ );
@@ -316,25 +318,26 @@ ADN_Symbols_Data::~ADN_Symbols_Data()
     symbolsMap_.clear();
     for( IT_SymbolInfoVector it = symbols_.begin(); it != symbols_.end(); ++it )
         delete *it;
-    symbols_.clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Symbols_Data::FilesNeeded
 // Created: SBO 2011-04-18
 // -----------------------------------------------------------------------------
-void ADN_Symbols_Data::FilesNeeded( T_StringList& files ) const
+void ADN_Symbols_Data::FilesNeeded( T_StringList& /*files*/ ) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSymbols_.GetData() );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Symbols_Data::Save
-// Created: ABR 2011-04-21
+// Name: ADN_Symbols_Data::Load
+// Created: ABR 2011-04-22
 // -----------------------------------------------------------------------------
-void ADN_Symbols_Data::Save()
+void ADN_Symbols_Data::Load( const tools::Loader_ABC& fileLoader )
 {
-    // NOTHING
+    const std::string filename = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSymbols_.GetData();
+    const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + filename;
+    fileLoader.LoadFile( strFile, boost::bind( &ADN_Symbols_Data::ReadArchive, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -344,6 +347,7 @@ void ADN_Symbols_Data::Save()
 void ADN_Symbols_Data::Reset()
 {
     symbols_.Reset();
+    symbolsMap_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -362,8 +366,8 @@ void ADN_Symbols_Data::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Symbols_Data::ReadCategory( xml::xistream& xis )
 {
-    const std::string name = xis.attribute< std::string >( "name" );
-    if( name == "Tactical graphics" || name == "Objets tactiques graphiques" || name == "Objects tactiques graphiques" ) // $$$$ SBO 2011-04-18: hard coded
+    bool hidden = xis.attribute< bool >( "hidden", false );
+    if( hidden ) // $$$$ ABR 2011-04-22: check for hidden to display only tactical graphics category
         xis >> xml::list( "template", *this, &ADN_Symbols_Data::ReadTemplate );
 }
 
@@ -395,7 +399,6 @@ ADN_Symbols_Data::SymbolInfo* const ADN_Symbols_Data::GetSymbol( const std::stri
 ADN_Symbols_Data::T_SymbolInfoVector& ADN_Symbols_Data::GetSymbols( const std::string geometries )
 {
     T_SymbolInfoVector& currentVector = symbolsMap_[ geometries ];
-
     if( currentVector.empty() )
     {
         QStringList qlist = QStringList::split( ',', geometries.c_str() );

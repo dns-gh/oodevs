@@ -278,7 +278,7 @@
   <object geometry="point" name="Zone d'implantation mortier" symbol="G*FPAP----****X" type="mortar deployment area">
     <protection geniePrepared="false" max-size="1"/>
   </object>
-  <object geometry="point" name="Plot de ravitaillement" symbol="" type="logistic support area">
+  <object geometry="point" name="Plot de ravitaillement" symbol="G*SPPR----****X" type="logistic support area">
     <supply/>
   </object>
   <object geometry="polygon" name="Aire de poser" symbol="G*GPGAL---****X" type="landing area"/>
@@ -377,4 +377,4 @@
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="3740260459" -->
+<!-- signature="3695763221" -->

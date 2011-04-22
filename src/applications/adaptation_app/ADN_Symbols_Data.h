@@ -113,7 +113,7 @@ public:
     //! @name Operations
     //@{
     virtual void FilesNeeded( T_StringList& files ) const;
-    virtual void Save();
+    virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Reset();
     SymbolInfo* const GetSymbol( const std::string& code ) const;
     T_SymbolInfoVector& GetSymbols( const std::string geometries );
