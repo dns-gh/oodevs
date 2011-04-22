@@ -9,37 +9,33 @@
 
 #ifndef __Timeout_h_
 #define __Timeout_h_
-#include "boost/date_time/posix_time/posix_time.hpp" 
+
+#pragma warning( push )
+#pragma warning( disable : 4244 )
+#include <boost/date_time/posix_time/posix_time.hpp>
+#pragma warning( pop )
+#include <boost/noncopyable.hpp>
 
 namespace mission_tester
 {
-
 // =============================================================================
 /** @class  Timeout
     @brief  Timeout
 */
 // Created: HBD 2011-04-21
 // =============================================================================
-class Timeout
+class Timeout : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-              explicit Timeout( unsigned int duration );
+    explicit Timeout( unsigned int duration );
     virtual ~Timeout();
     //@}
 
     //! @name Operations
     //@{
-    void Start();
     bool Expired() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Timeout( const Timeout& );            //!< Copy constructor
-    Timeout& operator=( const Timeout& ); //!< Assignment operator
     //@}
 
 private:

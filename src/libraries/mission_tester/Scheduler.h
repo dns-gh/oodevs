@@ -11,14 +11,16 @@
 #define __Scheduler_h_
 
 #include "Scheduler_ABC.h"
-#pragma warning( push, 0 )
+#pragma warning( push )
+#pragma warning( disable : 4244 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
+#include <vector>
 
 namespace mission_tester
 {
     class Filter_ABC;
-    class Schedulable_ABC;
+
 // =============================================================================
 /** @class  Scheduler
     @brief  Scheduler
@@ -27,18 +29,17 @@ namespace mission_tester
 // =============================================================================
 class Scheduler : public Scheduler_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    	     Scheduler( boost::shared_ptr< Filter_ABC > filter, unsigned int delta  );
+    	     Scheduler( std::auto_ptr< Filter_ABC > filter, unsigned int delta  );
     virtual ~Scheduler();
     //@}
 
     //! @name Operations
     //@{
     virtual void Schedule( boost::shared_ptr< Schedulable_ABC > schedulable );
-    virtual void Step( Exercise& exercise, unsigned int delta = 0 );
+    virtual void Step( Exercise& exercise );
     //@}
 
 private:
@@ -50,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< Filter_ABC > filter_;
+    std::auto_ptr< Filter_ABC > filter_;
     T_Schedulables schedulables_;
     T_Schedulables::iterator next_;
     boost::posix_time::ptime last_;

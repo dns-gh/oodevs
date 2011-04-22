@@ -16,13 +16,12 @@ namespace mission_tester
 {
 // =============================================================================
 /** @class  FilterFactory
-    @brief  FilterFactory
+    @brief  Filter factory
 */
 // Created: PHC 2011-04-06
 // =============================================================================
 class FilterFactory : public FilterFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -32,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual boost::shared_ptr< Filter_ABC > Create( const std::string& criteria );
+    virtual std::auto_ptr< Filter_ABC > Create( const std::string& criteria ) const;
     //@}
 };
 }

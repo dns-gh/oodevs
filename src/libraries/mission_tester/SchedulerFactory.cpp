@@ -11,6 +11,7 @@
 #include "SchedulerFactory.h"
 #include "FilterFactory.h"
 #include "Scheduler.h"
+#include "Filter_ABC.h"
 
 using namespace mission_tester;
 
@@ -20,7 +21,7 @@ using namespace mission_tester;
 // -----------------------------------------------------------------------------
 SchedulerFactory::SchedulerFactory( unsigned int delta )
     : filterFactory_( new FilterFactory() )
-    , delta_ ( delta )
+    , delta_        ( delta )
 {
     // NOTHING
 }
@@ -38,7 +39,7 @@ SchedulerFactory::~SchedulerFactory()
 // Name: SchedulerFactory::CreateAgentScheduler
 // Created: PHC 2011-04-04
 // -----------------------------------------------------------------------------
-std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAgentScheduler()
+std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAgentScheduler() const
 {
     return std::auto_ptr< Scheduler_ABC >( new Scheduler( filterFactory_->Create( "agent" ), delta_ ) );
 }

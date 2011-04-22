@@ -50,7 +50,19 @@ namespace
         virtual bool StartMission( Exercise& /*exercise*/ ) { return true; }
         const std::string type_;
     };
+}
 
+BOOST_AUTO_TEST_CASE( scheduler_schedules_a_schedulable )
+{
+    Filter_ABC* filter = new MockFilter();
+    Scheduler scheduler( std::auto_ptr< Filter_ABC >( filter ), 500u );
+    boost::shared_ptr< MockSchedulable > schedulable( new MockSchedulable );
+    MOCK_EXPECT( schedulable, Matches ).once().with( mock::same( *filter ) ).returns( true );
+    scheduler.Schedule( schedulable );
+}
+
+namespace
+{
     FilterFactory_ABC* FilterFactoryStub()
     {
         MockFilter* filter = new MockFilter;
@@ -64,7 +76,7 @@ namespace
     {
         FilterFixture()
             : factory_             ( FilterFactoryStub() )
-            , agentScheduler_      ( boost::shared_ptr< Filter_ABC >( factory_->Create( "agent" ) ) )
+            , agentScheduler_      ( factory_->Create( "agent" ), 500u )
             , agentSchedulable_    ( new Schedulable( "agent" ) )
             , automatonSchedulable_( new Schedulable( "automat" ) )
         {}
@@ -76,17 +88,7 @@ namespace
     };
 }
 
-BOOST_AUTO_TEST_CASE( scheduler_schedules_a_schedulable )
-{
-    boost::shared_ptr< MockFilter > filter( new MockFilter() );
-    Scheduler scheduler( filter );
-    boost::shared_ptr< MockSchedulable > schedulable( new MockSchedulable );
-    MOCK_EXPECT( schedulable, Matches ).once().with( mock::same( *filter ) ).returns( true );
-    scheduler.Schedule( schedulable );
-}
-
 BOOST_FIXTURE_TEST_CASE( agent_filter_allows_only_agents, FilterFixture )
 {
     agentScheduler_.Schedule( agentSchedulable_ );
-    // agentScheduler_.Schedule( automatonSchedulable_ ); mockscheduler
 }

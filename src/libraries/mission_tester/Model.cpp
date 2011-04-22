@@ -82,11 +82,8 @@ void Model::Register( const Listener_ABC& listener )
 void Model::CreateAgent( const sword::UnitCreation& message )
 {
     boost::shared_ptr< Agent > agent( new Agent( message, staticModel_.types_ ) );
-    if( agent.get() )
-    {
-        agents_[ message.unit().id() ] = agent;
-        scheduler_.Schedule( agent );
-    }
+    agents_[ message.unit().id() ] = agent;
+    scheduler_.Schedule( agent );
 }
 
 // -----------------------------------------------------------------------------

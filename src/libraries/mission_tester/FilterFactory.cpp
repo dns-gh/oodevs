@@ -35,7 +35,7 @@ FilterFactory::~FilterFactory()
 // Name: FilterFactory::Create
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Filter_ABC > FilterFactory::Create( const std::string& criteria )
+std::auto_ptr< Filter_ABC > FilterFactory::Create( const std::string& criteria ) const
 {
-    return boost::shared_ptr< Filter_ABC >( new Filter( criteria ) );
+    return std::auto_ptr< Filter_ABC >( new Filter( criteria ) );
 }

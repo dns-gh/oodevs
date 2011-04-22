@@ -11,21 +11,21 @@
 #define __SchedulerFactory_h_
 
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace mission_tester
 {
     class FilterFactory_ABC;
     class Scheduler_ABC;
+
 // =============================================================================
 /** @class  SchedulerFactory
-    @brief  SchedulerFactory
+    @brief  Scheduler factory
 */
 // Created: PHC 2011-04-04
 // =============================================================================
 class SchedulerFactory : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -35,14 +35,14 @@ public:
 
     //! @name Operations
     //@{
-    std::auto_ptr< Scheduler_ABC > CreateAgentScheduler();
+    std::auto_ptr< Scheduler_ABC > CreateAgentScheduler() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     std::auto_ptr< FilterFactory_ABC > filterFactory_;
-    unsigned int                       delta_;
+    const unsigned int delta_;
     //@}
 };
 }

@@ -17,15 +17,15 @@ namespace mission_tester
 {
     class Schedulable_ABC;
     class Exercise;
+
 // =============================================================================
 /** @class  Scheduler_ABC
-    @brief  Scheduler_ABC
+    @brief  Scheduler definition
 */
 // Created: PHC 2011-03-28
 // =============================================================================
 class Scheduler_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -36,7 +36,7 @@ public:
     //! @name Operations
     //@{
     virtual void Schedule( boost::shared_ptr< Schedulable_ABC > schedulable ) = 0;
-    virtual void Step( Exercise& exercise, unsigned int delta = 0 ) = 0;
+    virtual void Step( Exercise& exercise ) = 0;
     //@}
 };
 }

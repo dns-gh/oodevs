@@ -17,9 +17,10 @@ using namespace mission_tester;
 // Created: HBD 2011-04-21
 // -----------------------------------------------------------------------------
 Timeout::Timeout( unsigned int duration )
-    : duration_( duration ) 
-{ 
-    Start();
+    : duration_( duration )
+    , start_   ( boost::posix_time::microsec_clock::universal_time() )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -31,14 +32,6 @@ Timeout::~Timeout()
     // NOTHING
 }
 
-// -----------------------------------------------------------------------------
-// Name: Timeout::Start
-// Created: HBD 2011-04-21
-// -----------------------------------------------------------------------------
-void Timeout::Start()
-{
-    start_ = boost::posix_time::microsec_clock::universal_time();
-}
 
 // -----------------------------------------------------------------------------
 // Name: Timeout::Expired
