@@ -65,7 +65,7 @@ public:
     }
     virtual void OnEndTick()
     {
-        handler_.Apply( keys_.size() );
+        handler_.Apply( static_cast< unsigned int >( keys_.size() ) );
         handler_.EndTick();
     }
     //@}

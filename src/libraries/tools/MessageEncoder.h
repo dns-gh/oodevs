@@ -13,8 +13,8 @@
 #include "Message.h"
 #include <boost/shared_array.hpp>
 #pragma warning( push, 0 )
-#include <google/protobuf/Message.h>
-#include <google/protobuf/Descriptor.h>
+#include <google/protobuf/message.h>
+#include <google/protobuf/descriptor.h>
 #pragma warning( pop )
 
 namespace tools

@@ -10,7 +10,9 @@
 #ifndef shield_Tools_h
 #define shield_Tools_h
 
+#pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
+#pragma warning( pop )
 #include <boost/assign/list_of.hpp>
 
 namespace shield

@@ -12,6 +12,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <intrin.h>
 
 //-----------------------------------------------------------------------------
 // Name: MT_Assert
@@ -23,7 +24,7 @@ bool MT_Assert( const char* expression, const char* file, int line )
     std::cerr << "assert '" << expression
               << "' - File '" << file
               << "' - Line "  << line << std::endl;
-    _asm int 3;
+    __debugbreak();
     return true;
 }
 

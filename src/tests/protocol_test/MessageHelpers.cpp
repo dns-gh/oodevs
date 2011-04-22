@@ -10,8 +10,8 @@
 #include "protocol_test_pch.h"
 #include "MessageHelpers.h"
 #pragma warning( push, 0 )
-#include <google/protobuf/Descriptor.h>
-#include <google/protobuf/Message.h>
+#include <google/protobuf/descriptor.h>
+#include <google/protobuf/message.h>
 #pragma warning( pop )
 
 namespace

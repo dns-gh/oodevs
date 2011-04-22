@@ -22,7 +22,9 @@
 #include "protocol/Protocol.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
-#include <google/protobuf/Descriptor.h>
+#pragma warning( push, 0 )
+#include <google/protobuf/descriptor.h>
+#pragma warning( pop )
 
 using namespace kernel;
 

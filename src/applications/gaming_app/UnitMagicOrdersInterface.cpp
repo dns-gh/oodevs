@@ -35,8 +35,10 @@
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
 #include "protocol/SimulationSenders.h"
-#include <google/protobuf/Message.h>
-#include <google/protobuf/Descriptor.h>
+#pragma warning( push, 0 )
+#include <google/protobuf/message.h>
+#include <google/protobuf/descriptor.h>
+#pragma warning( pop )
 #include <boost/foreach.hpp>
 
 using namespace kernel;

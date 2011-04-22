@@ -102,7 +102,7 @@ namespace
     {
         if( IsWindow( hwnd ) )
         {
-            DWORD result;
+            DWORD_PTR result;
             SendMessageTimeout( hwnd, WM_CLOSE, 0, 0, SMTO_ABORTIFHUNG | SMTO_BLOCK, 0, &result );
         }
         return TRUE;

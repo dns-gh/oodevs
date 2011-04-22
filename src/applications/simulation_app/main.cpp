@@ -20,7 +20,7 @@
 #include <dbghelp.h>
 #include <direct.h>
 
-int __cdecl NoMoreMemoryHandler( unsigned int nSize )
+int __cdecl NoMoreMemoryHandler( std::size_t nSize )
 {
     int nResult = MessageBox( 0, MT_FormatString( "No more memory (%d bytes requested) - Retry ?", nSize ).c_str(), "SWORD - Memory error", MB_ICONERROR | MB_RETRYCANCEL | MB_TOPMOST );
     switch( nResult )

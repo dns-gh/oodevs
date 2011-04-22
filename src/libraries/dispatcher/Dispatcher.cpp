@@ -19,7 +19,7 @@
 #include "StaticModel.h"
 #include "Shield.h"
 #include "clients_kernel/Tools.h"
-#include <google/protobuf/Message.h>
+#include <google/protobuf/message.h>
 #include <qsettings.h>
 #include <qtextcodec.h>
 

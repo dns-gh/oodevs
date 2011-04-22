@@ -62,7 +62,7 @@ void Profiling::Update( const sword::ControlEndTick& message )
 
 namespace
 {
-    const unsigned meanCount = 50;
+    const std::size_t meanCount = 50;
 }
 
 // -----------------------------------------------------------------------------

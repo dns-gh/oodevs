@@ -27,7 +27,9 @@
 #include "shield/proto/ClientToReplay.pb.h"
 #include "shield/proto/ClientToSim.pb.h"
 #include "shield/proto/AdminToLauncher.pb.h"
+#pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
+#pragma warning( pop )
 
 namespace google
 {

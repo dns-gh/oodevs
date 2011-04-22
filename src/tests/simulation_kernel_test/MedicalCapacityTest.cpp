@@ -8,13 +8,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-#include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
 #include "simulation_kernel/Entities/Objects/MedicalCapacity.h"
 #include "simulation_kernel/Entities/Objects/MedicalTreatmentAttribute.h"
 #include "MockMIL_Object_ABC.h"
 #include "MockMIL_Injury_ABC.h"
 #include "MockMIL_Time_ABC.h"
-#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

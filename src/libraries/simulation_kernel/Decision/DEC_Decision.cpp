@@ -1067,16 +1067,16 @@ void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::
 }
 
 #ifndef PLATFORM
-#define PLATFORM _vc80
+#error PLATFORM must be defined (for instance vc80 or vc100_x64) for masalife and directia plugins
 #endif
 
 #ifndef PLUGIN
 #ifdef NDEBUG
-#define PLUGIN46( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt-4_6.plugin',"
-#define PLUGIN( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt.plugin',"
+#define PLUGIN46( plugin ) std::string( "'plugin_" plugin "_" BOOST_PP_STRINGIZE( PLATFORM ) "-mt-4_6.plugin'," )
+#define PLUGIN( plugin ) std::string( "'plugin_" plugin "_" BOOST_PP_STRINGIZE( PLATFORM ) "-mt.plugin'," )
 #else
-#define PLUGIN46( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt-gd-4_6.plugin',"
-#define PLUGIN( plugin ) "'plugin_" + plugin + BOOST_PP_STRINGIZE( PLATFORM ) + "-mt-gd.plugin',"
+#define PLUGIN46( plugin ) std::string( "'plugin_" plugin "_" BOOST_PP_STRINGIZE( PLATFORM ) "-mt-gd-4_6.plugin'," )
+#define PLUGIN( plugin ) std::string( "'plugin_" plugin "_" BOOST_PP_STRINGIZE( PLATFORM ) "-mt-gd.plugin'," )
 #endif
 #endif
 
@@ -1085,34 +1085,31 @@ namespace
     std::map< std::string, boost::shared_ptr< directia::brain::Brain > > brainTable;
 }
 
-bool CreateBrain(boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain, const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type )
+bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain,
+                  const std::string& includePath, const std::string& brainFile, bool isMasalife, const std::string& type )
 {
     pArchetypeBrain = isMasalife ? brainTable[type] : brainTable[brainFile];
-
-    if( !pArchetypeBrain.get() )
+    if( !pArchetypeBrain )
     {
-        std::string plugins;
         if( isMasalife )
         {
-            plugins = std::string( "plugins={" )
+            pArchetypeBrain.reset( new directia::brain::Brain(
+                "plugins={"
                 + PLUGIN( "masalife_brain" )
                 + PLUGIN( "knowledge" )
                 + PLUGIN( "communication" )
-                + PLUGIN( "services" );
-            std::string brainInit = plugins
-                + "} cwd='" + includePath + "'";
-            pArchetypeBrain.reset( new directia::brain::Brain( brainInit ) );
+                + PLUGIN( "services" )
+                + "} cwd='" + includePath + "'" ) );
             (*pArchetypeBrain)["include"]( brainFile ,includePath, type );
             brainTable[type] = pArchetypeBrain;
         }
         else
         {
-            plugins = std::string( "plugins={" )
+            pArchetypeBrain.reset( new directia::brain::Brain(
+                "plugins={"
                 + PLUGIN46( "eventmanager" )
-                + PLUGIN46( "motivation" );
-            std::string brainInit = plugins
-                + "} cwd='" + includePath + "'";
-            pArchetypeBrain.reset( new directia::brain::Brain( brainInit ) );
+                + PLUGIN46( "motivation" )
+                + "} cwd='" + includePath + "'" ) );
             (*pArchetypeBrain)["include"]( brainFile ,includePath, type );
             brainTable[brainFile] = pArchetypeBrain;
         }

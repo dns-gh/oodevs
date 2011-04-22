@@ -10,6 +10,7 @@
 #ifndef __MockMIL_Object_ABC_h_
 #define __MockMIL_Object_ABC_h_
 
+#include "protocol/Protocol.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 
 // =============================================================================
