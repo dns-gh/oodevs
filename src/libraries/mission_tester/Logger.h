@@ -22,7 +22,6 @@ namespace mission_tester
 // =============================================================================
 class Logger : public Listener_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

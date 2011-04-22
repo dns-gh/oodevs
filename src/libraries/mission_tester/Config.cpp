@@ -40,13 +40,13 @@ Config::Config( int argc, char** argv )
     Parse( argc, argv );
     xml::xifstream xis( configurationFile_ );
     xis >> xml::start( "configuration" )
-        >> xml::content( "host", host_ )
-        >> xml::content( "port", port_ )
-        >> xml::content( "login", login_ )
-        >> xml::content( "output", logFile_ )
-        >> xml::content( "scheduler", scheduler_ )
-        >> xml::content( "timeout", timeout_ );
-    password_ = xis.content( "password", "" );
+            >> xml::content( "host", host_ )
+            >> xml::content( "port", port_ )
+            >> xml::content( "login", login_ )
+            >> xml::content( "output", logFile_ )
+            >> xml::content( "scheduler", scheduler_ )
+            >> xml::content( "timeout", timeout_ )
+            >> xml::start( "password" ) >> xml::optional >> password_;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,8 +69,7 @@ void Config::ConfigureLogging( Facade& facade ) const
     {
         try
         {
-            boost::shared_ptr< Listener_ABC > logger( new FileLogger( logFile_ ) );
-            facade.AddListener( logger );
+            facade.AddListener( boost::shared_ptr< Listener_ABC >( new FileLogger( logFile_ ) ) );
         }
         catch( ... )
         {
@@ -80,7 +79,7 @@ void Config::ConfigureLogging( Facade& facade ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::auto_ptr< Client > Config::CreateClient
+// Name: Config::CreateClient
 // Created: HBD 2011-04-20
 // -----------------------------------------------------------------------------
 std::auto_ptr< Client > Config::CreateClient( SwordMessageHandler_ABC& handler ) const
@@ -89,19 +88,19 @@ std::auto_ptr< Client > Config::CreateClient( SwordMessageHandler_ABC& handler )
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::auto_ptr< SchedulerFactory > Config::CreateSchedulerFactory
+// Name: Config::CreateSchedulerFactory
 // Created: HBD 2011-04-21
 // -----------------------------------------------------------------------------
 std::auto_ptr< SchedulerFactory > Config::CreateSchedulerFactory( ) const
 {
-    return new std::auto_ptr< SchedulerFactory > ( new SchedulerFactory( scheduler_ ) );
+    return new std::auto_ptr< SchedulerFactory >( new SchedulerFactory( scheduler_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::auto_ptr< Timeout > Config::CreateTimeout
+// Name: Config::CreateTimeout
 // Created: HBD 2011-04-21
 // -----------------------------------------------------------------------------
 std::auto_ptr< Timeout > Config::CreateTimeout() const
 {
-    return new std::auto_ptr< Timeout > ( new Timeout( timeout_ ) );
+    return new std::auto_ptr< Timeout >( new Timeout( timeout_ ) );
 }

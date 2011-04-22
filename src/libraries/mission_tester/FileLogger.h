@@ -24,7 +24,6 @@ namespace mission_tester
 class FileLogger : private boost::base_from_member< std::auto_ptr< std::ostream > >
                  , public Logger
 {
-
 public:
     //! @name Constructors/Destructor
     //@{

@@ -11,6 +11,8 @@
 #define __MainFactory_ABC_h_
 
 #include <memory>
+#include <boost/noncopyable.hpp>
+
 class SwordMessageHandler_ABC;
 
 namespace mission_tester
@@ -21,19 +23,18 @@ namespace mission_tester
    class Timeout;
 
 // =============================================================================
-/** @class  MainFactory
-    @brief  MainFactory
+/** @class  MainFactory_ABC
+    @brief  Main factory definition
 */
 // Created: HBD 2011-04-20
 // =============================================================================
-class MainFactory_ABC
+class MainFactory_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    MainFactory_ABC() {};
-    virtual ~MainFactory_ABC() {};
+             MainFactory_ABC() {}
+    virtual ~MainFactory_ABC() {}
     //@}
 
     //! @name Operations
@@ -42,13 +43,6 @@ public:
     virtual std::auto_ptr< SchedulerFactory > CreateSchedulerFactory() const = 0;
     virtual void ConfigureLogging( Facade& facade ) const = 0;
     virtual std::auto_ptr< Timeout > CreateTimeout() const = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    MainFactory_ABC( const MainFactory_ABC& );            //!< Copy constructor
-    MainFactory_ABC& operator=( const MainFactory_ABC& ); //!< Assignment operator
     //@}
 };
 }

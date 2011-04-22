@@ -35,7 +35,6 @@ class Config : private boost::base_from_member< std::auto_ptr< tools::RealFileLo
              , public tools::ExerciseConfig 
              , public MainFactory_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -49,7 +48,6 @@ public:
     virtual std::auto_ptr< Client > CreateClient( SwordMessageHandler_ABC& handler ) const;
     virtual std::auto_ptr< SchedulerFactory > CreateSchedulerFactory() const;
     virtual std::auto_ptr< Timeout > CreateTimeout() const;
-
     //@}
 
 private:

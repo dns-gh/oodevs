@@ -20,7 +20,7 @@ using namespace mission_tester;
 // Created: PHC 2011-03-24
 // -----------------------------------------------------------------------------
 Client::Client( SwordMessageHandler_ABC& handler, const std::string& host, unsigned short port, const std::string& profile, const std::string& password )
-    : SwordProxy   ( host, port, profile, password )
+    : SwordProxy( host, port, profile, password )
     , connected_   ( false )
     , authentified_( false )
 {

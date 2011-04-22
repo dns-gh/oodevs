@@ -16,13 +16,12 @@ namespace mission_tester
 {
 // =============================================================================
 /** @class  ConsoleLogger
-    @brief  ConsoleLogger
+    @brief  Console logger
 */
 // Created: PHC 2011-04-07
 // =============================================================================
 class ConsoleLogger : public Logger
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
