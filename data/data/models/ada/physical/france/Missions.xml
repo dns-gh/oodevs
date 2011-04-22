@@ -2333,7 +2333,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
-      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" dia-type="france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" id="2122" name="GENIE Reprendre Travaux">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2346,7 +2346,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" dia-type="france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" id="2050" name="GENIE Realiser Camps">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -2354,7 +2354,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Camps a construire" optional="false" type="PlannedWork"/>
-      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" dia-type="france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" id="2104" name="GENIE ActiverObstacles">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4529,4 +4529,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3487381606" -->
+<!-- signature="0358846075" -->
