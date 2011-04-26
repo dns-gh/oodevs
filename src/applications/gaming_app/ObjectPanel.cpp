@@ -69,9 +69,8 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( tools::translate( "Object", "TC2:" ) );
 
     GetBuilder().AddGroup( tools::translate( "NBC", "NBC" ) )
-                .AddLabel( tools::translate( "NBCPrototype_ABC", "NBC agent state:" ) )
                 .AddLabel( tools::translate( "NBC", "Danger:" ) )
-                .AddLabel( tools::translate( "NBCPrototype_ABC", "NBC agent(s):" ) );
+                .AddLabel( tools::translate( "NBC", "NBC agent(s):" ) );
 
     GetBuilder().AddGroup( tools::translate( "MedicalTreatment", "Medical Treatment" ) )
                 .AddLabel( tools::translate( "MedicalTreatment", "Total number of beds:" ) )
