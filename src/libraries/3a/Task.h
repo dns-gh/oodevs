@@ -12,15 +12,7 @@
 
 #include "ModelFunctionComposite.h"
 #include "dispatcher/MessageHandler_ABC.h"
-#include "protocol/Protocol.h"
-
-#pragma warning (push)
-#pragma warning (disable : 4702 )
-#include <memory>
-#include <string>
-#include <map>
 #include <boost/enable_shared_from_this.hpp>
-#pragma warning( pop )
 
 class Connector_ABC;
 class ModelFunction_ABC;
@@ -36,6 +28,7 @@ namespace xml
 {
     class xistream;
 }
+
 // =============================================================================
 /** @class  Task
     @brief  Task
@@ -48,16 +41,16 @@ class Task : public dispatcher::MessageHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Task();
+             Task( unsigned int firstTick, unsigned int lastTick );
     virtual ~Task();
     //@}
 
     //! @name Operations
     //@{
-    void SetResult   ( boost::shared_ptr< Result_ABC > output );
+    void SetResult( boost::shared_ptr< Result_ABC > output );
     void AddExtractor( boost::shared_ptr< ModelFunction_ABC > function );
-    void AddFunction ( const std::string& name, boost::shared_ptr< Slot_ABC > function );
-    void AddFunction ( boost::shared_ptr< Slot_ABC > function );
+    void AddFunction( const std::string& name, boost::shared_ptr< Slot_ABC > function );
+    void AddFunction( boost::shared_ptr< Slot_ABC > function );
     void AddConnector( const std::string& name, boost::shared_ptr< Connector_ABC > connector );
     void Connect( xml::xistream& xis );
 
@@ -68,12 +61,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Task( const Task& );            //!< Copy constructor
-    Task& operator=( const Task& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< std::string, boost::shared_ptr< Connector_ABC > >   T_Connectors;
@@ -93,6 +80,9 @@ private:
 private:
     //! @name Member data
     //@{
+    unsigned int firstTick_;
+    unsigned int lastTick_;
+    unsigned int skippedFrames_;
     ModelFunctionComposite composite_;
     T_Connectors connectors_;
     T_Slots slots_;

@@ -45,9 +45,9 @@ void FunctionFactory::Add( std::auto_ptr< ElementFactory_ABC > factory )
 // Name: FunctionFactory::CreateTask
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Task > FunctionFactory::CreateTask( xml::xistream& xis )
+boost::shared_ptr< Task > FunctionFactory::CreateTask( xml::xistream& xis, unsigned int firstTick, unsigned int lastTick )
 {
-    boost::shared_ptr< Task > result( new Task() );
+    boost::shared_ptr< Task > result( new Task( firstTick, lastTick ) );
     xis >> xml::list( *this, &FunctionFactory::CreateFunction, *result );
     result->Connect( xis );
     return result;

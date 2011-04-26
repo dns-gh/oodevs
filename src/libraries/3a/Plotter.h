@@ -29,29 +29,44 @@ class Plotter : public Function1_ABC< K, T >
 public:
     //! @name Constructors/Destructor
     //@{
-             Plotter( dispatcher::ClientPublisher_ABC& publisher, int context )
-                 : publisher_( publisher ), context_( context ) {};
-    virtual ~Plotter() {};
+    Plotter( dispatcher::ClientPublisher_ABC& publisher, int context )
+        : publisher_( publisher ), context_( context )
+    {
+        // NOTHING
+    }
+    virtual ~Plotter()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
     //@{
-    virtual std::string GetName() const { return "Plotter"; }
-    virtual void BeginTick() {};
+    virtual std::string GetName() const
+    {
+        return "Plotter";
+    }
+    virtual void BeginTick() {}
     virtual void SetKey( const K& ) {}
     virtual void Apply( const T& arg )
     {
         values_.push_back( arg );
     }
-    virtual void EndTick() {};
+    virtual void EndTick() {}
 
-    virtual void Commit() const
+    virtual void Commit( unsigned int skippedFrames, unsigned int firstTick ) const
     {
         aar::PlotResult result;
         result().set_identifier( context_ );
         result().set_error     ( "" );
         for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
-            result().mutable_values()->Add( float( *it ) );
+        {
+            if( skippedFrames == 0 )
+                result().mutable_values()->Add( float( *it ) );
+            else
+                --skippedFrames;
+        }
+        result().set_begin_tick( firstTick );
         result.Send( publisher_, 0 );
     }
     //@}

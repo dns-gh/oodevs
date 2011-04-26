@@ -109,10 +109,17 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const swor
     {
         if( boost::starts_with( request.request(), "indicator://" ) )
             return;
+        unsigned int firstTick = 0;
+        unsigned int lastTick = std::numeric_limits< unsigned int >::max();
+        if( request.has_time_range() )
+        {
+            firstTick = request.time_range().first_tick();
+            lastTick = firstTick + request.time_range().duration();
+        }
         xml::xistringstream xis( request.request() );
         AarFacade factory( resolver_.GetPublisher( client ), request.identifier(), *model_ );
         xis >> xml::start( "indicator" );
-        boost::shared_ptr< Task > task( factory.CreateTask( xis ) );
+        boost::shared_ptr< Task > task( factory.CreateTask( xis, firstTick, lastTick ) );
         xis >> xml::end;
         task->Process( *messages_ ); // $$$$ AGE 2007-09-17: deconnexion en route=>crash
     }

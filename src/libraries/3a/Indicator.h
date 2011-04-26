@@ -45,7 +45,7 @@ public:
         result.Send( publisher_ );
     }
     virtual void EndTick() {};
-    virtual void Commit() const {}
+    virtual void Commit( unsigned int /*skippedFrames*/, unsigned int /*firstTick*/ ) const {}
     //@}
 
 private:

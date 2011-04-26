@@ -30,6 +30,7 @@ void AarToClient::Convert( const sword::PlotResult& from, MsgsAarToClient::MsgPl
     CONVERT( identifier );
     CONVERT( error );
     to->mutable_values()->MergeFrom( from.values() );
+    CONVERT( begin_tick );
 }
 
 // -----------------------------------------------------------------------------

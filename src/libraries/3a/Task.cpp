@@ -21,8 +21,11 @@
 // Name: Task constructor
 // Created: AGE 2007-09-11
 // -----------------------------------------------------------------------------
-Task::Task()
-    : frameEnded_( true )
+Task::Task( unsigned int firstTick, unsigned int lastTick )
+    : firstTick_    ( firstTick )
+    , lastTick_     ( lastTick )
+    , skippedFrames_( 0 )
+    , frameEnded_   ( true )
 {
     // NOTHING
 }
@@ -148,14 +151,14 @@ void Task::Receive( const sword::SimToClient& wrapper )
 
     try
     {
-        if (wrapper.message().has_control_begin_tick())
+        if( wrapper.message().has_control_begin_tick() )
         {
             if( ! frameEnded_ )
                 composite_.EndTick();
             composite_.BeginTick();
             frameEnded_ = false;
         }
-        else if (wrapper.message().has_control_end_tick())
+        else if( wrapper.message().has_control_end_tick() )
         {
             composite_.EndTick();
             frameEnded_ = true;
@@ -176,7 +179,7 @@ void Task::Receive( const sword::SimToClient& wrapper )
 void Task::Commit()
 {
     if( result_ )
-        result_->Commit();
+        result_->Commit( skippedFrames_, firstTick_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,9 +188,11 @@ void Task::Commit()
 // -----------------------------------------------------------------------------
 void Task::Process( dispatcher::MessageLoader_ABC& loader )
 {
-    const unsigned ticks = loader.GetTickNumber();
-    loader.LoadKeyFrame( 0, *this );
-    for( unsigned i = 0; i < ticks - 1; ++i )
+    unsigned int keyFrame = loader.FindKeyFrame( firstTick_ );
+    skippedFrames_ = firstTick_ - keyFrame;
+    const unsigned int ticks = std::min( lastTick_, loader.GetTickNumber() );
+    loader.LoadKeyFrame( keyFrame, *this );
+    for( unsigned int i = keyFrame; i < ticks - 1; ++i )
         loader.LoadFrame( i, *this );
     loader.LoadFrame( ticks - 1, *this, boost::bind( &Task::Commit, shared_from_this() ) );
 }

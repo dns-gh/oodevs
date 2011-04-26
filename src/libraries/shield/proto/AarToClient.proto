@@ -17,6 +17,7 @@ message MsgPlotResult {
     required uint32 identifier = 1;
     repeated float  values     = 2;
     required string error      = 3;
+    optional uint32 begin_tick = 4;
 }
 
 message MsgIndicator {

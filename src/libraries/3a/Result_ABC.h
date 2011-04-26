@@ -23,14 +23,14 @@ class Result_ABC : public Slot_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Result_ABC() {};
-    virtual ~Result_ABC() {};
+             Result_ABC() {}
+    virtual ~Result_ABC() {}
     //@}
 
     //! @name Operations
     //@{
     virtual std::string GetName() const = 0;
-    virtual void Commit() const = 0;
+    virtual void Commit( unsigned int skippedFrames, unsigned int firstTick ) const = 0;
     //@}
 };
 

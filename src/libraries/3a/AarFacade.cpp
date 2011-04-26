@@ -43,7 +43,7 @@ AarFacade::~AarFacade()
 // Name: boost::shared_ptr< Task > AarFacade::CreateTask
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Task > AarFacade::CreateTask( xml::xistream& xis )
+boost::shared_ptr< Task > AarFacade::CreateTask( xml::xistream& xis, unsigned int firstTick, unsigned int lastTick )
 {
-    return factory_->CreateTask( xis );
+    return factory_->CreateTask( xis, firstTick, lastTick );
 }

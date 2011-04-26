@@ -41,7 +41,7 @@ public:
     //@{
     void Add( std::auto_ptr< ElementFactory_ABC > factory );
 
-    boost::shared_ptr< Task > CreateTask( xml::xistream& xis );
+    boost::shared_ptr< Task > CreateTask( xml::xistream& xis, unsigned int firstTick, unsigned int lastTick );
     //@}
 
 private:

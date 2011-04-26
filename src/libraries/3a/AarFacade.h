@@ -10,6 +10,7 @@
 #ifndef __AarFacade_h_
 #define __AarFacade_h_
 
+#include <limits>
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
 
@@ -48,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< Task > CreateTask( xml::xistream& xis );
+    boost::shared_ptr< Task > CreateTask( xml::xistream& xis, unsigned int firstTick = 0, unsigned int lastTick = std::numeric_limits< unsigned int >::max() );
     //@}
 
 private:

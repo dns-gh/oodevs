@@ -155,8 +155,12 @@ void MessageLoader::ScanData()
             for( bfs::directory_iterator it( dir ); it !=  bfs::directory_iterator(); ++it )
                 try
                 {
-                    boost::mutex::scoped_lock lock( dataAccessMutex_ );
-                    if( bfs::is_directory( it->status() ) && fragmentsInfos_.find( it->path().leaf() ) == fragmentsInfos_.end() )
+                    bool doAdd = false;
+                    {
+                        boost::mutex::scoped_lock lock( dataAccessMutex_ );
+                        doAdd = bfs::is_directory( it->status() ) && fragmentsInfos_.find( it->path().leaf() ) == fragmentsInfos_.end();
+                    }
+                    if( doAdd )
                         AddFolder( it->path().leaf() );
                 }
                 catch( const std::exception & )

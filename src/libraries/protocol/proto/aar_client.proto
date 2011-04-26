@@ -49,6 +49,7 @@ message PlotResult
     required uint32 identifier = 1; //!< An identifier for the request
     repeated float  values     = 2; //!< The result values
     required string error      = 3; //!< The description of an error
+    optional uint32 begin_tick = 4; //!< The result values first tick
 }
 
 /** @struct Indicator
