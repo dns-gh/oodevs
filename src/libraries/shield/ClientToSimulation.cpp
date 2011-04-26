@@ -185,6 +185,7 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& fro
                         ( MsgsClientToSim::MsgUnitMagicAction::create_wound, sword::UnitMagicAction::create_wound )
                         ( MsgsClientToSim::MsgUnitMagicAction::inhabitant_change_health_state, sword::UnitMagicAction::inhabitant_change_health_state )
                         ( MsgsClientToSim::MsgUnitMagicAction::inhabitant_change_affinities, sword::UnitMagicAction::inhabitant_change_affinities )
+                        ( MsgsClientToSim::MsgUnitMagicAction::change_extension, sword::UnitMagicAction::change_extension )
                         ( MsgsClientToSim::MsgUnitMagicAction::unit_creation, sword::UnitMagicAction::unit_creation ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }

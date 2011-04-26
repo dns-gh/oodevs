@@ -531,6 +531,14 @@ message MsgAtlasNature {
    required int32 nature = 1;
 }
 
+message Extension {
+    message Entry {
+        required string name  = 1;
+        required string value = 2;
+    }
+    repeated Entry entries = 1;
+}
+
 message MsgMissionParameter {
     message Value {
         //parameters used for missions and magic actions:
@@ -555,7 +563,7 @@ message MsgMissionParameter {
         optional ResourceType                resourceType                = 19;
         optional MsgLogMaintenancePriorities logMaintenancePriorities    = 20;
         optional MsgLogMedicalPriorities     logMedicalPriorities        = 21;
-        
+
         //parameters used for magic actions only:
         optional float                       aReal                       = 22;
         optional MsgPathList                 pathList                    = 23;
@@ -580,7 +588,8 @@ message MsgMissionParameter {
         optional uint32                      identifier                  = 42;
         optional int32                       quantity                    = 43;
         optional KnowledgeGroupId            knowledgeGroup              = 44;
-        repeated Value                       list                        = 45;
+        optional Extension                   extensionList               = 45;
+        repeated Value                       list                        = 46;
     }
     optional bool  null_value       = 1;
     repeated Value value   = 2;

@@ -270,7 +270,7 @@ message MsgPartyCreation {
    required Common.PartyId       party          = 1;
    required string               name           = 2;
    required Common.EnumDiplomacy type           = 3;
-   optional Extension            extension      = 4;
+   optional Common.Extension     extension      = 4;
    optional Common.RgbColor      color          = 5;
 }
 
@@ -280,7 +280,7 @@ message MsgFormationCreation {
     optional Common.FormationId       parent                = 3;
     required Common.EnumNatureLevel   level                 = 4;
     required string                   name                  = 5;
-    optional Extension                extension             = 6;
+    optional Common.Extension         extension             = 6;
     required string                   app6symbol            = 7;
     required Common.EnumLogisticLevel logistic_level        = 8;
     optional Common.RgbColor          color                 = 9;
@@ -298,7 +298,7 @@ message MsgAutomatCreation {
     required Common.ParentEntity           parent          = 4;
     required Common.PartyId                party           = 5;
     optional Common.KnowledgeGroupId       knowledge_group = 6;
-    optional Extension                     extension       = 7;
+    optional Common.Extension              extension       = 7;
     required string                        app6symbol      = 8;
     required Common.EnumLogisticLevel      logistic_level  = 9;
     optional Common.RgbColor               color           = 10;
@@ -415,14 +415,6 @@ message Communication {
     optional Common.KnowledgeGroupId  knowledge_group = 2;
 }
 
-message Extension {
-    message Entry {
-        required string name  = 1;
-        required string value = 2;
-    }
-    repeated Entry entries = 1;
-}
-
 message MsgUnitAttributes {
     enum Posture {
         mouvement           = 0;
@@ -498,7 +490,7 @@ message MsgUnitAttributes {
     optional Satisfaction                       satisfaction                  = 45;
     optional string                             critical_intelligence         = 46; //implemented in PIV3 
     optional Common.PartyAdhesions              adhesions                     = 47;
-    optional Extension                          extension                     = 48;
+    optional Common.Extension                   extension                     = 48;
 }
 
 message MsgUnitPathFind {
@@ -950,7 +942,7 @@ message MsgCrowdCreation {
    required Common.CrowdType        type        = 2;
    optional string                  nom         = 3;
    required Common.PartyId          party       = 4;
-   optional Extension               extension   = 5;
+   optional Common.Extension        extension   = 5;
    required Common.HumanRepartition repartition = 6;
 }
 
@@ -1254,7 +1246,7 @@ message MsgPopulationCreation {
     required Common.PartyId        party     = 2;
     required Common.PopulationType type      = 3;
     required string                name      = 4;
-    optional Extension             extension = 5;
+    optional Common.Extension      extension = 5;
     repeated Common.ObjectId       objects   = 6;
 }
 

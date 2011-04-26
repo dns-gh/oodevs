@@ -749,21 +749,6 @@ message Communication {
     optional KnowledgeGroupId  knowledge_group = 2; //!< The knowledge group identifier @see KnowledgeGroupId
 }
 
-/** @struct Extension
-    @brief An extension message
-    @todo What's this ?
-*/
-message Extension {
-    /** @struct Entry
-        @brief An extension entry message
-    */
-    message Entry {
-        required string name  = 1; //!< The entry name
-        required string value = 2; //!< The entry value
-    }
-    repeated Entry entries = 1; //!< The extension entries @see Entry
-}
-
 /** @struct UnitAttributes
     @brief A unit attributes message
 */

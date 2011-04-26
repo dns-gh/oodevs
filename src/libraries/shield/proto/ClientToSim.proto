@@ -74,6 +74,7 @@ message MsgUnitMagicAction {
         inhabitant_change_health_state    = 32;
         inhabitant_change_affinities      = 33;
         unit_change_affinities            = 34;
+        change_extension                  = 35;
     }
    required Common.Tasker               tasker     = 1;
    required Type                        type       = 2;
