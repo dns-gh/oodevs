@@ -110,13 +110,16 @@ void PopulationPanel::DisplayParts( const Population_ABC& population )
 // -----------------------------------------------------------------------------
 void PopulationPanel::Display( const PopulationPart_ABC& part, Displayer_ABC& displayer, ValuedListItem* )
 {
+    unsigned int totalHumans = part.GetHealthyHumans() + part.GetWoundedHumans() + part.GetContaminatedHumans() + part.GetDeadHumans();
+    float aliveDensity = ( totalHumans == 0 ) ? 0 :
+        part.GetDensity() * ( part.GetHealthyHumans() + part.GetWoundedHumans() + + part.GetContaminatedHumans() ) / totalHumans;
     displayer.Display( tools::translate( "gui::PopulationPanel", "Chunks" ), part.GetName() )
              .Display( tools::translate( "gui::PopulationPanel", "Healthy" ), part.GetHealthyHumans() )
              .Display( tools::translate( "gui::PopulationPanel", "Wounded" ), part.GetWoundedHumans() )
              .Display( tools::translate( "gui::PopulationPanel", "Contaminated" ), part.GetContaminatedHumans() )
              .Display( tools::translate( "gui::PopulationPanel", "Dead" ), part.GetDeadHumans() )
              .Display( tools::translate( "gui::PopulationPanel", "Mood" ), part.GetAttitude() )
-             .Display( tools::translate( "gui::PopulationPanel", "Alive density" ), part.GetDensity() );
+             .Display( tools::translate( "gui::PopulationPanel", "Alive density" ), aliveDensity );
 }
 
 // -----------------------------------------------------------------------------
