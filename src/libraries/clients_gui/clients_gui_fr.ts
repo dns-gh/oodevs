@@ -1005,27 +1005,27 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Healthy people:</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnes saines:</translation>
     </message>
     <message>
         <source>Wounded people:</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnes blessées:</translation>
     </message>
     <message>
         <source>Contaminated people:</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnes contaminées:</translation>
     </message>
     <message>
         <source>Healthy</source>
-        <translation type="unfinished"></translation>
+        <translation>Sains</translation>
     </message>
     <message>
         <source>Wounded</source>
-        <translation type="unfinished"></translation>
+        <translation>Blessés</translation>
     </message>
     <message>
         <source>Contaminated</source>
-        <translation type="unfinished"></translation>
+        <translation>Contaminés</translation>
     </message>
 </context>
 <context>
@@ -1043,7 +1043,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Healthy number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de vivants:</translation>
     </message>
 </context>
 <context>
