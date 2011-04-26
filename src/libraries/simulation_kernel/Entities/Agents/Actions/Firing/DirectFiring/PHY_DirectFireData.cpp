@@ -160,9 +160,8 @@ void PHY_DirectFireData::operator() ( const PHY_ComposantePion& compFirer, PHY_W
 // Name: PHY_DirectFireData::CanFire
 // Created: LDC 2011-03-09
 // -----------------------------------------------------------------------------
-bool PHY_DirectFireData::CanFire( const PHY_ComposantePion& firer )
+bool PHY_DirectFireData::CanFire( const PHY_ComposantePion& /*firer*/ )
 {
-    bool isInCity = false;
     if( !firer_.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
         return true;
     return( MT_Random::GetInstance().rand32_io( 0u, 100u ) < PHY_DirectFireData::nUrbanCoefficient_ );

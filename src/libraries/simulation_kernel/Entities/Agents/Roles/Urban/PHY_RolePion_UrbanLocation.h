@@ -61,7 +61,7 @@ public:
     virtual double ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
     virtual MT_Vector2D GetFirerPosition( MIL_Agent_ABC& target ) const;
     virtual MT_Vector2D GetTargetPosition( MIL_Agent_ABC& target ) const;
-    virtual float ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
+    virtual double ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
     virtual float ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const;
     virtual float ComputeRatioPionInside( const geometry::Polygon2f& polygon, float modificator ) const;
     void Execute( posture::PostureComputer_ABC& algorithm ) const;

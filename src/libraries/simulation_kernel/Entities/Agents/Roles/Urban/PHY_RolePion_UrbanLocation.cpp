@@ -226,7 +226,7 @@ MT_Vector2D PHY_RolePion_UrbanLocation::GetTargetPosition( MIL_Agent_ABC& firer 
 // Name: PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock
 // Created: SLG 2010-04-16
 // -----------------------------------------------------------------------------
-float PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const
+double PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const
 {
     std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
     pion_.Execute( *firerComputer );
@@ -236,7 +236,7 @@ float PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock( MIL_Agent
     UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
     if( urbanObject_ )
     {
-        float distance = firerResult.position_.Distance( targetResult.position_ );
+        double distance = firerResult.position_.Distance( targetResult.position_ );
         return distance * ( 1 - firerResult.urbanDeployment_ ) * ( 1 - targetResult.urbanDeployment_ );
     }
     return firerResult.position_.Distance( targetResult.position_ );
