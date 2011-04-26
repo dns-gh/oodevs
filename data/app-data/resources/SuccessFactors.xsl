@@ -37,7 +37,8 @@ function Start()
         local result = false
         for _, factor in pairs( factors ) do
             if factor.CheckConditions() then
-                result = result or factor.ExecuteActions()
+                factor.ExecuteActions()
+                result = true
             end
         end
         return result
