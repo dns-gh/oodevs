@@ -66,7 +66,8 @@ public:
             else
                 --skippedFrames;
         }
-        result().set_begin_tick( firstTick );
+        if( firstTick != 0 )
+            result().set_begin_tick( firstTick );
         result.Send( publisher_, 0 );
     }
     //@}
