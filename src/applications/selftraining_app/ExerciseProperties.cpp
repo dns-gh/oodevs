@@ -73,7 +73,7 @@ ExerciseProperties::ExerciseProperties( QWidget* parent, const tools::GeneralCon
         QVBox* editBox = Style( new QVBox( box ) );
         editBox->setMinimumWidth( 200 );
         editBox->setSpacing( 5 );
-        QLabel* label = Style( new QLabel( tools::translate( "ExerciseProperties", "Exercise parameters:" ), editBox ) );
+        Style( new QLabel( tools::translate( "ExerciseProperties", "Exercise parameters:" ), editBox ) );
         {
             terrainList_ = Style( new QComboBox( editBox ) );
             connect( terrainList_, SIGNAL( activated( int ) ), SLOT( ModelChanged() ) );
