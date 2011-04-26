@@ -11,11 +11,13 @@
 #define __AfterActionFunctionList_h_
 
 #include "clients_gui/ListDisplayer.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Controllers;
 }
+
 namespace gui
 {
     class ParametersLayer;
@@ -32,7 +34,6 @@ namespace actions
 class AfterActionParameter;
 class AfterActionFunction;
 class AfterActionModel;
-class QToolBox;
 class StaticModel;
 
 // =============================================================================
@@ -42,8 +43,9 @@ class StaticModel;
 // Created: AGE 2007-09-21
 // =============================================================================
 class AfterActionFunctionList : public QVBox
+                              , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -66,12 +68,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AfterActionFunctionList( const AfterActionFunctionList& );            //!< Copy constructor
-    AfterActionFunctionList& operator=( const AfterActionFunctionList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateRequestButton();
@@ -91,7 +87,6 @@ private:
     AfterActionModel& model_;
     gui::ParametersLayer& layer_;
     const StaticModel& staticModel_;
-
     gui::ListDisplayer< AfterActionFunctionList >* functions_;
     QGroupBox* parameters_;
     QPushButton* request_;

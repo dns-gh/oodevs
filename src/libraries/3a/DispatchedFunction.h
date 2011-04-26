@@ -52,13 +52,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DispatchedFunction( const DispatchedFunction& );            //!< Copy constructor
-    DispatchedFunction& operator=( const DispatchedFunction& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     const K key_;

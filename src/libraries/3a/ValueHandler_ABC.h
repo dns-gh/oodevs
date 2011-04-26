@@ -22,8 +22,8 @@ class ValueHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ValueHandler_ABC() {};
-    virtual ~ValueHandler_ABC() {};
+             ValueHandler_ABC() {}
+    virtual ~ValueHandler_ABC() {}
     //@}
 
     //! @name Operations

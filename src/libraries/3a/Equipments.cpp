@@ -24,7 +24,7 @@ Equipments::Equipments()
 namespace
 {
     const unsigned nEquipmentStates = 5;
-    typedef int (sword::EquipmentDotations_EquipmentDotation::* EquipmentDotationsMemberFn)() const;
+    typedef int( sword::EquipmentDotations_EquipmentDotation::* EquipmentDotationsMemberFn )() const;
     EquipmentDotationsMemberFn equipmentData[5] =
     {
         &sword::EquipmentDotations_EquipmentDotation::available,
@@ -71,7 +71,7 @@ Equipments::Equipments( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 int Equipments::Extract( const sword::UnitAttributes& attributes )
 {
-    unsigned size = attributes.equipment_dotations().elem_size();
+    unsigned int size = attributes.equipment_dotations().elem_size();
     while( size > 0 )
     {
         --size;

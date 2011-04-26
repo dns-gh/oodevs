@@ -26,7 +26,7 @@ Humans::Humans()
 namespace
 {
     const unsigned nHumanStates = 9;
-    typedef google::protobuf::int32 (HumanDotations_HumanDotation::*HumanDotationsMemberFn)()const;
+    typedef google::protobuf::int32( HumanDotations_HumanDotation::*HumanDotationsMemberFn )()const;
     HumanDotationsMemberFn humanData[9] =
     {
         &HumanDotations_HumanDotation::total,
@@ -37,7 +37,7 @@ namespace
         &HumanDotations_HumanDotation::contaminated,
         &HumanDotations_HumanDotation::healing,
         &HumanDotations_HumanDotation::maintenance,
-        &HumanDotations_HumanDotation::unevacuated_wounded,
+        &HumanDotations_HumanDotation::unevacuated_wounded
     };
     const char* humanStates[9] =
     {
@@ -51,13 +51,13 @@ namespace
         "in-maintenance",
         "wounded-not-evacuated",
     };
-    int ReadMask( xml::xistream& xis, const char* attribute, const char** names, unsigned count )
+    int ReadMask( xml::xistream& xis, const char* attribute, const char** names, unsigned int count )
     {
         if( xis.attribute< std::string >( attribute ).empty() )
             return 1;
         FilterHelper< std::string > states( xis, attribute );
         int result = 0;
-        for( unsigned i = 0; i < count; ++i )
+        for( unsigned int i = 0; i < count; ++i )
             if( states.IsAllowed( names[i] ) )
                 result |= ( 1 << i );
         return result;
@@ -97,15 +97,15 @@ Humans::Humans( xml::xistream& xis )
 int Humans::Extract( const UnitAttributes& attributes )
 {
     int result = 0;
-    unsigned size = attributes.human_dotations().elem_size();
+    unsigned int size = attributes.human_dotations().elem_size();
     while( size > 0 )
     {
         --size;
         const HumanDotations_HumanDotation& humans = attributes.human_dotations().elem( size );
         if( ( rankMask_ & ( 1 << humans.rank() ) ) != 0 )
-            for( unsigned i = 0; i < nHumanStates; ++i )
+            for( unsigned int i = 0; i < nHumanStates; ++i )
                 if( ( stateMask_ & ( 1 << i ) ) != 0 )
-                    result += (humans.*humanData[i])();
+                    result += ( humans.*humanData[i] )();
     }
     return result;
 }

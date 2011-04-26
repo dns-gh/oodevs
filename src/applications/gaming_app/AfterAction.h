@@ -11,18 +11,19 @@
 #define __AfterAction_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Controllers;
 }
+
 namespace gui
 {
     class ItemFactory_ABC;
     class ParametersLayer;
 }
 
-class AfterActionFunction;
 class AfterActionModel;
 class AfterActionRequest;
 class IndicatorPlotFactory;
@@ -39,6 +40,7 @@ class AfterAction : public QObject
                   , public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< Services >
                   , public tools::ElementObserver_ABC< AfterActionRequest >
+                  , boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -54,12 +56,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AfterAction( const AfterAction& );            //!< Copy constructor
-    AfterAction& operator=( const AfterAction& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model,

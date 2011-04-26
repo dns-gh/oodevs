@@ -11,6 +11,7 @@
 #define __IndicatorPlotFactory_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -32,6 +33,7 @@ class Simulation;
 // =============================================================================
 class IndicatorPlotFactory : public tools::Observer_ABC
                            , public tools::ElementObserver_ABC< Services >
+                           , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -46,12 +48,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    IndicatorPlotFactory( const IndicatorPlotFactory& );            //!< Copy constructor
-    IndicatorPlotFactory& operator=( const IndicatorPlotFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const Services& services );

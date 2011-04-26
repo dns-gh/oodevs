@@ -11,7 +11,6 @@
 #define __Values_h_
 
 #include "ValueHandler_ABC.h"
-#include "protocol/Protocol.h"
 
 // =============================================================================
 /** @class  Value

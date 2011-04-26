@@ -11,11 +11,8 @@
 #include "IndicatorPlotFactory.h"
 #include "IndicatorPlot.h"
 #include "clients_kernel/Controllers.h"
-#include "protocol/Protocol.h"
-#include "protocol/ReplaySenders.h"
 #include "gaming/Services.h"
 #include "gaming/Simulation.h"
-#include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorPlotFactory constructor
@@ -66,5 +63,5 @@ IndicatorPlot* IndicatorPlotFactory::CreatePlot( const IndicatorRequest& request
 // -----------------------------------------------------------------------------
 void IndicatorPlotFactory::NotifyUpdated( const Services& services )
 {
-    hasReplay_ = services.HasService< replay::Service >( );
+    hasReplay_ = services.HasService< replay::Service >();
 }

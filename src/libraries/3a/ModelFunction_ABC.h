@@ -10,7 +10,12 @@
 #ifndef __ModelFunction_ABC_h_
 #define __ModelFunction_ABC_h_
 
-#include "protocol/Protocol.h"
+#include <boost/noncopyable.hpp>
+
+namespace sword
+{
+    class SimToClient;
+}
 
 // =============================================================================
 /** @class  ModelFunction_ABC
@@ -18,13 +23,13 @@
 */
 // Created: AGE 2007-08-29
 // =============================================================================
-class ModelFunction_ABC
+class ModelFunction_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ModelFunction_ABC() {};
-    virtual ~ModelFunction_ABC() {};
+             ModelFunction_ABC() {}
+    virtual ~ModelFunction_ABC() {}
     //@}
 
     //! @name Operations

@@ -64,7 +64,7 @@ bool UnitDetection::HasValue( const sword::SimToClient& wrapper ) const
     if( wrapper.message().has_unit_detection() )
     {
         const sword::UnitDetection& message = wrapper.message().unit_detection();
-        return detectedUnitId_ == unsigned long( message.detected_unit().id() );
+        return detectedUnitId_ == static_cast< unsigned long >( message.detected_unit().id() );
     }
     return false;
 }
@@ -76,7 +76,7 @@ bool UnitDetection::HasValue( const sword::SimToClient& wrapper ) const
 float UnitDetection::Extract( const sword::SimToClient& wrapper ) const
 {
     const sword::UnitDetection& message = wrapper.message().unit_detection();
-    if( detectedUnitId_ == unsigned long( message.detected_unit().id() ) && ( visibilityMask_ & ( 1 << message.current_visibility() ) ) != 0 )
+    if( detectedUnitId_ == static_cast< unsigned long >( message.detected_unit().id() ) && ( visibilityMask_ & ( 1 << message.current_visibility() ) ) != 0 )
         return 1.f;
     return 0.f;
 }

@@ -71,7 +71,6 @@ IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publish
 IndicatorPlot::~IndicatorPlot()
 {
     controllers_.Unregister( *this );
-
     if( tickData_ )
         UnregisterPlotData( *tickData_, true );
     for( T_Datas::iterator it = datas_.begin(); it != datas_.end(); ++it )
@@ -80,7 +79,7 @@ IndicatorPlot::~IndicatorPlot()
 
 namespace
 {
-    QColor GetPlotColor( unsigned i )
+    QColor GetPlotColor( unsigned int i )
     {
         QColor col;
         const int nColors = 6;
@@ -182,7 +181,7 @@ void IndicatorPlot::UpdatePlot( gui::GQ_PlotData* plot, const IndicatorRequest& 
         min_ = std::min( value, min_ );
         max_ = std::max( value, max_ );
     }
-    YAxis().SetAxisRange( min_, max_* 1.1, true );
+    YAxis().SetAxisRange( min_, max_ * 1.1, true );
     XAxis().SetAxisRange( 0, request.Result().size(), true );
 }
 
@@ -207,7 +206,7 @@ void IndicatorPlot::mouseReleaseEvent( QMouseEvent* e )
         const int offset = YAxis().GetAxisSize().width() + YAxis().GetCaptionSize().width();
         double tick = XAxis().MapFromViewport( e->pos().x() - offset );
         replay::ControlSkipToTick skip;
-        skip().set_tick( unsigned( tick ) );
+        skip().set_tick( static_cast< unsigned int >( tick ) );
         skip.Send( publisher_ );
     }
     gui::GQ_Plot::mouseReleaseEvent( e );
@@ -269,7 +268,7 @@ void IndicatorPlot::dropEvent( QDropEvent* e )
 // -----------------------------------------------------------------------------
 void IndicatorPlot::SetTickData( double currentTickPosition )
 {
-    if( ! tickData_ )
+    if( !tickData_ )
     {
         tickData_ = new gui::GQ_PlotData( 0, *this );
         RegisterPlotData( *tickData_ );

@@ -43,12 +43,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ModelFunctionComposite( const ModelFunctionComposite& );            //!< Copy constructor
-    ModelFunctionComposite& operator=( const ModelFunctionComposite& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< boost::shared_ptr< ModelFunction_ABC > > T_Functions;

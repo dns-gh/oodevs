@@ -25,9 +25,6 @@
 #include "gaming/AfterActionParameter.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/StaticModel.h"
-#include "icons.h"
-#include <qtoolbox.h>
-#include <qvgroupbox.h>
 #include <boost/bind.hpp>
 
 using namespace kernel;
@@ -40,11 +37,11 @@ using namespace gui;
 AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const ::StaticModel& staticModel )
     : QVBox( parent, "AfterActionFunctionList" )
     , controllers_( controllers )
-    , model_( model )
-    , layer_( layer )
+    , model_      ( model )
+    , layer_      ( layer )
     , staticModel_( staticModel )
-    , parameters_( 0 )
-    , request_( 0 )
+    , parameters_ ( 0 )
+    , request_    ( 0 )
 {
     functions_ = new ListDisplayer< AfterActionFunctionList >( this, *this, factory );
     functions_->AddColumn( tr( "Name" ) );
@@ -85,7 +82,7 @@ void AfterActionFunctionList::CreateRequestButton()
 // Name: AfterActionFunctionList::Display
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-void AfterActionFunctionList::Display( const AfterActionFunction& function, Displayer_ABC& , ValuedListItem* item )
+void AfterActionFunctionList::Display( const AfterActionFunction& function, Displayer_ABC&, ValuedListItem* item )
 {
     item->SetNamed( function );
     item->SetToolTip( function.GetComments() );
@@ -97,7 +94,8 @@ void AfterActionFunctionList::Display( const AfterActionFunction& function, Disp
 // -----------------------------------------------------------------------------
 void AfterActionFunctionList::OnSelectionChange( QListViewItem* i )
 {
-    delete request_; request_ = 0;
+    delete request_;
+    request_ = 0;
     std::for_each( paramList_.begin(), paramList_.end(), boost::bind( &actions::gui::Param_ABC::RemoveFromController, _1 ) );
     paramList_.clear();
     delete parameters_;
@@ -120,9 +118,13 @@ void AfterActionFunctionList::OnSelectionChange( QListViewItem* i )
 namespace
 {
     struct Serializer : public actions::ParameterContainer_ABC
+                      , private boost::noncopyable
     {
         Serializer( IndicatorRequest& request )
-            : request_( &request ) {}
+            : request_( &request )
+        {
+            // NOTHING
+        }
         virtual void AddParameter( actions::Parameter_ABC& parameter )
         {
             std::string result;
@@ -131,8 +133,6 @@ namespace
             delete& parameter;
         }
     private:
-        Serializer( const Serializer& );
-        Serializer& operator=( const Serializer& );
         IndicatorRequest* request_;
     };
 }

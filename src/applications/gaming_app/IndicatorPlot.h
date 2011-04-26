@@ -12,6 +12,7 @@
 
 #include "clients_gui/GQ_Plot.h"
 #include "tools/ElementObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -33,8 +34,9 @@ class IndicatorPlot : public gui::GQ_Plot
                     , public tools::Observer_ABC
                     , public tools::ElementObserver_ABC< Simulation >
                     , public tools::ElementObserver_ABC< IndicatorRequest >
+                    , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -57,12 +59,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    IndicatorPlot( const IndicatorPlot& );            //!< Copy constructor
-    IndicatorPlot& operator=( const IndicatorPlot& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void hideEvent( QHideEvent* event );

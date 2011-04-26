@@ -26,8 +26,8 @@
 // -----------------------------------------------------------------------------
 IndicatorReportDialog::IndicatorReportDialog( QWidget* parent, const ScoreModel& model, const tools::ExerciseConfig& config, gui::LinkInterpreter_ABC& interpreter )
     : QDialog( parent, "IndicatorReportDialog" )
-    , model_( model )
-    , config_( config )
+    , model_      ( model )
+    , config_     ( config )
     , interpreter_( interpreter )
 {
     setCaption( tools::translate( "IndicatorReports", "Create report" ) );

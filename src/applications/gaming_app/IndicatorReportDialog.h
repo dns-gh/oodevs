@@ -10,6 +10,8 @@
 #ifndef __IndicatorReportDialog_h_
 #define __IndicatorReportDialog_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace gui
 {
     class LinkInterpreter_ABC;
@@ -29,6 +31,7 @@ class ScoreModel;
 // Created: SBO 2009-05-05
 // =============================================================================
 class IndicatorReportDialog : public QDialog
+                            , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -49,12 +52,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    IndicatorReportDialog( const IndicatorReportDialog& );            //!< Copy constructor
-    IndicatorReportDialog& operator=( const IndicatorReportDialog& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateReport() const;

@@ -12,18 +12,15 @@
 #include "moc_IndicatorExportDialog.cpp"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Tools.h"
-#include "tools/SessionConfig.h"
 #include <boost/foreach.hpp>
 #include <fstream>
-#include <string>
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorExportDialog constructor
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-IndicatorExportDialog::IndicatorExportDialog( QWidget* parent, tools::SessionConfig& config )
+IndicatorExportDialog::IndicatorExportDialog( QWidget* parent )
     : QDialog( parent, "IndicatorExportDialog" )
-    , config_ ( config )
 {
     setCaption( tools::translate( "Scores", "Export data" ) );
     QGridLayout* grid = new QGridLayout( this, 2, 2, 0, 5 );
@@ -114,7 +111,7 @@ void IndicatorExportDialog::OnAccept()
     {
         std::ofstream file( file_->text().ascii() );
         if( !file )
-            throw std::exception(tools::translate( "IndicatorExportDialog", "Impossible to create file in specified directory" ));
+            throw std::exception(tools::translate( "IndicatorExportDialog", "Impossible to create file in specified directory" ) );
         const std::string sep = separator_->text().ascii();
         if( header_->isChecked() )
         {

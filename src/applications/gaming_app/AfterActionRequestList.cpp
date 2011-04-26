@@ -16,7 +16,6 @@
 #include "clients_gui/ValuedDragObject.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Simulation.h"
-#include "IndicatorPlot.h"
 #include "IndicatorPlotFactory.h"
 #include "icons.h"
 
@@ -31,11 +30,14 @@ namespace
     public:
         MyList( AfterActionRequestList* parent, ItemFactory_ABC& factory )
             : ListDisplayer< AfterActionRequestList >( parent, *parent, factory )
-        {}
+        {
+            // NOTHING
+        }
         virtual QDragObject* dragObject()
         {
-            ValuedListItem* item = (ValuedListItem*)selectedItem();
-            if( !item ) return 0;
+            ValuedListItem* item = static_cast< ValuedListItem* >( selectedItem() );
+            if( !item )
+                return 0;
             const IndicatorRequest* request = item->GetValue< const IndicatorRequest >();
             return new ValuedDragObject( request, this );
         }
@@ -48,9 +50,9 @@ namespace
 // -----------------------------------------------------------------------------
 AfterActionRequestList::AfterActionRequestList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, IndicatorPlotFactory& plotFactory )
     : QVBox( parent, "AfterActionRequestList" )
-    , controllers_( controllers )
-    , factory_( factory )
-    , plotFactory_( plotFactory )
+    , controllers_  ( controllers )
+    , factory_      ( factory )
+    , plotFactory_  ( plotFactory )
     , pendingPixmap_( MAKE_PIXMAP( aaa_pending ) )
     , donePixmap_   ( MAKE_PIXMAP( aaa_valid ) )
     , failedPixmap_ ( MAKE_PIXMAP( aaa_broken ) )
@@ -148,7 +150,7 @@ void AfterActionRequestList::NotifyUpdated( const Simulation& simulation )
 // Name: AfterActionRequestList::Display
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterActionRequestList::Display( const IndicatorRequest& request, gui::ValuedListItem* item )
+void AfterActionRequestList::Display( const IndicatorRequest& request, ValuedListItem* item )
 {
     item->SetNamed( request );
     item->setPixmap( 1, request.IsPending() ? pendingPixmap_ :

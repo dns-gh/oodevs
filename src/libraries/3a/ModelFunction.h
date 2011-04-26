@@ -25,15 +25,6 @@ class ModelFunction : public ModelFunction_ABC
 public:
     //! @name Types
     //@{
-    /*
-    struct ValueConcept
-    {
-        typedef impl Type;
-        void Prepare();
-        void Receive( const sword& message );
-        void Push( ValueHandler_ABC< Type >& handler );
-    };
-    */
     typedef typename Value::Type Return_Type;
     //@}
 
@@ -41,8 +32,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ModelFunction( ValueHandler_ABC< Return_Type >& handler, const Value& value = Value() )
-                : handler_( handler ), value_( value ) {};
-    virtual ~ModelFunction() {};
+                : handler_( handler ), value_( value ) {}
+    virtual ~ModelFunction() {}
     //@}
 
     //! @name Operations
@@ -61,13 +52,6 @@ public:
         value_.Push( handler_ );
         handler_.EndTick();
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ModelFunction( const ModelFunction& );            //!< Copy constructor
-    ModelFunction& operator=( const ModelFunction& ); //!< Assignment operator
     //@}
 
 private:

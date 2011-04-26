@@ -54,13 +54,6 @@ public:
         return boost::lexical_cast< T >( xis.attribute< std::string >( "value" )  );
     }
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Constant( const Constant& );            //!< Copy constructor
-    Constant& operator=( const Constant& ); //!< Assignment operator
-    //@}
 };
 
 #endif // __Constant_h_

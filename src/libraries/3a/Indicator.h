@@ -27,9 +27,16 @@ class Indicator : public Function1_ABC< K, T >
 public:
     //! @name Constructors/Destructor
     //@{
-             Indicator( dispatcher::ClientPublisher_ABC& publisher, const std::string& name )
-                 : publisher_( publisher ), name_( name ) {};
-    virtual ~Indicator() {}
+    Indicator( dispatcher::ClientPublisher_ABC& publisher, const std::string& name )
+        : publisher_( publisher )
+        , name_( name )
+    {
+        // NOTHING
+    }
+    virtual ~Indicator()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -41,7 +48,7 @@ public:
     {
         aar::Indicator result;
         result().set_name( name_.c_str() );
-        result().set_value( float( arg ) );
+        result().set_value( static_cast< float >( arg ) );
         result.Send( publisher_ );
     }
     virtual void EndTick() {};

@@ -11,12 +11,9 @@
 #include "AfterAction.h"
 #include "AfterActionFunctionList.h"
 #include "AfterActionRequestList.h"
-#include "icons.h"
 #include "clients_kernel/Controllers.h"
-#include "gaming/AfterActionModel.h"
 #include "gaming/Services.h"
 #include "gaming/Tools.h"
-#include "protocol/Protocol.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/AarSenders.h"
 

@@ -54,7 +54,7 @@ public:
 
 private:
     //! @name Member data
-    //@{*
+    //@{
     FilterHelper< int > filter_;
     std::map< int, int > resources_;
     //@}

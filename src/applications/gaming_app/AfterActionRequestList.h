@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -32,9 +33,9 @@ class AfterActionRequestList : public QVBox
                              , public tools::Observer_ABC
                              , public tools::ElementObserver_ABC< IndicatorRequest >
                              , public tools::ElementObserver_ABC< Simulation >
-
+                             , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -52,12 +53,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AfterActionRequestList( const AfterActionRequestList& );            //!< Copy constructor
-    AfterActionRequestList& operator=( const AfterActionRequestList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const IndicatorRequest& request );

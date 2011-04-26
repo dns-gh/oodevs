@@ -15,7 +15,6 @@
 #include "Result_ABC.h"
 #include "protocol/AarSenders.h"
 
-
 // =============================================================================
 /** @class  Plotter
     @brief  Plotter
@@ -62,7 +61,7 @@ public:
         for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
         {
             if( skippedFrames == 0 )
-                result().mutable_values()->Add( float( *it ) );
+                result().mutable_values()->Add( static_cast< float >( *it ) );
             else
                 --skippedFrames;
         }

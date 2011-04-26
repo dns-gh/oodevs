@@ -36,7 +36,7 @@ Resources::Resources( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 int Resources::Extract( const sword::UnitAttributes& attributes )
 {
-    unsigned size = attributes.resource_dotations().elem_size();
+    unsigned int size = attributes.resource_dotations().elem_size();
     while( size > 0 )
     {
         --size;

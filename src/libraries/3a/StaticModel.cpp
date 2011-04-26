@@ -20,7 +20,7 @@ using namespace aar;
 // Created: ABR 2011-02-10
 // -----------------------------------------------------------------------------
 StaticModel::StaticModel( const tools::ExerciseConfig& config )
-    : powerIndicators_( new PowerIndicators() )
+    : powerIndicators_  ( new PowerIndicators() )
     , powerModificators_( new PowerModificator() )
 {
     powerIndicators_->Load( config );

@@ -39,8 +39,14 @@ public:
     explicit Dispatcher( const FunctionFactory& factory = FunctionFactory(), const KeyValue& keyValue = KeyValue() )
                 : factory_( factory )
                 , keyValue_( keyValue )
-                , frameWasEnded_( false ) {}
-    virtual ~Dispatcher() {}
+                , frameWasEnded_( false )
+    {
+        // NOTHING
+    }
+    virtual ~Dispatcher()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -93,12 +99,6 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Dispatcher( const Dispatcher& );            //!< Copy constructor
-    Dispatcher& operator=( const Dispatcher& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< K, boost::shared_ptr< ModelFunction_ABC > >  T_Functions;

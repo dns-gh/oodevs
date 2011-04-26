@@ -17,11 +17,6 @@
 #include <set>
 #pragma warning( pop )
 
-namespace xml
-{
-    class xistream;
-}
-
 // =============================================================================
 /** @class  FilterHelper
     @brief  FilterHelper
@@ -34,11 +29,13 @@ class FilterHelper
 public:
     //! @name Constructors/Destructor
     //@{
-    FilterHelper() {};
+    FilterHelper()
+    {
+        // NOTHING
+    }
     FilterHelper( xml::xistream& xis, const std::string& attribute )
     {
-        const std::string values = xis.attribute< std::string >( attribute, std::string() );
-        FillAllowedValues( values );
+        FillAllowedValues( xis.attribute< std::string >( attribute, std::string() ) );
     }
     FilterHelper( xml::xistream& xis, const std::string& attribute, const std::string& variant )
     {
@@ -47,7 +44,10 @@ public:
             values = xis.attribute< std::string >( variant, std::string() );
         FillAllowedValues( values );
     }
-    virtual ~FilterHelper() {};
+    virtual ~FilterHelper()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations

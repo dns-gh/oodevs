@@ -10,11 +10,7 @@
 #ifndef __IndicatorExportDialog_h_
 #define __IndicatorExportDialog_h_
 
-namespace tools
-{
-    class SessionConfig;
-};
-
+#include <boost/noncopyable.hpp>
 
 class IndicatorRequest;
 
@@ -25,13 +21,14 @@ class IndicatorRequest;
 // Created: SBO 2009-04-30
 // =============================================================================
 class IndicatorExportDialog : public QDialog
+                            , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IndicatorExportDialog( QWidget* parent, tools::SessionConfig& config );
+    explicit IndicatorExportDialog( QWidget* parent );
     virtual ~IndicatorExportDialog();
     //@}
 
@@ -50,13 +47,7 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    IndicatorExportDialog( const IndicatorExportDialog& );            //!< Copy constructor
-    IndicatorExportDialog& operator=( const IndicatorExportDialog& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
+    //! @name Types
     //@{
     typedef std::vector< const IndicatorRequest* > T_Requests;
     //@}
@@ -64,7 +55,6 @@ private:
 private:
     //! @name Member data
     //@{
-    tools::SessionConfig& config_;
     T_Requests requests_;
     QLineEdit* file_;
     QLineEdit* separator_;

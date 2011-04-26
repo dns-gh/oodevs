@@ -25,7 +25,7 @@ class bad_type_usage : public std::invalid_argument
 public:
     bad_type_usage( const std::string& message )
         : std::invalid_argument( "Invalid type usage : " + message )
-    {};
+    {}
 };
 
 inline
