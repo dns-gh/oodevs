@@ -46,9 +46,11 @@ public:
     //! @name Operations
     //@{
     void SetParameter( const std::string& name, const std::string& value );
+    void SetTimeRange( unsigned int firstTick, unsigned int duration );
     void Commit() const;
 
     QString GetName() const;
+    unsigned int GetFirstTick() const;
     void Update( const sword::PlotResult& message );
     void Update( const sword::Indicator& message );
     bool IsPending() const;
@@ -79,6 +81,8 @@ private:
     Publisher_ABC& publisher_;
     T_Parameters parameters_;
     bool done_;
+    unsigned int firstTick_;
+    unsigned int duration_;
     T_Data result_;
     T_Data newValues_;
     std::string error_;

@@ -174,15 +174,16 @@ void IndicatorPlot::NotifyDeleted( const IndicatorRequest& request )
 // -----------------------------------------------------------------------------
 void IndicatorPlot::UpdatePlot( gui::GQ_PlotData* plot, const IndicatorRequest& request, unsigned int from )
 {
+    const unsigned int firstTick = request.GetFirstTick();
     for( unsigned int i = from; i < request.Result().size(); ++i )
     {
         const double value = request.Result()[i];
-        plot->AddPoint( i, value );
+        plot->AddPoint( firstTick + i, value );
         min_ = std::min( value, min_ );
         max_ = std::max( value, max_ );
     }
     YAxis().SetAxisRange( min_, max_ * 1.1, true );
-    XAxis().SetAxisRange( 0, request.Result().size(), true );
+    XAxis().SetAxisRange( firstTick, firstTick + request.Result().size(), true );
 }
 
 // -----------------------------------------------------------------------------

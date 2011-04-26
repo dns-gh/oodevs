@@ -236,8 +236,12 @@ bool MessageLoader::SwitchToFragment( unsigned int& frameNumber )
 {
     if( frameNumber > tickCount_ )
         frameNumber = tickCount_;
-    boost::mutex::scoped_lock lock( dataAccessMutex_ );
-    if( currentOpenFolder_.empty() || frameNumber < fragmentsInfos_[ currentOpenFolder_ ].first || frameNumber > fragmentsInfos_[ currentOpenFolder_ ].second )
+    bool doSwitch = false;
+    {
+        boost::mutex::scoped_lock lock( dataAccessMutex_ );
+        doSwitch = currentOpenFolder_.empty() || frameNumber < fragmentsInfos_[ currentOpenFolder_ ].first || frameNumber > fragmentsInfos_[ currentOpenFolder_ ].second;
+    }
+    if( doSwitch )
     {
         frames_.clear();
         keyFrames_.clear();

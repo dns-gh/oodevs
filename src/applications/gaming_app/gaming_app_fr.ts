@@ -93,6 +93,18 @@
         <source>Send request</source>
         <translation>Envoyer la requête</translation>
     </message>
+    <message>
+        <source>Time range</source>
+        <translation>Plage temporelle</translation>
+    </message>
+    <message>
+        <source>First tick</source>
+        <translation>Premier tick</translation>
+    </message>
+    <message>
+        <source>Duration</source>
+        <translation>Durée</translation>
+    </message>
 </context>
 <context>
     <name>AfterActionRequestList</name>

@@ -24,8 +24,11 @@ using namespace sword;
 IndicatorRequest::IndicatorRequest( kernel::Controller& controller, const IndicatorDefinition_ABC& definition, Publisher_ABC& publisher )
     : controller_( controller )
     , definition_( definition )
-    , publisher_( publisher )
-    , done_( false )
+    , publisher_ ( publisher )
+    , done_      ( false )
+    , firstTick_ ( 0 )
+    , duration_  ( std::numeric_limits< unsigned int >::max() )
+
 {
     controller_.Create( *this );
 }
@@ -40,12 +43,31 @@ IndicatorRequest::~IndicatorRequest()
 }
 
 // -----------------------------------------------------------------------------
+// Name: IndicatorRequest::GetFirstTick
+// Created: JSR 2011-04-26
+// -----------------------------------------------------------------------------
+unsigned int IndicatorRequest::GetFirstTick() const
+{
+    return firstTick_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: IndicatorRequest::SetParameter
 // Created: AGE 2007-10-10
 // -----------------------------------------------------------------------------
 void IndicatorRequest::SetParameter( const std::string& name, const std::string& value )
 {
     parameters_[ name ] = value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndicatorRequest::SetTimeRange
+// Created: JSR 2011-04-26
+// -----------------------------------------------------------------------------
+void IndicatorRequest::SetTimeRange( unsigned int firstTick, unsigned int duration )
+{
+    firstTick_ = firstTick;
+    duration_ = duration;
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +80,11 @@ void IndicatorRequest::Commit() const
     const std::string request = definition_.Commit( parameters_ );
     message().set_identifier( reinterpret_cast< unsigned int >( this ) );
     message().set_request( request.c_str() );
+    if( firstTick_ != 0 || duration_ != std::numeric_limits< unsigned int >::max() )
+    {
+        message().mutable_time_range()->set_first_tick( firstTick_ );
+        message().mutable_time_range()->set_duration( duration_ );
+    }
     message.Send( publisher_, 0 );
 }
 
@@ -73,6 +100,8 @@ void IndicatorRequest::Update( const sword::PlotResult& message )
         result_.resize( message.values_size() );
         for ( int i = 0; i < message.values_size(); ++i )
             result_[i] = message.values(i);
+        if( message.has_begin_tick() )
+            firstTick_ = message.begin_tick();
         error_ = message.error();
         controller_.Update( *this );
     }

@@ -34,6 +34,7 @@ namespace actions
 class AfterActionParameter;
 class AfterActionFunction;
 class AfterActionModel;
+class Simulation;
 class StaticModel;
 
 // =============================================================================
@@ -43,6 +44,8 @@ class StaticModel;
 // Created: AGE 2007-09-21
 // =============================================================================
 class AfterActionFunctionList : public QVBox
+                              , public tools::Observer_ABC
+                              , public tools::ElementObserver_ABC< Simulation >
                               , private boost::noncopyable
 {
     Q_OBJECT
@@ -70,6 +73,7 @@ private slots:
 private:
     //! @name Helpers
     //@{
+    virtual void NotifyUpdated( const Simulation& simulation );
     void CreateRequestButton();
     void CreateParameter( const AfterActionParameter& parameter );
     boost::shared_ptr< actions::gui::Param_ABC > CreateParameter( const std::string& type, const QString& name );
@@ -89,6 +93,9 @@ private:
     const StaticModel& staticModel_;
     gui::ListDisplayer< AfterActionFunctionList >* functions_;
     QGroupBox* parameters_;
+    QVGroupBox* timeGroup_;
+    QSpinBox* firstTick_;
+    QSpinBox* duration_;
     QPushButton* request_;
     T_Parameters paramList_;
     //@}

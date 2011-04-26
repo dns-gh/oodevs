@@ -24,6 +24,7 @@
 #include "gaming/AfterActionModel.h"
 #include "gaming/AfterActionParameter.h"
 #include "gaming/IndicatorRequest.h"
+#include "gaming/Simulation.h"
 #include "gaming/StaticModel.h"
 #include <boost/bind.hpp>
 
@@ -47,6 +48,19 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
     functions_->AddColumn( tr( "Name" ) );
     new ListItemToolTip( functions_->viewport(), *functions_ );
     parameters_ = new QVGroupBox( tr( "Parameters" ), this );
+    timeGroup_ = new QVGroupBox( tr( "Time range" ), this );
+    timeGroup_->setCheckable( true );
+    timeGroup_->setChecked( false );
+    {
+        QHBox* box = new QHBox( timeGroup_ );
+        new QLabel( tr( "First tick" ), box );
+        firstTick_ = new QSpinBox( box );
+    }
+    {
+        QHBox* box = new QHBox( timeGroup_ );
+        new QLabel( tr( "Duration" ), box );
+        duration_ = new QSpinBox( box );
+    }
     connect( functions_, SIGNAL( selectionChanged( QListViewItem* ) ), SLOT( OnSelectionChange( QListViewItem* ) ) );
 
     CreateRequestButton();
@@ -54,6 +68,7 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
     functions_->DeleteTail(
         functions_->DisplayList( model_.CreateIterator() )
         );
+    controllers_.controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +77,19 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
 // -----------------------------------------------------------------------------
 AfterActionFunctionList::~AfterActionFunctionList()
 {
-    // NOTHING
+    controllers_.controller_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::NotifyUpdated
+// Created: JSR 2011-04-26
+// -----------------------------------------------------------------------------
+void AfterActionFunctionList::NotifyUpdated( const Simulation& simulation )
+{
+    firstTick_->setMinValue( 0 );
+    firstTick_->setMaxValue( simulation.GetTickCount() );
+    duration_->setMinValue( 0 );
+    duration_->setMaxValue( simulation.GetTickCount() );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,6 +174,8 @@ void AfterActionFunctionList::Request()
         if( const AfterActionFunction* function = item->GetValue< const AfterActionFunction >() )
         {
             IndicatorRequest& request = model_.CreateRequest( *function );
+            if( timeGroup_->isChecked() )
+                request.SetTimeRange( firstTick_->value(), duration_->value() );
             Serializer serializer( request );
             std::for_each( paramList_.begin(), paramList_.end(),
                 boost::bind( &actions::gui::Param_ABC::CommitTo, _1, boost::ref( serializer ) ) );

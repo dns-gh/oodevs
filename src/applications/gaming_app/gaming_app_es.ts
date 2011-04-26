@@ -93,6 +93,18 @@
         <source>Send request</source>
         <translation>Enviar requerimientos</translation>
     </message>
+    <message>
+        <source>Time range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>First tick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AfterActionRequestList</name>
