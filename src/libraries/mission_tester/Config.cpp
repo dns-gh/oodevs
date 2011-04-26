@@ -11,6 +11,7 @@
 #include "Config.h"
 #include "Client.h" 
 #include "ConsoleLogger.h"
+#include "Exercise.h"
 #include "Facade.h"
 #include "FileLogger.h"
 #include "SchedulerFactory.h"
@@ -46,7 +47,8 @@ Config::Config( int argc, char** argv )
             >> xml::content( "output", logFile_ )
             >> xml::content( "scheduler", scheduler_ )
             >> xml::content( "timeout", timeout_ )
-            >> xml::start( "password" ) >> xml::optional >> password_;
+            >> xml::start( "password" ) >> xml::optional >> password_ >> xml::end;
+    xibs_.reset( new xml::xibufferstream( xis >> xml::start( "parameters" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,4 +105,13 @@ std::auto_ptr< SchedulerFactory > Config::CreateSchedulerFactory( ) const
 std::auto_ptr< Timeout > Config::CreateTimeout() const
 {
     return new std::auto_ptr< Timeout >( new Timeout( timeout_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::auto_ptr< Exercise > Config::CreateExercise
+// Created: PHC 2011-04-22
+// -----------------------------------------------------------------------------
+std::auto_ptr< Exercise > Config::CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher ) const
+{
+    return new std::auto_ptr< Exercise >( new Exercise( entities, staticModel, publisher, *xibs_ ) );
 }

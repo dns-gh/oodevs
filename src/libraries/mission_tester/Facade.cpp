@@ -31,7 +31,7 @@ using namespace mission_tester;
 // Created: PHC 2011-04-05
 // -----------------------------------------------------------------------------
 Facade::Facade( const tools::ExerciseConfig& config, const MainFactory_ABC& mainFactory )
-    : mainFactory_ ( mainFactory ) 
+    : mainFactory_( mainFactory ) 
     , staticModel_( new kernel::StaticModel() )
 {
     factory_ = mainFactory_.CreateSchedulerFactory();
@@ -57,8 +57,8 @@ void Facade::Run()
     boost::shared_ptr< Scheduler_ABC > scheduler( factory_->CreateAgentScheduler() );
     Model model( *staticModel_, *scheduler );
     std::auto_ptr< Client > client = mainFactory_.CreateClient( model );
-    Exercise exercise( model, *staticModel_, *client );
-    exercise.Register( *this );
+    std::auto_ptr< Exercise > exercise = mainFactory_.CreateExercise( model, *staticModel_, *client );
+    exercise->Register( *this );
     client->Register( *this );
     model.Register( *this );
     client->Connect();
@@ -71,7 +71,7 @@ void Facade::Run()
             if( client->IsAuthentified() )
                 break;
         }
-        if ( timeout->Expired() )
+        if( timeout->Expired() )
             throw std::runtime_error( "Timeout exceeded." );
     }
     catch( std::exception& e )
@@ -87,7 +87,7 @@ void Facade::Run()
                 break;
         }
         client->Update();
-        scheduler->Step( exercise );
+        scheduler->Step( *exercise );
     }
 }
 

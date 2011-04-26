@@ -37,6 +37,11 @@ namespace kernel
     class MissionType;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace mission_tester
 {
     class Client;
@@ -53,7 +58,7 @@ class Exercise : private boost::noncopyable
 public:
     //! @name Constructors / Destructors
     //@{
-             Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher );
+             Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher, xml::xistream& xis );
     virtual ~Exercise();
     //@}
 

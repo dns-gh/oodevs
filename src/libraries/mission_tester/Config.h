@@ -19,6 +19,11 @@ namespace tools
     class RealFileLoaderObserver_ABC;
 }
 
+namespace xml
+{
+    class xibufferstream;
+}
+
 namespace mission_tester
 {
     class Facade;
@@ -48,6 +53,7 @@ public:
     virtual std::auto_ptr< Client > CreateClient( SwordMessageHandler_ABC& handler ) const;
     virtual std::auto_ptr< SchedulerFactory > CreateSchedulerFactory() const;
     virtual std::auto_ptr< Timeout > CreateTimeout() const;
+    virtual std::auto_ptr< Exercise > CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher ) const;
     //@}
 
 private:
@@ -67,6 +73,7 @@ private:
     std::string logFile_;
     unsigned int timeout_;
     unsigned int scheduler_;
+    std::auto_ptr< xml::xibufferstream > xibs_;
     //@}
 };
 }

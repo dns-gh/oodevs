@@ -13,11 +13,24 @@
 #include <memory>
 #include <boost/noncopyable.hpp>
 
+class Publisher_ABC;
 class SwordMessageHandler_ABC;
+
+namespace kernel
+{
+    class EntityResolver_ABC;
+    class StaticModel;
+}
+
+namespace xml
+{
+    class xistream;
+}
 
 namespace mission_tester
 {
    class Client;
+   class Exercise;
    class Facade;
    class SchedulerFactory;
    class Timeout;
@@ -43,6 +56,7 @@ public:
     virtual std::auto_ptr< SchedulerFactory > CreateSchedulerFactory() const = 0;
     virtual void ConfigureLogging( Facade& facade ) const = 0;
     virtual std::auto_ptr< Timeout > CreateTimeout() const = 0;
+    virtual std::auto_ptr< Exercise > CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher ) const = 0;
     //@}
 };
 }
