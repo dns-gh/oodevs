@@ -885,10 +885,10 @@
             <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/weather.xsd" file="../data/exercises/@{exercise}/weather.xml" failonerror="true" warn="true"/>
             <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/session.xsd" file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true" warn="true"/>
             <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true" timeout="900000">
-                <arg value="- -root-dir=../../data"/>
-                <arg value="- -exercise=@{exercise}"/>
-                <arg value="- -session=@{session}"/>
-                <arg value="- -test"/>
+                <arg value="--root-dir=../../data"/>
+                <arg value="--exercise=@{exercise}"/>
+                <arg value="--session=@{session}"/>
+                <arg value="--test"/>
             </exec>
         </sequential>
     </macrodef>
