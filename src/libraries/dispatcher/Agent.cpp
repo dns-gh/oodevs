@@ -123,6 +123,8 @@ void Agent::DoUpdate( const sword::UnitCreation& msg )
     if( automat_->GetId() != msg.automat().id() )
         SetSuperior( model_.Automats().Get( msg.automat().id() ) );
     decisionalInfos_.Clear();
+    reinforcements_.Clear();
+    transportedAgents_.Clear();
 }
 
 #define UPDATE_ASN_ATTRIBUTE( ASN, CPP ) \
@@ -443,6 +445,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_radio_receiver_disabled( bRadioRecieverEnabled_ );
         asn().set_radar_active( bRadarEnabled_ );
         {
+            asn().mutable_transported_units();
             for( tools::Iterator< const kernel::Agent_ABC& > it = transportedAgents_.CreateIterator(); it.HasMoreElements(); )
                 asn().mutable_transported_units()->add_elem()->set_id( it.NextElement().GetId() );
         }
