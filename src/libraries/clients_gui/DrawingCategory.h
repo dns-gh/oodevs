@@ -69,8 +69,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    QString name_;
-    QString description_;
+    const QString name_;
+    const QString description_;
     //@}
 };
 

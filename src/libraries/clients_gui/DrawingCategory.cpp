@@ -21,13 +21,10 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 DrawingCategory::DrawingCategory( xml::xistream& xis, svg::TextRenderer& renderer, kernel::Controller& controller )
     : controller_( controller )
+    , name_( xis.attribute< std::string >( "name" ).c_str() )
+    , description_( xis.content< std::string >( "description", "" ).c_str() )
 {
-    std::string name, description;
-    xis >> xml::attribute( "name", name )
-        >> xml::optional >> xml::content( "description", description )
-        >> xml::list( "template", *this, &DrawingCategory::ReadTemplate, renderer );
-    name_ = name.c_str();
-    description_ = description.c_str();
+    xis >> xml::list( "template", *this, &DrawingCategory::ReadTemplate, renderer );
     controller_.Create( *this );
 }
 
