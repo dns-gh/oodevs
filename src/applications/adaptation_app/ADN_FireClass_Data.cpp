@@ -269,6 +269,7 @@ ADN_FireClass_Data::FireClassInfos* ADN_FireClass_Data::FireClassInfos::CreateCo
 {
     FireClassInfos* pCopy = new FireClassInfos();
     pCopy->injuryInfos_.CopyFrom( injuryInfos_ );
+    pCopy->modifUrbanBlocks_ = modifUrbanBlocks_;
     pCopy->strName_ = strName_.GetData();
     pCopy->initialHeat_ = initialHeat_.GetData();
     pCopy->maxHeat_ = maxHeat_.GetData();
