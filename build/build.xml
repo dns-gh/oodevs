@@ -885,10 +885,10 @@
             <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/weather.xsd" file="../data/exercises/@{exercise}/weather.xml" failonerror="true" warn="true"/>
             <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/session.xsd" file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true" warn="true"/>
             <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true" timeout="900000">
-                <arg value="--root-dir=../../data"/>
-                <arg value="--exercise=@{exercise}"/>
-                <arg value="--session=@{session}"/>
-                <arg value="--test"/>
+                <arg value="- -root-dir=../../data"/>
+                <arg value="- -exercise=@{exercise}"/>
+                <arg value="- -session=@{session}"/>
+                <arg value="- -test"/>
             </exec>
         </sequential>
     </macrodef>
@@ -946,11 +946,13 @@
     <target name="data_migrations_test">
         <test-data-migration old-version="3.0" exercise="CabourgOld"/>
         <test-data-migration old-version="4.2.0" exercise="Cabourg"/>
-        <!--<test-data-migration old-version="4.2.0" exercise="BMDrosoville"/>-->
+        <test-data-migration old-version="4.2.0" exercise="BMDrosoville"/>
         <test-data-migration old-version="4.2.1" exercise="Cabourg"/>
-        <!--<test-data-migration old-version="4.2.1" exercise="BMDrosoville"/>-->
+        <test-data-migration old-version="4.2.1" exercise="BMDrosoville"/>
         <test-data-migration old-version="4.2.2" exercise="Cabourg"/>
-        <!--<test-data-migration old-version="4.2.2" exercise="BMDrosoville"/>-->
+        <test-data-migration old-version="4.2.2" exercise="BMDrosoville"/>
+		<test-data-migration old-version="4.3.0" exercise="Cabourg"/>
+        <test-data-migration old-version="4.3.0" exercise="BMDrosoville"/>
     </target>
 
     <target name="protocol_test" description="build protocol test application" depends="library.protocol,library.tools">
@@ -1142,9 +1144,9 @@
             <delete file="${out.dir}/content.xml"/>
         </sequential>
     </macrodef>
-
+ 
     <target name="package.otpacks" depends="package.otpack.lossc,package.otpack.cetac,package.otpack.tutosw" description="package the exercise otpacks"/>
-
+ 
     <target name="package.otpack.lossc" description="package du LOSSC otpack">
         <pack name="LOSSC" description="LOSSC exercises package"
               includes="exercises/LOSSC Scenario 1/**,exercises/LOSSC Scenario 2/**,exercises/LOSSC Scenario 3/**,data/terrains/afghan_kabuldist/**"/>
