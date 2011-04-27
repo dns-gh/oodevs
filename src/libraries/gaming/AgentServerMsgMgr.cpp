@@ -1086,6 +1086,7 @@ void AgentServerMsgMgr::OnReceiveObjectKnowledgeUpdate( const sword::ObjectKnowl
 void AgentServerMsgMgr::OnReceiveObjectKnowledgeDestruction( const sword::ObjectKnowledgeDestruction& message )
 {
     GetModel().teams_.GetTeam( message.party().id() ).Update( message );
+    GetModel().knowledgeGroups_.Apply( boost::bind( &kernel::Entity_ABC::Update< sword::ObjectKnowledgeDestruction >, _1, boost::cref( message ) ) );
 }
 
 // -----------------------------------------------------------------------------
