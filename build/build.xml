@@ -946,13 +946,15 @@
     <target name="data_migrations_test">
         <test-data-migration old-version="3.0" exercise="CabourgOld"/>
         <test-data-migration old-version="4.2.0" exercise="Cabourg"/>
-        <test-data-migration old-version="4.2.0" exercise="BMDrosoville"/>
         <test-data-migration old-version="4.2.1" exercise="Cabourg"/>
-        <test-data-migration old-version="4.2.1" exercise="BMDrosoville"/>
         <test-data-migration old-version="4.2.2" exercise="Cabourg"/>
+        <!--
+        <test-data-migration old-version="4.2.0" exercise="BMDrosoville"/>
+        <test-data-migration old-version="4.2.1" exercise="BMDrosoville"/>
         <test-data-migration old-version="4.2.2" exercise="BMDrosoville"/>
-		<test-data-migration old-version="4.3.0" exercise="Cabourg"/>
+	<test-data-migration old-version="4.3.0" exercise="Cabourg"/>
         <test-data-migration old-version="4.3.0" exercise="BMDrosoville"/>
+        -->
     </target>
 
     <target name="protocol_test" description="build protocol test application" depends="library.protocol,library.tools">
