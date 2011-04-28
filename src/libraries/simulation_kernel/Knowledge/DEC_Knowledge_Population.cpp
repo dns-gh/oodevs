@@ -134,10 +134,9 @@ void DEC_Knowledge_Population::Prepare()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Population::UpdateReconAttributes()
 {
-    if( !IsRecon() )
-        return;
+    if( IsRecon() )
+        bReconAttributesValid_ = true;
     assert( pPopulationKnown_ );
-    bReconAttributesValid_ = true;
     if( rDominationState_ != pPopulationKnown_->GetDecision().GetDominationState() )
     {
         rDominationState_ = pPopulationKnown_->GetDecision().GetDominationState();
