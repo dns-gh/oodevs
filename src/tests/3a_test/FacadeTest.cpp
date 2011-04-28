@@ -74,6 +74,41 @@ namespace
             plot.add_values( static_cast< float >( data[i] ) );
         MOCK_EXPECT( mocker, Send4 ).once().with( boost::bind( &CheckValue, result, _1 ) );
     }
+    SimToClient MakeEquipementVariation( int variation[5], unsigned long id, unsigned long equipmentId = 42 )
+    {
+        SimToClient result;
+        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        attributes.mutable_unit()->set_id( id );
+        EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_equipment_dotations()->add_elem();
+        equipment.mutable_type()->set_id( equipmentId );
+        equipment.set_available( variation[0] );
+        equipment.set_unavailable( variation[1] );
+        equipment.set_repairable( variation[2] );
+        equipment.set_repairing( variation[3] );
+        equipment.set_captured( variation[4] );
+        return result;
+    }
+    SimToClient MakePosition( const char* position, unsigned long id )
+    {
+        SimToClient result;
+        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        attributes.mutable_unit()->set_id( id );
+        geocoord::MGRS mgrs( position );
+        geocoord::Geodetic geodetic( mgrs );
+        attributes.mutable_position()->set_latitude( geodetic.GetLatitude() * 180 / std::acos( -1. ) );
+        attributes.mutable_position()->set_longitude( geodetic.GetLongitude() * 180 / std::acos( -1. ) );
+        return result;
+    }
+    SimToClient MakeResourceVariation( int variation, unsigned long id, unsigned long resourceId = 42 )
+    {
+        SimToClient result;
+        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        attributes.mutable_unit()->set_id( id );
+        ResourceDotations_ResourceDotation& resource = *attributes.mutable_resource_dotations()->add_elem();
+        resource.mutable_type()->set_id( resourceId );
+        resource.set_quantity( variation );
+        return result;
+    }
     class Fixture
     {
     public:
@@ -151,21 +186,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalStateNormalized, Fixture )
     double expectedResult[] = { 0, 0, 1, 1 };
     MakeExpectation( publisher, expectedResult );
     task->Commit();
-}
-
-namespace
-{
-    SimToClient MakePosition( const char* position, unsigned long id )
-    {
-        SimToClient result;
-        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_unit()->set_id( id );
-        geocoord::MGRS mgrs( position );
-        geocoord::Geodetic geodetic( mgrs );
-        attributes.mutable_position()->set_latitude( geodetic.GetLatitude() * 180 / std::acos( -1. ) );
-        attributes.mutable_position()->set_longitude( geodetic.GetLongitude() * 180 / std::acos( -1. ) );
-        return result;
-    }
 }
 
 //CREATE PROCEDURE dbo.[AAAT_GENERAL_DISTANCE_ENTRE_DEUX_UNITES_A_LA_DATE_T]
@@ -535,20 +555,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithC
     task->Commit();
 }
 
-namespace
-{
-    SimToClient MakeResourceVariation( int variation, unsigned long id, unsigned long resourceId = 42 )
-    {
-        SimToClient result;
-        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_unit()->set_id( id );
-        ResourceDotations_ResourceDotation& resource = *attributes.mutable_resource_dotations()->add_elem();
-        resource.mutable_type()->set_id( resourceId );
-        resource.set_quantity( variation );
-        return result;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Facade_TestAllResources
 // Created: AGE 2004-12-15
@@ -666,24 +672,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter, Fixt
     double expectedResult[] = { 0, -54, -54, -54, -154 };
     MakeExpectation( publisher, expectedResult );
     task->Commit();
-}
-
-namespace
-{
-    SimToClient MakeEquipementVariation( int variation[5], unsigned long id, unsigned long equipmentId = 42 )
-    {
-        SimToClient result;
-        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_unit()->set_id( id );
-        EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_equipment_dotations()->add_elem();
-        equipment.mutable_type()->set_id( equipmentId );
-        equipment.set_available( variation[0] );
-        equipment.set_unavailable( variation[1] );
-        equipment.set_repairable( variation[2] );
-        equipment.set_repairing( variation[3] );
-        equipment.set_captured( variation[4] );
-        return result;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1066,6 +1054,226 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestProductOnTwoExtractors, Fixture )
     task->Receive( EndTick() ); // expect same as previous
     double expectedResult[] = { 5, 5, 30, 30 };
     MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestAvailableEquipmentsForUnitList
+// Created: FPO 2011-04-26
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableEquipmentsForUnitList, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "<extract function='equipments' states='available' id='1' equipments='12,42'/>"
+                             "<transform function='domain' type='int' select='17,18' input='1' id='2'/>"
+                             "<reduce type='int' function='sum' input='2' id='3'/>"
+                             "<result function='plot' input='3' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int variation[5] = { 5, 0, 0, 0, 0 };
+    int variation2[5] = { 1, 0, 0, 0, 0 };
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
+    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( MakeEquipementVariation( variation, 17, 51 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( variation2, 17, 42 ) );
+    task->Receive( MakeEquipementVariation( variation2, 17, 12 ) );
+    task->Receive( MakeEquipementVariation( variation2, 18, 42 ) );
+    task->Receive( MakeEquipementVariation( variation2, 15, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( variation2, 17, 42 ) );
+    task->Receive( EndTick() );
+    double expectedResult[] = { 5, 3, 3 };
+    MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestUnavailableEquipmentsForUnitList
+// Created: FPO 2011-04-26
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestUnavailableEquipmentsForUnitList, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "<extract function='equipments' states='unavailable,repairable,repairing,captured' id='1' equipments='12,42'/>"
+                             "<transform function='domain' type='int' select='17,18' input='1' id='2'/>"
+                             "<reduce type='int' function='sum' input='2' id='3'/>"
+                             "<result function='plot' input='3' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int variation[5] = { 0, 1, 1, 1, 0 };
+    int variation2[5] = { 0, 1, 0, 0, 0 };
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
+    //task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
+    //task->Receive( MakeEquipementVariation( variation, 17, 51 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( variation2, 17, 42 ) );
+    task->Receive( MakeEquipementVariation( variation2, 17, 12 ) );
+    task->Receive( MakeEquipementVariation( variation2, 18, 42 ) );
+    //task->Receive( MakeEquipementVariation( variation2, 15, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( variation2, 17, 42 ) );
+    task->Receive( EndTick() );
+    double expectedResult[] = { 3, 3, 3 };
+    MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestAvailableEquipmentsInSpecifiedZone
+// Created: FPO 2011-04-26
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableEquipmentsInSpecifiedZone, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+        "<extract function='equipments' states='available' id='equipments' equipments='12,42'/>"
+        "<extract function='position' id='positions'/>"
+        "<constant type='zone' value='circle(31TCM1508386208,31TCM1410587214)' id='circle'/>"
+        "<transform function='contains' input='circle,positions' id='selected-units'/>"
+        "<transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>"
+        "<reduce type='int' function='sum' input='filtered-positions' id='3'/>"
+        "<result function='plot' input='3' type='int'/>"
+        "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int variation[5] = { 5, 0, 0, 0, 0 };
+    int variation2[5] = { 1, 0, 0, 0, 0 };
+    sword::SimToClient  message = MakeEquipementVariation( variation, 17, 42 );
+    task->Receive( BeginTick() );
+    task->Receive( MakePosition( "31TCM1508386208", 17 ) );
+    task->Receive( MakePosition( "31TCM1543486826", 15 ) );
+    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
+    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakePosition( "31TCM0960387104", 18 ) );
+    task->Receive( MakeEquipementVariation( variation2, 18, 42 ) );
+    task->Receive( MakeEquipementVariation( variation2, 17, 12 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( variation, 17, 12 ) );
+    task->Receive( EndTick() );
+    double expectedResult[] = { 10, 11, 15 };
+    MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestDeadHumansForUnitList
+// Created: FPO 2011-04-26
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansForUnitList, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "<extract function='humans' states='dead' ranks='officer,sub-officer,troopers' id='humans'/>"
+                             "<transform function='domain' type='int' select='42,17' input='humans' id='domained'/>"
+                             "<reduce type='int' function='sum' input='domained' id='sum'/>"
+                             "<result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int state[8] = { 0, 0, 1, 0, 0, 0, 0, 0 };
+    task->Receive( BeginTick() );
+    task->Receive( MakeHumanVariation( state, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeHumanVariation( state, 17 ) );
+    task->Receive( MakeHumanVariation( state, 18 ) );
+    task->Receive( EndTick() );
+    {
+        double expectedResult[] = { 1, 2 };
+        MakeExpectation( publisher, expectedResult );
+    }
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestOperationalHumansForUnitList
+// Created: FPO 2011-04-26
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalHumansForUnitList, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "<extract function='humans' states='operational' ranks='officer,sub-officer,troopers' id='humans'/>"
+                             "<transform function='domain' type='int' select='42,17' input='humans' id='domained'/>"
+                             "<reduce type='int' function='sum' input='domained' id='sum'/>"
+                             "<result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int state[8] = { 0, 1, 0, 0, 0, 0, 0, 0 };
+    task->Receive( BeginTick() );
+    task->Receive( MakeHumanVariation( state, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeHumanVariation( state, 17 ) );
+    task->Receive( MakeHumanVariation( state, 18 ) );
+    task->Receive( EndTick() );
+    {
+        double expectedResult[] = { 1, 2 };
+        MakeExpectation( publisher, expectedResult );
+    }
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestWoundedHumansForUnitList
+// Created: FPO 2011-04-26
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestWoundedHumansForUnitList, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "<extract function='humans' states='wounded' ranks='officer,sub-officer,troopers' id='humans'/>"
+                             "<transform function='domain' type='int' select='42,17' input='humans' id='domained'/>"
+                             "<reduce type='int' function='sum' input='domained' id='sum'/>"
+                             "<result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int state[8] = { 0, 0, 0, 1, 0, 0, 0, 0 };
+    task->Receive( BeginTick() );
+    task->Receive( MakeHumanVariation( state, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeHumanVariation( state, 17 ) );
+    task->Receive( MakeHumanVariation( state, 18 ) );
+    task->Receive( EndTick() );
+    {
+        double expectedResult[] = { 1, 2 };
+        MakeExpectation( publisher, expectedResult );
+    }
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestAvailableResourcesForUnitList
+// Created: FPO 2011-04-26
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableResourcesForUnitList, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "<extract function='resources' id='1' resources='47,51'/>"
+                             "<transform function='domain' type='int' select='12,17' input='1' id='2'/>"
+                             "<reduce type='int' function='sum' input='2' id='3'/>"
+                             "<result function='plot' input='3' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 4212, 12, 47 ) );
+    task->Receive( MakeResourceVariation( 1242, 23, 47 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeResourceVariation( 4200, 17, 47 ) );
+    task->Receive( MakeResourceVariation( 1200, 12, 51 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( EndTick() );
+    {
+        double expectedResult[] = { 4212, 9612, 9612 };
+        MakeExpectation( publisher, expectedResult );
+    }
     task->Commit();
 }
 
