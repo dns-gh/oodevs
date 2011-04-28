@@ -177,10 +177,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wound effects on power indicators</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Available</source>
         <translation type="unfinished"></translation>
     </message>
@@ -198,6 +194,10 @@
     </message>
     <message>
         <source>Captured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment state on power indicators</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

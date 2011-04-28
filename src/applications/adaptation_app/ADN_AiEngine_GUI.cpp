@@ -96,7 +96,7 @@ void ADN_AiEngine_GUI::Build()
     builder.AddField<ADN_TimeField>( pCriticalIntelligenceBox, tr( "Maximum affinity" ), data_.rMaximumAffinity_ );
 
     // Wound effects modificators
-    QGroupBox* pWoundEffectsBox = new QGroupBox( 3, Qt::Horizontal, tr( "Wound effects on power indicators" ), pMainWidget_ );
+    QGroupBox* pWoundEffectsBox = new QGroupBox( 3, Qt::Horizontal, tr( "Equipment state on power indicators" ), pMainWidget_ );
     builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Available" ), data_.rAvailableModificator_, tr( "%" ), ePercentage );
     builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Unavailable" ), data_.rUnavailableModificator_, tr( "%" ), ePercentage );
     builder.AddField<ADN_EditLine_Double>( pWoundEffectsBox, tr( "Repairable" ), data_.rRepairableModificator_, tr( "%" ), ePercentage );

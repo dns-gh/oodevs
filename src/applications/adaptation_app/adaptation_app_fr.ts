@@ -179,10 +179,6 @@ Voulez vous sauvegarder malgré tout ?</translation>
         <translation>Adhésion maximale</translation>
     </message>
     <message>
-        <source>Wound effects on power indicators</source>
-        <translation>Effets des blessures sur les indicateurs de puissance</translation>
-    </message>
-    <message>
         <source>Available</source>
         <translation>Disponible</translation>
     </message>
@@ -201,6 +197,10 @@ Voulez vous sauvegarder malgré tout ?</translation>
     <message>
         <source>Captured</source>
         <translation>Capturé</translation>
+    </message>
+    <message>
+        <source>Equipment state on power indicators</source>
+        <translation>Effet état équipement sur indicateurs de puissance</translation>
     </message>
 </context>
 <context>

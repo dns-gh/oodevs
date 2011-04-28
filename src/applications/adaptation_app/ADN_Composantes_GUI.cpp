@@ -251,7 +251,7 @@ void ADN_Composantes_GUI::Build()
         QVBox* pPowerIndicatorsPage = new QVBox( pTabWidget );
         pPowerIndicatorsPage->setMargin( 5 );
         pPowerIndicatorsPage->setSpacing( 5 );
-        pTabWidget->addTab( pPowerIndicatorsPage, "Power indicators" );
+        pTabWidget->addTab( pPowerIndicatorsPage, tr( "Power indicators" ) );
 
         BuildPowerIndicators( pPowerIndicatorsPage, vInfosConnectors );
     }
