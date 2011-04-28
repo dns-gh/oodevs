@@ -681,7 +681,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter, Fixt
 BOOST_FIXTURE_TEST_CASE( Facade_TestEquipments, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='equipments' states='available,prisoner' equipments='12,42' id='equipments'/>"
+                             "    <extract function='equipments' states='available,captured' equipments='12,42' id='equipments'/>"
                              "    <reduce type='int' function='sum' input='equipments' id='sum'/>"
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
@@ -1104,23 +1104,23 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnavailableEquipmentsForUnitList, Fixture )
                              "<result function='plot' input='3' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    int variation[5] = { 0, 1, 1, 1, 0 };
+    int variation[5] = { 0, 1, 1, 1, 1 };
     int variation2[5] = { 0, 1, 0, 0, 0 };
     task->Receive( BeginTick() );
     task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
-    //task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
-    //task->Receive( MakeEquipementVariation( variation, 17, 51 ) );
+    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( MakeEquipementVariation( variation, 17, 51 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( MakeEquipementVariation( variation2, 17, 42 ) );
     task->Receive( MakeEquipementVariation( variation2, 17, 12 ) );
     task->Receive( MakeEquipementVariation( variation2, 18, 42 ) );
-    //task->Receive( MakeEquipementVariation( variation2, 15, 42 ) );
+    task->Receive( MakeEquipementVariation( variation2, 15, 42 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( MakeEquipementVariation( variation2, 17, 42 ) );
     task->Receive( EndTick() );
-    double expectedResult[] = { 3, 3, 3 };
+    double expectedResult[] = { 4, 3, 3 };
     MakeExpectation( publisher, expectedResult );
     task->Commit();
 }

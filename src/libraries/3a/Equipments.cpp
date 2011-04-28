@@ -39,7 +39,7 @@ namespace
         "unavailable",
         "repairable",
         "repairing",
-        "prisoner" // $$$$ MCO rename to captured
+        "captured" // $$$$ MCO rename to captured
     };
     int ReadMask( xml::xistream& xis )
     {
