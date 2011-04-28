@@ -9,18 +9,22 @@
 
 #include "gaming_pch.h"
 #include "MeteoModel.h"
+#include "Simulation.h"
 #include "meteo/PHY_Meteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
 #include "meteo/MeteoData.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel constructor
 // Created: HBD 2010-03-10
 // -----------------------------------------------------------------------------
-MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter )
-    : converter_( converter )
+MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter, const Simulation& simulation, kernel::Controller& controller )
+    : converter_ ( converter )
+    , simulation_( simulation )
+    , controller_( controller )
 {
     weather::PHY_Precipitation::Initialize();
     weather::PHY_Lighting::Initialize();
@@ -55,6 +59,17 @@ const weather::PHY_Lighting& MeteoModel::GetLighting() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MeteoModel::GetGlobalMeteo
+// Created: ABR 2011-04-28
+// -----------------------------------------------------------------------------
+const weather::PHY_Meteo* MeteoModel::GetGlobalMeteo() const
+{
+    if( pGlobalMeteo_.get() )
+        return pGlobalMeteo_.get();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
@@ -64,7 +79,8 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
     if( pGlobalMeteo_.get() )
         pGlobalMeteo_->Update( msg.attributes() );
     else
-        pGlobalMeteo_.reset( new weather::PHY_Meteo( msg.weather().id(),msg.attributes(), this ) );
+        pGlobalMeteo_.reset( new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, simulation_.GetTickDuration() ) );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,7 +100,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
             geometry::Point2d(
                 msg.bottom_right().longitude(),
                 msg.bottom_right().latitude() ) );
-        RegisterMeteo( *new weather::MeteoData( msg.weather().id(), topLeft, bottomRight, msg.attributes(), *this, converter_ ) );
+        RegisterMeteo( *new weather::MeteoData( msg.weather().id(), topLeft, bottomRight, msg.attributes(), *this, converter_, simulation_.GetTickDuration() ) );
     }
 }
 

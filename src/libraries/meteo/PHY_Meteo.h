@@ -56,17 +56,18 @@ class PHY_Meteo : public kernel::Entity_ABC
 public:
     struct sWindData
     {
-        double    rWindSpeed_;
-        MT_Vector2D vWindDirection_;
+        double       rWindSpeed_;
+        unsigned int eWindAngle_;
+        MT_Vector2D  vWindDirection_;
     };
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
-             PHY_Meteo( unsigned int id, const sword::WeatherAttributes&, MeteoManager_ABC* listener );
-             PHY_Meteo( unsigned int id, const sword::MissionParameters&, MeteoManager_ABC* listener );
-             PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitation );
+             PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, unsigned int timeStep );
+             PHY_Meteo( unsigned int id, const sword::WeatherAttributes&, MeteoManager_ABC* listener, unsigned int timeStep );
+             PHY_Meteo( unsigned int id, const sword::MissionParameters&, MeteoManager_ABC* listener, unsigned int timeStep );
+             PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitation, unsigned int timeStep );
     virtual ~PHY_Meteo();
     //@}
 
@@ -81,9 +82,13 @@ public:
 
     //! @name Accessors
     //@{
-    const PHY_Precipitation& GetPrecipitation() const;
-    const PHY_Lighting&      GetLighting     () const;
-    const sWindData&         GetWind         () const;
+    const PHY_Precipitation& GetPrecipitation   () const;
+    const PHY_Lighting&      GetLighting        () const;
+    const sWindData&         GetWind            () const;
+    int                      GetCloudFloor      () const;
+    int                      GetCloudCeiling    () const;
+    double                   GetCloudDensity    () const;
+    int                      GetConversionFactor() const;
     //@}
 
     //! @name Operations
@@ -110,20 +115,20 @@ protected:
     //@{
     int                      nPlancherCouvertureNuageuse_;
     int                      nPlafondCouvertureNuageuse_;
-    double                 rDensiteCouvertureNuageuse_;
+    double                   rDensiteCouvertureNuageuse_;
     sWindData                wind_;
     const PHY_Lighting*      pLighting_;
     const PHY_Precipitation* pPrecipitation_;
-    unsigned int nRefCount_;
-    int conversionFactor_;
-    unsigned int id_;
-    bool isChanged_;
+    unsigned int             nRefCount_;
+    unsigned int             id_;
+    bool                     isChanged_;
+    int                      conversionFactor_;
     //@}
 
 private:
     //! @name Member data
     //@{
-    MeteoManager_ABC* listener_;
+    MeteoManager_ABC*        listener_;
     //@}
 };
 

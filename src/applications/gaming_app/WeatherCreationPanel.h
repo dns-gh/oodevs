@@ -40,6 +40,7 @@ namespace actions
 
 class StaticModel;
 class WeatherWidget;
+class MeteoModel;
 
 // =============================================================================
 /** @class  WeatherCreationPanel
@@ -51,6 +52,7 @@ class WeatherCreationPanel : public gui::InfoPanel_ABC
                            , public tools::Observer_ABC
                            , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                            , public tools::ElementObserver_ABC< Simulation >
+                           , public tools::ElementObserver_ABC< MeteoModel >
                            , public gui::ShapeHandler_ABC
 {
         Q_OBJECT;
@@ -65,6 +67,7 @@ public:
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const Simulation& simulation );
+    virtual void NotifyUpdated( const MeteoModel& meteoModel );
     void Draw( const kernel::Viewport_ABC& viewport );
     virtual void Handle ( kernel::Location_ABC& location );
     //@}

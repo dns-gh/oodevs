@@ -20,12 +20,12 @@ using namespace kernel;
 // Name: AmmoEffect constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter )
+AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter, unsigned int tickDuration )
     : controller_( controller )
     , id_        ( message.fire_effect().id() )
     , type_      ( message.type() )
     , ellipse_   ( message.location(), converter )
-    , meteo_     ( weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_ )
+    , meteo_     ( weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_, tickDuration )
 {
     if( type_ == sword::WeatherAttributes::artificial_light )
         meteo_.Update( weather::PHY_Lighting::eclairant_ );

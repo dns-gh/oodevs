@@ -21,6 +21,7 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ParametersLayer.h"
+#include "gaming/MeteoModel.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
 #include "WeatherWidget.h"
@@ -42,9 +43,8 @@ WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC
     , tools_            ( tools )
     , location_         ( 0 )
     , serializer_       ( model.coordinateConverter_ )
-    , isGlobal_         ( false )
+    , isGlobal_         ( true )
 {
-
     QGroupBox* localGroup = new QGroupBox( 1, Qt::Horizontal, tools::translate( "WeatherCreationPanel", "Weather" ), this );
     QVBox* localWeatherBox = new QVBox( localGroup );
     weather_ = new WeatherWidget( localWeatherBox, tr( "Weather parameters" ) );
@@ -70,6 +70,7 @@ WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC
     connect( cancelBtn, SIGNAL( clicked() ), this, SLOT( Reset() ) );
     connect( weatherType, SIGNAL( toggled( bool ) ), this, SLOT( OnToogleWeatherType( bool ) ) );
     controllers_.Register( *this );
+    OnToogleWeatherType( true );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,6 +101,17 @@ void WeatherCreationPanel::NotifyUpdated( const Simulation& simulation )
         startTime_->setDateTime( simulation.GetInitialDateTime() );
     if( !endTime_->dateTime().isValid() )
         endTime_->setDateTime( simulation.GetInitialDateTime() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherCreationPanel::NotifyUpdated
+// Created: ABR 2011-04-28
+// -----------------------------------------------------------------------------
+void WeatherCreationPanel::NotifyUpdated( const MeteoModel& meteoModel )
+{
+    const weather::PHY_Meteo* meteo = meteoModel.GetGlobalMeteo();
+    if( meteo )
+        weather_->Update( *meteo );
 }
 
 // -----------------------------------------------------------------------------

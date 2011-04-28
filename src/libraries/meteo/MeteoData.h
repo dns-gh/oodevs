@@ -43,7 +43,7 @@ class MeteoData: public PHY_Meteo
 public:
     //! @name Constructors/Destructor
     //@{
-             MeteoData( unsigned int id, const geometry::Point2f& upLeft, const geometry::Point2f& downRight, const sword::WeatherAttributes& attributes, MeteoModel_ABC& model, kernel::CoordinateConverter_ABC& converter );
+             MeteoData( unsigned int id, const geometry::Point2f& upLeft, const geometry::Point2f& downRight, const sword::WeatherAttributes& attributes, MeteoModel_ABC& model, kernel::CoordinateConverter_ABC& converter, unsigned int timeStep );
     virtual ~MeteoData();
     //@}
 

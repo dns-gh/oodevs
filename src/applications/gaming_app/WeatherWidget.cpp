@@ -16,6 +16,7 @@
 #include "actions/Enumeration.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
+#include "meteo/PHY_Meteo.h"
 #include "meteo/PHY_Precipitation.h"
 #include "protocol/SimulationSenders.h"
 
@@ -56,6 +57,22 @@ WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
 WeatherWidget::~WeatherWidget()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherWidget::Update
+// Created: ABR 2011-04-28
+// -----------------------------------------------------------------------------
+void WeatherWidget::Update( const weather::PHY_Meteo& globalMeteo )
+{
+    windSpeed_->setValue( static_cast< int >( globalMeteo.GetWind().rWindSpeed_ / globalMeteo.GetConversionFactor() ) );
+    windDirection_->setValue( static_cast< int >( globalMeteo.GetWind().eWindAngle_ ) );
+    cloudDensity_->setValue( static_cast< int >( globalMeteo.GetCloudDensity() ) );
+    cloudFloor_->setValue( globalMeteo.GetCloudFloor() );
+    cloudCeiling_->setValue( globalMeteo.GetCloudCeiling() );
+    E_WeatherType type = globalMeteo.GetPrecipitation().GetID();
+    assert( type >= eWeatherType_None && type < eNbrWeatherType );
+    type_->setCurrentItem( static_cast< int >( type ) );
 }
 
 // -----------------------------------------------------------------------------

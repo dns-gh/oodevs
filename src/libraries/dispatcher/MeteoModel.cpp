@@ -9,8 +9,8 @@
 
 #include "dispatcher_pch.h"
 #include "MeteoModel.h"
+#include "Config.h"
 #include "Model.h"
-#include "EntityPublisher.h"
 #include "EntityPublisher.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
@@ -25,8 +25,9 @@ using namespace dispatcher;
 // Name: MeteoModel constructor
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
-MeteoModel::MeteoModel( const tools::ExerciseConfig& config, Model& model )
+MeteoModel::MeteoModel( const Config& config, Model& model )
     : model_       ( model )
+    , config_      ( config )
     , converter_   ( new kernel::CoordinateConverter( config ) )
     , pGlobalMeteo_( 0 )
 {
@@ -63,7 +64,7 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
         pGlobalMeteo_->Update( msg.attributes() );
     else
     {
-        pGlobalMeteo_ = new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this );
+        pGlobalMeteo_ = new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, config_.GetTickDuration() );
         model_.AddExtensions( *pGlobalMeteo_ );
     }
  }
@@ -80,14 +81,12 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
     const geometry::Point2f vDownRight = converter_->ConvertFromGeo( bottomRight );
     if( msg.has_attributes() )
     {
-        weather::MeteoData* weather = new weather::MeteoData( msg.weather().id(), vUpLeft, vDownRight, msg.attributes(), *this, *converter_ );
+        weather::MeteoData* weather = new weather::MeteoData( msg.weather().id(), vUpLeft, vDownRight, msg.attributes(), *this, *converter_, config_.GetTickDuration() );
         model_.AddExtensions( *weather );
         RegisterMeteo( *weather );
         weather->Update( msg.attributes() );
     }
-
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel::OnReceiveMsgLocalMeteoDestruction
@@ -105,7 +104,6 @@ void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWea
             return;
         }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel::RegisterMeteo

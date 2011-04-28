@@ -309,7 +309,7 @@ void NET_ASN_Tools::WriteDirection( const MT_Vector2D& vDir, Heading& asnDir )
     if( rAngle < 0 )
         rAngle += (2 * MT_PI); // Trigo ...[0, 2PI]
     rAngle = (2 * MT_PI) - rAngle; // Clockwise [0, 2PI]
-    asnDir.set_heading( (unsigned int)( rAngle * 180. / MT_PI ) );
+    asnDir.set_heading( static_cast< unsigned int >( rAngle * 180. / MT_PI + 0.5f) );
 }
 
 //-----------------------------------------------------------------------------

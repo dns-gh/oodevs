@@ -63,6 +63,7 @@ StatusBar.cpp \
 SupplyRoutePrototype_ABC.cpp \
 TacticalLinesLayer.cpp \
 TerrainObjectProxy.cpp \
+TerrainPicker.cpp \
 TerrainPreference.cpp \
 TerrainProfile.cpp \
 TerrainProfiler.cpp \

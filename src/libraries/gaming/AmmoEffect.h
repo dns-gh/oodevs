@@ -10,6 +10,7 @@
 #ifndef __AmmoEffect_h_
 #define __AmmoEffect_h_
 
+#include <boost/noncopyable.hpp>
 #include "MSEllipse.h"
 #include "protocol/Protocol.h"
 #include "meteo/PHY_Meteo.h"
@@ -27,12 +28,12 @@ namespace kernel
 */
 // Created: AGE 2006-04-04
 // =============================================================================
-class AmmoEffect
+class AmmoEffect : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             AmmoEffect( const sword::StartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
+             AmmoEffect( const sword::StartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, unsigned int tickDuration );
     virtual ~AmmoEffect();
     //@}
 
@@ -41,13 +42,6 @@ public:
     virtual void Draw( const kernel::GlTools_ABC& tools ) const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
     virtual const weather::PHY_Meteo& GetMeteo() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    AmmoEffect( const AmmoEffect& );            //!< Copy constructor
-    AmmoEffect& operator=( const AmmoEffect& ); //!< Assignment operator
     //@}
 
 private:

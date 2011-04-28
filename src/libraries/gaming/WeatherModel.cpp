@@ -12,6 +12,7 @@
 #include "AmmoEffect.h"
 #include "clients_kernel/Controllers.h"
 #include "Model.h"
+#include "Simulation.h"
 #include "StaticModel.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 
@@ -21,9 +22,10 @@ using namespace kernel;
 // Name: WeatherModel constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-WeatherModel::WeatherModel( Controllers& controllers, Model& model )
+WeatherModel::WeatherModel( Controllers& controllers, Model& model, const Simulation& simulation )
      : controllers_( controllers )
-     , model_( model )
+     , model_      ( model )
+     , simulation_ ( simulation )
 {
     // NOTHING
 }
@@ -52,7 +54,7 @@ void WeatherModel::Purge()
 // -----------------------------------------------------------------------------
 void WeatherModel::CreateAmmoEffect( const sword::StartFireEffect& message )
 {
-    Register( message.fire_effect().id(), *new AmmoEffect( message, controllers_.controller_, model_.static_.coordinateConverter_ ) );
+    Register( message.fire_effect().id(), *new AmmoEffect( message, controllers_.controller_, model_.static_.coordinateConverter_, simulation_.GetTickDuration() ) );
 }
 
 // -----------------------------------------------------------------------------

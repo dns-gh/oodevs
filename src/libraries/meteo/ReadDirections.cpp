@@ -11,15 +11,24 @@
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
-// Name: ReadDirections::ReadDirection
-// Created: SBO 2010-04-07
+// Name: weather::ReadDirection
+// Created: ABR 2011-04-28
 // -----------------------------------------------------------------------------
-MT_Vector2D weather::ReadDirection( const sword::Heading& message )
+MT_Vector2D weather::ReadDirection( double orientation )
 {
     MT_Vector2D result( 0, 1 ); // North vector
-    double radAngle = message.heading() * MT_PI / 180.;
+    double radAngle = orientation * MT_PI / 180.;
     result.Rotate( radAngle );
     result.Normalize();
     assert( !result.IsZero() );
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: weather::ReadDirection
+// Created: SBO 2010-04-07
+// -----------------------------------------------------------------------------
+MT_Vector2D weather::ReadDirection( const sword::Heading& message )
+{
+    return ReadDirection( message.heading() );
 }

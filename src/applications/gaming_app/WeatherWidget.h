@@ -29,6 +29,11 @@ namespace kernel
     class OrderParameter;
 }
 
+namespace weather
+{
+    class PHY_Meteo;
+}
+
 namespace tools
 {
     template< typename Item > class Iterator;
@@ -53,6 +58,7 @@ public:
 
     //! @name Operations
     //@{
+    void Update( const weather::PHY_Meteo& globalMeteo );
     void Commit( sword::WeatherAttributes& att ) const;
     void Commit( sword::MissionParameters& att ) const;
     void CreateParameters( actions::MagicAction& action, tools::Iterator< const kernel::OrderParameter& >& it );

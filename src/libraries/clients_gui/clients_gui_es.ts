@@ -1259,6 +1259,13 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::TerrainPicker</name>
+    <message>
+        <source>Wind speed: %1km/h, direction: %2&#xb0;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::TerrainPreference</name>
     <message>
         <source>Line thickness: </source>

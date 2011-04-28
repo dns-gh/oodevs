@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_GlobalMeteo.h"
+#include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -19,8 +20,8 @@
 // Name: PHY_GlobalMeteo constructor
 // Created: HBD 2010-03-25
 // -----------------------------------------------------------------------------
-PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, int conversionFactor )
-    : PHY_Meteo( id, xis, light, conversionFactor )
+PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light )
+    : PHY_Meteo( id, xis, light, MIL_AgentServer::GetWorkspace().GetTimeStepDuration() )
 {
     // NOTHING
 }
@@ -30,7 +31,7 @@ PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const wea
 // Created: HBD 2010-03-25
 // -----------------------------------------------------------------------------
 PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, const sword::WeatherAttributes& msg, weather::MeteoManager_ABC* list )
-    : PHY_Meteo( id, msg, list )
+    : PHY_Meteo( id, msg, list, MIL_AgentServer::GetWorkspace().GetTimeStepDuration() )
 {
     // NOTHING
 }

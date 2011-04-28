@@ -9,11 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_LocalMeteo.h"
+#include "meteo/PHY_Lighting.h"
+#include "meteo/PHY_Precipitation.h"
+#include "MIL_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
-#include "meteo/PHY_Lighting.h"
-#include "meteo/PHY_Precipitation.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -25,8 +26,8 @@ namespace bpt = boost::posix_time;
 // Name: PHY_LocalMeteo constructor
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, int conversionFactor )
-    : PHY_Meteo( id, xis, light, conversionFactor )
+PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light )
+    : PHY_Meteo( id, xis, light, MIL_AgentServer::GetWorkspace().GetTimeStepDuration() )
     , bIsPatched_( false )
 {
     std::string strStartTime, strEndTime, strTopLeftPos, strTopRightPos;
@@ -45,7 +46,7 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weath
 // Created: JSR 2010-04-12
 // -----------------------------------------------------------------------------
 PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& msg, weather::MeteoManager_ABC* list )
-    : PHY_Meteo( id, msg, list )
+    : PHY_Meteo( id, msg, list, MIL_AgentServer::GetWorkspace().GetTimeStepDuration() )
     , bIsPatched_( false )
 {
     const sword::MissionParameter& startTime = msg.elem( 7 );

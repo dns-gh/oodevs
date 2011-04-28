@@ -87,7 +87,9 @@ void TerrainPicker::OnTimeOut()
     }
     if( weather_ )
         if( const weather::PHY_Meteo* weather = weather_->Pick( terrainCoordinates_ ) )
-            emit WeatherPicked( tools::ToDisplayedString( weather->GetLighting().GetID() ), tools::ToDisplayedString( weather->GetPrecipitation().GetID() ) );
+            emit WeatherPicked( tools::ToDisplayedString( weather->GetLighting().GetID() ),
+                                tools::ToDisplayedString( weather->GetPrecipitation().GetID() ),
+                                tools::translate( "gui::TerrainPicker", "Wind speed: %1km/h, direction: %2°" ).arg( weather->GetWind().rWindSpeed_ / weather->GetConversionFactor(), 0, 'f', 0 ).arg( weather->GetWind().eWindAngle_ ).ascii() );
 
     if( objects_ )
     {

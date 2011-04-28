@@ -91,7 +91,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , logistics_( *new LogisticsModel( logisticFactory_ ) )
     , limits_( *new LimitsModel( tacticalLineFactory_ ) )
     , fires_( *new FiresModel( agents_, agents_ ) )
-    , weather_( *new WeatherModel( controllers, *this ) )
+    , weather_( *new WeatherModel( controllers, *this, simulation ) )
     , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
     , actions_( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ), publisher  ) )
     , folk_( *new FolkModel( controllers.controller_ ) )
@@ -105,7 +105,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , urbanObjects_( *new UrbanModel( controllers, resourceNetwork_, static_, urbanBlockDetectionMap_ ) )
     , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_ ) )
     , notes_( *new NotesModel( controllers.controller_ ))
-    , meteo_( *new MeteoModel( static_.coordinateConverter_ ) )
+    , meteo_( *new MeteoModel( static_.coordinateConverter_, simulation, controllers.controller_ ) )
     , formations_( *new kernel::FormationLevels() )
     , publisher_( publisher )
 {

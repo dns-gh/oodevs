@@ -36,7 +36,7 @@ class PHY_GlobalMeteo : public weather::PHY_Meteo
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, int conversionFactor );
+             PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light );
              PHY_GlobalMeteo( unsigned int id, const sword::WeatherAttributes&, weather::MeteoManager_ABC* list );
     virtual ~PHY_GlobalMeteo();
     //@}

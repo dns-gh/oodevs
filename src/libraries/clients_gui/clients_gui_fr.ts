@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>&#xa9; 2011 MASA Group</source>
-        <translation type="unfinished">© 2011 MASA Group</translation>
+        <translation>© 2011 MASA Group</translation>
     </message>
 </context>
 <context>
@@ -1256,6 +1256,13 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Create phase line</source>
         <translation>Créer une lima</translation>
+    </message>
+</context>
+<context>
+    <name>gui::TerrainPicker</name>
+    <message>
+        <source>Wind speed: %1km/h, direction: %2&#xb0;</source>
+        <translation>Vitesse du vent: %1km/h, direction: %2°</translation>
     </message>
 </context>
 <context>

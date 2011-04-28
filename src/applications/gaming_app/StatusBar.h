@@ -55,7 +55,7 @@ private slots:
     //@{
     void OnLag();
     void OnCheckPoint();
-    void WeatherPicked( const QString&, const QString& );
+    void WeatherPicked( const QString&, const QString&, const QString& );
     //@}
 
 private:
@@ -86,6 +86,7 @@ private:
     QLabel* checkPoint_;
     QLabel* precipitationType_;
     QLabel* lightingType_;
+    QLabel* windInfos_;
     QTimer* checkPointTimer_;
     QPixmap tickred_;
     QPixmap tickoff_;

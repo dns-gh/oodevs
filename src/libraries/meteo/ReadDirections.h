@@ -19,6 +19,7 @@ namespace sword
 
 namespace weather
 {
+    MT_Vector2D ReadDirection( double orientation );
     MT_Vector2D ReadDirection( const sword::Heading& message );
 }
 

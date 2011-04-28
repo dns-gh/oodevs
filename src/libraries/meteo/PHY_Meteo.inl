@@ -39,6 +39,46 @@ const PHY_Meteo::sWindData& PHY_Meteo::GetWind() const
     return wind_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_Meteo::GetCloudFloor
+// Created: ABR 2011-04-28
+// -----------------------------------------------------------------------------
+inline
+int PHY_Meteo::GetCloudFloor() const
+{
+    return nPlancherCouvertureNuageuse_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Meteo::GetCloudCeiling
+// Created: ABR 2011-04-28
+// -----------------------------------------------------------------------------
+inline
+int PHY_Meteo::GetCloudCeiling() const
+{
+    return nPlafondCouvertureNuageuse_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Meteo::GetCloudDensity
+// Created: ABR 2011-04-28
+// -----------------------------------------------------------------------------
+inline
+double PHY_Meteo::GetCloudDensity() const
+{
+    return rDensiteCouvertureNuageuse_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Meteo::GetConversionFactor
+// Created: ABR 2011-04-28
+// -----------------------------------------------------------------------------
+inline
+int PHY_Meteo::GetConversionFactor() const
+{
+    return conversionFactor_;
+}
+
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo::IncRef
 // Created: JVT 03-08-06

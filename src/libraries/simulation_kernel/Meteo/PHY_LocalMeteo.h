@@ -33,7 +33,7 @@ class PHY_LocalMeteo : public weather::PHY_Meteo
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, int conversionFactor );
+             PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light );
              PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& message, weather::MeteoManager_ABC* list );
     virtual ~PHY_LocalMeteo();
     //@}

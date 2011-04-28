@@ -25,6 +25,7 @@ namespace kernel
 
 class AmmoEffect;
 class Model;
+class Simulation;
 
 // =============================================================================
 /** @class  WeatherModel
@@ -37,7 +38,7 @@ class WeatherModel : public tools::Resolver< AmmoEffect >
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherModel( kernel::Controllers& controllers, Model& model );
+             WeatherModel( kernel::Controllers& controllers, Model& model, const Simulation& simulation );
     virtual ~WeatherModel();
     //@}
 
@@ -60,7 +61,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Model& model_;
+    Model&               model_;
+    const Simulation&    simulation_;
     //@}
 };
 

@@ -18,7 +18,10 @@ namespace kernel
 {
     class CoordinateConverter_ABC;
     class CoordinateConverter;
+    class Controller;
 }
+
+class Simulation;
 
 // =============================================================================
 /** @class  MeteoModel
@@ -31,13 +34,18 @@ class MeteoModel : public weather::MeteoModel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MeteoModel( kernel::CoordinateConverter_ABC& converter );
+    explicit MeteoModel( kernel::CoordinateConverter_ABC& converter, const Simulation& simulation, kernel::Controller& controller );
     virtual ~MeteoModel();
+    //@}
+
+    //! @name Accessors
+    //@{
+    virtual const weather::PHY_Lighting& GetLighting() const;
+    virtual const weather::PHY_Meteo* GetGlobalMeteo() const;
     //@}
 
     //! @name Operations
     //@{
-    virtual const weather::PHY_Lighting& GetLighting() const;
     virtual void OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& message );
     virtual void OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWeatherDestruction& message );
     virtual void OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeatherCreation& message );
@@ -71,7 +79,9 @@ private:
     //@{
     T_MeteoList                         meteos_;
     kernel::CoordinateConverter_ABC&    converter_;
+    kernel::Controller&                 controller_;
     std::auto_ptr< weather::PHY_Meteo > pGlobalMeteo_;
+    const Simulation&                   simulation_;
     //@}
 };
 

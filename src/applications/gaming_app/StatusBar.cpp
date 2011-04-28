@@ -52,6 +52,7 @@ StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const Dete
 
     precipitationType_ = new QLabel( parent );
     lightingType_ = new QLabel( parent );
+    windInfos_ = new QLabel( parent );
 
     pSpeed_ = new MyButton( "--/--", parent );
     pSpeed_->setMinimumWidth( 50 );
@@ -74,10 +75,11 @@ StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const Dete
     parent->addWidget( pTick_, 0, true );
     parent->addWidget( precipitationType_, 0, true );
     parent->addWidget( lightingType_, 0, true );
+    parent->addWidget( windInfos_, 0, true );
 
     connect( pLagTimer_, SIGNAL( timeout() ), SLOT( OnLag() ) );
     connect( checkPointTimer_, SIGNAL( timeout() ), SLOT( OnCheckPoint() ) );
-    connect( &picker_, SIGNAL( WeatherPicked( const QString&, const QString& ) ), SLOT( WeatherPicked( const QString&, const QString& ) ) );
+    connect( &picker_, SIGNAL( WeatherPicked( const QString&, const QString&, const QString& ) ), SLOT( WeatherPicked( const QString&, const QString&, const QString& ) ) );
 
     controllers_.Register( *this );
 }
@@ -178,8 +180,9 @@ void StatusBar::OnCheckPoint()
 // Name: StatusBar::WeatherPicked
 // Created: HBD 2010-03-30
 // -----------------------------------------------------------------------------
-void StatusBar::WeatherPicked( const QString& lightingType, const QString& precipitationType )
+void StatusBar::WeatherPicked( const QString& lightingType, const QString& precipitationType, const QString& windInfos )
 {
     precipitationType_->setText( lightingType );
     lightingType_->setText( precipitationType );
+    windInfos_->setText( windInfos );
 }

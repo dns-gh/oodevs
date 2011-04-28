@@ -24,17 +24,25 @@
 
 using namespace weather;
 
+namespace
+{
+    int ConvertSpeedMosToSim( unsigned int timeStep )
+    {
+        return static_cast< int >( 1000. * timeStep / 3600. );
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor )
+PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, unsigned int timeStep )
     : pLighting_       ( &PHY_Lighting::jourSansNuage_ )
     , pPrecipitation_  ( &PHY_Precipitation::none_ )
     , nRefCount_       ( 0 )
-    , conversionFactor_( conversionFactor )
     , id_              ( id )
     , isChanged_       ( false )
+    , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
 {
     unsigned int nVal;
     xis >> xml::start( "cloud-cover" )
@@ -44,19 +52,17 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
         >> xml::end;
     rDensiteCouvertureNuageuse_ = std::min( nVal, 100u ) / 100.;
 
-    unsigned int nAngle;
-    sword::Heading heading;
     xis >> xml::start( "wind" )
             >> xml::attribute( "speed", wind_.rWindSpeed_ )
-            >> xml::attribute( "direction", nAngle )
+            >> xml::attribute( "direction", wind_.eWindAngle_ )
         >> xml::end;
     if( wind_.rWindSpeed_ < 0 )
         xis.error( "meteo: VitesseVent < 0" );
 
-        wind_.rWindSpeed_ = conversionFactor_ * /*MIL_Tools::ConvertSpeedMosToSim*/( wind_.rWindSpeed_ );
-    if( nAngle < 0 || nAngle > 360 )
+    wind_.rWindSpeed_ = conversionFactor_ * wind_.rWindSpeed_;
+    if( wind_.eWindAngle_ < 0 || wind_.eWindAngle_ > 360 )
         xis.error( "meteo: DirectionVent not in [0..360]" );
-    wind_.vWindDirection_ = ReadDirection( heading );
+    wind_.vWindDirection_ = ReadDirection( wind_.eWindAngle_ );
 
     std::string strVal;
     xis >> xml::start( "precipitation" )
@@ -72,13 +78,14 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
 // Name: PHY_Meteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( unsigned int id, const sword::WeatherAttributes& asnMsg, MeteoManager_ABC* listener )
-    : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
-    , pPrecipitation_( &PHY_Precipitation::none_ )
-    , nRefCount_     ( 0 )
-    , listener_      ( listener )
-    , id_            ( id )
-    , isChanged_     ( false )
+PHY_Meteo::PHY_Meteo( unsigned int id, const sword::WeatherAttributes& asnMsg, MeteoManager_ABC* listener, unsigned int timeStep )
+    : pLighting_       ( &PHY_Lighting::jourSansNuage_ )
+    , pPrecipitation_  ( &PHY_Precipitation::none_ )
+    , nRefCount_       ( 0 )
+    , listener_        ( listener )
+    , id_              ( id )
+    , isChanged_       ( false )
+    , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
 {
     Update( asnMsg );
 }
@@ -87,13 +94,14 @@ PHY_Meteo::PHY_Meteo( unsigned int id, const sword::WeatherAttributes& asnMsg, M
 // Name: PHY_Meteo constructor
 // Created: JSR 2010-04-12
 // -----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( unsigned int id, const sword::MissionParameters& asnMsg, MeteoManager_ABC* listener )
-    : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
-    , pPrecipitation_( &PHY_Precipitation::none_ )
-    , nRefCount_     ( 0 )
-    , listener_      ( listener )
-    , id_            ( id )
-    , isChanged_     ( false )
+PHY_Meteo::PHY_Meteo( unsigned int id, const sword::MissionParameters& asnMsg, MeteoManager_ABC* listener, unsigned int timeStep )
+    : pLighting_       ( &PHY_Lighting::jourSansNuage_ )
+    , pPrecipitation_  ( &PHY_Precipitation::none_ )
+    , nRefCount_       ( 0 )
+    , listener_        ( listener )
+    , id_              ( id )
+    , isChanged_       ( false )
+    , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
 {
     Update( asnMsg );
 }
@@ -102,13 +110,14 @@ PHY_Meteo::PHY_Meteo( unsigned int id, const sword::MissionParameters& asnMsg, M
 // Name: PHY_Meteo constructor
 // Created: HBD 2010-04-06
 // -----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitation )
-    : pLighting_     ( &light )
-    , pPrecipitation_( &precipitation )
-    , nRefCount_     ( 0 )
-    , listener_      ( 0 )
-    , id_            ( 0 )
-    , isChanged_     ( false )
+PHY_Meteo::PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitation, unsigned int timeStep )
+    : pLighting_       ( &light )
+    , pPrecipitation_  ( &precipitation )
+    , nRefCount_       ( 0 )
+    , listener_        ( 0 )
+    , id_              ( 0 )
+    , isChanged_       ( false )
+    , conversionFactor_( ConvertSpeedMosToSim( timeStep ) )
 {
     // NOTHING
 }
@@ -143,7 +152,8 @@ void PHY_Meteo::Update( const sword::WeatherAttributes& msg )
     wind_.rWindSpeed_ = conversionFactor_ * msg.wind_speed();
 
     // Direction du vent
-    wind_.vWindDirection_ = weather::ReadDirection( msg.wind_direction() );
+    wind_.eWindAngle_ = msg.wind_direction().heading();
+    wind_.vWindDirection_ = weather::ReadDirection( wind_.eWindAngle_ );
 
     // Précipitation
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( msg.precipitation() );
@@ -181,7 +191,8 @@ void PHY_Meteo::Update( const sword::MissionParameters& msg )
     const sword::MissionParameter& windDirection = msg.elem( 2 );
     if( windDirection.null_value() || !windDirection.value().Get(0).has_heading() )
         throw std::exception( "Meteo : bad attribute for windDirection" );
-    wind_.vWindDirection_ = weather::ReadDirection( windDirection.value().Get(0).heading() );
+    wind_.eWindAngle_ = windDirection.value().Get(0).heading().heading();
+    wind_.vWindDirection_ = weather::ReadDirection( wind_.eWindAngle_ );
 
     // Plancher de couverture nuageuse
     const sword::MissionParameter& cloudFloor = msg.elem( 3 );

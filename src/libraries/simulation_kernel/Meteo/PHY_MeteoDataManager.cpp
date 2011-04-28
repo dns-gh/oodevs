@@ -73,7 +73,7 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_ = new PHY_GlobalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase(), static_cast< int >( MIL_Tools::ConvertSpeedMosToSim( 1. ) ) );
+    pGlobalMeteo_ = new PHY_GlobalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase() );
     pGlobalMeteo_->IncRef();
     pGlobalMeteo_->SetListener( this );
     RegisterMeteo( *pGlobalMeteo_ );
@@ -98,7 +98,7 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 {
-    weather::PHY_Meteo* pMeteo = new PHY_LocalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase(), static_cast< int >( MIL_Tools::ConvertSpeedMosToSim( 1. ) ) );
+    weather::PHY_Meteo* pMeteo = new PHY_LocalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase() );
     RegisterMeteo( *pMeteo );
 }
 

@@ -20,8 +20,8 @@ using namespace weather;
 // Name: MeteoData constructor
 // Created: HBD 2010-03-26
 // -----------------------------------------------------------------------------
-MeteoData::MeteoData( unsigned int id, const geometry::Point2f& upLeft, const geometry::Point2f& downRight, const sword::WeatherAttributes& attributes, MeteoModel_ABC& model, kernel::CoordinateConverter_ABC& converter )
-    : PHY_Meteo( id, attributes, &model )
+MeteoData::MeteoData( unsigned int id, const geometry::Point2f& upLeft, const geometry::Point2f& downRight, const sword::WeatherAttributes& attributes, MeteoModel_ABC& model, kernel::CoordinateConverter_ABC& converter, unsigned int timeStep )
+    : PHY_Meteo( id, attributes, &model, timeStep )
     , converter_( converter )
     , rect_     ( upLeft.X(), downRight.Y(), downRight.X(), upLeft.Y() )
 {
@@ -55,7 +55,7 @@ void MeteoData::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     client::ControlLocalWeatherCreation msg;
     sword::WeatherAttributes* att = msg().mutable_attributes();
     msg().mutable_weather()->set_id( id_ );
-    att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
+    att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / PHY_Meteo::conversionFactor_ ) );
     att->mutable_wind_direction()->set_heading( 0 );
     att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
