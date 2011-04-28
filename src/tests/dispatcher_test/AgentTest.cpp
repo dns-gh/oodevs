@@ -184,7 +184,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_radio_emitter_disabled( true );
                 message.set_radio_receiver_disabled( true );
                 message.set_radar_active( true );
-//            message.mutable_pions_transportes();
+                message.mutable_transported_units();
                 message.mutable_transporting_unit()->set_id( 0 );
                 message.set_force_ratio( sword::ForceRatio::favorable );
                 message.set_meeting_engagement( sword::pinned_down );
