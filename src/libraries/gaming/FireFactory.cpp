@@ -53,7 +53,7 @@ Fire_ABC* FireFactory::CreateFire( const sword::StartUnitFire& message, unsigned
 // Name: FireFactory::CreateFire
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-Fire_ABC* FireFactory::CreateFire( const sword::StartCrowdFire& message, unsigned long /*id*/ ) // FIXME
+Fire_ABC* FireFactory::CreateFire( const sword::StartCrowdFire& message, unsigned long /*id*/ )
 {
     return new PopulationFire( message, model_.agents_ );
 }

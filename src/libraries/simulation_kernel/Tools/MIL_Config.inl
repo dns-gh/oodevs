@@ -212,13 +212,13 @@ unsigned int MIL_Config::GetTimeFactor() const
 inline
 unsigned int MIL_Config::ReadGCParameter_setPause() const
 {
-	return setpause_;
+    return setpause_;
 }
 
 inline
 unsigned int MIL_Config::ReadGCParameter_setStepMul() const
 {
-	return setstepmul_;
+    return setstepmul_;
 }
 
 

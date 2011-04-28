@@ -21,7 +21,6 @@ double MIL_Tools::ConvertSpeedMosToSim( double v )
     return v * rConvertionFactor;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MIL_Tools::ConvertSpeedSimToMos
 // Created: JVT 02-08-08
@@ -30,7 +29,6 @@ inline
 double MIL_Tools::ConvertSpeedSimToMos( double v )
 {
     static double rConvertionFactor = 3600. / MIL_AgentServer::GetWorkspace().GetTimeStepDuration() / 1000.;
-
     // conversion des vitesses de pixel/deltaT en Km/H
     return v * rConvertionFactor;
 }
