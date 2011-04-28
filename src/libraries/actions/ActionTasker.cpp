@@ -58,5 +58,6 @@ bool ActionTasker::IsSimulation() const
 // -----------------------------------------------------------------------------
 void ActionTasker::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "target", tasker_ ? tasker_->GetId() : 0 );
+    if( tasker_ )
+        xos << xml::attribute( "target", tasker_->GetId() );
 }

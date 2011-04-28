@@ -61,6 +61,7 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters&
         throw std::exception( "Meteo : bad attribute for Location" );
     NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 0 ), upLeft_    );
     NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 1 ), downRight_ );
+    isChanged_ = false;
 }
 
 
