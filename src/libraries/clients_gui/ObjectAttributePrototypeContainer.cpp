@@ -64,6 +64,7 @@ void ObjectAttributePrototypeContainer::Load( const kernel::ObjectType& type )
         std::pair< IT_AttributesPrototypes, bool > result = attributes_.insert( std::make_pair( type.GetType(), new T_AttributeContainer() ) );
         for( kernel::ObjectType::T_Capacities::const_iterator it = type.CapacitiesBegin(); result.second && it != type.CapacitiesEnd(); ++it )
             factory_.Create( it->first, *it->second, *result.first->second, parent_ );
+        factory_.FinalizeCreate();
     }
 }
 

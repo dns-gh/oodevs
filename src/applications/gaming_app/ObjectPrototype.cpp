@@ -93,21 +93,6 @@ namespace
         container.push_back( new LogisticPrototype( parent, controllers, attributesList ) );
     }
 
-    void PropagationAttribute( xml::xistream& /*xis*/, T_AttributeContainer& /*container*/, QWidget* /*parent*/, const kernel::ObjectTypes& /*resolver*/, ParameterList*& /*attributesList*/ )
-    {
-/*        std::string model( xis.attribute< std::string >( "model" ) );
-        if( model == "input" )
-        {
-            // NOT ALLOWED DURING GAMING SESSION
-            // container.push_back( new InputPropagationPrototype( parent, resolver, message ) );
-        }*/
-    }
-
-    void BurnAttribute( xml::xistream& /*xis*/, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
-    {
-        container.push_back( new FirePrototype( parent, resolver, attributesList ) );
-    }
-
     void StockAttribute( xml::xistream& /*xis*/, T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         container.push_back( new StockPrototype( parent, resolver, attributesList ) );
@@ -138,6 +123,45 @@ namespace
         }
     };
 
+    class FinalizableBuilders
+    {
+    public:
+        FinalizableBuilders()
+        {
+            Reset();
+        }
+
+        void AddBurn( T_AttributeContainer& container, QWidget* parent, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
+        {
+            pFirePrototype_ = new FirePrototype( parent, resolver, attributesList );
+            container.push_back( pFirePrototype_ );
+        }
+
+        void AddPropagation( xml::xistream& xis )
+        {
+            const std::string model( xis.attribute< std::string >( "model", std::string() ) );
+            if( model == "fire" )
+                bHasFirePropagation_ = true;
+        }
+
+        void Finalize()
+        {
+            if( pFirePrototype_ )
+                pFirePrototype_->SetHasFirePropagation( bHasFirePropagation_ );
+            Reset();
+        }
+
+    private:
+        void Reset()
+        {
+            pFirePrototype_ = 0;
+            bHasFirePropagation_ = false;
+
+        }
+        FirePrototype* pFirePrototype_;
+        bool bHasFirePropagation_;
+    };
+
     ObjectAttributePrototypeFactory_ABC* FactoryMaker( kernel::Controllers& controllers, const kernel::ObjectTypes& resolver, ParameterList*& attributesList )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
@@ -150,12 +174,16 @@ namespace
         factory->Register( "flood"                     , boost::bind( &Capacity< FloodPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "logistic"                  , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( attributesList ) ) );
         factory->Register( "medical"                   , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
-        factory->Register( "propagation"               , boost::bind( &PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "contamination"             , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
-        factory->Register( "burn"                      , boost::bind( &BurnAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "resources"                 , boost::bind( &ResourceNetworkAttribute, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "stock"                     , boost::bind( &StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
+
+        boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders( new FinalizableBuilders() );
+        factory->Register( "burn"                      , boost::bind( &FinalizableBuilders::AddBurn, pFinalizableBuilders, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
+        factory->Register( "propagation"               , boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1 ) );
+        factory->RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders ) );
+
         return factory;
     }
 }

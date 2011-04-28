@@ -24,6 +24,7 @@ using namespace gui;
 FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass, std::string >& resolver )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::FirePrototype_ABC", "Fire parameters" ) )
     , resolver_( resolver )
+    , hasFirePropagation_( false )
 {
     new QLabel( tools::translate( "gui::FirePrototype_ABC", "Fire Class:" ), this );
     fireClass_ = new ValuedComboBox< const kernel::FireClass* >( this );
@@ -44,6 +45,19 @@ FirePrototype_ABC::~FirePrototype_ABC()
 }
 
 // -----------------------------------------------------------------------------
+// Name: FirePrototype_ABC::SetHasFirePropagation
+// Created: BCI 2011-04-27
+// -----------------------------------------------------------------------------
+void FirePrototype_ABC::SetHasFirePropagation( bool b)
+{
+    if( hasFirePropagation_ != b )
+    {
+        FillTypes();
+        hasFirePropagation_ = b;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: FirePrototype_ABC::FillTypes
 // Created: JCR 2008-06-30
 // -----------------------------------------------------------------------------
@@ -54,7 +68,8 @@ void FirePrototype_ABC::FillTypes()
     while( it.HasMoreElements() )
     {
         const kernel::FireClass& element = it.NextElement();
-        fireClass_->AddItem( element.GetName(), &element );
+        if( hasFirePropagation_ == element.CanPropagate() )
+            fireClass_->AddItem( element.GetName(), &element );
     }
 }
 

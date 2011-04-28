@@ -50,3 +50,22 @@ void ObjectAttributePrototypeFactory::Create( const std::string& capacity, xml::
     if( it != callbacks_.end() )
         it->second( xis, container, parent );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributePrototypeFactory::RegisterFinalizeCreate
+// Created: BCI 2011-04-27
+// -----------------------------------------------------------------------------
+void ObjectAttributePrototypeFactory::RegisterFinalizeCreate( const FinalizePrototype_CallBack& callback )
+{
+    finalizePrototypeCallbacks_.push_back( callback );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributePrototypeFactory::FinalizeCreate
+// Created: BCI 2011-04-27
+// -----------------------------------------------------------------------------
+void ObjectAttributePrototypeFactory::FinalizeCreate() const
+{
+    for( FinalizePrototype_CallBacks::const_iterator it = finalizePrototypeCallbacks_.begin(); it != finalizePrototypeCallbacks_.end(); ++it )
+        (*it)();
+}

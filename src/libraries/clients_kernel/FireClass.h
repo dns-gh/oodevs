@@ -33,12 +33,14 @@ public:
     //! @name Operations
     //@{
     std::string GetName() const;
+    bool CanPropagate() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     std::string name_;
+    bool canPropagate_;
     //@}
 };
 

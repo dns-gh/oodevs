@@ -36,6 +36,8 @@ public:
     //! @name Types
     //@{
     typedef boost::function3< void, xml::xistream&, T_AttributeContainer&, QWidget* > T_CallBack;
+    typedef boost::function< void() >                                                 FinalizePrototype_CallBack;
+    typedef std::vector< FinalizePrototype_CallBack >                                 FinalizePrototype_CallBacks;
     //@}
 
 public:
@@ -48,7 +50,9 @@ public:
     //! @name Methods
     //@{
     void Register( const std::string& capacity, const T_CallBack& callback );
+    void RegisterFinalizeCreate( const FinalizePrototype_CallBack& callback );
     virtual void Create( const std::string& capacity, xml::xistream& xis, T_AttributeContainer& resolver, QWidget* parent ) const;
+    virtual void FinalizeCreate() const;
     //@}
 
 private:
@@ -61,6 +65,7 @@ private:
     //! @name Member data
     //@{
     T_CallBacks callbacks_;
+    FinalizePrototype_CallBacks finalizePrototypeCallbacks_;
     //@}
 };
 

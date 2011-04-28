@@ -44,9 +44,10 @@ public:
     virtual ~ObjectAttributePrototypeFactory_ABC() {}
     //@}
 
-    //! @name Registrer
+    //! @name Operations
     //@{
     virtual void Create( const std::string& capacity, xml::xistream& xis, T_AttributeContainer& container, QWidget* parent ) const = 0;
+    virtual void FinalizeCreate() const = 0;
     //@}
 
 private:

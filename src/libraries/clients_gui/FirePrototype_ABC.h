@@ -39,6 +39,7 @@ public:
 
     //! @name Operations
     //@{
+    void SetHasFirePropagation( bool );
     virtual bool CheckValidity() const;
     //@}
 
@@ -54,6 +55,7 @@ protected:
     const tools::Resolver_ABC< kernel::FireClass, std::string >& resolver_;
     ValuedComboBox< const kernel::FireClass* >* fireClass_;
     QSpinBox* maxCombustionEnergy_;
+    bool hasFirePropagation_;
     //@}
 };
 

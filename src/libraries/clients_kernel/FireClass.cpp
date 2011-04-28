@@ -20,6 +20,7 @@ using namespace kernel;
 FireClass::FireClass( xml::xistream& input )
 {
     input >> xml::attribute( "name", name_ );
+    canPropagate_ = input.has_child( "surfaces" );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,4 +39,13 @@ FireClass::~FireClass()
 std::string FireClass::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireClass::CanPropagate
+// Created: BCI 2011-04-27
+// -----------------------------------------------------------------------------
+bool FireClass::CanPropagate() const
+{
+    return canPropagate_;
 }
