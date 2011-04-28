@@ -26,6 +26,9 @@ SectionGroup "Models" s_mod
         !insertmacro OT.AddPhysicalModels "ada" "scipio-1.9.2" "s_phymod2"
     !else if "${EXO_PACK}" == "security-worldwide"
         !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phymod1"
+        !insertmacro OT.AddPhysicalModels "ada" "security-en" "s_phymod3"
+        !insertmacro OT.AddPhysicalModels "ada" "security-fr" "s_phymod3"
+    !else if "${EXO_PACK}" == "security-masa"
         !insertmacro OT.AddPhysicalModels "ada" "security-fr" "s_phymod3"
     !endif
 
@@ -130,10 +133,10 @@ SectionGroup "Exercises" s_exo
  
      !else if "${EXO_PACK}" == "security-worldwide"
         !insertmacro OT.AddExercise "bruxelles" "bruxelles" "s_exo1"
-        !insertmacro OT.AddExercise "lehavre" "lehavre" "s_exo2"        
+        !insertmacro OT.AddExercise "CODAH_JANUS" "lehavre_4.2.0" "s_exo2"        
      !else if "${EXO_PACK}" == "security-masa"        
         !insertmacro OT.AddExercise "bruxelles" "bruxelles" "s_exo1"
-        !insertmacro OT.AddExercise "lehavre" "lehavre" "s_exo2"        
+        !insertmacro OT.AddExercise "CODAH_JANUS" "lehavre_4.2.0" "s_exo2"        
         !insertmacro OT.AddExercise "montereycross" "montereycross" "s_exo3"
     !endif
 SectionGroupEnd
@@ -165,24 +168,12 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "PortoV3Lite" "s_ter9"      
      !else if "${EXO_PACK}" == "security-worldwide"   
         !insertmacro OT.AddTerrain "bruxelles" "s_ter1"
-        !insertmacro OT.AddTerrain "lehavre" "s_ter2"  
+        !insertmacro OT.AddTerrain "lehavre_4.2.0" "s_ter2"  
       !else if "${EXO_PACK}" == "security-masa"             
         !insertmacro OT.AddTerrain "bruxelles" "s_ter1"
-        !insertmacro OT.AddTerrain "lehavre" "s_ter2"  
+        !insertmacro OT.AddTerrain "lehavre_4.2.0" "s_ter2"  
         !insertmacro OT.AddTerrain "montereycross" "s_ter3"
     !endif
-SectionGroupEnd
-
-; ------------------------------------------------------------------------------
-SectionGroup "Populations" s_pop
-    !if "${EXO_PACK}" == "security-worldwide"   
-        !insertmacro OT.AddPopulation "bruxelles" "s_pop1"
-        !insertmacro OT.AddPopulation "lehavre" "s_pop2"
-    !else if "${EXO_PACK}" == "security-masa"             
-        !insertmacro OT.AddPopulation "bruxelles" "s_pop1"
-        !insertmacro OT.AddPopulation "lehavre" "s_pop2"
-        !insertmacro OT.AddPopulation "montereycross" "s_pop3"
-    !endif    
 SectionGroupEnd
 
 ; ------------------------------------------------------------------------------
