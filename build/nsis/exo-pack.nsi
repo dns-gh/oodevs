@@ -26,7 +26,6 @@ SectionGroup "Models" s_mod
         !insertmacro OT.AddPhysicalModels "ada" "scipio-1.9.2" "s_phymod2"
     !else if "${EXO_PACK}" == "security-worldwide"
         !insertmacro OT.AddPhysicalModels "ada" "worldwide" "s_phymod1"
-        !insertmacro OT.AddPhysicalModels "ada" "security-en" "s_phymod3"
         !insertmacro OT.AddPhysicalModels "ada" "security-fr" "s_phymod3"
     !else if "${EXO_PACK}" == "security-masa"
         !insertmacro OT.AddPhysicalModels "ada" "security-fr" "s_phymod3"
