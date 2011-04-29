@@ -101,23 +101,26 @@ ExerciseProperties::~ExerciseProperties()
 // -----------------------------------------------------------------------------
 void ExerciseProperties::Update()
 {
-    terrainList_->clear();
-    terrainList_->insertItem( tools::translate( "ExerciseProperties", "Terrain:" ) );
-    terrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
-
-    modelList_->clear();
-    modelList_->insertItem( tools::translate( "ExerciseProperties", "Model:" ) );
-    const QStringList decisionalModels = frontend::commands::ListModels( config_ );
-    int index = 1;
-    for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+    if( terrainList_ )
     {
-        const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
-        for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
-            modelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
+        terrainList_->clear();
+        terrainList_->insertItem( tools::translate( "ExerciseProperties", "Terrain:" ) );
+        terrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
+
+        modelList_->clear();
+        modelList_->insertItem( tools::translate( "ExerciseProperties", "Model:" ) );
+        const QStringList decisionalModels = frontend::commands::ListModels( config_ );
+        int index = 1;
+        for( QStringList::const_iterator it = decisionalModels.begin(); it != decisionalModels.end(); ++it )
+        {
+            const QStringList physicalModels = frontend::commands::ListPhysicalModels( config_, (*it).ascii() );
+            for( QStringList::const_iterator itP = physicalModels.begin(); itP != physicalModels.end(); ++itP, ++index )
+                modelList_->insertItem( QString( "%1/%2" ).arg( *it ).arg( *itP ), index );
+        }
+        if( modelList_->count() == 2 )
+            modelList_->setCurrentItem( 1 );
+        modelList_->setShown( modelList_->count() > 2 );
     }
-    if( modelList_->count() == 2 )
-        modelList_->setCurrentItem( 1 );
-    modelList_->setShown( modelList_->count() > 2 );
 }
 
 // -----------------------------------------------------------------------------

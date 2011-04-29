@@ -220,7 +220,6 @@ void ExerciseList::SelectProfile( const frontend::Profile& profile )
 // -----------------------------------------------------------------------------
 void ExerciseList::Clear()
 {
-    properties_->Update();
     QApplication::postEvent( this, new QCustomEvent( ::clearEvent ) );
 }
 
@@ -234,6 +233,7 @@ void ExerciseList::customEvent( QCustomEvent* e )
     {
         profiles_->clear();
         exercises_->clear();
+        properties_->Update();
     }
 }
 
