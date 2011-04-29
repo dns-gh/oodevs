@@ -129,6 +129,7 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "exercisesVA\Poseidon VA Missions Communes" "Porto" "s_exo23"
         !insertmacro OT.AddExercise "exercisesVA\Poseidon VA pions" "Porto" "s_exo24"
         !insertmacro OT.AddExercise "exercisesVA\Poseidon VA Automates" "Porto" "s_exo25"
+        !insertmacro OT.AddExercise "AToutFaire" "PortoV3" "s_exo26"
  
      !else if "${EXO_PACK}" == "security-worldwide"
         !insertmacro OT.AddExercise "bruxelles" "bruxelles" "s_exo1"
@@ -165,6 +166,7 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "Drosoville" "s_ter7"
         !insertmacro OT.AddTerrain "Mailly" "s_ter8"
         !insertmacro OT.AddTerrain "PortoV3Lite" "s_ter9"      
+        !insertmacro OT.AddTerrain "PortoV3" "s_ter10"
      !else if "${EXO_PACK}" == "security-worldwide"   
         !insertmacro OT.AddTerrain "bruxelles" "s_ter1"
         !insertmacro OT.AddTerrain "lehavre_4.2.0" "s_ter2"  
@@ -293,6 +295,7 @@ Function .onSelChange
         !insertmacro OT.CheckDependency "s_exo23" "s_ter9"
         !insertmacro OT.CheckDependency "s_exo24" "s_ter9"
         !insertmacro OT.CheckDependency "s_exo25" "s_ter9"
+        !insertmacro OT.CheckDependency "s_exo26" "s_ter10"
      !else if "${EXO_PACK}" == "security-worldwide"
         !insertmacro OT.CheckDependency "s_exo1" "s_ter1"
         !insertmacro OT.CheckDependency "s_ter1" "s_pop1"    
