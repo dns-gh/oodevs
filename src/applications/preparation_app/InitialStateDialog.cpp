@@ -27,7 +27,7 @@ InitialStateDialog::InitialStateDialog( QWidget* parent, kernel::Controllers& co
     : QDialog( parent, "InitialStateDialog_Dialog", true )
     , controllers_( controllers )
     , staticModel_( staticModel )
-    , selected_   ( 0 )
+    , selected_   ( controllers )
 {
     // Init dialog
     setCaption( tools::translate( "InitialStateDialog", "Initial state" ) );
@@ -95,7 +95,7 @@ void InitialStateDialog::Validate()
     if( !selected_ )
         return;
     accept();
-    InitialState& extension = selected_->Get< InitialState >();
+    InitialState& extension = selected_.ConstCast()->Get< InitialState >();
     for( unsigned int i = 0; i < tabs_.size(); ++i )
         tabs_[ i ]->WriteExtension( extension );
     controllers_.controller_.Update( *selected_ );
@@ -110,7 +110,7 @@ void InitialStateDialog::Reset()
 {
     if( !selected_ )
         return;
-    InitialState& extension = selected_->Get< InitialState >();
+    InitialState& extension = selected_.ConstCast()->Get< InitialState >();
     extension.Reset();
     for( unsigned int i = 0; i < tabs_.size(); ++i )
         tabs_[ i ]->ReadExtension( extension );

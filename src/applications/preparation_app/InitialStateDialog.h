@@ -70,7 +70,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const StaticModel&   staticModel_;
-    kernel::Agent_ABC *  selected_;
+    kernel::SafePointer< kernel::Agent_ABC > selected_;
     std::vector< boost::shared_ptr< InitialStateTable_ABC > > tabs_;
     //@}
 };

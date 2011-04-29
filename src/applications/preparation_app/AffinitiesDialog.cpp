@@ -29,6 +29,7 @@ AffinitiesDialog::AffinitiesDialog( QWidget* parent, kernel::Controllers& contro
     : QDialog( parent, "AffinitiesDialog" )
     , controllers_( controllers )
     , pGrid_      ( 0 )
+    , selected_   ( controllers )
 {
     setCaption( tools::translate( "AffinitiesDialog", "Change affinities" ) );
     resize( 320, 150 );
@@ -95,7 +96,7 @@ void AffinitiesDialog::Show()
     if( !selected_ )
         return;
     Clear();
-    selected_->Get< Affinities >().Fill( affinities_ );
+    selected_.ConstCast()->Get< Affinities >().Fill( affinities_ );
     BOOST_FOREACH( const T_Teams::value_type& team, teams_ )
     {
         QLabel* pLabel = new QLabel( team.second.c_str(), pGrid_ );
@@ -132,10 +133,10 @@ void AffinitiesDialog::Validate()
     if( !selected_ )
         return;
     accept();
-    selected_->Get< Affinities >().Clear();
+    selected_.ConstCast()->Get< Affinities >().Clear();
     if( pCheckBox_->isChecked () )
         BOOST_FOREACH( const T_QAffinities::value_type& content, spinboxs_ )
-            selected_->Get< Affinities >().Add( content.get< 0 >(), content.get< 2 >()->value() );
+            selected_.ConstCast()->Get< Affinities >().Add( content.get< 0 >(), content.get< 2 >()->value() );
     controllers_.controller_.Update( *selected_ );
     selected_ = 0;
 }

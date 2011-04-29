@@ -12,6 +12,7 @@
 
 #include "Preparation/Types.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 #include <map>
 #include <vector>
@@ -87,7 +88,7 @@ private:
 protected:
     //! @name Member data
     //@{
-    kernel::Entity_ABC* selected_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 
 private:
