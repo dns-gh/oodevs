@@ -24,6 +24,8 @@ using namespace sword;
 
 namespace
 {
+    static unsigned int currentTick_ = 1;
+
     SimToClient OperationalState( unsigned opstate, unsigned long id )
     {
         SimToClient result;
@@ -36,6 +38,7 @@ namespace
     {
         SimToClient result;
         ControlBeginTick beginTick;
+        beginTick.set_current_tick( currentTick_++ );
         *result.mutable_message()->mutable_control_begin_tick() = beginTick ;
         return result;
     }
@@ -115,7 +118,7 @@ namespace
         Fixture()
             : facade( publisher, 42, model )
         {
-            // NOTHING
+            currentTick_ = 1;
         }
         MockClientPublisher publisher;
         MockStaticModel model;

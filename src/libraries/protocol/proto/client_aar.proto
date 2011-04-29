@@ -27,8 +27,8 @@ message PlotRequest {
         @brief Defines the request time range.
     */
     message TimeRange {
-        required uint32 first_tick = 1; //!< The first tick
-        required uint32 duration   = 2;  //!< The time range duration (in ticks)
+        required uint32 begin_tick = 1; //!< The first tick of the time range request
+        required uint32 end_tick   = 2; //!< The last tick of the time range request (must be >= begin_tick)
     }
     required uint32    identifier = 1;  //!< An identifier for the request
     required string    request    = 2;  //!< The request

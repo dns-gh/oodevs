@@ -13,7 +13,7 @@
 #include <xeumeuleu/xml.hpp>
 #include "dispatcher/MessageLoader_ABC.h"
 #pragma warning( push )
-#pragma warning( disable : 4512 4996 )
+#pragma warning( disable : 4996 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
@@ -24,8 +24,10 @@
 Task::Task( unsigned int firstTick, unsigned int lastTick )
     : firstTick_    ( firstTick )
     , lastTick_     ( lastTick )
-    , skippedFrames_( 0 )
-    , frameEnded_   ( true )
+    , firstTickRead_( 0 )
+    , hasFirstTick_ ( false )
+    , currentTick_  ( 0 )
+    , insideFrame_  ( false )
 {
     // NOTHING
 }
@@ -146,25 +148,40 @@ void Task::SetResult( boost::shared_ptr< Result_ABC > output )
 // -----------------------------------------------------------------------------
 void Task::Receive( const sword::SimToClient& wrapper )
 {
-    // $$$$ AGE 2007-10-10: bDummies :
-    // $$$$ AGE 2007-10-10: le LoadKeyFrame génère un BeginTick mais pas de EndTick()...
-
     try
     {
         if( wrapper.message().has_control_begin_tick() )
         {
-            if( ! frameEnded_ )
-                composite_.EndTick();
-            composite_.BeginTick();
-            frameEnded_ = false;
+             // $$$$ JSR 2011-04-29: On envoie un BeginTick si on n'en a pas encore eu, si on n'est pas sur la première keyframe ou si on a changé de tick courant.
+            unsigned int tick = wrapper.message().control_begin_tick().current_tick();
+            if( !hasFirstTick_ || ( currentTick_ != firstTickRead_ && tick != currentTick_ ) )
+            {
+                // $$$$ JSR 2011-04-29: On envoie un EndTick avant le BeginTick si on était pendant un tick.
+                if( insideFrame_ )
+                    composite_.EndTick();
+                composite_.BeginTick();
+                hasFirstTick_ = true;
+            }
+            currentTick_ = tick;
+            insideFrame_ = true;
         }
         else if( wrapper.message().has_control_end_tick() )
         {
             composite_.EndTick();
-            frameEnded_ = true;
+            insideFrame_ = false;
         }
         else
+        {
+            // $$$$ JSR 2011-04-29: On envoie un BeginTick si on n'en a pas encore eu.
+            if( !hasFirstTick_ )
+            {
+                currentTick_ = firstTickRead_;
+                composite_.BeginTick();
+                hasFirstTick_ = true;
+                insideFrame_ = true;
+            }
             composite_.Receive( wrapper );
+        }
     }
     catch( std::exception& )
     {
@@ -179,7 +196,7 @@ void Task::Receive( const sword::SimToClient& wrapper )
 void Task::Commit()
 {
     if( result_ )
-        result_->Commit( skippedFrames_, firstTick_ );
+        result_->Commit( firstTick_ - firstTickRead_, firstTick_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,11 +205,12 @@ void Task::Commit()
 // -----------------------------------------------------------------------------
 void Task::Process( dispatcher::MessageLoader_ABC& loader )
 {
-    unsigned int keyFrame = loader.FindKeyFrame( firstTick_ );
-    skippedFrames_ = firstTick_ - keyFrame;
-    const unsigned int ticks = std::min( lastTick_, loader.GetTickNumber() );
-    loader.LoadKeyFrame( keyFrame, *this );
-    for( unsigned int i = keyFrame; i < ticks - 1; ++i )
+    if( firstTick_ > lastTick_ )
+        return;
+    firstTickRead_ = loader.FindKeyFrame( firstTick_ );
+    const unsigned int ticks = std::min( lastTick_, loader.GetTickNumber() - 1 ) + 1;
+    loader.LoadKeyFrame( firstTickRead_, *this );
+    for( unsigned int i = firstTickRead_; i < ticks - 1; ++i )
         loader.LoadFrame( i, *this );
     loader.LoadFrame( ticks - 1, *this, boost::bind( &Task::Commit, shared_from_this() ) );
 }

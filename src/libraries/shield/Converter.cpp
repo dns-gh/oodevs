@@ -399,8 +399,8 @@ void Converter::ReceiveClientToAar( const std::string& from, const MsgsClientToA
             out.mutable_message()->mutable_plot_request()->set_request( msg.message().plot_request().request() );
             if( msg.message().plot_request().has_time_range() )
             {
-                out.mutable_message()->mutable_plot_request()->mutable_time_range()->set_first_tick( msg.message().plot_request().time_range().first_tick() );
-                out.mutable_message()->mutable_plot_request()->mutable_time_range()->set_duration( msg.message().plot_request().time_range().duration() );
+                out.mutable_message()->mutable_plot_request()->mutable_time_range()->set_begin_tick( msg.message().plot_request().time_range().begin_tick() );
+                out.mutable_message()->mutable_plot_request()->mutable_time_range()->set_end_tick( msg.message().plot_request().time_range().end_tick() );
             }
             server_.Send( out );
             return;

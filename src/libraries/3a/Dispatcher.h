@@ -12,11 +12,7 @@
 
 #include "ModelFunction_ABC.h"
 #include "ValueHandler_ABC.h"
-#pragma warning( push )
-#pragma warning( disable : 4702 )
 #include <map>
-#include <algorithm>
-#pragma warning( pop )
 
 // =============================================================================
 /** @class  Dispatcher
@@ -28,18 +24,12 @@ template< typename KeyValue, typename FunctionFactory >
 class Dispatcher : public ModelFunction_ABC
 {
 public:
-    //! @name Types
-    //@{
-    typedef typename KeyValue::Type K;
-    //@}
-
-public:
     //! @name Constructors/Destructor
     //@{
     explicit Dispatcher( const FunctionFactory& factory = FunctionFactory(), const KeyValue& keyValue = KeyValue() )
-                : factory_( factory )
-                , keyValue_( keyValue )
-                , frameWasEnded_( false )
+                : factory_    ( factory )
+                , keyValue_   ( keyValue )
+                , insideFrame_( false )
     {
         // NOTHING
     }
@@ -53,9 +43,7 @@ public:
     //@{
     virtual void BeginTick()
     {
-        if( ! frameWasEnded_ )
-            EndTick();
-        frameWasEnded_ = false;
+        insideFrame_ = true;
         for( IT_Functions it = dispatched_.begin(); it != dispatched_.end(); ++it )
             it->second->BeginTick();
     }
@@ -66,35 +54,46 @@ public:
     };
     virtual void EndTick()
     {
-        frameWasEnded_ = true;
+        insideFrame_ = false;
         for( IT_Functions it = dispatched_.begin(); it != dispatched_.end(); ++it )
             it->second->EndTick();
     }
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef typename KeyValue::Type K;
+    //@}
+
     //! @name Helpers
     //@{
     struct Handler : public ValueHandler_ABC< K >
+                   , private boost::noncopyable
     {
         Handler( Dispatcher& that, const sword::SimToClient& message )
-            : that_( &that ), message_( &message ) {}
+            : that_   ( that )
+            , message_( message )
+        {
+            // NOTHING
+        }
         virtual void BeginTick() {}
         virtual void Handle( const K& value )
         {
-            boost::shared_ptr< ModelFunction_ABC >& function = that_->dispatched_[ value ];
-            if( ! function )
+            boost::shared_ptr< ModelFunction_ABC >& function = that_.dispatched_[ value ];
+            if( !function )
             {
-                function = that_->factory_( value );
-                // BeginTick should not be called if we are between two ticks, but only if a tick has already begun.
-                if( !that_->frameWasEnded_ )
+                function = that_.factory_( value );
+                // We call BeginTick if a frame has already begun. Otherwise, it will be done in the next Dispatcher::BeginTick.
+                if( that_.insideFrame_ )
                     function->BeginTick();
             }
-            function->Receive( *message_ );
+            function->Receive( message_ );
         }
         virtual void EndTick() {}
-        Dispatcher* that_;
-        const sword::SimToClient* message_;
+
+        Dispatcher& that_;
+        const sword::SimToClient& message_;
     };
     //@}
 
@@ -111,7 +110,7 @@ private:
     FunctionFactory factory_;
     KeyValue        keyValue_;
     T_Functions     dispatched_;
-    bool            frameWasEnded_;
+    bool            insideFrame_;
     //@}
 };
 

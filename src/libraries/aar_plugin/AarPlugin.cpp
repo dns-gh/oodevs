@@ -113,8 +113,8 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const swor
         unsigned int lastTick = std::numeric_limits< unsigned int >::max();
         if( request.has_time_range() )
         {
-            firstTick = request.time_range().first_tick();
-            lastTick = firstTick + request.time_range().duration();
+            firstTick = request.time_range().begin_tick();
+            lastTick = request.time_range().end_tick();
         }
         xml::xistringstream xis( request.request() );
         AarFacade factory( resolver_.GetPublisher( client ), request.identifier(), *model_ );

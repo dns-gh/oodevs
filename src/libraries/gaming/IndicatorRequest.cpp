@@ -82,8 +82,8 @@ void IndicatorRequest::Commit() const
     message().set_request( request.c_str() );
     if( firstTick_ != 0 || duration_ != std::numeric_limits< unsigned int >::max() )
     {
-        message().mutable_time_range()->set_first_tick( firstTick_ );
-        message().mutable_time_range()->set_duration( duration_ );
+        message().mutable_time_range()->set_begin_tick( firstTick_ );
+        message().mutable_time_range()->set_end_tick( firstTick_ + duration_ );
     }
     message.Send( publisher_, 0 );
 }

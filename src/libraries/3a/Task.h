@@ -63,11 +63,13 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, boost::shared_ptr< Connector_ABC > >   T_Connectors;
-    typedef T_Connectors::const_iterator                                CIT_Connectors;
-    typedef std::map< std::string, boost::shared_ptr< Slot_ABC > >        T_Slots;
-    typedef T_Slots::const_iterator                                     CIT_Slots;
-    typedef std::vector< boost::shared_ptr< Slot_ABC > >                  T_Objects;
+    typedef std::map< std::string, boost::shared_ptr< Connector_ABC > > T_Connectors;
+    typedef T_Connectors::const_iterator                              CIT_Connectors;
+
+    typedef std::map< std::string, boost::shared_ptr< Slot_ABC > > T_Slots;
+    typedef T_Slots::const_iterator                              CIT_Slots;
+
+    typedef std::vector< boost::shared_ptr< Slot_ABC > > T_Objects;
     //@}
 
     //! @name Helpers
@@ -82,13 +84,15 @@ private:
     //@{
     unsigned int firstTick_;
     unsigned int lastTick_;
-    unsigned int skippedFrames_;
+    unsigned int firstTickRead_;
+    bool hasFirstTick_;
+    unsigned int currentTick_;
+    bool insideFrame_;
     ModelFunctionComposite composite_;
     T_Connectors connectors_;
     T_Slots slots_;
     T_Objects objects_;
     boost::shared_ptr< Result_ABC > result_;
-    bool frameEnded_;
     //@}
 };
 

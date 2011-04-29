@@ -11,8 +11,8 @@ package MsgsClientToAar;
 
 message MsgPlotRequest {
     message TimeRange {
-        required uint32 first_tick = 1;
-        required uint32 duration   = 2;
+        required uint32 begin_tick = 1;
+        required uint32 end_tick   = 2;
     }
     required uint32    identifier = 1;
     required string    request    = 2;
