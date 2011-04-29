@@ -17,6 +17,7 @@
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
+#include "MT_Tools/MT_Logger.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FireAttribute )
 
@@ -57,7 +58,10 @@ FireAttribute::FireAttribute( const sword::MissionParameter_Value& attributes )
 {
     pClass_ = MIL_FireClass::Find( attributes.list( 1 ).acharstr() );
     if( !pClass_ )
+    {
+        MT_LOG_ERROR_MSG( "Unknown 'Fire class' '" << attributes.list( 1 ).acharstr() << "' for fire object attribute" );
         throw std::runtime_error( "Unknown 'Fire class' for fire object attribute" );
+    }
     maxCombustionEnergy_ = attributes.list( 2 ).quantity();
 }
 

@@ -167,7 +167,17 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& 
     if( ! NET_ASN_Tools::ReadLocation( message.elem( 1 ).value( 0 ).location(), location ) )
         return 0;
     Object* pObject = new Object( *it->second, army, &location, message.elem( 2 ).value( 0 ).acharstr() );
-    attributes_->Create( *pObject, message.elem( 4 ) );
+    
+    try
+    {    
+        attributes_->Create( *pObject, message.elem( 4 ) );    
+    }
+    catch( std::runtime_error& )
+    {
+        value = sword::ObjectMagicActionAck::error_invalid_object;
+        return 0;
+    }
+
     pObject->Finalize();
     return pObject;
 }
