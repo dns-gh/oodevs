@@ -546,8 +546,22 @@
     ============================================================================
     -->
 
+    <macrodef name="extract-knowledges">
+        <attribute name="dir"/>
+        <attribute name="tofile"/>
+        <sequential>
+            <concat destfile="@{tofile}" fixlastline="yes">
+                <fileset dir="@{dir}" includes="**/*.xml"/>
+                <filterchain>
+                    <containsregex pattern='.*name="(.*)" source.*knowledge-class="(.*)">' replace='integration.taskKnowledge["\1"] = "\2"'/>
+                </filterchain>
+            </concat>
+        </sequential>
+    </macrodef>
+    
     <target name="generate-database" description="compile behavior model database">
         <bmc src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
+        <extract-knowledges dir="${models.dir}" tofile="${models.dir}/../integration/TaskKnowledge.lua"/>
     </target>
 
     <target name="generate-symbols" description="generate symbols">
