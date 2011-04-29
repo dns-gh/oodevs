@@ -68,5 +68,5 @@ void NullFileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& file
 // -----------------------------------------------------------------------------
 void NullFileLoaderObserver::NotifyFileMigrated( const std::string& fileName, const std::string& fromVersion, const std::string& toVersion )
 {
-    std::cout << boost::format( "Xml file %s migrated from version %s to %s" ) % fileName % fromVersion % toVersion << std::endl;
+    // NOTHING
 }
