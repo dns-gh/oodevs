@@ -105,8 +105,8 @@ void TerrainObjectProxy::CreateDictionary( Controller& controller )
 {
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     EntityImplementation< Object_ABC >::Attach( dictionary );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), EntityImplementation< Object_ABC >::id_ );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), EntityImplementation< Object_ABC >::name_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Identifier" ), ( const unsigned long& ) EntityImplementation< Object_ABC >::id_ );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Block", "Info/Name" ), ( const QString& ) EntityImplementation< Object_ABC >::name_ );
 }
 
 // -----------------------------------------------------------------------------

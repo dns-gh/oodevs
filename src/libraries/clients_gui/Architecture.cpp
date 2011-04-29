@@ -46,12 +46,13 @@ void Architecture::Initialize( float height, unsigned int floorNumber, const std
     floorNumber_ = floorNumber;
     occupation_ = static_cast< unsigned int >( occupation * 100u );
     trafficability_ = trafficability;
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), height_ );
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), floorNumber_ );
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), roofShape_ );
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), material_ );
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), occupation_ );
-    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), trafficability_ );
+    const Architecture& architecture = *this;
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), architecture.height_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), architecture.floorNumber_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), architecture.roofShape_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), architecture.material_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), architecture.occupation_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/trafficability" ), architecture.trafficability_ );
 }
 
 // -----------------------------------------------------------------------------
