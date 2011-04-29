@@ -98,20 +98,6 @@ private:
 
     //! @name Types
     //@{
-    struct T_BaseColor
-    {
-        T_BaseColor()
-            : red_  ( 0 )
-            , green_( 0 )
-            , blue_ ( 0 )
-        {
-            // NOTHING
-        }
-        unsigned short red_;
-        unsigned short green_;
-        unsigned short blue_;
-    };
-
     typedef T_HumansStrMap T_Humans;
     //@}
 
@@ -123,7 +109,6 @@ private:
     unsigned int id_;
     float density_;
     T_Humans humans_;
-    T_BaseColor color_;
     const kernel::ObjectType& type_;
     unsigned int occupation_;
     UrbanDisplayOptions& options_;

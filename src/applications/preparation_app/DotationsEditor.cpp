@@ -62,7 +62,6 @@ DotationsEditor::DotationsEditor( QDialog*& self, QWidget* parent, const tools::
 DotationsEditor::~DotationsEditor()
 {
     self_ = 0;
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
