@@ -16,6 +16,7 @@
 namespace kernel
 {
     class Controllers;
+    class PropertiesDictionary;
     class Team_ABC;
 }
 
@@ -40,14 +41,15 @@ class PeopleAffinities : public Affinities
 public:
     //! @name Constructors/Destructor
     //@{
-             PeopleAffinities( kernel::Controllers& controllers, Model& model );
-             PeopleAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model );
+             PeopleAffinities( kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary );
+             PeopleAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary );
     virtual ~PeopleAffinities();
     //@}
 
     //! @name Operations
     //@{
     virtual void NotifyCreated( const kernel::Team_ABC& team );
+    virtual void NotifyUpdated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     virtual void Clear();
     //@}
@@ -63,12 +65,13 @@ private:
     //@{
     void InitializeAffinities();
     void ReadAffinity( xml::xistream& xis );
+    void AddTeam( const kernel::Team_ABC& team );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< unsigned long, EntityAffinity > T_Affinities;
-    typedef T_Affinities::const_iterator            CIT_Affinities;
+    typedef std::map< unsigned long, std::string > T_Teams;
+    typedef T_Teams::const_iterator              CIT_Teams;
     //@}
 
 private:
@@ -76,7 +79,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Model& model_;
-    T_Affinities PeopleAffinities_;
+    kernel::PropertiesDictionary& dictionary_;
+    T_Teams teams_;
     //@}
 };
 

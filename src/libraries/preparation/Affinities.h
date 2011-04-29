@@ -37,6 +37,13 @@ public:
     virtual ~Affinities();
     //@}
 
+public:
+    //! @name Types
+    //@{
+    typedef std::map< unsigned long, EntityAffinity > T_Affinities;
+    typedef T_Affinities::const_iterator            CIT_Affinities;
+    //@}
+
     //! @name Operations
     //@{
     virtual void Clear() = 0;
@@ -52,12 +59,6 @@ private:
     void ReadAffinity( xml::xistream& xis );
     //@}
 
-private:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned long, EntityAffinity > T_Affinities;
-    typedef T_Affinities::const_iterator            CIT_Affinities;
-    //@}
 
 protected:
     //! @name Member data

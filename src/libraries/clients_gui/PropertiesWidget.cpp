@@ -47,7 +47,6 @@ PropertiesWidget::PropertiesWidget( kernel::Controller& controller, PropertiesWi
     , button_( 0 )
 {
     FillUp( name );
-    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,7 +187,8 @@ kernel::Displayer_ABC& PropertiesWidget::SubItem( const QString& subItem, const 
 PropertiesWidget* PropertiesWidget::CreateWidget( const QString& subItem )
 {
     PropertiesWidget* subWidget = new PropertiesWidget( controller_, this, subItem, factory_, displayer_ );
-    connect( button_, SIGNAL( toggled( bool ) ), subWidget, SLOT( setShown( bool ) ) );
+    if( button_ )
+        connect( button_, SIGNAL( toggled( bool ) ), subWidget, SLOT( setShown( bool ) ) );
     subWidgets_.push_back( subWidget );
     categories_[ subItem ] = subWidgets_.size() - 1;
     layout_->addWidget( subWidget, subWidgets_.size() + 1, 1 );
@@ -261,7 +261,15 @@ void PropertiesWidget::UpdatePath( const kernel::DictionaryUpdated& message, con
             message.GetEntity().Get< kernel::PropertiesDictionary >().DisplaySubPath( message.GetEntry(), parent );
     }
     else
-        table_->Update( name );
+    {
+        if( path.front() == name )
+        {
+            CreateWidget( name );
+            UpdatePath( message, name, parent );
+        }
+        else
+            table_->Update( name );
+    }
 }
 
 // -----------------------------------------------------------------------------

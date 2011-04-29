@@ -14,7 +14,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/tools.h"
-#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
 #include "tools/Iterator.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -22,27 +22,28 @@
 // Name: PeopleAffinities constructor
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-PeopleAffinities::PeopleAffinities( kernel::Controllers& controllers, Model& model )
+PeopleAffinities::PeopleAffinities( kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary )
     : Affinities()
     , controllers_( controllers )
     , model_      ( model )
+    , dictionary_ ( dictionary )
 {
-    InitializeAffinities();
     controllers_.Register( *this );
+    InitializeAffinities();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PeopleAffinities constructor
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
-PeopleAffinities::PeopleAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model )
+PeopleAffinities::PeopleAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary )
     : Affinities( xis )
     , controllers_( controllers )
     , model_      ( model )
+    , dictionary_ ( dictionary )
 {
-    if( affinities_.empty() )
-        InitializeAffinities();
     controllers_.Register( *this );
+    InitializeAffinities();
 }
 
 // -----------------------------------------------------------------------------
@@ -60,8 +61,17 @@ PeopleAffinities::~PeopleAffinities()
 // -----------------------------------------------------------------------------
 void PeopleAffinities::NotifyCreated( const kernel::Team_ABC& team )
 {
-    if( affinities_.find( team.GetId() ) == affinities_.end() )
-        affinities_[ team.GetId() ] = 0.f;
+    AddTeam( team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PeopleAffinities::NotifyUpdated
+// Created: LGY 2011-04-20
+// -----------------------------------------------------------------------------
+void PeopleAffinities::NotifyUpdated( const kernel::Team_ABC& team )
+{
+    dictionary_.Remove( tools::translate( "Affinities", "Affinities/%1" ).arg( teams_[ team.GetId() ].c_str() ) );
+    AddTeam( team );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +80,9 @@ void PeopleAffinities::NotifyCreated( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 void PeopleAffinities::NotifyDeleted( const kernel::Team_ABC& team )
 {
-    affinities_.erase( team.GetId() );
+    affinities_.erase(team.GetId() );
+    teams_.erase( team.GetId() );
+    dictionary_.Remove( tools::translate( "Affinities", "Affinities/%1" ).arg( team.GetName() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,15 +96,24 @@ void PeopleAffinities::Clear()
 
 // -----------------------------------------------------------------------------
 // Name: PeopleAffinities::InitializeAffinities
-// Created: ABR 2011-01-27
+// Created: LGY 2011-04-27
 // -----------------------------------------------------------------------------
 void PeopleAffinities::InitializeAffinities()
 {
     tools::Iterator< const kernel::Team_ABC& > it = model_.teams_.CreateIterator();
     while( it.HasMoreElements() )
-    {
-        const kernel::Team_ABC&next = it.NextElement();
-        if( affinities_.find( next.GetId() ) == affinities_.end() )
-            affinities_[ next.GetId() ] = 0.f;
-    }
+        AddTeam( it.NextElement() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PeopleAffinities::AddTeam
+// Created: LGY 2011-04-27
+// -----------------------------------------------------------------------------
+void PeopleAffinities::AddTeam( const kernel::Team_ABC& team )
+{
+    if( affinities_.find( team.GetId() ) == affinities_.end() )
+        affinities_[ team.GetId() ] = 0.f;
+    teams_[ team.GetId() ] =  team.GetName();
+    CIT_Affinities it = affinities_.find( team.GetId() );
+    dictionary_.Register( *this, tools::translate( "Affinities", "Affinities/%1" ).arg( team.GetName() ), it->second );
 }
