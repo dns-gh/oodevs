@@ -38,9 +38,10 @@ private:
     //! @name Member data
     //@{
     MT_Vector2D vEnemyPosition_;
-    double rSecurityDistance_;
+    double rSquareSecurityDistance_;
     double rFactor_;
     double rOffset_;
+    const MIL_Agent_ABC* pKnowledgeAgent_;
     //@}
 };
 

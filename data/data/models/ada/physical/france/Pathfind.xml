@@ -85,13 +85,23 @@
     </rule>
     <rule type="infiltration" flying="false" autonomous="false" inherits="base">
       <preferred-altitude value="-0.001"/>
-      <preferred-terrains>
+      <preferred-terrains strength="50">
         <preferred-terrain type="foret"/>
+        <preferred-terrain type="urbain"/>
       </preferred-terrains>
-      <avoided-terrains>
-        <avoided-terrain type="urbain"/>
+      <avoided-terrains strength="50">
+        <avoided-terrain type="chemin"/>
+        <avoided-terrain type="departementale"/>
+        <avoided-terrain type="nationale"/>
+        <avoided-terrain type="autoroute"/>
       </avoided-terrains>
-      <enemies cost-on-contact="100" cost-at-security-range="10"/>
+      <enemies cost-on-contact="10" cost-at-security-range="25"/>
+      <population-costs security-range="50" maximum="100" outside-of-population="100">
+        <population-cost attitude="calme" contact-cost="0"/>
+        <population-cost attitude="agitee" contact-cost="0"/>
+        <population-cost attitude="excitee" contact-cost="0"/>
+        <population-cost attitude="agressive" contact-cost="0"/>
+      </population-costs>
     </rule>
     <rule type="assault" flying="false" autonomous="false" inherits="base">
       <optimisation shortest="true"/>
@@ -114,7 +124,7 @@
         <outter-tolerance cost-per-meter="1" distance="100000000"/>
       </automat-zone>
       <danger-direction base-cost-beyond="5" cost-per-meter="0.01"/>
-      <enemies cost-on-contact="100" cost-at-security-range="10"/>
+      <enemies cost-on-contact="10" cost-at-security-range="25"/>
     </rule>
     <rule type="backup" flying="false" autonomous="false" inherits="base">
       <optimisation shortest="true"/>
@@ -125,7 +135,7 @@
         <avoided-terrain type="nationale"/>
         <avoided-terrain type="autoroute"/>
       </avoided-terrains>
-      <enemies cost-on-contact="100" cost-at-security-range="10"/>
+      <enemies cost-on-contact="10" cost-at-security-range="25"/>
     </rule>
     <rule type="minesweep" flying="false" autonomous="false" inherits="movement">
       <object-costs avoid="false" threshold="10000"/>
@@ -209,7 +219,7 @@
         <inner-comfort cost-per-meter="0.002" distance="500"/>
       </zone>
       <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
-      <enemies cost-on-contact="100" cost-at-security-range="10"/>
+      <enemies cost-on-contact="10" cost-at-security-range="25"/>
     </rule>
     <rule type="infiltration" flying="true" autonomous="false" inherits="base">
       <preferred-altitude value="-0.001"/>
@@ -221,12 +231,12 @@
         <inner-comfort cost-per-meter="0.002" distance="500"/>
       </zone>
       <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
-      <enemies cost-on-contact="100" cost-at-security-range="10"/>
+      <enemies cost-on-contact="10" cost-at-security-range="25"/>
     </rule>
     <rule type="assault" flying="true" autonomous="false" inherits="base">
       <preferred-altitude value="-0.001"/>
       <danger-direction base-cost-beyond="1" cost-per-meter="0.001"/>
-      <enemies cost-on-contact="100" cost-at-security-range="10"/>
+      <enemies cost-on-contact="10" cost-at-security-range="25"/>
     </rule>
     <rule type="retreat" flying="true" autonomous="false" inherits="base">
       <automat-zone>
@@ -237,7 +247,7 @@
         <inner-comfort cost-per-meter="0.002" distance="500"/>
       </zone>
       <danger-direction base-cost-beyond="5" cost-per-meter="0.01"/>
-      <enemies cost-on-contact="100" cost-at-security-range="10"/>
+      <enemies cost-on-contact="10" cost-at-security-range="25"/>
     </rule>
     <rule type="backup" flying="true" autonomous="false" inherits="base">
       <automat-zone>
@@ -248,7 +258,7 @@
         <inner-comfort cost-per-meter="0.002" distance="500"/>
       </zone>
       <danger-direction base-cost-beyond="5" cost-per-meter="0.01"/>
-      <enemies cost-on-contact="100" cost-at-security-range="10"/>
+      <enemies cost-on-contact="10" cost-at-security-range="25"/>
     </rule>
     <rule type="minesweep" flying="true" autonomous="false" inherits="base">
       <object-costs avoid="false" threshold="0"/>
@@ -302,4 +312,4 @@
     <rule type="base" cost-out-of-channeling="50" channeling-range="1000"/>
   </population-rules>
 </pathfind>
-<!-- signature="3481224973" -->
+<!-- signature="2255181691" -->

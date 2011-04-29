@@ -182,7 +182,7 @@ double DEC_Agent_PathfinderRule::GetObjectsCost( const MT_Vector2D& from, const 
 inline
 double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
 {
-    assert( ( !path_.GetPathClass().AvoidEnemies() && path_.GetPathKnowledgeAgents().empty() ) || path_.GetPathClass().AvoidEnemies() );
+    assert( path_.GetPathClass().AvoidEnemies() || path_.GetPathKnowledgeAgents().empty() );
     double rEnemyCost = 0.;
     for( DEC_Agent_Path::CIT_PathKnowledgeAgentVector it = path_.GetPathKnowledgeAgents().begin(); it != path_.GetPathKnowledgeAgents().end(); ++it )
     {
@@ -202,7 +202,7 @@ double DEC_Agent_PathfinderRule::GetEnemiesCost( const MT_Vector2D& from, const 
 // -----------------------------------------------------------------------------
 double DEC_Agent_PathfinderRule::GetPopulationsCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const
 {
-    assert( ( !path_.GetPathClass().HandlePopulations() && path_.GetPathKnowledgePopulations().empty() ) || path_.GetPathClass().HandlePopulations() );
+    assert( path_.GetPathClass().HandlePopulations() || path_.GetPathKnowledgePopulations().empty() );
     double rCost = 0.;
     for( DEC_Agent_Path::CIT_PathKnowledgePopulationVector it = path_.GetPathKnowledgePopulations().begin(); it != path_.GetPathKnowledgePopulations().end(); ++it )
     {
@@ -331,7 +331,6 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     return rBaseCost * ( 1 + rDynamicCost );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Agent_PathfinderRule::GetFuseauxCost
 // Created: NLD 2006-01-31
@@ -365,7 +364,7 @@ float DEC_Agent_PathfinderRule::EvaluateCost( const geometry::Point2f& from, con
     const float rDistance = from.Distance( to );
     if( rMaxSpeed_ != 0 )
         return bShort_ ? rDistance : ( rDistance / rMaxSpeed_ );
-    return INT_MAX;
+    return FLT_MAX;
 }
 
 // -----------------------------------------------------------------------------
