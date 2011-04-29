@@ -228,7 +228,7 @@ void DrawingsModel::RegisterIn( directia::brain::Brain& brain )
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr< Drawing > DrawingsModel::CreateDrawing
+// Name: DrawingsModel::CreateDrawing
 // Created: AGE 2008-07-09
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DrawingProxy > DrawingsModel::CreateDrawing( const std::string& name )

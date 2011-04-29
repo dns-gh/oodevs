@@ -11,6 +11,7 @@
 #define __Note_h_
 
 #include "protocol/MessengerSenders.h"
+#include <boost/noncopyable.hpp>
 #include <list>
 
 namespace xml
@@ -34,7 +35,7 @@ namespace messenger
 */
 // Created: HBD 2010-01-15
 // =============================================================================
-class Note
+class Note : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -46,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    void WriteNote( std::ofstream& file, int parentLine ) const;
+    void WriteNote( std::ostream& file, int parentLine ) const;
     unsigned long GetId() const;
     unsigned long GetParent() const;
 
@@ -61,13 +62,6 @@ public:
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher, bool stateParent ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Note( const Note& );            //!< Copy constructor
-    Note& operator=( const Note& ); //!< Assignment operator
     //@}
 
 private:

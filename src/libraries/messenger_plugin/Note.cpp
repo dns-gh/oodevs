@@ -194,12 +194,11 @@ unsigned long Note::GetParent() const
     return parent_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Note::WriteNote
 // Created: HBD 2010-11-19
 // -----------------------------------------------------------------------------
-void Note::WriteNote( std::ofstream& file, int parentLine ) const
+void Note::WriteNote( std::ostream& file, int parentLine ) const
 {
     file << name_ << ";"
          << parentLine;

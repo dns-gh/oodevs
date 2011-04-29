@@ -12,6 +12,7 @@
 
 #include "protocol/MessengerSenders.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 #include <fstream>
 #include <list>
 
@@ -34,18 +35,21 @@ namespace messenger
 */
 // Created: HBD 2010-01-15
 // =============================================================================
-class NotesModel : public tools::Resolver< Note >
+class NotesModel : private boost::noncopyable
+                 , public tools::Resolver< Note >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager , const std::string& file);
+             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager , const std::string& file );
     virtual ~NotesModel();
     //@}
 
     //! @name Operations
     //@{
-    void Save( const std::string& directory ) const;
+    void LoadNotes( const std::string& filename );
+    void SaveNotes();
+    void UpdateTime( const std::string& time );
     //@}
 
     //! @name Requests
@@ -53,30 +57,16 @@ public:
     void HandleRequest( const sword::MarkerCreationRequest&    message );
     void HandleRequest( const sword::MarkerDestructionRequest& message );
     void HandleRequest( const sword::MarkerUpdateRequest&      message );
-
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
-
-    void Publish( const Note& note );
-
-    void LoadNotes( const std::string filename );
-    void SaveNotes();
-
-    void UpdateTime( std::string time );
     //@}
 private:
-    //! @name Copy/Assignment
-    //@{
-    NotesModel( const NotesModel& );            //!< Copy constructor
-    NotesModel& operator=( const NotesModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void HandleRequestDestructSingle( Note* note );
     void HandleRequestDestructCascade( Note* note );
-    void WriteNote( const Note& note, int& lineNumber, int parentLine );
     void ReadNote( const std::string& input, std::vector< unsigned int >& notes );
-    void CreateHeader();
+    void WriteNote( std::ostream& os, const Note& note, int& lineNumber, int parentLine );
+    void CreateHeader( std::ostream& os );
     unsigned int CreateNote( std::vector<std::string>& note, const unsigned int parent );
     //@}
 
@@ -89,13 +79,11 @@ private:
 private:
     //! @name Member data
     //@{
-    static const unsigned int        headerLines_ = 6;
     const dispatcher::Config&        config_;
     dispatcher::ClientPublisher_ABC& clients_;
     IdManager&                       idManager_;
-    std::list<unsigned int>          headNotes_;
-    std::ofstream                    file_;
-    std::string                      fileName_;
+    const std::string                fileName_;
+    std::list< unsigned int >        headNotes_;
     std::string                      currentTime_;
     //@}
 };
