@@ -34,6 +34,6 @@ std::string BOOST_RESOLVE( const std::string& filename );
 #endif
 #endif
 
-#define BRAIN_INIT() std::string( "plugins={" ) + PLUGIN( "masalife_brain" ) + PLUGIN( "services" ) + PLUGIN( "knowledge" ) + "} cwd='" + BOOST_RESOLVE( "." ) + "'"
+#define BRAIN_INIT() std::string( "plugins={" ) + PLUGIN( "masalife_brain" ) + PLUGIN( "communication" ) + PLUGIN( "services" ) + PLUGIN( "knowledge" ) + "} cwd='" + BOOST_RESOLVE( "." ) + "'"
 
 #endif // __integration_decisionnal_test_pch_h_
