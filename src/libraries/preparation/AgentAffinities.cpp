@@ -97,7 +97,6 @@ void AgentAffinities::NotifyCreated( const kernel::Team_ABC& team )
     if( !affinities_.empty() && affinities_.find( team.GetId() ) == affinities_.end() )
         affinities_[ team.GetId() ] = 0.f;
     AddTeam( team );
-    controllers_.controller_.Update( kernel::DictionaryUpdated( agent_, propertyName_ ) );
 }
 
 // -----------------------------------------------------------------------------
