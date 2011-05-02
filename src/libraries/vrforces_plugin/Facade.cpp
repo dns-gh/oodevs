@@ -27,6 +27,8 @@ using namespace plugins::vrforces;
 Facade::Facade( DtExerciseConn& connection )
     : controller_( createVrfRemoteController() )
 {
+    if( !controller_.get() )
+        throw std::runtime_error( __FUNCTION__ ": unable to create Vrf Remote Controller" );
     controller_->init( &connection );
     controller_->backendListener()->addBackendDiscoveryCallback( &Facade::OnBackendDiscovery, this );
     controller_->backendListener()->addBackendRemovalCallback( &Facade::OnBackendRemoval, this );
