@@ -607,7 +607,7 @@
     </target>
 
     <target name="tools_test" depends="library.tools">
-        <build-test name="tools" depends="boost,xerces,xalan" libs="lib${ant.project.name}_tools-${platform}-mt@{suffix}"/>
+        <build-test name="tools" depends="boost,xerces,xalan" libs="lib${ant.project.name}_tools-${platform}-mt@{suffix},tools"/>
     </target>
 
     <target name="plugins_test" depends="library.hla_plugin,library.tic,library.script_plugin,library.bml_plugin,library.crossbow_plugin,library.timeline_plugin">
