@@ -97,19 +97,6 @@ MIL_NBCType::MIL_NBCType( const std::string& strName, xml::xistream& xis )
         >> xml::list( "effects", *this, &MIL_NBCType::ReadEffects );
 }
 
-namespace
-{
-    MIL_NBCType::E_Form StringToE_Form( const std::string& type )
-    {
-        MIL_NBCType::E_Form form = MIL_NBCType::eLiquid;
-        if( type == "liquid" )
-            form = MIL_NBCType::eLiquid;
-        else if( type == "gaseous" )
-            form = MIL_NBCType::eGas;
-       return form;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_NBCType::ReadExtinguisherAgentEffect
 // Created: RFT 19/05/2008
@@ -121,7 +108,6 @@ void MIL_NBCType::ReadEffects( xml::xistream& xis )
     xis >> xml::attribute( "type" , type )
         >> xml::attribute( "contaminate", bCanContaminate_ )
         >> xml::attribute( "poison", bCanPoison_ );
-    form_ = StringToE_Form( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,16 +171,6 @@ const std::string MIL_NBCType::GetName() const
 unsigned int MIL_NBCType::GetID() const
 {
     return nID_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_NBCType::GetForm
-// Created: RFT 19/05/2008
-// Modified: none
-// -----------------------------------------------------------------------------
-MIL_NBCType::E_Form MIL_NBCType::GetForm() const
-{
-    return form_;
 }
 
 // -----------------------------------------------------------------------------

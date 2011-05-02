@@ -27,15 +27,6 @@ namespace xml
 class MIL_NBCType : private boost::noncopyable
 {
 public:
-    //!@name Enum
-    enum E_Form
-    {
-        eLiquid = 1,
-        eGas
-    };
-    //@}
-
-public:
     //! @name Factory
     //@{
     static void Initialize( xml::xistream& xis );
@@ -63,7 +54,6 @@ public:
     //@{
     const std::string GetName() const;
     unsigned int GetID() const;
-    E_Form GetForm() const;
     bool IsContaminating() const;
     bool IsPoisoning() const;
     static unsigned int GetWidth();
@@ -90,7 +80,6 @@ private:
     //@{
     const std::string strName_;
     unsigned int nID_;
-    E_Form form_;
     bool bCanContaminate_;
     bool bCanPoison_;
     static T_NBCTypeMap nbcAgentTypes_;
