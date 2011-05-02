@@ -10,6 +10,7 @@
 #include "tools_pch.h"
 #include "NullFileLoaderObserver.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/format.hpp>
 #include <iostream>
 
 using namespace tools;
