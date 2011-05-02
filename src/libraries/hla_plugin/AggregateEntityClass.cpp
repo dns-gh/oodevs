@@ -41,7 +41,7 @@ AggregateEntityClass::AggregateEntityClass( ::hla::Federate& federate, AgentSubj
     : id_          ( 1 )
     , subject_     ( subject )
     , registration_( new UnitRegistration() )
-    , hlaClass_    ( new ::hla::Class< AggregateEntity >( *registration_ ) )
+    , hlaClass_    ( new ::hla::Class< AggregateEntity >( *registration_, true ) )
 {
     hlaClass_->Register( ::hla::AttributeIdentifier( "EntityType" ) );             // static
     hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );       // static
@@ -55,6 +55,7 @@ AggregateEntityClass::AggregateEntityClass( ::hla::Federate& federate, AgentSubj
     hlaClass_->Register( ::hla::AttributeIdentifier( "SilentEntities" ) );         // dynamic
     federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity" ), *hlaClass_, true, false );
     subject_.Register( *this );
+    hlaClass_->ActivateUpdates( true );
 }
 
 // -----------------------------------------------------------------------------
