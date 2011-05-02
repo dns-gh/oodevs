@@ -17,7 +17,7 @@ using namespace plugins::hla;
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
 Spatial::Spatial( double latitude, double longitude, float altitude, float speed, float heading )
-    : deadReckoningAlgorithm_( 2 ) // FPW
+    : deadReckoningAlgorithm_( 1 ) // Static
     , fpw_                   ( latitude, longitude, altitude, speed, heading )
 {
     // NOTHING

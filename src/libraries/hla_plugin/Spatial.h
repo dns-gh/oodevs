@@ -55,7 +55,6 @@ private:
             worldLocation_.Serialize( archive );
             archive << isFrozen_ << padding_;
             orientation_.Serialize( archive );
-            velocityVector_.Serialize( archive );
         }
         rpr::WorldLocation worldLocation_;
         bool isFrozen_;
