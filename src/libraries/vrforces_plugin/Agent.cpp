@@ -23,7 +23,7 @@
 #include "protocol/Protocol.h"
 #include "protocol/SimulationSenders.h"
 #include "rpr/EntityType.h"
-#include "rpr/EntityTypeResolver.h"
+#include "rpr/EntityTypeResolver_ABC.h"
 #include <boost/lexical_cast.hpp>
 #pragma warning( push, 0 )
 #include <matrix/geodcoord.h>
@@ -69,7 +69,7 @@ namespace
 // Name: Agent constructor
 // Created: SBO 2011-01-21
 // -----------------------------------------------------------------------------
-Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message, const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation, const rpr::EntityTypeResolver& entityTypes, dispatcher::SimulationPublisher_ABC& simulation )
+Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message, const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation, const rpr::EntityTypeResolver_ABC& entityTypes, dispatcher::SimulationPublisher_ABC& simulation )
     : disaggregation_( disaggregation )
     , swordPublisher_( simulation )
     , connection_    ( connection )

@@ -28,7 +28,7 @@ namespace dispatcher
 
 namespace rpr
 {
-    class EntityTypeResolver;
+    class EntityTypeResolver_ABC;
 }
 
 namespace sword
@@ -97,7 +97,7 @@ private:
     dispatcher::Model_ABC& model_;
     dispatcher::SimulationPublisher_ABC& simulation_;
     std::auto_ptr< ForceResolver_ABC > forceResolver_;
-    std::auto_ptr< rpr::EntityTypeResolver > typeResolver_;
+    std::auto_ptr< rpr::EntityTypeResolver_ABC > typeResolver_;
     std::auto_ptr< DtFilePrinter > logger_;
     std::auto_ptr< DtExerciseConn > connection_;
     std::auto_ptr< Facade > vrForces_;

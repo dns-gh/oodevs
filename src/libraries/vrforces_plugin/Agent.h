@@ -36,7 +36,7 @@ namespace kernel
 
 namespace rpr
 {
-    class EntityTypeResolver;
+    class EntityTypeResolver_ABC;
 }
 
 namespace sword
@@ -72,7 +72,7 @@ public:
     //@{
              Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message
                   , const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation
-                  , const rpr::EntityTypeResolver& entityTypes, dispatcher::SimulationPublisher_ABC& simulation );
+                  , const rpr::EntityTypeResolver_ABC& entityTypes, dispatcher::SimulationPublisher_ABC& simulation );
     virtual ~Agent();
     //@}
 
@@ -133,7 +133,7 @@ private:
     const DtReflectedAggregate* reflected_;
     T_Subordinates subordinates_;
     const kernel::AgentType& type_;
-    const rpr::EntityTypeResolver& entityTypes_;
+    const rpr::EntityTypeResolver_ABC& entityTypes_;
     std::auto_ptr< AggregatedPosition_ABC > position_;
     std::auto_ptr< AggregatedState_ABC > state_;
     DtVector destination_;

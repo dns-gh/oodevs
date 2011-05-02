@@ -10,8 +10,8 @@
 #ifndef __EntityTypeResolver_h_
 #define __EntityTypeResolver_h_
 
+#include "EntityTypeResolver_ABC.h"
 #include "clients_kernel/ApproximativeMap.h"
-#include "rpr/EntityType.h"
 #include <boost/noncopyable.hpp>
 #include <map>
 
@@ -23,14 +23,13 @@ namespace xml
 
 namespace rpr
 {
-
 // =============================================================================
 /** @class  EntityTypeResolver
-    @brief  EntityTypeResolver
+    @brief  Entity type resolver
 */
 // Created: AGE 2008-04-04
 // =============================================================================
-class EntityTypeResolver : private boost::noncopyable
+class EntityTypeResolver : public EntityTypeResolver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -41,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    rpr::EntityType Find( const std::string& name ) const;
+    virtual rpr::EntityType Find( const std::string& name ) const;
     //@}
 
 private:
