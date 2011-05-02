@@ -11930,5 +11930,25 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="france.military.platoon.role.IndividuIsole" id="451" name="Pion test individu isole" type="Pion Civilian">
+    <nature atlas-nature="None" level="none" nature-app6="undefined"/>
+    <equipments>
+      <equipment count="1" crew="1" loadable="true" major="true" type="Foule"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="300s"/>
+      <posture name="Poste" setup-time="900s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <repartition children="0" female="0" male="1"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="3732056194" -->
+<!-- signature="0012441377" -->

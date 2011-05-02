@@ -594,9 +594,47 @@
         <mission name="ASY Commettre un Attentat Suicide"/>
         <mission name="ASY Se Dissimuler"/>
         <mission name="ASY Prendre un Otage"/>
+        <mission name="S'Infiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les règles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="france.military.platoon.role.IndividuIsole">
+      <missions>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="S'Infiltrer"/>
+        <mission name="COMMUNES Interroger"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -11558,4 +11596,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1527790797" -->
+<!-- signature="3914563101" -->
