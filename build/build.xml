@@ -687,7 +687,7 @@
 
     <target name="launcher_test" depends="application.launcher_dll,library.frontend">
         <build-test name="launcher" depends="boost,qt,xerces,protobuf"
-            libs="launcher-${platform}-mt@{suffix},
+            libs="launcher-${platform}-mt@{suffix},tools,
                   lib${ant.project.name}_frontend-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
