@@ -19,6 +19,7 @@ namespace tools
 
 class QLineEdit;
 class QGroupBox;
+class QSpinBox;
 
 namespace frontend
 {
@@ -46,9 +47,12 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
+    const std::string library_;
     QGroupBox* box_;
     QLineEdit* federation_;
     QLineEdit* name_;
+    QLineEdit* host_;
+    QSpinBox*  port_;
     //@}
 };
 }

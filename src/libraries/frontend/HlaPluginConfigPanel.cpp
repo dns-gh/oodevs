@@ -15,6 +15,7 @@
 #include <qlineedit.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
+#include <qspinbox.h>
 
 using namespace frontend;
 
@@ -34,7 +35,8 @@ namespace
 // -----------------------------------------------------------------------------
 HlaPluginConfigPanel::HlaPluginConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
     : PluginConfig_ABC( parent )
-    , config_( config )
+    , config_ ( config )
+    , library_( "hla_plugin-vc80-mt.dll" ) // $$$$ SLI 2011-05-02: hard coded library name
 {
     setMargin( 5 );
     setBackgroundOrigin( QWidget::WindowOrigin );
@@ -48,6 +50,15 @@ HlaPluginConfigPanel::HlaPluginConfigPanel( QWidget* parent, const tools::Genera
     {
         Style( new QLabel( tools::translate( "HlaPluginConfigPanel", "Federate name: " ), box_ ) );
         name_ = Style( new QLineEdit( tools::translate( "Application", "SWORD" ), box_ ) );
+    }
+    {
+        Style( new QLabel( tools::translate( "HlaPluginConfigPanel", "Host name: " ), box_ ) );
+        host_ = Style( new QLineEdit( "localhost", box_ ) );
+    }
+    {
+        Style( new QLabel( tools::translate( "HlaPluginConfigPanel", "Port: " ), box_ ) );
+        port_ = Style( new QSpinBox( 0, 65535, 1, box_ ) );
+        port_->setValue( 8989 );
     }
 }
 
@@ -69,8 +80,11 @@ void HlaPluginConfigPanel::Commit( const std::string& exercise, const std::strin
     if( box_->isChecked() )
     {
         frontend::CreateSession action( config_, exercise, session );
+        action.SetOption( "session/config/dispatcher/plugins/hla/@library", library_ );
         action.SetOption( "session/config/dispatcher/plugins/hla/@federation", federation_->text() );
         action.SetOption( "session/config/dispatcher/plugins/hla/@name", name_->text() );
+        action.SetOption( "session/config/dispatcher/plugins/hla/@host", host_->text() );
+        action.SetOption( "session/config/dispatcher/plugins/hla/@port", port_->value() );
         action.Commit();
     }
 }

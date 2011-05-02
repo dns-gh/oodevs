@@ -184,6 +184,14 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
         <source>Federate name: </source>
         <translation>Nom du fédéré: </translation>
     </message>
+    <message>
+        <source>Host name: </source>
+        <translation>Hôte: </translation>
+    </message>
+    <message>
+        <source>Port: </source>
+        <translation>Port: </translation>
+    </message>
 </context>
 <context>
     <name>JoinExercise</name>
