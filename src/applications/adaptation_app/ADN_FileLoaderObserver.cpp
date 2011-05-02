@@ -9,8 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_FileLoaderObserver.h"
-/*#include <xeumeuleu/xml.hpp>
-#include <iostream>*/
+#include <boost/format.hpp>
 
 using namespace tools;
 
