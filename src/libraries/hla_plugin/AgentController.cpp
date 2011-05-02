@@ -63,7 +63,7 @@ void AgentController::Create( dispatcher::Agent& entity )
 {
     agents_.push_back( T_Agent( new AgentProxy( entity ) ) );
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-        (*it)->Created( *agents_.back(), entity.GetType().GetName() + boost::lexical_cast< std::string >( entity.GetId() ), entity.GetName().ascii(), GetForce( entity ) );
+        (*it)->Created( *agents_.back(), boost::lexical_cast< std::string >( entity.GetId() ) + entity.GetType().GetName(), entity.GetName().ascii(), GetForce( entity ) );
 }
 
 // -----------------------------------------------------------------------------
