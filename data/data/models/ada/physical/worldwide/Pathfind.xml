@@ -94,6 +94,9 @@
         <avoided-terrain type="nationale"/>
         <avoided-terrain type="autoroute"/>
       </avoided-terrains>
+      <object-costs avoid="true" threshold="10000">
+        <object-cost type="checkpoint" value="10000"/>
+      </object-costs>
       <enemies cost-at-security-range="25" cost-on-contact="10"/>
       <population-costs security-range="50" maximum="100" outside-of-population="100">
         <population-cost attitude="calme" contact-cost="0"/>
@@ -310,4 +313,4 @@
     <rule channeling-range="1000" cost-out-of-channeling="50" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="2611023329" -->
+<!-- signature="3642034717" -->
