@@ -2233,7 +2233,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="true" type="AgentKnowledge"/>
-      <parameter dia-name="harassObjective" name="Objectif" optional="false" type="LocationComposite">
+      <parameter dia-name="interceptionObjective" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Polygon"/>
           <parameter type="UrbanKnowledge"/>
