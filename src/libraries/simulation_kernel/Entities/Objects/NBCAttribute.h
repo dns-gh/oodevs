@@ -36,18 +36,12 @@ class NBCAttribute : public ObjectAttribute_ABC
                    , public UpdatableAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > T_KnowledgeProxyType;
-
-public:
     //! @name Types
     //@{
-    enum E_Form
-    {
-        eLiquid,
-        eGas
-    };
     typedef std::vector< const MIL_NbcAgentType* > T_NBCAgents;
     typedef T_NBCAgents::const_iterator          CIT_NBCAgents;
+
+    typedef DEC_Knowledge_ObjectAttributeProxyRecon< NBCAttribute > T_KnowledgeProxyType;
     //@}
 
 public:
@@ -108,6 +102,16 @@ private:
     bool ReadAgents( const std::string& strAgents );
     std::string WriteAgents() const;
     template< typename T > bool Insert( const T& type );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    enum E_Form
+    {
+        eLiquid,
+        eGas
+    };
     //@}
 
 private:

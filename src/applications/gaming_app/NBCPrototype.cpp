@@ -51,4 +51,5 @@ void NBCPrototype::Commit()
     for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
         if( item->isSelected() )
             agents.AddIdentifier( "Id", static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >()->GetId() );
+    list.AddQuantity( "State", nbcStates_->GetValue() == "liquid" ? eLiquid : eGas );
 }

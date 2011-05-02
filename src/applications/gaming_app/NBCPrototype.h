@@ -44,6 +44,16 @@ public:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    enum E_Form
+    {
+        eLiquid,
+        eGas
+    };
+    //@}
+
+private:
     //! @name Member data
     //@{
     actions::parameters::ParameterList*& attributesList_;

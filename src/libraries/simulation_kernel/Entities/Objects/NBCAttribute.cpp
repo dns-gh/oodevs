@@ -65,6 +65,8 @@ NBCAttribute::NBCAttribute( const sword::MissionParameter_Value& attributes )
             throw std::runtime_error( "Unknown agent type for NBC attribute" );
         agents_.push_back( pType );
     }
+    if( attributes.list_size() == 4 )
+        nForm_ = static_cast< E_Form >( attributes.list( 3 ).quantity() );
 }
 
 // -----------------------------------------------------------------------------
