@@ -12,6 +12,7 @@
 #include "MIL_AgentServer.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
