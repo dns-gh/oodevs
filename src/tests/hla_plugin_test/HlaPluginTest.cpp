@@ -43,6 +43,7 @@ BOOST_AUTO_TEST_CASE( hla_plugin_initialization_declares_publications )
     MOCK_EXPECT( rtiAmbassador, Connect ).once().in( s ).with( mock::retrieve( federateAmbassador ) ).returns( true );
     MOCK_EXPECT( rtiAmbassador, Join ).once().in( s ).with( "name", "federation", mock::retrieve( federateAmbassador ) ).returns( true );
     MOCK_EXPECT( rtiAmbassador, Tick ).calls( boost::bind( &hla::FederateAmbassador_ABC::TimeAdvanceGranted, boost::ref( federateAmbassador ), boost::ref( target ) ) );;
+    MOCK_EXPECT( rtiAmbassador, EnableTimeConstrained ).once().in( s ).calls( boost::bind( &hla::FederateAmbassador_ABC::TimeConstrainedEnabled, boost::ref( federateAmbassador ), boost::ref( target ) ) );
     MOCK_EXPECT( rtiAmbassador, EnableTimeRegulation ).once().in( s ).calls( boost::bind( &hla::FederateAmbassador_ABC::TimeRegulationEnabled, boost::ref( federateAmbassador ), boost::ref( target ) ) );
     MOCK_EXPECT( rtiAmbassador, PublishClass ).once().in( s ).with( "BaseEntity.AggregateEntity", mock::any );
     MOCK_EXPECT( subject, Register ).once().in( s );
@@ -67,6 +68,7 @@ namespace
             MOCK_EXPECT( rtiAmbassador, Connect ).once().with( mock::retrieve( federateAmbassador ) ).returns( true );
             MOCK_EXPECT( rtiAmbassador, Join ).once().with( "name", "federation", mock::retrieve( federateAmbassador ) ).returns( true );
             MOCK_EXPECT( rtiAmbassador, Tick ).calls( boost::bind( &hla::FederateAmbassador_ABC::TimeAdvanceGranted, boost::ref( federateAmbassador ), boost::ref( target ) ) );;
+            MOCK_EXPECT( rtiAmbassador, EnableTimeConstrained ).once().calls( boost::bind( &hla::FederateAmbassador_ABC::TimeConstrainedEnabled, boost::ref( federateAmbassador ), boost::ref( target ) ) );
             MOCK_EXPECT( rtiAmbassador, EnableTimeRegulation ).once().calls( boost::bind( &hla::FederateAmbassador_ABC::TimeRegulationEnabled, boost::ref( federateAmbassador ), boost::ref( target ) ) );
             MOCK_EXPECT( rtiAmbassador, PublishClass ).once().with( "BaseEntity.AggregateEntity", mock::any );
             MOCK_EXPECT( subject, Register ).once().with( mock::retrieve( listener ) );

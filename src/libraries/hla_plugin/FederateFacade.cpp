@@ -35,7 +35,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject,
     try
     {
         federate_->Connect();
-        joined_ = federate_->Join( name, false, true );
+        joined_ = federate_->Join( name );
     }
     catch( ::hla::HLAException& /*e*/ )
     {
