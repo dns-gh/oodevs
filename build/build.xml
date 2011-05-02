@@ -297,7 +297,7 @@
 
     <target name="application.launcher_dll" depends="library.clients_gui,library.frontend,library.protocol,library.shield" description="build Sword launcher dll">
         <build-lib name="launcher_dll" outtype="shared" mode="release" depends="boost,qt,xerces,xalan,protobuf" pattern="launcher-${platform}-mt"
-            libs="zipstream,zlib1,
+            libs="zipstream,zlib1,tools,
                   lib${ant.project.name}_clients_gui-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
