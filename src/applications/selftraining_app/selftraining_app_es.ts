@@ -22,8 +22,8 @@
         <translation>Aplicaciones en ejecución</translation>
     </message>
     <message>
-        <source>The FrontEnd is already running. Close ?</source>
-        <translation>Aplicación en ejecución ¿Desea cerrarla?</translation>
+        <source>The FrontEnd is already running. Start anyway ?</source>
+        <translation>Aplicación en ejecución ¿Inicio de todos modos?</translation>
     </message>
     <message>
         <source>SWORD</source>

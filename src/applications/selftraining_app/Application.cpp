@@ -95,14 +95,9 @@ void Application::Initialize()
     frontend::ProcessList processes;
     if( processes.Contains( "selftraining_app.exe" ) )
     {
-        MessageDialog message( mainWindow_, tools::translate( "Application", "Already running" ), tools::translate( "Application", "The FrontEnd is already running. Close ?"  ), QMessageBox::Yes, QMessageBox::No );
-        if( message.exec() == QMessageBox::Yes )
-            processes.KillAll( "selftraining_app.exe" );
-        else
-        {
-            closeAllWindows();
-            return;
-        }
+        MessageDialog message( mainWindow_, tools::translate( "Application", "Already running" ), tools::translate( "Application", "The FrontEnd is already running. Start anyway ?" ), QMessageBox::Yes, QMessageBox::No );
+        if( message.exec() == QMessageBox::No )
+        	closeAllWindows();
     }
     if( processes.Contains( "simulation_app.exe" ) )
     {
