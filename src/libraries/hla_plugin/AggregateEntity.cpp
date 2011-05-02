@@ -211,4 +211,5 @@ void AggregateEntity::UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) con
         entity.Serialize( serializer );
     }
     functor.Visit( ::hla::AttributeIdentifier( "SilentEntities" ), serializer );
+    compositionChanged_ = false;
 }
