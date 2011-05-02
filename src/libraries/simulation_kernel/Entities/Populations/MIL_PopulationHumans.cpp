@@ -246,12 +246,14 @@ void MIL_PopulationHumans::ApplyContamination()
 void MIL_PopulationHumans::ApplyIntoxication( double woundedPercentage, double deadPercentage )
 {
     unsigned int healthy = static_cast< unsigned int >( healthy_ * ( 1.f - woundedPercentage - deadPercentage ) );
-    unsigned int wounded = static_cast< unsigned int >( wounded_ + healthy_ * woundedPercentage );
-    unsigned int dead = static_cast< unsigned int >( dead_ + healthy_ * deadPercentage );
-    unsigned int total = healthy + wounded + dead + contaminated_;
+    unsigned int contaminated = static_cast< unsigned int >( contaminated_ * ( 1.f - woundedPercentage - deadPercentage ) );
+    unsigned int wounded = static_cast< unsigned int >( wounded_ + ( healthy_ + contaminated ) * woundedPercentage );
+    unsigned int dead = static_cast< unsigned int >( dead_ + ( healthy_ + contaminated ) * deadPercentage );
+    unsigned int total = healthy + wounded + dead + contaminated;
     if( total != GetAllHumans() )
         wounded += GetAllHumans() - total;
     healthy_ = healthy;
+    contaminated_ = contaminated;
     wounded_ = wounded;
     dead_ = dead;
 }

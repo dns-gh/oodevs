@@ -13,6 +13,7 @@
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
 #include "MIL_IntoxicationEffect.h"
+#include "MIL_ContaminationEffect.h"
 #include "Entities/Populations/Actions/PHY_FireResults_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -504,9 +505,17 @@ void MIL_PopulationElement_ABC::ClearCollisions()
 // Name: MIL_PopulationElement_ABC::ApplyContamination
 // Created: LGY 2011-03-30
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::ApplyContamination()
+void MIL_PopulationElement_ABC::ApplyContamination( const MIL_NbcAgentType& type )
 {
-    humans_.ApplyContamination();
+    const MIL_PopulationType& populationType = pPopulation_->GetType();
+    IT_ContaminationEffects it = contaminationEffects_.find( type.GetID() );
+    if( it == contaminationEffects_.end() )
+    {
+        boost::shared_ptr< MIL_ContaminationEffect > pEffect( new MIL_ContaminationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_AgentServer::GetWorkspace().GetRealTime() ) );
+        contaminationEffects_[ type.GetID() ] = pEffect;
+    }
+    else
+        it->second->Update( MIL_AgentServer::GetWorkspace().GetRealTime() );
     bHumansUpdated_ = true;
 }
 
@@ -517,12 +526,12 @@ void MIL_PopulationElement_ABC::ApplyContamination()
 void MIL_PopulationElement_ABC::ApplyIntoxication( const MIL_NbcAgentType& type )
 {
     const MIL_PopulationType& populationType = pPopulation_->GetType();
-    IT_Effects it = effects_.find( type.GetID() );
-    if( it == effects_.end() )
+    IT_IntoxicationEffects it = intoxicationEffects_.find( type.GetID() );
+    if( it == intoxicationEffects_.end() )
     {
-        boost::shared_ptr< MIL_IntoxicationEffect > pEffect( new MIL_IntoxicationEffect( humans_, populationType.GetDelay(), MIL_AgentServer::GetWorkspace().GetRealTime() ) );
+        boost::shared_ptr< MIL_IntoxicationEffect > pEffect( new MIL_IntoxicationEffect( humans_, static_cast< unsigned int >( populationType.GetDelay() ), MIL_AgentServer::GetWorkspace().GetRealTime() ) );
         type.InitializePopulationEffect( *pEffect );
-        effects_[ type.GetID() ] = pEffect;
+        intoxicationEffects_[ type.GetID() ] = pEffect;
     }
     else
         it->second->Update( MIL_AgentServer::GetWorkspace().GetRealTime() );

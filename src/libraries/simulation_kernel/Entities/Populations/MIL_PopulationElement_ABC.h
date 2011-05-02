@@ -24,6 +24,7 @@ class MIL_Population;
 class MIL_PopulationAttitude;
 class MIL_PopulationType;
 class MIL_IntoxicationEffect;
+class MIL_ContaminationEffect;
 class MT_Circle;
 class PHY_Volume;
 class PHY_FireResults_ABC;
@@ -72,7 +73,7 @@ public:
     void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult );
     void ApplyInjury( MIL_Injury_ABC& injury );
     void ApplyBurn( const MIL_BurnEffectManipulator& burn );
-    void ApplyContamination();
+    void ApplyContamination( const MIL_NbcAgentType& type );
     void ApplyIntoxication( const MIL_NbcAgentType& type );
     //@}
 
@@ -136,9 +137,13 @@ private:
     typedef std::vector< MIL_Agent_ABC* >   T_AgentVector;
     typedef T_AgentVector::const_iterator CIT_AgentVector;
 
-    typedef boost::shared_ptr< MIL_IntoxicationEffect > T_Effect;
-    typedef std::map< unsigned int, T_Effect >          T_Effects;
-    typedef T_Effects::iterator                        IT_Effects;
+    typedef boost::shared_ptr< MIL_IntoxicationEffect >    T_IntoxicationEffect;
+    typedef std::map< unsigned int, T_IntoxicationEffect > T_IntoxicationEffects;
+    typedef T_IntoxicationEffects::iterator               IT_IntoxicationEffects;
+
+    typedef boost::shared_ptr< MIL_ContaminationEffect >    T_ContaminationEffect;
+    typedef std::map< unsigned int, T_ContaminationEffect > T_ContaminationEffects;
+    typedef T_ContaminationEffects::iterator               IT_ContaminationEffects;
     //@}
 
 private:
@@ -153,7 +158,8 @@ private:
     // Network
     bool bAttitudeUpdated_;
     bool bHumansUpdated_;
-    T_Effects effects_;
+    T_IntoxicationEffects intoxicationEffects_;
+    T_ContaminationEffects contaminationEffects_;
     //@}
 };
 

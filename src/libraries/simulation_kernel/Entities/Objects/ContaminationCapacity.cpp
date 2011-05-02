@@ -134,7 +134,7 @@ void ContaminationCapacity::ProcessPopulationInside( MIL_Object_ABC& object, MIL
         const NBCAttribute::T_NBCAgents& agents = pNBC->GetNBCAgents();
         for( NBCAttribute::CIT_NBCAgents it = agents.begin(); it != agents.end(); ++it )
             if( (*it)->IsGasContaminating() || (*it)->IsLiquidContaminating() )
-                population.ApplyContamination();
+                population.ApplyContamination( **it );
     }
 }
 
