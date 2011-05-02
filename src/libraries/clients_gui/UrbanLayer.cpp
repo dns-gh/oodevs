@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "UrbanLayer.h"
 #include "TerrainObjectProxy.h"
+#include "View_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
@@ -25,6 +26,7 @@ using namespace gui;
 UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                         View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
     : EntityLayer< TerrainObjectProxy >( controllers, tools, strategy, view, profile, filter )
+    , view_          ( view )
     , selectedObject_( 0 )
 {
     // NOTHING
@@ -151,4 +153,13 @@ void UrbanLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& v
         viewport.SetHotpoint( position );
         entity.Draw( position, viewport, tools_ );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::ActivateEntity
+// Created: LGY 2011-05-02
+// -----------------------------------------------------------------------------
+void UrbanLayer::ActivateEntity( const kernel::Entity_ABC& entity )
+{
+    view_.CenterOn( entity.Get< kernel::UrbanPositions_ABC >().Barycenter() );
 }

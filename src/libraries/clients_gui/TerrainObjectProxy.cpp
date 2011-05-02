@@ -98,6 +98,15 @@ void TerrainObjectProxy::Select( ActionController& controller ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::Activate
+// Created: LGY 2011-05-02
+// -----------------------------------------------------------------------------
+void TerrainObjectProxy::Activate( kernel::ActionController& controller ) const
+{
+    controller.Activate( *this, *static_cast< const Entity_ABC* >( this ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy::CreateDictionary
 // Created: SLG 2009-12-08
 // -----------------------------------------------------------------------------

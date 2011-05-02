@@ -14,6 +14,7 @@
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
+#include "clients_gui/TerrainObjectProxy.h"
 #include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/InternalLinks.h"
@@ -25,7 +26,7 @@ using namespace gui;
 // Name: RcEntityResolver constructor
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-RcEntityResolver::RcEntityResolver(Controllers& controllers )
+RcEntityResolver::RcEntityResolver( Controllers& controllers )
     : controllers_( controllers )
 {
     controllers_.Register( *this );
@@ -131,6 +132,26 @@ void RcEntityResolver::NotifyDeleted( const PopulationKnowledge_ABC& element )
 }
 
 // -----------------------------------------------------------------------------
+// Name: RcEntityResolver::NotifyCreated
+// Created: LGY 2011-05-02
+// -----------------------------------------------------------------------------
+void RcEntityResolver::NotifyCreated( const Object_ABC& element )
+{
+    if( element.GetTypeName() == TerrainObjectProxy::typeName_ )
+        tools::Resolver< Object_ABC >::Register( element.GetId(), const_cast< Object_ABC& >( element ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RcEntityResolver::NotifyDeleted
+// Created: LGY 2011-05-02
+// -----------------------------------------------------------------------------
+void RcEntityResolver::NotifyDeleted( const Object_ABC& element )
+{
+    if( element.GetTypeName() == TerrainObjectProxy::typeName_ )
+        tools::Resolver< Object_ABC >::Remove( element.GetId() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: RcEntityResolver::CreateLink
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
@@ -146,6 +167,8 @@ QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) co
         return CreateLink< AgentKnowledge_ABC >( id );
     else if( type == PopulationKnowledge_ABC::typeName_ )
         return CreateLink< PopulationKnowledge_ABC >( id );
+    else if( type == TerrainObjectProxy::typeName_ )
+        return CreateLink< Object_ABC >( id );
     return QString::number( id );
 }
 

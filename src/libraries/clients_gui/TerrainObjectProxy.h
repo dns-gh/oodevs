@@ -62,12 +62,6 @@ public:
     virtual ~TerrainObjectProxy();
     //@}
 
-    //! @name Copy/Assignment
-    //@{
-    TerrainObjectProxy( const TerrainObjectProxy& );           //!< Copy constructor
-    TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignment operator
-    //@}
-
     //! @name Accessors
     //@{
     virtual QString GetName() const;
@@ -79,7 +73,7 @@ public:
     //@{
     virtual void DoUpdate( const sword::UrbanUpdate& msg );
     virtual void Select( kernel::ActionController& controller ) const;
-    virtual void Activate( kernel::ActionController& /*controller*/ ) const {}
+    virtual void Activate( kernel::ActionController& controller ) const;
     virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     virtual void Display( kernel::Displayer_ABC& ) const {}
     void UpdateHumans( const std::string& inhabitant, const T_BlockOccupation& occupations, bool alerted, bool confined, bool evacuated, float angriness );
@@ -87,6 +81,12 @@ public:
     //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    TerrainObjectProxy( const TerrainObjectProxy& );           //!< Copy constructor
+    TerrainObjectProxy& operator=( const TerrainObjectProxy& ); //!< Assignment operator
+    //@}
+
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );

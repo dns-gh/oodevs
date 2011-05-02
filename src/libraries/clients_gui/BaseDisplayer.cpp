@@ -360,7 +360,7 @@ void BaseDisplayer::Call( const kernel::KnowledgeGroup_ABC& value )
 // -----------------------------------------------------------------------------
 void BaseDisplayer::Clear()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
