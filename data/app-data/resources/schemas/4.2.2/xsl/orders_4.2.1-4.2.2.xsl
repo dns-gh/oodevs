@@ -11,6 +11,7 @@
     <xsl:template match="@type">
         <xsl:choose>
             <xsl:when test=".='objective' or .='Objective'"><xsl:attribute name="type">Point</xsl:attribute></xsl:when>
+            <xsl:when test=".='numeric' or .='Numeric'"><xsl:attribute name="type">Integer</xsl:attribute></xsl:when>
             <xsl:otherwise><xsl:copy></xsl:copy></xsl:otherwise>
         </xsl:choose>
     </xsl:template>
