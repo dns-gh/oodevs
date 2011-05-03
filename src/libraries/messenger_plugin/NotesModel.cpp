@@ -19,6 +19,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/filesystem/path.hpp>
+#include <directia/brain/Brain.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::messenger;
@@ -37,8 +38,9 @@ NotesModel::NotesModel( const dispatcher::Config& config, dispatcher::ClientPubl
     , clients_  ( clients )
     , idManager_( idManager )
     , fileName_ ( file )
+    , cursor_   ( 0 )
 {
-    LoadNotes( file );
+    LoadNotes( file, 0 );
     SaveNotes();
 }
 
@@ -239,21 +241,26 @@ void NotesModel::WriteNote( std::ostream& os, const Note& note, int& lineNumber,
 // Name: NotesModel::LoadNotes
 // Created: HBD 2010-02-15
 // -----------------------------------------------------------------------------
-void NotesModel::LoadNotes( const std::string& filename )
+unsigned int NotesModel::LoadNotes( const std::string& filename, unsigned int skip )
 {
     std::ifstream file( filename.c_str() );
     if( !file || file.fail() )
     {
         MT_LOG_INFO_MSG( "Cannot load note file : " << filename );
-        return;
+        return 0;
     }
     std::vector< unsigned int > notes;// id
     std::string currentLine;
-    // Skip first lines (header)
-    for( int i = 1; i < ::headerLines; ++i )
+    // Skip first lines
+    for( unsigned int i = 1; i < skip + ::headerLines; ++i )
         std::getline( file, currentLine );
+    unsigned int count = 0;
     while( std::getline( file, currentLine ) )
+    {
         ReadNote( currentLine, notes );
+        ++count;
+    }
+    return count;
 }
 
 // -----------------------------------------------------------------------------
@@ -268,6 +275,8 @@ void NotesModel::ReadNote( const std::string& input, std::vector< unsigned int >
     std::copy( esc_tokens.begin(), esc_tokens.end(), std::back_inserter( fields ) );
     try
     {
+        if( fields.size() != 6 )
+            return;
         const unsigned int parent = boost::lexical_cast< unsigned int >( fields[1] );
         notes.push_back( CreateNote( fields, parent ? notes[ parent - ::headerLines ] : 0 ) );
     }
@@ -302,4 +311,23 @@ unsigned int NotesModel::CreateNote( std::vector< std::string >& fields, const u
 void NotesModel::UpdateTime( const std::string& message )
 {
     currentTime_ = boost::posix_time::to_simple_string( boost::posix_time::from_iso_string( message ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotesModel::RegisterIn
+// Created: SBO 2011-05-02
+// -----------------------------------------------------------------------------
+void NotesModel::RegisterIn( directia::brain::Brain& brain )
+{
+    brain[ "markers" ] = this;
+    brain.Register( "CreateFromFile", &NotesModel::CreateFromFile );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotesModel::CreateFromFile
+// Created: SBO 2011-05-02
+// -----------------------------------------------------------------------------
+void NotesModel::CreateFromFile( const std::string& filename, bool tail )
+{
+    cursor_ += LoadNotes( config_.BuildSessionChildFile( filename ), tail ? cursor_ : 0 );
 }

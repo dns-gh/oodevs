@@ -46,6 +46,7 @@ Model::Model( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC&
     , clientObjects_( *new ClientObjectsModel( clients, *idManager_ ) )
 {
     registrables.Add( new dispatcher::RegistrableProxy( drawings_ ) );
+    registrables.Add( new dispatcher::RegistrableProxy( notes_ ) );
     Load();
 }
 

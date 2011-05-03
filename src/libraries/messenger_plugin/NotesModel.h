@@ -10,10 +10,11 @@
 #ifndef __NotesModel_h_
 #define __NotesModel_h_
 
+#include "dispatcher/Registrable_ABC.h"
 #include "protocol/MessengerSenders.h"
 #include "tools/Resolver.h"
 #include <boost/noncopyable.hpp>
-#include <fstream>
+#include <ostream>
 #include <list>
 
 namespace dispatcher
@@ -37,6 +38,7 @@ namespace messenger
 // =============================================================================
 class NotesModel : private boost::noncopyable
                  , public tools::Resolver< Note >
+                 , public dispatcher::Registrable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -47,7 +49,6 @@ public:
 
     //! @name Operations
     //@{
-    void LoadNotes( const std::string& filename );
     void SaveNotes();
     void UpdateTime( const std::string& time );
     //@}
@@ -62,12 +63,15 @@ public:
 private:
     //! @name Helpers
     //@{
+    unsigned int LoadNotes( const std::string& filename, unsigned int skip );
     void HandleRequestDestructSingle( Note* note );
     void HandleRequestDestructCascade( Note* note );
     void ReadNote( const std::string& input, std::vector< unsigned int >& notes );
     void WriteNote( std::ostream& os, const Note& note, int& lineNumber, int parentLine );
     void CreateHeader( std::ostream& os );
-    unsigned int CreateNote( std::vector<std::string>& note, const unsigned int parent );
+    unsigned int CreateNote( std::vector< std::string >& note, const unsigned int parent );
+    virtual void RegisterIn( directia::brain::Brain& brain );
+    void CreateFromFile( const std::string& filename, bool tail );
     //@}
 
     //! @name Types
@@ -85,6 +89,7 @@ private:
     const std::string                fileName_;
     std::list< unsigned int >        headNotes_;
     std::string                      currentTime_;
+    unsigned int                     cursor_;
     //@}
 };
 
