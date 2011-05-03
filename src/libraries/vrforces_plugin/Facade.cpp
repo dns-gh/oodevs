@@ -17,6 +17,7 @@
 #include <vrforces/vrfBeListener.h>
 #include <vrforces/vrfController.h>
 #pragma warning( pop )
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::vrforces;
 
@@ -24,8 +25,10 @@ using namespace plugins::vrforces;
 // Name: Facade constructor
 // Created: SBO 2011-01-20
 // -----------------------------------------------------------------------------
-Facade::Facade( DtExerciseConn& connection )
+Facade::Facade( DtExerciseConn& connection, xml::xistream& xis )
     : controller_( createVrfRemoteController() )
+    , models_( xis.attribute< std::string >( "scenario", "../data/simulationModelSets/default.sms" ) )
+    , scenario_( xis.attribute< std::string >( "scenario", "../data/terrain/WorldFlatEarth.mtd" ) )
 {
     if( !controller_.get() )
         throw std::runtime_error( __FUNCTION__ ": unable to create Vrf Remote Controller" );
@@ -84,8 +87,8 @@ void Facade::StartScenario( const DtSimulationAddress& address )
 {
     address_ = address;
     std::vector< DtString > simulationModelFiles;
-    simulationModelFiles.push_back( "../data/simulationModelSets/default.sms" );
-    controller_->newScenario( "../data/terrain/WorldFlatEarth.mtd", "../data/terrain/WorldFlatEarth.mtd", simulationModelFiles );
+    simulationModelFiles.push_back( models_.c_str() );
+    controller_->newScenario( scenario_.c_str(), scenario_.c_str(), simulationModelFiles );
 }
 
 // -----------------------------------------------------------------------------

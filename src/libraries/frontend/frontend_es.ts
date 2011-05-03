@@ -415,5 +415,13 @@ Conexión SDE: sde://user:password@host:port/db_name.sword</translation>
         <source>FOM: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Models: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scenario: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

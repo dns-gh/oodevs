@@ -48,6 +48,16 @@ VrForcesPluginConfigPanel::VrForcesPluginConfigPanel( QWidget* parent, const too
         QHBox* box = Style( new QHBox( box_ ) );
         fom_ = Style( new QLineEdit( "VR-Link.fed", box ) );
     }
+    {
+        Style( new QLabel( tools::translate( "VrForcesPluginConfigPanel", "Models: " ), box_ ) );
+        QHBox* box = Style( new QHBox( box_ ) );
+        models_ = Style( new QLineEdit( "../data/simulationModelSets/default.sms", box ) );
+    }
+    {
+        Style( new QLabel( tools::translate( "VrForcesPluginConfigPanel", "Scenario: " ), box_ ) );
+        QHBox* box = Style( new QHBox( box_ ) );
+        scenario_ = Style( new QLineEdit( "../data/terrain/WorldFlatEarth.mtd", box ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -79,6 +89,8 @@ void VrForcesPluginConfigPanel::Commit( const std::string& exercise, const std::
         frontend::CreateSession action( config_, exercise, session );
         action.SetOption( "session/config/dispatcher/plugins/vrforces/@library", library_ );
         action.SetOption( "session/config/dispatcher/plugins/vrforces/@fom", fom_->text() );
+        action.SetOption( "session/config/dispatcher/plugins/vrforces/@models", models_->text() );
+        action.SetOption( "session/config/dispatcher/plugins/vrforces/@scenario", scenario_->text() );
         action.Commit();
     }
 }

@@ -51,6 +51,8 @@ private:
     const std::string library_;
     QGroupBox* box_;
     QLineEdit* fom_;
+    QLineEdit* models_;
+    QLineEdit* scenario_;
     //@}
 };
 }

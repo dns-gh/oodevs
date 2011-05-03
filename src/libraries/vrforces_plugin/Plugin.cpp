@@ -31,14 +31,14 @@ using namespace plugins::vrforces;
 // Name: Plugin constructor
 // Created: SBO 2011-01-19
 // -----------------------------------------------------------------------------
-Plugin::Plugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, xml::xistream& /*xis*/ )
+Plugin::Plugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, xml::xistream& xis )
     : model_        ( model )
     , simulation_   ( simulation )
     , forceResolver_( new ForceResolver( model_ ) )
     , typeResolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
     , logger_       ( new DtFilePrinter( config.BuildSessionChildFile( "vrforces.log" ).c_str() ) )
     , connection_   ( new DtExerciseConn( DtVrlApplicationInitializer( 0, 0, "VR-Forces Plugin" ) ) )
-    , vrForces_     ( new Facade( *connection_ ) )
+    , vrForces_     ( new Facade( *connection_, xis ) )
     , disaggregator_( new DisaggregationStrategy( *vrForces_ ) )
 {
     DtWarn.attachPrinter( logger_.get() );

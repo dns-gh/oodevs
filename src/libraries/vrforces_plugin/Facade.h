@@ -25,6 +25,11 @@ class DtReflectedObject;
 class DtString;
 class DtVrfRemoteController;
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace plugins
 {
 namespace vrforces
@@ -44,7 +49,7 @@ class Facade : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Facade( DtExerciseConn& connection );
+             Facade( DtExerciseConn& connection, xml::xistream& xis );
     virtual ~Facade();
     //@}
 
@@ -86,6 +91,8 @@ private:
     std::auto_ptr< DtVrfRemoteController > controller_;
     std::auto_ptr< DtReflectedAggregateList > reflectedAggregates_;
     std::auto_ptr< DtReflectedEntityList > reflectedEntities_;
+    const std::string models_;
+    const std::string scenario_;
     DtSimulationAddress address_;
     T_ReflectedCreationListeners listeners_;
     T_AggregateResolver addedAggregates_;
