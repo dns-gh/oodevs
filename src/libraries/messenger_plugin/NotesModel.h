@@ -37,13 +37,13 @@ namespace messenger
 // Created: HBD 2010-01-15
 // =============================================================================
 class NotesModel : private boost::noncopyable
-                 , public tools::Resolver< Note >
+                 , private tools::Resolver< Note >
                  , public dispatcher::Registrable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager , const std::string& file );
+             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager, const std::string& file );
     virtual ~NotesModel();
     //@}
 
@@ -72,12 +72,16 @@ private:
     unsigned int CreateNote( std::vector< std::string >& note, const unsigned int parent );
     virtual void RegisterIn( directia::brain::Brain& brain );
     void CreateFromFile( const std::string& filename, bool tail );
+    void OpenContext( const std::string& name );
+    void CloseContext();
+    void ClearContext();
     //@}
 
     //! @name Types
     //@{
     typedef std::list< unsigned long > T_List;
     typedef T_List::const_iterator     CIT_List;
+    typedef std::map< std::string, T_List > T_ContextNotes;
     //@}
 
 private:
@@ -90,6 +94,8 @@ private:
     std::list< unsigned int >        headNotes_;
     std::string                      currentTime_;
     unsigned int                     cursor_;
+    T_ContextNotes                   contexts_;
+    std::string                      currentContext_;
     //@}
 };
 

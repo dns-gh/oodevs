@@ -296,6 +296,8 @@ unsigned int NotesModel::CreateNote( std::vector< std::string >& fields, const u
     boost::algorithm::replace_all( fields[3], "<br>", "\n" );
     std::auto_ptr< Note > note( new Note( id, fields, parent, currentTime_ ) );
     Register( note->GetId(), *note );
+    if( !currentContext_.empty() )
+        contexts_[ currentContext_ ].push_back( note->GetId() );
     if( note->GetParent() )
         if( Note* parent = Find( note->GetParent() ) )
             parent->AddChild( note->GetId() );
@@ -329,5 +331,42 @@ void NotesModel::RegisterIn( directia::brain::Brain& brain )
 // -----------------------------------------------------------------------------
 void NotesModel::CreateFromFile( const std::string& filename, bool tail )
 {
+    OpenContext( filename );
+    ClearContext();
     cursor_ += LoadNotes( config_.BuildSessionChildFile( filename ), tail ? cursor_ : 0 );
+    CloseContext();
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotesModel::OpenContext
+// Created: SBO 2011-05-03
+// -----------------------------------------------------------------------------
+void NotesModel::OpenContext( const std::string& name )
+{
+    currentContext_ = name;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotesModel::CloseContext
+// Created: SBO 2011-05-03
+// -----------------------------------------------------------------------------
+void NotesModel::CloseContext()
+{
+    currentContext_ = "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotesModel::ClearContext
+// Created: SBO 2011-05-03
+// -----------------------------------------------------------------------------
+void NotesModel::ClearContext()
+{
+    T_ContextNotes::iterator contextIt = contexts_.find( currentContext_ );
+    if( contextIt != contexts_.end() )
+        while( !contextIt->second.empty() )
+        {
+            if( Note* note = Find( contextIt->second.front() ) )
+                HandleRequestDestructSingle( note );
+            contextIt->second.pop_front();
+        }
 }
