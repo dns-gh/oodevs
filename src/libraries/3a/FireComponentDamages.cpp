@@ -21,6 +21,15 @@ FireComponentDamages::FireComponentDamages()
 }
 
 // -----------------------------------------------------------------------------
+// Name: FireComponentDamages destructor
+// Created: FPO 2011-04-29
+// -----------------------------------------------------------------------------
+FireComponentDamages::~FireComponentDamages()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: FireComponentDamages constructor
 // Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------

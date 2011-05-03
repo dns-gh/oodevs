@@ -12,6 +12,8 @@
 
 #include "Values.h"
 #include "FireComponentDamages.h"
+#include "FireHumanDamages.h"
+#include "WoundHumans.h"
 
 // =============================================================================
 /** @namespace  Existences
@@ -37,6 +39,8 @@ namespace events
     };
 
 typedef Event< extractors::FireComponentDamages > FireComponentDamages;
+typedef Event< extractors::FireHumanDamages > FireHumanDamages;
+typedef Event< extractors::WoundHumans > WoundHumans;
 
 }
 

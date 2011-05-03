@@ -10,8 +10,7 @@
 #ifndef __IdentifierValue_h_
 #define __IdentifierValue_h_
 
-#include "Values.h"
-#include "Types.h"
+#include "IdentifierValue_ABC.h"
 
 // =============================================================================
 /** @class  IdentifierValue
@@ -19,7 +18,7 @@
 */
 // Created: AGE 2007-08-28
 // =============================================================================
-struct IdentifierValue : public InstantValue< NumericValue >
+struct IdentifierValue : public IdentifierValue_ABC
 {
 
     enum { has_parameter = false };
@@ -30,7 +29,7 @@ struct IdentifierValue : public InstantValue< NumericValue >
 
     //! @name Operations
     //@{
-    void Receive( const sword::SimToClient& wrapper )
+    virtual void Receive( const sword::SimToClient& wrapper )
     {
         if( wrapper.message().has_order_ack() && wrapper.message().order_ack().tasker().has_unit() )
             Set( wrapper.message().order_ack().tasker().unit().id() );

@@ -39,7 +39,7 @@ ExtractorsFactory::~ExtractorsFactory()
 namespace
 {
     template< typename Value, typename Identifier >
-    void Extract( const std::string& name, Task& result, const DispatcherFactory< IdentifierValue, Value >& factory )
+    void Extract( const std::string& name, Task& result, const DispatcherFactory< Identifier, Value >& factory )
     {
         typedef FunctionConnector< Identifier::Type, typename Value::Type > Connector;
         boost::shared_ptr< Connector > connector( new Connector() );
@@ -89,6 +89,10 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
         Extract< existences::DirectFireUnitId, IdentifierValue >( name, xis, result );
     else if( value == "fire-component-damage" )
         Extract< events::FireComponentDamages, IdentifierValue >( name, xis, result );
+    else if( value == "fire-human-damage" )
+        Extract< events::FireHumanDamages, IdentifierValue >( name, xis, result );
+    else if( value == "woundhumans" )
+        Extract< events::WoundHumans, extractors::WoundHumans::IdentifierValue >( name, xis, result );
     else if( value == "detecting-unit" )
         Extract< attributes::Detections, IdentifierValue >( name, xis, result );
     else if( value == "mounted" )

@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __FireComponentDamages_h_
-#define __FireComponentDamages_h_
+#ifndef __FireHumanDamages_h_
+#define __FireHumanDamages_h_
 
 #include "Extractors.h"
 #include "FilterHelper.h"
@@ -17,13 +17,12 @@ namespace extractors
 {
 
 // =============================================================================
-/** @class  FireComponentDamages
-    @brief  FireComponentDamages
-            components='id1,id2,...'
+/** @class  FireHumanDamages
+    @brief  FireHumanDamages
 */
-// Created: AGE 2007-10-24
+// Created: FPO 2011-04-29
 // =============================================================================
-class FireComponentDamages : public Extractor< NumericValue >
+class FireHumanDamages : public Extractor< NumericValue >
 {
 public:
     //! @name Types
@@ -34,9 +33,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-                 FireComponentDamages();
-    /*implicit*/ FireComponentDamages( xml::xistream& xis );
-    virtual     ~FireComponentDamages();
+             FireHumanDamages();
+    /*implicit*/ FireHumanDamages( xml::xistream& xis );
+    virtual ~FireHumanDamages();
     //@}
 
     //! @name Operations
@@ -51,10 +50,12 @@ public:
 private:
     //! @name Member data
     //@{
+    int rankMask_;
+    int stateMask_;
     FilterHelper< int > filter_;
     //@}
 };
 
 }
 
-#endif // __FireComponentDamages_h_
+#endif // __FireHumanDamages_h_
