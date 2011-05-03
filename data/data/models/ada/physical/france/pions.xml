@@ -11905,7 +11905,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="sword.military.platoon.terrorism.roles.Terrorist" id="450" name="Terroriste V1STAB" type="Pion ASY">
+  <unit decisional-model="france.military.platoon.terrorism.roles.Terrorist" id="450" name="Terroriste V1STAB" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Terroriste"/>
@@ -11930,7 +11930,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.role.IndividuIsole" id="451" name="Pion test individu isole" type="Pion Civilian">
+  <unit decisional-model="france.military.platoon.terrorism.roles.IndividuIsole" id="451" name="Pion test individu isole" type="Pion Civilian">
     <nature atlas-nature="None" level="none" nature-app6="undefined"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Foule"/>
@@ -11951,4 +11951,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0012441377" -->
+<!-- signature="1522882127" -->
