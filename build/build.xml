@@ -1052,7 +1052,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.exo,package.debug,package.otpacks,package.wise-driver" description="package the installers and packs"/>
+    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver" description="package the installers and packs"/>
 
     <!-- Package misc -->
     <target name="package.patch" description="create a patch installer">
@@ -1088,92 +1088,173 @@
         </nsis>
     </target>
 
-    <!-- Package Exo -->
-    <target name="package.exo" depends="package.exo.defense.france,package.exo.defense.worldwide,package.exo.defense.scipio,package.exo.security.worldwide,package.exo.security.masa" description="package the exercices installers"/>
-
-    <target name="package.exo.defense.worldwide" description="package des exercices worldwide defense">
-        <nsis name="sword" script="exo-pack.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DEXO_PACK=defense-worldwide"/>
-            <arg value="/DUNINSTALL_LOG=uninstall-defense-worldwide"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.exo.defense.france" description="package des exercices france defense">
-        <nsis name="sword" script="exo-pack.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DEXO_PACK=defense-france"/>
-            <arg value="/DUNINSTALL_LOG=uninstall-defense-france"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.exo.defense.scipio" description="package des exercices scipio defense">
-        <nsis name="sword" script="exo-pack.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DEXO_PACK=defense-scipio"/>
-            <arg value="/DUNINSTALL_LOG=uninstall-defense-scipio"/>
-            <arg value="/X!include sword-defense.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.exo.security.worldwide" description="package des exercices worldwide security">
-        <nsis name="sword" script="exo-pack.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DEXO_PACK=security-worldwide"/>
-            <arg value="/DUNINSTALL_LOG=uninstall-security-worldwide"/>
-            <arg value="/X!include sword-security.nsh"/>
-        </nsis>
-    </target>
-
-    <target name="package.exo.security.masa" description="package des exercices demo masa security">
-        <nsis name="sword" script="exo-pack.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
-            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/DEXO_PACK=security-masa"/>
-            <arg value="/DUNINSTALL_LOG=uninstall-security-masa"/>
-            <arg value="/X!include sword-security.nsh"/>
-        </nsis>
-    </target>
-
     <!-- Package packs -->
     <macrodef name="pack">
         <attribute name="name"/>
         <attribute name="description"/>
-        <attribute name="includes"/>
+        <element name="otpack-include" implicit="yes"/>
         <sequential>
             <echoxml file="${out.dir}/content.xml">
                 <content>
                     <name>@{name}</name>
-                    <description>@{desc}</description>
+                    <description>@{description}</description>
                 </content>
             </echoxml>
             <zip destfile="${dist.dir}/SWORD_@{name}_${version.major}.otpak" filesonly="true">
-                <fileset dir="${data.dir}" includes="@{includes}"/>
+                <fileset dir="${data.dir}">
+                    <otpack-include/>
+                </fileset>
                 <fileset dir="${out.dir}" includes="content.xml"/>
             </zip>
             <delete file="${out.dir}/content.xml"/>
         </sequential>
     </macrodef>
  
-    <target name="package.otpacks" depends="package.otpack.lossc,package.otpack.cetac,package.otpack.tutosw" description="package the exercise otpacks"/>
- 
+    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.france,package.otpack.defense.scipio,package.otpack.security.worldwide,package.otpack.security.masa,package.otpack.lossc,package.otpack.cetac,package.otpack.tutosw" description="package the exercise otpacks"/>
+
+    <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
+        <pack name="defense-worldwide" description="defense-worldwide exercises package">
+            <include name="data/models/ada/physical/worldwide/**"/>
+            <include name="data/propagations/test/**"/>
+            <include name="exercises/Egypt/**"/>
+            <include name="exercises/Paris/**"/>
+            <include name="exercises/Scripting demo/**"/>
+            <include name="exercises/9_cases/**"/>
+            <include name="exercises/Musoria Border Defense/**"/>
+            <include name="exercises/tutorials/01 - Generalities/**"/>
+            <include name="exercises/tutorials/02 - Gaming/**"/>
+            <include name="exercises/tutorials/03 - Missions/**"/>
+            <include name="exercises/tutorials/04 - Armor units/**"/>
+            <include name="exercises/tutorials/05 - Infantry/**"/>
+            <include name="exercises/tutorials/06 - Engineering/**"/>
+            <include name="exercises/tutorials/07 - Artillery/**"/>
+            <include name="exercises/tutorials/08 - Logistic/**"/>
+            <include name="exercises/tutorials/09 - Air units/**"/>
+            <include name="exercises/tutorials/10 - NBC/**"/>
+            <include name="exercises/tutorials/11 - Preparation/**"/>
+            <include name="exercises/tutorials/12 - AAR/**"/>
+            <include name="exercises/tutorials/13 - Advanced features/**"/>
+            <include name="data/terrains/Nord egypt/**"/>
+            <include name="data/terrains/Paris_Est/**"/>
+            <include name="data/terrains/test/**"/>
+            <include name="data/terrains/Angers_x9/**"/>
+        </pack>
+    </target>
+
+    <target name="package.otpack.defense.france" description="package du defense-france otpack">
+        <pack name="defense-france" description="defense-france exercises package">
+            <include name="data/models/ada/physical/france/**"/>
+            <include name="data/propagations/test/**"/>
+            <include name="exercises/Cabourg/**"/>
+            <include name="exercises/BMDrosoville/**"/>
+            <include name="exercises/TerrainDifficile/**"/>
+            <include name="exercises/Poseidon VA/**"/>
+            <include name="exercises/tutorials/01 - Generalites/**"/>
+            <include name="exercises/tutorials/02 - Jeu/**"/>
+            <include name="exercises/tutorials/03 - Mission/**"/>
+            <include name="exercises/tutorials/04 - ABC/**"/>
+            <include name="exercises/tutorials/05 - Infanterie/**"/>
+            <include name="exercises/tutorials/06 - Genie/**"/>
+            <include name="exercises/tutorials/07 - Artillerie/**"/>
+            <include name="exercises/tutorials/071 - NRBC/**"/>
+            <include name="exercises/tutorials/072 - ALAT/**"/>
+            <include name="exercises/tutorials/073 - LOG/**"/>
+            <include name="exercises/tutorials/08 - Fonctions Avancees/**"/>
+            <include name="exercises/tutorials/09 - Rejeu et AAA/**"/>
+            <include name="exercises/tutorials/10 - Preparation/**"/>
+            <include name="exercises/tests/capteurs/**"/>
+            <include name="exercises/tests/capteurs-delai/**"/>
+            <include name="exercises/tests/nested_knowledge_groups/**"/>
+            <include name="exercises/tests/suicide/**"/>
+            <include name="exercises/tests/Test1_9_2/**"/>
+            <include name="exercises/tests/ValidationTests/**"/>
+            <include name="exercises/tests/ValidationTests aux tomates/**"/>
+            <include name="exercises/tests/ValidationTests LOG/**"/>
+            <include name="exercises/tests/ValidationTests LOG 1_9_2/**"/>
+            <include name="exercises/tests/Water/**"/>
+            <include name="exercises/tests/missions/**"/>
+            <include name="exercises/tests/embrayer/**"/>
+            <include name="exercises/tests/jamming-shoot/**"/>
+            <include name="exercises/tests/attrition/**"/>
+            <include name="exercises/tests/coi/**"/>
+            <include name="exercises/tests/Meteo/**"/>
+            <include name="exercises/tests/embrayerAuto/**"/>
+            <include name="data/terrains/Nord egypt/**"/>
+            <include name="data/terrains/Paris_Est/**"/>
+            <include name="data/terrains/Malaisie/**"/>
+            <include name="data/terrains/Cabourg/**"/>
+            <include name="data/terrains/Drosoville_France/**"/>
+            <include name="data/terrains/Angers_x9/**"/>
+            <include name="data/terrains/PortoV3Lite/**"/>
+        </pack>
+    </target>
+
+    <target name="package.otpack.defense.scipio" description="package du defense-scipio otpack">
+        <pack name="defense-scipio" description="defense-scipio exercises package">
+            <include name="data/models/ada/physical/scipio-1.9.2/**"/>
+            <include name="data/propagations/test/**"/>
+            <include name="exercises/Porto - 1.9.2/**"/>
+            <include name="exercises/BMDrosoville-1.9.2/**"/>
+            <include name="exercises/tests/test1_increment1_v1stab/**"/>
+            <include name="exercises/Poseidon VA/**"/>
+            <include name="exercises/exercisesVA/Poseidon VA Missions Communes/**"/>
+            <include name="exercises/exercisesVA/Poseidon VA pions/**"/>
+            <include name="exercises/exercisesVA/Poseidon VA Automates/**"/>
+            <include name="exercises/AToutFaire/**"/>
+            <include name="data/terrains/Porto/**"/>
+            <include name="data/terrains/Drosoville/**"/>
+            <include name="data/terrains/Mailly/**"/>
+            <include name="data/terrains/PortoV3Lite/**"/>
+            <include name="data/terrains/PortoV3/**"/>
+        </pack>
+    </target>
+
+    <target name="package.otpack.security.worldwide" description="package du security-worldwide otpack">
+        <pack name="security-worldwide" description="security-worldwide exercises package">
+            <include name="data/models/ada/physical/worldwide/**"/>
+            <include name="data/models/ada/physical/security-fr/**"/>
+            <include name="data/propagations/test/**"/>
+            <include name="exercises/bruxelles/**"/>
+            <include name="exercises/CODAH_JANUS/**"/>
+            <include name="data/terrains/bruxelles/**"/>
+            <include name="data/terrains/lehavre_4.2.0/**"/>
+        </pack>
+    </target>
+
+    <target name="package.otpack.security.masa" description="package du security-masa otpack">
+        <pack name="security-masa" description="security-masa exercises package">
+            <include name="data/models/ada/physical/security-fr/**"/>
+            <include name="data/propagations/test/**"/>
+            <include name="exercises/bruxelles/**"/>
+            <include name="exercises/CODAH_JANUS/**"/>
+            <include name="exercises/montereycross/**"/>
+            <include name="data/terrains/bruxelles/**"/>
+            <include name="data/terrains/lehavre_4.2.0/**"/>
+            <include name="data/terrains/montereycross/**"/>
+        </pack>
+    </target>
+
     <target name="package.otpack.lossc" description="package du LOSSC otpack">
-        <pack name="LOSSC" description="LOSSC exercises package"
-              includes="exercises/LOSSC Scenario 1/**,exercises/LOSSC Scenario 2/**,exercises/LOSSC Scenario 3/**,data/terrains/afghan_kabuldist/**"/>
+        <pack name="LOSSC" description="LOSSC exercises package">
+            <include name="exercises/LOSSC Scenario 1/**"/>
+            <include name="exercises/LOSSC Scenario 2/**"/>
+            <include name="exercises/LOSSC Scenario 3/**"/>
+            <include name="data/terrains/afghan_kabuldist/**"/>
+        </pack>
     </target>
 
     <target name="package.otpack.cetac" description="package du CETAC otpack">
-        <pack name="CETAC" description="CETAC exercise package" includes="exercises/CETAC_worldwide/**,data/terrains/CETAC_dted1/**"/>
+        <pack name="CETAC" description="CETAC exercise package">
+            <include name="exercises/CETAC_worldwide/**"/>
+            <include name="data/terrains/CETAC_dted1/**"/>
+        </pack>
     </target>
 
     <target name="package.otpack.tutosw" description="package du Tuto_sw otpack">
-        <pack name="tutosw" description="tuto_sw exercises package" includes="exercises/Tuto_sw/**,data/terrains/Sw_terrain2/**"/>
+        <pack name="tutosw" description="tuto_sw exercises package">
+            <include name="exercises/Tuto_sw/**"/>
+            <include name="data/terrains/Sw_terrain2/**"/>
+        </pack>
     </target>
 
     <!--
