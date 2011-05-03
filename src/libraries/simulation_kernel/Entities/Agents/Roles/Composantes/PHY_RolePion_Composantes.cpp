@@ -67,8 +67,9 @@ PHY_RolePion_Composantes::T_ComposanteTypeProperties::T_ComposanteTypeProperties
 bool PHY_RolePion_Composantes::T_ComposanteTypeProperties::HasUsableComposantes() const
 {
     unsigned int i = 0;
-    for( std::vector< unsigned int >::const_iterator it = nbrsPerState_.begin(); it != nbrsPerState_.end(); ++it, ++i )
-        if( *it > 0 && PHY_ComposanteState::Find( i ).IsUsable() )
+    unsigned int size = nbrsPerState_.size();
+    for( ; i < size; ++i )
+        if( nbrsPerState_[i] > 0 && PHY_ComposanteState::Find( i ).IsUsable() )
             return true;
     return false;
 }
