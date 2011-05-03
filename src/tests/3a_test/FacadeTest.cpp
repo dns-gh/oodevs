@@ -112,6 +112,81 @@ namespace
         resource.set_quantity( variation );
         return result;
     }
+    SimToClient CreateUnitDetection( unsigned int detector, unsigned int detected, sword::UnitVisibility::Level visibility )
+    {
+        SimToClient result;
+        sword::UnitDetection& message = *result.mutable_message()->mutable_unit_detection();
+        message.mutable_observer()->set_id( detector );
+        message.mutable_detected_unit()->set_id( detected );
+        message.set_current_visibility( visibility );
+        message.set_max_visibility( visibility );
+        return result;
+    }
+    SimToClient MakeMounted( bool mounted, unsigned long id )
+    {
+        SimToClient result;
+        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        attributes.mutable_unit()->set_id( id );
+        attributes.set_embarked( mounted );
+        return result;
+    }
+    SimToClient MakeHumanVariation( int state[8], unsigned long id )
+    {
+        SimToClient result;
+        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        attributes.mutable_unit()->set_id( id );
+        HumanDotations_HumanDotation& personnel = *attributes.mutable_human_dotations()->add_elem();
+        personnel.set_rank( sword::officer );
+        personnel.set_total( state[0] );
+        personnel.set_operational( state[1] );
+        personnel.set_dead( state[2] );
+        personnel.set_wounded( state[3] );
+        personnel.set_mentally_wounded( state[4] );
+        personnel.set_contaminated( state[5] );
+        personnel.set_healing( state[6] );
+        personnel.set_maintenance( state[7] );
+        personnel.set_unevacuated_wounded( 0 );
+        return result;
+    }
+    SimToClient CreateDirectFire( unsigned fire_id, unsigned long firer )
+    {
+        SimToClient result;
+        StartUnitFire& fire = *result.mutable_message()->mutable_start_unit_fire();
+        fire.mutable_fire()->set_id( fire_id );
+        fire.mutable_firing_unit()->set_id( firer );
+        return result;
+    }
+    SimToClient StopFire( unsigned fire_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0 )
+    {
+        SimToClient result;
+        StopUnitFire& fire = *result.mutable_message()->mutable_stop_unit_fire();
+        fire.mutable_fire()->set_id( fire_id );
+        UnitFireDamages& damage = *fire.mutable_units_damages()->add_elem();
+        damage.mutable_equipments()->add_elem()->set_unavailable( damage_count );
+        damage.mutable_humans()->add_elem()->set_dead( deadhumans_count );
+        damage.mutable_target()->set_id( target_id );
+        return result;
+    }
+    SimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0  )
+    {
+        SimToClient result;
+        LogMaintenanceHandlingCreation& creation = *result.mutable_message()->mutable_log_maintenance_handling_creation();
+        creation.mutable_request()->set_id( id );
+        creation.mutable_unit()->set_id( unit_id ) ;
+        return result;
+    }
+
+    SimToClient DestroyConsign( unsigned long id )
+    {
+        SimToClient result;
+        LogMaintenanceHandlingDestruction& destruction = *result.mutable_message()->mutable_log_maintenance_handling_destruction();
+        destruction.mutable_request()->set_id( id );
+        return result;
+    }
+    bool IsCloseCombatPower( const extractors::PowerExtractor_ABC& extractor )
+    {
+        return dynamic_cast< const extractors::CloseCombatPower* >( &extractor ) != 0;
+    }
     class Fixture
     {
     public:
@@ -230,18 +305,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDistanceBetweenTwoUnits, Fixture )
     task->Commit();
 }
 
-namespace
-{
-    SimToClient MakeMounted( bool mounted, unsigned long id )
-    {
-        SimToClient result;
-        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_unit()->set_id( id );
-        attributes.set_embarked( mounted );
-        return result;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Facade_TestMountedUnit
 // Created: SBO 2010-07-12
@@ -281,26 +344,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTypeInstanciationIsVerifiedAtRuntime, Fixtur
                              "    <reduce type='position' function='sum' input='position' id='position2'/>" // summing positions
                              "</indicator>" );
     BOOST_CHECK_THROW( facade.CreateTask( xis >> xml::start( "indicator" ) ), std::invalid_argument );
-}
-
-namespace
-{
-    SimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0  )
-    {
-        SimToClient result;
-        LogMaintenanceHandlingCreation& creation = *result.mutable_message()->mutable_log_maintenance_handling_creation();
-        creation.mutable_request()->set_id( id );
-        creation.mutable_unit()->set_id( unit_id ) ;
-        return result;
-    }
-
-    SimToClient DestroyConsign( unsigned long id )
-    {
-        SimToClient result;
-        LogMaintenanceHandlingDestruction& destruction = *result.mutable_message()->mutable_log_maintenance_handling_destruction();
-        destruction.mutable_request()->set_id( id );
-        return result;
-    }
 }
 
 // $$$$ AGE 2007-09-13: AU_NTI1 => liste de pannes
@@ -379,27 +422,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter, Fixture )
     task->Commit();
 }
 
-namespace
-{
-    SimToClient CreateDirectFire( unsigned fire_id, unsigned long firer )
-    {
-        SimToClient result;
-        StartUnitFire& fire = *result.mutable_message()->mutable_start_unit_fire();
-        fire.mutable_fire()->set_id( fire_id );
-        fire.mutable_firing_unit()->set_id( firer );
-        return result;
-    }
-    SimToClient StopFire( unsigned fire_id, unsigned long damage_count = 0 )
-    {
-        SimToClient result;
-        StopUnitFire& fire = *result.mutable_message()->mutable_stop_unit_fire();
-        fire.mutable_fire()->set_id( fire_id );
-        UnitFireDamages& damage = *fire.mutable_units_damages()->add_elem();
-        damage.mutable_equipments()->add_elem()->set_unavailable( damage_count );
-        return result;
-    }
-}
-
 //CREATE PROCEDURE dbo.[AAAT_MELEE-APPUI_NOMBRE_DE_COUPS_DIRECTS_TIRES_PAR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2]
 //(
 //  @TDebut DATETIME,           -- Date de debut de l'intervalle
@@ -427,22 +449,22 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter, Fixture )
     task->Receive( CreateDirectFire( 13, 13 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( StopFire( 12 ) );
-    task->Receive( StopFire( 13 ) );
+    task->Receive( StopFire( 12, 16 ) );
+    task->Receive( StopFire( 13, 16 ) );
     task->Receive( CreateDirectFire( 14, 14 ) );
     task->Receive( CreateDirectFire( 15, 15 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( StopFire( 13 ) );
-    task->Receive( StopFire( 14 ) );
-    task->Receive( StopFire( 15 ) );
+    task->Receive( StopFire( 13, 16 ) );
+    task->Receive( StopFire( 14, 18 ) );
+    task->Receive( StopFire( 15, 19 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( CreateDirectFire( 16, 15 ) );
     task->Receive( CreateDirectFire( 17, 42 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( StopFire( 16 ) );
+    task->Receive( StopFire( 16, 16 ) );
     task->Receive( CreateDirectFire( 18, 13 ) );
     task->Receive( CreateDirectFire( 19, 14 ) );
     task->Receive( EndTick() );
@@ -479,25 +501,25 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire, Fix
     task->Receive( CreateDirectFire( 13, 13 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( StopFire( 12, 5 ) );
-    task->Receive( StopFire( 13 ) );
+    task->Receive( StopFire( 12, 16, 5 ) );
+    task->Receive( StopFire( 13, 16 ) );
     task->Receive( CreateDirectFire( 14, 14 ) );
     task->Receive( CreateDirectFire( 15, 15 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( StopFire( 13 ) );
-    task->Receive( StopFire( 14 ) );
-    task->Receive( StopFire( 15 ) );
+    task->Receive( StopFire( 13, 16 ) );
+    task->Receive( StopFire( 14, 18 ) );
+    task->Receive( StopFire( 15, 19 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( CreateDirectFire( 16, 15 ) );
     task->Receive( CreateDirectFire( 17, 42 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( StopFire( 16 ) );
+    task->Receive( StopFire( 16, 18 ) );
     task->Receive( CreateDirectFire( 18, 13 ) );
     task->Receive( CreateDirectFire( 19, 14 ) );
-    task->Receive( StopFire( 17, 3 ) );
+    task->Receive( StopFire( 17, 16, 3 ) );
     task->Receive( EndTick() );
     double expectedResult[] = { 0., 5., 0., 0., 3. };
     MakeExpectation( publisher, expectedResult );
@@ -533,25 +555,25 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithC
     task->Receive( CreateDirectFire( 13, 13 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( StopFire( 12, 5 ) );
-    task->Receive( StopFire( 13 ) );
+    task->Receive( StopFire( 12, 18, 5 ) );
+    task->Receive( StopFire( 13, 19 ) );
     task->Receive( CreateDirectFire( 14, 14 ) );
     task->Receive( CreateDirectFire( 15, 15 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( StopFire( 13 ) );
-    task->Receive( StopFire( 14 ) );
-    task->Receive( StopFire( 15 ) );
+    task->Receive( StopFire( 13, 14 ) );
+    task->Receive( StopFire( 14, 13 ) );
+    task->Receive( StopFire( 15, 18 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( CreateDirectFire( 16, 15 ) );
     task->Receive( CreateDirectFire( 17, 42 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( StopFire( 16 ) );
+    task->Receive( StopFire( 16, 13 ) );
     task->Receive( CreateDirectFire( 18, 13 ) );
     task->Receive( CreateDirectFire( 19, 14 ) );
-    task->Receive( StopFire( 17, 3 ) );
+    task->Receive( StopFire( 17, 17, 3 ) );
     task->Receive( EndTick() );
     double expectedResult[] = { 0., 5., 0., 0., 3. };
     MakeExpectation( publisher, expectedResult );
@@ -717,28 +739,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestEquipments, Fixture )
     task->Commit();
 }
 
-namespace
-{
-    SimToClient MakeHumanVariation( int state[8], unsigned long id )
-    {
-        SimToClient result;
-        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_unit()->set_id( id );
-        HumanDotations_HumanDotation& personnel = *attributes.mutable_human_dotations()->add_elem();
-        personnel.set_rank( sword::officer );
-        personnel.set_total( state[0] );
-        personnel.set_operational( state[1] );
-        personnel.set_dead( state[2] );
-        personnel.set_wounded( state[3] );
-        personnel.set_mentally_wounded( state[4] );
-        personnel.set_contaminated( state[5] );
-        personnel.set_healing( state[6] );
-        personnel.set_maintenance( state[7] );
-        personnel.set_unevacuated_wounded( 0 );
-        return result;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Facade_TestHumans
 // Created: AGE 2004-12-15
@@ -820,32 +820,18 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestConflicts, Fixture )
     task->Receive( BeginTick() );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( StopFire( 12 ) );
-    task->Receive( StopFire( 13 ) );
+    task->Receive( StopFire( 12, 18 ) );
+    task->Receive( StopFire( 13, 19 ) );
     task->Receive( CreateDirectFire( 14, 55 ) );
     task->Receive( CreateDirectFire( 15, 56 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
-    task->Receive( StopFire( 14 ) );
-    task->Receive( StopFire( 15 ) );
+    task->Receive( StopFire( 14, 16 ) );
+    task->Receive( StopFire( 15, 13 ) );
     task->Receive( EndTick() );
     double expectedResult[] = { 2, 4, 8, 10 };
     MakeExpectation( publisher, expectedResult );
     task->Commit();
-}
-
-namespace
-{
-    SimToClient CreateUnitDetection( unsigned int detector, unsigned int detected, sword::UnitVisibility::Level visibility )
-    {
-        SimToClient result;
-        sword::UnitDetection& message = *result.mutable_message()->mutable_unit_detection();
-        message.mutable_observer()->set_id( detector );
-        message.mutable_detected_unit()->set_id( detected );
-        message.set_current_visibility( visibility );
-        message.set_max_visibility( visibility );
-        return result;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -978,14 +964,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, F
     double expectedResult[] = { 1, 2, 3, 3, 3 };
     MakeExpectation( publisher, expectedResult );
     task->Commit();
-}
-
-namespace
-{
-    bool IsCloseCombatPower( const extractors::PowerExtractor_ABC& extractor )
-    {
-        return dynamic_cast< const extractors::CloseCombatPower* >( &extractor ) != 0;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1135,14 +1113,14 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnavailableEquipmentsForUnitList, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableEquipmentsInSpecifiedZone, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-        "<extract function='equipments' states='available' id='equipments' equipments='12,42'/>"
-        "<extract function='position' id='positions'/>"
-        "<constant type='zone' value='circle(31TCM1508386208,31TCM1410587214)' id='circle'/>"
-        "<transform function='contains' input='circle,positions' id='selected-units'/>"
-        "<transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>"
-        "<reduce type='int' function='sum' input='filtered-positions' id='3'/>"
-        "<result function='plot' input='3' type='int'/>"
-        "</indicator>" );
+                             "<extract function='equipments' states='available' id='equipments' equipments='12,42'/>"
+                             "<extract function='position' id='positions'/>"
+                             "<constant type='zone' value='circle(31TCM1508386208,31TCM1410587214)' id='circle'/>"
+                             "<transform function='contains' input='circle,positions' id='selected-units'/>"
+                             "<transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>"
+                             "<reduce type='int' function='sum' input='filtered-positions' id='3'/>"
+                             "<result function='plot' input='3' type='int'/>"
+                             "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int variation[5] = { 5, 0, 0, 0, 0 };
     int variation2[5] = { 1, 0, 0, 0, 0 };
@@ -1167,6 +1145,111 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableEquipmentsInSpecifiedZone, Fixture 
 }
 
 // -----------------------------------------------------------------------------
+// Name: Facade_TestUnavailableEquipmentsInSpecifiedZone
+// Created: FPO 2011-04-28
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestUnavailableEquipmentsInSpecifiedZone, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "<extract function='equipments' states='unavailable,repairable,repairing,captured' id='equipments' equipments='12,42'/>"
+                             "<extract function='position' id='positions'/>"
+                             "<constant type='zone' value='circle(31TCM1508386208,31TCM1410587214)' id='circle'/>"
+                             "<transform function='contains' input='circle,positions' id='selected-units'/>"
+                             "<transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>"
+                             "<reduce type='int' function='sum' input='filtered-positions' id='3'/>"
+                             "<result function='plot' input='3' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int variation[5] = { 10, 1, 1, 1, 2 };
+    int variation2[5] = { 0, 0, 1, 0, 0 };
+    sword::SimToClient  message = MakeEquipementVariation( variation, 17, 42 );
+    task->Receive( BeginTick() );
+    task->Receive( MakePosition( "31TCM1508386208", 17 ) );
+    task->Receive( MakePosition( "31TCM1543486826", 15 ) );
+    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
+    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakePosition( "31TCM0960387104", 18 ) );
+    task->Receive( MakeEquipementVariation( variation2, 18, 42 ) );
+    task->Receive( MakeEquipementVariation( variation2, 17, 12 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( variation, 17, 12 ) );
+    task->Receive( EndTick() );
+    double expectedResult[] = { 10, 11, 15 };
+    MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestDestroyedEquipmentsInSpecifiedZone
+// Created: FPO 2011-04-28
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestDestroyedEquipmentsInSpecifiedZone, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "<extract function='equipments' states='unavailable' id='equipments' equipments='12,42'/>"
+                             "<extract function='position' id='positions'/>"
+                             "<constant type='zone' value='circle(31TCM1508386208,31TCM1410587214)' id='circle'/>"
+                             "<transform function='contains' input='circle,positions' id='selected-units'/>"
+                             "<transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>"
+                             "<reduce type='int' function='sum' input='filtered-positions' id='3'/>"
+                             "<result function='plot' input='3' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int variation[5] = { 10, 5, 1, 1, 2 };
+    int variation2[5] = { 0, 1, 1, 0, 0 };
+    task->Receive( BeginTick() );
+    task->Receive( MakePosition( "31TCM1508386208", 17 ) );
+    task->Receive( MakePosition( "31TCM1543486826", 15 ) );
+    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
+    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakePosition( "31TCM0960387104", 18 ) );
+    task->Receive( MakeEquipementVariation( variation2, 18, 42 ) );
+    task->Receive( MakeEquipementVariation( variation2, 17, 12 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( variation, 17, 12 ) );
+    task->Receive( EndTick() );
+    double expectedResult[] = { 10, 11, 15 };
+    MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestDestroyedEquipmentsInSpecifiedZoneWithPolygon
+// Created: FPO 2011-04-28
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestDestroyedEquipmentsInSpecifiedZoneWithPolygon, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "<extract function='equipments' states='unavailable' id='equipments' equipments='12,42'/>"
+                             "<extract function='position' id='positions'/>"
+                             "<constant type='zone' value='polygon(31TBN9260307999,31TBN9768407716,31TBN9516711524)' id='defined-polygon'/>"
+                             "<transform function='contains' input='defined-polygon,positions' id='selected-units'/>"
+                             "<transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>"
+                             "<reduce type='int' function='sum' input='filtered-positions' id='3'/>"
+                             "<result function='plot' input='3' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int variation[5] = { 10, 5, 1, 1, 2 };
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
+    task->Receive( MakePosition( "31TBN9525308404", 17 ) );
+    task->Receive( MakePosition( "31TCM1543486826", 15 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( EndTick() );
+    double expectedResult[] = { 5, 5 };
+    MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Facade_TestDeadHumansForUnitList
 // Created: FPO 2011-04-26
 // -----------------------------------------------------------------------------
@@ -1179,7 +1262,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansForUnitList, Fixture )
                              "<result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    int state[8] = { 0, 0, 1, 0, 0, 0, 0, 0 };
+    int state[8] = { 1, 0, 1, 0, 0, 0, 0, 0 };
     task->Receive( BeginTick() );
     task->Receive( MakeHumanVariation( state, 42 ) );
     task->Receive( EndTick() );
@@ -1207,9 +1290,43 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalHumansForUnitList, Fixture )
                              "<result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    int state[8] = { 0, 1, 0, 0, 0, 0, 0, 0 };
+    int state[8] = { 2, 1, 0, 0, 0, 1, 0, 0 };
     task->Receive( BeginTick() );
     task->Receive( MakeHumanVariation( state, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( MakeHumanVariation( state, 17 ) );
+    task->Receive( MakeHumanVariation( state, 18 ) );
+    task->Receive( EndTick() );
+    {
+        double expectedResult[] = { 1, 2 };
+        MakeExpectation( publisher, expectedResult );
+    }
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestOperationalHumansForSpecifiedZone
+// Created: FPO 2011-04-29
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalHumansForSpecifiedZone, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "<extract function='humans' states='operational' ranks='officer,sub-officer,troopers' id='humans'/>"
+                             "<extract function='position' id='positions'/>"
+                             "<constant type='zone' value='circle(31TCM1508386208,31TCM1410587214)' id='circle'/>"
+                             "<transform function='contains' input='circle,positions' id='selected-units'/>"
+                             "<transform function='filter' id='filtered-positions' input='selected-units,humans' type='int'/>"
+                             "<reduce type='int' function='sum' input='filtered-positions' id='sum'/>"
+                             "<result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int state[8] = { 2, 1, 0, 0, 0, 0, 1, 0 };
+    task->Receive( BeginTick() );
+    task->Receive( MakePosition( "31TCM1508386208", 17 ) );
+    task->Receive( MakePosition( "31TCM1543486826", 15 ) );
+    task->Receive( MakePosition( "31TCM0960387104", 18 ) );
+    task->Receive( MakeHumanVariation( state, 15 ) );
     task->Receive( EndTick() );
     task->Receive( BeginTick() );
     task->Receive( MakeHumanVariation( state, 17 ) );
@@ -1235,7 +1352,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestWoundedHumansForUnitList, Fixture )
                              "<result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    int state[8] = { 0, 0, 0, 1, 0, 0, 0, 0 };
+    int state[8] = { 3, 0, 0, 3, 1, 0, 0, 0 };
     task->Receive( BeginTick() );
     task->Receive( MakeHumanVariation( state, 42 ) );
     task->Receive( EndTick() );
@@ -1244,7 +1361,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestWoundedHumansForUnitList, Fixture )
     task->Receive( MakeHumanVariation( state, 18 ) );
     task->Receive( EndTick() );
     {
-        double expectedResult[] = { 1, 2 };
+        double expectedResult[] = { 3, 6 };
         MakeExpectation( publisher, expectedResult );
     }
     task->Commit();
@@ -1257,10 +1374,10 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestWoundedHumansForUnitList, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableResourcesForUnitList, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "<extract function='resources' id='1' resources='47,51'/>"
-                             "<transform function='domain' type='int' select='12,17' input='1' id='2'/>"
-                             "<reduce type='int' function='sum' input='2' id='3'/>"
-                             "<result function='plot' input='3' type='int'/>"
+                             "    <extract function='resources' id='1' resources='47,51'/>"
+                             "    <transform function='domain' type='int' select='12,17' input='1' id='2'/>"
+                             "    <reduce type='int' function='sum' input='2' id='3'/>"
+                             "    <result function='plot' input='3' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( BeginTick() );
@@ -1277,6 +1394,135 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableResourcesForUnitList, Fixture )
         double expectedResult[] = { 4212, 9612, 9612 };
         MakeExpectation( publisher, expectedResult );
     }
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestNumberOfDirectFires
+// Created: FPO 2011-04-29
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFires, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='direct-fire-unit' id='fires'/>"
+                             "    <reduce type='unsigned long' function='count' input='fires' id='count'/>"
+                             "    <result function='plot' input='count' type='unsigned'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 12, 12 ) );
+    task->Receive( CreateDirectFire( 13, 13 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 12, 16 ) );
+    task->Receive( StopFire( 13, 18 ) );
+    task->Receive( CreateDirectFire( 14, 14 ) );
+    task->Receive( CreateDirectFire( 15, 15 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 13, 19 ) );
+    task->Receive( StopFire( 14, 23 ) );
+    task->Receive( StopFire( 15, 26 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 16, 15 ) );
+    task->Receive( CreateDirectFire( 17, 42 ) );
+    task->Receive( StopFire( 16, 28 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 18, 13 ) );
+    task->Receive( CreateDirectFire( 19, 14 ) );
+    task->Receive( EndTick() );
+    double expectedResult[] = { 2., 4., 2., 2., 3. };
+    MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestDeadHumansFromDirectFire
+// Created: FPO 2011-04-29
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFire, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='fire-human-damage' id='damages' ranks='officer,sub-officer,troopers' states='dead'/>"
+                             "    <extract function='direct-fire-unit' id='units'/>"
+                             "    <transform function='is-one-of' type='unsigned long' select='12,42' input='units' id='selected-fires'/>"
+                             "    <transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
+                             "    <reduce type='float' function='sum' input='the-damages' id='sum'/>"
+                             "    <result function='plot' input='sum' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 12, 12 ) );
+    task->Receive( CreateDirectFire( 13, 13 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 12, 26, 2, 5 ) );
+    task->Receive( StopFire( 13, 14 ) );
+    task->Receive( CreateDirectFire( 14, 14 ) );
+    task->Receive( CreateDirectFire( 15, 15 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 13, 13 ) );
+    task->Receive( StopFire( 14, 12 ) );
+    task->Receive( StopFire( 15, 14 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 16, 15 ) );
+    task->Receive( CreateDirectFire( 17, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 16, 17 ) );
+    task->Receive( CreateDirectFire( 18, 13 ) );
+    task->Receive( CreateDirectFire( 19, 14 ) );
+    task->Receive( StopFire( 17, 16, 4, 6 ) );
+    task->Receive( EndTick() );
+    double expectedResult[] = { 0., 5., 0., 0., 6. };
+    MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestWoundHumansFromDirectFire
+// Created: FPO 2011-04-29
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestWoundHumansFromDirectFire, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+        "    <extract function='woundhumans' id='damages' ranks='officer,sub-officer,troopers' states='dead'/>"
+        "    <reduce type='float' function='select' input='damages' key='2' id='selected-damages'/>"
+        "    <reduce type='float' function='sum' input='selected-damages' id='sum'/>"
+        "    <result function='plot' input='sum' type='float'/>"
+        "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 12, 12 ) );
+    task->Receive( CreateDirectFire( 13, 13 ) );
+    task->Receive( StopFire( 13, 21 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 12, 2, 2, 5 ) );
+    task->Receive( StopFire( 13, 21 ) );
+    task->Receive( CreateDirectFire( 14, 14 ) );
+    task->Receive( CreateDirectFire( 15, 15 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 14, 26 ) );
+    task->Receive( StopFire( 15, 24 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( CreateDirectFire( 16, 15 ) );
+    task->Receive( CreateDirectFire( 17, 42 ) );
+    task->Receive( EndTick() );
+    task->Receive( BeginTick() );
+    task->Receive( StopFire( 16, 11 ) );
+    task->Receive( CreateDirectFire( 18, 13 ) );
+    task->Receive( CreateDirectFire( 19, 14 ) );
+    task->Receive( StopFire( 17, 2, 4, 2 ) );
+    task->Receive( EndTick() );
+    double expectedResult[] = { 0., 5., 0., 0., 2. };
+    MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
