@@ -38,10 +38,10 @@ ExtractorsFactory::~ExtractorsFactory()
 
 namespace
 {
-    template< typename Value >
+    template< typename Value, typename Identifier >
     void Extract( const std::string& name, Task& result, const DispatcherFactory< IdentifierValue, Value >& factory )
     {
-        typedef FunctionConnector< IdentifierValue::Type, typename Value::Type > Connector;
+        typedef FunctionConnector< Identifier::Type, typename Value::Type > Connector;
         boost::shared_ptr< Connector > connector( new Connector() );
         boost::shared_ptr< ModelFunction_ABC > function( factory(
             connector->handlers_.KeyParameter(),
@@ -49,17 +49,17 @@ namespace
         result.AddExtractor( function );
         result.AddConnector( name, connector );
     }
-    template< typename Value >
+    template< typename Value, typename Identifier >
     void Extract( const std::string& name, xml::xistream& xis, Task& result )
     {
-        DispatcherFactory< IdentifierValue, Value > factory( xis );
-        Extract( name, result, factory );
+        DispatcherFactory< Identifier, Value > factory( xis );
+        Extract< Value, Identifier >( name, result, factory );
     }
-    template< typename Value >
+    template< typename Value, typename Identifier >
     void Extract( const std::string& name, xml::xistream& xis, Task& result, const aar::StaticModel_ABC& model )
     {
-        DispatcherFactory< IdentifierValue, Value > factory( xis, model );
-        Extract( name, result, factory );
+        DispatcherFactory< Identifier, Value > factory( xis, model );
+        Extract< Value, Identifier >( name, result, factory );
     }
 }
 
@@ -74,33 +74,33 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
     std::string value, name;
     xis >> xml::attribute( "function", value ) >> xml::attribute( "id", name );
     if( value == "operational-state" )
-        Extract< attributes::OperationalState >( name, xis, result );
+        Extract< attributes::OperationalState, IdentifierValue >( name, xis, result );
     else if( value == "position" )
-        Extract< attributes::Position >( name, xis, result );
+        Extract< attributes::Position, IdentifierValue >( name, xis, result );
     else if( value == "resources" )
-        Extract< attributes::Resources >( name, xis, result );
+        Extract< attributes::Resources, IdentifierValue >( name, xis, result );
     else if( value == "equipments" )
-        Extract< attributes::Equipments >( name, xis, result );
+        Extract< attributes::Equipments, IdentifierValue >( name, xis, result );
     else if( value == "humans" )
-        Extract< attributes::Humans >( name, xis, result );
+        Extract< attributes::Humans, IdentifierValue >( name, xis, result );
     else if( value == "maintenance-handling-unit" )
-        Extract< existences::MaintenanceHandlingUnitId >( name, xis, result );
+        Extract< existences::MaintenanceHandlingUnitId, IdentifierValue >( name, xis, result );
     else if( value == "direct-fire-unit" )
-        Extract< existences::DirectFireUnitId >( name, xis, result );
+        Extract< existences::DirectFireUnitId, IdentifierValue >( name, xis, result );
     else if( value == "fire-component-damage" )
-        Extract< events::FireComponentDamages >( name, xis, result );
+        Extract< events::FireComponentDamages, IdentifierValue >( name, xis, result );
     else if( value == "detecting-unit" )
-        Extract< attributes::Detections >( name, xis, result );
+        Extract< attributes::Detections, IdentifierValue >( name, xis, result );
     else if( value == "mounted" )
-        Extract< attributes::Mounted >( name, xis, result );
+        Extract< attributes::Mounted, IdentifierValue >( name, xis, result );
     else if( value == "direct-fire-power" )
-        Extract< attributes::DirectFirePower >( name, xis, result, model_ );
+        Extract< attributes::DirectFirePower, IdentifierValue >( name, xis, result, model_ );
     else if( value == "indirect-fire-power" )
-        Extract< attributes::IndirectFirePower >( name, xis, result, model_ );
+        Extract< attributes::IndirectFirePower, IdentifierValue >( name, xis, result, model_ );
     else if( value == "close-combat-power" )
-        Extract< attributes::CloseCombatPower >( name, xis, result, model_ );
+        Extract< attributes::CloseCombatPower, IdentifierValue >( name, xis, result, model_ );
     else if( value == "engineering-power" )
-        Extract< attributes::EngineeringPower >( name, xis, result, model_ );
+        Extract< attributes::EngineeringPower, IdentifierValue >( name, xis, result, model_ );
     else
         throw std::runtime_error( "Unknown value to extract '" + value + "'" );
 }
