@@ -152,8 +152,6 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
 
     // Critical Intelligence
     brain[ "DEC_ObtenirRenseignementCritiqueSurPion" ] = &DEC_KnowledgeAgentFunctions::GetCriticalIntelligence;
-    brain[ "DEC_ObtenirRenseignementCritiqueSurFoule" ] =
-         boost::function< std::string( int ) >(boost::bind( &DEC_KnowledgePopulationFunctions::GetCriticalIntelligence, boost::cref( GetPion() ), _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -923,4 +921,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     DEC_CommunicationFunctions::Register( brain );
 
     pEntity_->GetType().RegisterFunctions( brain, GetPion() );
+    //
+    // Critical Intelligence
+    brain[ "DEC_ObtenirRenseignementCritiqueSurFoule" ] =
+         boost::function< std::string( int ) >(boost::bind( &DEC_KnowledgePopulationFunctions::GetCriticalIntelligence, boost::cref( GetPion() ), _1 ) );
 }
