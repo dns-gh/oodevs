@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/reconnaitre zone/ReconnaitreZone - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_GEN_ReconnaitreZone
 ]]--[[//
@@ -168,7 +170,7 @@ node "BEH_Medo_Automate_GEN_MRT_FaireReconnaitre"
 ]]--[[//-----------------------------------------------------------------------------
 ]]                end
 
-                for _,pion in pairs( self._namedParams.listePionsGenie or {} ) do
+                for _,pion in pairs( self._namedParams.listePionsGenie or emptyTable ) do
                 local _continue = true
 do
                         if( self.rIterateurSecteur == #( self.listeZones ) ) then

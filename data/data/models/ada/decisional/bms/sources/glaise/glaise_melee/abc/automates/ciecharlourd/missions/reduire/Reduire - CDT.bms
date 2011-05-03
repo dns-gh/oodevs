@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharlourd/missions/reduire/Reduire - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created$
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Esc Xl/Missions/Reduire/Reduire - CDT.hal $
@@ -39,7 +41,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharlourd/missions/r
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_ABC_Reduire, 1, {} )--[[//---------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_ABC_Reduire, 1, emptyTable )--[[//---------------------------------------------------------------------
 ]]--[[// Comportement génériques
 ]]--[[//---------------------------------------------------------------------
 ]]

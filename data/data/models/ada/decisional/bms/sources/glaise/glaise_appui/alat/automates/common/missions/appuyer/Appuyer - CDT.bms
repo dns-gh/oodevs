@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/appuyer/Appuyer - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[//
 ]]--[[// Commentaires : pas de gestion de l'étallement du dispositif
@@ -51,7 +53,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/appuye
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         --[[// donner des missions aux pions qui sont opérationnels et qui ne sont pas en cours
 ]]--[[// de ravitaillement
@@ -82,7 +84,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
         self.listeAppuyer = {}
         local compteur = 0
         for _,x in pairs( --[[//1 unité qui appui pour deux qui détruisent
-]]self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours or {} ) do
+]]self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours or emptyTable ) do
         local _continue = true
 do
                 if( compteur == 0 ) then
@@ -111,7 +113,7 @@ do
                     --[[//Tir sur riposte si est unites a appuyer sont dans une position
 ]]--[[//favorable, sinon, tir libre.
 ]]local bBesoinAppuisFeu = false
-                    for _,x in pairs( self.listePionsAAppuyer or {} ) do
+                    for _,x in pairs( self.listePionsAAppuyer or emptyTable ) do
                     local _continue = true
 do
                             local pionDEC = x
@@ -125,13 +127,13 @@ do
 
                     if( bBesoinAppuisFeu ) then
                         do
-                            Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                            Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, emptyTable )
+                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
                         end
                     else
 do
-                            Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                            Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
+                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
                         end
 --[[// missions
 ]]                    end
@@ -158,7 +160,7 @@ do
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eSExfiltrer then
-                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
                                 cases_switch_1[2] = true

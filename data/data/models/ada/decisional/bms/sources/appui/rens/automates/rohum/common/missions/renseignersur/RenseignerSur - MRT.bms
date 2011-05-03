@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/RenseignerSur - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Medo_Automate_RENS_ROHUM_AssignerRenseignerA
 ]]--[[//
@@ -48,7 +50,7 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/
                         DEC_Trace( "Impossiblde de trouver des sous secteurs dans localisation" )
                         --[[// JCR : 11/08/2005 10:55                        
 ]]DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                                 self:SendFeedback( eActionImpossible )
                         do return end
 
@@ -59,7 +61,7 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/renseignersur/
                 for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des mission une par une au pion (pas simultanément)
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPions or {} ) do
+]]self._namedParams.selPions or emptyTable ) do
                 local _continue = true
 do
                         if( self.rIterateurSecteur == #( listeSousSecteurs ) ) then

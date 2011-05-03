@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/pions/missions/FaireMouvement.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: SDE 02-04-16 $
@@ -44,7 +46,7 @@ includedFiles["sources/appui/trans/pions/missions/FaireMouvement.bms"] = true
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do

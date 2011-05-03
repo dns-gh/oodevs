@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artfdp/pions/sam sic/missions/AssurerMiseEnOeuvre2Zones.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[/** \file S VAB - Actions.hal
  *
@@ -53,7 +55,7 @@ node "MIS_Pion_ASS_AssurerMiseEnOeuvre2Zones"
 ]]        end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -73,7 +75,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 ]]self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMettreEnOeuvre then
-                    Activate( self.activations.ACT_Pion_ASS_DebarquerLanceur, 1, {} )
+                    Activate( self.activations.ACT_Pion_ASS_DebarquerLanceur, 1, emptyTable )
                     Activate( self.activations.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, GetMotivation( "MOT_Mission" ), { M_DELAI_PREPARATION_RECO_SAM(), } )
                     _continue = false
                                 cases_switch_1[1] = true

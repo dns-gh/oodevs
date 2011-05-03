@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/missions/fairemouvement/MRT - FaireMouvement.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_FaireMouvement
 ]]--[[// 
@@ -97,7 +99,7 @@ node "BEH_Medo_Automate_AssignerFaireMouvementA"
         local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then
-for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementSurItA, 1, { ePhase_MRT, pion, self.mission.itineraire_, } )
 

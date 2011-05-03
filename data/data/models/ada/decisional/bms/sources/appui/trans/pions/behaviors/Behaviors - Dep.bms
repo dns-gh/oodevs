@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Dep.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Dep_ProgressionVers
 ]]--[[//
@@ -50,7 +52,7 @@ includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Dep.bms"] = true
 
         Activate( self.activations.BEH_Dep_SeDeplacer, 1, { self.it, } )
 self.done_BEH_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Observation
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -99,7 +101,7 @@ node "BEH_Dep_SeDeplacer"
             end
         end
 
-        Activate( self.activations.ACT_Pions_SeDesinstaller, 1, {} )
+        Activate( self.activations.ACT_Pions_SeDesinstaller, 1, emptyTable )
         if( not DEC_Agent_EstDesinstalle() ) then
             do return end
         end

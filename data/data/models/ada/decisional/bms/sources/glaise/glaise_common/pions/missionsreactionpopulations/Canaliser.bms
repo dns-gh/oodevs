@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/missionsreactionpopulations/Canaliser.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_CanaliserPopulations
 ]]--[[//
@@ -36,7 +38,7 @@ includedFiles["sources/glaise/glaise_common/pions/missionsreactionpopulations/Ca
         self.localisation = self.localisation or self._namedParams.mission.zone_
         self.objectif = self.objectif or nil
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -105,7 +107,7 @@ elseif switch_1 == eAnimer then
                             Activate( self.activations.ACT_Pion_Canaliser, 1, { self.localisation, } )
                         end
 
-                        Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, {} )
+                        Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, emptyTable )
 self.done_BEH_Dep_Virtuel_PreparationAction = function( self, _, v ) self.ePreparation = v[1] end
                         _continue = false
                     end
@@ -113,7 +115,7 @@ self.done_BEH_Dep_Virtuel_PreparationAction = function( self, _, v ) self.ePrepa
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                                         Halt( self )
                     do return end
 

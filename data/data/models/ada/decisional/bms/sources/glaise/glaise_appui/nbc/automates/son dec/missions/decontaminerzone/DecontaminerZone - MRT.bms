@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/nbc/automates/son dec/missions/decontaminerzone/DecontaminerZone - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_NBC_DecontaminerUneZone
 ]]--[[// 
@@ -31,7 +33,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/son dec/missions/decont
                 DEC_Trace( "$ MIS_Automate_MRT_NBC_DecontaminerUneZone: $" )
                 DEC_SetMission( myself, self._namedParams.mission )
                 local listePionsSubordonnes = DEC_Automate_PionsSansPC()
-                for _,x in pairs( listePionsSubordonnes or {} ) do
+                for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x

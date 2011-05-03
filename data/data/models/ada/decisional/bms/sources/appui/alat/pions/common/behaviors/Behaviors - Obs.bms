@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Obs.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//------------------------------------------------------------------------------
 ]]--[[// ReconnaitreZones (T_Localisation)
 ]]--[[//
@@ -40,7 +42,7 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Obs.bms"] =
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     Activate( self.activations.ACT_Obs_Pions_ALAT_EnregistrerPuisAllerReconnaitreNonVus, 1, { self._namedParams.zone, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -53,9 +55,9 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Obs.bms"] =
                         end
                     end
 
-                    for _,x in pairs( DEC_Connaissances_UnitesEnnemiesDangereuses() or {} ) do
+                    for _,x in pairs( DEC_Connaissances_UnitesEnnemiesDangereuses() or emptyTable ) do
                     local _continue = true
-for _,y in pairs( DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone ) or {} ) do
+for _,y in pairs( DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone ) or emptyTable ) do
                         local _continue = true
 if( x == y ) then
                                 self:SendFeedback( eActionEffectuee )
@@ -279,7 +281,7 @@ node "BEH_Eni_Pion_ALAT_GererUnitesDetectes"
         --[[// variable persistantes
 ]]self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
         local listeUnitesDetecteesDansFuseau = DEC_Connaissances_UnitesDetecteesDansFuseau()
-        for _,x in pairs( listeUnitesDetecteesDansFuseau or {} ) do
+        for _,x in pairs( listeUnitesDetecteesDansFuseau or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstMort( x ) ) then

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/BehaviorsReactionPopulations.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -43,9 +45,9 @@ include "Common/Pions/behaviors/behaviors - POP - Rens.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_ROE_Recevoir_OrdreInopinePopulation, 1, {} )
-        Activate( self.activations.BEH_Pop_RC, 1, {} )
-        Activate( self.activations.BEH_Pop_RenseignerAuContact, 1, {} )
+        Activate( self.activations.BEH_ROE_Recevoir_OrdreInopinePopulation, 1, emptyTable )
+        Activate( self.activations.BEH_Pop_RC, 1, emptyTable )
+        Activate( self.activations.BEH_Pop_RenseignerAuContact, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -83,7 +85,7 @@ node "BEH_Pop_RC"
 
         local lstPops = DEC_Connaissances_Populations()
         local populationDangereuse = false
-        for _,pop in pairs( lstPops or {} ) do
+        for _,pop in pairs( lstPops or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissancePopulation_Dangerosite( pop ) > 1 ) then
@@ -115,7 +117,7 @@ do
 ]]local lstPopsPAP = DEC_Connaissances_PopulationsPrenantAPartie()
         local rNouvellesPopPAP = 0
         local rTailleNouvelleListe = #( lstPopsPAP )
-        for _,pop in pairs( lstPopsPAP or {} ) do
+        for _,pop in pairs( lstPopsPAP or emptyTable ) do
         local _continue = true
 if( not DEC_UserTypeList_Contient( self.lstPopsPAPenCours, pop ) ) then
                 do

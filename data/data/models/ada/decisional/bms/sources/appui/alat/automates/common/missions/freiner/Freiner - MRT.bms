@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/missions/freiner/Freiner - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -41,7 +43,7 @@ node "MIS_Automate_MRT_ALAT_Freiner"
                 --[[//1 pion de reserve pour 3 qui peuvent Freiner
 ]]local nbPionsReserve = nbPionsPouvantFreiner / 3
                 for _,x in pairs( --[[//construction de la liste des pions en reserve
-]]self.listePatrouillesPeutFaireMissionFreiner or {} ) do
+]]self.listePatrouillesPeutFaireMissionFreiner or emptyTable ) do
                 local _continue = true
                     do
                         if( nbPionsReserve < 1 ) then
@@ -69,8 +71,8 @@ node "MIS_Automate_MRT_ALAT_Freiner"
                     end
                 end
 
-                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
         end
 
@@ -100,7 +102,7 @@ node "MIS_Automate_MRT_ALAT_Freiner"
                     if( not self.affectationFuseauOk ) then
                         do
                             local listeBuffer = {}
-                            for _,x in pairs( self.listeFreiner or {} ) do
+                            for _,x in pairs( self.listeFreiner or emptyTable ) do
                             local _continue = true
                                 do
                                     --[[//si x est le dernier element de la liste

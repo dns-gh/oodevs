@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/cie proterre/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -43,7 +45,7 @@ include "Melee/Inf/Automates/Common/Globals.bms"
     local _returnValue = 0
     _returnValue = 0
     local selPions = DEC_Automate_PionsSansPC()
-    for _,x in pairs( selPions or {} ) do
+    for _,x in pairs( selPions or emptyTable ) do
     local _continue = true
 do
             if( S_Misc_EstMissionAffectee_Pion( x, typeMission ) ) then
@@ -73,7 +75,7 @@ function S_Misc_Automate_NbrPionsAffectes_Reduire( ksEni )
     local _returnValue = 0
     _returnValue = 0
     local selPions = DEC_Automate_PionsSansPC()
-    for _,x in pairs( selPions or {} ) do
+    for _,x in pairs( selPions or emptyTable ) do
     local _continue = true
 do
             if( S_Misc_EstMissionAffectee_Pion( x, "T_Mission_Pion_INF_Reduire" ) and ( S_Misc_Automate_UniteMission_Reduire( x ) == ksEni ) ) then
@@ -90,7 +92,7 @@ end
 function S_Conduite_Automate_Relever_PionFinMouvement( selPions )
     local _returnValue = 0
     _returnValue = 0
-    for _,x in pairs( selPions or {} ) do
+    for _,x in pairs( selPions or emptyTable ) do
     local _continue = true
 do
             local x_pion = x

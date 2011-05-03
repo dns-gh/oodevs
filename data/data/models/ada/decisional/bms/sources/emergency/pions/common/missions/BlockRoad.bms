@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/emergency/pions/common/missions/BlockRoad.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// This file is part of a MASA library or program.
@@ -44,7 +46,7 @@ includedFiles["sources/emergency/pions/common/missions/BlockRoad.bms"] = true
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -74,7 +76,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                                 cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eDeployer then
-                    Activate( self.activations.BEH_Pion_Emergency_BlockRoad, 1, {} )
+                    Activate( self.activations.BEH_Pion_Emergency_BlockRoad, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then

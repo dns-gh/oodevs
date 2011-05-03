@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/pions/common/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// 
 ]]--[[// $Created: MIA 02-11-08 $
@@ -39,7 +41,7 @@ include "Humus/Humus_Melee/Abc/Pions/Common/Parameters.bms"
     local _returnValue = nil
     _returnValue = 0
     local listeObjet = DEC_Connaissances_ObjetsDansCercle( position, 300, S_TypeObject_ToString( eTypeObjectPosteControle ) )
-    for _,x in pairs( listeObjet or {} ) do
+    for _,x in pairs( listeObjet or emptyTable ) do
     local _continue = true
         _returnValue = x
 

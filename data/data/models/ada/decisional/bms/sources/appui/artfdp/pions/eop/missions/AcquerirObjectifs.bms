@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artfdp/pions/eop/missions/AcquerirObjectifs.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -51,7 +53,7 @@ node "MIS_Pion_ASS_EOP_AcquerirObjectifs"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -67,13 +69,13 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
-                    Activate( self.activations.BEH_Pion_EOP_AcquerirObjectifs_Mission, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Pion_EOP_AcquerirObjectifs_Mission, GetMotivation( "MOT_Mission" ), emptyTable )
                     _continue = false
                 --[[// Sur fin de mission, on se replie
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
                     if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.mission.positionDebarquement_, 100 ) ) then
-                        Activate( self.activations.BEH_Transport_Pion_EOP_RecupererTransporteur, 1, {} )
+                        Activate( self.activations.BEH_Transport_Pion_EOP_RecupererTransporteur, 1, emptyTable )
                     end
 
                     if( self.eAction == eActionEffectuee ) then
@@ -141,9 +143,9 @@ node "BEH_Pion_EOP_AcquerirObjectifs_Mission"
         self.ePhase = self.ePhase or ePreparerMission
         if( self.ePhase == eRejoindre and S_Geometrie_EstProchePosition( DEC_Agent_Position(), self.mission.positionDebarquement_, 300 ) ) then
             do
-                StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                 StartActivateOverride( self, self.activations.BEH_Mot_Pion_EOP_Debarquer, 1.1, { true, } )
-                StartActivateOverride( self, self.activations.BEH_Dep_Pion_EOP_PreparerDebarquement, 1.1, {} )
+                StartActivateOverride( self, self.activations.BEH_Dep_Pion_EOP_PreparerDebarquement, 1.1, emptyTable )
                 self.ePhase = eDeployer
             end
         end
@@ -219,7 +221,7 @@ node "BEH_Dep_Pion_EOP_PreparerDebarquement"
             end
         end
 
-        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+        Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
         Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_Poste, } )
 self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eActionDelai = v[1] end
     end,

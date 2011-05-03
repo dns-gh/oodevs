@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/flancgarder/FlancGarder - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-04-26 $
@@ -50,7 +52,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/flancga
             DEC_Trace( "BEH_Conduite_Automate_ABC_FlancGarder" )
         end
 
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination --> est ce utile ici
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -59,17 +61,17 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/flancga
         else
 do
                 Activate( self.activations.ACT_Info_Automate_Trace, 1, { "$$$ L'unité amie n'a pas de mission, en attente $$$", } )
-                Activate( self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Attendre_, 1, emptyTable )
             end
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion appuis et releve et SE
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, {} )
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, emptyTable )
         --[[// Avec relève
 ]]Activate( self.activations.BEH_Dispositif_Automate_ABC_GererPionsDetruits_, 1, { true, } )
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSE_, 1, {} )
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSE_, 1, emptyTable )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Condition opérationnelle
 ]]--[[//-----------------------------------------------------------------------------

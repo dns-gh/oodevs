@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artdsa/common/fonctions/Fonctions - Misc.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[// *************************************************************************
@@ -17,7 +19,7 @@ end
 function S_Liste_UnitesReconnues( listeConnaissances )
     local _returnValue = {}
     _returnValue = {}
-    for _,x in pairs( listeConnaissances or {} ) do
+    for _,x in pairs( listeConnaissances or emptyTable ) do
     local _continue = true
 do
             if( S_Eni_EstNiveauPerceptionGTIA( x, eReconnu ) ) then

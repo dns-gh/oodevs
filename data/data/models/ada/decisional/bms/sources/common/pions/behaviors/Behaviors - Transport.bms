@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/behaviors/Behaviors - Transport.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -63,7 +65,7 @@ include "Common/Pions/Actions/Actions - Transport.bms"
 ]]self.listeUnitesMissionTransporter = {}
         self.listeUnitesMissionTransporter = S_Cherche_Filtre_TypeMission( self.sUnitesATransporter, "T_Mission_Pion_SeFaireTransporter" )
         local listeUnitesMissionTransporterBM = S_Cherche_Filtre_TypeMission( self.sUnitesATransporter, "net.masagroup.sword.france.military.platoon.tasks.SeFaireTransporter" )
-        for _,x in pairs( listeUnitesMissionTransporterBM or {} ) do
+        for _,x in pairs( listeUnitesMissionTransporterBM or emptyTable ) do
         local _continue = true
             DIA_PushBack( self.listeUnitesMissionTransporter, x )
 
@@ -101,7 +103,7 @@ include "Common/Pions/Actions/Actions - Transport.bms"
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.posEmbarquement, eProgressionDirect, eTypeItiInfiltration, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
@@ -136,7 +138,7 @@ elseif switch_1 == eTransporterEmbarquer then
 
                     local attendreUnites = false
                     self.listeUnitesPretes = {}
-                    for _,x in pairs( self.listeUnitesMissionTransporter or {} ) do
+                    for _,x in pairs( self.listeUnitesMissionTransporter or emptyTable ) do
                     local _continue = true
 do
                             --[[// si on est à plus de "distanceEmbarquement" de l'unité à transporter,
@@ -174,7 +176,7 @@ do
                     if( ( #( self.listeUnitesPretes ) ~= 0 ) and not attendreUnites ) then
                         do
                             DEC_Transport_AjouterPions( self.listeUnitesPretes, not self._namedParams.avecMateriel )
-                            Activate( self.activations.ACT_Transport_Pion_TransportEmbarquer, 1, {} )
+                            Activate( self.activations.ACT_Transport_Pion_TransportEmbarquer, 1, emptyTable )
 self.done_ACT_Transport_Pion_TransportEmbarquer = function( self, _, v ) self.eEtat = v[1] end
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEmbarquement, } )
                         end
@@ -213,7 +215,7 @@ elseif switch_1 == eTransporterAllerDebarquer then
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posDebarquement, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.posDebarquement, eProgressionDirect, eTypeItiInfiltration, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
@@ -248,11 +250,11 @@ elseif switch_1 == eTransporterDebarquer then
                         end
                     end
 
-                    Activate( self.activations.ACT_Transport_Pion_TransportDebarquer, 1, {} )
+                    Activate( self.activations.ACT_Transport_Pion_TransportDebarquer, 1, emptyTable )
 self.done_ACT_Transport_Pion_TransportDebarquer = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[4] = true
-                                end
+                end
             end
 
     end,
@@ -267,206 +269,3 @@ connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_Transporter, "BEH_D
 connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_Transporter, "ACT_RC_SurPion", nodes.ACT_RC_SurPion }
 connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_Transporter, "ACT_Transport_Pion_TransportEmbarquer", nodes.ACT_Transport_Pion_TransportEmbarquer }
 connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_Transporter, "ACT_Transport_Pion_TransportDebarquer", nodes.ACT_Transport_Pion_TransportDebarquer }
-
-
-
---[[// *****************************************************************************
-]]--[[// BEH_Transport_Pion_TransportEmbarquer
-]]--[[//
-]]--[[// Commentaires : Traiter la liste des unités a transporter pour ne retenir que 
-]]--[[//                les unites que myself peut effectivement traiter
-]]--[[// *****************************************************************************
-]]node "BEH_Transport_Pion_TransportEmbarquer"
-{
-    feedbacks = { { { "done_BEH_Transport_Pion_TransportEmbarquer" }, "BEH_Transport_Pion_TransportEmbarquer" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Transport_Pion_TransportEmbarquer, {value} ) end,
-    activations =
-    {
-        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
-        { "ACT_Maj_Pions_ObjectifEsquive", { "done_ACT_Maj_Pions_ObjectifEsquive" } },
-        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
-        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
-        { "ACT_RC", { "done_ACT_RC" } },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.posEmbarquement = self.params[1]
-        self._namedParams.unitesATransporter = self.params[2]
-        self._namedParams.distanceEmbarquement = self.params[3]
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        self.eEtat = self.eEtat or eActionEnCours
-        self.ePhase = self.ePhase or eTransporterAllerEmbarquer
-        self.sUnitesATransporter = self.sUnitesATransporter or S_Liste_PionsTransportables( self._namedParams.unitesATransporter, false )
-
-        if( #( self.sUnitesATransporter ) == 0 ) then
-            
-            self:SendFeedback( eActionEffectuee )
-            Halt( self )
-            do return end
-        end
-
-         do
-            local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eTransporterAllerEmbarquer then
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    if( self.eEtat == eActionEffectuee ) then
-                        self.eEtat = eActionEnCours
-                            self.ePhase = eTransporterEmbarquer
-                            do return end
-                    end
-
-                    if( self.eEtat == eActionImpossible ) then
-                        do
-                                                        do
-                                DEC_Trace( "Transporter : Impossible Rejoindre Point d'embarquemement" )
-                            end
-
-                                                        self:SendFeedback( eActionImpossible )
-                            Halt( self )
-                            do return end
-
-                        end
-                    end
-
-                    Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.posEmbarquement, eProgressionDirect, eTypeItiInfiltration, } )
-self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eTransporterEmbarquer then
-
-            DEC_RC( eRC_TransportEmbarquement )
-            DEC_Transport_EmbarquerPionsSansDelais( self.sUnitesATransporter, false )
-            self.ePhase = eFinMission
-            self:SendFeedback( eActionTerminee )
-            Halt( self )
-            do return end
-
-            end
-        end
-    end,
-}
-
-connections = connections or {}
-connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_TransportEmbarquer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
-connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_TransportEmbarquer, "ACT_Maj_Pions_ObjectifEsquive", nodes.ACT_Maj_Pions_ObjectifEsquive }
-connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_TransportEmbarquer, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
-connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_TransportEmbarquer, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
-connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_TransportEmbarquer, "ACT_RC", nodes.ACT_RC }
-
-
-
-
---[[// *****************************************************************************
-]]--[[// BEH_Transport_Pion_TransportDebarquer
-]]--[[//
-]]--[[// Commentaires : Traiter la liste des unités a transporter pour ne retenir que 
-]]--[[//                les unites que myself peut effectivement traiter
-]]--[[// *****************************************************************************
-]]node "BEH_Transport_Pion_TransportDebarquer"
-{
-    feedbacks = { { { "done_BEH_Transport_Pion_TransportDebarquer" }, "BEH_Transport_Pion_TransportDebarquer" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_Transport_Pion_TransportDebarquer, {value} ) end,
-    activations =
-    {
-        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
-        { "ACT_Maj_Pions_ObjectifEsquive", { "done_ACT_Maj_Pions_ObjectifEsquive" } },
-        { "ACT_Obs_EtablirVisionCur", { "done_ACT_Obs_EtablirVisionCur" } },
-        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
-        { "ACT_RC", { "done_ACT_RC" } },
-        { "ACT_Transport_Pion_TransportEmbarquer", { "done_ACT_Transport_Pion_TransportEmbarquer" } },
-        { "ACT_Transport_Pion_TransportDebarquer", { "done_ACT_Transport_Pion_TransportDebarquer" } },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.posDebarquement = self.params[1]
-        self._namedParams.unitesADebarquer_ = self.params[2]
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        self.eEtat = self.eEtat or eActionEnCours
-        self.ePhase = self.ePhase or eTransporterAllerDebarquer
-        self.unitesADebarquer = self._namedParams.unitesADebarquer_;
-        --[[self.unitesADebarquer_ = self.unitesADebarquer_ or S_Liste_PionsTransportables( self._namedParams.unitesATransporter, not self._namedParams.avecMateriel )
-        --]]
-
-        if( #( self.unitesADebarquer ) == 0 ) then
-            self:SendFeedback( eActionEffectuee )
-            Halt( self )
-            do return end
-        end
-
-         do
-            local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-if switch_1 == eTransporterAllerDebarquer then
-                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEnCours, } )
-                    if( self.eEtat == eActionEffectuee ) then
-                        do
-                            self.eEtat = eActionEnCours
-                                                        do
-                                self.ePhase = eTransporterDebarquer
-                                do return end                                
-
-                            end
-
-                        end
-                    end
-
-                    if( self.eEtat == eActionImpossible ) then
-                        do
-                                                        do
-                                                                self:SendFeedback( eActionImpossible )
-                                Halt( self )
-                                do return end
-
-                            end
-
-                                                        self:SendFeedback( eActionImpossible )
-                            Halt( self )
-                            do return end
-
-                        end
-                    end
-
-                    Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posDebarquement, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.posDebarquement, eProgressionDirect, eTypeItiInfiltration, } )
-self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
-                    _continue = false
-                                cases_switch_1[3] = true
-elseif switch_1 == eTransporterDebarquer then
-                        self.eEtat = eActionEnCours
-                        
-                        DEC_RC( eRC_TransportDebarquement )
-                        
-                        DEC_Transport_DebarquerPionsSansDelais( self.unitesADebarquer )
-                            self.ePhase = eFinMission
-                            self:SendFeedback( eActionTerminee )
-                            Halt( self )
-                            do return end
-
-                    _continue = false
-                                cases_switch_1[4] = true
-                                end
-            end
-
-    end,
-}
-
-connections = connections or {}
-connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_TransportDebarquer, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
-connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_TransportDebarquer, "ACT_Maj_Pions_ObjectifEsquive", nodes.ACT_Maj_Pions_ObjectifEsquive }
-connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_TransportDebarquer, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
-connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_TransportDebarquer, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
-connections[ #connections + 1 ] = { nodes.BEH_Transport_Pion_TransportDebarquer, "ACT_RC", nodes.ACT_RC }

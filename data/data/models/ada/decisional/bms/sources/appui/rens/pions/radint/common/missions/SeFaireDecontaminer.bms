@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/radint/common/missions/SeFaireDecontaminer.bms"] = true
 
+local emptyTable = emptyTable
+
 
 
 --[[// *****************************************************************************
@@ -44,7 +46,7 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/SeFaireDecontamin
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -109,7 +111,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                                 cases_switch_1[3] = true
                 end
             end

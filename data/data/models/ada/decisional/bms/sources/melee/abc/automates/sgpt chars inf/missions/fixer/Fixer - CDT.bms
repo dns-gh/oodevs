@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/sgpt chars inf/missions/fixer/Fixer - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-02-06 $
@@ -41,7 +43,7 @@ includedFiles["sources/melee/abc/automates/sgpt chars inf/missions/fixer/Fixer -
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_ABC_Fixer, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_ABC_Fixer, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Conduite générique 
 ]]--[[//-----------------------------------------------------------------------------
 ]]

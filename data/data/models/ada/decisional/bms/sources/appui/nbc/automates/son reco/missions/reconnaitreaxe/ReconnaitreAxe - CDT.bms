@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/nbc/automates/son reco/missions/reconnaitreaxe/ReconnaitreAxe - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_NBC_ReconnaitreUnAxe
 ]]--[[// 
@@ -30,7 +32,7 @@ includedFiles["sources/appui/nbc/automates/son reco/missions/reconnaitreaxe/Reco
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_NBC_ReconnaitreUnAxe, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_NBC_ReconnaitreUnAxe, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Conduite générique 
 ]]--[[//-----------------------------------------------------------------------------
 ]]

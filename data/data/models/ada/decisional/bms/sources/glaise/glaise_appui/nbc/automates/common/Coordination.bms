@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/nbc/automates/common/Coordination.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-02-24 $
@@ -42,7 +44,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/Coordination.bms
     activate = function( self )
         local Activate = Activate
         Activate( self.activations.ACT_Info_Automate_Trace, 1, { "***$$$ Activation des coordinations $$$***", } )
-        Activate( self.activations.BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_, 1, {} )
+        Activate( self.activations.BEH_CoordDep_Automate_NBC_CoordonnerPEAvecSE_, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -129,7 +131,7 @@ node "BEH_CoordDep_Automate_NBC_ActiverCoordinnationSur"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        for _,x in pairs( self._namedParams.listePionsACoordonner or {} ) do
+        for _,x in pairs( self._namedParams.listePionsACoordonner or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -155,7 +157,7 @@ do
 ]]if( DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, self.pionEnQueue ) > M_MODELE_AUTOMATE_NBC_DISTANCE_ETALEMENT_ESC_MAX() ) then
             do
                 Activate( self.activations.ACT_Info_Automate_Trace, 1, { "==< Coordinnation active >==", } )
-                for _,x in pairs( self._namedParams.listePionsACoordonner or {} ) do
+                for _,x in pairs( self._namedParams.listePionsACoordonner or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x

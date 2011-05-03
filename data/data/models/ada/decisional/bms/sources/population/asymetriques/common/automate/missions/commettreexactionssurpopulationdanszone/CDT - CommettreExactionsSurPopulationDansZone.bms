@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/asymetriques/common/automate/missions/commettreexactionssurpopulationdanszone/CDT - CommettreExactionsSurPopulationDansZone.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_CommettreExactionsSurPopulationDansZone
 ]]--[[// 
@@ -41,7 +43,7 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
     end,
 

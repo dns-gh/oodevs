@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/automates/common/MRT generique mis offensives.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created$
@@ -74,7 +76,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/MRT generique mis 
                     for _,x in pairs( --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des grands échelons Ecl / Utile( PE + SE )/ non prevus
 ]]--[[//---------------------------------------------------------------------
-]]selPions or {} ) do
+]]selPions or emptyTable ) do
                     local _continue = true
 do
                             local pion = x

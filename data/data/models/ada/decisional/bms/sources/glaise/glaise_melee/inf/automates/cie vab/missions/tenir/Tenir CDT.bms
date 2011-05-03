@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/automates/cie vab/missions/tenir/Tenir CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -37,7 +39,7 @@ node "MIS_Automate_CDT_INF_Tenir"
 ]]if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )--[[// Coordination lors de la mise en place du dispositif dans les fuseaux			
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )--[[// Coordination lors de la mise en place du dispositif dans les fuseaux			
 ]]
             end
 --[[// Conduite des pions au niveau section
@@ -59,7 +61,7 @@ node "MIS_Automate_CDT_INF_Tenir"
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreStatique, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreStatique, 1, emptyTable )
     end,
 
     destroy = function( self )

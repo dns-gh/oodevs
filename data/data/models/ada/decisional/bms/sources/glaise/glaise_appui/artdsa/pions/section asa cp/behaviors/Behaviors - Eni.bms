@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artdsa/pions/section asa cp/behaviors/Behaviors - Eni.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique :
 ]]--[[//
@@ -70,7 +72,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreZone"
 
     activate = function( self )
         local Activate = Activate
-        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
+        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique, S_Eni_Pion_ASA_DefendreZone( x, self._namedParams.localisation ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), 700, true, } )
@@ -105,7 +107,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreSite"
 
     activate = function( self )
         local Activate = Activate
-        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
+        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique, S_Eni_Pion_ASA_DefendreSite( x, self._namedParams.localisation ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), 700, true, } )
@@ -135,7 +137,7 @@ node "BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller"
 
     activate = function( self )
         local Activate = Activate
-        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
+        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_ASA_Roland_Carol_InterceptionBalistique, S_Eni_Pion_ASA_Surveiller( x ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), M_MODELE_VITESSE_MISSILE_ROLAND(), true, } )

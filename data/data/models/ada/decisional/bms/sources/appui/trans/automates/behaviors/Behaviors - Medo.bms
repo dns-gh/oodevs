@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/automates/behaviors/Behaviors - Medo.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -45,11 +47,11 @@ include "Appui/Trans/Automates/Actions/Actions - Medo.bms"
             do return end
         end
 
-        Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, 1, {} )
+        Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, 1, emptyTable )
 self.done_ACT_Mission_Automate_ControleCreation_EnCours = function( self, _, v ) self.eAction_EnCours = v[1] end
-        Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, self._namedParams.rN_Pion, {} )
+        Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, self._namedParams.rN_Pion, emptyTable )
 self.done_ACT_Mission_Automate_ControleCreation_OK = function( self, _, v ) self.eAction_OK = v[1] end
-        Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+        Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
 self.done_ACT_Mission_Automate_ControleCreation_NOK = function( self, _, v ) self.eAction_NOK = v[1] end
     end,
 
@@ -85,7 +87,7 @@ node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonAListe"
         assert( #( self._namedParams.listePions ) ~= 0, "Liste pions vide" )
         if( ModuleBegins() ) then
             do
-                for _,x in pairs( self._namedParams.listePions or {} ) do
+                for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA, 1, { self._namedParams.ePhase, x, self._namedParams.position, } )
 
@@ -135,17 +137,17 @@ node "BEH_Mission_Automate_AssignerFaireMouvementSurItA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end
@@ -191,17 +193,17 @@ node "BEH_Mission_Automate_TRANS_AssignerEtablirGererLiaisonA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end
@@ -248,17 +250,17 @@ node "BEH_Mission_Automate_AssignerFaireMouvementA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end
@@ -304,17 +306,17 @@ node "BEH_Mission_Automate_AssignerSeFaireTransporterA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end

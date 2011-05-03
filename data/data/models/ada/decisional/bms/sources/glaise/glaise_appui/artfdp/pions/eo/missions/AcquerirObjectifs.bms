@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artfdp/pions/eo/missions/AcquerirObjectifs.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[/** \file S VAB - Actions.hal
  *
@@ -44,7 +46,7 @@ node "MIS_Pion_ASS_EO_AcquerirObjectifs"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -59,7 +61,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eReconnaitre then
-                    Activate( self.activations.BEH_Pion_ASS_AcquerirObjectifs_Mission, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Pion_ASS_AcquerirObjectifs_Mission, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Pion_ASS_AcquerirObjectifs_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/defensives/freiner/Freiner - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -33,7 +35,7 @@ include "bit.lua"
         local Activate = Activate
         self.objectifsPrioritaires = self.objectifsPrioritaires or {}--[[// Vide dans cette mission
 ]]
-        Activate( self.activations.ACT_GTIA_AnalyserSituationPourMissionRetrograde, 1, {} )--[[// Analyse environnement
+        Activate( self.activations.ACT_GTIA_AnalyserSituationPourMissionRetrograde, 1, emptyTable )--[[// Analyse environnement
 ]]
         --[[// Init
 ]]if( ModuleBegins() ) then
@@ -42,7 +44,7 @@ include "bit.lua"
                                 do
                     g_bPhaseReceuil = false
                     local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
-                    for _,x in pairs( listePionsSubordonnes or {} ) do
+                    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                     local _continue = true
                         do
                             local automat = x
@@ -61,12 +63,12 @@ include "bit.lua"
 
         if( not self._namedParams.mission.sansRearticulation_ ) then
             --[[//// tres moche priorite
-]]Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourFreiner, 10, {} )
+]]Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourFreiner, 10, emptyTable )
         end
 
-        Activate( self.activations.BEH_GTIA_RendreCompte, 1, {} )--[[// CR
+        Activate( self.activations.BEH_GTIA_RendreCompte, 1, emptyTable )--[[// CR
 ]]
-        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, {} )--[[// Dispositif
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, emptyTable )--[[// Dispositif
 ]]
         --[[// pas d'objectifs
 ]]Activate( self.activations.BEH_GTIA_RepartirDansFuseaux, 1, { self.objectifsPrioritaires, } )
@@ -158,7 +160,7 @@ node "ACT_GTIA_AnalyserSituationPourMissionRetrograde"
     activate = function( self )
         local Activate = Activate
         Activate( self.activations.BEH_GTIA_AssignerLesMissionsRetrogrades, 1, { self._namedParams.travaux, } )
-        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationRetrograde, 1, {} )
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationRetrograde, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -221,7 +223,7 @@ node "BEH_GTIA_AssignerMissionsRetrogradesEcl"
 
     activate = function( self )
         local Activate = Activate
-        for _,pion in pairs( self._namedParams.listePion or {} ) do
+        for _,pion in pairs( self._namedParams.listePion or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionRetrogradeMelee, 1, { pion, "T_Mission_Automate_ABC_Jalonner", } )
 
@@ -254,14 +256,14 @@ node "BEH_GTIA_AssignerMissionsRetrogradesPE"
     activate = function( self )
         local Activate = Activate
         for _,pion in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionRetrogradeMelee, 1, { pion, "T_Mission_Automate_ABC_Freiner", } )
 
         end
 
         for _,pion in pairs( --[[// Assignation missions INF  
-]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionRetrogradeMelee, 1, { pion, "T_Mission_Automate_INF_Freiner", } )
 
@@ -295,14 +297,14 @@ node "BEH_GTIA_AssignerMissionsRetrogradesSE"
     activate = function( self )
         local Activate = Activate
         for _,pion in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePion ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePion ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionRetrogradeMelee, 1, { pion, "T_Mission_Automate_ABC_Freiner", } )
 
         end
 
         for _,pion in pairs( --[[// Assignation missions INF
-]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePion ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePion ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionRetrogradeMelee, 1, { pion, "T_Mission_Automate_INF_Freiner", } )
 
@@ -367,21 +369,21 @@ node "BEH_GTIA_AssignerMissionsRetrogradesSEAppui"
     activate = function( self )
         local Activate = Activate
         for _,pion in pairs( --[[// Assignation missions TC2
-]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.listePion ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.listePion ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionRetrogradeLogA, 1, { pion, } )
 
         end
 
         for _,pion in pairs( --[[// Assignation missions Genie // Spé Freiner 
-]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.listePion ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.listePion ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionRetrogradeGenieA, 1, { pion, self._namedParams.travaux, } )
 
         end
 
         for _,pion in pairs( --[[// Assignation missions ART
-]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.listePion ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.listePion ) or emptyTable ) do
         local _continue = true
             --[[// idem attaquer
 ]]Activate( self.activations.BEH_GTIA_AssignerMissionRetrogradeART, 1, { pion, } )

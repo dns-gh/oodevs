@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/son appui/missions/Appuyer.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -63,7 +65,7 @@ include "bit.lua"
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Appui, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_APPUYER(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -149,7 +151,7 @@ node "BEH_Eni_Pion_SAppui_Appuyer"
     activate = function( self )
         local Activate = Activate
         local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
-        for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
+        for _,ksEni in pairs( lstEnisDansFuseau or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then
@@ -162,10 +164,10 @@ do
 ]]local bDemandeDebarquement = S_Tir_EstAPortee_Debarque( ksEni, GetStateVariable( "VE_Agressivite_Tir" ) ) or S_Tir_EstAPortee( ksEni, GetStateVariable( "VE_Agressivite_Tir" ) )
                     if( bDemandeDebarquement ) then
                         do
-                            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
                             --[[// Si on est a porte, on se poste
 ]]Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { ksEni, } )
-                            Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, {} )
+                            Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, emptyTable )
                         end
 --[[//  Gestion particuliere:
 ]]--[[//  On tir principalement sur les blindes
@@ -196,7 +198,7 @@ do
 ]]
         end
 
-        for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
+        for _,ksEni in pairs( lstEnisDansFuseau or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then

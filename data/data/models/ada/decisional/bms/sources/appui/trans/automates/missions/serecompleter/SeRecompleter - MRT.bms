@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/automates/missions/serecompleter/SeRecompleter - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 node "MIS_Automate_MRT_SeRecompleter"
 {
     feedbacks = { { { "done_MIS_Automate_MRT_SeRecompleter" }, "MIS_Automate_MRT_SeRecompleter" } },
@@ -60,7 +62,7 @@ self.done_BEH_Medo_Automate_ControleCreationMission = function( self, _, v ) sel
         for _,x in pairs( --[[//---------------------------------------------------------------------
 ]]--[[// Assignation de la mission "Faire mouvement" dans la zone
 ]]--[[//---------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() or {} ) do
+]]DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
 do
                 local pion = x

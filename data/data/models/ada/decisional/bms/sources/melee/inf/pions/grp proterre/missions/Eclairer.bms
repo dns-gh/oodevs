@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/grp proterre/missions/Eclairer.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -44,14 +46,14 @@ node "MIS_Pion_INF_Eclairer"
                 DEC_Trace( "Mission 'Eclairer' : debut" )
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, {} )
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, emptyTable )
             end
         end
 
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_TIR_PH_MISSION_MANOEUVRE(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -68,7 +70,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 if switch_1 == eReconnaitre then
                     if( self.eCurrentPhase ~= eFinMission ) then
                         do
-                            Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), {} )
+                            Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_RecoAxe = function( self, _, v ) self.eCurrentPhase = v[1] end
                             _continue = false
                         end

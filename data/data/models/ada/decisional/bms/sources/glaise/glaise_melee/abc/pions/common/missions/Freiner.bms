@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Freiner.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-09-24 $
@@ -52,7 +54,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Freiner.bms
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.bLRPassee = self.bLRPassee or false
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -72,7 +74,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 ]]if( ModuleBegins() ) then
             do
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
             end
         end
@@ -107,7 +109,7 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnFreinage, } )
                     --[[// Vitesse et direction observation st différentes du default (vers cur)
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1.1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1.1, emptyTable )
                     --[[// Deplacement
 ]]if( self.eEtat == eActionEffectuee ) then
                         do
@@ -130,7 +132,7 @@ self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
 ]]--[[//---------------------------------------------------------------------
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
-                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )--[[// reprendre sauvegarde
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, emptyTable )--[[// reprendre sauvegarde
 ]]
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     _continue = false

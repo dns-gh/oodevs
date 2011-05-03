@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/nbc/pions/common/Behaviors - Dep.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-04-29 $
@@ -71,11 +73,11 @@ includedFiles["sources/appui/nbc/pions/common/Behaviors - Dep.bms"] = true
 ]]--[[// Etat du pion
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LCA, } )
-        Activate( self.activations.BEH_Dep_SePoster, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dep_SePoster, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Posture
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Passer en alerte de niveau 4
 ]]--[[//-----------------------------------------------------------------------------
@@ -204,7 +206,7 @@ do
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+        Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
     end,
 
 }

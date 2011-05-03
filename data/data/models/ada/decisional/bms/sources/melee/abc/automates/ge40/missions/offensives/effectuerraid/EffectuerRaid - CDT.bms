@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/offensives/effectuerraid/EffectuerRaid - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_ABC_GTIA_EffectuerRaid
 ]]--[[// 
@@ -44,7 +46,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/effectuerrai
                                 do
                     g_bPhaseReceuil = false
                     local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
-                    for _,x in pairs( listePionsSubordonnes or {} ) do
+                    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                     local _continue = true
                         do
                             local automat = x
@@ -63,17 +65,17 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/effectuerrai
 
         if( not self._namedParams.mission.sansRearticulation_ ) then
             --[[//// tres moche priorite
-]]Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourAttaquer, 10, {} )
+]]Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourAttaquer, 10, emptyTable )
         end
 
-        Activate( self.activations.BEH_GTIA_RendreCompte, 1, {} )--[[/***************TEST *******************/]]--[[// CR
+        Activate( self.activations.BEH_GTIA_RendreCompte, 1, emptyTable )--[[/***************TEST *******************/]]--[[// CR
 ]]
-        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, {} )--[[// Dispositif 
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, emptyTable )--[[// Dispositif 
 ]]
         Activate( self.activations.BEH_GTIA_RepartirDansFuseaux, 1, { self._namedParams.mission.objectifs_, } )
         --[[// Missions
 ]]--[[// priorite 1
-]]Activate( self.activations.BEH_GTIA_GererAppuisInternes, 10, {} )
+]]Activate( self.activations.BEH_GTIA_GererAppuisInternes, 10, emptyTable )
         --[[// priorite 2
 ]]Activate( self.activations.BEH_GTIA_AssignerLesOrdresPourAttaquer, 1, { self._namedParams.mission.objectifs_, } )
     end,

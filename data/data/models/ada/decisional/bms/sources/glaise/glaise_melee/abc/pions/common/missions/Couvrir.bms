@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Couvrir.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-10-27 $
@@ -59,7 +61,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Couvrir.bms
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Pion detruit
@@ -130,11 +132,11 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eCouvrir then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    Activate( self.activations.BEH_MAJ_Pion_ABC_EnvieTenir, 1, {} )--[[// MAJ VE_Courage pour tenir
+                    Activate( self.activations.BEH_MAJ_Pion_ABC_EnvieTenir, 1, emptyTable )--[[// MAJ VE_Courage pour tenir
 ]]
-                    Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, {} )
-                    Activate( self.activations.BEH_Pion_ABC_InstallerDispositif, 1, {} )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, emptyTable )
+                    Activate( self.activations.BEH_Pion_ABC_InstallerDispositif, 1, emptyTable )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// 4) Fin de la mission 
@@ -142,7 +144,7 @@ elseif switch_1 == eCouvrir then
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[4] = true
 

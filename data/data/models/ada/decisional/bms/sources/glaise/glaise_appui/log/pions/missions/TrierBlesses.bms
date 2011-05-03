@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/log/pions/missions/TrierBlesses.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_LOG_TrierBlesses
 ]]--[[//
@@ -39,7 +41,7 @@ includedFiles["sources/glaise/glaise_appui/log/pions/missions/TrierBlesses.bms"]
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -87,13 +89,13 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eDeployer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    Activate( self.activations.BEH_Pion_Log_Trier, 1, {} )
+                    Activate( self.activations.BEH_Pion_Log_Trier, 1, emptyTable )
                     _continue = false
                 --[[// Fin de la mission (sur ordre)
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[4] = true
 
@@ -127,11 +129,11 @@ node "BEH_Pion_Log_Trier"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.ACT_Pions_SInstaller, 1, {} )
+        Activate( self.activations.ACT_Pions_SInstaller, 1, emptyTable )
         if( DEC_Agent_EstInstalle() ) then
             do
-                Activate( self.activations.ACT_Pion_Log_ActiverFonctionSoin, 1, {} )
-                Activate( self.activations.ACT_Pion_Log_ActiverFonctionTri, 1, {} )
+                Activate( self.activations.ACT_Pion_Log_ActiverFonctionSoin, 1, emptyTable )
+                Activate( self.activations.ACT_Pion_Log_ActiverFonctionTri, 1, emptyTable )
             end
         end
 

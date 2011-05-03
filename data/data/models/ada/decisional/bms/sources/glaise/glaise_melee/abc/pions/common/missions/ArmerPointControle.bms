@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/ArmerPointControle.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-01-12 $
@@ -58,7 +60,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/ArmerPointC
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Pion detruit
@@ -147,7 +149,7 @@ elseif switch_1 == eAnimer then
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[3] = true
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/genie/automates/cie blindee/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -115,7 +117,7 @@ function S_Obj_Automate_GEN_ObjetPlusProche( listeObjets, point )
     _returnValue = 0
     local distanceMax = 1105199104
     local objetProche = nil
-    for _,x in pairs( listeObjets or {} ) do
+    for _,x in pairs( listeObjets or emptyTable ) do
     local _continue = true
 do
             local objet = x
@@ -144,7 +146,7 @@ end
 function S_Gen_ObtenirSectionsGenieDisponibles( )
     local _returnValue = {}
     local listeTemp = {}
-    for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+    for _,x in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -171,7 +173,7 @@ end
 function S_Misc_Automate_GEN_ObtenirRenfortsDisponibles( eTypePion )
     local _returnValue = {}
     local selTemp = {}
-    for _,x in pairs( DEC_Automate_PionsSansPC() or {} ) do
+    for _,x in pairs( DEC_Automate_PionsSansPC() or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -190,7 +192,7 @@ end
 function S_Gen_ObtenirGroupeGenie( )
     local _returnValue = {}
     local selTemp = {}
-    for _,x in pairs( DEC_Automate_PionsSansPC() or {} ) do
+    for _,x in pairs( DEC_Automate_PionsSansPC() or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -209,7 +211,7 @@ end
 function S_Obj_ListeObjetsNonContournes( objets )
     local _returnValue = {}
     local listeObjets = {}
-    for _,objet in pairs( objets or {} ) do
+    for _,objet in pairs( objets or emptyTable ) do
     local _continue = true
 do
             if( not S_Obj_EstContourne( objet ) and DEC_ConnaissanceObjet_EstValide( objet ) ) then
@@ -230,12 +232,12 @@ function S_Obj_TrierListePourDetruireObjets( objets )
     local listeObjetsOK = {}
     local listeObjetsKO = {}
     local listeObjetsTries = {}
-    for _,objet in pairs( objets or {} ) do
+    for _,objet in pairs( objets or emptyTable ) do
     local _continue = true
 do
             if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
                 do
-                    for _,pion in pairs( DEC_Automate_PionsSansPC() or {} ) do
+                    for _,pion in pairs( DEC_Automate_PionsSansPC() or emptyTable ) do
                     local _continue = true
                         do
                             if( DEC_Automate_PionPeutDetruireObjet( pion, objet ) ) then
@@ -260,13 +262,13 @@ do
 
     end
 
-    for _,objet in pairs( listeObjetsOK or {} ) do
+    for _,objet in pairs( listeObjetsOK or emptyTable ) do
     local _continue = true
         DEC_UserTypeList_PushBack( listeObjetsTries, objet )
 
     end
 
-    for _,objet in pairs( listeObjetsKO or {} ) do
+    for _,objet in pairs( listeObjetsKO or emptyTable ) do
     local _continue = true
         DEC_UserTypeList_PushBack( listeObjetsTries, objet )
 
@@ -282,12 +284,12 @@ function S_Obj_TrierListePourContournerObjets( objets )
     local listeObjetsOK = {}
     local listeObjetsKO = {}
     local listeObjetsTries = {}
-    for _,objet in pairs( objets or {} ) do
+    for _,objet in pairs( objets or emptyTable ) do
     local _continue = true
 do
             if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
                 do
-                    for _,pion in pairs( DEC_Automate_PionsSansPC() or {} ) do
+                    for _,pion in pairs( DEC_Automate_PionsSansPC() or emptyTable ) do
                     local _continue = true
                         do
                             if( DEC_Automate_PionPeutConstruireContournementObjet( pion, objet ) ) then
@@ -312,13 +314,13 @@ do
 
     end
 
-    for _,objet in pairs( listeObjetsOK or {} ) do
+    for _,objet in pairs( listeObjetsOK or emptyTable ) do
     local _continue = true
         DEC_UserTypeList_PushBack( listeObjetsTries, objet )
 
     end
 
-    for _,objet in pairs( listeObjetsKO or {} ) do
+    for _,objet in pairs( listeObjetsKO or emptyTable ) do
     local _continue = true
         DEC_UserTypeList_PushBack( listeObjetsTries, objet )
 
@@ -333,12 +335,12 @@ function S_Obj_TrierListePourContruireObjetsPlanifies( objets )
     local listeObjetsOK = {}
     local listeObjetsKO = {}
     local listeObjetsTries = {}
-    for _,x in pairs( objets or {} ) do
+    for _,x in pairs( objets or emptyTable ) do
     local _continue = true
 do
             local objet = x
             local type = DEC_GenObject_Type( objet )
-            for _,pion in pairs( DEC_Automate_PionsSansPC() or {} ) do
+            for _,pion in pairs( DEC_Automate_PionsSansPC() or emptyTable ) do
             local _continue = true
 do
                     if( DEC_Automate_PionPeutConstruireObjet( pion, type ) ) then
@@ -360,13 +362,13 @@ do
 
     end
 
-    for _,objet in pairs( listeObjetsOK or {} ) do
+    for _,objet in pairs( listeObjetsOK or emptyTable ) do
     local _continue = true
         DEC_UserTypeList_PushBack( listeObjetsTries, objet )
 
     end
 
-    for _,objet in pairs( listeObjetsKO or {} ) do
+    for _,objet in pairs( listeObjetsKO or emptyTable ) do
     local _continue = true
         DEC_UserTypeList_PushBack( listeObjetsTries, objet )
 

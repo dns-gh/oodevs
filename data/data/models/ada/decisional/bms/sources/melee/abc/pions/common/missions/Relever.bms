@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created$
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Common/Missions/Relever.hal $
@@ -44,7 +46,7 @@ includedFiles["sources/melee/abc/pions/common/missions/Relever.bms"] = true
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.positionPionARelever = self.positionPionARelever or self._namedParams.mission.uniteARelever_:DEC_Agent_Position()
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do

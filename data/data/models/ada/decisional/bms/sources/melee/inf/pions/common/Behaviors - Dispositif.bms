@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/common/Behaviors - Dispositif.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -79,7 +81,7 @@ include "bit.lua"
 ]]                end
 
                 if( bDebarquement ) then
-                    StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                    StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
                 end
 
             end

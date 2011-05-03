@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/common/missions/tenir/Tenir - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Medo_Automate_ABC_Tenir_AssignerMissionBarrerA
 ]]--[[//
@@ -48,7 +50,7 @@ includedFiles["sources/melee/abc/automates/common/missions/tenir/Tenir - MRT.bms
                         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des mission une par une au pion (pas simultanément)
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPions or {} ) do
+]]self._namedParams.selPions or emptyTable ) do
                         local _continue = true
                             do
                                 if( self.rIterateurPoint == DEC_ListePoints_Size( self.listePoint ) ) then

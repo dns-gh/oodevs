@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/automates/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: SDE 02-11-22 $
@@ -74,7 +76,7 @@ include "Appui/Trans/Automates/Missions/SeFaireTransporter/CDT - SeFaireTranspor
         local Activate = Activate
         if( DEC_Automate_EstEmbraye() ) then
             do
-                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
             end
         end
 

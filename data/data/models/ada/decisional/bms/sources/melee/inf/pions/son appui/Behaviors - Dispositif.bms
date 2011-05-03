@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/son appui/Behaviors - Dispositif.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-02-20 $
@@ -57,9 +59,9 @@ node "BEH_Dispositif_Pion_VAB_InstallationDefensive"
 --[[// Demande a etre debarqe
 ]]        end
 
-        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
         --[[// Si l'on trouve un embossement a proximite, on le rejoint
-]]Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1.2, {} )
+]]Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1.2, emptyTable )
         Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
         local mission = DEC_GetMission( myself )
         Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )

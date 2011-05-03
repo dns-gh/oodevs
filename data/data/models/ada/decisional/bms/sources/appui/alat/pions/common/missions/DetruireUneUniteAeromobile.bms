@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/pions/common/missions/DetruireUneUniteAeromobile.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -55,7 +57,7 @@ include "bit.lua"
                 DEC_SetMission( myself, self._namedParams.mission )
                 myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
                 end
 
                 DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
@@ -63,7 +65,7 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -115,7 +117,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                     end
 
                     if( self.eEtat == eActionEffectuee ) then
@@ -130,7 +132,7 @@ elseif switch_1 == eSExfiltrer then
                         end
                     end
 
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointRegroupement_, } )
 self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
@@ -153,7 +155,7 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
@@ -197,7 +199,7 @@ node "BEH_Eni_Pion_ALAT_GererEniDetruireAeromobile"
             do return end
         end
 
-        for _,x in pairs( self._namedParams.listeEnis or {} ) do
+        for _,x in pairs( self._namedParams.listeEnis or emptyTable ) do
         local _continue = true
 do
                 if( not DEC_ConnaissanceAgent_EstPercuParUnite( x ) ) then

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -51,7 +53,7 @@ include "Common/Automates/Functions.bms"
     local _returnValue = false
     _returnValue = false
     local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-    for _,x in pairs( listePionsSubordonnes or {} ) do
+    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
     local _continue = true
 do
             if( DEC_Automate_PionEstContamine( x ) ) then
@@ -80,7 +82,7 @@ function S_Automate_TauxDestruction( listePionsSubordonnes )
     end
 
     local rNombrePionsNonOp = 0
-    for _,x in pairs( listePionsSubordonnes or {} ) do
+    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
     local _continue = true
 do
             local pion = x

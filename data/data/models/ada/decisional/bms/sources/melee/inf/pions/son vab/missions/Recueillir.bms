@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/son vab/missions/Recueillir.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -54,7 +56,7 @@ includedFiles["sources/melee/inf/pions/son vab/missions/Recueillir.bms"] = true
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_STATIQUE(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -65,7 +67,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         end
 
         local selOrder = DEC_GetCategory( "ordres_recus" )
-        for _,repOrder in pairs( selOrder or {} ) do
+        for _,repOrder in pairs( selOrder or emptyTable ) do
         local _continue = true
 do
                 DEC_Trace( "reception ordre de conduite" )
@@ -99,7 +101,7 @@ do
                         end
                     end
 
-                    Activate( self.activations.BEH_Mission_Pion_VAB_Recueillir, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Mission_Pion_VAB_Recueillir, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_Recueillir = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
@@ -116,7 +118,7 @@ elseif switch_1 == eRompreContact then
                         end
                     end
 
-                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, emptyTable )
 self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
@@ -181,7 +183,7 @@ node "BEH_Mission_Pion_VAB_Recueillir"
         self.eAction = self.eAction or eActionEnCours
         self.ptMission = self.ptMission or self.mission.positionInstallation_
         if( ModuleBegins() ) then
-            StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+            StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
         end
 
          do
@@ -245,7 +247,7 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_Poste, } )
 self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
-                    StartActivateOverride( self, self.activations.BEH_RC_Pion_VAB_SurveillerPIA, 1, {} )
+                    StartActivateOverride( self, self.activations.BEH_RC_Pion_VAB_SurveillerPIA, 1, emptyTable )
                     _continue = false
                 --[[//  On se met en position de tir
 ]]                cases_switch_1[2] = true

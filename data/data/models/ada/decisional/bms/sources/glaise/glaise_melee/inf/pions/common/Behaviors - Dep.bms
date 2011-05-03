@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/common/Behaviors - Dep.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -124,7 +126,7 @@ self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
 ]]--[[// rForceDelai = S_Force_PDelaiSurMemePosition( rConst_Delai, DEC_Agent_Position(), rForceDelai );
 ]]local rTemps_Ecoule = DEC_TempsSim() - self.rTemps_Debut
         local rForceDelai = 1 - rTemps_Ecoule / self.rConst_Delai
-        Activate( self.activations.BEH_Dep_SePoster, 8 * rForceDelai, {} )
+        Activate( self.activations.BEH_Dep_SePoster, 8 * rForceDelai, emptyTable )
     end,
 
 --[[//=============================================================================
@@ -357,7 +359,7 @@ node "BEH_Dep_Pion_INF_PreciserMaintenirContact"
         end
 
         Activate( self.activations.ACT_MAJ_EtatSituationEni, 1, { eEtatSituationEnnemi_PrecisionContact, } )
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
          do
             local _continue = true
             local switch_1 = self.ePhase
@@ -542,8 +544,8 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eActionRejoindre
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ReconnaissanceLocalisation, } )
                     --[[// Observe la direction dangereuse		
-]]Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, {} )
-                    Activate( self.activations.ACT_Dep_SePoster, 1.1, {} )
+]]Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, emptyTable )
+                    Activate( self.activations.ACT_Dep_SePoster, 1.1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -650,7 +652,7 @@ self.done_BEH_Obs_Pion_INF_RecoPoint = function( self, _, v ) self.eAction = v[1
                         end
                     end
 
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
                     Activate( self.activations.BEH_Dep_Pion_INF_RejoindreObjectif, 1, { self._namedParams.ptMission, } )
 self.done_BEH_Dep_Pion_INF_RejoindreObjectif = function( self, _, v ) self.eAction = v[1] end
@@ -695,7 +697,7 @@ node "BEH_Progression_Pion_INF_Aborder"
 
         Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 0.5, } )
         Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1, { self.ptAborder_Copie, } )
-        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
         --[[// le deplacement se fait dans le comportement 
 ]]--[[// appellant
 ]]if( DEC_Geometrie_PositionsEgales( self.ptAborder_Copie, DEC_Agent_Position() ) ) then

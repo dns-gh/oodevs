@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/missions/aller se recompleter/Aller Se Recompleter - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Aller Se Recompleter :
 ]]--[[//
@@ -34,7 +36,7 @@ includedFiles["sources/appui/alat/automates/common/missions/aller se recompleter
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
     end,
 

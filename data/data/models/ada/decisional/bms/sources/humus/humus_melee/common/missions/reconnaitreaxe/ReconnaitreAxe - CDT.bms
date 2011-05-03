@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/common/missions/reconnaitreaxe/ReconnaitreAxe - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-08-26 $
@@ -45,11 +47,11 @@ includedFiles["sources/humus/humus_melee/common/missions/reconnaitreaxe/Reconnai
             DEC_Trace( "BEH_Conduite_Automate_ABC_ReconnaitreUnAxe" )
         end
 
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion appuis et releve et SE
 ]]--[[//-----------------------------------------------------------------------------
 ]]

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/automates/common/missions/recueillir/Recueillir - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-08-26 $
@@ -44,7 +46,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/recueilli
             DEC_Trace( "BEH_Conduite_Automate_ABC_Recueillir" )
         end
 
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[//behavior BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_();
@@ -53,7 +55,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/recueilli
 ]]--[[//-----------------------------------------------------------------------------
 ]]
         Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_, 1, { true, self.LR, } )
-        Activate( self.activations.BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des unites sur la LIA
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -93,7 +95,7 @@ node "BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl"
                 Activate( self.activations.ACT_Info_Trace, 1, { "----- Recueille des unités sur la LIA -----", } )
                 --[[// Donner décrocher des que problème
 ]]local listePionsEclairant = S_ObtenirPionsDe( eEtatEchelon_Eclairage, eEtatDestruction_None )
-                for _,pion in pairs( listePionsEclairant or {} ) do
+                for _,pion in pairs( listePionsEclairant or emptyTable ) do
                 local _continue = true
                     do
                         local pionDEC = pion

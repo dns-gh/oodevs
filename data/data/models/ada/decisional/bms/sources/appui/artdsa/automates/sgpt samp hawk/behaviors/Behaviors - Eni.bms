@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/behaviors/Behaviors - Eni.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//------------------------------------------------------------------------------
 ]]--[[// Pour chaque ennemi connu, on tente de donner un ordre de tir au pion le plus
 ]]--[[// proche sur l'agent ennemi le plus proche d'une connaissance amie
@@ -26,7 +28,7 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/behaviors/Behaviors
         local sListeEnis = S_ConnaissancesEnnemiesVivantesPercuesVolantesPourSgpt( DEC_Automate_PionsAvecPC() )
         local sListeEnisADetruire = {}
         for _,x in pairs( --[[//effacer les piste des unites hawk subordonnées
-]]listeSAMP or {} ) do
+]]listeSAMP or emptyTable ) do
         local _continue = true
 do
                 local pionHawk = x
@@ -72,7 +74,7 @@ node "BEH_Eni_ASA_HAWK_GererTirsDefendreSite"
         local sListeEnis = S_ConnaissancesEnnemiesVivantesPercuesVolantesPourSgpt( DEC_Automate_PionsAvecPC() )
         local sListeEnisADetruire = {}
         for _,x in pairs( --[[//effacer les piste des unites hawk subordonnées
-]]listeSAMP or {} ) do
+]]listeSAMP or emptyTable ) do
         local _continue = true
 do
                 local pionHawk = x
@@ -116,7 +118,7 @@ node "BEH_Eni_ASA_HAWK_GererTirsSurveiller"
         local sListeEnis = S_ConnaissancesEnnemiesVivantesPercuesVolantesPourSgpt( DEC_Automate_PionsAvecPC() )
         local sListeEnisADetruire = {}
         for _,x in pairs( --[[//effacer les piste des unites hawk subordonnées
-]]listeSAMP or {} ) do
+]]listeSAMP or emptyTable ) do
         local _continue = true
 do
                 local pionHawk = x
@@ -150,7 +152,7 @@ node "BEH_Eni_Automate_ASA_HAWK_AffecterPistesASectionsDeTir"
     activate = function( self )
         local Activate = Activate
         for _,x in pairs( --[[//tri par distances des ennemis
-]]self._namedParams.listeSectionsTir or {} ) do
+]]self._namedParams.listeSectionsTir or emptyTable ) do
         local _continue = true
 do
                 if( x:GetType() ~= "TheaterHighAltitudeDefenseTroop" ) then
@@ -167,7 +169,7 @@ do
 ]]
         end
 
-        for _,x in pairs( self._namedParams.listeSectionsTir or {} ) do
+        for _,x in pairs( self._namedParams.listeSectionsTir or emptyTable ) do
         local _continue = true
 do
                 if( x:GetType() ~= "TheaterHighAltitudeDefenseTroop" ) then

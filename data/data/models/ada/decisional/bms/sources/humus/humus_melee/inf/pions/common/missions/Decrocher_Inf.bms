@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Decrocher_Inf.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_Decrocher
@@ -40,12 +42,12 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Decrocher_Inf
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
             end
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -82,14 +84,14 @@ elseif switch_1 == eDecrocher then
                                 end
                             end
 
-                            Activate( self.activations.BEH_Lima_GererLR, 1, {} )
-                            Activate( self.activations.BEH_Lima_Pion_INF_GererLIA, 1, {} )
-                            Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+                            Activate( self.activations.BEH_Lima_GererLR, 1, emptyTable )
+                            Activate( self.activations.BEH_Lima_Pion_INF_GererLIA, 1, emptyTable )
+                            Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, emptyTable )
 self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eEtat = v[1] end
                             _continue = false
                                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
-                            StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )
+                            StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, emptyTable )
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                             _continue = false
                                                 cases_switch_1[3] = true

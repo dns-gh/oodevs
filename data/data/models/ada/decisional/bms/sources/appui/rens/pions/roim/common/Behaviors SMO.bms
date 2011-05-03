@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/roim/common/Behaviors SMO.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Dep_Pion_Rens_GererDrones
 ]]--[[//
@@ -28,7 +30,7 @@ includedFiles["sources/appui/rens/pions/roim/common/Behaviors SMO.bms"] = true
 ]]if( ModuleBegins() ) then
             do
                 DEC_Transport_EmbarquerPionsSansDelais( selDrones, false )
-                for _,x in pairs( selDrones or {} ) do
+                for _,x in pairs( selDrones or emptyTable ) do
                 local _continue = true
                     do
                         local drone = x
@@ -44,7 +46,7 @@ includedFiles["sources/appui/rens/pions/roim/common/Behaviors SMO.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        for _,drone in pairs( selDrones or {} ) do
+        for _,drone in pairs( selDrones or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Dep_Pion_Rens_GererEmbarquementDrone, S_Force_DistancePt( drone:DEC_Agent_Position() ), { drone, } )
 

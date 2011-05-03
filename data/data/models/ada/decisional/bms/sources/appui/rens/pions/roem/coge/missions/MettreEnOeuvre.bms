@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/roem/coge/missions/MettreEnOeuvre.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_RENS_ROEM_MettreEnOeuvre
 ]]--[[// 
@@ -31,7 +33,7 @@ includedFiles["sources/appui/rens/pions/roem/coge/missions/MettreEnOeuvre.bms"] 
         self.eEtatRejoindre = self.eEtatRejoindre or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -69,15 +71,15 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 --[[// Installation sur place
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSurveiller then
-                    Activate( self.activations.ACT_Pion_Rens_InstallerDisposifif, 1, {} )--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation ); // sert à rien déjà sur place
+                    Activate( self.activations.ACT_Pion_Rens_InstallerDisposifif, 1, emptyTable )--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation ); // sert à rien déjà sur place
 ]]
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                 --[[// 4) Fin de la mission de reconnaissance
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[3] = true
 

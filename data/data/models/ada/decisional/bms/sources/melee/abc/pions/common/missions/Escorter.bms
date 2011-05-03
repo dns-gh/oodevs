@@ -1,10 +1,12 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/pions/common/missions/Escorter.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
-include "Melee/ABC/Pions/Common/Missions/Protect.bms"
 
+include "Melee/Abc/Pions/Common/Missions/Protect.bms"
 
 --[[// *****************************************************************************
 ]]--[[//
@@ -61,7 +63,7 @@ include "Melee/ABC/Pions/Common/Missions/Protect.bms"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -148,14 +150,14 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Obstacle
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, {} )
+]]Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, emptyTable )
                     _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { self._namedParams.pionAmi, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[4] = true
 
@@ -213,7 +215,7 @@ node "BEH_Mission_Pion_ABC_EscorterAutomate"
 ]]local listePionsAmis = DEC_Pion_PionsDeAutomateSansPC( self._namedParams.automateAmi )
         --[[// pion de premier échelon au hasard de l'unité à escorter
 ]]local pionTemoin = nil
-        for _,x in pairs( listePionsAmis or {} ) do
+        for _,x in pairs( listePionsAmis or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -239,7 +241,7 @@ do
         if( ModuleBegins() ) then
             do
                 for _,pion in pairs( --[[// Escorter (dire à l'unite qu'on l'escorte
-]]listePionsAmis or {} ) do
+]]listePionsAmis or emptyTable ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, 1, { pion, } )
 
@@ -252,7 +254,7 @@ do
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -338,12 +340,12 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Obstacle
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, {} )
+]]Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, emptyTable )
                     _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
-                    for _,pion in pairs( listePionsAmis or {} ) do
+                    for _,pion in pairs( listePionsAmis or emptyTable ) do
                     local _continue = true
                         StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { pion, } )
 
@@ -352,7 +354,7 @@ elseif switch_1 == eFinMission then
                     --[[// PC
 ]]StopActivateOverride( self, self.activations.ACT_Misc_Pion_ABC_Escorter, { DEC_Pion_PionPCDeAutomate( self._namedParams.automateAmi ), } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[4] = true
 

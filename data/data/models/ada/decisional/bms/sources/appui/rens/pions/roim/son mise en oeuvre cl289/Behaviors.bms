@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/roim/son mise en oeuvre cl289/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created$
@@ -101,11 +103,11 @@ include "Appui/Rens/Pions/Roim/Son mise en oeuvre CL289/Missions/Missions.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Mot_Pion_Rens_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Mot_Pion_Rens_AffecterVariablesDEtat, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ de l'état DEC par défaut 
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -114,17 +116,17 @@ include "Appui/Rens/Pions/Roim/Son mise en oeuvre CL289/Missions/Missions.bms"
             do return end
         end
 
-        Activate( self.activations.BEH_Dep_Pion_Rens_GererDrones, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dep_Pion_Rens_GererDrones, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ de l'état DEC par défaut 
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_ROE, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Comp générique
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Ambiance, 1, {} )
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_Rens, 1, {} )
+        Activate( self.activations.BEH_Ambiance, 1, emptyTable )
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_Rens, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************

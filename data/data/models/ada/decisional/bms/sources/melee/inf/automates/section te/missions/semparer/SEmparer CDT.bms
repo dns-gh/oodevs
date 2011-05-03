@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/section te/missions/semparer/SEmparer CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -38,7 +40,7 @@ node "MIS_Automate_CDT_INF_Semparer"
 ]]if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )--[[// Coordination lors de la mise en place du dispositif dans les fuseaux
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )--[[// Coordination lors de la mise en place du dispositif dans les fuseaux
 ]]
             end
 --[[// Conduite des pions au niveau section
@@ -59,7 +61,7 @@ node "MIS_Automate_CDT_INF_Semparer"
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, emptyTable )
         --[[/* bReduire */]]Activate( self.activations.BEH_Situation_Automate_INF_Assaut, 1, { false, } )
     end,
 

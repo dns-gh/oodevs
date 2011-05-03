@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/cie vab/missions/semparer/SEmparer CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -43,7 +45,7 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/semparer/SEmparer CD
 ]]        end
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, emptyTable )
         --[[/* bReduire */]]Activate( self.activations.BEH_Situation_Automate_INF_Assaut, 1, { false, } )
     end,
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/soutenir/Soutenir - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-10-01 $
@@ -47,11 +49,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/souteni
             DEC_Trace( "BEH_Conduite_Automate_ABC_Soutenir : debut" )
         end
 
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination de l'escadron
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion appuis et releve et SE
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -64,7 +66,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/souteni
         else
 do
                 Activate( self.activations.ACT_Info_Automate_Trace, 1, { "$$$ L'unité amie n'a pas de mission, en attente $$$", } )
-                Activate( self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Attendre_, 1, emptyTable )
             end
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Condition opérationnelle

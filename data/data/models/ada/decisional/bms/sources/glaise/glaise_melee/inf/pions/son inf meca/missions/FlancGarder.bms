@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/FlancGarder.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -70,13 +72,13 @@ node "MIS_Pion_INF_FlancGarder"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Reception d ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 --[[//-----------------------------------------------------------------------------
@@ -151,14 +153,14 @@ do
                         end
                     end
 
-                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 2 * GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
+                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 2 * GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
 self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eReconnaitre then
                     if( self.eCurrentPhase ~= eFinMission ) then
                         do
-                            Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), {} )
+                            Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_RecoAxe = function( self, _, v ) self.eCurrentPhase = v[1] end
                             _continue = false
                         end

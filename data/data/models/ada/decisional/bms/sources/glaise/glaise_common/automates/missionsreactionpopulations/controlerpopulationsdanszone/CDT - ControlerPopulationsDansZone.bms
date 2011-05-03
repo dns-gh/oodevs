@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/missionsreactionpopulations/controlerpopulationsdanszone/CDT - ControlerPopulationsDansZone.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_ControlerPopulationsDansZone
 ]]--[[//
@@ -37,7 +39,7 @@ includedFiles["sources/glaise/glaise_common/automates/missionsreactionpopulation
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         self.listePionsCanaliserPopulation = {}
         self.listePionsSuivre = {}

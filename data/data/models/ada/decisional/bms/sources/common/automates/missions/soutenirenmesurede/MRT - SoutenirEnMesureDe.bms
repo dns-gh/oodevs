@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/missions/soutenirenmesurede/MRT - SoutenirEnMesureDe.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_SoutenirEnMesureDe
 ]]--[[// 
@@ -97,7 +99,7 @@ node "BEH_Medo_Automate_AssignerFaireSoutenirEnMesureDe"
         local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then
-for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSoutenirEnMesureDeA, 1, { ePhase_MRT, pion, self.mission.itineraire_, } )
 
@@ -206,7 +208,7 @@ node "BEH_Medo_Automate_AssignerFaireSoutenirSurPositionEnMesureDe"
         self.centre = self.centre or S_Geometrie_BarycentreZone( self._namedParams.locPosition )
         self.mission = self.mission or DEC_GetMission( myself )
         if( ModuleBegins() ) then
-for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
             local _continue = true
                 do
                     local position = DEC_Geometrie_PositionAleatoireDansCercle( self.centre, 500 )

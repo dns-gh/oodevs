@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/emergency/pions/common/missions/EscortPopulation.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// This file is part of a MASA library or program.
@@ -41,7 +43,7 @@ includedFiles["sources/emergency/pions/common/missions/EscortPopulation.bms"] = 
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do

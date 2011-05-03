@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/pions/common/missions/PasserAuCommandementDe.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//------------------------------------------------------------------------------
 ]]--[[// MIS_Pion_PasserAuCommandementDe()
 ]]--[[//
@@ -33,7 +35,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/missions/PasserAuCo
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -61,7 +63,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     end
 
                         if _continue then
-                        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                         Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                         Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { self._namedParams.mission.lieu_, eProgressionDefaut, eTypeItiInfiltration, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
@@ -98,7 +100,7 @@ elseif switch_1 == eSeMettreEnPlace then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true

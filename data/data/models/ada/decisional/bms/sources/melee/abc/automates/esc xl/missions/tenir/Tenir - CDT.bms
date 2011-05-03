@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/esc xl/missions/tenir/Tenir - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created$
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Esc Xl/Missions/Tenir/Tenir - CDT.hal $
@@ -47,7 +49,7 @@ includedFiles["sources/melee/abc/automates/esc xl/missions/tenir/Tenir - CDT.bms
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Auto_CDT_ABC_Tenir, 1, {} )
+        Activate( self.activations.BEH_Auto_CDT_ABC_Tenir, 1, emptyTable )
     end,
 
 }

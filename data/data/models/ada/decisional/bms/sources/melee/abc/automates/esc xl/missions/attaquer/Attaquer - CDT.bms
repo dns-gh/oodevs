@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/esc xl/missions/attaquer/Attaquer - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: SDE 03-04-25 $
@@ -49,7 +51,7 @@ includedFiles["sources/melee/abc/automates/esc xl/missions/attaquer/Attaquer - C
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Auto_CDT_ABC_Attaquer, 1, {} )
+        Activate( self.activations.BEH_Auto_CDT_ABC_Attaquer, 1, emptyTable )
     end,
 
 }

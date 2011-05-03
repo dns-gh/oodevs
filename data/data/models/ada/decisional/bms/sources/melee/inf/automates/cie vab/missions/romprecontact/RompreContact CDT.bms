@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/cie vab/missions/romprecontact/RompreContact CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -59,7 +61,7 @@ node "MIS_Automate_CDT_INF_RompreContact"
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_RompreContact, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_RompreContact, 1, emptyTable )
     end,
 
     destroy = function( self )

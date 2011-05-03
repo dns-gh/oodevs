@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/missions/fairemouvement/MRT - FaireMouvement.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created$
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Common/Automates/Missions/FaireMouvement/MRT - FaireMouvement.hal $
@@ -110,7 +112,7 @@ node "BEH_Medo_Automate_AssignerFaireMouvementA"
 ]]--[[//---------------------------------------------------------------------	
 ]]if( ModuleBegins() ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementSurItA, 1, { ePhase_MRT, pion, self.mission.itineraire_, } )
 

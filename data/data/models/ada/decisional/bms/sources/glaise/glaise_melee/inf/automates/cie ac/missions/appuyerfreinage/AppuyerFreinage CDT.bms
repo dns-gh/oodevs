@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/automates/cie ac/missions/appuyerfreinage/AppuyerFreinage CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -39,7 +41,7 @@ node "MIS_Automate_CDT_INF_AppuyerUnFreinage"
 ]]if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )
 self.done_BEH_Conduite_Automate_GererFuseau = function( self, _, v ) self.eActionHorsFuseau = v[1] end
             end
 --[[// Conduite des pions au niveau section
@@ -61,8 +63,8 @@ self.done_BEH_Conduite_Automate_GererFuseau = function( self, _, v ) self.eActio
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_AppuyerFreinage, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreRetrograde, 1, {} )--[[// behavior BEH_Conduite_Automate_INF_Appuyer( mission.compagnie_ );
+        Activate( self.activations.BEH_Conduite_Automate_INF_AppuyerFreinage, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreRetrograde, 1, emptyTable )--[[// behavior BEH_Conduite_Automate_INF_Appuyer( mission.compagnie_ );
 ]]
     end,
 
@@ -91,7 +93,7 @@ node "BEH_Conduite_Automate_INF_AppuyerFreinage"
         local Activate = Activate
         local selPionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         local selPionsHOT = S_Cherche_Automate_Filtre_TypePion( selPionsPE, "SectionInfanterie_HOT" )
-        for _,x in pairs( selPionsHOT or {} ) do
+        for _,x in pairs( selPionsHOT or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Conduite_Automate_HOT_AppuiFreinage, 1, { x, } )
 

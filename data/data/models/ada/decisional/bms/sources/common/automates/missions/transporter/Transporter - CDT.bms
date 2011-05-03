@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/missions/transporter/Transporter - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -44,7 +46,7 @@ node "MIS_Automate_CDT_Transporter"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         --[[// liste des pions de l'automate ( gestion des sgroupements dynamiques )
 ]]self.listePionsSgpt = {}
@@ -75,7 +77,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
 ]]--[[// ------------------------------------------------------------
 ]]local gestionCDTMissionsTransport = false
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -107,7 +109,7 @@ do
 elseif switch_1 == eFinMission then
                     --[[//quand plus aucun pion n'a de mission
 ]]local plusDeMissions = true
-                    for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+                    for _,x in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                     local _continue = true
 do
                             local pionBuffer = x

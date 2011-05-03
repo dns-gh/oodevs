@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/Freiner.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -60,10 +62,10 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/Frein
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local ordre = x
@@ -110,7 +112,7 @@ do
                 if switch_1 == eFreiner then
                     if( self.ePhaseMission ~= eFinMission ) then
                         do
-                            Activate( self.activations.BEH_Mission_Pion_INF_Freiner, GetMotivation( "MOT_Mission" ), {} )
+                            Activate( self.activations.BEH_Mission_Pion_INF_Freiner, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_Freiner = function( self, _, v ) self.ePhaseMission = v[1] end
                             _continue = false
                         end

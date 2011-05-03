@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/nbc/pions/common/Behaviors - Dep.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-04-29 $
@@ -60,7 +62,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/pions/common/Behaviors - Dep.bms"
 ]]--[[// -----------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
             do
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                 Activate( self.activations.ACT_Info_Trace, 1, { "<== Pas d'amis avec lesquels se coordonner ==>", } )
                                 do return end
 
@@ -74,7 +76,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/pions/common/Behaviors - Dep.bms"
         if( rDistance < M_MODELE_PION_NBC_DISTANCE_LIGNE_AMI_MIN() ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "<== L'unite se poste ==>", } )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
             end
         end
 
@@ -136,11 +138,11 @@ node "BEH_Lima_Pion_NBC_SePosterSurLCA"
 ]]--[[// Etat du pion
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LCA, } )
-        Activate( self.activations.BEH_Dep_SePoster, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dep_SePoster, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Posture
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Passer en alerte de niveau 4
 ]]--[[//-----------------------------------------------------------------------------
@@ -269,7 +271,7 @@ do
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+        Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
     end,
 
 }

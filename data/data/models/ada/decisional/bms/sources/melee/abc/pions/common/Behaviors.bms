@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/pions/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 02-11-08 $
@@ -25,6 +27,7 @@ includedFiles["sources/melee/abc/pions/common/Behaviors.bms"] = true
 ]]include "Melee/Abc/Pions/Common/Actions.bms"
 
 include "Melee/Common/Pions/Missions.bms"
+
 
 
 --[[// *****************************************************************************
@@ -56,11 +59,11 @@ include "Melee/Common/Pions/Missions.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Mot_Pion_ABC_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Mot_Pion_ABC_AffecterVariablesDEtat, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ de l'état DEC par défaut 
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -69,18 +72,18 @@ include "Melee/Common/Pions/Missions.bms"
             do return end
         end
 
-        Activate( self.activations.BEH_ROE, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Comp générique
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Ambiance, 1, {} )
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_Rens, 1, {} )
-        Activate( self.activations.BEH_Pion_ABC_Default, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Ambiance, 1, emptyTable )
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_Rens, 1, emptyTable )
+        Activate( self.activations.BEH_Pion_ABC_Default, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Specifique unite de l'ABC
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_MAJ_Pion_ABC_EniDangereux, 1, {} )--[[// Ajout ADA gestion mortier
+        Activate( self.activations.BEH_MAJ_Pion_ABC_EniDangereux, 1, emptyTable )--[[// Ajout ADA gestion mortier
 ]]
     end,
 
@@ -107,7 +110,7 @@ node "BEH_MAJ_Pion_ABC_EniDangereux"
     activate = function( self )
         local Activate = Activate
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeConnaissances or {} ) do
+        for _,repEni in pairs( listeConnaissances or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_MAJ_EnnemiEnCours, S_Force_DangerSur( repEni ), { repEni, } )
 
@@ -158,7 +161,7 @@ node "BEH_Dep_Pion_ABC_SeCoordonnerAvec"
 ]]--[[// -----------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
             do
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                 Activate( self.activations.ACT_Info_Trace, 1, { "No friendly units to coordinate with...", } )
                                 do return end
 
@@ -172,7 +175,7 @@ node "BEH_Dep_Pion_ABC_SeCoordonnerAvec"
         if( rDistance < M_MODELE_PION_ABC_DISTANCE_LIGNE_AMI_MIN() ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "staying on position", } )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
             end
         end
 
@@ -219,11 +222,11 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCA"
 ]]--[[// MAJ Etat Lima
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LCA, } )
-        Activate( self.activations.BEH_Dep_SePoster, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dep_SePoster, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Posture
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
     end,
 
 --[[// ******************************************************************************
@@ -256,7 +259,7 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCAR"
             do
                 --[[// apres le premier tick on aura envie de se poster
 ]]SetStateVariable( "VE_SePoster", 2 )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                                 do return end
 
             end
@@ -405,7 +408,7 @@ do
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+        Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -480,7 +483,7 @@ node "BEH_Pion_ABC_InstallerDispositif"
     activate = function( self )
         local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
-            Activate( self.activations.ACT_Pion_ABC_InstallerDisposifif, 1, {} )
+            Activate( self.activations.ACT_Pion_ABC_InstallerDisposifif, 1, emptyTable )
         end
 
     end,
@@ -741,7 +744,7 @@ node "BEH_Dep_Pion_ABC_GererDeboucher"
 ]]--[[// Regarder les eAvantPoint dans la liste des points interessants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local ptABC = x
@@ -809,7 +812,7 @@ node "BEH_Ordre_SePosterPourDeboucher"
 ]]if( ModuleBegins() ) then
             do
                 SetStateVariable( "VE_SePoster", 2 )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                                 do return end
 
             end
@@ -856,7 +859,7 @@ node "BEH_Dep_Pion_ABC_GererDeboucherEclairage"
 ]]--[[// Regarder les eAvantPoint dans la liste des points interessants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local ptABC = x
@@ -924,7 +927,7 @@ node "BEH_Ordre_LivrerLigneDeboucher"
 ]]if( ModuleBegins() ) then
             do
                 SetStateVariable( "VE_SePoster", 2 )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                                 do return end
 
             end

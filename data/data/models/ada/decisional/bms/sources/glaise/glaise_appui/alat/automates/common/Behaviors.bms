@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/automates/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//génériques automates scipio
 ]]include "glaise/glaise_Common/Automates/Behaviors.bms"
 
@@ -55,7 +57,7 @@ include "glaise/glaise_Appui/Alat/Automates/Common/Behaviors/Behaviors - Rc.bms"
         self.listePionsAvecPC = DEC_Automate_PionsAvecPC()
         --[[//netoyage des connaissances
 ]]myself.sPlotsDeRavitaillement_ = S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ )
-        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[// ---------------------------------------------------------------------
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates génériques sur eni et situation mission
 ]]--[[// ---------------------------------------------------------------------
 ]]
@@ -64,30 +66,30 @@ include "glaise/glaise_Appui/Alat/Automates/Common/Behaviors/Behaviors - Rc.bms"
 ]]--[[// -------------------------------------------------------------------------
 ]]if( DEC_Automate_EstEmbraye() ) then
             do
-                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
-                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[// ---------------------------------------------------------------------
+                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
+                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// Mettre les combinaisons Nbc si alerte de niveau 4
 ]]--[[// ---------------------------------------------------------------------
 ]]
-                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )--[[//----------------------------------------------------------------------
+                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )--[[//----------------------------------------------------------------------
 ]]--[[// ROE --> Tir libre, sur riposte, interdit
 ]]--[[//----------------------------------------------------------------------
 ]]
-                Activate( self.activations.BEH_RC_Automate_ALAT_Situation, 1, {} )--[[// ---------------------------------------------------------------------
+                Activate( self.activations.BEH_RC_Automate_ALAT_Situation, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates spécifique à l'ALAT
 ]]--[[// ---------------------------------------------------------------------
 ]]
-                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )--[[// ---------------------------------------------------------------------
+                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// Gestion de l'ordre de conduite Silence Radio/radar
 ]]--[[// ---------------------------------------------------------------------
 ]]
                 if( DEC_GetMission( myself ) ~= nil ) then
                     do
-                        Activate( self.activations.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau, 1, {} )--[[// -----------------------------------------------------------------
+                        Activate( self.activations.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau, 1, emptyTable )--[[// -----------------------------------------------------------------
 ]]--[[// Ajout des plots dans mon fuseau si j'ai une mission
 ]]--[[// -----------------------------------------------------------------
 ]]
-                        Activate( self.activations.BEH_Log_Automate_ALAT_GererPlotsRavitaillement, 1, {} )--[[// -----------------------------------------------------------------
+                        Activate( self.activations.BEH_Log_Automate_ALAT_GererPlotsRavitaillement, 1, emptyTable )--[[// -----------------------------------------------------------------
 ]]--[[// choix des plots de ravitaillement des pions subordonnés
 ]]--[[// -----------------------------------------------------------------
 ]]

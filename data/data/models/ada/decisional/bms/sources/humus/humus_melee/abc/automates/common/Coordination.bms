@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/automates/common/Coordination.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -68,10 +70,10 @@ include "bit.lua"
     activate = function( self )
         local Activate = Activate
         Activate( self.activations.ACT_Info_Automate_Trace, 1, { "***$$$ Activation des coordinations $$$***", } )
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_, 1, {} )
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl_, 1, {} )
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEclAvecPE_, 1, {} )
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEcl_, 1, {} )
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_, 1, emptyTable )
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl_, 1, emptyTable )
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEclAvecPE_, 1, emptyTable )
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEcl_, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -223,7 +225,7 @@ node "BEH_CoordDep_Automate_ABC_ActiverCoordinationAmisSur"
 ]]        end
 
         local selPions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( selPions or {} ) do
+        for _,x in pairs( selPions or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -329,7 +331,7 @@ node "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur"
 ]]if( DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pionEnQueue ) > M_MODELE_AUTOMATE_ABC_DISTANCE_ETALEMENT_ESC_MAX() ) then
             do
                 Activate( self.activations.ACT_Info_Automate_Trace, 1, { "==< Coordinnation active >==", } )
-                for _,x in pairs( self._namedParams.listePionsACoordonner or {} ) do
+                for _,x in pairs( self._namedParams.listePionsACoordonner or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x
@@ -456,7 +458,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl"
 ]]--[[// PE trop pres de l'Ecl --> le PE attend
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        for _,x in pairs( listePionsPE or {} ) do
+        for _,x in pairs( listePionsPE or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -502,10 +504,10 @@ node "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerJalonnement, 1, {} )--[[// définie dans mis jalonner
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerJalonnement, 1, emptyTable )--[[// définie dans mis jalonner
 ]]
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerFreinage, 1, {} )
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerMouvement, 1, {} )
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerFreinage, 1, emptyTable )
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerMouvement, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -551,7 +553,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerFreinage"
 ]]if( S_PionsAuContact( eEtatEchelon_Premier ) ) then
             do
                 DEC_Trace( "****** ----- PION PE AU CONTACT ----- ******" )
-                for _,x in pairs( selPionsFreinantsPE or {} ) do
+                for _,x in pairs( selPionsFreinantsPE or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x
@@ -562,7 +564,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerFreinage"
                 end
 
                 if( S_Dispositif_Automate_ABC_Freiner_PionsDevant( self.resultatCalcul, eEtatEchelon_Second ) ) then
-for _,x in pairs( selPionsFreinantsSE or {} ) do
+for _,x in pairs( selPionsFreinantsSE or emptyTable ) do
                     local _continue = true
                         do
                             local pion = x
@@ -581,7 +583,7 @@ for _,x in pairs( selPionsFreinantsSE or {} ) do
         if( S_PionsAuContact( eEtatEchelon_Second ) ) then
             do
                 DEC_Trace( "****** ----- PION SE AU CONTACT ----- ******" )
-                for _,x in pairs( selPionsFreinantsSE or {} ) do
+                for _,x in pairs( selPionsFreinantsSE or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x
@@ -592,7 +594,7 @@ for _,x in pairs( selPionsFreinantsSE or {} ) do
                 end
 
                 if( S_Dispositif_Automate_ABC_Freiner_PionsDevant( self.resultatCalcul, eEtatEchelon_Premier ) ) then
-for _,x in pairs( selPionsFreinantsPE or {} ) do
+for _,x in pairs( selPionsFreinantsPE or emptyTable ) do
                     local _continue = true
                         do
                             local pion = x
@@ -655,7 +657,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerJalonnement"
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Coordinnation
 ]]--[[//-----------------------------------------------------------------------------
-]]self.selPionsJal or {} ) do
+]]self.selPionsJal or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -711,7 +713,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerMouvement"
 ]]--[[// Récuper les unités qui on la mission decrocher
 ]]--[[//---------------------------------------------------------------------
 ]]local listePionEnMvt = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_Decrocher" )
-        for _,pion in pairs( listePionEnMvt or {} ) do
+        for _,pion in pairs( listePionEnMvt or emptyTable ) do
         local _continue = true
 do
                 --[[// VALEUR A DEFINIR

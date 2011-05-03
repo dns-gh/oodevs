@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/pions/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 02-11-08 $
@@ -54,11 +56,11 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/Behaviors.bms"] = tr
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Mot_Pion_ABC_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Mot_Pion_ABC_AffecterVariablesDEtat, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ de l'état DEC par défaut 
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -67,14 +69,14 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/Behaviors.bms"] = tr
             do return end
         end
 
-        Activate( self.activations.BEH_ROE, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Comp générique
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Ambiance, 1, {} )
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_Rens, 1, {} )
-        Activate( self.activations.BEH_Pion_ABC_Default, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Ambiance, 1, emptyTable )
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_Rens, 1, emptyTable )
+        Activate( self.activations.BEH_Pion_ABC_Default, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Specifique unite de l'ABC
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -123,7 +125,7 @@ node "BEH_Dep_Pion_ABC_SeCoordonnerAvec"
 ]]--[[// -----------------------------------------------------------------------------
 ]]if( DIA_IsListEmpty( self._namedParams.listePions ) ) then
             do
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                 Activate( self.activations.ACT_Info_Trace, 1, { "<== Pas d'amis avec lesquels se coordonner ==>", } )
                                 do return end
 
@@ -137,7 +139,7 @@ node "BEH_Dep_Pion_ABC_SeCoordonnerAvec"
         if( rDistance < M_MODELE_PION_ABC_DISTANCE_LIGNE_AMI_MIN() ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "<== L'unite se poste ==>", } )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
             end
         end
 
@@ -191,11 +193,11 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCA"
 ]]--[[// MAJ Etat Lima
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LCA, } )
-        Activate( self.activations.BEH_Dep_SePoster, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dep_SePoster, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Posture
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
     end,
 
 --[[// ******************************************************************************
@@ -254,7 +256,7 @@ node "BEH_Lima_Pion_ABC_SePosterSurLCAR"
             do
                 --[[// apres le premier tick on aura envie de se poster
 ]]SetStateVariable( "VE_SePoster", 2 )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                                 do return end
 
             end
@@ -403,7 +405,7 @@ do
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+        Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -478,7 +480,7 @@ node "BEH_Pion_ABC_InstallerDispositif"
     activate = function( self )
         local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
-            Activate( self.activations.ACT_Pion_ABC_InstallerDisposifif, 1, {} )
+            Activate( self.activations.ACT_Pion_ABC_InstallerDisposifif, 1, emptyTable )
         end
 
     end,

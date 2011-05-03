@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Attaquer.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-10-27 $
@@ -57,7 +59,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Attaquer.bm
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Pion detruit
@@ -103,7 +105,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eDonnerAssaut then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
-                    Activate( self.activations.BEH_Dep_Pion_ABC_GererDeboucher, 1, {} )--[[// Gestion du déboucher
+                    Activate( self.activations.BEH_Dep_Pion_ABC_GererDeboucher, 1, emptyTable )--[[// Gestion du déboucher
 ]]
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -127,7 +129,7 @@ self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[3] = true
 
@@ -164,7 +166,7 @@ node "BEH_Dep_Pion_ABC_GererDeboucher"
 ]]--[[// Regarder les eAvantPoint dans la liste des points interessants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local ptABC = x
@@ -232,7 +234,7 @@ node "BEH_Ordre_SePosterPourDeboucher"
 ]]if( ModuleBegins() ) then
             do
                 SetStateVariable( "VE_SePoster", 2 )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                                 do return end
 
             end

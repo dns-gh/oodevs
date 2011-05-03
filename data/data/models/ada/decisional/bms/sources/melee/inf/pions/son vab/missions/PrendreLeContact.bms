@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/son vab/missions/PrendreLeContact.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -65,14 +67,14 @@ node "MIS_Pion_INF_PrendrePreciserContact"
                     end
                 end
 
-                StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
             end
         end
 
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_MANOEUVRE(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -105,8 +107,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 if switch_1 == ePrendreContact then
                     if( self.eCurrentPhase ~= eFinMission ) then
                         do
-                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
-                            Activate( self.activations.BEH_Mission_Pion_VAB_PrendrePreciserContact, GetMotivation( "MOT_Mission" ), {} )
+                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
+                            Activate( self.activations.BEH_Mission_Pion_VAB_PrendrePreciserContact, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_PrendrePreciserContact = function( self, _, v ) self.eCurrentPhase = v[1] end
                             _continue = false
                         end

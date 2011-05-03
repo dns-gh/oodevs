@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/radint/cougar horizon/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -54,7 +56,7 @@ end
     local _returnValue = {}
     local selTemp = {}
     local listePions = DEC_Pion_PionsAvecPC()
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local pion = x

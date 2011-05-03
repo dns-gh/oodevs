@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artdsa/common/fonctions/Fonctions - Listes.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// variables locales
 ]]--[[//si la connaissance est valide
@@ -9,7 +11,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/common/fonctions/Fonctions - L
     local _returnValue = {}
     local listeCopie = listeEnis
     _returnValue = {}
-    for _,x in pairs( listeEnis or {} ) do
+    for _,x in pairs( listeEnis or emptyTable ) do
     local _continue = true
 do
             if( not DEC_ConnaissanceAgent_EstValide( x ) ) then
@@ -31,11 +33,11 @@ end
 function S_ConnaissancesEnnemiesVivantesPercuesVolantesPourSgpt( listePions )
     local _returnValue = {}
     _returnValue = {}
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local listeUnitesEnnemiesVivantesPercuesParPion = DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion( x )
-            for _,y in pairs( listeUnitesEnnemiesVivantesPercuesParPion or {} ) do
+            for _,y in pairs( listeUnitesEnnemiesVivantesPercuesParPion or emptyTable ) do
             local _continue = true
 do
                     if( not S_ConnaissanceAgent_EstEnVol( y ) ) then

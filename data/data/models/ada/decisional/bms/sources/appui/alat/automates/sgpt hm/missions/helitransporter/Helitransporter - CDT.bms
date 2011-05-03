@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/sgpt hm/missions/helitransporter/Helitransporter - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -77,7 +79,7 @@ include "bit.lua"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         --[[// Mise à Jour des selections de pions ( à tous les tics )
 ]]--[[// -------------------------------------------------------
@@ -128,7 +130,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
 ]]--[[// ------------------------------------------------------------
 ]]local gestionCDTMissionsTransport = false
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -174,7 +176,7 @@ do
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eSExfiltrer then
-                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
                                 cases_switch_1[2] = true

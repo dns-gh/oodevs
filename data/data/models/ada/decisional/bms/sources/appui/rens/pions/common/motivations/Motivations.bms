@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/common/motivations/Motivations.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//  MOTIVATION MISSION --> ordre de mission strength = 1
 ]]--[[//
@@ -41,7 +43,7 @@ node "ActivatedByMOT_Furtivite"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_MOT_Rens_ActiverFurtivite, 1, {} )--[[// -----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MOT_Rens_ActiverFurtivite, 1, emptyTable )--[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// -----------------------------------------------------------------------------

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/nbc/automates/common/Gestion deuxieme echelon.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -56,7 +58,7 @@ include "bit.lua"
             do return end
         end
 
-        for _,pion in pairs( selNBC_SE or {} ) do
+        for _,pion in pairs( selNBC_SE or emptyTable ) do
         local _continue = true
 do
                 --[[// Pion du PE à suivre

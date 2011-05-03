@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/pions/pel xl/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// Paramètres généraux
 ]]--[[// -------------------
 ]]use_priority = yes
@@ -160,7 +162,7 @@ node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer"
         local Activate = Activate
         --[[// Garder ses distances sur enis dangereux
 ]]local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeConnaissances or {} ) do
+        for _,repEni in pairs( listeConnaissances or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA, S_Force_Distance( repEni ), { repEni, } )
 

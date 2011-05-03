@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/common/Behaviors Conduite.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -72,7 +74,7 @@ include "Melee/Inf/Automates/Common/Behaviors CDT - Retrograde.bms"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eActionMission ~= eActionEnCours ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                 local _continue = true
                     pion:SetStateVariable( "VE_PreparationMission", 0 )
 
@@ -88,7 +90,7 @@ include "Melee/Inf/Automates/Common/Behaviors CDT - Retrograde.bms"
 
             end
         else
-            Activate( self.activations.BEH_Situation_Automate_INF_FinDeMission, 1, {} )
+            Activate( self.activations.BEH_Situation_Automate_INF_FinDeMission, 1, emptyTable )
 self.done_BEH_Situation_Automate_INF_FinDeMission = function( self, _, v ) self.eActionMission = v[1] end
         end
 
@@ -96,7 +98,7 @@ self.done_BEH_Situation_Automate_INF_FinDeMission = function( self, _, v ) self.
 ]]--[[// Gestion des RC recus 
 ]]--[[//-----------------------------------------------------------------------------	
 ]]Activate( self.activations.BEH_Situation_Automate_INF_Defaut, 1, { self._namedParams.bFinMission, } )
-        Activate( self.activations.BEH_Conduite_Automate_INF_Gerer_UniteInconnues, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_INF_Gerer_UniteInconnues, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des unites inconnues n'ayant pas de mission
 ]]--[[//-----------------------------------------------------------------------------	
 ]]
@@ -159,7 +161,7 @@ node "BEH_Conduite_Automate_INF_CadreOffensif"
         local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
-        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, emptyTable )
         --[[//-------------------------------------------------------------------------
 ]]--[[// Coordination du front
 ]]--[[//-------------------------------------------------------------------------
@@ -175,10 +177,10 @@ node "BEH_Conduite_Automate_INF_CadreOffensif"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
-        Activate( self.activations.BEH_Situation_Automate_INF_CadreOffensif, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, emptyTable )
+        Activate( self.activations.BEH_Situation_Automate_INF_CadreOffensif, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Gere les situations ennemis
 ]]--[[//-------------------------------------------------------------------------
 ]]
@@ -215,11 +217,11 @@ node "BEH_Conduite_Automate_INF_CadreRetrograde"
         local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
-        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
-        Activate( self.activations.BEH_CoordDep_Automate_INF_Retrograde, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, emptyTable )
+        Activate( self.activations.BEH_CoordDep_Automate_INF_Retrograde, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, emptyTable )
     end,
 
 --[[//-------------------------------------------------------------------------
@@ -257,14 +259,14 @@ node "BEH_Conduite_Automate_INF_CadreStatique"
         local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { false, } )
-        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Coordination du front
 ]]--[[//-------------------------------------------------------------------------	
 ]]
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
-        Activate( self.activations.BEH_Situation_Automate_INF_CadreDefensif_InstallerPC, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, emptyTable )
+        Activate( self.activations.BEH_Situation_Automate_INF_CadreDefensif_InstallerPC, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Gere les situations ennemis
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// TODO :
@@ -303,7 +305,7 @@ node "BEH_CoordTir_Automate_INF_Intervention_LCAR"
         Activate( self.activations.BEH_CoordTir_Automate_INF_EvalueActivite_Eni, 1, { self._namedParams.pPion, } )
 self.done_BEH_CoordTir_Automate_INF_EvalueActivite_Eni = function( self, _, v ) self.eAction = v[1] end
         for _,x_appuis in pairs( --[[// Regarde si les appuis traitent un ennemi
-]]F_Pion_GetselUnitesEnAppui( self._namedParams.pPion ) or {} ) do
+]]F_Pion_GetselUnitesEnAppui( self._namedParams.pPion ) or emptyTable ) do
         local _continue = true
 do
                 local pionAppui = x_appuis

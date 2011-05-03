@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/Behaviors - Dispositif.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -82,9 +84,9 @@ include "bit.lua"
             end
         end
 
-        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
         --[[// Si un ennemi arrive, on arrete les travaux ...
-]]Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1.2, {} )
+]]Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1.2, emptyTable )
         Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
         local mission = DEC_GetMission( myself )
         Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )

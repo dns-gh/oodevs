@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/missions/escorter/Escorter - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Mission Automate Alat Escorter
 ]]--[[// ------------------------------
@@ -49,8 +51,8 @@ includedFiles["sources/appui/alat/automates/common/missions/escorter/Escorter - 
 --[[// ROE par défaut pour cette mission + ordre poursuivre
 ]]                end
 
-                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
         else
 do

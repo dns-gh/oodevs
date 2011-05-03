@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/donnercouparret/DonnerCoupArret - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -48,7 +50,7 @@ include "bit.lua"
 ]]if( ModuleBegins() ) then
             do
                 DEC_Trace( "BEH_Conduite_Automate_ABC_DonnerUnCoupDArret" )
-                StartActivateOverride( self, self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, {} )--[[//-----------------------------------------------------------------------------
+                StartActivateOverride( self, self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination, partielle ici, le PE se coordonne pas avec l'Ecl
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[/*
@@ -77,13 +79,13 @@ include "bit.lua"
 
         if( self.bPriseDeContact and S_Automate_EstEnDifficulte() ) then
             do
-                StopActivateOverride( self, self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, {} )--[[// Decrocher
+                StopActivateOverride( self, self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, emptyTable )--[[// Decrocher
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Condition opérationnelle
 ]]
                 --[[//-----------------------------------------------------------------------------
 ]]StopActivateOverride( self, self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_, { true, self.LCAR, } )
-                Activate( self.activations.BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions, 1, {} )
+                Activate( self.activations.BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions, 1, emptyTable )
             end
 --[[// *****************************************************************************
 ]]--[[// BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions
@@ -120,7 +122,7 @@ node "BEH_Conduite_Automate_ABC_DonnerCoupArret_FaireDecrocherLesPions"
         Activate( self.activations.ACT_Info_Trace, 1, { "----- OUVERTURE FEU -----", } )
         Activate( self.activations.ACT_Info_Trace, 1, { "----- Decroche -----", } )
         local listePions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
 do
                 local pionDEC = pion

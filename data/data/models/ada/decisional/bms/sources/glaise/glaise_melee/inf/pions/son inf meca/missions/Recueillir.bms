@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/Recueillir.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -66,7 +68,7 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/Recue
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
         --[[///////////////////////////////////////////////////////////////////////////////
 ]]--[[//=============================================================================
@@ -75,7 +77,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 ]]--[[///////////////////////////////////////////////////////////////////////////////
 ]]--[[// On commence par prendre en compte les ordres recus
 ]]local selOrder = DEC_GetCategory( "ordres_recus" )
-        for _,repOrder in pairs( selOrder or {} ) do
+        for _,repOrder in pairs( selOrder or emptyTable ) do
         local _continue = true
 do
                 --[[//-----------------------------------------------------------------------------
@@ -131,7 +133,7 @@ do
                         end
                     end
 
-                    Activate( self.activations.BEH_Mission_Pion_VAB_Recueillir, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Mission_Pion_VAB_Recueillir, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_Recueillir = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
@@ -148,7 +150,7 @@ elseif switch_1 == eRompreContact then
                         end
                     end
 
-                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, emptyTable )
 self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                 --[[//------------------------------------------------------------------
@@ -225,7 +227,7 @@ node "BEH_Mission_Pion_VAB_Recueillir"
         if( ModuleBegins() ) then
             do
                 --[[// Verifie que l'on est bien dans son fuseau
-]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
             end
 --[[///////////////////////////////////////////////////////////////////////////////
 ]]--[[//=============================================================================
@@ -300,7 +302,7 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
 
                     Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, { eNiveauInstallation_Poste, } )
 self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction = v[1] end
-                    StartActivateOverride( self, self.activations.BEH_RC_Pion_VAB_SurveillerPIA, 1, {} )
+                    StartActivateOverride( self, self.activations.BEH_RC_Pion_VAB_SurveillerPIA, 1, emptyTable )
                     _continue = false
                 --[[//------------------------------------------------------------------
 ]]--[[//  On se met en position de tir 

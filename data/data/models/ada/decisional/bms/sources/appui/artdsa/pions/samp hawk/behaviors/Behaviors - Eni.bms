@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artdsa/pions/samp hawk/behaviors/Behaviors - Eni.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Gestion de l'interception balystique pour la section HAWK
 ]]--[[// -----------------------------------------------------------------------------
@@ -63,7 +65,7 @@ node "BEH_Eni_GererDemandesDeTirsCentralisees"
         --[[// variables locales
 ]]local nbComposanteesRestantes = M_MODELE_NOMBRE_UNITES_ENI_ENGAGEABLE_PAR_TIC()
         local nbComposantees = 0
-        for _,eni in pairs( myself.listeEnisTirAutorise_ or {} ) do
+        for _,eni in pairs( myself.listeEnisTirAutorise_ or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstMort( eni ) ) then

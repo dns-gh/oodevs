@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/missions/fairemouvement/CDT - FaireMouvement.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_FaireMouvement
 ]]--[[// 
@@ -42,7 +44,7 @@ includedFiles["sources/common/automates/missions/fairemouvement/CDT - FaireMouve
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         Activate( self.activations.BEH_CoordDep_Automate_ActiverCoordinationSur, 1, { DEC_Automate_PionsAvecPC(), 1000, } )
     end,

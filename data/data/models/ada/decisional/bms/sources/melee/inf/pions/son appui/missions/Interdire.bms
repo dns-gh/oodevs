@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/son appui/missions/Interdire.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-02-20 $
@@ -51,7 +53,7 @@ includedFiles["sources/melee/inf/pions/son appui/missions/Interdire.bms"] = true
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_STATIQUE(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -78,7 +80,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                         end
                     end
 
-                    Activate( self.activations.BEH_Mission_Pion_INF_Interdire, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Mission_Pion_INF_Interdire, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_Interdire = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true

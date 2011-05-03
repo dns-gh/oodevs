@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/pions/common/Behaviors - Esquive.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -144,7 +146,7 @@ node "BEH_Manoeuvre_Pion_INF_SeReplier"
         end
 
         if( not S_EstADistanceTir_Pt( self.ptDepart ) ) then
-            StartActivateOverride( self, self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+            StartActivateOverride( self, self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
         end
 
         if( S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ptRepli, 0 ) ) then

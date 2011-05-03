@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/pions/pat ei/missions/Eclairer.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -41,15 +43,15 @@ include "bit.lua"
     activate = function( self )
         local Activate = Activate
         self.eEtat = self.eEtat or nil
-        Activate( self.activations.BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_Pion_ABC_EnvieDeSInfiltrer, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[//  /===========> ///////////// SPE MISSION EI /////////////<============
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[// désactive l'esquive normal sur PAP mais l'envie (Etat esquive MAJ)
+        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )--[[// désactive l'esquive normal sur PAP mais l'envie (Etat esquive MAJ)
 ]]
-        Activate( self.activations.BEH_MOT_EtrePrudent, GetMotivation( "MOT_EtrePrudent" ), {} )
+        Activate( self.activations.BEH_MOT_EtrePrudent, GetMotivation( "MOT_EtrePrudent" ), emptyTable )
         Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { DEC_ListePoints_GetAt( self._namedParams.mission.itineraire_, DEC_ListePoints_Size( self._namedParams.mission.itineraire_ ) - 1 ), } )
-        Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// Furtivité
+        Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// Furtivité
 ]]
         --[[//-----------------------------------------------------------------------------
 ]]--[[//  /===========> ///////////// FIN SPE MISSION EI /////////////<============

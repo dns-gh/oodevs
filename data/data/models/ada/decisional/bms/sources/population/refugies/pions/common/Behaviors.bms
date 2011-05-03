@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/refugies/pions/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[//Commun toutes armes
 ]]include "Common/Pions/Behaviors.bms"
@@ -32,7 +34,7 @@ includedFiles["sources/population/refugies/pions/common/Behaviors.bms"] = true
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ de l'état DEC par défaut 
 ]]--[[//-----------------------------------------------------------------------------
 ]]

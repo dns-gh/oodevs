@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/rohum/urh/missions/renseignersur/RenseignerSur - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_RENS_ROHUM_RenseignerSur
 ]]--[[// 
@@ -30,7 +32,7 @@ includedFiles["sources/appui/rens/automates/rohum/urh/missions/renseignersur/Ren
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Auto_CDT_RENS_ROHUM_RenseignerSur, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Auto_CDT_RENS_ROHUM_RenseignerSur, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Conduite générique 
 ]]--[[//-----------------------------------------------------------------------------
 ]]

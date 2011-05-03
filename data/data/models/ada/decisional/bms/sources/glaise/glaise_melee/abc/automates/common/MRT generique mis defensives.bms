@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/MRT generique mis defensives.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -84,7 +86,7 @@ include "bit.lua"
                     for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Verification des moyens
 ]]--[[//-----------------------------------------------------------------------------
-]]selPions or {} ) do
+]]selPions or emptyTable ) do
                     local _continue = true
 do
                             local pion = x
@@ -169,7 +171,7 @@ elseif switch_1 == eMRT_DeterminerEchelonsLocals then
 ]]--[[// PE / SE
 ]]--[[//-----------------------------------------------------------------------------
 ]]fNbPionsEnSoutienMin = Floor( fNbPionsEnSoutienMin )
-                    for _,x in pairs( self.selABC_Blindes or {} ) do
+                    for _,x in pairs( self.selABC_Blindes or emptyTable ) do
                     local _continue = true
 do
                             local pion = x

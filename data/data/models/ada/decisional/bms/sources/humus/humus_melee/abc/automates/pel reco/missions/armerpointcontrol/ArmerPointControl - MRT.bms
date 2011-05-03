@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/automates/pel reco/missions/armerpointcontrol/ArmerPointControl - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-02-06 $
@@ -42,7 +44,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/pel reco/missions/armerpo
                 DEC_Trace( "$ MIS AUTO ArmerPointDeControle: debut MRT $" )
                                 do
                     local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-                    for _,x in pairs( listePionsSubordonnes or {} ) do
+                    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                     local _continue = true
                         do
                             local pion = x

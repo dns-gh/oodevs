@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/populations/missions/Manifester.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pop_Manifester
 ]]--[[//
@@ -40,11 +42,11 @@ includedFiles["sources/population/populations/missions/Manifester.bms"] = true
 ]]        end
 
         Activate( self.activations.BEH_Pop_RejoindrePoint, 1, { self.objectif, } )
-        Activate( self.activations.BEH_Pop_PAPPions, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Pop_PAPPions, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Manifester
 ]]--[[//----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Pop_RalentissementPions, 1, {} )
+        Activate( self.activations.BEH_Pop_RalentissementPions, 1, emptyTable )
     end,
 
 }

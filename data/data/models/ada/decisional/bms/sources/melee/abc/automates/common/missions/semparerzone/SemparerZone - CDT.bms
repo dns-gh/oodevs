@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/common/missions/semparerzone/SemparerZone - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Conduite_Automate_ABC_SemparerDUneZone
 ]]--[[// 
@@ -25,12 +27,12 @@ includedFiles["sources/melee/abc/automates/common/missions/semparerzone/Semparer
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination, partielle ici, le PE se coordonne pas avec l'Ecl
 ]]--[[//----------------------------------------------------------------------------- 
 ]]
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEcl_, 1, {} )
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEcl_, 1, emptyTable )
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion appuis et releve et SE
 ]]--[[//-----------------------------------------------------------------------------
 ]]

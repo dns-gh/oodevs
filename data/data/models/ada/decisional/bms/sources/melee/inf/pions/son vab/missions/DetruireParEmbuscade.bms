@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/son vab/missions/DetruireParEmbuscade.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -54,7 +56,7 @@ node "MIS_Pion_INF_DetruireEmbuscade"
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 DEC_Trace( "Mission 'Detruire par Embuscade' : debut" )
-                Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
             end
         end
 
@@ -62,7 +64,7 @@ node "MIS_Pion_INF_DetruireEmbuscade"
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_DETRUIRE(), } )
         Activate( self.activations.ACT_Misc_Pion_INF_MAJ_PositionRegroupement, 1, { self._namedParams.mission.positionRegroupement_, } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -73,7 +75,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         end
 
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -126,7 +128,7 @@ do
 
                     Activate( self.activations.BEH_Eni_Pion_VAB_DetruireEmbuscade, GetMotivation( "MOT_ManoeuvrerSurEnis" ), { self.eCurrentPhase, } )
 self.done_BEH_Eni_Pion_VAB_DetruireEmbuscade = function( self, _, v ) self.eAction = v[1] end
-                    Activate( self.activations.BEH_Mission_Pion_VAB_DetruireEmbuscade, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Mission_Pion_VAB_DetruireEmbuscade, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_DetruireEmbuscade = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
                 --[[// Decrocher sur ordre ou non
@@ -146,7 +148,7 @@ elseif switch_1 == eRompreContact then
 ]]                    end
 
                     Activate( self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Vitesse, } )
-                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, emptyTable )
 self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
@@ -217,7 +219,7 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
                 end
 
                 --[[// Verifie que l'on est bien dans son fuseau
-]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
             end
         end
 
@@ -260,7 +262,7 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
                         end
                     end
 
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     --[[// Rejoins une position d'observation de la position a Barrer
 ]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.positionEmbuscade_, true, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
@@ -270,9 +272,9 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
 elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                    StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// On fait en sorte de ne pas etre vu
+                    StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// On fait en sorte de ne pas etre vu
 ]]
-                    StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                    StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours

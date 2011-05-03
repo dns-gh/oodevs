@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/pions/common/fonctions/Fonctions - Listes.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// -------------------------------------------------------------------------
 ]]--[[// liste des unités à suivre :
@@ -23,7 +25,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/fonctions/Fonctions
     local _returnValue = {}
     local patrouilleAlat = nil
     _returnValue = {}
-    for _,x in pairs( listeUnites or {} ) do
+    for _,x in pairs( listeUnites or emptyTable ) do
     local _continue = true
 do
             if( S_Misc_EstPionDetruitPhysique( x ) ) then
@@ -56,7 +58,7 @@ function S_Liste_Pion_ALAT_UnitesAAppuyer( listeUnites )
     local _returnValue = {}
     local patrouilleAlat = nil
     _returnValue = {}
-    for _,x in pairs( listeUnites or {} ) do
+    for _,x in pairs( listeUnites or emptyTable ) do
     local _continue = true
 do
             if( S_Misc_EstPionDetruitPhysique( x ) ) then
@@ -88,7 +90,7 @@ end
 function S_Liste_Pion_ALAT_UnitesADetruire( listInput )
     local _returnValue = {}
     _returnValue = {}
-    for _,x in pairs( listInput or {} ) do
+    for _,x in pairs( listInput or emptyTable ) do
     local _continue = true
 do
             if( not DEC_ConnaissanceAgent_EstValide( x ) ) then

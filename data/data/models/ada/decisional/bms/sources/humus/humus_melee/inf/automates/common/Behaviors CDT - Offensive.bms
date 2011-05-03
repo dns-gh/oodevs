@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/automates/common/Behaviors CDT - Offensive.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -155,7 +157,7 @@ node "BEH_Situation_Automate_INF_Assaut"
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des RC recus 
 ]]--[[//-----------------------------------------------------------------------------		
-]]DEC_Automate_PionsSansPC() or {} ) do
+]]DEC_Automate_PionsSansPC() or emptyTable ) do
         local _continue = true
 do
                 local x_pion = x
@@ -395,7 +397,7 @@ do
         for _,x_assaut in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Installation de l'assaut
 ]]--[[//-----------------------------------------------------------------------------		
-]]S_Cherche_Automate_Filtre_TypePion( selAppui, "SectionInfanterie" ) or {} ) do
+]]S_Cherche_Automate_Filtre_TypePion( selAppui, "SectionInfanterie" ) or emptyTable ) do
         local _continue = true
 do
                 --[[// Initialise la reduction

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/automates/common/Behaviors CDT - Coordination.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -83,7 +85,7 @@ include "bit.lua"
                 end
 
                 Activate( self.activations.ACT_Info_Automate_Trace, 1, { "==< Coordinnation : debut >==", } )
-                for _,x in pairs( self._namedParams.selPions or {} ) do
+                for _,x in pairs( self._namedParams.selPions or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x
@@ -178,7 +180,7 @@ node "BEH_CoordDep_Automate_INF_AvecAutomate"
             do return end
         end
 
-        for _,x_pion in pairs( selPionsPE or {} ) do
+        for _,x_pion in pairs( selPionsPE or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_CoordDep_Automate_INF_AvecAutomate_Pion, rActivity, { self._namedParams.compagnieAmie, self._namedParams.bResterAHauteur, x_pion, } )
 
@@ -446,7 +448,7 @@ node "BEH_Conduite_Automate_INF_FlancGarder_Regroupement"
         end
 
         local ptRegroupement_PE = DEC_Automate_PionPosition( DIA_GetAt( selPionsCompagnie_PE, 0 ) )
-        for _,x in pairs( selPions_PE or {} ) do
+        for _,x in pairs( selPions_PE or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Conduite_Automate_PointRegroupement_Pion, 1, { x, ptRegroupement_PE, } )
 
@@ -460,7 +462,7 @@ node "BEH_Conduite_Automate_INF_FlancGarder_Regroupement"
             ptRegroupement_SE = DEC_Automate_PionPosition( DIA_GetAt( selPionsCompagnie_SE, 0 ) )
         end
 
-        for _,x in pairs( selPions_SE or {} ) do
+        for _,x in pairs( selPions_SE or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Conduite_Automate_PointRegroupement_Pion, 1, { x, ptRegroupement_SE, } )
 
@@ -489,7 +491,7 @@ node "BEH_Conduite_Automate_INF_FlancGarder_Tenir"
         local selPion = DEC_Automate_PionsAvecPC()
         local selPion_PE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
         local bAuContact = false
-        for _,x in pairs( selPion or {} ) do
+        for _,x in pairs( selPion or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -502,7 +504,7 @@ do
         end
 
         if( bAuContact ) then
-for _,x in pairs( selPion_PE or {} ) do
+for _,x in pairs( selPion_PE or emptyTable ) do
             local _continue = true
                 Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { x, } )
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Freiner.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-03-31 $
@@ -66,7 +68,7 @@ node "BEH_Mission_Pion_INF_Freiner"
         do
         end
 
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
          do
             local _continue = true
             local switch_1 = self.ePhase
@@ -89,7 +91,7 @@ elseif switch_1 == eSurveiller then
                     --[[// eEtatPhaseMission_EnPosition
 ]]--[[// Attendre de se degager ...								
 ]]if( F_Pion_GeteEtatLima( myself ) ~= eEtatLima_LCAR ) then
-                        StartActivateOverride( self, self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, 1.1, {} )
+                        StartActivateOverride( self, self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, 1.1, emptyTable )
                     end
 
                                 cases_switch_1[2] = true
@@ -113,7 +115,7 @@ elseif switch_1 == eSurveiller then
                         do
                             --[[// Arrete de decrocher ( si 2 LCAR sont proches )
 ]]if( self.ePhase == eFreiner ) then
-                                StopActivateOverride( self, self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, {} )
+                                StopActivateOverride( self, self.activations.BEH_Dep_Pion_INF_Freiner_Decrocher, emptyTable )
                             end
 
                             self.ePhase = eSurveiller
@@ -126,8 +128,8 @@ elseif switch_1 == eSurveiller then
                     --[[// Rmque : Ce comportement ne se trouve pas dans Progresser, 
 ]]--[[// 		   car sinon il induit une boucle dans le graphe DIA				
 ]]Activate( self.activations.BEH_Lima_GererLCAR, 2, { not DEC_Agent_AutomateEstEmbraye(), myself.bFreiner_EnTete_, } )
-                    Activate( self.activations.BEH_Lima_GererLR, 2, {} )
-                    Activate( self.activations.BEH_Lima_Pion_INF_GererLIA, 2, {} )
+                    Activate( self.activations.BEH_Lima_GererLR, 2, emptyTable )
+                    Activate( self.activations.BEH_Lima_Pion_INF_GererLIA, 2, emptyTable )
                     Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.mission.itineraire_, eProgressionDirect, eTypeItiRepli, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
@@ -200,7 +202,7 @@ node "BEH_Dep_Pion_INF_Freiner_Decrocher"
 
         --[[// Reste debarque a proximite
 ]]if( S_Geometrie_EstProchePosition( self.ptDepart, DEC_Agent_Position(), self.rDist_Decroche ) ) then
-            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
         end
 
     end,

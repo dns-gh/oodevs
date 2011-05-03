@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/automates/common/missions/romprecontact/RompreContact CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -42,10 +44,10 @@ node "BEH_Conduite_Automate_INF_RompreContact"
 ]]--[[//-----------------------------------------------------------------------------	
 ]]        end
 
-        Activate( self.activations.BEH_CoordDep_Automate_INF_Retrograde, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
+        Activate( self.activations.BEH_CoordDep_Automate_INF_Retrograde, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, emptyTable )
     end,
 
 }

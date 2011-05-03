@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/common/missions/Behaviors MRT - Retrograde.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -328,7 +330,7 @@ node "BEH_Medo_Automate_INF_OrganiserMissions_Freiner"
 ]]--[[//---------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                for _,x_inf in pairs( self._namedParams.selPions_PE or {} ) do
+                for _,x_inf in pairs( self._namedParams.selPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         --[[// On affecte appuyer aux pions qui vont freiner en PE
@@ -430,7 +432,7 @@ node "BEH_Medo_Automate_INF_AssignerFreiner"
         self.ptRgpt_Foo = self.ptRgpt_Foo or nil
         --[[// Mission Pion		
 ]]if( ModuleBegins() ) then
-for _,x_inf in pairs( self._namedParams.selPions_PE or {} ) do
+for _,x_inf in pairs( self._namedParams.selPions_PE or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Freiner, 1, { ePhase_MRT, x_inf, self.ptRgpt_Foo, } )
 
@@ -460,7 +462,7 @@ node "BEH_Medo_Automate_INF_AssignerDecrocher_RgptDansZone"
         local Activate = Activate
         --[[// Mission Pion		
 ]]if( ModuleBegins() ) then
-for _,x_inf in pairs( self._namedParams.selPions_PE or {} ) do
+for _,x_inf in pairs( self._namedParams.selPions_PE or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Medo_Automate_INF_AssignerDecrocherA_RgptDansZone, 1, { x_inf, self._namedParams.locRgpt, } )
 
@@ -512,7 +514,7 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima"
     activate = function( self )
         local Activate = Activate
         if( ModuleBegins() ) then
-for _,x in pairs( self._namedParams.lstPionsAttaque or {} ) do
+for _,x in pairs( self._namedParams.lstPionsAttaque or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion, 1, { x, self._namedParams.lima, } )
 
@@ -555,7 +557,7 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_Lima_PourPion"
                     do
                         DEC_Trace( "Pas de position LCAR : Impossible d'assigner mission." )
                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
-                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                                 self:SendFeedback( eActionImpossible )
                         do return end
 
@@ -607,7 +609,7 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima"
     activate = function( self )
         local Activate = Activate
         if( ModuleBegins() ) then
-for _,x in pairs( self._namedParams.lstPionsSurveillance or {} ) do
+for _,x in pairs( self._namedParams.lstPionsSurveillance or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion, 1, { x, self._namedParams.lima, } )
 
@@ -652,7 +654,7 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Lima_PourPion"
                     do
                         DEC_Trace( "Pas de position LCAR : Impossible d'assigner mission." )
                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
-                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                     end
                 end
 
@@ -697,7 +699,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerFreinage"
                     DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                 end
 
-                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                 self:SendFeedback( eActionImpossible )
                 do return end
 
@@ -713,7 +715,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerFreinage"
                 local rIt_Pion = 0
                 local rIt_Appui = 0
                 local rIt_NbrAppuisMax = 1 + Floor( ( 1 + #( self._namedParams.selPions_PE ) ) / #( selPionsAppui_PE ) )
-                for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
+                for _,x_pion in pairs( self._namedParams.selPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         if( rIt_Pion < #( selPionsAppui_PE ) ) then

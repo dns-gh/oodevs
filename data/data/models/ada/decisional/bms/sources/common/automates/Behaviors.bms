@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -63,17 +65,17 @@ include "Common/Automates/Missions/Behaviors.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_MAJ_Automate_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_Automate_EtatDefaut, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ des états de l'automates
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_MAJ_Automate_RecevoirOrdreGE, 1, {} )
-        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_Automate_RecevoirOrdreGE, 1, emptyTable )
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// CR
 ]]--[[//-----------------------------------------------------------------------------
 ]]
         if( DEC_Automate_EstEmbraye() ) then
-            Activate( self.activations.BEH_Default_Automate_ReactionPopulations, 1, {} )
+            Activate( self.activations.BEH_Default_Automate_ReactionPopulations, 1, emptyTable )
         end
 
         --[[// debug TEMP
@@ -110,13 +112,13 @@ node "BEH_MAJ_Automate_EtatDefaut"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_MAJ_Automate_EtatOperationnel, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_Automate_EtatOperationnel, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ etat destruction
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_MAJ_Automate_EtatMission, 1, {} )
-        Activate( self.activations.BEH_MAJ_Automate_EtatLima, 1, {} )
-        Activate( self.activations.BEH_MAJ_Automate_EtatRapFor, 1, {} )
+        Activate( self.activations.BEH_MAJ_Automate_EtatMission, 1, emptyTable )
+        Activate( self.activations.BEH_MAJ_Automate_EtatLima, 1, emptyTable )
+        Activate( self.activations.BEH_MAJ_Automate_EtatRapFor, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -265,7 +267,7 @@ node "ACT_MAJ_Automate_EtatDestruction"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Echelon ecl
 ]]--[[//-------------------------------------------------------------------------
-]]listePionsPecl or {} ) do
+]]listePionsPecl or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -289,7 +291,7 @@ do
 ]]        end
 
         rIt = 0
-        for _,x in pairs( listePionsPE or {} ) do
+        for _,x in pairs( listePionsPE or emptyTable ) do
         local _continue = true
 do
                 local pion = x

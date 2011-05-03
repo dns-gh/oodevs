@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/cie vab/missions/prendreprecisermaintenircontact/PrendrePreciserMaintenirContact CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_INF_PrendrePreciserMaintenirContact
 ]]--[[// 
@@ -47,7 +49,7 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/prendreprecisermaint
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, emptyTable )
     end,
 
 }

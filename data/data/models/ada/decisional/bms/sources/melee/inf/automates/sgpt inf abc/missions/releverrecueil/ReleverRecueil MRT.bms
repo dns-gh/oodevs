@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/releverrecueil/ReleverRecueil MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -77,7 +79,7 @@ node "MIS_Automate_MRT_INF_ReleverEnRecueillant"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Medo_Automate_INF_ReleverEnRecueillant, 1, {} )
+        Activate( self.activations.BEH_Medo_Automate_INF_ReleverEnRecueillant, 1, emptyTable )
 self.done_BEH_Medo_Automate_INF_ReleverEnRecueillant = function( self, _, v ) self.eCreationMRT = v[1] end
     end,
 
@@ -133,7 +135,7 @@ node "BEH_Medo_Automate_INF_ReleverEnRecueillant"
                     --[[// Second Echelon
 ]]local rN_SE = #( DEC_Automate_PionsSansPC() ) - rN_PE
                     DEC_Trace( "Selection des composantes pion" )
-                    for _,x in pairs( self.selPions or {} ) do
+                    for _,x in pairs( self.selPions or emptyTable ) do
                     local _continue = true
 do
                             local pion = x

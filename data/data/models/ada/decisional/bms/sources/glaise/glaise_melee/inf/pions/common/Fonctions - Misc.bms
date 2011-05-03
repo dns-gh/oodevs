@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/common/Fonctions - Misc.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// *****************************************************************************
 ]]--[[//
@@ -52,7 +54,7 @@ function S_UnitesAppuis_EnPosition( )
     local _returnValue = false
     local sAppuis = F_Pion_GetselUnitesEnAppui( myself )
     _returnValue = true
-    for _,x in pairs( sAppuis or {} ) do
+    for _,x in pairs( sAppuis or emptyTable ) do
     local _continue = true
 do
             local tAppui = x
@@ -75,7 +77,7 @@ function S_EstDetecteParEnis( )
     local _returnValue = false
     _returnValue = false
     local lstEnisPercues = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
-    for _,ksEni in pairs( lstEnisPercues or {} ) do
+    for _,ksEni in pairs( lstEnisPercues or emptyTable ) do
     local _continue = true
 do
             if( S_Eni_SuisDetectePar( ksEni ) ) then
@@ -98,7 +100,7 @@ function S_Cherche_Pion_INF_EniPercu( )
     local rMaxForce = 0
     _returnValue = 0
     local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
-    for _,ksEni in pairs( lstEnisPercus or {} ) do
+    for _,ksEni in pairs( lstEnisPercus or emptyTable ) do
     local _continue = true
 do
             if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then

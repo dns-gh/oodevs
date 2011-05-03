@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Maj.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_MAJ_EtatDefaut()
 ]]--[[//
@@ -23,7 +25,7 @@ includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Maj.bms"] = true
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_MAJ_EtatOperationnel, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_EtatOperationnel, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ etat destruction
 ]]--[[//-----------------------------------------------------------------------------
 ]]

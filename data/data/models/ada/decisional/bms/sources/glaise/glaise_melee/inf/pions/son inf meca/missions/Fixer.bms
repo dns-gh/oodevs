@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/Fixer.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -81,7 +83,7 @@ node "MIS_Pion_INF_Fixer"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
         --[[// *************************************************************************
 ]]--[[// Corps principal de la mission
@@ -110,7 +112,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 
                     if( self.eCurrentPhase ~= eFinMission ) then
                         do
-                            Activate( self.activations.BEH_Mission_Pion_VAB_Fixer, GetMotivation( "MOT_Mission" ), {} )
+                            Activate( self.activations.BEH_Mission_Pion_VAB_Fixer, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_Fixer = function( self, _, v ) self.eCurrentPhase = v[1] end
                                                         do return end
 
@@ -182,7 +184,7 @@ node "BEH_Mission_Pion_VAB_Fixer"
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             do
-                StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
             end
 --[[// Lorsque l'action est impossible
 ]]        end

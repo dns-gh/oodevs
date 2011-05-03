@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/emergency/automates/common/missions/alert/Alert - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// This file is part of a MASA library or program.
@@ -134,7 +136,7 @@ node "BEH_Medo_Automate_Emergency_PrepareMission_Alert"
                                                                             DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( eCodeLoc, E_LocalisationFunctionsReturnCode ) )
                                                                                 do
                                             DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                            Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                            Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                                                                         self:SendFeedback( eActionImpossible )
                                             do return end
 
@@ -164,7 +166,7 @@ do
 
                     DEC_Trace( "Select " .. FloatToString( sizePions ) .. " units" )
                     self.ePhase = eMRT_AssignerMissions
-                    for _,x in pairs( selTmp or {} ) do
+                    for _,x in pairs( selTmp or emptyTable ) do
                     local _continue = true
 do
                             local pion = x
@@ -266,7 +268,7 @@ node "BEH_Medo_Automate_Emergency_AssignAlert"
                 end
 
                 DEC_Trace( "Set " .. FloatToString( distSize ) .. " zones to each unit" )
-                for _,x_pion in pairs( self._namedParams.lstPions or {} ) do
+                for _,x_pion in pairs( self._namedParams.lstPions or emptyTable ) do
                 local _continue = true
 do
                         local references = {}

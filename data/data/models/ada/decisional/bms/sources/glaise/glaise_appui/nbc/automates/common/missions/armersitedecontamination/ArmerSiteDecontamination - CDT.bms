@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/armersitedecontamination/ArmerSiteDecontamination - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Conduite_Automate_NBC_ArmerUnSiteDeDecontamination
 ]]--[[// 
@@ -25,14 +27,14 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/armersi
     activate = function( self )
         local Activate = Activate
         self.mission = self.mission or DEC_GetMission( myself )
-        Activate( self.activations.BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gen
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// PC y compris
 ]]
-        Activate( self.activations.BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_, 1, {} )--[[// PC y compris
+        Activate( self.activations.BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_, 1, emptyTable )--[[// PC y compris
 ]]
-        Activate( self.activations.BEH_Dispositif_Automate_NBC_GererPionsDetruits_, 1, {} )
+        Activate( self.activations.BEH_Dispositif_Automate_NBC_GererPionsDetruits_, 1, emptyTable )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Spé
 ]]--[[//-----------------------------------------------------------------------------
@@ -87,7 +89,7 @@ node "BEH_Dispositif_Automate_NBC_FaireArmerSite_"
 ]]        end
 
         local listePionsDecontamination = S_Automate_NBC_ObtenirPatrouilleDecOperationnelles()
-        for _,pion in pairs( listePionsDecontamination or {} ) do
+        for _,pion in pairs( listePionsDecontamination or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_NBC_AssignerArmerSiteA, 1, { ePhase_CDT, pion, self.positionSite, } )
 

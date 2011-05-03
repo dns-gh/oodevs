@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/pions/common/behaviors/Behaviors - Dep.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -77,20 +79,20 @@ node "BEH_Dep_Pion_ALAT_Voler"
             local switch_1 = F_Pion_GeteEtatAmbiance( myself )
             local cases_switch_1 = {}
                 if switch_1 == eEtatAmbiance_Surete then
-                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                     if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
-                        Activate( self.activations.BEH_Dep_Pion_ALAT_SecondeAllure, 1, {} )
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_SecondeAllure, 1, emptyTable )
                     else
-                        Activate( self.activations.BEH_Dep_Pion_ALAT_SecondeAllureAvecAppuis, 1, {} )
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_SecondeAllureAvecAppuis, 1, emptyTable )
                     end
 
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatAmbiance_Vitesse then
                     if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
-                        Activate( self.activations.BEH_Dep_Pion_ALAT_TroisiemeAllure, 1, {} )
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_TroisiemeAllure, 1, emptyTable )
                     else
-                        Activate( self.activations.BEH_Dep_Pion_ALAT_TroisiemeAllureAvecAppuis, 1, {} )
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_TroisiemeAllureAvecAppuis, 1, emptyTable )
                     end
 
                     _continue = false
@@ -441,7 +443,7 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
             end
         end
 
-        Activate( self.activations.BEH_Dep_Pion_ALAT_Voler, 1, {} )
+        Activate( self.activations.BEH_Dep_Pion_ALAT_Voler, 1, emptyTable )
         if( ModuleBegins() ) then
             do
                 assert( self._namedParams.listePoints ~= nil, "liste de points non valide" )
@@ -476,7 +478,7 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
             end
         end
 
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
         Activate( self.activations.BEH_Dep_Progresser, 1, { self.itineraire, self._namedParams.typeProgression, } )
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
          do

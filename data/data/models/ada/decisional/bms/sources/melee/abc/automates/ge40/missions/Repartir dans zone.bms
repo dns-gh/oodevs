@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/Repartir dans zone.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -88,7 +90,7 @@ node "BEH_GTIA_RepartirPionsDansZones"
 
         self.zones = self.zones or S_Geometrie_DecoupeLocalisation( self._namedParams.zone, #( self._namedParams.listePions ) )
         local itZone = 0
-        for _,pion in pairs( self._namedParams.listePions or {} ) do
+        for _,pion in pairs( self._namedParams.listePions or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_GTIA_AssignerZone, 1, { pion, DEC_UserTypeList_GetAt( self.zones, itZone ), } )
@@ -168,7 +170,7 @@ node "BEH_GTIA_AssignerZoneMeleeSuivantTerrain"
         local listePionsINF = S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePionsMelee )
         local itZone = 0
         for _,pion in pairs( --[[// Inf dans fuseau plus "fermés"
-]]listePionsINF or {} ) do
+]]listePionsINF or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_GTIA_AssignerZone, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )
@@ -178,7 +180,7 @@ do
 ]]
         end
 
-        for _,pion in pairs( listePionsABC or {} ) do
+        for _,pion in pairs( listePionsABC or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_GTIA_AssignerZone, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )
@@ -224,7 +226,7 @@ node "BEH_GTIA_AssignerZoneMeleeSuivantEnisDebarques"
 
         local itZone = 0
         for _,pion in pairs( --[[// ABC dans les fuseaux "enis embarques"
-]]listePionsABC or {} ) do
+]]listePionsABC or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_GTIA_AssignerZone, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )
@@ -234,7 +236,7 @@ do
 ]]
         end
 
-        for _,pion in pairs( listePionsINF or {} ) do
+        for _,pion in pairs( listePionsINF or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_GTIA_AssignerZone, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )
@@ -280,7 +282,7 @@ node "BEH_GTIA_AssignerZoneMeleeSuivantEnisEmbarques"
 
         local itZone = 0
         for _,pion in pairs( --[[// Inf dans fuseaux "eni debarques"
-]]listePionsINF or {} ) do
+]]listePionsINF or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )
@@ -290,7 +292,7 @@ do
 ]]
         end
 
-        for _,pion in pairs( listePionsABC or {} ) do
+        for _,pion in pairs( listePionsABC or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_GTIA_AssignerFuseau, 1, { pion, DEC_UserTypeList_GetAt( zonesTriees, itZone ), } )

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/esc amx-erc/missions/eclairer/Eclairer - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-02-05 $
@@ -42,7 +44,7 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/eclairer/Eclaire
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_ABC_Eclairer, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_ABC_Eclairer, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Conduite générique 
 ]]--[[//-----------------------------------------------------------------------------
 ]]

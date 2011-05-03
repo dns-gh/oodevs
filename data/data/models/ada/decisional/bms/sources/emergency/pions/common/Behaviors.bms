@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/emergency/pions/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// This file is part of a MASA library or program.
@@ -43,10 +45,10 @@ node "BEH_Defaut"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[// MAJ de l'état DEC par défaut 
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )--[[// MAJ de l'état DEC par défaut 
 ]]--[[//-------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, {} )--[[// MAJ de l'etat du pion en fonction de son agressivite
+        Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, emptyTable )--[[// MAJ de l'etat du pion en fonction de son agressivite
 ]]--[[// ------------------------------------------------------------------------	
 ]]
         --[[// Si totalement detruit...
@@ -54,18 +56,18 @@ node "BEH_Defaut"
             do return end
         end
 
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// Embarquement apres Heliportage
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[// Embarquement apres Heliportage
 ]]--[[// ------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Ambiance, 1, {} )--[[// Ambiance
+        Activate( self.activations.BEH_Ambiance, 1, emptyTable )--[[// Ambiance
 ]]--[[// ------------------------------------------------------------------------
 ]]--[[// Gestion de l'ambiance en fonction des ennemis
 ]]--[[// Module la vitesse en fonction de l'ambiance
 ]]
-        Activate( self.activations.BEH_ROE, 1, {} )--[[// Comportements Generiques
+        Activate( self.activations.BEH_ROE, 1, emptyTable )--[[// Comportements Generiques
 ]]
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_Rens, 1, {} )--[[// Gestion de la guerre elec : Passer en silence radio
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_Rens, 1, emptyTable )--[[// Gestion de la guerre elec : Passer en silence radio
 ]]
         if( DEC_GetMission( myself ) == nil ) then
             do

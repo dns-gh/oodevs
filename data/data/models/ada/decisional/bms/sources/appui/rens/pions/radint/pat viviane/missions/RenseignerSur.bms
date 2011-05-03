@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/radint/pat viviane/missions/RenseignerSur.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_RENS_RADINT_RenseignerSur
 ]]--[[//
@@ -49,7 +51,7 @@ do
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -65,7 +67,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 --[[// données doctrine
 ]]DEC_Copie_Point( DEC_Agent_Position(), self.positionInitiale )
                 Activate( self.activations.ACT_Info_Trace, 1, { "Intelligence gathering mission begining", } )
-                Activate( self.activations.ACT_Connaissance_Rens_EnregistrerDonnees, 1, {} )--[[// Enregistrement des donnes
+                Activate( self.activations.ACT_Connaissance_Rens_EnregistrerDonnees, 1, emptyTable )--[[// Enregistrement des donnes
 ]]
             end
         end
@@ -102,7 +104,7 @@ elseif switch_1 == eProgresser then
 ]]Activate( self.activations.BEH_Obs_Pion_Rens_Radint_RenseignerDans, 1, { self._namedParams.mission.zonesDeRecherche_, } )
                             Activate( self.activations.ACT_Info_Trace, 1, { "Vertical take off", } )
                             --[[// Rester sur palce dans la cas du Cougar
-]]Activate( self.activations.ACT_Dep_SePoster, 1.1, {} )
+]]Activate( self.activations.ACT_Dep_SePoster, 1.1, emptyTable )
                             --[[// données doctrine
 ]]Activate( self.activations.BEH_Dep_Pion_RENS_MonterA, 1.1, { 3000, } )
                             --[[// Delai mise en place
@@ -140,7 +142,7 @@ elseif switch_1 == eFinMission then
                         Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     end
 
-                    Activate( self.activations.BEH_Connaissance_Rens_ExploiterRens, 1, {} )
+                    Activate( self.activations.BEH_Connaissance_Rens_ExploiterRens, 1, emptyTable )
 self.done_BEH_Connaissance_Rens_ExploiterRens = function( self, _, v ) self.eEtat = v[1] end--[[// Developpement photos
 ]]
                     --[[// données doctrine
@@ -182,7 +184,7 @@ node "BEH_Connaissance_Rens_ExploiterRens"
         if( self.eEtat == eActionEffectuee ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "End of data processing", } )
-                Activate( self.activations.ACT_Connaissance_Rens_ExtraireDonnees, 1, {} )
+                Activate( self.activations.ACT_Connaissance_Rens_ExtraireDonnees, 1, emptyTable )
                                 self:SendFeedback( eActionEffectuee )
                 do return end
 
@@ -222,7 +224,7 @@ node "BEH_Obs_Pion_Rens_Radint_RenseignerDans"
         for _,zone in pairs( --[[//---------------------------------------------------------------------
 ]]--[[// Observation ( si station => exploitation du Rens possible)
 ]]--[[//---------------------------------------------------------------------
-]]self._namedParams.zonesDeRecherches or {} ) do
+]]self._namedParams.zonesDeRecherches or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Obs_SurveillerZone, 1, { zone, } )
 

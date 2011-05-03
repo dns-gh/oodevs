@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/pions/common/missions/ReconnaitreContourEnnemi.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -63,7 +65,7 @@ include "bit.lua"
                 self.localisationCourante = S_Geometrie_LocalisationProche( self.listeLocalisations )
                 self.nouvelleLocalisation = self.localisationCourante
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                 end
 
                 DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
@@ -71,13 +73,13 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
                 if( self.ePhase ~= eFinMission and self.ePhase ~= eSExfiltrer ) then
                     do
-                        StopActivateOverride( self, self.activations.BEH_Dep_Pion_ALAT_PremiereAllure, {} )
+                        StopActivateOverride( self, self.activations.BEH_Dep_Pion_ALAT_PremiereAllure, emptyTable )
                         self.ePhase = eSExfiltrer
                         self.eEtat = eActionEnCours
                     end
@@ -134,7 +136,7 @@ if( DEC_UserTypeList_Contient( self.listeLocalisationsATraiter, self.localisatio
                     end
 
                     self.nouvelleLocalisation = nil
-                    for _,x in pairs( self.listeLocalisations or {} ) do
+                    for _,x in pairs( self.listeLocalisations or emptyTable ) do
                     local _continue = true
 do
                             if( DEC_Geometrie_EstPointDansLocalisation( myself:DEC_Agent_Position(), x ) ) then
@@ -149,7 +151,7 @@ do
 
                     if( self.nouvelleLocalisation ~= nil ) then
                         do
-                            for _,x in pairs( self.listeLocalisations or {} ) do
+                            for _,x in pairs( self.listeLocalisations or emptyTable ) do
                             local _continue = true
                                 do
                                     if( x ~= self.nouvelleLocalisation ) then
@@ -178,12 +180,12 @@ do
 
                     --[[//si on a percu un ennemi dans le fuseau, passage en première allure
 ]]if( not DIA_IsListEmpty( DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau() ) ) then
-                        StartActivateOverride( self, self.activations.BEH_Dep_Pion_ALAT_PremiereAllure, GetMotivation( "MOT_Manoeuvrer" ) * 4, {} )
+                        StartActivateOverride( self, self.activations.BEH_Dep_Pion_ALAT_PremiereAllure, GetMotivation( "MOT_Manoeuvrer" ) * 4, emptyTable )
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointFinFuseau, } )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self.pointFinFuseau, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     --[[// si l'agent n'est pas dans son fuseau ou s'il n'est pas dans une zone non reconnue
 ]]if( ( not DEC_Geometrie_EstPointDansFuseau( myself:DEC_Agent_Position() ) or ( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Surete ) ) and not self.recoEnCours ) then
                         do
@@ -207,7 +209,7 @@ self.done_BEH_Obs_Pion_ALAT_ReconnaitreZone = function( self, _, v ) self.eEtat 
 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                     end
 
                     if( self.eEtat == eActionEffectuee ) then
@@ -242,7 +244,7 @@ elseif switch_1 == eSExfiltrer then
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointRegroupement_, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointRegroupement_, } )
 self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
@@ -265,7 +267,7 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
@@ -308,7 +310,7 @@ node "BEH_Eni_Pion_ALAT_GererEniRecoContourEni"
         local Activate = Activate
         self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
         local listeUnitesDetecteesDansFuseau = DEC_Connaissances_UnitesDetecteesDansFuseau()
-        for _,x in pairs( listeUnitesDetecteesDansFuseau or {} ) do
+        for _,x in pairs( listeUnitesDetecteesDansFuseau or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstMort( x ) or not DEC_Geometrie_EstPointDansLocalisation( DEC_ConnaissanceAgent_Position( x ), self._namedParams.localisation ) ) then

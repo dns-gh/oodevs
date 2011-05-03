@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/freiner/Freiner - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Conduite de la mission Automate ALAT Freiner :
 ]]--[[// -----------------------------------------------------------------------------
@@ -46,7 +48,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/freine
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         --[[// ---------------------------------------------------------------------
 ]]--[[// Mise à Jour des selections de pions ( à tous les tics )
@@ -117,7 +119,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eSExfiltrer then
-                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
                                 cases_switch_1[2] = true

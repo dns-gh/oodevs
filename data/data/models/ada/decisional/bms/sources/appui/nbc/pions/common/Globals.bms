@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/nbc/pions/common/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// 
 ]]--[[// $Created: MIA 02-11-08 $
@@ -72,13 +74,13 @@ end
     _returnValue = nil
     local listeObjet = DEC_Connaissances_ObjetsDansCercle( position, 300, S_TypeObject_ToString( eTypeObjectSiteDecontamination ) )
     local listeObjetBis = DEC_Connaissances_CollisionsObjets()
-    for _,x in pairs( listeObjet or {} ) do
+    for _,x in pairs( listeObjet or emptyTable ) do
     local _continue = true
         _returnValue = x
 
     end
 
-    for _,objet in pairs( listeObjetBis or {} ) do
+    for _,objet in pairs( listeObjetBis or emptyTable ) do
     local _continue = true
 if( DEC_ConnaissanceObjet_Type( objet ) == S_TypeObject_ToString( eTypeObjectSiteDecontamination ) ) then
             _returnValue = objet

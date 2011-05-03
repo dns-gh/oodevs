@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/appuimob/pions/Transporter.bms"] = true
 
+local emptyTable = emptyTable
+
 node "MIS_Pion_LOG_TransporterUniteChars"
 {
     feedbacks = { { { "done_MIS_Pion_LOG_TransporterUniteChars" }, "MIS_Pion_LOG_TransporterUniteChars" } },
@@ -30,7 +32,7 @@ node "MIS_Pion_LOG_TransporterUniteChars"
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                 end
 
             end
@@ -57,7 +59,7 @@ node "MIS_Pion_LOG_TransporterUniteChars"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do

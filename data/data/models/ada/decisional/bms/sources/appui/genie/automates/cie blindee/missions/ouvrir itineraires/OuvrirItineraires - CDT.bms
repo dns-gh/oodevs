@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/genie/automates/cie blindee/missions/ouvrir itineraires/OuvrirItineraires - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -36,7 +38,7 @@ include "bit.lua"
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[//---------------------------------------------------------------------
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )--[[//---------------------------------------------------------------------
 ]]--[[// Ordre conduite
 ]]--[[//---------------------------------------------------------------------
 ]]
@@ -55,8 +57,8 @@ include "bit.lua"
 ]]--[[//---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_, 1, {} )
-        Activate( self.activations.BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement, 1, {} )--[[//---------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_, 1, emptyTable )
+        Activate( self.activations.BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement, 1, emptyTable )--[[//---------------------------------------------------------------------
 ]]--[[// Renforcement 
 ]]--[[//---------------------------------------------------------------------
 ]]
@@ -92,7 +94,7 @@ node "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement"
 ]]--[[// T_ConnaissanceObjet_local
 ]]--[[//---------------------------------------------------------------------
 ]]        local listePionsGenie = S_ObtenirPionsOperationnelsFiltre( "SectionGenie" )
-        for _,pion in pairs( listePionsGenie or {} ) do
+        for _,pion in pairs( listePionsGenie or emptyTable ) do
         local _continue = true
 do
                 --[[// cast
@@ -111,7 +113,7 @@ do
 ]]
         end
 
-        for _,x in pairs( g_selConnaissanceObs or {} ) do
+        for _,x in pairs( g_selConnaissanceObs or emptyTable ) do
         local _continue = true
 do
                 local objet = x
@@ -128,7 +130,7 @@ do
 ]]
         end
 
-        for _,x in pairs( g_selConnaissanceObs or {} ) do
+        for _,x in pairs( g_selConnaissanceObs or emptyTable ) do
         local _continue = true
 do
                 local objet = x
@@ -291,7 +293,7 @@ node "BEH_Conduite_Automate_GEN_OuvrirAxe_GererSE_"
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion pions détruit
 ]]--[[//-----------------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() or {} ) do
+]]DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
 do
                 --[[// cast
@@ -307,7 +309,7 @@ do
 
         local pionsPE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
         if( ModuleBegins() or S_Conduite_Pions_EtatMission( pionsPE, eEtatPhaseMission_FinMission ) == #( pionsPE ) ) then
-            Activate( self.activations.BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre, 1, {} )
+            Activate( self.activations.BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre, 1, emptyTable )
         end
 
     end,
@@ -349,7 +351,7 @@ node "BEH_Conduite_Automate_GEN_OuvrirAxe_FaireSuivre"
 ]]--[[// Assignation mission suivre
 ]]--[[//-----------------------------------------------------------------------------
 ]]local rIterateurPionASuivre = 0
-        for _,x in pairs( sel_SE or {} ) do
+        for _,x in pairs( sel_SE or emptyTable ) do
         local _continue = true
 do
                 local pion = x

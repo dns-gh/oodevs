@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Transport.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -95,7 +97,7 @@ if( DEC_Transport_EnCoursDeTransport() ) then
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.posEmbarquement, eProgressionDirect, eTypeItiInfiltration, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
@@ -130,7 +132,7 @@ elseif switch_1 == eTransporterEmbarquer then
 
                     local attendreUnites = false
                     self.listeUnitesPretes = {}
-                    for _,x in pairs( self.listeUnitesMissionTransporter or {} ) do
+                    for _,x in pairs( self.listeUnitesMissionTransporter or emptyTable ) do
                     local _continue = true
 do
                             --[[// si on est à plus de "distanceEmbarquement" de l'unité à transporter,
@@ -168,7 +170,7 @@ do
                     if( ( #( self.listeUnitesPretes ) ~= 0 ) and not attendreUnites ) then
                         do
                             DEC_Transport_AjouterPions( self.listeUnitesPretes, not self._namedParams.avecMateriel )
-                            Activate( self.activations.ACT_Transport_Pion_TransportEmbarquer, 1, {} )
+                            Activate( self.activations.ACT_Transport_Pion_TransportEmbarquer, 1, emptyTable )
 self.done_ACT_Transport_Pion_TransportEmbarquer = function( self, _, v ) self.eEtat = v[1] end
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEmbarquement, } )
                         end
@@ -208,7 +210,7 @@ elseif switch_1 == eTransporterAllerDebarquer then
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posDebarquement, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.posDebarquement, eProgressionDirect, eTypeItiInfiltration, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false

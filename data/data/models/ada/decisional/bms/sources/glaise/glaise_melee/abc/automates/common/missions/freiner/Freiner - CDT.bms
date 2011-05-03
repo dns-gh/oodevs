@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/freiner/Freiner - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-09-29 $
@@ -33,11 +35,11 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/freiner
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordinationRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordinationRetrograde_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination
 ]]--[[//-----------------------------------------------------------------------------
 ]]

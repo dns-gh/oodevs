@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/missions/attaquer une formation aeromobile/Attaquer une Formation Aeromobile - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 node "MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile"
 {
     feedbacks = { { { "done_MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile" }, "MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile" } },
@@ -34,7 +36,7 @@ node "MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         --[[// ---------------------------------------------------------------------
 ]]--[[// 1. Mise à Jour des selections de pions ( à tous les tics )
@@ -74,7 +76,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eSExfiltrer then
-                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
                                 cases_switch_1[2] = true

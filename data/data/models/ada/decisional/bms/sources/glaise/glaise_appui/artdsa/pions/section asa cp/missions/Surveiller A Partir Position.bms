@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artdsa/pions/section asa cp/missions/Surveiller A Partir Position.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -43,14 +45,14 @@ include "bit.lua"
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurOrdre, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurOrdre, 1, emptyTable )
                 end
 
             end
         end
 
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_DOCTRINE_PION_ASA_PH(), } )
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatODC = v[1] end--[[// Gestion de l'ordre de conduite "interrompre"
 ]]--[[// --------------------------------------------
 ]]
@@ -66,14 +68,14 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatODC = v[1] end--[
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     self.ePhase = eRejoindre
                     _continue = false
                 --[[//Rejoindre la position donnée par le commandant d'unité
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -105,7 +107,7 @@ elseif switch_1 == eSurveiller then
                     if( ( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) and ( F_Pion_GeteEtatRadar( myself ) == eEtatRadar_Ouvert ) and F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre ) then
                         do
                             Activate( self.activations.ACT_RC, 1, { eRC_PretAuTir, } )
-                            Activate( self.activations.BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller, 1, {} )
+                            Activate( self.activations.BEH_Eni_Pion_ASA_RolandCarol_GererEniSurveiller, 1, emptyTable )
                         end
                     end
 

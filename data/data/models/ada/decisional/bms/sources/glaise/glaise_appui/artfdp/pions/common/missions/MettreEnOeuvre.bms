@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artfdp/pions/common/missions/MettreEnOeuvre.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -38,7 +40,7 @@ node "BEH_Pion_ASS_GererOrdre_AppliquerFeux"
         --[[// Prise en charge de l'ordre d'application des feux
 ]]--[[//---------------------------------------------------------------------	
 ]]local selOrder = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( selOrder or {} ) do
+        for _,x in pairs( selOrder or emptyTable ) do
         local _continue = true
 do
                 local repOrdreCond = x
@@ -390,7 +392,7 @@ node "BEH_Dep_Pion_ASS_SePosterPourTirer"
             do return end
         end
 
-        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+        Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
     end,
 
 }
@@ -493,7 +495,7 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
 ]]        end
 
         Activate( self.activations.BEH_Tir_Pion_ASS_PreparerTirSur, 1.1, { self._namedParams.ptCible, M_DELAI_PREPARATION_TIR(), } )
-        Activate( self.activations.ACT_Dep_SePoster, 0.5, {} )
+        Activate( self.activations.ACT_Dep_SePoster, 0.5, emptyTable )
         if( self.eAction ~= eActionEnCours ) then
             Halt( self )
             do return end

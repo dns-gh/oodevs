@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/Eclairer.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -49,7 +51,7 @@ node "MIS_Pion_INF_Eclairer"
                 --[[// situation tactique
 ]]DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, {} )--[[//ROE par defaut pour cette mission
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, emptyTable )--[[//ROE par defaut pour cette mission
 ]]
             end
         end
@@ -67,7 +69,7 @@ node "MIS_Pion_INF_Eclairer"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
          do
             local _continue = true
@@ -82,7 +84,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eCurrentPhase ~= eFinMission ) then
                         do
-                            Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), {} )
+                            Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_RecoAxe = function( self, _, v ) self.eCurrentPhase = v[1] end
                             _continue = false
                         end

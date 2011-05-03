@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/jalonner/Jalonner - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -64,7 +66,7 @@ include "bit.lua"
                 --[[//1 pion de reserve pour 4 qui peuvent Jalonner
 ]]local nbPionsReserve = nbPionsPouvantJalonner / 3
                 for _,x in pairs( --[[//construction de la liste des pions en reserve
-]]self.listePatrouillesPeutFaireMissionJalonner or {} ) do
+]]self.listePatrouillesPeutFaireMissionJalonner or emptyTable ) do
                 local _continue = true
                     do
                         if( nbPionsReserve < 1 ) then
@@ -92,8 +94,8 @@ include "bit.lua"
                     end
                 end
 
-                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
         end
 

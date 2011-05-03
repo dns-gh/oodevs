@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/rohum/common/missions/sexfiltrer/SExfiltrer - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Medo_Automate_RENS_ROHUM_AssignerSExfiltrerA
 ]]--[[//
@@ -36,13 +38,13 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/sexfiltrer/SEx
 ]]if( self.centreZone == nil ) then
                     do
                         DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                                 do return end
 
                     end
                 end
 
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_RENS_ROHUM_AssignerSExfiltrerA, 1, { ePhase_MRT, pion, self.mission.zoneDeRegroupement_, self._namedParams.eEtatEchelon, } )
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/genie/automates/cie appui/missions/sedeployer/SeDeployer - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_GEN_SeDeployer
 ]]--[[//
@@ -105,7 +107,7 @@ node "BEH_Medo_Automate_AssignerFaireMouvementAGenie"
 ]]--[[//---------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                for _,pion in pairs( self._namedParams.listePions or {} ) do
+                for _,pion in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
                         local position = DEC_Geometrie_PositionAleatoireDansCercle( self.positionSite, 300 )

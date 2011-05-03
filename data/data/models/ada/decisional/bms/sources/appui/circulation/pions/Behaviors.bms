@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/circulation/pions/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -93,8 +95,8 @@ include "Appui/Circulation/Pions/Missions/Missions.bms"
 ]]--[[// ---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )
-        Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, {} )--[[// ------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )
+        Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, emptyTable )--[[// ------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[// ------------------------------------------------------------------------
 ]]
@@ -103,17 +105,17 @@ include "Appui/Circulation/Pions/Missions/Missions.bms"
             do return end
         end
 
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// Embarquement apres Heliportage
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[// Embarquement apres Heliportage
 ]]--[[// ------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_ROE, 1, {} )--[[// ---------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// Comp générique
 ]]--[[// ---------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Ambiance, 1, {} )
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_Rens, 1, {} )
-        Activate( self.activations.BEH_Ordre_Pion_CIRCU_OrdresInopines, 1, {} )--[[// ---------------------------------------------------------------------
+        Activate( self.activations.BEH_Ambiance, 1, emptyTable )
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_Rens, 1, emptyTable )
+        Activate( self.activations.BEH_Ordre_Pion_CIRCU_OrdresInopines, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// Ordre
 ]]--[[// ---------------------------------------------------------------------
 ]]
@@ -168,7 +170,7 @@ node "BEH_LOG_Pion_FaireDesMesures"
 ]]--[[// il s'agirait d'une zone contaminée
 ]]--[[//---------------------------------------------------------------------
 ]]local listeObjet = DEC_Connaissances_CollisionsObjets()
-        for _,objet in pairs( listeObjet or {} ) do
+        for _,objet in pairs( listeObjet or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_LOG_Pion_FaireUneMesureDans, 1, { objet, } )
 
@@ -220,9 +222,9 @@ node "BEH_LOG_Pion_FaireUneMesureDans"
 ]]--[[//---------------------------------------------------------------------
 ]]if( not self.bMesureEffectuee ) then
             do
-                Activate( self.activations.ACT_LOG_FaireMesure, 1, {} )--[[// Juste pour RC
+                Activate( self.activations.ACT_LOG_FaireMesure, 1, emptyTable )--[[// Juste pour RC
 ]]
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )--[[// Attente la posture adéquate pour faire fonctionner le senseur
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )--[[// Attente la posture adéquate pour faire fonctionner le senseur
 ]]
             end
         end
@@ -254,7 +256,7 @@ node "BEH_Ordre_Pion_CIRCU_OrdresInopines"
     activate = function( self )
         local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -362,7 +364,7 @@ node "BEH_Pion_Circu_InstallerDispositif"
     activate = function( self )
         local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
-            Activate( self.activations.ACT_Pion_Circu_InstallerDisposifif, 1, {} )
+            Activate( self.activations.ACT_Pion_Circu_InstallerDisposifif, 1, emptyTable )
         end
 
     end,

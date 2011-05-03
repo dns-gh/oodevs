@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Manoeuvre.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Ce comportement doit etre appelé avec une force comprise entre la plage des 
 ]]--[[// forces reservée pour les comportements de mission, et la plage entre reservée
@@ -20,7 +22,7 @@ includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Manoeuvre.b
 
     activate = function( self )
         local Activate = Activate
-        for _,x in pairs( myself.listePionsCoordination_ or {} ) do
+        for _,x in pairs( myself.listePionsCoordination_ or emptyTable ) do
         local _continue = true
 do
                 --[[//seulement sur les pions alat pour le moment
@@ -61,7 +63,7 @@ node "BEH_Manoeuvre_Pion_GestionDestruction"
         if( S_Misc_EstDetruitTactique() ) then
             do
                 if( self.eEtat == eActionEffectuee ) then
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                 else
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, { myself.pointRegroupement_, eProgressionDefaut, eTypeItiInfiltration, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
@@ -129,8 +131,8 @@ node "BEH_Manoeuvre_Pion_GererRecueil"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Lima_GererLIA, 1, {} )
-        Activate( self.activations.BEH_Lima_GererLR, 1, {} )
+        Activate( self.activations.BEH_Lima_GererLIA, 1, emptyTable )
+        Activate( self.activations.BEH_Lima_GererLR, 1, emptyTable )
     end,
 
 }

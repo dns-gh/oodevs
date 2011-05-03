@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/milices/pion/missions/DetruireParCoupDeMain.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -41,7 +43,7 @@ includedFiles["sources/population/milices/pion/missions/DetruireParCoupDeMain.bm
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
-                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
             end
         end
 
@@ -49,7 +51,7 @@ includedFiles["sources/population/milices/pion/missions/DetruireParCoupDeMain.bm
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
         Activate( self.activations.ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement, 1, { self._namedParams.mission.pointRegroupement_, } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -60,7 +62,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         end
 
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x

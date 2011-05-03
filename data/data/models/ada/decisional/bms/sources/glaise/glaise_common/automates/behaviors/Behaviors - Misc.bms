@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - Misc.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// ****************************************************************************
 ]]--[[// BEH_Misc_Automate_GererLesMoyens
@@ -28,7 +30,7 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - Misc
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Pour chaque pion de l'automate...
 ]]--[[//-----------------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() or {} ) do
+]]DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Misc_Automate_Gerer, 1, { pion, } )
 

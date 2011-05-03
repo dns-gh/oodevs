@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Jalonner.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -65,7 +67,7 @@ include "bit.lua"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Agressivite
@@ -77,7 +79,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 ]]if( ModuleBegins() ) then
             do
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
             end
 --[[//=============================================================================
 ]]--[[// SQUELETTE DE LA MISSION
@@ -135,7 +137,7 @@ elseif switch_1 == eJalonner then
                         end
                     end
 
-                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_GererLimas, 1, {} )
+                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_GererLimas, 1, emptyTable )
 self.done_BEH_Lima_Pion_ABC_Jalonner_GererLimas = function( self, _, v ) self.eEtatRecueil = v[1] end
                     Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
@@ -150,14 +152,14 @@ self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Jalonner les enis
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Eni_Pion_ABC_JalonnerLesGros, 1.1, {} )
+]]Activate( self.activations.BEH_Eni_Pion_ABC_JalonnerLesGros, 1.1, emptyTable )
                     _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// 4) Fin de la mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
-                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )--[[// reprendre sauvegarde
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, emptyTable )--[[// reprendre sauvegarde
 ]]
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     _continue = false
@@ -198,7 +200,7 @@ node "BEH_Eni_Pion_ABC_JalonnerLesGros"
 ]]local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
         if( not DIA_IsListEmpty( listeConnaissances ) ) then
             do
-                for _,repEni in pairs( listeConnaissances or {} ) do
+                for _,repEni in pairs( listeConnaissances or emptyTable ) do
                 local _continue = true
                     do
                         local eValiditeRequete = nil
@@ -215,7 +217,7 @@ node "BEH_Eni_Pion_ABC_JalonnerLesGros"
             end
 --[[// Si pas d'ennemi à jalonner, surveiller
 ]]        else
-            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
         end
 
     end,
@@ -296,7 +298,7 @@ node "BEH_Lima_Pion_ABC_Jalonner_GererLimas"
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local pointABC = x

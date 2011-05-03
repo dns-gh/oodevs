@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissementsurzone/AppuyerFranchissementSurZone - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_LOG_AppuyerFranchissementDansZone
 ]]--[[// 
@@ -43,7 +45,7 @@ includedFiles["sources/appui/circulation/automates/missions/appuyerfranchissemen
 ]]--[[//---------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                for _,x in pairs( selPions or {} ) do
+                for _,x in pairs( selPions or emptyTable ) do
                 local _continue = true
                     do
                         local pionBuffer = x

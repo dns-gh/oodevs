@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/automates/sgpt hm/behaviors/Behaviors - Manoeuvre.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Ce comportement permet de synchroniser les unites qui transportent afin
 ]]--[[// d'eviter une dispertion sur le terrain.
@@ -34,7 +36,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/sgpt hm/behaviors/Beha
         local pionDECBuffer = nil
         for _,x in pairs( --[[//synchronisation sur la dernière unité de la liste.
 ]]--[[//c'est la réference de synchronisation
-]]self._namedParams.listeUnites or {} ) do
+]]self._namedParams.listeUnites or emptyTable ) do
         local _continue = true
 do
                 pionDECBuffer = x
@@ -56,7 +58,7 @@ do
 
         --[[// indicateur pour savoir si toutes les unites sont synchronisées.
 ]]local bUnitesSynchronisees = true
-        for _,x in pairs( self._namedParams.listeUnites or {} ) do
+        for _,x in pairs( self._namedParams.listeUnites or emptyTable ) do
         local _continue = true
 do
                 pionDECBuffer = x
@@ -71,7 +73,7 @@ do
         if( not bUnitesSynchronisees ) then
             do
                 for _,x in pairs( --[[//poster toutes les unites qui sont dans etatAPoster
-]]self._namedParams.listeUnites or {} ) do
+]]self._namedParams.listeUnites or emptyTable ) do
                 local _continue = true
                     do
                         pionDECBuffer = x
@@ -87,7 +89,7 @@ do
         else
 do
                 for _,x in pairs( --[[//continuer avec toutes les unites
-]]self._namedParams.listeUnites or {} ) do
+]]self._namedParams.listeUnites or emptyTable ) do
                 local _continue = true
                     Activate( self.activations.ACT_Ordre_Automate_Continue, 1, { x, } )
 

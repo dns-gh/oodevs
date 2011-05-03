@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/pions/pat milan/missions/ArmerPointControle.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-02-04 $
@@ -52,7 +54,7 @@ includedFiles["sources/melee/abc/pions/pat milan/missions/ArmerPointControle.bms
             do return end
         end
 
-        Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// SPE EEI
 ]]--[[//-----------------------------------------------------------------------------
 ]]

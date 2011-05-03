@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/Echelonner dispositif.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// behavior BEH_GTIA_EchelonnerDispositif()
 ]]--[[// 
@@ -27,13 +29,13 @@ includedFiles["sources/melee/abc/automates/ge40/missions/Echelonner dispositif.b
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_GTIA_EchelonnerLesAppuis, 1, {} )
-        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel, 1, {} )
-        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques, g_rRapEniDebarques, {} )
-        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques, g_rRapEniEmbarques, {} )
-        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme, g_rRapTerrainComp, {} )
-        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert, g_rRapTerrainOuvert, {} )
-        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantDelais, g_rEstimationDelais, {} )
+        Activate( self.activations.BEH_GTIA_EchelonnerLesAppuis, 1, emptyTable )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel, 1, emptyTable )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques, g_rRapEniDebarques, emptyTable )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques, g_rRapEniEmbarques, emptyTable )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme, g_rRapTerrainComp, emptyTable )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert, g_rRapTerrainOuvert, emptyTable )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositifSuivantDelais, g_rEstimationDelais, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -64,7 +66,7 @@ node "BEH_GTIA_EchelonnerLesAppuis"
 ]]--[[// Eclairage eventuel (une section/peloton habituellement)
 ]]--[[// Seulement jusqu'a la LD pour attaquer
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsEcl or {} ) do
+]]listePionsEcl or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Eclairage, } )
 
@@ -73,7 +75,7 @@ node "BEH_GTIA_EchelonnerLesAppuis"
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Appuis: log (TC2), Génie, DLO
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsAppuis or {} ) do
+]]listePionsAppuis or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
 
@@ -114,7 +116,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantDelais"
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation Echelon ABC
 ]]--[[//----------------------------------------------------------------------------- 
-]]listePionsABC or {} ) do
+]]listePionsABC or emptyTable ) do
         local _continue = true
 if( rNbrePionPECourant < rNbrePionsPE ) then
                 do
@@ -130,7 +132,7 @@ if( rNbrePionPECourant < rNbrePionsPE ) then
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation Echelon INF
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsINF or {} ) do
+]]listePionsINF or emptyTable ) do
         local _continue = true
 if( rNbrePionPECourant < rNbrePionsPE ) then
                 do
@@ -177,7 +179,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantTerrainFerme"
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation Echelon INF
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsINF or {} ) do
+]]listePionsINF or emptyTable ) do
         local _continue = true
 if( rNbrePionPECourant < rNbrePionsPE ) then
                 do
@@ -193,7 +195,7 @@ if( rNbrePionPECourant < rNbrePionsPE ) then
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation Echelon ABC
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsABC or {} ) do
+]]listePionsABC or emptyTable ) do
         local _continue = true
 if( rNbrePionPECourant < rNbrePionsPE ) then
                 do
@@ -240,7 +242,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantTerrainOuvert"
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation Echelon ABC
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsABC or {} ) do
+]]listePionsABC or emptyTable ) do
         local _continue = true
 if( rNbrePionPECourant < rNbrePionsPE ) then
                 do
@@ -256,7 +258,7 @@ if( rNbrePionPECourant < rNbrePionsPE ) then
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation Echelon INF
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsINF or {} ) do
+]]listePionsINF or emptyTable ) do
         local _continue = true
 if( rNbrePionPECourant < rNbrePionsPE ) then
                 do
@@ -300,7 +302,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantEnisDebarques"
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation Echelon INF
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsINF or {} ) do
+]]listePionsINF or emptyTable ) do
         local _continue = true
 if( rNbrePionPECourant < rNbrePionsPE ) then
                 do
@@ -316,7 +318,7 @@ if( rNbrePionPECourant < rNbrePionsPE ) then
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation Echelon ABC
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsABC or {} ) do
+]]listePionsABC or emptyTable ) do
         local _continue = true
 if( rNbrePionPECourant < rNbrePionsPE ) then
                 do
@@ -360,7 +362,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantEnisEmbarques"
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation Echelon ABC
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsABC or {} ) do
+]]listePionsABC or emptyTable ) do
         local _continue = true
 if( rNbrePionPECourant < rNbrePionsPE ) then
                 do
@@ -376,7 +378,7 @@ if( rNbrePionPECourant < rNbrePionsPE ) then
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation Echelon INF
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsINF or {} ) do
+]]listePionsINF or emptyTable ) do
         local _continue = true
 if( rNbrePionPECourant < rNbrePionsPE ) then
                 do
@@ -414,7 +416,7 @@ node "BEH_GTIA_EchelonnerDispositifSuivantEtatOperationnel"
     activate = function( self )
         local Activate = Activate
         local listePionsNop = S_Cherche_GE_AutomateNonOperationnels( DEC_Automate_AutomatesSubordonnes() )
-        for _,pion in pairs( listePionsNop or {} ) do
+        for _,pion in pairs( listePionsNop or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_AssignerEchelonA, 1, { pion, eEtatEchelon_Second, } )
 

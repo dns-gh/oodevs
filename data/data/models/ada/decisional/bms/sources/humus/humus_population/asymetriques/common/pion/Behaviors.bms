@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_population/asymetriques/common/pion/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -30,7 +32,7 @@ include "bit.lua"
         --[[//choisir une population ( la plus proche )et la rejoindre, en même temps agresser toute population ennemie à portée
 ]]local listePopus = DEC_Connaissances_Populations()
         local listePopusCollision = DEC_Connaissances_CollisionsPopulations()
-        for _,pop in pairs( listePopus or {} ) do
+        for _,pop in pairs( listePopus or emptyTable ) do
         local _continue = true
 do
                 --[[//si la population est dans la zone

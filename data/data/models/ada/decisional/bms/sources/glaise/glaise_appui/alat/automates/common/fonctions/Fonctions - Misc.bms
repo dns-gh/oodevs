@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/automates/common/fonctions/Fonctions - Misc.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// -------------------------------------------------------------------------
 ]]--[[// Renvoie le pion dont l'alerte est la plus iminente
@@ -27,7 +29,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/fonctions/Fonct
     local alerteMax = -1105199104
     local patrouilleAlat = nil
     assert( not DIA_IsListEmpty( listePionsAlat ), "pas de pion alat dans cette liste" )
-    for _,x in pairs( listePionsAlat or {} ) do
+    for _,x in pairs( listePionsAlat or emptyTable ) do
     local _continue = true
 do
             patrouilleAlat = x
@@ -51,7 +53,7 @@ function S_Misc_Automate_ALAT_PionAlerteLaMoinsIminente( listePions )
     local alerteMin = 1105199104
     local patrouilleAlat = nil
     assert( not DIA_IsListEmpty( listePionsAlat ), "pas de pion alat dans cette liste" )
-    for _,x in pairs( listePionsAlat or {} ) do
+    for _,x in pairs( listePionsAlat or emptyTable ) do
     local _continue = true
 do
             patrouilleAlat = x
@@ -97,7 +99,7 @@ function S_Misc_Automate_ALAT_DistancePionPlusLoinAPlotRavitaillement( listePion
         do return _returnValue end
     end
 
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             if( not S_EstPatrouilleALAT( x ) ) then

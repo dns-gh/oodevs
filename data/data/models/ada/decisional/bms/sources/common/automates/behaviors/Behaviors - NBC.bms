@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/behaviors/Behaviors - NBC.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-05-25 $
@@ -42,7 +44,7 @@ includedFiles["sources/common/automates/behaviors/Behaviors - NBC.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( S_EstContamine() ) then
             do
-                Activate( self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, 1, emptyTable )
                                 do return end
 
             end
@@ -52,7 +54,7 @@ includedFiles["sources/common/automates/behaviors/Behaviors - NBC.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -87,7 +89,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurAlerteNBC"
 ]]--[[// Recevoir un ordre
 ]]--[[//-----------------------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -97,14 +99,14 @@ do
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_MettreTenueNBC" then
                             DEC_Trace( "$ --- ORDRE Mettre tenue NBC ---$" )
-                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, 1, {} )
-                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, {} )
+                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, 1, emptyTable )
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, emptyTable )
                             _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
                             DEC_Trace( "$ --- ORDRE Enlever tenue NBC ---$" )
-                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, {} )
-                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, 1, {} )
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurAlerteNBC, emptyTable )
+                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteSurFinAlerteNBC, 1, emptyTable )
                             _continue = false
                                                 cases_switch_1[2] = true
                         end
@@ -148,7 +150,7 @@ node "BEH_Ordre_Automate_ConduiteSurAlerteNBC"
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePionsSubordonnes = myself:DEC_Automate_PionsAvecPC()
-        for _,x in pairs( listePionsSubordonnes or {} ) do
+        for _,x in pairs( listePionsSubordonnes or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -190,7 +192,7 @@ node "BEH_Ordre_Automate_ConduiteSurFinAlerteNBC"
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-        for _,x in pairs( listePionsSubordonnes or {} ) do
+        for _,x in pairs( listePionsSubordonnes or emptyTable ) do
         local _continue = true
 do
                 local pion = x

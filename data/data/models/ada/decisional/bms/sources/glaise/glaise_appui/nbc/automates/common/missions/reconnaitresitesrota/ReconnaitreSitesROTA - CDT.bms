@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/reconnaitresitesrota/ReconnaitreSitesROTA - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA
@@ -23,13 +25,13 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/reconna
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Dispositif_Automate_NBC_GererPionsDetruits_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_NBC_GererPionsDetruits_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gen
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// behavior BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_();  // PC y compris
 ]]--[[//behavior BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_(); 			    // PC y compris
 ]]
-        Activate( self.activations.BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Spé
 ]]--[[//-------------------------------------------------------------------------
 ]]
@@ -84,7 +86,7 @@ node "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA"
 ]]--[[// Assignation des mission
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// Cherche le site le plus proche du pion disponible
-]]listePionsROTA or {} ) do
+]]listePionsROTA or emptyTable ) do
         local _continue = true
 do
                 local siteROTA = S_Misc_ObtenirSiteProche( self.listeSitesNonReconnus, DEC_Automate_PionPosition( pion ) )

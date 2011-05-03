@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/pions/common/behaviors/Behaviors - Ambiance.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Gestion de l'ambiance de mission pour les elements de l'ALAT
 ]]--[[// -----------------------------------------------------------------------------
@@ -47,7 +49,7 @@ do
 ]]        end
 
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x

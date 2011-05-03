@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/nbc/automates/common/missions/reconnaitresitesrota/ReconnaitreSitesROTA - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Conduite_Automate_NBC_ReconnaitreSitesROTA
@@ -23,13 +25,13 @@ includedFiles["sources/appui/nbc/automates/common/missions/reconnaitresitesrota/
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Dispositif_Automate_NBC_GererPionsDetruits_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_NBC_GererPionsDetruits_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gen
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// behavior BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_();  // PC y compris
 ]]--[[//behavior BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_(); 			    // PC y compris
 ]]
-        Activate( self.activations.BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Spé
 ]]--[[//-------------------------------------------------------------------------
 ]]
@@ -74,7 +76,7 @@ node "BEH_Conduite_Automate_NBC_FaireReconnaitreLesSitesROTA"
         for _,pion in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Assignation des mission
 ]]--[[//-------------------------------------------------------------------------
-]]listePionsROTA or {} ) do
+]]listePionsROTA or emptyTable ) do
         local _continue = true
 do
                 --[[// Cherche le site le plus proche du pion disponible

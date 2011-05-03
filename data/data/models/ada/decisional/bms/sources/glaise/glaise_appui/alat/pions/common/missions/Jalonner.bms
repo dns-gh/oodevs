@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/pions/common/missions/Jalonner.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -55,7 +57,7 @@ include "bit.lua"
                 DEC_SetMission( myself, self._namedParams.mission )
                 myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                 end
 
                 self.pointFinFuseau = DEC_Geometrie_CalculerPointArrivee()
@@ -65,7 +67,7 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -80,14 +82,14 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             end
         end
 
-        Activate( self.activations.BEH_Manoeuvre_Pion_GererRecueil, 10, {} )
+        Activate( self.activations.BEH_Manoeuvre_Pion_GererRecueil, 10, emptyTable )
          do
             local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eJalonner then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnJalonnement, } )
-                    Activate( self.activations.BEH_Eni_Pion_ALAT_GererUnitesDetectes, GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
+                    Activate( self.activations.BEH_Eni_Pion_ALAT_GererUnitesDetectes, GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
                     Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniJalonner, GetMotivation( "MOT_Manoeuvrer" ) * 4, { self._namedParams.mission.ciblesPrioritaires_, self.pointDebutFuseau, } )
                     Activate( self.activations.BEH_Eni_Pion_ALAT_JalonnerGererFeu, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 8, { self.pointDebutFuseau, self._namedParams.mission.ciblesPrioritaires_, } )
                     _continue = false
@@ -124,11 +126,11 @@ elseif switch_1 == eSExfiltrer then
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                     end
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointRegroupement_, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointRegroupement_, } )
 self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
@@ -149,7 +151,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
@@ -191,7 +193,7 @@ node "BEH_Eni_Pion_ALAT_GererEniJalonner"
         Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.pointDebutFuseau, } )
         --[[// gestion des unités reconnues
 ]]local listeUnitesEnnemiesVivantesDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
-        for _,x in pairs( listeUnitesEnnemiesVivantesDansFuseau or {} ) do
+        for _,x in pairs( listeUnitesEnnemiesVivantesDansFuseau or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_RC, 1, { eRC_EnJalonnement, } )
@@ -235,7 +237,7 @@ node "BEH_Eni_Pion_ALAT_JalonnerGererFeu"
         end
 
         local listeUnitesEnnemiesVivantesPercuesDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
-        for _,x in pairs( listeUnitesEnnemiesVivantesPercuesDansFuseau or {} ) do
+        for _,x in pairs( listeUnitesEnnemiesVivantesPercuesDansFuseau or emptyTable ) do
         local _continue = true
 do
                 if( not DEC_ConnaissanceAgent_EstValide( x ) ) then

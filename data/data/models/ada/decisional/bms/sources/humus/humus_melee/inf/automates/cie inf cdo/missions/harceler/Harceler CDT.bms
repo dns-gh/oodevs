@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/automates/cie inf cdo/missions/harceler/Harceler CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -182,7 +184,7 @@ node "MIS_Automate_CDT_INF_Rezzou"
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )
             end
         end
 
@@ -201,8 +203,8 @@ node "MIS_Automate_CDT_INF_Rezzou"
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_Rezzou, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Rezzou, 1, emptyTable )
     end,
 
     destroy = function( self )
@@ -232,9 +234,9 @@ node "BEH_Conduite_Automate_INF_Rezzou"
             end
         end
 
-        Activate( self.activations.BEH_Situation_Automate_INF_Rezzou_GestionSituation, 1, {} )
+        Activate( self.activations.BEH_Situation_Automate_INF_Rezzou_GestionSituation, 1, emptyTable )
         Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
-        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, emptyTable )
     end,
 
     destroy = function( self )
@@ -263,7 +265,7 @@ node "BEH_Situation_Automate_INF_Rezzou_GestionSituation"
         local Activate = Activate
         local selEnTete = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         self.eOrdre = self.eOrdre or eActionEnCours
-        for _,x in pairs( DEC_Automate_PionsSansPC() or {} ) do
+        for _,x in pairs( DEC_Automate_PionsSansPC() or emptyTable ) do
         local _continue = true
 do
                 local x_pion = x
@@ -321,7 +323,7 @@ elseif switch_1 == eEtatPhaseMission_AttenteConditionFavorablePourInfiltration t
                                 do
                                     Activate( self.activations.ACT_Ordre_Automate_Pause, 1, { x_pion, } )
                                     local ordres_recus = DEC_GetCategory( "ordres_recus" )
-                                    for _,ordreRecus in pairs( ordres_recus or {} ) do
+                                    for _,ordreRecus in pairs( ordres_recus or emptyTable ) do
                                     local _continue = true
                                         do
                                             local ordre = ordreRecus

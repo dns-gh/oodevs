@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/behaviors/Behaviors - Objet.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Obj_RejoindreEmbossements
 ]]--[[//
@@ -33,7 +35,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Objet.bms"] = true
 ]]--[[// Rejoindre embossement le plus proche
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listeEmbossements = DEC_Connaissances_ObjetsDansCercle( self.positionInitiale, 500, S_TypeObject_ToString( eTypeObjectPosteTir ), S_TypeObject_ToString( eTypeObjectZoneProtegee ) )
-        for _,repEmbossement in pairs( listeEmbossements or {} ) do
+        for _,repEmbossement in pairs( listeEmbossements or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceObjet_PeutEtreOccupe( repEmbossement ) ) then
@@ -104,7 +106,7 @@ node "BEH_Obj_RejoindreEmbossementLibre"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( self.eEtat == eActionEffectuee ) then
             do
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                 Activate( self.activations.ACT_Info_Trace, 1, { "%% Defilade position reached %%", } )
                                 do return end
 

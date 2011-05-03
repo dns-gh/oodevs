@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/rohum/common/missions/sexfiltrer/SExfiltrer - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Auto_CDT_RENS_ROHUM_SExfiltrer
 ]]--[[//
@@ -29,11 +31,11 @@ includedFiles["sources/appui/rens/automates/rohum/common/missions/sexfiltrer/SEx
             DEC_Trace( "BEH_Auto_CDT_RENS_ROHUM_SExfiltrer : debut " )
         end
 
-        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererPionsDetruits_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererPionsDetruits_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion 
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererLeSE_, 1, {} )
+        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererLeSE_, 1, emptyTable )
     end,
 
 }

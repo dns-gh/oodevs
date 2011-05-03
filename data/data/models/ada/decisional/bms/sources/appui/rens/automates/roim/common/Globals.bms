@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/roim/common/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[//=============================================================================
@@ -15,7 +17,7 @@ include "bit.lua"
 ]]function S_Dispositif_Automate_RENS_ObtenirPionSMO( )
     local _returnValue = nil
     _returnValue = nil
-    for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+    for _,x in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -33,7 +35,7 @@ end
 function S_Dispositif_Automate_RENS_ObtenirPionDroneMiseEnOeuvre( eTypePion )
     local _returnValue = nil
     _returnValue = nil
-    for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+    for _,x in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
     local _continue = true
 do
             local pion = x

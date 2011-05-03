@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artdsa/pions/common/fonctions/Fonctions - Forces.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// -------------------------------------------------------------------------
 ]]--[[// force entre 1 et 2
@@ -38,7 +40,7 @@ function S_Eni_Pion_ASA_DefendreZone( ennemi, zone )
     assert( zone ~= nil, "Zone non Valide" )
     local listeAmis = DEC_Connaissances_UnitesAmiesDansZone( zone )
     local dangerosite = 0
-    for _,x in pairs( listeAmis or {} ) do
+    for _,x in pairs( listeAmis or emptyTable ) do
     local _continue = true
         dangerosite = dangerosite + S_Connaissance_ForceDistance( x, ennemi )
 
@@ -78,12 +80,12 @@ function S_Eni_Pion_ASA_DefendreUnites( listePions )
     local _returnValue = 0
     local sommeDangerositeSurAmis = 0
     local dangerGlobale = 0
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local dangerSurEnnemis = 0
             local nbEnnemisDangereuxVolant = 0
-            for _,y in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
+            for _,y in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or emptyTable ) do
             local _continue = true
 do
                                         nbEnnemisDangereuxVolant = nbEnnemisDangereuxVolant + 1

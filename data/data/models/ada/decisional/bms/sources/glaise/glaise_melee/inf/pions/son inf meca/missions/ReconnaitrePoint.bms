@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/ReconnaitrePoint.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -78,7 +80,7 @@ include "bit.lua"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
         do
         end
@@ -103,7 +105,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
                     if( self.eCurrentPhase ~= eFinMission ) then
                         do
                             --[[// -> Gestion l'ennemi
-]]Activate( self.activations.BEH_Eni_Pion_VAB_RecoPoint, GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
+]]Activate( self.activations.BEH_Eni_Pion_VAB_RecoPoint, GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
                             Activate( self.activations.BEH_Mission_Pion_VAB_RecoPoint, GetMotivation( "MOT_Mission" ), { self.pt, } )
 self.done_BEH_Mission_Pion_VAB_RecoPoint = function( self, _, v ) self.eCurrentPhase = v[1] end
                                                         do return end
@@ -187,12 +189,12 @@ node "BEH_Mission_Pion_VAB_RecoPoint"
         if( ModuleBegins() ) then
             do
                 --[[// Verifie que l'on est bien dans son fuseau
-]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
             end
         end
 
         if( not S_Tir_EstAPortee_DebarquePt( self._namedParams.pt ) ) then
-            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
         end
 
         do
@@ -232,7 +234,7 @@ elseif switch_1 == eObserver then
 ]]--[[//  3) Observation de l'objectif
 ]]--[[//-----------------------------------------------------------------------------                
 ]]StartActivateOverride( self, self.activations.ACT_Obs_ReconnaitrePoint, 1, { self._namedParams.pt, } )
-                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, {} )
+                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -249,7 +251,7 @@ elseif switch_1 == eRejoindreAssaut then
 ]]--[[//  4) Rejoinds l'objectif a pied
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( S_Tir_EstAPortee_DebarquePt( self._namedParams.pt ) ) then
-                        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, {} )
+                        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, emptyTable )
                     end
 
                     _continue = false
@@ -309,7 +311,7 @@ node "BEH_Eni_Pion_VAB_RecoPoint"
         self.eAction = self.eAction or eActionEnCours
         self.bContinue = self.bContinue or true
         local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
-        for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
+        for _,ksEni in pairs( lstEnisDansFuseau or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then

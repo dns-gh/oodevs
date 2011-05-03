@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/nbc/automates/common/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -45,7 +47,7 @@ include "Appui/Nbc/Globals.bms"
     local _returnValue = false
     _returnValue = false
     local rNbrePionsPrets = 0
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -64,7 +66,7 @@ end
 function S_NBC_ObtenirSitesNonReconnus( listeSite )
     local _returnValue = {}
     local listeTemp = {}
-    for _,site in pairs( listeSite or {} ) do
+    for _,site in pairs( listeSite or emptyTable ) do
     local _continue = true
 do
             if( not DEC_ConnaissanceObjet_EstReconnu( site ) ) then
@@ -82,7 +84,7 @@ end
 function S_NBC_ObtenirPionsROTADisposnibles( )
     local _returnValue = {}
     local listeTemp = {}
-    for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+    for _,x in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -103,7 +105,7 @@ function S_Misc_ObtenirSiteProche( listeObjets, positionPion )
     _returnValue = nil
     local rDistanceProche = 1105199104
     local rDistanceCourante = 0
-    for _,objet in pairs( listeObjets or {} ) do
+    for _,objet in pairs( listeObjets or emptyTable ) do
     local _continue = true
 do
             if( not DEC_ConnaissanceObjet_EstValide( objet ) ) then

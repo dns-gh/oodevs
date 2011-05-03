@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/defensives/freiner/Coordonner dispositif.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_GTIA_AssurerLaCoordinationRetrograde
 ]]--[[// 
@@ -38,11 +40,11 @@ includedFiles["sources/melee/abc/automates/ge40/missions/defensives/freiner/Coor
             Activate( self.activations.BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon, 1, { listePionsPE, listePionsSE, } )
         end
 
-        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard, 1, {} )--[[// Coordination si retard --> décrocher
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard, 1, emptyTable )--[[// Coordination si retard --> décrocher
 ]]
-        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationSurLR, 1, {} )--[[// Passage LR
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationSurLR, 1, emptyTable )--[[// Passage LR
 ]]
-        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationAuContact, 1, {} )--[[// Contact
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordinationAuContact, 1, emptyTable )--[[// Contact
 ]]
     end,
 
@@ -68,7 +70,7 @@ node "BEH_GTIA_AssurerLaCoordinationSurLR"
 
     activate = function( self )
         local Activate = Activate
-        for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) or {} ) do
+        for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreTenirSurLR, 1, { pion, } )
 
@@ -98,7 +100,7 @@ node "BEH_GTIA_AssurerLaCoordinationAuContact"
 
     activate = function( self )
         local Activate = Activate
-        for _,x in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) or {} ) do
+        for _,x in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) or emptyTable ) do
         local _continue = true
 do
                 local automat = x
@@ -136,13 +138,13 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeSurRetard"
         local Activate = Activate
         if( S_AnalyseDelai_GE_EstEnRetard() ) then
             do
-                for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) or {} ) do
+                for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Premier ) or emptyTable ) do
                 local _continue = true
                     Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreDecrocher, 1, { pion, } )
 
                 end
 
-                for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ) or {} ) do
+                for _,pion in pairs( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Eclairage ) or emptyTable ) do
                 local _continue = true
                     Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreDecrocher, 1, { pion, } )
 
@@ -183,7 +185,7 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeInterEchelon"
             self.resultatCalcul = DEC_Geometrie_StartCalculAutomateLignesAvantEtArriere( self._namedParams.listePionsPE )
         end
 
-        for _,pion in pairs( self._namedParams.listePionsSE or {} ) do
+        for _,pion in pairs( self._namedParams.listePionsSE or emptyTable ) do
         local _continue = true
 --[[// A REMPLACER PAR Distance vers prochaine Position calculée
 ]]if( DEC_Geometrie_CalculerAutomateDistanceLigneArriere( self.resultatCalcul, pion ) > -2000 ) then
@@ -231,7 +233,7 @@ node "BEH_GTIA_AssurerLaCoordinationRetrogradeIntraEchelon"
             do return end
         end
 
-        for _,pion in pairs( self._namedParams.listePions or {} ) do
+        for _,pion in pairs( self._namedParams.listePions or emptyTable ) do
         local _continue = true
 if( DEC_Geometrie_CalculerAutomateDistanceLigneAvant( self.resultatCalcul, pion ) > 2000 ) then
                 Activate( self.activations.ACT_GTIA_Automate_DonnerOrdreDecrocher, 1, { pion, } )

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artdsa/pions/samp hawk/missions/Defendre Site A Partir Position.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -43,7 +45,7 @@ include "bit.lua"
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
                 end
 
             end
@@ -51,7 +53,7 @@ include "bit.lua"
 
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_DOCTRINE_PION_ASA_PH(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -67,7 +69,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     self.ePhase = eRejoindre
                     _continue = false
                 --[[//Rejoindre la position donnée par le commandant d'unité
@@ -86,7 +88,7 @@ elseif switch_1 == eRejoindre then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointDeDeploiement_, } )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.pointDeDeploiement_, } )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointDeDeploiement_, eProgressionDefaut, eTypeItiReconnaissance, } )
@@ -96,7 +98,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     Activate( self.activations.ACT_Dep_SePosterFaceADir, 1, { DEC_GetDirectionDanger( self._namedParams.mission ), } )
-                    Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                    Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
                     Activate( self.activations.BEH_Manoeuvre_Pion_ASA_SeDeployer, 1, { 0, } )
                     if( DEC_Agent_EstInstalle() and ( F_Pion_GeteEtatRadar( myself ) == eEtatRadar_Ouvert ) and F_Pion_GeteConsigneTir( myself ) == eEtatROE_TirLibre ) then
                         Activate( self.activations.ACT_RC, 1, { eRC_PretAuTir, } )

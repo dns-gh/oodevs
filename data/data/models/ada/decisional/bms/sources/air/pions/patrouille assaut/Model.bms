@@ -11,7 +11,6 @@ include "Common/Pions/Perception.bms"
 include "Air/Pions/Common/Motivations.bms"
 include "Air/Pions/Patrouille Assaut/Behaviors.bms"
 
-
 local actualConnections = {}
 if connections then
     for i, entry in pairs( connections ) do

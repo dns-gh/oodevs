@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artdsa/pions/satcp mistral/missions/Defendre Zone A Partir Position.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Mission defendre zone
 ]]--[[// 
@@ -39,7 +41,7 @@ includedFiles["sources/appui/artdsa/pions/satcp mistral/missions/Defendre Zone A
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
                 end
 
                 myself.typeDeploiement_ = self._namedParams.mission.modeDeploiement_
@@ -48,7 +50,7 @@ includedFiles["sources/appui/artdsa/pions/satcp mistral/missions/Defendre Zone A
 
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_DOCTRINE_PION_ASA_PH(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -64,7 +66,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             local cases_switch_1 = {}
                 if switch_1 == ePreparerMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_PreparationMission, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     self.ePhase = eRejoindre
                     _continue = false
                                 cases_switch_1[1] = true
@@ -82,7 +84,7 @@ elseif switch_1 == eRejoindre then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointDeDeploiement_, } )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.pointDeDeploiement_, } )
                     Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointDeDeploiement_, eProgressionDefaut, eTypeItiMouvement, } )

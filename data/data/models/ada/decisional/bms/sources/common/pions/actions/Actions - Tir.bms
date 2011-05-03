@@ -1,6 +1,5 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/actions/Actions - Tir.bms"] = true
-require "debug"
 
 --[[// ****************************************************************************** 
 ]]--[[// ACT_Tir_DirectSur

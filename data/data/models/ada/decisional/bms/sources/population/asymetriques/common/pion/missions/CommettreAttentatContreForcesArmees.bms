@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAttentatContreForcesArmees.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_ASY_CommettreAttentatContreForcesArmees
 ]]--[[//
@@ -24,7 +26,6 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
-        self._namedParams.mission.suicide_ = self.params.mission.suicide_ or false
     end,
 
     activate = function( self )
@@ -50,7 +51,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/CommettreAtt
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -166,10 +167,14 @@ if( DEC_Geometrie_Distance( self.lieuAttentat, DEC_Agent_Position() ) > 10 ) the
                 --[[// Rejoindre la position de repli
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eSExfiltrer then
-                    if self._namedParams.mission.suicide_ then
-                        self.ePhaseMission = eFinMission
-                        return
+                    if( self._namedParams.mission.suicide_ ) then
+                        do
+                            self.ePhaseMission = eFinMission
+                                                        do return end
+
+                        end
                     end
+
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( self.eAction == eActionEffectuee ) then
                         do

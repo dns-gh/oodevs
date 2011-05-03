@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/esc amx-erc/missions/flancgarder/FlancGarder - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_ABC_FlancGarder
 ]]--[[// 
@@ -32,7 +34,7 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/flancgarder/Flan
                 DEC_SetMission( myself, self._namedParams.mission )
                                 do
                     local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-                    for _,x in pairs( listePionsSubordonnes or {} ) do
+                    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                     local _continue = true
                         do
                             local pion = x

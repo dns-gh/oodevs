@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/reduiredetruire/ReduireDetruire CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-07 $
@@ -59,9 +61,9 @@ node "MIS_Automate_CDT_INF_Reduire"
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, emptyTable )
         --[[/* bReduire */]]Activate( self.activations.BEH_Situation_Automate_INF_Assaut, 1, { true, } )
-        Activate( self.activations.BEH_Situation_Automate_INF_ReduireDetruire, 1, {} )
+        Activate( self.activations.BEH_Situation_Automate_INF_ReduireDetruire, 1, emptyTable )
     end,
 
     destroy = function( self )

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/automates/pel reco/missions/controlerzone/ControlerZone - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created$
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Pel EEI/Missions/ControlerZone/ControlerZone - CDT.hal $
@@ -39,7 +41,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/pel reco/missions/control
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_ABC_ControlerZone, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_ABC_ControlerZone, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Conduite gen
 ]]--[[//-----------------------------------------------------------------------------
 ]]

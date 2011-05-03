@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/refugies/automates/refugie/missions/SeRendreVersCampRefugies - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 
 
 --[[// *****************************************************************************
@@ -119,7 +121,7 @@ node "BEH_Medo_Automate_Refugies_AssignerFaireMouvementA"
 ]]--[[//---------------------------------------------------------------------	
 ]]if( ModuleBegins() ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, pion, self._namedParams.posCampPrisonnier, eEtatEchelon_Second, } )
 

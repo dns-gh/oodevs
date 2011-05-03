@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/behaviors/Behaviors - Ordre.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_MAJ_Automate_RecevoirOrdreGE
 ]]--[[//
@@ -27,29 +29,29 @@ includedFiles["sources/common/automates/behaviors/Behaviors - Ordre.bms"] = true
     activate = function( self )
         local Activate = Activate
         if( F_Automat_GetbOrdreRalentir( myself ) == true ) then
-            Activate( self.activations.BEH_Ordre_Automate_Ralentir_, 1, {} )
+            Activate( self.activations.BEH_Ordre_Automate_Ralentir_, 1, emptyTable )
         end
 
         if( F_Automat_GetbOrdreAttendre( myself ) == true ) then
-            Activate( self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+            Activate( self.activations.BEH_Ordre_Automate_Attendre_, 1, emptyTable )
         end
 
         if( F_Automat_GetbOrdrePoursuivre( myself ) == true ) then
-            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
         end
 
         if( F_Automat_GetbOrdreDecrocher( myself ) == true ) then
-            Activate( self.activations.BEH_Ordre_Automate_Decrocher_, 1, {} )--[[// Mis jalonner/Freiner du GE
+            Activate( self.activations.BEH_Ordre_Automate_Decrocher_, 1, emptyTable )--[[// Mis jalonner/Freiner du GE
 ]]
         end
 
         if( F_Automat_GetbOrdreTenirSurLR( myself ) == true ) then
-            Activate( self.activations.BEH_Ordre_Automate_TenirSurLR_, 1, {} )--[[// Mis jalonner/Freiner du GE
+            Activate( self.activations.BEH_Ordre_Automate_TenirSurLR_, 1, emptyTable )--[[// Mis jalonner/Freiner du GE
 ]]
         end
 
         if( F_Automat_GetbOrdreTenir( myself ) == true ) then
-            Activate( self.activations.BEH_Ordre_Automate_Tenir_, 1, {} )--[[// Mis jalonner/Freiner du GE
+            Activate( self.activations.BEH_Ordre_Automate_Tenir_, 1, emptyTable )--[[// Mis jalonner/Freiner du GE
 ]]
         end
 
@@ -83,7 +85,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreInopine"
     activate = function( self )
         local Activate = Activate
                 local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -93,7 +95,7 @@ do
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Interrompre" then
                             DEC_Trace( "$ --- ORDRE Interruption mission ---$" )
-                            Activate( self.activations.BEH_Ordre_Automate_Interrompre_, 1, {} )
+                            Activate( self.activations.BEH_Ordre_Automate_Interrompre_, 1, emptyTable )
                                                         self:SendFeedback( eActionHalt )
                             do return end
 
@@ -101,15 +103,15 @@ do
                         elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
                             DEC_Trace( "$ --- ORDRE Attendre ---$" )
                             g_bOrdreAnibas = true
-                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, emptyTable )
                             _continue = false
                                                 cases_switch_1[2] = true
 elseif switch_1 == "Rep_OrderConduite_Deboucher"
                         or switch_1 == "Rep_OrderConduite_Poursuivre" then
                             DEC_Trace( "$ --- ORDRE Poursuivre ---$" )
                             g_bOrdreAnibas = false
-                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, {} )
-                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, emptyTable )
+                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )--[[// Cas des LC
 ]]
                             _continue = false
                                                 cases_switch_1[3] = true
@@ -118,9 +120,9 @@ elseif switch_1 == "Rep_OrderConduite_ChangerAmbiance" then
                             --[[// Cast
 ]]local ordreAmbiance = repOrdre
                             if( ordreAmbiance:GetorderConduiteChangerAmbiance_() == eAmbianceMission_Surete ) then
-                                Activate( self.activations.BEH_Ordre_Automate_AmbianceSurete_, 1, {} )
+                                Activate( self.activations.BEH_Ordre_Automate_AmbianceSurete_, 1, emptyTable )
                             else
-                                Activate( self.activations.BEH_Ordre_Automate_AmbianceVitesse_, 1, {} )--[[//eAmbianceMission_Vitesse
+                                Activate( self.activations.BEH_Ordre_Automate_AmbianceVitesse_, 1, emptyTable )--[[//eAmbianceMission_Vitesse
 ]]
                             end
 
@@ -165,7 +167,7 @@ node "BEH_Ordre_Automate_Interrompre_"
         local Activate = Activate
         --[[// Le PC peut avoir une mission
 ]]local listePions = DEC_Automate_PionsAvecPC()
-        for _,pion in pairs( listePions or {} ) do
+        for _,pion in pairs( listePions or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_Interrompre, 1, { pion, } )
 
@@ -202,7 +204,7 @@ node "BEH_Ordre_Automate_Attendre_"
             self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( listePions )
         end
 
-        for _,pion in pairs( listePions or {} ) do
+        for _,pion in pairs( listePions or emptyTable ) do
         local _continue = true
 do
                 local rDistanceLigne = DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pion )
@@ -249,7 +251,7 @@ node "BEH_Ordre_Automate_Ralentir_"
             self.resultatCalcul = DEC_Geometrie_StartCalculLignesAvantEtArriere( listePions )
         end
 
-        for _,pion in pairs( listePions or {} ) do
+        for _,pion in pairs( listePions or emptyTable ) do
         local _continue = true
 do
                 local rDistanceLigne = DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pion )
@@ -292,7 +294,7 @@ node "BEH_Ordre_Automate_Poursuivre_"
     activate = function( self )
         local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE or {} ) do
+        for _,pion in pairs( listePionsPE or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_Continue, 1, { pion, } )
 
@@ -323,7 +325,7 @@ node "BEH_Ordre_Automate_Decrocher_"
     activate = function( self )
         local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE or {} ) do
+        for _,pion in pairs( listePionsPE or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_Decrocher, 1, { pion, } )
 
@@ -354,7 +356,7 @@ node "BEH_Ordre_Automate_AmbianceSurete_"
     activate = function( self )
         local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE or {} ) do
+        for _,pion in pairs( listePionsPE or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_PasserEnAmbianceSurete, 1, { pion, } )
 
@@ -385,7 +387,7 @@ node "BEH_Ordre_Automate_AmbianceVitesse_"
     activate = function( self )
         local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE or {} ) do
+        for _,pion in pairs( listePionsPE or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_PasserEnAmbianceVitesse, 1, { pion, } )
 
@@ -416,7 +418,7 @@ node "BEH_Ordre_Automate_TenirSurLR_"
     activate = function( self )
         local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE or {} ) do
+        for _,pion in pairs( listePionsPE or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_TenirSurLR, 1, { pion, } )
 
@@ -447,7 +449,7 @@ node "BEH_Ordre_Automate_Tenir_"
     activate = function( self )
         local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,pion in pairs( listePionsPE or {} ) do
+        for _,pion in pairs( listePionsPE or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_Tenir, 1, { pion, } )
 

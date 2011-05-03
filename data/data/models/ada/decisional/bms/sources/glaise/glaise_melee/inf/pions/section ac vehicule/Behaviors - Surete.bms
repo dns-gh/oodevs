@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/section ac vehicule/Behaviors - Surete.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -84,7 +86,7 @@ self.done_BEH_Dep_Pion_INF_Appuyer = function( self, _, v ) self.eCurrentPhase =
 ]]--[[// Appui feu en faveur de la section appuyee
 ]]--[[// behavior BEH_Eni_Pion_HOT_TirAppui( tAmi ) : strength = 1.5 * rMotivation;
 ]]--[[// Ennemi propre a la section
-]]Activate( self.activations.BEH_Eni_Pion_HOT_Appuyer, GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
+]]Activate( self.activations.BEH_Eni_Pion_HOT_Appuyer, GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
     end,
 
 }
@@ -106,7 +108,7 @@ node "BEH_Eni_Pion_HOT_Appuyer"
     activate = function( self )
         local Activate = Activate
         local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
-        for _,ksEni in pairs( lstEnisPercus or {} ) do
+        for _,ksEni in pairs( lstEnisPercus or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then
@@ -139,7 +141,7 @@ do
                         --[[// Si on est a porte, on se poste		
 ]]if( S_Tir_EstAPortee( ksEni, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
                             do
-                                Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, {} )
+                                Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, emptyTable )
                                 Activate( self.activations.ACT_Dep_SePosterFaceA, 1, { ksEni, } )
                             end
                         end
@@ -197,7 +199,7 @@ node "BEH_Dep_Pion_HOT_AppuyerFreinage"
             self.ePhase = eSePoster
         end
 
-        Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// on rejoint la position d'appui a couvert
+        Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// on rejoint la position d'appui a couvert
 ]]
         do
         end
@@ -215,7 +217,7 @@ elseif switch_1 == eSePoster then
                     Activate( self.activations.ACT_RC, 1, { eRC_EnAppui, } )
                     local mission = DEC_GetMission( myself )
                     Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( mission ), } )
-                    Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, {} )--[[// on indique a l'unites appuyee que la section
+                    Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, emptyTable )--[[// on indique a l'unites appuyee que la section
 ]]--[[// est en position d'appui
 ]]
                     _continue = false

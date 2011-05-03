@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/reconnaitre/Reconnaitre - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Reconnaitre :
 ]]--[[// -------------
@@ -60,7 +62,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/reconn
                 --[[//1 pion de reserve pour 3 qui peuvent reconnaitre
 ]]local nbPionsReserve = nbPionsPouvantReconnaire / 3
                 for _,x in pairs( --[[//construction de la liste des pions en reserve
-]]self.listePatrouillesPeutFaireMissionReconnaitre or {} ) do
+]]self.listePatrouillesPeutFaireMissionReconnaitre or emptyTable ) do
                 local _continue = true
                     do
                         if( nbPionsReserve < 1 ) then
@@ -88,8 +90,8 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/reconn
                     end
                 end
 
-                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
         end
 

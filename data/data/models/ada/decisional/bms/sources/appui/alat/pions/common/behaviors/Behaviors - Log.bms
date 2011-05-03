@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Log.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -158,11 +160,11 @@ elseif switch_1 == eRecompleter then
                         Activate( self.activations.BEH_Log_Pion_ALAT_SeRecompleterSurPlot, 1, { myself.plotRavitaillementAssigne_, } )
 self.done_BEH_Log_Pion_ALAT_SeRecompleterSurPlot = function( self, _, v ) self.eEtat = v[1] end
                     else
-                        Activate( self.activations.BEH_Log_Pion_ALAT_SeRecompleterSurTC2, 1, {} )
+                        Activate( self.activations.BEH_Log_Pion_ALAT_SeRecompleterSurTC2, 1, emptyTable )
 self.done_BEH_Log_Pion_ALAT_SeRecompleterSurTC2 = function( self, _, v ) self.eEtat = v[1] end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )--[[//empeche le pion de se déplacer pendant son ravitaillement
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )--[[//empeche le pion de se déplacer pendant son ravitaillement
 ]]
                     _continue = false
                                 cases_switch_1[2] = true
@@ -211,9 +213,9 @@ node "BEH_Log_Pion_ALAT_GererPlotsRavitaillement"
         local distanceBuffer = 0
         myself.plotRavitaillementAssigne_ = nil
         --[[//dependances des comportements
-]]Activate( self.activations.BEH_Log_Pion_ALAT_Recompletement, 0, {} )
-        Activate( self.activations.BEH_Mot_Pion_ALAT_AffecterVariablesDEtat, 0, {} )
-        for _,x in pairs( S_Obj_ListeObjetsValides( myself.plotsRavitaillement_ ) or {} ) do
+]]Activate( self.activations.BEH_Log_Pion_ALAT_Recompletement, 0, emptyTable )
+        Activate( self.activations.BEH_Mot_Pion_ALAT_AffecterVariablesDEtat, 0, emptyTable )
+        for _,x in pairs( S_Obj_ListeObjetsValides( myself.plotsRavitaillement_ ) or emptyTable ) do
         local _continue = true
 do
                 local positionLocalisation = S_Geometrie_BarycentreZone( DEC_ConnaissanceObjet_Localisation( x ) )
@@ -386,8 +388,8 @@ node "BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau"
 ]]--[[// OPT MIA: Faire avec DEC_Connaissances_ObjetsDansFuseau
 ]]local sConnaissancesObjets = DEC_Connaissances_ObjetsDansFuseau( S_TypeObject_ToString( eTypeObjectPlotRavitaillement ) )
         --[[// dependance de comportements
-]]Activate( self.activations.BEH_Log_Pion_ALAT_GererPlotsRavitaillement, 0, {} )
-        for _,x in pairs( sConnaissancesObjets or {} ) do
+]]Activate( self.activations.BEH_Log_Pion_ALAT_GererPlotsRavitaillement, 0, emptyTable )
+        for _,x in pairs( sConnaissancesObjets or emptyTable ) do
         local _continue = true
 do
                 if( ( not DEC_UserTypeList_Contient( myself.plotsRavitaillement_, x ) ) ) then

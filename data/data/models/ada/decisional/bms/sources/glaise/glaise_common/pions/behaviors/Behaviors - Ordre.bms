@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Ordre.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Ordre_Inopine
 ]]--[[//
@@ -42,7 +44,7 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Ordre.bm
 ]]        end
 
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local ordre = x
@@ -128,7 +130,7 @@ node "BEH_Ordre_SePoster_EnAttente"
             do
                 DEC_Trace( "Se poste en attente d'ordre." )
                 SetStateVariable( "VE_SePoster", 2 )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )--[[// On force le poste au premier tour
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )--[[// On force le poste au premier tour
 ]]
                                 self:SendFeedback( eActionEnCours )
                 do return end

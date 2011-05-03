@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/defensives/donnercouparret/DonnerCoupArret - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -36,7 +38,7 @@ include "bit.lua"
         local Activate = Activate
         self.objectifsPrioritaires = self.objectifsPrioritaires or {}--[[//Vide dans cette mission
 ]]
-        Activate( self.activations.ACT_GTIA_AnalyserSituationPourMissionRetrograde, 1, {} )--[[// Analyse environnement
+        Activate( self.activations.ACT_GTIA_AnalyserSituationPourMissionRetrograde, 1, emptyTable )--[[// Analyse environnement
 ]]
         --[[// Init
 ]]if( ModuleBegins() ) then
@@ -45,7 +47,7 @@ include "bit.lua"
                                 do
                     g_bPhaseReceuil = false
                     local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
-                    for _,x in pairs( listePionsSubordonnes or {} ) do
+                    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                     local _continue = true
                         do
                             local automat = x
@@ -63,22 +65,22 @@ include "bit.lua"
 --[[/* **************TEST *******************/]]        end
 
         if( not self._namedParams.mission.sansRearticulation_ ) then
-            Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourDonnerCAR, 10, {} )
+            Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourDonnerCAR, 10, emptyTable )
         end
 
-        Activate( self.activations.BEH_GTIA_RendreCompte, 1, {} )--[[// CR
+        Activate( self.activations.BEH_GTIA_RendreCompte, 1, emptyTable )--[[// CR
 ]]
-        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, {} )--[[// Dispositif  
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, emptyTable )--[[// Dispositif  
 ]]
         Activate( self.activations.BEH_GTIA_RepartirDansFuseaux, 1, { self.objectifsPrioritaires, } )
         --[[// Missions
 ]]--[[//priorite 1
-]]Activate( self.activations.BEH_GTIA_GererAppuisInternesEnDefense, 10, {} )
+]]Activate( self.activations.BEH_GTIA_GererAppuisInternesEnDefense, 10, emptyTable )
         --[[//priorite 2
 ]]Activate( self.activations.BEH_GTIA_AssignerLesOrdresPourCoupArret, 1, { self._namedParams.mission.travaux_, self._namedParams.mission.zoneRegroupement_, } )
-        Activate( self.activations.BEH_GTIA_ORDRE_Decrocher, 1, {} )--[[//si utilisateur veut faire décrocher le GTIA sur ordre
+        Activate( self.activations.BEH_GTIA_ORDRE_Decrocher, 1, emptyTable )--[[//si utilisateur veut faire décrocher le GTIA sur ordre
 ]]
-        Activate( self.activations.BEH_GTIA_Decrocher, 1, {} )--[[// Décrocher sur RapFor
+        Activate( self.activations.BEH_GTIA_Decrocher, 1, emptyTable )--[[// Décrocher sur RapFor
 ]]
     end,
 
@@ -140,7 +142,7 @@ node "BEH_GTIA_ORDRE_Decrocher"
     activate = function( self )
         local Activate = Activate
                 local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,ordre in pairs( ordres_recus or {} ) do
+        for _,ordre in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = ordre
@@ -279,21 +281,21 @@ node "BEH_GTIA_AssignerMissionsDefenseSEAppui"
     activate = function( self )
         local Activate = Activate
         for _,pion in pairs( --[[// TC2
-]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.pions ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.pions ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionDefenseLogA, 1, { pion, self._namedParams.zoneRegroupement, } )
 
         end
 
         for _,pion in pairs( --[[// Assignation missions Genie
-]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.pions ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.pions ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionDefenseGenieA, 1, { pion, self._namedParams.travaux, self._namedParams.zoneRegroupement, } )
 
         end
 
         for _,pion in pairs( --[[// Assignation missions ART
-]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.pions ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.pions ) or emptyTable ) do
         local _continue = true
             --[[// idem Freiner
 ]]Activate( self.activations.BEH_GTIA_AssignerMissionRetrogradeART, 1, { pion, } )
@@ -455,7 +457,7 @@ node "BEH_GTIA_AssignerMissionsDefensesPEclSurveiller"
 
     activate = function( self )
         local Activate = Activate
-        for _,x in pairs( self._namedParams.listePions or {} ) do
+        for _,x in pairs( self._namedParams.listePions or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -526,7 +528,7 @@ node "BEH_GTIA_AssignerMissionsDefensesPETenir"
     activate = function( self )
         local Activate = Activate
         for _,x in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -536,7 +538,7 @@ do
 ]]
         end
 
-        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or {} ) do
+        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -586,7 +588,7 @@ node "BEH_GTIA_AssignerMissionsDefensesSE"
             Activate( self.activations.BEH_GTIA_AssignerMissionsDefensesSESoutenir, 1, { self._namedParams.listePions, } )
         else
 for _,x in pairs( --[[// Il est temps de décrocher pour le SE
-]]self._namedParams.listePions or {} ) do
+]]self._namedParams.listePions or emptyTable ) do
             local _continue = true
 do
                     local automat = x
@@ -629,7 +631,7 @@ node "BEH_GTIA_AssignerMissionsDefensesSESoutenir"
     activate = function( self )
         local Activate = Activate
         for _,x in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -652,7 +654,7 @@ do
 ]]
         end
 
-        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or {} ) do
+        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -698,7 +700,7 @@ node "BEH_GTIA_AssignerMissionsDefensesDecrocher"
     activate = function( self )
         local Activate = Activate
         for _,x in pairs( --[[// Assignation missions ABC et INF
-]]self._namedParams.listePions or {} ) do
+]]self._namedParams.listePions or emptyTable ) do
         local _continue = true
 do
                 local pion = x

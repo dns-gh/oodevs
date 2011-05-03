@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/pions/pat hm/behaviors/Behaviors - Transport.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -60,7 +62,7 @@ include "bit.lua"
 ]]        end
 
         local bUnitesEnAttenteSurPtEmbarquement = false
-        for _,x in pairs( self._namedParams.unitesAHelitransporter or {} ) do
+        for _,x in pairs( self._namedParams.unitesAHelitransporter or emptyTable ) do
         local _continue = true
 do
                 if( DEC_Geometrie_Distance( x:DEC_Agent_Position(), self._namedParams.posEmbarquement ) < DEC_Geometrie_Distance( x:DEC_Agent_Position(), self._namedParams.posDebarquement ) ) then
@@ -83,7 +85,7 @@ do
         self.listeUnitesPretes = {}
         self.listeUnitesPretes = S_Cherche_Filtre_TypeMission( self._namedParams.unitesAHelitransporter, "T_Mission_Pion_SeFaireTransporter" )
         for _,x in pairs( --[[//liste des unites qui n'ont plus la mission se faire transporter
-]]self._namedParams.unitesAHelitransporter or {} ) do
+]]self._namedParams.unitesAHelitransporter or emptyTable ) do
         local _continue = true
 do
                 if( DIA_Contains( self.listeUnitesPretesPrecedantes, x ) and not DIA_Contains( self.listeUnitesPretes, x ) ) then
@@ -102,7 +104,7 @@ do
         self.bAuMoinsUneUniteSurPositionEmbarquement = false
         for _,x in pairs( --[[// Affichage du RC unites pas pretes si des unites non encore debarquées
 ]]--[[// n'ont pas la mission se faire transporter.
-]]self._namedParams.unitesAHelitransporter or {} ) do
+]]self._namedParams.unitesAHelitransporter or emptyTable ) do
         local _continue = true
 do
                 --[[// si pas ou plus mission se faire transporter
@@ -187,10 +189,10 @@ elseif switch_1 == eAttendre then
                         self.ePhase = eTransporterAllerEmbarquer
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
                     for _,x in pairs( --[[//si pas d'unités prete sur position, on ne commence pas à s'organiser
-]]self.listeUnitesPretes or {} ) do
+]]self.listeUnitesPretes or emptyTable ) do
                     local _continue = true
 do
                             if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) > M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
@@ -212,7 +214,7 @@ elseif switch_1 == eTransporterEmbarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEmbarquement, } )
                     for _,x in pairs( --[[//des que j'ai des unites pretes et à bonne distance du pion, alors, je
 ]]--[[//les met dans la liste
-]]self.listeUnitesPretes or {} ) do
+]]self.listeUnitesPretes or emptyTable ) do
                     local _continue = true
 do
                             if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) <= M_TRANSPORT_PION_ALAT_DISTANCE_DEBUT_EMBARQUEMENT() ) then
@@ -224,7 +226,7 @@ do
 ]]
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
                     if( self.eEtat == eActionEffectuee ) then
                         do
                             self.eEtat = eActionEnCours
@@ -258,7 +260,7 @@ do
                         do return end
                     end
 
-                    Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer, 1, {} )
+                    Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer, 1, emptyTable )
 self.done_ACT_Transport_Pion_ALAT_HM_HelitransportEmbarquer = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
@@ -301,7 +303,7 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat =
                                 cases_switch_1[4] = true
 elseif switch_1 == eTransporterDebarquer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportDebarquement, } )
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )--[[//se poser pour embarquement
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )--[[//se poser pour embarquement
 ]]
                     if( self.eEtat == eActionEffectuee ) then
                         do
@@ -332,7 +334,7 @@ elseif switch_1 == eTransporterDebarquer then
                         end
                     end
 
-                    Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer, 1, {} )
+                    Activate( self.activations.ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer, 1, emptyTable )
 self.done_ACT_Transport_Pion_ALAT_HM_HelitransportDebarquer = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[5] = true

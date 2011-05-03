@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/esc amx-erc/missions/recueillir/Recueillir - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-08-29 $
@@ -49,7 +51,7 @@ includedFiles["sources/melee/abc/automates/esc amx-erc/missions/recueillir/Recue
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Conduite_Automate_ABC_Recueillir, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_ABC_Recueillir, 1, emptyTable )
     end,
 
 }

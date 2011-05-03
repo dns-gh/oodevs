@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/groupe te/missions/EscorterConvoi.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created: JDY 02-11-06 $
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Groupe TE/Missions/EscorterConvoi.hal $
@@ -59,7 +61,7 @@ includedFiles["sources/melee/inf/pions/groupe te/missions/EscorterConvoi.bms"] =
                         end
                     end
 
-                    Activate( self.activations.BEH_Mission_Pion_VAB_EscorterUnConvoi, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Mission_Pion_VAB_EscorterUnConvoi, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_EscorterUnConvoi = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
@@ -123,12 +125,12 @@ node "BEH_Mission_Pion_VAB_EscorterUnConvoi"
         self.ePhase = self.ePhase or ePreparerMission
         if( ModuleBegins() ) then
             do
-                StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
             end
         end
 
         Activate( self.activations.ACT_Misc_Pion_Melee_Escorter, 1, { self.pionConvoi, } )
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
          do
             local _continue = true
             local switch_1 = self.ePhase
@@ -218,7 +220,7 @@ node "BEH_Dep_Pion_INF_SeCoordonnerSurEscorte"
         end
 
         if( S_Geometrie_EstProchePosition( self._namedParams.pionAmi:DEC_Agent_Position(), DEC_Agent_Position(), self._namedParams.rDistMin ) ) then
-            Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+            Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
         end
 
     end,

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/son hot/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -105,7 +107,7 @@ include "Melee/Inf/Pions/Son Hot/Missions/Surveiller.bms"
             myself.bAppuieFreinage_ = false
         end
 
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
     end,
 
 }

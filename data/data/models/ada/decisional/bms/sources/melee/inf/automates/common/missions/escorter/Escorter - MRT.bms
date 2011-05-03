@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/common/missions/escorter/Escorter - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-08-29 $
@@ -43,7 +45,7 @@ includedFiles["sources/melee/inf/automates/common/missions/escorter/Escorter - M
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPE or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPE or emptyTable ) do
                 local _continue = true
                     do
                         if( rIterateurPion == 0 ) then
@@ -100,7 +102,7 @@ node "BEH_Medo_Automate_INF_AssignerMissionEscorterEclA"
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPEcl or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPEcl or emptyTable ) do
                 local _continue = true
                     do
                         if( rIterateurPion == 0 ) then
@@ -154,7 +156,7 @@ node "BEH_Medo_Automate_INF_AssignerMissionEscorterAutomateA"
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPE or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPE or emptyTable ) do
                 local _continue = true
                     do
                         --[[// un seul pion suffit
@@ -212,7 +214,7 @@ node "BEH_Medo_Automate_INF_AssignerMissionEscorterAutomateEclA"
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPEcl or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPEcl or emptyTable ) do
                 local _continue = true
                     do
                         --[[// un seul pion suffit
@@ -277,7 +279,7 @@ node "BEH_Medo_Automate_INF_AssignerMissionEscorterA"
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPE or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPE or emptyTable ) do
                 local _continue = true
                     do
                         if( rIterateurPion == 0 ) then
@@ -334,7 +336,7 @@ node "BEH_Medo_Automate_INF_AssignerMissionEscorterEclA"
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPEcl or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPEcl or emptyTable ) do
                 local _continue = true
                     do
                         if( rIterateurPion == 0 ) then
@@ -388,7 +390,7 @@ node "BEH_Medo_Automate_INF_AssignerMissionEscorterAutomateA"
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPE or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPE or emptyTable ) do
                 local _continue = true
                     do
                         --[[// un seul pion suffit
@@ -446,7 +448,7 @@ node "BEH_Medo_Automate_INF_AssignerMissionEscorterAutomateEclA"
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPEcl or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPEcl or emptyTable ) do
                 local _continue = true
                     do
                         --[[// un seul pion suffit

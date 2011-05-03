@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artfdp/automates/bat reco lrm/missions/reconnaitrezonesdeploiement/ReconnaitreZonesDeploiement MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created$
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/ArtFdp/Automates/Bat Reco LRM/Missions/ReconnaitreZonesDeploiement/ReconnaitreZonesDeploiement MRT.hal $
@@ -68,7 +70,7 @@ includedFiles["sources/appui/artfdp/automates/bat reco lrm/missions/reconnaitrez
             end
         end
 
-        Activate( self.activations.BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement, 1, {} )
+        Activate( self.activations.BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement, 1, emptyTable )
 self.done_BEH_Medo_Automate_PreparerMission_ReconnaitreZonesDeploiement = function( self, _, v ) self.eValidationMRT = v[1] end
     end,
 

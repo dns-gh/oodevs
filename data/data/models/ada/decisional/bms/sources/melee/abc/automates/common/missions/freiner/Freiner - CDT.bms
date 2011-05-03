@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/common/missions/freiner/Freiner - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -26,15 +28,15 @@ include "bit.lua"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordinationRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordinationRetrograde_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Conduite_ABC_Automate_Freiner_GererLesLC, 1, {} )--[[// Ajout ADA
+        Activate( self.activations.BEH_Conduite_ABC_Automate_Freiner_GererLesLC, 1, emptyTable )--[[// Ajout ADA
 ]]
     end,
 
@@ -62,7 +64,7 @@ node "BEH_Conduite_ABC_Automate_Freiner_GererLesLC"
         local Activate = Activate
         local selPionsFr = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_ABC_Freiner" )
         if( DEC_AutomateSuperieur_EstEmbraye() and F_Automat_GeteEtatEchelon( myself ) ~= eEtatEchelon_Premier ) then
-for _,pion in pairs( selPionsFr or {} ) do
+for _,pion in pairs( selPionsFr or emptyTable ) do
             local _continue = true
                 Activate( self.activations.ACT_Ordre_Automate_PasserSurLC, 1, { pion, } )
 

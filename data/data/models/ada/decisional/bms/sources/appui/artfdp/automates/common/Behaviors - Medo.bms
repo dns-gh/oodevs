@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artfdp/automates/common/Behaviors - Medo.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-05-15 $
@@ -92,7 +94,7 @@ elseif switch_1 == eMRT_AffecterFuseaux then
                         end
                     end
 
-                    for _,x in pairs( self.selPions_ASS_Reco or {} ) do
+                    for _,x in pairs( self.selPions_ASS_Reco or emptyTable ) do
                     local _continue = true
 do
                             if( #( sFuseau ) < rN_ParFuseau ) then
@@ -246,7 +248,7 @@ elseif switch_1 == eMRT_AffecterFuseaux then
                         end
                     end
 
-                    for _,x in pairs( self.selPions_ASS_Reco or {} ) do
+                    for _,x in pairs( self.selPions_ASS_Reco or emptyTable ) do
                     local _continue = true
 do
                             if( #( sFuseau ) < rN_ParFuseau ) then
@@ -346,7 +348,7 @@ node "BEH_Medo_Automate_ASS_AssignerMission_PC"
 ]]local pAppui = nil
                 for _,x in pairs( --[[// Potentiellement, le PC peut etre un pion de PE, dans ce cas la, il ne
 ]]--[[// s'appuie pas lui meme
-]]self._namedParams.selPion or {} ) do
+]]self._namedParams.selPion or emptyTable ) do
                 local _continue = true
                     do
                         if( x ~= DEC_Automate_PionPC() ) then

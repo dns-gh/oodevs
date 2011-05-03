@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/marine/pions/common/motivations/Motivations.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//  MOT_GarderSesDistances
 ]]--[[//
@@ -81,7 +83,7 @@ node "ActivatedByMOT_GarderSesDistances"
 
         --[[//ce comportement permet de décrocher à une position de sécutité
 ]]--[[//afin de satisfaire le besoin de garder ses distances
-]]Activate( self.activations.BEH_MOT_Pion_MARINE_GarderSesDistances, GetMotivation( "MOT_GarderSesDistances" ), {} )
+]]Activate( self.activations.BEH_MOT_Pion_MARINE_GarderSesDistances, GetMotivation( "MOT_GarderSesDistances" ), emptyTable )
     end,
 
 }
@@ -335,7 +337,7 @@ node "ActivatedByMOT_RiposterSurEnis"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_RiposterSurEnis, GetMotivation( "MOT_RiposterSurEnis" ), {} )
+]]Activate( self.activations.BEH_MOT_RiposterSurEnis, GetMotivation( "MOT_RiposterSurEnis" ), emptyTable )
     end,
 
 }
@@ -404,7 +406,7 @@ node "ActivatedByMOT_SePoster"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_SePoster, GetMotivation( "MOT_SePoster" ), {} )
+]]Activate( self.activations.BEH_MOT_SePoster, GetMotivation( "MOT_SePoster" ), emptyTable )
     end,
 
 }
@@ -467,7 +469,7 @@ node "ActivatedByMOT_PasserEnSilenceRadio"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_PasserEnSilenceRadio, GetMotivation( "MOT_PasserEnSilenceRadio" ), {} )
+]]Activate( self.activations.BEH_MOT_PasserEnSilenceRadio, GetMotivation( "MOT_PasserEnSilenceRadio" ), emptyTable )
     end,
 
 }
@@ -530,7 +532,7 @@ node "ActivatedByMOT_PasserEnSilenceRadioPartiel"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_PasserEnSilenceRadioPartiel, GetMotivation( "MOT_PasserEnSilenceRadioPartiel" ), {} )
+]]Activate( self.activations.BEH_MOT_PasserEnSilenceRadioPartiel, GetMotivation( "MOT_PasserEnSilenceRadioPartiel" ), emptyTable )
     end,
 
 }
@@ -593,7 +595,7 @@ node "ActivatedByMOT_PasserEnAlerteDeNiveau4"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_PasserEnAlerteDeNiveau4, GetMotivation( "MOT_PasserEnAlerteDeNiveau4" ), {} )
+]]Activate( self.activations.BEH_MOT_PasserEnAlerteDeNiveau4, GetMotivation( "MOT_PasserEnAlerteDeNiveau4" ), emptyTable )
     end,
 
 }
@@ -656,7 +658,7 @@ node "ActivatedByMOT_PasserEnTirRestreint"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_PasserEnTirRestreint, GetMotivation( "MOT_PasserEnTirRestreint" ), {} )
+]]Activate( self.activations.BEH_MOT_PasserEnTirRestreint, GetMotivation( "MOT_PasserEnTirRestreint" ), emptyTable )
     end,
 
 }
@@ -719,7 +721,7 @@ node "ActivatedByMOT_PasserEnTirInterdit"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_PasserEnTirInterdit, GetMotivation( "MOT_PasserEnTirInterdit" ), {} )
+]]Activate( self.activations.BEH_MOT_PasserEnTirInterdit, GetMotivation( "MOT_PasserEnTirInterdit" ), emptyTable )
     end,
 
 }
@@ -784,7 +786,7 @@ node "ActivatedByMOT_PasserEnTirLibre"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_PasserEnTirLibre, GetMotivation( "MOT_PasserEnTirLibre" ), {} )
+]]Activate( self.activations.BEH_MOT_PasserEnTirLibre, GetMotivation( "MOT_PasserEnTirLibre" ), emptyTable )
     end,
 
 }
@@ -847,7 +849,7 @@ node "ActivatedByMOT_RiposteSurPopulations"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_RiposteSurPopulations, GetMotivation( "MOT_RiposteSurPopulations" ), {} )
+]]Activate( self.activations.BEH_MOT_RiposteSurPopulations, GetMotivation( "MOT_RiposteSurPopulations" ), emptyTable )
     end,
 
 }
@@ -910,7 +912,7 @@ node "ActivatedByMOT_EsquivePopulations"
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[//ce comportement permet de décrocher à une position de sécurité
-]]Activate( self.activations.BEH_MOT_DecrochageFaceAPopulations, GetMotivation( "MOT_EsquivePopulations" ), {} )
+]]Activate( self.activations.BEH_MOT_DecrochageFaceAPopulations, GetMotivation( "MOT_EsquivePopulations" ), emptyTable )
     end,
 
 }
@@ -973,7 +975,7 @@ node "ActivatedByMOT_PasserEnEmploiForceInterdit"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_PasserEnEmploiForceInterdit, GetMotivation( "MOT_PasserEnEmploiForceInterdit" ), {} )
+]]Activate( self.activations.BEH_MOT_PasserEnEmploiForceInterdit, GetMotivation( "MOT_PasserEnEmploiForceInterdit" ), emptyTable )
     end,
 
 }
@@ -1036,7 +1038,7 @@ node "ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux, GetMotivation( "MOT_PasserEnMaintienADistanceParMoyensNonLetaux" ), {} )
+]]Activate( self.activations.BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux, GetMotivation( "MOT_PasserEnMaintienADistanceParMoyensNonLetaux" ), emptyTable )
     end,
 
 }
@@ -1099,7 +1101,7 @@ node "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs, GetMotivation( "MOT_PasserEnDispersionParMoyensDeDefenseActifs" ), {} )
+]]Activate( self.activations.BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs, GetMotivation( "MOT_PasserEnDispersionParMoyensDeDefenseActifs" ), emptyTable )
     end,
 
 }
@@ -1162,7 +1164,7 @@ node "ActivatedByMOT_PasserEnArmesLetalesAutorisees"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_PasserEnArmesLetalesAutorisees, GetMotivation( "MOT_PasserEnArmesLetalesAutorisees" ), {} )
+]]Activate( self.activations.BEH_MOT_PasserEnArmesLetalesAutorisees, GetMotivation( "MOT_PasserEnArmesLetalesAutorisees" ), emptyTable )
     end,
 
 }

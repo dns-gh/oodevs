@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/pions/common/missions/SEmparerObjectif.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -60,7 +62,7 @@ node "BEH_Mission_Pion_HUMUS_Harceler"
 ]]self.ptMission = self.mission.pointObjectif_
                 --[[// Vérifier que l'on est bien dans son fuseau
 ]]if( S_RapForLocal() == eEtatRapportDeForce_Favorable ) then
-                    StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                    StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
                 end
 
             end
@@ -95,7 +97,7 @@ node "BEH_Mission_Pion_HUMUS_Harceler"
                     local switch_1 = self.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == eSeMettreEnPlace then
-                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// Se mettre en position en restant sur ses gardes
+                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[// Se mettre en position en restant sur ses gardes
 ]]
                             if( self.eAction == eActionEffectuee ) then
                                 do
@@ -117,7 +119,7 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
 ]]                        cases_switch_1[1] = true
 elseif switch_1 == eAborderObjectif then
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                             if( self.eAction == eActionEffectuee ) then
                                 do
                                     self.eAction = eActionEnCours
@@ -142,7 +144,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
                             StartActivateOverride( self, self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { DEC_Geometrie_ConvertirPointEnLocalisation( self.mission.pointObjectif_ ), } )
                             StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.ptMission, false, } )
-                            Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                            Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                             if( self.eAction == eActionEffectuee ) then
                                 do
                                     self.eAction = eActionEnCours
@@ -167,7 +169,7 @@ self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction 
                         if cases_switch_1[3] or switch_1 == eSurveiller then
                             --[[// Surveille secteur			
 ]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnControleZone, } )
-                            Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                            Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                             _continue = false--[[// behavior BEH_Pion_INF_Detruire_Harceler( mission.zone_, mission.natureObjectif_ ) : strength = 2;
 ]]
                                                 cases_switch_1[4] = true

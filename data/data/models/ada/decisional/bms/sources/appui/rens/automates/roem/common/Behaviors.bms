@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/roem/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 02-11-08 $
@@ -45,7 +47,7 @@ includedFiles["sources/appui/rens/automates/roem/common/Behaviors.bms"] = true
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[// ========================== En embrayé ET débrayé ===========================
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )--[[// ========================== En embrayé ET débrayé ===========================
 ]]--[[// CR automates sur eni et situation mission
 ]]
         --[[// ========================== En embrayé SEULEMENT ============================
@@ -53,19 +55,19 @@ includedFiles["sources/appui/rens/automates/roem/common/Behaviors.bms"] = true
             do return end
         end
 
-        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// NBC --> alerte de niveau 4
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Silence radio
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// ROE --> Tir libre, sur riposte, interdit
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des pions --> init de la place dans le dispositif
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -74,7 +76,7 @@ includedFiles["sources/appui/rens/automates/roem/common/Behaviors.bms"] = true
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_GetMission( myself ) ~= nil ) then
             do
-                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[// reception d'ordre venant du dessus
+                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )--[[// reception d'ordre venant du dessus
 ]]
             end
 --[[//behavior BEH_Conduite_Automate_GererFuseau();

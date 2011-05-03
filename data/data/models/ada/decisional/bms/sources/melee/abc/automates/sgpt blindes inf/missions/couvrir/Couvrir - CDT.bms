@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/sgpt blindes inf/missions/couvrir/Couvrir - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-02-06 $
@@ -41,7 +43,7 @@ includedFiles["sources/melee/abc/automates/sgpt blindes inf/missions/couvrir/Cou
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_ABC_Couvrir, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_ABC_Couvrir, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Conduite générique 
 ]]--[[//-----------------------------------------------------------------------------
 ]]

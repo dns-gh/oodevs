@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/common/missions/attaquer/AttaquerSouplesse CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -95,7 +97,7 @@ node "BEH_Conduite_Automate_AssignerSemparerA"
                 for _,x_pion in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Assignement des missions aux differents pions
 ]]--[[//-------------------------------------------------------------------------		
-]]self._namedParams.selPions_PE or {} ) do
+]]self._namedParams.selPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         local rIdProche = S_Geometrie_PointPlusProchePosition_DansFuseau( DEC_Automate_PionPosition( x_pion ), self.lstObjectifs )

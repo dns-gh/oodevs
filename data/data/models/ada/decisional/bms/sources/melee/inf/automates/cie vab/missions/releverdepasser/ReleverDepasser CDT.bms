@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/cie vab/missions/releverdepasser/ReleverDepasser CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -60,7 +62,7 @@ node "MIS_Automate_CDT_INF_Relever"
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_Relever, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Relever, 1, emptyTable )
     end,
 
     destroy = function( self )
@@ -121,7 +123,7 @@ node "BEH_Conduite_Automate_INF_Relever"
                         end
                     end
 
-                    Activate( self.activations.BEH_Conduite_Automate_INF_CadreStatique, 1, {} )
+                    Activate( self.activations.BEH_Conduite_Automate_INF_CadreStatique, 1, emptyTable )
                     Activate( self.activations.BEH_Situation_Automate_INF_Relever, 1, { self.rN_PE, self.mission.compagnie_, } )
                     Activate( self.activations.BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide, 1, { self.rN_PE, } )
 self.done_BEH_Conduite_Automate_INF_Relever_PrepareReleve_Valide = function( self, _, v ) self.eActionReleve = v[1] end
@@ -142,7 +144,7 @@ self.done_BEH_Conduite_Automate_INF_Relever_AssignerReleve = function( self, _, 
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
-                    Activate( self.activations.BEH_Conduite_Automate_INF_Relever_ApresReleve, 1, {} )--[[// Freiner ? 
+                    Activate( self.activations.BEH_Conduite_Automate_INF_Relever_ApresReleve, 1, emptyTable )--[[// Freiner ? 
 ]]
                     _continue = false
                                 cases_switch_1[3] = true
@@ -172,7 +174,7 @@ node "BEH_Situation_Automate_INF_Relever"
         local Activate = Activate
         self.selPions = self.selPions or S_ObtenirTousPionsDe( eEtatEchelon_Premier )
         local rPion_FinMouvement = 0
-        for _,x in pairs( self.selPions or {} ) do
+        for _,x in pairs( self.selPions or emptyTable ) do
         local _continue = true
 do
                 local x_pion = x
@@ -256,7 +258,7 @@ node "BEH_Conduite_Automate_INF_Relever_AssignerReleve"
         if( ModuleBegins() ) then
             do
                 local rIt_Pion = 0
-                for _,x_releve in pairs( S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier ) or {} ) do
+                for _,x_releve in pairs( S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier ) or emptyTable ) do
                 local _continue = true
                     do
                         if( rIt_Pion >= #( selUnites ) ) then
@@ -313,7 +315,7 @@ node "BEH_Conduite_Automate_INF_Relever_ApresReleve"
 --[[// Coordination lors de la mise en place du dispositif dans les fuseaux			
 ]]--[[/* MIA ADA //start behavior BEH_Conduite_Automate_GererFuseau();*/]]        end
 
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, emptyTable )
     end,
 
 }

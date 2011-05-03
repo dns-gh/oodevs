@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/roim/cl289/missions/renseignersur/RenseignerSur - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur
 ]]--[[// 
@@ -32,12 +34,12 @@ includedFiles["sources/appui/rens/automates/roim/cl289/missions/renseignersur/Re
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererPionsDetruits_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererPionsDetruits_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion 
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererLeSE_, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_RENS_GererLeSE_, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_RENS_ROIM_CL289_GererMiseEnOeuvre, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion du drone
 ]]--[[//----------------------------------------------------------------------------- 
 ]]

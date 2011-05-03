@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/freiner/Freiner - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-09-29 $
@@ -47,7 +49,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/freiner
 ]]--[[// Affectation des missions du premier echelon
 ]]--[[// Tous les pions de premier echelon on la mssion reconnaitre
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPion or {} ) do
+]]self._namedParams.selPion or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_ABC_AssignerFreinerA, 1, { ePhase_MRT, pion, self._namedParams.eEtatEchelon, } )
 

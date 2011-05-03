@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/automates/cie vab/missions/releverrecueil/ReleverRecueil CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -38,7 +40,7 @@ node "MIS_Automate_CDT_INF_ReleverEnRecueillant"
                 DEC_Trace( "Conduite Rompre Contact : debut" )
                 DEC_Trace( "Direction Dangereuse : " .. DEC_DirectionToString( self._namedParams.mission.directionEnnemi_ ) )
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )
             end
 --[[// Conduite des pions au niveau section
 ]]--[[//-----------------------------------------------------------------------------		

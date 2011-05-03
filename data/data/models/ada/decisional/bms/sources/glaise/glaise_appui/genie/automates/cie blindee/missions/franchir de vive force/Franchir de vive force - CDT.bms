@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/franchir de vive force/Franchir de vive force - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -43,7 +45,7 @@ include "bit.lua"
 ]]--[[//---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
         --[[//---------------------------------------------------------------------
 ]]--[[// Vérification des moyens
 ]]--[[//---------------------------------------------------------------------
@@ -99,7 +101,7 @@ node "BEH_Mission_Automate_GEN_CDT_OuvrirPlanObjets_"
 ]]--[[//-------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                 local _continue = true
                     Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
 
@@ -149,7 +151,7 @@ node "BEH_Misc_Automate_GEN_GererOuvertureDesObstacles"
 ]]--[[// JSR : copie membre à membre de la liste, pour contourner un bug causé par la traduction lors d'une affectation directe
 ]]if( ModuleBegins() ) then
             do
-                for _,obj in pairs( self._namedParams.obstacles or {} ) do
+                for _,obj in pairs( self._namedParams.obstacles or emptyTable ) do
                 local _continue = true
                     do
                         DIA_PushBack( self.listeObjetsABrecher, obj )
@@ -164,7 +166,7 @@ node "BEH_Misc_Automate_GEN_GererOuvertureDesObstacles"
 ]]        end
 
         local listePionsGenie = S_Gen_ObtenirSectionsGenieDisponibles()
-        for _,pion in pairs( listePionsGenie or {} ) do
+        for _,pion in pairs( listePionsGenie or emptyTable ) do
         local _continue = true
 do
                 local objetABrecher = nil
@@ -290,7 +292,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourContournerObstacles"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Iteration sur les T_ConnaissanceObjet_local --> Assignation renforcement
 ]]--[[//-------------------------------------------------------------------------
-]]g_selConnaissanceObs or {} ) do
+]]g_selConnaissanceObs or emptyTable ) do
         local _continue = true
 do
                 local objetABrecher = x
@@ -307,7 +309,7 @@ do
 ]]
         end
 
-        for _,x in pairs( g_selConnaissanceObs or {} ) do
+        for _,x in pairs( g_selConnaissanceObs or emptyTable ) do
         local _continue = true
 do
                 local objetABrecher = x
@@ -322,7 +324,7 @@ do
         if( DIA_IsListEmpty( S_Obj_ListeObjetsNonContournes( self._namedParams.obstaclesAFranchir ) ) ) then
             do
                 local listeGroupes = S_Gen_ObtenirGroupeGenie()
-                for _,pion in pairs( listeGroupes or {} ) do
+                for _,pion in pairs( listeGroupes or emptyTable ) do
                 local _continue = true
                     do
                         --[[// cast
@@ -523,7 +525,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementObstaclePour"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Iteration sur les pions en renforcement
 ]]--[[//-------------------------------------------------------------------------
-]]self._namedParams.listePionsRenforcement or {} ) do
+]]self._namedParams.listePionsRenforcement or emptyTable ) do
         local _continue = true
 do
                 local pionRenfort = x

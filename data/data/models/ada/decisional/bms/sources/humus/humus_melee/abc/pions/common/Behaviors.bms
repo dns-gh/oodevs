@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/pions/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 02-11-08 $
@@ -60,11 +62,11 @@ include "Humus/Humus_Melee/Abc/Pions/Common/Actions.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Mot_Pion_ABC_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Mot_Pion_ABC_AffecterVariablesDEtat, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ de l'état DEC par défaut 
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -73,13 +75,13 @@ include "Humus/Humus_Melee/Abc/Pions/Common/Actions.bms"
             do return end
         end
 
-        Activate( self.activations.BEH_ROE, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Comp générique
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Ambiance, 1, {} )
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_Pion_ABC_Default, 1, {} )--[[//behavior BEH_Rens();
+        Activate( self.activations.BEH_Ambiance, 1, emptyTable )
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_Pion_ABC_Default, 1, emptyTable )--[[//behavior BEH_Rens();
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Spécifique unité de l'ABC
 ]]--[[//-----------------------------------------------------------------------------
@@ -211,7 +213,7 @@ do
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+        Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -241,7 +243,7 @@ node "BEH_Dep_Pion_ABC_GererDeboucher"
 ]]--[[// Regarder les eAvantPoint dans la liste des points interessants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local ptABC = x
@@ -309,7 +311,7 @@ node "BEH_Ordre_SePosterPourDeboucher"
 ]]if( ModuleBegins() ) then
             do
                 SetStateVariable( "VE_SePoster", 2 )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                                 do return end
 
             end
@@ -401,7 +403,7 @@ node "BEH_Pion_ABC_InstallerDispositif"
     activate = function( self )
         local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_Poste ) then
-            Activate( self.activations.ACT_Pion_ABC_InstallerDisposifif, 1, {} )
+            Activate( self.activations.ACT_Pion_ABC_InstallerDisposifif, 1, emptyTable )
         end
 
     end,

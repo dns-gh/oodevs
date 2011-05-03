@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/missions/PrendreEnComptePrisonniers.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -45,7 +47,7 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -92,7 +94,7 @@ self.done_BEH_Dep_Pion_AllerDebarquerPrisonniers = function( self, _, v ) self.e
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[4] = true
                 end
@@ -127,7 +129,7 @@ node "BEH_Dep_Pion_AllerRecupererPrisonniers"
         for _,prisonnier in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de chaque pion prisonnier
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.prisonniers or {} ) do
+]]self._namedParams.prisonniers or emptyTable ) do
         local _continue = true
 if( DEC_ConnaissanceAgent_EstValide( prisonnier ) and not DEC_Prisonniers_EstEmbarque( prisonnier ) ) then
                 Activate( self.activations.BEH_Dep_Pion_GererEmbarquementPrisonnier, S_Force_DistancePt( DEC_ConnaissanceAgent_Position( prisonnier ) ), { prisonnier, } )
@@ -225,7 +227,7 @@ node "BEH_Dep_Pion_AllerDebarquerPrisonniers"
 
         if( DEC_Geometrie_Distance( self.point, DEC_Agent_Position() ) < 100 ) then
             do
-                for _,prisonnier in pairs( self._namedParams.prisonniers or {} ) do
+                for _,prisonnier in pairs( self._namedParams.prisonniers or emptyTable ) do
                 local _continue = true
                     Activate( self.activations.ACT_Transport_Pion_DebarquerPrisonnierDansCamp, 1, { prisonnier, self._namedParams.campPrisonnier, } )
 

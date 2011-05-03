@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/rohum/urh/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// Comportement par défaut.
 ]]--[[//
@@ -29,10 +31,10 @@ includedFiles["sources/appui/rens/pions/rohum/urh/common/Behaviors.bms"] = true
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Dep_Pion_GererFurtivite, 1, {} )--[[// Furtivité Attention Hack --> normalement utilisée seulement pd les missions.
+        Activate( self.activations.BEH_Dep_Pion_GererFurtivite, 1, emptyTable )--[[// Furtivité Attention Hack --> normalement utilisée seulement pd les missions.
 ]]--[[// DONC pas de mise à jour du rapFor. Esquive suelement sur prise à partie
 ]]
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// behavior BEH_Mot_Pion_Rens_AffecterVariablesDEtat();
@@ -45,14 +47,14 @@ includedFiles["sources/appui/rens/pions/rohum/urh/common/Behaviors.bms"] = true
             do return end
         end
 
-        Activate( self.activations.BEH_ROE, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Comp générique
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Ambiance, 1, {} )
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_Rens, 1, {} )
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Ambiance, 1, emptyTable )
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_Rens, 1, emptyTable )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Embarquement apres Heliportage
 ]]--[[// ------------------------------------------------------------------------
 ]]

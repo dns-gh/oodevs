@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/radint/esc horizon/missions/renseignersur/RenseignerSur - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -46,7 +48,7 @@ include "bit.lua"
                 DEC_SetMission( myself, self._namedParams.mission )
                                 do
                     local listePionsSubordonnes = DEC_Automate_PionsSansPC()
-                    for _,x in pairs( listePionsSubordonnes or {} ) do
+                    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                     local _continue = true
                         do
                             local pion = x
@@ -143,7 +145,7 @@ node "BEH_Medo_Automate_RENS_RADINT_MettreEnOeuvreA"
             DEC_Copie_Point( DEC_Automate_PionPosition( DEC_Automate_PionPC() ), self.positionDeploiement )
         end
 
-        for _,pion in pairs( self._namedParams.listePions or {} ) do
+        for _,pion in pairs( self._namedParams.listePions or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_RENS_RADINT_AssignerMettreEnOeuvreA, 1, { ePhase_MRT, pion, self.positionDeploiement, eEtatEchelon_Premier, } )
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/circulation/pions/missions/RealiserObjetDansZone.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Pion_CIRCU_RealiserObjetDansZone
 ]]--[[//
@@ -33,7 +35,7 @@ includedFiles["sources/appui/circulation/pions/missions/RealiserObjetDansZone.bm
         self.ePhase = self.ePhase or ePreparerMission
         self.positionInstallation = self.positionInstallation or S_Geometrie_BarycentreZone( self._namedParams.zone )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -116,7 +118,7 @@ self.done_ACT_Obj_Pion_LOG_RealiserTravaux = function( self, _, v ) self.eEtat =
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     if( DEC_ConnaissanceObjet_EstValide( myself.objMisEnCours_ ) ) then
                         DEC_DetruireObjetSansDelais( myself.objMisEnCours_ )
                     end

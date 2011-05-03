@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa tcp/missions/defendre itineraire/Defendre Itineraire - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Mistral : defendre Itineraire
 ]]--[[//
@@ -62,8 +64,8 @@ do
                 end
 
                 DIA_PushBack( self.listePC, self.pionPC )
-                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
         end
 

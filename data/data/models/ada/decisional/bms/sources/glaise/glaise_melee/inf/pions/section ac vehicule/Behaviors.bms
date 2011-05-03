@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/section ac vehicule/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -104,7 +106,7 @@ include "Glaise/Glaise_Melee/Inf/Pions/section AC vehicule/Missions/Surveiller.b
             myself.bAppuieFreinage_ = false
         end
 
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
     end,
 
 }

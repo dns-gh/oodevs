@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharlourd/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -50,7 +52,7 @@ include "Glaise/glaise_Melee/Abc/Automates/cieCharLourd/Parameters.bms"
     local listePionsAttaquant = {}
     local mission = DEC_GetMission( myself )
     local selPion = DEC_Automate_PionsSansPC()
-    for _,x in pairs( selPion or {} ) do
+    for _,x in pairs( selPion or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -71,7 +73,7 @@ function S_Pions_AppuiSoutien( )
     local _returnValue = {}
     local listePionsEnSoutien = {}
     local selPion = DEC_Automate_PionsSansPC()
-    for _,x in pairs( selPion or {} ) do
+    for _,x in pairs( selPion or emptyTable ) do
     local _continue = true
 do
             local pion = x

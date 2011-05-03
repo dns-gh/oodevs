@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/log/automates/Actions.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// ACT_Ordre_Automate_LOG_OrdresInopines
 ]]--[[//
@@ -22,7 +24,7 @@ includedFiles["sources/appui/log/automates/Actions.bms"] = true
     activate = function( self )
         local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x

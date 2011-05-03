@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/pions/common/missions/Soutenir.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -51,7 +53,7 @@ include "bit.lua"
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -65,7 +67,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 ]]        end
 
         Activate( self.activations.BEH_MAJ_Pion_ABC_AgressiviteTir, 1, { self._namedParams.rPH, } )
-        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Soutenir à tout prix
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -97,7 +99,7 @@ elseif switch_1 == eSuivreUnite then
 ]]--[[//-----------------------------------------------------------------------------
 ]]local mission = DEC_GetMission( self._namedParams.pionAmi )
                     if( mission ~= nil and mission:GetType() == "T_Mission_Pion_ABC_Barrer" ) then
-                        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
                     end
 
                     --[[//-----------------------------------------------------------------------------
@@ -122,7 +124,7 @@ elseif switch_1 == eSuivreUnite then
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[3] = true
 
@@ -159,7 +161,7 @@ node "BEH_Dep_Pion_ABC_Appuyer"
     activate = function( self )
         local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
-        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )--[[//---------------------------------------------------------------------
+        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )--[[//---------------------------------------------------------------------
 ]]--[[// Defaut
 ]]--[[//---------------------------------------------------------------------
 ]]

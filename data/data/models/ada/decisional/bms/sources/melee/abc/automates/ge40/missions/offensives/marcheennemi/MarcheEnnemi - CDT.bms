@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/offensives/marcheennemi/MarcheEnnemi - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_ABC_GTIA_MarcheEnnemi
 ]]--[[// 
@@ -31,7 +33,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/marcheennemi
         local Activate = Activate
         self.objectifsPrioritaires = self.objectifsPrioritaires or {}--[[// Vide dans cette mission
 ]]
-        Activate( self.activations.ACT_GTIA_AnalyserSituationPourReconnaitre, 1, {} )--[[// Analyse environnement
+        Activate( self.activations.ACT_GTIA_AnalyserSituationPourReconnaitre, 1, emptyTable )--[[// Analyse environnement
 ]]
         --[[// Init
 ]]if( ModuleBegins() ) then
@@ -40,7 +42,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/marcheennemi
                                 do
                     g_bPhaseReceuil = false
                     local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
-                    for _,x in pairs( listePionsSubordonnes or {} ) do
+                    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                     local _continue = true
                         do
                             local automat = x
@@ -59,17 +61,17 @@ includedFiles["sources/melee/abc/automates/ge40/missions/offensives/marcheennemi
 
         if( not self._namedParams.mission.sansRearticulation_ ) then
             --[[//// tres moche priorite
-]]Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourAttaquer, 10, {} )
+]]Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourAttaquer, 10, emptyTable )
         end
 
-        Activate( self.activations.BEH_GTIA_RendreCompte, 1, {} )--[[/***************TEST *******************/]]--[[// CR
+        Activate( self.activations.BEH_GTIA_RendreCompte, 1, emptyTable )--[[/***************TEST *******************/]]--[[// CR
 ]]
         --[[// Dispositif / missions etc.
 ]]--[[//// tres moche priorite
-]]Activate( self.activations.BEH_GTIA_GererAppuisInternes, 10, {} )
-        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, {} )
+]]Activate( self.activations.BEH_GTIA_GererAppuisInternes, 10, emptyTable )
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, emptyTable )
         Activate( self.activations.BEH_GTIA_RepartirDansFuseaux, 1, { self.objectifsPrioritaires, } )
-        Activate( self.activations.BEH_GTIA_AssignerLesOrdresPourReconnaitre, 1, {} )
+        Activate( self.activations.BEH_GTIA_AssignerLesOrdresPourReconnaitre, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -125,8 +127,8 @@ node "ACT_GTIA_AnalyserSituationPourReconnaitre"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_GTIA_AssignerLesMissionsReconnaissance, 1, {} )
-        Activate( self.activations.BEH_GTIA_AssurerLaCoordination, 1, {} )--[[// idem Attaquer
+        Activate( self.activations.BEH_GTIA_AssignerLesMissionsReconnaissance, 1, emptyTable )
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordination, 1, emptyTable )--[[// idem Attaquer
 ]]
     end,
 
@@ -193,7 +195,7 @@ node "BEH_GTIA_AssignerMissionsRecoPE"
     activate = function( self )
         local Activate = Activate
         for _,x in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -203,7 +205,7 @@ do
 ]]
         end
 
-        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or {} ) do
+        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or emptyTable ) do
         local _continue = true
 do
                 local pion = x

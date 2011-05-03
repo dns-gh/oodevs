@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/escorter/Escorter - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-08-29 $
@@ -43,7 +45,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/escorte
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPE or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPE or emptyTable ) do
                 local _continue = true
                     do
                         if( rIterateurPion == 0 ) then
@@ -100,7 +102,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterEclA"
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPEcl or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPEcl or emptyTable ) do
                 local _continue = true
                     do
                         if( rIterateurPion == 0 ) then
@@ -154,7 +156,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateA"
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPE or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPE or emptyTable ) do
                 local _continue = true
                     do
                         --[[// un seul pion suffit
@@ -212,7 +214,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionEscorterAutomateEclA"
 ]]if( ModuleBegins() ) then
             do
                 local rIterateurPion = 0
-                for _,pion in pairs( self._namedParams.selPionPEcl or {} ) do
+                for _,pion in pairs( self._namedParams.selPionPEcl or emptyTable ) do
                 local _continue = true
                     do
                         --[[// un seul pion suffit

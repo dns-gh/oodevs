@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/son proterre/missions/Controler.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -48,15 +50,15 @@ node "MIS_Pion_INF_ControlerSecteur"
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
             end
         end
 
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
-        Activate( self.activations.BEH_Misc_Defini_AppuisMobile, 1, {} )
+        Activate( self.activations.BEH_Misc_Defini_AppuisMobile, 1, emptyTable )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_DETRUIRE(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -77,7 +79,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     if( self.ePhaseMission == eFinMission ) then
                         do
                             if( F_Pion_GeteniEnCours( myself ) == nil and self._namedParams.mission.preparerTerrain_ ) then
-                                StartActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_NettoyerObstacle, 1.1 * GetMotivation( "MOT_Mission" ), {} )
+                                StartActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_NettoyerObstacle, 1.1 * GetMotivation( "MOT_Mission" ), emptyTable )
                             end
 
                             self.ePhase = eFinMission
@@ -99,14 +101,14 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     end
 
                     Activate( self.activations.BEH_Eni_Pion_VAB_Controler_Traiter, 1, { self._namedParams.mission.zone_, } )
-                    Activate( self.activations.BEH_Mission_Pion_VAB_ControlerSecteur, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Mission_Pion_VAB_ControlerSecteur, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_ControlerSecteur = function( self, _, v ) self.ePhaseMission = v[1] end
                     _continue = false
                 --[[// Rejoins la position de replis
 ]]                cases_switch_1[1] = true
 elseif switch_1 == eSeReplier then
                     if( F_Pion_GeteniEnCours( myself ) == nil ) then
-                        StartActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_NettoyerObstacle, 1.2 * GetMotivation( "MOT_Mission" ), {} )
+                        StartActivateOverride( self, self.activations.BEH_Obj_Pion_VAB_NettoyerObstacle, 1.2 * GetMotivation( "MOT_Mission" ), emptyTable )
                     end
 
                     if( self.eAction == eActionEffectuee ) then
@@ -119,7 +121,7 @@ elseif switch_1 == eSeReplier then
                         end
                     else
 do
-                            Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+                            Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, emptyTable )
 self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                                                         do return end
 
@@ -191,7 +193,7 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
                 --[[// Determine la position dans le secteur d'arrive			
 ]]self.ptMission = S_Geometrie_BarycentreZone( self.mission.zone_ )
                 --[[// Verifie que l'on est bien dans son fuseau
-]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
             end
 --[[// Lorsqu'un comportement  ne  peut  pas  s'effectuer  correctement, la mission 
 ]]--[[// s'arrete
@@ -236,7 +238,7 @@ node "BEH_Mission_Pion_VAB_ControlerSecteur"
                         end
                     end
 
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.ptMission, true, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
@@ -309,7 +311,7 @@ node "BEH_Eni_Pion_VAB_Controler_Traiter"
 
         --[[// On traite l'unite si elle est dans le fuseau de la section
 ]]local lstEnis = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.locZone )
-        for _,ksEni in pairs( lstEnis or {} ) do
+        for _,ksEni in pairs( lstEnis or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then

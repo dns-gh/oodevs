@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/sgpt chars inf/missions/semparerzone/SemparerZone - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-10-04 $
@@ -41,7 +43,7 @@ includedFiles["sources/melee/abc/automates/sgpt chars inf/missions/semparerzone/
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_ABC_SemparerDUneZone, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_ABC_SemparerDUneZone, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement génériques
 ]]--[[//-----------------------------------------------------------------------------
 ]]

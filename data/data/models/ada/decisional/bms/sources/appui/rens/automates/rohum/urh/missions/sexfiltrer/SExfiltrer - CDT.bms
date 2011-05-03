@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/rohum/urh/missions/sexfiltrer/SExfiltrer - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_RENS_ROHUM_SExfiltrer
 ]]--[[// 
@@ -30,7 +32,7 @@ includedFiles["sources/appui/rens/automates/rohum/urh/missions/sexfiltrer/SExfil
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Auto_CDT_RENS_ROHUM_SExfiltrer, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Auto_CDT_RENS_ROHUM_SExfiltrer, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Conduite générique 
 ]]--[[//-----------------------------------------------------------------------------
 ]]

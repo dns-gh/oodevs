@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//actions génériques aux pions scipio
 ]]include "Glaise/Glaise_Common/Pions/Actions.bms"
 
@@ -63,12 +65,12 @@ include "Glaise/Glaise_Common/Pions/Behaviors/behaviors - Transport.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Info_Mos, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Info_Mos, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// INFO MOS
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, {} )
-        Activate( self.activations.BEH_Default_ReactionPopulations, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, emptyTable )
+        Activate( self.activations.BEH_Default_ReactionPopulations, 1, emptyTable )
     end,
 
 }

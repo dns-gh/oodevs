@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/common/Coordination.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -27,9 +29,9 @@ include "bit.lua"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_, 1, {} )
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl_, 1, {} )
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEcl_, 1, {} )
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecSE_, 1, emptyTable )
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl_, 1, emptyTable )
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerPEcl_, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -177,7 +179,7 @@ node "BEH_CoordDep_Automate_ABC_ActiverCoordinationAmisSur"
 ]]--[[// Determiner les pions à coordonner
 ]]--[[//-----------------------------------------------------------------------------
 ]]local selPions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( selPions or {} ) do
+        for _,x in pairs( selPions or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -273,7 +275,7 @@ node "BEH_CoordDep_Automate_ABC_ActiverCoordinnationSur"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pionEnQueue ) > M_MODELE_AUTOMATE_ABC_DISTANCE_ETALEMENT_ESC_MAX() ) then
             do
-                for _,x in pairs( self._namedParams.listePionsACoordonner or {} ) do
+                for _,x in pairs( self._namedParams.listePionsACoordonner or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x
@@ -370,7 +372,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerPEAvecPEcl"
 ]]--[[// PE trop pres de l'Ecl --> le PE attend
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        for _,x in pairs( listePionsPE or {} ) do
+        for _,x in pairs( listePionsPE or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -418,7 +420,7 @@ node "BEH_CoordDep_Automate_ABC_CoordinationRetrograde_"
         --[[// définie dans mission jalonner
 ]]Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerJalonnement, 1, { selPionsJal, } )
         Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerFreinage, 1, { selPionsFr, } )
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerMouvement, 1, {} )
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordonnerMouvement, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -460,7 +462,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerFreinage"
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Coordinnation
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPionsFr or {} ) do
+]]self._namedParams.selPionsFr or emptyTable ) do
         local _continue = true
 if( DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pion ) > M_MODELE_AUTOMATE_ABC_DISTANCE_LAV_MIN_JALONNER() ) then
                 Activate( self.activations.ACT_Ordre_Automate_Decrocher, 1, { pion, } )
@@ -513,7 +515,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerJalonnement"
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Coordinnation
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPionsJal or {} ) do
+]]self._namedParams.selPionsJal or emptyTable ) do
         local _continue = true
 if( DEC_Geometrie_CalculerDistanceLigneAvant( self.resultatCalcul, pion ) > M_MODELE_AUTOMATE_ABC_DISTANCE_LAV_MIN_JALONNER() ) then
                 Activate( self.activations.ACT_Ordre_Automate_Decrocher, 1, { pion, } )
@@ -562,7 +564,7 @@ node "BEH_CoordDep_Automate_ABC_CoordonnerMouvement"
 ]]--[[// Récuper les unités qui on la mission decrocher
 ]]--[[//---------------------------------------------------------------------
 ]]local listePionEnMvt = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_Decrocher" )
-        for _,pion in pairs( listePionEnMvt or {} ) do
+        for _,pion in pairs( listePionEnMvt or emptyTable ) do
         local _continue = true
 --[[// VALEUR A DEFINIR
 ]]if( DEC_Geometrie_CalculerDistanceLigneArriere( self.resultatCalcul, pion ) < -1500 ) then

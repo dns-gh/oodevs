@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/section ac vehicule/missions/Barrer.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -66,7 +68,7 @@ node "MIS_Pion_INF_Barrer"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
          do
             local _continue = true
@@ -98,7 +100,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
                         end
                     end
 
-                    Activate( self.activations.BEH_Mission_Pion_INF_Barrer, 1, {} )
+                    Activate( self.activations.BEH_Mission_Pion_INF_Barrer, 1, emptyTable )
 self.done_BEH_Mission_Pion_INF_Barrer = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true

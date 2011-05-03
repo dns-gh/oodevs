@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/common/missions/eclairer/Eclairer - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-08-29 $
@@ -45,7 +47,7 @@ includedFiles["sources/humus/humus_melee/common/missions/eclairer/Eclairer - MRT
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions à l'echelon
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selABC_Ecl or {} ) do
+]]self._namedParams.selABC_Ecl or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_ABC_AssignerEclairerA, 1, { ePhase_MRT, pion, self._namedParams.eEtatEchelon, } )
 

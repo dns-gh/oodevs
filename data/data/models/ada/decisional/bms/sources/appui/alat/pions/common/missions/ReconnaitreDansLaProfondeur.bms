@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/pions/common/missions/ReconnaitreDansLaProfondeur.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -66,7 +68,7 @@ include "bit.lua"
 
                 self.localisationCourante = S_Geometrie_LocalisationProche( self.listeLocalisations )
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                 end
 
                 DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
@@ -74,7 +76,7 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -127,7 +129,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.pointDislocation_, } )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifCourant, 1, { self._namedParams.mission.pointDislocation_, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointDislocation_, eProgressionDefaut, eTypeItiInfiltration, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
@@ -147,7 +149,7 @@ elseif switch_1 == eReconnaitre then
                             self.eEtat = eActionEnCours
                                                         do
                                 local dansListe = false
-                                for _,x in pairs( self.zonesReconnues or {} ) do
+                                for _,x in pairs( self.zonesReconnues or emptyTable ) do
                                 local _continue = true
                                     do
                                         if( x == self.localisationCourante ) then
@@ -209,7 +211,7 @@ elseif switch_1 == eReconnaitre then
                     local barycentreZone = S_Geometrie_BarycentreZone( self.localisationCourante )
                     DEC_Copie_Point( barycentreZone, self.objectifCourant )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.objectifCourant, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Obs_Pion_ALAT_ReconnaitreZone, GetMotivation( "MOT_Manoeuvrer" ), { self.localisationCourante, } )
 self.done_BEH_Obs_Pion_ALAT_ReconnaitreZone = function( self, _, v ) self.eEtat = v[1] end
                     Activate( self.activations.BEH_Eni_Pion_ALAT_GererEniRecoDansLaProfondeur, GetMotivation( "MOT_ManoeuvrerSurEnis" ) * 2, { self._namedParams.mission.zone_, } )
@@ -218,7 +220,7 @@ self.done_BEH_Obs_Pion_ALAT_ReconnaitreZone = function( self, _, v ) self.eEtat 
 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                     end
 
                     if( self.eEtat == eActionEffectuee ) then
@@ -252,7 +254,7 @@ elseif switch_1 == eSExfiltrer then
                         end
                     end
 
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointRegroupement_, } )
 self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
@@ -275,7 +277,7 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[4] = true
@@ -313,7 +315,7 @@ node "BEH_Eni_Pion_ALAT_GererEniRecoDansLaProfondeur"
         local Activate = Activate
         self.eEtatProgressionTactique = self.eEtatProgressionTactique or eActionEnCours
         local listeUnitesDetecteesDansZone = DEC_Connaissances_UnitesDetecteesDansZone( self._namedParams.localisation )
-        for _,x in pairs( listeUnitesDetecteesDansZone or {} ) do
+        for _,x in pairs( listeUnitesDetecteesDansZone or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstMort( x ) ) then

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/fonctions/Fonctions - Listes.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[// -------------------------------------------------------------------------
@@ -26,7 +28,7 @@ include "bit.lua"
     local _returnValue = {}
     local patrouilleAlat = nil
     _returnValue = {}
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             if( not S_EstPatrouilleALAT( x ) ) then
@@ -52,7 +54,7 @@ function S_Liste_Automate_ALAT_PionsNonEnCoursRavitaillement( listePions )
     local listeEnCoursRavitaillement = S_Liste_Automate_ALAT_PionsEnCoursRavitaillement( listePions )
     local patrouilleAlat = nil
     _returnValue = {}
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             if( S_EstPatrouilleALAT( x ) and not DIA_Contains( listeEnCoursRavitaillement, x ) ) then
@@ -70,7 +72,7 @@ function S_Liste_Automate_ALAT_PionsNonOperationnels( listePions )
     local _returnValue = {}
     local pionDEC = nil
     _returnValue = {}
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             pionDEC = x
@@ -89,7 +91,7 @@ function S_Liste_Automate_ALAT_PionsNonEnCoursExtraction( listePions )
     local _returnValue = {}
     local patrouilleALAT = nil
     _returnValue = {}
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             if( not S_EstPatrouilleALAT( x ) ) then
@@ -114,7 +116,7 @@ function S_Liste_Automate_ALAT_UnitesAAppuyer( listeUnites )
     local _returnValue = {}
     local patrouilleAlat = nil
     _returnValue = {}
-    for _,x in pairs( listeUnites or {} ) do
+    for _,x in pairs( listeUnites or emptyTable ) do
     local _continue = true
 do
             if( S_Pion_EstDetruitPhysique( x ) ) then

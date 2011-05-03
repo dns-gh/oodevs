@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/MRT generique mis retrogrades.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -74,7 +76,7 @@ include "bit.lua"
 ]]--[[// Différenece avec mission marche à l'ennemi: que des blindes dans PE 
 ]]--[[// et SE
 ]]--[[//---------------------------------------------------------------------
-]]selPions or {} ) do
+]]selPions or emptyTable ) do
                     local _continue = true
 do
                             local pion = x
@@ -143,7 +145,7 @@ elseif switch_1 == eMRT_DeterminerEchelonsLocals then
 ]]--[[// à équilibrer la formation --> tous les pions en premier echeleon
 ]]--[[// ( sauf ceux qui ne peuvent pas comme le PAD et autre pion non prevu )
 ]]--[[//-----------------------------------------------------------------------------
-]]self.selABC_Blinde or {} ) do
+]]self.selABC_Blinde or emptyTable ) do
                     local _continue = true
 do
                             local pion = x

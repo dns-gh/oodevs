@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/grp proterre/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -119,12 +121,12 @@ node "BEH_Misc_Pion_INF_Default"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_MOT_Pion_INF_GarderSesDistances_GererTransport, GetMotivation( "MOT_GarderSesDistances" ), {} )
-        Activate( self.activations.BEH_MOT_Pion_INF_EtrePrudent_GererTransport, GetMotivation( "MOT_EtrePrudent" ), {} )
+        Activate( self.activations.BEH_MOT_Pion_INF_GarderSesDistances_GererTransport, GetMotivation( "MOT_GarderSesDistances" ), emptyTable )
+        Activate( self.activations.BEH_MOT_Pion_INF_EtrePrudent_GererTransport, GetMotivation( "MOT_EtrePrudent" ), emptyTable )
         if( DEC_GetMission( myself ) ~= nil ) then
             do
                 if( S_Misc_EstMissionAffectee_Generique() ) then
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                 end
 
             end

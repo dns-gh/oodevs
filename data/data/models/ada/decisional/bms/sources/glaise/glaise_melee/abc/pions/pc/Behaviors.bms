@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/pions/pc/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created$
@@ -79,7 +81,7 @@ include "Glaise/Glaise_Melee/Abc/Pions/PC/Missions/Missions.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Embarquement apres Heliportage
 ]]--[[// ------------------------------------------------------------------------
 ]]

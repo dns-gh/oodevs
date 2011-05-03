@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/common/missions/escorter/Escorter - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-08-29 $
@@ -36,7 +38,7 @@ includedFiles["sources/melee/inf/automates/common/missions/escorter/Escorter - C
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesAppuis_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesAppuis_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion appuis et releve et SE
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -83,7 +85,7 @@ node "BEH_Conduite_Automate_INF_Escorter"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesAppuis_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesAppuis_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion appuis et releve et SE
 ]]--[[//-----------------------------------------------------------------------------
 ]]

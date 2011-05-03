@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/log/automates/missions/SeDeployer - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_SeDeployer
 ]]--[[//
@@ -23,7 +25,7 @@ includedFiles["sources/glaise/glaise_appui/log/automates/missions/SeDeployer - C
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.ACT_Ordre_Automate_LOG_OrdresInopines, 1, {} )
+        Activate( self.activations.ACT_Ordre_Automate_LOG_OrdresInopines, 1, emptyTable )
     end,
 
 }

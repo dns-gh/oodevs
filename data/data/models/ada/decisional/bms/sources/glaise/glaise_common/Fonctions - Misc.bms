@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/Fonctions - Misc.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[//-------------------------------------------------------------------------
 ]]--[[// Niveau perception GTIA
@@ -76,20 +78,20 @@ end
 
 function S_Liste_Concatene( listResult, listeA, listeB )
     local bufferSelection = {}
-    for _,x in pairs( listeA or {} ) do
+    for _,x in pairs( listeA or emptyTable ) do
     local _continue = true
         DIA_PushBack( bufferSelection, x )
 
     end
 
-    for _,x in pairs( listeB or {} ) do
+    for _,x in pairs( listeB or emptyTable ) do
     local _continue = true
         DIA_PushBack( bufferSelection, x )
 
     end
 
     S_Clear( listResult )
-    for _,x in pairs( bufferSelection or {} ) do
+    for _,x in pairs( bufferSelection or emptyTable ) do
     local _continue = true
         DIA_PushBack( listResult, x )
 
@@ -101,7 +103,7 @@ end
 
 function S_ListeLocalisations_Copie( listeSrc, listeDest )
     local bufferSelection = {}
-    for _,x in pairs( listeSrc or {} ) do
+    for _,x in pairs( listeSrc or emptyTable ) do
     local _continue = true
         DEC_UserTypeList_PushBack( listeDest, x )
 

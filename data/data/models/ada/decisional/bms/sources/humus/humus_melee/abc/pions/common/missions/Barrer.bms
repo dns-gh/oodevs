@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/pions/common/missions/Barrer.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created: MIA 03-03-26 $
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Common/Missions/Barrer.hal $
@@ -45,7 +47,7 @@ includedFiles["sources/humus/humus_melee/abc/pions/common/missions/Barrer.bms"] 
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -111,15 +113,15 @@ elseif switch_1 == eBarrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     --[[// MAJ VE_Courage pour tenir
 ]]Activate( self.activations.BEH_MAJ_Pion_ABC_EnvieTenir, 1, { 2, } )
-                    Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, {} )
-                    Activate( self.activations.BEH_Pion_ABC_InstallerDispositif, 1, {} )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, emptyTable )
+                    Activate( self.activations.BEH_Pion_ABC_InstallerDispositif, 1, emptyTable )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                 --[[// 5) Fin de la mission de reconnaissance SUR ORDRE
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[4] = true
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/roim/common/MRT generique.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -51,7 +53,7 @@ include "bit.lua"
                     for _,x in pairs( --[[//---------------------------------------------------------------------
 ]]--[[// Assignation des grands échelons Ecl / Utile( PE + SE )/ non prevus
 ]]--[[//---------------------------------------------------------------------
-]]selPions or {} ) do
+]]selPions or emptyTable ) do
                     local _continue = true
 do
                             local pion = x

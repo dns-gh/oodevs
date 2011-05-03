@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/log/pions/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: SDE 02-11-22 $
@@ -86,22 +88,22 @@ include "Appui/Log/Pions/Missions/Missions.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// MAJ de l'état DEC par défaut 
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Ambiance, 1, {} )--[[// ---------------------------------------------------------------------
+        Activate( self.activations.BEH_Ambiance, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// Comp générique
 ]]--[[// ---------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_ROE, 1, {} )
-        Activate( self.activations.BEH_Rens, 1, {} )
-        Activate( self.activations.BEH_Ordre_Pion_LOG_OrdresInopines, 1, {} )--[[// ---------------------------------------------------------------------
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_ROE, 1, emptyTable )
+        Activate( self.activations.BEH_Rens, 1, emptyTable )
+        Activate( self.activations.BEH_Ordre_Pion_LOG_OrdresInopines, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// Spé log --> marche quand mission en cours
 ]]--[[// ---------------------------------------------------------------------
 ]]
@@ -111,9 +113,9 @@ include "Appui/Log/Pions/Missions/Missions.bms"
 ]]--[[//---------------------------------------------------------------------
 ]]if( myself:GetType() == "SectionLOGTC2" ) then
             do
-                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverSante, 1, {} )
-                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverMaintenance, 1, {} )
-                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverRavitaillement, 1, {} )
+                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverSante, 1, emptyTable )
+                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverMaintenance, 1, emptyTable )
+                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverRavitaillement, 1, emptyTable )
                                 do return end
 
             end
@@ -137,7 +139,7 @@ include "Appui/Log/Pions/Missions/Missions.bms"
 ]]--[[//---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Log_Pion_GererActivationsChaines, 1, {} )
+        Activate( self.activations.BEH_Log_Pion_GererActivationsChaines, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -188,7 +190,7 @@ node "BEH_Ordre_Pion_LOG_OrdresInopines"
     activate = function( self )
         local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -287,9 +289,9 @@ node "BEH_Log_Pion_GererActivationsChaines"
         local Activate = Activate
         if( DEC_Agent_EstInstalle() ) then
             do
-                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverSante, 1, {} )
-                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverMaintenance, 1, {} )
-                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverRavitaillement, 1, {} )
+                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverSante, 1, emptyTable )
+                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverMaintenance, 1, emptyTable )
+                Activate( self.activations.ACT_Misc_Pion_LOG_ActiverRavitaillement, 1, emptyTable )
             end
         end
 

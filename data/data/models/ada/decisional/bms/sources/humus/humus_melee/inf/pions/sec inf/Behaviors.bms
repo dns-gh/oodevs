@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/pions/sec inf/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -134,7 +136,7 @@ node "BEH_Misc_Pion_INF_Default"
         if( DEC_GetMission( myself ) ~= nil ) then
             do
                 if( S_Misc_EstMissionAffectee_Generique() ) then
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                 end
 
             end

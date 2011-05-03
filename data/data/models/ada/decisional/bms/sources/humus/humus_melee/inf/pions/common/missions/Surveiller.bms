@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Surveiller.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-02-20 $
@@ -51,7 +53,7 @@ node "BEH_Mission_Pion_INF_SurveillerSecteur"
                 if( ModuleBegins() ) then
                     do
                         if( F_Pion_GeteEtatEchelon( myself ) == eEtatEchelon_Premier ) then
-                            StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                            StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
                         end
 
                     end
@@ -79,14 +81,14 @@ node "BEH_Mission_Pion_INF_SurveillerSecteur"
                                 end
                             end
 
-                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                             --[[// Rejoins une position d'observation de la position a Barrer
 ]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.positionInstallation_, false, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                             _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == eAborderObjectif then
-                            StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                            StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                             if( self.eAction == eActionEffectuee ) then
                                 do
                                     self.eAction = eActionEnCours
@@ -109,8 +111,8 @@ self.done_BEH_Progression_Pion_INF_AborderObjectif = function( self, _, v ) self
                         if cases_switch_1[2] or switch_1 == eInstallerDispositif then
                             Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                            StartActivateOverride( self, self.activations.BEH_Obj_RejoindreEmbossements, 1.2, {} )
-                            StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                            StartActivateOverride( self, self.activations.BEH_Obj_RejoindreEmbossements, 1.2, emptyTable )
+                            StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
                             StartActivateOverride( self, self.activations.ACT_Misc_Pion_Ambiance, 1, { eEtatAmbiance_Surete, } )
                             --[[// Prepare la mission de surveillance
 ]]if( self.eAction == eActionEffectuee ) then
@@ -133,7 +135,7 @@ self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction 
                                                 cases_switch_1[3] = true
 elseif switch_1 == eSurveiller then
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                            Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[// On desactive la sauvegarde pendant la phase de surveillance
+                            Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )--[[// On desactive la sauvegarde pendant la phase de surveillance
 ]]
                             --[[// Se tourne vers les ennemis
 ]]Activate( self.activations.ACT_Obs_EtablirVisionFaceADir, 1, { DEC_GetDirectionDanger( self.mission ), } )
@@ -186,7 +188,7 @@ node "BEH_Eni_Pion_INF_SurveillerSecteur"
     activate = function( self )
         local Activate = Activate
         local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
-        for _,ksEni in pairs( lstEnisPercus or {} ) do
+        for _,ksEni in pairs( lstEnisPercus or emptyTable ) do
         local _continue = true
 do
                 if( S_Tir_EstAPorteePosturesReelles( ksEni, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
@@ -198,7 +200,7 @@ do
         end
 
         if( S_EstDetecteParEnis() ) then
-            Activate( self.activations.BEH_Manoeuvre_RompreContact, 2, {} )
+            Activate( self.activations.BEH_Manoeuvre_RompreContact, 2, emptyTable )
         end
 
     end,

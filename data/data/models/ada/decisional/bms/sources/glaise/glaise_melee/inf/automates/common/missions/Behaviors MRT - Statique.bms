@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/automates/common/missions/Behaviors MRT - Statique.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -242,7 +244,7 @@ elseif switch_2 == "T_Mission_Automate_INF_BarrerDirection" then
                                 _continue = false
                                                         cases_switch_2[2] = true
 elseif switch_2 == "T_Mission_Automate_INF_DonnerCoupArret" then
-                                if( self.limaLCAR == 0 ) then
+                                if( self.limaLCAR == nil ) then
                                     do
                                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
                                                                                 self:SendFeedback( eActionImpossible )
@@ -259,7 +261,7 @@ elseif switch_2 == "T_Mission_Automate_INF_DonnerCoupArret" then
                                                         cases_switch_2[3] = true
 elseif switch_2 == "T_Mission_Automate_INF_RecueillirUnite" then
                                 local mission = DEC_GetMission( myself )
-                                if( self.limaLR == 0 ) then
+                                if( self.limaLR == nil ) then
                                     do
                                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
                                                                                 self:SendFeedback( eActionImpossible )
@@ -324,7 +326,7 @@ elseif switch_1 == eMRT_RetablirFuseau then
                         end
                     end
 
-                    for _,x_pion in pairs( self.lstPionsAttaque or {} ) do
+                    for _,x_pion in pairs( self.lstPionsAttaque or emptyTable ) do
                     local _continue = true
                         Activate( self.activations.ACT_Medo_Automate_AffecterFuseaux_Compagnie, 1, { x_pion, } )
 self.done_ACT_Medo_Automate_AffecterFuseaux_Compagnie = function( self, _, v ) self.eValidationMRT = v[1] end
@@ -364,7 +366,7 @@ node "BEH_Medo_Automate_INF_AssignerDefendre_DansZone"
         local Activate = Activate
                 if( ModuleBegins() ) then
             do
-                for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
+                for _,x_pion in pairs( self._namedParams.selPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         local ptMission = nil
@@ -425,7 +427,7 @@ node "BEH_Medo_Automate_INF_AssignerDefendre_SurLima"
                     do
                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
                         self.lstPoints = self.lstNullPoint
-                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                     end
                 end
 
@@ -471,7 +473,7 @@ node "BEH_Medo_Automate_INF_AssignerDefendre_SurPoints"
         if( ModuleBegins() ) then
             do
                 DEC_Copie_ListePoints( self._namedParams.lstPoints, self.lstPoints_ )
-                for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
+                for _,x_pion in pairs( self._namedParams.selPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         local rIt_Point = S_Geometrie_Automate_PointPlusProchePion_DansFuseau( x_pion, self.lstPoints_ )
@@ -533,7 +535,7 @@ node "BEH_Medo_Automate_INF_AssignerInterdire_SurPoints"
         if( ModuleBegins() ) then
             do
                 DEC_Copie_ListePoints( self._namedParams.lstPoints, self.lstPoints_ )
-                for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
+                for _,x_pion in pairs( self._namedParams.selPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x_pion
@@ -600,7 +602,7 @@ node "BEH_Medo_Automate_INF_AssignerBarrer_DansZone"
 ]]--[[// Assignement des missions aux differents pions
 ]]--[[//-------------------------------------------------------------------------			
 ]]if( ModuleBegins() ) then
-for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
+for _,x_pion in pairs( self._namedParams.selPions_PE or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_BarrerDansZone, 1, { ePhase_MRT, x_pion, self._namedParams.zone, } )
 
@@ -645,7 +647,7 @@ node "BEH_Medo_Automate_INF_AssignerBarrer_SurLima"
                     do
                         DEC_Warning( eRC_MissionImpossibleLimaInvalide )
                         self.lstPoints = self.lstNullPoint
-                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                        StartActivateOverride( self, self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                     end
                 end
 
@@ -690,7 +692,7 @@ node "BEH_Medo_Automate_INF_AssignerBarrer_SurPoints"
         if( ModuleBegins() ) then
             do
                 DEC_Copie_ListePoints( self._namedParams.lstPoints, self.lstPoints_ )
-                for _,x_inf in pairs( self._namedParams.selPions_PE or {} ) do
+                for _,x_inf in pairs( self._namedParams.selPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         local rIt_Point = S_Geometrie_Automate_PointPlusProchePion_DansFuseau( x_inf, self.lstPoints_ )
@@ -790,7 +792,7 @@ node "BEH_Medo_Automate_INF_AssignerSurveiller_Zone"
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
-for _,x_inf in pairs( self._namedParams.selPions_PE or {} ) do
+for _,x_inf in pairs( self._namedParams.selPions_PE or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_SurveillerZone, 1, { ePhase_MRT, x_inf, self._namedParams.zone, } )
 

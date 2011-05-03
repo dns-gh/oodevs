@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/Gestion deuxieme echelon.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -40,12 +42,12 @@ include "bit.lua"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des pions en RAS --> enlever un éventuel soutien
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// behavior BEH_Dispositif_Automate_ABC_RendreDisposnibleLeSE();
 ]]
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererMortier, 1, {} )--[[// Ajout ADA gestion mortier
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererMortier, 1, emptyTable )--[[// Ajout ADA gestion mortier
 ]]
     end,
 
@@ -72,7 +74,7 @@ node "BEH_Dispositif_Automate_ABC_GererMortier"
     activate = function( self )
         local Activate = Activate
         local listePionsMortier = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsAvecPC(), "GroupeInfanterie_Mortier" )
-        for _,pion in pairs( listePionsMortier or {} ) do
+        for _,pion in pairs( listePionsMortier or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), eEtatEchelon_Second, } )
 
@@ -107,12 +109,12 @@ node "BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE"
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assigner soutien aux pions en difficultés
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionEnDifficulte or {} ) do
+]]listePionEnDifficulte or emptyTable ) do
         local _continue = true
 do
                 local pionEnDifficulte = x
                 for _,y in pairs( --[[// Choisir un pion de soutien et donner mission soutenir à un pion en difficulte
-]]listePionsDeSoutien or {} ) do
+]]listePionsDeSoutien or emptyTable ) do
                 local _continue = true
 do
                         local pionEnSoutien = y
@@ -195,7 +197,7 @@ node "BEH_Dispositif_Automate_ABC_RendreDisposnibleLeSE"
 ]]--[[// --> si un pion en mode "RAS" est soutenu on remet l'unité de soutien à
 ]]--[[// disposition de l'automate pour un autre soutien eventuel.
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionRAS or {} ) do
+]]listePionRAS or emptyTable ) do
         local _continue = true
 do
                 local pionEnRAS = x
@@ -270,7 +272,7 @@ elseif switch_1 == eGererSecondEchelon then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSE_, 1, {} )
+                    Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeSE_, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[2] = true
                 end
@@ -319,7 +321,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeSE_"
             do return end
         end
 
-        for _,x in pairs( selABC_SE or {} ) do
+        for _,x in pairs( selABC_SE or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -409,7 +411,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_"
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Mission aux pions sans missions --> Faire mouveemnt vers la fin du fuseau 
 ]]--[[//-----------------------------------------------------------------------------
-]]S_Dispositif_Automate_ABC_PionsSansMission() or {} ) do
+]]S_Dispositif_Automate_ABC_PionsSansMission() or emptyTable ) do
         local _continue = true
 do
                 local pionDEC = pion
@@ -528,7 +530,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeSEStatique_"
 ]]--[[// Assignation des mission une par une au pion (pas simultanément)
 ]]--[[//-----------------------------------------------------------------------------
 ]]local rIterateurPoint = 0
-                        for _,pion in pairs( selABC_SE or {} ) do
+                        for _,pion in pairs( selABC_SE or emptyTable ) do
                         local _continue = true
                             do
                                 if( rIterateurPoint == DEC_ListePoints_Size( self.listePoints ) ) then
@@ -665,7 +667,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_"
 ]]--[[// Assignation des missions une par une au pion (pas simultanément)
 ]]--[[//-----------------------------------------------------------------------------
 ]]local rIterateurPoint = 0
-                        for _,pion in pairs( selABC_SE or {} ) do
+                        for _,pion in pairs( selABC_SE or emptyTable ) do
                         local _continue = true
                             do
                                 if( rIterateurPoint == DEC_ListePoints_Size( self.listePoints ) ) then

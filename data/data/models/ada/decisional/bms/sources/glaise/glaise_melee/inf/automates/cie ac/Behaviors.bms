@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/automates/cie ac/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-05-15 $
@@ -62,12 +64,12 @@ node "BEH_Conduite_Automate_HOT_Defaut"
         local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
-        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Coordination du front
 ]]--[[//-------------------------------------------------------------------------		
 ]]
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, emptyTable )
     end,
 
 --[[// behavior BEH_Conduite_Automate_Gerer_UniteInconnues();	

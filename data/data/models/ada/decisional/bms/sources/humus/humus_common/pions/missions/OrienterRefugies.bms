@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_common/pions/missions/OrienterRefugies.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -47,7 +49,7 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -102,7 +104,7 @@ self.done_BEH_Dep_Pion_AllerDebarquerRefugies = function( self, _, v ) self.eEta
 ]]                        cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                             _continue = false
                                                 cases_switch_1[4] = true
                         end
@@ -118,7 +120,7 @@ do
     end,
 
     destroy = function( self )
-                for _,refugie in pairs( self._namedParams.mission.refugies_ or {} ) do
+                for _,refugie in pairs( self._namedParams.mission.refugies_ or emptyTable ) do
         local _continue = true
             DEC_Refugies_Debarquer( refugie )
 
@@ -153,7 +155,7 @@ node "BEH_Dep_Pion_AllerRecupererRefugies"
         for _,refugie in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de chaque pion refugie
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.refugies or {} ) do
+]]self._namedParams.refugies or emptyTable ) do
         local _continue = true
 if( DEC_ConnaissanceAgent_EstValide( refugie ) and not DEC_Refugies_EstEmbarque( refugie ) ) then
                 Activate( self.activations.BEH_Dep_Pion_GererEmbarquementRefugie, S_Force_DistancePt( DEC_ConnaissanceAgent_Position( refugie ) ), { refugie, } )
@@ -246,7 +248,7 @@ node "BEH_Dep_Pion_AllerDebarquerRefugies"
 ]]        end
 
         if( DEC_Geometrie_Distance( self.point, DEC_Agent_Position() ) < 100 ) then
-for _,refugie in pairs( self._namedParams.refugies or {} ) do
+for _,refugie in pairs( self._namedParams.refugies or emptyTable ) do
             local _continue = true
                 Activate( self.activations.ACT_Transport_Pion_DebarquerRefugieDansCamp, 1, { refugie, self._namedParams.campRefugie, } )
 

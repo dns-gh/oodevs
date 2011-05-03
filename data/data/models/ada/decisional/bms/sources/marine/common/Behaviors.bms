@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/marine/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//génériques pions SCIPIO
 ]]include "Common/Pions/Behaviors.bms"
 
@@ -58,18 +60,18 @@ include "Marine/Pions/Common/Behaviors/Behaviors - Eni.bms"
             end
         end
 
-        Activate( self.activations.BEH_Mot_Pion_MARINE_AffecterVariablesDEtat, 1, {} )
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )
+        Activate( self.activations.BEH_Mot_Pion_MARINE_AffecterVariablesDEtat, 1, emptyTable )
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )
         if( not S_Misc_EstDetruitPhysique() ) then
             do
-                Activate( self.activations.BEH_Ambiance, 1, {} )
-                Activate( self.activations.BEH_Nbc, 1, {} )
-                Activate( self.activations.BEH_ROE, 1, {} )
-                Activate( self.activations.BEH_Rens, 1, {} )
+                Activate( self.activations.BEH_Ambiance, 1, emptyTable )
+                Activate( self.activations.BEH_Nbc, 1, emptyTable )
+                Activate( self.activations.BEH_ROE, 1, emptyTable )
+                Activate( self.activations.BEH_Rens, 1, emptyTable )
             end
         end
 
-        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, emptyTable )
     end,
 
 --[[////////////////////////////// PARTIE COMPORTEMENTS VIRTUELS /////////////////////////////////////////////////////

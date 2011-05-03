@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/fonctions/Functions - Transport.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[//-------------------------------------------------------------------------
 ]]--[[// Renvoie la liste filtrée des pions embarquables
@@ -26,7 +28,7 @@ includedFiles["sources/glaise/glaise_common/pions/fonctions/Functions - Transpor
 ]]function S_Liste_PionsTransportables( listePions, seulementEmbarquable )
     local _returnValue = {}
     local listBuffer = {}
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 if( DEC_Agent_PeutTransporterPion( x, seulementEmbarquable ) ) then
             DIA_PushBack( listBuffer, x )
@@ -42,7 +44,7 @@ function S_Liste_RefugiesTousEmbarques( listePions )
     local _returnValue = false
     _returnValue = false
     local rIterateur = 0
-    for _,pion in pairs( listePions or {} ) do
+    for _,pion in pairs( listePions or emptyTable ) do
     local _continue = true
 if( DEC_Refugies_EstEmbarque( pion ) ) then
                         rIterateur = rIterateur + 1
@@ -61,7 +63,7 @@ function S_Liste_PrisonniersTousEmbarques( listePions )
     local _returnValue = false
     _returnValue = false
     local rIterateur = 0
-    for _,pion in pairs( listePions or {} ) do
+    for _,pion in pairs( listePions or emptyTable ) do
     local _continue = true
 if( DEC_Prisonniers_EstEmbarque( pion ) ) then
                         rIterateur = rIterateur + 1
@@ -80,7 +82,7 @@ function S_Misc_Pion_RefugiesTousDebarquesDansCamp( listePions, camp )
     local _returnValue = false
     _returnValue = false
     local rIterateur = 0
-    for _,pion in pairs( listePions or {} ) do
+    for _,pion in pairs( listePions or emptyTable ) do
     local _continue = true
 if( DEC_Refugies_EstDebarqueDansCamp( pion, camp ) ) then
                         rIterateur = rIterateur + 1
@@ -99,7 +101,7 @@ function S_Misc_Pion_PrisonniersTousDebarquesDansCamp( listePions, camp )
     local _returnValue = false
     _returnValue = false
     local rIterateur = 0
-    for _,pion in pairs( listePions or {} ) do
+    for _,pion in pairs( listePions or emptyTable ) do
     local _continue = true
 if( DEC_Prisonniers_EstDebarqueDansCamp( pion, camp ) ) then
                         rIterateur = rIterateur + 1

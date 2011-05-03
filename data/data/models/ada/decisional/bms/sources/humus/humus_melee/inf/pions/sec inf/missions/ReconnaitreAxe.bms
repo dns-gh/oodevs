@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/pions/sec inf/missions/ReconnaitreAxe.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -55,7 +57,7 @@ node "MIS_Pion_INF_ReconnaitreAxe"
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_MANOEUVRE(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -88,8 +90,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                                 Activate( self.activations.ACT_Info_Trace, 1, { "Il fait nuit, l'unité s'arrête", } )
                             else
 do
-                                    Activate( self.activations.BEH_Eni_Pion_VAB_RecoAxe, 1, {} )
-                                    Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), {} )
+                                    Activate( self.activations.BEH_Eni_Pion_VAB_RecoAxe, 1, emptyTable )
+                                    Activate( self.activations.BEH_Mission_Pion_INF_RecoAxe, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_RecoAxe = function( self, _, v ) self.eCurrentPhase = v[1] end
                                                                         do return end
 
@@ -104,7 +106,7 @@ self.done_BEH_Mission_Pion_INF_RecoAxe = function( self, _, v ) self.eCurrentPha
                                 cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eFinMission then
-                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -169,7 +171,7 @@ node "BEH_Eni_Pion_VAB_RecoAxe"
 
         --[[// Precise le contact sur les unites detectees
 ]]local lstUnitesDansFuseau = DEC_Connaissances_UnitesDetecteesDansFuseau()
-        for _,ksEni in pairs( lstUnitesDansFuseau or {} ) do
+        for _,ksEni in pairs( lstUnitesDansFuseau or emptyTable ) do
         local _continue = true
 do
                 local rForce = GetMotivation( "MOT_ManoeuvrerSurEnis" ) + S_Force_ActionContre( ksEni )
@@ -182,7 +184,7 @@ do
         end
 
         local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
-        for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
+        for _,ksEni in pairs( lstEnisDansFuseau or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) ) then

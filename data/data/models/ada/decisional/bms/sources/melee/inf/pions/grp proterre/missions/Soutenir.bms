@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/grp proterre/missions/Soutenir.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -106,13 +108,13 @@ node "BEH_Mission_Pion_INF_SoutenirUneUnite"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Agressivite
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.BEH_MAJ_Pion_INF_AgressiviteTir, 1, { self._namedParams.rPH, } )
-        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Soutenir à tout prix
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[//Modifié par LLS 28/02/2007
@@ -163,7 +165,7 @@ elseif switch_1 == eSuivreUnite then
 ]]--[[//-----------------------------------------------------------------------------
 ]]local mission = DEC_GetMission( self._namedParams.pionAmi )
                     if( mission ~= nil and mission:GetType() == "T_Mission_Pion_INF_Barrer" ) then
-                        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[//Modifié par LLS 28/02/2007
+                        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )--[[//Modifié par LLS 28/02/2007
 ]]--[[//behavior BEH_Eni_Pion_INF_DesactiveSauvegarde();
 ]]
                     end
@@ -193,7 +195,7 @@ elseif switch_1 == eSuivreUnite then
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                 --[[//M_CheckInvalidPhase( "BEH_Mission_Pion_INF_SoutenirUneUnite", ePhaseMission )
 ]]--[[//Modifié par LLS le 28/02/2007
@@ -235,7 +237,7 @@ node "BEH_Dep_Pion_MILAN_Appuyer"
     activate = function( self )
         local Activate = Activate
                 self.eEtat = self.eEtat or eActionEnCours
-        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )--[[//---------------------------------------------------------------------
+        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )--[[//---------------------------------------------------------------------
 ]]--[[// Defaut
 ]]--[[//---------------------------------------------------------------------
 ]]

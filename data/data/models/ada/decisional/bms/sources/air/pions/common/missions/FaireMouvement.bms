@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/air/pions/common/missions/FaireMouvement.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// Faire mouvement
 ]]--[[//
@@ -38,7 +40,7 @@ includedFiles["sources/air/pions/common/missions/FaireMouvement.bms"] = true
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -87,7 +89,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_Pion_AIR_SePoser, 1, {} )
+                    Activate( self.activations.BEH_Dep_Pion_AIR_SePoser, 1, emptyTable )
 self.done_BEH_Dep_Pion_AIR_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true

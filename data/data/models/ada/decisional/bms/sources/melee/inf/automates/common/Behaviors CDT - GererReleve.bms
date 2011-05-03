@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/common/Behaviors CDT - GererReleve.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-05-15 $
@@ -38,7 +40,7 @@ includedFiles["sources/melee/inf/automates/common/Behaviors CDT - GererReleve.bm
         local Activate = Activate
         --[[// Recupere les section d'infanterie en appui
 ]]local selPions_PourReleve = S_Cherche_Automate_PionsPourReleve()
-        for _,x_pion in pairs( DEC_Automate_PionsSansPC() or {} ) do
+        for _,x_pion in pairs( DEC_Automate_PionsSansPC() or emptyTable ) do
         local _continue = true
 do
                 if( not S_Pion_EstDetruitTactique( x_pion ) ) then
@@ -49,7 +51,7 @@ do
                     local pionDetruit = x_pion
                     if( F_Pion_GeteEtatEchelon( pionDetruit ) == eEtatEchelon_Premier ) then
                         do
-                            for _,x_appui in pairs( selPions_PourReleve or {} ) do
+                            for _,x_appui in pairs( selPions_PourReleve or emptyTable ) do
                             local _continue = true
                                 do
                                     if( not DEC_Automate_PionPeutReleverPion( x_appui, pionDetruit ) ) then

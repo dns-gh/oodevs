@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/behaviors/Behaviors - ROE.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE()
 ]]--[[//
@@ -21,7 +23,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - ROE.bms"] = true
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_ROE_Recevoir_OrdreInopine, 1, {} )--[[// pour anibas 
+        Activate( self.activations.BEH_ROE_Recevoir_OrdreInopine, 1, emptyTable )--[[// pour anibas 
 ]]
     end,
 
@@ -58,7 +60,7 @@ node "BEH_ROE_Recevoir_OrdreInopine"
 ]]--[[// Reception d'un ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -75,19 +77,19 @@ do
                                     if switch_2 == eEtatROE_TirLibre then
                                         --[[// TIR LIBRE
 ]]DEC_Trace( " === Frag Order --> ROE FREE FIRE" )
-                                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
                                         _continue = false
                                     --[[// TIR SUR RIPOSTE
 ]]                                    cases_switch_2[1] = true
 elseif switch_2 == eEtatROE_TirSurRiposte then
                                         DEC_Trace( " === Frag Order --> ROE RETURN OF FIRE" )
-                                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                                         _continue = false
                                     --[[// TIR INTERDIT
 ]]                                    cases_switch_2[2] = true
 elseif switch_2 == eEtatROE_TirInterdit then
                                         DEC_Trace( " === Frag Order --> ROE FORBIDDEN FIRE" )
-                                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, {} )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, emptyTable )
                                         _continue = false
                                                                         cases_switch_2[3] = true
                                     end
@@ -106,7 +108,7 @@ elseif switch_1 == "Rep_OrderConduite_Pion_AutoriserMunition" then
                             _continue = false
                                                 cases_switch_1[3] = true
 elseif switch_1 == "Rep_OrderConduite_Pion_AutoriserToutesMunitions" then
-                            Activate( self.activations.ACT_Maj_Pion_AutoriserToutesMunitions, 1, {} )
+                            Activate( self.activations.ACT_Maj_Pion_AutoriserToutesMunitions, 1, emptyTable )
                             _continue = false
                                                 cases_switch_1[4] = true
                         end

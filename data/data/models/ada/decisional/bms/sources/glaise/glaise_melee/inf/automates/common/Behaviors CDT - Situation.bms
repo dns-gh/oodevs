@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/automates/common/Behaviors CDT - Situation.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -34,7 +36,7 @@ node "BEH_Situation_Automate_INF_Defaut"
     activate = function( self )
         local Activate = Activate
         local sComposants = DEC_Automate_PionsSansPC()
-        for _,x in pairs( sComposants or {} ) do
+        for _,x in pairs( sComposants or emptyTable ) do
         local _continue = true
 do
                 local x_pion = x
@@ -97,7 +99,7 @@ node "BEH_Situation_Automate_INF_CadreOffensif"
     activate = function( self )
         local Activate = Activate
         local sComposants = DEC_Automate_PionsSansPC()
-        for _,x in pairs( sComposants or {} ) do
+        for _,x in pairs( sComposants or emptyTable ) do
         local _continue = true
 do
                 local x_pion = x

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/behaviors/Behaviors - POP - Roe.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE_GererROEEmploiForceInterdit
 ]]--[[//
@@ -137,7 +139,7 @@ node "BEH_ROE_Recevoir_OrdreInopinePopulation"
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
-            Activate( self.activations.ACT_Maj_Pion_PasserEnEmploiForceInterdit, 1, {} )--[[// par defaut
+            Activate( self.activations.ACT_Maj_Pion_PasserEnEmploiForceInterdit, 1, emptyTable )--[[// par defaut
 ]]
         end
 
@@ -145,7 +147,7 @@ node "BEH_ROE_Recevoir_OrdreInopinePopulation"
 ]]--[[// Reception d'un ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -163,25 +165,25 @@ do
                                     if switch_2 == eEtatROEPopulation_EmploiForceInterdit then
                                         --[[// TIR INTERDIT POP
 ]]DEC_Trace( " === Frag order --> POPULATION ROE: USE OF FORCE FORBIDDEN" )
-                                        Activate( self.activations.ACT_Maj_Pion_PasserEnEmploiForceInterdit, 1, {} )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnEmploiForceInterdit, 1, emptyTable )
                                         _continue = false
                                     --[[// TIR SOMMATION POP
 ]]                                    cases_switch_2[1] = true
 elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                                         DEC_Trace( " === Frag order --> POPULATION ROE: KEEP DISTANCE WITH NON LETHAL MEANS" )
-                                        Activate( self.activations.ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux, 1, {} )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux, 1, emptyTable )
                                         _continue = false
                                     --[[// TIR DISSUASION POP
 ]]                                    cases_switch_2[2] = true
 elseif switch_2 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
                                         DEC_Trace( " === Frag order --> POPULATION ROE: DISPERSE WITH DEFENSIVE WEAPONS ENABLED" )
-                                        Activate( self.activations.ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs, 1, {} )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs, 1, emptyTable )
                                         _continue = false
                                     --[[// TIR NEUTRALISATION POP
 ]]                                    cases_switch_2[3] = true
 elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
                                         DEC_Trace( " === Frag order --> POPULATION ROE: ENABLE LETHAL WEAPONS" )
-                                        Activate( self.activations.ACT_Maj_Pion_PasserEnArmesLetalesAutorisees, 1, {} )
+                                        Activate( self.activations.ACT_Maj_Pion_PasserEnArmesLetalesAutorisees, 1, emptyTable )
                                         _continue = false
                                                                         cases_switch_2[4] = true
                                     end

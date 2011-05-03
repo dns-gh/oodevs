@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Manoeuvre.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//------------------------------------------------------------------------------
 ]]--[[// Ce comportement permet de gerer l'etalement du dispositif afin d'eviter tout
 ]]--[[// moyen d'infiltration par l'ennemi
@@ -26,7 +28,7 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Manoeuv
         local pionBuffer = nil
         for _,x in pairs( --[[//determination de la direction globale du groupe en fonction des objectifs
 ]]--[[//des pions subordonnes
-]]self._namedParams.listePions or {} ) do
+]]self._namedParams.listePions or emptyTable ) do
         local _continue = true
 do
                 if( not S_EstPatrouilleALAT( x ) ) then
@@ -60,7 +62,7 @@ do
             do return end
         end
 
-        for _,x in pairs( self._namedParams.listePions or {} ) do
+        for _,x in pairs( self._namedParams.listePions or emptyTable ) do
         local _continue = true
 do
                 if( not S_EstPatrouilleALAT( x ) ) then
@@ -71,7 +73,7 @@ do
                     pionBuffer = x
                     pionBuffer:ClearlistePionsCoordination_()
                     local listePionsBuffer = DEC_Geometrie_PionEstCoordonne( x, S_Liste_Automate_ALAT_PionsNonEnCoursRavitaillement( self._namedParams.listePions ), self._namedParams.distance )
-                    for _,y in pairs( listePionsBuffer or {} ) do
+                    for _,y in pairs( listePionsBuffer or emptyTable ) do
                     local _continue = true
 do
                             local comparePions = {}
@@ -97,7 +99,7 @@ do
 
     destroy = function( self )
                 local pionBuffer = nil
-        for _,x in pairs( self._namedParams.listePions or {} ) do
+        for _,x in pairs( self._namedParams.listePions or emptyTable ) do
         local _continue = true
 do
                 if( not S_EstPatrouilleALAT( x ) ) then
@@ -150,10 +152,10 @@ node "BEH_Manoeuvre_Automate_ALAT_GererReleves"
         for _,x in pairs( --[[//--------------------------------------------------------------------------
 ]]--[[// Relever les pions qui sont detruits même si en cours de ravitaillement
 ]]--[[//--------------------------------------------------------------------------
-]]sPionsDetruits or {} ) do
+]]sPionsDetruits or emptyTable ) do
         local _continue = true
 do
-                for _,y in pairs( self._namedParams.listePionsPourReleve or {} ) do
+                for _,y in pairs( self._namedParams.listePionsPourReleve or emptyTable ) do
                 local _continue = true
 do
                         if( not DEC_Automate_PionPeutReleverPion( y, x ) ) then
@@ -183,10 +185,10 @@ do
         for _,x in pairs( --[[//--------------------------------------------------------------------------
 ]]--[[// Relever les pions qui sont en Cours de ravitaillement
 ]]--[[//--------------------------------------------------------------------------
-]]sPionsEnCoursRavitaillement or {} ) do
+]]sPionsEnCoursRavitaillement or emptyTable ) do
         local _continue = true
 do
-                for _,y in pairs( sListePionsApresReleveSurDestruction or {} ) do
+                for _,y in pairs( sListePionsApresReleveSurDestruction or emptyTable ) do
                 local _continue = true
 do
                         if( S_EstPatrouilleALAT( y ) ) then

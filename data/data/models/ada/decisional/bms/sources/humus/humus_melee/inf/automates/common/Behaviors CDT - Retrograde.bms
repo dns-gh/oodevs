@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/automates/common/Behaviors CDT - Retrograde.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -173,12 +175,12 @@ node "BEH_Conduite_Automate_INF_CoupArret"
         self.eAction = self.eAction or eActionEnCours
         self.eAction_CoupArret = self.eAction_CoupArret or eActionEnCours
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
                 if( repOrdre:GetType() == "Rep_OrderConduite_Decrocher" ) then
-                    StartActivateOverride( self, self.activations.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre, 1, {} )
+                    StartActivateOverride( self, self.activations.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre, 1, emptyTable )
 self.done_BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre = function( self, _, v ) self.eAction = v[1] end
                 end
 
@@ -190,7 +192,7 @@ self.done_BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre = function( self
         if( S_CompagnieAbimee() or self.eAction_CoupArret == eActionEffectuee ) then
             do
                 if( self.eAction == eActionEnCours ) then
-                    StartActivateOverride( self, self.activations.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre, 1, {} )
+                    StartActivateOverride( self, self.activations.BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre, 1, emptyTable )
 self.done_BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre = function( self, _, v ) self.eAction = v[1] end
                 end
 
@@ -200,7 +202,7 @@ self.done_BEH_Situation_Automate_INF_RuptureDeContact_Manoeuvre = function( self
 ]]        end
 
         local lst_Pions_EnTete = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        for _,x_EnTete in pairs( lst_Pions_EnTete or {} ) do
+        for _,x_EnTete in pairs( lst_Pions_EnTete or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_CoordTir_Automate_INF_Intervention_LCAR, 1, { x_EnTete, } )
@@ -305,7 +307,7 @@ self.done_ACT_Misc_Delai = function( self, _, v ) self.eActionDelai = v[1] end
             end
         end
 
-        Activate( self.activations.BEH_CoordDep_Automate_INF_RompreContact, 1, {} )
+        Activate( self.activations.BEH_CoordDep_Automate_INF_RompreContact, 1, emptyTable )
 self.done_BEH_CoordDep_Automate_INF_RompreContact = function( self, _, v ) self.eAction = v[1] end
     end,
 
@@ -342,7 +344,7 @@ node "BEH_Conduite_Automate_INF_DesactiveSauvegarde"
         end
 
         if( ModuleBegins() ) then
-for _,x in pairs( self.selPions or {} ) do
+for _,x in pairs( self.selPions or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ArretSauvegardeSur, 1, { x, self._namedParams.rDelai, } )
 self.done_BEH_Ordre_Automate_ArretSauvegardeSur = function( self, _, v ) self.eAction = v[1] end

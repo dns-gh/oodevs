@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artfdp/pions/common/missions/ReconnaitreZoneDeploiement.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -217,7 +219,7 @@ self.done_ACT_Obj_Pion_ASS_RealiserObjet = function( self, _, v ) self.eActionOb
 
             end
         else
-            Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+            Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
         end
 
     end,
@@ -284,7 +286,7 @@ self.done_ACT_Obj_Pion_ASS_RealiserObjet = function( self, _, v ) self.eActionOb
 
             end
         else
-            Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+            Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
         end
 
     end,

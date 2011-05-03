@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/pions/common/missions/Decrocher.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_Decrocher
 ]]--[[//
@@ -36,12 +38,12 @@ includedFiles["sources/appui/alat/pions/common/missions/Decrocher.bms"] = true
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
             end
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -51,7 +53,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
             end
         end
 
-        Activate( self.activations.BEH_Manoeuvre_Pion_GererRecueil, 10, {} )
+        Activate( self.activations.BEH_Manoeuvre_Pion_GererRecueil, 10, emptyTable )
          do
             local _continue = true
             local switch_1 = self.ePhaseMission
@@ -83,7 +85,7 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat =
                 --[[// 4) Fin de la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
-                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, emptyTable )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     --[[// quand on stationne, on débarque les passagers
 ]]if( self.eEtat == eActionEffectuee ) then
@@ -95,7 +97,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true

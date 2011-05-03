@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/pions/pat milan/Motivations.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-04-10 $
@@ -101,7 +103,7 @@ node "ActivatedByMOT_AcquerirEnis"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_TirerSurEnis, -GetMotivation( "MOT_AcquerirEnis" ), {} )
+]]Activate( self.activations.BEH_MOT_TirerSurEnis, -GetMotivation( "MOT_AcquerirEnis" ), emptyTable )
     end,
 
 }
@@ -167,7 +169,7 @@ node "ActivatedByMOT_SInfiltrer"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer, GetMotivation( "MOT_SInfiltrer" ), {} )
+]]Activate( self.activations.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer, GetMotivation( "MOT_SInfiltrer" ), emptyTable )
     end,
 
 }

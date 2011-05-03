@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/radint/common/missions/Decrocher.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_Decrocher
@@ -37,13 +39,13 @@ includedFiles["sources/appui/rens/pions/radint/common/missions/Decrocher.bms"] =
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 DEC_Trace( "** MIS DECROCHER **" )
-                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
                 StartActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, 1, { 30, } )
             end
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -86,7 +88,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     StopActivateOverride( self, self.activations.ACT_Dep_Pion_RENS_VolerA, { 30, } )
-                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, emptyTable )
                     _continue = false
                                 cases_switch_1[3] = true
 

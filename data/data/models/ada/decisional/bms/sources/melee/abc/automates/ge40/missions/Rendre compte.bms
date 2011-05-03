@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/Rendre compte.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -27,10 +29,10 @@ include "bit.lua"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_GTIA_RendreCompteDebutFinMission, 1, {} )
-        Activate( self.activations.BEH_GTIA_RendreCompteSurOrdreDeConduite, 1, {} )
-        Activate( self.activations.BEH_GTIA_RendreCompteSurLima, 1, {} )
-        Activate( self.activations.BEH_GTIA_AFFICHE_temp, 1, {} )--[[// TEMP rien à faire ici
+        Activate( self.activations.BEH_GTIA_RendreCompteDebutFinMission, 1, emptyTable )
+        Activate( self.activations.BEH_GTIA_RendreCompteSurOrdreDeConduite, 1, emptyTable )
+        Activate( self.activations.BEH_GTIA_RendreCompteSurLima, 1, emptyTable )
+        Activate( self.activations.BEH_GTIA_AFFICHE_temp, 1, emptyTable )--[[// TEMP rien à faire ici
 ]]
     end,
 
@@ -95,7 +97,7 @@ node "BEH_GTIA_RendreCompteSurOrdreDeConduite"
     activate = function( self )
         local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,ordre in pairs( ordres_recus or {} ) do
+        for _,ordre in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = ordre

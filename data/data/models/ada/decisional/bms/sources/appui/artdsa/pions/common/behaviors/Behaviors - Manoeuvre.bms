@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artdsa/pions/common/behaviors/Behaviors - Manoeuvre.bms"] = true
 
+local emptyTable = emptyTable
+
 node "BEH_Manoeuvre_Pion_ASA_SeDeployer"
 {
     feedbacks = { { { "done_BEH_Manoeuvre_Pion_ASA_SeDeployer" }, "BEH_Manoeuvre_Pion_ASA_SeDeployer" } },
@@ -44,7 +46,7 @@ self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
                             _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == eSeDeployer then
-                            Activate( self.activations.ACT_Pions_SInstaller, 1, {} )--[[//action de déploiement
+                            Activate( self.activations.ACT_Pions_SInstaller, 1, emptyTable )--[[//action de déploiement
 ]]
                                                         self:SendFeedback( eActionEffectuee )
                             do return end

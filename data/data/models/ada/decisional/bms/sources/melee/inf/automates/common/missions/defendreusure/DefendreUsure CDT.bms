@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/common/missions/defendreusure/DefendreUsure CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -30,12 +32,12 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_CoordDep_Automate_INF_Retrograde, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_CoordDep_Automate_INF_Retrograde, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination du front
 ]]--[[//-----------------------------------------------------------------------------
 ]]
         local lstSection = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        for _,x_pe in pairs( lstSection or {} ) do
+        for _,x_pe in pairs( lstSection or emptyTable ) do
         local _continue = true
 do
                 local pionPE = x_pe
@@ -73,7 +75,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis"
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "Cherche appui : " .. DEC_GetSzName( self._namedParams.pionEnTete ) )
-                for _,x_pion in pairs( lstSectionSE or {} ) do
+                for _,x_pion in pairs( lstSectionSE or emptyTable ) do
                 local _continue = true
                     do
                         local pionSE = x_pion
@@ -93,7 +95,7 @@ node "BEH_Conduite_Automate_INF_MenerDefenseUsure_AffecterAppuis"
             end
         end
 
-        for _,x_pion in pairs( lstSectionSE or {} ) do
+        for _,x_pion in pairs( lstSectionSE or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_Misc_Automate_INF_Defini_PionAppuiMobile, 1, { x_pion, } )

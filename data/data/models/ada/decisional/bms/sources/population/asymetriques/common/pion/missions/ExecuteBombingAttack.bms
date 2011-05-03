@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/asymetriques/common/pion/missions/ExecuteBombingAttack.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_ASY_CommettreExaction
 ]]--[[//
@@ -36,7 +38,7 @@ includedFiles["sources/population/asymetriques/common/pion/missions/ExecuteBombi
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -112,7 +114,7 @@ node "BEH_Eni_Pion_ASY_ExecuteBombingAttackAt"
                 local point = DEC_Geometrie_CalculerPositionObstacle( self._namedParams.location, S_TypeObject_ToString( eTypeObjectDirtyBomb ), 200 )
                 self.locPosition = DEC_Geometrie_ConvertirPointEnLocalisation( point )
                 DEC_CreerObjetSansDelais( S_TypeObject_ToString( eTypeObjectDirtyBomb ), self.locPosition )
-                for _,pop in pairs( self.listPopulations or {} ) do
+                for _,pop in pairs( self.listPopulations or emptyTable ) do
                 local _continue = true
                     do
                         --[[//rejoindre la population

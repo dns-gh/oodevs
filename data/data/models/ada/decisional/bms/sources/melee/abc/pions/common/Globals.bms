@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/pions/common/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 include "Common/Pions/Globals.bms"
 
 include "Melee/Abc/Pions/Common/Donnees Doctrines.bms"
@@ -28,7 +30,7 @@ include "Melee/Abc/Pions/Common/Parameters.bms"
     local _returnValue = nil
     _returnValue = nil
     local listeObjet = DEC_Connaissances_ObjetsDansCercle( position, 300, S_TypeObject_ToString( eTypeObjectPosteControle ) )
-    for _,x in pairs( listeObjet or {} ) do
+    for _,x in pairs( listeObjet or emptyTable ) do
     local _continue = true
         _returnValue = x
 

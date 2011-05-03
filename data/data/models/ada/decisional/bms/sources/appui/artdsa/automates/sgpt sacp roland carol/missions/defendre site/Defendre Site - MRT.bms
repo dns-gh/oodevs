@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artdsa/automates/sgpt sacp roland carol/missions/defendre site/Defendre Site - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 node "MIS_Automate_MRT_ASA_DefendreSite"
 {
     feedbacks = { { { "done_MIS_Automate_MRT_ASA_DefendreSite" }, "MIS_Automate_MRT_ASA_DefendreSite" } },
@@ -44,8 +46,8 @@ node "MIS_Automate_MRT_ASA_DefendreSite"
                     self.ePhase = eMRT_MissionImpossible
                 end
 
-                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
 --[[// =============================================================================
 ]]--[[// Vérifier les moyens, determiner les patrouilles qui vont aller reconnaitre

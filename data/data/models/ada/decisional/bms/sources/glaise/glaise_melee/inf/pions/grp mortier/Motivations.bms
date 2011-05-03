@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/grp mortier/Motivations.bms"] = true
 
+local emptyTable = emptyTable
+
 
 include "Glaise/Glaise_Common/Pions/Motivations.bms"
 
@@ -77,7 +79,7 @@ node "ActivatedByMOT_AppliquerLesFeux"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_Pion_Mortier_AppliquerLesFeux, GetMotivation( "MOT_AppliquerLesFeux" ), {} )
+]]Activate( self.activations.BEH_MOT_Pion_Mortier_AppliquerLesFeux, GetMotivation( "MOT_AppliquerLesFeux" ), emptyTable )
     end,
 
 }

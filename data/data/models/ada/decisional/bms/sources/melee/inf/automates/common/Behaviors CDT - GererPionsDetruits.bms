@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/common/Behaviors CDT - GererPionsDetruits.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -42,7 +44,7 @@ include "bit.lua"
         local Activate = Activate
         local selPions = DEC_Automate_PionsAvecPC()
         local selPionsPE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        for _,x_pion in pairs( selPions or {} ) do
+        for _,x_pion in pairs( selPions or emptyTable ) do
         local _continue = true
 do
                 local pPion = x_pion
@@ -57,7 +59,7 @@ do
 
                     if( self._namedParams.bSuivre and F_Pion_GeteEtatEchelon( pPion ) ~= eEtatEchelon_Premier ) then
                         do
-                            for _,x_enTete in pairs( selPionsPE or {} ) do
+                            for _,x_enTete in pairs( selPionsPE or emptyTable ) do
                             local _continue = true
                                 do
                                     local pionEnTete = x_enTete

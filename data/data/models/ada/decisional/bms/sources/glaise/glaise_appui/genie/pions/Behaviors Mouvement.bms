@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/genie/pions/Behaviors Mouvement.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Lima_Pion_Gen_SePosterSurLCA
 ]]--[[//
@@ -47,11 +49,11 @@ includedFiles["sources/glaise/glaise_appui/genie/pions/Behaviors Mouvement.bms"]
 ]]--[[// MAJ Etat Lima
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LCA, } )
-        Activate( self.activations.BEH_Dep_SePoster, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dep_SePoster, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Posture
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
     end,
 
 --[[// ******************************************************************************

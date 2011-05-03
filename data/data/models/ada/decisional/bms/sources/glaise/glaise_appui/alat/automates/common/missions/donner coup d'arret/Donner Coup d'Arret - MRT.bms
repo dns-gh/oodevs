@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/donner coup d'arret/Donner Coup d'Arret - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -54,7 +56,7 @@ include "bit.lua"
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 local unSurDeux = false
-                for _,x in pairs( self.listePeutDonnerCoupArret or {} ) do
+                for _,x in pairs( self.listePeutDonnerCoupArret or emptyTable ) do
                 local _continue = true
                     do
                         if( DIA_IsListEmpty( self.listePionRef ) ) then
@@ -107,9 +109,9 @@ include "bit.lua"
                 --[[//point flanc droit
 ]]directionBuffer = DEC_Geometrie_CreerDirectionPerpendiculaire( self._namedParams.mission.directionEnnemi_, false )
                 self.pointDeDislocationDroit = DEC_Geometrie_PositionTranslateDir( barycentreZone, directionBuffer, 5000 )
-                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )--[[// ROE par défaut pour cette mission + ordre poursuivre
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )--[[// ROE par défaut pour cette mission + ordre poursuivre
 ]]
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
         end
 

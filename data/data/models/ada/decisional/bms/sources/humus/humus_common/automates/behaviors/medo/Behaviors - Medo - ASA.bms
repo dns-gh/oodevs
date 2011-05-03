@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_common/automates/behaviors/medo/Behaviors - Medo - ASA.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-05-15 $
@@ -39,7 +41,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreZoneAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions or {} ) do
+                for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -83,7 +85,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreZoneAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions or {} ) do
+                for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -134,17 +136,17 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreZoneAPartirPositionA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end
@@ -185,17 +187,17 @@ node "BEH_Medo_Automate_ASA_AssignerMissionDefendreZoneAPartirPositionA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end
@@ -231,7 +233,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsDefendreSiteAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions or {} ) do
+                for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -275,7 +277,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreSiteAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions or {} ) do
+                for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -326,17 +328,17 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionDefendreSiteAPartirPositionA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end
@@ -377,17 +379,17 @@ node "BEH_Medo_Automate_ASA_AssignerMissionDefendreSiteAPartirPositionA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end
@@ -422,7 +424,7 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionsSurveillerAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions or {} ) do
+                for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -465,7 +467,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsSurveillerAListe"
         if( ModuleBegins() ) then
             do
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions or {} ) do
+                for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
                         --[[//si on a moins de positions que de pions, on renforce des positions
@@ -515,17 +517,17 @@ node "BEH_Medo_Automate_ASA_MISTRAL_AssignerMissionSurveillerA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end
@@ -565,17 +567,17 @@ node "BEH_Medo_Automate_ASA_AssignerMissionSurveillerA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end
@@ -611,7 +613,7 @@ node "BEH_Medo_Automate_ASA_AssignerMissionsDefendreUnitesAListe"
                 --[[//copie de la liste de pions
 ]]local listeSectionsASA = self._namedParams.listePions
                 local iterateur = 0
-                for _,x in pairs( self._namedParams.listePions or {} ) do
+                for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
                         --[[//si on a attribué au moins une fois tous les pc de la liste
@@ -665,17 +667,17 @@ node "BEH_Medo_Automate_ASA_AssignerMissionDefendreUnites"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/automates/common/missions/jalonner/Jalonner - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-09-15 $
@@ -34,11 +36,11 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/jalonner/
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordinationRetrograde_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_CoordDep_Automate_ABC_CoordinationRetrograde_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination
 ]]--[[//-----------------------------------------------------------------------------
 ]]

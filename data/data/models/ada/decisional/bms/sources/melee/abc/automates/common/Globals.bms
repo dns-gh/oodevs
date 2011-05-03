@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/common/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -83,7 +85,7 @@ include "Melee/Abc/Automates/Common/Parameters.bms"
     local _returnValue = {}
     local listePionsPEEnRAS = {}
     local listePions = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -103,7 +105,7 @@ function S_Dispositif_Automate_ABC_ObtenirPionsPE_EnDifficultes( )
     local _returnValue = {}
     local listePionsPEEnDifficulte = {}
     local listePions = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -123,7 +125,7 @@ function S_Dispositif_Automate_ABC_ObtenirPionsSoutien( )
     local _returnValue = {}
     local listePion = DEC_Automate_PionsSansPC()
     local listePionDeSoutien = {}
-    for _,x in pairs( listePion or {} ) do
+    for _,x in pairs( listePion or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -156,7 +158,7 @@ function S_Dispositif_Automate_ABC_ObtenirPionEnSoutienDe( pionSoutenu )
     local _returnValue = nil
     local pionEnSoutien = nil
     local listePions = DEC_Automate_PionsSansPC()
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -183,7 +185,7 @@ function S_Misc_Automate_ABC_PionsEnPosition( listePions )
     local _returnValue = false
     _returnValue = false
     local rNbrePionsPrets = 0
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -203,7 +205,7 @@ function S_Dispositif_Automate_ABC_EstPEclEnDanger( )
     local _returnValue = false
     _returnValue = false
     local listePionEcl = S_ObtenirPionsDe( eEtatEchelon_Eclairage, eEtatDestruction_None )
-    for _,x in pairs( listePionEcl or {} ) do
+    for _,x in pairs( listePionEcl or emptyTable ) do
     local _continue = true
 do
             local pionEcl = x
@@ -237,7 +239,7 @@ function S_Dispositif_Automate_ABC_EvtPionDetruit( )
     _returnValue = false
     local listePionsPE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
     local listePionsPEcl = S_ObtenirTousPionsDe( eEtatEchelon_Eclairage )
-    for _,x in pairs( listePionsPE or {} ) do
+    for _,x in pairs( listePionsPE or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -253,7 +255,7 @@ do
 
     end
 
-    for _,x in pairs( listePionsPEcl or {} ) do
+    for _,x in pairs( listePionsPEcl or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -271,7 +273,7 @@ end
 function S_Dispositif_Automate_ABC_PionsSansMission( )
     local _returnValue = {}
     local selTemp = {}
-    for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+    for _,x in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -291,7 +293,7 @@ function S_Dispositif_Automate_ABC_ObtenirListePionsFreinantDe( eEtatEchelon )
     local _returnValue = {}
     local listeFiltre = {}
     local listePionFreinant = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsAvecPC(), "T_Mission_Pion_ABC_Freiner" )
-    for _,x in pairs( listePionFreinant or {} ) do
+    for _,x in pairs( listePionFreinant or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -312,7 +314,7 @@ function S_Dispositif_ObtenirPionSoutienProcheDe( pion )
     _returnValue = nil
     local rDistanceMax = 1105199104
     local listePionsSecondEchelonNonDetruits = S_ObtenirPionsDe( eEtatEchelon_Second, eEtatDestruction_None )
-    for _,x in pairs( listePionsSecondEchelonNonDetruits or {} ) do
+    for _,x in pairs( listePionsSecondEchelonNonDetruits or emptyTable ) do
     local _continue = true
 do
             local pionProche = x
@@ -342,19 +344,19 @@ function S_Dispositif_Automate_ABC_PionsPourArmerPointControle( )
     local listePionPatrouilleMilan = S_ObtenirPionsOperationnelsFiltre( "Patrouille_EI_Milan" )
     local listePionPAD = S_ObtenirPionsOperationnelsFiltre( "Peloton_AD" )
     local selTemp = {}
-    for _,pion in pairs( listePionPatrouille or {} ) do
+    for _,pion in pairs( listePionPatrouille or emptyTable ) do
     local _continue = true
         DIA_PushFront( selTemp, pion )
 
     end
 
-    for _,pion in pairs( listePionPatrouilleMilan or {} ) do
+    for _,pion in pairs( listePionPatrouilleMilan or emptyTable ) do
     local _continue = true
         DIA_PushFront( selTemp, pion )
 
     end
 
-    for _,pion in pairs( listePionPAD or {} ) do
+    for _,pion in pairs( listePionPAD or emptyTable ) do
     local _continue = true
         DIA_PushFront( selTemp, pion )
 
@@ -368,7 +370,7 @@ function S_Dispositif_Automate_ABC_ObtenirPionDetruitsDe( eEtatEchelon )
     local _returnValue = {}
     local selTemp = {}
     local listePions = S_ObtenirTousPionsDe( eEtatEchelon )
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -388,7 +390,7 @@ function S_Dispositif_Automate_ABC_Freiner_PionsDevant( resultatCalcul, eEtatEch
     local _returnValue = false
     _returnValue = false
     local listePions = S_ObtenirTousPionsDe( eEtatEchelon )
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -406,7 +408,7 @@ end
 function S_Dispositif_Automate_ABC_PionsAmisEnDifficultes( compagnie )
     local _returnValue = false
     _returnValue = false
-    for _,x in pairs( DEC_Automate_PionsDeAutomateAvecPC( compagnie ) or {} ) do
+    for _,x in pairs( DEC_Automate_PionsDeAutomateAvecPC( compagnie ) or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -426,7 +428,7 @@ function S_Dispositif_ABC_Automate_TousPionsHorsFuseau( compagnie )
     _returnValue = false
     local rIterateur = 0
     local listePions = DEC_Automate_PionsDeAutomateAvecPC( compagnie )
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local pion = x

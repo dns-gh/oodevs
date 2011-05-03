@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/common/missions/reconnaitrepoint surete/ReconnaitrePoint Pat - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-09-26 $
@@ -65,7 +67,7 @@ includedFiles["sources/melee/abc/automates/common/missions/reconnaitrepoint sure
 ]]--[[//-----------------------------------------------------------------------------
 ]]                end
 
-                for _,pion in pairs( self._namedParams.selPions or {} ) do
+                for _,pion in pairs( self._namedParams.selPions or emptyTable ) do
                 local _continue = true
 do
                         if( self.rIterateurSecteur == #( self.listeSousSecteurs ) ) then

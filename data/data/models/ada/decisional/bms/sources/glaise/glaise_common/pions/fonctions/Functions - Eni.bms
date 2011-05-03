@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/fonctions/Functions - Eni.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[// *****************************************************************************
@@ -95,7 +97,7 @@ function S_Eni_ChercheEniPlusProchePosition( point, listeEnis )
     local rDist_Min = 1105199104
     local rDistanceConnaissance = 0
     _returnValue = nil
-    for _,ksEni in pairs( listeEnis or {} ) do
+    for _,ksEni in pairs( listeEnis or emptyTable ) do
     local _continue = true
 do
             rDistanceConnaissance = DEC_Geometrie_Distance( point, DEC_ConnaissanceAgent_Position( ksEni ) )

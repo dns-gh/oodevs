@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/son proterre/missions/surveiller/Surveiller CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -41,7 +43,7 @@ node "MIS_Automate_CDT_INF_Surveiller"
 ]]--[[//-----------------------------------------------------------------------------				
 ]]        end
 
-        Activate( self.activations.BEH_Situation_Automate_INF_Surveiller, 1, {} )
+        Activate( self.activations.BEH_Situation_Automate_INF_Surveiller, 1, emptyTable )
     end,
 
     destroy = function( self )
@@ -66,8 +68,8 @@ node "BEH_Situation_Automate_INF_Surveiller"
     activate = function( self )
         local Activate = Activate
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, emptyTable )
     end,
 
 }

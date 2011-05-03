@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/offensives/attaquer/Attaquer - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -41,7 +43,7 @@ include "bit.lua"
                                 do
                     g_bPhaseReceuil = false
                     local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
-                    for _,x in pairs( listePionsSubordonnes or {} ) do
+                    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                     local _continue = true
                         do
                             local automat = x
@@ -60,17 +62,17 @@ include "bit.lua"
 
         if( not self._namedParams.mission.sansRearticulation_ ) then
             --[[//// tres moche priorite
-]]Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourAttaquer, 10, {} )
+]]Activate( self.activations.BEH_GTIA_OrganiserLesMoyensPourAttaquer, 10, emptyTable )
         end
 
-        Activate( self.activations.BEH_GTIA_RendreCompte, 1, {} )--[[/***************TEST *******************/]]--[[// CR
+        Activate( self.activations.BEH_GTIA_RendreCompte, 1, emptyTable )--[[/***************TEST *******************/]]--[[// CR
 ]]
-        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, {} )--[[// Dispositif
+        Activate( self.activations.BEH_GTIA_EchelonnerDispositif, 1, emptyTable )--[[// Dispositif
 ]]
         Activate( self.activations.BEH_GTIA_RepartirDansFuseaux, 1, { self._namedParams.mission.objectifsPrioritaires_, } )
         --[[// Missions
 ]]--[[// priorite 1
-]]Activate( self.activations.BEH_GTIA_GererAppuisInternes, 10, {} )
+]]Activate( self.activations.BEH_GTIA_GererAppuisInternes, 10, emptyTable )
         --[[// priorite 2
 ]]Activate( self.activations.BEH_GTIA_AssignerLesOrdresPourAttaquer, 1, { self._namedParams.mission.objectifsPrioritaires_, } )
     end,
@@ -166,7 +168,7 @@ node "ACT_GTIA_AnalyserSituationPourAttaquer"
     activate = function( self )
         local Activate = Activate
         Activate( self.activations.BEH_GTIA_AssignerLesMissions, 1, { self._namedParams.objectifsPrioritaires, } )
-        Activate( self.activations.BEH_GTIA_AssurerLaCoordination, 1, {} )
+        Activate( self.activations.BEH_GTIA_AssurerLaCoordination, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -230,7 +232,7 @@ node "BEH_GTIA_AssignerMissionsEcl"
 
     activate = function( self )
         local Activate = Activate
-        for _,pion in pairs( S_Cherche_GE_Filtre_TypeAutomate_Eclairage( self._namedParams.listePion ) or {} ) do
+        for _,pion in pairs( S_Cherche_GE_Filtre_TypeAutomate_Eclairage( self._namedParams.listePion ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pion, "T_Mission_Automate_ABC_Eclairer", } )
 
@@ -270,7 +272,7 @@ node "BEH_GTIA_AssignerMissionsPE"
         end
 
         for _,x in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePions ) or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -287,7 +289,7 @@ do
 ]]
         end
 
-        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or {} ) do
+        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePions ) or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -330,14 +332,14 @@ node "BEH_GTIA_AssignerMissionsSE"
     activate = function( self )
         local Activate = Activate
         for _,pion in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePion ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( self._namedParams.listePion ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pion, "T_Mission_Automate_SoutenirEnMesureDe", } )
 
         end
 
         for _,pion in pairs( --[[// Assignation missions INF 
-]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePion ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_INF( self._namedParams.listePion ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pion, "T_Mission_Automate_SoutenirEnMesureDe", } )
 
@@ -401,21 +403,21 @@ node "BEH_GTIA_AssignerMissionsSEAppui"
     activate = function( self )
         local Activate = Activate
         for _,pion in pairs( --[[// TC2
-]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.listePion ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_Log( self._namedParams.listePion ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionLogA, 1, { pion, } )
 
         end
 
         for _,pion in pairs( --[[// Génie
-]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.listePion ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_Genie( self._namedParams.listePion ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionGenieA, 1, { pion, self._namedParams.objectifs, } )
 
         end
 
         for _,pion in pairs( --[[// DLO
-]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.listePion ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ART( self._namedParams.listePion ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionART, 1, { pion, } )
 
@@ -755,7 +757,7 @@ elseif switch_1 == "T_Mission_Automate_INF_Semparer" then
         local listeItineraires = {}--[[// itineraires à assigner
 ]]
         for _,objectif in pairs( --[[// Itineraires vers les zones prioritaires
-]]self._namedParams.objectifs or {} ) do
+]]self._namedParams.objectifs or emptyTable ) do
         local _continue = true
 do
                 local ptVersZone = S_Geometrie_BarycentreZone( DEC_Objectif_Localisation( objectif ) )

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Reconnaissance.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[//=============================================================================
 ]]--[[//=============================================================================
@@ -33,13 +35,13 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Reconnaissanc
         if( S_RapForLocal() == eEtatRapportDeForce_Favorable ) then
             do
                 if( ModuleBegins() ) then
-                    StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                    StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
                 end
 
                 do
                 end
 
-                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                  do
                     local _continue = true
                     local switch_1 = self.ePhase
@@ -70,11 +72,11 @@ includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Reconnaissanc
 --[[// dispositif de deplacement
 ]]                            end
 
-                            Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                            Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                             --[[// Progression sur l'itineraire
 ]]Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eAction = v[1] end
-                            Activate( self.activations.BEH_Lima_GererLimas, 1.5, {} )
+                            Activate( self.activations.BEH_Lima_GererLimas, 1.5, emptyTable )
                             _continue = false
                                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then

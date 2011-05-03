@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/genie/pions/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -143,7 +145,7 @@ function S_Pion_GEN_EstRenforceParMATS( )
     local _returnValue = false
     _returnValue = false
     local selPions = DEC_Renforts()
-    for _,x in pairs( selPions or {} ) do
+    for _,x in pairs( selPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -165,7 +167,7 @@ end
 function S_ObjetsPlanifiesAvecTC2( travaux )
     local _returnValue = false
     _returnValue = true
-    for _,camp in pairs( travaux or {} ) do
+    for _,camp in pairs( travaux or emptyTable ) do
     local _continue = true
 do
             local type = DEC_GenObject_Type( camp )

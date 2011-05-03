@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/automates/common/missions/Behaviors MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -139,11 +141,11 @@ node "BEH_Medo_Automate_ABC_AssignerMissionSoutenirA"
     activate = function( self )
         local Activate = Activate
         for _,pPion in pairs( --[[//Définition du pion ABC en appui : T55
-]]self._namedParams.lstPionsAppui or {} ) do
+]]self._namedParams.lstPionsAppui or emptyTable ) do
         local _continue = true
 do
                 for _,pPionAAppuyer in pairs( --[[//Défintion du pion à appuyer par le pion ABC : Pion AntiChar
-]]self._namedParams.pionsAntiChar or {} ) do
+]]self._namedParams.pionsAntiChar or emptyTable ) do
                 local _continue = true
 do
                         StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerSoutenirA, 1, { ePhase_MRT, pPion, pPionAAppuyer, self._namedParams.eEtatEchelon_Second, } )
@@ -191,7 +193,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA"
                     end
                 end
 
-                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                 self:SendFeedback( eActionImpossible )
                 do return end
 
@@ -202,7 +204,7 @@ node "BEH_Medo_Automate_ABC_AssignerMissionSemparerZoneA"
 ]]        end
 
         if( ModuleBegins() ) then
-for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
+for _,x_pion in pairs( self._namedParams.selPions_PE or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerSemparerZoneA, 1, { ePhase_MRT, x_pion, self._namedParams.locZone, self._namedParams.eEtatEchelon_Premier, } )
 
@@ -276,13 +278,13 @@ node "BEH_Medo_Automate_HUMUS_AssignerAppuyerA_Mortier"
         self.bTrouver = self.bTrouver or false
         if( ModuleBegins() ) then
             do
-                for _,x1 in pairs( self.lstPions or {} ) do
+                for _,x1 in pairs( self.lstPions or emptyTable ) do
                 local _continue = true
                     do
                         local x_pion = x1
                         if( ( x_pion:GetType() == "Peloton_AMX" or x_pion:GetType() == "Peloton_XL" ) and self.bTrouver == false ) then
                             do
-                                for _,x_inf in pairs( self._namedParams.selPions_Mortier or {} ) do
+                                for _,x_inf in pairs( self._namedParams.selPions_Mortier or emptyTable ) do
                                 local _continue = true
                                     do
                                         StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, x_inf, x_pion, eEtatEchelon_Second, } )

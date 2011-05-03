@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_common/automates/behaviors/Behaviors - ROE.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-05-25 $
@@ -32,7 +34,7 @@ includedFiles["sources/humus/humus_common/automates/behaviors/Behaviors - ROE.bm
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_ROE_Automate_RecevoirOrdreInopine, 1, {} )--[[// Ordres inopiné de l'anibas
+        Activate( self.activations.BEH_ROE_Automate_RecevoirOrdreInopine, 1, emptyTable )--[[// Ordres inopiné de l'anibas
 ]]
     end,
 
@@ -67,7 +69,7 @@ node "BEH_ROE_Automate_RecevoirOrdreInopine"
 ]]--[[// Reception d'un ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local ordre = x
@@ -86,25 +88,25 @@ do
                                     if switch_2 == eEtatROE_TirLibre then
                                         --[[// TIR LIBRE
 ]]DEC_Trace( " === ORDRE --> ROE TIR LIBRE" )
-                                        StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, {} )
-                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, {} )
+                                        StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, 1, emptyTable )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, emptyTable )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, emptyTable )
                                         _continue = false
                                     --[[// TIR SUR RIPOSTE
 ]]                                    cases_switch_2[1] = true
 elseif switch_2 == eEtatROE_TirSurRiposte then
                                         DEC_Trace( " === ORDRE --> ROE TIR SUR RIPOSTE" )
-                                        StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, {} )
-                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, {} )
+                                        StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, emptyTable )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, emptyTable )
                                         _continue = false
                                     --[[// TIR INTERDIT
 ]]                                    cases_switch_2[2] = true
 elseif switch_2 == eEtatROE_TirInterdit then
                                         DEC_Trace( " === ORDRE --> ROE TIR INTERDIT" )
-                                        StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, 1, {} )
-                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, {} )
-                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, {} )
+                                        StartActivateOverride( self, self.activations.BEH_ROE_Automate_TirInterdit, 1, emptyTable )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirLibre, emptyTable )
+                                        StopActivateOverride( self, self.activations.BEH_ROE_Automate_TirRestreint, emptyTable )
                                         _continue = false
                                                                         cases_switch_2[3] = true
                                     end
@@ -144,7 +146,7 @@ node "BEH_ROE_Automate_TirLibre"
 
     activate = function( self )
         local Activate = Activate
-        for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirLibre, 1, { pion, } )
 
@@ -174,7 +176,7 @@ node "BEH_ROE_Automate_TirRestreint"
 
     activate = function( self )
         local Activate = Activate
-        for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirRestreint, 1, { pion, } )
 
@@ -204,7 +206,7 @@ node "BEH_ROE_Automate_TirInterdit"
 
     activate = function( self )
         local Activate = Activate
-        for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+        for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirInterdit, 1, { pion, } )
 

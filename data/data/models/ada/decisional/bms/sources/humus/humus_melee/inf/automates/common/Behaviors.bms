@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/automates/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -62,7 +64,7 @@ include "Humus/Humus_Melee/Inf/Automates/Common/Missions/Behaviors.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[// ---------------------------------------------------------------------
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates génériques sur eni et situation mission
 ]]--[[// ---------------------------------------------------------------------
 ]]
@@ -71,19 +73,19 @@ include "Humus/Humus_Melee/Inf/Automates/Common/Missions/Behaviors.bms"
             do return end
         end
 
-        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[//--------------------------------------------------------------------------
+        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )--[[//--------------------------------------------------------------------------
 ]]--[[// NBC --> alerte de niveau 4
 ]]--[[//--------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )--[[//--------------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )--[[//--------------------------------------------------------------------------
 ]]--[[// ROE --> Tir libre, sur riposte, interdit
 ]]--[[//--------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, {} )--[[//--------------------------------------------------------------------------
+        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, emptyTable )--[[//--------------------------------------------------------------------------
 ]]--[[// Gestion des pions --> init de la place dans le dispositif
 ]]--[[//--------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )--[[//--------------------------------------------------------------------------
+        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, emptyTable )--[[//--------------------------------------------------------------------------
 ]]--[[// Silence radio
 ]]--[[//--------------------------------------------------------------------------
 ]]
@@ -93,10 +95,10 @@ include "Humus/Humus_Melee/Inf/Automates/Common/Missions/Behaviors.bms"
             do return end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[// Gestion des Ordres venant du GTIA
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )--[[// Gestion des Ordres venant du GTIA
 ]]--[[//-------------------------------------------------------------------------- 	 	
 ]]
-        Activate( self.activations.BEH_Ordre_Automate_INF_GererTransporteur, 1, {} )--[[// Gestion de l'ordre de conduite permettant de recuperer les transporteurs
+        Activate( self.activations.BEH_Ordre_Automate_INF_GererTransporteur, 1, emptyTable )--[[// Gestion de l'ordre de conduite permettant de recuperer les transporteurs
 ]]--[[//-------------------------------------------------------------------------- 	 	
 ]]
     end,
@@ -126,7 +128,7 @@ node "BEH_Situation_Automate_INF_FinDeMission_Sur"
             DEC_Trace( DEC_GetSzName( self._namedParams.pion ) .. " : fin de mission." )
         end
 
-        Activate( self.activations.BEH_Situation_Automate_INF_FinDeMission, 1, {} )
+        Activate( self.activations.BEH_Situation_Automate_INF_FinDeMission, 1, emptyTable )
     end,
 
 }
@@ -192,7 +194,7 @@ node "BEH_Ordre_Automate_INF_GererTransporteur"
 ]]--[[// Reception d'un ordre de l'ANIBAS
 ]]--[[// =============================================================================
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -233,12 +235,12 @@ node "BEH_Conduite_Automate_HOT_Defaut"
         local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
-        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Coordination du front
 ]]--[[//-------------------------------------------------------------------------		
 ]]
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, emptyTable )
     end,
 
 --[[// behavior BEH_Conduite_Automate_Gerer_UniteInconnues();	

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/missions/prendreencompteprisonniers/MRT - PrendreEnComptePrisonniers.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_PrendreEnComptePrisonniers
 ]]--[[// 
@@ -35,7 +37,7 @@ includedFiles["sources/glaise/glaise_common/automates/missions/prendreencomptepr
                 DEC_Trace( "$ MIS_Automate_MRT_PrendreEnComptePrisonniers : debut MRT $" )
                                 do
                     local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-                    for _,x in pairs( listePionsSubordonnes or {} ) do
+                    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                     local _continue = true
                         do
                             local pion = x

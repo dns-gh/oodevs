@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/populations/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -54,7 +56,7 @@ include "Population/Populations/Missions/Manifester.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Default, 1, {} )
+        Activate( self.activations.BEH_Default, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -116,12 +118,12 @@ if( GetStateVariable( "VE_Domination" ) == 1 and rCourage == 0 ) then
         end
 
         DEC_Population_ChangeEtatDomination( GetStateVariable( "VE_Domination" ) * GetStateVariable( "VE_Courage" ) )
-        Activate( self.activations.BEH_Pop_ReagirFaceAPropagande, 1, {} )
+        Activate( self.activations.BEH_Pop_ReagirFaceAPropagande, 1, emptyTable )
         --[[// =============================================================================
 ]]--[[// Reception d'un ordre de l'ANIBAS
 ]]--[[// =============================================================================
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -207,7 +209,7 @@ node "BEH_Pop_Stationner"
             DEC_RC( eRC_EnStationnement )
         end
 
-        Activate( self.activations.ACT_Pop_Stationner, 1, {} )
+        Activate( self.activations.ACT_Pop_Stationner, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -317,7 +319,7 @@ node "BEH_Pop_RalentissementPions"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.ACT_Pop_RalentissementPions, 1, {} )
+        Activate( self.activations.ACT_Pop_RalentissementPions, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -431,7 +433,7 @@ node "BEH_Pop_RepondreALaPriseAPartie"
     activate = function( self )
         local Activate = Activate
         local lstPions = DEC_Connaissances_PionsPrenantAPartie()
-        for _,pion in pairs( lstPions or {} ) do
+        for _,pion in pairs( lstPions or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Pop_PAPPion, 1, { pion, } )
@@ -464,7 +466,7 @@ node "BEH_Pop_ReagirFaceAPropagande"
     activate = function( self )
         local Activate = Activate
         --[[//-----------------------------------------------------------------------------
-]]--[[// Look at close propaganda objects
+]]--[[// Look at closed propaganda objects
 ]]--[[//-----------------------------------------------------------------------------
 ]]local locations = DEC_Population_Positions()
         local it = 0
@@ -473,7 +475,7 @@ node "BEH_Pop_ReagirFaceAPropagande"
 do
                 local location = DEC_UserTypeList_GetAt( locations, it )
                 local leaflets = DEC_Connaissances_ObjetsDansZone( location, S_TypeObject_ToString( eTypeObjectLeaflet ) )
-                for _,leaflet in pairs( leaflets or {} ) do
+                for _,leaflet in pairs( leaflets or emptyTable ) do
                 local _continue = true
 do
                         local ptPOP = DEC_Geometrie_CalculerBarycentreLocalisation( location )

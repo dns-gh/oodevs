@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/pions/behaviors/Behaviors - Ordre.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -26,7 +28,7 @@ include "bit.lua"
         local Activate = Activate
         local bOrdreConduiteInterrompre = false
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x

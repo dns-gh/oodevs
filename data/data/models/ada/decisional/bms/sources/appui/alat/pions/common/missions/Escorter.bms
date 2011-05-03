@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/pions/common/missions/Escorter.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -69,7 +71,7 @@ include "bit.lua"
                 myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 self.pointARejoindre = DEC_Geometrie_CreerPoint()
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
                 end
 
                 DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
@@ -83,7 +85,7 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -104,7 +106,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         self.listeCourantePionsAEscorter = S_Liste_Pion_ALAT_UnitesASuivre( self.listePionsAEscorter )
         for _,x in pairs( --[[//  Gestion de l'abonnement a la liste des pions qui appuient
 ]]--[[//  ---------------------------------------------------------
-]]self.listeCourantePionsAEscorter or {} ) do
+]]self.listeCourantePionsAEscorter or emptyTable ) do
         local _continue = true
             Activate( self.activations.Act_AbonnerPionAAppui, 1, { x, } )
 
@@ -124,7 +126,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 if switch_1 == eAppuyer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EscorteUnite, } )
                     for _,x in pairs( --[[// partage de la connaissance
-]]self.listePionsAEscorter or {} ) do
+]]self.listePionsAEscorter or emptyTable ) do
                     local _continue = true
 do
                             local pion = x
@@ -134,7 +136,7 @@ do
                     end
 
                     local bSePoser = true
-                    for _,x in pairs( self.listeCourantePionsAEscorter or {} ) do
+                    for _,x in pairs( self.listeCourantePionsAEscorter or emptyTable ) do
                     local _continue = true
 do
                             if( S_EstPatrouilleALAT( x ) ) then
@@ -152,9 +154,9 @@ do
 
                     end
 
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     if( bSePoser ) then
-                        Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                        Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
                     else
                         Activate( self.activations.BEH_Dep_Pion_ALAT_EclairerItinerairePion, GetMotivation( "MOT_Manoeuvrer" ), { self.pionDeTete, eProgressionDefaut, eTypeItiReconnaissance, } )
                     end
@@ -165,7 +167,7 @@ do
 elseif switch_1 == eSExfiltrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
                     if( not DEC_Agent_AutomateEstEmbraye() ) then
-                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                     end
 
                     if( self.eEtat == eActionEffectuee ) then
@@ -197,7 +199,7 @@ elseif switch_1 == eSExfiltrer then
                         end
                     end
 
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointRegroupement_, } )
 self.done_BEH_Manoeuvre_Pion_AllerStationner = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
@@ -220,7 +222,7 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[3] = true
@@ -256,11 +258,11 @@ node "BEH_Eni_Pion_ALAT_GererEniEscorter"
 
     activate = function( self )
         local Activate = Activate
-        for _,x in pairs( self._namedParams.listePionsEscortes or {} ) do
+        for _,x in pairs( self._namedParams.listePionsEscortes or emptyTable ) do
         local _continue = true
 do
                 local listeUnitesEnnemiesPercues = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( x:DEC_Agent_Position(), 3 * DEC_Geometrie_Distance( myself:DEC_Agent_Position(), x:DEC_Agent_Position() ) )
-                for _,y in pairs( listeUnitesEnnemiesPercues or {} ) do
+                for _,y in pairs( listeUnitesEnnemiesPercues or emptyTable ) do
                 local _continue = true
 do
                         Activate( self.activations.BEH_Eni_Pion_ALAT_AttendrePuisAllerDetruire, S_Force_Pion_ALAT_Defendre( x, y, self._namedParams.typeCiblePrioritaire ), { 0, y, eReconnu, 1, M_DOCTRINE_PION_ALAT_PH(), false, } )

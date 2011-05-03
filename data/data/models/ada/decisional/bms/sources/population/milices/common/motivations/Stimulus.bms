@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/milices/common/motivations/Stimulus.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: SDE 2003-03-27 $
@@ -71,7 +73,7 @@ motivation_plugin.stimuli["STIM_PriseAPartieTirInDirect"] = function()
 
 motivation_plugin.stimuli["STIM_PopulationDangereuse"] = function()
         local lstPops = DEC_Connaissances_Populations()
-        for _,pop in pairs( lstPops or {} ) do
+        for _,pop in pairs( lstPops or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissancePopulation_Dangerosite( pop ) > 1 ) then

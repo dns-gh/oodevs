@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - ROE.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_ROE()
 ]]--[[//
@@ -21,7 +23,7 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - ROE.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_ROE_Recevoir_OrdreInopine, 1, {} )--[[// pour anibas 
+        Activate( self.activations.BEH_ROE_Recevoir_OrdreInopine, 1, emptyTable )--[[// pour anibas 
 ]]
     end,
 
@@ -55,7 +57,7 @@ node "BEH_ROE_Recevoir_OrdreInopine"
 ]]--[[// Reception d'un ordre du superieur
 ]]--[[//-----------------------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local ordre = x
@@ -80,19 +82,19 @@ do
                                             if switch_2 == eEtatROE_TirLibre then
                                                                                             --[[// TIR LIBRE
 ]]DEC_Trace( " === ORDRE --> ROE TIR LIBRE" )
-                                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
                                                 _continue = false
                                             --[[// TIR SUR RIPOSTE
 ]]                                            cases_switch_2[1] = true
 elseif switch_2 == eEtatROE_TirSurRiposte then
                                                                                             DEC_Trace( " === ORDRE --> ROE TIR SUR RIPOSTE" )
-                                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                                                 _continue = false
                                             --[[// TIR INTERDIT
 ]]                                            cases_switch_2[2] = true
 elseif switch_2 == eEtatROE_TirInterdit then
                                                                                             DEC_Trace( " === ORDRE --> ROE TIR INTERDIT" )
-                                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, {} )
+                                                Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, emptyTable )
                                                 _continue = false
                                                                                         cases_switch_2[3] = true
                                             end

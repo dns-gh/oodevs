@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artdsa/automates/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//génériques automates scipio
 ]]include "Common/Automates/Behaviors.bms"
 include "Common/Automates/Behaviors/Medo/Behaviors - Medo - ASA.bms"
@@ -35,7 +37,7 @@ include "Common/Automates/Behaviors/Medo/Behaviors - Medo - ASA.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[// ---------------------------------------------------------------------
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates sur eni et situation mission
 ]]--[[// ---------------------------------------------------------------------
 ]]
@@ -44,29 +46,29 @@ include "Common/Automates/Behaviors/Medo/Behaviors - Medo - ASA.bms"
 ]]--[[// -------------------------------------------------------------------------
 ]]if( DEC_Automate_EstEmbraye() ) then
             do
-                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )--[[//----------------------------------------------------------------------
+                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )--[[//----------------------------------------------------------------------
 ]]--[[// ROE --> Tir libre, sur riposte, interdit
 ]]--[[//----------------------------------------------------------------------
 ]]
-                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[// ---------------------------------------------------------------------
+                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// Mettre les combinaisons Nbc si alerte de niveau 4
 ]]--[[// ---------------------------------------------------------------------
 ]]
-                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[// ---------------------------------------------------------------------
+                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// Gestion des ordres inopines
 ]]--[[// ---------------------------------------------------------------------
 ]]
-                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )--[[// ---------------------------------------------------------------------
+                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// Gestion de l'ordre de conduite Silence Radio/Radar
 ]]--[[// ---------------------------------------------------------------------
 ]]
-                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar, 1, emptyTable )
             end
 --[[//appel au comportement par défaut spécifique aux automates de sous groupements
 ]]--[[//ASA
 ]]        end
 
-        Activate( self.activations.BEH_Automate_ASA_Defaut, 1, {} )
+        Activate( self.activations.BEH_Automate_ASA_Defaut, 1, emptyTable )
     end,
 
 }

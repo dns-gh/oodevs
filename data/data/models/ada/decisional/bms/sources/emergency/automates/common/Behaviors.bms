@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/emergency/automates/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// This file is part of a MASA library or program.
@@ -39,15 +41,15 @@ node "BEH_Defaut"
             do return end
         end
 
-        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[//--------------------------------------------------------------------------
+        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )--[[//--------------------------------------------------------------------------
 ]]--[[// NBC --> alerte de niveau 4
 ]]--[[//--------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )--[[//--------------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )--[[//--------------------------------------------------------------------------
 ]]--[[// ROE --> Tir libre, sur riposte, interdit
 ]]--[[//--------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, {} )--[[//--------------------------------------------------------------------------
+        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, emptyTable )--[[//--------------------------------------------------------------------------
 ]]--[[// Gestion des pions --> init de la place dans le dispositif
 ]]--[[//--------------------------------------------------------------------------
 ]]
@@ -57,7 +59,7 @@ node "BEH_Defaut"
             do return end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )--[[// Gestion des Ordres venant du GTIA
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )--[[// Gestion des Ordres venant du GTIA
 ]]--[[//-------------------------------------------------------------------------- 	 	
 ]]
     end,

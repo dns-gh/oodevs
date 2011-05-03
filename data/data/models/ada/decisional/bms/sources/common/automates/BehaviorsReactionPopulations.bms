@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/BehaviorsReactionPopulations.bms"] = true
 
+local emptyTable = emptyTable
+
 include "Common/Automates/Behaviors/Behaviors - POP - ROE.bms"
 
 
@@ -24,7 +26,7 @@ include "Common/Automates/Behaviors/Behaviors - POP - ROE.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, 1, {} )
+        Activate( self.activations.BEH_ROE_Automate_RecevoirOrdreInopinePopulation, 1, emptyTable )
     end,
 
 }

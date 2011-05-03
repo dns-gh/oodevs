@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/missions/orienterrefugies/CDT - OrienterRefugies.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_OrienterRefugies
@@ -31,7 +33,7 @@ includedFiles["sources/common/automates/missions/orienterrefugies/CDT - Orienter
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Dispositif_Automate_FaireSuivreLeSE, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_FaireSuivreLeSE, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Mission suivre au autres pions
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// défini dans MIS_Automate_CDT_PrendreEnComptePrisonniers

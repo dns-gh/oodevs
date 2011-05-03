@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/marine/pions/common/behaviors/Behaviors - Eni.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// DecrocherFaceA
 ]]--[[// -----------------------------------------------------------------------------
@@ -110,7 +112,7 @@ node "BEH_Eni_Pion_MARINE_EviterContactsAvecEnnemisConnus"
     activate = function( self )
         local Activate = Activate
         local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,x in pairs( listeUnitesEnnemiesDangereuses or {} ) do
+        for _,x in pairs( listeUnitesEnnemiesDangereuses or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_MARINE_DecrocherFaceA, 1, { x, S_Tir_PorteeMaxPourEtreTireParAgent( x, 0 ), M_POLY_DISTANCE_SECURITE_ESQUIVE(), } )

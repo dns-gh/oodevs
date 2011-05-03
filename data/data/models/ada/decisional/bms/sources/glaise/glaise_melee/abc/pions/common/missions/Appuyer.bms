@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Appuyer.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-01-25 $
@@ -62,7 +64,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Appuyer.bms
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Pion detruit
@@ -165,8 +167,8 @@ self.done_BEH_Dep_Pion_ABC_RejoindrePositionAppuiPour = function( self, _, v ) s
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eSePoster then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
-                    Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
+                    Activate( self.activations.BEH_Obj_RejoindreEmbossements, 1, emptyTable )
                     _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// 4) Fin de la mission de reconnaissance
@@ -174,7 +176,7 @@ elseif switch_1 == eSePoster then
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[5] = true
 

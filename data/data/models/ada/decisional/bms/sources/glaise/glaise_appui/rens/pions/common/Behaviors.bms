@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/rens/pions/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 
 
 --[[// Communs aux pions Rens
@@ -54,7 +56,7 @@ node "BEH_Dep_Pion_GererFurtivite"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_MAJ_Pion_Rens_Furtivite, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_Pion_Rens_Furtivite, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Furtivite
 ]]--[[//-----------------------------------------------------------------------------
 ]]

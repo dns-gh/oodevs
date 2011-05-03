@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/pions/common/missions/Harceler.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -45,7 +47,7 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 --[[// Vérifie que l'on est bien dans son fuseau
-]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
             end
 --[[// Lorsqu'un comportement  ne  peut  pas  s'effectuer  correctement, la mission s'arrête
 ]]        end
@@ -68,7 +70,7 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -88,7 +90,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     local switch_1 = self.ePhase
                     local cases_switch_1 = {}
                         if switch_1 == eSeMettreEnPlace then
-                                                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// Se mettre en position en restant sur ses gardes
+                                                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[// Se mettre en position en restant sur ses gardes
 ]]
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                             if( self.eAction == eActionEffectuee ) then
@@ -144,8 +146,8 @@ elseif switch_1 == eRejoindre then
                                     --[[//Rapport de force favorable ou neutre => continuer la mission
 ]]if( S_RapForLocal() == eEtatRapportDeForce_Favorable ) then
                                         do
-                                            Activate( self.activations.BEH_Eni_Pion_VAB_Semparer, 1, {} )
-                                            Activate( self.activations.BEH_Mission_Pion_VAB_Semparer, 1, {} )
+                                            Activate( self.activations.BEH_Eni_Pion_VAB_Semparer, 1, emptyTable )
+                                            Activate( self.activations.BEH_Mission_Pion_VAB_Semparer, 1, emptyTable )
 self.done_BEH_Mission_Pion_VAB_Semparer = function( self, _, v ) self.eCurrentPhase = v[1] end
                                         end
 --[[//Rapport de force défavorable ou neutre => se replier
@@ -221,7 +223,7 @@ node "BEH_Eni_Pion_VAB_Semparer"
 ]]--[[//  Rencontre d'un eni lorsque l'on est pas dans la phase d'assaut
 ]]--[[//-----------------------------------------------------------------------------		
 ]]local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
-        for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
+        for _,ksEni in pairs( lstEnisDansFuseau or emptyTable ) do
         local _continue = true
 do
                 --[[// L'ennemi est trop loin de la position
@@ -346,7 +348,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
 ]]self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             --[[// Vérifier que l'on est bien dans son fuseau
-]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
         end
 
          do
@@ -354,7 +356,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindrePosition then
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[//Rejoindre l'objectif
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[//Rejoindre l'objectif
 ]]
                     --[[// On ne se rapproche pas trop pour éviter de se faire prendre à parti
 ]]if( S_EstADistanceTir_Pt( self.pointCentreLocalisation ) ) then
@@ -445,7 +447,7 @@ elseif switch_1 == eRejoindreAssaut then
 elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( not S_EstADistanceTir_Pt( self.pointCentreLocalisation ) ) then
-                        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     end
 
                     if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
@@ -478,10 +480,10 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
 ]]--[[//-----------------------------------------------------------------------------
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eFouiller then
-                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
                     if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
-                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[//Peut-être embarquer avant
+                            Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[//Peut-être embarquer avant
 ]]
                             self.ePhase = eRejoindreAssaut
                                                         do return end

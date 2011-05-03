@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/behaviors/Behaviors - Lima.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Lima_GererLimas
 ]]--[[//
@@ -34,7 +36,7 @@ includedFiles["sources/common/pions/behaviors/Behaviors - Lima.bms"] = true
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local pointABC = x
@@ -98,7 +100,7 @@ if( appuiGeniePions() ) then
                                                             if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
                                                                 do
                                                                     F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
-                                                                    StartActivateOverride( self, self.activations.BEH_Lima_Pion_Gen_SePosterSurLCA, 1, {} )
+                                                                    StartActivateOverride( self, self.activations.BEH_Lima_Pion_Gen_SePosterSurLCA, 1, emptyTable )
                                                                 end
                                                             end
 
@@ -109,7 +111,7 @@ if( appuiNbcPionsCommon() ) then
                                                                 if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
                                                                     do
                                                                         F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
-                                                                        StartActivateOverride( self, self.activations.BEH_Lima_Pion_NBC_SePosterSurLCA, 1, {} )
+                                                                        StartActivateOverride( self, self.activations.BEH_Lima_Pion_NBC_SePosterSurLCA, 1, emptyTable )
                                                                     end
                                                                 else
                                                                     SetStateVariable( "VE_NiveauNBC", 4 )
@@ -122,7 +124,7 @@ if( meleeAbcPionsCommon() ) then
                                                                     if( F_Pion_GeteEtatAmbiance( myself ) == eEtatAmbiance_Vitesse ) then
                                                                         do
                                                                             F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Surete )
-                                                                            StartActivateOverride( self, self.activations.BEH_Lima_Pion_ABC_SePosterSurLCA, 1, {} )
+                                                                            StartActivateOverride( self, self.activations.BEH_Lima_Pion_ABC_SePosterSurLCA, 1, emptyTable )
                                                                         end
                                                                     end
 
@@ -130,7 +132,7 @@ if( meleeAbcPionsCommon() ) then
                                                             else
 if( meleeInfPionsCommon() ) then
                                                                     do
-                                                                        StartActivateOverride( self, self.activations.BEH_Lima_Pion_INF_SurLCA, 1, {} )
+                                                                        StartActivateOverride( self, self.activations.BEH_Lima_Pion_INF_SurLCA, 1, emptyTable )
                                                                     end
                                                                 end
                                                             end
@@ -153,7 +155,7 @@ elseif switch_1 == eTypeLima_LD then
                                     if( not DEC_GetMissionLimaFlag( lima ) ) then
                                         do
                                             if( meleeAbcPionsCommon() ) then
-                                                StartActivateOverride( self, self.activations.BEH_Lima_Pion_ABC_PasserSurLD, 1, {} )
+                                                StartActivateOverride( self, self.activations.BEH_Lima_Pion_ABC_PasserSurLD, 1, emptyTable )
                                             else
 if( meleeInfPionsCommon() ) then
                                                     StartActivateOverride( self, self.activations.BEH_Lima_Pion_INF_SurLD, 1, { lima, } )
@@ -219,7 +221,7 @@ node "BEH_Lima_GererLCAR"
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local pointABC = x
@@ -244,7 +246,7 @@ if( meleeAbcPionsCommon() ) then
                                                             do
                                                                 if( self.bPosteActif ) then
                                                                     do
-                                                                        StartActivateOverride( self, self.activations.BEH_Lima_Pion_ABC_SePosterSurLCAR, 1, {} )
+                                                                        StartActivateOverride( self, self.activations.BEH_Lima_Pion_ABC_SePosterSurLCAR, 1, emptyTable )
                                                                         self.bPosteActif = false
                                                                     end
                                                                 else
@@ -254,7 +256,7 @@ if( meleeAbcPionsCommon() ) then
                                                             end
                                                         else
 if( F_POLY_LIMA_PION_SUR_LCAR() ) then
-                                                                StartActivateOverride( self, self.activations.BEH_Lima_Pion_INF_SurLCAR, 1, {} )
+                                                                StartActivateOverride( self, self.activations.BEH_Lima_Pion_INF_SurLCAR, 1, emptyTable )
                                                             end
                                                         end
                                                     end
@@ -314,7 +316,7 @@ node "BEH_Lima_GererLR"
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local pointABC = x
@@ -342,7 +344,7 @@ do
                                                 end
                                             else
 if( meleeInfPionsCommon() ) then
-                                                    Activate( self.activations.BEH_Lima_Pion_INF_SurLR, 1, {} )
+                                                    Activate( self.activations.BEH_Lima_Pion_INF_SurLR, 1, emptyTable )
                                                 end
                                             end
 
@@ -391,7 +393,7 @@ node "BEH_Lima_GererLIA"
 ]]--[[// Traiter les points interressants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local pointABC = x
@@ -461,7 +463,7 @@ node "BEH_Lima_Pion_SePosterSurLC"
 --[[// On se poster
 ]]        end
 
-        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, {} )
+        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, emptyTable )
 self.done_BEH_Ordre_SePoster_EnAttente = function( self, _, v ) self.eOrdre = v[1] end
         --[[// MAJ Etat Lima
 ]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LC, } )

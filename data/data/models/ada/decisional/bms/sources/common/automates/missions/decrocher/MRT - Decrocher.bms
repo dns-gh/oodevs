@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/missions/decrocher/MRT - Decrocher.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_Decrocher
 ]]--[[// 
@@ -101,7 +103,7 @@ node "BEH_Medo_Automate_AssignerDecrocherA"
         if( self.ptRegroupement == nil ) then
             do
                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                 self:SendFeedback( eActionImpossible )
                 do return end
 
@@ -113,7 +115,7 @@ node "BEH_Medo_Automate_AssignerDecrocherA"
 
         if( ModuleBegins() ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_MRT, pion, self.ptRegroupement, eEtatEchelon_Premier, } )
 

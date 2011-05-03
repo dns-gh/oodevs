@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Rc.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Gestion des ordres de conduite spécifiques aux sgpt alat
 ]]--[[// -----------------------------------------------------------------------------
@@ -21,7 +23,7 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Rc.bms"
         local listeUnites = DEC_Automate_PionsAvecPC()
         for _,x in pairs( --[[// Si demande ordre de conduite d'au moins un pion
 ]]--[[// -----------------------------------------------
-]]listeUnites or {} ) do
+]]listeUnites or emptyTable ) do
         local _continue = true
 do
                 if( not S_EstPatrouilleALAT( x ) ) then

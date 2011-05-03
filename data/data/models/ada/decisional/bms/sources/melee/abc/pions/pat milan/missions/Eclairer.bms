@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/pions/pat milan/missions/Eclairer.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -52,7 +54,7 @@ include "bit.lua"
             do return end
         end
 
-        Activate( self.activations.BEH_Dep_Pion_ABC_GererDeboucherEclairage, 1, {} )
+        Activate( self.activations.BEH_Dep_Pion_ABC_GererDeboucherEclairage, 1, emptyTable )
         Activate( self.activations.BEH_Mission_Pion_ABC_Eclairer, 1, { self._namedParams.mission.itineraire_, M_MODELE_PION_ABC_ECLAIRER_PH(), M_MODELE_PION_ABC_ECLAIRER_ID(), } )
 self.done_BEH_Mission_Pion_ABC_Eclairer = function( self, _, v ) self.eEtat = v[1] end
     end,

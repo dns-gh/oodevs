@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/cie vab/missions/releverrecueil/ReleverRecueil MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -74,7 +76,7 @@ node "MIS_Automate_MRT_INF_ReleverEnRecueillant"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Medo_Automate_INF_RecueillirUnite, 1, {} )
+        Activate( self.activations.BEH_Medo_Automate_INF_RecueillirUnite, 1, emptyTable )
 self.done_BEH_Medo_Automate_INF_RecueillirUnite = function( self, _, v ) self.eCreationMRT = v[1] end
     end,
 

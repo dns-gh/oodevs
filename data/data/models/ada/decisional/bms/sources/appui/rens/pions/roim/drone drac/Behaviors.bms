@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/roim/drone drac/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created$
@@ -41,8 +43,10 @@ hauteur = 1,
 objectifEsquive = 1,
 }
 
+
 --[[//missions génériques
 ]]include "Common/Pions/MissionsGeneriques.bms"
+
 
 --[[// Commun Rens
 ]]include "Appui/Rens/Behaviors.bms"
@@ -101,12 +105,12 @@ include "Appui/Rens/Pions/Roim/Drone DRAC/Missions/Missions.bms"
 ]]DEC_Perception_DesactiverSenseurs()
         end
 
-        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// INFO MOS
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Info_Pion_Rens_Disponibilite, 1, {} )--[[//---------------------------------------------------------------------
+        Activate( self.activations.BEH_Info_Pion_Rens_Disponibilite, 1, emptyTable )--[[//---------------------------------------------------------------------
 ]]--[[// pour MOS ligth temp
 ]]--[[//---------------------------------------------------------------------
 ]]

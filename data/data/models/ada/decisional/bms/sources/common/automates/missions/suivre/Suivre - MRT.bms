@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/missions/suivre/Suivre - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_Suivre
 ]]--[[// 
@@ -96,7 +98,7 @@ node "BEH_Mission_Automate_AssignerFaireMouvement"
     activate = function( self )
         local Activate = Activate
         if( ModuleBegins() ) then
-for _,pion in pairs( self._namedParams.listePions or {} ) do
+for _,pion in pairs( self._namedParams.listePions or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, pion, DEC_Geometrie_CalculerPointArriveePourPion( pion ), eEtatEchelon_Premier, } )
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_common/automates/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// Actions communes à tous les Automate
 ]]--[[//----------------------------------
 ]]
@@ -56,12 +58,12 @@ include "Humus/Humus_Common/Automates/Missions/Behaviors.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// CR
 ]]--[[//-----------------------------------------------------------------------------
 ]]
         if( DEC_Automate_EstEmbraye() ) then
-            Activate( self.activations.BEH_Default_Automate_ReactionPopulations, 1, {} )
+            Activate( self.activations.BEH_Default_Automate_ReactionPopulations, 1, emptyTable )
         end
 
     end,

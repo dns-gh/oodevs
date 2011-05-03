@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/appuimob/pions/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: SDE 02-11-22 $
@@ -85,6 +87,7 @@ include "Appui/AppuiMob/Pions/Missions/Missions.bms"
     end,
 
     activate = function( self )
+        local Activate = Activate
         if( DEC_GetMission( myself ) == nil ) then
             do
                 F_Pion_SeteEtatPhaseMission( myself, eEtatPhaseMission_None )
@@ -95,19 +98,19 @@ include "Appui/AppuiMob/Pions/Missions/Missions.bms"
 ]]--[[// ---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )
-        Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, {} )--[[// ------------------------------------------------------------------------
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )
+        Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, emptyTable )--[[// ------------------------------------------------------------------------
 ]]--[[// MAJ VE
 ]]--[[// ------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
-        Activate( self.activations.BEH_Ambiance, 1, {} )--[[// ---------------------------------------------------------------------
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
+        Activate( self.activations.BEH_Ambiance, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// Comp générique
 ]]--[[// ---------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_ROE, 1, {} )
-        Activate( self.activations.BEH_Rens_PasserEnSilenceRadioPartiel, 1, {} )
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_ROE, 1, emptyTable )
+        Activate( self.activations.BEH_Rens_PasserEnSilenceRadioPartiel, 1, emptyTable )
     end,
 
 }
@@ -120,6 +123,7 @@ node "BEH_Mot_AffecterVariablesDEtat"
     end,
 
     activate = function( self )
+        local Activate = Activate
         --[[//////////////// BMS OPTIM  ///////////////////
 ]]        if( F_Pion_GeteEtatDec( myself ) == eEtatDec_Sauvegarde ) then
             do return end
@@ -202,6 +206,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     end,
 
     activate = function( self )
+        local Activate = Activate
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -219,6 +224,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
     end,
 
     activate = function( self )
+        local Activate = Activate
                 self:SendFeedback( eActionEffectuee )
         do return end
 

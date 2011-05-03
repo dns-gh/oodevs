@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/missions/suivre/Suivre - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_Suivre
 ]]--[[// 
@@ -39,7 +41,7 @@ includedFiles["sources/common/automates/missions/suivre/Suivre - CDT.bms"] = tru
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         Activate( self.activations.BEH_CoordDep_Automate_ActiverCoordinationAmisSur, 1, { S_ObtenirPionsOperationnelsPour( self._namedParams.mission.compagnie_ ), } )
     end,
@@ -82,7 +84,7 @@ node "BEH_CoordDep_Automate_ActiverCoordinationAmisSur"
 ]]--[[// Determiner les pions à coordonner
 ]]--[[//-----------------------------------------------------------------------------
 ]]local selPions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( selPions or {} ) do
+        for _,x in pairs( selPions or emptyTable ) do
         local _continue = true
 do
                 local pion = x

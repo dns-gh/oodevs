@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/emergency/pions/common/missions/Supply.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -48,7 +50,7 @@ include "bit.lua"
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -111,7 +113,7 @@ node "BEH_Pion_Emergency_OrganiseSupply"
     activate = function( self )
         local Activate = Activate
                 local listSupplyPoint = DEC_Connaissances_ObjetsDansZone( self._namedParams.zone, S_TypeObject_ToString( eTypeObjectSupplyFacility ) )
-        for _,x_object in pairs( listSupplyPoint or {} ) do
+        for _,x_object in pairs( listSupplyPoint or emptyTable ) do
         local _continue = true
 do
                 if( not DEC_ConnaissanceObject_EstRavitaillee( x_object ) ) then

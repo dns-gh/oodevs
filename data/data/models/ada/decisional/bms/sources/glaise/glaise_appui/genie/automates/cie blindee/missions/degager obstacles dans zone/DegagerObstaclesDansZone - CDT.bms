@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/degager obstacles dans zone/DegagerObstaclesDansZone - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_GEN_DegagerObstaclesDansZone
 ]]--[[//
@@ -40,7 +42,7 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
 ]]--[[//---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
         --[[//---------------------------------------------------------------------
 ]]--[[// Vérification des moyens
 ]]--[[//---------------------------------------------------------------------
@@ -96,7 +98,7 @@ node "BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_"
 ]]--[[//-------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                 local _continue = true
                     Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
 
@@ -150,7 +152,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Iteration sur les T_ConnaissanceObjet_local --> Assignation renforcement
 ]]--[[//-------------------------------------------------------------------------
-]]g_selConnaissanceObs or {} ) do
+]]g_selConnaissanceObs or emptyTable ) do
         local _continue = true
 do
                 local objetABrecher = x
@@ -168,7 +170,7 @@ do
 ]]
         end
 
-        for _,x in pairs( g_selConnaissanceObs or {} ) do
+        for _,x in pairs( g_selConnaissanceObs or emptyTable ) do
         local _continue = true
 do
                 local objetABrecher = x
@@ -183,7 +185,7 @@ do
         if( DIA_IsListEmpty( S_Obj_ListeObjetsValides( self._namedParams.obstacles ) ) ) then
             do
                 local listeGroupes = S_Gen_ObtenirGroupeGenie()
-                for _,pion in pairs( listeGroupes or {} ) do
+                for _,pion in pairs( listeGroupes or emptyTable ) do
                 local _continue = true
                     do
                         --[[// cast
@@ -233,7 +235,7 @@ node "BEH_Misc_Automate_GEN_GererReductionDesObstacles"
 ]]--[[// JSR : copie membre à membre de la liste, pour contourner un bug causé par la traduction lors d'une affectation directe
 ]]if( ModuleBegins() ) then
             do
-                for _,obj in pairs( self._namedParams.obstacles or {} ) do
+                for _,obj in pairs( self._namedParams.obstacles or emptyTable ) do
                 local _continue = true
                     do
                         DIA_PushBack( self.listeObjetsADegager, obj )
@@ -248,7 +250,7 @@ node "BEH_Misc_Automate_GEN_GererReductionDesObstacles"
 ]]        end
 
         local listePionsGenie = S_Gen_ObtenirSectionsGenieDisponibles()
-        for _,pion in pairs( listePionsGenie or {} ) do
+        for _,pion in pairs( listePionsGenie or emptyTable ) do
         local _continue = true
 do
                 local objetADegager = nil

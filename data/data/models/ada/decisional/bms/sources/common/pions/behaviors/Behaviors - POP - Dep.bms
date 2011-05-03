@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/behaviors/Behaviors - POP - Dep.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -255,7 +257,7 @@ do
 ]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
         Activate( self.activations.ACT_Dep_SeDeplacer, 1, { self.itEsquive, } )
 self.done_ACT_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
-        Activate( self.activations.ACT_Pion_FuirPopulations, 1, {} )
+        Activate( self.activations.ACT_Pion_FuirPopulations, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -301,7 +303,7 @@ node "BEH_Pop_Pion_SecuriserPopulation"
                     Activate( self.activations.ACT_Pion_Securiser, 1, { self._namedParams.pop, } )
                 end
 
-                Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, {} )
+                Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, emptyTable )
 self.done_BEH_Dep_Virtuel_PreparationAction = function( self, _, v ) self.ePreparation = v[1] end
             end
         else
@@ -346,7 +348,7 @@ node "BEH_Pop_Pion_SecuriserPopulationDans"
 ]]--[[// Pour toutes les pops dans la zone... on sécurise la plus dangereuse
 ]]--[[//-----------------------------------------------------------------------------
 ]]local lstPops = DEC_Connaissances_Populations()
-        for _,pop in pairs( lstPops or {} ) do
+        for _,pop in pairs( lstPops or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissancePopulation_EstDansZone( pop, self._namedParams.zone ) ) then
@@ -412,7 +414,7 @@ node "BEH_Pop_Pion_BloquerPopulation"
         self.localisation = self.localisation or DEC_Geometrie_CreerLocalisationCercle( self._namedParams.objectif, self._namedParams.rMin )
         self.localisationEtendue = self.localisationEtendue or DEC_Geometrie_CreerLocalisationCercle( self._namedParams.objectif, self._namedParams.rMax )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -468,7 +470,7 @@ elseif switch_1 == eAnimer then
 ]]                            end
 
                             Activate( self.activations.BEH_Pop_Pion_AnimerBlocagePopulation, 1, { self.posteControle, self._namedParams.permeabilite, } )
-                            Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, {} )
+                            Activate( self.activations.BEH_Dep_Virtuel_PreparationAction, 1, emptyTable )
 self.done_BEH_Dep_Virtuel_PreparationAction = function( self, _, v ) self.ePreparation = v[1] end
                         end
                     end
@@ -574,7 +576,7 @@ node "BEH_Pop_Pion_AnimerBlocagePopulation"
         Activate( self.activations.ACT_Pion_Animer, 1, { self._namedParams.posteControle, self._namedParams.permeabilite, } )
         --[[//Si les popus au contact sont trop dangereuses par rapport aux ROE on compense par le tir pour la dominer
 ]]local lstPops = DEC_Connaissances_CollisionsPopulations()
-        for _,pop in pairs( lstPops or {} ) do
+        for _,pop in pairs( lstPops or emptyTable ) do
         local _continue = true
 if( S_PopulationTropAggressive( pop ) ) then
                 Activate( self.activations.BEH_AttaqueDePopulation, 1, { pop, } )
@@ -609,7 +611,7 @@ node "BEH_Pop_Pion_RejoindrePopulationLaPlusProche"
     activate = function( self )
         local Activate = Activate
         local lstPops = DEC_Connaissances_Populations()
-        for _,pop in pairs( lstPops or {} ) do
+        for _,pop in pairs( lstPops or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissancePopulation_EstDansZone( pop, self._namedParams.zone ) ) then
@@ -680,7 +682,7 @@ node "BEH_Pop_Pion_RejoindrePopulation"
                 Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.objectif, eProgressionDefaut, eTypeItiMouvement, } )
             end
         else
-            Activate( self.activations.BEH_Dep_SePoster, 1, {} )
+            Activate( self.activations.BEH_Dep_SePoster, 1, emptyTable )
         end
 
     end,

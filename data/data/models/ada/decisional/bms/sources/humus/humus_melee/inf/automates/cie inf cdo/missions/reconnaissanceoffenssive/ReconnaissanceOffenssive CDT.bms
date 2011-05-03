@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/automates/cie inf cdo/missions/reconnaissanceoffenssive/ReconnaissanceOffenssive CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-05-06 $
@@ -45,7 +47,7 @@ includedFiles["sources/humus/humus_melee/inf/automates/cie inf cdo/missions/reco
             do
                 DEC_Trace( "Conduite Automate Reconnaissance Offenssive : debut" )
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )
             end
 --[[// Gestion de la situation des pions de la compagnie
 ]]--[[//-----------------------------------------------------------------------------
@@ -66,7 +68,7 @@ includedFiles["sources/humus/humus_melee/inf/automates/cie inf cdo/missions/reco
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, emptyTable )
     end,
 
     destroy = function( self )

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/milices/pion/missions/DetruireParEmbuscade.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -56,12 +58,12 @@ node "MIS_Pion_MILICE_DetruireEmbuscade"
 --[[// Voir milice 
 ]]        end
 
-        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, 0.8, } )
         Activate( self.activations.ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement, 1, { self._namedParams.mission.positionRegroupement_, } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -252,7 +254,7 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
 elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                    StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
+                    StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
 ]]--[[// On fait en sorte de ne pas etre vu
 ]]
                     if( self.eAction == eActionEffectuee ) then

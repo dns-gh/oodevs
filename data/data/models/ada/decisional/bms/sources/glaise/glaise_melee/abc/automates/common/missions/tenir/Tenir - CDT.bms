@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/tenir/Tenir - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created$
@@ -43,7 +45,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/tenir/T
             DEC_Trace( "BEH_Auto_CDT_ABC_Tenir" )
         end
 
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination, partielle ici, le PE se coordonne pas avec l'Ecl
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[/*

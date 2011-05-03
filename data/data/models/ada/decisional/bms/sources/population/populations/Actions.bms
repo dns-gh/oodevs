@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/populations/Actions.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// Actions utilitaires
 ]]include "Population/Populations/Actions - misc.bms"
 
@@ -185,7 +187,7 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 ]]        if( self._namedParams.intensite > 0 ) then
             do
                 local lstInstallations = DEC_Connaissances_ObjetsDansZone( self._namedParams.zone, S_TypeObject_ToString( eTypeObjectInstallation ) )
-                for _,installation in pairs( lstInstallations or {} ) do
+                for _,installation in pairs( lstInstallations or emptyTable ) do
                 local _continue = true
                     do
                         if( DEC_ConnaissanceObjet_Distance( installation ) < 10 ) then

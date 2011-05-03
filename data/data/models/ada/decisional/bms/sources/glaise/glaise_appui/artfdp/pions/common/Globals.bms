@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artfdp/pions/common/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -79,7 +81,7 @@ end
     end
 
     local selPions = DEC_Pion_PionsDeAutomateSansPC( pAutomate )
-    for _,x in pairs( selPions or {} ) do
+    for _,x in pairs( selPions or emptyTable ) do
     local _continue = true
 do
             local pion = x

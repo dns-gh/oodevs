@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/nbc/automates/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 02-11-08 $
@@ -70,15 +72,15 @@ include "Glaise/Glaise_Appui/Nbc/Automates/Common/Gestion pions detruits.bms"
             do return end
         end
 
-        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// NBC --> alerte de niveau 4
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// ROE --> Tir libre, sur riposte, interdit
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Silence radio
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -87,15 +89,15 @@ include "Glaise/Glaise_Appui/Nbc/Automates/Common/Gestion pions detruits.bms"
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_GetMission( myself ) ~= nil ) then
             do
-                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
-                Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
+                Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )
             end
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des pions --> init de la place dans le dispositif
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, {} )
+        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -122,7 +124,7 @@ node "BEH_Ordre_Automate_NBC_FairePosterLePremierEchelon_"
     activate = function( self )
         local Activate = Activate
         local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( listePionsPE or {} ) do
+        for _,x in pairs( listePionsPE or emptyTable ) do
         local _continue = true
 do
                 local pion = x

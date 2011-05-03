@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_common/automates/missions/sefairetransporter/MRT - SeFaireTransporter.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created$
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Common/Automates/Missions/SeFaireTransporter/MRT - SeFaireTransporter.hal $
@@ -194,7 +196,7 @@ node "BEH_Medo_Automate_FaireTransporter_DansZone"
     activate = function( self )
         local Activate = Activate
         self.ptCentreZone = self.ptCentreZone or S_Geometrie_BarycentreZone( self._namedParams.locZone )
-        for _,x_pion in pairs( self._namedParams.selPions or {} ) do
+        for _,x_pion in pairs( self._namedParams.selPions or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_AssignerSeFaireTransporterA_DansZone, 1, { x_pion, self.ptCentreZone, } )
 

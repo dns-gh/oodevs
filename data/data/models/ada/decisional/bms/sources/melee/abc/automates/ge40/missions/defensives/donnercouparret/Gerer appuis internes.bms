@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/defensives/donnercouparret/Gerer appuis internes.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -59,7 +61,7 @@ node "BEH_GTIA_GererAppuiEnDefensePour"
 
     activate = function( self )
         local Activate = Activate
-        for _,pion in pairs( self._namedParams.listePEEnDifficultes or {} ) do
+        for _,pion in pairs( self._namedParams.listePEEnDifficultes or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionsPourAppuyerEnDefense, 1, { pion, } )
 
@@ -95,7 +97,7 @@ node "BEH_GTIA_AssignerMissionsPourAppuyerEnDefense"
 ]]local listePionsSE = S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second )
         local listePionSEAppui = S_Cherche_GE_Filtre_EnMesureDe( S_Cherche_GE_AutomateOperationnels( listePionsSE ) )
         for _,x in pairs( --[[// Assignation missions ABC
-]]S_Cherche_GE_Filtre_TypeAutomate_ABC( listePionSEAppui ) or {} ) do
+]]S_Cherche_GE_Filtre_TypeAutomate_ABC( listePionSEAppui ) or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -105,7 +107,7 @@ do
 ]]
         end
 
-        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( listePionSEAppui ) or {} ) do
+        for _,x in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( listePionSEAppui ) or emptyTable ) do
         local _continue = true
 do
                 local pion = x

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/log/pions/missions/Convoyer.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_LOG_Convoyer
 ]]--[[//
@@ -36,7 +38,7 @@ includedFiles["sources/appui/log/pions/missions/Convoyer.bms"] = true
         self.pionPCRavitaille = self.pionPCRavitaille or DEC_Ravitaillement_Convoi_Ravitaille()
         self.pionPCConvoyant = self.pionPCConvoyant or DEC_Ravitaillement_Convoi_Convoyeur()
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -89,7 +91,7 @@ elseif switch_1 == eTestConvoyerStep_Chargement then
                         end
                     end
 
-                    Activate( self.activations.ACT_Misc_Pion_LOG_Charger, 1, {} )
+                    Activate( self.activations.ACT_Misc_Pion_LOG_Charger, 1, emptyTable )
 self.done_ACT_Misc_Pion_LOG_Charger = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Aller
@@ -118,7 +120,7 @@ elseif switch_1 == eTestConvoyerStep_Dechargement then
                         end
                     end
 
-                    Activate( self.activations.ACT_Misc_Pion_LOG_Decharger, 1, {} )
+                    Activate( self.activations.ACT_Misc_Pion_LOG_Decharger, 1, emptyTable )
 self.done_ACT_Misc_Pion_LOG_Decharger = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Retour
@@ -237,7 +239,7 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) <= self._namedParams.rDistanceMin ) then
                         do
-                            Activate( self.activations.ACT_Dep_SePoster, 1.5, {} )
+                            Activate( self.activations.ACT_Dep_SePoster, 1.5, emptyTable )
                             Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
                         end
                     end

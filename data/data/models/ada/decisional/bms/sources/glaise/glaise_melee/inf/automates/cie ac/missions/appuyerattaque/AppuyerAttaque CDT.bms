@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/automates/cie ac/missions/appuyerattaque/AppuyerAttaque CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -38,7 +40,7 @@ node "MIS_Automate_CDT_INF_AppuyerUneAttaque"
 ]]if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )
 self.done_BEH_Conduite_Automate_GererFuseau = function( self, _, v ) self.eActionHorsFuseau = v[1] end
             end
 --[[// Conduite des pions au niveau section
@@ -60,7 +62,7 @@ self.done_BEH_Conduite_Automate_GererFuseau = function( self, _, v ) self.eActio
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_AppuyerUneAttaque, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_AppuyerUneAttaque, 1, emptyTable )
 --[[// behavior BEH_Conduite_Automate_INF_Appuyer( mission.compagnie_ );		
 ]]    end,
 
@@ -88,12 +90,12 @@ node "BEH_Conduite_Automate_INF_AppuyerUneAttaque"
         local Activate = Activate
         --[[// Gestion des pions detruits		
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
-        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Coordination du front
 ]]--[[//-------------------------------------------------------------------------		
 ]]
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, emptyTable )
     end,
 
 --[[// behavior BEH_Conduite_Automate_Gerer_UniteInconnues();	

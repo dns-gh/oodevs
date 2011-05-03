@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/nbc/automates/common/MRT generique.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created$
@@ -63,7 +65,7 @@ includedFiles["sources/appui/nbc/automates/common/MRT generique.bms"] = true
 ]]self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_DeterminerEchelonsGlobals then
-                    for _,x in pairs( selPions or {} ) do
+                    for _,x in pairs( selPions or emptyTable ) do
                     local _continue = true
 do
                             local pion = x

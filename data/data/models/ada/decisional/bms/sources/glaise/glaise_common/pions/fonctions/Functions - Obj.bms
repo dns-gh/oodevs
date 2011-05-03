@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/fonctions/Functions - Obj.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[// *****************************************************************************
@@ -56,7 +58,7 @@ end
 function S_Obj_ListeObjetsNonContournes( objets )
     local _returnValue = {}
     local listeObjets = {}
-    for _,objet in pairs( objets or {} ) do
+    for _,objet in pairs( objets or emptyTable ) do
     local _continue = true
 do
             if( not S_Obj_EstContourne( objet ) and DEC_ConnaissanceObjet_EstValide( objet ) ) then
@@ -136,7 +138,7 @@ function S_Obj_ObtenirObjetProcheDePosition( ptRef, lstObjets, rDistMax )
     local _returnValue = nil
     _returnValue = nil
     local rDist = rDistMax
-    for _,ksObj in pairs( lstObjets or {} ) do
+    for _,ksObj in pairs( lstObjets or emptyTable ) do
     local _continue = true
 do
             local ptObj = S_Obj_Position( ksObj )

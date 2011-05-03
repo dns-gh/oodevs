@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/attaquer/Attaquer - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created$
@@ -45,7 +47,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/attaque
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions du premier echelon
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selABC or {} ) do
+]]self._namedParams.selABC or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_ABC_AssignerAttaquerA, 1, { ePhase_MRT, pion, self._namedParams.eEtatEchelon, } )
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/automates/common/missions/Behaviors MRT - Manoeuvre.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-05-15 $
@@ -328,7 +330,7 @@ node "BEH_Medo_Automate_ABC_AssignerReconnaitre"
     activate = function( self )
         local Activate = Activate
         if( ModuleBegins() ) then
-for _,x_abc in pairs( self._namedParams.selPion_ABC or {} ) do
+for _,x_abc in pairs( self._namedParams.selPion_ABC or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_ABC_AssignerReconnaitreA, 1, { ePhase_MRT, x_abc, eEtatEchelon_Premier, } )
 
@@ -356,7 +358,7 @@ node "BEH_Medo_Automate_INF_AssignerReconnaitre"
     activate = function( self )
         local Activate = Activate
         if( ModuleBegins() ) then
-for _,x_inf in pairs( self._namedParams.selPion_INF or {} ) do
+for _,x_inf in pairs( self._namedParams.selPion_INF or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerReconnaitreA, 1, { ePhase_MRT, x_inf, } )
 
@@ -393,7 +395,7 @@ node "BEH_Medo_Automate_Melee_AssignerReconnaitrePtA"
 ]]--[[// Assignement des missions aux differents pions
 ]]--[[//-------------------------------------------------------------------------
 ]]local rIt_Pion = 0
-                for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
+                for _,x_pion in pairs( self._namedParams.selPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         local rIdProche = S_Geometrie_PointPlusProchePosition_DansFuseau( DEC_Automate_PionPosition( x_pion ), self.lstObjectifs )
@@ -440,7 +442,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerA_Mortier"
         local Activate = Activate
         self.pionPC = self.pionPC or DEC_Automate_PionPC()
         if( ModuleBegins() ) then
-for _,x_inf in pairs( self._namedParams.selPions_Mortier or {} ) do
+for _,x_inf in pairs( self._namedParams.selPions_Mortier or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerAppuyerA, 1, { ePhase_MRT, x_inf, self.pionPC, eEtatEchelon_Second, } )
 
@@ -474,7 +476,7 @@ node "BEH_Medo_Automate_INF_AssignerFixerA"
 ]]--[[// Assignement des missions aux differents pions
 ]]--[[//-------------------------------------------------------------------------
 ]]local rIt_Pion = 0
-                for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
+                for _,x_pion in pairs( self._namedParams.selPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         local ksEni = DEC_UserTypeList_GetAt( self._namedParams.ksEnis, rIt_Pion )
@@ -522,7 +524,7 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Zone"
                     end
                 end
 
-                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                 self:SendFeedback( eActionImpossible )
                 do return end
 
@@ -533,7 +535,7 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Zone"
 ]]        end
 
         if( ModuleBegins() ) then
-for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
+for _,x_pion in pairs( self._namedParams.selPions_PE or emptyTable ) do
             local _continue = true
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_INF_AssignerA_Semparer, 1, { ePhase_MRT, x_pion, self.ptZone, } )
 
@@ -567,7 +569,7 @@ node "BEH_Medo_Automate_INF_AssignerSemparer_Objectifs"
 ]]if( ModuleBegins() ) then
             do
                 local rIt_Pion = 0
-                for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
+                for _,x_pion in pairs( self._namedParams.selPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         if( rIt_Pion >= DEC_ListePoints_Size( self._namedParams.lstPoints ) ) then
@@ -616,7 +618,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerAttaque"
                     DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                 end
 
-                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                 self:SendFeedback( eActionImpossible )
                 do return end
 
@@ -655,7 +657,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerAttaque"
                     DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
                 end
 
-                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                 self:SendFeedback( eActionImpossible )
                 do return end
 
@@ -667,7 +669,7 @@ node "BEH_Medo_Automate_INF_AssignerAppuyerAttaque"
                 local rIt_Pion = 0
                 local rIt_Appui = 0
                 local rIt_NbrAppuisMax = Floor( ( 1 + #( self._namedParams.selPions_PE ) ) / #( self.selPionsAppui_PE ) )
-                for _,x_pion in pairs( self._namedParams.selPions_PE or {} ) do
+                for _,x_pion in pairs( self._namedParams.selPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         if( rIt_Pion < #( self.selPionsAppui_PE ) ) then
@@ -721,7 +723,7 @@ node "BEH_Medo_Automate_INF_AssignerRelever"
             do
                 local selPionARelever = S_ObtenirTousPionsPour( self._namedParams.compagnie, eEtatEchelon_Premier )
                 local rIt_Pion = 0
-                for _,x_pion in pairs( self._namedParams.lstPionsAttaque or {} ) do
+                for _,x_pion in pairs( self._namedParams.lstPionsAttaque or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x_pion

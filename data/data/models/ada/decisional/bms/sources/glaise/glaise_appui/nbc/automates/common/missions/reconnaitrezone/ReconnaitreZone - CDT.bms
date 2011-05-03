@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/reconnaitrezone/ReconnaitreZone - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Conduite_Automate_NBC_ReconnaitreUneZone
 ]]--[[// 
@@ -22,12 +24,12 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/reconna
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_NBC_FaireSuivreLeSE_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gen
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// PC y compris
 ]]
-        Activate( self.activations.BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_, 1, {} )--[[// PC y compris
+        Activate( self.activations.BEH_CoordDep_Automate_NBC_AssurerLaCoordinationInterne_, 1, emptyTable )--[[// PC y compris
 ]]
     end,
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/asymetriques/common/automate/missions/commettreexactionssurpopulationdanszone/MRT - CommettreExactionsSurPopulationDansZone.bms"] = true
 
+local emptyTable = emptyTable
+
 
 
 --[[// *****************************************************************************
@@ -39,7 +41,7 @@ includedFiles["sources/population/asymetriques/common/automate/missions/commettr
                 if( szListeZones > 0 ) then
                     do
                         local nCurrentZoneIndex = 0
-                        for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+                        for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                         local _continue = true
                             do
                                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_ASY_AssignerCommettreExactionsA, 1, { ePhase_MRT, pion, DEC_UserTypeList_GetAt( self.missionExaction.zones_, nCurrentZoneIndex ), } )
@@ -130,17 +132,17 @@ node "BEH_Mission_Automate_ASY_AssignerCommettreExactionsA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end

@@ -496,7 +496,7 @@ node "ACT_Obj_Pion_Emergency_RealiserObjet"
                 end
 
                 DEC_Trace( "object construction: begin" )
-                self.actionID = DEC_StartCreerObjet( self.repObj, S_TypeObject_ToString( self._namedParams.eTypeObjet ), self._namedParams.locObjet )
+                self.actionID = DEC_StartCreateObjet( self.repObj, S_TypeObject_ToString( self._namedParams.eTypeObjet ), self._namedParams.locObjet )
                 actionCallbacks[ self.actionID ] = function( arg ) self.eEtatObjet = arg end
 
                 DEC_Trace( "DEC_StartCreateObjet: OK" )

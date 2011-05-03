@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/pions/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: SDE 02-11-22 $
@@ -83,10 +85,10 @@ include "Appui/Trans/Pions/Missions/FaireMouvement.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )--[[// RC par défaut
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )--[[// RC par défaut
 ]]
-        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, {} )
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// gestion NBC
+        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, emptyTable )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[// gestion NBC
 ]]--[[//behavior BEH_Nbc();
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// Embarquement apres Heliportage

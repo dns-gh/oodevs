@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/sgpt blindes ecl/missions/jalonner/Jalonner - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-09-15 $
@@ -41,7 +43,7 @@ includedFiles["sources/melee/abc/automates/sgpt blindes ecl/missions/jalonner/Ja
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_ABC_Jalonner, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_ABC_Jalonner, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Conduite gen
 ]]--[[//-----------------------------------------------------------------------------
 ]]

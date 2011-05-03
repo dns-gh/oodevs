@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Ordre.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Ordre_Automate_RecevoirOrdreInopine
 ]]--[[//
@@ -47,7 +49,7 @@ node "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement"
     activate = function( self )
         local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -85,7 +87,7 @@ node "BEH_Ordre_Automate_ALAT_ChangerParametresRecompletementPions"
     activate = function( self )
         local Activate = Activate
         local listePions = DEC_Automate_PionsAvecPC()
-        for _,x in pairs( S_ListePionsALAT( listePions ) or {} ) do
+        for _,x in pairs( S_ListePionsALAT( listePions ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_Ordre_Automate_ALAT_ChangerParametresRecompletement, 1, { x, self._namedParams.porteeAction, self._namedParams.ambianceMission, } )
 

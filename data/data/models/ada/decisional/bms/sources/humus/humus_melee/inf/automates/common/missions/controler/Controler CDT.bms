@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/automates/common/missions/controler/Controler CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-09-01 $
@@ -36,13 +38,13 @@ node "BEH_Situation_Automate_INF_Controler"
 ]]--[[// Gestion des pions detruits
 ]]--[[//-------------------------------------------------------------------------	
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
-        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Gestion des appuis
 ]]--[[//-------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppui_Mortier, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, emptyTable )
         --[[// behavior BEH_Conduite_Automate_Gerer_UniteInconnues();
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// Reduit les unites se trouvant dans la zone
@@ -71,7 +73,7 @@ node "BEH_Situation_Automate_INF_Controler_Reduire"
         local Activate = Activate
         local selPions_SE = S_ObtenirPionsDe( eEtatEchelon_Second, eEtatDestruction_None )
         local selPions_SE_INF = S_Cherche_Automate_Filtre_TypePion_INF( selPions_SE )
-        for _,x_appui in pairs( selPions_SE_INF or {} ) do
+        for _,x_appui in pairs( selPions_SE_INF or emptyTable ) do
         local _continue = true
 do
                 local pAppui = x_appui

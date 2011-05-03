@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/appuimob/automates/missions/transporter/Transporter - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 node "MIS_Automate_CDT_LOG_TransporterUnites"
 {
     feedbacks = { { { "done_MIS_Automate_CDT_LOG_TransporterUnites" }, "MIS_Automate_CDT_LOG_TransporterUnites" } },
@@ -29,7 +31,7 @@ node "MIS_Automate_CDT_LOG_TransporterUnites"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         --[[// ---------------------------------------------------------------------
 ]]--[[// 1. Mise à Jour des selections de pions ( à tous les tics )
@@ -62,7 +64,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
 elseif switch_1 == eFinMission then
                     --[[//quand plus aucun pion n'a de mission
 ]]local plusDeMissions = true
-                    for _,x in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+                    for _,x in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                     local _continue = true
 do
                             local pionBuffer = x

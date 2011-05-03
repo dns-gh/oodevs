@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/reconnaitreaxe/ReconnaitreAxe - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// *****************************************************************************
 ]]--[[// BEH_Medo_Automate_NBC_AssignerReconnaitreA
@@ -35,7 +37,7 @@ includedFiles["sources/glaise/glaise_appui/nbc/automates/common/missions/reconna
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions du premier echelon
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPions or {} ) do
+]]self._namedParams.selPions or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_NBC_AssignerReconnaitreA, 1, { ePhase_MRT, pion, } )
 

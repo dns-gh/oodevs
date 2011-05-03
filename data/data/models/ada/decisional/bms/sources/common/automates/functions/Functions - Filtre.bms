@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/functions/Functions - Filtre.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[//-----------------------------------------------------------------------------
@@ -74,7 +76,7 @@ include "bit.lua"
     local _returnValue = nil
     local pFoo = nil
     _returnValue = pFoo
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -96,7 +98,7 @@ end
 function S_Cherche_Automate_Filtre_TypePion( sPions, type )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -115,7 +117,7 @@ end
 function S_Cherche_Automate_Filtre_TypePionEchelon( sPions, type, eEtatEchelon )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -134,7 +136,7 @@ end
 function S_Cherche_Automate_Filtre_PionEchelon( sPions, eEtatEchelon )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -153,7 +155,7 @@ end
 function S_Cherche_Automate_Filtre_PionLima( sPions, eEtatLima )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -172,7 +174,7 @@ end
 function S_Cherche_Automate_PionsOperationnels( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             if( S_Pion_EstDetruitTactique( x ) ) then
@@ -193,7 +195,7 @@ end
 function S_Cherche_Automate_PionsNonOperationnels( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             if( S_Pion_EstDetruitTactique( x ) ) then
@@ -211,7 +213,7 @@ end
 function S_Cherche_Automate_Filtre_TypePionOperationnels( sPions, type )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             if( S_Pion_EstDetruitTactique( x ) ) then
@@ -236,7 +238,7 @@ end
 function S_Cherche_Automate_Filtre_PionNonDansListe( listePionReference, listePion )
     local _returnValue = {}
     local listeOutput = {}
-    for _,x in pairs( listePionReference or {} ) do
+    for _,x in pairs( listePionReference or emptyTable ) do
     local _continue = true
 if( not DIA_Contains( listePion, x ) ) then
             DIA_PushBack( listeOutput, x )
@@ -251,7 +253,7 @@ end
 function S_Cherche_Automate_Filtre_NotTypePion( sPions, type )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -270,7 +272,7 @@ end
 function S_Cherche_Automate_Filtre_TypePion_ABC( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -297,7 +299,7 @@ end
 function S_Cherche_Automate_Filtre_TypePion_INF( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -326,7 +328,7 @@ end
 function S_Cherche_Automate_Filtre_TypePion_Melee( sPions )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -357,7 +359,7 @@ end
 function S_Cherche_Automate_Filtre_TypeMission( sPions, type )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -377,7 +379,7 @@ end
 function S_Automate_ValideEchelonPion( sUnites_XL, selPion_PE, rMax_PE, selPion_SE )
     local _returnValue = {}
     local selTemp = {}
-    for _,x_xl in pairs( sUnites_XL or {} ) do
+    for _,x_xl in pairs( sUnites_XL or emptyTable ) do
     local _continue = true
 do
             if( not S_Pion_EstDetruitTactique( x_xl ) and #( selPion_PE ) < rMax_PE ) then
@@ -400,7 +402,7 @@ end
 function S_Automate_ValideTroisEchelons_Pion( sUnites_Distribuees, selPion_PE, rMax_PE, selPion_DE, rMax_DE, selPion_TE )
     local _returnValue = {}
     local selTemp = {}
-    for _,x_inf in pairs( sUnites_Distribuees or {} ) do
+    for _,x_inf in pairs( sUnites_Distribuees or emptyTable ) do
     local _continue = true
 do
             if( not S_Pion_EstDetruitTactique( x_inf ) and #( selPion_PE ) < rMax_PE ) then
@@ -473,7 +475,7 @@ function S_ObtenirPionsSurLima( eTypeLima )
     local _returnValue = {}
     local listePions = DEC_Automate_PionsSansPC()
     local selTemp = {}
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local pion = x

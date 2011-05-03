@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/surveiller/Surveiller - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Surveiller Hawk - MRT
 ]]--[[// -----------------------------------------------------------------------------
@@ -48,8 +50,8 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/surveiller
                     self.ePhase = eMRT_MissionImpossible
                 end
 
-                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
         end
 

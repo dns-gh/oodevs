@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artdsa/pions/groupe asa tcp/behaviors/Behaviors - Eni.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// gestion du déploiement des sections MISTRAL
 ]]--[[// -----------------------------------------------------------------------------
@@ -96,7 +98,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreZone"
 
     activate = function( self )
         local Activate = Activate
-        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
+        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_DefendreZone( x, self._namedParams.localisation ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), M_MODELE_VITESSE_MISSILE_MISTRAL(), myself.typeDeploiement_, true, } )
@@ -131,7 +133,7 @@ node "BEH_Eni_Pion_ASA_GererEniDefendreSite"
 
     activate = function( self )
         local Activate = Activate
-        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or {} ) do
+        for _,x in pairs( S_ConnaissancesEnnemiesVivantesPercuesVolantes() or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_DefendreZone( x, self._namedParams.localisation ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), M_MODELE_VITESSE_MISSILE_MISTRAL(), myself.typeDeploiement_, true, } )
@@ -162,7 +164,7 @@ node "BEH_Eni_Pion_ASA_MISTRAL_GererEniSurveiller"
     activate = function( self )
         local Activate = Activate
         local listeEnnemiesVivantesPercuesVolantes = S_ConnaissancesEnnemiesVivantesPercuesVolantes()
-        for _,x in pairs( listeEnnemiesVivantesPercuesVolantes or {} ) do
+        for _,x in pairs( listeEnnemiesVivantesPercuesVolantes or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_ASA_MISTRAL_InterceptionBalistique, S_Eni_Pion_ASA_Surveiller( x ), { x, eReconnu, M_DOCTRINE_PION_ASA_PH(), M_MODELE_VITESSE_MISSILE_MISTRAL(), myself.typeDeploiement_, true, } )

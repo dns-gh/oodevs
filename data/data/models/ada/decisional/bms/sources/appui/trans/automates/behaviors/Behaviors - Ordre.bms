@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/trans/automates/behaviors/Behaviors - Ordre.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Ordre_Automate_RecevoirOrdreInopine
 ]]--[[//
@@ -24,12 +26,12 @@ includedFiles["sources/appui/trans/automates/behaviors/Behaviors - Ordre.bms"] =
         local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         local bOrdreConduiteInterrompre = false
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
                 if( repOrdre:GetType() == "Rep_OrderConduite_Interrompre" ) then
-                    Activate( self.activations.BEH_Ordre_Automate_Interrompre_, 1, {} )
+                    Activate( self.activations.BEH_Ordre_Automate_Interrompre_, 1, emptyTable )
                 end
 
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
@@ -69,7 +71,7 @@ node "BEH_Ordre_Automate_Interrompre_"
         local Activate = Activate
         --[[// Le PC peut avoir une mission
 ]]local listePions = DEC_Automate_PionsAvecPC()
-        for _,x in pairs( listePions or {} ) do
+        for _,x in pairs( listePions or emptyTable ) do
         local _continue = true
 do
                 local pion = x

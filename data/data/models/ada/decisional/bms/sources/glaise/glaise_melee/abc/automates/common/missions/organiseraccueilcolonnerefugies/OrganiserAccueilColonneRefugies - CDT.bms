@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/organiseraccueilcolonnerefugies/OrganiserAccueilColonneRefugies - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: SDE 03-04-25 $
@@ -42,7 +44,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/organis
             DEC_Trace( "BEH_Conduite_Automate_ABC_OrganiserAccueilColonneRefugies : debut " )
         end
 
-        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_ABC_GererLesAppuis_, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Coordination
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[//behavior BEH_CoordDep_Automate_ABC_AssurerLaCoordinationInterne_();

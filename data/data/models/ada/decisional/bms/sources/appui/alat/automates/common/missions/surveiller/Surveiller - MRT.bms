@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveiller - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Conduite de la mission Automate ALAT Surveiller :
 ]]--[[// -----------------------------------------------------------------------------
@@ -50,7 +52,7 @@ includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveille
                 --[[//1 pion de reserve pour 4 qui peuvent Surveiller
 ]]local nbPionsReserve = nbPionsPouvantSurveiller / 4
                 for _,x in pairs( --[[//construction de la liste des pions en reserve
-]]self.listePatrouillesPeutFaireMissionSurveiller or {} ) do
+]]self.listePatrouillesPeutFaireMissionSurveiller or emptyTable ) do
                 local _continue = true
                     do
                         if( nbPionsReserve <= 0 ) then
@@ -89,8 +91,8 @@ includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveille
                     end
                 end
 
-                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
         end
 

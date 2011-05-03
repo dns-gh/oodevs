@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/missions/recueillir une formation aeromobile/Recueillir une Formation Aeromobile - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -48,7 +50,7 @@ include "bit.lua"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         --[[// ---------------------------------------------------------------------
 ]]--[[// Mise à Jour des selections de pions ( à tous les tics )
@@ -62,7 +64,7 @@ self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.
 ]]self.listeHMLog = {}
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "GeneralPurposeHelicopterPatrol" )
         for _,x in pairs( --[[//Gestion du debut du coup d'arret
-]]self.listeDetruire or {} ) do
+]]self.listeDetruire or emptyTable ) do
         local _continue = true
 do
                 local pionDEC = x
@@ -93,7 +95,7 @@ do
                             --[[//Tir libre pour le pion le plus en arriere
 ]]local pionArriere = DEC_Geometrie_PionDerriere( self.listeDetruire, DEC_GetDirectionEnnemi( self._namedParams.mission ) )
                             Activate( self.activations.ACT_ROE_Automate_DonnerOrdreTirLibre, 1, { pionArriere, } )
-                            for _,x in pairs( self.listeDetruire or {} ) do
+                            for _,x in pairs( self.listeDetruire or emptyTable ) do
                             local _continue = true
 do
                                     local pionDEC = x
@@ -144,7 +146,7 @@ do
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eSExfiltrer then
-                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                    Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
                     Activate( self.activations.BEH_Mission_Automate_AssignerStationnerAListe, 1, { ePhase_CDT, DEC_Automate_PionsAvecPC(), self._namedParams.mission.pointRegroupement_, } )
                     _continue = false
                                 cases_switch_1[2] = true

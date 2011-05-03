@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_common/automates/functions/Functions.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[// *****************************************************************************
@@ -85,7 +87,7 @@ function S_Eni_ChercheEniPlusProchePosition( point, listeEnis )
     local rDist_Min = 1105199104
     local rDistanceConnaissance = 0
     _returnValue = 0
-    for _,ksEni in pairs( listeEnis or {} ) do
+    for _,ksEni in pairs( listeEnis or emptyTable ) do
     local _continue = true
 do
             if( not DEC_ConnaissanceAgent_EstValide( ksEni ) ) then

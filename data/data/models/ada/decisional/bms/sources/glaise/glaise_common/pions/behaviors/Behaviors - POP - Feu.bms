@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - POP - Feu.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_AttaqueDePopulation
 ]]--[[//
@@ -107,7 +109,7 @@ node "BEH_RiposteSurPopulation"
             Activate( self.activations.ACT_Misc_Delai, 1, { BEH_RiposteSurPopulation, rDelai, } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtatDelai = v[1] end
         else
-for _,popPrenantAPartie in pairs( lstPops or {} ) do
+for _,popPrenantAPartie in pairs( lstPops or emptyTable ) do
             local _continue = true
 do
                     --[[//DEC_Trace(  "--->>> Fire in return on population ---"  );

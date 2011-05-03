@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/section te/missions/appuyer/Appuyer CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created: JCR 03-07-29 $
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Section TE/Missions/Appuyer/Appuyer CDT.hal $
@@ -36,7 +38,7 @@ includedFiles["sources/melee/inf/automates/section te/missions/appuyer/Appuyer C
 ]]if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )
             end
 --[[// Conduite des pions au niveau section
 ]]        end
@@ -56,7 +58,7 @@ includedFiles["sources/melee/inf/automates/section te/missions/appuyer/Appuyer C
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, emptyTable )
         Activate( self.activations.BEH_Conduite_Automate_INF_Appuyer, 1, { self._namedParams.mission.compagnie_, } )
     end,
 

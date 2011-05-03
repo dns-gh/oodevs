@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/pions/pat ei/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-02-10 $
@@ -95,7 +97,7 @@ include "Glaise/Glaise_Melee/Abc/Pions/Common/Missions/Escorter.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// Embarquement apres Heliportage
 ]]--[[// ------------------------------------------------------------------------
 ]]
@@ -153,7 +155,7 @@ node "BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer"
         local Activate = Activate
         --[[// Garder ses distances sur enis dangereux
 ]]local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeConnaissances or {} ) do
+        for _,repEni in pairs( listeConnaissances or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrerFaceA, S_Force_Distance( repEni ), { repEni, } )
 

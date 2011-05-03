@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/common/Gestion pions detruits.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-02-24 $
@@ -40,7 +42,7 @@ includedFiles["sources/appui/rens/automates/common/Gestion pions detruits.bms"] 
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Revoir la place du pion dans le dispositif et le relever eventuellement
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsDetruits or {} ) do
+]]listePionsDetruits or emptyTable ) do
         local _continue = true
 do
                 local pionDetruit = x

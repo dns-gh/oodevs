@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/Fonctions - Obj.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[//-----------------------------------------------------------------------------
 ]]--[[// Renvoie la localisation correspondant à l'objet
@@ -58,7 +60,7 @@ function S_Geometrie_PositionObjetPlusProche( listeObjets, point )
     local _returnValue = nil
     local ptBuffer = nil
     local distanceMax = 1105199104
-    for _,x in pairs( listeObjets or {} ) do
+    for _,x in pairs( listeObjets or emptyTable ) do
     local _continue = true
 do
             local ptX = S_Obj_Position( x )
@@ -83,7 +85,7 @@ function S_Geometrie_ObjetPlusProche( listeObjets, point )
     _returnValue = nil
     local distanceMax = 1105199104
     local objetProche = nil
-    for _,x in pairs( listeObjets or {} ) do
+    for _,x in pairs( listeObjets or emptyTable ) do
     local _continue = true
 do
             local objet = x
@@ -106,7 +108,7 @@ end
 function S_Obj_ListeObjetsValides( liste )
     local _returnValue = {}
     local listeBuffer = {}
-    for _,x in pairs( liste or {} ) do
+    for _,x in pairs( liste or emptyTable ) do
     local _continue = true
 if( DEC_ConnaissanceObjet_EstValide( x ) ) then
             DEC_UserTypeList_PushBack( listeBuffer, x )

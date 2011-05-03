@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/behaviors/medo/Behaviors - Medo - APPUIMOB.bms"] = true
 
+local emptyTable = emptyTable
+
 include "Glaise/Glaise_Common/Automates/Actions/Medo/Actions - Medo - APPUIMOB.bms"
 
 
@@ -34,7 +36,7 @@ include "Glaise/Glaise_Common/Automates/Actions/Medo/Actions - Medo - APPUIMOB.b
 ]]local listeCopiePionsATraiter = self._namedParams.listeUnitesATransporter
                 local nbPionsParPatrouille = Floor( #( self._namedParams.listeUnitesATransporter ) / #( self._namedParams.listePions ) )
                 local pionBuffer = nil
-                for _,x in pairs( self._namedParams.listePions or {} ) do
+                for _,x in pairs( self._namedParams.listePions or emptyTable ) do
                 local _continue = true
                     do
                         --[[//si plus de pion a traiter, ne pas donner de mission pour rien
@@ -59,7 +61,7 @@ do
 
                         if( DIA_GetAt( self._namedParams.listePions, #( self._namedParams.listePions ) - 1 ) == x ) then
                             do
-                                for _,y in pairs( listeCopiePionsATraiter or {} ) do
+                                for _,y in pairs( listeCopiePionsATraiter or emptyTable ) do
                                 local _continue = true
                                     DIA_PushBack( listePionsATransporterBuffer, y )
 
@@ -113,17 +115,17 @@ node "BEH_Medo_Automate_LOG_AssignerMissionTransporterA"
             local switch_1 = self.eActionCreation
             local cases_switch_1 = {}
                 if switch_1 == eActionEnCours then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eActionHalt
                 or switch_1 == eActionImpossible then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, emptyTable )
                                         do return end
 
                                 end
                 if cases_switch_1[2] or switch_1 == eActionEffectuee then
-                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, emptyTable )
                                         do return end
 
                                 end

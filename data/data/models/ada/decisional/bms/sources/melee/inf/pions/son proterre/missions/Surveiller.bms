@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/son proterre/missions/Surveiller.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-02-20 $
@@ -45,14 +47,14 @@ node "MIS_Pion_INF_SurveillerSecteur"
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
             end
         end
 
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eIdentifie, M_TIR_PH_MISSION_STATIQUE(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -63,7 +65,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
         end
 
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -121,9 +123,9 @@ do
                         end
                     end
 
-                    Activate( self.activations.BEH_Eni_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
+                    Activate( self.activations.BEH_Eni_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
 self.done_BEH_Eni_Pion_INF_SurveillerSecteur = function( self, _, v ) self.eActionEnnemi = v[1] end
-                    Activate( self.activations.BEH_Mission_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Mission_Pion_INF_SurveillerSecteur, GetMotivation( "MOT_Mission" ), emptyTable )
                     _continue = false
                 --[[// Rejoins une position de replis
 ]]                cases_switch_1[1] = true
@@ -138,7 +140,7 @@ elseif switch_1 == eSeReplier then
                         end
                     else
 do
-                            Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+                            Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, emptyTable )
 self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                                                         do return end
 

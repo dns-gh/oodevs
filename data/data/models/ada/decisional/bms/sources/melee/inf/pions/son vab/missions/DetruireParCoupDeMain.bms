@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/son vab/missions/DetruireParCoupDeMain.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -46,11 +48,11 @@ node "MIS_Pion_INF_DetruireParCoupDeMain"
         end
 
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
-        Activate( self.activations.BEH_Misc_Defini_AppuisMobile, 1, {} )
+        Activate( self.activations.BEH_Misc_Defini_AppuisMobile, 1, emptyTable )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_MANOEUVRE(), } )
         Activate( self.activations.ACT_Misc_Pion_INF_MAJ_PositionRegroupement, 1, { self._namedParams.mission.pointRegroupement_, } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -76,7 +78,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                         end
                     end
 
-                    Activate( self.activations.BEH_Mission_Pion_INF_DetruireParCoupDeMain, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Mission_Pion_INF_DetruireParCoupDeMain, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_INF_DetruireParCoupDeMain = function( self, _, v ) self.ePhaseMission = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true

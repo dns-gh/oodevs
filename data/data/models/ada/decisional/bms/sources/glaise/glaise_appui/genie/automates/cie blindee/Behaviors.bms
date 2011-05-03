@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// Paramètres généraux
 ]]--[[// -------------------
 ]]use_priority = no
@@ -51,7 +53,7 @@ include "glaise/glaise_appui/Genie/Automates/Cie Blindee/Missions/Missions.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// CR
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -62,23 +64,23 @@ include "glaise/glaise_appui/Genie/Automates/Cie Blindee/Missions/Missions.bms"
             do return end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_GEN_ActiverObstacle, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Ordre_Automate_GEN_ActiverObstacle, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Activation des obstacles
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// NBC --> alerte de niveau 4
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// ROE --> Tir libre, sur riposte, interdit
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des pions --> init de la place dans le dispositif
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Silence radio
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -111,7 +113,7 @@ node "BEH_Ordre_Automate_GEN_ActiverObstacle"
 ]]--[[// En fonction de l'ordre recu
 ]]--[[//-----------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local ordre = x
@@ -157,7 +159,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets"
 
     activate = function( self )
         local Activate = Activate
-        for _,objet in pairs( self._namedParams.objets or {} ) do
+        for _,objet in pairs( self._namedParams.objets or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire, 1, { objet, } )
 
@@ -191,7 +193,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruire"
         local Activate = Activate
         local eValidite = nil
         local listePions = DEC_Automate_PionsSansPC()
-        for _,pion in pairs( listePions or {} ) do
+        for _,pion in pairs( listePions or emptyTable ) do
         local _continue = true
 do
                 if( DEC_Automate_PionPeutConstruireObjet( pion, DEC_GenObject_Type( self._namedParams.objet ) ) ) then
@@ -203,7 +205,7 @@ do
 
         end
 
-        Activate( self.activations.ACT_Info_Automate_GEN_RendreComptePourRenfort, 1, {} )
+        Activate( self.activations.ACT_Info_Automate_GEN_RendreComptePourRenfort, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -230,7 +232,7 @@ node "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets"
 
     activate = function( self )
         local Activate = Activate
-        for _,objet in pairs( self._namedParams.objets or {} ) do
+        for _,objet in pairs( self._namedParams.objets or emptyTable ) do
         local _continue = true
 if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
                 Activate( self.activations.BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet, 1, { objet, } )
@@ -266,7 +268,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet"
         local Activate = Activate
         local eValidite = nil
         local listePions = DEC_Automate_PionsSansPC()
-        for _,pion in pairs( listePions or {} ) do
+        for _,pion in pairs( listePions or emptyTable ) do
         local _continue = true
 do
                 if( DEC_Automate_PionPeutDetruireObjet( pion, DEC_ConnaissanceObjet_Type( self._namedParams.objet, eValidite ) ) ) then
@@ -278,7 +280,7 @@ do
 
         end
 
-        Activate( self.activations.ACT_Info_Automate_GEN_RendreComptePourRenfort, 1, {} )
+        Activate( self.activations.ACT_Info_Automate_GEN_RendreComptePourRenfort, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -305,7 +307,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets"
 
     activate = function( self )
         local Activate = Activate
-        for _,objet in pairs( self._namedParams.objets or {} ) do
+        for _,objet in pairs( self._namedParams.objets or emptyTable ) do
         local _continue = true
 if( DEC_ConnaissanceObjet_EstValide( objet ) ) then
                 Activate( self.activations.BEH_Objet_Automate_GEN_VerifierRenfortPourContourner, 1, { objet, } )
@@ -346,7 +348,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner"
 
         local eValidite = nil
         local listePions = DEC_Automate_PionsSansPC()
-        for _,pion in pairs( listePions or {} ) do
+        for _,pion in pairs( listePions or emptyTable ) do
         local _continue = true
 do
                 if( DEC_Automate_PionPeutConstruireContournementObjet( pion, DEC_ConnaissanceObjet_Type( self._namedParams.objet, eValidite ) ) ) then
@@ -358,7 +360,7 @@ do
 
         end
 
-        Activate( self.activations.ACT_Info_Automate_GEN_RendreComptePourRenfort, 1, {} )
+        Activate( self.activations.ACT_Info_Automate_GEN_RendreComptePourRenfort, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************

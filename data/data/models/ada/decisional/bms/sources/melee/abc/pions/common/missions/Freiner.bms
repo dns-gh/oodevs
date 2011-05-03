@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/pions/common/missions/Freiner.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -41,7 +43,7 @@ include "bit.lua"
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.bLRPassee = self.bLRPassee or false
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -61,7 +63,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 ]]if( ModuleBegins() ) then
             do
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
-                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
             end
         end
 
@@ -99,7 +101,7 @@ elseif switch_1 == eJalonner then
 
                     if( self.bLRPassee ) then
                         do
-                            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                                                         do return end
 
                         end
@@ -122,7 +124,7 @@ elseif switch_1 == eJalonner then
                         end
                     end
 
-                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_GererLimas, 1, {} )
+                    Activate( self.activations.BEH_Lima_Pion_ABC_Jalonner_GererLimas, 1, emptyTable )
 self.done_BEH_Lima_Pion_ABC_Jalonner_GererLimas = function( self, _, v ) self.eEtatRecueil = v[1] end
                     Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
@@ -134,18 +136,18 @@ self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     --[[// Si ordre automate
 ]]--[[// Ajout mia ADA
 ]]if( F_Pion_GetbOrdreTenir( myself ) ) then
-                        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 2, {} )
+                        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 2, emptyTable )
                     end
 
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Jalonner les enis
 ]]--[[//-----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Eni_Pion_ABC_Freiner, 1.1, {} )
+]]Activate( self.activations.BEH_Eni_Pion_ABC_Freiner, 1.1, emptyTable )
                     _continue = false
                 --[[// 4) Fin de la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
-                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )--[[// reprendre sauvegarde
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, emptyTable )--[[// reprendre sauvegarde
 ]]
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     _continue = false
@@ -181,13 +183,13 @@ node "BEH_Eni_Pion_ABC_Freiner"
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
         if( not DIA_IsListEmpty( listeConnaissances ) ) then
             do
-                for _,repEni in pairs( listeConnaissances or {} ) do
+                for _,repEni in pairs( listeConnaissances or emptyTable ) do
                 local _continue = true
 --[[// Attention au seuil
 ]]if( DEC_ConnaissanceAgent_Dangerosite( repEni ) < 1.5 ) then
                         Activate( self.activations.BEH_Eni_Pion_ABC_FreinerSur, S_Force_DangerSur( repEni ), { repEni, } )
                     else
-                        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     end
 
                 end
@@ -195,7 +197,7 @@ node "BEH_Eni_Pion_ABC_Freiner"
             end
 --[[// Si pas d'ennemi à freiner, surveiller
 ]]        else
-            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
         end
 
     end,

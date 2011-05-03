@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - Rens.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Rens_Automate_GererSilenceRadio()
 ]]--[[//
@@ -21,7 +23,7 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - Rens
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, 1, {} )--[[// Eventuellement d'autre comportements...
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio, 1, emptyTable )--[[// Eventuellement d'autre comportements...
 ]]--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion de l'ordre de conduite
 ]]--[[//-----------------------------------------------------------------------------
@@ -61,7 +63,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadio"
 ]]--[[// Recevoir un ordre
 ]]--[[//-----------------------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local ordre = x
@@ -73,15 +75,15 @@ do
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadio" then
                             DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
-                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, 1, {} )
-                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, {} )
-                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_BEH_Ordre_Automate_ConduitePasserEnSilenceRadioPartiel, {} )
+                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, 1, emptyTable )
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, emptyTable )
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_BEH_Ordre_Automate_ConduitePasserEnSilenceRadioPartiel, emptyTable )
                             _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadio" then
                             DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
-                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, {} )
-                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, 1, {} )
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadio, emptyTable )
+                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadio, 1, emptyTable )
                             _continue = false
                         --[[//-----------------------------------------------------------------------------
 ]]--[[// Sinon...
@@ -135,7 +137,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreSurSilenceRadar"
 ]]--[[// Recevoir un ordre
 ]]--[[//-----------------------------------------------------------------------------
 ]]local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local ordre = x
@@ -147,14 +149,14 @@ do
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_PasserEnSilenceRadar" then
                             DEC_Trace( "$ --- ORDRE Passer en Silence Radio ---$" )
-                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, 1, {} )
-                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, {} )
+                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, 1, emptyTable )
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, emptyTable )
                             _continue = false
                                                 cases_switch_1[1] = true
 elseif switch_1 == "Rep_OrderConduite_ArreterSilenceRadar" then
                             DEC_Trace( "$ --- ORDRE Autoriser Emissions Radio ---$" )
-                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, {} )
-                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, 1, {} )
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduitePasserEnSilenceRadar, emptyTable )
+                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_ConduiteFinSilenceRadar, 1, emptyTable )
                             _continue = false
                         --[[//-----------------------------------------------------------------------------
 ]]--[[// Sinon...
@@ -210,7 +212,7 @@ node "BEH_Ordre_Automate_ConduitePasserEnSilenceRadio"
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-        for _,x in pairs( listePionsSubordonnes or {} ) do
+        for _,x in pairs( listePionsSubordonnes or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -247,7 +249,7 @@ node "BEH_Ordre_Automate_ConduiteFinSilenceRadio"
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-        for _,x in pairs( listePionsSubordonnes or {} ) do
+        for _,x in pairs( listePionsSubordonnes or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -342,7 +344,7 @@ node "ACT_Ordre_PasserEnSilenceRadio"
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-        for _,x in pairs( listePionsSubordonnes or {} ) do
+        for _,x in pairs( listePionsSubordonnes or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -378,7 +380,7 @@ node "BEH_Ordre_Automate_ConduiteFinSilenceRadar"
 ]]--[[// Donner l'ordre aux pions si embrayé
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-        for _,x in pairs( listePionsSubordonnes or {} ) do
+        for _,x in pairs( listePionsSubordonnes or emptyTable ) do
         local _continue = true
 do
                 local pion = x

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Retablir itineraire.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -44,7 +46,7 @@ include "bit.lua"
 ]]        end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -83,13 +85,13 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self._namedParams.mission.itineraire_, eProgressionReco, eTypeItiDeminage, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eEtat = v[1] end
                     --[[// Nettoyage obstacle si possible
-]]Activate( self.activations.BEH_Dep_GEN_Retablir_ReagirFaceAObstacles, 2, {} )
+]]Activate( self.activations.BEH_Dep_GEN_Retablir_ReagirFaceAObstacles, 2, emptyTable )
                     _continue = false
                 --[[// Fin de la mission
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[3] = true
                 end
@@ -196,7 +198,7 @@ self.done_ACT_Obj_Pion_GEN_ReduireObstacle = function( self, _, v ) self.eEtat =
         else
 do
                 Activate( self.activations.ACT_Pion_GEN_AttendreRenforcementPour, 1, { self._namedParams.obj, } )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
             end
         end
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// Common Squadron Behaviors and Actions
 ]]--[[// -------------------------------------
 ]]include "Common/Automates/Behaviors.bms"
@@ -53,7 +55,7 @@ include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Ordre.bms"
         self.listePionsAvecPC = self.listePionsAvecPC or {}
         self.listePionsAvecPC = DEC_Automate_PionsAvecPC()
         myself.sPlotsDeRavitaillement_ = S_Obj_ListeObjetsValides( myself.sPlotsDeRavitaillement_ )
-        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[// ---------------------------------------------------------------------
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates génériques sur eni et situation mission
 ]]--[[// ---------------------------------------------------------------------
 ]]
@@ -62,18 +64,18 @@ include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Ordre.bms"
 ]]--[[// -------------------------------------------------------------------------
 ]]if( DEC_Automate_EstEmbraye() ) then
             do
-                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
-                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )
-                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )
-                Activate( self.activations.BEH_RC_Automate_ALAT_Situation, 1, {} )--[[// ---------------------------------------------------------------------
+                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
+                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )
+                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )
+                Activate( self.activations.BEH_RC_Automate_ALAT_Situation, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates spécifique à l'ALAT
 ]]--[[// ---------------------------------------------------------------------
 ]]
-                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )
+                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, emptyTable )
                 if( DEC_GetMission( myself ) ~= nil ) then
                     do
-                        Activate( self.activations.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau, 1, {} )
-                        Activate( self.activations.BEH_Log_Automate_ALAT_GererPlotsRavitaillement, 1, {} )
+                        Activate( self.activations.BEH_Log_Automate_ALAT_AjoutNouveauxPlotsDansFuseau, 1, emptyTable )
+                        Activate( self.activations.BEH_Log_Automate_ALAT_GererPlotsRavitaillement, 1, emptyTable )
                     end
                 end
 
@@ -81,7 +83,7 @@ include "Appui/Alat/Automates/Common/Behaviors/Behaviors - Ordre.bms"
 --[[// gestion de l'ordre de conduite changement des paramètres de recompletement ALAT
 ]]        end
 
-        Activate( self.activations.BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_ALAT_ChangerParametresRecompletement, 1, emptyTable )
     end,
 
 }

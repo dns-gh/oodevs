@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/grp mortier/Behaviors - Tir.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -46,7 +48,7 @@ node "BEH_Ordre_Pion_Mortier_AppliquerLesFeux"
             do return end
         end
 
-        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 2, {} )
+        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 2, emptyTable )
         if( not DEC_Agent_EstEmbarque() ) then
             Activate( self.activations.BEH_Tir_Pion_Mortier_AppliquerFeux, 1, { self._namedParams.ptCible, self._namedParams.rIT, self._namedParams.dotation, } )
 self.done_BEH_Tir_Pion_Mortier_AppliquerFeux = function( self, _, v ) self.eAction = v[1] end
@@ -234,9 +236,9 @@ node "BEH_MOT_Pion_Mortier_AppliquerLesFeux"
             Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
         end
 
-        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 2, {} )
+        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 2, emptyTable )
         local selPions_Compagnie = DEC_Pion_PionsAvecPC()
-        for _,x_pion in pairs( selPions_Compagnie or {} ) do
+        for _,x_pion in pairs( selPions_Compagnie or emptyTable ) do
         local _continue = true
 do
                 local pPion = x_pion

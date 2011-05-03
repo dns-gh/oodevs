@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artdsa/pions/common/fonctions/Fonctions - Listes.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[// variables locales
@@ -8,7 +10,7 @@ include "bit.lua"
     local _returnValue = {}
     local agentDec = nil
     _returnValue = {}
-    for _,x in pairs( listeUnites or {} ) do
+    for _,x in pairs( listeUnites or emptyTable ) do
     local _continue = true
 do
             agentDec = x
@@ -26,7 +28,7 @@ end
 function S_ConnaissancesOperationnelles( listePions )
     local _returnValue = {}
     _returnValue = {}
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             if( not ( S_Misc_EstPionDetruitPhysique( x ) or S_Misc_EstPionDetruitTactique( x ) ) ) then
@@ -44,7 +46,7 @@ function S_ConnaissancesEnnemiesVivantesPercuesVolantes( )
     local _returnValue = {}
     _returnValue = {}
     local listeUnitesEnnemiesVivantesPercues = DEC_Connaissances_UnitesEnnemiesVivantesPercues()
-    for _,x in pairs( listeUnitesEnnemiesVivantesPercues or {} ) do
+    for _,x in pairs( listeUnitesEnnemiesVivantesPercues or emptyTable ) do
     local _continue = true
 do
             if( not S_ConnaissanceAgent_EstEnVol( x ) ) then
@@ -65,7 +67,7 @@ function S_ConnaissancesEnnemiesDangereusesNonVolantes( )
     local _returnValue = {}
     _returnValue = {}
     local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
-    for _,x in pairs( listeUnitesEnnemiesDangereuses or {} ) do
+    for _,x in pairs( listeUnitesEnnemiesDangereuses or emptyTable ) do
     local _continue = true
 do
             if( S_ConnaissanceAgent_EstEnVol( x ) ) then

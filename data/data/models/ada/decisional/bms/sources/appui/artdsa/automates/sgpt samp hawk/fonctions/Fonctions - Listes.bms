@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/fonctions/Fonctions - Listes.bms"] = true
 
+local emptyTable = emptyTable
+
 include "Common/Fonctions - Telepathy.bms"
 
 --[[// -------------------------------------------------------------------------
@@ -51,12 +53,12 @@ include "Common/Fonctions - Telepathy.bms"
     local listePionsSsgpt = DEC_Automate_PionsAvecPC()
     local meilleureDangerosite = 0
     local eniLePlusDangereux = nil
-    for _,x in pairs( listeEnis or {} ) do
+    for _,x in pairs( listeEnis or emptyTable ) do
     local _continue = true
 do
             local dangerositeSurAmis = 0
             local dangerositeSurSsgpt = 0
-            for _,y in pairs( listeAmisDansZone or {} ) do
+            for _,y in pairs( listeAmisDansZone or emptyTable ) do
             local _continue = true
                 dangerositeSurAmis = dangerositeSurAmis + S_Connaissance_ForceDistance( y, x )
 
@@ -66,7 +68,7 @@ do
                 dangerositeSurAmis = dangerositeSurAmis / #( listeAmisDansZone )
             end
 
-            for _,y in pairs( listePionsSsgpt or {} ) do
+            for _,y in pairs( listePionsSsgpt or emptyTable ) do
             local _continue = true
                 dangerositeSurSsgpt = dangerositeSurSsgpt + S_Pion_ForceDistance( y, x )
 
@@ -97,13 +99,13 @@ function S_Eni_Automate_ASA_HAWK_LePlusDangereuxSurSite( listeEnis, zone )
     local meilleureDangerosite = 0
     local eniLePlusDangereux = nil
     local barycentreSite = S_Geometrie_BarycentreZone( zone )
-    for _,x in pairs( listeEnis or {} ) do
+    for _,x in pairs( listeEnis or emptyTable ) do
     local _continue = true
 do
             local dangerositeSurSsgpt = 0
             local dangerSurSite = 0
             dangerSurSite = 2 - S_ForceDistance( DEC_Geometrie_Distance( barycentreSite, DEC_ConnaissanceAgent_Position( x ) ) )
-            for _,y in pairs( listePionsSsgpt or {} ) do
+            for _,y in pairs( listePionsSsgpt or emptyTable ) do
             local _continue = true
                 dangerositeSurSsgpt = dangerositeSurSsgpt + S_Pion_ForceDistance( y, x )
 
@@ -133,7 +135,7 @@ function S_Eni_Automate_ASA_HAWK_TrieParDangerositeSurAmisDansZone( sListeEnis, 
     local listeCopie = sListeEnis
     local connaissanceAgentBuffer = nil
     _returnValue = {}
-    for _,x in pairs( sListeEnis or {} ) do
+    for _,x in pairs( sListeEnis or emptyTable ) do
     local _continue = true
 do
             if( not S_ConnaissanceAgent_EstEnVol( x ) ) then
@@ -157,7 +159,7 @@ function S_Eni_Automate_ASA_HAWK_TrieParDangerositeSurSite( sListeEnis, zone )
     local listeCopie = sListeEnis
     local connaissanceAgentBuffer = nil
     _returnValue = {}
-    for _,x in pairs( sListeEnis or {} ) do
+    for _,x in pairs( sListeEnis or emptyTable ) do
     local _continue = true
 do
             if( not S_ConnaissanceAgent_EstEnVol( x ) ) then
@@ -187,7 +189,7 @@ function S_Liste_GererOverKill( pion, listeSectionsTir )
 
     local sectionHawk = pion
     listeConnaissancesEnisCopie = F_GetListeEnisTirAutorise( sectionHawk )
-    for _,x in pairs( listeConnaissancesEnisCopie or {} ) do
+    for _,x in pairs( listeConnaissancesEnisCopie or emptyTable ) do
     local _continue = true
 do
             if( not S_ConnaissanceAgent_EstEnVol( x ) ) then
@@ -196,7 +198,7 @@ do
 
                 if _continue then
                 local distanceASectionHAWK = DEC_Geometrie_Distance( DEC_Automate_PionPosition( pion ), DEC_ConnaissanceAgent_Position( x ) )
-                for _,y in pairs( listeCopie or {} ) do
+                for _,y in pairs( listeCopie or emptyTable ) do
                 local _continue = true
 do
                         if( y:GetType() ~= "TheaterHighAltitudeDefenseTroop" ) then
@@ -229,7 +231,7 @@ do
 end
 
 function S_Eni_Automate_ASA_HAWK_AffecterPistes( listePions )
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             if( x:GetType() ~= "TheaterHighAltitudeDefenseTroop" ) then
@@ -240,7 +242,7 @@ do
                 local sectionTirHAWK = x
                 local listeConnaissancesBuffer = {}
                 local iterateur = 0
-                for _,y in pairs( sectionTirHAWK:GetlisteEnisTirAutorise_() or {} ) do
+                for _,y in pairs( sectionTirHAWK:GetlisteEnisTirAutorise_() or emptyTable ) do
                 local _continue = true
 do
                         if( iterateur >= M_POLY_DOCTRINE_NB_PISTE_TIR_PAR_SECTION() ) then

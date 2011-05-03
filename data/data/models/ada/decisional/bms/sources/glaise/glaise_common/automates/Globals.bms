@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//=============================================================================
 ]]--[[// Variables Globales des automates
 ]]--[[//=============================================================================
@@ -30,7 +32,7 @@ include "Glaise/glaise_Common/Automates/Functions.bms"
     local _returnValue = false
     _returnValue = false
     local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-    for _,x in pairs( listePionsSubordonnes or {} ) do
+    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
     local _continue = true
 do
             if( DEC_Automate_PionEstContamine( x ) ) then

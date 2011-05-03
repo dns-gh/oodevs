@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/genie/pions/missions/appui a la mobilite/Contourner obstacles.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -43,7 +45,7 @@ include "bit.lua"
 ]]        end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -68,7 +70,7 @@ elseif switch_1 == eProgresser then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     --[[// Contournement
 ]]local obstacles = S_Obj_ListeObjetsNonContournes( self._namedParams.mission.obstacles_ )
-                    for _,obstacle in pairs( obstacles or {} ) do
+                    for _,obstacle in pairs( obstacles or emptyTable ) do
                     local _continue = true
 do
                             Activate( self.activations.BEH_Dep_GEN_AllerContournerObstacle, S_Obj_ForceDistance( obstacle ), { obstacle, } )
@@ -84,7 +86,7 @@ do
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[3] = true
                 end

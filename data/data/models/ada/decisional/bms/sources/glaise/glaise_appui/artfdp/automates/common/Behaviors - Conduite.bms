@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artfdp/automates/common/Behaviors - Conduite.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-05-15 $
@@ -53,7 +55,7 @@ includedFiles["sources/glaise/glaise_appui/artfdp/automates/common/Behaviors - C
             end
         end
 
-        Activate( self.activations.BEH_Situation_Automate_ASS_FinMission, 1, {} )
+        Activate( self.activations.BEH_Situation_Automate_ASS_FinMission, 1, emptyTable )
 self.done_BEH_Situation_Automate_ASS_FinMission = function( self, _, v ) self.eActionMission = v[1] end
     end,
 
@@ -82,7 +84,7 @@ node "BEH_Situation_Automate_ASS_FinMission"
         end
 
         local rN_Fin = 0
-        for _,x in pairs( self.lst_Pions_EnTete or {} ) do
+        for _,x in pairs( self.lst_Pions_EnTete or emptyTable ) do
         local _continue = true
 do
                 local x_pion = x

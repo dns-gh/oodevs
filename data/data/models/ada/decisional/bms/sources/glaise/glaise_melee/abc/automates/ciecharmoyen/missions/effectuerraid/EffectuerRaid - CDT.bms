@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharmoyen/missions/effectuerraid/EffectuerRaid - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-08-29 $
@@ -49,7 +51,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/ciecharmoyen/missions/e
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Auto_CDT_ABC_Attaquer, 1, {} )
+        Activate( self.activations.BEH_Auto_CDT_ABC_Attaquer, 1, emptyTable )
     end,
 
 }

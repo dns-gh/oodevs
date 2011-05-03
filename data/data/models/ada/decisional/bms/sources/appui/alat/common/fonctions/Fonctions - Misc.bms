@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/common/fonctions/Fonctions - Misc.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[//------------------------------------------------------------------------------
@@ -17,7 +19,7 @@ end
 function S_ListePionsALAT( listeAgents )
     local _returnValue = {}
     local listeBuffer = {}
-    for _,x in pairs( listeAgents or {} ) do
+    for _,x in pairs( listeAgents or emptyTable ) do
     local _continue = true
 do
             if( S_EstPatrouilleALAT( x ) ) then

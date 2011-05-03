@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/pions/common/missions/SEmparerObjectifOriginal.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -59,7 +61,7 @@ node "MIS_Pion_INF_Semparer"
                 Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
                 Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_DETRUIRE(), } )
                 self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-                Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+                Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
                 if( self.eEtatOrdreFinMission == eActionHalt ) then
                     do
@@ -79,8 +81,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                         if switch_1 == eSeMettreEnPlace then
                             if( self.eCurrentPhase ~= eFinMission ) then
                                 do
-                                    Activate( self.activations.BEH_Eni_Pion_VAB_Semparer, GetMotivation( "MOT_ManoeuvrerSurEnis" ), {} )
-                                    Activate( self.activations.BEH_Mission_Pion_VAB_Semparer, GetMotivation( "MOT_Mission" ), {} )
+                                    Activate( self.activations.BEH_Eni_Pion_VAB_Semparer, GetMotivation( "MOT_ManoeuvrerSurEnis" ), emptyTable )
+                                    Activate( self.activations.BEH_Mission_Pion_VAB_Semparer, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_Semparer = function( self, _, v ) self.eCurrentPhase = v[1] end
                                     _continue = false
                                 end
@@ -160,7 +162,7 @@ node "BEH_Eni_Pion_VAB_Semparer"
 ]]--[[//  Rencontre d'un eni lorsque l'on est pas dans la phase d'assaut
 ]]--[[//-----------------------------------------------------------------------------		
 ]]local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
-        for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
+        for _,ksEni in pairs( lstEnisDansFuseau or emptyTable ) do
         local _continue = true
 do
                 --[[// L'ennemi est trop loin de la position
@@ -229,7 +231,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
         self.ePhase = self.ePhase or eRejoindrePosition
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
-            StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+            StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
         end
 
          do
@@ -237,7 +239,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindrePosition then
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     --[[// On ne se rapproche pas trop pour éviter de se faire prendre à parti
 ]]if( S_EstADistanceTir_Pt( self.mission.objectif_ ) ) then
                         self.eAction = eActionEffectuee
@@ -259,7 +261,7 @@ node "BEH_Mission_Pion_VAB_Semparer"
                     Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.objectif_, false, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     if( not DEC_Agent_AutomateEstEmbraye() and F_Pion_GeteniEnCours( myself ) ~= nil ) then
-                        Activate( self.activations.BEH_Ordre_Pion_VAB_Semparer_Demande, 1, {} )
+                        Activate( self.activations.BEH_Ordre_Pion_VAB_Semparer_Demande, 1, emptyTable )
                     end
 
                     _continue = false
@@ -326,7 +328,7 @@ elseif switch_1 == eRejoindreAssaut then
 elseif switch_1 == eRejoindre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
                     if( not S_EstADistanceTir_Pt( self.mission.objectif_ ) ) then
-                        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     end
 
                     if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
@@ -357,7 +359,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eAction = v[1] e
                 --[[// Une fois sur place, on fouille les lieux
 ]]                cases_switch_1[4] = true
 elseif switch_1 == eFouiller then
-                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                    Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
                     if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
                         do
                             self.ePhase = eRejoindreAssaut
@@ -423,7 +425,7 @@ node "BEH_Ordre_Pion_VAB_Semparer_Demande"
 
         --[[// On se poste
 ]]Activate( self.activations.ACT_RC, 1, { eRC_AttenteOrdrePoursuivre, } )
-        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, {} )
+        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, emptyTable )
 self.done_BEH_Ordre_SePoster_EnAttente = function( self, _, v ) self.eOrdre = v[1] end
     end,
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/automates/common/Gestion deuxieme echelon.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -50,7 +52,7 @@ include "bit.lua"
             do return end
         end
 
-        for _,x in pairs( sel_SE or {} ) do
+        for _,x in pairs( sel_SE or emptyTable ) do
         local _continue = true
 do
                 local pion = x

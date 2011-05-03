@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/cie vab/missions/freiner/Freiner CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_INF_Freiner
 ]]--[[//
@@ -50,7 +52,7 @@ includedFiles["sources/melee/inf/automates/cie vab/missions/freiner/Freiner CDT.
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_Freiner, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Freiner, 1, emptyTable )
         local selAppuis_Mortier = S_Cherche_Automate_Filtre_TypePion( S_ObtenirPionsOperationnels(), "GroupeInfanterie_Mortier" )
         Activate( self.activations.BEH_Conduite_Automate_INF_GererOrdre_Mortier, 1, { selAppuis_Mortier, } )
     end,

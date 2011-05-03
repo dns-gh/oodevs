@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/defendre zone/Defendre Zone - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Defendre Zone Hawk - MRT
 ]]--[[// -----------------------------------------------------------------------------
@@ -48,8 +50,8 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/missions/defendre z
                     self.ePhase = eMRT_MissionImpossible
                 end
 
-                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
 --[[// =============================================================================
 ]]--[[// Vérifier les moyens, determiner les patrouilles qui vont aller reconnaitre

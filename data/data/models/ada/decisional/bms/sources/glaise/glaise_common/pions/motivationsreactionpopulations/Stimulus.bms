@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/motivationsreactionpopulations/Stimulus.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -18,7 +20,7 @@ motivation_plugin.motivations = motivation_plugin.motivations or {}
 
 motivation_plugin.stimuli["STIM_PopulationDangereuse"] = function()
         local lstPops = DEC_Connaissances_Populations()
-        for _,pop in pairs( lstPops or {} ) do
+        for _,pop in pairs( lstPops or emptyTable ) do
         local _continue = true
 do
                 local domination = 0

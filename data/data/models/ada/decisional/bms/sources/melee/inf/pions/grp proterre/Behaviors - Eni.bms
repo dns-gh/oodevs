@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/grp proterre/Behaviors - Eni.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -113,7 +115,7 @@ node "BEH_Eni_Pion_VAB_Fixer"
 
         Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.repEni, } )
         if( S_Tir_EstAPortee( self._namedParams.repEni, rPH / 2 ) ) then
-            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, {} )
+            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, emptyTable )
         end
 
         --[[// Attention / si l'ennemi est en mouvement
@@ -131,7 +133,7 @@ node "BEH_Eni_Pion_VAB_Fixer"
 do
                 Activate( self.activations.ACT_RC, 1, { eRC_PretPourConduiteTir, } )
                 Activate( self.activations.ACT_MAJ_EtatSituationEni, 1, { eEtatSituationEnnemi_PretPourConduiteTir, } )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                 --[[//=============================================================================
 ]]Activate( self.activations.BEH_Feu_Pion_INF_TirFixer, 1, { self._namedParams.repEni, } )
 self.done_BEH_Feu_Pion_INF_TirFixer = function( self, _, v ) self.eActionFixer = v[1] end
@@ -243,8 +245,8 @@ self.done_BEH_Dep_Pion_INF_AborderEnnemi = function( self, _, v ) self.eActionDe
                 end
                 if cases_switch_1[2] or switch_1 == eDetruire then
                     --[[// mise en place du dispositif d' assaut
-]]Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.1, {} )
-                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// Ennemi detruit on nettoie la position
+]]Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.1, emptyTable )
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// Ennemi detruit on nettoie la position
 ]]
                     Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
                     _continue = false
@@ -423,7 +425,7 @@ node "BEH_Eni_Pion_VAB_Offensif_Manoeuvre"
         end
 
         local lstUnitesDetectees = DEC_Connaissances_UnitesDetecteesDansFuseau()
-        for _,ksEni in pairs( lstUnitesDetectees or {} ) do
+        for _,ksEni in pairs( lstUnitesDetectees or emptyTable ) do
         local _continue = true
 do
                 local rForce = GetMotivation( "MOT_ManoeuvrerSurEnis" ) + S_Force_ActionContre( ksEni )
@@ -433,7 +435,7 @@ do
         end
 
         local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
-        for _,ksEni in pairs( lstEnisPercus or {} ) do
+        for _,ksEni in pairs( lstEnisPercus or emptyTable ) do
         local _continue = true
 do
                 --[[// On lance l'assaut si le niveau de perception attendu est atteind

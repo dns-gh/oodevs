@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/cie vab/missions/harceler/Harceler CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -57,7 +59,7 @@ node "MIS_Automate_CDT_INF_Harceler"
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_Harceler, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_Harceler, 1, emptyTable )
     end,
 
     destroy = function( self )
@@ -90,12 +92,12 @@ node "BEH_Conduite_Automate_INF_Harceler"
 ]]--[[//---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Situation_Automate_INF_Harceler_GestionSituation, 1, {} )
+        Activate( self.activations.BEH_Situation_Automate_INF_Harceler_GestionSituation, 1, emptyTable )
         --[[// ---------------------------------------------------------------------	
 ]]--[[// 
 ]]--[[//---------------------------------------------------------------------
 ]]Activate( self.activations.BEH_Dispositif_Automate_INF_GererLesPionsDetruits, 1, { true, } )
-        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, {} )
+        Activate( self.activations.BEH_Dispositif_Automate_INF_GererReleve, 1, emptyTable )
     end,
 
     destroy = function( self )
@@ -122,7 +124,7 @@ node "BEH_Situation_Automate_INF_Harceler_GestionSituation"
     activate = function( self )
         local Activate = Activate
         local selEnTete = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        for _,x in pairs( DEC_Automate_PionsSansPC() or {} ) do
+        for _,x in pairs( DEC_Automate_PionsSansPC() or emptyTable ) do
         local _continue = true
 do
                 local x_pion = x
@@ -181,7 +183,7 @@ elseif switch_3 == "SectionInfanterie"
                                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatPhaseMission_ArriveSurLocalisation then
                             if( S_Misc_EstMissionAffectee_Pion( x_pion, "T_Mission_Pion_INF_Harceler" ) ) then
-                                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement, 1, {} )
+                                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement, 1, emptyTable )
                             end
 
                             _continue = false
@@ -219,7 +221,7 @@ node "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement"
         if( ModuleBegins() ) then
             do
                 Activate( self.activations.BEH_Mission_Automate_AssignerStationnerA, 1, { ePhase_CDT, DEC_Automate_PionPC(), self.ptRegroupement, } )
-                for _,x_pion in pairs( S_ObtenirTousPionsDe( eEtatEchelon_Second ) or {} ) do
+                for _,x_pion in pairs( S_ObtenirTousPionsDe( eEtatEchelon_Second ) or emptyTable ) do
                 local _continue = true
                     Activate( self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_CDT, x_pion, self.ptRegroupement, eEtatEchelon_Second, } )
 

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/automates/cie vab/missions/controler/Controler CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-09-01 $
@@ -38,7 +40,7 @@ node "MIS_Automate_CDT_INF_Controler"
             do
                 DEC_Trace( "Conduite Automate Controler : debut" )
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )--[[// Coordination lors de la mise en place du dispositif dans les fuseaux			
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )--[[// Coordination lors de la mise en place du dispositif dans les fuseaux			
 ]]
             end
 --[[// Gestion de la situation des pions de la compagnie
@@ -60,7 +62,7 @@ node "MIS_Automate_CDT_INF_Controler"
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Situation_Automate_INF_Controler, 1, {} )
+        Activate( self.activations.BEH_Situation_Automate_INF_Controler, 1, emptyTable )
     end,
 
     destroy = function( self )

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/pions/common/behaviors/Behaviors - Mot.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Comportement SePoster spécifique à l'ALAT
 ]]--[[// -----------------------------------------------------------------------------
@@ -20,7 +22,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/behaviors/Behaviors
     activate = function( self )
         local Activate = Activate
         Activate( self.activations.ACT_MAJ_EtatOrdreCoordination, 1, { eEtatOrdreCoordination_Attendre, } )
-        Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, {} )
+        Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 1, emptyTable )
     end,
 
 --[[//------------------------------------------------------------------------------
@@ -47,7 +49,7 @@ node "BEH_MOT_Pion_ALAT_GarderSesDistances"
     activate = function( self )
         local Activate = Activate
         local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeUnitesEnnemiesDangereuses or {} ) do
+        for _,repEni in pairs( listeUnitesEnnemiesDangereuses or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.ACT_MAJ_EtatDec, 1, { eEtatDec_Sauvegarde, } )

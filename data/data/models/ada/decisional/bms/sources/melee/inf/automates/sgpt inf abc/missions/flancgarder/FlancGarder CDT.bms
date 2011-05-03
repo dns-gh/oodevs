@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/sgpt inf abc/missions/flancgarder/FlancGarder CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-09-18 $
@@ -58,7 +60,7 @@ node "MIS_Automate_CDT_INF_FlancGarder"
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreOffensif, 1, emptyTable )
         Activate( self.activations.BEH_Conduite_Automate_INF_FlancGarder, 1, { self._namedParams.mission.compagnie_, } )
     end,
 

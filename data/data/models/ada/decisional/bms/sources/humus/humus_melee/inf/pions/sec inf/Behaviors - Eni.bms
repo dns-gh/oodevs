@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/pions/sec inf/Behaviors - Eni.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[/** \file S VAB - Behaviors - Destruction.hal
  *
@@ -95,7 +97,7 @@ node "BEH_Eni_Pion_VAB_Fixer"
 
         Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.repEni, } )
         if( S_Tir_EstAPortee( self._namedParams.repEni, rPH / 2 ) ) then
-            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, {} )
+            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.2, emptyTable )
         end
 
         --[[// Attention / si l'ennemi est en mouvement
@@ -113,7 +115,7 @@ node "BEH_Eni_Pion_VAB_Fixer"
 do
                 Activate( self.activations.ACT_RC, 1, { eRC_PretPourConduiteTir, } )
                 Activate( self.activations.ACT_MAJ_EtatSituationEni, 1, { eEtatSituationEnnemi_PretPourConduiteTir, } )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )--[[// ----------------------------------------------------------------------------
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )--[[// ----------------------------------------------------------------------------
 ]]--[[// Gestion du tir
 ]]
                 --[[// ----------------------------------------------------------------------------

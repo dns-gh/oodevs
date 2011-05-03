@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/common/missions/Reconnaissance.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[//=============================================================================
 ]]--[[//=============================================================================
@@ -28,7 +30,7 @@ includedFiles["sources/melee/inf/pions/common/missions/Reconnaissance.bms"] = tr
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or ePreparerMission
         self.eAction = self.eAction or eActionEnCours
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
          do
             local _continue = true
             local switch_1 = self.ePhase
@@ -51,11 +53,11 @@ includedFiles["sources/melee/inf/pions/common/missions/Reconnaissance.bms"] = tr
 --[[// dispositif de deplacement
 ]]                    end
 
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     --[[// Progression sur l'itineraire
 ]]Activate( self.activations.BEH_Dep_ProgressionSur, 1, { self.mission.itineraire_, eProgressionReco, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eAction = v[1] end
-                    Activate( self.activations.BEH_Lima_GererLimas, 1.5, {} )
+                    Activate( self.activations.BEH_Lima_GererLimas, 1.5, emptyTable )
                     _continue = false
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/log/automates/missions/SeDeployer - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_LOG_SeDeployer
 ]]--[[//
@@ -63,7 +65,7 @@ includedFiles["sources/glaise/glaise_appui/log/automates/missions/SeDeployer - M
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eMRT_AssignerMissions then
-                    for _,x in pairs( self.selPions or {} ) do
+                    for _,x in pairs( self.selPions or emptyTable ) do
                     local _continue = true
 do
                             local pion = x

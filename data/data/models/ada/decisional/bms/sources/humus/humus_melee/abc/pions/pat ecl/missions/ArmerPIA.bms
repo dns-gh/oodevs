@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/pions/pat ecl/missions/ArmerPIA.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-02-04 $
@@ -53,7 +55,7 @@ includedFiles["sources/humus/humus_melee/abc/pions/pat ecl/missions/ArmerPIA.bms
             do return end
         end
 
-        Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// SPE EEI
 ]]--[[//-----------------------------------------------------------------------------
 ]]

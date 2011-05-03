@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/air/automates/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//génériques automates scipio
 ]]include "Common/Automates/Behaviors.bms"
 
@@ -31,13 +33,13 @@ includedFiles["sources/air/automates/common/Behaviors.bms"] = true
 ]]
         --[[// variables locales    
 ]]self.listePionsAvecPC = DEC_Automate_PionsAvecPC()
-        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )
         if( DEC_Automate_EstEmbraye() ) then
             do
-                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )
-                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
-                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )
+                Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )
+                Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
+                Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, emptyTable )
             end
         end
 

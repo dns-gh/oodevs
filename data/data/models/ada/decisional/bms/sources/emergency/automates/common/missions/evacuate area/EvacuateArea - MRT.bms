@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/emergency/automates/common/missions/evacuate area/EvacuateArea - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// This file is part of a MASA library or program.
@@ -112,7 +114,7 @@ node "BEH_Medo_Automate_Emergency_PreparerMission_EvacuateArea"
                     self.ePhase = eMRT_AssignerMissions
                     local selTmp = DEC_Automate_PionsSansPC()
                     local i = #( selTmp ) - #( selTmp ) / 3
-                    for _,x in pairs( selTmp or {} ) do
+                    for _,x in pairs( selTmp or emptyTable ) do
                     local _continue = true
 do
                             local pion = x
@@ -239,7 +241,7 @@ node "BEH_Medo_Automate_Emergency_EvacuateArea"
                                                     DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
                                                         do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                                                 self:SendFeedback( eActionImpossible )
                                 do return end
 
@@ -257,7 +259,7 @@ elseif switch_1 == eNoError then
                     end
 
                 local rIt = 0
-                for _,x_pion in pairs( self._namedParams.lstPions or {} ) do
+                for _,x_pion in pairs( self._namedParams.lstPions or emptyTable ) do
                 local _continue = true
                     do
                         if( rIt < #( self.lstLocalisations ) ) then

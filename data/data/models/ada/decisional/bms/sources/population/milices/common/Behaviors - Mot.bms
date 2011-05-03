@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/milices/common/Behaviors - Mot.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -70,7 +72,7 @@ node "BEH_MOT_Milice_TirerSurEnis"
     activate = function( self )
         local Activate = Activate
         local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeUnitesEnnemiesDangereuses or {} ) do
+        for _,repEni in pairs( listeUnitesEnnemiesDangereuses or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_MOT_GererLesFeuxSur, 1 + S_Force_DangerSur( repEni ), { repEni, } )
 

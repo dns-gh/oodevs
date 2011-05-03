@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/son ac milan/missions/surveiller/Surveiller CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-07-29 $
@@ -36,14 +38,14 @@ node "MIS_Automate_CDT_INF_Surveiller"
 ]]if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )--[[// Coordination lors de la mise en place du dispositif dans les fuseaux
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )--[[// Coordination lors de la mise en place du dispositif dans les fuseaux
 ]]
             end
 --[[// Conduite des pions au niveau section
 ]]--[[//-----------------------------------------------------------------------------				
 ]]        end
 
-        Activate( self.activations.BEH_Situation_Automate_INF_Surveiller, 1, {} )
+        Activate( self.activations.BEH_Situation_Automate_INF_Surveiller, 1, emptyTable )
     end,
 
     destroy = function( self )
@@ -68,8 +70,8 @@ node "BEH_Situation_Automate_INF_Surveiller"
     activate = function( self )
         local Activate = Activate
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { false, } )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, {} )
-        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_INF, 1, emptyTable )
+        Activate( self.activations.BEH_Conduite_Automate_INF_GererAppuis_ABC, 1, emptyTable )
     end,
 
 }

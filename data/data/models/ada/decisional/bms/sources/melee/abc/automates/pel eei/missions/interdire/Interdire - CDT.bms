@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/pel eei/missions/interdire/Interdire - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created$
@@ -41,7 +43,7 @@ includedFiles["sources/melee/abc/automates/pel eei/missions/interdire/Interdire 
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_ABC_Interdire, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_ABC_Interdire, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement génériques
 ]]--[[//-----------------------------------------------------------------------------
 ]]

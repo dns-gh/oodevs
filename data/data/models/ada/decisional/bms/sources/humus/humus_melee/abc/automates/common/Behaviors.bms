@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/automates/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -62,7 +64,7 @@ include "Humus/Humus_Melee/Abc/Automates/Common/Gestion pions detruits.bms"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_RC_Automate_Situation, 1, {} )--[[// ---------------------------------------------------------------------
+        Activate( self.activations.BEH_RC_Automate_Situation, 1, emptyTable )--[[// ---------------------------------------------------------------------
 ]]--[[// CR automates génériques sur eni et situation mission
 ]]--[[// ---------------------------------------------------------------------
 ]]
@@ -70,19 +72,19 @@ include "Humus/Humus_Melee/Abc/Automates/Common/Gestion pions detruits.bms"
             do return end
         end
 
-        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Nbc_Automate_GererAlerteNiv4, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// NBC --> alerte de niveau 4
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_ROE_Automate_GererOrdre, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// ROE --> Tir libre, sur riposte, interdit
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Misc_Automate_GererLesMoyens, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Gestion des pions --> init de la place dans le dispositif
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Rens_Automate_GererSilenceRadio, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Silence radio
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -90,7 +92,7 @@ include "Humus/Humus_Melee/Abc/Automates/Common/Gestion pions detruits.bms"
 ]]--[[// Seulement pendant une mission
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_GetMission( myself ) ~= nil ) then
-            Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+            Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
         end
 
     end,

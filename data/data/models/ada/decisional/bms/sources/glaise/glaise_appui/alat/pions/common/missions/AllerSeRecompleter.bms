@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/pions/common/missions/AllerSeRecompleter.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//------------------------------------------------------------------------------
 ]]--[[// Aller Se Recompleter
 ]]--[[//
@@ -36,14 +38,14 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/missions/AllerSeRec
                 DEC_SetMission( myself, self._namedParams.mission )
                 myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                 end
 
             end
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -90,8 +92,8 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                         end
                     end
 
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
-                    Activate( self.activations.BEH_Log_Pion_ALAT_Recompletement, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
+                    Activate( self.activations.BEH_Log_Pion_ALAT_Recompletement, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Log_Pion_ALAT_Recompletement = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
@@ -113,7 +115,7 @@ elseif switch_1 == eFinMission then
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true

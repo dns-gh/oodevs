@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/missions/SoutenirEnMesureDe.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_SoutenirEnMesureDe
 ]]--[[//
@@ -37,10 +39,10 @@ includedFiles["sources/common/pions/missions/SoutenirEnMesureDe.bms"] = true
             end
         end
 
-        Activate( self.activations.BEH_MAJ_Pion_EniDangereux, 1, {} )
+        Activate( self.activations.BEH_MAJ_Pion_EniDangereux, 1, emptyTable )
         Activate( self.activations.BEH_MAJ_Pion_AgressiviteTir, 1, { 0.5, } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -79,7 +81,7 @@ self.done_BEH_Dep_ProgressionAvecEscortePossibleSur = function( self, _, v ) sel
                                 cases_switch_1[2] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[3] = true
                 end
@@ -125,10 +127,10 @@ node "MIS_Pion_SoutenirSurPositionEnMesureDe"
             end
         end
 
-        Activate( self.activations.BEH_MAJ_Pion_EniDangereux, 1, {} )
+        Activate( self.activations.BEH_MAJ_Pion_EniDangereux, 1, emptyTable )
         Activate( self.activations.BEH_MAJ_Pion_AgressiviteTir, 1, { 0.5, } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -168,12 +170,12 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                                 cases_switch_1[2] = true
 elseif switch_1 == eBarrer then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[4] = true
                 end
@@ -233,7 +235,7 @@ node "BEH_MAJ_Pion_EniDangereux"
     activate = function( self )
         local Activate = Activate
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeConnaissances or {} ) do
+        for _,repEni in pairs( listeConnaissances or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_MAJ_EnnemiEnCours, S_Force_DangerSur( repEni ), { repEni, } )
 

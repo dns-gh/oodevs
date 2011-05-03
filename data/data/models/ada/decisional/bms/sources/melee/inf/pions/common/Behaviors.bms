@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -45,8 +47,8 @@ include "Common/Pions/Missions/PrendreEnComptePrisonniers.bms"
 
 --[[// Ajout ADA
 ]]include "Common/Pions/Missions/SoutenirEnMesureDe.bms"
-
-include "Melee/Common/Pions/Missions.bms"
+--[[// common
+]]include "Melee/Common/Pions/Missions.bms"
 
 --[[//missions populations
 ]]include "Common/Pions/MissionsReactionPopulations.bms"
@@ -134,7 +136,7 @@ node "BEH_Defaut"
         if( ModuleBegins() ) then
             do
                 SetStateVariable( "VE_PreparationMission", 0 )
-                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )--[[//ROE par defaut pour cette mission
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )--[[//ROE par defaut pour cette mission
 ]]
                 F_Pion_SetrTenir( myself, 0 )
                 F_Pion_SetobjectifEsquive( myself, nil )
@@ -148,8 +150,8 @@ node "BEH_Defaut"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )
-        Activate( self.activations.BEH_Mot_Pion_INF_AffecterVariablesDEtat, 1, {} )--[[// MAJ de l'etat du pion en fonction de son agressivite
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )
+        Activate( self.activations.BEH_Mot_Pion_INF_AffecterVariablesDEtat, 1, emptyTable )--[[// MAJ de l'etat du pion en fonction de son agressivite
 ]]--[[// ------------------------------------------------------------------------	
 ]]--[[// behavior BEH_Mot_AffecterVariablesDEtat();
 ]]
@@ -158,32 +160,32 @@ node "BEH_Defaut"
             do return end
         end
 
-        Activate( self.activations.BEH_Ambiance, 1, {} )--[[// Ambiance
+        Activate( self.activations.BEH_Ambiance, 1, emptyTable )--[[// Ambiance
 ]]--[[// ------------------------------------------------------------------------
 ]]--[[// Gestion de l'ambiance en fonction des ennemis
 ]]--[[// Module la vitesse en fonction de l'ambiance
 ]]
-        Activate( self.activations.BEH_Misc_Pion_INF_ModulationVitesse, 1.1, {} )
-        Activate( self.activations.BEH_ROE, 1, {} )--[[// Comportements Generiques
+        Activate( self.activations.BEH_Misc_Pion_INF_ModulationVitesse, 1.1, emptyTable )
+        Activate( self.activations.BEH_ROE, 1, emptyTable )--[[// Comportements Generiques
 ]]--[[// ------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_Rens, 1, {} )--[[// Gestion de la guerre elec : Passer en silence radio
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_Rens, 1, emptyTable )--[[// Gestion de la guerre elec : Passer en silence radio
 ]]--[[// ------------------------------------------------------------------------
 ]]
         --[[// Motivations specifiques pour l'infanterie : en parallele
 ]]--[[// ------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_Pion_INF_GarderSesDistances, GetMotivation( "MOT_GarderSesDistances" ), {} )
-        Activate( self.activations.BEH_Misc_Pion_INF_Default, 1, {} )--[[// Default mis a jour par chaque type de modele
+]]Activate( self.activations.BEH_MOT_Pion_INF_GarderSesDistances, GetMotivation( "MOT_GarderSesDistances" ), emptyTable )
+        Activate( self.activations.BEH_Misc_Pion_INF_Default, 1, emptyTable )--[[// Default mis a jour par chaque type de modele
 ]]--[[// ------------------------------------------------------------------------
 ]]
         if( DEC_GetMission( myself ) == nil ) then
             do
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.BEH_MOT_Pion_InitialisePreparationMission, 1, {} )
+                    Activate( self.activations.BEH_MOT_Pion_InitialisePreparationMission, 1, emptyTable )
                 end
 
-                Activate( self.activations.BEH_MOT_Pion_INF_InitialisePoste, 1, {} )
+                Activate( self.activations.BEH_MOT_Pion_INF_InitialisePoste, 1, emptyTable )
                 local ksFoo = nil
                 Activate( self.activations.ACT_MAJ_EnnemiEnCours, 0.5, { ksFoo, } )
             end
@@ -192,7 +194,7 @@ do
                 --[[// Met a jour le parametre de mission precedente
 ]]Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Mission, 1, { DEC_GetMission( myself ), } )
                 if( F_Pion_GeteTypeContact( myself ) == eTypeContact_Offensif ) then
-                    Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Repli, 1, {} )
+                    Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Repli, 1, emptyTable )
                 end
 
             end
@@ -232,7 +234,7 @@ node "BEH_Poste_Pion_INF_TomberEnGarde"
 ]]--[[// .. Sinon attention aux surprises
 ]]local bDebarquement = self._namedParams.bDemandeDebarquement and ( myself:GetType() ~= "SectionInfanterie_HOT" ) and DEC_Agent_EstEmbarque()
         if( bDebarquement ) then
-            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+            Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
         end
 
         Activate( self.activations.ACT_RC, 1, { eRC_EnPosteFaceADirectionDangereuse, } )
@@ -481,7 +483,7 @@ node "BEH_Dep_Virtuel_ProgressionVers"
     activate = function( self )
         local Activate = Activate
         self.eAction = self.eAction or eActionEnCours
-        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+        Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.point, self._namedParams.eTypeProgression, self._namedParams.eTypeIti, } )
     end,
 
@@ -505,7 +507,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+        Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
         if( not DEC_Agent_EstEmbarque() ) then
             self:SendFeedback( eActionEffectuee )
             do return end

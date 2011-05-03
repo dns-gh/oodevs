@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Info.bms"] = true
 
+local emptyTable = emptyTable
+
 
 
 --[[// *****************************************************************************
@@ -36,21 +38,21 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Info.bms
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurEtatOperationnel, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurEtatOperationnel, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR EVT autres que enis
 ]]--[[//-----------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurAmbiance, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurNBC, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurROE, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSilenceRadio, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSilenceRadar, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPresencePop, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiParArt, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSituationDeplacement, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSituationMissions, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurLima, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSituationCoordination, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurAmbiance, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurNBC, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurROE, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSilenceRadio, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSilenceRadar, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPresencePop, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiParArt, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSituationDeplacement, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSituationMissions, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurLima, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurSituationCoordination, 1, emptyTable )
         --[[//-----------------------------------------------------------------------------
 ]]--[[// CR SUR EVT enis
 ]]--[[//-----------------------------------------------------------------------------
@@ -59,8 +61,8 @@ includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Info.bms
             do return end
         end
 
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPriseDeContact, 1, {} )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompteSurPriseDeContact, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -535,7 +537,7 @@ node "BEH_Info_Pion_RendreCompteSurPriseAPartiParEnis"
     activate = function( self )
         local Activate = Activate
         local listeUnitesPrenantAPartie = DEC_Connaissances_UnitesPrenantAPartie()
-        for _,repEni in pairs( listeUnitesPrenantAPartie or {} ) do
+        for _,repEni in pairs( listeUnitesPrenantAPartie or emptyTable ) do
         local _continue = true
             StartActivateOverride( self, self.activations.BEH_Info_Pion_RendreCompteSurPriseAPartiDe, 1, { repEni, } )
 
@@ -638,7 +640,7 @@ node "BEH_Info_Pion_RendreCompteSurPresencePop"
         for _,eniRendu in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Prisoniers
 ]]--[[//-----------------------------------------------------------------------------
-]]DEC_Connaissances_UnitesRenduesAProximite( 1000 ) or {} ) do
+]]DEC_Connaissances_UnitesRenduesAProximite( 1000 ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_RC, 1, { eRC_PresenceEnnemiRendu, } )
 
@@ -647,7 +649,7 @@ node "BEH_Info_Pion_RendreCompteSurPresencePop"
         for _,repRefugies in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// refugies
 ]]--[[//-----------------------------------------------------------------------------
-]]DEC_Connaissances_RefugiesAProximite( 1000 ) or {} ) do
+]]DEC_Connaissances_RefugiesAProximite( 1000 ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_RC, 1, { eRC_PresencePopulation, } )
 
@@ -765,11 +767,11 @@ node "BEH_Info_Mos"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Info_RenseignerSurRapFor, 1, {} )
-        Activate( self.activations.BEH_Info_RenseignerSurROE, 1, {} )
-        Activate( self.activations.BEH_Info_RenseignerSurEtatDec, 1, {} )--[[// Résultat des motivations
+        Activate( self.activations.BEH_Info_RenseignerSurRapFor, 1, emptyTable )
+        Activate( self.activations.BEH_Info_RenseignerSurROE, 1, emptyTable )
+        Activate( self.activations.BEH_Info_RenseignerSurEtatDec, 1, emptyTable )--[[// Résultat des motivations
 ]]
-        Activate( self.activations.BEH_Info_RenseignerSurEtatOperationnel, 1, {} )
+        Activate( self.activations.BEH_Info_RenseignerSurEtatOperationnel, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************

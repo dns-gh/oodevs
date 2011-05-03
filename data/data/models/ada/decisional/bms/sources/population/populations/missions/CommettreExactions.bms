@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/populations/missions/CommettreExactions.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -45,7 +47,7 @@ include "bit.lua"
 
         local lstInstallations = DEC_Connaissances_ObjetsDansZone( self._namedParams.mission.zone_, S_TypeObject_ToString( eTypeObjectInstallation ) )
         local bInstallation = false
-        for _,installation in pairs( lstInstallations or {} ) do
+        for _,installation in pairs( lstInstallations or emptyTable ) do
         local _continue = true
 if( DEC_ConnaissanceObjet_EstValide( installation ) and DEC_ConnaissanceObjet_EstEnnemi( installation ) ~= eTristate_False ) then
                 do
@@ -69,8 +71,8 @@ if( DEC_ConnaissanceObjet_EstValide( installation ) and DEC_ConnaissanceObjet_Es
 ]]--[[//------------------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Pop_PAPPions, 1, {} )
-        Activate( self.activations.BEH_Pop_RalentissementPions, 1, {} )
+        Activate( self.activations.BEH_Pop_PAPPions, 1, emptyTable )
+        Activate( self.activations.BEH_Pop_RalentissementPions, 1, emptyTable )
         Activate( self.activations.BEH_Pop_DegraderInstallations, 1, { self._namedParams.mission.zone_, } )
     end,
 

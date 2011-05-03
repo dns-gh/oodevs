@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/marine/pions/common/behaviors/Behaviors - Mot.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -27,7 +29,7 @@ include "bit.lua"
         local Activate = Activate
         --[[// Garder ses distances sur enis dangereux
 ]]local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,repEni in pairs( listeUnitesEnnemiesDangereuses or {} ) do
+        for _,repEni in pairs( listeUnitesEnnemiesDangereuses or emptyTable ) do
         local _continue = true
 do
                 --[[// Maj etat dec

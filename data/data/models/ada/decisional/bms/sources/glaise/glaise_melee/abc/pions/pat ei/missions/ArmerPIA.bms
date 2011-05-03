@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/pions/pat ei/missions/ArmerPIA.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 04-02-04 $
@@ -53,7 +55,7 @@ includedFiles["sources/glaise/glaise_melee/abc/pions/pat ei/missions/ArmerPIA.bm
             do return end
         end
 
-        Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// SPE EEI
 ]]--[[//-----------------------------------------------------------------------------
 ]]

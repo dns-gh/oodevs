@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/Parameters.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: SDE 2003-03-24 $
@@ -59,7 +61,7 @@ end
         end
     end
 
-    for _,x in pairs( DEC_Pion_PionsSansPC() or {} ) do
+    for _,x in pairs( DEC_Pion_PionsSansPC() or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -112,7 +114,7 @@ function S_Dist_MissionSuivre_Max( )
         end
     end
 
-    for _,x in pairs( DEC_Pion_PionsSansPC() or {} ) do
+    for _,x in pairs( DEC_Pion_PionsSansPC() or emptyTable ) do
     local _continue = true
 do
             local pion = x

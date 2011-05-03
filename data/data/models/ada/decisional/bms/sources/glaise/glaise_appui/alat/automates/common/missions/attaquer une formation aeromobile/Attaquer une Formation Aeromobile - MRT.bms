@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/attaquer une formation aeromobile/Attaquer une Formation Aeromobile - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Attaquer une formation Aeromobile
 ]]--[[// -----------------------------------------------------------------------------
@@ -49,8 +51,8 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/attaqu
 --[[// ROE par défaut pour cette mission + ordre poursuivre
 ]]                end
 
-                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirLibre, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
 --[[// ---------------------------------------------------------------------
 ]]--[[// 2. Decoupage du fuseau et attribution des missions

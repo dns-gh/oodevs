@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/automates/section te/missions/interdire/Interdire CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created: JCR 03-07-29 $
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Automates/Section TE/Missions/Interdire/Interdire CDT.hal $
@@ -34,7 +36,7 @@ includedFiles["sources/melee/inf/automates/section te/missions/interdire/Interdi
 ]]if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, {} )--[[// Coordination lors de la mise en place du dispositif dans les fuseaux			
+                StartActivateOverride( self, self.activations.BEH_Conduite_Automate_GererFuseau, 1, emptyTable )--[[// Coordination lors de la mise en place du dispositif dans les fuseaux			
 ]]
             end
 --[[// Conduite des pions au niveau section
@@ -55,7 +57,7 @@ includedFiles["sources/melee/inf/automates/section te/missions/interdire/Interdi
 
         Activate( self.activations.BEH_Conduite_Automate_INF_Defaut, 1, { true, } )
 self.done_BEH_Conduite_Automate_INF_Defaut = function( self, _, v ) self.eActionMission = v[1] end
-        Activate( self.activations.BEH_Conduite_Automate_INF_CadreStatique, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_INF_CadreStatique, 1, emptyTable )
     end,
 
     destroy = function( self )

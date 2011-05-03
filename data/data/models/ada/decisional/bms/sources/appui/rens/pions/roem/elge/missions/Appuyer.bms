@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/roem/elge/missions/Appuyer.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_RENS_ROEM_Appuyer
 ]]--[[//
@@ -31,7 +33,7 @@ includedFiles["sources/appui/rens/pions/roem/elge/missions/Appuyer.bms"] = true
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -110,7 +112,7 @@ elseif switch_1 == eAppuyer then
 ]]--[[//---------------------------------------------------------------------
 ]]                    end
 
-                    Activate( self.activations.BEH_Objet_Rens_DeposerBrouilleur, 1, {} )
+                    Activate( self.activations.BEH_Objet_Rens_DeposerBrouilleur, 1, emptyTable )
 self.done_BEH_Objet_Rens_DeposerBrouilleur = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Fin de la mission --> SUR ORDRE

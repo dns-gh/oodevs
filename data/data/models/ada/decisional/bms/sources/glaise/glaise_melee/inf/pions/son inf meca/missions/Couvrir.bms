@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/Couvrir.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -74,7 +76,7 @@ node "MIS_Pion_INF_Couvrir"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
         if( self.eAction == eActionImpossible ) then
             do
@@ -94,7 +96,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] en
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eCouvrir then
-                    Activate( self.activations.BEH_Mission_Pion_VAB_Couvrir, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Mission_Pion_VAB_Couvrir, GetMotivation( "MOT_Mission" ), emptyTable )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
@@ -161,7 +163,7 @@ node "BEH_Mission_Pion_VAB_Couvrir"
         if( ModuleBegins() ) then
             do
                 --[[// Verifie que l'on est bien dans son fuseau
-]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
             end
         end
 
@@ -183,7 +185,7 @@ node "BEH_Mission_Pion_VAB_Couvrir"
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     --[[// action ACT_Pion_INF_DeplacementDiscret();
 ]]if( self.eAction == eActionEffectuee ) then
                         do

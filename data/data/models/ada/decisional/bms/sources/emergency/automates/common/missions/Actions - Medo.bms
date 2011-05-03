@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/emergency/automates/common/missions/Actions - Medo.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// This file is part of a MASA library or program.
@@ -153,7 +155,7 @@ elseif switch_1 == ePhase_CDT then
         --[[// Mission
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         for _,x in pairs( --[[// travaux etc.
-]]self._namedParams.locations or {} ) do
+]]self._namedParams.locations or emptyTable ) do
         local _continue = true
             DEC_UserTypeList_PushBack_Mission( self.missionPion, "zones_", x )
 

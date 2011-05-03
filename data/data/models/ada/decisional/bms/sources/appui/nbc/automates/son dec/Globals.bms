@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/nbc/automates/son dec/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-08-29 $
@@ -24,7 +26,7 @@ include "Appui/Nbc/Automates/Son Dec/Parameters.bms"
     local _returnValue = {}
     local selPatrouillesOperationnelles = {}
     local selTemp = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsAvecPC(), "Equipe_NBC_Dec" )
-    for _,x in pairs( selTemp or {} ) do
+    for _,x in pairs( selTemp or emptyTable ) do
     local _continue = true
 do
             local pion = x

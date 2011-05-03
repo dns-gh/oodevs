@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_common/automates/behaviors/Behaviors - Ordre.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// Automate_Conduite
 ]]--[[//
@@ -55,7 +57,7 @@ node "BEH_Ordre_Automate_RecevoirOrdreInopine"
     activate = function( self )
         local Activate = Activate
                 local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local ordre = x
@@ -66,7 +68,7 @@ do
                     local cases_switch_1 = {}
                         if switch_1 == "Rep_OrderConduite_Interrompre" then
                             DEC_Trace( "$ --- ORDRE Interruption mission ---$" )
-                            Activate( self.activations.BEH_Ordre_Automate_Interrompre_, 1, {} )
+                            Activate( self.activations.BEH_Ordre_Automate_Interrompre_, 1, emptyTable )
                                                         self:SendFeedback( eActionHalt )
                             do return end
 
@@ -74,15 +76,15 @@ do
                         elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
                             DEC_Trace( "$ --- ORDRE Attendre ---$" )
                             g_bOrdreAnibas = true
-                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, emptyTable )
                             _continue = false
                                                 cases_switch_1[2] = true
 elseif switch_1 == "Rep_OrderConduite_Deboucher"
                         or switch_1 == "Rep_OrderConduite_Poursuivre" then
                             DEC_Trace( "$ --- ORDRE Poursuivre ---$" )
                             g_bOrdreAnibas = false
-                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, {} )
-                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, emptyTable )
+                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )--[[// Cas des LC
 ]]
                             _continue = false
                                                 cases_switch_1[3] = true
@@ -91,9 +93,9 @@ elseif switch_1 == "Rep_OrderConduite_ChangerAmbiance" then
                             --[[// Cast
 ]]local ordreAmbiance = repOrdre
                             if( ordreAmbiance:GetorderConduiteChangerAmbiance_() == eAmbianceMission_Surete ) then
-                                Activate( self.activations.BEH_Ordre_Automate_AmbianceSurete_, 1, {} )
+                                Activate( self.activations.BEH_Ordre_Automate_AmbianceSurete_, 1, emptyTable )
                             else
-                                Activate( self.activations.BEH_Ordre_Automate_AmbianceVitesse_, 1, {} )--[[//eAmbianceMission_Vitesse
+                                Activate( self.activations.BEH_Ordre_Automate_AmbianceVitesse_, 1, emptyTable )--[[//eAmbianceMission_Vitesse
 ]]
                             end
 
@@ -141,7 +143,7 @@ node "BEH_Ordre_Automate_Interrompre_"
         local Activate = Activate
         --[[// Le PC peut avoir une mission
 ]]local listePions = DEC_Automate_PionsAvecPC()
-        for _,x in pairs( listePions or {} ) do
+        for _,x in pairs( listePions or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -188,7 +190,7 @@ node "BEH_Ordre_Automate_Attendre_"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Calcule sur PE
 ]]--[[//-------------------------------------------------------------------------
-]]listePions or {} ) do
+]]listePions or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -231,7 +233,7 @@ node "BEH_Ordre_Automate_Poursuivre_"
 ]]--[[// Donner l'ordre de poursuivre
 ]]--[[//-------------------------------------------------------------------------
 ]]local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( listePionsPE or {} ) do
+        for _,x in pairs( listePionsPE or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -268,7 +270,7 @@ node "BEH_Ordre_Automate_AmbianceSurete_"
 ]]--[[// Donner l'ordre de poursuivre
 ]]--[[//-------------------------------------------------------------------------
 ]]local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( listePionsPE or {} ) do
+        for _,x in pairs( listePionsPE or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -305,7 +307,7 @@ node "BEH_Ordre_Automate_AmbianceVitesse_"
 ]]--[[// Donner l'ordre de poursuivre
 ]]--[[//-------------------------------------------------------------------------
 ]]local listePionsPE = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( listePionsPE or {} ) do
+        for _,x in pairs( listePionsPE or emptyTable ) do
         local _continue = true
 do
                 local pion = x

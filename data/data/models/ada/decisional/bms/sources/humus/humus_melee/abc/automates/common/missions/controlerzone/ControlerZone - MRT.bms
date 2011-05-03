@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/automates/common/missions/controlerzone/ControlerZone - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// $Created$
 ]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Common/Missions/ControlerZone/ControlerZone - MRT.hal $
@@ -66,7 +68,7 @@ includedFiles["sources/humus/humus_melee/abc/automates/common/missions/controler
 ]]--[[//-----------------------------------------------------------------------------
 ]]                end
 
-                for _,pion in pairs( self._namedParams.selPions or {} ) do
+                for _,pion in pairs( self._namedParams.selPions or emptyTable ) do
                 local _continue = true
 do
                         if( self.rIterateurSecteur == #( self.listeSousSecteurs ) ) then

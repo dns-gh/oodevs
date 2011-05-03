@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Dep.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -60,7 +62,7 @@ include "bit.lua"
 
         Activate( self.activations.BEH_Dep_SeDeplacer, 1, { self.it, } )
 self.done_BEH_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Observation
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -128,7 +130,7 @@ node "BEH_Dep_ProgressionVers"
 
         Activate( self.activations.BEH_Dep_SeDeplacer, 1, { self.it, } )
 self.done_BEH_Dep_SeDeplacer = function( self, _, v ) self.eEtat = v[1] end
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Observation
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -177,7 +179,7 @@ node "BEH_Dep_SeDeplacer"
             end
         end
 
-        Activate( self.activations.ACT_Pions_SeDesinstaller, 1, {} )
+        Activate( self.activations.ACT_Pions_SeDesinstaller, 1, emptyTable )
         if( not DEC_Agent_EstDesinstalle() ) then
             do return end
         end
@@ -220,7 +222,7 @@ node "BEH_Dep_GererAvantPoint"
 ]]--[[// Regarder les eAvantPoint dans la liste des points interranssant
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local ptABC = x
@@ -342,7 +344,7 @@ node "BEH_Dep_GererPoint"
 ]]--[[// Regarder les points interssants
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local ptABC = x
@@ -364,7 +366,7 @@ if( meleeInfPionsCommon() ) then
                                             do
                                                 if( GetActivity() >= 1 ) then
                                                     do
-                                                        Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Repli, 1, {} )
+                                                        Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Repli, 1, emptyTable )
                                                         Activate( self.activations.ACT_Info_Trace, 1, { "Sur point ou bond", } )
                                                         StartActivateOverride( self, self.activations.BEH_Poste_Pion_INF_ArretCourt, 1, { repPoint:Getpoint_(), S_TempsObservationPoint_Ambiance(), } )
                                                     end
@@ -430,7 +432,7 @@ node "BEH_Dep_GererProgression"
 ]]--[[// Limas --> LC / LCA
 ]]--[[//---------------------------------------------------------------------
 ]]if( ( bit.band( self._namedParams.typeProgression, eTypePointLima ) ) ~= eProgressionDirect ) then
-                    Activate( self.activations.BEH_Lima_GererLimas, 1.5, {} )
+                    Activate( self.activations.BEH_Lima_GererLimas, 1.5, emptyTable )
                 end
 
                 --[[//---------------------------------------------------------------------
@@ -438,7 +440,7 @@ node "BEH_Dep_GererProgression"
 ]]--[[//---------------------------------------------------------------------
 ]]Activate( self.activations.BEH_Dep_GererPoint, 1.1, { self._namedParams.typeProgression, } )
                 Activate( self.activations.BEH_Dep_GererAvantPoint, 1.1, { self._namedParams.typeProgression, } )
-                Activate( self.activations.ACT_Obs_ElargirObservation, 1, {} )--[[//---------------------------------------------------------------------
+                Activate( self.activations.ACT_Obs_ElargirObservation, 1, emptyTable )--[[//---------------------------------------------------------------------
 ]]--[[// Elargir l'observation --> simulation des coups de sondes
 ]]--[[//---------------------------------------------------------------------
 ]]
@@ -448,7 +450,7 @@ node "BEH_Dep_GererProgression"
 ]]--[[//---------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, {} )
+        Activate( self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, emptyTable )
     end,
 
 --[[// ******************************************************************************
@@ -495,7 +497,7 @@ node "BEH_Dep_Progresser"
         end
 
         Activate( self.activations.BEH_Dep_GererProgression, 1, { self._namedParams.typeProgression, } )
-        Activate( self.activations.ACT_Pions_SeDesinstaller, 1, {} )
+        Activate( self.activations.ACT_Pions_SeDesinstaller, 1, emptyTable )
         if( not DEC_Agent_EstDesinstalle() ) then
             do return end
         end
@@ -612,7 +614,7 @@ node "BEH_Dep_SePoster"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+        Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -793,7 +795,7 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( DEC_Geometrie_Distance( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position() ) <= self._namedParams.rDistanceMin ) then
                         do
-                            Activate( self.activations.ACT_Dep_SePoster, 1.5, {} )
+                            Activate( self.activations.ACT_Dep_SePoster, 1.5, emptyTable )
                             Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
                         end
                     end
@@ -918,7 +920,7 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
 ]]self.bEnAttente = self.bEnAttente or S_Geometrie_EstProchePosition( DEC_Agent_Position(), self._namedParams.ami:DEC_Agent_Position(), self._namedParams.rDistanceMin )
                     if( self.bEnAttente ) then
                         do
-                            Activate( self.activations.ACT_Dep_SePoster, 1.5, {} )
+                            Activate( self.activations.ACT_Dep_SePoster, 1.5, emptyTable )
                             Activate( self.activations.ACT_Obs_EtablirVisionVersPt, 1.5, { self._namedParams.ami:DEC_Agent_Position(), } )
                         end
 --[[//-----------------------------------------------------------------------------
@@ -933,7 +935,7 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
                         end
                     end
 
-                    StartActivateOverride( self, self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, {} )
+                    StartActivateOverride( self, self.activations.BEH_Dep_ReagirFaceAObstacle, 1.1, emptyTable )
 self.done_BEH_Dep_ReagirFaceAObstacle = function( self, _, v ) self.eEtatObstacle = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true

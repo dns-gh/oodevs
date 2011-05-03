@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/common/missions/DetruireParCoupDeMain.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -75,7 +77,7 @@ include "bit.lua"
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
                 if switch_1 == eSeMettreEnPlace then
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )--[[// On va se mettre en position en restant sur nos garde
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )--[[// On va se mettre en position en restant sur nos garde
 ]]
                     if( self.eAction == eActionEffectuee ) then
                         do
@@ -96,7 +98,7 @@ self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAc
                                 cases_switch_1[1] = true
 elseif switch_1 == eAborderObjectif then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
@@ -144,7 +146,7 @@ self.done_ACT_Misc_Pion_DelaiInstallation = function( self, _, v ) self.eAction 
                                 end
                 if cases_switch_1[3] or switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
-                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// Posture discret
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )--[[// Posture discret
 ]]
                     if( self.eActionDeplacement == eActionEffectuee ) then
                         do
@@ -222,7 +224,7 @@ node "BEH_Pion_INF_Detruire_DetruireParCoupDeMain"
                 --[[// On attend 1h apres le couche du soleil si la date n'est pas depassee
 ]]Activate( self.activations.ACT_Misc_Delai, 1, { 1, 60, } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                                 do return end
 
             end
@@ -236,7 +238,7 @@ self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
         else
 do
                 Activate( self.activations.ACT_RC, 1, { eRC_AttenteConditionFavorablePourInfiltration, } )
-                Activate( self.activations.ACT_Dep_SePoster, 1, {} )--[[// On se poste en attendant de faire le coup de main
+                Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )--[[// On se poste en attendant de faire le coup de main
 ]]
                 self.eAction = eActionEnCours
             end
@@ -390,7 +392,7 @@ elseif switch_1 == eNatureObjectif_ElementMobile then
             end
 
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Offensif, } )
-        Activate( self.activations.BEH_Eni_Pion_VAB_Offensif_Manoeuvre, 1, {} )
+        Activate( self.activations.BEH_Eni_Pion_VAB_Offensif_Manoeuvre, 1, emptyTable )
     end,
 
 --[[//=============================================================================
@@ -422,7 +424,7 @@ node "BEH_Obj_Pion_INF_Detruire_Objets"
                 --[[// Recuperer les objets dans la zone :
 ]]--[[// OPT MIA: Faire avec DEC_Connaissances_ObjetsDansZone()
 ]]local lstObjets = DEC_Connaissances_ObjetsDansZone( self._namedParams.zone, S_TypeObject_ToString( eTypeObjectPosteTir ), S_TypeObject_ToString( eTypeObjectZoneProtegee ), S_TypeObject_ToString( eTypeObjectZoneImplantationCanon ), S_TypeObject_ToString( eTypeObjectZoneImplantationCOBRA ), S_TypeObject_ToString( eTypeObjectZoneImplantationMortier ), S_TypeObject_ToString( eTypeObjectZoneImplantationLRM ), S_TypeObject_ToString( eTypeObjectSiteFranchissement ), S_TypeObject_ToString( eTypeObjectPlotRavitaillement ), S_TypeObject_ToString( eTypeObjectSiteDecontamination ), S_TypeObject_ToString( eTypeObjectRota ) )
-                for _,x_obj in pairs( lstObjets or {} ) do
+                for _,x_obj in pairs( lstObjets or emptyTable ) do
                 local _continue = true
                     do
                         --[[/*    MIA OPT : attention on ne détruit que les objets dans la zone

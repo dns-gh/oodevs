@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artdsa/automates/section asa tcp/missions/surveiller/Surveiller - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 node "MIS_Automate_MRT_ASA_MISTRAL_Surveiller"
 {
     feedbacks = { { { "done_MIS_Automate_MRT_ASA_MISTRAL_Surveiller" }, "MIS_Automate_MRT_ASA_MISTRAL_Surveiller" } },
@@ -50,7 +52,7 @@ do
                                 local switch_1 = self._namedParams.mission.modeDeploiement_
                                 local cases_switch_1 = {}
                                     if switch_1 == deploiementOmnidirectionnelEnCarreAutourZone then
-                                        for _,x in pairs( self.listeSectionMistral or {} ) do
+                                        for _,x in pairs( self.listeSectionMistral or emptyTable ) do
                                         local _continue = true
 do
                                                 if( compteur ~= 4 ) then
@@ -68,7 +70,7 @@ do
                                         _continue = false
                                                                         cases_switch_1[1] = true
 elseif switch_1 == deploiementOmnidirectionnelEnTriangleAutourZone then
-                                        for _,x in pairs( self.listeSectionMistral or {} ) do
+                                        for _,x in pairs( self.listeSectionMistral or emptyTable ) do
                                         local _continue = true
 do
                                                 if( compteur ~= 3 ) then
@@ -86,7 +88,7 @@ do
                                         _continue = false
                                                                         cases_switch_1[2] = true
 elseif switch_1 == deploiementNasseTroisSections then
-                                        for _,x in pairs( self.listeSectionMistral or {} ) do
+                                        for _,x in pairs( self.listeSectionMistral or emptyTable ) do
                                         local _continue = true
 do
                                                 if( compteur ~= 3 ) then
@@ -104,7 +106,7 @@ do
                                         _continue = false
                                                                         cases_switch_1[3] = true
 elseif switch_1 == deploiementNasseQuatreSections then
-                                        for _,x in pairs( self.listeSectionMistral or {} ) do
+                                        for _,x in pairs( self.listeSectionMistral or emptyTable ) do
                                         local _continue = true
 do
                                                 if( compteur ~= 4 ) then
@@ -127,7 +129,7 @@ elseif switch_1 == deploiementDoubleRideau then
                                         _continue = false
                                                                         cases_switch_1[5] = true
 elseif switch_1 == deploiementSimpleRideau then
-                                        for _,x in pairs( self.listeSectionMistral or {} ) do
+                                        for _,x in pairs( self.listeSectionMistral or emptyTable ) do
                                         local _continue = true
 do
                                                 if( compteur ~= 4 ) then
@@ -156,8 +158,8 @@ do
                     end
                 end
 
-                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
         end
 

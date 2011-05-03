@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/fairemouvement/FaireMouvement - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_ABC_GTIA_FaireMouvement
 ]]--[[// 
@@ -30,7 +32,7 @@ includedFiles["sources/melee/abc/automates/ge40/missions/fairemouvement/FaireMou
                                 do
                     g_bPhaseReceuil = false
                     local listePionsSubordonnes = DEC_Automate_AutomatesSubordonnes()
-                    for _,x in pairs( listePionsSubordonnes or {} ) do
+                    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                     local _continue = true
                         do
                             local automat = x
@@ -75,7 +77,7 @@ node "BEH_GTIA_AssignerLesOrdresPourFaireMouvement"
 
     activate = function( self )
         local Activate = Activate
-        for _,pion in pairs( DEC_Automate_AutomatesSubordonnes() or {} ) do
+        for _,pion in pairs( DEC_Automate_AutomatesSubordonnes() or emptyTable ) do
         local _continue = true
             Activate( self.activations.ACT_GTIA_AssignerMissionFaireMouvementA, 1, { pion, self._namedParams.zoneArrivee, } )
 

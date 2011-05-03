@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_population/asymetriques/common/pion/missions/CommettreAttentatContreInstallation.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_ASY_CommettreAttentatContreInstallation
 ]]--[[//
@@ -35,7 +37,7 @@ includedFiles["sources/humus/humus_population/asymetriques/common/pion/missions/
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, {} )
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirInterdit, 1, emptyTable )
                 self.objectif = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( DEC_ConnaissanceObjet_Localisation( self._namedParams.mission.installationCible_ ) )
                 if( self.objectif == nil ) then
                     do
@@ -50,7 +52,7 @@ includedFiles["sources/humus/humus_population/asymetriques/common/pion/missions/
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do

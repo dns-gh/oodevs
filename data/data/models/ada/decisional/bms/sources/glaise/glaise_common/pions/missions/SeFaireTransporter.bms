@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/missions/SeFaireTransporter.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_SeFaireTransporter
 ]]--[[//
@@ -31,7 +33,7 @@ includedFiles["sources/glaise/glaise_common/pions/missions/SeFaireTransporter.bm
         self.eEtat = self.eEtat or eActionEnCours
         self.aEteTransporte = self.aEteTransporte or false
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -88,14 +90,14 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
 ]]                cases_switch_1[2] = true
 elseif switch_1 == eAttendre then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                 --[[// Fin mission
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     if( DEC_Agent_EstTransporte() ) then
                         do
-                            Activate( self.activations.ACT_Dep_Trans_TransportEnCours, 1, {} )
+                            Activate( self.activations.ACT_Dep_Trans_TransportEnCours, 1, emptyTable )
                             self.aEteTransporte = true
                         end
                     else
@@ -111,7 +113,7 @@ do
                             end
 
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                         end
                     end
 

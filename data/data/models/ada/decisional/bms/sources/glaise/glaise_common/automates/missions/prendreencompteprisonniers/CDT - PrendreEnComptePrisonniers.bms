@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/missions/prendreencompteprisonniers/CDT - PrendreEnComptePrisonniers.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -34,7 +36,7 @@ include "bit.lua"
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Dispositif_Automate_FaireSuivreLeSE, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dispositif_Automate_FaireSuivreLeSE, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Mission suivre au autres pions
 ]]--[[//-----------------------------------------------------------------------------
 ]]
@@ -73,7 +75,7 @@ node "BEH_Dispositif_Automate_FaireSuivreLeSE"
             do return end
         end
 
-        for _,x in pairs( sel_SE or {} ) do
+        for _,x in pairs( sel_SE or emptyTable ) do
         local _continue = true
 do
                 local pion = x

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/genie/automates/cie blindee/missions/faire franchir/Faire franchir - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -41,7 +43,7 @@ include "bit.lua"
                 for _,site in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// 1) TEST erreur sur site de franchissement
 ]]--[[//-------------------------------------------------------------------------
-]]self._namedParams.mission.sitesDeFranchissement_ or {} ) do
+]]self._namedParams.mission.sitesDeFranchissement_ or emptyTable ) do
                 local _continue = true
                     do
                         --[[// Erreur si position site
@@ -100,7 +102,7 @@ include "bit.lua"
             end
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite, 1, emptyTable )
 self.done_BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite = function( self, _, v ) self.eEtatOrdreConduite = v[1] end
         --[[//-------------------------------------------------------------------------
 ]]--[[// Gestion reconnaissance
@@ -110,8 +112,8 @@ self.done_BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite = function( s
 ]]--[[//-------------------------------------------------------------------------
 ]]Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites, 1, { self._namedParams.mission.sitesDeFranchissement_, } )
         Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererExploitation, 1, { self.positionRegroupement, } )
-        Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererRenforcements, 1, {} )
-        Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererVariantement, 1, {} )
+        Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererRenforcements, 1, emptyTable )
+        Activate( self.activations.BEH_Misc_Automate_GEN_CDT_GererVariantement, 1, emptyTable )
     end,
 
     destroy = function( self )
@@ -154,7 +156,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererReconnaissanceDesSites"
 
                 --[[// Assignation 1 site <==> 1 pion
 ]]local rIterateurSections = 0
-                for _,site in pairs( self._namedParams.listSites or {} ) do
+                for _,site in pairs( self._namedParams.listSites or emptyTable ) do
                 local _continue = true
 do
                         local section = DIA_GetAt( selSectionGen, rIterateurSections )
@@ -244,7 +246,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererExploitation"
         for _,site in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// On gère ici seulement les sites reconnus
 ]]--[[//-------------------------------------------------------------------------
-]]g_selConnaissanceObs or {} ) do
+]]g_selConnaissanceObs or emptyTable ) do
         local _continue = true
 do
                 local conSite = site
@@ -383,7 +385,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "******** renforcement PAA ***********", } )
                 local rCompteur = 0
-                for _,x in pairs( selPAA or {} ) do
+                for _,x in pairs( selPAA or emptyTable ) do
                 local _continue = true
                     do
                         local pionPAA = x
@@ -407,7 +409,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "******** renforcement MLF ***********", } )
                 local rCompteur = 0
-                for _,x in pairs( selMLF or {} ) do
+                for _,x in pairs( selMLF or emptyTable ) do
                 local _continue = true
                     do
                         local pionMLF = x
@@ -431,7 +433,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "******** renforcement EFA ***********", } )
                 local rCompteur = 0
-                for _,x in pairs( selEFA or {} ) do
+                for _,x in pairs( selEFA or emptyTable ) do
                 local _continue = true
                     do
                         local pionEFA = x
@@ -455,7 +457,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererRenforcementsPour"
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { "******** renforcement PFM ***********", } )
                 local rCompteur = 0
-                for _,x in pairs( selPFM or {} ) do
+                for _,x in pairs( selPFM or emptyTable ) do
                 local _continue = true
                     do
                         local pionPFM = x
@@ -537,7 +539,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererUnitesDeuxiemeEchelon"
         for _,x in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//-----------------------------------------------------------------------------
-]]listePionsSE or {} ) do
+]]listePionsSE or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -592,7 +594,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererFinMission"
 ]]if( ModuleBegins() ) then
             do
                 local listePions = S_Cherche_Automate_Filtre_TypePion( DEC_Automate_PionsSansPC(), "SectionGenie" )
-                for _,x in pairs( listePions or {} ) do
+                for _,x in pairs( listePions or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x
@@ -603,7 +605,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererFinMission"
                 end
 
                 local listePionsSE = S_ObtenirTousPionsDe( eEtatEchelon_Second )
-                for _,x in pairs( listePionsSE or {} ) do
+                for _,x in pairs( listePionsSE or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x
@@ -644,7 +646,7 @@ node "BEH_Conduite_Automate_GEN_FaireFranchir_OrdresDeConduite"
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
         self.obs = self.obs or nil
         local bOrdreConduiteInterrompre = false
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -659,15 +661,15 @@ do
 elseif switch_1 == "Rep_OrderConduite_AttendreSePoster" then
                             --[[// Mise en attente de la progression
 ]]DEC_Trace( "$ --- Wait fragmentary order ---$" )
-                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, {} )
+                            StartActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, 1, emptyTable )
                             _continue = false
                                                 cases_switch_1[2] = true
 elseif switch_1 == "Rep_OrderConduite_Poursuivre" then
                             --[[// ordre de poursuivre -> on reprend la progression
 ]]--[[// la section n est plus en attente d'ordre
 ]]DEC_Trace( "$ --- Resume fragmentary order ---$" )
-                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, {} )
-                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )--[[// Cas des LC
+                            StopActivateOverride( self, self.activations.BEH_Ordre_Automate_Attendre_, emptyTable )
+                            Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )--[[// Cas des LC
 ]]
                             _continue = false
                                                 cases_switch_1[3] = true
@@ -714,7 +716,7 @@ node "BEH_Misc_Automate_GEN_CDT_GererVariantement"
         for _,x in pairs( --[[//-----------------------------------------------------------------
 ]]--[[// En fonction de l'ordre recu
 ]]--[[//-----------------------------------------------------------------
-]]ordres_recus or {} ) do
+]]ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -771,7 +773,7 @@ node "BEH_Ordre_Automate_GEN_CDT_Varianter"
 ]]--[[// Variantement
 ]]--[[//-----------------------------------------------------------------
 ]]
-        for _,site in pairs( g_selConnaissanceObs or {} ) do
+        for _,site in pairs( g_selConnaissanceObs or emptyTable ) do
         local _continue = true
 do
                 --[[// cast

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/behaviors/Behaviors - Conduite.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -31,10 +33,10 @@ include "bit.lua"
         local Activate = Activate
         self.eActionInit = self.eActionInit or eActionEnCours
         if( self.eActionInit == eActionEnCours ) then
-            Activate( self.activations.BEH_Conduite_Automate_GererFuseau_Init, 1, {} )
+            Activate( self.activations.BEH_Conduite_Automate_GererFuseau_Init, 1, emptyTable )
 self.done_BEH_Conduite_Automate_GererFuseau_Init = function( self, _, v ) self.eActionInit = v[1] end
         else
-            Activate( self.activations.BEH_Conduite_Automate_GererFuseau_Valide, 1, {} )
+            Activate( self.activations.BEH_Conduite_Automate_GererFuseau_Valide, 1, emptyTable )
         end
 
     end,
@@ -69,7 +71,7 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
             do
                 --[[// Dit a tous les pions dans le fuseau de se poster
 ]]local rPions_DansFuseau = 0
-                for _,x in pairs( sUnites_PE or {} ) do
+                for _,x in pairs( sUnites_PE or emptyTable ) do
                 local _continue = true
                     do
                         if( DEC_Automate_EstPointDansFuseauPion( DEC_Automate_PionPosition( x ), x ) ) then
@@ -109,7 +111,7 @@ node "BEH_Conduite_Automate_GererFuseau_Init"
 
         if( rPion_Rejoins ~= nil and rPion_SurFuseau == rPion_Rejoins ) then
             do
-                for _,x in pairs( sUnites_PE or {} ) do
+                for _,x in pairs( sUnites_PE or emptyTable ) do
                 local _continue = true
                     Activate( self.activations.ACT_Ordre_Automate_Continue, 1, { x, } )
 
@@ -138,7 +140,7 @@ node "BEH_Conduite_Automate_GererFuseau_Valide"
     activate = function( self )
         local Activate = Activate
         local sUnites_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
-        for _,x in pairs( sUnites_PE or {} ) do
+        for _,x in pairs( sUnites_PE or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -177,7 +179,7 @@ node "BEH_Conduite_Automate_GererFinMission"
                 self.eActionMission = eActionEnCours
                                 do
                     for _,pion in pairs( --[[//selection selPions = DEC_Pion_PionsAvecPC();
-]]DEC_Automate_PionsAvecPC() or {} ) do
+]]DEC_Automate_PionsAvecPC() or emptyTable ) do
                     local _continue = true
                         pion:SetStateVariable( "VE_PreparationMission", 1 )
 
@@ -195,7 +197,7 @@ node "BEH_Conduite_Automate_GererFinMission"
             end
         end
 
-        Activate( self.activations.BEH_Situation_Automate_FinDeMission, 1, {} )
+        Activate( self.activations.BEH_Situation_Automate_FinDeMission, 1, emptyTable )
 self.done_BEH_Situation_Automate_FinDeMission = function( self, _, v ) self.eActionMission = v[1] end
     end,
 
@@ -224,7 +226,7 @@ node "BEH_Situation_Automate_FinDeMission_Sur"
             DEC_Trace( DEC_GetSzName( self._namedParams.pion ) .. " : fin de mission." )
         end
 
-        Activate( self.activations.BEH_Situation_Automate_FinDeMission, 1, {} )
+        Activate( self.activations.BEH_Situation_Automate_FinDeMission, 1, emptyTable )
     end,
 
 }

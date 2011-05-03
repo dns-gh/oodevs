@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_common/automates/missionsreactionpopulations/interdirefranchissementpopulations/CDT - InterdireFranchissementPopulations.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_FiltrerPopulations
 ]]--[[//
@@ -53,7 +55,7 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_ListePoints_GetAt( self._namedParams.m
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
 self.done_BEH_Ordre_Automate_RecevoirOrdreInopine = function( self, _, v ) self.eEtatODC = v[1] end
         self.listePionsInterdireFranchissement = {}
         self.listePionsSuivre = {}

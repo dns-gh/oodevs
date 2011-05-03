@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/populations/Motivations.bms"] = true
 
+local emptyTable = emptyTable
+
 include "Population/Populations/Etats.bms"
 
 include "Population/Populations/Stimulus.bms"
@@ -119,7 +121,7 @@ node "ActivatedByMOT_Riposte"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executer quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Pop_RepondreALaPriseAPartie, GetMotivation( "MOT_Riposte" ), {} )
+]]Activate( self.activations.BEH_Pop_RepondreALaPriseAPartie, GetMotivation( "MOT_Riposte" ), emptyTable )
     end,
 
 }
@@ -178,7 +180,7 @@ node "ActivatedByMOT_Stationner"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executer quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Pop_Stationner, GetMotivation( "MOT_Stationner" ), {} )
+]]Activate( self.activations.BEH_Pop_Stationner, GetMotivation( "MOT_Stationner" ), emptyTable )
     end,
 
 }

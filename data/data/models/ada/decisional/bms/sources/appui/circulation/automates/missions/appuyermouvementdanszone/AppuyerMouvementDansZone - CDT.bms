@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/circulation/automates/missions/appuyermouvementdanszone/AppuyerMouvementDansZone - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_LOG_AppuyerMouvementDansZone
 ]]--[[// 
@@ -23,7 +25,7 @@ includedFiles["sources/appui/circulation/automates/missions/appuyermouvementdans
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, emptyTable )
     end,
 
 }

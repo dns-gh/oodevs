@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/behaviors/Behaviors - Nbc.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -35,8 +37,8 @@ include "bit.lua"
 --[[// pour anibas
 ]]        end
 
-        Activate( self.activations.BEH_Nbc_Recevoir_OrdreInopine, 1, {} )
-        Activate( self.activations.BEH_ReactToNBC, 1, {} )
+        Activate( self.activations.BEH_Nbc_Recevoir_OrdreInopine, 1, emptyTable )
+        Activate( self.activations.BEH_ReactToNBC, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -63,7 +65,7 @@ node "BEH_Nbc_Recevoir_OrdreInopine"
     activate = function( self )
         local Activate = Activate
         local ordres_recus = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( ordres_recus or {} ) do
+        for _,x in pairs( ordres_recus or emptyTable ) do
         local _continue = true
 do
                 local repOrdre = x
@@ -88,8 +90,7 @@ elseif switch_1 == "Rep_OrderConduite_EnleverTenueNBC" then
         end
 
     end,
-    
-    
+
 --[[// *****************************************************************************
 ]]--[[// BEH_ReactToNBC
 ]]--[[//
@@ -104,29 +105,50 @@ node "BEH_ReactToNBC"
     SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ReactToNBC, {value} ) end,
     activations =
     {
-        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } }
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
     },
+
+    create = function( self )
+    end,
 
     activate = function( self )
         local Activate = Activate
-        
         local pos = DEC_Agent_Position()
-        local lstObjects = DEC_Knowledges_ObjectsInCircle( pos, 2000, {"nbc cloud", "nbc zone"} )
+        local lstObjects = DEC_Connaissances_ObjetsDansCercle( pos, 2000, S_TypeObject_ToString( eTypeObjectNuageNBC ), S_TypeObject_ToString( eTypeObjectZoneNBC ) )
         local lstObjectsInside = {}
-        for _, object in pairs( lstObjects  ) do
-            if DEC_Geometrie_EstPointDansLocalisation( pos, DEC_ConnaissanceObjet_Localisation( object ) ) then
-                lstObjectsInside[#lstObjectsInside + 1] = object
+        for _,x in pairs( lstObjects or emptyTable ) do
+        local _continue = true
+do
+                local objet = x
+                if( DEC_Geometrie_EstPointDansLocalisation( pos, DEC_ConnaissanceObjet_Localisation( object ) ) ) then
+                    do
+                        DEC_UserTypeList_PushBack( lstObjectsInside, objet )
+                    end
+                end
+
             end
+
         end
-        
+
         local positions = {}
-        for _, objective in pairs( lstObjectsInside ) do
-            positions[ #positions + 1 ] = DEC_Geometrie_GetLeavingAreaPosition( DEC_ConnaissanceObjet_Localisation( objective ) )
+        for _,x in pairs( lstObjectsInside or emptyTable ) do
+        local _continue = true
+do
+                local objet = x
+                DEC_UserTypeList_PushBack( positions, DEC_Geometrie_GetLeavingAreaPosition( DEC_ConnaissanceObjet_Localisation( objet ) ) )
+            end
+
         end
-        
-        for _, position in pairs( positions ) do
-            Activate( self.activations.BEH_Dep_ProgressionVers, 1 / DEC_Geometrie_DistanceBetweenPoints( position, pos ), { position, eProgressionDirect, eTypeItiRepli, } )
+
+        for _,x in pairs( positions or emptyTable ) do
+        local _continue = true
+do
+                local position = x
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1 / DEC_Geometrie_DistanceBetweenPoints( position, pos ), { position, eProgressionDirect, eTypeItiRepli, } )
+            end
+
         end
+
     end,
 
 --[[// *****************************************************************************
@@ -153,7 +175,7 @@ node "BEH_Nbc_GererAlerteNiv4"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.ACT_Nbc_MettreTenueProtection, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.ACT_Nbc_MettreTenueProtection, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Mettre la combi
 ]]--[[//-----------------------------------------------------------------------------
 ]]

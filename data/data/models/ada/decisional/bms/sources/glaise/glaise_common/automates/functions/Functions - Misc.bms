@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/functions/Functions - Misc.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[// -------------------------------------------------------------------------
@@ -50,7 +52,7 @@ include "bit.lua"
     local _returnValue = nil
     local pionLePlusProcheBuffer = nil
     local distanceMin = 1105199104
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local distance = DEC_Geometrie_Distance( point, DEC_Automate_PionPosition( x ) )
@@ -103,14 +105,14 @@ end
 function S_SelectionnePCEtSubordonnes( unites_ )
     local _returnValue = {}
     local bufferPionCont = {}
-    for _,x in pairs( unites_ or {} ) do
+    for _,x in pairs( unites_ or emptyTable ) do
     local _continue = true
 do
             local automate = DEC_GetAutomate( x )
             if( ( x == DEC_Automate_PionPCDeAutomate( automate ) ) and automate:DEC_Automate_EstEmbraye() ) then
                 do
                     local listePionsAvecPC = DEC_Automate_PionsDeAutomateAvecPC( automate )
-                    for _,y in pairs( listePionsAvecPC or {} ) do
+                    for _,y in pairs( listePionsAvecPC or emptyTable ) do
                     local _continue = true
                         DIA_PushBack( bufferPionCont, y )
 
@@ -123,7 +125,7 @@ do
 
     end
 
-    for _,pion in pairs( unites_ or {} ) do
+    for _,pion in pairs( unites_ or emptyTable ) do
     local _continue = true
 do
             if( not DIA_Contains( bufferPionCont, pion ) ) then
@@ -164,7 +166,7 @@ function S_Liste_Automate_PionsPC( listePions )
     local _returnValue = {}
     local listeBuffer = {}
     local pionPC = nil
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local pion = x

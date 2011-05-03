@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/log/automates/missions/SeDeployer - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_SeDeployer
 ]]--[[//
@@ -23,7 +25,7 @@ includedFiles["sources/appui/log/automates/missions/SeDeployer - CDT.bms"] = tru
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.ACT_Ordre_Automate_LOG_OrdresInopines, 1, {} )
+        Activate( self.activations.ACT_Ordre_Automate_LOG_OrdresInopines, 1, emptyTable )
     end,
 
 }

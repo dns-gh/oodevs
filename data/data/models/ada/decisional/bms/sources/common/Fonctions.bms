@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/Fonctions.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -26,7 +28,7 @@ include "Common/Fonctions - RC.bms"
 ]]function S_Cherche_Filtre_TypeMission( sPions, type )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -46,7 +48,7 @@ end
 function S_Filtre_ChercheTypePion( sPions, type )
     local _returnValue = {}
     local sFiltre = {}
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x

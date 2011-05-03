@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/milices/pion/Behaviors - Eni.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -207,7 +209,7 @@ node "BEH_Eni_Pion_VAB_Offensif_Manoeuvre"
         end
 
         local listeUnitesEnnemiesDangereuses = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,ksEni in pairs( listeUnitesEnnemiesDangereuses or {} ) do
+        for _,ksEni in pairs( listeUnitesEnnemiesDangereuses or emptyTable ) do
         local _continue = true
 do
                 if( DEC_ConnaissanceAgent_EstDetruitTactique( ksEni ) or ( DEC_ConnaissanceAgent_EstUnEnnemi( ksEni ) == eTristate_False ) ) then

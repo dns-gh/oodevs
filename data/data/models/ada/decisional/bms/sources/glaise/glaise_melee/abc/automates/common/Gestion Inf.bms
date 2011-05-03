@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/Gestion Inf.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -45,7 +47,7 @@ include "bit.lua"
         --[[// --> S'il ya des pions en difficulte en PE, demande de les aider
 ]]local selPions_PE = S_ObtenirPionsDe( eEtatEchelon_Premier, eEtatDestruction_None )
         local rNbreDemande = 0
-        for _,x in pairs( selPions_PE or {} ) do
+        for _,x in pairs( selPions_PE or emptyTable ) do
         local _continue = true
 do
                 local pion = x

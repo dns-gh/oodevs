@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/inf/pions/grp mortier/missions/Appuyer.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -75,10 +77,10 @@ node "MIS_Pion_INF_Appuyer"
 
                 Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Appui, } )
                 Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_APPUYER(), } )
-                Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[// ajout ADA mia
+                Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )--[[// ajout ADA mia
 ]]
                 self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-                Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+                Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
                 if( self.eEtatOrdreFinMission == eActionHalt ) then
                     do
@@ -89,7 +91,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 end
 
                 local selOrder = DEC_GetCategory( "ordres_recus" )
-                for _,x in pairs( selOrder or {} ) do
+                for _,x in pairs( selOrder or emptyTable ) do
                 local _continue = true
 do
                         local repOrdreCond = x

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Embarquement.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -30,7 +32,7 @@ include "Glaise/Glaise_Common/Pions/Actions/Actions - Embarquement.bms"
     activate = function( self )
         local Activate = Activate
         if( DEC_Agent_TransporteursPret() and ( not DEC_Agent_EstEmbarque() ) ) then
-            StartActivateOverride( self, self.activations.ACT_Transport_Pion_Embarquer, 2.01, {} )
+            StartActivateOverride( self, self.activations.ACT_Transport_Pion_Embarquer, 2.01, emptyTable )
         end
 
         Activate( self.activations.ACT_Transport_MaintenirEtat, 2, { eEtatTransport_Embarque, } )

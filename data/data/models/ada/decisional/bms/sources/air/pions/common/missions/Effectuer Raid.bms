@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/air/pions/common/missions/Effectuer Raid.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Effectuer RAID
 ]]--[[// -----------------------------------------------------------------------------
@@ -36,14 +38,14 @@ includedFiles["sources/air/pions/common/missions/Effectuer Raid.bms"] = true
             do
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
                 end
 
             end
         end
 
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -71,11 +73,11 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAttaque, } )
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.barycentreZone, } )
                     Activate( self.activations.BEH_Dep_Pion_AIR_RejoindreParItineraire, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.itineraire_, eProgressionDefaut, eTypeItiInfiltration, 0, 500, 0, 0, } )
 self.done_BEH_Dep_Pion_AIR_RejoindreParItineraire = function( self, _, v ) self.eEtat = v[1] end
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Eni_Pion_AIR_EffectuerRaid, GetMotivation( "MOT_ManoeuvrerSurEnis" ), { self._namedParams.mission.zone_, } )
                     _continue = false
                                 cases_switch_1[1] = true
@@ -96,7 +98,7 @@ elseif switch_1 == eFinMission then
                     end
 
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_Pion_AIR_SePoser, 1, {} )
+                    Activate( self.activations.BEH_Dep_Pion_AIR_SePoser, 1, emptyTable )
 self.done_BEH_Dep_Pion_AIR_SePoser = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
@@ -134,7 +136,7 @@ node "BEH_Eni_Pion_AIR_EffectuerRaid"
         local Activate = Activate
         self.eEtat = self.eEtat or eActionEnCours
         local listeConnaissances = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self._namedParams.zone )
-        for _,x in pairs( listeConnaissances or {} ) do
+        for _,x in pairs( listeConnaissances or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_Eni_Pion_AIR_FrappeIndirecteSur, S_Eni_Pion_AIR_ForceDetruire( x, eNatureAtlas_None ), { x, eDetecte, 1, eObus_Explosif, M_DOCTRINE_PION_AIR_PH(), } )

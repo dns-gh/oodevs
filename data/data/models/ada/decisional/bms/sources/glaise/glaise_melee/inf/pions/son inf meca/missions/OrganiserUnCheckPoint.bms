@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/OrganiserUnCheckPoint.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -47,7 +49,7 @@ node "MIS_Pion_INF_OrganiserUnCheckPoint"
                 DEC_SetMission( myself, self._namedParams.mission )
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
-                Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )--[[//ROE par defaut pour cette mission
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )--[[//ROE par defaut pour cette mission
 ]]
                 DEC_Trace( "Mission 'Organiser un check point' : debut" )
             end
@@ -69,10 +71,10 @@ node "MIS_Pion_INF_OrganiserUnCheckPoint"
             end
         end
 
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eActionOrdre = v[1] end
         local sOrdre = DEC_GetCategory( "ordres_recus" )
-        for _,repOrder in pairs( sOrdre or {} ) do
+        for _,repOrder in pairs( sOrdre or emptyTable ) do
         local _continue = true
 do
                 --[[//-----------------------------------------------------------------------------
@@ -130,7 +132,7 @@ do
                         end
                     end
 
-                    Activate( self.activations.BEH_Mission_Pion_VAB_OrganiserUnCheckPoint, GetMotivation( "MOT_Mission" ), {} )
+                    Activate( self.activations.BEH_Mission_Pion_VAB_OrganiserUnCheckPoint, GetMotivation( "MOT_Mission" ), emptyTable )
 self.done_BEH_Mission_Pion_VAB_OrganiserUnCheckPoint = function( self, _, v ) self.eCurrentPhase = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
@@ -147,7 +149,7 @@ elseif switch_1 == eRompreContact then
                         end
                     end
 
-                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, {} )
+                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, emptyTable )
 self.done_BEH_Manoeuvre_RompreContact = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
@@ -216,7 +218,7 @@ node "BEH_Mission_Pion_VAB_OrganiserUnCheckPoint"
         self.eAction = self.eAction or eActionEnCours
         if( ModuleBegins() ) then
             do
-                StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, emptyTable )
             end
         end
 
@@ -241,7 +243,7 @@ node "BEH_Mission_Pion_VAB_OrganiserUnCheckPoint"
                         end
                     end
 
-                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, {} )
+                    Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.pointInstallation_, true, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false

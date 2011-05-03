@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/common/Behaviors - Lima.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -59,7 +61,7 @@ include "bit.lua"
         --[[// $$$$ Pour le moment comme les points particuliers	
 ]]Activate( self.activations.BEH_Poste_Pion_INF_ArretCourt, 1, { self.repPt, S_TempsObservationPoint_Ambiance(), } )
 self.done_BEH_Poste_Pion_INF_ArretCourt = function( self, _, v ) self.eAction = v[1] end
-        Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Repli, 1, {} )
+        Activate( self.activations.BEH_Misc_Pion_INF_MAJ_Repli, 1, emptyTable )
     end,
 
 --[[//-----------------------------------------------------------------------------
@@ -97,7 +99,7 @@ node "BEH_Lima_Pion_INF_SurLD"
 --[[// Se poster
 ]]        end
 
-        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, {} )
+        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, emptyTable )
 self.done_BEH_Ordre_SePoster_EnAttente = function( self, _, v ) self.eOrdre = v[1] end
         --[[// MAJ Etat Lima
 ]]Activate( self.activations.ACT_Dep_PasserSurLima, 1, { eEtatLima_LD, } )
@@ -150,7 +152,7 @@ node "BEH_Lima_Pion_INF_SurLCAR"
         end
 
         Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
-        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, {} )
+        Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, emptyTable )
 self.done_BEH_Ordre_SePoster_EnAttente = function( self, _, v ) self.eAction = v[1] end
     end,
 
@@ -202,7 +204,7 @@ node "BEH_Lima_Pion_INF_GererLIA"
 ]]        end
 
         local listePointInterressant = DEC_GetCategory( "points_interressants" )
-        for _,x in pairs( listePointInterressant or {} ) do
+        for _,x in pairs( listePointInterressant or emptyTable ) do
         local _continue = true
 do
                 local pointABC = x

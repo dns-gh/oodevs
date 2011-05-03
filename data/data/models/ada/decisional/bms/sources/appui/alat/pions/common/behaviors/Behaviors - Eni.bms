@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/pions/common/behaviors/Behaviors - Eni.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -285,7 +287,7 @@ node "BEH_Eni_Pion_ALAT_AllerDetruireEnnemi"
                 if( DEC_ConnaissanceAgent_EstPercuParUnite( self._namedParams.ennemi ) and S_Eni_EstNiveauPerceptionGTIA( self._namedParams.ennemi, self._namedParams.niveauPerception ) ) then
                     do
                         Activate( self.activations.ACT_Tir_DirectSur, 1, { self._namedParams.ennemi, self._namedParams.pourcentageComposantes, } )
-                        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+                        Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
                     end
                 end
 
@@ -454,7 +456,7 @@ node "BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus"
         local Activate = Activate
         self.listeEnisPrec = self.listeEnisPrec or DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( myself:DEC_Agent_Position(), 10000 )
         local listeEnisCourant = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( myself:DEC_Agent_Position(), 10000 )
-        for _,x in pairs( listeEnisCourant or {} ) do
+        for _,x in pairs( listeEnisCourant or emptyTable ) do
         local _continue = true
 do
                 if( not DEC_UserTypeList_Contient( self.listeEnisPrec, x ) ) then

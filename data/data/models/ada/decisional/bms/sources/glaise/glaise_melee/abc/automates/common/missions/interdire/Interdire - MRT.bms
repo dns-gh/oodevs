@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/interdire/Interdire - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created$
@@ -49,7 +51,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/interdi
 ]]--[[//-------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                local lima = 0
+                local lima = nil
                 --[[// On recupère la lima à interdire
 ]]if( not DEC_AutomateSuperieur_EstEmbraye() ) then
                     lima = DEC_GetLima( eTypeLima_LI )
@@ -82,7 +84,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/interdi
 ]]--[[//---------------------------------------------------------------------
 ]]                end
 
-                for _,pion in pairs( self._namedParams.selPions or {} ) do
+                for _,pion in pairs( self._namedParams.selPions or emptyTable ) do
                 local _continue = true
 do
                         if( self.rIterateurPosition == DEC_ListePoints_Size( self.listePositions ) ) then
@@ -141,7 +143,7 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
 ]]--[[//-------------------------------------------------------------------------
 ]]if( ModuleBegins() ) then
             do
-                local lima = 0
+                local lima = nil
                 --[[// On recupère la lima à interdire
 ]]if( not DEC_AutomateSuperieur_EstEmbraye() ) then
                     lima = DEC_GetLima( eTypeLima_LI )
@@ -174,7 +176,7 @@ node "BEH_Medo_Automate_ABC_Interdire_AssignerMissionSurveillerA"
 ]]--[[//---------------------------------------------------------------------
 ]]                end
 
-                for _,pion in pairs( self._namedParams.selPions or {} ) do
+                for _,pion in pairs( self._namedParams.selPions or emptyTable ) do
                 local _continue = true
 do
                         if( self.rIterateurPosition == DEC_ListePoints_Size( self.listePositions ) ) then

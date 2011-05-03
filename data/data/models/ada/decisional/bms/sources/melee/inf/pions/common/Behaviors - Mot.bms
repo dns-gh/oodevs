@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/common/Behaviors - Mot.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -34,7 +36,7 @@ include "bit.lua"
     activate = function( self )
         local Activate = Activate
         local lstEnisDangereux = DEC_Connaissances_UnitesEnnemiesDangereuses()
-        for _,ksEni in pairs( lstEnisDangereux or {} ) do
+        for _,ksEni in pairs( lstEnisDangereux or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_MOT_Pion_INF_GarderSesDistancesFaceA, S_Force_DangerSur( ksEni ), { ksEni, } )
 
@@ -102,9 +104,9 @@ node "BEH_MOT_Pion_INF_GarderSesDistances_GererTransport"
         if( DEC_Agent_EstEmbarque() and ( eNiveauInstallation_Poste == DEC_Agent_NiveauInstallation() ) ) then
             do
                 local lstEnisDangereux = DEC_Connaissances_UnitesEnnemiesDangereuses()
-                for _,ksEni in pairs( lstEnisDangereux or {} ) do
+                for _,ksEni in pairs( lstEnisDangereux or emptyTable ) do
                 local _continue = true
-                    StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )
+                    StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )
 
                 end
 
@@ -138,9 +140,9 @@ node "BEH_MOT_Pion_INF_EtrePrudent_GererTransport"
         if( F_Pion_GeteEtatDecPrudence( myself ) == eEtatDecPrudence_Actif and DEC_Agent_EstEmbarque() ) then
             do
                 local lstEnisDangereux = DEC_Connaissances_UnitesEnnemiesDangereuses()
-                for _,ksEni in pairs( lstEnisDangereux or {} ) do
+                for _,ksEni in pairs( lstEnisDangereux or emptyTable ) do
                 local _continue = true
-                    StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, {} )--[[// : strength = 1.1 * S_Force_DangerSur( ksEni );
+                    StartActivateOverride( self, self.activations.BEH_MOT_Pion_INF_Debarquer, 1, emptyTable )--[[// : strength = 1.1 * S_Force_DangerSur( ksEni );
 ]]
 
                 end
@@ -193,7 +195,7 @@ node "BEH_Mot_Delai_Pion_INF_AugmenterAgression"
 
         Activate( self.activations.ACT_Misc_Delai, 1, { 1, self._namedParams.rDelai, } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
-        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
     end,
 
 --[[// ----------------------------------------------------------------------------
@@ -259,7 +261,7 @@ node "BEH_MOT_Pion_INF_Debarquer"
     activate = function( self )
         local Activate = Activate
         if( DEC_Agent_TransporteursPret() and DEC_Agent_EstEmbarque() ) then
-            StartActivateOverride( self, self.activations.ACT_Transport_Pion_INF_Debarquer, 2.01, {} )
+            StartActivateOverride( self, self.activations.ACT_Transport_Pion_INF_Debarquer, 2.01, emptyTable )
         end
 
         Activate( self.activations.ACT_Transport_MaintenirEtat, 2, { eEtatTransport_Debarque, } )

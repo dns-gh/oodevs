@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/pions/fonctions/Functions - Misc.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[//-------------------------------------------------------------------------
@@ -130,7 +132,7 @@ include "bit.lua"
     local _returnValue = nil
     local pionLePlusProcheBuffer = nil
     local distanceMin = 1105199104
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 do
             local distance = DEC_Geometrie_Distance( point, x:DEC_Agent_Position() )
@@ -152,13 +154,13 @@ end
 function S_SelectionnePCEtSubordonnes( unites_ )
     local _returnValue = {}
     local bufferPionCont = {}
-    for _,x in pairs( unites_ or {} ) do
+    for _,x in pairs( unites_ or emptyTable ) do
     local _continue = true
 do
             if( x:DEC_Agent_EstPC() and x:DEC_Agent_AutomateEstEmbraye() ) then
                 do
                     local listePionsAvecPC = x:DEC_Pion_PionsAvecPC()
-                    for _,y in pairs( listePionsAvecPC or {} ) do
+                    for _,y in pairs( listePionsAvecPC or emptyTable ) do
                     local _continue = true
                         DIA_PushBack( bufferPionCont, y )
 
@@ -171,7 +173,7 @@ do
 
     end
 
-    for _,pion in pairs( unites_ or {} ) do
+    for _,pion in pairs( unites_ or emptyTable ) do
     local _continue = true
 do
             if( not DIA_Contains( bufferPionCont, pion ) ) then
@@ -221,7 +223,7 @@ end
 function S_PionsNonDetruits( listePions )
     local _returnValue = {}
     local listeBuffer = {}
-    for _,x in pairs( listePions or {} ) do
+    for _,x in pairs( listePions or emptyTable ) do
     local _continue = true
 if( not S_Misc_EstPionDetruitPhysique( x ) ) then
             DIA_PushBack( listeBuffer, x )
@@ -240,7 +242,7 @@ function S_Geometrie_LocalisationProche( listeLocalisation )
     local rDistanceMin = 1105199104
     local rDistanceCourante = 0
     _returnValue = locVide
-    for _,loc in pairs( listeLocalisation or {} ) do
+    for _,loc in pairs( listeLocalisation or emptyTable ) do
     local _continue = true
 do
             ptEntreeLocalisation = DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau( loc )

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/rens/pions/rohum/rbrr/pat recherche nautique/missions/SExfiltrer.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_RENS_ROHUM_SExfiltrer
 ]]--[[//
@@ -40,7 +42,7 @@ includedFiles["sources/glaise/glaise_appui/rens/pions/rohum/rbrr/pat recherche n
             do return end
         end
 
-        Activate( self.activations.BEH_Dep_Pion_GererFurtivite, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dep_Pion_GererFurtivite, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Furtivite
 ]]--[[//-----------------------------------------------------------------------------
 ]]

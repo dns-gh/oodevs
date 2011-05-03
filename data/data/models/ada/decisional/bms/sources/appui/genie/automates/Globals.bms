@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/genie/automates/Globals.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -85,7 +87,7 @@ end
 
 function S_Dispositif_Automate_Init( )
     local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-    for _,x in pairs( listePionsSubordonnes or {} ) do
+    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
     local _continue = true
 do
             local pion = x

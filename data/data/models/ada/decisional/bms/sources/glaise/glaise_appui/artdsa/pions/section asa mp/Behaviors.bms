@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/artdsa/pions/section asa mp/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// Paramètres généraux
 ]]--[[// -------------------
 ]]use_priority = no
@@ -71,7 +73,7 @@ etat_ROE = 1,
     activate = function( self )
         local Activate = Activate
         if( DEC_Agent_NiveauInstallation() >= eNiveauInstallation_PosteAmenage ) then
-            Activate( self.activations.BEH_Eni_GererDemandesDeTirsCentralisees, 1, {} )
+            Activate( self.activations.BEH_Eni_GererDemandesDeTirsCentralisees, 1, emptyTable )
         end
 
     end,

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/rohum/urh/common/missions/RenseignerSur.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Mission_Pion_RENS_RenseignerSur
 ]]--[[//
@@ -34,7 +36,7 @@ includedFiles["sources/appui/rens/pions/rohum/urh/common/missions/RenseignerSur.
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.pointARenseigner = self.pointARenseigner or S_Geometrie_BarycentreZone( self._namedParams.mission.zoneAObserver_ )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -79,7 +81,7 @@ elseif switch_1 == eProgresser then
                         do
                             Activate( self.activations.ACT_Info_Trace, 1, { "Il fait ne pas nuit, l'unité reste cachée", } )
                             Activate( self.activations.ACT_RC, 1, { eRC_AttenteConditionFavorablePourInfiltration, } )
-                            Activate( self.activations.BEH_Dep_SePoster, 1.5, {} )
+                            Activate( self.activations.BEH_Dep_SePoster, 1.5, emptyTable )
                         end
 --[[// Hack car si pas condition fav myself.eEtatPionMission_ = 0  Attention pour automate!
 ]]                    end
@@ -105,7 +107,7 @@ self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
 elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ArriveSurLocalisation, } )
                     Activate( self.activations.BEH_Rens_EnSurveillanceDe, 1, { self._namedParams.mission.zoneAObserver_, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     if( DEC_Geometrie_Distance( myself:DEC_Agent_Position(), self.pointARenseigner ) > 200 ) then
                         Activate( self.activations.BEH_Dep_ProgressionVers, 1.1, { self.pointARenseigner, eProgressionReco, eTypeItiInfiltration, } )
                     end
@@ -115,7 +117,7 @@ elseif switch_1 == eSurveiller then
 ]]                cases_switch_1[3] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     _continue = false
                                 cases_switch_1[4] = true
 

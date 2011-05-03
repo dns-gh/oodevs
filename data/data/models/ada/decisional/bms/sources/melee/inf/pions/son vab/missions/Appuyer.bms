@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/inf/pions/son vab/missions/Appuyer.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -71,7 +73,7 @@ include "bit.lua"
                     end
                 end
 
-                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
                 --[[// ajout ADA mia
 ]]DEC_Trace( "Mission 'Appuyer ( " .. DEC_GetSzName( self.repAmi ) .. " )' : debut" )
             end
@@ -80,7 +82,7 @@ include "bit.lua"
         Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Appui, } )
         Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_APPUYER(), } )
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -174,7 +176,7 @@ node "BEH_Eni_Pion_VAB_Appuyer"
         end
 
         local lstEnisDansFuseau = DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau()
-        for _,ksEni in pairs( lstEnisDansFuseau or {} ) do
+        for _,ksEni in pairs( lstEnisDansFuseau or emptyTable ) do
         local _continue = true
 do
                 local rForceDemande = 1
@@ -202,7 +204,7 @@ do
                         end
                     else
 do
-                            Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, {} )
+                            Activate( self.activations.ACT_Misc_UnitesEnAppui_EnPosition, 1, emptyTable )
                             Activate( self.activations.BEH_Eni_Pion_VAB_ManoeuvreDetruire, 1 + rForce_Contact, { ksEni, true, } )
                         end
                     end

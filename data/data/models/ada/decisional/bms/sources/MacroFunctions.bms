@@ -750,3 +750,5 @@ function DIA_SetLocalFakeActuator( behavior, pion, activity )
     fakeActuators[behavior] = fakeActuators[behavior] or {}
     fakeActuators[behavior][pion] = activity
 end
+
+emptyTable = {}

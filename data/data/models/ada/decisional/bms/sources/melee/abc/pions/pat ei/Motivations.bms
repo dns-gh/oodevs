@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/pions/pat ei/Motivations.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 02-11-08 $
@@ -90,7 +92,7 @@ node "ActivatedByMOT_SInfiltrer"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer, GetMotivation( "MOT_SInfiltrer" ), {} )
+]]Activate( self.activations.BEH_Pion_ABC_GarderSesDistancesPourSInfiltrer, GetMotivation( "MOT_SInfiltrer" ), emptyTable )
     end,
 
 }
@@ -156,7 +158,7 @@ node "ActivatedByMOT_PoursuivreFaceAEni"
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
 ]]if( GetMotivation( "MOT_PoursuivreFaceAEni" ) > 0 ) then
-            Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+            Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
         end
 
     end,

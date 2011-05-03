@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/ouvrir itineraires/OuvrirItineraires - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_GEN_OuvrirItineraires
 ]]--[[//
@@ -151,7 +153,7 @@ node "BEH_Medo_Automate_GEN_MRT_FaireOuvrir"
                 for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.listePionsGenie or {} ) do
+]]self._namedParams.listePionsGenie or emptyTable ) do
                 local _continue = true
                     do
                         if( self.rIterateurItineraire == #( self._namedParams.itineraires ) ) then

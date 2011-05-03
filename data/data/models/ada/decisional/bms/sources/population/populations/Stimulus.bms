@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/populations/Stimulus.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// *****************************************************************************
 ]]--[[//  STIMULUS ORDRE MISSION
@@ -27,7 +29,7 @@ motivation_plugin.stimuli["STIM_Mission"] = function()
 
 motivation_plugin.stimuli["STIM_PriseAPartieTirDirect"] = function()
         local lstPions = DEC_Connaissances_PionsPrenantAPartie()
-        for _,pion in pairs( lstPions or {} ) do
+        for _,pion in pairs( lstPions or emptyTable ) do
         local _continue = true
 do
                 local roe = DEC_ConnaissanceAgent_RoePopulation( pion )
@@ -69,7 +71,7 @@ do
 
 motivation_plugin.stimuli["STIM_ZoneSecurisee"] = function()
         local lstSecus = DEC_Connaissances_PionsSecurisant()
-        for _,secu in pairs( lstSecus or {} ) do
+        for _,secu in pairs( lstSecus or emptyTable ) do
         local _continue = true
 do
                 UpdateStateVariable( "VE_Domination", S_EffetSecurisationSurDomination( DEC_ConnaissanceAgent_RoePopulation( secu ) ) )

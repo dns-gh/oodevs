@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - POP - Mot.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -26,7 +28,7 @@ include "bit.lua"
     activate = function( self )
         local Activate = Activate
         local lstPops = DEC_Connaissances_CollisionsPopulations()
-        for _,pop in pairs( lstPops or {} ) do
+        for _,pop in pairs( lstPops or emptyTable ) do
         local _continue = true
 do
                 Activate( self.activations.BEH_RiposteSurPopulation, DEC_ConnaissancePopulation_Dangerosite( pop ), { pop, } )
@@ -65,7 +67,7 @@ node "BEH_MOT_DecrochageFaceAPopulations"
 
         local lstPops = DEC_Connaissances_Populations()
         local lstPopsCollision = DEC_Connaissances_CollisionsPopulations()
-        for _,pop in pairs( lstPops or {} ) do
+        for _,pop in pairs( lstPops or emptyTable ) do
         local _continue = true
 do
                 local rDangerosite = DEC_ConnaissancePopulation_Dangerosite( pop )
@@ -105,7 +107,7 @@ node "BEH_MOT_PasserEnEmploiForceInterdit"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_ROE_GererEmploiForceInterdit, 1, {} )
+        Activate( self.activations.BEH_ROE_GererEmploiForceInterdit, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -130,7 +132,7 @@ node "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_ROE_GererMaintienADistanceParMoyensNonLetaux, 1, {} )
+        Activate( self.activations.BEH_ROE_GererMaintienADistanceParMoyensNonLetaux, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -155,7 +157,7 @@ node "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_ROE_GererDispersionParMoyensDeDefenseActifs, 1, {} )
+        Activate( self.activations.BEH_ROE_GererDispersionParMoyensDeDefenseActifs, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -180,7 +182,7 @@ node "BEH_MOT_PasserEnArmesLetalesAutorisees"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_ROE_GererArmesLetalesAutorisees, 1, {} )
+        Activate( self.activations.BEH_ROE_GererArmesLetalesAutorisees, 1, emptyTable )
     end,
 
 }

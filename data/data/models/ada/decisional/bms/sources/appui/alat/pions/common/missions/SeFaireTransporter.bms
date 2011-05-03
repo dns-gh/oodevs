@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/pions/common/missions/SeFaireTransporter.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//------------------------------------------------------------------------------// MIS_Pion_SeFaireTransporter
 ]]--[[//
 ]]--[[// Commentaires: 
@@ -32,7 +34,7 @@ includedFiles["sources/appui/alat/pions/common/missions/SeFaireTransporter.bms"]
         self.eEtat = self.eEtat or eActionEnCours
         self.aEteTransporte = self.aEteTransporte or false
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -52,7 +54,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                 F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( not DEC_Agent_AutomateEstEmbraye() ) then
-                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                    Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, emptyTable )
                 end
 
             end
@@ -81,7 +83,7 @@ elseif switch_1 == eProgresser then
                         end
                     end
 
-                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), { self._namedParams.mission.pointEmbarquement_, eProgressionDefaut, eTypeItiInfiltration, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
@@ -89,7 +91,7 @@ self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat =
 elseif switch_1 == eFinMission then
                     if( DEC_Agent_EstTransporte() ) then
                         do
-                            Activate( self.activations.ACT_Dep_ALAT_TransportEnCours, 1, {} )
+                            Activate( self.activations.ACT_Dep_ALAT_TransportEnCours, 1, emptyTable )
                             self.aEteTransporte = true
                         end
                     else
@@ -105,7 +107,7 @@ do
                             end
 
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                            Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), {} )
+                            Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
 self.done_BEH_Dep_Pion_ALAT_SePoser = function( self, _, v ) self.eEtat = v[1] end
                         end
                     end

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - CoordDep.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// *****************************************************************************
 ]]--[[// BEH_CoordDep_Automate_ActiverCoordinationSur
@@ -56,7 +58,7 @@ includedFiles["sources/glaise/glaise_common/automates/behaviors/Behaviors - Coor
 ]]--[[// Escadron trop etalé --> le PE ralentit
 ]]--[[//-----------------------------------------------------------------------------
 ]]Activate( self.activations.ACT_Info_Automate_Trace, 1, { "==< Coordinnation active >==", } )
-        for _,x in pairs( self._namedParams.listePions or {} ) do
+        for _,x in pairs( self._namedParams.listePions or emptyTable ) do
         local _continue = true
 do
                 local pion = x

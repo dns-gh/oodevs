@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/rens/pions/rohum/rbrr/pat recherche motorisee/missions/Guider.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_RENS_ROHUM_OrienterGuider
 ]]--[[//
@@ -40,7 +42,7 @@ includedFiles["sources/appui/rens/pions/rohum/rbrr/pat recherche motorisee/missi
             do return end
         end
 
-        Activate( self.activations.BEH_Dep_Pion_GererFurtivite, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Dep_Pion_GererFurtivite, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Furtivite
 ]]--[[//-----------------------------------------------------------------------------
 ]]

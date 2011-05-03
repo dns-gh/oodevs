@@ -293,8 +293,8 @@ eRC_TirIndirectImpossible = 274
 eRC_CibleNonPercue = 275
 eRC_EnnemiTactiquementDetruit = 276
 eRC_VisionRadarVerrouilleeSur = 277
-eRC_DebutReconnaissanceBlocUrbain = 278
-eRC_FinReconnaissanceBlocUrbain = 279
+eRC_DebutReconnaissanceBlocUrabin = 278
+eRC_FinReconnaissanceBlocUrabin = 279
 eRC_DebutReconnaissancePoint = 280
 eRC_FinReconnaissancePoint = 281
 eRC_FinTirDirectSurCible = 282
@@ -374,7 +374,7 @@ eRC_ArrivedOnEvacuateZone = 355
 eRC_ZoneEvacuationInProgress = 356
 eRC_DebutValorisation = 357
 eRC_FinValorisation = 358
-eNbr = 358
+eNbr = 359
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion

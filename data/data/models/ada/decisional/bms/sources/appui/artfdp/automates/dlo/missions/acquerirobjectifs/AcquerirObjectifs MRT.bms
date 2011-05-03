@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artfdp/automates/dlo/missions/acquerirobjectifs/AcquerirObjectifs MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_ASS_AcquerirObjectifsDLO
 ]]--[[//
@@ -102,7 +104,7 @@ node "BEH_Medo_Automate_AssignerAcquerirObjectifsA"
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des mission une par une au pion (pas simultanément)
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.listePions or {} ) do
+]]self._namedParams.listePions or emptyTable ) do
         local _continue = true
 do
                 if( rIterateurZones == #( self._namedParams.listeZonesObjectifs ) ) then

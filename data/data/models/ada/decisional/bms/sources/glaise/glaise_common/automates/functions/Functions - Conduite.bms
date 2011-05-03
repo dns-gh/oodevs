@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/functions/Functions - Conduite.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 --[[// *****************************************************************************
@@ -22,7 +24,7 @@ include "bit.lua"
 ]]function S_Conduite_Pions_EtatMission( sPions, eEtatPhase_Mission )
     local _returnValue = 0
     _returnValue = 0
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -40,7 +42,7 @@ end
 function S_Conduite_Pions_EtatLima( sPions, eEtatLima )
     local _returnValue = 0
     _returnValue = 0
-    for _,x in pairs( sPions or {} ) do
+    for _,x in pairs( sPions or emptyTable ) do
     local _continue = true
 do
             local pion = x
@@ -59,7 +61,7 @@ function S_Automate_EstEnDifficulte( )
     local _returnValue = false
     _returnValue = false
     local listePionsPE = S_ObtenirTousPionsDe( eEtatEchelon_Premier )
-    for _,x in pairs( listePionsPE or {} ) do
+    for _,x in pairs( listePionsPE or emptyTable ) do
     local _continue = true
 do
             local pion = x

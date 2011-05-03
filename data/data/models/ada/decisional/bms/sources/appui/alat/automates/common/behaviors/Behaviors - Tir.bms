@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Tir.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Ce comportement permet de gerer la synchronisation des feux au niveau de
 ]]--[[// l'automate alat.
@@ -24,7 +26,7 @@ includedFiles["sources/appui/alat/automates/common/behaviors/Behaviors - Tir.bms
             do return end
         end
 
-        for _,x in pairs( self._namedParams.listePionsACoordonner or {} ) do
+        for _,x in pairs( self._namedParams.listePionsACoordonner or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -42,7 +44,7 @@ do
         pourcentageEffectif = compteur / #( self._namedParams.listePionsACoordonner )
         if( pourcentageEffectif >= self._namedParams.pourcentageEngagement ) then
             do
-                for _,x in pairs( self._namedParams.listePionsACoordonner or {} ) do
+                for _,x in pairs( self._namedParams.listePionsACoordonner or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x

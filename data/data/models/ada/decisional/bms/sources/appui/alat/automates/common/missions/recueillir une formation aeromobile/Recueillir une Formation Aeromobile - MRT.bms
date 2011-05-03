@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/alat/automates/common/missions/recueillir une formation aeromobile/Recueillir une Formation Aeromobile - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -107,7 +109,7 @@ do
 ]]                end
 
                 local unSurDeux = false
-                for _,x in pairs( self.listePeutTraiterAero or {} ) do
+                for _,x in pairs( self.listePeutTraiterAero or emptyTable ) do
                 local _continue = true
 do
                         if( DIA_IsListEmpty( self.listePionRef ) ) then
@@ -164,14 +166,14 @@ do
 ]]                it = it + 1
                 end
 
-                for _,x in pairs( self.listePeutTraiterAero or {} ) do
+                for _,x in pairs( self.listePeutTraiterAero or emptyTable ) do
                 local _continue = true
                     DEC_UserTypeList_PushBack( self.localisationsASurveiller, self._namedParams.mission.zone_ )
 
                 end
 
-                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
-                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, emptyTable )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, emptyTable )
             end
         end
 

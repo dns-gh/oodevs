@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_common/automates/missions/serendre/MRT - SeRendre.bms"] = true
 
+local emptyTable = emptyTable
+
 
 
 --[[// *****************************************************************************
@@ -118,7 +120,7 @@ node "BEH_Medo_Automate_Prisonniers_AssignerFaireMouvementA"
 ]]--[[//---------------------------------------------------------------------	
 ]]if( ModuleBegins() ) then
             do
-                for _,pion in pairs( DEC_Automate_PionsAvecPC() or {} ) do
+                for _,pion in pairs( DEC_Automate_PionsAvecPC() or emptyTable ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerFaireMouvementA, 1, { ePhase_MRT, pion, self._namedParams.posCampPrisonnier, eEtatEchelon_Premier, } )
 

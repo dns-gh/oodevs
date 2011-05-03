@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/abc/pions/common/missions/ReconnaitrePoint.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 02-11-21 $
@@ -50,7 +52,7 @@ includedFiles["sources/humus/humus_melee/abc/pions/common/missions/ReconnaitrePo
         self.eEtat = self.eEtat or eActionEnCours
         self.ePhaseMission = self.ePhaseMission or ePreparerMission
         self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
-        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
 self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
         if( self.eEtatOrdreFinMission == eActionHalt ) then
             do
@@ -147,7 +149,7 @@ self.done_BEH_Obs_Pion_ABC_ReconnaitrePointMission = function( self, _, v ) self
                 if cases_switch_1[3] or switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
                     if( self.eEtat == eActionEffectuee ) then
-                        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+                        Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, emptyTable )
                     else
                         Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.mission.pointAReconnaitre_, eProgressionDefaut, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end

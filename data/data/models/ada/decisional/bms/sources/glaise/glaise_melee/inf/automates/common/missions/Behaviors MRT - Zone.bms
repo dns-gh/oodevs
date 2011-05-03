@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/automates/common/missions/Behaviors MRT - Zone.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JCR 03-05-15 $
@@ -256,7 +258,7 @@ node "BEH_Medo_Automate_INF_AssignerControler"
                                                     DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
                                                         do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                                                 self:SendFeedback( eActionImpossible )
                                 do return end
 
@@ -274,7 +276,7 @@ elseif switch_1 == eNoError then
                     end
 
                 local rIt = 0
-                for _,x_pion in pairs( self._namedParams.lstPions_PE or {} ) do
+                for _,x_pion in pairs( self._namedParams.lstPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         if( rIt < #( self.lstLocalisations ) ) then
@@ -347,7 +349,7 @@ node "BEH_Medo_Automate_INF_AssignerHarceler"
                                                     DEC_Trace( "Erreur MRT : Decoupage de la zone " .. EnumToString( self.eCodeLoc, E_LocalisationFunctionsReturnCode ) )
                                                         do
                                 DEC_Warning( eRC_MissionImpossibleZoneHorsFuseau )
-                                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, {} )
+                                Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, 1, emptyTable )
                                                                 self:SendFeedback( eActionImpossible )
                                 do return end
 
@@ -369,7 +371,7 @@ elseif switch_1 == eNoError then
                 self.lstLocRgpt = self.lstLocRgpt.first
                 local rIt = 0
                 local natureObjectif = eNatureObjectif_ElementTerrain
-                for _,x_pion in pairs( self._namedParams.lstPions_PE or {} ) do
+                for _,x_pion in pairs( self._namedParams.lstPions_PE or emptyTable ) do
                 local _continue = true
                     do
                         if( rIt < #( self.lstLocalisations ) ) then
@@ -438,7 +440,7 @@ if( #( self._namedParams.lstPionsAppui ) ~= 0 ) then
                 end
 
                 StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, DEC_Automate_PionPC(), pAppui, } )
-                for _,x_appui in pairs( self._namedParams.lstPionsAppui or {} ) do
+                for _,x_appui in pairs( self._namedParams.lstPionsAppui or emptyTable ) do
                 local _continue = true
                     StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_MRT, x_appui, pAppui, } )
 

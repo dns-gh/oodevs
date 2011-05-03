@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artfdp/pions/common/missions/MettreEnOeuvre.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -35,11 +37,10 @@ include "bit.lua"
         local Activate = Activate
         local _munitions = myself.munitions_
         local _nbIT = myself.nbIT_
-		DEC_Trace( "Indirect fire requested: " .. tostring( _nbIT ) )
         Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : AppliquerFeux", } )
         Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
         if( _munitions ~= nil and _nbIT > 0 ) then
-            Activate( self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { _munitions, _nbIT, myself.cible_, } )
+            Activate( self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 1, { _munitions, _nbIT, myself.cible_, } )
         end
 
     end,
@@ -68,7 +69,7 @@ node "BEH_Pion_ASS_GererOrdre_AppliquerFeux"
         --[[// Prise en charge de l'ordre d'application des feux
 ]]--[[//---------------------------------------------------------------------	
 ]]local selOrder = DEC_GetCategory( "ordres_recus" )
-        for _,x in pairs( selOrder or {} ) do
+        for _,x in pairs( selOrder or emptyTable ) do
         local _continue = true
 do
                 local repOrdreCond = x
@@ -123,7 +124,7 @@ node "BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC"
 ]]local selOrder = DEC_GetCategory( "ordres_recus" )
         self.ptZoneCanon = self.ptZoneCanon or nil--[[//Variable représentant le point de barycentre d'une zone d'implantation canon parmi la liste des zones
 ]]
-        for _,x_ordre in pairs( selOrder or {} ) do
+        for _,x_ordre in pairs( selOrder or emptyTable ) do
         local _continue = true
 do
                 local repOrdreCond = x_ordre
@@ -505,7 +506,7 @@ node "BEH_Dep_Pion_ASS_SePosterPourTirer"
             do return end
         end
 
-        Activate( self.activations.ACT_Dep_SePoster, 1, {} )
+        Activate( self.activations.ACT_Dep_SePoster, 1, emptyTable )
     end,
 
 }
@@ -656,7 +657,7 @@ node "BEH_Tir_Pion_ASS_AppliquerFeux"
 ]]        end
 
         Activate( self.activations.BEH_Tir_Pion_ASS_PreparerTirSur, 1.1, { self._namedParams.ptCible, M_DELAI_PREPARATION_TIR(), } )
-        Activate( self.activations.ACT_Dep_SePoster, 0.5, {} )
+        Activate( self.activations.ACT_Dep_SePoster, 0.5, emptyTable )
         if( self.eAction ~= eActionEnCours ) then
             Halt( self )
             do return end
@@ -710,9 +711,6 @@ self.done_ACT_Misc_Delai = function( self, _, v ) self.eAction = v[1] end
 }
 
 connections = connections or {}
-connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ASS_AppliquerFeux, "ACT_Info_Trace", nodes.ACT_Info_Trace }
-connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ASS_AppliquerFeux, "ACT_RC", nodes.ACT_RC }
-connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ASS_AppliquerFeux, "BEH_Tir_Pion_ASS_AppliquerFeux", nodes.BEH_Tir_Pion_ASS_AppliquerFeux }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "ACT_RC", nodes.ACT_RC }
@@ -723,6 +721,9 @@ connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_Apr
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_SePosterPourTirer, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
 connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, "ACT_Info_Pion_ASS_DisponibiliteAuTir", nodes.ACT_Info_Pion_ASS_DisponibiliteAuTir }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ASS_AppliquerFeux, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ASS_AppliquerFeux, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_MOT_Pion_ASS_AppliquerFeux, "BEH_Tir_Pion_ASS_AppliquerFeux", nodes.BEH_Tir_Pion_ASS_AppliquerFeux }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "ACT_RC_PreparationMission", nodes.ACT_RC_PreparationMission }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }

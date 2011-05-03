@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/air/pions/common/behaviors/Behaviors - Dep.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -102,20 +104,20 @@ node "BEH_Dep_Pion_AIR_Voler"
             local switch_1 = F_Pion_GeteEtatAmbiance( myself )
             local cases_switch_1 = {}
                 if switch_1 == eEtatAmbiance_Surete then
-                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
+                    Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, emptyTable )
                     if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
-                        Activate( self.activations.BEH_Dep_Pion_AIR_SecondeAllure, 1, {} )
+                        Activate( self.activations.BEH_Dep_Pion_AIR_SecondeAllure, 1, emptyTable )
                     else
-                        Activate( self.activations.BEH_Dep_Pion_AIR_SecondeAllureAvecAppuis, 1, {} )
+                        Activate( self.activations.BEH_Dep_Pion_AIR_SecondeAllureAvecAppuis, 1, emptyTable )
                     end
 
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eEtatAmbiance_Vitesse then
                     if( DIA_IsListEmpty( F_Pion_GetselUnitesEnAppui( myself ) ) ) then
-                        Activate( self.activations.BEH_Dep_Pion_AIR_TroisiemeAllure, 1, {} )
+                        Activate( self.activations.BEH_Dep_Pion_AIR_TroisiemeAllure, 1, emptyTable )
                     else
-                        Activate( self.activations.BEH_Dep_Pion_AIR_TroisiemeAllureAvecAppuis, 1, {} )
+                        Activate( self.activations.BEH_Dep_Pion_AIR_TroisiemeAllureAvecAppuis, 1, emptyTable )
                     end
 
                     _continue = false
@@ -484,8 +486,8 @@ node "BEH_Dep_Pion_AIR_RejoindreParItineraire"
             end
         end
 
-        Activate( self.activations.BEH_Dep_Pion_AIR_Voler, 1, {} )
-        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+        Activate( self.activations.BEH_Dep_Pion_AIR_Voler, 1, emptyTable )
+        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
         Activate( self.activations.BEH_Dep_Progresser, 1, { self.itineraire, self._namedParams.typeProgression, } )
 self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
          do
@@ -541,8 +543,7 @@ self.done_BEH_Dep_Progresser = function( self, _, v ) self.eEtat = v[1] end
 elseif switch_1 == eItineraire_Invalide then
                     do
                     end
---[[//DEC_Debug( "itineraire" + DEC_ItineraireToString( itineraire ) + " invalide" );
-]]
+
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )
@@ -552,15 +553,13 @@ elseif switch_1 == eItineraire_Invalide then
                 if cases_switch_1[2] or switch_1 == eItineraire_CalculEnCours then
                     do
                     end
---[[//DEC_Debug( "Agent" + " : itineraire " + DEC_ItineraireToString( itineraire ) + " calcul en cours..." );
-]]
+
                     _continue = false
                                 cases_switch_1[3] = true
 elseif switch_1 == eItineraire_Impossible then
                     do
                     end
---[[//DEC_Debug( "itineraire" + DEC_ItineraireToString( itineraire ) + " impossible" );
-]]
+
                     self.itineraire = S_Misc_DetruireItineraire( self.itineraire, "BEH_Dep_Pion_AIR_RejoindreParItineraire" )
                                         self:SendFeedback( eActionImpossible )
                     Halt( self )

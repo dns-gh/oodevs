@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/milices/pion/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: JDY 02-11-06 $
@@ -141,7 +143,7 @@ node "BEH_Defaut"
         local Activate = Activate
         if( ModuleBegins() ) then
             do
-                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )--[[//ROE par defaut pour cette mission
+                Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )--[[//ROE par defaut pour cette mission
 ]]
                 F_Pion_SetobjectifEsquive( myself, nil )
                 myself.ptRegroupement_ = nil
@@ -154,8 +156,8 @@ node "BEH_Defaut"
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )
-        Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, {} )--[[// MAJ de l'etat du pion en fonction de son agressivite
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )
+        Activate( self.activations.BEH_Mot_AffecterVariablesDEtat, 1, emptyTable )--[[// MAJ de l'etat du pion en fonction de son agressivite
 ]]--[[// ------------------------------------------------------------------------	
 ]]
         --[[// action ACT_Mot_MAJ_AgressivitePion();
@@ -164,14 +166,14 @@ node "BEH_Defaut"
             do return end
         end
 
-        Activate( self.activations.BEH_Ambiance, 1, {} )--[[// -------------------------------------------------------------------------	
+        Activate( self.activations.BEH_Ambiance, 1, emptyTable )--[[// -------------------------------------------------------------------------	
 ]]--[[// Ambiance
 ]]--[[// ------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_ROE, 1, {} )--[[// Comportements Generiques
+        Activate( self.activations.BEH_ROE, 1, emptyTable )--[[// Comportements Generiques
 ]]
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_Rens, 1, {} )--[[// Gestion de la guerre elec : Passer en silence radio
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_Rens, 1, emptyTable )--[[// Gestion de la guerre elec : Passer en silence radio
 ]]
         if( DEC_GetMission( myself ) == nil ) then
             do

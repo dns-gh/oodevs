@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/nbc/automates/son reco/missions/reconnaitrezone/ReconnaitreZone - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_CDT_NBC_ReconnaitreUneZone
 ]]--[[// 
@@ -30,7 +32,7 @@ includedFiles["sources/appui/nbc/automates/son reco/missions/reconnaitrezone/Rec
             DEC_SetMission( myself, self._namedParams.mission )
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_NBC_ReconnaitreUneZone, 1, {} )--[[//-----------------------------------------------------------------------------
+        Activate( self.activations.BEH_Conduite_Automate_NBC_ReconnaitreUneZone, 1, emptyTable )--[[//-----------------------------------------------------------------------------
 ]]--[[// Conduite générique 
 ]]--[[//-----------------------------------------------------------------------------
 ]]

@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_rens/pions/smp/missions/SExfiltrer.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Pion_RENS_ROHUM_SExfiltrer
 ]]--[[//
@@ -46,7 +48,7 @@ includedFiles["sources/humus/humus_rens/pions/smp/missions/SExfiltrer.bms"] = tr
 ]]--[[//-----------------------------------------------------------------------------
 ]]if( not DEC_Nuit() ) then
             do
-                Activate( self.activations.BEH_Dep_Pion_GererFurtivite, 1, {} )
+                Activate( self.activations.BEH_Dep_Pion_GererFurtivite, 1, emptyTable )
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Comportement de la mission
 ]]--[[//-----------------------------------------------------------------------------

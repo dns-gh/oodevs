@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/common/missions/jalonner/Jalonner - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-09-15 $
@@ -47,7 +49,7 @@ includedFiles["sources/melee/abc/automates/common/missions/jalonner/Jalonner - M
 ]]--[[// Affectation des missions du premier echelon
 ]]--[[// Tous les pion de premier echelon on la mssion reconnaitre
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPions or {} ) do
+]]self._namedParams.selPions or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_ABC_AssignerJalonnerA, 1, { ePhase_MRT, pion, self._namedParams.eEtatEchelon, } )
 

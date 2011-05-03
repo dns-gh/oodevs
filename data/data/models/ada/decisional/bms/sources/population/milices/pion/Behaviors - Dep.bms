@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/milices/pion/Behaviors - Dep.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_Lima_Pion_RejoindreFuseau_EnAttente
 ]]--[[//
@@ -57,7 +59,7 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_Agent_Position() ) ) then
                                 cases_switch_1[1] = true
                 end
                 if cases_switch_1[1] or switch_1 == eAttendre then
-                    Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, {} )
+                    Activate( self.activations.BEH_Ordre_SePoster_EnAttente, 1, emptyTable )
 self.done_BEH_Ordre_SePoster_EnAttente = function( self, _, v ) self.eOrdre = v[1] end
                     _continue = false
                                 cases_switch_1[2] = true
@@ -313,7 +315,7 @@ self.done_BEH_Dep_ProgressionSur = function( self, _, v ) self.eActionRejoindre 
 
                                 end
                 if cases_switch_1[1] or switch_1 == eSurveiller then
-                    Activate( self.activations.ACT_Dep_SePoster, 1.1, {} )
+                    Activate( self.activations.ACT_Dep_SePoster, 1.1, emptyTable )
                     Activate( self.activations.ACT_Info_Trace, 1, { "Position atteinte", } )
                     --[[// $$$$ Penser au debarquement pr les VAB/MILAN
 ]]--[[// Observe la direction dangereuse				action ACT_Misc_Pion_DelaiInstallation( eNiveauInstallation_Poste ) return in  

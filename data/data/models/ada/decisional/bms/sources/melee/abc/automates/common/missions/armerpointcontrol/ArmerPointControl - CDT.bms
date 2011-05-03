@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/common/missions/armerpointcontrol/ArmerPointControl - CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: SDE 03-04-25 $
@@ -91,7 +93,7 @@ node "BEH_Dispositif_Automate_ABC_FaireArmerPointControle_"
 ]]--[[// Essayer d'armer le site
 ]]--[[//-----------------------------------------------------------------------------
 ]]local listePions = S_Dispositif_Automate_ABC_PionsPourArmerPointControle()
-        for _,pion in pairs( listePions or {} ) do
+        for _,pion in pairs( listePions or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_AssignerArmerPointControleA, 1, { ePhase_CDT, pion, self._namedParams.positionSite, eEtatEchelon_Premier, } )
 

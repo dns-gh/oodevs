@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_common/automates/behaviors/Behaviors - RC.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -34,18 +36,18 @@ include "bit.lua"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_RC_Automate_Situation_Ambiance, 1, {} )--[[//-------------------------------------------------------------------------
+        Activate( self.activations.BEH_RC_Automate_Situation_Ambiance, 1, emptyTable )--[[//-------------------------------------------------------------------------
 ]]--[[// CRs en dehors du cadre de la mission
 ]]--[[//-------------------------------------------------------------------------
 ]]
-        Activate( self.activations.BEH_RC_Automate_Situation_RapFor, 1, {} )
-        Activate( self.activations.BEH_RC_Automate_Situation_NBC, 1, {} )
-        Activate( self.activations.BEH_RC_Automate_Situation_ROE, 1, {} )
-        Activate( self.activations.BEH_RC_Automate_Situation_Radio, 1, {} )
-        Activate( self.activations.BEH_RC_Automate_Situation_Radar, 1, {} )
-        Activate( self.activations.BEH_RC_Automate_Situation_Coordination, 1, {} )--[[// Ordre anibas attendre poursuivre.
+        Activate( self.activations.BEH_RC_Automate_Situation_RapFor, 1, emptyTable )
+        Activate( self.activations.BEH_RC_Automate_Situation_NBC, 1, emptyTable )
+        Activate( self.activations.BEH_RC_Automate_Situation_ROE, 1, emptyTable )
+        Activate( self.activations.BEH_RC_Automate_Situation_Radio, 1, emptyTable )
+        Activate( self.activations.BEH_RC_Automate_Situation_Radar, 1, emptyTable )
+        Activate( self.activations.BEH_RC_Automate_Situation_Coordination, 1, emptyTable )--[[// Ordre anibas attendre poursuivre.
 ]]
-        Activate( self.activations.BEH_RC_Automate_Situation_Neutralisation, 1, {} )
+        Activate( self.activations.BEH_RC_Automate_Situation_Neutralisation, 1, emptyTable )
         --[[//-------------------------------------------------------------------------
 ]]--[[// CRs valables pendant une mission --> reinit des que nouvelle mission
 ]]--[[//-------------------------------------------------------------------------
@@ -54,9 +56,9 @@ include "bit.lua"
             do return end
         end
 
-        Activate( self.activations.BEH_RC_Automate_Situation_Contact, 1, {} )
-        Activate( self.activations.BEH_RC_Automate_Situation_Mission, 1, {} )
-        Activate( self.activations.BEH_RC_Automate_Situation_Limas, 1, {} )--[[// lié à la mission
+        Activate( self.activations.BEH_RC_Automate_Situation_Contact, 1, emptyTable )
+        Activate( self.activations.BEH_RC_Automate_Situation_Mission, 1, emptyTable )
+        Activate( self.activations.BEH_RC_Automate_Situation_Limas, 1, emptyTable )--[[// lié à la mission
 ]]
     end,
 
@@ -86,7 +88,7 @@ node "BEH_RC_Automate_Situation_Neutralisation"
 ]]--[[// Juste CR Prise à partie par Art
 ]]--[[// pour voir neutralisation cf CR. des pions
 ]]--[[//-------------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() or {} ) do
+]]DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
 do
                 if( DEC_Automate_PionEstNeutralise( pion ) ) then
@@ -124,7 +126,7 @@ node "BEH_RC_Automate_Situation_Ambiance"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Des qu'un pion à changé d'ambiance...
 ]]--[[//-------------------------------------------------------------------------
-]]DEC_Automate_PionsAvecPC() or {} ) do
+]]DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -169,7 +171,7 @@ node "BEH_RC_Automate_Situation_Coordination"
 ]]--[[// CR si on donne l'ordre à l'automate d'attendre
 ]]--[[//-------------------------------------------------------------------------
 ]]local listePions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( listePions or {} ) do
+        for _,x in pairs( listePions or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -211,7 +213,7 @@ node "BEH_RC_Automate_Situation_RapFor"
 ]]--[[// Peut être testé le rapFort du premier echelon plutôt...
 ]]--[[//-------------------------------------------------------------------------
 ]]if( S_Automate_EstEnDifficulte() ) then
-            Activate( self.activations.BEH_RC_Automate_Situation_RapForDef, 1, {} )
+            Activate( self.activations.BEH_RC_Automate_Situation_RapForDef, 1, emptyTable )
         end
 
     end,
@@ -267,7 +269,7 @@ node "BEH_RC_Automate_Situation_ROE"
 ]]--[[//-------------------------------------------------------------------------
 ]]local nbrePions = #( DEC_Automate_PionsAvecPC() )
         for _,x in pairs( --[[// AVEC PC!
-]]DEC_Automate_PionsAvecPC() or {} ) do
+]]DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -324,7 +326,7 @@ node "BEH_RC_Automate_Situation_Radio"
 ]]--[[// Sur tous les pions
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// AVEC PC!
-]]DEC_Automate_PionsAvecPC() or {} ) do
+]]DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -366,7 +368,7 @@ node "BEH_RC_Automate_Situation_Radar"
 ]]--[[// Sur tous les pions
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// AVEC PC!
-]]DEC_Automate_PionsAvecPC() or {} ) do
+]]DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -410,7 +412,7 @@ node "BEH_RC_Automate_Situation_NBC"
 ]]--[[// Alerte de niveau 4 sur ordre
 ]]--[[//-------------------------------------------------------------------------
 ]]--[[// AVEC PC!
-]]DEC_Automate_PionsAvecPC() or {} ) do
+]]DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -467,7 +469,7 @@ node "BEH_RC_Automate_Situation_Mission"
 ]]--[[// Situation mission
 ]]--[[//-------------------------------------------------------------------------
 ]]local listePions = S_ObtenirPionsEchelonPremierEtEclairage( eEtatDestruction_None )
-        for _,x in pairs( listePions or {} ) do
+        for _,x in pairs( listePions or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -500,7 +502,7 @@ do
 ]]
         end
 
-        Activate( self.activations.BEH_RC_Automate_Situation_FinMission, 1, {} )
+        Activate( self.activations.BEH_RC_Automate_Situation_FinMission, 1, emptyTable )
     end,
 
 --[[// *****************************************************************************
@@ -531,7 +533,7 @@ node "BEH_RC_Automate_Situation_FinMission"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Echelon ecl
 ]]--[[//-------------------------------------------------------------------------
-]]listePionsPecl or {} ) do
+]]listePionsPecl or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -546,7 +548,7 @@ do
 ]]
         end
 
-        for _,x in pairs( listePionsPE or {} ) do
+        for _,x in pairs( listePionsPE or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -585,7 +587,7 @@ node "BEH_RC_Automate_Situation_Contact"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Sur tous les pions même le PC...
 ]]--[[//-------------------------------------------------------------------------
-]]myself:DEC_Automate_PionsAvecPC() or {} ) do
+]]myself:DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
 do
                 local pion = x
@@ -659,7 +661,7 @@ node "BEH_RC_Automate_SurLima"
         for _,x in pairs( --[[//-------------------------------------------------------------------------
 ]]--[[// Le premier pion a atteindre la lima = CR
 ]]--[[//-------------------------------------------------------------------------
-]]DEC_Automate_PionsSansPC() or {} ) do
+]]DEC_Automate_PionsSansPC() or emptyTable ) do
         local _continue = true
 do
                 local pion = x

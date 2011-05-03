@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_appui/alat/pions/common/Behaviors.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[//génériques pions scipio
 ]]include "glaise/glaise_Common/Pions/Behaviors.bms"
 
@@ -96,35 +98,35 @@ include "glaise/glaise_Appui/Alat/Pions/Common/Behaviors/Behaviors - Ambiance.bm
 --[[// MAJ par défaut
 ]]        end
 
-        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, {} )
-        Activate( self.activations.BEH_Mot_Pion_ALAT_AffecterVariablesDEtat, 1, {} )
-        Activate( self.activations.BEH_ALAT_Ambiance, 1, {} )
-        Activate( self.activations.BEH_Nbc, 1, {} )
-        Activate( self.activations.BEH_ROE, 1, {} )
-        Activate( self.activations.BEH_Rens, 1, {} )
-        Activate( self.activations.BEH_Ordre_Pion_ALAT_ChangerParametresRecompletement, 1, {} )
-        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, {} )
+        Activate( self.activations.BEH_MAJ_EtatDefaut, 1, emptyTable )
+        Activate( self.activations.BEH_Mot_Pion_ALAT_AffecterVariablesDEtat, 1, emptyTable )
+        Activate( self.activations.BEH_ALAT_Ambiance, 1, emptyTable )
+        Activate( self.activations.BEH_Nbc, 1, emptyTable )
+        Activate( self.activations.BEH_ROE, 1, emptyTable )
+        Activate( self.activations.BEH_Rens, 1, emptyTable )
+        Activate( self.activations.BEH_Ordre_Pion_ALAT_ChangerParametresRecompletement, 1, emptyTable )
+        Activate( self.activations.BEH_Info_Pion_RendreCompte, 1, emptyTable )
         myself.plotsRavitaillement_ = S_Obj_ListeObjetsValides( myself.plotsRavitaillement_ )
         if( S_Misc_EstDetruitPhysique() ) then
             do return end
         end
 
-        Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 0.5, {} )
+        Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, 0.5, emptyTable )
         if( myself.bEnPhaseRavitaillement_ ) then
-            Activate( self.activations.BEH_Log_Pion_ALAT_Recompletement, 100000, {} )
+            Activate( self.activations.BEH_Log_Pion_ALAT_Recompletement, 100000, emptyTable )
         end
 
-        Activate( self.activations.BEH_Lima_GererLimas, 1, {} )--[[// Gestion automatique du vol furtif
+        Activate( self.activations.BEH_Lima_GererLimas, 1, emptyTable )--[[// Gestion automatique du vol furtif
 ]]
         --[[// coordination du feu    	
 ]]if( not DEC_Agent_AutomateEstEmbraye() ) then
             SetStateVariable( "VE_Coordination_Tir", 1 )
         else
-            Activate( self.activations.BEH_Manoeuvre_Pion_SeCoordonner, 100, {} )
+            Activate( self.activations.BEH_Manoeuvre_Pion_SeCoordonner, 100, emptyTable )
         end
 
         --[[// gestion de la déstruction tactique
-]]Activate( self.activations.BEH_Manoeuvre_Pion_GestionDestruction, 10000, {} )
+]]Activate( self.activations.BEH_Manoeuvre_Pion_GestionDestruction, 10000, emptyTable )
         --[[// ---------------------------------------------------------------------
 ]]--[[// choix du plot de ravitaillement si l'automate n'a pas de mission
 ]]--[[//
@@ -133,14 +135,14 @@ include "glaise/glaise_Appui/Alat/Pions/Common/Behaviors/Behaviors - Ambiance.bm
 ]]local automate = DEC_GetAutomate( myself )
         if( DEC_GetMission( automate ) == nil ) then
             do
-                Activate( self.activations.BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau, 1, {} )
-                Activate( self.activations.BEH_Log_Pion_ALAT_GererPlotsRavitaillement, 1, {} )
+                Activate( self.activations.BEH_Log_Pion_ALAT_AjoutNouveauPlotsDansFuseau, 1, emptyTable )
+                Activate( self.activations.BEH_Log_Pion_ALAT_GererPlotsRavitaillement, 1, emptyTable )
             end
 --[[// implémentation du pathfind adaptatif
 ]]--[[// ------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus, 1, {} )
+        Activate( self.activations.BEH_Eni_Pion_ALAT_EviterContactsAvecEnnemisConnus, 1, emptyTable )
     end,
 
 --[[//------------------------------------------------------------------------------
@@ -188,7 +190,7 @@ node "BEH_Dep_Virtuel_PreparationAction"
 
     activate = function( self )
         local Activate = Activate
-        Activate( self.activations.BEH_Dep_Pion_ALAT_Voler, 1, {} )--[[//Gestion du vol pour les hélicopteres
+        Activate( self.activations.BEH_Dep_Pion_ALAT_Voler, 1, emptyTable )--[[//Gestion du vol pour les hélicopteres
 ]]
                 self:SendFeedback( eActionEffectuee )
         do return end

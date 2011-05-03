@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/tenir/Tenir - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created$
@@ -59,7 +61,7 @@ includedFiles["sources/glaise/glaise_melee/abc/automates/common/missions/tenir/T
                         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Assignation des mission une par une au pion (pas simultanément)
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selPions or {} ) do
+]]self._namedParams.selPions or emptyTable ) do
                         local _continue = true
                             do
                                 if( self.rIterateurPoint == DEC_ListePoints_Size( self.listePoint ) ) then

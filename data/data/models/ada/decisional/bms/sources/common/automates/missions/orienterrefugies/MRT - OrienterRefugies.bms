@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/common/automates/missions/orienterrefugies/MRT - OrienterRefugies.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_OrienterRefugies
 ]]--[[// 
@@ -35,7 +37,7 @@ includedFiles["sources/common/automates/missions/orienterrefugies/MRT - Orienter
                 DEC_Trace( "$ MIS_Automate_MRT_OrienterRefugies : debut MRT $" )
                                 do
                     local listePionsSubordonnes = DEC_Automate_PionsAvecPC()
-                    for _,x in pairs( listePionsSubordonnes or {} ) do
+                    for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                     local _continue = true
                         do
                             local pion = x

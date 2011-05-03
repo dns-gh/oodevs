@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/nbc/automates/son reco/missions/reconnaitrezone/ReconnaitreZone - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// MIS_Automate_MRT_NBC_ReconnaitreUneZone
 ]]--[[// 
@@ -31,7 +33,7 @@ includedFiles["sources/appui/nbc/automates/son reco/missions/reconnaitrezone/Rec
                 DEC_Trace( "$ MIS AUTO Reconnaitre zone: debut MRT $" )
                 DEC_SetMission( myself, self._namedParams.mission )
                 local listePionsSubordonnes = DEC_Automate_PionsSansPC()
-                for _,x in pairs( listePionsSubordonnes or {} ) do
+                for _,x in pairs( listePionsSubordonnes or emptyTable ) do
                 local _continue = true
                     do
                         local pion = x

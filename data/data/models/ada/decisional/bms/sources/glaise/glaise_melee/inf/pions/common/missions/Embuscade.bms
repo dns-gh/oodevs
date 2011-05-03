@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Embuscade.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -281,15 +283,15 @@ node "BEH_Eni_Pion_INF_DetruireEmbuscade"
 ]]        end
 
         if( self.eActionObst == eActionEffectuee ) then
-            Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+            Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, emptyTable )
         else
-            Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+            Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, emptyTable )
         end
 
         --[[//
 ]]--[[// Gestion des unites percues
 ]]local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
-        for _,x in pairs( lstEnisPercus or {} ) do
+        for _,x in pairs( lstEnisPercus or emptyTable ) do
         local _continue = true
 do
                 --[[// On fait l'assaut

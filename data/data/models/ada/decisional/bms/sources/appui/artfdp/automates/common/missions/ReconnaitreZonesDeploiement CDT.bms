@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/artfdp/automates/common/missions/ReconnaitreZonesDeploiement CDT.bms"] = true
 
+local emptyTable = emptyTable
+
 include "bit.lua"
 
 
@@ -39,7 +41,7 @@ node "BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement"
         for _,x_ass in pairs( --[[// Remets des Points dans la liste si le pion s'est fait detuire ou autre ..
 ]]--[[// TODO
 ]]--[[//
-]]selPion_ASS_Reco or {} ) do
+]]selPion_ASS_Reco or emptyTable ) do
         local _continue = true
 do
                 --[[// On ne donne la mission qu'au pion ne possedant pas la mission de reconnaissance
@@ -64,7 +66,7 @@ do
 ]]
         end
 
-        Activate( self.activations.BEH_Conduite_Automate_ASS_FaireSuivreDispositif, 1, {} )
+        Activate( self.activations.BEH_Conduite_Automate_ASS_FaireSuivreDispositif, 1, emptyTable )
     end,
 
 }
@@ -98,7 +100,7 @@ node "BEH_Conduite_Automate_ASS_FaireSuivreDispositif"
         end
 
         for _,x in pairs( --[[// Suit le pion le plus proche
-]]DEC_Automate_PionsAvecPC() or {} ) do
+]]DEC_Automate_PionsAvecPC() or emptyTable ) do
         local _continue = true
 do
                 local x_pion = x

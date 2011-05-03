@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/appui/circulation/automates/Fonctions.bms"] = true
 
+local emptyTable = emptyTable
+
 
 --[[// ------------------------------------------------------------------------
 ]]--[[// Filtre la liste des pions donnés en paramétre
@@ -12,7 +14,7 @@ includedFiles["sources/appui/circulation/automates/Fonctions.bms"] = true
 ]]function S_Misc_Pion_Circulation_SelectionnePC( selPions )
     local _returnValue = {}
     local selOut = {}
-    for _,x in pairs( selPions or {} ) do
+    for _,x in pairs( selPions or emptyTable ) do
     local _continue = true
 do
             local pion = x

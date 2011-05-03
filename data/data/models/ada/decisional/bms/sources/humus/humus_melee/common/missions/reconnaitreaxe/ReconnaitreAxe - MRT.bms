@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/humus/humus_melee/common/missions/reconnaitreaxe/ReconnaitreAxe - MRT.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[//
 ]]--[[// $Created: MIA 03-08-26 $
@@ -45,7 +47,7 @@ includedFiles["sources/humus/humus_melee/common/missions/reconnaitreaxe/Reconnai
         for _,pion in pairs( --[[//-----------------------------------------------------------------------------
 ]]--[[// Affectation des missions du premier echelon
 ]]--[[//-----------------------------------------------------------------------------
-]]self._namedParams.selABC_PE or {} ) do
+]]self._namedParams.selABC_PE or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_Mission_Automate_ABC_AssignerReconnaitreA, 1, { ePhase_MRT, pion, self._namedParams.eEtatEchelon, } )
 

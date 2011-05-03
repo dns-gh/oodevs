@@ -1,6 +1,8 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/melee/abc/automates/ge40/missions/offensives/Gerer appuis internes.bms"] = true
 
+local emptyTable = emptyTable
+
 --[[// *****************************************************************************
 ]]--[[// BEH_GTIA_GererAppuisInternes
 ]]--[[// 
@@ -56,7 +58,7 @@ node "BEH_GTIA_GererAppuiPour"
 
     activate = function( self )
         local Activate = Activate
-        for _,pion in pairs( self._namedParams.listePEEnDifficultes or {} ) do
+        for _,pion in pairs( self._namedParams.listePEEnDifficultes or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionsPourAppuyer, 1, { pion, } )
 
@@ -91,13 +93,13 @@ node "BEH_GTIA_AssignerMissionsPourAppuyer"
         --[[// On récupère les pions de second échelons "en mesure de" 
 ]]local listePionsSE = S_Cherche_GE_AutomateOperationnels( S_Cherche_GE_ObtenirPionsDe( eEtatEchelon_Second ) )
         local listePionSEDansFuseau = S_Cherche_GE_Filtre_PionsDansFuseau( listePionsSE, F_Automat_Getfuseau( self._namedParams.pion ) )
-        for _,pionAppui in pairs( S_Cherche_GE_Filtre_TypeAutomate_ABC( listePionSEDansFuseau ) or {} ) do
+        for _,pionAppui in pairs( S_Cherche_GE_Filtre_TypeAutomate_ABC( listePionSEDansFuseau ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pionAppui, "T_Mission_Automate_ABC_Attaquer", } )
 
         end
 
-        for _,pionAppui in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( listePionSEDansFuseau ) or {} ) do
+        for _,pionAppui in pairs( S_Cherche_GE_Filtre_TypeAutomate_INF( listePionSEDansFuseau ) or emptyTable ) do
         local _continue = true
             Activate( self.activations.BEH_GTIA_AssignerMissionMeleeA, 1, { pionAppui, "T_Mission_Automate_INF_PrendrePreciserMaintenirContact", } )
 
