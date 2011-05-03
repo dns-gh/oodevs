@@ -130,7 +130,6 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     //limas / Missions
     brain[ "DEC_GetRawMission" ] = &DEC_AgentFunctions::GetMission;
     brain[ "DEC_HasMission" ] = &DEC_AgentFunctions::HasMission;
-    brain[ "DEC_GetLima" ] = boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_OrdersFunctions::GetLima< MIL_Agent_ABC >, boost::ref( GetPion() ), _1 ) );
 
 
     //Calculs de positions
@@ -642,7 +641,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_NouvelleMission" ] = boost::bind( &DEC_OrdersFunctions::IsNewMissionStarted< MIL_AgentPion >, boost::ref( GetPion() ) );
     brain[ "DEC_FinMission" ] = boost::bind( &DEC_OrdersFunctions::FinishMission< MIL_AgentPion >, boost::ref( GetPion() ) );
     brain[ "DEC_GetLima" ] =
-        boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_OrdersFunctions::GetLima< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) );
+        boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_OrdersFunctions::GetLima< MIL_Agent_ABC >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_SetMissionLimaFlag"             ] =
         boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::PionSetMissionLimaFlag, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_GetMissionLimaFlag"             ] =
