@@ -87,12 +87,16 @@ private:
     void OnReceiveMessengerToClient( const std::string& /*link*/, const sword::MessengerToClient& message );
     //@}
 
+public:
+    class ListenerThread;
+
 private:
     //! @name Member data
     //@{
     std::auto_ptr< CrossbowPublisher > crossbowPublisher_;
     std::auto_ptr< tools::ClientNetworker > clientNetworker_;
     std::auto_ptr< dispatcher::Plugin_ABC > messenger_;
+    std::auto_ptr< ListenerThread > listeners_;
     //@}
 };
 

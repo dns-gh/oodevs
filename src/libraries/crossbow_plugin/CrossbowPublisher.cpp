@@ -229,7 +229,6 @@ void CrossbowPublisher::UpdateOnTick( const sword::SimToClient& wrapper )
         MT_LOG_INFO_MSG( "tick " << wrapper.message().control_begin_tick().current_tick() );
         // update simulation clock
         databaseUpdater_->Update( wrapper.message().control_begin_tick() );
-        UpdateListeners();
     }
     else if( wrapper.message().has_control_end_tick() )
     {

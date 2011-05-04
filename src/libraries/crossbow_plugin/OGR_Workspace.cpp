@@ -85,7 +85,7 @@ void crossbow::OGR_Workspace::Initialize( xml::xistream& xis, const tools::Exerc
     else
     {
         InitializeConnectionReference( "geometry", reference );
-        InitializeConnectionReference( "flat", reference );
+        //InitializeConnectionReference( "flat", reference );
     }
 }
 

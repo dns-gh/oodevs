@@ -149,5 +149,5 @@ void OGR_FeatureClass::BeginTransaction()
 // -----------------------------------------------------------------------------
 void OGR_FeatureClass::EndTransaction()
 {
-    editor_->BeginTransaction();
+   editor_->EndTransaction();
 }

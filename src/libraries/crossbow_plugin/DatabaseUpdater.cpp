@@ -202,7 +202,7 @@ void DatabaseUpdater::Update( const sword::UnitKnowledgeCreation& msg )
     row.SetField( "public_oid"  , FieldVariant( ( long ) msg.knowledge().id() ) );
     row.SetField( "group_oid"   , FieldVariant( ( long ) msg.knowledge_group().id() ) );
     row.SetField( "unit_oid", FieldVariant( ( long ) msg.unit().id() ) );
-   // $$$$ NEEDED ? builder.SetField( "type", msg.type_unite );
+    row.SetField( "type", FieldVariant( ( long ) msg.type().id() ) );
     row.SetField( "session_id", FieldVariant( session_.GetId() ) );
     if( const dispatcher::Agent_ABC* realAgent = model_.Agents().Find( msg.unit().id() ) )
     {

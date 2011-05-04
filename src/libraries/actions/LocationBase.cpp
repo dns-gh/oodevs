@@ -19,6 +19,9 @@
 #include <windows.h>
 #include <gl/gl.h>
 
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
+
 using namespace actions;
 using namespace parameters;
 
@@ -85,7 +88,19 @@ void LocationBase::ReadPoint( xml::xistream& xis )
 {
     std::string mgrs;
     xis >> xml::attribute( "coordinates", mgrs );
-    PushBack( converter_.ConvertToXY( mgrs ) );
+
+    std::vector< std::string > result;
+    boost::algorithm::split( result, mgrs, boost::is_any_of(" ") );
+    geometry::Point2f point;
+    if( result.size() == 2 ) //Location in WGS84
+    {
+        point = converter_.ConvertFromGeo( geometry::Point2d( boost::lexical_cast< double >( result[ 0 ] ),
+                                                      boost::lexical_cast< double >( result[ 1 ] ) ) );    
+    }   
+    else
+        point = converter_.ConvertToXY( mgrs );
+
+    PushBack( point );
 }
 
 // -----------------------------------------------------------------------------

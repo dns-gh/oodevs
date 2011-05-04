@@ -66,6 +66,7 @@ public:
     //@{
     virtual void Receive( const sword::SimToClient& asn );
     virtual void Receive( const sword::MessengerToClient& asn );
+    void UpdateListeners();
     //@}
 
 private:
@@ -84,7 +85,6 @@ private:
     void UpdateOnAcknowledge( const sword::SimToClient& asn );
     void UpdateDatabase( const sword::SimToClient& asn );
     void UpdateDatabase( const sword::MessengerToClient& asn );
-    void UpdateListeners();
     //@}
 
     //! @name Types

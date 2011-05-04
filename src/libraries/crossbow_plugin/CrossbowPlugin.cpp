@@ -16,6 +16,7 @@
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/AuthenticationSenders.h"
+#include <boost/thread.hpp>
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -59,6 +60,26 @@ namespace
     };
 }
 
+class CrossbowPlugin::ListenerThread : public boost::thread 
+{
+public:
+    ListenerThread( CrossbowPublisher& crossbow, int frequency ) 
+        : boost::thread( boost::bind( &CrossbowPlugin::ListenerThread::Run, this ) )
+        , crossbow_ ( crossbow ), frequency_ ( frequency ) {}
+    
+    void Run()
+    {
+        while ( true ) 
+        {
+            crossbow_.UpdateListeners();
+            boost::this_thread::sleep( boost::posix_time::milliseconds( frequency_ ) );
+        }
+    }
+private:
+    CrossbowPublisher& crossbow_;
+    const int frequency_;
+};
+
 // -----------------------------------------------------------------------------
 // Name: CrossbowPlugin constructor
 // Created: JCR 2007-08-29
@@ -73,6 +94,7 @@ CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream&
     try
     {
         crossbowPublisher_.reset( new CrossbowPublisher( config, model, staticModel, publisher, xis ) );
+        listeners_.reset( new ListenerThread( *crossbowPublisher_, 500 ) ); 
         MT_LOG_INFO_MSG( "CrossbowPlugin : registered." )
     }
     catch ( std::exception& ex )
