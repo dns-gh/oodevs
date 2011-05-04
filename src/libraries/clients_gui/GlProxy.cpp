@@ -245,30 +245,12 @@ void GlProxy::DrawRectangle( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlProxy::DrawConvexPolygon
+// Name: GlProxy::DrawPolygon
 // Created: AGE 2007-05-23
 // -----------------------------------------------------------------------------
-void GlProxy::DrawConvexPolygon( const T_PointVector& points ) const
+void GlProxy::DrawPolygon( const T_PointVector& points ) const
 {
-    tools_->DrawConvexPolygon( points );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::DrawConvexPolygon
-// Created: RPD 2010-01-05
-// -----------------------------------------------------------------------------
-void GlProxy::DrawConvexPolygon( const geometry::Polygon2f& polygon ) const
-{
-    tools_->DrawConvexPolygon( polygon );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlProxy::DrawConvexPolygon
-// Created: SLG 2009-12-14
-// -----------------------------------------------------------------------------
-void GlProxy::DrawConvexPolygon( const T_PointVector& points, bool selected ) const
-{
-    tools_->DrawConvexPolygon( points, selected );
+    tools_->DrawPolygon( points );
 }
 
 // -----------------------------------------------------------------------------

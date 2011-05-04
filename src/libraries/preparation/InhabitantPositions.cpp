@@ -235,7 +235,7 @@ void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const kernel
     {
         const gui::TerrainObjectProxy& object = *( *it ).get< 2 >();
         if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
-            tools.DrawConvexPolygon( positions->Vertices() );
+            tools.DrawPolygon( positions->Vertices() );
     }
 }
 

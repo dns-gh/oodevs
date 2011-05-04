@@ -47,7 +47,7 @@ void ConvexHulls::Draw( const Point2f& , const Viewport_ABC& , const GlTools_ABC
     if( tools.ShouldDisplay( "ConvexHulls" ) )
     {
         Update();
-        tools.DrawConvexPolygon( hull_ );
+        tools.DrawPolygon( hull_ );
     }
 }
 

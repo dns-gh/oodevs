@@ -11,7 +11,7 @@
 #include "Gl3dWidget.h"
 #include "EntityLayer.h"
 #include "clients_kernel/DetectionMap.h"
-
+#include "clients_kernel/UrbanColor_ABC.h"
 #include <graphics/Compass.h>
 #include <graphics/Visitor3d.h>
 #include <graphics/ViewFrustum.h>
@@ -206,10 +206,10 @@ void Gl3dWidget::DrawRectangle( const T_PointVector& /*points*/ ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gl3dWidget::DrawConvexPolygon
+// Name: Gl3dWidget::DrawPolygon
 // Created: AGE 2007-05-23
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawConvexPolygon( const T_PointVector& points ) const
+void Gl3dWidget::DrawPolygon( const T_PointVector& points ) const
 {
     if( points.size() <= 2 )
         return;
@@ -218,31 +218,41 @@ void Gl3dWidget::DrawConvexPolygon( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Gl3dWidget::DrawConvexPolygon
-// Created: RPD 2009-10-05
-// -----------------------------------------------------------------------------
-void Gl3dWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
-{
-    const Polygon2f::T_Vertices& points = polygon.Vertices();
-    DrawConvexPolygon( points );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Gl3dWidget::DrawConvexPolygon
-// Created: SBO 2010-06-09
-// -----------------------------------------------------------------------------
-void Gl3dWidget::DrawConvexPolygon( const T_PointVector& /*points*/, bool /*selected*/ ) const
-{
-    //SLG TODO
-}
-
-// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawDecoratedPolygon
 // Created: SBO 2010-06-09
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& /*polygon*/, const kernel::UrbanColor_ABC& /*urbanColor*/, const std::string& /*name*/, unsigned int /*height*/, bool /*selected*/ ) const
+void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& /*name*/, unsigned int height, bool /*selected*/ ) const
 {
-    //SLG TODO
+    const T_PointVector& footprint = polygon.Vertices();
+    if( footprint.empty() )
+        return;
+    const float visibleHeight = ( height + 2.f ) * 3.f * zRatio_;
+    glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
+        float color[ 4 ];
+        color[ 0 ] = static_cast< float >( urbanColor.Red() ) / 255.f;
+        color[ 1 ] = static_cast< float >( urbanColor.Green() ) / 255.f;
+        color[ 2 ] = static_cast< float >( urbanColor.Blue() ) / 255.f;
+        color[ 3 ] = urbanColor.Alpha() * 0.6f;
+        glColor4fv( color );
+        glLineWidth( 1 );
+        const unsigned int count = footprint.size();
+        for( unsigned int i = 0 ; i < count; ++i )
+        {
+            const unsigned int next = ( i + 1 ) % count;
+            const float elevation = std::max( ElevationAt( footprint[next] ), ElevationAt( footprint[i] ) );
+            glBegin( GL_QUADS );
+                glVertex3f( footprint[i].X(), footprint[i].Y(), elevation );
+                glVertex3f( footprint[i].X(), footprint[i].Y(), elevation + visibleHeight );
+                glVertex3f( footprint[next].X(), footprint[next].Y(), elevation + visibleHeight );
+                glVertex3f( footprint[next].X(), footprint[next].Y(), elevation );
+            glEnd();
+        }
+        const float elevation = ElevationAt( footprint.front() );
+        glBegin( GL_TRIANGLE_FAN );
+        for( geometry::Polygon2f::CIT_Vertices it = footprint.begin(); it != footprint.end(); ++it )
+            glVertex3f( it->X(), it->Y(), elevation + visibleHeight );
+        glEnd();
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------

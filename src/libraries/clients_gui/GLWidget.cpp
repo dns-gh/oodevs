@@ -254,7 +254,7 @@ void GlWidget::UpdateStipple() const
 // Name: GlWidget::DrawTextLabel
 // Created: RPD 2010-01-01
 // -----------------------------------------------------------------------------
-void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2f& where, int /*baseSize = 12*/)
+void GlWidget::DrawTextLabel( const std::string& content, const geometry::Point2f& where, int /*baseSize = 12*/ )
 {
     HDC screen = GetDC( NULL );
     const int hSize = GetDeviceCaps( screen, HORZSIZE );
@@ -420,58 +420,30 @@ void GlWidget::DrawRectangle( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GlWidget::DrawConvexPolygon
+// Name: GlWidget::DrawPolygon
 // Created: AGE 2007-05-23
 // -----------------------------------------------------------------------------
-void GlWidget::DrawConvexPolygon( const T_PointVector& points ) const
+void GlWidget::DrawPolygon( const T_PointVector& points ) const
 {
-    glEnable( GL_LINE_SMOOTH );
+    glEnable( GL_STENCIL_TEST );
     glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
+    glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE );
+    glStencilFunc( GL_ALWAYS, 0x1, 0x1 );
+    glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
+    glDrawArrays( GL_TRIANGLE_FAN, 0, points.size() );
+    glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
+    glStencilFunc( GL_EQUAL, 0x1, 0x1 );
+    glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
     glPushAttrib( GL_CURRENT_BIT );
         float color[4];
         glGetFloatv( GL_CURRENT_COLOR, color );
-        color[3]*=0.5f;
+        color[3] *= 0.5;
         glColor4fv( color );
-        glDrawArrays( GL_POLYGON, 0, points.size() );
+        glDrawArrays( GL_TRIANGLE_FAN, 0, points.size() );
     glPopAttrib();
+    glEnable( GL_LINE_SMOOTH );
     glDrawArrays( GL_LINE_LOOP, 0, points.size() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlWidget::DrawConvexPolygon
-// Created: SLG 2009-12-14
-// -----------------------------------------------------------------------------
-void GlWidget::DrawConvexPolygon( const T_PointVector& points, bool selected ) const
-{
-    if( !selected )
-    {
-        DrawConvexPolygon( points );
-    }
-    else
-    {
-        glEnable( GL_LINE_SMOOTH );
-        glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
-        glPushAttrib( GL_CURRENT_BIT );
-            float color[4];
-            glGetFloatv( GL_CURRENT_COLOR, color );
-            color[ 0 ] = 0.55f;
-            color[ 1 ] = 0.92f;
-            color[ 2 ] = 1.f;
-            glColor4fv( color );
-            glDrawArrays( GL_POLYGON, 0, points.size() );
-        glPopAttrib();
-        glDrawArrays( GL_LINE_LOOP, 0, points.size() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: GlWidget::DrawConvexPolygon
-// Created: RPD 2009-10-05
-// -----------------------------------------------------------------------------
-void GlWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
-{
-    const Polygon2f::T_Vertices& points = polygon.Vertices();
-    DrawConvexPolygon( points );
+    glDisable( GL_STENCIL_TEST );
 }
 
 // -----------------------------------------------------------------------------
@@ -481,100 +453,86 @@ void GlWidget::DrawConvexPolygon( const Polygon2f& polygon ) const
 void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor,
                                      const std::string& name, unsigned int height, bool selected ) const
 {
-    //TEMP SLG
-    if( polygon.Vertices().empty() )
-        return;
-    // TEMP SLG
-    const T_PointVector& footprintPoints = polygon.Vertices();
-    if( footprintPoints.empty() )
+    const T_PointVector& footprint = polygon.Vertices();
+    if( footprint.empty() )
         return;
     float color[ 4 ];
     color[ 0 ] = static_cast< float >( urbanColor.Red() ) / 255.f;
     color[ 1 ] = static_cast< float >( urbanColor.Green() ) / 255.f;
     color[ 2 ] = static_cast< float >( urbanColor.Blue() ) / 255.f;
-    float baseAlpha = urbanColor.Alpha();
-    if( baseAlpha >= 0 )
-        baseAlpha = urbanColor.Alpha() * 0.9f;
-    color[ 3 ] = baseAlpha;
-    glEnable( GL_STENCIL_TEST );          // enable stencil test
+    color[ 3 ] = urbanColor.Alpha();
+    if( color[ 3 ] >= 0 )
+        color[ 3 ] *= 0.9f;
 
+    glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&footprint.front()) );
+    glEnable( GL_STENCIL_TEST );
+    glEnable( GL_LINE_SMOOTH );
     // PASS 1: draw to stencil buffer only
     // The reference value will be written to the stencil buffer plane if test passed
     // The stencil buffer is initially set to all 0s.
     glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE ); // disable writing to color buffer
     glStencilFunc( GL_ALWAYS, 0x1, 0x1 );
     glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
-    glBegin( GL_TRIANGLE_FAN );
-    for( CIT_PointVector it = footprintPoints.begin(); it != footprintPoints.end(); ++it )
-        glVertex2d( it->X(), it->Y() );
-    glEnd();
+    glDrawArrays( GL_TRIANGLE_FAN, 0, footprint.size() );
     glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );    // enable writing to color buffer
     glStencilFunc( GL_EQUAL, 0x1, 0x1 );                  // test if it is odd(1)
     glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
     glColor4f( color[ 0 ], color[ 1 ], color[ 2 ], color[ 3 ] );
-    glBegin( GL_TRIANGLE_FAN );
-    for( CIT_PointVector it = footprintPoints.begin(); it != footprintPoints.end(); ++it )
-        glVertex2d( it->X(), it->Y() );
-    glEnd();
+    glDrawArrays( GL_TRIANGLE_FAN, 0, footprint.size() );
     glDisable( GL_STENCIL_TEST );
-    Polygon2f::T_Vertices roofPoints = polygon.VerticeCopy();
-    glMatrixMode( GL_MODELVIEW );
-    glLineWidth( 1 );
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-    color[ 3 ] = baseAlpha * 0.6f;
-    glColor4fv( color );
-    glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &footprintPoints.front() ) );
-    glDrawArrays( GL_LINE_LOOP, 0, footprintPoints.size() );
-    Polygon2f::T_Vertices face;
-    //calculating roof geometry:
-    for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
-    {
-        Point2f& point = roofPoints[ i ];
-        float factor = rZoom_ * height;
-        float deltaX = ( point.X() - center_.X() ) * factor;
-        float deltaY = ( point.Y() - center_.Y() ) * factor;
-        point.Set( point.X() + deltaX, point.Y() + deltaY );
-    }
-    //drawing faces:
-    for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
-    {
-        face.clear();
-        unsigned int next = i + 1;
-        if( i == roofPoints.size() - 1 )
-            next = 0;
-        face.push_back( footprintPoints[ i ] );
-        face.push_back( roofPoints[ i ] );
-        face.push_back( roofPoints[ next ] );
-        face.push_back( footprintPoints[ next ] );
-        glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &face.front() ) );
-        glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glDrawArrays( GL_POLYGON, 0, face.size() );
-        glPopAttrib();
-        glDrawArrays( GL_LINE_LOOP, 0, face.size() );
-    }
-
-    if( selected )
-        color[ 3 ] = std::min ( 1.f, baseAlpha * 1.6f );
-    else
-        color[ 3 ] = baseAlpha;
-    glColor4fv( color );
-    glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &footprintPoints.front() ) );
-    glDrawArrays( GL_LINE_LOOP, 0, roofPoints.size() );
-    if( selected )
-    {
-        UpdateStipple();
-        glLineWidth( 1.5 );
-        color[ 0 ] = 1.f - color[ 0 ];
-        color[ 1 ] = 1.f - color[ 1 ];
-        color[ 2 ] = 1.f - color[ 2 ];
-        color[ 3 ] = 0.9f;
-    }
-    glColor4fv( color );
-    glDrawArrays( GL_LINE_LOOP, 0, roofPoints.size() );
-    glDisable( GL_LINE_STIPPLE );
+        glLineWidth( 1 );
+        color[ 3 ] = urbanColor.Alpha() * 0.6f;
+        glColor4fv( color );
+        glDrawArrays( GL_LINE_LOOP, 0, footprint.size() );
+        //calculating roof geometry:
+        Polygon2f::T_Vertices roofPoints = polygon.VerticeCopy();
+        for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
+        {
+            Point2f& point = roofPoints[ i ];
+            float factor = rZoom_ * height;
+            float deltaX = ( point.X() - center_.X() ) * factor;
+            float deltaY = ( point.Y() - center_.Y() ) * factor;
+            point.Set( point.X() + deltaX, point.Y() + deltaY );
+        }
+        //drawing faces:
+        Polygon2f::T_Vertices face;
+        for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
+        {
+            face.clear();
+            unsigned int next = i + 1;
+            if( i == roofPoints.size() - 1 )
+                next = 0;
+            face.push_back( footprint[ i ] );
+            face.push_back( roofPoints[ i ] );
+            face.push_back( roofPoints[ next ] );
+            face.push_back( footprint[ next ] );
+            glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &face.front() ) );
+            glDrawArrays( GL_POLYGON, 0, face.size() );
+            glDrawArrays( GL_LINE_LOOP, 0, face.size() );
+        }
+        if( selected )
+            color[ 3 ] = std::min ( 1.f, urbanColor.Alpha() * 1.6f );
+        else
+            color[ 3 ] = urbanColor.Alpha();
+        glColor4fv( color );
+        glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &footprint.front() ) );
+        glDrawArrays( GL_LINE_LOOP, 0, footprint.size() );
+        if( selected )
+        {
+            UpdateStipple();
+            glLineWidth( 1.5 );
+            color[ 0 ] = 1.f - color[ 0 ];
+            color[ 1 ] = 1.f - color[ 1 ];
+            color[ 2 ] = 1.f - color[ 2 ];
+            color[ 3 ] = 0.9f;
+        }
+        glColor4fv( color );
+        glDrawArrays( GL_LINE_LOOP, 0, footprint.size() );
+        glDisable( GL_LINE_STIPPLE );
     glPopAttrib();
-    if( name != "" )
-        ( ( GlWidget& ) ( *this ) ).DrawTextLabel( name, Polygon2f( roofPoints ).BoundingBoxCenter(), 13 );
+    if( !name.empty() )
+        const_cast< GlWidget* >( this )->DrawTextLabel( name, Polygon2f( roofPoints ).BoundingBoxCenter(), 13 );
 }
 
 // -----------------------------------------------------------------------------

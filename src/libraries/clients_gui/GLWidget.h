@@ -78,9 +78,7 @@ public:
     virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to ) const;
     virtual void DrawLines        ( const T_PointVector& points ) const;
     virtual void DrawRectangle    ( const T_PointVector& points ) const;
-    virtual void DrawConvexPolygon( const T_PointVector& points ) const;
-    virtual void DrawConvexPolygon( const geometry::Polygon2f& polygon    ) const;
-    virtual void DrawConvexPolygon( const T_PointVector& points, bool selected ) const;
+    virtual void DrawPolygon      ( const T_PointVector& points ) const;
     virtual void DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const kernel::UrbanColor_ABC& urbanColor, const std::string& name, unsigned int height, bool selected ) const;
     virtual void DrawArrow        ( const geometry::Point2f& from, const geometry::Point2f& to, float size = -1.f, E_Unit unit = meters ) const;
     virtual void DrawCurvedArrow  ( const geometry::Point2f& from, const geometry::Point2f& to, float curveRatio = 0.2f, float size = -1.f, E_Unit unit = meters ) const;

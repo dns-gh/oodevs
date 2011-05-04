@@ -205,7 +205,7 @@ void Inhabitant::Draw( const Point2f& /*where*/, const Viewport_ABC& /*viewport*
 {
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
         if( const kernel::UrbanPositions_ABC* positions = it->second->Retrieve< kernel::UrbanPositions_ABC >() )
-                tools.DrawConvexPolygon( positions->Vertices() );
+                tools.DrawPolygon( positions->Vertices() );
 }
 
 // -----------------------------------------------------------------------------
