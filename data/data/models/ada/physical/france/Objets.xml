@@ -376,4 +376,5 @@
     </fire-propagation-modifier>
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
-</objects><!-- signature="2330032806" -->
+</objects>
+<!-- signature="3956230053" -->

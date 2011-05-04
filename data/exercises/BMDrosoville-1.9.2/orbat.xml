@@ -115,8 +115,11 @@
           <automat engaged="true" id="58" knowledge-group="2" logistic-level="tc2" name="TC2 LOG" type="LOG - TC2 LOG">
             <unit command-post="true" id="59" name="TC2" position="31TCM0973787237" type="LOG - TC2"/>
           </automat>
-          <automat engaged="false" id="50" knowledge-group="2" name="ONG" type="ONG">
+          <automat engaged="true" id="50" knowledge-group="2" name="ONG" type="ONG">
             <unit command-post="true" id="51" name="ONG Intervention" position="31TCM1135691013" type="ONG Intervention"/>
+            <unit command-post="false" id="151" name="ONG Intervention" position="31TCM1166691159" type="ONG Intervention"/>
+            <unit command-post="false" id="152" name="ONG Intervention" position="31TCM1163490636" type="ONG Intervention"/>
+            <unit command-post="false" id="153" name="ONG Intervention" position="31TCM1160490942" type="ONG Intervention"/>
           </automat>
           <automat engaged="true" id="67" knowledge-group="2" name="Compagnie INF AMX 10 P [67]" type="INF - Compagnie CBT AMX 10 P">
             <unit command-post="true" id="68" name="Section CDT CIE INF AMX10P" position="31TCM1157789807" type="INF - Section CDT CIE quaternaire AMX10P"/>

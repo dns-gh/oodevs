@@ -7712,6 +7712,7 @@
         <mission name="MELEE Surveiller"/>
         <mission name="STABILISATION Animer Postes De Controle"/>
         <mission name="STABILISATION Canaliser foule"/>
+        <mission name="LOGISTIQUE Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -11596,4 +11597,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0899238658" -->
+<!-- signature="1446793306" -->
