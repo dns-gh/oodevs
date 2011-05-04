@@ -38,6 +38,7 @@
 #include "ObjectDetections.h"
 #include "AgentDetections.h"
 #include "VisionCones.h"
+#include "LivingArea.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
 #include "TeamsModel.h"
@@ -126,7 +127,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
         superior = & (( tools::Resolver< kernel::Formation_ABC >&)( model_.teams_ )) .Get( message.parent().formation().id() );
     else
         superior = & (( tools::Resolver< kernel::Automat_ABC >&)  ( model_.agents_ )).Get( message.parent().automat().id() );
-    result->Attach< kernel::TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
+    result->Attach< kernel::TacticalHierarchies >( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach< Lives_ABC >( *new AutomatLives( *result ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, result->GetLogisticLevel(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
@@ -228,6 +229,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& m
     result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new Affinities( controllers_.controller_, model_.teams_, dico ) );
+    result->Attach< kernel::LivingArea_ABC >( *new LivingArea( message, result->GetId(), controllers_.controller_, model_.urbanObjects_ ) );
     result->Polish();
     return result;
 }

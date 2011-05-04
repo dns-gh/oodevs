@@ -162,36 +162,10 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
         CIT_UrbanObjectVector it = livingUrbanObject_.find( id );
         if( it != livingUrbanObject_.end() )
         {
-            gui::T_Human& mutableHuman = humans_[ id ];
+            gui::T_BlockOccupation blockOccupation;
             for( int j = 0; j < occupation.persons_size(); ++j )
-                mutableHuman.persons_[ occupation.persons( j ).usage().c_str() ] = occupation.persons( j ).number();
-            mutableHuman.alerted_ = occupation.alerted();
-            mutableHuman.confined_ = occupation.confined();
-            mutableHuman.evacuated_ = occupation.evacuated();
-            mutableHuman.angriness_ = occupation.angriness();
-            it->second->UpdateHumans( name_.ascii(), mutableHuman.persons_, mutableHuman.alerted_, mutableHuman.confined_, mutableHuman.evacuated_, mutableHuman.angriness_ );
-            const gui::T_Human& human = mutableHuman;
-            PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
-            const QString keyHuman = tools::translate( "Inhabitant", "Living Area/" ) + it->second->GetName().ascii() + "/";
-            for( gui::CIT_BlockOccupation occupation = human.persons_.begin(); occupation != human.persons_.end(); occupation++ )
-            {
-                const QString keyOccupation = keyHuman + occupation->first + "/";
-                const QString keyNumber = keyOccupation + tools::translate( "Inhabitant", "Resident" );
-                if( !dictionary.HasKey( keyNumber ) )
-                    dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyNumber, occupation->second );
-            }
-            const QString keyAlerted = keyHuman + tools::translate( "Inhabitant", "Alerted" );
-            if( !dictionary.HasKey( keyAlerted ) )
-                dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAlerted, human.alerted_ );
-            const QString keyConfined = keyHuman + tools::translate( "Inhabitant", "Confined" );
-            if( !dictionary.HasKey( keyConfined ) )
-                dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyConfined, human.confined_ );
-            const QString keyEvacuated = keyHuman + tools::translate( "Inhabitant", "Evacuated" );
-            if( !dictionary.HasKey( keyEvacuated ) )
-                dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyEvacuated, human.evacuated_ );
-            const QString keyAngriness = keyHuman + tools::translate( "Inhabitant", "Angriness" );
-            if( !dictionary.HasKey( keyAngriness ) )
-                dictionary.Register( *static_cast< const Entity_ABC* >( this ), keyAngriness, human.angriness_ );
+                blockOccupation[ occupation.persons( j ).usage().c_str() ] = occupation.persons( j ).number();
+            it->second->UpdateHumans( name_.ascii(), blockOccupation, occupation.alerted(), occupation.confined(), occupation.evacuated(), occupation.angriness() );
         }
     }
     controllers_.controller_.Update( *static_cast< Entity_ABC* >( this ) );

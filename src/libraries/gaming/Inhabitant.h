@@ -10,7 +10,6 @@
 #ifndef __Inhabitant_h_
 #define __Inhabitant_h_
 
-#include "clients_gui/HumanDefs.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -101,8 +100,6 @@ private:
 
     typedef std::map< const kernel::DotationType*, unsigned int > T_ResourceSatisfactions;
     typedef T_ResourceSatisfactions::const_iterator             CIT_ResourceSatisfactions;
-
-    typedef gui::T_HumansIdMap T_Humans;
     //@}
 
 private:
@@ -119,7 +116,6 @@ private:
     unsigned int lodgingSatisfaction_;
     T_MotivationSatisfactions motivationSatisfactions_;
     T_ResourceSatisfactions resourceSatisfactions_;
-    T_Humans humans_;
     T_UrbanObjectVector livingUrbanObject_;
     T_Extensions extensions_;
     //@}

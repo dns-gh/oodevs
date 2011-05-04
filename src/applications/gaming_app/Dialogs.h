@@ -27,10 +27,16 @@ namespace tools
     class ExerciseConfig;
 }
 
+namespace gui
+{
+    class ItemFactory_ABC;
+}
+
 class Model;
 class StaticModel;
 class Publisher_ABC;
 class CommandHandler;
+class RcEntityResolver_ABC;
 
 // =============================================================================
 /** @class  Dialogs
@@ -43,7 +49,9 @@ class Dialogs : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config );
+             Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel,
+                      Publisher_ABC& publisher, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation,
+                      const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config, const RcEntityResolver_ABC& rcResolver, gui::ItemFactory_ABC& factory );
     virtual ~Dialogs();
     //@}
 };

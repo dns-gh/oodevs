@@ -612,22 +612,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Living Area/</source>
-        <translation>Zone de vie</translation>
-    </message>
-    <message>
-        <source>Resident</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alerted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Confined</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>M\F\C Repartition/Male</source>
         <translation type="unfinished"></translation>
     </message>
@@ -657,14 +641,6 @@
     </message>
     <message>
         <source>Satisfactions/Resource/</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Evacuated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Angriness</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

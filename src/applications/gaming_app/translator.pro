@@ -55,6 +55,7 @@ InhabitantChangeHealthStateDialog.cpp \
 InhabitantExtractCrowdDialog.cpp \
 KnowledgeGroupMagicOrdersInterface.cpp \
 LendingsListView.cpp \
+LivingAreaDialog.cpp \
 LoginDialog.cpp \
 LogisticStatusWidgets.cpp \
 LogisticSupplyChangeQuotasDialog.cpp \

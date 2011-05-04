@@ -61,6 +61,7 @@ class LoginDialog;
 class Publisher_ABC;
 class LoggerProxy;
 class Simulation;
+class RcEntityResolver_ABC;
 
 // =============================================================================
 /** @class  MainWindow
@@ -81,7 +82,7 @@ public:
     //@{
              MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation,
                          Network& network, const kernel::Profile_ABC& profile, tools::SessionConfig& config, LoggerProxy& logger,
-                         const QString& license );
+                         const RcEntityResolver_ABC& rcResolver, const QString& license );
     virtual ~MainWindow();
     //@}
 

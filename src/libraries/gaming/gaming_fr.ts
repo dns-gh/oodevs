@@ -612,22 +612,6 @@
         <translation>Satisfaction en %1:</translation>
     </message>
     <message>
-        <source>Living Area/</source>
-        <translation>Zone de vie/</translation>
-    </message>
-    <message>
-        <source>Resident</source>
-        <translation>Habitant</translation>
-    </message>
-    <message>
-        <source>Alerted</source>
-        <translation>Alerté</translation>
-    </message>
-    <message>
-        <source>Confined</source>
-        <translation>Confiné</translation>
-    </message>
-    <message>
         <source>M\F\C Repartition/Male</source>
         <translation>Répartition H\F\E/Hommes</translation>
     </message>
@@ -658,14 +642,6 @@
     <message>
         <source>Satisfactions/Resource/</source>
         <translation>Satisfaction/Ressource/</translation>
-    </message>
-    <message>
-        <source>Evacuated</source>
-        <translation>Evacué</translation>
-    </message>
-    <message>
-        <source>Angriness</source>
-        <translation>Colère</translation>
     </message>
 </context>
 <context>
