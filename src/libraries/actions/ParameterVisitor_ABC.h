@@ -32,6 +32,7 @@ namespace actions
         class Identifier;
         class KnowledgeGroup;
         class UrbanBlock;
+        class ResourceNetwork;
     }
 
 // =============================================================================
@@ -70,6 +71,7 @@ public:
     virtual void Visit( const parameters::Quantity&            ) {}
     virtual void Visit( const parameters::Identifier&          ) {}
     virtual void Visit( const parameters::KnowledgeGroup&      ) {}
+    virtual void Visit( const parameters::ResourceNetwork&     ) {}
     //@}
 };
 

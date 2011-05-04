@@ -182,6 +182,10 @@
         <source>Objective location</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gaming_app::Action</name>

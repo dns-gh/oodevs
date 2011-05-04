@@ -364,6 +364,15 @@ bool MIL_BaseParameter::ToLimaList( std::vector< boost::shared_ptr< TER_Localisa
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToResourceNetwork
+// Created: JSR 2011-05-03
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToResourceNetwork( boost::shared_ptr< DEC_ResourceNetwork >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::Append
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------

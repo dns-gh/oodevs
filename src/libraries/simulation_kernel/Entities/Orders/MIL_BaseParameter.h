@@ -68,6 +68,7 @@ public:
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const;
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
+    virtual bool ToResourceNetwork( boost::shared_ptr< DEC_ResourceNetwork >& ) const;
 
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param );
     //@}

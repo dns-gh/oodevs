@@ -766,6 +766,12 @@ message Extension {
     repeated Entry entries = 1; //!< The extension entries @see Entry
 }
 
+message ResourceNetworkElement
+{
+    required ObjectId            object   = 1; //! An object identifier
+    required ResourceNetworkType resource = 2; //!< The resource network type
+}
+
 /** @struct MissionParameter
     @brief Defines a mission parameter
 */
@@ -821,7 +827,8 @@ message MissionParameter {
         optional int32                    quantity                 = 43; //!< A quantity
         optional KnowledgeGroupId         knowledgeGroup           = 44; //!< A knowledge group identifier
         optional Extension                extensionList            = 45; //!< An extension list
-        repeated Value                    list                     = 46; //!< A list of values
+        optional ResourceNetworkElement   resourceNetwork          = 46; //!< An resource network element
+        repeated Value                    list                     = 47; //!< A list of values
     }
     optional bool  null_value = 1; //!< Whether the parameter is a null value or not
     repeated Value value      = 2; //!< The parameter

@@ -182,6 +182,10 @@
         <source>Way point %1</source>
         <translation>Point de passage %1</translation>
     </message>
+    <message>
+        <source>Resource</source>
+        <translation>Ressource</translation>
+    </message>
 </context>
 <context>
     <name>gaming_app::Action</name>

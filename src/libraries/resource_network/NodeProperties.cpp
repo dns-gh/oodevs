@@ -155,6 +155,17 @@ void NodeProperties::Push( int quantity, unsigned long resourceId )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::SetActivation
+// Created: JSR 2011-05-04
+// -----------------------------------------------------------------------------
+void NodeProperties::SetActivation( unsigned long resourceId, bool activated )
+{
+    NodeElement* element = Find( resourceId );
+    if( element )
+        element->SetActivation( activated );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::SetModifier
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------

@@ -21,6 +21,7 @@ ParameterList.cpp \
 Parameter_ABC.cpp \
 Path.cpp \
 PopulationKnowledge.cpp \
+ResourceNetwork.cpp \
 UrbanBlock.cpp \
 
 TRANSLATIONS = actions_fr.ts actions_es.ts

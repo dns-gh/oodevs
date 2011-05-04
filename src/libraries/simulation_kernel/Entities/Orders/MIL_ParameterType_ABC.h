@@ -59,6 +59,7 @@ public:
         eUrbanKnowledge = 23,
         eLocationComposite = 24,
         ePhaseLine = 25,
+        eResourceNetwork = 26
     };
 
     //! @name Factory

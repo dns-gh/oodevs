@@ -61,6 +61,7 @@ public:
     void Consume( float& functionalState );
     void DistributeResource( float functionalState, const ResourceNetworkModel& model );
     void Push( int quantity );
+    void SetActivation( bool activated );
     void SetModifier( float modifier );
     void RemoveLink( unsigned int nodeId );
     bool NeedUpdate() const;

@@ -22,6 +22,7 @@
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_OrdersFunctions.h"
 #include "Decision/DEC_PathFunctions.h"
+#include "Decision/DEC_ResourceNetworkFunctions.h"
 #include "Decision/DEC_TelepathyFunctions.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_PathPoint.h"
@@ -149,6 +150,17 @@ void RegisterUrbanBlockFunctions( directia::brain::Brain& brain )
         boost::function< boost::shared_ptr< MT_Vector2D >( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentBarycenter, _1 ) );
    brain[ "DEC_ConnaissanceUrbanBlock_Lisiere" ] = boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( UrbanObjectWrapper* ) >
        ( boost::bind( &DEC_UrbanObjectFunctions::GetBoundingBox, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::RegisterResourceNetworkFunctions
+// Created: JSR 2011-05-03
+// -----------------------------------------------------------------------------
+void RegisterResourceNetworkFunctions( directia::brain::Brain& brain )
+{
+    brain[ "DEC_ReseauRessource_Position" ] = &DEC_ResourceNetworkFunctions::GetResourceNetworkPosition;
+    brain[ "DEC_ReseauRessource_DesactiverElement" ] = &DEC_ResourceNetworkFunctions::DeactivateRessourceNetworkElement;
+    brain[ "DEC_ReseauRessource_ActiverElement" ] = &DEC_ResourceNetworkFunctions::ActivateRessourceNetworkElement;
 }
 
 // -----------------------------------------------------------------------------
@@ -392,6 +404,7 @@ void RegisterCommonUserFunctions( directia::brain::Brain& brain, bool isMasalife
     RegisterUnitFunctions( brain );
     RegisterGeometryFunctions( brain );
     RegisterUrbanBlockFunctions( brain );
+    RegisterResourceNetworkFunctions( brain );
     RegisterAreaFunctions( brain );
     RegisterFuseauFunctions( brain );
     RegisterTimeManagementFunctions( brain );
@@ -740,6 +753,17 @@ bool DotationTypeListFunctionBM( directia::brain::Brain& /*brain*/, directia::to
     return false;
 }
 
+bool ResourceNetworkFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    boost::shared_ptr< DEC_ResourceNetwork > value;
+    if( element.ToResourceNetwork( value ) && value )
+    {
+        refMission[ name ] = value;
+        return true;
+    }
+    return false;
+}
+
 void EquipmentTypeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     const PHY_ComposanteTypePion* value = 0;
@@ -987,6 +1011,7 @@ void InitFunctions()
         functorsBM[ "PhaseLineList" ] = PhaseLineListFunctionBM;
         functorsBM[ "ResourceType" ] = DotationTypeFunctionBM;
         functorsBM[ "ResourceTypeList" ] = DotationTypeListFunctionBM;
+        functorsBM[ "ResourceNetwork" ] = ResourceNetworkFunctionBM;
     }
 }
 

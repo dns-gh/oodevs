@@ -19,6 +19,6 @@ ParamObjectKnowledgeList.cpp \
 ParamObstacle.cpp \
 ParamObstacleList.cpp \
 ParamPathList.cpp \
-
+ParamResourceNetwork.cpp \
 
 TRANSLATIONS = actions_gui_fr.ts actions_gui_es.ts

@@ -1,0 +1,60 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2011 MASA Group
+//
+// *****************************************************************************
+
+#include "simulation_kernel_pch.h"
+#include "DEC_ResourceNetwork.h"
+#include "protocol/protocol.h"
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetwork constructor
+// Created: JSR 2011-05-03
+// -----------------------------------------------------------------------------
+DEC_ResourceNetwork::DEC_ResourceNetwork( const sword::ResourceNetworkElement& message )
+    : objectId_( message.object().id() )
+    , resource_( message.resource().name() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetwork destructor
+// Created: JSR 2011-05-03
+// -----------------------------------------------------------------------------
+DEC_ResourceNetwork::~DEC_ResourceNetwork()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetwork::Serialize
+// Created: JSR 2011-05-03
+// -----------------------------------------------------------------------------
+void DEC_ResourceNetwork::Serialize( sword::ResourceNetworkElement& message ) const
+{
+    message.mutable_object()->set_id( objectId_ );
+    message.mutable_resource()->set_name( resource_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetwork::GetObjectId
+// Created: JSR 2011-05-04
+// -----------------------------------------------------------------------------
+unsigned int DEC_ResourceNetwork::GetObjectId() const
+{
+    return objectId_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetwork::GetResource
+// Created: JSR 2011-05-04
+// -----------------------------------------------------------------------------
+const std::string& DEC_ResourceNetwork::GetResource() const
+{
+    return resource_;
+}

@@ -40,6 +40,7 @@
 #include "Identifier.h"
 #include "ParameterList.h"
 #include "KnowledgeGroup.h"
+#include "ResourceNetwork.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
@@ -164,6 +165,8 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         return new parameters::Identifier( parameter, message.identifier() );
     if( message.has_knowledgegroup() )
         return new parameters::KnowledgeGroup( parameter, message.knowledgegroup().id(), entities_, controller_ );
+    if( message.has_resourcenetwork() )
+        return new parameters::ResourceNetwork( parameter, message.resourcenetwork(), entities_, controller_ );
     if( message.list_size() )
         return new parameters::ParameterList( parameter );
     return 0;
@@ -305,6 +308,8 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new parameters::Identifier( parameter, xis ) );
     else if( type == "knowledgegroup" )
         param.reset( new parameters::KnowledgeGroup( parameter, xis, entities_, controller_ ) );
+    else if( type == "resourcenetwork" )
+        param.reset( new parameters::ResourceNetwork( parameter, xis, entities_, controller_ ) );
     else
         return false;
     return true;

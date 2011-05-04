@@ -37,6 +37,7 @@
 #include "MIL_PolygonParameter.h"
 #include "MIL_PopulationKnowledgeParameter.h"
 #include "MIL_RealParameter.h"
+#include "MIL_ResourceNetworkParameter.h"
 #include "MIL_StringParameter.h"
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
@@ -141,6 +142,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 //        else if( message.has_value_line() ||
 //            message.has_value_intelligenceList() )
         // $$$$ LDC : These types are exclusively managed by the OrderContext.
+    else if( message.has_resourcenetwork() )
+        ptr = new MIL_ResourceNetworkParameter( message.resourcenetwork() );
     else
         ptr = new MIL_ListParameter( resolver, message.list() );
 

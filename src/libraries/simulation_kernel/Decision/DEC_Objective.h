@@ -36,8 +36,8 @@ public:
     //! @name Accessors
     //@{
     const TER_Localisation& GetLocalisation() const;
-          unsigned int              GetSchedule    () const;
-          bool              IsFlagged      () const;
+    unsigned int GetSchedule() const;
+    bool IsFlagged() const;
     //@}
 
     //! @name Operations
@@ -50,9 +50,9 @@ public:
     //@}
 
 private:
-    TER_Localisation  localisation_;
-    unsigned int              nSchedule_;
-    bool              bFlag_;
+    TER_Localisation localisation_;
+    unsigned int nSchedule_;
+    bool bFlag_;
 };
 
 #include "DEC_Objective.inl"

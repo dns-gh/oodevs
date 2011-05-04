@@ -198,6 +198,15 @@ void ResourceNetworkCapacity::NotifyStructuralStateChanged( float structuralStat
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::SetActivation
+// Created: JSR 2011-05-04
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::SetActivation( unsigned long resourceId, bool activated )
+{
+    nodeProperties_->SetActivation( resourceId, activated );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::AddConsumption
 // Created: JSR 2011-02-01
 // -----------------------------------------------------------------------------

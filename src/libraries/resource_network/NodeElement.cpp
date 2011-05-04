@@ -353,6 +353,16 @@ void NodeElement::Push( int quantity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeElement::SetActivation
+// Created: JSR 2011-05-04
+// -----------------------------------------------------------------------------
+void NodeElement::SetActivation( bool activated )
+{
+    needUpdate_ = ( isActivated_ != activated );
+    isActivated_ = activated;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeElement::SetModifier
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------

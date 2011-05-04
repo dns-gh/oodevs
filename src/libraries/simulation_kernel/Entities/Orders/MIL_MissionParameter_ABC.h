@@ -61,6 +61,7 @@ class DEC_Gen_Object;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
+class DEC_ResourceNetwork;
 class UrbanObjectWrapper;
 class DEC_Objective;
 class MIL_ParameterType_ABC;
@@ -141,6 +142,7 @@ public:
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const = 0;
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const = 0;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const = 0;
+    virtual bool ToResourceNetwork( boost::shared_ptr< DEC_ResourceNetwork >& ) const = 0;
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param ) = 0;
     //@}
 };

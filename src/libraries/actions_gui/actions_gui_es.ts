@@ -146,4 +146,19 @@
         <translation>Tipo de obstáculo</translation>
     </message>
 </context>
+<context>
+    <name>ParamResourceNetwork</name>
+    <message>
+        <source>Resource network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>
