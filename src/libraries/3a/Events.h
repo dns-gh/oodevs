@@ -14,6 +14,7 @@
 #include "FireComponentDamages.h"
 #include "FireHumanDamages.h"
 #include "WoundHumans.h"
+#include "LogMedicalEquipments.h"
 
 // =============================================================================
 /** @namespace  Existences

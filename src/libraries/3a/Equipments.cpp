@@ -25,7 +25,7 @@ namespace
 {
     const unsigned nEquipmentStates = 5;
     typedef int( sword::EquipmentDotations_EquipmentDotation::* EquipmentDotationsMemberFn )() const;
-    EquipmentDotationsMemberFn equipmentData[5] =
+    EquipmentDotationsMemberFn equipmentData[nEquipmentStates] =
     {
         &sword::EquipmentDotations_EquipmentDotation::available,
         &sword::EquipmentDotations_EquipmentDotation::unavailable,
@@ -33,7 +33,7 @@ namespace
         &sword::EquipmentDotations_EquipmentDotation::repairing,
         &sword::EquipmentDotations_EquipmentDotation::captured
     };
-    const char* equipmentStates[5] =
+    const char* equipmentStates[nEquipmentStates] =
     {
         "available",
         "unavailable",

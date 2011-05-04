@@ -47,6 +47,9 @@ struct IdentifierValue : public IdentifierValue_ABC
         SET_OID( log_medical_handling_creation, request().id );
         SET_OID( log_medical_handling_update, request().id );
         SET_OID( log_medical_handling_destruction, request().id );
+        SET_OID( log_medical_state, unit().id );
+        SET_OID( log_maintenance_state, unit().id );
+        SET_OID( log_supply_state, unit().id );
         SET_OID( log_maintenance_handling_creation, request().id );
         SET_OID( log_maintenance_handling_update, request().id );
         SET_OID( log_maintenance_handling_destruction, request().id );

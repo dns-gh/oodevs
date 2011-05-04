@@ -16,6 +16,9 @@
 #include "Resources.h"
 #include "UnitDetection.h"
 #include "Values.h"
+#include "LogMedicalEquipments.h"
+#include "LogMaintenanceEquipments.h"
+#include "LogSupplyStocks.h"
 
 // =============================================================================
 /** @namespace  Attributes
@@ -58,16 +61,40 @@ struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
     Extractor extractor_;
 };
 
-typedef UnitAttribute< extractors::OperationalState >  OperationalState;
-typedef UnitAttribute< extractors::Position >          Position;
-typedef UnitAttribute< extractors::Resources >         Resources;
-typedef UnitAttribute< extractors::Equipments >        Equipments;
-typedef UnitAttribute< extractors::Humans >            Humans;
-typedef UnitAttribute< extractors::Mounted >           Mounted;
-typedef UnitAttribute< extractors::DirectFirePower >   DirectFirePower;
-typedef UnitAttribute< extractors::IndirectFirePower > IndirectFirePower;
-typedef UnitAttribute< extractors::CloseCombatPower >  CloseCombatPower;
-typedef UnitAttribute< extractors::EngineeringPower >  EngineeringPower;
+template< typename Extractor >
+struct LogisticAttribute : public ContinuousValue< typename Extractor::Type >
+{
+    enum { has_parameter = Extractor::has_parameter };
+    LogisticAttribute()
+        : extractor_() {}
+    explicit LogisticAttribute( xml::xistream& xis )
+        : extractor_( xis ) {}
+    explicit LogisticAttribute( const aar::StaticModel_ABC& model )
+        : extractor_( model ) {}
+
+    void Receive( const sword::SimToClient& wrapper )
+    {
+        if( extractor_.HasValue( wrapper ) )
+            Set( extractor_.Extract( wrapper ) );
+    }
+
+Extractor extractor_;
+};
+
+typedef UnitAttribute< extractors::OperationalState >    OperationalState;
+typedef UnitAttribute< extractors::Position >            Position;
+typedef UnitAttribute< extractors::Resources >           Resources;
+typedef UnitAttribute< extractors::Equipments >          Equipments;
+typedef UnitAttribute< extractors::Humans >              Humans;
+typedef UnitAttribute< extractors::Mounted >             Mounted;
+typedef UnitAttribute< extractors::DirectFirePower >     DirectFirePower;
+typedef UnitAttribute< extractors::IndirectFirePower >   IndirectFirePower;
+typedef UnitAttribute< extractors::CloseCombatPower >    CloseCombatPower;
+typedef UnitAttribute< extractors::EngineeringPower >    EngineeringPower;
+
+typedef LogisticAttribute< extractors::LogMedicalEquipments > LogMedicalEquipments;
+typedef LogisticAttribute< extractors::LogMaintenanceEquipments > LogMaintenanceEquipments;
+typedef LogisticAttribute< extractors::LogSupplyStocks > LogSupplyStocks;
 
 struct Detections : public ContinuousValue< extractors::UnitDetection::Type >
 {

@@ -23,6 +23,7 @@ namespace extractors
     @brief  WoundHumans
 */
 // Created: FPO 2011-05-02
+// Ne fonctionne pas FIXME
 // =============================================================================
 class WoundHumans : public Extractor< NumericValue >
 {
@@ -35,9 +36,8 @@ public:
         //@{
         virtual void Receive( const sword::SimToClient& wrapper )
         {
-            if( wrapper.message().has_order_ack() && wrapper.message().order_ack().tasker().has_unit() )
-                Set( wrapper.message().order_ack().tasker().unit().id() );
-            if( wrapper.message().has_stop_unit_fire() ) 
+            // Problème pour gérer valeurs multiples pour différents identifier, FIXME
+            if( wrapper.message().has_stop_unit_fire() )
                 for( int i = 0; i < wrapper.message().stop_unit_fire().units_damages().elem_size(); ++i )
                     Set( wrapper.message().stop_unit_fire().units_damages().elem( i ).target().id() );
         }

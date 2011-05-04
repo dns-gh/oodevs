@@ -25,7 +25,7 @@ namespace
 {
     const unsigned nHumanDamageStates = 6;
     typedef google::protobuf::int32( UnitHumanFireDamage::*UnitHumanFireDamageMemberFn )()const;
-    UnitHumanFireDamageMemberFn humanDamageData[ 6 ] =
+    UnitHumanFireDamageMemberFn humanDamageData[ nHumanDamageStates ] =
     {
         &UnitHumanFireDamage::alive,
         &UnitHumanFireDamage::dead,
@@ -34,7 +34,7 @@ namespace
         &UnitHumanFireDamage::wounded_u3,
         &UnitHumanFireDamage::wounded_ue,
     };
-    const char* humanDamageStates[ 6 ] =
+    const char* humanDamageStates[ nHumanDamageStates ] =
     {
         "alive",
         "dead",

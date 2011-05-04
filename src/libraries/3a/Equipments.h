@@ -24,7 +24,7 @@ namespace extractors
 /** @class  Equipments
     @brief  Equipments
             equipments='id1,id2,...'
-            states='available,unavailable,repairable,repairing,prisoner'
+            states='available,unavailable,repairable,repairing,captured'
 */
 // Created: AGE 2007-10-29
 // =============================================================================
