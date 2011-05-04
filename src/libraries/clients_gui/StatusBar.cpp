@@ -17,6 +17,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/CoordinateSystems.h"
+#include "clients_kernel/Tools.h"
 #include <qstatusbar.h>
 #include <boost/format.hpp>
 
@@ -159,7 +160,7 @@ void StatusBar::ParameterSelected( int index )
 // -----------------------------------------------------------------------------
 void StatusBar::TerrainPicked( const QString& type )
 {
-    pTerrainType_->setText( type );
+    pTerrainType_->setText( tools::translate( "Terrain type", type ) );
 }
 
 // -----------------------------------------------------------------------------

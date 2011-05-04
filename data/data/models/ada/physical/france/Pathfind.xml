@@ -62,38 +62,38 @@
         <object-cost type="mortar deployment area" value="10"/>
         <object-cost type="installation" value="0"/>
         <object-cost type="urban block" value="10000"/>
-        <object-cost type="seal off area" value="10000" />
+        <object-cost type="seal off area" value="10000"/>
       </object-costs>
     </rule>
     <rule type="movement" flying="false" autonomous="false" inherits="base">
       <preferred-terrains>
-        <preferred-terrain type="chemin"/>
-        <preferred-terrain type="departementale"/>
-        <preferred-terrain type="nationale"/>
-        <preferred-terrain type="autoroute"/>
+        <preferred-terrain type="error"/>
+        <preferred-terrain type="error"/>
+        <preferred-terrain type="error"/>
+        <preferred-terrain type="error"/>
       </preferred-terrains>
     </rule>
     <rule type="recon" flying="false" autonomous="false" inherits="base">
       <preferred-altitude value="0.001"/>
       <preferred-terrains>
-        <preferred-terrain type="lisiere"/>
-        <preferred-terrain type="chemin"/>
-        <preferred-terrain type="departementale"/>
-        <preferred-terrain type="nationale"/>
-        <preferred-terrain type="autoroute"/>
+        <preferred-terrain type="error"/>
+        <preferred-terrain type="error"/>
+        <preferred-terrain type="error"/>
+        <preferred-terrain type="error"/>
+        <preferred-terrain type="error"/>
       </preferred-terrains>
     </rule>
     <rule type="infiltration" flying="false" autonomous="false" inherits="base">
       <preferred-altitude value="-0.001"/>
       <preferred-terrains strength="50">
-        <preferred-terrain type="foret"/>
-        <preferred-terrain type="urbain"/>
+        <preferred-terrain type="error"/>
+        <preferred-terrain type="error"/>
       </preferred-terrains>
       <avoided-terrains strength="50">
-        <avoided-terrain type="chemin"/>
-        <avoided-terrain type="departementale"/>
-        <avoided-terrain type="nationale"/>
-        <avoided-terrain type="autoroute"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
       </avoided-terrains>
       <object-costs avoid="true" threshold="10000">
         <object-cost type="checkpoint" value="10000"/>
@@ -109,10 +109,10 @@
     <rule type="assault" flying="false" autonomous="false" inherits="base">
       <optimisation shortest="true"/>
       <avoided-terrains strength="5">
-        <avoided-terrain type="chemin"/>
-        <avoided-terrain type="departementale"/>
-        <avoided-terrain type="nationale"/>
-        <avoided-terrain type="autoroute"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
       </avoided-terrains>
       <zone>
         <inner-comfort cost-per-meter="0.8" distance="1000"/>
@@ -133,10 +133,10 @@
       <optimisation shortest="true"/>
       <danger-direction base-cost-beyond="5" cost-per-meter="0.01"/>
       <avoided-terrains>
-        <avoided-terrain type="chemin"/>
-        <avoided-terrain type="departementale"/>
-        <avoided-terrain type="nationale"/>
-        <avoided-terrain type="autoroute"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
       </avoided-terrains>
       <enemies cost-on-contact="10" cost-at-security-range="25"/>
     </rule>
@@ -153,12 +153,12 @@
       <preferred-altitude value="0"/>
       <preferred-terrains/>
       <avoided-terrains strength="7">
-        <avoided-terrain type="foret"/>
-        <avoided-terrain type="urbain"/>
-        <avoided-terrain type="chemin"/>
-        <avoided-terrain type="departementale"/>
-        <avoided-terrain type="nationale"/>
-        <avoided-terrain type="autoroute"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
+        <avoided-terrain type="error"/>
       </avoided-terrains>
       <automat-zone>
         <outter-tolerance cost-per-meter="0" distance="1000000000"/>
@@ -209,7 +209,7 @@
         <object-cost type="mortar deployment area" value="10"/>
         <object-cost type="installation" value="0"/>
         <object-cost type="urban block" value="10000"/>
-        <object-cost type="seal off area" value="10000" />
+        <object-cost type="seal off area" value="10000"/>
       </object-costs>
     </rule>
     <rule type="movement" flying="true" autonomous="false" inherits="base"/>
@@ -314,5 +314,4 @@
   <population-rules>
     <rule type="base" cost-out-of-channeling="50" channeling-range="1000"/>
   </population-rules>
-</pathfind>
-<!-- signature="2212940571" -->
+</pathfind><!-- signature="2212940571" -->

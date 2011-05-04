@@ -149,7 +149,7 @@ void PHY_Speeds::ReadTerrain( xml::xistream& xis )
 
     xis >> xml::attribute( "terrain", strTerrainType );
 
-    const TerrainData data = MIL_Tools::ConvertLandType( strTerrainType );
+    const TerrainData data = TerrainData::FromString( strTerrainType );
     if( data.Area() == 0xFF )
         xis.error( "Unknown terrain type '" + strTerrainType + "'" );
 

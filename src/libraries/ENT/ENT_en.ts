@@ -2,112 +2,16 @@
 <context>
     <name>ENT_Tr</name>
     <message>
-        <source>identifiee</source>
-        <translation type="unfinished">identified</translation>
-    </message>
-    <message>
-        <source>reconnue</source>
-        <translation type="unfinished">recognized</translation>
-    </message>
-    <message>
-        <source>detectee</source>
-        <translation type="unfinished">detected</translation>
-    </message>
-    <message>
-        <source>signale</source>
-        <translation type="unfinished">reported</translation>
-    </message>
-    <message>
         <source>mine</source>
         <translation type="unfinished">mine</translation>
-    </message>
-    <message>
-        <source>error invalid order conduite</source>
-        <translation type="unfinished">error invalid frag order</translation>
-    </message>
-    <message>
-        <source>error invalid order mission</source>
-        <translation type="unfinished">error invalid mission</translation>
-    </message>
-    <message>
-        <source>error invalid order initial</source>
-        <translation type="unfinished">error invalid initial order</translation>
-    </message>
-    <message>
-        <source>error invalid order conduite parameters</source>
-        <translation type="unfinished">error invalid frag order parameters</translation>
-    </message>
-    <message>
-        <source>error invalid localisation</source>
-        <translation type="unfinished">error invalid location</translation>
-    </message>
-    <message>
-        <source>error invalid lima function</source>
-        <translation type="unfinished">error invalid phase line function</translation>
     </message>
     <message>
         <source>agressive</source>
         <translation type="unfinished">agressive</translation>
     </message>
     <message>
-        <source>error invalid donneur</source>
-        <translation type="unfinished">error invalid supplier</translation>
-    </message>
-    <message>
-        <source>error invalid receveur</source>
-        <translation type="unfinished">error invalid receiver</translation>
-    </message>
-    <message>
         <source>veteran</source>
         <translation type="unfinished">veteran</translation>
-    </message>
-    <message>
-        <source>error automate embraye</source>
-        <translation type="unfinished">error automat engaged</translation>
-    </message>
-    <message>
-        <source>error invalid pion</source>
-        <translation type="unfinished">error invalid unit</translation>
-    </message>
-    <message>
-        <source>error invalid automate</source>
-        <translation type="unfinished">error invalid automat</translation>
-    </message>
-    <message>
-        <source>error invalid automate tc2</source>
-        <translation type="unfinished">error invalid tc2 automat </translation>
-    </message>
-    <message>
-        <source>error invalid automate maintenance</source>
-        <translation type="unfinished">error invalid maintenance superior</translation>
-    </message>
-    <message>
-        <source>error invalid automate sante</source>
-        <translation type="unfinished">error invalid medical superior</translation>
-    </message>
-    <message>
-        <source>error invalid automate ravitaillement</source>
-        <translation type="unfinished">error invalid supply automat</translation>
-    </message>
-    <message>
-        <source>error invalid camp</source>
-        <translation type="unfinished">error invalid team</translation>
-    </message>
-    <message>
-        <source>error invalid groupe connaissance</source>
-        <translation type="unfinished">error invalid knowledge group</translation>
-    </message>
-    <message>
-        <source>error camps incompatibles</source>
-        <translation type="unfinished">errors incompatible teams</translation>
-    </message>
-    <message>
-        <source>no error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error unit surrendered</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>circle</source>
@@ -182,103 +86,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error invalid unit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid attribute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error not allowed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error already started</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error not started</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error not paused</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error already paused</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid time factor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>running</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>paused</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>stopped</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid geometry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid diffusion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid object</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error missing specific attributes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid specific attributes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>reserved</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid limit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid lima</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid mission</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error invalid mission parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>error unit cannot receive order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -498,78 +306,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>engaged</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>disengaged</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>smoke</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>illumination shell</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>line of departure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>posture switching line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>coordination line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>deny line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>line of objectives</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>block line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rearward line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>starting line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>finish line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>identification and reception line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>shift type 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>shift type 2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>shift type 3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>shift type 4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>moving toward logistic system</source>
         <translation type="unfinished"></translation>
     </message>
@@ -678,10 +414,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>looking for triange area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>waiting for triage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -727,18 +459,6 @@
     </message>
     <message>
         <source>preliminary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>event</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>one echelon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>two echelons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -846,7 +566,131 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>limit</source>
+        <source>extinguisher agent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>energy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>looking for triage area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forest</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>orchard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>swamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>urban area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lake</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>glacier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>forest edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>suburb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waterfront</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>orchard edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>swamp edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dune edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>glacier edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>country road</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>highway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>main road</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>secondary road</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stream</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>river</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>main river</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bridge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cliff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>railroad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>crossroad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mountain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mountain edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>limit 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>limit 2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -93,19 +93,19 @@
   </xs:simpleType>
   <xs:simpleType name="T_TerrainType">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="autoroute"/>
-      <xs:enumeration value="departementale"/>
-      <xs:enumeration value="chemin"/>
+      <xs:enumeration value="highway"/>
+      <xs:enumeration value="secondary road"/>
+      <xs:enumeration value="country road"/>
       <xs:enumeration value="rue"/>
-      <xs:enumeration value="carrefour"/>
-      <xs:enumeration value="nationale"/>
-      <xs:enumeration value="voie ferree"/>
-      <xs:enumeration value="pont"/>
+      <xs:enumeration value="crossroad"/>
+      <xs:enumeration value="main road"/>
+      <xs:enumeration value="railroad"/>
+      <xs:enumeration value="bridge"/>
       <xs:enumeration value="souterrain"/>
-      <xs:enumeration value="banlieue"/>
-      <xs:enumeration value="lisiere"/>
-      <xs:enumeration value="foret"/>
-      <xs:enumeration value="urbain"/>
+      <xs:enumeration value="suburb"/>
+      <xs:enumeration value="forest edge"/>
+      <xs:enumeration value="forest"/>
+      <xs:enumeration value="urban area"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="T_UnitSpeedPolicy">

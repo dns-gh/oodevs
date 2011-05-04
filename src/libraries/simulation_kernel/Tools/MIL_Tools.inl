@@ -139,9 +139,19 @@ const std::string& MIL_Tools::GetEnvironnementTypeName( PHY_RawVisionData::E_Vis
 // Created: AGN 03-07-30
 //-----------------------------------------------------------------------------
 inline
-TerrainData MIL_Tools::ConvertLandType( const std::string& sName )
+E_KeyPoint MIL_Tools::ConvertLandType( const std::string& sName )
 {
-    return TerrainData( sName );
+    if( sName == "forest" )
+        return eKeyPointForest;
+    if( sName == "urban area" )
+        return eKeyPointUrban;
+    if( sName == "crossroad" )
+        return eKeyPointCrossroads;
+    if( sName == "bridge" )
+        return eKeyPointBridge;
+    if( sName == "lima" )
+        return eKeyPointLima;
+    throw std::runtime_error( __FUNCTION__ " : unknown landtype" );
 }
 
 //-----------------------------------------------------------------------------

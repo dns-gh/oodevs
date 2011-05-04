@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<objects model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Objects.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<objects xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" model-version="4.6.0" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Objects.xsd">
   <object geometry="point" name="Bouchon de mines" symbol="G*MPOMC---****X" type="mines">
     <activable/>
     <attrition category="mine classique"/>
@@ -13,13 +13,13 @@
       </buildable>
     </constructor>
     <heuristic>
-      <terrain type="autoroute" value="1"/>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="nationale" value="2"/>
-      <terrain type="voie ferree" value="5"/>
-      <terrain type="pont" value="8"/>
-      <terrain type="banlieue" value="7"/>
+      <terrain type="error" value="1"/>
+      <terrain type="error" value="3"/>
+      <terrain type="error" value="10"/>
+      <terrain type="error" value="2"/>
+      <terrain type="error" value="5"/>
+      <terrain type="error" value="8"/>
+      <terrain type="error" value="7"/>
     </heuristic>
     <interact-with-enemy/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
@@ -203,10 +203,10 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="autoroute" value="2"/>
-      <terrain type="nationale" value="5"/>
+      <terrain type="error" value="3"/>
+      <terrain type="error" value="10"/>
+      <terrain type="error" value="2"/>
+      <terrain type="error" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -228,10 +228,10 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="autoroute" value="1"/>
-      <terrain type="nationale" value="5"/>
+      <terrain type="error" value="3"/>
+      <terrain type="error" value="10"/>
+      <terrain type="error" value="1"/>
+      <terrain type="error" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -252,7 +252,7 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="pont" value="10"/>
+      <terrain type="error" value="10"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
@@ -305,12 +305,12 @@
       <acquisition-times/>
     </detection>
     <heuristic>
-      <terrain type="autoroute" value="1"/>
-      <terrain type="nationale" value="2"/>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="voie ferree" value="5"/>
-      <terrain type="pont" value="8"/>
+      <terrain type="error" value="1"/>
+      <terrain type="error" value="2"/>
+      <terrain type="error" value="3"/>
+      <terrain type="error" value="10"/>
+      <terrain type="error" value="5"/>
+      <terrain type="error" value="8"/>
     </heuristic>
     <population-filter density="0.5"/>
     <workable max-animator="1"/>
@@ -376,5 +376,4 @@
     </fire-propagation-modifier>
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
-</objects>
-<!-- signature="3695763221" -->
+</objects><!-- signature="2330032806" -->

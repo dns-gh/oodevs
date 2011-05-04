@@ -13,13 +13,13 @@
       </buildable>
     </constructor>
     <heuristic>
-      <terrain type="autoroute" value="1"/>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="nationale" value="2"/>
-      <terrain type="voie ferree" value="5"/>
-      <terrain type="pont" value="8"/>
-      <terrain type="banlieue" value="7"/>
+      <terrain type="highway" value="1"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="main road" value="2"/>
+      <terrain type="railroad" value="5"/>
+      <terrain type="bridge" value="8"/>
+      <terrain type="suburb" value="7"/>
     </heuristic>
     <interact-with-enemy/>
     <interaction-height height="1"/>
@@ -195,10 +195,10 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="autoroute" value="2"/>
-      <terrain type="nationale" value="5"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="highway" value="2"/>
+      <terrain type="main road" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -220,10 +220,10 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="autoroute" value="1"/>
-      <terrain type="nationale" value="5"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="highway" value="1"/>
+      <terrain type="main road" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -244,7 +244,7 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="pont" value="10"/>
+      <terrain type="bridge" value="10"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
@@ -297,12 +297,12 @@
       <acquisition-times/>
     </detection>
     <heuristic>
-      <terrain type="autoroute" value="1"/>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="nationale" value="2"/>
-      <terrain type="voie ferree" value="5"/>
-      <terrain type="pont" value="8"/>
+      <terrain type="highway" value="1"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="main road" value="2"/>
+      <terrain type="railroad" value="5"/>
+      <terrain type="bridge" value="8"/>
     </heuristic>
     <population-filter density="0.5"/>
     <workable max-animator="1"/>
@@ -407,4 +407,4 @@
     <time-limited/>
   </object>
 </objects>
-<!-- signature="0834641915" -->
+<!-- signature="1599880109" -->

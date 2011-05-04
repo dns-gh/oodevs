@@ -29,6 +29,16 @@ class MIL_Time_ABC;
 
 enum E_TerrainObjectTypeID;
 
+enum E_KeyPoint
+{
+    eKeyPointForest = 0,
+    eKeyPointUrban,
+    eKeyPointCrossroads,
+    eKeyPointBridge,
+    eKeyPointLima,
+    eNbrKeyPoints
+};
+
 //=============================================================================
 // Created: NLD 2002-08-06
 // Last modified: JVT 03-12-02
@@ -65,7 +75,7 @@ public:
     /** @name name to id converters */
     //-------------------------------------------------------------------------
     //@{
-    static TerrainData ConvertLandType( const std::string& );
+    static E_KeyPoint ConvertLandType( const std::string& sName );
     //@}
 
     //-------------------------------------------------------------------------

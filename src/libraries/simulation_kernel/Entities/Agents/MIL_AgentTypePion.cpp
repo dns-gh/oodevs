@@ -11,6 +11,7 @@
 
 #include "MIL_AgentTypePion.h"
 #include "MIL_AgentPion.h"
+#include "Tools/MIL_Tools.h"
 #include "Units/PHY_UnitType.h"
 
 #include "Decision/DEC_Workspace.h"
@@ -219,6 +220,27 @@ void MIL_AgentTypePion::InitializeDistancesAvantPoints( xml::xistream& xis )
         >> xml::end;
 }
 
+
+namespace
+{
+    const TerrainData KeypointToTerrainData( const E_KeyPoint keypoint )
+    {
+        switch( keypoint )
+        {
+            case eKeyPointForest:
+                return TerrainData::Forest();
+            case eKeyPointBridge:
+                return TerrainData::Bridge();
+            case eKeyPointCrossroads:
+                return TerrainData::Crossroad();
+            case eKeyPointUrban:
+                return TerrainData::Urban();
+            default:
+                throw std::runtime_error( __FUNCTION__ " unknown keypoint value" );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::ReadPoint
 // Created: ABL 2007-07-23
@@ -227,7 +249,6 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
 {
     std::string strTypePoint;
     xis >> xml::attribute( "type", strTypePoint );
-    // Cas particulier : limas ( point n'appartenant pas à TER ! )
     if( sCaseInsensitiveEqual()( strTypePoint, "lima" ) )
     {
         xis >> xml::attribute( "value", rDistanceAvantLimas_ );
@@ -235,9 +256,7 @@ void MIL_AgentTypePion::ReadPoint( xml::xistream& xis )
     }
     else
     {
-        const TerrainData nType = MIL_Tools::ConvertLandType( strTypePoint );
-        if( nType.Area() == 0xFF )
-            xis.error( "Unknown land type" );
+        const TerrainData nType = KeypointToTerrainData( MIL_Tools::ConvertLandType( strTypePoint ) );
         if( distancesAvantPoints_.find( nType ) != distancesAvantPoints_.end() )
             xis.error( "Unknown 'distance avant point'" );
         double& rDistance = distancesAvantPoints_[ nType ];

@@ -179,7 +179,7 @@ void MIL_FireClass::ReadSurface( xml::xistream& xis )
         >> xml::attribute( "ignition-threshold", surface.ignitionThreshold_ )
         >> xml::attribute( "max-combustion-energy", surface.maxCombustionEnergy_ );
 
-    surface.terrainData_ = MIL_Tools::ConvertLandType( strTerrainType );
+    surface.terrainData_ = TerrainData::FromString( strTerrainType );
     if( surface.terrainData_.Area() == 0xFF )
         xis.error( "Unknown terrain type '" + strTerrainType + "'" );
 

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<pathfind model-version="4.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/physical/Pathfind.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<pathfind xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" model-version="4.4.1" xsi:noNamespaceSchemaLocation="schemas/4.3.0/physical/Pathfind.xsd">
   <configuration distance-threshold="15000" max-calculation-time="15s"/>
   <unit-rules>
     <rule autonomous="false" flying="false" type="base">
@@ -66,33 +66,33 @@
     </rule>
     <rule autonomous="false" flying="false" inherits="base" type="movement">
       <preferred-terrains>
-        <preferred-terrain type="chemin"/>
-        <preferred-terrain type="departementale"/>
-        <preferred-terrain type="nationale"/>
-        <preferred-terrain type="autoroute"/>
+        <preferred-terrain type="country road"/>
+        <preferred-terrain type="secondary road"/>
+        <preferred-terrain type="main road"/>
+        <preferred-terrain type="highway"/>
       </preferred-terrains>
     </rule>
     <rule autonomous="false" flying="false" inherits="base" type="recon">
       <preferred-altitude value="0.001"/>
       <preferred-terrains>
-        <preferred-terrain type="lisiere"/>
-        <preferred-terrain type="chemin"/>
-        <preferred-terrain type="departementale"/>
-        <preferred-terrain type="nationale"/>
-        <preferred-terrain type="autoroute"/>
+        <preferred-terrain type="forest edge"/>
+        <preferred-terrain type="country road"/>
+        <preferred-terrain type="secondary road"/>
+        <preferred-terrain type="main road"/>
+        <preferred-terrain type="highway"/>
       </preferred-terrains>
     </rule>
     <rule autonomous="false" flying="false" inherits="base" type="infiltration">
       <preferred-altitude value="-0.001"/>
       <preferred-terrains strength="50">
-        <preferred-terrain type="foret"/>
-        <preferred-terrain type="urbain"/>
+        <preferred-terrain type="forest"/>
+        <preferred-terrain type="urban area"/>
       </preferred-terrains>
       <avoided-terrains strength="50">
-        <avoided-terrain type="chemin"/>
-        <avoided-terrain type="departementale"/>
-        <avoided-terrain type="nationale"/>
-        <avoided-terrain type="autoroute"/>
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
       </avoided-terrains>
       <object-costs avoid="true" threshold="10000">
         <object-cost type="checkpoint" value="10000"/>
@@ -108,10 +108,10 @@
     <rule autonomous="false" flying="false" inherits="base" type="assault">
       <optimisation shortest="true"/>
       <avoided-terrains strength="5">
-        <avoided-terrain type="chemin"/>
-        <avoided-terrain type="departementale"/>
-        <avoided-terrain type="nationale"/>
-        <avoided-terrain type="autoroute"/>
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
       </avoided-terrains>
       <zone>
         <inner-comfort cost-per-meter="0.8" distance="1000"/>
@@ -132,10 +132,10 @@
       <optimisation shortest="true"/>
       <danger-direction base-cost-beyond="5" cost-per-meter="0.01"/>
       <avoided-terrains>
-        <avoided-terrain type="chemin"/>
-        <avoided-terrain type="departementale"/>
-        <avoided-terrain type="nationale"/>
-        <avoided-terrain type="autoroute"/>
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
       </avoided-terrains>
       <enemies cost-at-security-range="25" cost-on-contact="10"/>
     </rule>
@@ -152,12 +152,12 @@
       <preferred-altitude value="0"/>
       <preferred-terrains/>
       <avoided-terrains strength="7">
-        <avoided-terrain type="foret"/>
-        <avoided-terrain type="urbain"/>
-        <avoided-terrain type="chemin"/>
-        <avoided-terrain type="departementale"/>
-        <avoided-terrain type="nationale"/>
-        <avoided-terrain type="autoroute"/>
+        <avoided-terrain type="forest"/>
+        <avoided-terrain type="urban area"/>
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
       </avoided-terrains>
       <automat-zone>
         <outter-tolerance cost-per-meter="0" distance="1000000000"/>
@@ -312,5 +312,4 @@
   <population-rules>
     <rule channeling-range="1000" cost-out-of-channeling="50" type="base"/>
   </population-rules>
-</pathfind>
-<!-- signature="3642034717" -->
+</pathfind><!-- signature="3642034717" -->

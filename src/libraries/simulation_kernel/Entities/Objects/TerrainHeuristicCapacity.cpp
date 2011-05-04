@@ -61,7 +61,7 @@ void TerrainHeuristicCapacity::ReadTerrain( xml::xistream& xis )
     std::string strTerrainType( xis.attribute< std::string >( "type", std::string() ) );
     unsigned int nScore = xis.attribute< int >( "value", 0 );
 
-    TerrainData nLandType = MIL_Tools::ConvertLandType( strTerrainType );
+    TerrainData nLandType = TerrainData::FromString( strTerrainType );
     if( nLandType.Area() == 0xFF )
         xis.error( "Unknown land type" );
 

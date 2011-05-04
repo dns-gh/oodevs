@@ -31,35 +31,35 @@
       <urban-modifier material-type="Vegetation" value="0.5"/>
     </urban-modifiers>
     <surfaces>
-      <surface ignition-threshold="100000" max-combustion-energy="20000" type="inconnu"/>
-      <surface ignition-threshold="5000" max-combustion-energy="200000" type="foret"/>
-      <surface ignition-threshold="1000" max-combustion-energy="20000" type="plantation"/>
-      <surface ignition-threshold="100000" max-combustion-energy="20000" type="marais"/>
+      <surface ignition-threshold="100000" max-combustion-energy="20000" type="unknown"/>
+      <surface ignition-threshold="5000" max-combustion-energy="200000" type="forest"/>
+      <surface ignition-threshold="1000" max-combustion-energy="20000" type="orchard"/>
+      <surface ignition-threshold="100000" max-combustion-energy="20000" type="swamp"/>
       <surface ignition-threshold="100000" max-combustion-energy="20000" type="dune"/>
-      <surface ignition-threshold="5000" max-combustion-energy="20000" type="urbain"/>
-      <surface ignition-threshold="2000000000" max-combustion-energy="20000" type="etendue eau"/>
-      <surface ignition-threshold="2000000000" max-combustion-energy="20000" type="glace"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="lisiere"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="banlieue"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="cote"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="bord de plantation"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="bord de marais"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="bord de dune"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="bord de glace"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="chemin"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="autoroute"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="nationale"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="departementale"/>
-      <surface ignition-threshold="2000000000" max-combustion-energy="100000" type="ruisseau"/>
-      <surface ignition-threshold="2000000000" max-combustion-energy="100000" type="riviere"/>
-      <surface ignition-threshold="2000000000" max-combustion-energy="100000" type="riviere importante"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="pont"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="falaise"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="voie ferree"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="carrefour"/>
-      <surface ignition-threshold="100000" max-combustion-energy="20000" type="montagne"/>
-      <surface ignition-threshold="100000" max-combustion-energy="100000" type="bord de montagne"/>
+      <surface ignition-threshold="5000" max-combustion-energy="20000" type="urban area"/>
+      <surface ignition-threshold="2000000000" max-combustion-energy="20000" type="lake"/>
+      <surface ignition-threshold="2000000000" max-combustion-energy="20000" type="glacier"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="forest edge"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="suburb"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="waterfront"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="orchard edge"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="swamp edge"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="dune edge"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="glacier edge"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="country road"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="highway"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="main road"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="secondary road"/>
+      <surface ignition-threshold="2000000000" max-combustion-energy="100000" type="stream"/>
+      <surface ignition-threshold="2000000000" max-combustion-energy="100000" type="river"/>
+      <surface ignition-threshold="2000000000" max-combustion-energy="100000" type="main river"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="bridge"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="cliff"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="railroad"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="crossroad"/>
+      <surface ignition-threshold="100000" max-combustion-energy="20000" type="mountain"/>
+      <surface ignition-threshold="100000" max-combustion-energy="100000" type="mountain edge"/>
     </surfaces>
   </fire>
 </fires>
-<!-- signature="4108748183" -->
+<!-- signature="0052647221" -->
