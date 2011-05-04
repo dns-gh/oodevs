@@ -25,11 +25,10 @@
 struct FixturePion : private boost::noncopyable
 {
     FixturePion( MIL_EffectManager& effectManager )
-        : algorithmsFactories_( new AlgorithmsFactories() )
-        , effectManager_( effectManager )
+        : effectManager_( effectManager )
     {
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms' id='12' name='stuff'/>" );
-        xis.start( "main" );
+        xis >> xml::start( "main" );
         std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
 
         pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false ) );
@@ -38,16 +37,15 @@ struct FixturePion : private boost::noncopyable
         pType_.reset( new StubMIL_AgentTypePion( *pModel_ ) );
         pTypeAutomat_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pTypeAutomat_ ) );
-        pPion_.reset( new StubMIL_AgentPion( *pType_, *pAutomat_, *algorithmsFactories_, xis ) );
+        pPion_.reset( new StubMIL_AgentPion( *pType_, *pAutomat_, algorithmsFactories_, xis ) );
     }
-
-    std::auto_ptr< AlgorithmsFactories >   algorithmsFactories_;
+    AlgorithmsFactories                    algorithmsFactories_;
+    MIL_EffectManager&                     effectManager_;
     std::auto_ptr< DEC_Model >             pModel_;
     std::auto_ptr< StubMIL_AgentTypePion > pType_;
     std::auto_ptr< StubMIL_AutomateType >  pTypeAutomat_;
     std::auto_ptr< MIL_Automate >          pAutomat_;
     std::auto_ptr< StubMIL_AgentPion >     pPion_;
-    MIL_EffectManager&                     effectManager_;
 };
 
 struct FixtureAutomate : private boost::noncopyable
@@ -61,11 +59,10 @@ struct FixtureAutomate : private boost::noncopyable
         pType_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pType_ ) );
     }
-
+    MIL_EffectManager                     effectManager_;
     std::auto_ptr< DEC_Model >            pModel_;
     std::auto_ptr< StubMIL_AutomateType > pType_;
     std::auto_ptr< MIL_Automate >         pAutomat_;
-    MIL_EffectManager                     effectManager_;
 };
 
 #endif // __Fixture_h_

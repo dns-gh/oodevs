@@ -10,6 +10,7 @@
 #include "Server.h"
 #include "Client.h"
 #include "Listener_ABC.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace shield;
 
@@ -22,6 +23,7 @@ Server::Server( unsigned short port, const std::string& host, Listener_ABC& list
     , host_    ( host )
     , listener_( listener )
 {
+    listener_.Info( "Starting shield server on port " + boost::lexical_cast< std::string >( port ) );
     AllowConnections();
 }
 

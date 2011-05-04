@@ -70,7 +70,7 @@ public:
     template< typename T >
     void Update( const T& updateMessage )
     {
-        const unsigned applied = Apply( & Updatable_ABC< T >::DoUpdate, updateMessage );
+        const std::size_t applied = Apply( & Updatable_ABC< T >::DoUpdate, updateMessage );
         if( ! applied )
             CheckUpdate( typeid( updateMessage ) );
     }

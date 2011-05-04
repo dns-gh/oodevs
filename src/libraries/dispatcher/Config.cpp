@@ -24,6 +24,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     : SessionConfig( observer )
+    , networkSimulationPort_   ( 0 )
     , networkClientsParameters_( 0 )
     , networkShieldParameters_ ( 0 )
     , keyFramesFrequency_      ( 100 )
@@ -32,7 +33,8 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
-        ( "port" , po::value( &networkClientsParameters_ ), "specify the serving port" );
+        ( "simulation-port", po::value( &networkSimulationPort_ )   , "specify the simulation server port number" );
+        ( "dispatcher-port", po::value( &networkClientsParameters_ ), "specify the dispatcher server port number" );
     AddOptions( desc );
 }
 
@@ -73,6 +75,10 @@ void Config::Parse( int argc, char** argv )
                         >> xml::end
                         >> xml::optional >>xml::start( "shield" )
                             >> xml::attribute( "server", networkShieldParameters_ );
+    if( networkSimulationPort_ != 0 )
+        networkSimulationParameters_ =
+            networkSimulationParameters_.substr( 0, networkSimulationParameters_.find( ':' ) )
+            + ':' + boost::lexical_cast< std::string >( networkSimulationPort_ );
     if( ! networkClientsParameters_ )
         networkClientsParameters_ = port;
 }

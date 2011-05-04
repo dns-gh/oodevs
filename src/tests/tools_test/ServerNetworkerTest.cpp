@@ -16,7 +16,7 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( server_networker_throws_if_open_on_port_already_open )
 {
-    tools::ServerNetworker server( 7777 );
+    tools::ServerNetworker server( PORT );
     server.AllowConnections();
-    BOOST_CHECK_THROW( tools::ServerNetworker( 7777 ).AllowConnections(), std::exception );
+    BOOST_CHECK_THROW( tools::ServerNetworker( PORT ).AllowConnections(), std::exception );
 }

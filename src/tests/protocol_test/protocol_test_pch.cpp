@@ -9,8 +9,11 @@
 
 #include "protocol_test_pch.h"
 #include <google/protobuf/stubs/common.h>
+#include <boost/lexical_cast.hpp>
 #include <iostream>
 #include <string>
+
+unsigned short PORT = 55000;
 
 namespace
 {
@@ -24,6 +27,8 @@ namespace
             const std::string::size_type n = argument.find( '=' );
             if( n != std::string::npos && argument.substr( 0, n ) == "--data_directory" )
                 data_directory = argument.substr( n+1 );
+            if( n != std::string::npos && argument.substr( 0, n ) == "--port_number" )
+                PORT = boost::lexical_cast< unsigned short >( argument.substr( n+1 ) );
         }
     }
 }

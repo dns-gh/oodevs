@@ -25,7 +25,6 @@
 namespace
 {
     const std::string    defaultHost     = "127.0.0.1";
-    const unsigned short defaultPort     = 10101;
     const std::string    defaultProfile  = "Supervisor";
     const std::string    defaultPassword = "";
     const unsigned int   timeOut         = 1000;
@@ -126,10 +125,10 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( ClientConnectsAndAuthenticatesToSimulation )
 {
-    MockServer server( defaultPort );
-    SwordProxy client( defaultHost, defaultPort, defaultProfile, defaultPassword );
+    MockServer server( PORT );
+    SwordProxy client( defaultHost, PORT, defaultProfile, defaultPassword );
     MockConnectionHandler connectionHandler;
-    MOCK_EXPECT( connectionHandler, OnConnectionSucceeded ).once().with( MakeHost( defaultHost, defaultPort ) );
+    MOCK_EXPECT( connectionHandler, OnConnectionSucceeded ).once().with( MakeHost( defaultHost, PORT ) );
     MOCK_EXPECT( connectionHandler, OnAuthenticationSucceeded ).once().with( defaultProfile );
     client.Connect( &connectionHandler );
     Timeout timeout( timeOut );
@@ -147,10 +146,10 @@ BOOST_AUTO_TEST_CASE( ClientConnectsAndAuthenticatesToSimulation )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( MessageHandlersCanBeRegistered )
 {
-    MockServer server( defaultPort );
-    SwordProxy client( defaultHost, defaultPort, defaultProfile, defaultPassword );
+    MockServer server( PORT );
+    SwordProxy client( defaultHost, PORT, defaultProfile, defaultPassword );
     MockConnectionHandler connectionHandler;
-    MOCK_EXPECT( connectionHandler, OnConnectionSucceeded ).once().with( MakeHost( defaultHost, defaultPort ) );
+    MOCK_EXPECT( connectionHandler, OnConnectionSucceeded ).once().with( MakeHost( defaultHost, PORT ) );
     MOCK_EXPECT( connectionHandler, OnAuthenticationSucceeded ).once().with( defaultProfile );
     MockMessageHandler messageHandler;
     MOCK_EXPECT( messageHandler, OnReceiveMessageSimToClient ).at_least( 1 );

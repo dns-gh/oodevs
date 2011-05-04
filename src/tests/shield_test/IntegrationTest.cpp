@@ -17,6 +17,7 @@
 #include "protocol/Simulation.h"
 #include <boost/lambda/lambda.hpp>
 #include <boost/lambda/bind.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/thread.hpp>
 
 namespace bl = boost::lambda;
@@ -30,7 +31,7 @@ namespace
     };
 
     template< typename C, typename F >
-    void wait( C condition, F flush, int timeout = 1000, int sleep = 100 )
+    void wait( C condition, F flush, int timeout = 10000, int sleep = 100 )
     {
         while( !condition() && timeout > 0 )
         {
@@ -44,7 +45,7 @@ namespace
     struct Client : tools::ClientNetworker
     {
         Client()
-            : tools::ClientNetworker( "localhost:7777" )
+            : tools::ClientNetworker( "localhost:" + boost::lexical_cast< std::string >( PORT ) )
         {
             RegisterMessage( *this, &Client::Receive );
         }
@@ -57,7 +58,7 @@ namespace
     struct Server : tools::ServerNetworker
     {
         Server()
-            : tools::ServerNetworker( 7778 )
+            : tools::ServerNetworker( PORT + 1 )
         {
             AllowConnections();
             RegisterMessage( *this, &Server::Receive );
@@ -68,10 +69,18 @@ namespace
         MOCK_METHOD_EXT( ConnectionError, 2, void( const std::string&, const std::string& ), ConnectionError );
         std::string host;
     };
-    struct Fixture
+    struct ListenerFixture
+    {
+        ListenerFixture()
+        {
+            MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Starting shield server on port" ) );
+        }
+        MockListener listener;
+    };
+    struct Fixture : ListenerFixture
     {
         Fixture()
-            : shield( 7777, "localhost:7778", listener )
+            : shield( PORT, "localhost:" + boost::lexical_cast< std::string >( PORT + 1 ), listener )
         {
             MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy received connection from" ) );
             MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy connected to" ) );
@@ -88,7 +97,6 @@ namespace
             server.Update();
             client.Update();
         }
-        MockListener listener;
         shield::Server shield;
         Server server;
         Client client;
@@ -98,7 +106,8 @@ namespace
 BOOST_AUTO_TEST_CASE( non_existing_dispatcher_is_detected_by_proxy_when_a_client_connects )
 {
     MockListener listener;
-    shield::Server shield( 7777, "localhost:7778", listener );
+    MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Starting shield server on port" ) );
+    shield::Server shield( PORT, "localhost:" + boost::lexical_cast< std::string >( PORT + 1 ), listener );
     Client client;
     MOCK_EXPECT( listener, Info ).once().with( mock::contain( "Shield proxy received connection from" ) );
     int errors = 3;

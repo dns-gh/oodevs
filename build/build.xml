@@ -226,9 +226,7 @@
     </target>
 
     <target name="library.shield" depends="library.protocol" description="build shield static library">
-        <build-lib name="shield" excludes="**/*.h" pattern="lib${ant.project.name}_shield-${platform}-mt@{suffix}" suffix="-gd">
-            <compilerarg value="/bigobj" if="is-vc100_x64"/>
-        </build-lib>
+        <build-lib name="shield" excludes="**/*.h" pattern="lib${ant.project.name}_shield-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
     <target name="library.import" description="build import static library">
@@ -723,22 +721,37 @@
         <build-test name="positions_plugin" depends="boost,qt" libs="lib${ant.project.name}_positions_plugin-${platform}-mt"/>
     </target>
 
+    <macrodef name="run-simulation">
+        <attribute name="exercise"/>
+        <attribute name="session" default="default"/>
+        <element name="args" implicit="true" optional="true"/>
+        <sequential>
+            <math result="test.portnumber2">
+                <op op="+" datatype="int">
+                    <num value="${test.portnumber}"/>
+                    <num value="1"/>
+                </op>
+            </math>
+            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
+                <arg value="--root-dir=../../data"/>
+                <arg value="--exercise=@{exercise}"/>
+                <arg value="--session=@{session}"/>
+                <arg value="--simulation-port=${test.portnumber}"/>
+                <arg value="--dispatcher-port=${test.portnumber2}"/>
+                <arg value="--test"/>
+                <args/>
+            </exec>
+        </sequential>
+    </macrodef>
+
     <target name="checkpoint_test" depends="application.simulation_app" description="save and load a checkpoint">
-        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
-            <arg value="--root-dir=../../data"/>
-            <arg value="--exercise=CheckpointTests"/>
-            <arg value="--session=default"/>
-            <arg value="--test"/>
+        <run-simulation exercise="CheckpointTests">
             <arg value="--savecheckpoint=tempcheckpoint"/>
-        </exec>
-        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
-            <arg value="--root-dir=../../data"/>
-            <arg value="--exercise=CheckpointTests"/>
-            <arg value="--session=default"/>
-            <arg value="--test"/>
+        </run-simulation>
+        <run-simulation exercise="CheckpointTests">
             <arg value="--checkpoint=tempcheckpoint"/>
             <arg value="--deletecheckpoint"/>
-        </exec>
+        </run-simulation>
     </target>
 
     <macrodef name="test-scripts">
@@ -754,12 +767,7 @@
                     <filter token="PHYSICAL" value="@{physical}"/>
                 </filterset>
             </copy>
-            <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
-                <arg value="--root-dir=../../data"/>
-                <arg value="--exercise=scripts_test"/>
-                <arg value="--session=test-session"/>
-                <arg value="--test"/>
-            </exec>
+            <run-simulation exercise="scripts_test" session="test-session"/>
             <delete dir="${data.dir}/exercises/scripts_test"/>
         </sequential>
     </macrodef>
@@ -898,12 +906,7 @@
             <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/profiles.xsd" file="../data/exercises/@{exercise}/profiles.xml" failonerror="true" warn="true"/>
             <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/weather.xsd" file="../data/exercises/@{exercise}/weather.xml" failonerror="true" warn="true"/>
             <schemavalidate nonamespacefile="${run.dir}/resources/schemas/${version.major}/exercise/session.xsd" file="../data/exercises/@{exercise}/sessions/@{session}/session.xml" failonerror="true" warn="true"/>
-            <exec executable="${out.dir}/release/applications/@{simulation}/@{simulation}.exe" dir="${run.dir}" failonerror="true" timeout="900000">
-                <arg value="--root-dir=../../data"/>
-                <arg value="--exercise=@{exercise}"/>
-                <arg value="--session=@{session}"/>
-                <arg value="--test"/>
-            </exec>
+            <run-simulation exercise="@{exercise}" session="@{session}"/>
         </sequential>
     </macrodef>
 
@@ -944,12 +947,7 @@
                 </filterset>
             </copy>
             <!-- SIM -->
-            <exec executable="${out.dir}/Release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true" timeout="900000">
-                <arg value="--root-dir=../../data"/>
-                <arg value="--exercise=@{temporary-name}"/>
-                <arg value="--session=@{session}"/>
-                <arg value="--test"/>
-            </exec>
+            <run-simulation exercise="@{temporary-name}" session="@{session}"/>
             <!-- cleanup -->
             <delete dir="${adaptation_test.dir2}" failonerror="false"/>
             <delete dir="${data.dir}/data/models/ada/physical/@{temporary-name}"  failonerror="false"/>
@@ -966,7 +964,7 @@
         <test-data-migration old-version="4.2.0" exercise="BMDrosoville"/>
         <test-data-migration old-version="4.2.1" exercise="BMDrosoville"/>
         <test-data-migration old-version="4.2.2" exercise="BMDrosoville"/>
-	<test-data-migration old-version="4.3.0" exercise="Cabourg"/>
+        <test-data-migration old-version="4.3.0" exercise="Cabourg"/>
         <test-data-migration old-version="4.3.0" exercise="BMDrosoville"/>
         -->
     </target>
@@ -1285,7 +1283,7 @@
         <update name="masalife/brain" version="${masalife.version}" package="bmc" todir="${bin.dir}"/>
         <update name="masalife/brain" version="${masalife.version}" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
         <update name="hla"/>
-        <update name="hla" package="federation_app_${platform}" todir="${bin.dir}"/>
+        <update name="hla" package="federation_app" todir="${bin.dir}"/>
         <update name="tools"/>
         <update name="flexlm"/>
         <update name="xerces-c"/>
@@ -1298,7 +1296,6 @@
         <update name="turtle"/>
         <update name="protobuf"/>
         <update name="vcredist" package="vcredist"/>
-        <update name="system"/>
         <update name="openssl"/>
         <update name="mak"/><!-- overwrites rti -->
         <update name="wise"/>

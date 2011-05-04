@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "integration_decisionnal_test_pch.h"
-
 #include <directia/brain/Brain.h>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -19,17 +18,17 @@ namespace
     {
     public:
         BrainFixture()
-        : brain_( BRAIN_INIT() )
+        : brain( BRAIN_INIT )
         {
-            brain_[ "include" ]( std::string("integration/ToolsFunctions.lua") );
+            brain[ "include" ]( std::string("integration/ToolsFunctions.lua") );
         }
         void LinearInterpolationTest( double min, double max, double start, double stop, bool upslop, double value, double expected )
         {
-            directia::tools::binders::ScriptRef linearInterpolation = brain_[ "LinearInterpolation" ];
+            directia::tools::binders::ScriptRef linearInterpolation = brain[ "LinearInterpolation" ];
             BOOST_CHECK_CLOSE( linearInterpolation.Call< double >( min, max, start, stop, upslop, value ), expected, std::numeric_limits<float>::epsilon() );
         }
     private:
-        directia::brain::Brain brain_;
+        directia::brain::Brain brain;
     };
 }
 // -----------------------------------------------------------------------------

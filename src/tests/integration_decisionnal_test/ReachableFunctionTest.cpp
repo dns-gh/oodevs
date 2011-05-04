@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "integration_decisionnal_test_pch.h"
-
 #include <directia/brain/Brain.h>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -19,7 +18,7 @@ namespace
     {
     public:
         BrainFixture()
-        : brain( BRAIN_INIT() )
+        : brain( BRAIN_INIT )
         {
             brain[ "include" ]( std::string("Integration.lua") );
         }

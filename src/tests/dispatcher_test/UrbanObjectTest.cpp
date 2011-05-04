@@ -8,15 +8,10 @@
 // *****************************************************************************
 
 #include "dispatcher_test_pch.h"
+#include "dispatcher/UrbanObject.h"
 #include "Helpers.h"
 #include "MockClientPublisher.h"
 #include "MockModel.h"
-#include "MockSide.h"
-#include "clients_kernel/ObjectType.h"
-#include "dispatcher/UrbanObject.h"
-#include "protocol/ClientSenders.h"
-#include "tools/Resolver.h"
-#include <xeumeuleu/xml.hpp>
 
 namespace
 {
@@ -41,11 +36,9 @@ namespace
             MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
             result->SendCreation( publisher );
             publisher.verify();
+            publisher.reset();
             expected.mutable_message()->Clear();
         }
-        tools::Resolver< kernel::ObjectType, std::string > types;
-        std::auto_ptr< kernel::ObjectType > type;
-        tools::Resolver< dispatcher::Team_ABC > teams;
         std::auto_ptr< dispatcher::Object_ABC > result;
         MockModel model;
         sword::SimToClient expected;
@@ -57,7 +50,7 @@ namespace
 // Name: UrbanObject_IsCreatedUnderATeam
 // Created: PHC 2010-07-23
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( UrbanObject_IsCreatedUnderATeam, Fixture )
+BOOST_FIXTURE_TEST_CASE( UrbanObject_IsCreatedUnderATeam, Fixture ) // $$$$ MCO what team ?!
 {
     CreateUrbanObject();
 }
@@ -82,6 +75,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
         publisher.verify();
+        publisher.reset();
     }
     {
         expected.mutable_message()->Clear();
@@ -96,7 +90,6 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated, Fixture )
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
-        publisher.verify();
     }
 }
 
@@ -115,6 +108,7 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated_With_No_Optionals, Fixture )
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendFullUpdate( publisher );
         publisher.verify();
+        publisher.reset();
     }
     {
         expected.mutable_message()->Clear();
@@ -129,6 +123,5 @@ BOOST_FIXTURE_TEST_CASE( UrbanObject_IsUpdated_With_No_Optionals, Fixture )
         BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
         MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
         result->SendCreation( publisher );
-        publisher.verify();
     }
 }

@@ -75,7 +75,7 @@ void Config::ConfigureLogging( Facade& facade ) const
         }
         catch( ... )
         {
-            // $$$$ PHC 2011-04-07: Unable to create logging file
+            // $$$$ PHC 2011-04-07: Unable to create log file
         }
     }
 }
@@ -86,7 +86,7 @@ void Config::ConfigureLogging( Facade& facade ) const
 // -----------------------------------------------------------------------------
 std::auto_ptr< Client > Config::CreateClient( SwordMessageHandler_ABC& handler ) const
 {
-    return new std::auto_ptr< Client >( new Client( handler, host_, port_, login_, password_ ) );
+    return std::auto_ptr< Client >( new Client( handler, host_, port_, login_, password_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ std::auto_ptr< Client > Config::CreateClient( SwordMessageHandler_ABC& handler )
 // -----------------------------------------------------------------------------
 std::auto_ptr< SchedulerFactory > Config::CreateSchedulerFactory( ) const
 {
-    return new std::auto_ptr< SchedulerFactory >( new SchedulerFactory( scheduler_ ) );
+    return std::auto_ptr< SchedulerFactory >( new SchedulerFactory( scheduler_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,14 +104,14 @@ std::auto_ptr< SchedulerFactory > Config::CreateSchedulerFactory( ) const
 // -----------------------------------------------------------------------------
 std::auto_ptr< Timeout > Config::CreateTimeout() const
 {
-    return new std::auto_ptr< Timeout >( new Timeout( timeout_ ) );
+    return std::auto_ptr< Timeout >( new Timeout( timeout_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::auto_ptr< Exercise > Config::CreateExercise
+// Name: Config::CreateExercise
 // Created: PHC 2011-04-22
 // -----------------------------------------------------------------------------
 std::auto_ptr< Exercise > Config::CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher ) const
 {
-    return new std::auto_ptr< Exercise >( new Exercise( entities, staticModel, publisher, *xibs_ ) );
+    return std::auto_ptr< Exercise >( new Exercise( entities, staticModel, publisher, *xibs_ ) );
 }

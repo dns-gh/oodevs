@@ -55,7 +55,7 @@ Config::Config()
     po::options_description desc( "Frontend options" );
     desc.add_options()
         ( "install"      , po::value( &package_      ), "specify the package to install" )
-        ( "launcher-port", po::value( &launcherPort_ ), "specify the launcher server listening port" )
+        ( "launcher-port", po::value( &launcherPort_ ), "specify the launcher server port number" )
     ;
     AddOptions( desc );
 }

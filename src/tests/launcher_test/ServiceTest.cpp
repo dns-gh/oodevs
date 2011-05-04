@@ -18,19 +18,15 @@
 #include "protocol/LauncherSenders.h"
 #include <tools/ElementObserver_ABC.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/assign.hpp>
 #pragma warning( push, 0 )
 #include <qapplication.h>
 #pragma warning( pop )
 
 namespace
 {
-    const unsigned short defaultPort = 33000;
-    const std::string    defaultHost = "127.0.0.1";
-    const unsigned int   timeOut     = 5000;
-
-    int   argc = 2;
-    char* argv[] = { "", "--root-dir=../../data" };
-    QApplication dummyApplication( argc, argv );
+    const std::string   defaultHost = "127.0.0.1";
+    const unsigned int  timeOut     = 5000;
 
     struct Timeout : private boost::noncopyable
     {
@@ -58,30 +54,38 @@ namespace
         MOCK_METHOD( OnConnectionLost, 1 );
         MOCK_METHOD( OnError, 1 );
     };
-}
 
-// -----------------------------------------------------------------------------
-// Name: FrontendConfigurationMatches
-// Created: SBO 2010-11-12
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( FrontendConfigurationMatches )
-{
-    frontend::Config frontendConfig;
-    BOOST_REQUIRE_EQUAL( defaultPort, frontendConfig.GetLauncherPort() );
-}
-
-namespace
-{
-    class Fixture
+    struct ApplicationFixture
     {
-    public:
+        ApplicationFixture()
+            : varg( MakeArg() )
+            , args( boost::assign::list_of< char* >( "" )( "--root-dir=../../data" )( &varg[0] ) )
+            , argc( args.size() )
+            , app( argc, &args[0] )
+        {}
+        std::vector< char > MakeArg()
+        {
+            const std::string arg( "--launcher-port=" + boost::lexical_cast< std::string >( PORT ) );
+            std::vector< char > result( arg.begin(), arg.end() );
+            result.push_back( 0 );
+            return result;
+        }
+        std::string arg;
+        std::vector< char > varg;
+        std::vector< char* > args;
+        int argc;
+        QApplication app;
+    };
+    struct Fixture : ApplicationFixture
+    {
         Fixture()
-            : launcher( qApp->argc(), qApp->argv() )
+            : launcher( argc, &args[0] )
             , client  ( controllers.controller_ )
             , timeout ( timeOut )
         {
+            BOOST_REQUIRE_MESSAGE( launcher.GetLastError().empty(), launcher.GetLastError() );
             MOCK_EXPECT( handler, OnConnectionSucceeded ).once();
-            client.Connect( defaultHost, defaultPort, handler );
+            client.Connect( defaultHost, PORT, handler );
             while( !client.Connected() && !timeout.Expired() )
             {
                 client.Update();

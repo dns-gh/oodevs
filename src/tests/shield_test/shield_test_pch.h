@@ -25,4 +25,6 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+extern unsigned short PORT;
+
 #endif // shield_test_pch_h

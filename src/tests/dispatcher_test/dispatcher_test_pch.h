@@ -17,8 +17,9 @@
 
 #define BOOST_TODO BOOST_WARN_MESSAGE( 0, "TODO !" )
 
-#pragma warning( disable : 4505 )
+#define MOCK_USE_CONVERSIONS
 #include <turtle/mock.hpp>
+#pragma warning( disable : 4505 )
 
 std::string BOOST_RESOLVE( const std::string& filename );
 

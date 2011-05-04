@@ -11,6 +11,20 @@
 #define __MockClientPublisher_h_
 
 #include "protocol/ClientPublisher_ABC.h"
+#pragma warning( push, 0 )
+#include <google/protobuf/message.h>
+#pragma warning( pop )
+
+namespace google
+{
+namespace protobuf
+{
+    inline mock::stream& operator<<( mock::stream& s, const Message& msg )
+    {
+        return s << msg.ShortDebugString();
+    }
+}
+}
 
 // =============================================================================
 /** @class  MockClientPublisher

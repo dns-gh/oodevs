@@ -18,7 +18,7 @@ namespace
     {
     public:
         BrainFixture()
-        : brain( BRAIN_INIT() )
+        : brain( BRAIN_INIT )
         {
             brain[ "include" ]( std::string("Integration.lua") );
             brain[ "DEC_ConnaissanceAgent_EstUnEnnemi" ] = boost::function< int ( const std::string& ) >( boost::bind( &BrainFixture::Mock_IsEnemy, boost::cref(this), _1  ) );

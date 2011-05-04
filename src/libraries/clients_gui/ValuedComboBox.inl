@@ -46,7 +46,7 @@ void ValuedComboBox<T>::AddItem( const QString& label, const T& value )
 {
     if( !sorting_ )
     {
-        insertItem( label, values_.size() );
+        insertItem( label, (int)values_.size() );
         values_.push_back( value );
     }
     else

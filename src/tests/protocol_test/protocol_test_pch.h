@@ -20,4 +20,6 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+extern unsigned short PORT;
+
 #endif // __protocol_test_pch_h_

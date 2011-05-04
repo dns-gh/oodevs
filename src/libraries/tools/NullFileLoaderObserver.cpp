@@ -62,7 +62,6 @@ void NullFileLoaderObserver::NotifyNoXmlSchemaSpecified( const std::string& file
     std::cout << boost::format( "Xml file %s doesn't have any schema" ) % fileName << std::endl;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: NullFileLoaderObserver::NotifyFileMigrated
 // Created: NLD 2011-02-28

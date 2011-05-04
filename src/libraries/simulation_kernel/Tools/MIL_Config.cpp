@@ -35,6 +35,7 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
     , endTick_                  ( 0 )
     , diaDebuggerPort_          ( 0 )
     , networkLoggerPort_        ( 0 )
+    , networkPort_              ( 0 )
     , bCheckPointOrbat_         ( false )
     , bUseCheckPointCRC_        ( true )
     , bUseOnlyDIAArchive_       ( false )
@@ -54,11 +55,12 @@ MIL_Config::MIL_Config( tools::RealFileLoaderObserver_ABC& observer )
 {
     po::options_description desc( "Simulation options" );
     desc.add_options()
-        ( "checkpointorbat"                                                         , "use backup orbat with checkpoint"         )
-        ( "test"                                                                    , "test mode: loading + first tick"          )
-        ( "testdata"                                                                , "test mode: load models only (no terrain)" )
-        ( "savecheckpoint" , po::value< std::string >( &strCheckPointNameTestMode_ ), "specify checkpoint to save"               )
-        ( "deletecheckpoint"                                                        , "delete checkpoint folder"                 );
+        ( "checkpointorbat"                                          , "use backup orbat with checkpoint"         )
+        ( "test"                                                     , "test mode: loading + first tick"          )
+        ( "testdata"                                                 , "test mode: load models only (no terrain)" )
+        ( "savecheckpoint" , po::value( &strCheckPointNameTestMode_ ), "specify checkpoint to save"               )
+        ( "deletecheckpoint"                                         , "delete checkpoint folder"                 )
+        ( "simulation-port", po::value( &networkPort_ )              , "specify the simulation server port number"      );
     AddOptions( desc );
 }
 
@@ -103,6 +105,7 @@ void MIL_Config::ReadSessionFile( const std::string& file )
 // -----------------------------------------------------------------------------
 void MIL_Config::ReadSessionXml( xml::xistream& xis )
 {
+    unsigned short port;
     xis >> xml::start( "session" )
             >> xml::start( "config" )
                 >> xml::start( "simulation" )
@@ -123,7 +126,7 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                         >> xml::attribute( "embedded", bEmbeddedDispatcher_ )
                     >> xml::end
                     >> xml::start( "network" )
-                        >> xml::attribute( "port", networkPort_ )
+                        >> xml::attribute( "port", port )
                     >> xml::end
                     >> xml::start( "time" )
                         >> xml::attribute( "step", timeStep_ )
@@ -143,6 +146,8 @@ void MIL_Config::ReadSessionXml( xml::xistream& xis )
                     >> xml::start( "random" )
                         >> xml::attribute( "seed", randomSeed_ )
                     >> xml::end;
+    if( ! networkPort_ )
+        networkPort_ = port;
     ConfigureRandom( xis );
     ReadCheckPointConfiguration( xis );
     ReadDebugConfiguration     ( xis );

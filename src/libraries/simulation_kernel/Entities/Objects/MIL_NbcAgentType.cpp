@@ -252,7 +252,7 @@ void MIL_NbcAgentType::InitializePopulationEffect( MIL_IntoxicationEffect& effec
 // Name: MIL_NbcAgentType::ApplyIntoxication
 // Created: LGY 2011-04-01
 // -----------------------------------------------------------------------------
-void MIL_NbcAgentType::ApplyIntoxication( MIL_IntoxicationEffect& effect, const T_HumanPoisonousVector& data ) const
+void MIL_NbcAgentType::ApplyIntoxication( MIL_IntoxicationEffect& effect, const T_HumanPoisonousVector& /*data*/ ) const
 {
     double wounded = liquidPoisonous_[ PHY_HumanWound::woundedU3_.GetID() ] + liquidPoisonous_[ PHY_HumanWound::woundedU2_.GetID() ]
                    + liquidPoisonous_[ PHY_HumanWound::woundedU1_.GetID() ] + liquidPoisonous_[ PHY_HumanWound::woundedUE_.GetID() ];

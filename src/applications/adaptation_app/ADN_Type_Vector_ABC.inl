@@ -134,7 +134,7 @@ void ADN_Type_Vector_ABC<T>::SwapItemPrivate(int i,int j)
     else if (i < 0 )
         SwapItem(0,j);
     else if (j>=(int)size())
-        SwapItem(i,size()-1);
+        SwapItem(i,(int)size()-1);
     else if (i>j)
         SwapItem(j,i);
     else

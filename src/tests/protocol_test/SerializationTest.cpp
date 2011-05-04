@@ -13,14 +13,15 @@
 #include "MockClient.h"
 #include "MockServer.h"
 #include <boost/lambda/lambda.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/thread.hpp>
 
 namespace
 {
-    template< typename F >
-    void wait( bool& condition, F flush, int timeout = 1000, int sleep = 100 )
+    template< typename C, typename F >
+    void wait( C condition, F flush, int timeout = 10000, int sleep = 100 )
     {
-        while( !condition && timeout > 0 )
+        while( !condition() && timeout > 0 )
         {
             --timeout;
             if( sleep > 0 )
@@ -32,25 +33,25 @@ namespace
     struct Fixture
     {
         Fixture()
-            : endpoint_( "127.0.0.1:33333" )
+            : endpoint_( "127.0.0.1:" + boost::lexical_cast< std::string >( PORT ) )
+            , server_  ( PORT )
             , client_  ( endpoint_ )
-            , server_  ( 33333 )
         {
-            bool connected = false;
-            MOCK_EXPECT( server_, ConnectionSucceeded ).once().with( mock::retrieve( link_ ) );
-            MOCK_EXPECT( client_, ConnectionSucceeded ).once().with( endpoint_ ).calls( boost::lambda::var( connected ) = true );
-            wait( connected, boost::bind( &Fixture::Update, this ) );
+            int connections = 0;
+            MOCK_EXPECT( server_, ConnectionSucceeded ).once().with( mock::retrieve( link_ ) ).calls( ++boost::lambda::var( connections ) );
+            MOCK_EXPECT( client_, ConnectionSucceeded ).once().with( endpoint_ ).calls( ++boost::lambda::var( connections ) );
+            wait( boost::lambda::var( connections ) == 2, boost::bind( &Fixture::Update, this ) );
             mock::verify();
             mock::reset();
         }
 
         template< typename From, typename Message, typename Expectation >
-        void VerifyReception( From& from, const std::string& endpoint, const Message& message, Expectation& expectation ) // $$$$ MCO : expectation should be copiable but isn't due to a bug in turtle
+        void VerifyReception( From& from, const std::string& endpoint, const Message& message, Expectation& expectation )
         {
             from.Send( endpoint, message );
             bool received = false;
             expectation.once().with( mock::any, message ).calls( boost::lambda::var( received ) = true );
-            wait( received, boost::bind( &Fixture::Update, this ) );
+            wait( boost::lambda::var( received ), boost::bind( &Fixture::Update, this ) );
         }
 
         void VerifyServerReception( const MsgPion& message )
@@ -70,14 +71,14 @@ namespace
 
         void Update()
         {
-            client_.Update();
             server_.Update();
+            client_.Update();
         }
 
         std::string endpoint_;
         std::string link_;
-        MockClient client_;
         MockServer server_;
+        MockClient client_;
     };
 }
 

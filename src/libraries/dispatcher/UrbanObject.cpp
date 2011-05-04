@@ -40,6 +40,7 @@ UrbanObject::UrbanObject( Model_ABC& /*model*/, const sword::UrbanCreation& msg 
     RegisterSelf( *this );
     optionals_.localisationPresent = 0;
     optionals_.attributesPresent = 0;
+    optionals_.objectAttributesPresent = 0;
 }
 
 // -----------------------------------------------------------------------------

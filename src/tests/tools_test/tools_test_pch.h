@@ -25,6 +25,8 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+extern unsigned short PORT;
+
 void BOOST_CHECK_XML_EQUAL( const std::string& expected, const std::string& actual );
 
 #endif // __tools_test_pch_h_

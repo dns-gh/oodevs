@@ -29,6 +29,7 @@ NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& 
     , nUnitVisionConesChangeTimeStep_( 0 )
     , bSendUnitVisionCones_          ( false )
 {
+    MT_LOG_INFO_MSG( "Starting simulation server on port " << config.GetNetworkPort() );
     AllowConnections();
 }
 

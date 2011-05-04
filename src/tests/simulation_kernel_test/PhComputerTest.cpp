@@ -39,39 +39,42 @@
 
 namespace
 {
-    class Configuration
+    struct WorldFixture
     {
-    public:
-        Configuration()
+        WorldFixture()
+        {
+            WorldInitialize( "Paris" );
+        }
+        ~WorldFixture()
+        {
+            TER_World::DestroyWorld();
+        }
+    };
+
+    struct Fixture : WorldFixture
+    {
+        Fixture()
             : firerFixture ( effectManager )
             , targetFixture( effectManager )
+            , vertices     ( boost::assign::list_of( geometry::Point2f( 0, 0 ) )( geometry::Point2f( 0, 2 ) )
+                                                   ( geometry::Point2f( 2, 2 ) )( geometry::Point2f( 2, 0 ) ) )
+            , poly         ( vertices )
+            , urbanBlock   ( 0, "test", &poly, 0, coord )
+            , xis          ( "<objects>"
+                             "    <object type='urban block'/>"
+                             "</objects>" )
         {
-            vertices = boost::assign::list_of( geometry::Point2f( 0, 0 ) )( geometry::Point2f( 0, 2 ) )
-                                             ( geometry::Point2f( 2, 2 ) )( geometry::Point2f( 2, 0 ) );
+            loader.Initialize( xis );
         }
         MIL_EffectManager effectManager;
         FixturePion firerFixture;
         FixturePion targetFixture;
         std::vector< geometry::Point2f > vertices;
-    };
-    class Fixture : public Configuration
-    {
-    public:
-        Fixture()
-            : poly( vertices )
-            , coord( new urban::CoordinateConverter() )
-            , urbanBlock( new urban::UrbanObject ( 0, "test", &poly, 0, *coord ) )
-        {
-            WorldInitialize( "Paris" );
-        }
-        ~Fixture()
-        {
-            TER_World::DestroyWorld();
-            delete coord;
-        }
         geometry::Polygon2f poly;
-        std::auto_ptr< urban::UrbanObject > urbanBlock;
-        urban::CoordinateConverter_ABC* coord;
+        urban::CoordinateConverter coord;
+        urban::UrbanObject urbanBlock;
+        xml::xistringstream xis;
+        MIL_ObjectLoader loader;
     };
 }
 
@@ -81,50 +84,32 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( PhComputerFirerPositionTest, Fixture )
 {
-    MIL_ObjectLoader loader;
-    {
-        xml::xistringstream xis( "<objects>"
-                                 "    <object type='urban block'/>"
-                                "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
-    }
-    std::auto_ptr< MIL_Object_ABC > pObject;
-    {
-        BOOST_CHECK_NO_THROW( pObject.reset( loader.CreateUrbanObject( *urbanBlock ) ) );
-    }
+    std::auto_ptr< MIL_Object_ABC > pObject( loader.CreateUrbanObject( urbanBlock ) );
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
-    urbanRole->NotifyMovingInsideObject( *pObject);
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* firerlocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
-    firerlocationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerlocationRole );
     PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
-    targetLocationRole->MagicMove( MT_Vector2D( 3, 2 ) );
     targetFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *targetLocationRole );
+    urbanRole->NotifyMovingInsideObject( *pObject);
+    firerlocationRole->MagicMove( MT_Vector2D( 1, 1 ) );
+    targetLocationRole->MagicMove( MT_Vector2D( 3, 2 ) );
     MT_Vector2D result( 2, 1.5 );
     BOOST_CHECK_EQUAL( result, urbanRole->GetFirerPosition( *targetFixture.pPion_ ) );
-    pObject.reset();
 }
 
 BOOST_FIXTURE_TEST_CASE( PhComputerTargetPositionTest, Fixture )
 {
-    MIL_ObjectLoader loader;
-    {
-        xml::xistringstream xis( "<objects>"
-                                 "    <object type='urban block'/>"
-                                 "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
-    }
-    MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
+    std::auto_ptr< MIL_Object_ABC > pObject( loader.CreateUrbanObject( urbanBlock ) );
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
-    urbanRole->NotifyMovingInsideObject( *pObject );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
-    targetLocationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     targetFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *targetLocationRole );
     PHY_RolePion_Location* firerLocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
-    firerLocationRole->MagicMove( MT_Vector2D( 3, 2 ) );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerLocationRole );
+    urbanRole->NotifyMovingInsideObject( *pObject );
+    targetLocationRole->MagicMove( MT_Vector2D( 1, 1 ) );
+    firerLocationRole->MagicMove( MT_Vector2D( 3, 2 ) );
     const MT_Vector2D firerPosition( 3, 2 );
     const MT_Vector2D targetPosition( 1, 1 );
     MT_Vector2D result = urbanRole->GetTargetPosition( *targetFixture.pPion_ );
@@ -133,25 +118,13 @@ BOOST_FIXTURE_TEST_CASE( PhComputerTargetPositionTest, Fixture )
     BOOST_CHECK_EQUAL( eCollinear, MT_Droite( firerPosition, targetPosition ).Intersect2D( MT_Droite( firerPosition, result ), tmp ) );
 }
 
-BOOST_AUTO_TEST_CASE( PhComputerDistanceInSameBUTest )
-{
-    //TODO
-}
-
 BOOST_FIXTURE_TEST_CASE( PhComputerIndirectPhModifier, Fixture )
 {
-    MIL_ObjectLoader loader;
-    {
-        xml::xistringstream xis( "<objects>"
-                                 "    <object type='urban block'/>"
-                                 "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
-    }
-    MIL_Object_ABC* pObject = loader.CreateUrbanObject( *urbanBlock );
+    std::auto_ptr< MIL_Object_ABC > pObject( loader.CreateUrbanObject( urbanBlock ) );
     PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
-    urbanRole->NotifyMovingInsideObject( *pObject );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
     PHY_RolePion_Location* locationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
+    urbanRole->NotifyMovingInsideObject( *pObject );
     locationRole->MagicMove( MT_Vector2D( 1, 1 ) );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *locationRole );
     const MT_Ellipse attritionSurface( MT_Vector2D( 3, 2 ), MT_Vector2D( 5, 2 ),  MT_Vector2D( 3, 3 ) );

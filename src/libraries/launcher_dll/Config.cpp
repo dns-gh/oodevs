@@ -55,7 +55,7 @@ Config::Config()
 {
     po::options_description desc( "Launcher options" );
     desc.add_options()
-        ( "launcher-port", po::value( &launcherPort_ ), "specify the launcher server listening port" )
+        ( "launcher-port", po::value( &launcherPort_ ), "specify the launcher server port number" )
     ;
     AddOptions( desc );
 }

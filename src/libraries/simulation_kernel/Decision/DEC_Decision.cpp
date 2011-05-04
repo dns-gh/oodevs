@@ -1098,7 +1098,6 @@ bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, 
                 + PLUGIN( "masalife_brain" )
                 + PLUGIN( "knowledge" )
                 + PLUGIN( "communication" )
-                + PLUGIN( "services" )
                 + "} cwd='" + includePath + "'" ) );
             (*pArchetypeBrain)["include"]( brainFile ,includePath, type );
             brainTable[type] = pArchetypeBrain;

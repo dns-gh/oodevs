@@ -9,7 +9,10 @@
 
 #include "tools_test_pch.h"
 #include <string>
+#include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
+
+unsigned short PORT = 55000;
 
 namespace
 {
@@ -23,6 +26,8 @@ namespace
             const std::string::size_type n = argument.find( '=' );
             if( n != std::string::npos && argument.substr( 0, n ) == "--data_directory" )
                 data_directory = argument.substr( n+1 );
+            if( n != std::string::npos && argument.substr( 0, n ) == "--port_number" )
+                PORT = boost::lexical_cast< unsigned short >( argument.substr( n+1 ) );
         }
     }
 }

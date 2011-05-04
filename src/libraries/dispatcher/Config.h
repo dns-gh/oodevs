@@ -53,6 +53,7 @@ private:
     //! @name Member data
     //@{
     std::string networkSimulationParameters_;
+    unsigned short networkSimulationPort_;
     unsigned short networkClientsParameters_;
     unsigned short networkShieldParameters_;
     unsigned int keyFramesFrequency_;

@@ -22,6 +22,8 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+extern unsigned short PORT;
+
 #include <boost/date_time/gregorian/gregorian.hpp>
 #define BOOST_FAIL_ON_DATE( year, month, day )                                                                  \
     const boost::gregorian::date expected( year, month, day );                                                  \
