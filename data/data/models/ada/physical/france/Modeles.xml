@@ -73,6 +73,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -11595,4 +11596,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2835118649" -->
+<!-- signature="0899238658" -->

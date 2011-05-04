@@ -163,7 +163,22 @@ bool DEC_KnowledgePopulationFunctions::HasFlow( const MIL_AgentPion& caller, int
 // -----------------------------------------------------------------------------
 void DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals( const MIL_AgentPion& callerAgent, int knowledgeId, const double rArmedIndividuals)
 {
-    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
+    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     if( pKnowledge )
         pKnowledge->GetPopulationKnown().SetNewArmedIndividuals( rArmedIndividuals );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetCrowdAffinity
+// Created: DDA 2011-05-02
+// -----------------------------------------------------------------------------
+float DEC_KnowledgePopulationFunctions::GetCrowdAffinity( const MIL_AgentPion& callerAgent, int knowledgeId )
+{
+    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    if( pKnowledge )
+    {
+        MIL_Army_ABC& army = callerAgent.GetArmy();
+        return pKnowledge->GetPopulationKnown().GetAffinity( army.GetID() );
+    }
+    return 0;
 }

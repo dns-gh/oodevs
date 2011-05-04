@@ -41,6 +41,7 @@ public:
                            static std::string GetCriticalIntelligence( const MIL_AgentPion& caller, int knowledgeId );
                            static bool HasFlow( const MIL_AgentPion& caller, int knowledgeId );
                            static void ChangeArmedIndividuals( const MIL_AgentPion& callerAgent, int knowledgeId, const double rArmedIndividuals);
+                           static float GetCrowdAffinity( const MIL_AgentPion& callerAgent, int knowledgeId );
     //@}
 };
 

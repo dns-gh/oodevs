@@ -514,6 +514,19 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsAttacking( T_KnowledgePopu
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::IsPopulationAttacking
+// Created: DDA 2011-05-03
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeBlackBoard_AgentPion::IsPopulationAttacking( const DEC_Knowledge_Population& knowledge ) const
+{
+    assert( pKnowledgePopulationPerceptionContainer_ );
+    DEC_Knowledge_PopulationPerception* perception = pKnowledgePopulationPerceptionContainer_->GetKnowledgePopulationPerception( knowledge.GetPopulationKnown() );
+    if( !perception )
+        return false;
+    return perception->IsAttacker();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------

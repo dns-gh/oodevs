@@ -448,6 +448,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     // Population
     brain[ "DEC_Agent_CanaliserPopulation" ] =
         boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::ChannelPopulations, _1 ) );
+    brain[ "DEC_GetAdhesionPopulation" ] =
+        boost::function< float (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAffinity , boost::cref( GetPion() ), _1 ) );
 
     // Inhabitants => je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
     brain[ "DEC_Agent_Alert" ] =
@@ -629,6 +631,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< boost::shared_ptr< DEC_Knowledge_Object >( const std::string& ) >( boost::bind( &DEC_KnowledgeFunctions::GetClosestFriendObject, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_CollisionsPopulations" ] = boost::bind( &DEC_KnowledgeFunctions::GetPopulationsColliding, boost::ref( GetPion() ) );
     brain[ "DEC_Connaissances_PopulationsPrenantAPartie" ] = boost::bind( &DEC_KnowledgeFunctions::GetPopulationsAttacking, boost::ref( GetPion() ) );
+    brain[ "DEC_Connaissances_EstPrisAPartieParPopulation" ] =
+        boost::function< bool( const int ) >( boost::bind( &DEC_KnowledgeFunctions::IsPopulationAttacking, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_Populations" ] = boost::bind( &DEC_KnowledgeFunctions::GetPopulations< MIL_AgentPion >, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_ChangerNombreIndividuArmeDansFoule" ] =
         boost::function< void( const int, const double ) >( boost::bind( &DEC_KnowledgePopulationFunctions::ChangeArmedIndividuals, boost::ref( GetPion() ), _1, _2 ) );

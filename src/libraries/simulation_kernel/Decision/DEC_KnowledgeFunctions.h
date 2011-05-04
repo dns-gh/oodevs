@@ -82,6 +82,7 @@ public:
 
     static T_KnowledgePopulationDiaIDVector GetPopulationsColliding( const MIL_AgentPion& callerAgent );
     static T_KnowledgePopulationDiaIDVector GetPopulationsAttacking( const MIL_AgentPion& callerAgent );
+    static bool IsPopulationAttacking( const MIL_AgentPion& callerAgent, int knowledgeId );
     template< typename T > static std::vector< unsigned int > GetPopulations( const T& caller );
     //@}
 

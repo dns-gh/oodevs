@@ -329,3 +329,14 @@ T_KnowledgePopulationDiaIDVector DEC_KnowledgeFunctions::GetPopulationsAttacking
     return attackers;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::IsPopulationAttacking
+// Created: DDA 2011-05-03
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeFunctions::IsPopulationAttacking( const MIL_AgentPion& callerAgent, int knowledgeId )
+{
+    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    if( !pKnowledge )
+        return false;
+    return callerAgent.GetKnowledge().IsPopulationAttacking( *pKnowledge );
+}
