@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<units model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Units.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<units xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" model-version="4.6.0" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Units.xsd">
   <unit decisional-model="Marine CP" id="1" name="Marine CP" type="Pion JOINT">
     <nature atlas-nature="None" level="ooo" nature-app6="combat service support/transportation/spod spoe"/>
     <equipments>
@@ -25,10 +25,10 @@
     </postures>
     <nbc decontamination-delay="120s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -67,10 +67,10 @@
     </postures>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -95,10 +95,10 @@
     <setup installation-time="1800s" uninstallation-time="1800s"/>
     <nbc decontamination-delay="1200s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -125,10 +125,10 @@
     <setup installation-time="600s" uninstallation-time="600s"/>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -155,10 +155,10 @@
     </postures>
     <nbc decontamination-delay="6900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -181,10 +181,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -208,10 +208,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -235,10 +235,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -282,10 +282,10 @@
     </postures>
     <nbc decontamination-delay="1350s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -321,10 +321,10 @@
     </postures>
     <nbc decontamination-delay="1200s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -360,10 +360,10 @@
     </postures>
     <nbc decontamination-delay="2550s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -432,10 +432,10 @@
     </postures>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="300"/>
-      <distance-before-point type="" value="400"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="300"/>
+      <distance-before-point type="urban area" value="400"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -466,10 +466,10 @@
     </postures>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -500,10 +500,10 @@
     </postures>
     <nbc decontamination-delay="1050s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -533,10 +533,10 @@
     </postures>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -608,10 +608,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -665,10 +665,10 @@
     </postures>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="1000" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -864,10 +864,10 @@
     </postures>
     <nbc decontamination-delay="2100s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -889,10 +889,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -969,10 +969,10 @@
     </postures>
     <nbc decontamination-delay="3750s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -1005,10 +1005,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -1041,10 +1041,10 @@
     </postures>
     <nbc decontamination-delay="1500s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -1066,10 +1066,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -1782,10 +1782,10 @@
     <setup installation-time="1800s" uninstallation-time="1800s"/>
     <nbc decontamination-delay="1200s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -1808,10 +1808,10 @@
     </postures>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -1849,10 +1849,10 @@
     </postures>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -1875,10 +1875,10 @@
     </postures>
     <nbc decontamination-delay="3000s"/>
     <distance-before-points>
-      <distance-before-point type="" value="200"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
@@ -1904,10 +1904,10 @@
     </postures>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
-      <distance-before-point type="" value="300"/>
-      <distance-before-point type="" value="400"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="300"/>
+      <distance-before-point type="urban area" value="400"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
@@ -1940,10 +1940,10 @@
     </postures>
     <nbc decontamination-delay="1250s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2020,10 +2020,10 @@
     </postures>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2062,10 +2062,10 @@
     </postures>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2095,10 +2095,10 @@
     </postures>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2120,10 +2120,10 @@
     </postures>
     <nbc decontamination-delay="300s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -2146,10 +2146,10 @@
     </postures>
     <nbc decontamination-delay="180s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2176,10 +2176,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2207,10 +2207,10 @@
     </postures>
     <nbc decontamination-delay="5700s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2237,10 +2237,10 @@
     </postures>
     <nbc decontamination-delay="3150s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2268,10 +2268,10 @@
     </postures>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2298,10 +2298,10 @@
     </postures>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2323,10 +2323,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="300"/>
-      <distance-before-point type="" value="400"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="300"/>
+      <distance-before-point type="urban area" value="400"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -2349,10 +2349,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="300"/>
-      <distance-before-point type="" value="400"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="300"/>
+      <distance-before-point type="urban area" value="400"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -2375,10 +2375,10 @@
     </postures>
     <nbc decontamination-delay="300s"/>
     <distance-before-points>
-      <distance-before-point type="" value="300"/>
-      <distance-before-point type="" value="400"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="300"/>
+      <distance-before-point type="urban area" value="400"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2413,10 +2413,10 @@
     </postures>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2449,10 +2449,10 @@
     </postures>
     <nbc decontamination-delay="1500s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -2486,10 +2486,10 @@
     </postures>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2519,10 +2519,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -2554,10 +2554,10 @@
     </postures>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2587,10 +2587,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -2613,10 +2613,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -2645,10 +2645,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -2672,10 +2672,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -2699,10 +2699,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -2726,10 +2726,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -2753,10 +2753,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -2856,10 +2856,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -2883,10 +2883,10 @@
     </postures>
     <nbc decontamination-delay="300s"/>
     <distance-before-points>
-      <distance-before-point type="" value="300"/>
-      <distance-before-point type="" value="400"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="300"/>
+      <distance-before-point type="urban area" value="400"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -2908,10 +2908,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="300"/>
-      <distance-before-point type="" value="400"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="300"/>
+      <distance-before-point type="urban area" value="400"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -3051,10 +3051,10 @@
     </postures>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -3076,10 +3076,10 @@
     </postures>
     <nbc decontamination-delay="3000s"/>
     <distance-before-points>
-      <distance-before-point type="" value="200"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
@@ -3113,10 +3113,10 @@
     </postures>
     <nbc decontamination-delay="1250s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -3157,10 +3157,10 @@
     </postures>
     <nbc decontamination-delay="1350s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -3194,10 +3194,10 @@
     </postures>
     <nbc decontamination-delay="1200s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -3229,10 +3229,10 @@
     </postures>
     <nbc decontamination-delay="1250s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -3268,10 +3268,10 @@
     </postures>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -3304,10 +3304,10 @@
     </postures>
     <nbc decontamination-delay="2100s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -3340,10 +3340,10 @@
     </postures>
     <nbc decontamination-delay="2100s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -3382,10 +3382,10 @@
     </postures>
     <nbc decontamination-delay="1350s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -3417,10 +3417,10 @@
     </postures>
     <nbc decontamination-delay="1200s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -3451,10 +3451,10 @@
     </postures>
     <nbc decontamination-delay="1250s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -3487,10 +3487,10 @@
     </postures>
     <nbc decontamination-delay="1200s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -3523,10 +3523,10 @@
     </postures>
     <nbc decontamination-delay="1250s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -3558,10 +3558,10 @@
     </postures>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -3594,10 +3594,10 @@
     </postures>
     <nbc decontamination-delay="2100s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -3619,10 +3619,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -3646,10 +3646,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -3673,10 +3673,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -3700,10 +3700,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -3727,10 +3727,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -3754,10 +3754,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -3781,10 +3781,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -3810,10 +3810,10 @@
     <setup installation-time="600s" uninstallation-time="600s"/>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -3839,10 +3839,10 @@
     <setup installation-time="1800s" uninstallation-time="1800s"/>
     <nbc decontamination-delay="1200s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -3865,10 +3865,10 @@
     </postures>
     <nbc decontamination-delay="3000s"/>
     <distance-before-points>
-      <distance-before-point type="" value="200"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
@@ -3892,10 +3892,10 @@
     </postures>
     <nbc decontamination-delay="3000s"/>
     <distance-before-points>
-      <distance-before-point type="" value="200"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="200"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
       <distance-before-point type="lima" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="350"/>
@@ -3935,10 +3935,10 @@
     </postures>
     <nbc decontamination-delay="1350s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -3972,10 +3972,10 @@
     </postures>
     <nbc decontamination-delay="1200s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4010,10 +4010,10 @@
     </postures>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -4036,10 +4036,10 @@
     <setup installation-time="600s" uninstallation-time="600s"/>
     <nbc decontamination-delay="750s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4065,10 +4065,10 @@
     <setup installation-time="1800s" uninstallation-time="1800s"/>
     <nbc decontamination-delay="450s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4101,10 +4101,10 @@
     </postures>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -4137,10 +4137,10 @@
     </postures>
     <nbc decontamination-delay="2100s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -4162,10 +4162,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="5000" width="2000"/>
     <force-ratio feedback-time="60s"/>
@@ -4189,10 +4189,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="5000" width="3000"/>
     <force-ratio feedback-time="60s"/>
@@ -4216,10 +4216,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -4243,10 +4243,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -4285,10 +4285,10 @@
     </postures>
     <nbc decontamination-delay="3600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -4320,10 +4320,10 @@
     </postures>
     <nbc decontamination-delay="2100s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -4366,10 +4366,10 @@
     </postures>
     <nbc decontamination-delay="1350s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4401,10 +4401,10 @@
     </postures>
     <nbc decontamination-delay="1200s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4435,10 +4435,10 @@
     </postures>
     <nbc decontamination-delay="1250s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -4475,10 +4475,10 @@
     </postures>
     <nbc decontamination-delay="1350s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4512,10 +4512,10 @@
     </postures>
     <nbc decontamination-delay="1200s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4539,10 +4539,10 @@
     <setup installation-time="600s" uninstallation-time="600s"/>
     <nbc decontamination-delay="1800s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <force-ratio feedback-time="60s"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4609,10 +4609,10 @@
     </postures>
     <nbc decontamination-delay="180s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="5000" width="5000"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4635,10 +4635,10 @@
     </postures>
     <nbc decontamination-delay="180s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="5000" width="5000"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4661,10 +4661,10 @@
     </postures>
     <nbc decontamination-delay="180s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="5000" width="5000"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4696,10 +4696,10 @@
     </postures>
     <nbc decontamination-delay="2400s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -4721,10 +4721,10 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
     <force-ratio feedback-time="60s"/>
@@ -4748,10 +4748,10 @@
     </postures>
     <nbc decontamination-delay="600s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -4794,10 +4794,10 @@
     </postures>
     <nbc decontamination-delay="1350s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4829,10 +4829,10 @@
     </postures>
     <nbc decontamination-delay="1200s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4863,10 +4863,10 @@
     </postures>
     <nbc decontamination-delay="1250s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -4905,10 +4905,10 @@
     </postures>
     <nbc decontamination-delay="1350s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
@@ -4931,13 +4931,13 @@
     </postures>
     <nbc decontamination-delay="900s"/>
     <distance-before-points>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
-      <distance-before-point type="" value="500"/>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3212916715" -->
+<!-- signature="1285451490" -->
