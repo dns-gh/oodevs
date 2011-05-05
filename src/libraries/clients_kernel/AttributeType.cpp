@@ -109,6 +109,8 @@ void AttributeType::SetType( const std::string& type )
         type_ = ETypeDictionary;
     else if( type == "loosy-dictionary" )
         type_ = ETypeLoosyDictionary;
+    else if( type == "diffusion-list" )
+        type_ = ETypeDiffusionList;
     else
         throw std::exception( "Bad attribute type" );
 }

@@ -39,7 +39,8 @@ public:
         ETypeAlphanumeric,
         ETypeNumeric,
         ETypeDictionary,
-        ETypeLoosyDictionary
+        ETypeLoosyDictionary,
+        ETypeDiffusionList
     };
     //@}
 
