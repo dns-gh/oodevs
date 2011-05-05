@@ -348,6 +348,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::bind( &DEC_AgentFunctions::GetReconnoissanceDistance, boost::ref( GetPion() ) );
     brain[ "DEC_Detection_Distance" ] =
         boost::bind( &DEC_AgentFunctions::GetDetectionDistance, boost::ref( GetPion() ) );
+    brain[ "DEC_Connaissances_IdentifierToutesUnitésDansZone" ] =
+        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::IdentifyAllAgentsInZone, boost::ref( GetPion() ), _1 ) );
+
     // Gestion des renforts
     brain[ "DEC_Renforts" ] =
         boost::function< std::vector<DEC_Decision_ABC*> () >( boost::bind( &DEC_MiscFunctions::GetReinforcements, boost::ref( GetPion() ) ) );

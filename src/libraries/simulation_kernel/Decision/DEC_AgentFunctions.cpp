@@ -45,6 +45,7 @@
 #include "DEC_AutomateFunctions.h"
 #include "DEC_GeometryFunctions.h"
 #include "DotationComputer_ABC.h"
+#include "simulation_terrain/TER_AgentManager.h"
 #include "protocol/ClientSenders.h"
 
 //-----------------------------------------------------------------------------
@@ -888,4 +889,18 @@ float DEC_AgentFunctions::GetIlluminatingRange( const MIL_Agent_ABC& callerAgent
 {
     const dotation::PHY_RoleInterface_Dotations& roleDotations = callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >();
     return roleDotations.GetIlluminatingRange( );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IdentifyAllAgentsInZone
+// Created: JSR 2011-05-05
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, const TER_Localisation* location )
+{
+    assert( location );
+    TER_Agent_ABC::T_AgentPtrVector agentsDetected;
+    TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( *location, agentsDetected );
+    PHY_RoleInterface_Perceiver& perceiver = callerAgent.GetRole< PHY_RoleInterface_Perceiver >();
+    for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsDetected.begin(); itAgent != agentsDetected.end(); ++itAgent )
+        perceiver.NotifyPerception( static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent(), PHY_PerceptionLevel::identified_ );
 }
