@@ -11,7 +11,6 @@
 #include "dispatcher/Config.h"
 #include "dispatcher/Dispatcher.h"
 #include "bml_plugin/BmlPluginFactory.h"
-#include "edxlhave_plugin/EdxlHavePluginFactory.h"
 #include "timeline_plugin/TimelinePluginFactory.h"
 #include "crossbow_plugin/CrossbowPluginFactory.h"
 #include "positions_plugin/PositionsPluginFactory.h"
@@ -36,7 +35,6 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
     try
     {
         dispatcher_.reset( new dispatcher::Dispatcher( *config_, maxConnections ) );
-        dispatcher_->RegisterPluginFactory( *new edxl::EdxlHavePluginFactory() );
         dispatcher_->RegisterPluginFactory( *new timeline::TimelinePluginFactory() );
         dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new bml::BmlPluginFactory() );

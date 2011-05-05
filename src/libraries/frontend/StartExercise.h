@@ -57,6 +57,7 @@ private:
     std::string exercise_;
     std::string session_ ;
     std::auto_ptr< SpawnCommand > dispatcher_;
+    std::auto_ptr< SpawnCommand > edxl_;
     std::auto_ptr< ConfigurationManipulator > configManipulator_;
     unsigned int percentage_;
     //@}

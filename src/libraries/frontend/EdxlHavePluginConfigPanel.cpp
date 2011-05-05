@@ -18,7 +18,7 @@
 #include <qdatetimeedit.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
-
+#include <boost/filesystem.hpp>
 
 using namespace frontend;
 
@@ -45,34 +45,34 @@ EdxlHavePluginConfigPanel::EdxlHavePluginConfigPanel( QWidget* parent, const too
     {
         QHBox* box = Style( new QHBox( box_ ) );
         Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Host: " ), box ) );
-        host_ = Style( new QLineEdit( "localhost", box ) );
+        host_ = Style( new QLineEdit( "www.ewaphoenix.com", box ) );
     }
     {
         QHBox* box = Style( new QHBox( box_ ) );
         Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Use SSL: " ), box ) );
         ssl_ = Style( new QCheckBox( box ) );
-        ssl_->setChecked( false );
+        ssl_->setChecked( true );
     }
     {
         QHBox* box = Style( new QHBox( box_ ) );
         Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Log: " ), box ) );
         log_ = Style( new QCheckBox( box ) );
-        log_->setChecked( false );
+        log_->setChecked( true );
     }
     {
         QGroupBox* services = new QGroupBox( 2, Horizontal, tools::translate( "EdxlHavePluginConfigPanel", "Services configuration:" ), box_ );
         {
             Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Initialization service: " ), services ) );
-            initializeServiceURI_ = Style( new QLineEdit( "/initialize", services ) );
+            initializeServiceURI_ = Style( new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=initialize", services ) );
         }
         {
             Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Update service: " ), services ) );
-            updateServiceURI_ = Style( new QLineEdit( "/update", services ) );
+            updateServiceURI_ = Style( new QLineEdit( "/EWAPhoenix-BedTracking/XMLReceive.php?message=update", services ) );
 
             Style( new QLabel( tools::translate( "EdxlHavePluginConfigPanel", "Frequency: " ), services ) );
             frequency_ = new QTimeEdit( services );
             frequency_->setDisplay ( QTimeEdit::Hours | QTimeEdit::Minutes | QTimeEdit::Seconds  );
-            frequency_->setTime( QTime().addSecs( 3600 ) );
+            frequency_->setTime( QTime().addSecs( 120 ) );
         }
     }
 }
@@ -90,19 +90,22 @@ EdxlHavePluginConfigPanel::~EdxlHavePluginConfigPanel()
 // Name: EdxlHavePluginConfigPanel::Commit
 // Created: SBO 2008-03-05
 // -----------------------------------------------------------------------------
-void EdxlHavePluginConfigPanel::Commit( const std::string& exercise, const std::string& session )
+void EdxlHavePluginConfigPanel::Commit( const std::string& exercise, const std::string& /*session*/ )
 {
+    boost::filesystem::path exerciceDir( config_.GetExerciseDir( exercise ) );
+    boost::filesystem::path file = exerciceDir / "edxl.ini";
     if( box_->isChecked() )
     {
-        frontend::CreateSession action( config_, exercise, session );
-        action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/@host", host_->text() );
-        if( ssl_->isChecked() )
-            action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/@ssl", "true" );
-        if( log_->isChecked() )
-            action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/@log", "true" );
-        action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/initialization/@serviceURI", initializeServiceURI_->text() );
-        action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/update/@serviceURI", updateServiceURI_->text() );
-        action.SetOption( "session/config/dispatcher/plugins/edxl-have/services/update/@frequency", QString( "%1s" ).arg( QTime().secsTo( frequency_->time() ) ).ascii() );
-        action.Commit();
+        std::ofstream of( file.string().c_str() );
+        of << "edxl.host=" << host_->text().ascii() << std::endl
+           << "edxl.initialization.serviceURI=" << initializeServiceURI_->text() << std::endl
+           << "edxl.update.serviceURI=" << updateServiceURI_->text() << std::endl
+           << "edxl.update.frequency=" << QTime().secsTo( frequency_->time() ) << 's' << std::endl
+           << "edxl.ssl=true" << std::endl
+           << "sword.waitconnection=true" << std::endl
+           << "log=true" << std::endl
+           << "log.file=" << exerciceDir / "edxl.log" << std::endl;
     }
+    else
+        boost::filesystem::remove( file );
 }
