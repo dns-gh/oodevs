@@ -38,11 +38,12 @@ message PopulationId                       { required uint32              id = 1
 message PopulationIdList                   { repeated uint32              id = 1; }
 
 message Tasker {
-    optional AutomatId   automat    = 1;
-    optional FormationId formation  = 2;
-    optional CrowdId     crowd      = 3;
-    optional UnitId      unit       = 4;
-    optional PartyId     party      = 5;
+    optional AutomatId   	automat    = 1;
+    optional FormationId 	formation  = 2;
+    optional CrowdId     	crowd      = 3;
+    optional UnitId      	unit       = 4;
+    optional PartyId     	party      = 5;
+    optional PopulationId   population = 6;
 }
 
 message ParentEntity {

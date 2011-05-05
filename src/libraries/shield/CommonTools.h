@@ -325,6 +325,7 @@ namespace shield
         CONVERT_ID( crowd );
         CONVERT_ID( unit );
         CONVERT_ID( party );
+        CONVERT_ID( population );
     }
     template< typename From, typename To >
     void ConvertPartyAdhesion( const From& from, To* to )
