@@ -13,13 +13,13 @@
       </buildable>
     </constructor>
     <heuristic>
-      <terrain type="error" value="1"/>
-      <terrain type="error" value="3"/>
-      <terrain type="error" value="10"/>
-      <terrain type="error" value="2"/>
-      <terrain type="error" value="5"/>
-      <terrain type="error" value="8"/>
-      <terrain type="error" value="7"/>
+      <terrain type="highway" value="1"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="main road" value="2"/>
+      <terrain type="railroad" value="5"/>
+      <terrain type="bridge" value="8"/>
+      <terrain type="suburb" value="7"/>
     </heuristic>
     <interact-with-enemy/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
@@ -203,10 +203,10 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="error" value="3"/>
-      <terrain type="error" value="10"/>
-      <terrain type="error" value="2"/>
-      <terrain type="error" value="5"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="highway" value="2"/>
+      <terrain type="main road" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -228,10 +228,10 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="error" value="3"/>
-      <terrain type="error" value="10"/>
-      <terrain type="error" value="1"/>
-      <terrain type="error" value="5"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="highway" value="1"/>
+      <terrain type="main road" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -252,7 +252,7 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="error" value="10"/>
+      <terrain type="bridge" value="10"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
@@ -305,12 +305,12 @@
       <acquisition-times/>
     </detection>
     <heuristic>
-      <terrain type="error" value="1"/>
-      <terrain type="error" value="2"/>
-      <terrain type="error" value="3"/>
-      <terrain type="error" value="10"/>
-      <terrain type="error" value="5"/>
-      <terrain type="error" value="8"/>
+      <terrain type="highway" value="1"/>
+      <terrain type="main road" value="2"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="railroad" value="5"/>
+      <terrain type="bridge" value="8"/>
     </heuristic>
     <population-filter density="0.5"/>
     <workable max-animator="1"/>
@@ -376,5 +376,4 @@
     </fire-propagation-modifier>
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
-</objects>
-<!-- signature="3956230053" -->
+</objects><!-- signature="3695763221" -->

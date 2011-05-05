@@ -67,33 +67,33 @@
     </rule>
     <rule type="movement" flying="false" autonomous="false" inherits="base">
       <preferred-terrains>
-        <preferred-terrain type="error"/>
-        <preferred-terrain type="error"/>
-        <preferred-terrain type="error"/>
-        <preferred-terrain type="error"/>
+        <preferred-terrain type="country road"/>
+        <preferred-terrain type="secondary road"/>
+        <preferred-terrain type="main road"/>
+        <preferred-terrain type="highway"/>
       </preferred-terrains>
     </rule>
     <rule type="recon" flying="false" autonomous="false" inherits="base">
       <preferred-altitude value="0.001"/>
       <preferred-terrains>
-        <preferred-terrain type="error"/>
-        <preferred-terrain type="error"/>
-        <preferred-terrain type="error"/>
-        <preferred-terrain type="error"/>
-        <preferred-terrain type="error"/>
+        <preferred-terrain type="forest edge"/>
+        <preferred-terrain type="country road"/>
+        <preferred-terrain type="secondary road"/>
+        <preferred-terrain type="main road"/>
+        <preferred-terrain type="highway"/>
       </preferred-terrains>
     </rule>
     <rule type="infiltration" flying="false" autonomous="false" inherits="base">
       <preferred-altitude value="-0.001"/>
       <preferred-terrains strength="50">
-        <preferred-terrain type="error"/>
-        <preferred-terrain type="error"/>
+        <preferred-terrain type="forest"/>
+        <preferred-terrain type="urban area"/>
       </preferred-terrains>
       <avoided-terrains strength="50">
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
       </avoided-terrains>
       <object-costs avoid="true" threshold="10000">
         <object-cost type="checkpoint" value="10000"/>
@@ -109,10 +109,10 @@
     <rule type="assault" flying="false" autonomous="false" inherits="base">
       <optimisation shortest="true"/>
       <avoided-terrains strength="5">
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
       </avoided-terrains>
       <zone>
         <inner-comfort cost-per-meter="0.8" distance="1000"/>
@@ -133,10 +133,10 @@
       <optimisation shortest="true"/>
       <danger-direction base-cost-beyond="5" cost-per-meter="0.01"/>
       <avoided-terrains>
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
       </avoided-terrains>
       <enemies cost-on-contact="10" cost-at-security-range="25"/>
     </rule>
@@ -153,12 +153,12 @@
       <preferred-altitude value="0"/>
       <preferred-terrains/>
       <avoided-terrains strength="7">
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
-        <avoided-terrain type="error"/>
+        <avoided-terrain type="forest"/>
+        <avoided-terrain type="urban area"/>
+        <avoided-terrain type="country road"/>
+        <avoided-terrain type="secondary road"/>
+        <avoided-terrain type="main road"/>
+        <avoided-terrain type="highway"/>
       </avoided-terrains>
       <automat-zone>
         <outter-tolerance cost-per-meter="0" distance="1000000000"/>
@@ -314,5 +314,4 @@
   <population-rules>
     <rule type="base" cost-out-of-channeling="50" channeling-range="1000"/>
   </population-rules>
-</pathfind>
-<!-- signature="3669211382" -->
+</pathfind><!-- signature="2212940571" -->
