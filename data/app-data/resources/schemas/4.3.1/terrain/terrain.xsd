@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.4.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.6.0">
 	<xs:include schemaLocation="../exercise/common.xsd"/>
 	<xs:element name="terrain">
 		<xs:annotation>
@@ -38,12 +38,12 @@
 												<xs:documentation>Defines center position as WGS84 coordinates</xs:documentation>
 											</xs:annotation>
 											<xs:complexType>
-												<xs:attribute name="latitude" use="required">
+												<xs:attribute name="latitude" type="xs:float" use="required">
 													<xs:annotation>
 														<xs:documentation>WGS84 latitude of center point</xs:documentation>
 													</xs:annotation>
 												</xs:attribute>
-												<xs:attribute name="longitude" use="required">
+												<xs:attribute name="longitude" type="xs:float" use="required">
 													<xs:annotation>
 														<xs:documentation>WGS84 longitude of center point</xs:documentation>
 													</xs:annotation>
@@ -55,12 +55,12 @@
 												<xs:documentation>Defines dimensions of terrain  in meters</xs:documentation>
 											</xs:annotation>
 											<xs:complexType>
-												<xs:attribute name="height" use="required">
+												<xs:attribute name="height" type="xs:float" use="required">
 													<xs:annotation>
 														<xs:documentation>Terrain height in meters</xs:documentation>
 													</xs:annotation>
 												</xs:attribute>
-												<xs:attribute name="width" use="required">
+												<xs:attribute name="width" type="xs:float" use="required">
 													<xs:annotation>
 														<xs:documentation>Terrain width in meters</xs:documentation>
 													</xs:annotation>
@@ -72,22 +72,22 @@
 												<xs:documentation>Defines extent used for terrain generation as MGRS coordinates</xs:documentation>
 											</xs:annotation>
 											<xs:complexType>
-												<xs:attribute name="x-min" use="required">
+												<xs:attribute name="x-min" type="T_LocationMGRS" use="required">
 													<xs:annotation>
 														<xs:documentation>MGRS bottom left coordinates</xs:documentation>
 													</xs:annotation>
 												</xs:attribute>
-												<xs:attribute name="y-min" use="required">
+												<xs:attribute name="y-min" type="T_LocationMGRS" use="required">
 													<xs:annotation>
 														<xs:documentation>MGRS top left coordinates</xs:documentation>
 													</xs:annotation>
 												</xs:attribute>
-												<xs:attribute name="x-max" use="required">
+												<xs:attribute name="x-max" type="T_LocationMGRS" use="required">
 													<xs:annotation>
 														<xs:documentation>MGRS bottom right coordinates</xs:documentation>
 													</xs:annotation>
 												</xs:attribute>
-												<xs:attribute name="y-max" use="required">
+												<xs:attribute name="y-max" type="T_LocationMGRS" use="required">
 													<xs:annotation>
 														<xs:documentation>MGRS top right coordinates</xs:documentation>
 													</xs:annotation>
@@ -102,7 +102,7 @@
 									<xs:documentation>Defines pathfind data directory location</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
-									<xs:attribute name="directory" use="required">
+									<xs:attribute name="directory" type="xs:string" use="required">
 										<xs:annotation>
 											<xs:documentation>Pathfind data directory location</xs:documentation>
 										</xs:annotation>
@@ -114,7 +114,7 @@
 									<xs:documentation>Defines detection data directory location</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
-									<xs:attribute name="directory" use="required">
+									<xs:attribute name="directory" type="xs:string" use="required">
 										<xs:annotation>
 											<xs:documentation>Detection data directory location</xs:documentation>
 										</xs:annotation>
@@ -126,7 +126,7 @@
 									<xs:documentation>Defines graphics data directory location</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
-									<xs:attribute name="directory" use="required">
+									<xs:attribute name="directory" type="xs:string" use="required">
 										<xs:annotation>
 											<xs:documentation>Graphics data directory location</xs:documentation>
 										</xs:annotation>
@@ -138,7 +138,7 @@
 									<xs:documentation>Defines urban data file location</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
-									<xs:attribute name="file">
+									<xs:attribute name="file" type="xs:string">
 										<xs:annotation>
 											<xs:documentation>Urban data file location</xs:documentation>
 										</xs:annotation>
@@ -150,12 +150,12 @@
 									<xs:documentation>Defines the physical model used for this terrain</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
-									<xs:attribute name="dataset" use="required">
+									<xs:attribute name="dataset"  type="xs:string" use="required">
 										<xs:annotation>
 											<xs:documentation>Model data set</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
-									<xs:attribute name="physical" use="required">
+									<xs:attribute name="physical"  type="xs:string" use="required">
 										<xs:annotation>
 											<xs:documentation>Physical directory</xs:documentation>
 										</xs:annotation>
