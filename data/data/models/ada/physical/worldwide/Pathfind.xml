@@ -312,4 +312,5 @@
   <population-rules>
     <rule channeling-range="1000" cost-out-of-channeling="50" type="base"/>
   </population-rules>
-</pathfind><!-- signature="3642034717" -->
+</pathfind>
+<!-- signature="3315098614" -->
