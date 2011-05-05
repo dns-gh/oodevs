@@ -10,6 +10,7 @@
 #include "simulation_terrain_pch.h"
 #include "TER_ObjectManager.h"
 #include "TER_Object_ABC.h"
+#include "TER_ObjectVisitor_ABC.h"
 #include <pathfind/SpatialContainerTraits.h>
 
 // -----------------------------------------------------------------------------
@@ -133,4 +134,19 @@ TER_Object_ABC::T_Hint TER_ObjectManager::UpdatePosition( TER_Object_ABC& object
 bool TER_ObjectManager::Remove( TER_Object_ABC& object, const TER_Object_ABC::T_Hint& hint )
 {
     return objects_.Erase( &object, hint );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_ObjectManager::Accept
+// Created: JSR 2011-05-05
+// -----------------------------------------------------------------------------
+void TER_ObjectManager::Accept( TER_ObjectVisitor_ABC& visitor ) const
+{
+    T_Objects::View view = objects_.CreateView();
+    while( view.HasMoreElements() )
+    {
+        TER_Object_ABC* pObject = view.NextElement();
+        if( pObject )
+            visitor.Visit( *pObject );
+    }
 }

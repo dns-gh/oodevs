@@ -18,6 +18,7 @@ class MT_Ellipse;
 class TER_Localisation;
 class TER_Polygon;
 class TER_ObjectPositionHint;
+class TER_ObjectVisitor_ABC;
 class MT_Rect;
 
 // =============================================================================
@@ -50,6 +51,7 @@ public:
     void GetAllObjects( T_ObjectVector& objects ) const;
     TER_Object_ABC::T_Hint UpdatePosition( TER_Object_ABC& object, const TER_Object_ABC::T_Hint& hint );
     bool Remove( TER_Object_ABC& object, const TER_Object_ABC::T_Hint& hint );
+    void Accept( TER_ObjectVisitor_ABC& visitor ) const;
     //@}
 
 private:
