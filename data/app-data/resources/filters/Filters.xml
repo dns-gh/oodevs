@@ -1,65 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schemas/4.3.1/common/Filters.xsd">
-	<section id="Export" menu="File">
-		<descriptions>
-			<description lang="en" name="Export..."/>
-			<description lang="fr" name="Exporter..."/>
-		</descriptions>
-		<filters>
-			<filter command="ExportDQP.exe">
-				<arguments>
-					<argument name="0"/>
-					<argument name="--exercice" value="$exercice$"/>
-					<argument name="--root-dir" value="$rootdir$"/>
-				</arguments>
-				<descriptions>
-					<description lang="en" name="Export DQP">HTML Description</description>
-					<description lang="fr" name="Exporter DQP">HTML Description</description>
-				</descriptions>
-			</filter>
-			<filter command="ExportDQP.exe">
-				<arguments>
-					<argument name="1"/>
-					<argument name="--exercice" value="$exercice$"/>
-					<argument name="--root-dir" value="$rootdir$"/>
-				</arguments>
-				<descriptions>
-					<description lang="en" name="Export DQP test">HTML Description</description>
-					<description lang="fr" name="Exporter DQP test">HTML Description</description>
-				</descriptions>
-			</filter>
-			<filter target="exercise" xsl="htmlBriefing" output="html">
-				<descriptions>
-					<description lang="en" name="Scenario extractor"><![CDATA[Extracts briefing, terrain and model information from exercise meta data.<br>Outputs an HTML file.]]></description>
-					<description lang="fr" name="Export de scénario"><![CDATA[Extrait les informations de briefing, terrain et modèle à partir de l'exercice.<br>Le résultat est un fichier HTML.]]></description>
-				</descriptions>
-			</filter>
-			<filter target="orbat" xsl="simpleOrbat" output="xml">
-				<descriptions>
-					<description lang="en" name="Simplified orbat export"><![CDATA[Extracts teams, automats, units, populations and objects from orbat.<br>Outputs an XML file.]]></description>
-					<description lang="fr" name="Export d'OdB simplifié"><![CDATA[Extrait les camps, automates, unités, populations et objets de l'OdB.<br>Le résultat est un fichier XML.]]></description>
-				</descriptions>
-			</filter>
-		</filters>
-	</section>
-	<section id="Import" menu="File">
-		<descriptions>
-			<description lang="en" name="Import..."/>
-			<description lang="fr" name="Importer..."/>
-		</descriptions>
-		<filters>
-			<filter command="ImportDQP.exe">
-				<arguments>
-					<argument name="--exercice" value="$exercice$"/>
-					<argument name="--root-dir" value="$rootdir$"/>
-				</arguments>
-				<descriptions>
-					<description lang="en" name="Import DQP">HTML Description</description>
-					<description lang="fr" name="Importer DQP">HTML Description</description>
-				</descriptions>
-			</filter>
-		</filters>
-	</section>
-
+  <section id="Export" menu="File">
+    <descriptions>
+      <description lang="en" name="Export..."/>
+      <description lang="fr" name="Exporter..."/>
+    </descriptions>
+    <filters>
+      <filter command="ExportDQP.exe">
+        <arguments>
+          <argument name="0"/>
+          <argument name="-exercice" value="$exercice$"/>
+          <argument name="-root-dir" value="$rootdir$"/>
+        </arguments>
+        <descriptions>
+          <description lang="en" name="Test DQP export">HTML Description</description>
+          <description lang="fr" name="Test d'export DQP">HTML Description</description>
+        </descriptions>
+      </filter>
+      <filter command="ExportDQP.exe">
+        <arguments>
+          <argument name="1"/>
+          <argument name="-exercice" value="$exercice$"/>
+          <argument name="-root-dir" value="$rootdir$"/>
+        </arguments>
+        <descriptions>
+          <description lang="en" name="Export DQP">HTML Description</description>
+          <description lang="fr" name="Exporter DQP">HTML Description</description>
+        </descriptions>
+      </filter>
+      <filter target="exercise" xsl="htmlBriefing" output="html">
+        <descriptions>
+          <description lang="en" name="Scenario extractor"><![CDATA[Extracts briefing, terrain and model information from exercise meta data.<br>Outputs an HTML file.]]></description>
+          <description lang="fr" name="Export de scénario"><![CDATA[Extrait les informations de briefing, terrain et modèle à partir de l'exercice.<br>Le résultat est un fichier HTML.]]></description>
+        </descriptions>
+      </filter>
+      <filter target="orbat" xsl="simpleOrbat" output="xml">
+        <descriptions>
+          <description lang="en" name="Simplified orbat export"><![CDATA[Extracts teams, automats, units, populations and objects from orbat.<br>Outputs an XML file.]]></description>
+          <description lang="fr" name="Export d'OdB simplifié"><![CDATA[Extrait les camps, automates, unités, populations et objets de l'OdB.<br>Le résultat est un fichier XML.]]></description>
+        </descriptions>
+      </filter>
+    </filters>
+  </section>
+  <section id="Import" menu="File">
+    <descriptions>
+      <description lang="en" name="Import..."/>
+      <description lang="fr" name="Importer..."/>
+    </descriptions>
+    <filters>
+      <filter command="ImportDQP.exe" reload-exercise="true">
+        <arguments>
+          <argument name="-exercice" value="$exercice$"/>
+          <argument name="-root-dir" value="$rootdir$"/>
+        </arguments>
+        <descriptions>
+          <description lang="en" name="Import DQP">HTML Description</description>
+          <description lang="fr" name="Importer DQP">HTML Description</description>
+        </descriptions>
+      </filter>
+      <filter command="Melmil.exe" reload-exercise="false" >
+        <arguments>
+          <argument name="-exercice" value="$exercice$"/>
+          <argument name="-root-dir" value="$rootdir$"/>
+        </arguments>
+        <descriptions>
+          <description lang="en" name="Export DQP">HTML Description</description>
+          <description lang="fr" name="Exporter DQP">HTML Description</description>
+        </descriptions>
+      </filter>
+    </filters>
+  </section>
 </sections>
