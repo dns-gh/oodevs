@@ -289,7 +289,8 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     double rDynamicCost = 0.;
 
     // Altitude
-    rDynamicCost += GetAltitudeCost( rAltitudeTo );
+    const double rAltitudeCost = GetAltitudeCost( rAltitudeTo );
+    rDynamicCost += rAltitudeCost;
 
     // Fuseaux
     const double rFuseauxCost = GetFuseauxCost( from, to );
@@ -298,10 +299,12 @@ double DEC_Agent_PathfinderRule::GetCost( const MT_Vector2D& from, const MT_Vect
     rDynamicCost += rFuseauxCost;
 
     // terrain type
-    rDynamicCost += GetTerrainCost( nLinkTerrainType );
+    const double rTerrainCost = GetTerrainCost( nLinkTerrainType );
+    rDynamicCost += rTerrainCost;
 
     // danger direction
-    rDynamicCost += GetDangerDirectionCost( to );
+    const double rDangerDirectionCost = GetDangerDirectionCost( to );
+    rDynamicCost += rDangerDirectionCost;
 
     //urban blocks
     const double rUrbanBlockCost = GetUrbanBlockCost( from, to );

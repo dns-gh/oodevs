@@ -63,8 +63,8 @@ double DEC_Path_KnowledgeAgent::ComputeCost( const MT_Vector2D& from, const MT_V
     const double rSqDistBtwUnitAndEnemy = vPositionProjection.SquareDistance( vEnemyPosition_ );
 
     if( ( rFactor_ > 0. ) &&
-        ( rSqDistBtwUnitAndEnemy < rSquareSecurityDistance_ ) &&
-        DEC_PerceptionFunctions::IsPointVisible( *pKnowledgeAgent_, &vPositionProjection ) )
+        ( rSqDistBtwUnitAndEnemy < rSquareSecurityDistance_ )/* &&
+        DEC_PerceptionFunctions::IsPointVisible( *pKnowledgeAgent_, &vPositionProjection )*/ ) // TODO: code commented since it sometimes provokes a crash in the simulation. One needs to copy the perception surface in the class in order to fix the problem
     {
         // Inverse-square law
         double intensity = rSquareSecurityDistance_ / ( rFactor_ * pi * rSqDistBtwUnitAndEnemy );
