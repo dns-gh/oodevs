@@ -70,6 +70,8 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\libRTI-NG.dll"
     File "${RUNDIR}\librtiInternalIntercept.dll"
     File "${RUNDIR}\userDdm.dll"
+    File "${RUNDIR}\hla_plugin-${PLATFORM}-mt.dll"
+    File "${RUNDIR}\libFedTime1516e.dll"    
 !endif
     File /x "qt-*d.dll" "${RUNDIR}\qt-*.dll"
     File /x "*D.dll" "${RUNDIR}\xerces*.dll"
@@ -93,9 +95,6 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\proj.dll"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File "resources\*.ico"
-    ; HLA
-    File "${RUNDIR}\hla_plugin-${PLATFORM}-mt.dll"
-    File "${RUNDIR}\libFedTime1516e.dll"    
 
     ; evaluation licence
     !ifdef EVALUATION
