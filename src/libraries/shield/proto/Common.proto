@@ -652,7 +652,7 @@ message MsgTacticalLine {
 
 message MsgShape {
    required string              category  = 1;
-   required Common.RgbColor     color     = 2;
+   required RgbColor			color     = 2;
    required string              pattern   = 3;
    required MsgCoordLatLongList points    = 4;
 }
