@@ -72,11 +72,11 @@ ADN_Tr::T_ConverterVisionObject ADN_Tr::visionObjectConverter_[] =
 
 ADN_Tr::T_ConverterKeyPoint ADN_Tr::keyPointConverter_[] =
 {
-    T_ConverterKeyPoint( "foret",     QT_TRANSLATE_NOOP( "ADN_Tr" , "forest" ),     eKeyPointForest ),
-    T_ConverterKeyPoint( "urbain",    QT_TRANSLATE_NOOP( "ADN_Tr" , "urban area" ), eKeyPointUrban ),
-    T_ConverterKeyPoint( "carrefour", QT_TRANSLATE_NOOP( "ADN_Tr" , "crossroad" ),  eKeyPointCrossroads ),
-    T_ConverterKeyPoint( "pont",      QT_TRANSLATE_NOOP( "ADN_Tr" , "bridge" ),     eKeyPointBridge ),
-    T_ConverterKeyPoint( "lima",      QT_TRANSLATE_NOOP( "ADN_Tr" , "phase line" ), eKeyPointLima ),
+    T_ConverterKeyPoint( "forest",     QT_TRANSLATE_NOOP( "ADN_Tr" , "forest" ),     eKeyPointForest ),
+    T_ConverterKeyPoint( "urban area", QT_TRANSLATE_NOOP( "ADN_Tr" , "urban area" ), eKeyPointUrban ),
+    T_ConverterKeyPoint( "crossroad",  QT_TRANSLATE_NOOP( "ADN_Tr" , "crossroad" ),  eKeyPointCrossroads ),
+    T_ConverterKeyPoint( "bridge",     QT_TRANSLATE_NOOP( "ADN_Tr" , "bridge" ),     eKeyPointBridge ),
+    T_ConverterKeyPoint( "lima",       QT_TRANSLATE_NOOP( "ADN_Tr" , "lima" ),       eKeyPointLima ),
     T_ConverterKeyPoint( "" , "" , (E_KeyPoint)-1 )
 };
 

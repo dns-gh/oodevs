@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<objects xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" model-version="4.6.0" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Objects.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<objects model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Objects.xsd">
   <object geometry="point" name="Bouchon de mines" symbol="G*MPOMC---****X" type="mines">
     <activable/>
     <attrition category="mine classique"/>
@@ -377,4 +377,4 @@
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="1029043637" -->
+<!-- signature="2330032806" -->

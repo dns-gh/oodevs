@@ -105,4 +105,11 @@
 	<upgrade schema="schemas/4.2.2/physical/Units.xsd" apply="schemas/4.3.0/xsl/units_4.2.2-4.3.0.xsl"/>
     <upgrade schema="schemas/4.2.2/exercise/orbat.xsd" apply="schemas/4.3.0/xsl/orbat_4.2.2-4.3.0.xsl"/>
   </migration>
+  <migration from="4.3.0" to="4.3.1">
+    <upgrade schema="schemas/4.3.0/physical/Equipments.xsd" apply="schemas/4.3.1/xsl/components_4.3.0-4.3.1.xsl"/>
+    <upgrade schema="schemas/4.3.0/physical/Units.xsd" apply="schemas/4.3.1/xsl/units_4.3.0-4.3.1.xsl"/>
+    <upgrade schema="schemas/4.3.0/physical/Objects.xsd" apply="schemas/4.3.1/xsl/objects_4.3.0-4.3.1.xsl"/>
+    <upgrade schema="schemas/4.3.0/physical/Fires.xsd" apply="schemas/4.3.1/xsl/fires_4.3.0-4.3.1.xsl"/>
+    <upgrade schema="schemas/4.3.0/physical/Pathfind.xsd" apply="schemas/4.3.1/xsl/pathfinder_4.3.0-4.3.1.xsl"/>
+  </migration>
 </migrations>

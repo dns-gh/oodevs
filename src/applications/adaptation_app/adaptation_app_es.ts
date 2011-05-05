@@ -4432,10 +4432,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation></translation>
     </message>
     <message>
-        <source>phase line</source>
-        <translation>Lima</translation>
-    </message>
-    <message>
         <source>Infantry</source>
         <translation>Infanterie</translation>
     </message>
@@ -4941,6 +4937,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>UrbanKnowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lima</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

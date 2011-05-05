@@ -4432,10 +4432,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Zone urbaine</translation>
     </message>
     <message>
-        <source>phase line</source>
-        <translation>Lima</translation>
-    </message>
-    <message>
         <source>Infantry</source>
         <translation>Infanterie</translation>
     </message>
@@ -4946,6 +4942,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Civilian</source>
         <translation>Civil</translation>
+    </message>
+    <message>
+        <source>lima</source>
+        <translation>lima</translation>
     </message>
 </context>
 <context>
