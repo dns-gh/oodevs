@@ -244,10 +244,6 @@
         <build-lib name="timeline_plugin" pattern="lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
 
-    <target name="library.edxlhave_plugin" depends="library.dispatcher" description="build edxl_plugin static library (Emergency Data Exchange)">
-        <build-lib name="edxlhave_plugin" pattern="lib${ant.project.name}_edxlhave_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
-    </target>
-
     <target name="library.score_plugin" depends="library.dispatcher,library.3a,library.indicators" description="build score_plugin static library">
         <build-lib name="score_plugin" depends="boost,qt" pattern="lib${ant.project.name}_score_plugin-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
@@ -263,7 +259,7 @@
     <target name="library.plugins" depends="library.messenger_plugin,library.dis_plugin_dll,library.hla_plugin_dll,
                                             library.aar_plugin,library.rights_plugin,library.saver_plugin,library.replay_plugin,
                                             library.3a,library.bml_plugin,library.script_plugin,library.score_plugin,
-                                            library.crossbow_plugin,library.timeline_plugin,library.edxlhave_plugin,
+                                            library.crossbow_plugin,library.timeline_plugin,
                                             library.logger_plugin,library.positions_plugin" description="build all dispatcher plugins"/>
 
     <target name="library.mission_tester" depends="library.clients_kernel,library.actions,library.client_proxy" description="build mission tester lib">
@@ -288,7 +284,7 @@
     <target name="applications.clients" description="build Sword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app,
                      application.loadtester_app,application.import_app,application.wise_driver_dll,
-                     application.mission_tester_app,application.orbat_generator_app"/>
+                     application.mission_tester_app,application.orbat_generator_app,application.edxlhave_app"/>
 
     <target name="applications.frontends" description="build Sword Frontend executables"
             depends="application.selftraining_app,application.frontend_app,application.package_app"/>
@@ -329,7 +325,6 @@
                   lib${ant.project.name}_3a-${platform}-mt@{suffix},
                   lib${ant.project.name}_score_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_timeline_plugin-${platform}-mt@{suffix},
-                  lib${ant.project.name}_edxlhave_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_crossbow_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -523,6 +518,12 @@
     <target name="application.orbat_generator_app" depends="library.orbat_generator" description="build application">
         <build-app name="orbat_generator_app" subsystem="console" depends="boost,xerces,xalan"
             libs="lib${ant.project.name}_orbat_generator-${platform}-mt@{suffix}"/>
+    </target>
+    
+    <target name="application.edxlhave_app" depends="library.protocol" description="build edxl_app (Emergency Data Exchange)">
+        <build-app name="edxlhave_app" depends="xerces,boost,protobuf,openssl" libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" subsystem="console" >
+            <includepath path="${out.dir}/release/libraries/protocol"/>
+        </build-app>
     </target>
 
     <!--
