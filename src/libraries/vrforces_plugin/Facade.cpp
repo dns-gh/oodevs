@@ -14,8 +14,8 @@
 #pragma warning( push, 0 )
 #include <vl/reflAggList.h>
 #include <vl/reflEntList.h>
-#include <vrforces/vrfBeListener.h>
-#include <vrforces/vrfController.h>
+#include <vrforces/vrfcontrol/vrfBeListener.h>
+#include <vrforces/vrfcontrol/vrfController.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
@@ -26,7 +26,7 @@ using namespace plugins::vrforces;
 // Created: SBO 2011-01-20
 // -----------------------------------------------------------------------------
 Facade::Facade( DtExerciseConn& connection, xml::xistream& xis )
-    : controller_( createVrfRemoteController() )
+    : controller_( new DtVrfRemoteController() )
     , models_( xis.attribute< std::string >( "scenario", "../data/simulationModelSets/default.sms" ) )
     , scenario_( xis.attribute< std::string >( "scenario", "../data/terrain/WorldFlatEarth.mtd" ) )
 {

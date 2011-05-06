@@ -17,10 +17,25 @@
 #include <vl/aggPub.h>
 #include <vl/aggregateSR.h>
 #include <vl/reflEntList.h>
-#include <vrforces/vrfController.h>
+#include <vrforces/vrfcontrol/vrfController.h>
 #pragma warning( pop )
 
 using namespace plugins::vrforces;
+
+namespace
+{
+    void OnCreate( const DtString& name, const DtEntityIdentifier& id, void* usr )
+    {
+        if( Subordinate* that = static_cast< Subordinate* >( usr ) )
+            that->OnCreate( name, id );
+
+    }
+    void OnUpdate( DtReflectedEntity* reflected, void* usr )
+    {
+        if( Subordinate* that = static_cast< Subordinate* >( usr ) )
+            that->OnUpdate( reflected );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Subordinate constructor
@@ -36,7 +51,7 @@ Subordinate::Subordinate( const DtEntityType& type, DtAggregatePublisher& publis
     , reflected_ ( 0 )
 {
     vrForces_.AddListener( *this );
-    controller_.createEntity( &Subordinate::OnCreate, this
+    controller_.createEntity( &::OnCreate, this
                             , type
                             , publisher.asr()->location()
                             , publisher.asr()->forceId()
@@ -61,21 +76,18 @@ Subordinate::~Subordinate()
 // Name: Subordinate::OnCreate
 // Created: SBO 2011-03-23
 // -----------------------------------------------------------------------------
-void Subordinate::OnCreate( const DtString& /*name*/, const DtEntityIdentifier& id, void* usr )
+void Subordinate::OnCreate( const DtString& /*name*/, const DtEntityIdentifier& id )
 {
-    if( Subordinate* that = static_cast< Subordinate* >( usr ) )
+    entityId_ = id;
+    if( superiorId_ != DtEntityIdentifier::nullId() )
+        SetSuperior( superiorId_ );
+    if( !reflected_ )
     {
-        that->entityId_ = id;
-        if( that->superiorId_ != DtEntityIdentifier::nullId() )
-            that->SetSuperior( that->superiorId_ );
-        if( !that->reflected_ )
-        {
-            that->vrForces_.Lookup( id, *that );
-            if( that->reflected_ )
-                that->vrForces_.RemoveListener( *that );
-        }
-        DtInfo << "Subordinate created with identifier: " << id.string() << std::endl;
+        vrForces_.Lookup( id, *this );
+        if( reflected_ )
+            vrForces_.RemoveListener( *this );
     }
+    DtInfo << "Subordinate created with identifier: " << id.string() << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +103,7 @@ bool Subordinate::NotifyCreated( DtReflectedEntity& entity )
         {
             reflected_ = &entity;
             entityId_ = reflected_->esr()->entityId();
-            reflected_->addPostUpdateCallback( &Subordinate::OnUpdate, this );
+            reflected_->addPostUpdateCallback( &::OnUpdate, this );
             SetDestination( destination_ );
             return true;
         }
@@ -102,15 +114,14 @@ bool Subordinate::NotifyCreated( DtReflectedEntity& entity )
 // Name: Subordinate::OnUpdate
 // Created: SBO 2011-03-30
 // -----------------------------------------------------------------------------
-void Subordinate::OnUpdate( DtReflectedEntity* obj, void* userData )
+void Subordinate::OnUpdate( DtReflectedEntity* reflected )
 {
-    if( Subordinate* that = static_cast< Subordinate* >( userData ) )
-        if( obj && that->reflected_ == obj )
-        {
-            that->state_ = that->reflected_->esr()->damageState();
-            that->superior_.NotifyUpdated( *that );
-            DtInfo << "Subordinate '" << that->entityId_.string() << "' updated." << std::endl;
-        }
+    if( reflected && reflected_ == reflected )
+    {
+        state_ = reflected_->esr()->damageState();
+        superior_.NotifyUpdated( *this );
+        DtInfo << "Subordinate '" << entityId_.string() << "' updated." << std::endl;
+    }
 }
 
 // -----------------------------------------------------------------------------

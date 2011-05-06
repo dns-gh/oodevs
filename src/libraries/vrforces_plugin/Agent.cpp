@@ -32,7 +32,7 @@
 #include <vl/aggregateSR.h>
 #include <vl/reflectedAgg.h>
 #include <vlpi/entitytypes.h>
-#include <vrforces/vrfController.h>
+#include <vrforces/vrfcontrol/vrfController.h>
 #pragma warning( pop )
 
 #pragma warning( disable: 4355 )
@@ -282,7 +282,8 @@ void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSi
 // -----------------------------------------------------------------------------
 void Agent::AddSubordinateEntity( DtVrfRemoteController& controller, const DtSimulationAddress& address, const DtEntityType& type, const std::string& identifier )
 {
-    subordinates_.push_back( boost::shared_ptr< Subordinate >( new Subordinate( type, *aggregatePublisher_, heading_, identifier, controller, address, vrForces_, *this ) ) );
+    boost::shared_ptr< Subordinate > subordinate( new Subordinate( type, *aggregatePublisher_, heading_, identifier, controller, address, vrForces_, *this ) );
+    subordinates_.push_back( subordinate );
 }
 
 // -----------------------------------------------------------------------------

@@ -59,13 +59,9 @@ public:
     void Update( AggregatedPosition_ABC& position ) const;
     void Update( AggregatedState_ABC& state ) const;
     bool IsUndamaged() const;
-    //@}
 
-private:
-    //! @name Helpers
-    //@{
-    static void OnCreate( const DtString& name, const DtEntityIdentifier& id, void* usr );
-    static void OnUpdate( DtReflectedEntity* obj, void* userData );
+    void OnCreate( const DtString& name, const DtEntityIdentifier& id );
+    void OnUpdate( DtReflectedEntity* obj );
     //@}
 
 private:
