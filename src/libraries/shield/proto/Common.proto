@@ -540,6 +540,12 @@ message Extension {
     repeated Entry entries = 1;
 }
 
+message ResourceNetworkElement
+{
+    required ObjectId            object   = 1;
+    required ResourceNetworkType resource = 2;
+}
+
 message MsgMissionParameter {
     message Value {
         //parameters used for missions and magic actions:
@@ -564,33 +570,34 @@ message MsgMissionParameter {
         optional ResourceType                resourceType                = 19;
         optional MsgLogMaintenancePriorities logMaintenancePriorities    = 20;
         optional MsgLogMedicalPriorities     logMedicalPriorities        = 21;
+        optional ResourceNetworkElement      resourceNetwork             = 22;
 
         //parameters used for magic actions only:
-        optional float                       aReal                       = 22;
-        optional MsgPathList                 pathList                    = 23;
-        optional MsgPointList                pointList                   = 24;
-        optional MsgPolygonList              polygonList                 = 25;
-        optional MsgLocation                 location                    = 26;
-        optional MsgLocationList             locationList                = 27;
-        optional UnitIdList                  unitList                    = 28;
-        optional AutomatIdList               automatList                 = 29;
-        optional UnitKnowledgeIdList         unitKnowledgeList           = 30;
-        optional ObjectKnowledgeIdList       objectKnowledgeList         = 31;
-        optional MsgPlannedWorkList          plannedWorkList             = 32;
-        optional EquipmentType               equipmentType               = 33;
-        optional FireId                      tirIndirect                 = 34;
-        optional string                      aCharStr                    = 35;
-        optional MsgMissionObjective         missionObjective            = 36;
-        optional MsgMissionObjectiveList     missionObjectiveList        = 37;
-        optional MsgIntelligenceList         intelligenceList            = 38;
-        optional ObjectId                    object                      = 39;
-        optional PartyId                     party                       = 40;
-        optional FormationId                 formation                   = 41;
-        optional uint32                      identifier                  = 42;
-        optional int32                       quantity                    = 43;
-        optional KnowledgeGroupId            knowledgeGroup              = 44;
-        optional Extension                   extensionList               = 45;
-        repeated Value                       list                        = 46;
+        optional float                       aReal                       = 23;
+        optional MsgPathList                 pathList                    = 24;
+        optional MsgPointList                pointList                   = 25;
+        optional MsgPolygonList              polygonList                 = 26;
+        optional MsgLocation                 location                    = 27;
+        optional MsgLocationList             locationList                = 28;
+        optional UnitIdList                  unitList                    = 29;
+        optional AutomatIdList               automatList                 = 30;
+        optional UnitKnowledgeIdList         unitKnowledgeList           = 31;
+        optional ObjectKnowledgeIdList       objectKnowledgeList         = 32;
+        optional MsgPlannedWorkList          plannedWorkList             = 33;
+        optional EquipmentType               equipmentType               = 34;
+        optional FireId                      tirIndirect                 = 35;
+        optional string                      aCharStr                    = 36;
+        optional MsgMissionObjective         missionObjective            = 37;
+        optional MsgMissionObjectiveList     missionObjectiveList        = 38;
+        optional MsgIntelligenceList         intelligenceList            = 39;
+        optional ObjectId                    object                      = 40;
+        optional PartyId                     party                       = 41;
+        optional FormationId                 formation                   = 42;
+        optional uint32                      identifier                  = 43;
+        optional int32                       quantity                    = 44;
+        optional KnowledgeGroupId            knowledgeGroup              = 45;
+        optional Extension                   extensionList               = 46;
+        repeated Value                       list                        = 47;
     }
     optional bool  null_value       = 1;
     repeated Value value   = 2;

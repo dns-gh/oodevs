@@ -100,4 +100,10 @@ namespace shield
 #define CONVERT_DATE( field ) \
     CONVERT_DATE_TO( field, field )
 
+#define CONVERT_NAME_TO( from_field, to_field ) \
+    if( from.has_##from_field() && from.from_field().has_name() ) \
+        to->mutable_##to_field()->set_name( from.from_field().name() )
+#define CONVERT_NAME( field ) \
+    CONVERT_NAME_TO( field, field )
+
 #endif // shield_Tools_h

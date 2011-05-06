@@ -209,6 +209,12 @@ namespace shield
         CONVERT_ENUM_LIST( elem, HUMAN_WOUND );
     }
     template< typename From, typename To >
+    void ConvertResourceNetworkElement( const From& from, To* to )
+    {
+        CONVERT_ID( object );
+        CONVERT_NAME( resource );
+    }
+    template< typename From, typename To >
     void ConvertObjective( const From& from, To* to )
     {
 #ifdef SHIELD_CLIENT
@@ -269,6 +275,7 @@ namespace shield
         CONVERT_ID( resourcetype );
         CONVERT_LIST( logmaintenancepriorities, elem, ConvertIdentifier );
         CONVERT_CB( logmedicalpriorities, ConvertLogMedicalPriorities );
+        CONVERT_CB( resourcenetwork, ConvertResourceNetworkElement );
         CONVERT( areal );
         CONVERT_LIST( pathlist, elem, ConvertLocationElem );
         CONVERT_LIST( pointlist, elem, ConvertLocationElem );

@@ -359,6 +359,7 @@
 			<xs:enumeration value="MaintenancePriorities"/>
 			<xs:enumeration value="MedicalPriorities"/>
 			<xs:enumeration value="LocationComposite"/>
+			<xs:enumeration value="ResourceNetwork"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_OtherParameterType">
