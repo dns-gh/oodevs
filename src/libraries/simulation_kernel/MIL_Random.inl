@@ -184,6 +184,18 @@ double MIL_Random::rand_oi( double min, double max, int ctxt /* = -1 */ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Random::random_shuffle
+// Created: JSR 2011-05-05
+// -----------------------------------------------------------------------------
+template< typename T >
+inline
+void MIL_Random::random_shuffle( std::vector< T >& vector, int ctxt )
+{
+    boost::function< unsigned long( unsigned long ) > fun =  boost::bind( &MIL_Random::rand32_io, 0, _1, ctxt );
+    std::random_shuffle( vector.begin(), vector.end(), fun );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Random::gaussian_ii
 // Created: JSR 2010-07-02
 // -----------------------------------------------------------------------------

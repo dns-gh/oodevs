@@ -108,7 +108,7 @@ void PHY_HumansComposante::HealAllHumans()
 // -----------------------------------------------------------------------------
 unsigned int PHY_HumansComposante::HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange )
 {
-    std::random_shuffle( humans_.begin(), humans_.end() );
+    MIL_Random::random_shuffle( humans_, MIL_Random::eWounds );
     unsigned int nNbrChanged = 0;
     for( std::vector< Human_ABC* >::const_iterator it = humans_.begin(); it != humans_.end() && nNbrToChange; ++it )
     {
@@ -209,7 +209,7 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposanteState, PHY_FireDamages_Agent& fireDamages )
 {
-    std::random_shuffle( humans_.begin(), humans_.end() );
+    MIL_Random::random_shuffle( humans_, MIL_Random::eWounds );
     assert( pComposante_ );
     const PHY_Protection& protection = pComposante_->GetType().GetProtection();
     unsigned int nNbrDead = static_cast< unsigned int >( round( humans_.size() * protection.GetHumanDeadRatio( newComposanteState ) ) );

@@ -52,6 +52,9 @@ public:
     static double rand_oo( double min, double max, int ctxt = -1 );   // ] min., max. [
     static double rand_oi( double min, double max, int ctxt = -1 );   // ] min., max. ]
 
+    template< typename T >
+    static void random_shuffle( std::vector< T >& vector, int ctxt = -1 );
+
 private:
     //! @name Constructors/Destructor
     //@{

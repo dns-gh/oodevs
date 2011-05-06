@@ -56,7 +56,7 @@ PHY_Composante_ABC::T_ComposanteVector& DefaultComposantesAbleToBeFiredComputer:
         return availableTargets_;
     while( targets_.size() < nNbrWeaponsUsable )
     {
-        std::random_shuffle( availableTargets_.begin(), availableTargets_.end() );
+        MIL_Random::random_shuffle( availableTargets_, MIL_Random::eFire );
         std::copy( availableTargets_.begin(), availableTargets_.end(), std::back_inserter( targets_ ) );
     }
     targets_.resize( nNbrWeaponsUsable );

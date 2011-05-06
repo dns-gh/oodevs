@@ -227,7 +227,7 @@ void PHY_RolePion_Composantes::DistributeCommanders()
 {
     // Répartition des officiers
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
-    std::random_shuffle( composantes.begin(), composantes.end() );
+    MIL_Random::random_shuffle( composantes );
     const PHY_UnitType::T_CommanderRepartitionMap& commanderRepartition = pion_.GetType().GetUnitType().GetCommanderRepartition();
     for( PHY_UnitType::CIT_CommanderRepartitionMap it = commanderRepartition.begin(); it != commanderRepartition.end(); ++it )
     {
@@ -722,7 +722,7 @@ void PHY_RolePion_Composantes::DamageTransported( double rWeightToDamage, const 
 {
     assert( newState.IsDamaged() );
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
-    std::random_shuffle( composantes.begin(), composantes.end() );
+    MIL_Random::random_shuffle( composantes, MIL_Random::eBreakdowns );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end() && rWeightToDamage > 0; ++it )
     {
         PHY_ComposantePion& composante = **it;
@@ -784,7 +784,7 @@ void PHY_RolePion_Composantes::ApplyInjury( MIL_Injury_ABC& injury )
 void PHY_RolePion_Composantes::ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult )
 {
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
-    std::random_shuffle( composantes.begin(), composantes.end() );
+    MIL_Random::random_shuffle( composantes, MIL_Random::eWounds );
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
     {
@@ -973,7 +973,7 @@ void PHY_RolePion_Composantes::GetComposantesAbleToBeFired( PHY_ComposantePion::
         return;
     while( targets.size() < nNbrFirer )
     {
-        std::random_shuffle( availableTargets.begin(), availableTargets.end() );
+        MIL_Random::random_shuffle( availableTargets, MIL_Random::eFire );
         std::copy( availableTargets.begin(), availableTargets.end(), std::back_inserter( targets ) );
     }
     targets.resize( nNbrFirer );
@@ -1448,7 +1448,7 @@ void PHY_RolePion_Composantes::RepairAllComposantes()
 void PHY_RolePion_Composantes::DestroyRandomComposante()
 {
     PHY_ComposantePion::T_ComposantePionVector composantes = composantes_;
-    std::random_shuffle( composantes.begin(), composantes.end() );
+    MIL_Random::random_shuffle( composantes, MIL_Random::eWounds );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes.begin(); it != composantes.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;

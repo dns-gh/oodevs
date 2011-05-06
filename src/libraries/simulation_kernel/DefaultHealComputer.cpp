@@ -38,7 +38,7 @@ DefaultHealComputer::~DefaultHealComputer()
 // -----------------------------------------------------------------------------
 void DefaultHealComputer::ApplyOnComponent( PHY_ComposantePion& component )
 {
-  components_.push_back( &component );
+    components_.push_back( &component );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,22 +47,22 @@ void DefaultHealComputer::ApplyOnComponent( PHY_ComposantePion& component )
 // -----------------------------------------------------------------------------
 void DefaultHealComputer::Heal( const PHY_HumanRank& rank, unsigned int nNbrToChange ) const
 {
-  PHY_ComposantePion::T_ComposantePionVector components = components_;
-  std::random_shuffle( components.begin(), components.end() );
-  PHY_ComposantePion::IT_ComposantePionVector itCurrentComp = components.begin();
-  while( nNbrToChange && itCurrentComp != components.end() )
-  {
-    unsigned int nNbrChanged = (*itCurrentComp)->HealHumans( rank, 1 );
-    if( nNbrChanged == 0 )
-      itCurrentComp = components.erase( itCurrentComp );
-    else
+    PHY_ComposantePion::T_ComposantePionVector components = components_;
+    MIL_Random::random_shuffle( components, MIL_Random::eWounds );
+    PHY_ComposantePion::IT_ComposantePionVector itCurrentComp = components.begin();
+    while( nNbrToChange && itCurrentComp != components.end() )
     {
-      nNbrToChange -= nNbrChanged;
-      ++ itCurrentComp;
+        unsigned int nNbrChanged = (*itCurrentComp)->HealHumans( rank, 1 );
+        if( nNbrChanged == 0 )
+            itCurrentComp = components.erase( itCurrentComp );
+        else
+        {
+            nNbrToChange -= nNbrChanged;
+            ++ itCurrentComp;
+        }
+        if( itCurrentComp == components.end() )
+            itCurrentComp = components.begin();
     }
-    if( itCurrentComp == components.end() )
-      itCurrentComp = components.begin();
-  }
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ void DefaultHealComputer::Heal( const PHY_HumanRank& rank, unsigned int nNbrToCh
 void DefaultHealComputer::Wound( const PHY_HumanRank& rank, unsigned int nNbrToChange  ) const
 {
     PHY_ComposantePion::T_ComposantePionVector composantes = components_;
-    std::random_shuffle( composantes.begin(), composantes.end() );
+    MIL_Random::random_shuffle( composantes, MIL_Random::eWounds );
 
     PHY_ComposantePion::IT_ComposantePionVector itCurrentComp = composantes.begin();
     while( nNbrToChange && itCurrentComp != composantes.end() )
@@ -110,6 +110,7 @@ void DefaultHealComputer::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2
     for( PHY_ComposantePion::CIT_ComposantePionVector it = components_.begin(); it != components_.end(); ++it )
         (**it).EvacuateWoundedHumans( destinationTC2 );
 }
+
 // -----------------------------------------------------------------------------
 // Name: DefaultHealableComputer::HealAll
 // Created: MGD 2009-09-24
