@@ -227,7 +227,7 @@ float StructuralCapacity::GetStructuralState() const
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    agents_.push_back( &agent );
+    agents_.insert( &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -236,7 +236,7 @@ void StructuralCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_A
 // -----------------------------------------------------------------------------
 void StructuralCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
-    agents_.erase( std::find( agents_.begin(), agents_.end(), &agent ) );
+    agents_.erase( &agent );
 }
 
 // -----------------------------------------------------------------------------

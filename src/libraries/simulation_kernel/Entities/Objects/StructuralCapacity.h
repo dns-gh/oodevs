@@ -91,8 +91,8 @@ private:
 
     //! @name types
     //@{
-    typedef std::vector< MIL_Agent_ABC* > T_Agents;
-    typedef T_Agents::iterator           IT_Agents;
+    typedef std::set< MIL_Agent_ABC* > T_Agents;
+    typedef T_Agents::iterator         IT_Agents;
     //@}
 
 private:
