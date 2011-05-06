@@ -2015,7 +2015,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Unite a escorter" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="sword.military.platoon.terrorism.tasks.Ambush" dia-type="sword.military.platoon.terrorism.tasks.Ambush" id="2067" name="Embuscade" package="attack">
+    <mission dia-behavior="sword.military.platoon.individual.tasks.Ambush" dia-type="sword.military.platoon.individual.tasks.Ambush" id="2067" name="Embuscade" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2193,7 +2193,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="totalRecce" name="Reconnaissance avancee" optional="true" type="Boolean"/>
+      <parameter dia-name="searchObjective" name="Fouille des objectifs" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Eclairer" dia-type="france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4544,4 +4544,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0621476198" -->
+<!-- signature="3506679790" -->

@@ -543,7 +543,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="sword.military.platoon.terrorism.roles.Sniper" file="BMPion.bms" masalife="true" name="sword.military.platoon.terrorism.roles.Sniper">
+    <unit dia-type="sword.military.platoon.individual.roles.Individual" file="BMPion.bms" masalife="true" name="sword.military.platoon.terrorism.roles.Sniper">
       <missions>
         <mission name="Embuscade"/>
         <mission name="COMMUNES Decrocher"/>
@@ -11597,4 +11597,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1446793306" -->
+<!-- signature="3942114542" -->
