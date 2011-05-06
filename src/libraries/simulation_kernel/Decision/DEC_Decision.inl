@@ -15,6 +15,7 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "MIL_Singletons.h"
 #include <directia/brain/Brain.h>
+//#include "MT_Tools/MT_Logger.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision constructor
@@ -91,6 +92,11 @@ void DEC_Decision< T >::InitBrain( const std::string& brainFile, const std::stri
         boost::function< void( const std::string& ) >( boost::bind( &DEC_DIAFunctions::BreakForDebug, pEntity_->GetID() ,_1 ) ) ;
 
     pRefs_.reset( new ScriptRefs( *pBrain_) );
+
+//    float size = (*pBrain_)[ "collectgarbage" ].Call<float>( "count" );
+//    std::stringstream stream;
+//    stream << "Memory: " << size;
+//    MT_LOG_WARNING( stream.str(), 2, "whatever" );
     
     if ( newBrain )//Call GC only for a new archetype
     {
@@ -347,6 +353,26 @@ template< class T >
 MIL_Automate& DEC_Decision< T >::GetAutomate() const
 {
     throw std::runtime_error( "GetAutomate cannot be called for this Decision class" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::GetID
+// Created: LDC 2011-05-05
+// -----------------------------------------------------------------------------
+template< class T >
+unsigned int DEC_Decision< T >::GetID() const
+{
+    return pEntity_->GetID();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::GetKnowledgeGroup
+// Created: LDC 2011-05-05
+// -----------------------------------------------------------------------------
+template< class T >
+MIL_KnowledgeGroup& DEC_Decision<T>::GetKnowledgeGroup() const
+{
+    throw std::runtime_error( "GetKnowledgeGroup cannot be called for this Decision class" );
 }
 
 // -----------------------------------------------------------------------------

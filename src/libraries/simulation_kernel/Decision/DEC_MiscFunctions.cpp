@@ -12,13 +12,15 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_MiscFunctions.h"
 
+#include "Decision/DEC_Representations.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
-#include "Decision/DEC_Representations.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::SetCurrentSpeedModificator
@@ -210,4 +212,225 @@ std::string DEC_MiscFunctions::GetPointXY( boost::shared_ptr< MT_Vector2D > poin
 unsigned int DEC_MiscFunctions::GetTimeInSeconds()
 {
     return MIL_AgentServer::GetWorkspace().GetRealTime();
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::Report
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::Report( DEC_Decision_ABC& caller, int type, int reportId )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportAgentKnowledge
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportAgentKnowledge( DEC_Decision_ABC& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( agentKnowledge ) );
+        params.push_back( missionParam );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportDotationType
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportDotationType( DEC_Decision_ABC& caller, int type, int reportId, const PHY_DotationCategory* dotationType )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( dotationType ) );
+        params.push_back( missionParam );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportEquipmentType
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportEquipmentType( DEC_Decision_ABC& caller, int type, int reportId, const PHY_ComposanteTypePion* equipmentType )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( equipmentType ) );
+        params.push_back( missionParam );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportFloat
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportFloat( DEC_Decision_ABC& caller, int type, int reportId, float param )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( param ) );
+        params.push_back( missionParam );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportFloatFloat
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportFloatFloat( DEC_Decision_ABC& caller, int type, int reportId, float param1, float param2 )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam1( MIL_MissionParameterFactory::Create( param1 ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam2( MIL_MissionParameterFactory::Create( param2 ) );
+        params.push_back( missionParam1 );
+        params.push_back( missionParam2 );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportId
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportId( DEC_Decision_ABC& caller, int type, int reportId, int id )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( id ) );
+        params.push_back( missionParam );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportObjectKnoweldge
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportObjectKnoweldge( DEC_Decision_ABC& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( pKnowledge ) );
+        params.push_back( missionParam );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportPion
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportPion( DEC_Decision_ABC& caller, int type, int reportId, DEC_Decision_ABC* pion )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        DEC_RolePion_Decision* pionDec = static_cast< DEC_RolePion_Decision* >( pion ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
+        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( pionDec ) );
+        params.push_back( missionParam );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportPionAutomate
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportPionAutomate( DEC_Decision_ABC& caller, int type, int reportId, DEC_Decision_ABC* pion, DEC_Decision_ABC* automate )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+        DEC_RolePion_Decision* pionDec = static_cast< DEC_RolePion_Decision* >( pion ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam1( MIL_MissionParameterFactory::Create( pionDec ) );
+        DEC_AutomateDecision* automateDec = static_cast< DEC_AutomateDecision* >( automate ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam2( MIL_MissionParameterFactory::Create( automateDec ) );
+        params.push_back( missionParam1 );
+        params.push_back( missionParam2 );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportPionPion
+// Created: MGD 2010-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportPionPion( DEC_Decision_ABC& caller, int type, int reportId, DEC_Decision_ABC* pion1, DEC_Decision_ABC* pion2 )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+        DEC_RolePion_Decision* pionDec = static_cast< DEC_RolePion_Decision* >( pion1 ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam1( MIL_MissionParameterFactory::Create( pionDec ) );
+        DEC_RolePion_Decision* pionDec2 = static_cast< DEC_RolePion_Decision* >( pion2 ); // $$$$ LDC: FIXME Is an ABC or a concrete type passed from dia?
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam2( MIL_MissionParameterFactory::Create( pionDec2 ) );
+        params.push_back( missionParam1 );
+        params.push_back( missionParam2 );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportPopulationKnowledge
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportPopulationKnowledge( DEC_Decision_ABC& caller, int type, int reportId, int populationKnowledge )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+        DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(populationKnowledge);
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( pKnowledge ) );
+        params.push_back( missionParam );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportTirPion
+// Created: LDC 2009-06-16
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportTirPion( DEC_Decision_ABC& caller, int type, int reportId, int id )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::CreateTir( id ) );
+        params.push_back( missionParam );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: static void DEC_MiscFunctions::ReportString
+// Created: MGD 2010-03-24
+// -----------------------------------------------------------------------------
+void DEC_MiscFunctions::ReportString( DEC_Decision_ABC& caller, int type, int reportId, const std::string& message )
+{
+    if( const MIL_Report* pReport = MIL_Report::Find( reportId ) )
+    {
+        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+        boost::shared_ptr< MIL_MissionParameter_ABC > missionParam( MIL_MissionParameterFactory::Create( message ) );
+        params.push_back( missionParam );
+        pReport->Send( caller, MIL_Report::E_Type( type ), params );
+    }
 }

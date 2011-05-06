@@ -26,11 +26,11 @@ class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class MIL_AgentPion;
 class MIL_Automate;
+class MIL_KnowledgeGroup;
 class MIL_Mission_ABC;
+class MT_Vector2D;
 class PHY_Action_ABC;
-class MT_Vector2D;
 class PHY_DotationCategory;
-class MT_Vector2D;
 
 // =============================================================================
 /** @class  DEC_Decision_ABC
@@ -68,6 +68,8 @@ public:
     virtual const std::string& GetDIAType() const = 0;
     virtual MIL_AgentPion& GetPion() const = 0;
     virtual MIL_Automate& GetAutomate() const = 0;
+    virtual unsigned int GetID() const = 0;
+    virtual MIL_KnowledgeGroup& GetKnowledgeGroup() const = 0;
 
     //virtual void GarbageCollect() = 0;
 

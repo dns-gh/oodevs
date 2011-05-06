@@ -40,7 +40,6 @@
 #include "Decision/DEC_PathFunctions.h"
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
-#include "Decision/DEC_CommunicationFunctions.h"
 #include "Decision/DEC_MedicalTreatmentFunctions.h"
 #include "Decision/DEC_PopulationFunctions.h"
 #include "Entities/Actions/PHY_ActionInterrogate.h"
@@ -82,6 +81,7 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/vector.hpp>
 #include <directia/tools/binders/ScriptRef.h>
+
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::RegisterUserArchetypeFunctions
 // Created: ADY 2010-08-02
@@ -170,7 +170,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void( boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::CDT_GiveMission, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_DonnerMissionPionVersPion" ] =
         boost::function< void( boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::CDT_GiveMissionVersPion, boost::ref( GetPion() ), _1 ) );
-    brain[ "DEC_IsMissionPionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
 
     // Actions
     brain[ "DEC__StopAction" ] =
@@ -354,8 +353,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     // Gestion des renforts
     brain[ "DEC_Renforts" ] =
         boost::function< std::vector<DEC_Decision_ABC*> () >( boost::bind( &DEC_MiscFunctions::GetReinforcements, boost::ref( GetPion() ) ) );
-    brain[ "DEC_Agent_Renforts" ] =
-        boost::function< std::vector<DEC_Decision_ABC*> ( DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::GetAgentReinforcements, _1 ) );
     brain[ "DEC_Renforce" ] =
         boost::function< bool ( const DEC_Decision_ABC* ) >(boost::bind( &DEC_MiscFunctions::Reinforce, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_AnnuleRenforcement" ] =
@@ -446,73 +443,33 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_PeutReleverPion" ] =
         boost::function< bool( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::CanRelievePion, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Suicide" ] = boost::bind( &DEC_AgentFunctions::Suicide, boost::ref( GetPion() ) );
-    brain[ "DEC_GetTimeInSeconds" ] = &DEC_MiscFunctions::GetTimeInSeconds;
+
 
     // Population
-    brain[ "DEC_Agent_CanaliserPopulation" ] =
-        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::ChannelPopulations, _1 ) );
     brain[ "DEC_GetAdhesionPopulation" ] =
         boost::function< float (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAffinity , boost::cref( GetPion() ), _1 ) );
-
-    // Inhabitants => je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
-    brain[ "DEC_Agent_Alert" ] =
-        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::AlertInhabitants, _1 ) );
-    brain[ "DEC_Agent_IsAlerted" ] =
-        boost::function< bool( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::IsInhabitantsAlerted, _1 ) );
-    brain[ "DEC_Agent_Confine" ] =
-        boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::ConfineInhabitants, _1 ) );
-
-    // Agent knowledges accessors
-    brain[ "DEC_ConnaissanceAgent_EtatOps" ] =
-        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetOperationalState, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_EstDetruitTactique" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMajorOperationalState, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_Position" ] =
-        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPositionPtr, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_EstEnVol" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsFlying, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_NatureAtlas" ] =
-        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetNatureAtlas, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_NiveauPerceptionMax" ] =
-        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMaxPerceptionLevelForKnowledgeGroup, _1 ) );
+    // Agent knowledge accessors
     brain[ "DEC_ConnaissanceAgent_NiveauDePerceptionCourant" ] =
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceAgent_Dangerosite" ] =
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosity, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceAgent_AttritionPotentielle" ] =
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPotentialAttrition, boost::cref( GetPion() ), _1, _2 ) );
-    brain[ "DEC_ConnaissanceAgent_DangerositeSurPion" ] =
-        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnPion, _1, _2 ) );
-    brain[ "DEC_ConnaissanceAgent_DangerositeSurConnaissance" ] =
-        boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetDangerosityOnKnowledge, _1, _2 ) );
     brain[ "DEC_ConnaissanceAgent_EstPercuParUnite" ] = // i.e. I perceive the agent
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceivedByAgent, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceAgent_EstUnEnnemi" ] =
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsAnEnemy, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceAgent_EstUnAllie" ] =
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsAFriend, boost::cref( GetPion() ), _1 ) );
-    brain[ "DEC_ConnaissanceAgent_EstValide" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsKnowledgeValid, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_EstEnMouvement" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsMoving, _1 ) );
     brain[ "DEC_ConnaissanceAgent_PercoitUnite" ] = // i.e. the agent perceives me
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPerceivingAgent, boost::cref( GetPion() ), _1 ) );
-    brain[ "DEC_ConnaissanceAgent_EstPrisonnier" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPrisoner, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_EstMort" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsDead, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_Verrouiller" ] =
-        boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Lock, _1 ) );
-    brain[ "DEC_ConnaissanceAgent_Deverrouiller" ] =
-        boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Unlock, _1 ) );
     brain[ "DEC_ConnaissanceAgent_EstAPorteDeCapteurDansCone" ] =
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent >, const MT_Vector2D*, double ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsInDetectionCone, boost::cref( GetPion() ), _1, _2, _3 ) );
-    brain[ "DEC_ConnaissanceAgent_TuerOfficiers" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::KillOfficers, _1 ) );
     brain[ "DEC_ConnaissanceAgent_PeutEtreIllumine" ] =
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::CanBeIlluminate, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceAgent_PeutIlluminer" ] =
         boost::function< bool() >( boost::bind( &DEC_KnowledgeAgentFunctions::CanIlluminate, boost::cref( GetPion() ) ) );
+    
     // Object knowledges accessors
     brain[ "DEC_ConnaissanceObjet_EstUnEnnemi" ] =
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsAnEnemy, boost::cref( GetPion() ), _1 ) );
@@ -528,8 +485,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Object >, float, const PHY_DotationCategory*) >( boost::bind( &DEC_KnowledgeObjectFunctions::DamageObject, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_ConnaissanceObjet_NiveauDePerceptionCourant" ] =
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) );
-    brain[ "DEC_ConnaissanceObjet_PeutEtreValorise" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::CanBeValorized, _1 ) );
 
     // Population knowledges accessors
     brain[ "DEC_KnowledgePopulation_Domination" ] =
@@ -569,18 +524,12 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_ConnaissanceUrbanBlock_NiveauDeReconnaissanceCourant" ] = boost::function< float( UrbanObjectWrapper* )>( boost::bind( &DEC_UrbanObjectFunctions::GetCurrentRecceProgress, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceBlocUrbain_Traficabilite" ] =
         boost::function< float( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetPathfindCost, boost::cref( GetPion() ), _1 ) );
-    brain[ "DEC_NiveauDeProtectionMaterielComposantes" ] = &DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel;
     brain[ "DEC_ConnaissanceBlocUrbain_RapForLocal" ] =
         boost::function< float( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetRapForLocal, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_GetPerception" ] =
         boost::function< double( boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_PerceptionFunctions::GetPerception, boost::cref( GetPion() ), _1, _2 ) );
-    brain[ "DEC_PolygoneBlocUrbain" ] =
-        boost::function< boost::shared_ptr< TER_Localisation >( UrbanObjectWrapper* ) >( boost::bind( &DEC_UrbanObjectFunctions::GetPolygonFromUrbanBlock, _1 ) );
-   brain[ "DEC_DetruireBlocUrbain" ] =
+    brain[ "DEC_DetruireBlocUrbain" ] =
         boost::function< void( UrbanObjectWrapper*, const PHY_DotationCategory* )>( boost::bind( &DEC_UrbanObjectFunctions::DestroyUrbanBlock, boost::ref( GetPion() ), _1, _2 ) );
-    brain[ "DEC_BlocUrbain_Type" ] = &DEC_UrbanObjectFunctions::GetType;
-    brain[ "DEC_EtatBlocUrbain" ] =
-        boost::function< float( UrbanObjectWrapper* )>( boost::bind( &DEC_UrbanObjectFunctions::GetStateUrbanBlock, _1 ) );
 
     // Global knowledge
     brain[ "DEC_RapportDeForceLocal" ] = boost::bind( &DEC_KnowledgeFunctions::GetRapForLocal, boost::ref( GetPion() ) );
@@ -588,8 +537,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Connaissances_UnitesDetecteesDansZone" ] =
         boost::function< T_ConstKnowledgeAgentVector( const TER_Localisation* ) >( boost::bind( &DEC_KnowledgeFunctions::GetDetectedAgentsInZone, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_UnitesPrenantAPartie" ] = boost::bind( &DEC_KnowledgeFunctions::GetAgentsAttacking, boost::ref( GetPion() ) );
-    brain[ "DEC_Connaissances_UnitesPrenantAPartieSurAmi"  ] =
-        boost::function< T_ConstKnowledgeAgentVector( const DEC_Decision_ABC* )  >( boost::bind( &DEC_KnowledgeFunctions::GetAgentsAttackingAlly, _1 ) );
     brain[ "DEC_Connaissances_UnitesEnnemiesDangereuses" ] = boost::bind( &DEC_KnowledgeFunctions::GetDangerousEnemies, boost::ref( GetPion() ) );
 
     brain[ "DEC_Connaissances_UnitesEnnemiesVivantesPercues" ] = boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceived, boost::ref( GetPion() ) );
@@ -655,11 +602,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool (unsigned int)> ( boost::bind( &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_AgentPion >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_SetMissionLimaFlagHoraire"      ] =
         boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag, boost::ref( GetPion() ), _1, _2 ) );
-    brain[ "DEC_SetMission" ] =
-        boost::function< void( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_AgentFunctions::SetMission, _1, _2 ) );
-    brain[ "DEC_AssignerFuseauAMissionPion_Mission" ] =
-        boost::function< void( MIL_Fuseau* ,  boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToPionMission , _1, _2 ) );
-
+    
     // Etat décisionnel
     brain[ "DEC_Agent_ChangeEtatRapportDeForce" ] =
         boost::function< void( int ) >( boost::bind( &DEC_AgentFunctions::NotifyForceRatioStateChanged, boost::ref( GetPion() ), _1 ) );
@@ -727,12 +670,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< boost::shared_ptr< MT_Vector2D >( int, float ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeLima< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Geometrie_CalculerTrafficableBarycentreLocalisation" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisationBarycenter, boost::ref( GetPion() ), _1 ) );
-    brain[ "DEC_IsPointInUrbanBlock" ] =
-        boost::function< bool( MT_Vector2D&, UrbanObjectWrapper* ) >( boost::bind( &DEC_GeometryFunctions::IsPointInUrbanBlock, _1, _2 ) );
     brain[ "DEC_IsPointInUrbanBlockTrafficable" ] =
         boost::function< bool( MT_Vector2D&, bool ) >( boost::bind( &DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable, boost::ref( GetPion() ), _1, _2 ) );
-    brain[ "DEC_Geometrie_CalculerTrafficablePointPourPoint" ] =
-        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisation, _1 ) );
     brain[ "DEC_Geometrie_PositionAdvanceAlongFuseau" ] =
         boost::function< double( MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Geometrie_GetLeavingAreaPosition" ] =
@@ -791,47 +730,12 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_DebarqueBlesseDansHopital" ] =
         boost::function< void ( const DEC_Decision_ABC*, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MedicalTreatmentFunctions::TakeCareOfThePatient, boost::cref( GetPion() ), _1, _2 ) );
 
-    // RC
-    brain[ "DEC_RC1" ] =
-        boost::function< void ( int, int ) >( boost::bind( &DEC_MiscFunctions::Report< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
-    brain[ "DEC_RC_AgentKnowledge" ] =
-        boost::function< void ( int, int, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_DotationType" ] =
-        boost::function< void ( int, int, const PHY_DotationCategory* ) >( boost::bind( &DEC_MiscFunctions::ReportDotationType< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_EquipmentType" ] =
-        boost::function< void ( int, int, const PHY_ComposanteTypePion* ) >( boost::bind( &DEC_MiscFunctions::ReportEquipmentType< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_Float" ] =
-        boost::function< void ( int, int, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloat< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_Float_Float" ] =
-        boost::function< void ( int, int, float, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloatFloat< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3, _4 ) );
-    brain[ "DEC_RC_Id" ] =
-        boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportId< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_ObjectKnowledge" ] =
-        boost::function< void ( int, int, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MiscFunctions::ReportObjectKnoweldge< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_Pion" ] =
-        boost::function< void ( int, int, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPion< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_Pion_Automate" ] =
-        boost::function< void ( int, int, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionAutomate< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3, _4 ) );
-    brain[ "DEC_RC_Pion_Pion" ] =
-        boost::function< void ( int, int, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionPion< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3, _4 ) );
-    brain[ "DEC_RC_PopulationKnowledge" ] =
-        boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_TirPion" ] =
-        boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_String" ] =
-        boost::function< void ( int, int, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
     // Hierarchie
     brain[ "DEC_Pion_PionsAvecPC" ] = boost::bind( &DEC_AgentFunctions::GetPionsWithPC, boost::ref( GetPion() ) );
     brain[ "DEC_Pion_PionsSansPC" ] = boost::bind( &DEC_AgentFunctions::GetPionsWithoutPC, boost::ref( GetPion() ) );
     brain[ "DEC_Pion_PionPC" ] = boost::bind( &DEC_AgentFunctions::GetPionPC, boost::cref( GetPion() ) );
-    brain[ "DEC_Pion_PionPCDeAutomate" ] =
-        boost::function< DEC_Decision_ABC*( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::GetPionPCOfAutomate, _1 ) );
-    brain[ "DEC_Pion_PionsDeAutomateSansPC" ] =
-        boost::function< std::vector< DEC_Decision_ABC* >( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::GetPionsWithoutPCOfAutomate, _1 ) );
     brain[ "DEC_Pion_ChangeAutomate" ] =
         boost::function< bool( DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::ChangeAutomate, boost::ref( GetPion() ), _1 ) );
-    brain[ "DEC_GetAutomate" ] =
-        boost::function< DEC_Decision_ABC*( DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::GetAutomate, _1 ) );
 
     // Logistique
     brain[ "DEC_StartPreterVSRAM" ] =
@@ -864,15 +768,15 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Transport_EmbarquerPionSansDelais" ] =
         boost::function< void( const DEC_Decision_ABC*, bool ) >( boost::bind( &DEC_ActionFunctions::Transport_MagicLoadPion, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Transport_EmbarquerPionsSansDelais" ] =
-        boost::function< void (const std::vector< DEC_Decision_ABC* >&, bool) >( boost::bind( &DEC_ActionFunctions::Transport_MagicLoadPions, boost::ref(GetPion()) , _1, _2 ) );
+        boost::function< void (const std::vector< DEC_Decision_ABC* >&, bool) >( boost::bind( &DEC_ActionFunctions::Transport_MagicLoadPions, boost::ref( GetPion()) , _1, _2 ) );
     brain[ "DEC_Transport_DebarquerPionSansDelais" ] =
         boost::function<void(const DEC_Decision_ABC*)>( boost::bind( &DEC_ActionFunctions::Transport_MagicUnloadPion , boost::ref( GetPion()) , _1 ) );
     brain[ "DEC_Transport_DebarquerPionsSansDelais" ] =
         boost::function<void(const std::vector< DEC_Decision_ABC* >&)>( boost::bind( &DEC_ActionFunctions::Transport_MagicUnloadPions , boost::ref( GetPion()) , _1 ) );
     brain[ "DEC_Transport_EstTermine" ] =
-        boost::bind( &DEC_ActionFunctions::Transport_IsFinished , boost::ref(GetPion())                    );
+        boost::bind( &DEC_ActionFunctions::Transport_IsFinished , boost::ref( GetPion()) );
     brain[ "DEC_Transport_Annuler" ] =
-        boost::bind( &DEC_ActionFunctions::Transport_Cancel , boost::ref(GetPion())                    );
+        boost::bind( &DEC_ActionFunctions::Transport_Cancel , boost::ref( GetPion()) );
     brain[ "DEC_Transport_EnCoursDeTransport" ] =
         boost::bind( &DEC_ActionFunctions::Transport_IsTransporting, boost::ref( GetPion() ) );
 
@@ -891,9 +795,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
 
     // Refugies
     brain[ "DEC_Refugies_OrienterEtEmbarquer"  ] =
-        boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent > ) > ( boost::bind(&DEC_ActionFunctions::Refugees_OrientateAndLoad , boost::ref(GetPion()), _1 ) );
+        boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent > ) > ( boost::bind(&DEC_ActionFunctions::Refugees_OrientateAndLoad , boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Refugies_Debarquer"            ] =
-        boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent > ) > ( boost::bind(&DEC_ActionFunctions::Refugees_Unload , boost::ref(GetPion()), _1 ) );
+        boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent > ) > ( boost::bind(&DEC_ActionFunctions::Refugees_Unload , boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Refugies_DebarquerDansCamp"    ] =
         boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > )> ( boost::bind(&DEC_ActionFunctions::Refugees_UnloadInCamp , boost::ref( GetPion() ), _1, _2  ) );
     brain[ "DEC_Refugies_EstEmbarque"          ] =
@@ -923,8 +827,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_RemoveFromPointsCategory"  ] =
         boost::function< void( boost::shared_ptr< DEC_PathPoint > )>( boost::bind( &DEC_MiscFunctions::RemoveFromPointsCategory, boost::ref( *pEntity_ ), _1 ) );
     brain[ "DEC_GetSzName" ] = &DEC_MiscFunctions::GetName;
-
-    DEC_CommunicationFunctions::Register( brain );
 
     pEntity_->GetType().RegisterFunctions( brain, GetPion() );
     //

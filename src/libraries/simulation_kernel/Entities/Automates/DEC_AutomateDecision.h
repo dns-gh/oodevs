@@ -70,6 +70,7 @@ public:
     //! @name Accessors
     //@{
     virtual MIL_Automate& GetAutomate() const;
+    virtual MIL_KnowledgeGroup& GetKnowledgeGroup() const;
     virtual DEC_AutomateDecision* GetDecAutomate() const;
     virtual std::string GetName() const;
 

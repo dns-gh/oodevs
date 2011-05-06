@@ -28,7 +28,7 @@ public:
     //@{
     template< typename T > static std::pair< float, int > GetDominationState( const T& caller, unsigned int knowledgeId );
     template< typename T > static unsigned int GetAttitude( const T& caller, unsigned int knowledgeId );
-                           static float GetDangerosity( const MIL_AgentPion& caller, int knowledgeId);
+                           static float GetDangerosity( const MIL_AgentPion& caller, int knowledgeId );
                            static void Recon( const MIL_AgentPion& caller, int knowledgeId );
     template< typename T > static bool IsRecon( const T& caller, unsigned int knowledgeId );
     template< typename T > static bool IsInZone( const T& caller, unsigned int knowledgeId, TER_Localisation* pLoc );
@@ -40,7 +40,7 @@ public:
                            static int Exterminate( MIL_AgentPion& caller, int knowledgeId, float surface, const PHY_DotationCategory* dotation );
                            static std::string GetCriticalIntelligence( const MIL_AgentPion& caller, int knowledgeId );
                            static bool HasFlow( const MIL_AgentPion& caller, int knowledgeId );
-                           static void ChangeArmedIndividuals( const MIL_AgentPion& callerAgent, int knowledgeId, const double rArmedIndividuals);
+                           static void ChangeArmedIndividuals( const MIL_AgentPion& callerAgent, int knowledgeId, const double rArmedIndividuals );
                            static float GetCrowdAffinity( const MIL_AgentPion& callerAgent, int knowledgeId );
     //@}
 };

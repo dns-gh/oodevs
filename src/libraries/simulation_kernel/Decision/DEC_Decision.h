@@ -50,6 +50,8 @@ public:
     virtual const std::string& GetDIAType() const;
     virtual MIL_AgentPion& GetPion() const;
     virtual MIL_Automate& GetAutomate() const;
+    virtual unsigned int GetID() const;
+    virtual MIL_KnowledgeGroup& GetKnowledgeGroup() const;
 
     //virtual void GarbageCollect();
 

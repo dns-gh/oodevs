@@ -182,32 +182,6 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     brain[ "DEC_DecisionalState" ] =
         boost::function< void ( const std::string&, const std::string& ) >( boost::bind( &DEC_PopulationFunctions::DecisionalState, boost::cref( GetPopulation() ), _1, _2 ) );
 
-    // RC
-    brain[ "DEC_RC1" ] =
-        boost::function< void ( int, int ) >( boost::bind( &DEC_MiscFunctions::Report< MIL_Population >, boost::ref( GetPopulation() ), _1, _2 ) );
-    brain[ "DEC_RC_AgentKnowledge" ] =
-        boost::function< void ( int, int, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_MiscFunctions::ReportAgentKnowledge< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_DotationType" ] =
-        boost::function< void ( int, int, const PHY_DotationCategory* ) >( boost::bind( &DEC_MiscFunctions::ReportDotationType< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_EquipmentType" ] =
-        boost::function< void ( int, int, const PHY_ComposanteTypePion* ) >( boost::bind( &DEC_MiscFunctions::ReportEquipmentType< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_Float" ] =
-        boost::function< void ( int, int, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloat< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_Float_Float" ] =
-        boost::function< void ( int, int, float, float ) >( boost::bind( &DEC_MiscFunctions::ReportFloatFloat< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3, _4 ) );
-    brain[ "DEC_RC_Id" ] =
-        boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportId< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_ObjectKnowledge" ] =
-        boost::function< void ( int, int, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_MiscFunctions::ReportObjectKnoweldge< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_Pion" ] =
-        boost::function< void ( int, int, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPion< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_Pion_Automate" ] =
-        boost::function< void ( int, int, DEC_Decision_ABC*, DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::ReportPionAutomate< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3, _4 ) );
-    brain[ "DEC_RC_TirPion" ] =
-        boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) );
-    brain[ "DEC_RC_String" ] =
-        boost::function< void ( int, int, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString< MIL_Population >, boost::ref( GetPopulation() ), _1, _2, _3 ) );
-
     // Effects
     brain[ "DEC_Population_RalentissementPion_ChangeVitesse" ] =
         boost::function< void ( double ) >(boost::bind( &MIL_Population::SetPionMaxSpeed, boost::ref( GetPopulation() ), _1) );

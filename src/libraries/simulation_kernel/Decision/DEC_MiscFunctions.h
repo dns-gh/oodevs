@@ -48,20 +48,20 @@ class DEC_MiscFunctions
 {
 public:
     // Communication
-    template< typename T > static void Report                   ( T& caller, int type, int reportId );
-    template< typename T > static void ReportAgentKnowledge     ( T& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
-    template< typename T > static void ReportDotationType       ( T& caller, int type, int reportId, const PHY_DotationCategory* dotationType );
-    template< typename T > static void ReportEquipmentType      ( T& caller, int type, int reportId, const PHY_ComposanteTypePion* equipmentType );
-    template< typename T > static void ReportFloat              ( T& caller, int type, int reportId, float param );
-    template< typename T > static void ReportFloatFloat         ( T& caller, int type, int reportId, float param1, float param2 );
-    template< typename T > static void ReportId                 ( T& caller, int type, int reportId, int id );
-    template< typename T > static void ReportObjectKnoweldge    ( T& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    template< typename T > static void ReportPion               ( T& caller, int type, int reportId, DEC_Decision_ABC* pion );
-    template< typename T > static void ReportPionAutomate       ( T& caller, int type, int reportId, DEC_Decision_ABC* pion, DEC_Decision_ABC* automate );
-    template< typename T > static void ReportPionPion           ( T& caller, int type, int reportId, DEC_Decision_ABC* pion1, DEC_Decision_ABC* pion2 );
-    template< typename T > static void ReportPopulationKnowledge( T& caller, int type, int reportId, int populationKnowledge );
-    template< typename T > static void ReportTirPion            ( T& caller, int type, int reportId, int id );
-    template< typename T > static void ReportString             ( T& caller, int type, int reportId, const std::string& message );
+    static void Report                   ( DEC_Decision_ABC& caller, int type, int reportId );
+    static void ReportAgentKnowledge     ( DEC_Decision_ABC& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
+    static void ReportDotationType       ( DEC_Decision_ABC& caller, int type, int reportId, const PHY_DotationCategory* dotationType );
+    static void ReportEquipmentType      ( DEC_Decision_ABC& caller, int type, int reportId, const PHY_ComposanteTypePion* equipmentType );
+    static void ReportFloat              ( DEC_Decision_ABC& caller, int type, int reportId, float param );
+    static void ReportFloatFloat         ( DEC_Decision_ABC& caller, int type, int reportId, float param1, float param2 );
+    static void ReportId                 ( DEC_Decision_ABC& caller, int type, int reportId, int id );
+    static void ReportObjectKnoweldge    ( DEC_Decision_ABC& caller, int type, int reportId, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static void ReportPion               ( DEC_Decision_ABC& caller, int type, int reportId, DEC_Decision_ABC* pion );
+    static void ReportPionAutomate       ( DEC_Decision_ABC& caller, int type, int reportId, DEC_Decision_ABC* pion, DEC_Decision_ABC* automate );
+    static void ReportPionPion           ( DEC_Decision_ABC& caller, int type, int reportId, DEC_Decision_ABC* pion1, DEC_Decision_ABC* pion2 );
+    static void ReportPopulationKnowledge( DEC_Decision_ABC& caller, int type, int reportId, int populationKnowledge );
+    static void ReportTirPion            ( DEC_Decision_ABC& caller, int type, int reportId, int id );
+    static void ReportString             ( DEC_Decision_ABC& caller, int type, int reportId, const std::string& message );
 
     template< typename T > static void Trace          ( const T& caller, const std::string& message );
     template< typename T > static void Debug          ( const T& caller, const std::string& callerType, const std::string& message );
