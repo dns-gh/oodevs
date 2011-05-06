@@ -11,6 +11,7 @@
 #define __ChangeAffinitiesDialog_h_
 
 #include "clients_kernel/SafePointer.h"
+#include "gaming/AffinitiesVisitor_ABC.h"
 
 namespace gui
 {
@@ -30,6 +31,7 @@ namespace kernel
 // Created: ABR 2011-01-25
 // =============================================================================
 class ChangeAffinitiesDialog : public QDialog
+                             , private AffinitiesVisitor_ABC
 {
     Q_OBJECT;
 
@@ -47,6 +49,12 @@ private slots:
     void Validate();
     void Reject();
     void closeEvent( QCloseEvent * e );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual void Visit( unsigned long id,const std::string& team, float& affinity );
     //@}
 
 private:

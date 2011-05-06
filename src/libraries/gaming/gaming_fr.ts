@@ -2,8 +2,8 @@
 <context>
     <name>Affinities</name>
     <message>
-        <source>Affinities/%1</source>
-        <translation>Adhésions/%1</translation>
+        <source>Affinities</source>
+        <translation>Adhésions</translation>
     </message>
 </context>
 <context>

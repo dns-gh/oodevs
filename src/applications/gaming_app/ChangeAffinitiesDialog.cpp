@@ -12,6 +12,7 @@
 #include "moc_ChangeAffinitiesDialog.cpp"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/tools.h"
+#include "clients_gui/DecimalSpinBoxAndSlider.h"
 #include "gaming/Affinities.h"
 
 // -----------------------------------------------------------------------------
@@ -46,6 +47,18 @@ ChangeAffinitiesDialog::~ChangeAffinitiesDialog()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ChangeAffinitiesDialog::Visit
+// Created: LGY 2011-05-06
+// -----------------------------------------------------------------------------
+void ChangeAffinitiesDialog::Visit( unsigned long id, const std::string& team, float& affinity )
+{
+    new QLabel( team.c_str(), affinitiesGrid_ );
+    affinitiesSpinboxs_[ id ] = new gui::DecimalSpinBoxAndSlider( affinitiesGrid_, affinity, 2, -1.f, 1.f, 0.01f, Qt::Horizontal, Qt::Horizontal, true );
+    affinitiesSpinboxs_[ id ]->setMargin( 5 );
+    affinitiesSpinboxs_[ id ]->setSpacing( 5 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ChangeAffinitiesDialog::Show
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
@@ -61,7 +74,7 @@ void ChangeAffinitiesDialog::Show()
     affinitiesGrid_ = new QGrid( 2, this );
     mainLayout_->add( affinitiesGrid_ );
     mainLayout_->add( buttonLayout_ );
-    selected_.ConstCast()->Get< Affinities >().CreateAffinitiesSpinBoxs( affinitiesGrid_, affinitiesSpinboxs_ );
+    selected_.ConstCast()->Get< Affinities >().Accept( *this );
     show();
 }
 
@@ -73,7 +86,6 @@ void ChangeAffinitiesDialog::Validate()
 {
     if( ! selected_ )
         return;
-    selected_.ConstCast()->Get< Affinities >().ValidateChanges();
     accept();
     DoValidate();
 }
@@ -84,7 +96,6 @@ void ChangeAffinitiesDialog::Validate()
 // -----------------------------------------------------------------------------
 void ChangeAffinitiesDialog::Reject()
 {
-    selected_.ConstCast()->Get< Affinities >().CancelChanges();
     reject();
     selected_ = 0;
 }

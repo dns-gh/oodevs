@@ -14,11 +14,6 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 
-namespace gui
-{
-    class DecimalSpinBoxAndSlider;
-}
-
 namespace actions
 {
     namespace parameters
@@ -39,8 +34,8 @@ namespace sword
     class UnitAttributes;
 }
 
-class QGrid;
 class TeamsModel;
+class AffinitiesVisitor_ABC;
 
 // =============================================================================
 /** @class  Affinities
@@ -56,15 +51,13 @@ class Affinities : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Affinities( kernel::Controller& controller, TeamsModel& teams, kernel::PropertiesDictionary& dico );
+             Affinities( kernel::Entity_ABC& entity, kernel::Controller& controller, TeamsModel& teams, kernel::PropertiesDictionary& dico );
     virtual ~Affinities();
     //@}
 
     //! @name Operations
     //@{
-    void CreateAffinitiesSpinBoxs( QGrid* grid, std::map< unsigned long, gui::DecimalSpinBoxAndSlider* >& spinboxs );
-    void CancelChanges();
-    void ValidateChanges();
+    void Accept( AffinitiesVisitor_ABC& visitor );
     void FillParameterList( actions::parameters::ParameterList* parameterList ) const;
     bool HasAffinities() const;
     //@}
@@ -81,7 +74,8 @@ private:
     virtual void DoUpdate( const sword::PopulationUpdate& message );
     virtual void DoUpdate( const sword::CrowdUpdate& message );
     virtual void DoUpdate( const sword::UnitAttributes& message );
-    void CreateDictionary() const;
+    template< typename T >
+    void Update( const T& message );
     //@}
 
     //! @name Types
@@ -94,6 +88,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     TeamsModel& teams_;
     T_Affinities affinities_;

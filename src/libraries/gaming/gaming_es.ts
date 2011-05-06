@@ -2,7 +2,7 @@
 <context>
     <name>Affinities</name>
     <message>
-        <source>Affinities/%1</source>
+        <source>Affinities</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
