@@ -2193,6 +2193,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
+      <parameter dia-name="totalRecce" name="Reconnaissance avancee" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Eclairer" dia-type="france.military.platoon.combat.tasks.Eclairer" id="2093" name="MELEE Eclairer" package="intelligence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4543,4 +4544,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1028106641" -->
+<!-- signature="0621476198" -->
