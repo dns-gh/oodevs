@@ -30,7 +30,7 @@ namespace
 
     bool ReadMask( xml::xistream& xis, unsigned int index )
     {
-        if( xis.attribute< std::string >( "types" ).empty() )
+        if( !xis.has_attribute( "types" ) )
             return true;
         FilterHelper< std::string > equipments( xis, "types" );
         bool result = false;
@@ -76,20 +76,22 @@ LogMedicalEquipments::~LogMedicalEquipments()
 // Name: LogMedicalEquipments::Extract
 // Created: FPO 2011-05-03
 // -----------------------------------------------------------------------------
-float LogMedicalEquipments::Extract( const sword::SimToClient& wrapper ) const
+float LogMedicalEquipments::Extract( const sword::SimToClient& wrapper )
 {
     const sword::LogMedicalState& logstate = wrapper.message().log_medical_state();
     float result = 0;
 
-    if( ambulances_releve_ && logstate.has_evacuation_ambulances() )
+    if( ambulances_releve_.isAsked_ && logstate.has_evacuation_ambulances() )
     {
         const sword::SeqOfLogMedicalEquipmentAvailability& equipments = logstate.evacuation_ambulances();
-        result += addToResult( equipments );
+        ambulances_releve_.quantity_ = addToResult( equipments );
     }
-    if( ambulances_ramassage_ && logstate.has_collection_ambulances() )
+    if( ambulances_ramassage_.isAsked_ && logstate.has_collection_ambulances() )
     {
         const sword::SeqOfLogMedicalEquipmentAvailability& equipments = logstate.collection_ambulances();
-        result += addToResult( equipments );
+        ambulances_ramassage_.quantity_ = addToResult( equipments );
     }
+    result += ambulances_releve_.quantity_;
+    result += ambulances_ramassage_.quantity_;
     return result;
 }

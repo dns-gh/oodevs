@@ -83,12 +83,16 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
         Extract< attributes::Equipments, IdentifierValue >( name, xis, result );
     else if( value == "humans" )
         Extract< attributes::Humans, IdentifierValue >( name, xis, result );
+    else if( value == "populations" )
+        Extract< attributes::PopulationStates, IdentifierValue >( name, xis, result );
     else if( value == "stocks" )
         Extract< attributes::LogSupplyStocks, IdentifierValue >( name, xis, result );
     else if( value == "maintenance-handling-unit" )
         Extract< existences::MaintenanceHandlingUnitId, IdentifierValue >( name, xis, result );
     else if( value == "direct-fire-unit" )
         Extract< existences::DirectFireUnitId, IdentifierValue >( name, xis, result );
+    else if( value == "indirect-fire-unit" )
+        Extract< existences::IndirectFireUnitId, IdentifierValue >( name, xis, result );
     else if( value == "fire-component-damage" )
         Extract< events::FireComponentDamages, IdentifierValue >( name, xis, result );
     else if( value == "fire-human-damage" )

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __LogMedicalEquipments_h_
-#define __LogMedicalEquipments_h_
+#ifndef __PopulationStates_h_
+#define __PopulationStates_h_
 
 #include "Extractors.h"
 #include "FilterHelper.h"
@@ -17,12 +17,12 @@ namespace extractors
 {
 
 // =============================================================================
-/** @class  LogMedicalEquipments
-    @brief  LogMedicalEquipments
+/** @class  PopulationStates
+    @brief  PopulationStates
 */
-// Created: FPO 2011-05-03
+// Created: FPO 2011-05-05
 // =============================================================================
-class LogMedicalEquipments : public Extractor< NumericValue >
+class PopulationStates : public Extractor< NumericValue >
 {
 public:
     //! @name Types
@@ -33,41 +33,40 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-                 LogMedicalEquipments();
-    /*implicit*/ LogMedicalEquipments( xml::xistream& xis );
-    virtual     ~LogMedicalEquipments();
+                 PopulationStates();
+    /*implicit*/ PopulationStates( xml::xistream& xis );
+    virtual     ~PopulationStates();
     //@}
 
     //! @name Operations
     //@{
     bool HasValue( const sword::SimToClient& wrapper ) const
     {
-        return ( wrapper.message().has_log_medical_state() && ( 
-                 wrapper.message().log_medical_state().has_evacuation_ambulances() ||
-                 wrapper.message().log_medical_state().has_collection_ambulances() ) );
+        return ( wrapper.message().has_population_update() );
     }
-    float Extract( const sword::SimToClient& wrapper );
+    int Extract( const sword::SimToClient& wrapper );
     //@}
 
 private:
     //! @name Types
     //@{
-    struct Equip
+    struct State
     {
-        Equip( bool isAsked = false ) : isAsked_( isAsked ), quantity_( 0 ) { }
+        State( bool isAsked = false ) : isAsked_( isAsked ), quantity_( 0 ) { }
         bool isAsked_;
-        float quantity_;
+        int quantity_;
     };
     //@}
 
 private:
     //! @name Member data
     //@{
-       Equip ambulances_releve_;
-       Equip ambulances_ramassage_;
+    State healthy_;
+    State wounded_;
+    State dead_;
     //@}
 };
 
 }
 
-#endif // __LogMedicalEquipments_h_
+#endif // __PopulationStates_h_

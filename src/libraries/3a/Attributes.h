@@ -19,6 +19,7 @@
 #include "LogMedicalEquipments.h"
 #include "LogMaintenanceEquipments.h"
 #include "LogSupplyStocks.h"
+#include "PopulationStates.h"
 
 // =============================================================================
 /** @namespace  Attributes
@@ -62,14 +63,14 @@ struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
 };
 
 template< typename Extractor >
-struct LogisticAttribute : public ContinuousValue< typename Extractor::Type >
+struct Attribute : public ContinuousValue< typename Extractor::Type >
 {
     enum { has_parameter = Extractor::has_parameter };
-    LogisticAttribute()
+    Attribute()
         : extractor_() {}
-    explicit LogisticAttribute( xml::xistream& xis )
+    explicit Attribute( xml::xistream& xis )
         : extractor_( xis ) {}
-    explicit LogisticAttribute( const aar::StaticModel_ABC& model )
+    explicit Attribute( const aar::StaticModel_ABC& model )
         : extractor_( model ) {}
 
     void Receive( const sword::SimToClient& wrapper )
@@ -77,7 +78,6 @@ struct LogisticAttribute : public ContinuousValue< typename Extractor::Type >
         if( extractor_.HasValue( wrapper ) )
             Set( extractor_.Extract( wrapper ) );
     }
-
 Extractor extractor_;
 };
 
@@ -92,9 +92,10 @@ typedef UnitAttribute< extractors::IndirectFirePower >   IndirectFirePower;
 typedef UnitAttribute< extractors::CloseCombatPower >    CloseCombatPower;
 typedef UnitAttribute< extractors::EngineeringPower >    EngineeringPower;
 
-typedef LogisticAttribute< extractors::LogMedicalEquipments > LogMedicalEquipments;
-typedef LogisticAttribute< extractors::LogMaintenanceEquipments > LogMaintenanceEquipments;
-typedef LogisticAttribute< extractors::LogSupplyStocks > LogSupplyStocks;
+typedef Attribute< extractors::LogMedicalEquipments > LogMedicalEquipments;
+typedef Attribute< extractors::LogMaintenanceEquipments > LogMaintenanceEquipments;
+typedef Attribute< extractors::LogSupplyStocks > LogSupplyStocks;
+typedef Attribute< extractors::PopulationStates > PopulationStates;
 
 struct Detections : public ContinuousValue< extractors::UnitDetection::Type >
 {

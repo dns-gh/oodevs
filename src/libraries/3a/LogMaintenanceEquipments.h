@@ -46,14 +46,25 @@ public:
             wrapper.message().log_maintenance_state().has_repairers() ||
             wrapper.message().log_maintenance_state().has_haulers() ) );
     }
-    float Extract( const sword::SimToClient& wrapper ) const;
+    float Extract( const sword::SimToClient& wrapper );
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    struct Equip
+    {
+        Equip( bool isAsked = false ) : isAsked_( isAsked ), quantity_( 0 ) { }
+        bool isAsked_;
+        float quantity_;
+    };
     //@}
 
 private:
     //! @name Member data
     //@{
-    bool repairers_;
-    bool haulers_;
+    Equip repairers_;
+    Equip haulers_;
     //@}
 };
 

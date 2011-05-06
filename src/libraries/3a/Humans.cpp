@@ -27,7 +27,7 @@ namespace
 {
     const unsigned nHumanStates = 9;
     typedef google::protobuf::int32( HumanDotations_HumanDotation::*HumanDotationsMemberFn )()const;
-    HumanDotationsMemberFn humanData[9] =
+    HumanDotationsMemberFn humanData[nHumanStates] =
     {
         &HumanDotations_HumanDotation::total,
         &HumanDotations_HumanDotation::operational,
@@ -39,7 +39,7 @@ namespace
         &HumanDotations_HumanDotation::maintenance,
         &HumanDotations_HumanDotation::unevacuated_wounded
     };
-    const char* humanStates[9] =
+    const char* humanStates[nHumanStates] =
     {
         "total",
         "operational",

@@ -12,6 +12,7 @@
 
 #include "Extractors.h"
 #include "FilterHelper.h"
+#include <map>
 
 namespace extractors
 {
@@ -44,13 +45,14 @@ public:
     {
         return ( wrapper.message().has_log_supply_state() && wrapper.message().log_supply_state().has_stocks() );
     }
-    float Extract( const sword::SimToClient& wrapper ) const;
+    float Extract( const sword::SimToClient& wrapper );
     //@}
 
 private:
     //! @name Member data
     //@{
-        FilterHelper< int > filter_;
+       FilterHelper< int > filter_;
+       std::map< int, int > logSupplyStocks_;
     //@}
 };
 

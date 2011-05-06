@@ -30,7 +30,7 @@ namespace
 
     bool ReadMask( xml::xistream& xis, unsigned int index )
     {
-        if( xis.attribute< std::string >( "types" ).empty() )
+        if( !xis.has_attribute( "types" ) )
             return true;
         FilterHelper< std::string > equipments( xis, "types" );
         bool result = false;
@@ -75,20 +75,22 @@ LogMaintenanceEquipments::~LogMaintenanceEquipments()
 // Name: LogMaintenanceEquipments::Extract
 // Created: FPO 2011-05-04
 // -----------------------------------------------------------------------------
-float LogMaintenanceEquipments::Extract( const sword::SimToClient& wrapper ) const
+float LogMaintenanceEquipments::Extract( const sword::SimToClient& wrapper )
 {
     const sword::LogMaintenanceState& logstate = wrapper.message().log_maintenance_state();
     float result = 0;
 
-    if( repairers_ && logstate.has_repairers() )
+    if( repairers_.isAsked_ && logstate.has_repairers() )
     {
         const sword::SeqOfLogMaintenanceEquipmentAvailability& equipments = logstate.repairers();
-        result += addToResult( equipments );
+        repairers_.quantity_ = addToResult( equipments );
     }
-    if( haulers_ && logstate.has_haulers() )
+    if( haulers_.isAsked_ && logstate.has_haulers() )
     {
         const sword::SeqOfLogMaintenanceEquipmentAvailability& equipments = logstate.haulers();
-        result += addToResult( equipments );
+        haulers_.quantity_ = addToResult( equipments );
     }
+    result += repairers_.quantity_;
+    result += haulers_.quantity_;
     return result;
 }

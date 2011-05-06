@@ -60,6 +60,7 @@ struct IdentifierValue : public IdentifierValue_ABC
         SET_OID( stop_unit_fire, fire().id );
         SET_OID( start_crowd_fire, fire().id );
         SET_OID( stop_crowd_fire, fire().id );
+        SET_OID( population_update, id().id );
         // $$$$ AGE 2007-08-29: objets, ...
     }
     //@}

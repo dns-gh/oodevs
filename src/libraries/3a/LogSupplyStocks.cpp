@@ -43,7 +43,7 @@ LogSupplyStocks::~LogSupplyStocks()
 // Name: LogSupplyStocks::Extract
 // Created: FPO 2011-05-04
 // -----------------------------------------------------------------------------
-float LogSupplyStocks::Extract( const sword::SimToClient& wrapper ) const
+float LogSupplyStocks::Extract( const sword::SimToClient& wrapper )
 {
     const sword::LogSupplyState& logstate = wrapper.message().log_supply_state();
     float result = 0;
@@ -54,9 +54,14 @@ float LogSupplyStocks::Extract( const sword::SimToClient& wrapper ) const
         for( int i = 0; i < stocks.elem_size(); ++i )
         {
             const sword::DotationStock& stock = stocks.elem( i );
-            if( filter_.IsAllowed( stock.resource().id() ) )
-                result += stocks.elem( i ).quantity();
+            const int resourceId = stock.resource().id();
+            const int quantity = stock.quantity();
+            if( filter_.IsAllowed( resourceId ) )
+                logSupplyStocks_[ resourceId ] = quantity;
         }
     }
+
+    for( std::map< int, int >::const_iterator it = logSupplyStocks_.begin(); it != logSupplyStocks_.end(); ++it )
+        result += it->second;
     return result;
 }
