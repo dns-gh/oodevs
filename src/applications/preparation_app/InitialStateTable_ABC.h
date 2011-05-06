@@ -12,7 +12,6 @@
 
 #include <boost/noncopyable.hpp>
 
-class StaticModel;
 class InitialState;
 
 // =============================================================================
@@ -22,7 +21,7 @@ class InitialState;
 // Created: ABR 2011-02-24
 // =============================================================================
 class InitialStateTable_ABC : public QTable
-                          , private boost::noncopyable
+                            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

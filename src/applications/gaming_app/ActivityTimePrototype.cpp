@@ -14,7 +14,6 @@
 #include "actions/ParameterList.h"
 
 using namespace sword;
-
 using namespace kernel;
 using namespace gui;
 
@@ -23,7 +22,7 @@ using namespace gui;
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
 ActivityTimePrototype::ActivityTimePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList )
-    : ActivityTimePrototype_ABC ( parent )
+    : ActivityTimePrototype_ABC( parent )
     , attributesList_( attributesList )
 {
     // NOTHING

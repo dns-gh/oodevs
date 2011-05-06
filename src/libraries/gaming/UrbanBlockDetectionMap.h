@@ -10,6 +10,8 @@
 #ifndef __UrbanBlockDetectionMap_h_
 #define __UrbanBlockDetectionMap_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class DetectionMap;
@@ -22,21 +24,12 @@ namespace kernel
 */
 // Created: SLG 2010-03-12
 // =============================================================================
-class UrbanBlockDetectionMap
+class UrbanBlockDetectionMap : private boost::noncopyable
 {
-public:
-    //! @name Types
-    //@{
-    struct UrbanBlockEnvironment
-    {
-        kernel::Object_ABC* data_;
-    };
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanBlockDetectionMap( const kernel::DetectionMap& map );
+    explicit UrbanBlockDetectionMap( const kernel::DetectionMap& map );
     virtual ~UrbanBlockDetectionMap();
     //@}
 
@@ -47,10 +40,12 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Types
     //@{
-    UrbanBlockDetectionMap( const UrbanBlockDetectionMap& );            //!< Copy constructor
-    UrbanBlockDetectionMap& operator=( const UrbanBlockDetectionMap& ); //!< Assignment operator
+    struct UrbanBlockEnvironment
+    {
+        kernel::Object_ABC* data_;
+    };
     //@}
 
 private:

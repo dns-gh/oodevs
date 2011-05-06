@@ -1364,10 +1364,6 @@
         <source>Unknown urban object</source>
         <translation>Objet urbain inconnu</translation>
     </message>
-    <message>
-        <source>Urban block[%1]</source>
-        <translation>Blocs urbain[%1]</translation>
-    </message>
 </context>
 <context>
     <name>UserProfileFactory</name>

@@ -31,7 +31,7 @@ class ActivityTimePrototype : public gui::ActivityTimePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ActivityTimePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
+             ActivityTimePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
     virtual ~ActivityTimePrototype();
     //@}
 
