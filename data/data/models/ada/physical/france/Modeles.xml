@@ -11581,13 +11581,16 @@
         <mission name="COMMUNES AllerA">
           <fragorder name="Population Changer Attitude"/>
         </mission>
-        <mission name="Agresser">
+        <mission name="FOULES Agresser">
           <fragorder name="Population Changer Attitude"/>
         </mission>
-        <mission name="Deteriorer">
+        <mission name="FOULES Deteriorer">
           <fragorder name="Population Changer Attitude"/>
         </mission>
-        <mission name="Proteger">
+        <mission name="FOULES Proteger">
+          <fragorder name="Population Changer Attitude"/>
+        </mission>
+        <mission name="FOULES Manifester">
           <fragorder name="Population Changer Attitude"/>
         </mission>
       </missions>
@@ -11597,4 +11600,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3942114542" -->
+<!-- signature="2321255306" -->

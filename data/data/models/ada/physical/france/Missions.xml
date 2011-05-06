@@ -4328,7 +4328,7 @@
     <mission dia-behavior="MIS_Population_CommettreExactions" dia-type="T_Mission_Population_CommettreExactions" id="334" name="Commettre Exactions">
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="335" name="Deteriorer">
+    <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="335" name="FOULES Deteriorer">
       <parameter dia-name="objectif" name="objectif" optional="false" type="UrbanKnowledge"/>
     </mission>
     <mission dia-behavior="france.military.crowd.tasks.AllerA" dia-type="france.military.crowd.tasks.AllerA" id="3000" name="COMMUNES AllerA">
@@ -4340,15 +4340,24 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.crowd.tasks.Agresser" dia-type="france.military.crowd.tasks.Agresser" id="3001" name="Agresser">
+    <mission dia-behavior="france.military.crowd.tasks.Agresser" dia-type="france.military.crowd.tasks.Agresser" id="3001" name="FOULES Agresser">
       <parameter dia-name="objectif" name="Cible" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Agent"/>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.crowd.tasks.Proteger" dia-type="france.military.crowd.tasks.Proteger" id="3002" name="Proteger">
+    <mission dia-behavior="france.military.crowd.tasks.Proteger" dia-type="france.military.crowd.tasks.Proteger" id="3002" name="FOULES Proteger">
       <parameter dia-name="objectif" name="Cible" optional="false" type="Agent"/>
+    </mission>
+    <mission dia-behavior="france.military.crowd.tasks.Manifester" dia-type="france.military.crowd.tasks.Manifester" id="3003" name="FOULES Manifester">
+      <parameter dia-name="objectif" name="Destination" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Agent"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
   </populations>
   <fragorders>
@@ -4544,4 +4553,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3506679790" -->
+<!-- signature="1791309700" -->
