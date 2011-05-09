@@ -8,14 +8,15 @@
 // *****************************************************************************
 
 #include "3a_test_pch.h"
+#include "3aTestTools.h"
+#include "MockStaticModel.h"
+#include "MockClientPublisher.h"
 #include "3a/DispatchedFunctionHelper.h"
 #include "3a/Attributes.h"
 #include "3a/IdentifierValue.h"
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
 #include "protocol/Protocol.h"
-#include "MockStaticModel.h"
-#include "MockClientPublisher.h"
 #include <xeumeuleu/xml.hpp>
 #include <geocoord/geodetic.h>
 #include <geocoord/mgrs.h>
@@ -26,228 +27,6 @@ namespace
 {
     static unsigned int currentTick_ = 1;
 
-    SimToClient OperationalState( unsigned opstate, unsigned long id )
-    {
-        SimToClient result;
-        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_unit()->set_id( id );
-        attributes.set_raw_operational_state( opstate );
-        return result;
-    }
-    SimToClient BeginTick()
-    {
-        SimToClient result;
-        ControlBeginTick beginTick;
-        beginTick.set_current_tick( currentTick_++ );
-        *result.mutable_message()->mutable_control_begin_tick() = beginTick ;
-        return result;
-    }
-    SimToClient EndTick()
-    {
-        SimToClient result;
-        ControlEndTick endTick;
-        *result.mutable_message()->mutable_control_end_tick() = endTick ;
-        return result;
-    }
-    SimToClient MakeUnitCreation( unsigned long id, unsigned long type_id )
-    {
-        SimToClient result;
-        UnitCreation& message = *result.mutable_message()->mutable_unit_creation();
-        message.mutable_unit()->set_id( id );
-        message.mutable_type()->set_id( type_id );
-        message.set_name( "test" );
-        message.mutable_automat()->set_id( 12 );
-        message.set_pc( false );
-        return result;
-    }
-    bool CheckValue( const AarToClient& expected, const AarToClient& actual )
-    {
-        BOOST_CHECK_EQUAL( expected.DebugString(), actual.DebugString() );
-        return expected.DebugString() == actual.DebugString();
-    }
-    template< std::size_t N >
-    void MakeExpectation( MockClientPublisher& mocker, double (&data)[N] )
-    {
-        AarToClient result;
-        result.set_context( 0 );
-        PlotResult& plot = *result.mutable_message()->mutable_plot_result();
-        plot.set_identifier( 42 );
-        plot.set_error( "" );
-        for( unsigned i = 0; i < N; ++i )
-            plot.add_values( static_cast< float >( data[i] ) );
-        MOCK_EXPECT( mocker, Send4 ).once().with( boost::bind( &CheckValue, result, _1 ) );
-    }
-    SimToClient MakeEquipementVariation( int variation[5], unsigned long id, unsigned long equipmentId = 42 )
-    {
-        SimToClient result;
-        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_unit()->set_id( id );
-        EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_equipment_dotations()->add_elem();
-        equipment.mutable_type()->set_id( equipmentId );
-        equipment.set_available( variation[0] );
-        equipment.set_unavailable( variation[1] );
-        equipment.set_repairable( variation[2] );
-        equipment.set_repairing( variation[3] );
-        equipment.set_captured( variation[4] );
-        return result;
-    }
-    SimToClient MakePosition( const char* position, unsigned long id )
-    {
-        SimToClient result;
-        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_unit()->set_id( id );
-        geocoord::MGRS mgrs( position );
-        geocoord::Geodetic geodetic( mgrs );
-        attributes.mutable_position()->set_latitude( geodetic.GetLatitude() * 180 / std::acos( -1. ) );
-        attributes.mutable_position()->set_longitude( geodetic.GetLongitude() * 180 / std::acos( -1. ) );
-        return result;
-    }
-    SimToClient MakeResourceVariation( int variation, unsigned long id, unsigned long resourceId = 42 )
-    {
-        SimToClient result;
-        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_unit()->set_id( id );
-        ResourceDotations_ResourceDotation& resource = *attributes.mutable_resource_dotations()->add_elem();
-        resource.mutable_type()->set_id( resourceId );
-        resource.set_quantity( variation );
-        return result;
-    }
-    SimToClient MakeStockVariation( int variation, unsigned long id, unsigned long stockId )
-    {
-        SimToClient result;
-        LogSupplyState& supplystate = *result.mutable_message()->mutable_log_supply_state();
-        supplystate.mutable_unit()->set_id( id );
-        DotationStock& stock = *supplystate.mutable_stocks()->add_elem();
-        stock.mutable_resource()->set_id( stockId );
-        stock.set_quantity( variation );
-        return result;
-    }
-    SimToClient CreateUnitDetection( unsigned int detector, unsigned int detected, sword::UnitVisibility::Level visibility )
-    {
-        SimToClient result;
-        sword::UnitDetection& message = *result.mutable_message()->mutable_unit_detection();
-        message.mutable_observer()->set_id( detector );
-        message.mutable_detected_unit()->set_id( detected );
-        message.set_current_visibility( visibility );
-        message.set_max_visibility( visibility );
-        return result;
-    }
-    SimToClient MakeMounted( bool mounted, unsigned long id )
-    {
-        SimToClient result;
-        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_unit()->set_id( id );
-        attributes.set_embarked( mounted );
-        return result;
-    }
-    SimToClient MakeHumanVariation( int state[8], unsigned long id )
-    {
-        SimToClient result;
-        UnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
-        attributes.mutable_unit()->set_id( id );
-        HumanDotations_HumanDotation& personnel = *attributes.mutable_human_dotations()->add_elem();
-        personnel.set_rank( sword::officer );
-        personnel.set_total( state[0] );
-        personnel.set_operational( state[1] );
-        personnel.set_dead( state[2] );
-        personnel.set_wounded( state[3] );
-        personnel.set_mentally_wounded( state[4] );
-        personnel.set_contaminated( state[5] );
-        personnel.set_healing( state[6] );
-        personnel.set_maintenance( state[7] );
-        personnel.set_unevacuated_wounded( 0 );
-        return result;
-    }
-    SimToClient MakeAmbulances ( int evacuationNumber, int collectionNumber, unsigned long id )
-    {
-        SimToClient result;
-        LogMedicalState& medicalstate = *result.mutable_message()->mutable_log_medical_state();
-        medicalstate.mutable_unit()->set_id( id );
-        LogMedicalEquipmentAvailability& evacuationEquipment = *medicalstate.mutable_evacuation_ambulances()->add_elem();
-        LogMedicalEquipmentAvailability& collectionEquipment = *medicalstate.mutable_collection_ambulances()->add_elem();
-        evacuationEquipment.set_total( evacuationNumber );
-        collectionEquipment.set_total( collectionNumber );
-        return result;
-    }
-    SimToClient MakeMaintenance ( int repairersNumber, int haulersNumber, unsigned long id )
-    {
-        SimToClient result;
-        LogMaintenanceState& maintenancestate = *result.mutable_message()->mutable_log_maintenance_state();
-        maintenancestate.mutable_unit()->set_id( id );
-        LogMaintenanceEquipmentAvailability& repairers = *maintenancestate.mutable_repairers()->add_elem();
-        LogMaintenanceEquipmentAvailability& haulers = *maintenancestate.mutable_haulers()->add_elem();
-        repairers.set_total( repairersNumber );
-        haulers.set_total( haulersNumber );
-        return result;
-    }
-    SimToClient UpdatePopulation ( int healthy, int wounded, int dead, unsigned long id )
-    {
-        SimToClient result;
-        PopulationUpdate& updatestates = *result.mutable_message()->mutable_population_update();
-        updatestates.mutable_id()->set_id( id );
-        updatestates.set_healthy( healthy );
-        updatestates.set_wounded( wounded );
-        updatestates.set_dead( dead );
-        return result;
-    }
-    SimToClient UpdatePopulationbis ( int healthy, int wounded, unsigned long id )
-    {
-        SimToClient result;
-        PopulationUpdate& updatestates = *result.mutable_message()->mutable_population_update();
-        updatestates.mutable_id()->set_id( id );
-        updatestates.set_healthy( healthy );
-        updatestates.set_wounded( wounded );
-        return result;
-    }
-    SimToClient CreateDirectFire( unsigned fire_id, unsigned long firer )
-    {
-        SimToClient result;
-        StartUnitFire& fire = *result.mutable_message()->mutable_start_unit_fire();
-        fire.mutable_fire()->set_id( fire_id );
-        fire.mutable_firing_unit()->set_id( firer );
-        fire.set_type( StartUnitFire_UnitFireType_direct );
-        return result;
-    }
-    SimToClient CreateIndirectFire( unsigned fire_id, unsigned long firer )
-    {
-        SimToClient result;
-        StartUnitFire& fire = *result.mutable_message()->mutable_start_unit_fire();
-        fire.mutable_fire()->set_id( fire_id );
-        fire.mutable_firing_unit()->set_id( firer );
-        fire.set_type( StartUnitFire_UnitFireType_indirect );
-        return result;
-    }
-    SimToClient StopFire( unsigned fire_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0 )
-    {
-        SimToClient result;
-        StopUnitFire& fire = *result.mutable_message()->mutable_stop_unit_fire();
-        fire.mutable_fire()->set_id( fire_id );
-        UnitFireDamages& damage = *fire.mutable_units_damages()->add_elem();
-        damage.mutable_equipments()->add_elem()->set_unavailable( damage_count );
-        damage.mutable_humans()->add_elem()->set_dead( deadhumans_count );
-        damage.mutable_target()->set_id( target_id );
-        return result;
-    }
-    SimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0  )
-    {
-        SimToClient result;
-        LogMaintenanceHandlingCreation& creation = *result.mutable_message()->mutable_log_maintenance_handling_creation();
-        creation.mutable_request()->set_id( id );
-        creation.mutable_unit()->set_id( unit_id ) ;
-        return result;
-    }
-
-    SimToClient DestroyConsign( unsigned long id )
-    {
-        SimToClient result;
-        LogMaintenanceHandlingDestruction& destruction = *result.mutable_message()->mutable_log_maintenance_handling_destruction();
-        destruction.mutable_request()->set_id( id );
-        return result;
-    }
-    bool IsCloseCombatPower( const extractors::PowerExtractor_ABC& extractor )
-    {
-        return dynamic_cast< const extractors::CloseCombatPower* >( &extractor ) != 0;
-    }
     class Fixture
     {
     public:
@@ -274,26 +53,26 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalState, Fixture )
                              "    <result function='plot' input='myopstate' type='float'/>"
                              " </indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( OperationalState( 50, 1 ) );
-    task->Receive( OperationalState( 25, 2 ) );
-    task->Receive( OperationalState( 75, 3 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeUnitCreation( 51, 42 ) ); //testing unit creation in a tick
-    task->Receive( OperationalState( 75, 1 ) );
-    task->Receive( OperationalState( 85, 3 ) );
-    task->Receive( EndTick() );
-    task->Receive( MakeUnitCreation( 52, 42 ) ); //testing unit creation between two ticks
-    task->Receive( BeginTick() );
-    task->Receive( OperationalState( 75, 2 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 50, 1 ) );
+    task->Receive( TestTools::OperationalState( 25, 2 ) );
+    task->Receive( TestTools::OperationalState( 75, 3 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeUnitCreation( 51, 42 ) ); //testing unit creation in a tick
+    task->Receive( TestTools::OperationalState( 75, 1 ) );
+    task->Receive( TestTools::OperationalState( 85, 3 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::MakeUnitCreation( 52, 42 ) ); //testing unit creation between two ticks
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 75, 2 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 0.25, 0.25, 0.75, 0.75 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -310,22 +89,22 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalStateNormalized, Fixture )
                              "    <result function='plot' input='mynormalizedopstate' type='float'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( OperationalState( 50, 1 ) );
-    task->Receive( OperationalState( 25, 2 ) );
-    task->Receive( OperationalState( 75, 3 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( OperationalState( 75, 1 ) );
-    task->Receive( OperationalState( 85, 3 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( OperationalState( 75, 2 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 50, 1 ) );
+    task->Receive( TestTools::OperationalState( 25, 2 ) );
+    task->Receive( TestTools::OperationalState( 75, 3 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 75, 1 ) );
+    task->Receive( TestTools::OperationalState( 85, 3 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 75, 2 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 0, 0, 1, 1 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -351,20 +130,20 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDistanceBetweenTwoUnits, Fixture )
                              "    <result function='plot' input='distance' type='float'/>"
                              "</indicator>" ) ;
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TBN7728449218", 1 ) );
-    task->Receive( MakePosition( "31TBN7728449218", 2 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TBN7728449217", 1 ) );
-    task->Receive( MakePosition( "31TBN7728449219", 2 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TBN7728449216", 1 ) );
-    task->Receive( MakePosition( "31TBN7728449220", 2 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 1 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 2 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449217", 1 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449219", 2 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449216", 1 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449220", 2 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 0., 2.00212, 4.00424 }; // $$$$ _RC_ LGY 2010-08-10: margin?
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -380,19 +159,19 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestMountedUnit, Fixture )
                              "    <result function='plot' input='m1' type='float'/>"
                              "</indicator>" ) ;
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakeMounted( true, 1 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeMounted( false, 1 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeMounted( true, 1 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeMounted( true, 1 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeMounted( false, 1 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeMounted( true, 1 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 0., 1., 0., 0. };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -431,21 +210,21 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdowns, Fixture )
                               "    <result function='plot' input='count' type='unsigned'/>"
                               "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( CreateConsign( 12 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateConsign( 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( DestroyConsign( 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateConsign( 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateConsign( 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::DestroyConsign( 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 1., 2., 2., 2., 1. };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -463,25 +242,25 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter, Fixture )
                              "    <result function='plot' input='count' type='unsigned'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( CreateConsign( 12, 12 ) );
-    task->Receive( CreateConsign( 13, 13 ) );
-    task->Receive( CreateConsign( 14, 12 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateConsign( 42, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( DestroyConsign( 13 ) );
-    task->Receive( CreateConsign( 15, 15 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( DestroyConsign( 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateConsign( 12, 12 ) );
+    task->Receive( TestTools::CreateConsign( 13, 13 ) );
+    task->Receive( TestTools::CreateConsign( 14, 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateConsign( 42, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::DestroyConsign( 13 ) );
+    task->Receive( TestTools::CreateConsign( 15, 15 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::DestroyConsign( 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 2., 3., 3., 3., 2. };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -507,32 +286,32 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter, Fixture )
                              "    <result function='plot' input='count' type='unsigned'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 12, 12 ) );
-    task->Receive( CreateDirectFire( 13, 13 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 12, 16 ) );
-    task->Receive( StopFire( 13, 16 ) );
-    task->Receive( CreateDirectFire( 14, 14 ) );
-    task->Receive( CreateDirectFire( 15, 15 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 13, 16 ) );
-    task->Receive( StopFire( 14, 18 ) );
-    task->Receive( StopFire( 15, 19 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 16, 15 ) );
-    task->Receive( CreateDirectFire( 17, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 16, 16 ) );
-    task->Receive( CreateDirectFire( 18, 13 ) );
-    task->Receive( CreateDirectFire( 19, 14 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 12, 12 ) );
+    task->Receive( TestTools::CreateDirectFire( 13, 13 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 12, 16 ) );
+    task->Receive( TestTools::StopFire( 13, 16 ) );
+    task->Receive( TestTools::CreateDirectFire( 14, 14 ) );
+    task->Receive( TestTools::CreateDirectFire( 15, 15 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 13, 16 ) );
+    task->Receive( TestTools::StopFire( 14, 18 ) );
+    task->Receive( TestTools::StopFire( 15, 19 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 16, 15 ) );
+    task->Receive( TestTools::CreateDirectFire( 17, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 16, 16 ) );
+    task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
+    task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 1., 1., 0., 1., 1. };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -550,32 +329,32 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfIndirectFiresWithUnitFilter, Fixture
                              "    <result function='plot' input='count' type='unsigned'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( CreateIndirectFire( 12, 12 ) );
-    task->Receive( CreateIndirectFire( 13, 13 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 12, 16 ) );
-    task->Receive( StopFire( 13, 16 ) );
-    task->Receive( CreateIndirectFire( 14, 14 ) );
-    task->Receive( CreateIndirectFire( 15, 15 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 13, 16 ) );
-    task->Receive( StopFire( 14, 18 ) );
-    task->Receive( StopFire( 15, 19 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateIndirectFire( 16, 15 ) );
-    task->Receive( CreateIndirectFire( 17, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 16, 16 ) );
-    task->Receive( CreateIndirectFire( 18, 13 ) );
-    task->Receive( CreateIndirectFire( 19, 14 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateIndirectFire( 12, 12 ) );
+    task->Receive( TestTools::CreateIndirectFire( 13, 13 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 12, 16 ) );
+    task->Receive( TestTools::StopFire( 13, 16 ) );
+    task->Receive( TestTools::CreateIndirectFire( 14, 14 ) );
+    task->Receive( TestTools::CreateIndirectFire( 15, 15 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 13, 16 ) );
+    task->Receive( TestTools::StopFire( 14, 18 ) );
+    task->Receive( TestTools::StopFire( 15, 19 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateIndirectFire( 16, 15 ) );
+    task->Receive( TestTools::CreateIndirectFire( 17, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 16, 16 ) );
+    task->Receive( TestTools::CreateIndirectFire( 18, 13 ) );
+    task->Receive( TestTools::CreateIndirectFire( 19, 14 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 1., 1., 0., 1., 1. };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -602,33 +381,33 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire, Fix
                              "    <result function='plot' input='sum' type='float'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 12, 12 ) );
-    task->Receive( CreateDirectFire( 13, 13 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 12, 16, 5 ) );
-    task->Receive( StopFire( 13, 16 ) );
-    task->Receive( CreateDirectFire( 14, 14 ) );
-    task->Receive( CreateDirectFire( 15, 15 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 13, 16 ) );
-    task->Receive( StopFire( 14, 18 ) );
-    task->Receive( StopFire( 15, 19 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 16, 15 ) );
-    task->Receive( CreateDirectFire( 17, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 16, 18 ) );
-    task->Receive( CreateDirectFire( 18, 13 ) );
-    task->Receive( CreateDirectFire( 19, 14 ) );
-    task->Receive( StopFire( 17, 16, 3 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 12, 12 ) );
+    task->Receive( TestTools::CreateDirectFire( 13, 13 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 12, 16, 5 ) );
+    task->Receive( TestTools::StopFire( 13, 16 ) );
+    task->Receive( TestTools::CreateDirectFire( 14, 14 ) );
+    task->Receive( TestTools::CreateDirectFire( 15, 15 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 13, 16 ) );
+    task->Receive( TestTools::StopFire( 14, 18 ) );
+    task->Receive( TestTools::StopFire( 15, 19 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 16, 15 ) );
+    task->Receive( TestTools::CreateDirectFire( 17, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 16, 18 ) );
+    task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
+    task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
+    task->Receive( TestTools::StopFire( 17, 16, 3 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 0., 5., 0., 0., 3. };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -651,38 +430,38 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithC
                              "    <result function='plot' input='sum' type='float'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TBN7728449218", 12 ) );
-    task->Receive( MakePosition( "31TBN7728449242", 13 ) );
-    task->Receive( MakePosition( "31TBN7728449212", 14 ) );
-    task->Receive( MakePosition( "31TBN7728449242", 15 ) );
-    task->Receive( MakePosition( "31TBN7728449220", 42 ) );
-    task->Receive( CreateDirectFire( 12, 12 ) );
-    task->Receive( CreateDirectFire( 13, 13 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 12, 18, 5 ) );
-    task->Receive( StopFire( 13, 19 ) );
-    task->Receive( CreateDirectFire( 14, 14 ) );
-    task->Receive( CreateDirectFire( 15, 15 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 13, 14 ) );
-    task->Receive( StopFire( 14, 13 ) );
-    task->Receive( StopFire( 15, 18 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 16, 15 ) );
-    task->Receive( CreateDirectFire( 17, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 16, 13 ) );
-    task->Receive( CreateDirectFire( 18, 13 ) );
-    task->Receive( CreateDirectFire( 19, 14 ) );
-    task->Receive( StopFire( 17, 17, 3 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 12 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449242", 13 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449212", 14 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449242", 15 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449220", 42 ) );
+    task->Receive( TestTools::CreateDirectFire( 12, 12 ) );
+    task->Receive( TestTools::CreateDirectFire( 13, 13 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 12, 18, 5 ) );
+    task->Receive( TestTools::StopFire( 13, 19 ) );
+    task->Receive( TestTools::CreateDirectFire( 14, 14 ) );
+    task->Receive( TestTools::CreateDirectFire( 15, 15 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 13, 14 ) );
+    task->Receive( TestTools::StopFire( 14, 13 ) );
+    task->Receive( TestTools::StopFire( 15, 18 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 16, 15 ) );
+    task->Receive( TestTools::CreateDirectFire( 17, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 16, 13 ) );
+    task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
+    task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
+    task->Receive( TestTools::StopFire( 17, 17, 3 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 0., 5., 0., 0., 3. };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -699,24 +478,24 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAllResources, Fixture )
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 4212, 12, 42 ) );
-    task->Receive( MakeResourceVariation( 1242, 13, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 4200, 12, 42 ) );
-    task->Receive( MakeResourceVariation( 1200, 13, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 1000, 14 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 4100, 12 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 4212, 12, 42 ) );
+    task->Receive( TestTools::MakeResourceVariation( 1242, 13, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 4200, 12, 42 ) );
+    task->Receive( TestTools::MakeResourceVariation( 1200, 13, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 1000, 14 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 4100, 12 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 5454, 5400, 5400, 6400, 6300 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -738,28 +517,28 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourc
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 4212, 12, 42 ) );
-    task->Receive( MakeResourceVariation( 1242, 13, 42 ) );
-    task->Receive( MakeResourceVariation( 1000, 15, 12 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 4200, 12, 42 ) );
-    task->Receive( MakeResourceVariation( 1200, 13, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 5200, 12, 42 ) );
-    task->Receive( MakeResourceVariation( 2200, 13, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 1000, 14, 15 ) );
-    task->Receive( MakeResourceVariation(  500, 15, 12 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 5100, 12, 42 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 4212, 12, 42 ) );
+    task->Receive( TestTools::MakeResourceVariation( 1242, 13, 42 ) );
+    task->Receive( TestTools::MakeResourceVariation( 1000, 15, 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 4200, 12, 42 ) );
+    task->Receive( TestTools::MakeResourceVariation( 1200, 13, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 5200, 12, 42 ) );
+    task->Receive( TestTools::MakeResourceVariation( 2200, 13, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 1000, 14, 15 ) );
+    task->Receive( TestTools::MakeResourceVariation(  500, 15, 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 5100, 12, 42 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 0, -54, 0, 0, -100 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -780,28 +559,28 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter, Fixt
                              "    <result function='plot' input='total' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 4212, 12, 42 ) );
-    task->Receive( MakeResourceVariation( 1242, 13, 42 ) );
-    task->Receive( MakeResourceVariation( 1000, 15, 12 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 4200, 12, 42 ) );
-    task->Receive( MakeResourceVariation( 1200, 13, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 5200, 12, 42 ) );
-    task->Receive( MakeResourceVariation( 2200, 13, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 1000, 14, 15 ) );
-    task->Receive( MakeResourceVariation(  500, 15, 12 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 5100, 12, 42 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 4212, 12, 42 ) );
+    task->Receive( TestTools::MakeResourceVariation( 1242, 13, 42 ) );
+    task->Receive( TestTools::MakeResourceVariation( 1000, 15, 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 4200, 12, 42 ) );
+    task->Receive( TestTools::MakeResourceVariation( 1200, 13, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 5200, 12, 42 ) );
+    task->Receive( TestTools::MakeResourceVariation( 2200, 13, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 1000, 14, 15 ) );
+    task->Receive( TestTools::MakeResourceVariation(  500, 15, 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 5100, 12, 42 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 0, -54, -54, -54, -154 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -820,28 +599,28 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestEquipments, Fixture )
     int base  [5] = { 5, 0, 0, 0, 0 }; //  0
     int prison[5] = { 2, 1, 0, 1, 1 }; // -2
     int casse [5] = { 2, 1, 1, 1, 0 }; // -3
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( base, 12, 42 ) );
-    task->Receive( MakeEquipementVariation( base, 13, 42 ) );
-    task->Receive( MakeEquipementVariation( base, 15, 12 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( prison, 12, 42 ) );
-    task->Receive( MakeEquipementVariation( casse, 13, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( casse, 12, 42 ) );
-    task->Receive( MakeEquipementVariation( prison, 13, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( base, 14, 15 ) );
-    task->Receive( MakeEquipementVariation( base, 16, 12 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( prison, 12, 42 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( base, 12, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( base, 13, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( base, 15, 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( prison, 12, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( casse, 13, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( casse, 12, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( prison, 13, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( base, 14, 15 ) );
+    task->Receive( TestTools::MakeEquipementVariation( base, 16, 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( prison, 12, 42 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 15, 10, 10, 15, 16 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -858,15 +637,15 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestHumans, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int state[8] = { 0, 0, 1, 0, 0, 0, 0, 0 };
-    task->Receive( BeginTick() );
-    task->Receive( MakeHumanVariation( state, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeHumanVariation( state, 42 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeHumanVariation( state, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeHumanVariation( state, 42 ) );
+    task->Receive( TestTools::EndTick() );
     {
         double expectedResult[] = { 1, 1 };
-        MakeExpectation( publisher, expectedResult );
+        TestTools::MakeExpectation( publisher, expectedResult );
     }
     task->Commit();
 }
@@ -919,24 +698,24 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestConflicts, Fixture )
                              "    <result function='plot' input='6' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 12, 55 ) );
-    task->Receive( CreateDirectFire( 13, 56 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 12, 18 ) );
-    task->Receive( StopFire( 13, 19 ) );
-    task->Receive( CreateDirectFire( 14, 55 ) );
-    task->Receive( CreateDirectFire( 15, 56 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 14, 16 ) );
-    task->Receive( StopFire( 15, 13 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 12, 55 ) );
+    task->Receive( TestTools::CreateDirectFire( 13, 56 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 12, 18 ) );
+    task->Receive( TestTools::StopFire( 13, 19 ) );
+    task->Receive( TestTools::CreateDirectFire( 14, 55 ) );
+    task->Receive( TestTools::CreateDirectFire( 15, 56 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 14, 16 ) );
+    task->Receive( TestTools::StopFire( 15, 13 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 2, 4, 8, 10 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -953,21 +732,21 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnitDetection, Fixture )
                              "    <result function='plot' input='2' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::identified ) ); // ok
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 51, sword::UnitVisibility::recognized ) ); // irrelevant detected unit
-    task->Receive( CreateUnitDetection( 51, 69, sword::UnitVisibility::detected ) ); // irrelevant detecting unit
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::invisible ) ); // irrelevant detection level
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::recognized ) ); // ok
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateUnitDetection( 42, 69, sword::UnitVisibility::identified ) ); // ok
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateUnitDetection( 42, 51, sword::UnitVisibility::recognized ) ); // irrelevant detected unit
+    task->Receive( TestTools::CreateUnitDetection( 51, 69, sword::UnitVisibility::detected ) ); // irrelevant detecting unit
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateUnitDetection( 42, 69, sword::UnitVisibility::invisible ) ); // irrelevant detection level
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateUnitDetection( 42, 69, sword::UnitVisibility::recognized ) ); // ok
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 1, 1, 0, 1 };//, 1, 1, 1, 1 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -986,26 +765,26 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnitDetectionWithThreshold, Fixture )
                              "    <result function='plot' input='4' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 12, 69, sword::UnitVisibility::detected ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::identified ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 51, sword::UnitVisibility::recognized ) );
-    task->Receive( CreateUnitDetection( 51, 69, sword::UnitVisibility::detected ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::invisible ) );
-    task->Receive( CreateUnitDetection( 51, 69, sword::UnitVisibility::recorded ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::recognized ) );
-    task->Receive( CreateUnitDetection( 51, 69, sword::UnitVisibility::recognized ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateUnitDetection( 12, 69, sword::UnitVisibility::detected ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateUnitDetection( 42, 69, sword::UnitVisibility::identified ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateUnitDetection( 42, 51, sword::UnitVisibility::recognized ) );
+    task->Receive( TestTools::CreateUnitDetection( 51, 69, sword::UnitVisibility::detected ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateUnitDetection( 42, 69, sword::UnitVisibility::invisible ) );
+    task->Receive( TestTools::CreateUnitDetection( 51, 69, sword::UnitVisibility::recorded ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateUnitDetection( 42, 69, sword::UnitVisibility::recognized ) );
+    task->Receive( TestTools::CreateUnitDetection( 51, 69, sword::UnitVisibility::recognized ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 0, 1, 1, 0, 1 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1023,17 +802,17 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestProduct, Fixture )
                              "    <result function='plot' input='prod' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( OperationalState( 100, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( OperationalState( 50, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( OperationalState( 0, 42 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 100, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 50, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 0, 42 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 10, 5, 0 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1054,21 +833,21 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, F
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( OperationalState( 100, 69 ) );
-    task->Receive( CreateUnitDetection( 42, 69, sword::UnitVisibility::detected ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( OperationalState( 0, 69 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 100, 69 ) );
+    task->Receive( TestTools::CreateUnitDetection( 42, 69, sword::UnitVisibility::detected ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::OperationalState( 0, 69 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 1, 2, 3, 3, 3 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1085,18 +864,18 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestCloseCombatPower, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int variation[5] = { 1, 1, 1, 1, 0 };
-    sword::SimToClient  message = MakeEquipementVariation( variation, 42u );
+    sword::SimToClient  message = TestTools::MakeEquipementVariation( variation, 42u );
     const sword::UnitAttributes& attributes = message.message().unit_attributes();
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes ), &IsCloseCombatPower ).returns( 10.f );
-    task->Receive( BeginTick() );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes ), &TestTools::IsCloseCombatPower ).returns( 10.f );
+    task->Receive( TestTools::BeginTick() );
     task->Receive( message );
-    task->Receive( EndTick() );
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes ), &IsCloseCombatPower ).returns( 11.f );
-    task->Receive( BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes ), &TestTools::IsCloseCombatPower ).returns( 11.f );
+    task->Receive( TestTools::BeginTick() );
     task->Receive( message );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 10, 11 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1115,32 +894,32 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestProductOnTwoExtractors, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int variation[5] = { 1, 1, 1, 1, 0 };
-    sword::SimToClient  message1 = MakeEquipementVariation( variation, 42u );
-    sword::SimToClient  message2 = MakeEquipementVariation( variation, 123u );
+    sword::SimToClient  message1 = TestTools::MakeEquipementVariation( variation, 42u );
+    sword::SimToClient  message2 = TestTools::MakeEquipementVariation( variation, 123u );
     const sword::UnitAttributes& attributes1 = message1.message().unit_attributes();
     const sword::UnitAttributes& attributes2 = message2.message().unit_attributes();
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &IsCloseCombatPower ).returns( 10.f );
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes2 ), &IsCloseCombatPower ).returns( 1000.f );
-    task->Receive( BeginTick() );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &TestTools::IsCloseCombatPower ).returns( 10.f );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes2 ), &TestTools::IsCloseCombatPower ).returns( 1000.f );
+    task->Receive( TestTools::BeginTick() );
     task->Receive( message1 );
     task->Receive( message2 );
-    task->Receive( OperationalState( 50, 42 ) );
-    task->Receive( EndTick() ); // expect 10 * 0.5
+    task->Receive( TestTools::OperationalState( 50, 42 ) );
+    task->Receive( TestTools::EndTick() ); // expect 10 * 0.5
     mock::verify();
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &IsCloseCombatPower ).returns( 20.f );
-    task->Receive( BeginTick() );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &TestTools::IsCloseCombatPower ).returns( 20.f );
+    task->Receive( TestTools::BeginTick() );
     task->Receive( message1 );
-    task->Receive( OperationalState( 25, 42 ) );
-    task->Receive( EndTick() ); // expect 20 * 0.25
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &IsCloseCombatPower ).returns( 30.f );
-    task->Receive( BeginTick() );
+    task->Receive( TestTools::OperationalState( 25, 42 ) );
+    task->Receive( TestTools::EndTick() ); // expect 20 * 0.25
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &TestTools::IsCloseCombatPower ).returns( 30.f );
+    task->Receive( TestTools::BeginTick() );
     task->Receive( message1 );
-    task->Receive( OperationalState( 100, 42 ) );
-    task->Receive( EndTick() ); // expect 30 * 1
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() ); // expect same as previous
+    task->Receive( TestTools::OperationalState( 100, 42 ) );
+    task->Receive( TestTools::EndTick() ); // expect 30 * 1
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() ); // expect same as previous
     double expectedResult[] = { 5, 5, 30, 30 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1159,22 +938,22 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableEquipmentsForUnitList, Fixture )
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int variation[5] = { 5, 0, 0, 0, 0 };
     int variation2[5] = { 1, 0, 0, 0, 0 };
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
-    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
-    task->Receive( MakeEquipementVariation( variation, 17, 51 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( variation2, 17, 42 ) );
-    task->Receive( MakeEquipementVariation( variation2, 17, 12 ) );
-    task->Receive( MakeEquipementVariation( variation2, 18, 42 ) );
-    task->Receive( MakeEquipementVariation( variation2, 15, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( variation2, 17, 42 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 17, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 17, 51 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 17, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 17, 12 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 18, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 15, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 17, 42 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 5, 3, 3 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1193,22 +972,22 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnavailableEquipmentsForUnitList, Fixture )
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int variation[5] = { 0, 1, 1, 1, 1 };
     int variation2[5] = { 0, 1, 0, 0, 0 };
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
-    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
-    task->Receive( MakeEquipementVariation( variation, 17, 51 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( variation2, 17, 42 ) );
-    task->Receive( MakeEquipementVariation( variation2, 17, 12 ) );
-    task->Receive( MakeEquipementVariation( variation2, 18, 42 ) );
-    task->Receive( MakeEquipementVariation( variation2, 15, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( variation2, 17, 42 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 17, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 17, 51 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 17, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 17, 12 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 18, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 15, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 17, 42 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 4, 3, 3 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1230,23 +1009,23 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableEquipmentsInSpecifiedZone, Fixture 
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int variation[5] = { 5, 0, 0, 0, 0 };
     int variation2[5] = { 1, 0, 0, 0, 0 };
-    sword::SimToClient  message = MakeEquipementVariation( variation, 17, 42 );
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TCM1508386208", 17 ) );
-    task->Receive( MakePosition( "31TCM1543486826", 15 ) );
-    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
-    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TCM0960387104", 18 ) );
-    task->Receive( MakeEquipementVariation( variation2, 18, 42 ) );
-    task->Receive( MakeEquipementVariation( variation2, 17, 12 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( variation, 17, 12 ) );
-    task->Receive( EndTick() );
+    sword::SimToClient  message = TestTools::MakeEquipementVariation( variation, 17, 42 );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TCM1508386208", 17 ) );
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 15 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 17, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TCM0960387104", 18 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 18, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 17, 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 17, 12 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 10, 11, 15 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1268,23 +1047,23 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnavailableEquipmentsInSpecifiedZone, Fixtur
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int variation[5] = { 10, 1, 1, 1, 2 };
     int variation2[5] = { 0, 0, 1, 0, 0 };
-    sword::SimToClient  message = MakeEquipementVariation( variation, 17, 42 );
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TCM1508386208", 17 ) );
-    task->Receive( MakePosition( "31TCM1543486826", 15 ) );
-    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
-    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TCM0960387104", 18 ) );
-    task->Receive( MakeEquipementVariation( variation2, 18, 42 ) );
-    task->Receive( MakeEquipementVariation( variation2, 17, 12 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( variation, 17, 12 ) );
-    task->Receive( EndTick() );
+    sword::SimToClient  message = TestTools::MakeEquipementVariation( variation, 17, 42 );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TCM1508386208", 17 ) );
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 15 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 17, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TCM0960387104", 18 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 18, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 17, 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 17, 12 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 10, 11, 15 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1306,22 +1085,22 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDestroyedEquipmentsInSpecifiedZone, Fixture 
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int variation[5] = { 10, 5, 1, 1, 2 };
     int variation2[5] = { 0, 1, 1, 0, 0 };
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TCM1508386208", 17 ) );
-    task->Receive( MakePosition( "31TCM1543486826", 15 ) );
-    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
-    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TCM0960387104", 18 ) );
-    task->Receive( MakeEquipementVariation( variation2, 18, 42 ) );
-    task->Receive( MakeEquipementVariation( variation2, 17, 12 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( variation, 17, 12 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TCM1508386208", 17 ) );
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 15 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 17, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TCM0960387104", 18 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 18, 42 ) );
+    task->Receive( TestTools::MakeEquipementVariation( variation2, 17, 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 17, 12 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 10, 11, 15 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1342,16 +1121,16 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDestroyedEquipmentsInSpecifiedZoneWithPolygo
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int variation[5] = { 10, 5, 1, 1, 2 };
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( variation, 17, 42 ) );
-    task->Receive( MakePosition( "31TBN9525308404", 17 ) );
-    task->Receive( MakePosition( "31TCM1543486826", 15 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeEquipementVariation( variation, 15, 42 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 17, 42 ) );
+    task->Receive( TestTools::MakePosition( "31TBN9525308404", 17 ) );
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 15 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeEquipementVariation( variation, 15, 42 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 5, 5 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1369,16 +1148,16 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansForUnitList, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int state[8] = { 1, 0, 1, 0, 0, 0, 0, 0 };
-    task->Receive( BeginTick() );
-    task->Receive( MakeHumanVariation( state, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeHumanVariation( state, 17 ) );
-    task->Receive( MakeHumanVariation( state, 18 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeHumanVariation( state, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeHumanVariation( state, 17 ) );
+    task->Receive( TestTools::MakeHumanVariation( state, 18 ) );
+    task->Receive( TestTools::EndTick() );
     {
         double expectedResult[] = { 1, 2 };
-        MakeExpectation( publisher, expectedResult );
+        TestTools::MakeExpectation( publisher, expectedResult );
     }
     task->Commit();
 }
@@ -1397,16 +1176,16 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalHumansForUnitList, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int state[8] = { 2, 1, 0, 0, 0, 1, 0, 0 };
-    task->Receive( BeginTick() );
-    task->Receive( MakeHumanVariation( state, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeHumanVariation( state, 17 ) );
-    task->Receive( MakeHumanVariation( state, 18 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeHumanVariation( state, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeHumanVariation( state, 17 ) );
+    task->Receive( TestTools::MakeHumanVariation( state, 18 ) );
+    task->Receive( TestTools::EndTick() );
     {
         double expectedResult[] = { 1, 2 };
-        MakeExpectation( publisher, expectedResult );
+        TestTools::MakeExpectation( publisher, expectedResult );
     }
     task->Commit();
 }
@@ -1428,19 +1207,19 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalHumansForSpecifiedZone, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int state[8] = { 2, 1, 0, 0, 0, 0, 1, 0 };
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TCM1508386208", 17 ) );
-    task->Receive( MakePosition( "31TCM1543486826", 15 ) );
-    task->Receive( MakePosition( "31TCM0960387104", 18 ) );
-    task->Receive( MakeHumanVariation( state, 15 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeHumanVariation( state, 17 ) );
-    task->Receive( MakeHumanVariation( state, 18 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TCM1508386208", 17 ) );
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 15 ) );
+    task->Receive( TestTools::MakePosition( "31TCM0960387104", 18 ) );
+    task->Receive( TestTools::MakeHumanVariation( state, 15 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeHumanVariation( state, 17 ) );
+    task->Receive( TestTools::MakeHumanVariation( state, 18 ) );
+    task->Receive( TestTools::EndTick() );
     {
         double expectedResult[] = { 1, 2 };
-        MakeExpectation( publisher, expectedResult );
+        TestTools::MakeExpectation( publisher, expectedResult );
     }
     task->Commit();
 }
@@ -1459,16 +1238,16 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestWoundedHumansForUnitList, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     int state[8] = { 3, 0, 0, 3, 1, 0, 0, 0 };
-    task->Receive( BeginTick() );
-    task->Receive( MakeHumanVariation( state, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeHumanVariation( state, 17 ) );
-    task->Receive( MakeHumanVariation( state, 18 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeHumanVariation( state, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeHumanVariation( state, 17 ) );
+    task->Receive( TestTools::MakeHumanVariation( state, 18 ) );
+    task->Receive( TestTools::EndTick() );
     {
         double expectedResult[] = { 3, 6 };
-        MakeExpectation( publisher, expectedResult );
+        TestTools::MakeExpectation( publisher, expectedResult );
     }
     task->Commit();
 }
@@ -1486,19 +1265,19 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableResourcesForUnitList, Fixture )
                              "    <result function='plot' input='3' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 4212, 12, 47 ) );
-    task->Receive( MakeResourceVariation( 1242, 23, 47 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeResourceVariation( 4200, 17, 47 ) );
-    task->Receive( MakeResourceVariation( 1200, 12, 51 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 4212, 12, 47 ) );
+    task->Receive( TestTools::MakeResourceVariation( 1242, 23, 47 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeResourceVariation( 4200, 17, 47 ) );
+    task->Receive( TestTools::MakeResourceVariation( 1200, 12, 51 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
     {
         double expectedResult[] = { 4212, 9612, 9612 };
-        MakeExpectation( publisher, expectedResult );
+        TestTools::MakeExpectation( publisher, expectedResult );
     }
     task->Commit();
 }
@@ -1515,32 +1294,32 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFires, Fixture )
                              "    <result function='plot' input='count' type='unsigned'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 12, 12 ) );
-    task->Receive( CreateDirectFire( 13, 13 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 12, 16 ) );
-    task->Receive( StopFire( 13, 18 ) );
-    task->Receive( CreateDirectFire( 14, 14 ) );
-    task->Receive( CreateDirectFire( 15, 15 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 13, 19 ) );
-    task->Receive( StopFire( 14, 23 ) );
-    task->Receive( StopFire( 15, 26 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 16, 15 ) );
-    task->Receive( CreateDirectFire( 17, 42 ) );
-    task->Receive( StopFire( 16, 28 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 18, 13 ) );
-    task->Receive( CreateDirectFire( 19, 14 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 12, 12 ) );
+    task->Receive( TestTools::CreateDirectFire( 13, 13 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 12, 16 ) );
+    task->Receive( TestTools::StopFire( 13, 18 ) );
+    task->Receive( TestTools::CreateDirectFire( 14, 14 ) );
+    task->Receive( TestTools::CreateDirectFire( 15, 15 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 13, 19 ) );
+    task->Receive( TestTools::StopFire( 14, 23 ) );
+    task->Receive( TestTools::StopFire( 15, 26 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 16, 15 ) );
+    task->Receive( TestTools::CreateDirectFire( 17, 42 ) );
+    task->Receive( TestTools::StopFire( 16, 28 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
+    task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 2., 4., 2., 2., 3. };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1559,33 +1338,33 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFire, Fixture )
                              "    <result function='plot' input='sum' type='float'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 12, 12 ) );
-    task->Receive( CreateDirectFire( 13, 13 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 12, 26, 2, 5 ) );
-    task->Receive( StopFire( 13, 14 ) );
-    task->Receive( CreateDirectFire( 14, 14 ) );
-    task->Receive( CreateDirectFire( 15, 15 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 13, 13 ) );
-    task->Receive( StopFire( 14, 12 ) );
-    task->Receive( StopFire( 15, 14 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 16, 15 ) );
-    task->Receive( CreateDirectFire( 17, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 16, 17 ) );
-    task->Receive( CreateDirectFire( 18, 13 ) );
-    task->Receive( CreateDirectFire( 19, 14 ) );
-    task->Receive( StopFire( 17, 16, 4, 6 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 12, 12 ) );
+    task->Receive( TestTools::CreateDirectFire( 13, 13 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 12, 26, 2, 5 ) );
+    task->Receive( TestTools::StopFire( 13, 14 ) );
+    task->Receive( TestTools::CreateDirectFire( 14, 14 ) );
+    task->Receive( TestTools::CreateDirectFire( 15, 15 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 13, 13 ) );
+    task->Receive( TestTools::StopFire( 14, 12 ) );
+    task->Receive( TestTools::StopFire( 15, 14 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 16, 15 ) );
+    task->Receive( TestTools::CreateDirectFire( 17, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 16, 17 ) );
+    task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
+    task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
+    task->Receive( TestTools::StopFire( 17, 16, 4, 6 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 0., 5., 0., 0., 6. };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1607,41 +1386,41 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFireInZone, Fixture )
                              "    <result function='plot' input='sum' type='float'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakePosition( "31TBN7728449218", 12 ) );
-    task->Receive( MakePosition( "31TBN7728449242", 13 ) );
-    task->Receive( MakePosition( "31TBN7728449212", 14 ) );
-    task->Receive( MakePosition( "31TBN7728449242", 15 ) );
-    task->Receive( MakePosition( "31TBN7728449220", 42 ) );
-    task->Receive( MakePosition( "31TCM1543486826", 16 ) );
-    task->Receive( CreateDirectFire( 12, 12 ) );
-    task->Receive( CreateDirectFire( 13, 13 ) );
-    task->Receive( CreateDirectFire( 97, 16 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 12, 18, 5, 4 ) );
-    task->Receive( StopFire( 13, 19 ) );
-    task->Receive( StopFire( 97, 19, 3, 7 ) );
-    task->Receive( CreateDirectFire( 14, 14 ) );
-    task->Receive( CreateDirectFire( 15, 15 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 13, 14 ) );
-    task->Receive( StopFire( 14, 13 ) );
-    task->Receive( StopFire( 15, 18 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( CreateDirectFire( 16, 15 ) );
-    task->Receive( CreateDirectFire( 17, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( StopFire( 16, 13 ) );
-    task->Receive( CreateDirectFire( 18, 13 ) );
-    task->Receive( CreateDirectFire( 19, 14 ) );
-    task->Receive( StopFire( 17, 17, 3, 5 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 12 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449242", 13 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449212", 14 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449242", 15 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449220", 42 ) );
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 16 ) );
+    task->Receive( TestTools::CreateDirectFire( 12, 12 ) );
+    task->Receive( TestTools::CreateDirectFire( 13, 13 ) );
+    task->Receive( TestTools::CreateDirectFire( 97, 16 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 12, 18, 5, 4 ) );
+    task->Receive( TestTools::StopFire( 13, 19 ) );
+    task->Receive( TestTools::StopFire( 97, 19, 3, 7 ) );
+    task->Receive( TestTools::CreateDirectFire( 14, 14 ) );
+    task->Receive( TestTools::CreateDirectFire( 15, 15 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 13, 14 ) );
+    task->Receive( TestTools::StopFire( 14, 13 ) );
+    task->Receive( TestTools::StopFire( 15, 18 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateDirectFire( 16, 15 ) );
+    task->Receive( TestTools::CreateDirectFire( 17, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 16, 13 ) );
+    task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
+    task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
+    task->Receive( TestTools::StopFire( 17, 17, 3, 5 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 0, 4, 0, 0, 5 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1658,13 +1437,13 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogEvacuation, Fixture )
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakeAmbulances( 4, 2, 10 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeAmbulances( 4, 2, 10 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 4, 4 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1681,13 +1460,13 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogCollection, Fixture )
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakeAmbulances( 4, 2, 10 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeAmbulances( 4, 2, 10 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 2, 2 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1704,14 +1483,14 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogHaulers, Fixture )
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakeMaintenance( 4, 2, 10 ) );
-    task->Receive( MakeMaintenance( 12, 5, 11 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeMaintenance( 4, 2, 10 ) );
+    task->Receive( TestTools::MakeMaintenance( 12, 5, 11 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 2, 2 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1728,19 +1507,19 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogRepairers, Fixture )
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakeMaintenance( 4, 2, 10 ) );
-    task->Receive( MakeMaintenance( 12, 5, 11 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeMaintenance( 12, 5, 13 ) );
-    task->Receive( MakeMaintenance( 4, 2, 10 ) );
-    task->Receive( MakeMaintenance( 12, 5, 11 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeMaintenance( 4, 2, 10 ) );
+    task->Receive( TestTools::MakeMaintenance( 12, 5, 11 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeMaintenance( 12, 5, 13 ) );
+    task->Receive( TestTools::MakeMaintenance( 4, 2, 10 ) );
+    task->Receive( TestTools::MakeMaintenance( 12, 5, 11 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 4, 16, 16 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1757,19 +1536,19 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogRepairersAndHaulers, Fixture )
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakeMaintenance( 4, 2, 10 ) );
-    task->Receive( MakeMaintenance( 12, 5, 13 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeMaintenance( 5, 5, 13 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeMaintenance( 5, 10, 13 ) );
-    task->Receive( MakeMaintenance( 5, 17, 17 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeMaintenance( 4, 2, 10 ) );
+    task->Receive( TestTools::MakeMaintenance( 12, 5, 13 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeMaintenance( 5, 5, 13 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeMaintenance( 5, 10, 13 ) );
+    task->Receive( TestTools::MakeMaintenance( 5, 17, 17 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 23, 16, 21 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1786,18 +1565,18 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestStocks, Fixture )
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( MakeStockVariation( 3, 10, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeStockVariation( 5, 10, 42 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( MakeStockVariation( 7, 10, 13 ) );
-    task->Receive( MakeStockVariation( 7, 10, 11 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeStockVariation( 3, 10, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeStockVariation( 5, 10, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeStockVariation( 7, 10, 13 ) );
+    task->Receive( TestTools::MakeStockVariation( 7, 10, 11 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 3, 5, 12 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
 
@@ -1813,18 +1592,50 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestPopulationStates, Fixture )
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( BeginTick() );
-    task->Receive( UpdatePopulation( 1, 2, 3, 40 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( UpdatePopulationbis( 0, 2, 40 ) );
-    task->Receive( EndTick() );
-    task->Receive( BeginTick() );
-    task->Receive( UpdatePopulation( 0, 2, 5, 40 ) );
-    task->Receive( EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdatePopulation( 1, 2, 3, 40 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdatePopulationbis( 0, 2, 40 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdatePopulation( 0, 2, 5, 40 ) );
+    task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 3, 3, 5 };
-    MakeExpectation( publisher, expectedResult );
+    TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestWaintingForMedicalAttention
+// Created: FPO 2011-05-09
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestWaintingForMedicalAttention, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='waiting-for-medical' id='wounded'/>"
+                             "    <transform function='domain' type='int' select='12,15' input='wounded' id='domained-wounded'/>"
+                             "    <reduce type='int' function='sum' input='domained-wounded' id='sum'/>"
+                             "    <result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateMedicalConsign( 12, 13, true ) );
+    task->Receive( TestTools::CreateMedicalConsign( 12, 15, true ) );
+    task->Receive( TestTools::CreateMedicalConsign( 12, 18, true ) );
+    task->Receive( TestTools::CreateMedicalConsign( 15, 18, true ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateMedicalConsign( 15, 31, true ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateMedicalConsign( 15, 31, false ) );
+    task->Receive( TestTools::EndTick() );
+    double expectedResult[] = { 4, 4, 5, 4 };
+    TestTools::MakeExpectation( publisher, expectedResult );
+    task->Commit(); 
 }
 
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0

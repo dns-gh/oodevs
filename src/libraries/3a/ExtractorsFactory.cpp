@@ -101,6 +101,8 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
         Extract< events::WoundHumans, extractors::WoundHumans::IdentifierValue >( name, xis, result );
     else if( value == "ambulances" )
         Extract< attributes::LogMedicalEquipments, IdentifierValue >( name, xis, result );
+    else if( value == "waiting-for-medical" )
+        Extract< attributes::LogMedicalWaitingAttention, IdentifierValue >( name, xis, result );
     else if( value == "maintenance" )
         Extract< attributes::LogMaintenanceEquipments, IdentifierValue >( name, xis, result );
     else if( value == "detecting-unit" )

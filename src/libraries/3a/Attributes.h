@@ -20,6 +20,7 @@
 #include "LogMaintenanceEquipments.h"
 #include "LogSupplyStocks.h"
 #include "PopulationStates.h"
+#include "LogMedicalWaitingAttention.h"
 
 // =============================================================================
 /** @namespace  Attributes
@@ -93,6 +94,7 @@ typedef UnitAttribute< extractors::CloseCombatPower >    CloseCombatPower;
 typedef UnitAttribute< extractors::EngineeringPower >    EngineeringPower;
 
 typedef Attribute< extractors::LogMedicalEquipments > LogMedicalEquipments;
+typedef Attribute< extractors::LogMedicalWaitingAttention > LogMedicalWaitingAttention;
 typedef Attribute< extractors::LogMaintenanceEquipments > LogMaintenanceEquipments;
 typedef Attribute< extractors::LogSupplyStocks > LogSupplyStocks;
 typedef Attribute< extractors::PopulationStates > PopulationStates;

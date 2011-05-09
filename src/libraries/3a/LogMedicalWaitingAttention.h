@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __LogMedicalEquipments_h_
-#define __LogMedicalEquipments_h_
+#ifndef __LogMedicalWaitingAttention_h_
+#define __LogMedicalWaitingAttention_h_
 
 #include "Extractors.h"
 #include "FilterHelper.h"
@@ -17,57 +17,43 @@ namespace extractors
 {
 
 // =============================================================================
-/** @class  LogMedicalEquipments
-    @brief  LogMedicalEquipments
+/** @class  LogMedicalWaitingAttention
+    @brief  LogMedicalWaitingAttention
 */
-// Created: FPO 2011-05-03
+// Created: FPO 2011-05-09
 // =============================================================================
-class LogMedicalEquipments : public Extractor< NumericValue >
+class LogMedicalWaitingAttention : public Extractor< NumericValue >
 {
+
 public:
     //! @name Types
     //@{
     enum { has_parameter = true };
     //@}
 
-public:
     //! @name Constructors/Destructor
     //@{
-             LogMedicalEquipments();
-    explicit LogMedicalEquipments( xml::xistream& xis );
-    virtual ~LogMedicalEquipments();
+             LogMedicalWaitingAttention();
+    explicit LogMedicalWaitingAttention( xml::xistream& xis );
+    virtual ~LogMedicalWaitingAttention();
     //@}
 
     //! @name Operations
     //@{
     bool HasValue( const sword::SimToClient& wrapper ) const
     {
-        return ( wrapper.message().has_log_medical_state() && ( 
-                 wrapper.message().log_medical_state().has_evacuation_ambulances() ||
-                 wrapper.message().log_medical_state().has_collection_ambulances() ) );
+        return ( wrapper.message().has_log_medical_handling_update() && wrapper.message().log_medical_handling_update().has_state() );
     }
     float Extract( const sword::SimToClient& wrapper );
     //@}
 
 private:
-    //! @name Types
-    //@{
-    struct Equip
-    {
-        Equip( bool isAsked = false ) : isAsked_( isAsked ), quantity_( 0 ) { }
-        bool isAsked_;
-        float quantity_;
-    };
-    //@}
-
-private:
     //! @name Member data
     //@{
-    Equip ambulances_releve_;
-    Equip ambulances_ramassage_;
+    std::map< int, bool > requestWaitingForAttention_;
     //@}
 };
 
 }
 
-#endif // __LogMedicalEquipments_h_
+#endif // __LogMedicalWaitingAttention_h_
