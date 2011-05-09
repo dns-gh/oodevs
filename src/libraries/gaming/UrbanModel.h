@@ -33,7 +33,6 @@ namespace kernel
 
 class ResourceNetworkModel;
 class StaticModel;
-class UrbanBlockDetectionMap;
 
 // =============================================================================
 /** @class  UrbanModel
@@ -47,7 +46,7 @@ class UrbanModel : public tools::Resolver< gui::TerrainObjectProxy >
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanModel( kernel::Controllers& controllers, ResourceNetworkModel& resourceNetwork, const StaticModel& staticModel, UrbanBlockDetectionMap& map );
+             UrbanModel( kernel::Controllers& controllers, ResourceNetworkModel& resourceNetwork, const StaticModel& staticModel );
     virtual ~UrbanModel();
     //@}
 
@@ -69,7 +68,6 @@ private:
     ResourceNetworkModel& resourceNetwork_;
     const StaticModel& static_;
     std::auto_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;
-    UrbanBlockDetectionMap& urbanBlockDetectionMap_;
     //@}
 };
 

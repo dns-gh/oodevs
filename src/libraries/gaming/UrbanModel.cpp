@@ -19,7 +19,6 @@
 #include "StructuralStateAttribute.h"
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
-#include "UrbanBlockDetectionMap.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_gui/UrbanDisplayOptions.h"
 #include "clients_gui/Usages.h"
@@ -33,12 +32,11 @@
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( kernel::Controllers& controllers, ResourceNetworkModel& resourceNetwork, const StaticModel& staticModel, UrbanBlockDetectionMap& map )
+UrbanModel::UrbanModel( kernel::Controllers& controllers, ResourceNetworkModel& resourceNetwork, const StaticModel& staticModel )
     : controllers_           ( controllers )
     , resourceNetwork_       ( resourceNetwork )
     , static_                ( staticModel )
     , urbanDisplayOptions_   ( new gui::UrbanDisplayOptions( controllers, staticModel.accommodationTypes_ ) )
-    , urbanBlockDetectionMap_( map )
 {
     // NOTHING
 }
@@ -73,7 +71,6 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     pTerrainObject->Update( message );
     pTerrainObject->Polish();
     Register( id, *pTerrainObject );
-    urbanBlockDetectionMap_.AddUrbanBlock( *pTerrainObject );
 }
 
 // -----------------------------------------------------------------------------

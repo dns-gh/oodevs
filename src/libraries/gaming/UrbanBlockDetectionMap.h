@@ -10,11 +10,14 @@
 #ifndef __UrbanBlockDetectionMap_h_
 #define __UrbanBlockDetectionMap_h_
 
+#include "tools/ElementObserver_ABC.h"
+#include "clients_gui/TerrainObjectProxy.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class DetectionMap;
+    class Controller;
     class Object_ABC;
 }
 
@@ -24,18 +27,20 @@ namespace kernel
 */
 // Created: SLG 2010-03-12
 // =============================================================================
-class UrbanBlockDetectionMap : private boost::noncopyable
+class UrbanBlockDetectionMap : public tools::Observer_ABC
+                             , public tools::ElementObserver_ABC< gui::TerrainObjectProxy >
+                             , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanBlockDetectionMap( const kernel::DetectionMap& map );
+             UrbanBlockDetectionMap( kernel::Controllers& controllers, const kernel::DetectionMap& map );
     virtual ~UrbanBlockDetectionMap();
     //@}
 
     //! @name Operations
     //@{
-    void AddUrbanBlock( kernel::Object_ABC& object );
+    virtual void NotifyCreated( const gui::TerrainObjectProxy& object );
     const kernel::Object_ABC* GetUrbanBlock( const geometry::Point2f& point ) const;
     //@}
 
@@ -44,13 +49,14 @@ private:
     //@{
     struct UrbanBlockEnvironment
     {
-        kernel::Object_ABC* data_;
+        const kernel::Object_ABC* data_;
     };
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     const kernel::DetectionMap& map_;
     std::map< std::pair< int, int >, UrbanBlockEnvironment > urbanBlockEnvironment_;
     //@}

@@ -12,15 +12,17 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_gui/TerrainObjectProxy.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanBlockDetectionMap constructor
 // Created: SLG 2010-03-12
 // -----------------------------------------------------------------------------
-UrbanBlockDetectionMap::UrbanBlockDetectionMap( const kernel::DetectionMap& map )
-    : map_( map )
+UrbanBlockDetectionMap::UrbanBlockDetectionMap( kernel::Controllers& controllers, const kernel::DetectionMap& map )
+    : controllers_( controllers )
+    , map_        ( map )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -29,17 +31,17 @@ UrbanBlockDetectionMap::UrbanBlockDetectionMap( const kernel::DetectionMap& map 
 // -----------------------------------------------------------------------------
 UrbanBlockDetectionMap::~UrbanBlockDetectionMap()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanBlockDetectionMap::AddUrbanBlock
-// Created: SLG 2010-03-12
+// Name: UrbanBlockDetectionMap::NotifyCreated
+// Created: LGY 2011-05-09
 // -----------------------------------------------------------------------------
-void UrbanBlockDetectionMap::AddUrbanBlock( kernel::Object_ABC& object )
+void UrbanBlockDetectionMap::NotifyCreated( const gui::TerrainObjectProxy& object )
 {
     float cellsize = map_.GetCellSize();
-    if( kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+    if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
     {
         geometry::Rectangle2f boundingBox = positions->BoundingBox();
         const unsigned int imin = static_cast< unsigned int >( boundingBox.Left() / cellsize );
