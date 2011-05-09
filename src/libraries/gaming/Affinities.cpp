@@ -28,6 +28,7 @@ Affinities::Affinities( kernel::Entity_ABC& entity, kernel::Controller& controll
     , controller_( controller )
     , teams_     ( teams )
     , dico_      ( dico )
+    , baseName_  ( tools::translate( "Affinities", "Affinities" ) )
 {
     // NOTHING
 }
@@ -76,20 +77,26 @@ template< typename T >
 void Affinities::Update( const T& message )
 {
     if( message.has_adhesions() )
+    {
+        if( !affinities_.empty() )
+        {
+            for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
+            {
+                kernel::Team_ABC& team = teams_.GetTeam( it->first );
+                dico_.Remove(  baseName_ + QString( "/%1" ).arg( team.GetName() ) );
+            }
+            controller_.Delete( kernel::DictionaryUpdated( entity_, baseName_ ) );
+            affinities_.clear();
+        }
         for( int i = 0; i < message.adhesions().adhesion_size(); ++i )
         {
             const sword::PartyAdhesion& adhesion = message.adhesions().adhesion( i );
             affinities_[ adhesion.party().id() ] = adhesion.value();
+            kernel::Team_ABC& team = teams_.GetTeam( adhesion.party().id() );
+            CIT_Affinities it = affinities_.find( adhesion.party().id() );
+            dico_.Register( *this, baseName_ + QString( "/%1" ).arg( team.GetName() ), it->second );
+            controller_.Update( kernel::DictionaryUpdated( entity_, baseName_ ) );
         }
-    for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
-    {
-        kernel::Team_ABC& team = teams_.GetTeam( it->first );
-        const QString baseName = tools::translate( "Affinities", "Affinities" );
-        const QString key = baseName + QString( "/%1" ).arg( team.GetName() );
-        if( !dico_.HasKey( key ) )
-            dico_.Register( *this, key, it->second );
-        else
-            controller_.Update( kernel::DictionaryUpdated( entity_, baseName ) );
     }
 }
 
@@ -108,24 +115,41 @@ void Affinities::FillParameterList( actions::parameters::ParameterList* paramete
 }
 
 // -----------------------------------------------------------------------------
-// Name: Affinities::HasAffinities
-// Created: LGY 2011-03-15
-// -----------------------------------------------------------------------------
-bool Affinities::HasAffinities() const
-{
-    return !affinities_.empty();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Affinities::Accept
 // Created: LGY 2011-05-06
 // -----------------------------------------------------------------------------
-void Affinities::Accept( AffinitiesVisitor_ABC& visitor )
+bool Affinities::Accept( AffinitiesVisitor_ABC& visitor )
 {
-    changingAffinities_ = affinities_;
+    changingAffinities_ = !affinities_.empty() ? affinities_ : InitializeAffinities();
     BOOST_FOREACH( T_Affinities::value_type& affinity, changingAffinities_ )
     {
         kernel::Team_ABC& team = teams_.GetTeam( affinity.first );
         visitor.Visit( affinity.first, team.GetName().ascii(), affinity.second );
     }
+    return !affinities_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Affinities::ConfigureOptionalAffinities
+// Created: LGY 2011-05-06
+// -----------------------------------------------------------------------------
+Affinities::T_Affinities Affinities::InitializeAffinities()
+{
+    T_Affinities result;
+    tools::Iterator< const kernel::Team_ABC& > it = teams_.Resolver< kernel::Team_ABC >::CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Team_ABC& team = it.NextElement();
+        result[ team.GetId() ] = 0.f;
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Affinities::Clear
+// Created: LGY 2011-05-06
+// -----------------------------------------------------------------------------
+void Affinities::Clear()
+{
+    changingAffinities_.clear();
 }

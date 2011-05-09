@@ -27,8 +27,9 @@
 // Name: ChangeAffinitiesDialog constructor
 // Created: LGY 2011-03-16
 // -----------------------------------------------------------------------------
-AgentChangeAffinitiesDialog::AgentChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
-    : ChangeAffinitiesDialog( pParent, controllers )
+AgentChangeAffinitiesDialog::AgentChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers,
+                                                          const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
+    : ChangeAffinitiesDialog( pParent, controllers, true )
     , controllers_ ( controllers )
     , static_      ( staticModel )
     , simulation_  ( simulation )
@@ -73,10 +74,7 @@ void AgentChangeAffinitiesDialog::NotifyContextMenu( const kernel::Agent_ABC& en
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        if( selected_->Get< Affinities >().HasAffinities() )
-        {
-            QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
-            subMenu->insertItem( tools::translate( "ChangeAffinitiesDialog", "Change affinities" ), this, SLOT( Show() ) );
-        }
+        QPopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        subMenu->insertItem( tools::translate( "ChangeAffinitiesDialog", "Change affinities" ), this, SLOT( Show() ) );
     }
 }

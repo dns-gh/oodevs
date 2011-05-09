@@ -57,9 +57,9 @@ public:
 
     //! @name Operations
     //@{
-    void Accept( AffinitiesVisitor_ABC& visitor );
+    bool Accept( AffinitiesVisitor_ABC& visitor );
     void FillParameterList( actions::parameters::ParameterList* parameterList ) const;
-    bool HasAffinities() const;
+    void Clear();
     //@}
 
 private:
@@ -69,6 +69,13 @@ private:
     Affinities& operator=( const Affinities& ); //!< Assignment operator
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::map< unsigned long, float > T_Affinities;
+    typedef T_Affinities::iterator          IT_Affinities;
+    typedef T_Affinities::const_iterator   CIT_Affinities;
+    //@}
+
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::PopulationUpdate& message );
@@ -76,13 +83,7 @@ private:
     virtual void DoUpdate( const sword::UnitAttributes& message );
     template< typename T >
     void Update( const T& message );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< unsigned long, float > T_Affinities;
-    typedef T_Affinities::iterator          IT_Affinities;
-    typedef T_Affinities::const_iterator   CIT_Affinities;
+    T_Affinities InitializeAffinities();
     //@}
 
 private:
@@ -91,9 +92,10 @@ private:
     kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     TeamsModel& teams_;
+    kernel::PropertiesDictionary& dico_;
+    const QString baseName_;
     T_Affinities affinities_;
     T_Affinities changingAffinities_;
-    kernel::PropertiesDictionary& dico_;
     //@}
 };
 

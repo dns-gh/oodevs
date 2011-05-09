@@ -10,23 +10,33 @@
 #include "gaming_app_pch.h"
 #include "ChangeAffinitiesDialog.h"
 #include "moc_ChangeAffinitiesDialog.cpp"
+#include "gaming/TeamsModel.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/tools.h"
 #include "clients_gui/DecimalSpinBoxAndSlider.h"
 #include "gaming/Affinities.h"
+#include "tools/Iterator.h"
+#include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: ChangeAffinitiesDialog constructor
 // Created: ABR 2011-01-25
 // -----------------------------------------------------------------------------
-ChangeAffinitiesDialog::ChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers )
+ChangeAffinitiesDialog::ChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers, bool optional )
     : QDialog( pParent, tools::translate( "ChangeAffinitiesDialog", "Change affinities" ), true )
+    , optional_      ( optional )
     , selected_      ( controllers )
     , affinitiesGrid_( 0 )
 {
     setCaption( tools::translate( "ChangeAffinitiesDialog", "Change affinities" ) );
     resize( 320, 150 );
     mainLayout_ = new QVBoxLayout( this );
+    checkBox_ = new QCheckBox( tools::translate( "AffinitiesDialog", "Activate" ), this );
+    connect( checkBox_, SIGNAL( toggled( bool ) ), this, SLOT( Activated( bool ) ) );
+    checkBox_->setChecked( false );
+    checkBox_->setShown( optional );
+    mainLayout_->addWidget( checkBox_ );
     buttonLayout_ = new QHBox( this );
     QPushButton* okButton = new QPushButton( tr( "Ok" ), buttonLayout_ );
     QPushButton* cancelButton = new QPushButton( tr( "Cancel" ), buttonLayout_ );
@@ -74,7 +84,9 @@ void ChangeAffinitiesDialog::Show()
     affinitiesGrid_ = new QGrid( 2, this );
     mainLayout_->add( affinitiesGrid_ );
     mainLayout_->add( buttonLayout_ );
-    selected_.ConstCast()->Get< Affinities >().Accept( *this );
+    bool result = selected_.ConstCast()->Get< Affinities >().Accept( *this );
+    Activated( result );
+    checkBox_->setChecked( result );
     show();
 }
 
@@ -87,6 +99,8 @@ void ChangeAffinitiesDialog::Validate()
     if( ! selected_ )
         return;
     accept();
+    if( optional_ && !checkBox_->isChecked() )
+        selected_.ConstCast()->Get< Affinities >().Clear();
     DoValidate();
 }
 
@@ -107,4 +121,17 @@ void ChangeAffinitiesDialog::Reject()
 void ChangeAffinitiesDialog::closeEvent( QCloseEvent * /* e */ )
 {
     Reject();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ChangeAffinitiesDialog::Activated
+// Created: LGY 2011-05-06
+// -----------------------------------------------------------------------------
+void ChangeAffinitiesDialog::Activated( bool value )
+{
+    BOOST_FOREACH( T_SpinBoxs::value_type& content, affinitiesSpinboxs_ )
+    {
+        content.second->setEnabled( value );
+        content.second->setEnabled( value );
+    }
 }

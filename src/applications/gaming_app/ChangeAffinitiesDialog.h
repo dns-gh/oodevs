@@ -38,7 +38,7 @@ class ChangeAffinitiesDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers );
+             ChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers, bool optional = false );
     virtual ~ChangeAffinitiesDialog();
     //@}
 
@@ -47,6 +47,7 @@ private slots:
     //@{
     void Show();
     void Validate();
+    void Activated( bool value );
     void Reject();
     void closeEvent( QCloseEvent * e );
     //@}
@@ -70,6 +71,13 @@ private:
     ChangeAffinitiesDialog& operator=( const ChangeAffinitiesDialog& ); //!< Assignment operator
     //@}
 
+private:
+    //! @name Types
+    //@{
+    typedef std::map< unsigned long, gui::DecimalSpinBoxAndSlider* > T_SpinBoxs;
+    typedef std::map< unsigned long, float > T_Affinities;
+    //@}
+
 protected:
     //! @name Member data
     //@{
@@ -79,10 +87,13 @@ protected:
 private:
     //! @name Member data
     //@{
+    bool optional_;
     QVBoxLayout* mainLayout_;
+    QCheckBox* checkBox_;
     QGrid* affinitiesGrid_;
     QHBox* buttonLayout_;
-    std::map< unsigned long, gui::DecimalSpinBoxAndSlider* > affinitiesSpinboxs_;
+    T_SpinBoxs affinitiesSpinboxs_;
+    T_Affinities affinities_;
     //@}
 };
 

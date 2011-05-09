@@ -23,7 +23,7 @@ double MIL_AffinitiesMap::interrogateDelayForMaximumAffinity_ = 1800.; // 30m
 // Created: ABR 2011-02-03
 // -----------------------------------------------------------------------------
 MIL_AffinitiesMap::MIL_AffinitiesMap()
-    : hasChanged_ ( false )
+    : hasChanged_( false )
 {
     // NOTHING
 }
@@ -33,7 +33,7 @@ MIL_AffinitiesMap::MIL_AffinitiesMap()
 // Created: ABR 2011-02-03
 // -----------------------------------------------------------------------------
 MIL_AffinitiesMap::MIL_AffinitiesMap( xml::xistream& xis )
-    : hasChanged_ ( false )
+    : hasChanged_( false )
 {
     xis >> xml::optional
         >> xml::start( "adhesions" )
@@ -83,13 +83,11 @@ void MIL_AffinitiesMap::OnReceiveMsgChangeAffinities( const sword::UnitMagicActi
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
         throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
     const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list = msg.parameters().elem( 0 ).value();
+    affinities_.clear();
     for( int i = 0; i < list.size(); ++i )
     {
         sword::MissionParameter_Value element = list.Get( i );
-        IT_Affinities affinity = affinities_.find( element.list( 0 ).identifier() );
-        if ( affinity == affinities_.end() )
-            throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
-        affinity->second = element.list( 1 ).areal();
+        affinities_[ element.list( 0 ).identifier() ] = element.list( 1 ).areal();
     }
     hasChanged_ = true;
 }

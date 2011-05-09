@@ -19,11 +19,6 @@ namespace xml
     class xostream;
 }
 
-namespace client
-{
-    class PopulationUpdate;
-}
-
 namespace sword
 {
     class UnitMagicAction;
@@ -42,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AffinitiesMap();
-             MIL_AffinitiesMap( xml::xistream& xis );
+    explicit MIL_AffinitiesMap( xml::xistream& xis );
     virtual ~MIL_AffinitiesMap();
     //@}
 
@@ -117,6 +112,7 @@ void MIL_AffinitiesMap::UpdateNetwork( T& msg )
 {
     if( hasChanged_ )
     {
+        msg().mutable_adhesions();
         for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         {
             sword::PartyAdhesion& adhesion = *msg().mutable_adhesions()->add_adhesion();

@@ -27,7 +27,8 @@
 // Name: InhabitantChangeAffinitiesDialog constructor
 // Created: LGY 2011-03-15
 // -----------------------------------------------------------------------------
-InhabitantChangeAffinitiesDialog::InhabitantChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
+InhabitantChangeAffinitiesDialog::InhabitantChangeAffinitiesDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel,
+                                                                    actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const kernel::Profile_ABC& profile )
     : ChangeAffinitiesDialog( pParent, controllers )
     , controllers_ ( controllers )
     , static_      ( staticModel )

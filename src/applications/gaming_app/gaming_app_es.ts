@@ -61,6 +61,13 @@
     </message>
 </context>
 <context>
+    <name>AffinitiesDialog</name>
+    <message>
+        <source>Activate</source>
+        <translation type="unfinished">Activar</translation>
+    </message>
+</context>
+<context>
     <name>AfterAction</name>
     <message>
         <source>Functions</source>
