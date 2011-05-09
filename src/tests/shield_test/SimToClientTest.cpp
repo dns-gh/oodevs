@@ -581,6 +581,8 @@ namespace
     {
         d->mutable_target()->set_id( 30 );
         d->set_dead( 31 );
+        d->set_wounded( 22 );
+        d->set_scattered( 13 );
     }
 }
 
