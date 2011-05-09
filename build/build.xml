@@ -153,7 +153,7 @@
     <target name="library.vrforces_plugin_dll" depends="library.clients_kernel,library.vrforces_plugin" description="build vrforces_plugin dynamic library" if="is-vc80">
         <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces,protobuf" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="libFedtime,
-                  matrixRT,mtlRT,vlHLA13RT,vlRT,vlutilRT,vrfcontrolHLA13RT,
+                  matrixRT,mtlRT,vlHLA13RT,vlRT,vlutilRT,vrfcontrolHLA13,
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
