@@ -184,7 +184,7 @@ float SensorType::ComputeEnvironementFactor( bool inForest, bool inTown, bool in
 // Name: SensorType::ComputeExtinction
 // Created: JVT 2004-09-27
 // -----------------------------------------------------------------------------
-float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const Object_ABC* object ) const
+float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material ) const
 {
 //    assert( rCurrentNRJ <= rDetectionDist_ );
 //    assert( rCurrentNRJ > 0 );
@@ -192,8 +192,8 @@ float SensorType::ComputeExtinction( float rDistanceModificator, float rCurrentN
 //    rDistanceModificator *= lightingFactors_[ env.GetMeteo().GetLighting() ];
 //    rDistanceModificator *= weatherFactors_ [ env.GetMeteo().GetWeather() ];
     bool bIsAroundBU = false;
-    bIsAroundBU = ComputeUrbanExtinction( rCurrentNRJ, distance, object );
-    if( rCurrentNRJ > 0 && !object )
+    bIsAroundBU = ComputeUrbanExtinction( rCurrentNRJ, distance, material );
+    if( rCurrentNRJ > 0 && !material )
     {
         rDistanceModificator *= ComputeEnvironementFactor( inForest, inTown, inGround );
         return rDistanceModificator <= 1e-8 ? -1.f : rCurrentNRJ - distance / rDistanceModificator;
@@ -224,9 +224,9 @@ float SensorType::GetAngle() const
 // Name: SensorType::ComputeExtinction
 // Created: JVT 2004-09-28
 // -----------------------------------------------------------------------------
-float SensorType::ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const Object_ABC* object ) const
+float SensorType::ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const boost::optional< std::string >& material ) const
 {
-    return ComputeExtinction( distanceModificator, rDetectionDist_, inForest, inTown, inGround, distance, object );
+    return ComputeExtinction( distanceModificator, rDetectionDist_, inForest, inTown, inGround, distance, material );
 }
 
 // -----------------------------------------------------------------------------
@@ -248,18 +248,14 @@ E_PerceptionResult SensorType::InterpreteNRJ( float rNRJ ) const
 // Name: SensorType::ComputeUrbanExtinction
 // Created: SLG 2010-03-10
 // -----------------------------------------------------------------------------
-bool SensorType::ComputeUrbanExtinction( float& rVisionNRJ, float distance, const Object_ABC* object ) const
+bool SensorType::ComputeUrbanExtinction( float& rVisionNRJ, float distance, const boost::optional< std::string >& material ) const
 {
     bool bIsAroundBU = false;
-    if( object )
+    if( material )
     {
         bIsAroundBU = true;
-        const Architecture_ABC* pArchitecture = object->Retrieve< Architecture_ABC >();
-        if( pArchitecture )
-        {
-            float rDistanceModificator = urbanBlockFactors_.find( pArchitecture->GetMaterial() )->second;
-            rDistanceModificator <= 1e-8 ? rVisionNRJ = -1 : rVisionNRJ = rVisionNRJ - distance / rDistanceModificator ;
-        }
+        float rDistanceModificator = urbanBlockFactors_.find( *material )->second;
+        rDistanceModificator <= 1e-8 ? rVisionNRJ = -1 : rVisionNRJ = rVisionNRJ - distance / rDistanceModificator ;
     }
     return bIsAroundBU;
 }

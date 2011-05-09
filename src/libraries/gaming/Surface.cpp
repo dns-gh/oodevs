@@ -155,10 +155,10 @@ E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) 
         line.Increment();
         if( skyrock == std::numeric_limits< float >::infinity() )
             skyrock = sensorType_.ComputeExtinction( distanceModificator_,
-                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetUrbanBlock( line.CurrentPoint() ) );
+                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetEnvironment( line.CurrentPoint() ) );
         else
             skyrock = sensorType_.ComputeExtinction( distanceModificator_, skyrock,
-                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetUrbanBlock( line.CurrentPoint() ) );
+                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetEnvironment( line.CurrentPoint() ) );
     }
     return sensorType_.InterpreteNRJ( skyrock );
 }

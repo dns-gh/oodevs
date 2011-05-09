@@ -13,6 +13,7 @@
 #include "tools/ElementObserver_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
 
 namespace kernel
 {
@@ -41,16 +42,14 @@ public:
     //! @name Operations
     //@{
     virtual void NotifyCreated( const gui::TerrainObjectProxy& object );
-    const kernel::Object_ABC* GetUrbanBlock( const geometry::Point2f& point ) const;
+    const boost::optional< std::string > GetEnvironment( const geometry::Point2f& point ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    struct UrbanBlockEnvironment
-    {
-        const kernel::Object_ABC* data_;
-    };
+    typedef std::pair< int, int > T_Pair;
+    typedef std::map< T_Pair, std::string > T_Environment;
     //@}
 
 private:
@@ -58,7 +57,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::DetectionMap& map_;
-    std::map< std::pair< int, int >, UrbanBlockEnvironment > urbanBlockEnvironment_;
+    T_Environment urbanBlockEnvironment_;
     //@}
 };
 

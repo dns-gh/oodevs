@@ -12,6 +12,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
+#include "clients_kernel/Architecture_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
 
 // -----------------------------------------------------------------------------
@@ -53,22 +54,23 @@ void UrbanBlockDetectionMap::NotifyCreated( const gui::TerrainObjectProxy& objec
             {
                 geometry::Point2f cellCenter( i * cellsize + cellsize / 2, j * cellsize + cellsize / 2 );
                 if( positions->IsInside( cellCenter ) )
-                    urbanBlockEnvironment_[ std::pair< int, int >( i, j ) ].data_ = &object;
+                    if( const kernel::Architecture_ABC* pArchitecture = object.Retrieve< kernel::Architecture_ABC >() )
+                        urbanBlockEnvironment_[ std::pair< int, int >( i, j ) ] = pArchitecture->GetMaterial();
             }
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanBlockDetectionMap::GetUrbanBlock
-// Created: SLG 2010-03-12
+// Name: UrbanBlockDetectionMap::GetEnvironment
+// Created: LGY 2011-05-09
 // -----------------------------------------------------------------------------
-const kernel::Object_ABC* UrbanBlockDetectionMap::GetUrbanBlock( const geometry::Point2f& point ) const
+const boost::optional< std::string > UrbanBlockDetectionMap::GetEnvironment( const geometry::Point2f& point ) const
 {
     float cellsize = map_.GetCellSize();
     const unsigned int nCellX = static_cast< unsigned int >( point.X() / cellsize );
     const unsigned int nCellY = static_cast< unsigned int >( point.Y() / cellsize );
-    std::map< std::pair< int, int >, UrbanBlockEnvironment>::const_iterator it = urbanBlockEnvironment_.find( std::pair< int, int >( nCellX, nCellY ) );
+    T_Environment::const_iterator it = urbanBlockEnvironment_.find( T_Pair( nCellX, nCellY ) );
     if( it != urbanBlockEnvironment_.end() )
-        return urbanBlockEnvironment_.find( std::pair< int, int >( nCellX, nCellY ) )->second.data_;
-    return 0;
+        return urbanBlockEnvironment_.find( T_Pair( nCellX, nCellY ) )->second;
+    return boost::none;
 }
