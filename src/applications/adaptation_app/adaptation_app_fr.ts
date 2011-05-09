@@ -4951,6 +4951,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Reduced Lethality Weapon</source>
         <translation>Arme à létalité réduite</translation>
     </message>
+    <message>
+        <source>ResourceNetwork</source>
+        <translation>reseau de ressource</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

@@ -4947,6 +4947,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Reduced Lethality Weapon</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ResourceNetwork</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

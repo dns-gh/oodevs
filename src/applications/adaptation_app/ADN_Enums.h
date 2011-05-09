@@ -384,6 +384,7 @@ enum E_MissionParameterType
     eMissionParameterTypeIntelligence,
     eMissionParameterTypeUrbanBlock,
     eMissionParameterTypeLocationComposite,
+    eMissionParameterTypeResourceNetwork,
 
     eNbrMissionParameterType
 };

@@ -284,6 +284,7 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "Intelligence",          QT_TRANSLATE_NOOP("ADN_Tr", "Intelligence" ),          eMissionParameterTypeIntelligence ),
     T_ConverterMissionParameterType( "UrbanKnowledge",        QT_TRANSLATE_NOOP("ADN_Tr", "UrbanKnowledge" ),        eMissionParameterTypeUrbanBlock ),
     T_ConverterMissionParameterType( "LocationComposite",     QT_TRANSLATE_NOOP("ADN_Tr", "LocationComposite" ),     eMissionParameterTypeLocationComposite ),
+    T_ConverterMissionParameterType( "ResourceNetwork",       QT_TRANSLATE_NOOP("ADN_Tr", "ResourceNetwork" ),       eMissionParameterTypeResourceNetwork ),
 
     T_ConverterMissionParameterType( "", "", (E_MissionParameterType)-1 )
 };
