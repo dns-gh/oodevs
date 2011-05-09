@@ -556,7 +556,6 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="ASY Detruire point du reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -594,7 +593,6 @@
         <mission name="ASY Commettre un Attentat Suicide"/>
         <mission name="ASY Se Dissimuler"/>
         <mission name="ASY Prendre un Otage"/>
-        <mission name="ASY Detruire point du reseau"/>
         <mission name="S'Infiltrer"/>
         <mission name="COMMUNES Interroger"/>
       </missions>
@@ -11602,4 +11600,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3115984404" -->
+<!-- signature="2321255306" -->
