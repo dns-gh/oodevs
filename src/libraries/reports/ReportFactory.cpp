@@ -153,6 +153,8 @@ QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& val
 {
     if( value.has_areal() )
         return QString::number( value.areal() );
+    if( value.has_intvalue() )
+        return QString::number( value.intvalue() );
     if( value.has_agent() )
         return rcResolver_.CreateLink( Agent_ABC::typeName_, value.agent().id() );
     if( value.has_automat() )

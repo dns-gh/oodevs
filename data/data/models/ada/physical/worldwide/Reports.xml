@@ -318,7 +318,8 @@
       <value id="3" name="agressive"/>
     </parameter>
   </report>
-  <report category="operational" id="242" message="%1 civilians killed during engagement, %2 wounded">
+  <report category="operational" id="242" message="%1 civilians killed during engagement, %2 wounded, %3 scattered">
+    <parameter type="Integer"/>
     <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
@@ -519,4 +520,4 @@
   <report category="operational" id="3018" message="need police backup"/>
   <report category="operational" id="3019" message="need medical backup"/>
 </reports>
-<!-- signature="1454062563" -->
+<!-- signature="3034671415" -->

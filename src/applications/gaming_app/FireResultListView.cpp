@@ -69,8 +69,14 @@ void FireResultListView::Display( const PopulationFireResult* result, Displayer_
     item->SetValue( result );
     displayer.Display( tools::translate( "FireResultListView", "Date" ), result->time_ );
     displayer.Display( tools::translate( "FireResultListView", "Target" ), result->target_ );
-    displayer.Item( tools::translate( "FireResultListView", "Attrition" ) )
-                .Start( tools::translate( "FireResultListView", "Dead:" ) ).Add( result->deadPeople_ ).End();
+    displayer.Item( tools::translate( "FireResultListView", "Attrition" ) );
+    if( result->deadPeople_ )
+        displayer.Start( tools::translate( "FireResultListView", "Dead:" ) ).Add( result->deadPeople_ );
+    if( result->woundedPeople_ )
+        displayer.Start( tools::translate( "FireResultListView", "Wounded:" ) ).Add( result->woundedPeople_ );
+    if( result->scatteredPeople_ )
+        displayer.Start( tools::translate( "FireResultListView", "Scattered:" ) ).Add( result->scatteredPeople_ );
+    displayer.End();
 }
 
 // -----------------------------------------------------------------------------

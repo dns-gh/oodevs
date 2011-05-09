@@ -1045,8 +1045,10 @@ message UnitsFireDamages {
     @brief Defines the damage inflicted to a crowd
 */               
 message CrowdFireDamages {
-    required CrowdId target = 1; //!< The crowd identifier
-    required int32   dead   = 2; //!< The number of dead persons
+    required CrowdId target    = 1; //!< The crowd identifier
+    required int32   dead      = 2; //!< The number of dead persons
+    required int32   wounded   = 3; //!< The number of wounded persons
+    required int32   scattered = 4; //!< The number of scattered persons
 }
 
 /** @struct CrowdsFireDamages

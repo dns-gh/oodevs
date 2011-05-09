@@ -132,15 +132,27 @@ void MIL_PopulationElement_ABC::ApplyFire( unsigned int nNbrAmmoFired, PHY_FireR
         return;
     bHumansUpdated_ = true;
     if( lethal )
-    {
-        humans_.ApplyNumberOfDead( nHit );
-        fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
-    }
+        ApplyLethalDamage( nHit, fireResult );
     else
     {
+        bHumansUpdated_ = true;
         PullHumans( nHit );
-        fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
+        fireResult.GetDamages( *pPopulation_ ).NotifyHumansScattered( nHit );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::ApplyLethalDamage
+// Created: LDC 2011-05-09
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::ApplyLethalDamage( unsigned int nHit, PHY_FireResults_ABC& fireResult )
+{
+    bHumansUpdated_ = true;
+    humans_.ApplyNumberOfDead( nHit );
+    unsigned int nWounds = nHit * MIL_Random::rand_ii( 0.6, 1.25, MIL_Random::eWounds );
+    humans_.ApplyWounds( nWounds );
+    fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
+    fireResult.GetDamages( *pPopulation_ ).NotifyHumansWounded( nWounds );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,9 +165,7 @@ void MIL_PopulationElement_ABC::ApplyIndirectFire( const MT_Circle& attritionCir
     double rDead = std::min( static_cast< double >( humans_.GetTotalLivingHumans() ), rDensity_ * GetLocation().GetIntersectionAreaWithCircle( attritionCircle ) );
     // $$$$ SBO 2006-04-07: 2% kill, at least one kill
     unsigned int nDead = static_cast< unsigned int >( ceil( 0.02f * rDead ) );
-    humans_.ApplyNumberOfDead( nDead );
-    bHumansUpdated_ = true;
-    fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nDead );
+    ApplyLethalDamage( nDead, fireResult );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,9 +181,7 @@ void MIL_PopulationElement_ABC::ApplyExplosion( const AttritionCapacity& capacit
     for( unsigned int i = 0; i < nNbrTarget; ++i )
         if( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH )
             ++nHit;
-    humans_.ApplyNumberOfDead( nHit );
-    bHumansUpdated_ = true;
-    fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
+    ApplyLethalDamage( nHit, fireResult );
 }
 
 // -----------------------------------------------------------------------------

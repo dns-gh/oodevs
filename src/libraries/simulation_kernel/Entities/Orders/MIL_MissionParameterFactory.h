@@ -57,6 +57,7 @@ public:
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_ComposanteTypePion* equipmentType );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( float param );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( int id );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> CreateInteger( int id );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( DEC_RolePion_Decision* pion );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( DEC_AutomateDecision* automate );

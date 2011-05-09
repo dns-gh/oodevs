@@ -683,6 +683,14 @@ Reason: %3
         <source>Date</source>
         <translation>Date</translation>
     </message>
+    <message>
+        <source>Wounded:</source>
+        <translation>Blessés:</translation>
+    </message>
+    <message>
+        <source>Scattered:</source>
+        <translation>Dispersés:</translation>
+    </message>
 </context>
 <context>
     <name>HumansListView</name>

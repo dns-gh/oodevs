@@ -20,6 +20,8 @@
 // -----------------------------------------------------------------------------
 PHY_FireDamages_Population::PHY_FireDamages_Population()
     : nNbrKilledHumans_ ( 0 )
+    , nNbrWoundedHumans_( 0 )
+    , nNbrScatteredHumans_( 0 )
 {
     // NOTHING
 }
@@ -41,6 +43,8 @@ void PHY_FireDamages_Population::Serialize( const MIL_Population& target, sword:
 {
     asn.mutable_target()->set_id( target.GetID() );
     asn.set_dead( nNbrKilledHumans_ );
+    asn.set_wounded( nNbrWoundedHumans_ );
+    asn.set_scattered( nNbrScatteredHumans_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,10 +57,46 @@ void PHY_FireDamages_Population::NotifyHumansKilled( unsigned int nNbrHumans )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Population::NotifyHumansWounded
+// Created: LDC 2011-05-09
+// -----------------------------------------------------------------------------
+void PHY_FireDamages_Population::NotifyHumansWounded( unsigned int nNbrHumans )
+{
+    nNbrWoundedHumans_ += nNbrHumans;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Population::NotifyHumansScattered
+// Created: LDC 2011-05-09
+// -----------------------------------------------------------------------------
+void PHY_FireDamages_Population::NotifyHumansScattered( unsigned int nNbrHumans )
+{
+    nNbrScatteredHumans_ += nNbrHumans;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_FireDamages_Population::GetNbrKilledHumans
 // Created: NLD 2006-04-26
 // -----------------------------------------------------------------------------
 unsigned int PHY_FireDamages_Population::GetNbrKilledHumans() const
 {
     return nNbrKilledHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Population::GetNbrWoundedHumans
+// Created: LDC 2011-05-09
+// -----------------------------------------------------------------------------
+unsigned int PHY_FireDamages_Population::GetNbrWoundedHumans() const
+{
+    return nNbrWoundedHumans_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Population::GetNbrScatteredHumans
+// Created: LDC 2011-05-09
+// -----------------------------------------------------------------------------
+unsigned int PHY_FireDamages_Population::GetNbrScatteredHumans() const
+{
+    return nNbrScatteredHumans_;
 }

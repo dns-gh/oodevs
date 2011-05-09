@@ -132,6 +132,12 @@ protected:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ApplyLethalDamage( unsigned int nDead, PHY_FireResults_ABC& fireResult );
+    //@}
+
+private:
     //! @name Types
     //@{
     typedef std::vector< MIL_Agent_ABC* >   T_AgentVector;

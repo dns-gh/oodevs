@@ -33,11 +33,15 @@ public:
     //! @name Notifications
     //@{
     void NotifyHumansKilled( unsigned int nNbrHumans );
+    void NotifyHumansWounded( unsigned int nNbrHumans );
+    void NotifyHumansScattered( unsigned int nNbrHumans );
     //@}
 
     //! @name Accessors
     //@{
     unsigned int GetNbrKilledHumans() const;
+    unsigned int GetNbrWoundedHumans() const;
+    unsigned int GetNbrScatteredHumans() const;
     //@}
 
     //! @name Network
@@ -49,6 +53,8 @@ private:
     //! @name Member data
     //@{
     unsigned int nNbrKilledHumans_;
+    unsigned int nNbrWoundedHumans_;
+    unsigned int nNbrScatteredHumans_;
     //@}
 };
 

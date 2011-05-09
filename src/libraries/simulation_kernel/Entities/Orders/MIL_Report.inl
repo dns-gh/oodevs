@@ -119,6 +119,23 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, int nPara
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Report::PostEvent
+// Created: LDC 2011-05-09
+// -----------------------------------------------------------------------------
+template< typename T > inline
+void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, int nParam1, int nParam2, int nParam3 )
+{
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter1( MIL_MissionParameterFactory::CreateInteger( nParam1 ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter2( MIL_MissionParameterFactory::CreateInteger( nParam2 ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter3( MIL_MissionParameterFactory::CreateInteger( nParam3 ) );
+    parameters.push_back( pParameter1 );
+    parameters.push_back( pParameter2 );
+    parameters.push_back( pParameter3 );
+    PostEvent( receiver, nReport, parameters );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::PostEvent
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 template< typename T > inline

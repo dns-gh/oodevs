@@ -318,7 +318,8 @@
       <value id="3" name="agressive"/>
     </parameter>
   </report>
-  <report category="operational" id="242" message="population victime affrontements : %1">
+  <report category="operational" id="242" message="population victime affrontements : %1 morts, %2 blesses, %3 eparpilles">
+    <parameter type="Integer"/>
     <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
@@ -523,4 +524,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="0309668470" -->
+<!-- signature="3016365823" -->

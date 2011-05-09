@@ -49,6 +49,8 @@ public:
     //@{
     const kernel::Population_ABC& target_;
     unsigned int deadPeople_;
+    unsigned int woundedPeople_;
+    unsigned int scatteredPeople_;
     QDateTime time_;
     //@}
 };

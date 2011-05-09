@@ -23,6 +23,7 @@
 #include "MIL_DotationTypeParameter.h"
 #include "MIL_EnumerationParameter.h"
 #include "MIL_EquipmentTypeParameter.h"
+#include "MIL_IntegerParameter.h"1
 #include "MIL_LimaListParameter.h"
 #include "MIL_ListParameter.h"
 #include "MIL_LocationParameter.h"
@@ -198,6 +199,16 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( int id )
 {
     boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_EnumerationParameter( id ) );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateInteger
+// Created: LDC 2011-05-09
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateInteger( int id )
+{
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_IntegerParameter( id ) );
     return result;
 }
 

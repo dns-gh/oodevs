@@ -506,6 +506,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, const PHY_DotationCategory& parameter );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, double nParam1, double nParam2 );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, int nParam );
+    template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, int nParam1, int nParam2, int nParam3 );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, const MIL_Effect_IndirectFire& flyingShell );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     //@}

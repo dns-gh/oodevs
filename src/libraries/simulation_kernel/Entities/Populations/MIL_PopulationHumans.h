@@ -50,6 +50,7 @@ public:
     double GetLivingRatio() const;
     void KillAll();
     unsigned int ApplyNumberOfDead( unsigned int dead );
+    unsigned int ApplyWounds( unsigned int wounds );
     void ApplyContamination();
     void ApplyIntoxication( double woundedPercentage, double deadPercentage );
     void PullFrom( unsigned int number, MIL_PopulationHumans& humans );

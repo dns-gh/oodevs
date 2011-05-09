@@ -50,7 +50,7 @@ PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
         const MIL_Population&               population = *it->first;
         const PHY_FireDamages_Population&   damages    =  it->second;
 
-        MIL_Report::PostEvent( population, MIL_Report::eReport_MineExplosionOnPopulation, damages.GetNbrKilledHumans(), damages.GetNbrKilledHumans() * MIL_Random::rand_ii( 0.6, 0.75, MIL_Random::eWounds ) );
+        MIL_Report::PostEvent( population, MIL_Report::eReport_MineExplosionOnPopulation, damages.GetNbrKilledHumans(), damages.GetNbrWoundedHumans() );
     }
 }
 

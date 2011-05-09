@@ -20,6 +20,8 @@ using namespace kernel;
 PopulationFireResult::PopulationFireResult( const sword::CrowdFireDamages& message , const tools::Resolver_ABC< Population_ABC >& resolver, const QDateTime& time )
     : target_    ( resolver.Get( message.target().id() ) )
     , deadPeople_( message.dead() )
+    , woundedPeople_( message.wounded() )
+    , scatteredPeople_( message.scattered() )
     , time_      ( time )
 {
     // NOTHING

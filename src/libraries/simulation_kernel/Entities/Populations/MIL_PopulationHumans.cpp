@@ -196,6 +196,27 @@ unsigned int MIL_PopulationHumans::ApplyNumberOfDead( unsigned int dead )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationHumans::ApplyWounds
+// Created: LDC 2011-05-09
+// -----------------------------------------------------------------------------
+unsigned int MIL_PopulationHumans::ApplyWounds( unsigned int wounds )
+{
+    if( wounds > healthy_ + contaminated_ )
+        wounds = healthy_ + contaminated_;
+    wounded_ += wounds;
+    if( healthy_ >= wounds )
+        healthy_ -= wounds;
+    else
+    {
+        unsigned int woundsRemaining = wounds - healthy_;
+        healthy_ = 0;
+        contaminated_ -= woundsRemaining;
+        wounded_ = wounds;
+    }
+    return wounds;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationHumans::PullFrom
 // Created: JSR 2011-03-10
 // -----------------------------------------------------------------------------

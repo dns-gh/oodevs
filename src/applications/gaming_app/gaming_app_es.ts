@@ -683,6 +683,14 @@ Motivo: %3
         <source>Date</source>
         <translation>Fecha</translation>
     </message>
+    <message>
+        <source>Wounded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scattered:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HumansListView</name>
