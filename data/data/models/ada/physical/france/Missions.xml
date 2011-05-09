@@ -2653,6 +2653,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
   </units>
   <automats>
@@ -4560,4 +4561,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1617176803" -->
+<!-- signature="2784228112" -->
