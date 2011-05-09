@@ -435,6 +435,7 @@
 			<xs:enumeration value="MissileSol"/>
 			<xs:enumeration value="Mitraille"/>
 			<xs:enumeration value="Obus"/>
+			<xs:enumeration value="ALR"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_StockCategory">

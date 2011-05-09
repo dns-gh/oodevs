@@ -68,7 +68,7 @@ public:
     void FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult );
     void FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
     double GetDangerosity( const MIL_AgentPion& target ) const;
-    void ApplyFire( unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult );
+    void ApplyFire( unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, bool lethal );
     void ApplyIndirectFire( const MT_Circle& attritionCircle, PHY_FireResults_ABC& fireResult );
     void ApplyExplosion( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult );
     void ApplyInjury( MIL_Injury_ABC& injury );

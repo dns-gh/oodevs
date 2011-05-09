@@ -25,6 +25,7 @@ public:
     static const PHY_AmmoDotationClass missileAir_;
     static const PHY_AmmoDotationClass missileSol_;
     static const PHY_AmmoDotationClass mitraille_;
+    static const PHY_AmmoDotationClass alr_;
     //@}
 
 public:

@@ -240,7 +240,7 @@ do
 ]]self.roe = self.roe or DEC_Agent_RoePopulation()
                 if( self.roe > 1 ) then
                     do
-                        self.actionExaction = DEC__StartTirSurPopulation( self._namedParams.pop )
+                        self.actionExaction = DEC__StartTirSurPopulation( self._namedParams.pop, "mitraille" )
                     end
 --[[//if( eActionTir == eActionTirDirect_Running )
 ]]--[[//{

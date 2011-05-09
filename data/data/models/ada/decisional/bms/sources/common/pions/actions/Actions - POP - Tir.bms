@@ -42,7 +42,7 @@ includedFiles["sources/common/pions/actions/Actions - POP - Tir.bms"] = true
         self.roe = self.roe or DEC_Agent_RoePopulation()
         if( self.roe > 1 ) then
             do
-                self.actionTirSurPop = self.actionTirSurPop or DEC__StartTirSurPopulation( self._namedParams.pop )
+                self.actionTirSurPop = self.actionTirSurPop or DEC__StartTirSurPopulation( self._namedParams.pop, "mitraille" )
             end
 --[[// Reprise
 ]]        end

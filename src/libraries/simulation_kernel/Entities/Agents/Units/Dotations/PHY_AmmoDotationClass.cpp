@@ -19,6 +19,7 @@ const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , 0 
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", 1 );
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", 2 );
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , 3 );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::alr_       ( "ALR" , 4 );
 
 PHY_AmmoDotationClass::T_TypeMap PHY_AmmoDotationClass::types_;
 
@@ -29,10 +30,11 @@ PHY_AmmoDotationClass::T_TypeMap PHY_AmmoDotationClass::types_;
 void PHY_AmmoDotationClass::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing ammo dotation classes" );
-    types_[ obus_      .GetID() ] = &obus_;
+    types_[ obus_.GetID() ] = &obus_;
     types_[ missileAir_.GetID() ] = &missileAir_;
     types_[ missileSol_.GetID() ] = &missileSol_;
-    types_[ mitraille_ .GetID() ] = &mitraille_;
+    types_[ mitraille_.GetID() ] = &mitraille_;
+    types_[ alr_.GetID() ] = &alr_;
 }
 
 // -----------------------------------------------------------------------------

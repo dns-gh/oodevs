@@ -124,15 +124,23 @@ void MIL_PopulationElement_ABC::FireOnPions( double rIntensity, PHY_FireResults_
 // Name: MIL_PopulationElement_ABC::ApplyFire
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::ApplyFire( unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult )
+void MIL_PopulationElement_ABC::ApplyFire( unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult, bool lethal )
 {
     assert( pPopulation_ );
-    unsigned int nDead = std::min( humans_.GetTotalLivingHumans(), nNbrAmmoFired );
-    if( nDead == 0 )
+    unsigned int nHit = std::min( humans_.GetTotalLivingHumans(), nNbrAmmoFired );
+    if( nHit == 0 )
         return;
-    humans_.ApplyNumberOfDead( nDead );
     bHumansUpdated_ = true;
-    fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nDead );
+    if( lethal )
+    {
+        humans_.ApplyNumberOfDead( nHit );
+        fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
+    }
+    else
+    {
+        PullHumans( nHit );
+        fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
+    }
 }
 
 // -----------------------------------------------------------------------------

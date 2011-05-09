@@ -16,6 +16,7 @@
 #include "PHY_RoleAction_DirectFiring.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
+#include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Decision/DEC_Tools.h"
 
 using namespace firing;
@@ -24,11 +25,12 @@ using namespace firing;
 // Name: PHY_ActionDirectFirePopulation constructor
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionDirectFirePopulation::PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, unsigned int nID )
+PHY_ActionDirectFirePopulation::PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, unsigned int populationKnowledgeID, const std::string& dotationClass )
     : PHY_DecisionCallbackAction_ABC     ( pion )
     , role_              ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
-    , nTargetKnowledgeID_( nID )
+    , nTargetKnowledgeID_( populationKnowledgeID )
     , pFireResult_       ( 0 )
+    , dotationClass_     ( PHY_AmmoDotationClass::Find( dotationClass ) )
 {
     Callback( role_.GetInitialReturnCode() );
 }
@@ -63,7 +65,7 @@ void PHY_ActionDirectFirePopulation::StopAction()
 void PHY_ActionDirectFirePopulation::Execute()
 {
     bool bMustRefResult = ( pFireResult_ == 0 );
-    int nResult = role_.FirePopulation( nTargetKnowledgeID_, pFireResult_ );
+    int nResult = role_.FirePopulation( nTargetKnowledgeID_, pFireResult_, dotationClass_ );
     Callback( nResult );
 
     if( pFireResult_ && bMustRefResult )

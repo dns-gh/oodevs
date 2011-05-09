@@ -255,7 +255,7 @@ void PHY_WeaponType::DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PH
 void PHY_WeaponType::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
 {
     assert( pDirectFireData_ );
-    pDirectFireData_->Fire( firer, target, nNbrAmmoReserved, fireResult );
+    pDirectFireData_->Fire( firer, target, nNbrAmmoReserved, fireResult, GetDotationCategory().GetAmmoDotationClass() );
 }
 
 // -----------------------------------------------------------------------------

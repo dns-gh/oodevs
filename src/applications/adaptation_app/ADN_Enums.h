@@ -214,6 +214,7 @@ enum E_MunitionType
     eMunitionType_MissileSol,
     eMunitionType_MissileAir,
     eMunitionType_Mitraille,
+    eMunitionType_ALR,
     eNbrMunitionType
 };
 

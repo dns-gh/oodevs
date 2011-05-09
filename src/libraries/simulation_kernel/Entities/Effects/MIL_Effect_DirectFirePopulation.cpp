@@ -41,7 +41,7 @@ MIL_Effect_DirectFirePopulation::~MIL_Effect_DirectFirePopulation()
 // -----------------------------------------------------------------------------
 bool MIL_Effect_DirectFirePopulation::Execute()
 {
-    target_.ApplyFire( nNbrAmmoFired_, fireResult_ );
+    target_.ApplyFire( nNbrAmmoFired_, fireResult_, true );
     delete this;
     return false; // Effect must be stopped
 }

@@ -21,6 +21,7 @@ namespace firing
     class PHY_RoleAction_DirectFiring;
 }
 
+class PHY_AmmoDotationClass;
 class PHY_FireResults_Pion;
 class MIL_AgentPion;
 
@@ -34,7 +35,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-    PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, unsigned int nID );
+             PHY_ActionDirectFirePopulation( MIL_AgentPion& pion, unsigned int populationKnowledgeID, const std::string& dotationClass );
     virtual ~PHY_ActionDirectFirePopulation();
 
     //! @name Operations
@@ -45,9 +46,10 @@ public:
     //@}
 
 private:
-          firing::PHY_RoleAction_DirectFiring& role_;
-    const unsigned int                         nTargetKnowledgeID_;
-          PHY_FireResults_Pion*        pFireResult_;
+    firing::PHY_RoleAction_DirectFiring& role_;
+    const unsigned int nTargetKnowledgeID_;
+    PHY_FireResults_Pion* pFireResult_;
+    const PHY_AmmoDotationClass* dotationClass_;
 };
 
 #endif // __PHY_ActionDirectFirePopulation_h_

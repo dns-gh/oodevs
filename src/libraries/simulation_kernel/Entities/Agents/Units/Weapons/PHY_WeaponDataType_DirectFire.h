@@ -28,6 +28,7 @@ class PHY_RoleInterface_Posture;
 class PHY_WeaponType;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
+class PHY_AmmoDotationClass;
 class PHY_Composante_ABC;
 class PHY_ComposanteType_ABC;
 class PHY_FireResults_ABC;
@@ -53,7 +54,7 @@ public:
     double GetMinRangeToFireOnWithPosture( const PHY_ComposanteType_ABC& targetComposanteType, const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, double rWantedPH ) const;
     double GetMaxRangeToFire             ( double rWantedPH ) const;
     void     Fire                          ( MIL_Agent_ABC& firer, MIL_Agent_ABC& target, PHY_Composante_ABC& compTarget, PHY_FireResults_ABC& fireResult, bool bUsePH ) const;
-    void     Fire                          ( MIL_Agent_ABC& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const;
+    void     Fire                          ( MIL_Agent_ABC& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult, const PHY_AmmoDotationClass* dotationClass ) const;
     //@}
 
 private:

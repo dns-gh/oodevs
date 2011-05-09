@@ -223,7 +223,8 @@ ADN_Tr::T_ConverterMunitionType ADN_Tr::munitionTypeConverter_[] =
     T_ConverterMunitionType( "Obus",       QT_TRANSLATE_NOOP( "ADN_Tr", "Shell" ),       eMunitionType_Obus ),
     T_ConverterMunitionType( "MissileSol", QT_TRANSLATE_NOOP( "ADN_Tr", "Missile" ),     eMunitionType_MissileSol ),
     T_ConverterMunitionType( "MissileAir", QT_TRANSLATE_NOOP( "ADN_Tr", "Air missile" ), eMunitionType_MissileAir ),
-    T_ConverterMunitionType( "Mitraille",  QT_TRANSLATE_NOOP( "ADN_Tr", "Bullet" ),      eMunitionType_Mitraille),
+    T_ConverterMunitionType( "Mitraille",  QT_TRANSLATE_NOOP( "ADN_Tr", "Bullet" ),      eMunitionType_Mitraille ),
+    T_ConverterMunitionType( "ALR",        QT_TRANSLATE_NOOP( "ADN_Tr", "Reduced Lethality Weapon" ), eMunitionType_ALR ),
     T_ConverterMunitionType( "", "", (E_MunitionType)-1 )
 };
 

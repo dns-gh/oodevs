@@ -4947,6 +4947,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>lima</source>
         <translation>lima</translation>
     </message>
+    <message>
+        <source>Reduced Lethality Weapon</source>
+        <translation>Arme à létalité réduite</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

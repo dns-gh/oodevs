@@ -273,7 +273,7 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_Object_ABC& object, PHY_Fi
 // Name: PHY_RoleAction_DirectFiring::FirePopulation
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_DirectFiring::FirePopulation( unsigned int nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult )
+int PHY_RoleAction_DirectFiring::FirePopulation( unsigned int nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* dotationClass )
 {
     MIL_Population* pTarget = GetPopulationTarget( nTargetKnowledgeID );
     if( !pTarget )
@@ -284,7 +284,7 @@ int PHY_RoleAction_DirectFiring::FirePopulation( unsigned int nTargetKnowledgeID
     if( !pPopulationElement )
         return eEnemyDestroyed;
     // Firers
-    PHY_DirectFireData firerWeapons( pion_, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFiringModeNormal, 1., &PHY_AmmoDotationClass::mitraille_ );
+    PHY_DirectFireData firerWeapons( pion_, PHY_DirectFireData::eFireUsingAllComposantes, PHY_DirectFireData::eFiringModeNormal, 1., dotationClass );
     std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
     pion_.Execute( *weaponAvailabilityComputer );
     const unsigned int nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();

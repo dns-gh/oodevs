@@ -182,7 +182,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_StartDeplacement" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Path_ABC > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMove, boost::shared_ptr< DEC_Path_ABC > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC__StartTirSurPopulation" ] =
-        boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePopulation, unsigned int >, boost::ref( GetPion() ), _1 ) );
+        boost::function< unsigned int( unsigned int, const std::string& ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePopulation, unsigned int, const std::string& >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_StartTirDirect" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDirectFirePion, boost::shared_ptr< DEC_Knowledge_Agent >, double, int, int >, boost::ref( GetPion() ), _1, _2, _3, _4 ) );
     brain[ "DEC_StartTirDirectDebarques" ] =

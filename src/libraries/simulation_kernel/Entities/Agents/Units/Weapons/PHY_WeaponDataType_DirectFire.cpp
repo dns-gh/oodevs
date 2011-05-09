@@ -31,8 +31,10 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePion.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePopulation.h"
+#include "Entities/Effects/MIL_Effect_ScatterPopulation.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -362,17 +364,21 @@ void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_Agent_ABC& t
 // Name: PHY_WeaponDataType_DirectFire::Fire
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
+void PHY_WeaponDataType_DirectFire::Fire( MIL_Agent_ABC& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult, const PHY_AmmoDotationClass* dotationClass ) const
 {
-    const PHY_RoePopulation& roe  = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
-    const double           rPH  = target.GetPopulation().GetType().GetDamagePH( roe );
+    const PHY_RoePopulation& roe = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
+    const double rPH = target.GetPopulation().GetType().GetDamagePH( roe );
 
     unsigned int nHit = 0;
     for( unsigned int i = 1; i <= nNbrAmmoReserved; ++i )
         if( 1. - MIL_Random::rand_io() <= rPH )
             ++nHit;
 
-    MIL_Effect_DirectFirePopulation* pEffect = new MIL_Effect_DirectFirePopulation( target, nHit, fireResult );
+    MIL_Effect_ABC* pEffect = 0;
+    if( &PHY_AmmoDotationClass::alr_ == dotationClass )
+        pEffect = new MIL_Effect_ScatterPopulation( target, nHit, fireResult );
+    else
+        pEffect = new MIL_Effect_DirectFirePopulation( target, nHit, fireResult );
     MIL_EffectManager::GetEffectManager().Register( *pEffect );
 }
 
