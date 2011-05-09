@@ -38,7 +38,10 @@ public:
     {
         // NOTHING
     }
-    virtual ~Domain() {}
+    virtual ~Domain()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -66,12 +69,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Domain( const Domain& );            //!< Copy constructor
-    Domain& operator=( const Domain& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual std::string GetName() const { return "Domain"; }

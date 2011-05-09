@@ -34,13 +34,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Polygon( const Polygon& );            //!< Copy constructor
-    Polygon& operator=( const Polygon& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     geometry::Polygon2f polygon_;

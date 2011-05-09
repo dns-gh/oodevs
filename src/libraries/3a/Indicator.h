@@ -29,7 +29,7 @@ public:
     //@{
     Indicator( dispatcher::ClientPublisher_ABC& publisher, const std::string& name )
         : publisher_( publisher )
-        , name_( name )
+        , name_     ( name )
     {
         // NOTHING
     }
@@ -51,15 +51,8 @@ public:
         result().set_value( static_cast< float >( arg ) );
         result.Send( publisher_ );
     }
-    virtual void EndTick() {};
+    virtual void EndTick() {}
     virtual void Commit( unsigned int /*skippedFrames*/, unsigned int /*firstTick*/ ) const {}
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Indicator( const Indicator& );            //!< Copy constructor
-    Indicator& operator=( const Indicator& ); //!< Assignment operator
     //@}
 
 private:

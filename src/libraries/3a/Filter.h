@@ -12,7 +12,10 @@
 
 #include "Functions.h"
 
-namespace xml { class xistream; }
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 /** @class  Filter
@@ -33,8 +36,14 @@ public:
     //! @name Constructors/Destructor
     //@{
     Filter( xml::xistream&, Function1_ABC< K, Result_Type >& next )
-        : next_( next ) {}
-    virtual ~Filter() {}
+        : next_( next )
+    {
+        // NOTHING
+    }
+    virtual ~Filter()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -62,13 +71,6 @@ private:
     //! @name Helpers
     //@{
     virtual std::string GetName() const { return "Filter"; }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Filter( const Filter& );            //!< Copy constructor
-    Filter& operator=( const Filter& ); //!< Assignment operator
     //@}
 
 private:

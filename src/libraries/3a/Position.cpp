@@ -8,11 +8,11 @@
 // *****************************************************************************
 
 #include "Position.h"
+#include "protocol/Protocol.h"
 #include <geocoord/PlanarCartesian.h>
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
 #include <boost/bind.hpp>
-#include "protocol/Protocol.h"
 
 using namespace sword;
 
@@ -21,9 +21,10 @@ namespace
     bool Initialize( geocoord::PlanarCartesian::Parameters& parameters, const CoordLatLong& coord  )
     {
         const double rPiOver180 = std::acos( -1. ) / 180.;
-        parameters.SetOrigin( coord.latitude() * rPiOver180, coord.longitude() * rPiOver180);
+        parameters.SetOrigin( coord.latitude() * rPiOver180, coord.longitude() * rPiOver180 );
         return true;
     }
+
     geometry::Point2f ToPoint( const CoordLatLong& coord )
     {
         static geocoord::Geodetic geo_;
@@ -34,8 +35,9 @@ namespace
 
         geo_.Set( coord.latitude() * rPiOver180, coord.longitude() * rPiOver180 );
         planar_.SetCoordinates( geo_ );
-        return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) );
+        return geometry::Point2f( static_cast< float >( planar_.GetX() ), static_cast< float >( planar_.GetY() ) );
     }
+
     std::string ToMgrs( const CoordLatLong& coord )
     {
         static geocoord::Geodetic geo_;
@@ -78,7 +80,7 @@ Position::Position()
 // -----------------------------------------------------------------------------
 Position::Position( const CoordLatLong& coord )
     : coord_( coord )
-    , init_( false )
+    , init_ ( false )
 {
     // NOTHING
 }
@@ -89,11 +91,10 @@ Position::Position( const CoordLatLong& coord )
 // -----------------------------------------------------------------------------
 Position::Position( const std::string& coord )
     : coord_( ToCoord( coord ) )
-    , init_( false )
+    , init_ ( false )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Position destructor

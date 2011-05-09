@@ -24,13 +24,13 @@ class Task;
 */
 // Created: AGE 2007-09-10
 // =============================================================================
-class Slot_ABC
+class Slot_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Slot_ABC() {};
-    virtual ~Slot_ABC() {};
+             Slot_ABC() {}
+    virtual ~Slot_ABC() {}
     //@}
 
     //! @name Accessors
@@ -53,7 +53,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual Slot_ABC* GetSubSlot( unsigned ) { return this; }
+    virtual Slot_ABC* GetSubSlot( unsigned int ) { return this; }
     //@}
 };
 

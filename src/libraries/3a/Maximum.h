@@ -13,7 +13,10 @@
 #include "Reductor_ABC.h"
 #include "TypeChecks.h"
 
-namespace xml { class xistream; }
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 /** @class  Maximum
@@ -34,10 +37,21 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Maximum( Function1_ABC< K, T >& handler )
-                 : handler_( handler ), max_( std::numeric_limits< T >::min() ) {};
-             Maximum( xml::xistream&, Function1_ABC< K, T >& handler )
-                 : handler_( handler ), max_( std::numeric_limits< T >::min() ) {};
-    virtual ~Maximum() {}
+        : handler_( handler )
+        , max_    ( std::numeric_limits< T >::min() )
+    {
+        // NOTHING
+    }
+    Maximum( xml::xistream&, Function1_ABC< K, T >& handler )
+        : handler_( handler )
+        , max_    ( std::numeric_limits< T >::min() )
+    {
+        // NOTHING
+    }
+    virtual ~Maximum()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -57,13 +71,6 @@ public:
         handler_.Apply( max_ );
         handler_.EndTick();
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Maximum( const Maximum& );            //!< Copy constructor
-    Maximum& operator=( const Maximum& ); //!< Assignment operator
     //@}
 
 private:

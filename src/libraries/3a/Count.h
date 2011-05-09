@@ -11,12 +11,12 @@
 #define __Count_h_
 
 #include "Reductor_ABC.h"
-#pragma warning( push )
-#pragma warning( disable : 4702 )
 #include <set>
-#pragma warning( pop )
 
-namespace xml { class xistream; }
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 /** @class  Count
@@ -36,13 +36,22 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Count( xml::xistream&, Function1_ABC< K, NumericValue >& handler )
-                : handler_( handler )
-                , set_( false ){}
+    Count( xml::xistream&, Function1_ABC< K, NumericValue >& handler )
+        : handler_( handler )
+        , set_    ( false )
+    {
+        // NOTHING
+    }
     explicit Count( Function1_ABC< K, NumericValue >& handler )
-                : handler_( handler )
-                , set_( false ){}
-    virtual ~Count() {}
+        : handler_( handler )
+        , set_    ( false )
+    {
+        // NOTHING
+    }
+    virtual ~Count()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -55,7 +64,8 @@ public:
     }
     virtual void SetKey( const K& key )
     {
-        set_ = true; current_ = key;
+        set_ = true;
+        current_ = key;
     };
     virtual void Apply( const T& )
     {
@@ -71,18 +81,12 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Count( const Count& );            //!< Copy constructor
-    Count& operator=( const Count& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     Function1_ABC< K, NumericValue >& handler_;
     std::set< K > keys_;
-    K current_; bool set_;
+    K current_;
+    bool set_;
     //@}
 };
 

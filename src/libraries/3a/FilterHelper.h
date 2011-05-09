@@ -10,12 +10,13 @@
 #ifndef __FilterHelper_h_
 #define __FilterHelper_h_
 
-#pragma warning( push, 0 )
-#include <xeumeuleu/xml.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
 #include <set>
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+#include <boost/algorithm/string.hpp>
 #pragma warning( pop )
+#include <boost/lexical_cast.hpp>
+#include <xeumeuleu/xml.hpp>
 
 // =============================================================================
 /** @class  FilterHelper

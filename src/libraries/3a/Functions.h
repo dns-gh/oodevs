@@ -11,7 +11,6 @@
 #define __Functions_h_
 
 #include "Slots.h"
-#include "ValueHandler_ABC.h"
 
 // =============================================================================
 /** @class  Function_ABC
@@ -24,8 +23,14 @@ class Function_ABC : public Slot_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Function_ABC() {}
-    virtual ~Function_ABC() {}
+    Function_ABC()
+    {
+        // NOTHING
+    }
+    virtual ~Function_ABC()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -55,8 +60,14 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Function1_ABC() {}
-    virtual ~Function1_ABC() {}
+    Function1_ABC()
+    {
+        // NOTHING
+    }
+    virtual ~Function1_ABC()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -88,8 +99,14 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Function2_ABC() {}
-    virtual ~Function2_ABC() {}
+    Function2_ABC()
+    {
+        // NOTHING
+    }
+    virtual ~Function2_ABC()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations

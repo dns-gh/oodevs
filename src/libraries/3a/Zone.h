@@ -11,9 +11,9 @@
 #define __Zone_h_
 
 #include "Zone_ABC.h"
-#include <boost/shared_ptr.hpp>
 #include <string>
 #include <sstream>
+#include <boost/shared_ptr.hpp>
 
 // =============================================================================
 /** @class  Zone

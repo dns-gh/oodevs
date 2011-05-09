@@ -252,7 +252,7 @@ namespace
         template< typename T >
         double operator()( const T& t ) const
         {
-            return double( t );
+            return static_cast< double >( t );
         }
     };
 }

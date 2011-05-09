@@ -15,7 +15,10 @@
 #pragma warning( push )
 #pragma warning( disable : 4800 4804 )
 
-namespace xml { class xistream; }
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 /** @class  Adder
@@ -35,11 +38,22 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Adder( xml::xistream&, Function1_ABC< K, T >& handler )
-                 : handler_( handler ), sum_() {}
+    Adder( xml::xistream&, Function1_ABC< K, T >& handler )
+        : handler_( handler )
+        , sum_    ()
+    {
+        // NOTHING
+    }
     explicit Adder( Function1_ABC< K, T >& handler )
-                : handler_( handler ), sum_() {}
-    virtual ~Adder() {}
+        : handler_( handler )
+        , sum_()
+    {
+        // NOTHING
+    }
+    virtual ~Adder()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -59,13 +73,6 @@ public:
         handler_.Apply( sum_ );
         handler_.EndTick();
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Adder( const Adder& );
-    Adder& operator=( const Adder& );
     //@}
 
 private:

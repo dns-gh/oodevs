@@ -10,9 +10,13 @@
 #ifndef __Distance_h_
 #define __Distance_h_
 
-namespace xml { class xistream; }
 #include "Functions.h"
 #include "Position.h"
+
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 /** @class  Distance
@@ -33,8 +37,14 @@ public:
     //! @name Constructors/Destructor
     //@{
     Distance( xml::xistream&, Function1_ABC< K, NumericValue >& next )
-        : next_( next ) {}
-    virtual ~Distance() {}
+        : next_( next )
+    {
+        // NOTHING
+    }
+    virtual ~Distance()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -61,13 +71,6 @@ private:
     //! @name Operations
     //@{
     virtual std::string GetName() const { return "Distance"; }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Distance( const Distance& );            //!< Copy constructor
-    Distance& operator=( const Distance& ); //!< Assignment operator
     //@}
 
 private:

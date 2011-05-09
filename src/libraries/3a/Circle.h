@@ -13,11 +13,6 @@
 #include "Zone_ABC.h"
 #include "Position.h"
 
-#pragma warning (push)
-#pragma warning (disable : 4702 )
-#include <vector>
-#pragma warning (pop)
-
 // =============================================================================
 /** @class  Circle
     @brief  Circle
@@ -36,13 +31,6 @@ public:
     //! @name Operations
     //@{
     virtual bool Contains( const Position& position ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Circle( const Circle& );            //!< Copy constructor
-    Circle& operator=( const Circle& ); //!< Assignment operator
     //@}
 
 private:

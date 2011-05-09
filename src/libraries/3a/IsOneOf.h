@@ -32,12 +32,15 @@ public:
     //! @name Constructors/Destructor
     //@{
     IsOneOf( xml::xistream& xis, Function1_ABC< K, Result_Type >& next )
-        : next_( next )
+        : next_  ( next )
         , filter_( xis, "select" )
     {
         // NOTHING
     }
-    virtual ~IsOneOf() {}
+    virtual ~IsOneOf()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -61,12 +64,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    IsOneOf( const IsOneOf& );            //!< Copy constructor
-    IsOneOf& operator=( const IsOneOf& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual std::string GetName() const { return "IsOneOf"; }

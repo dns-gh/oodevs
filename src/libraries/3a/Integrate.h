@@ -16,7 +16,10 @@
 #pragma warning( push )
 #pragma warning( disable : 4800 4804 )
 
-namespace xml { class xistream; }
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 /** @class  Integrate
@@ -37,10 +40,21 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Integrate( Function1_ABC< K, T >& next )
-                : next_( next ), currentKey_() {}
-             Integrate( xml::xistream& , Function1_ABC< K, T >& next )
-                : next_( next ), currentKey_() {}
-    virtual ~Integrate() {}
+        : next_      ( next )
+        , currentKey_()
+    {
+        // NOTHING
+    }
+    Integrate( xml::xistream& , Function1_ABC< K, T >& next )
+        : next_      ( next )
+        , currentKey_()
+    {
+        // NOTHING
+    }
+    virtual ~Integrate()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -67,12 +81,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Integrate( const Integrate& );            //!< Copy constructor
-    Integrate& operator=( const Integrate& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual std::string GetName() const { return "Integrate"; }

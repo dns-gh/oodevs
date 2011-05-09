@@ -13,7 +13,8 @@
 #include "Reductor_ABC.h"
 #include "TypeChecks.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push, 0 )
+#pragma warning( push )
+#pragma warning( disable : 4996 )
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
@@ -75,12 +76,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Threshold( const Threshold& );            //!< Copy constructor
-    Threshold& operator=( const Threshold& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     std::map< double, double > ReadThresholds( xml::xistream& xis )
@@ -110,14 +105,16 @@ private:
 
     T ApplyThreshold( const T& value )
     {
-        std::map< double, double >::const_iterator it = thresholds_.lower_bound( double( value ) );
+        std::map< double, double >::const_iterator it = thresholds_.lower_bound( static_cast< double >( value ) );
         return it != thresholds_.end() ? ToResult< T >( it->second ) : T();
     }
+
     template< typename R >
     R ToResult( double value ) const
     {
         return R( value );
     }
+
     template<>
     bool ToResult< bool >( double value ) const
     {

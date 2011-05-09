@@ -13,7 +13,10 @@
 #include "Reductor_ABC.h"
 #include "TypeChecks.h"
 
-namespace xml { class xistream; }
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 /** @class  Minimum
@@ -34,10 +37,21 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit Minimum( Function1_ABC< K, T >& handler )
-                 : handler_( handler ), min_( std::numeric_limits< T >::max() ) {};
-             Minimum( xml::xistream&, Function1_ABC< K, T >& handler )
-                 : handler_( handler ), min_( std::numeric_limits< T >::max() ) {};
-    virtual ~Minimum() {}
+        : handler_( handler )
+        , min_    ( std::numeric_limits< T >::max() )
+    {
+        // NOTHING
+    }
+    Minimum( xml::xistream&, Function1_ABC< K, T >& handler )
+        : handler_( handler )
+        , min_    ( std::numeric_limits< T >::max() )
+    {
+        // NOTHING
+    }
+    virtual ~Minimum()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -57,13 +71,6 @@ public:
         handler_.Apply( min_ );
         handler_.EndTick();
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Minimum( const Minimum& );            //!< Copy constructor
-    Minimum& operator=( const Minimum& ); //!< Assignment operator
     //@}
 
 private:

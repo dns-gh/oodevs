@@ -11,13 +11,9 @@
 #define __Derivate_h_
 
 #include "Functions.h"
-#include "TypeChecks.h"
-#include <xeumeuleu/xml.hpp>
-#include <deque>
-#include <map>
 
 #pragma warning( push )
-#pragma warning( disable : 4800 4804 )
+#pragma warning( disable : 4800 )
 
 // =============================================================================
 /** @class  Derivate
@@ -38,8 +34,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     Derivate( xml::xistream& xis, Function1_ABC< K, T >& next )
-        : period_( double( std::max( xis.attribute< unsigned int >( "period", 1 ), 1u ) ) )
-        , next_  ( next )
+        : period_    ( static_cast< double >( std::max( xis.attribute< unsigned int >( "period", 1 ), 1u ) ) )
+        , next_      ( next )
         , currentKey_()
     {
         // NOTHING
@@ -76,12 +72,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Derivate( const Derivate& );            //!< Copy constructor
-    Derivate& operator=( const Derivate& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual std::string GetName() const

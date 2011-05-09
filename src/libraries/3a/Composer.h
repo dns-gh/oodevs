@@ -12,8 +12,8 @@
 
 #include "Reductor_ABC.h"
 
-#pragma warning (push)
-#pragma warning (disable : 4355)
+#pragma warning( push )
+#pragma warning( disable : 4355 )
 
 // =============================================================================
 /** @class  Composer
@@ -37,9 +37,15 @@ public:
     //@{
     explicit Composer( Function1_ABC< K, A2 >& next )
         : function_( next )
-        , first_( this )
-        , second_( this ) {}
-    virtual ~Composer() {}
+        , first_   ( this )
+        , second_  ( this )
+    {
+        // NOTHING
+    }
+    virtual ~Composer()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -49,12 +55,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Composer( const Composer& );            //!< Copy constructor
-    Composer& operator=( const Composer& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual std::string GetName() const { return "Composer"; }
@@ -62,7 +62,7 @@ private:
     {
         return slot == 0 ? &second_:
                slot == 1 ? &first_ :
-               (Slot_ABC*)0;
+               static_cast< Slot_ABC* >( 0 );
     }
     //@}
 
@@ -72,7 +72,13 @@ private:
     struct Function : public Reductor_ABC< K, T >
     {
         Function( Composer* that )
-            : that_( that ), done_( false ), hasKey_( false ), current_() {}
+            : that_   ( that )
+            , done_   ( false )
+            , hasKey_ ( false )
+            , current_()
+        {
+            // NOTHING
+        }
         virtual void OnBeginTick() {}
         virtual void SetKey( const K& key )
         {
@@ -90,7 +96,8 @@ private:
         }
         void Reset()
         {
-            done_ = hasKey_ = false;
+            done_ = false;
+            hasKey_ = false;
             current_ = K();
             values_.clear();
         }
@@ -114,7 +121,8 @@ private:
                 ForwardSecond();
             else
                 function_.Apply( second_.values_[ K() ] );
-            first_.Reset(); second_.Reset();
+            first_.Reset();
+            second_.Reset();
             function_.EndTick();
         }
     }
@@ -158,5 +166,7 @@ private:
     Function< A1, A2 > second_;
     //@}
 };
+
+#pragma warning( pop )
 
 #endif // __Composer_h_

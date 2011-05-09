@@ -12,7 +12,6 @@
 
 #include "Functions.h"
 #include "ValueHandler_ABC.h"
-#include <boost/shared_ptr.hpp>
 
 #pragma warning (push)
 #pragma warning (disable : 4355)
@@ -24,41 +23,48 @@
 // Created: AGE 2007-08-29
 // =============================================================================
 template< typename K, typename A >
-class HandlerToFunction
+class HandlerToFunction : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
     explicit HandlerToFunction( Function1_ABC< K, A >& function )
-        : function_( function ), key_(), value_( this ) {};
-    virtual ~HandlerToFunction() {}
+        : function_( function )
+        , key_     ()
+        , value_   ( this )
+    {
+        // NOTHING
+    }
+    virtual ~HandlerToFunction()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
     //@{
-    ValueHandler_ABC< K >& KeyParameter()  { return key_; }
-    ValueHandler_ABC< A >& Parameter()     { return value_; }
+    ValueHandler_ABC< K >& KeyParameter() { return key_; }
+    ValueHandler_ABC< A >& Parameter()    { return value_; }
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    HandlerToFunction( const HandlerToFunction& );            //!< Copy constructor
-    HandlerToFunction& operator=( const HandlerToFunction& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     template< typename T >
     struct ValueParameter : public ValueHandler_ABC< T >
     {
         ValueParameter( HandlerToFunction* that )
-            : that_( that ), value_()  {}
+            : that_ ( that )
+            , value_()
+        {
+            // NOTHING
+        }
         virtual void BeginTick()
         {
             that_->function_.BeginTick();
         }
-        virtual void Handle( const T& value ) {
+        virtual void Handle( const T& value )
+        {
             value_ = value;
             that_->Commit();
         }
@@ -73,9 +79,14 @@ private:
     struct ValueHolder : public ValueHandler_ABC< T >
     {
         ValueHolder()
-            : value_(), set_( false )  {}
+            : value_()
+            , set_  ( false )
+        {
+            // NOTHING
+        }
         virtual void BeginTick() {}
-        virtual void Handle( const T& value ) {
+        virtual void Handle( const T& value )
+        {
             value_ = value;
             set_ = true;
         }
@@ -96,7 +107,7 @@ private:
     //! @name Member data
     //@{
     Function1_ABC< K, A >& function_;
-    ValueHolder< K >    key_;
+    ValueHolder< K > key_;
     ValueParameter< A > value_;
     //@}
 };

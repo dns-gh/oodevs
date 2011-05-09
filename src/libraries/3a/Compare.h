@@ -37,8 +37,13 @@ public:
     Compare( xml::xistream& xis, Function1_ABC< K, Result_Type >& next )
         : operator_( MakeOperator( xis ) )
         , next_    ( next )
-    {}
-    virtual ~Compare() {}
+    {
+        // NOTHING
+    }
+    virtual ~Compare()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -62,12 +67,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Compare( const Compare& );            //!< Copy constructor
-    Compare& operator=( const Compare& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef boost::function2< bool, T, T > T_Operator;

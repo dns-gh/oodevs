@@ -32,8 +32,14 @@ public:
     //! @name Constructors/Destructor
     //@{
     Product( xml::xistream& /*xis*/, Function1_ABC< K, Result_Type >& next )
-        : next_( next ) {}
-    virtual ~Product() {}
+        : next_( next )
+    {
+        // NOTHING
+    }
+    virtual ~Product()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -55,13 +61,6 @@ public:
     {
         next_.EndTick();
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Product( const Product& );            //!< Copy constructor
-    Product& operator=( const Product& ); //!< Assignment operator
     //@}
 
 private:

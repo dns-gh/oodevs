@@ -30,9 +30,15 @@ public:
     //@{
     explicit KeyMarshaller( Function2_ABC< K, A1, A2 >& function )
         : function_( function )
-        , first_( this )
-        , second_( this ) {}
-    virtual ~KeyMarshaller() {}
+        , first_   ( this )
+        , second_  ( this )
+    {
+        // NOTHING
+    }
+    virtual ~KeyMarshaller()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -42,20 +48,14 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    KeyMarshaller( const KeyMarshaller& );            //!< Copy constructor
-    KeyMarshaller& operator=( const KeyMarshaller& ); //!< Assignment operator
-    //@}
-
     //! @name Operations
     //@{
     virtual std::string GetName() const { return function_.GetName(); }
-    virtual Slot_ABC* GetSubSlot( unsigned slot )
+    virtual Slot_ABC* GetSubSlot( unsigned int slot )
     {
         return slot == 0 ? &first_ :
                slot == 1 ? &second_ :
-               (Slot_ABC*)0;
+               static_cast< Slot_ABC* >( 0 );
     }
     //@}
 
@@ -65,7 +65,13 @@ private:
     struct Function : public Reductor_ABC< K, T >
     {
         Function( KeyMarshaller* that )
-            : that_( that ), done_( false ), hasKey_( false ), current_() {}
+            : that_   ( that )
+            , done_   ( false )
+            , hasKey_ ( false )
+            , current_()
+        {
+            // NOTHING
+        }
         virtual void OnBeginTick() {}
         virtual void SetKey( const K& key )
         {
@@ -106,7 +112,8 @@ private:
                 ForwardSecond();
             else
                 function_.Apply( first_.values_[ K() ], second_.values_[ K() ] );
-            first_.Reset(); second_.Reset();
+            first_.Reset();
+            second_.Reset();
             function_.EndTick();
         }
     }
@@ -123,7 +130,8 @@ private:
             {
                 function_.SetKey( firstIt->first );
                 function_.Apply ( firstIt->second, secondIt->second );
-                ++firstIt; ++secondIt;
+                ++firstIt;
+                ++secondIt;
             }
     }
     void ForwardFirst()

@@ -16,7 +16,10 @@
 #pragma warning( push )
 #pragma warning( disable : 4800 4804 )
 
-namespace xml { class xistream; }
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 /** @class  Meaner
@@ -36,11 +39,24 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Meaner( xml::xistream&, Function1_ABC< K, T >& handler )
-                : handler_( handler ), sum_(), count_( 0 ) {};
+     Meaner( xml::xistream&, Function1_ABC< K, T >& handler )
+        : handler_( handler )
+        , sum_    ()
+        , count_  ( 0 )
+     {
+         // NOTHING
+     }
     explicit Meaner( Function1_ABC< K, T >& handler )
-                : handler_( handler ), sum_(), count_( 0 ) {};
-    virtual ~Meaner() {}
+        : handler_( handler )
+        , sum_    ()
+        , count_  ( 0 )
+    {
+        // NOTHING
+    }
+    virtual ~Meaner()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -48,7 +64,7 @@ public:
     virtual std::string GetName() const { return "Mean"; }
     virtual void OnBeginTick()
     {
-        sum_   = T();
+        sum_ = T();
         count_ = 0;
         handler_.BeginTick();
     };
@@ -66,18 +82,11 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Meaner( const Meaner& );
-    Meaner& operator=( const Meaner& );
-    //@}
-
-private:
     //! @name Member data
     //@{
     Function1_ABC< K, T >& handler_;
-    T                      sum_;
-    unsigned               count_;
+    T sum_;
+    unsigned int count_;
     //@}
 };
 

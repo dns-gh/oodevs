@@ -29,7 +29,8 @@ public:
     //! @name Constructors/Destructor
     //@{
     Plotter( dispatcher::ClientPublisher_ABC& publisher, int context )
-        : publisher_( publisher ), context_( context )
+        : publisher_( publisher )
+        , context_  ( context )
     {
         // NOTHING
     }
@@ -52,12 +53,11 @@ public:
         values_.push_back( arg );
     }
     virtual void EndTick() {}
-
     virtual void Commit( unsigned int skippedFrames, unsigned int firstTick ) const
     {
         aar::PlotResult result;
         result().set_identifier( context_ );
-        result().set_error     ( "" );
+        result().set_error( "" );
         for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
         {
             if( skippedFrames == 0 )
@@ -72,18 +72,11 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Plotter( const Plotter& );            //!< Copy constructor
-    Plotter& operator=( const Plotter& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< T > T_Values;
     //@}
 
-private:
     //! @name Member data
     //@{
     dispatcher::ClientPublisher_ABC& publisher_;

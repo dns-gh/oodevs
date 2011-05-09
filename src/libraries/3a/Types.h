@@ -11,7 +11,7 @@
 #define __Types_h_
 
 #pragma warning( push )
-#pragma warning( disable : 4512 4702 )
+#pragma warning( disable : 4512 )
 #include <boost/variant.hpp>
 #pragma warning( pop )
 #include <iostream>
@@ -21,18 +21,30 @@ typedef boost::variant< int, unsigned int, long, unsigned long, float, double > 
 class NumericValue : public NumericVariant
 {
 public:
-    NumericValue() : NumericVariant() {}
+    NumericValue() : NumericVariant()
+    {
+        // NOTHING
+    }
     template< typename T >
-    NumericValue( const T& t ) : NumericVariant( t ) {}
-    virtual ~NumericValue() {}
+    NumericValue( const T& t ) : NumericVariant( t )
+    {
+        // NOTHING
+    }
+    virtual ~NumericValue()
+    {
+        // NOTHING
+    }
 
     // MSVC++ bug fix: https://svn.boost.org/trac/boost/ticket/592
     //@{
-    NumericValue( const NumericValue& other ) : NumericVariant( static_cast< const NumericVariant& >( other ) ) {}
+    NumericValue( const NumericValue& other ) : NumericVariant( static_cast< const NumericVariant& >( other ) )
+    {
+        // NOTHING
+    }
     NumericValue& operator=( const NumericValue& other )
     {
         *static_cast< NumericVariant* >( this ) = static_cast< const NumericVariant& >( other );
-        return (*this);
+        return *this;
     }
     //@}
 

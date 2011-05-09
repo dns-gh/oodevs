@@ -31,13 +31,24 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Selector( xml::xistream& xis, Function1_ABC< K, T >& handler )
-                 : key_( xis.attribute< double >( "key" ) ) // $$$$ SBO 2009-05-15: should be K
-                 , handler_( handler ), found_( false ) {}
-             Selector( const K& key, Function1_ABC< K, T >& handler )
-                 : key_( key )
-                 , handler_( handler ), found_( false ) {}
-    virtual ~Selector() {}
+     Selector( xml::xistream& xis, Function1_ABC< K, T >& handler )
+         : key_    ( xis.attribute< double >( "key" ) ) // $$$$ SBO 2009-05-15: should be K
+         , handler_( handler )
+         , found_  ( false )
+     {
+         // NOTHING
+     }
+     Selector( const K& key, Function1_ABC< K, T >& handler )
+         : key_    ( key )
+         , handler_( handler )
+         , found_  ( false )
+     {
+         // NOTHING
+     }
+    virtual ~Selector()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -61,13 +72,6 @@ public:
     {
         handler_.EndTick();
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Selector( const Selector& );            //!< Copy constructor
-    Selector& operator=( const Selector& ); //!< Assignment operator
     //@}
 
 private:

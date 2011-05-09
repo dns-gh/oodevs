@@ -12,13 +12,15 @@
 
 class Position;
 
+#include <boost/noncopyable.hpp>
+
 // =============================================================================
 /** @class  Zone_ABC
     @brief  Zone_ABC
 */
 // Created: AGE 2007-10-09
 // =============================================================================
-class Zone_ABC
+class Zone_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

@@ -10,10 +10,14 @@
 #ifndef __Contains_h_
 #define __Contains_h_
 
-namespace xml { class xistream; }
 #include "Functions.h"
 #include "Position.h"
 #include "Zone.h"
+
+namespace xml
+{
+    class xistream;
+}
 
 // =============================================================================
 /** @class  Contains
@@ -34,7 +38,10 @@ public:
     //! @name Constructors/Destructor
     //@{
     Contains( xml::xistream&, Function1_ABC< K, bool >& next )
-        : next_( next ) {}
+        : next_( next )
+    {
+        // NOTHING
+    }
     virtual ~Contains() {}
     //@}
 
@@ -62,13 +69,6 @@ private:
     //! @name Operations
     //@{
     virtual std::string GetName() const { return "Contains"; }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Contains( const Contains& );            //!< Copy constructor
-    Contains& operator=( const Contains& ); //!< Assignment operator
     //@}
 
 private:

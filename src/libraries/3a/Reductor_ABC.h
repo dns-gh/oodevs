@@ -24,8 +24,15 @@ class Reductor_ABC : public Function1_ABC< K, T >
 public:
     //! @name Constructors/Destructor
     //@{
-             Reductor_ABC() : count_( 0 ) {}
-    virtual ~Reductor_ABC() {}
+    Reductor_ABC()
+        : count_( 0 )
+    {
+        // NOTHING
+    }
+    virtual ~Reductor_ABC()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -55,12 +62,6 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Reductor_ABC( const Reductor_ABC& );            //!< Copy constructor
-    Reductor_ABC& operator=( const Reductor_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string GetName() const { return "Reductor"; }
@@ -69,7 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned count_;
+    unsigned int count_;
     //@}
 };
 
@@ -85,8 +86,15 @@ class Reductor2_ABC : public Function2_ABC< K, A1, A2 >
 public:
     //! @name Constructors/Destructor
     //@{
-             Reductor2_ABC() : count_( 0 ) {}
-    virtual ~Reductor2_ABC() {}
+    Reductor2_ABC()
+        : count_( 0 )
+    {
+        // NOTHING
+    }
+    virtual ~Reductor2_ABC()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
@@ -116,12 +124,6 @@ private:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Reductor2_ABC( const Reductor2_ABC& );            //!< Copy constructor
-    Reductor2_ABC& operator=( const Reductor2_ABC& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual std::string GetName() const { return "Reductor"; }
@@ -130,7 +132,7 @@ private:
 private:
     //! @name Member data
     //@{
-    unsigned count_;
+    unsigned int count_;
     //@}
 };
 

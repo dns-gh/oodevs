@@ -11,10 +11,7 @@
 #define __Position_h_
 
 #include <string>
-#pragma warning (push)
-#pragma warning (disable : 4702 )
 #include <geometry/Types.h>
-#pragma warning (pop)
 #include "protocol/Protocol.h"
 
 // =============================================================================
