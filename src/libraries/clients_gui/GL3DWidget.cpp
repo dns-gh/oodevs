@@ -443,6 +443,8 @@ void Gl3dWidget::Print( const std::string& message, const Point2f& where, const 
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& style, const geometry::Point2f& where, float factor /*= 1.f*/, float /*thickness = 1.f*/ ) const
 {
+    if( factor < 0 )
+        factor = 1;
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
     const float svgWidth = 360;
@@ -451,15 +453,15 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const std::string& s
     const float scaleRatio = expectedWidth / svgWidth;
 
     glPushMatrix();
-    glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-        glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
-        UndoRotations();
-        glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0 );
-        glScalef( scaleRatio, -scaleRatio, scaleRatio );
-        glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
-        const Rectangle2f bbox( -10000,-10000,10000,10000 ); // $$$$ AGE 2006-09-11:
-        Base().PrintApp6( symbol, style, bbox );
-    glPopAttrib();
+        glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+            glTranslatef( where.X(), where.Y(), ElevationAt( where ) + 100.f );
+            UndoRotations();
+            glTranslatef( - expectedWidth * 0.5f, expectedHeight, 0 );
+            glScalef( scaleRatio, - scaleRatio, scaleRatio );
+            glTranslatef( svgDeltaX, svgDeltaY, 0.0f );
+            const Rectangle2f bbox( -10000, -10000, 10000, 10000 ); // $$$$ AGE 2006-09-11:
+            Base().PrintApp6( symbol, style, bbox );
+        glPopAttrib();
     glPopMatrix();
 }
 
