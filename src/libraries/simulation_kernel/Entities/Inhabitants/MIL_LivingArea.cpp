@@ -198,7 +198,7 @@ void MIL_LivingArea::GetUsagesOccupation( std::map< std::string, unsigned int >&
     // $$$$ JSR 2011-03-22: à vérifier pour la satisfaction
     BOOST_FOREACH( const MIL_LivingAreaBlock* block, blocks_ )
         for( PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().begin(); it != PHY_AccomodationType::GetAccomodations().end(); ++it )
-            occupations[ it->first ] += block->GetNominalOccupation( it->first );
+            occupations[ it->first ] += block->GetNominalOccupation( it->first, it->second );
 }
 
 // -----------------------------------------------------------------------------

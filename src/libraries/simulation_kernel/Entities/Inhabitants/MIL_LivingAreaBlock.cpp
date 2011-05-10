@@ -226,7 +226,18 @@ unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motiv
 {
     PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().find( motivation );
     if( it != PHY_AccomodationType::GetAccomodations().end() )
-        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * GetStructuralState( *urbanObject_ ) * GetProportion( motivation ) * it->second->GetNominalCapacity() );
+        return GetNominalOccupation( motivation, it->second );
+    return 0u;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingAreaBlock::GetNominalOccupation
+// Created: LDC 2011-05-10
+// -----------------------------------------------------------------------------
+unsigned int MIL_LivingAreaBlock::GetNominalOccupation( const std::string& motivation, const PHY_AccomodationType* accomodation ) const
+{
+    if( accomodation )
+        return static_cast< unsigned int >( urbanObject_->GetLivingSpace() * GetStructuralState( *urbanObject_ ) * GetProportion( motivation ) * accomodation->GetNominalCapacity() );
     return 0u;
 }
 
@@ -282,7 +293,7 @@ float MIL_LivingAreaBlock::ComputeOccupationFactor() const
         return 0;
     int blockOccupation = 0;
     for( PHY_AccomodationType::CIT_AccomodationMap accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end(); ++accommodation )
-        blockOccupation += GetNominalOccupation( accommodation->first );
+        blockOccupation += GetNominalOccupation( accommodation->first, accommodation->second );
     int totalPopulation = urbanObject_->GetTotalInhabitants() - totalPerson;
     return std::min( static_cast< int >( totalPerson ), std::max( 0, blockOccupation - totalPopulation ) );
 }

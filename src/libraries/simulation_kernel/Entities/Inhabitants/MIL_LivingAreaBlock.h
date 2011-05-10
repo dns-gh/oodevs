@@ -20,6 +20,7 @@ namespace client
 class MIL_Army_ABC;
 class MIL_InhabitantType;
 class MIL_LivingArea;
+class PHY_AccomodationType;
 class PHY_ResourceNetworkType;
 class TER_Localisation;
 class UrbanObjectWrapper;
@@ -56,6 +57,7 @@ public:
     const UrbanObjectWrapper& GetObject() const;
     unsigned int GetPersonsForAccomodation( const std::string& accomodation ) const;
     unsigned int GetNominalOccupation( const std::string& motivation ) const;
+    unsigned int GetNominalOccupation( const std::string& motivation, const PHY_AccomodationType* accomodation ) const;
     unsigned int GetMaxOccupation( const std::string& motivation ) const;
     bool CanMove() const;
     bool IsUsableForMotivation( const std::string& motivation ) const;
