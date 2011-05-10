@@ -1560,10 +1560,10 @@ bool MIL_Population::HasReachedDestinationCompletely( const MT_Vector2D& destina
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::GetHeadPosition
+// Name: MIL_Population::GetFlowHeadPosition
 // Created: EVH 2011-05-10
 // -----------------------------------------------------------------------------
-MT_Vector2D MIL_Population::GetHeadPosition()
+MT_Vector2D MIL_Population::GetFlowHeadPosition()
 {
     assert( HasFlow() );
     MIL_PopulationFlow* firstFlow = *flows_.begin();

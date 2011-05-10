@@ -185,15 +185,15 @@ float DEC_KnowledgePopulationFunctions::GetCrowdAffinity( const MIL_AgentPion& c
 }
 
 // -----------------------------------------------------------------------------
-// Name: boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::GetHead
+// Name: boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::GetFlowHead
 // Created: EVH 2011-05-10
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::GetHead( const DEC_Decision_ABC& callerAgent, int knowledgeId )
+boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::GetFlowHead( const DEC_Decision_ABC& callerAgent, int knowledgeId )
 {
     DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     if( pKnowledge )
     {
-        MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetPopulationKnown().GetHeadPosition() );
+        MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetPopulationKnown().GetFlowHeadPosition() );
         return  boost::shared_ptr< MT_Vector2D >( pResult );
     }
     return boost::shared_ptr<MT_Vector2D>();

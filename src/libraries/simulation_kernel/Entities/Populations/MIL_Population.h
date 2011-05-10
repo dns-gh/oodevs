@@ -103,7 +103,7 @@ public:
     MT_Vector2D GetSecuringPoint( const MIL_Agent_ABC& securingAgent ) const;
     MT_Vector2D GetSafetyPosition( const MIL_AgentPion& agent, double rMinDistance ) const;
     boost::shared_ptr< MT_Vector2D > GetBarycenter() const;
-    MT_Vector2D GetHeadPosition();
+    MT_Vector2D GetFlowHeadPosition();
     //@}
 
     //! @name Effects on pions

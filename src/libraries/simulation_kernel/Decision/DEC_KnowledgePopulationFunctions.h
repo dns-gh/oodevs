@@ -43,7 +43,7 @@ public:
                            static bool HasFlow( const MIL_AgentPion& caller, int knowledgeId );
                            static void ChangeArmedIndividuals( const MIL_AgentPion& callerAgent, int knowledgeId, const double rArmedIndividuals );
                            static float GetCrowdAffinity( const MIL_AgentPion& callerAgent, int knowledgeId );
-                           static boost::shared_ptr< MT_Vector2D > GetHead( const DEC_Decision_ABC& callerAgent, int knowledgeId );
+                           static boost::shared_ptr< MT_Vector2D > GetFlowHead( const DEC_Decision_ABC& callerAgent, int knowledgeId );
     //@}
 };
 

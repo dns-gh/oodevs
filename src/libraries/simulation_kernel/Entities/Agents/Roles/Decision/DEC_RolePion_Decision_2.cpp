@@ -503,8 +503,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool (int, TER_Localisation*) >(boost::bind( &DEC_KnowledgePopulationFunctions::IsInZone < MIL_AgentPion >, boost::cref( GetPion() ), _1 , _2 ) );
     brain[ "DEC_ConnaissancePopulation_PointPlusProche" ] =
         boost::function< boost::shared_ptr<MT_Vector2D> (int) >(boost::bind( &DEC_KnowledgePopulationFunctions::ClosestPoint, boost::cref( GetPion() ), _1 ) );
-    brain[ "DEC_ConnaissancePopulation_PointEnTete" ] =
-        boost::function< boost::shared_ptr<MT_Vector2D> (const DEC_Decision_ABC&, int) >(boost::bind( &DEC_KnowledgePopulationFunctions::GetHead, _1, _2 ) );
+    brain[ "DEC_ConnaissancePopulation_PointEnTeteDeFlux" ] =
+        boost::function< boost::shared_ptr<MT_Vector2D> (const DEC_Decision_ABC&, int) >(boost::bind( &DEC_KnowledgePopulationFunctions::GetFlowHead, _1, _2 ) );
     brain[ "DEC_ConnaissancePopulation_Securiser" ] =
         boost::function< void (int) >(boost::bind( &DEC_KnowledgePopulationFunctions::Secure, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissancePopulation_PointSecurisation" ] =
