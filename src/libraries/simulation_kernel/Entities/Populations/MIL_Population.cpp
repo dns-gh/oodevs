@@ -1558,3 +1558,14 @@ bool MIL_Population::HasReachedDestinationCompletely( const MT_Vector2D& destina
 
     return destination.SquareDistance( concentrations_.front()->GetPosition() ) <= TER_World::GetWorld().GetWeldValue() * TER_World::GetWorld().GetWeldValue()/10;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::GetHeadPosition
+// Created: EVH 2011-05-10
+// -----------------------------------------------------------------------------
+MT_Vector2D MIL_Population::GetHeadPosition()
+{
+    assert( HasFlow() );
+    MIL_PopulationFlow* firstFlow = *flows_.begin();
+    return firstFlow->GetPosition();
+}

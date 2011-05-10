@@ -13,6 +13,7 @@
 #define __DEC_KnowledgePopulationFunctions_h_
 
 class MIL_AgentPion;
+class DEC_Decision_ABC;
 class PHY_DotationCategory;
 class TER_Localisation;
 class MT_Vector2D;
@@ -42,6 +43,7 @@ public:
                            static bool HasFlow( const MIL_AgentPion& caller, int knowledgeId );
                            static void ChangeArmedIndividuals( const MIL_AgentPion& callerAgent, int knowledgeId, const double rArmedIndividuals );
                            static float GetCrowdAffinity( const MIL_AgentPion& callerAgent, int knowledgeId );
+                           static boost::shared_ptr< MT_Vector2D > GetHead( const DEC_Decision_ABC& callerAgent, int knowledgeId );
     //@}
 };
 

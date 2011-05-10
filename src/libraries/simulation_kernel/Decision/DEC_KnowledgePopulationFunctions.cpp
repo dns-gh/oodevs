@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgePopulationFunctions.h"
+#include "DEC_Decision_ABC.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -181,4 +182,19 @@ float DEC_KnowledgePopulationFunctions::GetCrowdAffinity( const MIL_AgentPion& c
         return pKnowledge->GetPopulationKnown().GetAffinity( army.GetID() );
     }
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::GetHead
+// Created: EVH 2011-05-10
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::GetHead( const DEC_Decision_ABC& callerAgent, int knowledgeId )
+{
+    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    if( pKnowledge )
+    {
+        MT_Vector2D* pResult = new MT_Vector2D( pKnowledge->GetPopulationKnown().GetHeadPosition() );
+        return  boost::shared_ptr< MT_Vector2D >( pResult );
+    }
+    return boost::shared_ptr<MT_Vector2D>();
 }
