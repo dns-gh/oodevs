@@ -177,7 +177,7 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
-                  lib${ant.project.name}_tic-${platform}-mt@{suffix}
+                  lib${ant.project.name}_tic-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">
             <syslibset libs="shell32,user32"/>
             <defineset define="DIS_PLUGIN_DLL_EXPORTS"/>
@@ -718,8 +718,9 @@
         <build-test name="flood" depends="boost" libs="lib${ant.project.name}_flood-${platform}-mt"/>
     </target>
 
-    <target name="positions_plugin_test" depends="library.positions_plugin">
-        <build-test name="positions_plugin" depends="boost,qt" libs="lib${ant.project.name}_positions_plugin-${platform}-mt"/>
+    <target name="positions_plugin_test" depends="library.protocol,library.positions_plugin">
+        <build-test name="positions_plugin" depends="boost,protobuf"
+            libs="lib${ant.project.name}_positions_plugin-${platform}-mt,lib${ant.project.name}_protocol-${platform}-mt"/>
     </target>
 
     <macrodef name="run-simulation">
