@@ -342,7 +342,7 @@ function DEC_GetMission( entity )
 end
 
 function DIA_IsListEmpty( list )
-    return #list == 0
+    return (not list) or (#list == 0)
 end
 
 function DEC_UserTypeList_GetAt( list, index )
