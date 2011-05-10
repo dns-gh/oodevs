@@ -71,7 +71,7 @@ Exercise::Exercise( kernel::EntityResolver_ABC& entities, const kernel::StaticMo
     , parameterFactory_        ( new actions::ActionParameterFactory( staticModel.coordinateConverter_, entities, staticModel,
                                                                       *agentKnowledgeConverter_, *objectKnowledgeConverter_, *controller_ ) )
     , actionFactory_           ( new actions::ActionFactory( *controller_, *parameterFactory_, entities, staticModel, *time_ ) )
-    , factory_                 ( new ParameterFactory( staticModel.coordinateConverter_, *controller_, entities, xis ) )
+    , factory_                 ( new ParameterFactory( staticModel.coordinateConverter_, *controller_, entities, xis/*, staticModel.objectTypes_*/ ) )
 {
     // NOTHING
 }

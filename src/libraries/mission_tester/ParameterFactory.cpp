@@ -7,10 +7,17 @@
 //
 // *****************************************************************************
 
+#include "stdlib.h"
 #include "mission_tester_pch.h"
 #include "ParameterFactory.h"
 #include "actions/Direction.h"
+#include "actions/Automat.h"
 #include "actions/Agent.h"
+#include "actions/DateTime.h"
+#include "actions/Enumeration.h"
+#include "actions/MaintenancePriorities.h"
+#include "actions/MedicalPriorities.h"
+#include "actions/AtlasNature.h"
 #include "actions/Bool.h"
 #include "actions/Limit.h"
 #include "actions/Lima.h"
@@ -18,8 +25,14 @@
 #include "actions/Path.h"
 #include "actions/Point.h"
 #include "actions/Polygon.h"
+#include "actions/AgentKnowledge.h"
+#include "actions/ObjectKnowledge.h"
+#include "actions/ObstacleType.h"
+#include "actions/PopulationKnowledge.h"
+#include "actions/UrbanBlock.h"
 #include "actions/ParameterList.h"
 #include "clients_kernel/Lines.h"
+#include "clients_kernel/DotationType.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Controller.h"
 #include <boost/assign/list_of.hpp>
@@ -28,10 +41,52 @@ using namespace mission_tester;
 
 namespace
 {
-    void ReadLimit( std::pair< std::string, std::string >& limit, xml::xistream& xis )
+    char RandomChar( char upLeft, char downRight )
     {
-        limit.first = xis.content< std::string >( "point1" );
-        limit.second = xis.content< std::string >( "point2" );
+        if ( upLeft >= downRight )
+            return upLeft;
+        else
+            return ( char( rand() % ( downRight + 1 - upLeft ) + upLeft ) );
+    }
+
+    std::string RandomInt( unsigned int min, unsigned int max )
+    {
+        std::string  res;
+        if ( min >= max )
+            res = boost::lexical_cast< std::string >( min );
+        else
+            res = boost::lexical_cast< std::string >( rand() % ( max - min ) + min );
+        unsigned int it = 5;
+        while( it > res.size() )
+            res = '0' + res;
+        return res;
+    }
+
+    std::string ComputeCoord( Coordinates upperLeft, Coordinates lowerRight )
+    {
+        std::string prefixe = upperLeft.prefixe;
+        char alphaX = RandomChar( upperLeft.alphaX, lowerRight.alphaX );
+        char alphaY = RandomChar( upperLeft.alphaY, lowerRight.alphaY );
+        unsigned int max = 99999;
+        unsigned int min = 0;
+        if ( alphaX == upperLeft.alphaX )
+            min = upperLeft.x;
+        if ( alphaX == lowerRight.alphaX )
+            max = lowerRight.x;
+        std::string x = RandomInt( min, max );
+        if ( alphaY == upperLeft.alphaY )
+            min = upperLeft.y;
+        if ( alphaY == lowerRight.alphaY )
+            max = lowerRight.y;
+        std::string y = RandomInt( min, max );
+        return ( prefixe + alphaX + alphaY + x + y );
+    }
+
+    std::string ReadPoint( std::string point, xml::xisubstream xis )
+    {
+        xis >> xml::start( "points" )
+              >> xml::start( point );
+        return ( xis.attribute< std::string >( "value", "ppp" ) );
     }
 }
 
@@ -39,27 +94,15 @@ namespace
 // Name: ParameterFactory constructor
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-ParameterFactory::ParameterFactory( const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, const kernel::EntityResolver_ABC& entityResolver, xml::xistream& xis )
-    : converter_     ( converter )
-    , controller_    ( controller )
-    , entityResolver_( entityResolver )
+ParameterFactory::ParameterFactory( const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, const kernel::EntityResolver_ABC& entityResolver, xml::xistream& xis/*, tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver*/ )
+    : converter_           ( converter )
+    , controller_          ( controller )
+    , entityResolver_      ( entityResolver )
+    //, dotationTypeResolver_( dotationTypeResolver )
+    , upperLeft_           ( ReadPoint( "upperLeftPoint", xis ) )
+    , lowerRight_          ( ReadPoint( "lowerRightPoint", xis ) )
 {
-    xis >> xml::start( "limits" )
-          >> xml::start( "limit1" );
-    ReadLimit( limit1_, xis );
-    xis   >> xml::end
-          >> xml::start( "limit2" );
-    ReadLimit( limit2_, xis );
-    xis   >> xml::end
-          >> xml::start( "lima" );
-    ReadLimit( lima_, xis );
-    xis   >> xml::end
-        >> xml::end
-        >> xml::start( "pathfind" )
-          >> xml::list( "point", *this, &ParameterFactory::ReadPoint )
-        >> xml::end
-        >> xml::start( "polygon" )
-          >> xml::list( "point", *this, &ParameterFactory::ReadPolygonPoint );
+    srand( time( NULL ) );	
 }
 
 // -----------------------------------------------------------------------------
@@ -71,16 +114,6 @@ ParameterFactory::~ParameterFactory()
     // NOTHING
 }
 
-void ParameterFactory::ReadPoint( xml::xistream& xis )
-{
-    points_.push_back( xis.value< std::string >() );
-}
-
-void ParameterFactory::ReadPolygonPoint( xml::xistream& xis )
-{
-    polygon_.push_back( xis.value< std::string >() );
-}
-
 // -----------------------------------------------------------------------------
 // Name: ParameterFactory::CreateParameter
 // Created: PHC 2011-04-07
@@ -88,23 +121,47 @@ void ParameterFactory::ReadPolygonPoint( xml::xistream& xis )
 std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateParameter( const kernel::OrderParameter& parameter ) const
 {
     if( parameter.GetType() == "heading" )
-        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Direction( parameter, 360 ) );
-    if( parameter.GetType() == "integer" || parameter.GetType() == "numeric"  )
-        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Numeric( parameter, 1.f ) );
+        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Direction( parameter, rand() % 360 + 1 ) );
     if( parameter.GetType() == "phaseline" )
         return CreatePhaselineParameter( parameter );
     if( parameter.GetType() == "limit" )
         return CreateLimitParameter( parameter );
-    if( parameter.GetType() == "point" || parameter.GetType() == "locationcomposite" )
+    if( parameter.GetType() == "point" )
         return CreatePointParameter( parameter );
+    if( parameter.GetType() == "integer" || parameter.GetType() == "numeric"  )
+        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Numeric( parameter, rand() % 2 ) );
+    if( parameter.GetType() == "medicalpriorities" )
+        return CreateMedicalPrioritiesParameter( parameter );
     if( parameter.GetType() == "path" )
         return CreatePathParameter( parameter );
-    if( parameter.GetType() == "agent" )
-        return CreateAgentParameter( parameter );
     if( parameter.GetType() == "boolean" )
-        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Bool( parameter, true ) );
+        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Bool( parameter, ( ( rand() % 2 ) == 0 ) ) );
     if( parameter.GetType() == "polygon" )
         return CreatePolygonParameter( parameter );
+    if( parameter.GetType() == "natureatlas" )
+        return CreateNatureAtlasParameter( parameter );
+    if( parameter.GetType() == "enumeration" )
+        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Enumeration( parameter, rand() % 2 ) );
+
+    if( parameter.GetType() == "datetime" )
+        return CreateDateTimeParameter( parameter );
+    if( parameter.GetType() == "automat" )
+        return CreateAutomatParameter( parameter );
+    if( parameter.GetType() == "agent" )
+        return CreateAgentParameter( parameter );
+
+    /*if( parameter.GetType() == "locationcomposite" )
+        return CreatePointParameter( parameter );
+    if( parameter.GetType() == "plannedwork" )
+        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::ObstacleType( parameter, 1 ) );
+    if( parameter.GetType() == "objectknowledge" )
+        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::ObjectKnowledge( parameter, controller_ ) );
+    if( parameter.GetType() == "agentknowledge" )
+        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::AgentKnowledge( parameter, controller_ ) );
+    if( parameter.GetType() == "crowdknowledge" )
+        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::PopulationKnowledge( parameter, controller_ ) );
+    if( parameter.GetType() == "urbanknowledge" )
+        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::UrbanBlock( parameter, controller_ ) );*/
     return std::auto_ptr< actions::Parameter_ABC >();
 }
 
@@ -118,13 +175,14 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePhaselineParamet
     xml::xistringstream xis( "<parameter name='Lima' type='lima' value='LDM'>"
                              "  <parameter name='Position' type='location'>"
                              "    <location type='line'>"
-                             "      <point coordinates='" + lima_.first + "'/>"
-                             "      <point coordinates='" + lima_.second + "'/>"
+                             "      <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
+                             "      <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
                              "    </location>"
                              "  </parameter>"
-                             "  <parameter name='Horaire' type='datetime' value='20121203T143802'/>"
+                             "  <parameter name='Horaire' type='datetime' value='20771023T120000'/>"
                              "</parameter>" );
     xis >> xml::start( "parameter" );
+    std::cout << "apres start";
     list->AddParameter( *new actions::parameters::Lima( converter_, xis ) );
     return list;
 }
@@ -135,15 +193,11 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePhaselineParamet
 // -----------------------------------------------------------------------------
 std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateLimitParameter( const kernel::OrderParameter& parameter ) const
 {
-    static bool b = true;
-    b = !b;
     xml::xistringstream xis( std::string( "" ) + "<parameter name='Limit' type='Limit'>"
                              "  <location type='line'>"
-                           + ( b ? "    <point coordinates='" + limit1_.first + "'/>"
-                                   "    <point coordinates='" + limit1_.second + "'/>"
-                                 : "    <point coordinates='" + limit2_.first + "'/>"
-                                   "    <point coordinates='" + limit2_.second + "'/>" )
-                           + "  </location>"
+                             "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
+                             "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
+                             "  </location>"
                              "</parameter>" );
     xis >> xml::start( "parameter" );
     return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Limit( parameter, converter_, xis ) );
@@ -155,12 +209,9 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateLimitParameter( 
 // -----------------------------------------------------------------------------
 std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePointParameter( const kernel::OrderParameter& parameter ) const
 {
-    static CIT_Points point = points_.begin();
-    if( point == points_.end() )
-        point = points_.begin();
     xml::xistringstream xis( "<parameter name='Point' type='point'>"
                              "  <location type='point'>"
-                             "    <point coordinates='" + *( point++ ) + "'/>"
+                             "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
                              "  </location>"
                              "</parameter>" );
     xis >> xml::start( "parameter" );
@@ -173,19 +224,31 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePointParameter( 
 // -----------------------------------------------------------------------------
 std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePathParameter( const kernel::OrderParameter& parameter ) const
 {
-    static CIT_Points point = points_.begin();
-    if( point == points_.end() )
-        point = points_.begin();
-    xml::xistringstream xis( "<parameter name='Assault route' type='Path'>"
-                             "  <parameter name='Destination' type='pathpoint'>"
-                             "    <location type='point'>"
-                             "      <point coordinates='" + *( point++ ) + "'/>"
-                             "    </location>"
-                             "  </parameter>"
-                             "</parameter>" );
+    std::string pathString = "<parameter name='Assault route' type='Path'>";
+    unsigned int pointQuantity = rand() % 3 + 1;
+    for( unsigned int it = 0; it < pointQuantity; ++it )
+    {
+        pathString += "  <parameter name='Destination' type='pathpoint'>"
+                      "    <location type='point'>"
+                      "      <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>"
+                      "    </location>"
+                      "  </parameter>";
+    }
+    pathString += "</parameter>";
+    xml::xistringstream xis( pathString );
     xis >> xml::start( "parameter" );
     return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Path( kernel::OrderParameter( parameter.GetName(), "path", true ), converter_, xis ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ParameterFactory::CreateAutomatParameter
+// Created: PHC 2011-04-19
+// -----------------------------------------------------------------------------
+std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateAutomatParameter( const kernel::OrderParameter& parameter ) const
+{
+    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Automat( parameter, 11, entityResolver_, controller_ ) );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: ParameterFactory::CreateAgentParameter
@@ -193,7 +256,7 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePathParameter( c
 // -----------------------------------------------------------------------------
 std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateAgentParameter( const kernel::OrderParameter& parameter ) const
 {
-    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Agent( parameter, 19u, entityResolver_, controller_ ) );
+    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Agent( parameter, 16, entityResolver_, controller_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -202,14 +265,105 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateAgentParameter( 
 // -----------------------------------------------------------------------------
 std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePolygonParameter( const kernel::OrderParameter& parameter ) const
 {
-     xml::xistringstream xis( "<parameter name='Area' type='Polygon'>"
-                              "  <location type='polygon'>"
-                              "    <point coordinates='" + polygon_[0] + "'/>"
-                              "    <point coordinates='" + polygon_[1] + "'/>"
-                              "    <point coordinates='" + polygon_[2] + "'/>"
-                              "    <point coordinates='" + polygon_[3] + "'/>"
-                              "  </location>"
-                              "</parameter>" );
+    std::string polygonString = "<parameter name='Area' type='Polygon'>"
+                                "  <location type='polygon'>";
+    unsigned int pointQuantity = rand() % 8 + 3;
+    for( unsigned int it = 0; it < pointQuantity; ++it )
+        polygonString +=        "    <point coordinates='" + ComputeCoord( upperLeft_, lowerRight_ ) + "'/>";
+    polygonString +=            "  </location>"
+                                "</parameter>";
+    xml::xistringstream xis( polygonString );
     xis >> xml::start( "parameter" );
-    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Polygon( parameter, converter_, xis ) );
+    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Path( kernel::OrderParameter( parameter.GetName(), "path", true ), converter_, xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterFactory::CreateNatureAtlasParameter
+// Created: RCD 2011-04-27
+// -----------------------------------------------------------------------------
+std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateNatureAtlasParameter( const kernel::OrderParameter& parameter ) const
+{
+    unsigned short value = rand() % 512 + ( rand() % 2 ) * 1024;
+    const kernel::AtlasNature atlas( "atlasNature", value );
+    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::AtlasNature( parameter, atlas ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterFactory::CreateResourceTypeParameter
+// Created: RCD 2011-04-28
+// -----------------------------------------------------------------------------
+/*std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateResourceTypeParameter( const kernel::OrderParameter& parameter ) const
+{
+    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::DotationType( parameter, 1, dotationTypeResolver_ ) );
+}*/
+
+// -----------------------------------------------------------------------------
+// Name: ParameterFactory::CreateDateTimeParameter
+// Created: RCD 2011-04-28
+// -----------------------------------------------------------------------------
+std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateDateTimeParameter( const kernel::OrderParameter& parameter ) const
+{
+    xml::xistringstream xis( "<parameter name='Heure destruction' type='datetime' value='20771023T120000'/>" );
+    xis >> xml::start( "parameter" );
+    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::DateTime( parameter, xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterFactory::CreateAgentKnowledgeParameter
+// Created: RCD 2011-04-28
+// -----------------------------------------------------------------------------
+std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateAgentKnowledgeParameter( const kernel::OrderParameter& parameter ) const
+{
+    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::AgentKnowledge( parameter, controller_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterFactory::CreateObjectKnowledgeParameter
+// Created: RCD 2011-04-28
+// -----------------------------------------------------------------------------
+std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateObjectKnowledgeParameter( const kernel::OrderParameter& parameter ) const
+{
+    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::ObjectKnowledge( parameter, controller_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterFactory::CreateCrowdKnowledgeParameter
+// Created: RCD 2011-04-28
+// -----------------------------------------------------------------------------
+std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateCrowdKnowledgeParameter( const kernel::OrderParameter& parameter ) const
+{
+    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::PopulationKnowledge( parameter, controller_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterFactory::CreateMedicalPrioritiesParameter
+// Created: RCD 2011-04-28
+// -----------------------------------------------------------------------------
+std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateMedicalPrioritiesParameter( const kernel::OrderParameter& parameter ) const
+{
+    std::string priorities;
+    int num = 4;
+    unsigned int PrioritiesList[ 4 ] = { 2, 3, 4, 5 };
+
+    unsigned int prioritiesQuantity = rand() % 5;
+    for( unsigned int it = 1; it <= prioritiesQuantity; ++it )
+    {
+        unsigned int res = rand() % num;
+        priorities += PrioritiesList[ res ];
+        PrioritiesList[res] = PrioritiesList[ num - 1 ];
+        --num;
+        if( it != prioritiesQuantity )
+            priorities += ';';
+    }
+    xml::xistringstream xis( "<parameter name='Blessures traitees' type='medicalpriorities' value='" + priorities + "'/>" );
+    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::MedicalPriorities( parameter ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterFactory::CreateMaintenancePrioritiesParameter
+// Created: RCD 2011-04-28
+// -----------------------------------------------------------------------------
+std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateMaintenancePrioritiesParameter( const kernel::OrderParameter& parameter ) const
+{
+    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::MaintenancePriorities( parameter ) );
 }
