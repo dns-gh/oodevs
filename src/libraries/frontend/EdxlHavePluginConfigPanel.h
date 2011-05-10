@@ -42,6 +42,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual QString GetName() const;
     virtual void Commit( const std::string& exercise, const std::string& session );
     //@}
 

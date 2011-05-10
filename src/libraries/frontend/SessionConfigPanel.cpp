@@ -73,6 +73,15 @@ SessionConfigPanel::~SessionConfigPanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SessionConfigPanel::GetName
+// Created: SBO 2011-05-09
+// -----------------------------------------------------------------------------
+QString SessionConfigPanel::GetName() const
+{
+    return tools::translate( "SessionConfigPanel", "Session" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SessionConfigPanel::Commit
 // Created: JSR 2010-11-05
 // -----------------------------------------------------------------------------

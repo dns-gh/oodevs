@@ -141,6 +141,15 @@ void CheckpointConfigPanel::OnCheckpointSelected( const QString& checkpoint )
 }
 
 // -----------------------------------------------------------------------------
+// Name: CheckpointConfigPanel::GetName
+// Created: SBO 2011-05-09
+// -----------------------------------------------------------------------------
+QString CheckpointConfigPanel::GetName() const
+{
+    return tools::translate( "CheckpointConfigPanel", "Checkpoints" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CheckpointConfigPanel::Commit
 // Created: SBO 2010-04-19
 // -----------------------------------------------------------------------------

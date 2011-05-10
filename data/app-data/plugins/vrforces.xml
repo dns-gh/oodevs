@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plugin name="vrforces" version="1.0" library="vrforces_plugin-vc80-mt.dll" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\resources\schemas\4.3.1\plugins\plugin.xsd">
+	<descriptions>
+		<description lang="en" name="VrForces"><![CDATA[Communication plugin to connect with MäK VrForces.]]></description>
+	</descriptions>
+	<settings>
+		<setting attribute="@fom" type="string" default="Vr-Link.fed">
+			<descriptions>
+				<description lang="en" name="FOM"><![CDATA[Federate Object Model.]]></description>
+			</descriptions>
+		</setting>
+		<setting attribute="@models" type="string" default="../data/simulationModelSets/default.sms">
+			<descriptions>
+				<description name="Models" lang="en"><![CDATA[Model database to use.]]></description>
+			</descriptions>
+		</setting>
+		<setting attribute="@scenario" type="string" default="../data/terrain/WorldFlatEarth.mtd">
+			<descriptions>
+				<description name="Scenario" lang="en"><![CDATA[Scenario to load at startup.]]></description>
+			</descriptions>
+		</setting>
+	</settings>
+</plugin>

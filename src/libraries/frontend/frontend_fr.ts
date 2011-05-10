@@ -37,6 +37,10 @@
         <source>Fragmentation frequency: </source>
         <translation>Fréquence de fragmentation: </translation>
     </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Avancé</translation>
+    </message>
 </context>
 <context>
     <name>Application</name>
@@ -71,6 +75,10 @@
         <source>Session:</source>
         <translation>Session:</translation>
     </message>
+    <message>
+        <source>Checkpoints</source>
+        <translation>Sauvegardes</translation>
+    </message>
 </context>
 <context>
     <name>CheckpointList</name>
@@ -84,113 +92,49 @@
     </message>
 </context>
 <context>
-    <name>CrossbowPluginConfigPanel</name>
+    <name>CompositePluginConfig</name>
     <message>
-        <source>Enable Crossbow export</source>
-        <translation>Activer l&apos;export Crossbow</translation>
-    </message>
-    <message>
-        <source>GDB: filename.{gdb|mdb}
-SDE connection: sde://user:password@host:port/db_name.sword</source>
-        <translation>GDB: filename.{gdb|mdb}(new line)
-Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
-    </message>
-    <message>
-        <source>Feature database (manage geometry information):</source>
-        <translation>Export vers base de données (informations géométriques) :</translation>
-    </message>
-    <message>
-        <source>Flat database (manage no geometry information):</source>
-        <translation>Export vers base de données (informations no géométriques) :</translation>
-    </message>
-    <message>
-        <source>Connection URL:</source>
-        <translation>URL de connexion :</translation>
-    </message>
-</context>
-<context>
-    <name>DisPluginConfigPanel</name>
-    <message>
-        <source>Enable DIS export</source>
-        <translation>Activer export DIS</translation>
-    </message>
-    <message>
-        <source>Disaggregate units:</source>
-        <translation>Désaggréger les unités:</translation>
-    </message>
-    <message>
-        <source>Host: </source>
-        <translation>Hôte:</translation>
-    </message>
-    <message>
-        <source>Site Id: </source>
-        <translation>Site Id: </translation>
-    </message>
-    <message>
-        <source>Application Id: </source>
-        <translation>Application Id: </translation>
-    </message>
-    <message>
-        <source>Exercise Id: </source>
-        <translation>Exercise Id: </translation>
+        <source>Plugins</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>EdxlHavePluginConfigPanel</name>
     <message>
         <source>Enable EDXL-HAVE exchange</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer les échanges EDXL-HAVE</translation>
     </message>
     <message>
         <source>Host: </source>
-        <translation type="unfinished">Hôte:</translation>
-    </message>
-    <message>
-        <source>Use SSL: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Log: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Services configuration:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Initialization service: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update service: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Frequency: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HlaPluginConfigPanel</name>
-    <message>
-        <source>Enable HLA RPR-FOM export</source>
-        <translation>Activer export HLA RPR-FOM</translation>
-    </message>
-    <message>
-        <source>Federation: </source>
-        <translation>Fédération: </translation>
-    </message>
-    <message>
-        <source>Federate name: </source>
-        <translation>Nom du fédéré: </translation>
-    </message>
-    <message>
-        <source>Host name: </source>
         <translation>Hôte: </translation>
     </message>
     <message>
-        <source>Port: </source>
-        <translation>Port: </translation>
+        <source>Use SSL: </source>
+        <translation>Utiliser SSL: </translation>
+    </message>
+    <message>
+        <source>Log: </source>
+        <translation>Journal: </translation>
+    </message>
+    <message>
+        <source>Services configuration:</source>
+        <translation>Configuration des services:</translation>
+    </message>
+    <message>
+        <source>Initialization service: </source>
+        <translation>Service d&apos;initialisation: </translation>
+    </message>
+    <message>
+        <source>Update service: </source>
+        <translation>Service de mise à jour: </translation>
+    </message>
+    <message>
+        <source>Frequency: </source>
+        <translation>Fréquence: </translation>
+    </message>
+    <message>
+        <source>EDXL-HAVE</source>
+        <translation>EDXL-HAVE</translation>
     </message>
 </context>
 <context>
@@ -248,14 +192,10 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
 </context>
 <context>
-    <name>PositionsPluginConfigPanel</name>
+    <name>PluginConfig</name>
     <message>
-        <source>Positions logger:</source>
-        <translation>Enregistreur de positions:</translation>
-    </message>
-    <message>
-        <source>Frequency:</source>
-        <translation>Fréquence:</translation>
+        <source>Enable %1 plugin (v%2)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -312,6 +252,10 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
         <source>Set as default</source>
         <translation>Définir par défaut</translation>
     </message>
+    <message>
+        <source>Random</source>
+        <translation>Aléatoire</translation>
+    </message>
 </context>
 <context>
     <name>SessionConfigPanel</name>
@@ -326,6 +270,10 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     <message>
         <source>Exercise number:</source>
         <translation>Numéro de l&apos;exercice:</translation>
+    </message>
+    <message>
+        <source>Session</source>
+        <translation>Session</translation>
     </message>
 </context>
 <context>
@@ -366,11 +314,11 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
     <message>
         <source>Use SSL: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Utiliser SSL: </translation>
     </message>
     <message>
         <source>Log: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Journal: </translation>
     </message>
     <message>
         <source>Service configuration:</source>
@@ -404,24 +352,9 @@ Connexion SDE: sde://user:password@host:port/db_name.sword</translation>
         <source>Select Orders...</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>VrForcesPluginConfigPanel</name>
     <message>
-        <source>Enable VrForces integration</source>
-        <translation>Activer l&apos;intégration VrForces</translation>
-    </message>
-    <message>
-        <source>FOM: </source>
-        <translation>FOM: </translation>
-    </message>
-    <message>
-        <source>Models: </source>
-        <translation>Modèles: </translation>
-    </message>
-    <message>
-        <source>Scenario: </source>
-        <translation>Scénario: </translation>
+        <source>ERP/Timeline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

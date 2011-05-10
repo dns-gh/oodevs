@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plugin name="hla" version="1.0" library="hla_plugin-vc80-mt.dll" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\resources\schemas\4.3.1\plugins\plugin.xsd">
+	<descriptions>
+		<description lang="en" name="HLA"><![CDATA[HLA communication plugin.]]></description>
+	</descriptions>
+	<settings>
+		<setting attribute="@federation" type="string" default="MyFederation">
+			<descriptions>
+				<description lang="en" name="Federation"><![CDATA[Federation name.]]></description>
+			</descriptions>
+		</setting>
+		<setting attribute="@name" type="string" default="SWORD">
+			<descriptions>
+				<description name="Federate name" lang="en"><![CDATA[Federate name.]]></description>
+			</descriptions>
+		</setting>
+		<setting attribute="@host" type="string" default="localhost">
+			<descriptions>
+				<description name="Host name" lang="en"><![CDATA[Host name.]]></description>
+			</descriptions>
+		</setting>
+		<setting attribute="@port" type="integer" default="8989" min="0" max="65535">
+			<descriptions>
+				<description name="Port" lang="en"><![CDATA[Host port.]]></description>
+			</descriptions>
+		</setting>
+	</settings>
+</plugin>

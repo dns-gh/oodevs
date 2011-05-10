@@ -37,6 +37,10 @@
         <source>Fragmentation frequency: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Application</name>
@@ -71,6 +75,10 @@
         <source>Session:</source>
         <translation>Sesión:</translation>
     </message>
+    <message>
+        <source>Checkpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CheckpointList</name>
@@ -84,55 +92,10 @@
     </message>
 </context>
 <context>
-    <name>CrossbowPluginConfigPanel</name>
+    <name>CompositePluginConfig</name>
     <message>
-        <source>Enable Crossbow export</source>
-        <translation>Activar la exportación Crossbow</translation>
-    </message>
-    <message>
-        <source>GDB: filename.{gdb|mdb}
-SDE connection: sde://user:password@host:port/db_name.sword</source>
-        <translation>GDB: filename.{gdb|mdb}(new line)
-Conexión SDE: sde://user:password@host:port/db_name.sword</translation>
-    </message>
-    <message>
-        <source>Feature database (manage geometry information):</source>
+        <source>Plugins</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Connection URL:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flat database (manage no geometry information):</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DisPluginConfigPanel</name>
-    <message>
-        <source>Enable DIS export</source>
-        <translation>Habilitar la exportación DIS</translation>
-    </message>
-    <message>
-        <source>Disaggregate units:</source>
-        <translation>Desagregar unidades:</translation>
-    </message>
-    <message>
-        <source>Host: </source>
-        <translation>Equipo: </translation>
-    </message>
-    <message>
-        <source>Site Id: </source>
-        <translation> Id de Site: </translation>
-    </message>
-    <message>
-        <source>Application Id: </source>
-        <translation> Id de aplicación: </translation>
-    </message>
-    <message>
-        <source>Exercise Id: </source>
-        <translation> Id de ejercicio: </translation>
     </message>
 </context>
 <context>
@@ -169,28 +132,9 @@ Conexión SDE: sde://user:password@host:port/db_name.sword</translation>
         <source>Frequency: </source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>HlaPluginConfigPanel</name>
     <message>
-        <source>Enable HLA RPR-FOM export</source>
-        <translation>Habilitar la exportación HLA RPR-FOM</translation>
-    </message>
-    <message>
-        <source>Federation: </source>
-        <translation>Federación: </translation>
-    </message>
-    <message>
-        <source>Federate name: </source>
-        <translation>Nombre de federación: </translation>
-    </message>
-    <message>
-        <source>Host name: </source>
-        <translation>Equipo: </translation>
-    </message>
-    <message>
-        <source>Port: </source>
-        <translation>Puerto: </translation>
+        <source>EDXL-HAVE</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -248,13 +192,9 @@ Conexión SDE: sde://user:password@host:port/db_name.sword</translation>
     </message>
 </context>
 <context>
-    <name>PositionsPluginConfigPanel</name>
+    <name>PluginConfig</name>
     <message>
-        <source>Frequency:</source>
-        <translation type="unfinished">Frecuencia:</translation>
-    </message>
-    <message>
-        <source>Positions logger:</source>
+        <source>Enable %1 plugin (v%2)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -312,6 +252,10 @@ Conexión SDE: sde://user:password@host:port/db_name.sword</translation>
         <source>Set as default</source>
         <translation>Activar por defecto</translation>
     </message>
+    <message>
+        <source>Random</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SessionConfigPanel</name>
@@ -326,6 +270,10 @@ Conexión SDE: sde://user:password@host:port/db_name.sword</translation>
     <message>
         <source>Exercise number:</source>
         <translation type="unfinished">Número de ejercicio:</translation>
+    </message>
+    <message>
+        <source>Session</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -404,23 +352,8 @@ Conexión SDE: sde://user:password@host:port/db_name.sword</translation>
         <source>Select Orders...</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>VrForcesPluginConfigPanel</name>
     <message>
-        <source>Enable VrForces integration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FOM: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Models: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scenario: </source>
+        <source>ERP/Timeline</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

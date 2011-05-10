@@ -7,54 +7,66 @@
 //
 // *****************************************************************************
 
-#ifndef __VrForcesPluginConfigPanel_h_
-#define __VrForcesPluginConfigPanel_h_
+#ifndef __CompositePluginConfig_h_
+#define __CompositePluginConfig_h_
 
 #include "PluginConfig_ABC.h"
+#include <vector>
+
+class QTabWidget;
+
+namespace xml
+{
+    class xistream;
+}
 
 namespace tools
 {
     class GeneralConfig;
 }
 
-class QLineEdit;
-class QGroupBox;
-
 namespace frontend
 {
+
 // =============================================================================
-/** @class  VrForcesPluginConfigPanel
-    @brief  VrForces plugin configuration panel
+/** @class  CompositePluginConfig
+    @brief  CompositePluginConfig
 */
-// Created: SBO 2011-04-18
+// Created: SBO 2011-05-09
 // =============================================================================
-class VrForcesPluginConfigPanel : public PluginConfig_ABC
+class CompositePluginConfig : public PluginConfig_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             VrForcesPluginConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
-    virtual ~VrForcesPluginConfigPanel();
+    explicit CompositePluginConfig( QTabWidget* parent );
+    virtual ~CompositePluginConfig();
     //@}
 
     //! @name Operations
     //@{
+    virtual QString GetName() const;
     virtual bool IsAvailable() const;
     virtual void Commit( const std::string& exercise, const std::string& session );
+    void Add( const tools::GeneralConfig& config, xml::xistream& xis );
+    template< typename T >
+    void Add( const tools::GeneralConfig& config )
+    {
+        PluginConfig_ABC* plugin = new T( tabs_, config );
+        plugins_.push_back( plugin );
+        tabs_->addTab( plugin, plugin->GetName() );
+    }
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    const std::string library_;
-    QGroupBox* box_;
-    QLineEdit* fom_;
-    QLineEdit* models_;
-    QLineEdit* scenario_;
+    QTabWidget* tabs_;
+    std::vector< PluginConfig_ABC* > plugins_;
     //@}
 };
+
 }
 
-#endif // __VrForcesPluginConfigPanel_h_
+#endif // __CompositePluginConfig_h_

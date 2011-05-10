@@ -94,6 +94,7 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\geos.dll"
     File "${RUNDIR}\proj.dll"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
+    File /r /x ".svn" /x "*.qm" "${RUNDIR}\plugins"
     File "resources\*.ico"
 
     ; evaluation licence

@@ -594,60 +594,12 @@
         <translation>Iniciando %1</translation>
     </message>
     <message>
-        <source>DIS</source>
-        <translation>DIS</translation>
-    </message>
-    <message>
-        <source>HLA</source>
-        <translation>HLA</translation>
-    </message>
-    <message>
-        <source>Crossbow</source>
-        <translation>Crossbow</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>General</translation>
     </message>
     <message>
-        <source>Checkpoints</source>
-        <translation>Puntos de control</translation>
-    </message>
-    <message>
-        <source>Random</source>
-        <translation>Aleatório</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation>Configuración</translation>
-    </message>
-    <message>
-        <source>Plugins</source>
-        <translation>Plugins</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avanzados</translation>
-    </message>
-    <message>
-        <source>Session</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>EDXL-HAVE</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ERP/Timeline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Positions Saver</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VrForces</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

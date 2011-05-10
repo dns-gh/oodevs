@@ -181,6 +181,15 @@ RandomPluginConfigPanel::~RandomPluginConfigPanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: RandomPluginConfigPanel::GetName
+// Created: SBO 2011-05-09
+// -----------------------------------------------------------------------------
+QString RandomPluginConfigPanel::GetName() const
+{
+    return tools::translate( "RandomPluginConfigPanel", "Random" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: RandomPluginConfigPanel::Commit
 // Created: JSR 2010-07-12
 // -----------------------------------------------------------------------------

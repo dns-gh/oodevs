@@ -81,7 +81,7 @@ protected:
     virtual std::string BuildSessionName() const;
     void CreateSession( const QString& exercise, const QString& session );
     template< typename T >
-    T* AddPlugin( QTabWidget* tabs, const QString& name );
+    T* AddPlugin( QTabWidget* tabs );
     bool CanBeStarted() const;
     //@}
 

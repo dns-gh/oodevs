@@ -7,51 +7,59 @@
 //
 // *****************************************************************************
 
-#ifndef __PositionsPluginConfigPanel_h_
-#define __PositionsPluginConfigPanel_h_
+#ifndef __PluginSetting_h_
+#define __PluginSetting_h_
 
-#include "PluginConfig_ABC.h"
+#include <boost/noncopyable.hpp>
 
-class QGroupBox;
+class QCheckBox;
+class QLineEdit;
+class QSpinBox;
 class QTimeEdit;
+class QWidget;
 
-namespace tools
+namespace xml
 {
-    class GeneralConfig;
+    class xistream;
 }
 
 namespace frontend
 {
+    class PluginSettingVisitor_ABC;
+
 // =============================================================================
-/** @class  PositionsPluginConfigPanel
-    @brief  PositionsPluginConfigPanel
+/** @class  PluginSetting
+    @brief  PluginSetting
 */
-// Created: ABR 2011-04-04
+// Created: SBO 2011-05-09
 // =============================================================================
-class PositionsPluginConfigPanel : public PluginConfig_ABC
+class PluginSetting : private boost::noncopyable
 {
-    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PositionsPluginConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
-    virtual ~PositionsPluginConfigPanel();
+             PluginSetting( QWidget* parent, xml::xistream& xis );
+    virtual ~PluginSetting();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Commit( const std::string& exercise, const std::string& session );
+    void Accept( PluginSettingVisitor_ABC& visitor );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    QGroupBox* positionsSaverGroup_;
-    QTimeEdit* frequency_;
+    const std::string attribute_;
+    const std::string type_;
+    QLineEdit* stringValue_;
+    QSpinBox* integerValue_;
+    QCheckBox* booleanValue_;
+    QTimeEdit* timeValue_;
     //@}
 };
+
 }
 
-#endif // __PositionsPluginConfigPanel_h_
+#endif // __PluginSetting_h_

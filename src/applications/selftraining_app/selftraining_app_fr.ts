@@ -601,54 +601,6 @@
         <source>Settings</source>
         <translation>Configuration</translation>
     </message>
-    <message>
-        <source>Checkpoints</source>
-        <translation>Sauvegardes</translation>
-    </message>
-    <message>
-        <source>Session</source>
-        <translation>Session</translation>
-    </message>
-    <message>
-        <source>Random</source>
-        <translation>Aléatoire</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translation>Avancé</translation>
-    </message>
-    <message>
-        <source>Plugins</source>
-        <translation>Plugins</translation>
-    </message>
-    <message>
-        <source>DIS</source>
-        <translation>DIS</translation>
-    </message>
-    <message>
-        <source>HLA</source>
-        <translation>HLA</translation>
-    </message>
-    <message>
-        <source>Crossbow</source>
-        <translation>Crossbow</translation>
-    </message>
-    <message>
-        <source>EDXL-HAVE</source>
-        <translation>EDXL-HAVE</translation>
-    </message>
-    <message>
-        <source>ERP/Timeline</source>
-        <translation>ERP/Timeline</translation>
-    </message>
-    <message>
-        <source>Positions Saver</source>
-        <translation>Enregistreur de positions</translation>
-    </message>
-    <message>
-        <source>VrForces</source>
-        <translation>VrForces</translation>
-    </message>
 </context>
 <context>
     <name>ScenarioPage</name>

@@ -87,6 +87,15 @@ EdxlHavePluginConfigPanel::~EdxlHavePluginConfigPanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: EdxlHavePluginConfigPanel::GetName
+// Created: SBO 2011-05-09
+// -----------------------------------------------------------------------------
+QString EdxlHavePluginConfigPanel::GetName() const
+{
+    return tools::translate( "EdxlHavePluginConfigPanel", "EDXL-HAVE" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EdxlHavePluginConfigPanel::Commit
 // Created: SBO 2008-03-05
 // -----------------------------------------------------------------------------

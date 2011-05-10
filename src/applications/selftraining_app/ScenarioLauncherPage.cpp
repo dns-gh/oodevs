@@ -18,22 +18,18 @@
 #include "frontend/CheckpointConfigPanel.h"
 #include "frontend/Config.h"
 #include "frontend/CreateSession.h"
-#include "frontend/CrossbowPluginConfigPanel.h"
 #include "frontend/EdxlHavePluginConfigPanel.h"
 #include "frontend/TimelinePluginConfigPanel.h"
-#include "frontend/DisPluginConfigPanel.h"
 #include "frontend/EditExercise.h"
 #include "frontend/Exercise_ABC.h"
-#include "frontend/HlaPluginConfigPanel.h"
 #include "frontend/JoinAnalysis.h"
 #include "frontend/JoinExercise.h"
-#include "frontend/PositionsPluginConfigPanel.h"
+#include "frontend/PluginConfigBuilder.h"
 #include "frontend/ProcessWrapper.h"
 #include "frontend/RandomPluginConfigPanel.h"
 #include "frontend/SessionConfigPanel.h"
 #include "frontend/StartExercise.h"
 #include "frontend/StartReplay.h"
-#include "frontend/VrForcesPluginConfigPanel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/LinkInterpreter_ABC.h"
 #include "clients_gui/Tools.h"
@@ -165,31 +161,21 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
             TabWidget* config = new TabWidget( configBox );
             tabs->addTab( configBox, tools::translate( "ScenarioLauncherPage", "Settings" ) );
             {
-                frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Checkpoints" ) );
+                frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >( config );
                 connect( exercises_, SIGNAL( Select( const frontend::Exercise_ABC&, const frontend::Profile& ) ), panel, SLOT( Select( const frontend::Exercise_ABC& ) ) );
                 connect( exercises_, SIGNAL( ClearSelection() ), panel, SLOT( ClearSelection() ) );
                 connect( panel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
-                AddPlugin< frontend::SessionConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Session" ) );
-                AddPlugin< frontend::RandomPluginConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Random" ) );
-                AddPlugin< frontend::AdvancedConfigPanel >( config, tools::translate( "ScenarioLauncherPage", "Advanced" ) );
+                AddPlugin< frontend::SessionConfigPanel >( config );
+                AddPlugin< frontend::RandomPluginConfigPanel >( config );
+                AddPlugin< frontend::AdvancedConfigPanel >( config );
             }
         }
         {
-            QGroupBox* pluginsBox = new QGroupBox( 1, Qt::Vertical, tabs );
-            pluginsBox->setMargin( 5 );
-            pluginsBox->setFrameShape( QFrame::NoFrame );
-            pluginsBox->setBackgroundOrigin( QWidget::WindowOrigin );
-            TabWidget* plugins = new TabWidget( pluginsBox );
-            tabs->addTab( pluginsBox, tools::translate( "ScenarioLauncherPage", "Plugins" ) );
-            {
-                AddPlugin< frontend::DisPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "DIS" ) );
-                AddPlugin< frontend::HlaPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "HLA" ) );
-                AddPlugin< frontend::CrossbowPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "Crossbow" ) );
-                AddPlugin< frontend::EdxlHavePluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "EDXL-HAVE" ) );
-                AddPlugin< frontend::TimelinePluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "ERP/Timeline" ) );
-                AddPlugin< frontend::PositionsPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "Positions Saver" ) );
-                AddPlugin< frontend::VrForcesPluginConfigPanel >( plugins, tools::translate( "ScenarioLauncherPage", "VrForces" ) );
-            }
+            frontend::PluginConfigBuilder builder( config_, tabs );
+            plugins_.push_back( builder.BuildFromXml()
+                                       .Build< frontend::EdxlHavePluginConfigPanel >()
+                                       .Build< frontend::TimelinePluginConfigPanel >()
+                                       .Finalize() );
         }
     }
     EnableButton( eButtonStart, false );
@@ -348,12 +334,12 @@ void ScenarioLauncherPage::OnSelectCheckpoint( const QString& session, const QSt
 // Created: SBO 2009-12-09
 // -----------------------------------------------------------------------------
 template< typename T >
-T* ScenarioLauncherPage::AddPlugin( QTabWidget* tabs, const QString& name )
+T* ScenarioLauncherPage::AddPlugin( QTabWidget* tabs )
 {
     std::auto_ptr< T > plugin( new T( tabs, config_ ) );
     if( plugin.get() && plugin->IsAvailable() )
     {
-        tabs->addTab( plugin.get(), name );
+        tabs->addTab( plugin.get(), plugin->GetName() );
         plugins_.push_back( plugin.get() );
         return plugin.release();
     }

@@ -126,6 +126,15 @@ void TimelinePluginConfigPanel::OnOrderClicked()
 }
 
 // -----------------------------------------------------------------------------
+// Name: TimelinePluginConfigPanel::GetName
+// Created: SBO 2011-05-09
+// -----------------------------------------------------------------------------
+QString TimelinePluginConfigPanel::GetName() const
+{
+    return tools::translate( "TimelinePluginConfigPanel", "ERP/Timeline" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TimelinePluginConfigPanel::Commit
 // Created: SBO 2008-03-05
 // -----------------------------------------------------------------------------

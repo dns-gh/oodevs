@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plugin name="crossbow" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\resources\schemas\4.3.1\plugins\plugin.xsd">
+	<descriptions>
+		<description lang="en" name="Crossbow"><![CDATA[Crossbow communication plugin.]]></description>
+	</descriptions>
+	<settings>
+		<group>
+			<descriptions>
+				<description lang="en" name="Feature database (manage geometry information)"><![CDATA[]]></description>
+			</descriptions>
+			<settings>
+				<setting attribute="geometry/@connection" type="string" default="sde://user:password@host:port/sword_crossbow_db.sword">
+					<descriptions>
+						<description name="Connection URL:" lang="en"><![CDATA[GDB: filename.{gdb|mdb} SDE connection: sde://user:password@host:port/db_name.sword.]]></description>
+					</descriptions>
+				</setting>
+			</settings>
+		</group>
+		<group>
+			<descriptions>
+				<description lang="en" name="Flat database (manage no geometry information)"><![CDATA[]]></description>
+			</descriptions>
+			<settings>
+				<setting attribute="flat/@connection" type="string" default="postgres://user:password@host:port/sword_crossbow_db.sword">
+					<descriptions>
+						<description name="Connection URL:" lang="en"><![CDATA[Flat database (manage no geometry information).]]></description>
+					</descriptions>
+				</setting>
+			</settings>
+		</group>
+	</settings>
+</plugin>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plugin name="dis" version="1.0" library="dis_plugin-vc80-mt.dll" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\resources\schemas\4.3.1\plugins\plugin.xsd">
+	<descriptions>
+		<description lang="en" name="DIS"><![CDATA[DIS export plugin.]]></description>
+	</descriptions>
+	<settings>
+		<setting attribute="@server" type="string" default="localhost">
+			<descriptions>
+				<description lang="en" name="Host"><![CDATA[Host address.]]></description>
+			</descriptions>
+		</setting>
+		<setting attribute="@port" type="integer" default="12000" min="0" max="65535">
+			<descriptions>
+				<description name="Port" lang="en"><![CDATA[Host port.]]></description>
+			</descriptions>
+		</setting>
+		<setting attribute="@site" type="integer" default="1" min="0" max="32767">
+			<descriptions>
+				<description name="Site Id" lang="en"><![CDATA[Site identifier.]]></description>
+			</descriptions>
+		</setting>
+		<setting attribute="@application" type="integer" default="1" min="0" max="32767">
+			<descriptions>
+				<description name="Application Id" lang="en"><![CDATA[Application identifier.]]></description>
+			</descriptions>
+		</setting>
+		<setting attribute="@exercise" type="integer" default="1" min="0" max="255">
+			<descriptions>
+				<description name="Exercise Id" lang="en"><![CDATA[Exercise identifier.]]></description>
+			</descriptions>
+		</setting>
+	</settings>
+</plugin>

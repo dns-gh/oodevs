@@ -88,6 +88,15 @@ AdvancedConfigPanel::~AdvancedConfigPanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: AdvancedConfigPanel::GetName
+// Created: SBO 2011-05-09
+// -----------------------------------------------------------------------------
+QString AdvancedConfigPanel::GetName() const
+{
+    return tools::translate( "AdvancedConfigPanel", "Advanced" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AdvancedConfigPanel::Commit
 // Created: JSR 2010-07-15
 // -----------------------------------------------------------------------------
