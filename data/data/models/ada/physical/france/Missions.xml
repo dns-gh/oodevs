@@ -4403,8 +4403,7 @@
         <value id="0" name="none"/>
         <value id="1" name="emploi_force_interdit"/>
         <value id="2" name="maintien_a_distance_par_moyens_non_letaux"/>
-        <value id="3" name="dispersion_par_moyens_de_defense_actifs"/>
-        <value id="4" name="armes_letales_autorisees"/>
+        <value id="3" name="armes_letales_autorisees"/>
       </parameter>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Deboucher" id="349" name="Deboucher"/>
@@ -4561,4 +4560,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="4228909634" -->
+<!-- signature="3744176459" -->

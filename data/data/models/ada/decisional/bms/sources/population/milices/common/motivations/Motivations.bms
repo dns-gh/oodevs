@@ -1109,69 +1109,6 @@ node "ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux"
 }
 
 --[[// *****************************************************************************
-]]--[[// MOT_PasserEnDispersionParMoyensDeDefenseActifs
-]]--[[//
-]]--[[// Commentaires:
-]]--[[//
-]]--[[// *****************************************************************************
-]]motivation_plugin.motivations[ "MOT_PasserEnDispersionParMoyensDeDefenseActifs" ] =
-{
-    activation = {
-        VE_DispersionParMoyensDeDefenseActifs = 10,
-    },
-    amplification = {
-    },
-    reduction = {
-    },
-    max_increase_rate = 5,
-    max_decrease_rate = 5,
-    max_output_value = 10,
-}
-
-node "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs"
-{
-    feedbacks = { { { "done_ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs" }, "ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs, {value} ) end,
-    activations =
-    {
-        { "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs", { "done_BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs" } },
-    },
-
-    create = function( self )
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        --[[// -----------------------------------------------------------------------------
-]]--[[// Modules activateurs 
-]]--[[// -----------------------------------------------------------------------------
-]]--[[// -----------------------------------------------------------------------------
-]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
-]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
-]]--[[// laquelle la motivation va doubler.
-]]--[[// -----------------------------------------------------------------------------
-]]--[[// éventuellement d'autre stim
-]]--[[// -----------------------------------------------------------------------------
-]]--[[// Influence de la motivation par les stimulis. La premiere valeur indique la 
-]]--[[// valeur pour laquelle la motivation ne changera pas, le second la valeur pour 
-]]--[[// laquelle la motivation sera nulle.
-]]--[[// -----------------------------------------------------------------------------
-]]--[[// + éventuellement d'autre stim
-]]--[[// -----------------------------------------------------------------------------
-]]--[[// Variation de la motivation
-]]--[[// -----------------------------------------------------------------------------
-]]--[[// Coef de croissance max par unite de temps
-]]--[[// Coef de decroissance max par unite de temps
-]]--[[// Valeur max de la motivation.
-]]--[[// -----------------------------------------------------------------------------
-]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
-]]--[[// -----------------------------------------------------------------------------
-]]Activate( self.activations.BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs, GetMotivation( "MOT_PasserEnDispersionParMoyensDeDefenseActifs" ), emptyTable )
-    end,
-
-}
-
---[[// *****************************************************************************
 ]]--[[// MOT_PasserEnArmesLetalesAutorisees
 ]]--[[//
 ]]--[[//	Commentaires:
@@ -1378,7 +1315,6 @@ connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirInterdit", 1 ), 
 connections[ #connections + 1 ] = { motivation( "MOT_PasserEnTirLibre", 1 ), nodes.ActivatedByMOT_PasserEnTirLibre }
 connections[ #connections + 1 ] = { motivation( "MOT_PasserEnEmploiForceInterdit", 1 ), nodes.ActivatedByMOT_PasserEnEmploiForceInterdit }
 connections[ #connections + 1 ] = { motivation( "MOT_PasserEnMaintienADistanceParMoyensNonLetaux", 1 ), nodes.ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux }
-connections[ #connections + 1 ] = { motivation( "MOT_PasserEnDispersionParMoyensDeDefenseActifs", 1 ), nodes.ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs }
 connections[ #connections + 1 ] = { motivation( "MOT_PasserEnArmesLetalesAutorisees", 1 ), nodes.ActivatedByMOT_PasserEnArmesLetalesAutorisees }
 connections[ #connections + 1 ] = { motivation( "MOT_RiposteSurPopulations", 1 ), nodes.ActivatedByMOT_RiposteSurPopulations }
 connections[ #connections + 1 ] = { motivation( "MOT_EsquivePopulations", 1 ), nodes.ActivatedByMOT_EsquivePopulations }
@@ -1387,7 +1323,6 @@ connections[ #connections + 1 ] = { nodes.ActivatedByMOT_GarderSesDistanceFaceAT
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_GarderSesDistances, "BEH_MOT_GarderSesDistances", nodes.BEH_MOT_GarderSesDistances }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnAlerteDeNiveau4, "BEH_MOT_PasserEnAlerteDeNiveau4", nodes.BEH_MOT_PasserEnAlerteDeNiveau4 }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnArmesLetalesAutorisees, "BEH_MOT_PasserEnArmesLetalesAutorisees", nodes.BEH_MOT_PasserEnArmesLetalesAutorisees }
-connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnDispersionParMoyensDeDefenseActifs, "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs", nodes.BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnEmploiForceInterdit, "BEH_MOT_PasserEnEmploiForceInterdit", nodes.BEH_MOT_PasserEnEmploiForceInterdit }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnMaintienADistanceParMoyensNonLetaux, "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux", nodes.BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux }
 connections[ #connections + 1 ] = { nodes.ActivatedByMOT_PasserEnSilenceRadio, "BEH_MOT_PasserEnSilenceRadio", nodes.BEH_MOT_PasserEnSilenceRadio }

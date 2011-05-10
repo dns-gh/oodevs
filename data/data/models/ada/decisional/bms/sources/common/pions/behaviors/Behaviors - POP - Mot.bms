@@ -136,31 +136,6 @@ node "BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux"
     end,
 
 --[[// *****************************************************************************
-]]--[[// BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs
-]]--[[//
-]]--[[// Commentaires:
-]]--[[//
-]]--[[// *****************************************************************************
-]]}
-
-node "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs"
-{
-    feedbacks = { { { "done_BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs" }, "BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs, {value} ) end,
-    activations =
-    {
-        { "BEH_ROE_GererDispersionParMoyensDeDefenseActifs", { "done_BEH_ROE_GererDispersionParMoyensDeDefenseActifs" } },
-    },
-
-    create = function( self )
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        Activate( self.activations.BEH_ROE_GererDispersionParMoyensDeDefenseActifs, 1, emptyTable )
-    end,
-
---[[// *****************************************************************************
 ]]--[[// BEH_MOT_PasserEnArmesLetalesAutorisees
 ]]--[[//
 ]]--[[// Commentaires:
@@ -190,7 +165,6 @@ node "BEH_MOT_PasserEnArmesLetalesAutorisees"
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_MOT_DecrochageFaceAPopulations, "BEH_Pop_Pion_PresAuDecrochageFaceA", nodes.BEH_Pop_Pion_PresAuDecrochageFaceA }
 connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnArmesLetalesAutorisees, "BEH_ROE_GererArmesLetalesAutorisees", nodes.BEH_ROE_GererArmesLetalesAutorisees }
-connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnDispersionParMoyensDeDefenseActifs, "BEH_ROE_GererDispersionParMoyensDeDefenseActifs", nodes.BEH_ROE_GererDispersionParMoyensDeDefenseActifs }
 connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnEmploiForceInterdit, "BEH_ROE_GererEmploiForceInterdit", nodes.BEH_ROE_GererEmploiForceInterdit }
 connections[ #connections + 1 ] = { nodes.BEH_MOT_PasserEnMaintienADistanceParMoyensNonLetaux, "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux", nodes.BEH_ROE_GererMaintienADistanceParMoyensNonLetaux }
 connections[ #connections + 1 ] = { nodes.BEH_MOT_RiposteSurPopulations, "BEH_RiposteSurPopulation", nodes.BEH_RiposteSurPopulation }

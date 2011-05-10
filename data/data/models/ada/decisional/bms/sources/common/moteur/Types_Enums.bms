@@ -86,8 +86,7 @@ eEtatROE_TirInterdit = 3
 eEtatROEPopulation_None = 0
 eEtatROEPopulation_EmploiForceInterdit = 1
 eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux = 2
-eEtatROEPopulation_DispersionParMoyensDeDefenseActifs = 3
-eEtatROEPopulation_ArmesLetalesAutorisees = 4
+eEtatROEPopulation_ArmesLetalesAutorisees = 3
 
 
 eAttitudePopulation_Calme = 0

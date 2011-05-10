@@ -643,7 +643,6 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     CONVERT_ENUM( roe_crowd, ( sword::UnitAttributes::no_rule, MsgsSimToClient::MsgUnitAttributes::none )
                              ( sword::UnitAttributes::no_force, MsgsSimToClient::MsgUnitAttributes::emploi_force_interdit )
                              ( sword::UnitAttributes::non_lethal_force, MsgsSimToClient::MsgUnitAttributes::maintien_a_distance_par_moyens_non_letaux )
-                             ( sword::UnitAttributes::active_defense, MsgsSimToClient::MsgUnitAttributes::dispersion_par_moyens_de_defense_actifs )
                              ( sword::UnitAttributes::lethal_force, MsgsSimToClient::MsgUnitAttributes::armes_letales_autorisees ) );
     CONVERT_ENUM_TO( tiredness, fatigue, ( sword::UnitAttributes::rested, Common::normal )
                                          ( sword::UnitAttributes::tired, Common::fatigue )

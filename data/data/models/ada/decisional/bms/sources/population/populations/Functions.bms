@@ -132,11 +132,6 @@ elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                 rValeurNominale = rValeurNominale / 4
                 _continue = false
                         cases_switch_1[2] = true
-elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
-                rValeurNominale = rValeurNominale / 2
-                _continue = false
-                        cases_switch_1[3] = true
-            end
         end
 
      do
@@ -177,11 +172,6 @@ elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                 rValeurNominale = rValeurNominale / 4
                 _continue = false
                         cases_switch_1[2] = true
-elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
-                rValeurNominale = rValeurNominale / 2
-                _continue = false
-                        cases_switch_1[3] = true
-            end
         end
 
      do
@@ -352,11 +342,6 @@ elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                 rRoe_value = 1
                 _continue = false
                         cases_switch_1[2] = true
-elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
-                rRoe_value = 2
-                _continue = false
-                        cases_switch_1[3] = true
-            end
         end
 
      do

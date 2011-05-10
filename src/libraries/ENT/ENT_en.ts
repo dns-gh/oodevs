@@ -270,10 +270,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>active defense allowed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lethal weapon use allowed</source>
         <translation type="unfinished"></translation>
     </message>

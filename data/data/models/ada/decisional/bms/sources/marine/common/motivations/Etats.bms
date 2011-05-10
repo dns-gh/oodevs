@@ -420,24 +420,6 @@ motivation_plugin.statevariables[ "VE_TirRestreint" ] =
 ]]--[[//  ROE face aux populations
 ]]--[[//
 ]]--[[// *****************************************************************************
-]]motivation_plugin.statevariables[ "VE_DispersionParMoyensDeDefenseActifs" ] =
-{
-    min_confort = 0,
-    max_confort = 0,
-    tolerance_limit = 1,
-    viability_limit = 1,
-    init_value = 0,
-    natural_evolution = 0,
-    tolerance_min_output = 0,
-    tolerance_max_output = 10,
-    viability_max_output = 10,
-    emergency_increase_rate = 10,
-}
-
---[[// *****************************************************************************
-]]--[[//  ROE face aux populations
-]]--[[//
-]]--[[// *****************************************************************************
 ]]motivation_plugin.statevariables[ "VE_ArmesLetalesAutorisees" ] =
 {
     min_confort = 0,

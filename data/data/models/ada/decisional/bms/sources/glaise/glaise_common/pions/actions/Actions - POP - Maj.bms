@@ -18,7 +18,6 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - POP - Maj.bm
     select = function( self )
         SetStateVariable( "VE_EmploiForceInterdit", 1 )
         SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
-        SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
         SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
     end,
 
@@ -41,30 +40,6 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - POP - Maj.bm
     select = function( self )
         SetStateVariable( "VE_EmploiForceInterdit", 0 )
         SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 1 )
-        SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
-        SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
-    end,
-
-}
-
---[[// ****************************************************************************** 
-]]--[[// ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs
-]]--[[// 
-]]--[[// Commentaires: MIA:Appelee une seule fois par le comportement 
-]]--[[// BEH_ROE_Recevoir_OrdreInopine. Juste encapsulation, pas d'actuateurs
-]]--[[// 
-]]--[[// ****************************************************************************** 
-]]node "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs"
-{
-    feedbacks = { { { "done_ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs" }, "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs, {value} ) end,
-    create = function( self )
-    end,
-
-    select = function( self )
-        SetStateVariable( "VE_EmploiForceInterdit", 0 )
-        SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
-        SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 1 )
         SetStateVariable( "VE_ArmesLetalesAutorisees", 0 )
     end,
 
@@ -87,7 +62,6 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - POP - Maj.bm
     select = function( self )
         SetStateVariable( "VE_EmploiForceInterdit", 0 )
         SetStateVariable( "VE_MaintienADistanceParMoyensNonLetaux", 0 )
-        SetStateVariable( "VE_DispersionParMoyensDeDefenseActifs", 0 )
         SetStateVariable( "VE_ArmesLetalesAutorisees", 1 )
     end,
 

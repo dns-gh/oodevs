@@ -56,33 +56,6 @@ node "BEH_ROE_GererMaintienADistanceParMoyensNonLetaux"
     end,
 
 --[[// *****************************************************************************
-]]--[[// BEH_ROE_GererROEDispersionParMoyensDeDefenseActifs
-]]--[[//
-]]--[[// Commentaires:
-]]--[[//
-]]--[[// *****************************************************************************
-]]}
-
-node "BEH_ROE_GererDispersionParMoyensDeDefenseActifs"
-{
-    feedbacks = { { { "done_BEH_ROE_GererDispersionParMoyensDeDefenseActifs" }, "BEH_ROE_GererDispersionParMoyensDeDefenseActifs" } },
-    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_BEH_ROE_GererDispersionParMoyensDeDefenseActifs, {value} ) end,
-    activations =
-    {
-        { "ACT_Tir_ChangerConsignePopulation", { "done_ACT_Tir_ChangerConsignePopulation" } },
-        { "ACT_RC", { "done_ACT_RC" } },
-    },
-
-    create = function( self )
-    end,
-
-    activate = function( self )
-        local Activate = Activate
-        Activate( self.activations.ACT_Tir_ChangerConsignePopulation, 1, { eEtatROEPopulation_DispersionParMoyensDeDefenseActifs, } )
-        Activate( self.activations.ACT_RC, 1, { eRC_DispersionParMoyensDeDefenseActifs, } )
-    end,
-
---[[// *****************************************************************************
 ]]--[[// BEH_ROE_GererROEArmesLetalesAutorisees
 ]]--[[//
 ]]--[[// Commentaires:
@@ -125,7 +98,6 @@ node "BEH_ROE_Recevoir_OrdreInopinePopulation"
     {
         { "ACT_Maj_Pion_PasserEnEmploiForceInterdit", { "done_ACT_Maj_Pion_PasserEnEmploiForceInterdit" } },
         { "ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux", { "done_ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux" } },
-        { "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs", { "done_ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs" } },
         { "ACT_Maj_Pion_PasserEnArmesLetalesAutorisees", { "done_ACT_Maj_Pion_PasserEnArmesLetalesAutorisees" } },
         { "ACT_Ordre_Suppression", { "done_ACT_Ordre_Suppression" } },
     },
@@ -173,14 +145,8 @@ elseif switch_2 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                                         DEC_Trace( " === Frag order --> POPULATION ROE: KEEP DISTANCE WITH NON LETHAL MEANS" )
                                         Activate( self.activations.ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux, 1, emptyTable )
                                         _continue = false
-                                    --[[// TIR DISSUASION POP
-]]                                    cases_switch_2[2] = true
-elseif switch_2 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
-                                        DEC_Trace( " === Frag order --> POPULATION ROE: DISPERSE WITH DEFENSIVE WEAPONS ENABLED" )
-                                        Activate( self.activations.ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs, 1, emptyTable )
-                                        _continue = false
                                     --[[// TIR NEUTRALISATION POP
-]]                                    cases_switch_2[3] = true
+]]                                    cases_switch_2[2] = true
 elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
                                         DEC_Trace( " === Frag order --> POPULATION ROE: ENABLE LETHAL WEAPONS" )
                                         Activate( self.activations.ACT_Maj_Pion_PasserEnArmesLetalesAutorisees, 1, emptyTable )
@@ -206,14 +172,11 @@ elseif switch_2 == eEtatROEPopulation_ArmesLetalesAutorisees then
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_ROE_GererArmesLetalesAutorisees, "ACT_Tir_ChangerConsignePopulation", nodes.ACT_Tir_ChangerConsignePopulation }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_GererArmesLetalesAutorisees, "ACT_RC", nodes.ACT_RC }
-connections[ #connections + 1 ] = { nodes.BEH_ROE_GererDispersionParMoyensDeDefenseActifs, "ACT_Tir_ChangerConsignePopulation", nodes.ACT_Tir_ChangerConsignePopulation }
-connections[ #connections + 1 ] = { nodes.BEH_ROE_GererDispersionParMoyensDeDefenseActifs, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_GererEmploiForceInterdit, "ACT_Tir_ChangerConsignePopulation", nodes.ACT_Tir_ChangerConsignePopulation }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_GererEmploiForceInterdit, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_GererMaintienADistanceParMoyensNonLetaux, "ACT_Tir_ChangerConsignePopulation", nodes.ACT_Tir_ChangerConsignePopulation }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_GererMaintienADistanceParMoyensNonLetaux, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopinePopulation, "ACT_Maj_Pion_PasserEnEmploiForceInterdit", nodes.ACT_Maj_Pion_PasserEnEmploiForceInterdit }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopinePopulation, "ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux", nodes.ACT_Maj_Pion_PasserEnMaintienADistanceParMoyensNonLetaux }
-connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopinePopulation, "ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs", nodes.ACT_Maj_Pion_PasserEnDispersionParMoyensDeDefenseActifs }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopinePopulation, "ACT_Maj_Pion_PasserEnArmesLetalesAutorisees", nodes.ACT_Maj_Pion_PasserEnArmesLetalesAutorisees }
 connections[ #connections + 1 ] = { nodes.BEH_ROE_Recevoir_OrdreInopinePopulation, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }

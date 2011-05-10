@@ -151,7 +151,6 @@ ENT_Tr::T_ConverterPopulationRoe ENT_Tr::PopulationRoeConverter_[] =
     T_ConverterPopulationRoe( "none", QT_TRANSLATE_NOOP( "ENT_Tr", "none" ), ePopulationRoe_None ),
     T_ConverterPopulationRoe( "emploi force interdit", QT_TRANSLATE_NOOP( "ENT_Tr", "force shall not be used" ), ePopulationRoe_EmploiForceInterdit ),
     T_ConverterPopulationRoe( "maintien a distance par moyens non letaux", QT_TRANSLATE_NOOP( "ENT_Tr", "non lethal weapons use allowed" ), ePopulationRoe_MaintienADistanceParMoyensNonLetaux ),
-    T_ConverterPopulationRoe( "dispersion par moyens de defense actifs", QT_TRANSLATE_NOOP( "ENT_Tr", "active defense allowed" ), ePopulationRoe_DispersionParMoyensDeDefenseActifs ),
     T_ConverterPopulationRoe( "armes letales autorisees", QT_TRANSLATE_NOOP( "ENT_Tr", "lethal weapon use allowed" ), ePopulationRoe_ArmesLetalesAutorisees ),
     T_ConverterPopulationRoe( "", "", (E_PopulationRoe)-1 )
 };

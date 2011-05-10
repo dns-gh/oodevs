@@ -782,8 +782,7 @@ message UnitAttributes {
         no_rule          = 0; //!< No rule
         no_force         = 1; //!< Use of force forbidden
         non_lethal_force = 2; //!< Hold back civilians by the use of non lethal means
-        active_defense   = 3; //!< Disperse civilians by active defense means
-        lethal_force     = 4; //!< Lethal weapons authorized for use
+        lethal_force     = 3; //!< Lethal weapons authorized for use
     }
     /** @enum EnumUnitTiredness
         @brief Defines the different states of a unit's tiredness

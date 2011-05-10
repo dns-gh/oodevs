@@ -948,14 +948,10 @@ elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                     Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux, } )
                     _continue = false
                                 cases_switch_1[2] = true
-elseif switch_1 == eEtatROEPopulation_DispersionParMoyensDeDefenseActifs then
-                    Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_DispersionParMoyensDeDefenseActifs, } )
-                    _continue = false
-                                cases_switch_1[3] = true
 elseif switch_1 == eEtatROEPopulation_ArmesLetalesAutorisees then
                     Activate( self.activations.ACT_Info_EtatROEPopulation, 1, { eEtatROEPopulation_ArmesLetalesAutorisees, } )
                     _continue = false
-                                cases_switch_1[4] = true
+                                cases_switch_1[3] = true
                 end
             end
 

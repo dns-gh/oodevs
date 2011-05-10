@@ -65,8 +65,7 @@ private:
         eNone                                = 0,
         eEmploiForceInterdit                 = 1,
         eMaintienADistanceParMoyensNonLetaux = 2,
-        eDispersionParMoyensDeDefenseActifs  = 3,
-        eArmesLetalesAutorisees              = 4
+        eArmesLetalesAutorisees              = 3
     };
     //@}
 

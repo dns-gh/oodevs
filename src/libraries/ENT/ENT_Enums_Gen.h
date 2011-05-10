@@ -152,7 +152,6 @@ enum E_PopulationRoe
     ePopulationRoe_None,
     ePopulationRoe_EmploiForceInterdit,
     ePopulationRoe_MaintienADistanceParMoyensNonLetaux,
-    ePopulationRoe_DispersionParMoyensDeDefenseActifs,
     ePopulationRoe_ArmesLetalesAutorisees,
     eNbrPopulationRoe
 };

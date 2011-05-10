@@ -361,7 +361,6 @@ public:
         eRC_TraceID, // Parametre : float
         eRC_EmploiForceInterdit,
         eRC_MaintienADistanceParMoyensNonLetaux,
-        eRC_DispersionParMoyensDeDefenseActifs,
         eRC_ArmesLetalesAutorisees,
         eRC_PopulationDetectee, // Parametre : T_ConnaissancePopulation
         eRC_PriseAPartieParPopulation, // Parametre : T_ConnaissancePopulation
@@ -377,7 +376,6 @@ public:
         eRC_PopulationReconnue,
         eRC_SituationDifficilementTenableFaceAPopulation,
         eRC_UtilisationArmesNonLetalesFaceAPopulation,
-        eRC_UtilisationMoyensDefenseActifsFaceAPopulation,
         eRC_UtilisationArmementsFaceAPopulation,
         eRC_DebutInterventionFaceAPopulation, // Parametre : id
         eRC_PopulationVictimeAffrontements, // Parametres : victimes (float), dont_blesses (float),

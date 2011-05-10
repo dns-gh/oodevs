@@ -153,7 +153,6 @@
     </attrition-effects>
     <unit-fire-effects>
       <unit attrition-surface="5" ph="0" rule-of-engagment="maintien a distance par moyens non letaux"/>
-      <unit attrition-surface="10" ph="0.0005" rule-of-engagment="dispersion par moyens de defense actifs"/>
       <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
     </unit-fire-effects>
     <urban-destruction-effects>
@@ -315,7 +314,6 @@
     </attrition-effects>
     <unit-fire-effects>
       <unit attrition-surface="5" ph="0" rule-of-engagment="maintien a distance par moyens non letaux"/>
-      <unit attrition-surface="10" ph="0.0005" rule-of-engagment="dispersion par moyens de defense actifs"/>
       <unit attrition-surface="10" ph="0.005" rule-of-engagment="armes letales autorisees"/>
     </unit-fire-effects>
     <urban-destruction-effects>
@@ -327,4 +325,4 @@
     <repartition children="0" female="0.5" male="0.5"/>
   </population>
 </populations>
-<!-- signature="0134277228" -->
+<!-- signature="4002372382" -->

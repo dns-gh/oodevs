@@ -282,10 +282,6 @@
         <translation>se permite uso de armas no letales</translation>
     </message>
     <message>
-        <source>active defense allowed</source>
-        <translation>defensas activas permitidas</translation>
-    </message>
-    <message>
         <source>lethal weapon use allowed</source>
         <translation>se permite uso de armas letales</translation>
     </message>
