@@ -7660,6 +7660,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Interroger"/>
+        <mission name="GENIE Detruire point du reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -11673,4 +11674,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1971463106" -->
+<!-- signature="2294379648" -->
