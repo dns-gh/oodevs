@@ -4402,7 +4402,7 @@
       <parameter dia-name="orderConduiteChangerReglesEngagementPopulation_" name="Ordre conduite changer regles engagement population" optional="false" type="Enumeration">
         <value id="0" name="none"/>
         <value id="1" name="emploi_force_interdit"/>
-        <value id="2" name="maintien_a_distance_par_moyens_non_letaux"/>
+        <value id="2" name="armes_non_letales_autorisees"/>
         <value id="3" name="armes_letales_autorisees"/>
       </parameter>
     </fragorder>
@@ -4560,4 +4560,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3744176459" -->
+<!-- signature="4216056960" -->
