@@ -11995,7 +11995,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PlatoonINF" id="454" name="MILICE . CDT" type="Pion MILICE">
+  <unit decisional-model="france.military.platoon.roles.Milice" id="454" name="MILICE . CDT" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Milicien VL MIT 14.5"/>
@@ -12022,7 +12022,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PlatoonINF" id="455" name="MILICE . Miliciens" type="Pion MILICE">
+  <unit decisional-model="france.military.platoon.roles.Milice" id="455" name="MILICE . Miliciens" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Milicien VL MIT 14.5"/>
@@ -12051,4 +12051,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="4171942141" -->
+<!-- signature="3299113157" -->

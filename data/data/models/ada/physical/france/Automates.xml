@@ -1071,9 +1071,9 @@
     <unit command-post="true" min-occurs="1" type="ONG Soutien LOG"/>
     <unit min-occurs="1" type="ONG Intervention"/>
   </automat>
-  <automat decisional-model="france.military.company.roles.SGTIA" id="681" name="MILICE" type="Automate MILICE">
+  <automat decisional-model="france.military.company.roles.Milice" id="681" name="MILICE" type="Automate MILICE">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="MILICE . CDT"/>
     <unit max-occurs="2" min-occurs="2" type="MILICE . Miliciens"/>
   </automat>
 </automats>
-<!-- signature="1913294462" -->
+<!-- signature="3457510580" -->

@@ -7646,6 +7646,44 @@
         <fragorder name="Arreter Silence Radar"/>
       </fragorders>
     </unit>
+    <unit dia-type="france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.Milice">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Renforcer"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Interroger"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
   </units>
   <automats>
     <automat dia-type="france.military.company.roles.SGTIA" file="BMAutomat.bms" masalife="true" name="france.military.company.roles.SGTIA">
@@ -11559,6 +11597,34 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
+    <automat dia-type="france.military.company.roles.SGTIA" file="BMAutomat.bms" masalife="true" name="france.military.company.roles.Milice">
+      <missions>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
   </automats>
   <crowd>
     <crowd dia-type="T_Population" file="Population\Populations\Model.bms" masalife="false" name="Population">
@@ -11607,4 +11673,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3047671644" -->
+<!-- signature="1971463106" -->
