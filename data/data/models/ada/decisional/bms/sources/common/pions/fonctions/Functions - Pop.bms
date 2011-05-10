@@ -43,16 +43,15 @@ function S_PopulationTropAggressive( pop )
     if( ( roe == eEtatROEPopulation_EmploiForceInterdit ) and ( attitude ~= eAttitudePopulation_Calme ) ) then
         _returnValue = true
     else
-if( ( roe == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux ) and ( attitude == eAttitudePopulation_Excitee ) ) then
-            _returnValue = true
+        if( ( roe == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux ) and ( attitude == eAttitudePopulation_Excitee ) ) then
+                _returnValue = true
         else
-if( ( roe == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux ) and ( attitude == eAttitudePopulation_Agressive ) ) then
+            if( ( roe == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux ) and ( attitude == eAttitudePopulation_Agressive ) ) then
                 _returnValue = true
             else
                 _returnValue = false
             end
         end
-    end
     end
 
     local domination = 0
