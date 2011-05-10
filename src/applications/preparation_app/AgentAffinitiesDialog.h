@@ -13,6 +13,11 @@
 #include "AffinitiesDialog.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
+namespace kernel
+{
+    class Agent_ABC;
+}
+
 // =============================================================================
 /** @class  AgentAffinitiesDialog
     @brief  Agent Affinities dialog

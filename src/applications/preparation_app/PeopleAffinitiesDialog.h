@@ -13,6 +13,12 @@
 #include "AffinitiesDialog.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 
+namespace kernel
+{
+    class Inhabitant_ABC;
+    class Population_ABC;
+}
+
 // =============================================================================
 /** @class  PeopleAffinitiesDialog
     @brief  People affinities dialog
