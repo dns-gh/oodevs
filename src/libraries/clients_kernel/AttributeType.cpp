@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "AttributeType.h"
 #include "EntryLabelType.h"
+#include "ExtensionDependency.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -19,7 +20,8 @@ using namespace kernel;
 // Created: JSR 2010-10-01
 // -----------------------------------------------------------------------------
 AttributeType::AttributeType( xml::xistream& xis )
-    : name_( xis.attribute< std::string >( "name" ) )
+    : name_    ( xis.attribute< std::string >( "name" ) )
+    , operator_( EOperatorAND )
 {
     SetType( xis.attribute< std::string >( "type" ) );
     ReaderHelper( extends_, "extends", xis );
@@ -28,9 +30,21 @@ AttributeType::AttributeType( xml::xistream& xis )
     ReaderHelper( maxLength_, "max-length", xis );
     ReaderHelper( dictionaryKind_, "dictionary-kind", xis );
     ReaderHelper( dictionaryLanguage_, "dictionary-language", xis );
-    xis >> xml::optional >> xml::start( "labels" )
+    std::string op;
+    xis >> xml::optional >> xml::start( "dependencies" )
+            >> xml::attribute( "logical", op )
+            >> xml::list( "dependency", *this, &AttributeType::ReadDependency )
+        >> xml::end
+        >> xml::optional >> xml::start( "labels" )
             >> xml::list( "label", *this, &AttributeType::ReadLabel )
         >> xml::end;
+    if( !op.empty() )
+    {
+        if( op == "or" )
+            operator_ = EOperatorOR;
+        else if( op != "and" )
+            throw std::runtime_error( __FUNCTION__ "unknown logical operator, use 'and' or 'or'." );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -122,4 +136,35 @@ void AttributeType::SetType( const std::string& type )
 void AttributeType::ReadLabel( xml::xistream& xis )
 {
     labels_.push_back( new EntryLabelType( xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeType::ReadDependency
+// Created: ABR 2011-05-03
+// -----------------------------------------------------------------------------
+void AttributeType::ReadDependency( xml::xistream& xis )
+{
+    dependencies_.push_back( new ExtensionDependency( xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AttributeType::IsActive
+// Created: ABR 2011-05-03
+// -----------------------------------------------------------------------------
+bool AttributeType::IsActive( const std::map< std::string, std::string >& extensions ) const
+{
+    if( dependencies_.empty() )
+        return true;
+    bool active = operator_ == EOperatorAND;
+    for( CIT_Dependencies dep = dependencies_.begin(); dep != dependencies_.end(); ++dep )
+        for( std::map< std::string, std::string >::const_iterator ext = extensions.begin(); ext != extensions.end(); ++ext )
+            if( ( *dep )->GetName() == ext->first )
+            {
+                if( operator_ == EOperatorAND )
+                    active = active && ( *dep )->Allow( ext->second );
+                else if( operator_ == EOperatorOR )
+                    active = active || ( *dep )->Allow( ext->second );
+                break;
+            }
+    return active;
 }

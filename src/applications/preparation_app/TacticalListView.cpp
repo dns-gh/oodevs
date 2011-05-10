@@ -144,6 +144,7 @@ void TacticalListView::keyPressEvent( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void TacticalListView::OnContextMenuRequested( QListViewItem* item, const QPoint& pos, int index )
 {
+    HierarchyListView_ABC::OnContextMenuRequested( item, pos, index );
     if( item || !isVisible() )
         return;
     modelBuilder_.ClearSelection();

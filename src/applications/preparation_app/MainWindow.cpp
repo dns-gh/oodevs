@@ -15,6 +15,7 @@
 #include "ExerciseCreationDialog.h"
 #include "CreationPanels.h"
 #include "Dialogs.h"
+#include "DiffusionListDialog.h"
 #include "ExerciseDialog.h"
 #include "ExportDialog.h"
 #include "FileToolbar.h"
@@ -230,8 +231,10 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         pResourceWnd->hide();
     }
 
+    // Extensions
     {
-        pOrbatAttributes_ = new OrbatAttributesPanel( this, controllers, staticModel_.extensions_ );
+        DiffusionListDialog* diffusion = new DiffusionListDialog( this, controllers, model.agents_, staticModel_.extensions_, *factory, *icons, "DiffusionListDialog" );
+        pOrbatAttributes_ = new OrbatAttributesPanel( this, controllers, staticModel_.extensions_, *diffusion );
         moveDockWindow( pOrbatAttributes_, Qt::DockLeft );
         setDockEnabled( pOrbatAttributes_, Qt::DockTop, false );
         setAppropriate( pOrbatAttributes_, false );

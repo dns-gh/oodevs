@@ -18,11 +18,14 @@
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/DictionaryType.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/ExtensionDependency.h"
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
+#include "DiffusionListLineEdit.h"
+#include "DiffusionListHierarchy.h"
 #include "preparation/Tools.h"
 #include <boost/lexical_cast.hpp>
 #include <qtextcodec.h>
@@ -44,12 +47,13 @@ namespace
 // Name: OrbatAttributesPanel constructor
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-OrbatAttributesPanel::OrbatAttributesPanel( QMainWindow* parent, Controllers& controllers, const ExtensionTypes& extensions )
+OrbatAttributesPanel::OrbatAttributesPanel( QMainWindow* parent, Controllers& controllers, const ExtensionTypes& extensions, DiffusionListDialog& diffusionDialog )
     : QDockWindow ( parent, "extensions" )
-    , controllers_( controllers )
-    , extensions_ ( extensions )
-    , selected_   ( 0 )
-    , pGroupBox_  ( 0 )
+    , controllers_    ( controllers )
+    , extensions_     ( extensions )
+    , diffusionDialog_( diffusionDialog )
+    , selected_       ( controllers )
+    , pGroupBox_      ( 0 )
 {
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
@@ -107,8 +111,9 @@ void OrbatAttributesPanel::NotifySelected( const Entity_ABC* element )
                 pGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Enabled" ), pMainLayout_ );
                 pGroupBox_->setCheckable( true );
                 pGroupBox_->setMargin( 5 );
-                for( ExtensionType::CIT_AttributesTypes it = attributes.begin(); it != attributes.end(); ++it )
+                for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it )
                     AddWidget( **it );
+                UpdateDependencies();
                 const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
                 pGroupBox_->setChecked( ext ? ext->IsEnabled() : false );
                 pGroupBox_->show();
@@ -230,12 +235,12 @@ void OrbatAttributesPanel::AddWidget( const kernel::AttributeType& attribute )
     static const std::string language = ReadLang();
     const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
     std::string value( ext ? ext->GetValue( attribute.GetName() ) : "" );
-    if( attribute.GetType() ==AttributeType::ETypeBoolean )
+    if( attribute.GetType() == AttributeType::ETypeBoolean )
     {
         QCheckBox* box = new QCheckBox( attribute.GetLabel( language, "" ).c_str(), pGroupBox_, attribute.GetName().c_str() );
         widgets_.push_back( box );
         box->setChecked( value == "true" );
-        connect( box, SIGNAL( toggled( bool ) ), this, SLOT( Commit() ) );
+        connect( box, SIGNAL( toggled( bool ) ), SLOT( Commit() ) );
         return;
     }
     int min;
@@ -253,7 +258,7 @@ void OrbatAttributesPanel::AddWidget( const kernel::AttributeType& attribute )
             edit->insert( value.c_str() );
             box->setStretchFactor( edit, 1 );
             widgets_.push_back( edit );
-            connect( edit, SIGNAL( textChanged( const QString & ) ), this, SLOT( Commit() ) );
+            connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
         break;
     case AttributeType::ETypeAlphanumeric:
@@ -263,7 +268,7 @@ void OrbatAttributesPanel::AddWidget( const kernel::AttributeType& attribute )
             edit->insert( value.c_str() );
             box->setStretchFactor( edit, 1 );
             widgets_.push_back( edit );
-            connect( edit, SIGNAL( textChanged( const QString & ) ), this, SLOT( Commit() ) );
+            connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
         break;
     case AttributeType::ETypeNumeric:
@@ -273,7 +278,7 @@ void OrbatAttributesPanel::AddWidget( const kernel::AttributeType& attribute )
             edit->insert( value.c_str() );
             box->setStretchFactor( edit, 1 );
             widgets_.push_back( edit );
-            connect( edit, SIGNAL( textChanged( const QString & ) ), this, SLOT( Commit() ) );
+            connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
         break;
     case AttributeType::ETypeDictionary:
@@ -292,7 +297,7 @@ void OrbatAttributesPanel::AddWidget( const kernel::AttributeType& attribute )
             }
             box->setStretchFactor( combo, 1 );
             widgets_.push_back( combo );
-            connect( combo, SIGNAL( activated( int ) ), this, SLOT( Commit() ) );
+            connect( combo, SIGNAL( activated( int ) ), SLOT( Commit() ) );
         }
         break;
     case AttributeType::ETypeLoosyDictionary:
@@ -312,7 +317,19 @@ void OrbatAttributesPanel::AddWidget( const kernel::AttributeType& attribute )
                 combo->setCurrentText( value.c_str() );
             box->setStretchFactor( combo, 1 );
             widgets_.push_back( combo );
-            connect( combo, SIGNAL( activated( int ) ), this, SLOT( Commit() ) );
+            connect( combo, SIGNAL( activated( int ) ), SLOT( Commit() ) );
+        }
+        break;
+    case AttributeType::ETypeDiffusionList:
+        {
+            const std::string extensionName = extensions_.GetNameByType( AttributeType::ETypeDiffusionList );
+            assert( !extensionName.empty() );
+            DiffusionListLineEdit* edit = new DiffusionListLineEdit( box, selected_, diffusionDialog_, extensionName, attribute.GetName().c_str() );
+            edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( DiffusionListHierarchy::diffusionRegexp_, edit ) ) ); // $$$$ ABR 2011-05-04: Factorise regexp
+            edit->insert( value.c_str() );
+            box->setStretchFactor( edit, 1 );
+            widgets_.push_back( edit );
+            connect( edit, SIGNAL( textChanged( const QString& ) ), SLOT( Commit() ) );
         }
         break;
     default:
@@ -337,9 +354,9 @@ void OrbatAttributesPanel::DeleteWidgets()
 // -----------------------------------------------------------------------------
 void OrbatAttributesPanel::OnActivationChanged( bool activate )
 {
-    DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
+    DictionaryExtensions* ext = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
     if( !ext )
-        selected_->Attach( *( ext = new DictionaryExtensions( "orbat-attributes", extensions_ ) ) );
+        selected_.ConstCast()->Attach( *( ext = new DictionaryExtensions( "orbat-attributes", extensions_ ) ) );
     ext->SetEnabled( activate );
     if( activate )
         Commit();
@@ -353,34 +370,36 @@ void OrbatAttributesPanel::OnActivationChanged( bool activate )
 // -----------------------------------------------------------------------------
 void OrbatAttributesPanel::Commit()
 {
-    DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
+    DictionaryExtensions* ext = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( !ext || !type )
         return;
-    for( std::vector< QWidget* >::const_iterator it = widgets_.begin(); it != widgets_.end(); ++it )
+    for( CIT_Widgets it = widgets_.begin(); it != widgets_.end(); ++it )
     {
         AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( ( *it )->name() );
         if( attribute )
         {
+            const bool enabled = ( *it )->isEnabled();
             switch( attribute->GetType() )
             {
             case AttributeType::ETypeBoolean:
-                ext->SetValue( ( *it )->name(), static_cast< QCheckBox* >( *it )->isChecked() ? "true" : "false" );
+                ext->SetValue( ( *it )->name(), static_cast< QCheckBox* >( *it )->isChecked() && enabled ? "true" : "false" );
                 break;
             case AttributeType::ETypeString:
             case AttributeType::ETypeAlphanumeric:
             case AttributeType::ETypeNumeric:
+            case AttributeType::ETypeDiffusionList:
                 {
                     QLineEdit* edit = static_cast< QLineEdit* >( *it );
                     QString text = edit->text();
                     int pos = 0;
                     if( !edit->validator() || edit->validator()->validate( text, pos ) == QValidator::Acceptable )
                     {
-                        ext->SetValue( ( *it )->name(), text.ascii() );
+                        ext->SetValue( ( *it )->name(), enabled ? text.ascii() : "" );
                         edit->setPaletteBackgroundColor( Qt::white );
                     }
-                     else
-                         edit->setPaletteBackgroundColor( Qt::yellow );
+                    else
+                        edit->setPaletteBackgroundColor( Qt::yellow );
                 }
                 break;
             case AttributeType::ETypeDictionary:
@@ -388,7 +407,7 @@ void OrbatAttributesPanel::Commit()
                     QComboBox* combo = static_cast< QComboBox* >( *it );
                     const std::string key = GetDictionaryKey( combo->currentText(), *attribute, extensions_ );
                     if( !key.empty() )
-                        ext->SetValue( ( *it )->name(), key );
+                        ext->SetValue( ( *it )->name(), enabled ? key : "" );
                 }
                 break;
             case AttributeType::ETypeLoosyDictionary:
@@ -398,7 +417,7 @@ void OrbatAttributesPanel::Commit()
                     int pos = 0;
                     if( !combo->validator() || combo->validator()->validate( text, pos ) == QValidator::Acceptable )
                     {
-                        ext->SetValue( ( *it )->name(), text.ascii() );
+                        ext->SetValue( ( *it )->name(), enabled ? text.ascii() : "" );
                         combo->setPaletteBackgroundColor( Qt::white );
                     }
                     else
@@ -411,4 +430,24 @@ void OrbatAttributesPanel::Commit()
         }
     }
     controllers_.controller_.Update( *selected_ );
+    UpdateDependencies();
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrbatAttributesPanel::UpdateDependencies
+// Created: ABR 2011-05-03
+// -----------------------------------------------------------------------------
+void OrbatAttributesPanel::UpdateDependencies()
+{
+    DictionaryExtensions* dico = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
+    ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
+    if( !dico || !type )
+        return;
+    const DictionaryExtensions::T_Extensions& extensions = dico->GetExtensions();
+    for( CIT_Widgets widget = widgets_.begin(); widget != widgets_.end(); ++widget )
+    {
+        AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( ( *widget )->name() );
+        if( attribute )
+            ( *widget )->setEnabled( attribute->IsActive( extensions ) );
+    }
 }

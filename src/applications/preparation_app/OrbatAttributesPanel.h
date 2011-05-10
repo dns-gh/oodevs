@@ -10,8 +10,10 @@
 #ifndef __OrbatAttributesPanel_h_
 #define __OrbatAttributesPanel_h_
 
+#include <boost/noncopyable.hpp>
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -21,6 +23,8 @@ namespace kernel
     class Entity_ABC;
     class ExtensionTypes;
 }
+
+class DiffusionListDialog;
 
 // =============================================================================
 /** @class  OrbatAttributesPanel
@@ -32,12 +36,14 @@ class OrbatAttributesPanel : public QDockWindow
                            , public tools::Observer_ABC
                            , public tools::SelectionObserver< kernel::Entity_ABC >
                            , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                           , private boost::noncopyable
 {
     Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             OrbatAttributesPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions );
+             OrbatAttributesPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, DiffusionListDialog& diffusionDialog );
     virtual ~OrbatAttributesPanel();
     //@}
 
@@ -48,16 +54,18 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Types
     //@{
-    OrbatAttributesPanel( const OrbatAttributesPanel& );            //!< Copy constructor
-    OrbatAttributesPanel& operator=( const OrbatAttributesPanel& ); //!< Assignment operator
+    typedef std::vector< QWidget* >       T_Widgets;
+    typedef T_Widgets::const_iterator   CIT_Widgets;
     //@}
 
+private:
     //! @name Helpers
     //@{
     void AddWidget( const kernel::AttributeType& attribute );
     void DeleteWidgets();
+    void UpdateDependencies();
     //@}
 
 private slots:
@@ -70,12 +78,13 @@ private slots:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    const kernel::ExtensionTypes& extensions_;
-    kernel::Entity_ABC* selected_;
-    QVBox* pMainLayout_;
-    QGroupBox* pGroupBox_;
-    std::vector< QWidget* > widgets_;
+    kernel::Controllers&                      controllers_;
+    const kernel::ExtensionTypes&             extensions_;
+    DiffusionListDialog&                      diffusionDialog_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
+    QVBox*                                    pMainLayout_;
+    QGroupBox*                                pGroupBox_;
+    T_Widgets                                 widgets_;
     //@}
 };
 

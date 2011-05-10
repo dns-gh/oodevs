@@ -11,6 +11,7 @@
 #define __RichListItem_h_
 
 #include <qlistview.h>
+#include <boost/noncopyable.hpp>
 
 namespace gui
 {
@@ -23,6 +24,7 @@ namespace gui
 // Created: APE 2004-09-07
 // =============================================================================
 class RichListItem : public QListViewItem
+                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -43,6 +45,7 @@ public:
     //@{
     void SetBackgroundColor( const QColor& color );
     void SetBackgroundColor( const QColor& color1, const QColor& color2 );
+    const QColor& GetBackgroundColor();
 
     void SetFont( const QFont& font );
     void SetFontColor( const QColor& color );
@@ -68,7 +71,6 @@ private:
     bool InitializeColor();
     void AddColumns( const QString& label1, const QString& label2, const QString& label3, const QString& label4,
                      const QString& label5, const QString& label6, const QString& label7, const QString& label8 );
-    const QColor& GetBackgroundColor();
     SimplerRichText* CreateRichText( const QString& label );
     int Width( int nColumn ) const;
     //@}

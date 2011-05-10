@@ -19,7 +19,9 @@ namespace xml
 
 namespace kernel
 {
+
 class EntryLabelType;
+class ExtensionDependency;
 
 // =============================================================================
 /** @class  AttributeType
@@ -42,6 +44,15 @@ public:
         ETypeLoosyDictionary,
         ETypeDiffusionList
     };
+
+    enum EOperator
+    {
+        EOperatorAND,
+        EOperatorOR
+    };
+
+    typedef std::vector< ExtensionDependency* >   T_Dependencies;
+    typedef T_Dependencies::const_iterator      CIT_Dependencies;
     //@}
 
 public:
@@ -59,6 +70,7 @@ public:
     const std::string& GetLabel( const std::string& language, const std::string& kind ) const;
     void GetMinMaxLength( int& min, int& max ) const;
     void GetDictionaryValues( std::string& dictionary, std::string& kind, std::string& language ) const;
+    bool IsActive( const std::map< std::string, std::string >& extensions ) const;
     //@}
 
 private:
@@ -73,27 +85,30 @@ private:
     //@{
     void SetType( const std::string& type );
     void ReadLabel( xml::xistream& xis );
+    void ReadDependency( xml::xistream& xis );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< EntryLabelType* > T_Entries;
-    typedef T_Entries::const_iterator    CIT_Entries;
+    typedef std::vector< EntryLabelType* >        T_Entries;
+    typedef T_Entries::const_iterator           CIT_Entries;
     //@}
 
 private:
     //! @name Member data
     //@{
-    EType type_;
-    std::string name_;
-    OptionalValue< std::string > extends_;
-    OptionalValue< std::string > dictionary_;
+    EType                         type_;
+    std::string                   name_;
+    OptionalValue< std::string >  extends_;
+    OptionalValue< std::string >  dictionary_;
     OptionalValue< unsigned int > minLength_;
     OptionalValue< unsigned int > maxLength_;
-    OptionalValue< std::string > dictionaryKind_;
-    OptionalValue< std::string > dictionaryLanguage_;
-    T_Entries labels_;
+    OptionalValue< std::string >  dictionaryKind_;
+    OptionalValue< std::string >  dictionaryLanguage_;
+    T_Entries                     labels_;
+    EOperator                     operator_;
+    T_Dependencies                dependencies_;
     //@}
 };
 

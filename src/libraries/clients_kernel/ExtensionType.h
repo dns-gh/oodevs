@@ -38,8 +38,9 @@ public:
 
     //! @name Types
     //@{
-    typedef std::vector< const kernel::AttributeType* > T_AttributesTypes;
-    typedef T_AttributesTypes::const_iterator         CIT_AttributesTypes;
+    typedef std::vector< const kernel::AttributeType* >    T_AttributesTypes;
+    typedef T_AttributesTypes::const_iterator            CIT_AttributesTypes;
+    typedef T_AttributesTypes::const_reverse_iterator   RCIT_AttributesTypes;
     //@}
 
     //! @name Operations

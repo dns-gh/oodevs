@@ -5,6 +5,8 @@ AffinitiesDialog.cpp \
 AgentAffinitiesDialog.cpp \
 PeopleAffinitiesDialog.cpp \
 CommunicationListView.cpp \
+DiffusionListDialog.cpp \
+DiffusionListHierarchy.cpp \
 DotationsEditor.cpp \
 ExerciseCreationDialog.cpp \
 ExerciseDialog.cpp \

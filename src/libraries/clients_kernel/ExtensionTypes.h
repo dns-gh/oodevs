@@ -11,6 +11,7 @@
 #define __ExtensionTypes_h_
 
 #include "tools/Resolver.h"
+#include "AttributeType.h"
 
 namespace tools
 {
@@ -48,6 +49,7 @@ public:
     //@{
     void Load( const tools::ExerciseConfig& config, const std::string& file );
     void Purge();
+    const std::string GetNameByType( AttributeType::EType typeName ) const;
     //@}
 
 private:

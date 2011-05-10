@@ -74,13 +74,6 @@ public:
     void Activate( kernel::ActionController& actions );
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    ValuedListItem( const ValuedListItem& );            //!< Copy constructor
-    ValuedListItem& operator=( const ValuedListItem& ); //!< Assignment operator
-    //@}
-
 protected:
     //! @name Member data
     //@{

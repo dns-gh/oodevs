@@ -99,6 +99,56 @@ void DictionaryExtensions::SerializeAttributes( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DictionaryExtensions::ReadExtension
+// Created: JSR 2010-10-06
+// -----------------------------------------------------------------------------
+void DictionaryExtensions::ReadExtension( xml::xistream& xis )
+{
+    std::string value = xis.attribute< std::string >( "value" );
+    std::string key = xis.attribute< std::string >( "key" );
+    ExtensionType* type = resolver_.tools::StringResolver< ExtensionType >::Find( extensionType_ );
+    try
+    {
+        if( type )
+        {
+            tools::Iterator< const AttributeType& > attributeIt = type->CreateIterator();
+            bool found = false;
+            while( !found && attributeIt.HasMoreElements() )
+            {
+                const AttributeType& attribute = attributeIt.NextElement();
+                if( attribute.GetType() == AttributeType::ETypeDictionary && attribute.GetName() == key )
+                {
+                    unsigned int id = boost::lexical_cast< unsigned int >( value );
+                    std::string dictionary;
+                    std::string kind;
+                    std::string language;
+                    attribute.GetDictionaryValues( dictionary, kind, language );
+                    DictionaryType* dico = resolver_.tools::StringResolver< DictionaryType >::Find( dictionary );
+                    if( !dico )
+                        continue;
+                    tools::Iterator< const DictionaryEntryType& > dicoIt = dico->CreateIterator();
+                    while( dicoIt.HasMoreElements() )
+                    {
+                        const DictionaryEntryType& entry = dicoIt.NextElement();
+                        if( entry.GetId() == id )
+                        {
+                            value = entry.GetKey();
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
+    extensions_[ key ] = value;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DictionaryExtensions::SetEnabled
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
@@ -148,51 +198,10 @@ const DictionaryExtensions::T_Extensions& DictionaryExtensions::GetExtensions() 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DictionaryExtensions::ReadExtension
-// Created: JSR 2010-10-06
+// Name: DictionaryExtensions::GetExtensionTypes
+// Created: ABR 2011-05-03
 // -----------------------------------------------------------------------------
-void DictionaryExtensions::ReadExtension( xml::xistream& xis )
+const ExtensionTypes& DictionaryExtensions::GetExtensionTypes() const
 {
-    std::string value = xis.attribute< std::string >( "value" );
-    std::string key = xis.attribute< std::string >( "key" );
-    ExtensionType* type = resolver_.tools::StringResolver< ExtensionType >::Find( extensionType_ );
-    try
-    {
-        if( type )
-        {
-            tools::Iterator< const AttributeType& > attributeIt = type->CreateIterator();
-            bool found = false;
-            while( !found && attributeIt.HasMoreElements() )
-            {
-                const AttributeType& attribute = attributeIt.NextElement();
-                if( attribute.GetType() == AttributeType::ETypeDictionary && attribute.GetName() == key )
-                {
-                    unsigned int id = boost::lexical_cast< unsigned int >( value );
-                    std::string dictionary;
-                    std::string kind;
-                    std::string language;
-                    attribute.GetDictionaryValues( dictionary, kind, language );
-                    DictionaryType* dico = resolver_.tools::StringResolver< DictionaryType >::Find( dictionary );
-                    if( !dico )
-                        continue;
-                    tools::Iterator< const DictionaryEntryType& > dicoIt = dico->CreateIterator();
-                    while( dicoIt.HasMoreElements() )
-                    {
-                        const DictionaryEntryType& entry = dicoIt.NextElement();
-                        if( entry.GetId() == id )
-                        {
-                            value = entry.GetKey();
-                            found = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    catch( ... )
-    {
-        // NOTHING
-    }
-    extensions_[ key ] = value;
+    return resolver_;
 }

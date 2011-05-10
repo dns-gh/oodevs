@@ -12,6 +12,7 @@
 
 #include "Extension_ABC.h"
 #include "Serializable_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -31,6 +32,7 @@ namespace kernel
 // =============================================================================
 class DictionaryExtensions : public Extension_ABC
                            , public Serializable_ABC
+                           , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -55,15 +57,10 @@ public:
     void SetValue( const std::string& name, const std::string& value );
     const std::string& GetValue( const std::string& name ) const;
     const T_Extensions& GetExtensions() const;
+    const ExtensionTypes& GetExtensionTypes() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DictionaryExtensions( const DictionaryExtensions& );            //!< Copy constructor
-    DictionaryExtensions& operator=( const DictionaryExtensions& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadExtension( xml::xistream& xis );

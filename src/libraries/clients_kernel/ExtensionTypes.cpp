@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "ExtensionTypes.h"
+#include "AttributeType.h"
 #include "DictionaryType.h"
 #include "ExtensionType.h"
 #include "tools/ExerciseConfig.h"
@@ -92,4 +93,24 @@ void ExtensionTypes::ReadElement( const std::string& name, xml::xistream& xis )
 void ExtensionTypes::ReadDictionary( xml::xistream& xis )
 {
     tools::StringResolver< DictionaryType >::Register( xis.attribute< std::string >( "name" ), *new DictionaryType( xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionTypes::GetNameByType
+// Created: ABR 2011-05-03
+// -----------------------------------------------------------------------------
+const std::string ExtensionTypes::GetNameByType( AttributeType::EType type ) const
+{
+    ExtensionType* extension = tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
+    if( extension )
+    {
+        tools::Iterator< const AttributeType& > it = extension->CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const AttributeType& attribute = it.NextElement();
+            if( attribute.GetType() == type )
+                return attribute.GetName();
+        }
+    }
+    return "";
 }

@@ -15,6 +15,7 @@
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
+#include <boost/function.hpp>
 
 namespace kernel
 {
@@ -68,8 +69,8 @@ public:
 protected slots:
     //! @name Slots
     //@{
-    void OnSelectionChange( QListViewItem* item );
-    void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
+    virtual void OnSelectionChange( QListViewItem* item );
+    virtual void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
     void OnRequestCenter();
     void Update();
     //@}
@@ -83,16 +84,18 @@ protected:
     virtual void NotifyDeleted( const kernel::Hierarchies& hierarchies );
     virtual void NotifyUpdated( const kernel::Profile_ABC& profile );
     virtual void NotifyUpdated( const kernel::Symbol_ABC& symbol );
+    virtual void NotifySelected( const kernel::Entity_ABC* element );
+    virtual void NotifyActivated( const kernel::Entity_ABC& element );
     virtual void focusInEvent( QFocusEvent* );
     virtual void DisplayIcon( const kernel::Entity_ABC& entity, ValuedListItem* item );
+    static void SetVisible( QListViewItem* item, bool visible );
+    void ApplyFilter( boost::function< bool ( gui::ValuedListItem* ) > func );
     //@}
 
 private:
     //! @name Helpers
     //@{
     ValuedListItem* FindOrCreate( const kernel::Entity_ABC* entity );
-    virtual void NotifySelected( const kernel::Entity_ABC* element );
-    virtual void NotifyActivated( const kernel::Entity_ABC& element );
     void UpdateItem( ValuedListItem* item );
     virtual QDragObject* dragObject();
     virtual void dropEvent( QDropEvent* pEvent );
@@ -100,7 +103,7 @@ private:
     virtual void dragMoveEvent( QDragMoveEvent *pEvent );
     bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
-    static void SetVisible( QListViewItem* item, bool visible );
+    bool HasAnyChildVisible( gui::ValuedListItem* item, boost::function< bool ( gui::ValuedListItem* ) > func );
     //@}
 
 private:

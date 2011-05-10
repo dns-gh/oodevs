@@ -58,7 +58,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
+    virtual void OnContextMenuRequested( QListViewItem*, const QPoint&, int );
     void OnRename();
     void Engage();
     void Disengage();
