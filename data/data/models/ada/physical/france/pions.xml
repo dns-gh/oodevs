@@ -11930,10 +11930,11 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="ONG Intervention" id="451" name="ONG Intervention" type="Pion INF">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
+  <unit decisional-model="ONG Intervention" id="451" name="ONG Intervention" type="Pion GEN">
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="MPG"/>
+      <equipment count="2" crew="1" type="TC 910"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
@@ -11945,7 +11946,7 @@
       <posture name="PosteAmenage" setup-time="1800s"/>
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
-    <setup installation-time="2m" uninstallation-time="2m"/>
+    <setup installation-time="60s" uninstallation-time="2m"/>
     <nbc decontamination-delay="450s"/>
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
@@ -11970,5 +11971,29 @@
     <repartition children="0" female="0" male="1"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="ONG LOG" id="453" name="ONG Soutien LOG" type="Pion LOG TC2">
+    <nature atlas-nature="None" level="ooo" nature-app6="combat service support/supply"/>
+    <equipments>
+      <equipment convoyer="true" count="1" crew="2" type="Camion Citerne Semi remorque 30m3"/>
+      <equipment count="18" crew="2" type="TRM 2000 2Pers"/>
+      <equipment count="2" crew="1" type="TRM 4000"/>
+      <equipment count="5" crew="3" major="true" type="AMBULANCE J5 3 PAX"/>
+      <equipment count="1" crew="2" type="VTL R 2 Pers"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup installation-time="60s" uninstallation-time="2m"/>
+    <nbc decontamination-delay="450s"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="2599252206" -->
+<!-- signature="1595133215" -->
