@@ -202,7 +202,7 @@ void ContextMenu::InsertSeparators()
         const std::string current = *it;
         if( !previous.empty() && previous != current )
         {
-            const unsigned index = it - insertedCategories_.begin();
+            const int index = (int)(it - insertedCategories_.begin());
             menu_->insertSeparator( index );
             it = insertedCategories_.insert( it, "__separator__" );
             ++it;

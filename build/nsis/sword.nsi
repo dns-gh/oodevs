@@ -71,13 +71,17 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\librtiInternalIntercept.dll"
     File "${RUNDIR}\userDdm.dll"
     File "${RUNDIR}\hla_plugin-${PLATFORM}-mt.dll"
-    File "${RUNDIR}\libFedTime1516e.dll"    
+    File "${RUNDIR}\libFedTime1516e.dll"
 !endif
     File /x "qt-*d.dll" "${RUNDIR}\qt-*.dll"
     File /x "*D.dll" "${RUNDIR}\xerces*.dll"
     File /x "*D.dll" "${RUNDIR}\Xalan*.dll"
     File "${RUNDIR}\zlib1.dll"
+!if ${PLATFORM} == "vc100_x64"
+    File "${RUNDIR}\bugtrap-x64.dll"
+!else
     File "${RUNDIR}\bugtrap.dll"
+!endif
     File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_6.dll"
     File "${RUNDIR}\launcher-${PLATFORM}-mt.dll"

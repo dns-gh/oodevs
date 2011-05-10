@@ -25,11 +25,4 @@ std::string BOOST_RESOLVE( const std::string& filename );
 
 extern unsigned short PORT;
 
-#include <boost/date_time/gregorian/gregorian.hpp>
-#define BOOST_FAIL_ON_DATE( year, month, day )                                                                  \
-    const boost::gregorian::date expected( year, month, day );                                                  \
-    const boost::gregorian::date actual( boost::gregorian::day_clock::local_day() );                            \
-    if( actual >= expected )                                                                                    \
-        BOOST_FAIL( "expected date '" + boost::gregorian::to_simple_string( expected ) + "' has been reached" );
-
 #endif // __client_proxy_test_pch_h_

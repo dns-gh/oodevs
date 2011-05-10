@@ -44,7 +44,7 @@ public:
     //@{
     Message& operator >>( unsigned long& n );
 
-    unsigned long Size() const;
+    std::size_t Size() const;
     void Read ( char* data, unsigned size );
     void Write( const char* data, unsigned size );
     //@}

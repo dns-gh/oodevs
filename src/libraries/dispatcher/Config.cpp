@@ -33,7 +33,7 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
-        ( "simulation-port", po::value( &networkSimulationPort_ )   , "specify the simulation server port number" );
+        ( "simulation-port", po::value( &networkSimulationPort_ )   , "specify the simulation server port number" )
         ( "dispatcher-port", po::value( &networkClientsParameters_ ), "specify the dispatcher server port number" );
     AddOptions( desc );
 }

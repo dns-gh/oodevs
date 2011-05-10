@@ -35,8 +35,8 @@ std::string FilterSymbol( const std::string& source, const std::string& filter )
 {
     if( filter.empty() )
        return source;
-    unsigned i = 0;
-    const unsigned max = std::min( source.length(), filter.length() );
+    std::size_t i = 0;
+    const std::size_t max = std::min( source.length(), filter.length() );
     while( i < max && source[ i ] == filter[ i ] )
         ++i;
     return source.substr( 0, i );

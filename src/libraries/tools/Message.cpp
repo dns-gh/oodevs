@@ -58,7 +58,7 @@ Message& Message::operator >>( unsigned long& n )
 // Name: Message::Size
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-unsigned long Message::Size() const
+std::size_t Message::Size() const
 {
     return data_->size() - readOffset_;
 }
@@ -99,7 +99,8 @@ boost::asio::const_buffers_1 Message::MakeOutputBuffer( unsigned long tag ) cons
     if( ! data_ || data_->size() < 2 * sizeof( unsigned long ) )
         return boost::asio::const_buffers_1( boost::asio::const_buffer() );
     unsigned long* data = reinterpret_cast< unsigned long* >( &data_->front() );
-    *data = htonl( data_->size() - sizeof( unsigned long ) );
+    std::size_t size = data_->size() - sizeof( unsigned long );
+    *data = htonl( (unsigned long)size );
     *(data+1) = htonl( tag );
     const T_Data& buffer = *data_;
     return boost::asio::buffer( buffer );

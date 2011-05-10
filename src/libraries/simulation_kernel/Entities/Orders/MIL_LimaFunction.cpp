@@ -49,8 +49,6 @@ void MIL_LimaFunction::Initialize()
 // -----------------------------------------------------------------------------
 void MIL_LimaFunction::Terminate()
 {
-    for( CIT_LimaFunctionMap it = limaFunctions_.begin(); it != limaFunctions_.end(); ++it )
-        delete it->second;
     limaFunctions_.clear();
 }
 

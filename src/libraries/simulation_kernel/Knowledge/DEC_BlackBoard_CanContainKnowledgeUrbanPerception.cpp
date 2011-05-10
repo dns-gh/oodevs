@@ -41,7 +41,7 @@ DEC_BlackBoard_CanContainKnowledgeUrbanPerception::~DEC_BlackBoard_CanContainKno
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned int nNbr;
+    std::size_t nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -57,7 +57,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::load( MIL_CheckPointInAr
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    const T_KnowledgeUrbanPerceptionMap::size_type size = knowledgeUrbanPerceptionMap_.size();
+    const std::size_t size = knowledgeUrbanPerceptionMap_.size();
     file << size;
     for ( CIT_KnowledgeUrbanPerceptionMap it = knowledgeUrbanPerceptionMap_.begin(); it != knowledgeUrbanPerceptionMap_.end(); ++it )
     {

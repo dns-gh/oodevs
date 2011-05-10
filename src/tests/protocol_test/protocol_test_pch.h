@@ -17,6 +17,7 @@
 #include <boost/config/auto_link.hpp>
 
 #include <turtle/mock.hpp>
+#pragma warning( disable: 4505 )
 
 std::string BOOST_RESOLVE( const std::string& filename );
 

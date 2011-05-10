@@ -133,7 +133,7 @@ int ::kernel::internal::Find( const std::string& text, const std::vector< std::s
 {
     std::vector< int > scores;
     CoMatrix cmTarget( text.c_str() );
-    const int targetLen = text.size();
+    const int targetLen = (int)text.size();
 
     int bestScore = -1;
     int bestIndex = -1;
@@ -146,7 +146,7 @@ int ::kernel::internal::Find( const std::string& text, const std::vector< std::s
                         / ( reunion( cm, cmTarget ).worth() + (delta << 1) + 1 );
         if( score > bestScore && score > threshold )
         {
-            bestIndex = it - candidates.begin();
+            bestIndex = (int)(it - candidates.begin());
             bestScore = score;
         }
     }

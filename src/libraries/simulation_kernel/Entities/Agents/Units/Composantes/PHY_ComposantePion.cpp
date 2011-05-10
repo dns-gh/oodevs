@@ -119,7 +119,7 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int
     file >> nID;
     pState_ = &PHY_ComposanteState::Find( nID );
     sword::EquipmentType nEqID;
-    int equipment;
+    unsigned int equipment;
     file >> equipment;
     nEqID.set_id( equipment );
     pType_ = PHY_ComposanteTypePion::Find( nEqID );

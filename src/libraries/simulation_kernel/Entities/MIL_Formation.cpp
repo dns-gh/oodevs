@@ -27,6 +27,7 @@
 #include <boost/foreach.hpp>
 
 class MIL_Intelligence;
+
 namespace
 {
     MIL_IDManager idManager_;
@@ -122,10 +123,9 @@ MIL_Formation::MIL_Formation( const std::string& name )
 // -----------------------------------------------------------------------------
 MIL_Formation::~MIL_Formation()
 {
-    assert( pArmy_ );
     if( pParent_ )
         pParent_->UnregisterFormation( *this );
-    else
+    else if( pArmy_ )
         pArmy_->UnregisterFormation( *this );
 }
 

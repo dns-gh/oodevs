@@ -115,7 +115,7 @@ StockAttribute& StockAttribute::operator=( const StockAttribute& rhs )
 // -----------------------------------------------------------------------------
 void StockAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
-    unsigned size = 0;
+    std::size_t size;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
        >> size;
     while ( size-- )

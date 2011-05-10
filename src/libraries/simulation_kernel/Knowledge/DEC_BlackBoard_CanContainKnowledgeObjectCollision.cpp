@@ -46,7 +46,6 @@ namespace boost
     namespace serialization
     {
         template< typename Archive >
-        inline
         void serialize( Archive& file, DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
@@ -55,7 +54,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const unsigned int )
         {
-            const DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap::size_type size = map.size();
+            const unsigned int size = map.size();
             file << size;
             for ( DEC_BlackBoard_CanContainKnowledgeObjectCollision::CIT_KnowledgeObjectCollisionMap it = map.begin(); it != map.end(); ++it )
             {

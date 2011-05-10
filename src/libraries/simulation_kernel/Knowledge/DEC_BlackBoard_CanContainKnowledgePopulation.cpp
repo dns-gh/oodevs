@@ -44,7 +44,7 @@ DEC_BlackBoard_CanContainKnowledgePopulation::~DEC_BlackBoard_CanContainKnowledg
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned int nNbr;
+    std::size_t nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -60,7 +60,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    const T_KnowledgePopulationMap::size_type size = knowledgePopulationMap_.size();
+    const std::size_t size = knowledgePopulationMap_.size();
     file << size;
     for ( CIT_KnowledgePopulationMap it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
         file << it->first

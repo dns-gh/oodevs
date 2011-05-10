@@ -98,7 +98,7 @@ void App6Symbol::Merge( const std::string& from, std::string& to )
     else
     {
         unsigned i = 0;
-        const unsigned max = std::min( to.length(), from.length() );
+        const std::size_t max = std::min( to.length(), from.length() );
         while( i < max && to[ i ] == from[ i ] )
             ++i;
         to = to.substr( 0, i );

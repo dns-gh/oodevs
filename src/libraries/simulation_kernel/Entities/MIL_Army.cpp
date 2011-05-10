@@ -108,9 +108,10 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
 MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter )
-    : nID_               ( 0 )
-    , armyFactory_       ( armyFactory )
-    , diplomacyConverter_( diplomacyConverter )
+    : nID_                 ( 0 )
+    , armyFactory_         ( armyFactory )
+    , diplomacyConverter_  ( diplomacyConverter )
+    , pKnowledgeBlackBoard_( 0 )
 {
     // NOTHING
 }
