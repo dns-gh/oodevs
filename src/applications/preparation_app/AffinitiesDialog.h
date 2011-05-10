@@ -11,11 +11,11 @@
 #define _AffinitiesDialog_h
 
 #include "Preparation/Types.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 #include <map>
 #include <vector>
+#include <boost/noncopyable.hpp>
 #include <boost/tuple/tuple.hpp>
 
 namespace gui
@@ -25,12 +25,9 @@ namespace gui
 
 namespace kernel
 {
-    class Agent_ABC;
-    class Inhabitant_ABC;
-    class Population_ABC;
-    class Entity_ABC;
     class Controllers;
     class Team_ABC;
+    class Entity_ABC;
 }
 
 // =============================================================================
