@@ -3,48 +3,55 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __OrbatAttributesPanel_h_
-#define __OrbatAttributesPanel_h_
+#ifndef gui_ExtensionsPanel_h_
+#define gui_ExtensionsPanel_h_
 
 #include <boost/noncopyable.hpp>
+#include "clients_kernel/SafePointer.h"
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "clients_kernel/SafePointer.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
+    class Agent_ABC;
     class AttributeType;
     class Controllers;
-    class DictionaryExtensions;
     class Entity_ABC;
     class ExtensionTypes;
+    class Profile_ABC;
 }
 
-class DiffusionListDialog;
+namespace gui
+{
+    class DiffusionListDialog;
+    class EntitySymbols;
+    class ItemFactory_ABC;
 
 // =============================================================================
-/** @class  OrbatAttributesPanel
-    @brief  OrbatAttributesPanel
+/** @class  ExtensionsPanel
+    @brief  ExtensionsPanel
 */
-// Created: JSR 2010-10-04
+// Created: ABR 2011-05-10
 // =============================================================================
-class OrbatAttributesPanel : public QDockWindow
-                           , public tools::Observer_ABC
-                           , public tools::SelectionObserver< kernel::Entity_ABC >
-                           , public tools::ElementObserver_ABC< kernel::Entity_ABC >
-                           , private boost::noncopyable
+class ExtensionsPanel : public QDockWindow
+                      , public tools::Observer_ABC
+                      , public tools::SelectionObserver< kernel::Entity_ABC >
+                      , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                      , private boost::noncopyable
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             OrbatAttributesPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, DiffusionListDialog& diffusionDialog );
-    virtual ~OrbatAttributesPanel();
+             ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< kernel::Agent_ABC >& agents,
+                              ItemFactory_ABC& factory, const EntitySymbols& icons, const kernel::Profile_ABC& profile, const char* name = 0 );
+    virtual ~ExtensionsPanel();
     //@}
 
     //! @name Operations
@@ -80,7 +87,7 @@ private:
     //@{
     kernel::Controllers&                      controllers_;
     const kernel::ExtensionTypes&             extensions_;
-    DiffusionListDialog&                      diffusionDialog_;
+    DiffusionListDialog*                      diffusionDialog_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     QVBox*                                    pMainLayout_;
     QGroupBox*                                pGroupBox_;
@@ -88,4 +95,5 @@ private:
     //@}
 };
 
-#endif // __OrbatAttributesPanel_h_
+}
+#endif // gui_ExtensionsPanel_h_

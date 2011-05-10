@@ -15,7 +15,7 @@ namespace gui
 // Created: AGE 2006-10-04
 // -----------------------------------------------------------------------------
 template< typename H >
-HierarchyListView< H >::HierarchyListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+HierarchyListView< H >::HierarchyListView( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, const gui::EntitySymbols& icons )
     : HierarchyListView_ABC( pParent, controllers, factory, profile, icons )
     , controllers_( controllers )
 {

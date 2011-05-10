@@ -56,7 +56,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             HierarchyListView_ABC( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, EntitySymbols& symbols );
+             HierarchyListView_ABC( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, const EntitySymbols& symbols );
     virtual ~HierarchyListView_ABC();
     //@}
 
@@ -109,12 +109,12 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    ItemFactory_ABC& factory_;
-    const kernel::Profile_ABC& profile_;
-    EntitySymbols& symbols_;
+    kernel::Controllers&                      controllers_;
+    ItemFactory_ABC&                          factory_;
+    const kernel::Profile_ABC&                profile_;
+    const EntitySymbols&                      symbols_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    QTimer* timer_;
+    QTimer*                                   timer_;
     //@}
 };
 

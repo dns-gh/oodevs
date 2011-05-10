@@ -35,7 +35,7 @@ using namespace gui;
 // Name: HierarchyListView_ABC constructor
 // Created: APE 2004-03-18
 // -----------------------------------------------------------------------------
-HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, EntitySymbols& symbols )
+HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, const EntitySymbols& symbols )
     : ListView< HierarchyListView_ABC >( pParent, *this, factory, "HierarchyListView" )
     , controllers_( controllers )
     , factory_    ( factory )

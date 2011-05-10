@@ -7,7 +7,9 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+/* TRANSLATOR gui::DiffusionListDialog */
+
+#include "clients_gui_pch.h"
 #include "DiffusionListDialog.h"
 #include "moc_DiffusionListDialog.cpp"
 
@@ -19,17 +21,18 @@
 #include "clients_kernel/Tools.h"
 #include "DiffusionListFunctors.h"
 #include "DiffusionListHierarchy.h"
-#include "PreparationProfile.h"
-#include "preparation/AgentsModel.h"
+#include "tools/Resolver.h"
 #include <boost/lexical_cast.hpp>
 
+using namespace gui;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: DiffusionListDialog constructor
-// Created: ABR 2011-04-29
+// Created: ABR 2011-05-10
 // -----------------------------------------------------------------------------
-DiffusionListDialog::DiffusionListDialog( QWidget* parent, Controllers& controllers, const AgentsModel& agents, const ExtensionTypes& extensions, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, const char* name /*= 0*/ )
+DiffusionListDialog::DiffusionListDialog( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver< Agent_ABC >& agents, const kernel::ExtensionTypes& extensions,
+                                          ItemFactory_ABC& factory, const EntitySymbols& icons, const kernel::Profile_ABC& profile, const char* name /*= 0*/ )
     : QDialog( parent, name, true )
     , controllers_  ( controllers )
     , extensions_   ( extensions )
@@ -48,7 +51,7 @@ DiffusionListDialog::DiffusionListDialog( QWidget* parent, Controllers& controll
     transmitterName_ = new QLabel( header, "DiffusionListDialog_Label_TransmitterName" );
     // Editor
     QGroupBox* editor = new QGroupBox( 1, Qt::Horizontal, tr( "Recipients" ), this, "DiffusionListDialog_GroupBox_Editors" );
-    list_ = new DiffusionListHierarchy( editor, controllers, factory, PreparationProfile::GetProfile(), icons );
+    list_ = new DiffusionListHierarchy( editor, controllers, factory, profile, icons );
     // Legend
     QGroupBox* legend = new QGroupBox( 1, Qt::Vertical, tr( "Legend" ), editor, "DiffusionListDialog_GroupBox_Legend" );
     AddLegend( tr( "Transmitter:" ), legend, DiffusionListHierarchy::selectedColor_ );
@@ -163,7 +166,7 @@ void DiffusionListDialog::OnClearAll()
     if( QMessageBox::warning( this, tr( "Cleaning diffusion lists" ), tr( "You are about to erase all diffusion list on the exercise, are you sure?" ), QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
         return;
     const DiffusionListClearer functor( extensionName_ );
-    agents_.tools::Resolver< Agent_ABC >::Apply( functor );
+    agents_.Apply( functor );
     UpdateDisplay();
 }
 
@@ -189,7 +192,7 @@ void DiffusionListDialog::OnGenerateAll()
     if( QMessageBox::warning( this, tr( "Generating diffusion lists" ), tr( "You are about to replace all diffusion list on the exercise, are you sure?" ), QMessageBox::Yes, QMessageBox::No ) == QMessageBox::No )
         return;
     const DiffusionListGenerator functor( extensionName_ );
-    agents_.tools::Resolver< Agent_ABC >::Apply( functor );
+    agents_.Apply( functor );
     UpdateDisplay();
 }
 

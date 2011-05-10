@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __DiffusionListLineEdit_h_
-#define __DiffusionListLineEdit_h_
+#ifndef gui_DiffusionListLineEdit_h_
+#define gui_DiffusionListLineEdit_h_
 
 #include <boost/noncopyable.hpp>
 #include "clients_kernel/SafePointer.h"
@@ -21,11 +21,7 @@ namespace kernel
 
 namespace gui
 {
-    class ItemFactory_ABC;
-    class EntitySymbols;
-}
-
-class DiffusionListDialog;
+    class DiffusionListDialog;
 
 // =============================================================================
 /** @class  DiffusionListLineEdit
@@ -66,4 +62,6 @@ private:
     //@}
 };
 
-#endif // __DiffusionListLineEdit_h_
+}
+
+#endif // gui_DiffusionListLineEdit_h_

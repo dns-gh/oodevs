@@ -146,7 +146,7 @@ private:
     gui::ParametersLayer* parameters_;
     Menu* menu_;
     FileToolbar* fileToolBar_;
-    QDockWindow* pOrbatAttributes_;
+    QDockWindow* pExtensionsPanel_;
     bool loading_;
     bool needsSaving_;
     QString savedState_;

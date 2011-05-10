@@ -7,29 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef __DiffusionListDialog_h_
-#define __DiffusionListDialog_h_
+#ifndef gui_DiffusionListDialog_h_
+#define gui_DiffusionListDialog_h_
 
 #include <boost/noncopyable.hpp>
 #include "clients_kernel/SafePointer.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
+    class Agent_ABC;
     class Controllers;
     class Entity_ABC;
     class ExtensionTypes;
+    class Profile_ABC;
 }
 
 namespace gui
 {
+    class DiffusionListHierarchy;
     class EntitySymbols;
     class ItemFactory_ABC;
-}
-
-class AgentsModel;
-class DiffusionListHierarchy;
-class FormationModel;
-class Model;
 
 // =============================================================================
 /** @class  DiffusionListDialog
@@ -45,7 +43,8 @@ class DiffusionListDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             DiffusionListDialog( QWidget* parent, kernel::Controllers& controllers, const AgentsModel& agents, const kernel::ExtensionTypes& extensions, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, const char* name = 0 );
+             DiffusionListDialog( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver< kernel::Agent_ABC >& agents, const kernel::ExtensionTypes& extensions,
+                                  ItemFactory_ABC& factory, const EntitySymbols& icons, const kernel::Profile_ABC& profile, const char* name = 0 );
     virtual ~DiffusionListDialog();
     //@}
 
@@ -83,17 +82,19 @@ private slots:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers&                      controllers_;
-    const AgentsModel&                        agents_;
-    const kernel::ExtensionTypes&             extensions_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
-    std::string                               extensionName_;
-    DiffusionListHierarchy*                   list_;
-    QLineEdit*                                text_;
-    QLabel*                                   transmitterName_;
-    QButtonGroup*                             filtersButtons_;
-    QLineEdit*                                filterLine_;
+    kernel::Controllers&                        controllers_;
+    const kernel::ExtensionTypes&               extensions_;
+    const tools::Resolver< kernel::Agent_ABC >& agents_;
+    kernel::SafePointer< kernel::Entity_ABC >   selected_;
+    std::string                                 extensionName_;
+    DiffusionListHierarchy*                     list_;
+    QLineEdit*                                  text_;
+    QLabel*                                     transmitterName_;
+    QButtonGroup*                               filtersButtons_;
+    QLineEdit*                                  filterLine_;
     //@}
 };
 
-#endif // __DiffusionListDialog_h_
+}
+
+#endif // gui_DiffusionListDialog_h_

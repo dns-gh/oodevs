@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __DiffusionListHierarchy_h_
-#define __DiffusionListHierarchy_h_
+#ifndef gui_DiffusionListHierarchy_h_
+#define gui_DiffusionListHierarchy_h_
 
-#include "clients_gui/HierarchyListView.h"
+#include "HierarchyListView.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include <boost/function.hpp>
 
@@ -18,16 +18,12 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class TacticalHierarchies;
 }
 
 namespace gui
 {
     class EntitySymbols;
     class ItemFactory_ABC;
-}
-
-class AgentsModel;
 
 // =============================================================================
 /** @class  DiffusionListHierarchy
@@ -35,7 +31,7 @@ class AgentsModel;
 */
 // Created: ABR 2011-04-29
 // =============================================================================
-class DiffusionListHierarchy : public gui::HierarchyListView< kernel::TacticalHierarchies >
+class DiffusionListHierarchy : public HierarchyListView< kernel::TacticalHierarchies >
 {
     Q_OBJECT
 
@@ -53,7 +49,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DiffusionListHierarchy( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             DiffusionListHierarchy( QWidget* pParent, kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, const EntitySymbols& icons );
     virtual ~DiffusionListHierarchy();
     //@}
 
@@ -86,9 +82,9 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
-    bool ApplyAllFilters( gui::ValuedListItem* item );
-    bool ApplyFilterLine( gui::ValuedListItem* item );
-    bool ApplyFilterButtons( gui::ValuedListItem* item );
+    bool ApplyAllFilters( ValuedListItem* item );
+    bool ApplyFilterLine( ValuedListItem* item );
+    bool ApplyFilterButtons( ValuedListItem* item );
     void ComputeAndEmitDiffusionList();
     //@}
 
@@ -110,14 +106,16 @@ private:
 public:
     //! @name Static member data
     //@{
+    static const int     iconSize_;
     static const QColor  baseColor_;
     static const QColor  selectedColor_;
     static const QColor  recipientsColor_;
     static const QColor  potentialsColor_;
-    static const int     iconSize_;
     static const QString diffusionSeparator_;
     static const QRegExp diffusionRegexp_;
     //@}
 };
 
-#endif // __DiffusionListHierarchy_h_
+}
+
+#endif // gui_DiffusionListHierarchy_h_

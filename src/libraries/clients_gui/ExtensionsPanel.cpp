@@ -3,16 +3,19 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
-#include "OrbatAttributesPanel.h"
-#include "moc_OrbatAttributesPanel.cpp"
+/* TRANSLATOR gui::ExtensionsPanel */
+
+#include "clients_gui_pch.h"
+#include "ExtensionsPanel.h"
+#include "moc_ExtensionsPanel.cpp"
+
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AttributeType.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
@@ -22,15 +25,17 @@
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Tools.h"
+#include "DiffusionListDialog.h"
 #include "DiffusionListLineEdit.h"
 #include "DiffusionListHierarchy.h"
-#include "preparation/Tools.h"
 #include <boost/lexical_cast.hpp>
 #include <qtextcodec.h>
 #include <qobjectlist.h>
 
+using namespace gui;
 using namespace kernel;
 
 namespace
@@ -44,14 +49,15 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrbatAttributesPanel constructor
+// Name: ExtensionsPanel constructor
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-OrbatAttributesPanel::OrbatAttributesPanel( QMainWindow* parent, Controllers& controllers, const ExtensionTypes& extensions, DiffusionListDialog& diffusionDialog )
-    : QDockWindow ( parent, "extensions" )
+ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< Agent_ABC >& agents,
+                                  ItemFactory_ABC& factory, const EntitySymbols& icons, const Profile_ABC& profile, const char* name /*= 0*/ )
+    : QDockWindow( parent, name )
     , controllers_    ( controllers )
     , extensions_     ( extensions )
-    , diffusionDialog_( diffusionDialog )
+    , diffusionDialog_( new DiffusionListDialog( parent, controllers, agents, extensions, factory, icons, profile, "ExtensionPanel_DiffusionListDialog" ) )
     , selected_       ( controllers )
     , pGroupBox_      ( 0 )
 {
@@ -70,20 +76,21 @@ OrbatAttributesPanel::OrbatAttributesPanel( QMainWindow* parent, Controllers& co
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrbatAttributesPanel destructor
+// Name: ExtensionsPanel destructor
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-OrbatAttributesPanel::~OrbatAttributesPanel()
+ExtensionsPanel::~ExtensionsPanel()
 {
+    delete diffusionDialog_;
     DeleteWidgets();
     controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrbatAttributesPanel::NotifySelected
+// Name: ExtensionsPanel::NotifySelected
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-void OrbatAttributesPanel::NotifySelected( const Entity_ABC* element )
+void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
 {
     if( selected_ == element )
         return;
@@ -125,12 +132,12 @@ void OrbatAttributesPanel::NotifySelected( const Entity_ABC* element )
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrbatAttributesPanel::NotifyDeleted
+// Name: ExtensionsPanel::NotifyDeleted
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-void OrbatAttributesPanel::NotifyDeleted( const Entity_ABC& element )
+void ExtensionsPanel::NotifyDeleted( const Entity_ABC& element )
 {
-   if( selected_ == &element )
+    if( selected_ == &element )
         DeleteWidgets();
 }
 
@@ -149,34 +156,34 @@ namespace
             // NOTHING
         }
 
-    virtual State validate( QString& input, int& pos ) const
-    {
-        if( validator_ )
+        virtual State validate( QString& input, int& pos ) const
         {
-            input.remove( '*' );
-            input.remove( ' ' );
+            if( validator_ )
+            {
+                input.remove( '*' );
+                input.remove( ' ' );
+            }
+            else if( trailing_ && input.length() >= trailing_ && input.right( trailing_ ) == QString().fill( '*', trailing_ ) )
+                input = input.left( input.length() - trailing_ );
+            trailing_ = 0;
+            int len = input.length();
+            State state = Acceptable;
+            if( validator_ )
+                state = validator_->validate( input, pos );
+            if( max_ != -1 && len > max_)
+            {
+                input.truncate( max_ );
+                pos = std::min( pos, max_ );
+            }
+            if( min_ != -1 && len < min_ )
+            {
+                trailing_ = min_ - len;
+                input.append( QString().fill( '*', trailing_ ) );
+                if( state == Acceptable )
+                    state = Intermediate;
+            }
+            return state;
         }
-        else if( trailing_ && input.length() >= trailing_ && input.right( trailing_ ) == QString().fill( '*', trailing_ ) )
-            input = input.left( input.length() - trailing_ );
-        trailing_ = 0;
-        int len = input.length();
-        State state = Acceptable;
-        if( validator_ )
-            state = validator_->validate( input, pos );
-        if( max_ != -1 && len > max_)
-        {
-            input.truncate( max_ );
-            pos = std::min( pos, max_ );
-        }
-        if( min_ != -1 && len < min_ )
-        {
-            trailing_ = min_ - len;
-            input.append( QString().fill( '*', trailing_ ) );
-            if( state == Acceptable )
-                state = Intermediate;
-        }
-        return state;
-    }
 
     private:
         int min_;
@@ -227,10 +234,10 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrbatAttributesPanel::AddWidget
+// Name: ExtensionsPanel::AddWidget
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-void OrbatAttributesPanel::AddWidget( const kernel::AttributeType& attribute )
+void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
 {
     static const std::string language = ReadLang();
     const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
@@ -324,8 +331,8 @@ void OrbatAttributesPanel::AddWidget( const kernel::AttributeType& attribute )
         {
             const std::string extensionName = extensions_.GetNameByType( AttributeType::ETypeDiffusionList );
             assert( !extensionName.empty() );
-            DiffusionListLineEdit* edit = new DiffusionListLineEdit( box, selected_, diffusionDialog_, extensionName, attribute.GetName().c_str() );
-            edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( DiffusionListHierarchy::diffusionRegexp_, edit ) ) ); // $$$$ ABR 2011-05-04: Factorise regexp
+            DiffusionListLineEdit* edit = new DiffusionListLineEdit( box, selected_, *diffusionDialog_, extensionName, attribute.GetName().c_str() );
+            edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( DiffusionListHierarchy::diffusionRegexp_, edit ) ) );
             edit->insert( value.c_str() );
             box->setStretchFactor( edit, 1 );
             widgets_.push_back( edit );
@@ -338,10 +345,10 @@ void OrbatAttributesPanel::AddWidget( const kernel::AttributeType& attribute )
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrbatAttributesPanel::DeleteWidgets
+// Name: ExtensionsPanel::DeleteWidgets
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-void OrbatAttributesPanel::DeleteWidgets()
+void ExtensionsPanel::DeleteWidgets()
 {
     delete pGroupBox_;
     pGroupBox_ = 0;
@@ -349,10 +356,10 @@ void OrbatAttributesPanel::DeleteWidgets()
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrbatAttributesPanel::OnActivationChanged
+// Name: ExtensionsPanel::OnActivationChanged
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-void OrbatAttributesPanel::OnActivationChanged( bool activate )
+void ExtensionsPanel::OnActivationChanged( bool activate )
 {
     DictionaryExtensions* ext = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
     if( !ext )
@@ -365,10 +372,10 @@ void OrbatAttributesPanel::OnActivationChanged( bool activate )
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrbatAttributesPanel::Commit
+// Name: ExtensionsPanel::Commit
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-void OrbatAttributesPanel::Commit()
+void ExtensionsPanel::Commit()
 {
     DictionaryExtensions* ext = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
@@ -434,10 +441,10 @@ void OrbatAttributesPanel::Commit()
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrbatAttributesPanel::UpdateDependencies
+// Name: ExtensionsPanel::UpdateDependencies
 // Created: ABR 2011-05-03
 // -----------------------------------------------------------------------------
-void OrbatAttributesPanel::UpdateDependencies()
+void ExtensionsPanel::UpdateDependencies()
 {
     DictionaryExtensions* dico = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );

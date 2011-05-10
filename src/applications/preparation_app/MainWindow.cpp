@@ -15,7 +15,6 @@
 #include "ExerciseCreationDialog.h"
 #include "CreationPanels.h"
 #include "Dialogs.h"
-#include "DiffusionListDialog.h"
 #include "ExerciseDialog.h"
 #include "ExportDialog.h"
 #include "FileToolbar.h"
@@ -28,7 +27,6 @@
 #include "InhabitantCreationPanel.h"
 #include "ObjectListView.h"
 #include "ObjectsLayer.h"
-#include "OrbatAttributesPanel.h"
 #include "PopulationListView.h"
 #include "InhabitantListView.h"
 #include "PopulationsLayer.h"
@@ -56,6 +54,7 @@
 #include "clients_gui/EntitySearchBox.h"
 #include "clients_gui/EntitySymbols.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
+#include "clients_gui/ExtensionsPanel.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/GisToolbar.h"
@@ -222,7 +221,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         pPropertiesDockWnd->setCaption( tr( "Properties" ) );
         setDockEnabled( pPropertiesDockWnd, Qt::DockTop, false );
     }
-
     // ResourceNetwork panel
     {
         QDockWindow* pResourceWnd = new ResourceNetworkDialog( this, controllers, staticModel_.objectTypes_ );
@@ -230,15 +228,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         setDockEnabled( pResourceWnd, Qt::DockTop, false );
         pResourceWnd->hide();
     }
-
-    // Extensions
+    // Extensions panel
     {
-        DiffusionListDialog* diffusion = new DiffusionListDialog( this, controllers, model.agents_, staticModel_.extensions_, *factory, *icons, "DiffusionListDialog" );
-        pOrbatAttributes_ = new OrbatAttributesPanel( this, controllers, staticModel_.extensions_, *diffusion );
-        moveDockWindow( pOrbatAttributes_, Qt::DockLeft );
-        setDockEnabled( pOrbatAttributes_, Qt::DockTop, false );
-        setAppropriate( pOrbatAttributes_, false );
-        pOrbatAttributes_->hide();
+        pExtensionsPanel_ = new gui::ExtensionsPanel( this, controllers, staticModel_.extensions_, model.agents_, *factory, *icons, PreparationProfile::GetProfile(), "ExtensionsPanel" );
+        moveDockWindow( pExtensionsPanel_, Qt::DockLeft );
+        setDockEnabled( pExtensionsPanel_, Qt::DockTop, false );
+        setAppropriate( pExtensionsPanel_, false );
+        pExtensionsPanel_->hide();
     }
 
     // A few layers
@@ -441,11 +437,11 @@ bool MainWindow::Load()
         selector_->Load();
         staticModel_.Load( config_ );
         if( staticModel_.extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" ) )
-            setAppropriate( pOrbatAttributes_, true );
+            setAppropriate( pExtensionsPanel_, true );
         else
         {
-            setAppropriate( pOrbatAttributes_, false );
-            pOrbatAttributes_->hide();
+            setAppropriate( pExtensionsPanel_, false );
+            pExtensionsPanel_->hide();
         }
         SetWindowTitle( false );
     }

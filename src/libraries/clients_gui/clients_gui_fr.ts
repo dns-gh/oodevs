@@ -244,6 +244,116 @@
     </message>
 </context>
 <context>
+    <name>gui::DiffusionListDialog</name>
+    <message>
+        <source>Edit diffusion list</source>
+        <translation>Modifier la liste de diffusion</translation>
+    </message>
+    <message>
+        <source>Transmitter</source>
+        <translation>Emetteur</translation>
+    </message>
+    <message>
+        <source>Legend</source>
+        <translation>Légende</translation>
+    </message>
+    <message>
+        <source>Transmitter:</source>
+        <translation>Emetteur:</translation>
+    </message>
+    <message>
+        <source>Filters</source>
+        <translation>Filtres</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Tous</translation>
+    </message>
+    <message>
+        <source>Resulting diffusion list</source>
+        <translation>Liste de diffusion résultant</translation>
+    </message>
+    <message>
+        <source>Generate</source>
+        <translation>Générer</translation>
+    </message>
+    <message>
+        <source>Generate all</source>
+        <translation>Générer tout</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Vider</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Cleaning diffusion lists</source>
+        <translation>Nettoyage de liste de diffusion</translation>
+    </message>
+    <message>
+        <source>Recipients</source>
+        <translation>Destinataires</translation>
+    </message>
+    <message>
+        <source>Recipients:</source>
+        <translation>Destinataires:</translation>
+    </message>
+    <message>
+        <source>Potential recipients:</source>
+        <translation>Destinataires potentiels:</translation>
+    </message>
+    <message>
+        <source>Transmitter, recipients and potentials recipients</source>
+        <translation>Emetteur, destinataires et destinataires potentiels</translation>
+    </message>
+    <message>
+        <source>Transmitter and recipients</source>
+        <translation>Emetteur et destinataires</translation>
+    </message>
+    <message>
+        <source>Clear all</source>
+        <translation>Vider tout</translation>
+    </message>
+    <message>
+        <source>You are about to erase the selected unit&apos;s diffusion list, are you sure?</source>
+        <translation>Vous êtes sur le point d&apos;effacer la liste de diffusion de l&apos;unité sélectionnée, êtes-vous sûr?</translation>
+    </message>
+    <message>
+        <source>You are about to erase all diffusion list on the exercise, are you sure?</source>
+        <translation>Vous êtes sur le point d&apos;effacer toutes les listes de diffusion sur l&apos;exercice, êtes-vous sûr?</translation>
+    </message>
+    <message>
+        <source>You are about to replace the selected unit&apos;s diffusion list, are you sure?</source>
+        <translation>Vous êtes sur le point de remplacer la liste de diffusion de l&apos;unité sélectionnée, êtes-vous sûr?</translation>
+    </message>
+    <message>
+        <source>You are about to replace all diffusion list on the exercise, are you sure?</source>
+        <translation>Vous êtes sur le point de remplacer toutes les liste de diffusion sur l&apos;exercice, vous êtes sûr?</translation>
+    </message>
+    <message>
+        <source>Generating diffusion lists</source>
+        <translation>Generation de listes de diffusion</translation>
+    </message>
+</context>
+<context>
+    <name>gui::DiffusionListHierarchy</name>
+    <message>
+        <source>Add to diffusion list</source>
+        <translation>Ajouter à la liste de diffusion</translation>
+    </message>
+    <message>
+        <source>Remove from diffusion list</source>
+        <translation>Retirer de la liste de diffusion</translation>
+    </message>
+</context>
+<context>
     <name>gui::DiplomacyDialog_ABC</name>
     <message>
         <source>Diplomacy</source>
@@ -360,6 +470,17 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Strength</source>
         <translation>Intensité</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ExtensionsPanel</name>
+    <message>
+        <source>Extensions</source>
+        <translation>Extensions</translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation>Activé</translation>
     </message>
 </context>
 <context>

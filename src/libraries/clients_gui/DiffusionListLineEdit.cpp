@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "DiffusionListLineEdit.h"
 #include "moc_DiffusionListLineEdit.cpp"
 
@@ -15,6 +15,8 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "DiffusionListDialog.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: DiffusionListLineEdit constructor

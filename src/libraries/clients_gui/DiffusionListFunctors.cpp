@@ -7,8 +7,9 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "DiffusionListFunctors.h"
+
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ExtensionType.h"
@@ -17,6 +18,7 @@
 #include "DiffusionListHierarchy.h"
 #include <boost/lexical_cast.hpp>
 
+using namespace gui;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -143,3 +145,4 @@ void DiffusionListGenerator::operator()( const Entity_ABC& agent ) const
         dico->SetValue( name_, diffusion );
     }
 }
+

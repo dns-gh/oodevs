@@ -244,6 +244,116 @@
     </message>
 </context>
 <context>
+    <name>gui::DiffusionListDialog</name>
+    <message>
+        <source>Edit diffusion list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recipients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitter:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recipients:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Potential recipients:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitter, recipients and potentials recipients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transmitter and recipients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resulting diffusion list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>Cleaning diffusion lists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are about to erase the selected unit&apos;s diffusion list, are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are about to erase all diffusion list on the exercise, are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generating diffusion lists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are about to replace the selected unit&apos;s diffusion list, are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are about to replace all diffusion list on the exercise, are you sure?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::DiffusionListHierarchy</name>
+    <message>
+        <source>Add to diffusion list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove from diffusion list</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::DiplomacyDialog_ABC</name>
     <message>
         <source>Diplomacy</source>
@@ -360,6 +470,17 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Strength</source>
         <translation>Intensité</translation>
+    </message>
+</context>
+<context>
+    <name>gui::ExtensionsPanel</name>
+    <message>
+        <source>Extensions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

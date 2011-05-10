@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __DiffusionListFunctors_h_
-#define __DiffusionListFunctors_h_
+#ifndef gui_DiffusionListFunctors_h_
+#define gui_DiffusionListFunctors_h_
 
 #include <boost/noncopyable.hpp>
 
@@ -16,6 +16,9 @@ namespace kernel
 {
     class Entity_ABC;
 }
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  DiffusionListFunctor_ABC
@@ -43,7 +46,6 @@ protected:
     const std::string name_;
     //@}
 };
-
 
 // =============================================================================
 /** @class  DiffusionListGenerator
@@ -87,4 +89,6 @@ public:
     //@}
 };
 
-#endif // __DiffusionListFunctors_h_
+}
+
+#endif // gui_DiffusionListFunctors_h_

@@ -12,6 +12,8 @@ CoordinateSystemsPanel.cpp \
 CrossingSitePrototype_ABC.cpp \
 DelayPrototype_ABC.cpp \
 DensityWidget.cpp \
+DiffusionListDialog.cpp \
+DiffusionListHierarchy.cpp \
 DiplomacyDialog_ABC.cpp \
 DisplayToolbar.cpp \
 DrawerLayer.cpp \
@@ -19,6 +21,7 @@ DrawerPanel.cpp \
 EditorFactory.cpp \
 ElevationExtrema.cpp \
 ElevationPanel.cpp \
+ExtensionsPanel.cpp \
 FirePrototype_ABC.cpp \
 FirePropagationModifierPrototype_ABC.cpp \
 FixedLightWidget.cpp \

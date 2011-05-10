@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+/* TRANSLATOR gui::DiffusionListHierarchy */
+
+#include "clients_gui_pch.h"
 #include "DiffusionListHierarchy.h"
 #include "moc_DiffusionListHierarchy.cpp"
 
-#include "preparation/AgentsModel.h"
-#include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AttributeType.h"
 #include "clients_kernel/Controllers.h"
@@ -21,15 +21,17 @@
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "tools/GeneralConfig.h"
+#include "ValuedListItem.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
 
+using namespace gui;
 using namespace kernel;
 
 const int     DiffusionListHierarchy::iconSize_           = 32;
 const QColor  DiffusionListHierarchy::baseColor_          = Qt::white;
 const QColor  DiffusionListHierarchy::selectedColor_      = QColor( 222, 250, 218 );
-const QColor  DiffusionListHierarchy::recipientsColor_     = QColor( 216, 241, 250 );
+const QColor  DiffusionListHierarchy::recipientsColor_    = QColor( 216, 241, 250 );
 const QColor  DiffusionListHierarchy::potentialsColor_    = QColor( 255, 255, 200 );
 const QString DiffusionListHierarchy::diffusionSeparator_ = ";";
 const QRegExp DiffusionListHierarchy::diffusionRegexp_    = "([0-9]+[;]{1})*[0-9]*";
@@ -46,8 +48,8 @@ namespace
 // Name: DiffusionListHierarchy constructor
 // Created: ABR 2011-04-29
 // -----------------------------------------------------------------------------
-DiffusionListHierarchy::DiffusionListHierarchy( QWidget* pParent, Controllers& controllers, gui::ItemFactory_ABC& factory, const Profile_ABC& profile, gui::EntitySymbols& icons )
-    : gui::HierarchyListView< TacticalHierarchies >( pParent, controllers, factory, profile, icons )
+DiffusionListHierarchy::DiffusionListHierarchy( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, const EntitySymbols& icons )
+    : HierarchyListView< TacticalHierarchies >( pParent, controllers, factory, profile, icons )
     , selected_       ( controllers )
     , filter_         ( EFilterRecipientsAndPotentials )
     , basePixmap_     ( QPixmap() )
@@ -83,7 +85,7 @@ void DiffusionListHierarchy::OnSelectionChange( QListViewItem* /*item*/ )
 // -----------------------------------------------------------------------------
 void DiffusionListHierarchy::NotifySelected( const Entity_ABC* element )
 {
-    gui::ValuedListItem* item = element ? gui::FindItem( element, firstChild() ) : 0;
+    ValuedListItem* item = element ? FindItem( element, firstChild() ) : 0;
     if( item )
     {
         setSelected( item, true );
@@ -99,7 +101,7 @@ void DiffusionListHierarchy::OnContextMenuRequested( QListViewItem* item, const 
 {
     if( !item )
         return;
-    gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( item );
+    ValuedListItem* valuedItem = static_cast< ValuedListItem* >( item );
     popupMenu_.clear();
     if( valuedItem->GetBackgroundColor() == potentialsColor_ )
     {
@@ -119,7 +121,7 @@ void DiffusionListHierarchy::OnContextMenuRequested( QListViewItem* item, const 
 // -----------------------------------------------------------------------------
 void DiffusionListHierarchy::OnAddItem()
 {
-    gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( selectedItem() );
+    ValuedListItem* item = static_cast< ValuedListItem* >( selectedItem() );
     item->SetBackgroundColor( recipientsColor_ );
     kernel::Entity_ABC const* entity = item->GetValue< kernel::Entity_ABC >();
     recipients_.insert( entity->GetId() );
@@ -132,7 +134,7 @@ void DiffusionListHierarchy::OnAddItem()
 // -----------------------------------------------------------------------------
 void DiffusionListHierarchy::OnRemoveItem()
 {
-    gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( selectedItem() );
+    ValuedListItem* item = static_cast< ValuedListItem* >( selectedItem() );
     item->SetBackgroundColor( potentialsColor_ );
     kernel::Entity_ABC const* entity = item->GetValue< kernel::Entity_ABC >();
     recipients_.erase( entity->GetId() );
@@ -195,7 +197,7 @@ void DiffusionListHierarchy::OnFilterChanged( const QString& filterLine )
 // Name: DiffusionListHierarchy::ApplyAllFilters
 // Created: ABR 2011-05-09
 // -----------------------------------------------------------------------------
-bool DiffusionListHierarchy::ApplyAllFilters( gui::ValuedListItem* item )
+bool DiffusionListHierarchy::ApplyAllFilters( ValuedListItem* item )
 {
     return ApplyFilterButtons( item ) && ApplyFilterLine( item );
 }
@@ -204,7 +206,7 @@ bool DiffusionListHierarchy::ApplyAllFilters( gui::ValuedListItem* item )
 // Name: DiffusionListHierarchy::ApplyFilterButtons
 // Created: ABR 2011-05-09
 // -----------------------------------------------------------------------------
-bool DiffusionListHierarchy::ApplyFilterButtons( gui::ValuedListItem* item )
+bool DiffusionListHierarchy::ApplyFilterButtons( ValuedListItem* item )
 {
     return ( item ) ? std::find( filters_.begin(), filters_.end(), item->GetBackgroundColor() ) == filters_.end() : false;
 }
@@ -213,7 +215,7 @@ bool DiffusionListHierarchy::ApplyFilterButtons( gui::ValuedListItem* item )
 // Name: DiffusionListHierarchy::ApplyFilterLine
 // Created: ABR 2011-05-09
 // -----------------------------------------------------------------------------
-bool DiffusionListHierarchy::ApplyFilterLine( gui::ValuedListItem* item )
+bool DiffusionListHierarchy::ApplyFilterLine( ValuedListItem* item )
 {
     if( filterLine_.isEmpty() )
         return true;
@@ -249,7 +251,7 @@ void DiffusionListHierarchy::Initialize( SafePointer< Entity_ABC > selected, con
     // Update all potentials
     for( QListViewItemIterator it = firstChild(); it.current(); ++it )
     {
-        gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( it.current() );
+        ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
         kernel::Entity_ABC const* entity = item->GetValue< kernel::Entity_ABC >();
         DictionaryExtensions* dico = const_cast< DictionaryExtensions* >( entity->Retrieve< DictionaryExtensions >() );
         if( !dico )
@@ -267,7 +269,7 @@ void DiffusionListHierarchy::Initialize( SafePointer< Entity_ABC > selected, con
     OnFilterChanged( filter_ );
     for( QListViewItemIterator it = firstChild(); it.current(); ++it )
         it.current()->setOpen( false );
-    gui::ValuedListItem* item = gui::FindItem( selected_, firstChild() );
+    ValuedListItem* item = FindItem( selected_, firstChild() );
     if( item )
     {
         setSelected( item, false );
@@ -292,7 +294,7 @@ void DiffusionListHierarchy::UpdateDisplay( const QString& diffusionList )
     // Update display
     for( QListViewItemIterator it = firstChild(); it.current(); ++it )
     {
-        gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( it.current() );
+        ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
         kernel::Entity_ABC const* entity = item->GetValue< kernel::Entity_ABC >();
         if( entity->GetId() == selected_->GetId() )
         {
@@ -317,3 +319,4 @@ void DiffusionListHierarchy::UpdateDisplay( const QString& diffusionList )
         item->repaint();
     }
 }
+

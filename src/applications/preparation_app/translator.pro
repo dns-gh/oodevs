@@ -5,8 +5,6 @@ AffinitiesDialog.cpp \
 AgentAffinitiesDialog.cpp \
 PeopleAffinitiesDialog.cpp \
 CommunicationListView.cpp \
-DiffusionListDialog.cpp \
-DiffusionListHierarchy.cpp \
 DotationsEditor.cpp \
 ExerciseCreationDialog.cpp \
 ExerciseDialog.cpp \
@@ -26,7 +24,6 @@ InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \
 InitialStateTableResources.cpp \
 ObjectCreationPanel.cpp \
-OrbatAttributesPanel.cpp \
 PopulationListView.cpp \
 PopulationRepartitionEditor.cpp \
 PositionEditor.cpp \

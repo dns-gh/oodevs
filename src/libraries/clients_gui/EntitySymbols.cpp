@@ -43,7 +43,7 @@ EntitySymbols::~EntitySymbols()
 // Name: EntitySymbols::GetSymbol
 // Created: SBO 2007-02-21
 // -----------------------------------------------------------------------------
-QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ )
+QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ ) const
 {
     QPixmap stub( 1, 1 );
     stub.fill( Qt::white );
@@ -64,7 +64,7 @@ QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QSize&
 // Name: EntitySymbols::GetSymbol
 // Created: SBO 2007-10-17
 // -----------------------------------------------------------------------------
-QPixmap EntitySymbols::GetSymbol( const kernel::Intelligence_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ )
+QPixmap EntitySymbols::GetSymbol( const kernel::Intelligence_ABC& entity, const QSize& size /*= QSize( 32, 32 )*/ ) const
 {
     QPixmap stub( 1, 1 );
     stub.fill( Qt::white );
