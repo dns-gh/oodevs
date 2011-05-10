@@ -11,6 +11,8 @@
 #include "Gl3dWidget.h"
 #include "EntityLayer.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/SimpleLocationDrawer.h"
 #include "clients_kernel/UrbanColor_ABC.h"
 #include <graphics/Compass.h>
 #include <graphics/Visitor3d.h>
@@ -27,14 +29,14 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 Gl3dWidget::Gl3dWidget( QWidget* pParent, Controllers& controllers, const tools::ExerciseConfig& config, DetectionMap& elevation, EventStrategy_ABC& strategy )
     : WorldParameters( config )
-    , SetGlOptions()
-    , Widget3D( context_, pParent )
-    , GlToolsBase( controllers )
-    , elevation_    ( elevation )
-    , strategy_     ( strategy )
-    , zRatio_       ( 5 )
-    , frame_        ( 0 )
-    , isInitialized_( false )
+    , SetGlOptions   ()
+    , Widget3D       ( context_, pParent )
+    , GlToolsBase    ( controllers )
+    , elevation_     ( elevation )
+    , strategy_      ( strategy )
+    , zRatio_        ( 5 )
+    , frame_         ( 0 )
+    , isInitialized_ ( false )
 {
     // NOTHING
 }
@@ -375,7 +377,6 @@ void Gl3dWidget::DrawCircle( const Point2f& center, float radius /*= -1.f*/, E_U
 // -----------------------------------------------------------------------------
 void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Unit unit /*= meters*/ ) const
 {
-
     if( radius < 0 )
         radius = 10.f * Pixels( center );
     else if( unit == pixels )
@@ -400,19 +401,36 @@ void Gl3dWidget::DrawDisc( const Point2f& center, float radius /*= -1.f*/, E_Uni
 void Gl3dWidget::DrawLife( const Point2f& center, float h, float factor /*= 1.f*/ ) const
 {
     // $$$$ AGE 2006-09-11:
-    const float halfWidth   = factor * 600.f * 0.5f * 0.92f;
+    const float halfWidth   = factor * 600.f * 0.5f;
     const float deltaHeight = factor * 600.f * 0.062f;
-    const float xdelta = h * halfWidth;
+    const float xdelta = ( 1 + h ) * halfWidth;
+    const float barHeight = 60;
     glPushMatrix();
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glTranslatef( center.X(), center.Y(), ElevationAt( center ) + 100.f );
         UndoRotations();
-        glTranslatef( 0, 0, 1 );
-        glLineWidth( 3 );
-        glColor3f( 1 - h, h, 0.1f ); // $$$$ AGE 2006-09-11:
-        glBegin( GL_LINES );
-            glVertex2f( - xdelta, deltaHeight );
-            glVertex2f(   xdelta, deltaHeight );
+        glTranslatef( - halfWidth, - 35.f, 1 );
+        glColor3f( 0.6f, 0.6f, 0.6f );
+        glBegin( GL_QUADS );
+            glVertex2f( 0.f, deltaHeight );
+            glVertex2f( halfWidth * 2.f, deltaHeight );
+            glVertex2f( halfWidth * 2.f, deltaHeight - barHeight );
+            glVertex2f( 0.f, deltaHeight - barHeight );
+        glEnd();
+        glBegin( GL_QUADS );
+            glColor3f( 1 - h, h * h * h, 0.f );
+            glVertex2f( 0.f, deltaHeight );
+            glVertex2f( xdelta, deltaHeight );
+            glColor3f( 0.8f * ( 1 - h ), 0.8f * h * h * h, 0.f );
+            glVertex2f( xdelta, deltaHeight - barHeight );
+            glVertex2f( 0.f, deltaHeight - barHeight );
+        glEnd();
+        glColor3f( 0.f, 0.f, 0.f );
+        glBegin( GL_LINE_LOOP );
+            glVertex2f( 0, deltaHeight );
+            glVertex2f( halfWidth * 2.f, deltaHeight );
+            glVertex2f( halfWidth * 2.f, deltaHeight - barHeight );
+            glVertex2f( 0, deltaHeight - barHeight );
         glEnd();
     glPopAttrib();
     glPopMatrix();
@@ -478,9 +496,14 @@ void Gl3dWidget::DrawApp6Symbol( const std::string& symbol, const Point2f& where
 // Name: Gl3dWidget::DrawTacticalGraphics
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kernel::Location_ABC& /*location*/, bool /*overlined*/ ) const
+void Gl3dWidget::DrawTacticalGraphics( const std::string& /*symbol*/, const kernel::Location_ABC& location, bool /*overlined*/ ) const
 {
-    // $$$$ SBO 2009-05-29: TODO
+    // $$$$ SBO 2009-05-29: TODO: use SVG renderer instead
+    glPushAttrib( GL_LINE_BIT );
+        glLineWidth( 3.f );
+        kernel::SimpleLocationDrawer drawer( *this );
+        location.Accept( drawer );
+    glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
