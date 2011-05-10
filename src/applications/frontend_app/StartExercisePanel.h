@@ -68,7 +68,7 @@ private:
     virtual void Update();
     QString BuildSessionDirectory();
     template< typename T >
-    void AddPlugin( QTabWidget* tabs, const QString& name );
+    void AddPlugin( QTabWidget* tabs );
     //@}
 
     //! @name Helpers

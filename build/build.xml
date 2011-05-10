@@ -458,7 +458,7 @@
     </target>
 
     <target name="application.frontend_app" depends="library.frontend" description="build Sword Frontend executable">
-        <build-app name="frontend_app" depends="qt,boost,xerces,flexlm,protobuf"
+        <build-app name="frontend_app" depends="qt,boost,xerces,xalan,flexlm,protobuf"
             libs="bugtrap,zipstream,zlib1,tools
                     lib${ant.project.name}_ENT-${platform}-mt,
                     lib${ant.project.name}_frontend-${platform}-mt,

@@ -392,18 +392,6 @@ Description: %3</translation>
         <translation>Options</translation>
     </message>
     <message>
-        <source>HLA Export</source>
-        <translation>Export HLA</translation>
-    </message>
-    <message>
-        <source>DIS Export</source>
-        <translation>Export DIS</translation>
-    </message>
-    <message>
-        <source>DB Export</source>
-        <translation>Export BDD</translation>
-    </message>
-    <message>
         <source>Session name:</source>
         <translation>Nom de la session:</translation>
     </message>
@@ -422,14 +410,6 @@ Description: %3</translation>
     <message>
         <source>Select an exercise to start</source>
         <translation>Sélectionnez un exercice à démarrer</translation>
-    </message>
-    <message>
-        <source>ERP/Timeline Export</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>EDXL-HAVE Export</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -15,10 +15,8 @@
 #include "InfoBubble.h"
 #include "resources.h"
 #include "frontend/commands.h"
-#include "frontend/CrossbowPluginConfigPanel.h"
-#include "frontend/DisPluginConfigPanel.h"
-#include "frontend/HlaPluginConfigPanel.h"
 #include "frontend/EdxlHavePluginConfigPanel.h"
+#include "frontend/PluginConfigBuilder.h"
 #include "frontend/TimelinePluginConfigPanel.h"
 #include "frontend/StartExercise.h"
 #include "tools/GeneralConfig.h"
@@ -68,12 +66,13 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
     configPanel_ = new GameConfigPanel( tabs, config );
     tabs->addTab( configPanel_, tr( "Options" ) );
 
-    AddPlugin< frontend::DisPluginConfigPanel >( tabs, tr( "DIS Export" ) );
-    AddPlugin< frontend::HlaPluginConfigPanel >( tabs, tr( "HLA Export" ) );
-    AddPlugin< frontend::EdxlHavePluginConfigPanel >( tabs, tr( "EDXL-HAVE Export" ) );
-    AddPlugin< frontend::TimelinePluginConfigPanel >( tabs, tr( "ERP/Timeline Export" ) );
-    AddPlugin< frontend::CrossbowPluginConfigPanel >( tabs, tr( "DB Export" ) );
-
+    {
+        frontend::PluginConfigBuilder builder( config_, tabs );
+        plugins_.push_back( builder.BuildFromXml()
+                                   .Build< frontend::EdxlHavePluginConfigPanel >()
+                                   .Build< frontend::TimelinePluginConfigPanel >()
+                                   .Finalize() );
+    }
     {
         QHBox* sessionBox = new QHBox( group );
         sessionBox->setStretchFactor( new QLabel( tr( "Session name:" ), sessionBox ), 1 );
@@ -193,9 +192,9 @@ QString StartExercisePanel::BuildSessionDirectory()
 // Created: SBO 2009-12-09
 // -----------------------------------------------------------------------------
 template< typename T >
-void StartExercisePanel::AddPlugin( QTabWidget* tabs, const QString& name )
+void StartExercisePanel::AddPlugin( QTabWidget* tabs )
 {
     frontend::PluginConfig_ABC* plugin = new T( tabs, config_ );
-    tabs->addTab( plugin, name );
+    tabs->addTab( plugin, plugin->GetName() );
     plugins_.push_back( plugin );
 }
