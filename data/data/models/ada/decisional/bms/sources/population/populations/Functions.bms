@@ -133,6 +133,7 @@ elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                 _continue = false
                         cases_switch_1[2] = true
         end
+        end
 
      do
         local _continue = true
@@ -172,6 +173,7 @@ elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                 rValeurNominale = rValeurNominale / 4
                 _continue = false
                         cases_switch_1[2] = true
+        end
         end
 
      do
@@ -342,6 +344,7 @@ elseif switch_1 == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux then
                 rRoe_value = 1
                 _continue = false
                         cases_switch_1[2] = true
+        end
         end
 
      do

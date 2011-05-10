@@ -53,6 +53,7 @@ if( ( roe == eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux ) and ( atti
             end
         end
     end
+    end
 
     local domination = 0
     domination = DEC_ConnaissancePopulation_Domination( pop )
