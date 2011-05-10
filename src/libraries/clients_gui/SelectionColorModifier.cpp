@@ -9,12 +9,12 @@
 
 #include "clients_gui_pch.h"
 #include "SelectionColorModifier.h"
-#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
 using namespace gui;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: SelectionColorModifier constructor
@@ -37,16 +37,26 @@ SelectionColorModifier::~SelectionColorModifier()
     controllers_.Unregister( *this );
 }
 
+namespace
+{
+    template< typename H >
+    bool IsSubordinate( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& candidate )
+    {
+        if( const H* hierarchy = entity.Retrieve< H >() )
+            return hierarchy->IsSubordinateOf( candidate );
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: SelectionColorModifier::Apply
 // Created: AGE 2008-05-14
 // -----------------------------------------------------------------------------
 QColor SelectionColorModifier::Apply( const kernel::Entity_ABC& entity, const QColor& base )
 {
-    bool selected = selectedEntity_ == &entity;
-    bool superiorSelected = selectedEntity_
-        && entity.Retrieve< TacticalHierarchies >()
-        && entity.Retrieve< TacticalHierarchies >()->IsSubordinateOf( *selectedEntity_ );
+    const bool selected = selectedEntity_ == &entity;
+    const bool superiorSelected = selectedEntity_ && ( IsSubordinate< kernel::TacticalHierarchies >( entity, *selectedEntity_ )
+                                                    || IsSubordinate< kernel::CommunicationHierarchies >( entity, *selectedEntity_ ) );
     tools_.Select( selected, superiorSelected );
     if( selected )
         return SelectedColor( base );
