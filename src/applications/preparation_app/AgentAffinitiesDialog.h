@@ -11,6 +11,7 @@
 #define _AgentAffinitiesItem_h
 
 #include "AffinitiesDialog.h"
+#include "clients_kernel/ContextMenuObserver_ABC.h"
 
 // =============================================================================
 /** @class  AgentAffinitiesDialog
