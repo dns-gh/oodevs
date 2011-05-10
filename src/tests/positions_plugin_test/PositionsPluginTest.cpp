@@ -17,7 +17,7 @@ namespace bpt = boost::posix_time;
 namespace
 {
     const char* output = "positions_plugin_test.tmp";
-    const int frequency = 42;
+    const unsigned int frequency = 42;
 
     const std::string load( const char* filename = output )
     {
@@ -62,7 +62,7 @@ BOOST_FIXTURE_TEST_CASE( plugin_receiving_a_control_begin_tick_message_for_the_f
 {
     plugins::positions::PositionsPlugin plugin( output, frequency );
     plugin.Receive( MakeTimeMessage( 0 ) );
-    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970\n", load() );
+    BOOST_CHECK_EQUAL( "Team (id);Unit (id);1970-Jan-01 00:00:00\n", load() );
 }
 
 BOOST_FIXTURE_TEST_CASE( plugin_being_destroyed_adds_last_received_time_to_output_even_if_already_added, Fixture )
@@ -72,7 +72,7 @@ BOOST_FIXTURE_TEST_CASE( plugin_being_destroyed_adds_last_received_time_to_outpu
         plugin.Receive( MakeTimeMessage( 0 ) );
         std::remove( output );
     }
-    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:00 1970\n", load() );
+    BOOST_CHECK_EQUAL( "Team (id);Unit (id);1970-Jan-01 00:00:00;1970-Jan-01 00:00:00\n", load() );
 }
 
 BOOST_FIXTURE_TEST_CASE( plugin_being_destroyed_adds_last_received_time_to_output, Fixture )
@@ -84,7 +84,7 @@ BOOST_FIXTURE_TEST_CASE( plugin_being_destroyed_adds_last_received_time_to_outpu
         plugin.Receive( MakeTimeMessage( frequency - 1 ) );
         BOOST_REQUIRE( ! std::ifstream( output ) );
     }
-    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:41 1970\n", load() );
+    BOOST_CHECK_EQUAL( "Team (id);Unit (id);1970-Jan-01 00:00:00;1970-Jan-01 00:00:41\n", load() );
 }
 
 BOOST_FIXTURE_TEST_CASE( plugin_receiving_a_control_begin_tick_message_adds_time_to_output_if_frequency_threshold_is_reached, Fixture )
@@ -95,7 +95,7 @@ BOOST_FIXTURE_TEST_CASE( plugin_receiving_a_control_begin_tick_message_adds_time
     plugin.Receive( MakeTimeMessage( frequency - 1 ) );
     BOOST_REQUIRE( ! std::ifstream( output ) );
     plugin.Receive( MakeTimeMessage( frequency ) );
-    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:42 1970\n", load() );
+    BOOST_CHECK_EQUAL( "Team (id);Unit (id);1970-Jan-01 00:00:00;1970-Jan-01 00:00:42\n", load() );
 }
 
 namespace
@@ -132,7 +132,7 @@ BOOST_FIXTURE_TEST_CASE( received_units_are_added_to_output, Fixture )
     plugin.Receive( MakeUnitMessage( 21u, 31u, "unit1" ) );
     plugin.Receive( MakeUnitMessage( 21u, 32u, "unit2" ) );
     plugin.Receive( MakeTimeMessage( 0 ) );
-    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970\n"
+    BOOST_CHECK_EQUAL( "Team (id);Unit (id);1970-Jan-01 00:00:00\n"
                        "party1 (11);unit1 (31);NA\n"
                        "party1 (11);unit2 (32);NA\n", load() );
 }
@@ -160,7 +160,7 @@ BOOST_FIXTURE_TEST_CASE( received_units_with_positions_are_added_to_output_with_
     plugin.Receive( MakePositionMessage( 31u, 17, 42 ) );
     plugin.Receive( MakePositionMessage( 32u, 23, 51 ) );
     plugin.Receive( MakeTimeMessage( frequency ) );
-    BOOST_CHECK_EQUAL( "Team (id);Unit (id);Thu 1. Jan 00:00:00 1970;Thu 1. Jan 00:00:42 1970\n"
+    BOOST_CHECK_EQUAL( "Team (id);Unit (id);1970-Jan-01 00:00:00;1970-Jan-01 00:00:42\n"
                        "party1 (11);unit1 (31);NA;Lat:17 Long:42\n"
                        "party1 (11);unit2 (32);NA;Lat:23 Long:51\n", load() );
 }

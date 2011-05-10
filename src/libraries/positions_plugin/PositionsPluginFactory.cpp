@@ -46,7 +46,7 @@ std::auto_ptr< dispatcher::Plugin_ABC > PositionsPluginFactory::Create( const st
     std::auto_ptr< dispatcher::Plugin_ABC > result;
     if( name == "position-saver" )
     {
-        int frequency;
+        unsigned int frequency;
         if( !tools::DecodeTime( xis.attribute< std::string >( "frequency" ), frequency ) )
             xis.error( "Invalid time specified for position export frequency" );
         result.reset( new PositionsPlugin( config.BuildSessionChildFile( "positions.csv" ), frequency ) );

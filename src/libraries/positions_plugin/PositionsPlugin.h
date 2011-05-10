@@ -12,14 +12,10 @@
 
 #include "TeamResolver.h"
 #include "dispatcher/Plugin_ABC.h"
-#pragma warning( push, 0 )
-#include <qdatetime.h>
-#pragma warning( pop )
 #include <boost/filesystem/path.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <string>
 #include <vector>
-
-class QDateTime;
 
 namespace dispatcher
 {
@@ -41,7 +37,7 @@ class PositionsPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PositionsPlugin( const std::string& filename, int exportFrequency );
+             PositionsPlugin( const std::string& filename, unsigned int exportFrequency );
     virtual ~PositionsPlugin();
     //@}
 
@@ -71,13 +67,13 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::filesystem::path filepath_;
-    int                     exportFrequency_;
-    bool                    firstTick_;
-    QDateTime               lastExportTime_;
-    QDateTime               currentTime_;
-    TeamResolver            teams_;
-    T_Times                 times_;
+    boost::filesystem::path  filepath_;
+    unsigned int             exportFrequency_;
+    bool                     firstTick_;
+    boost::posix_time::ptime lastExportTime_;
+    boost::posix_time::ptime currentTime_;
+    TeamResolver             teams_;
+    T_Times                  times_;
     //@}
 
 public:

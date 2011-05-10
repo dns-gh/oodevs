@@ -15,23 +15,11 @@ using namespace plugins::positions;
 
 const std::string PositionsPlugin::separator_ = ";";
 
-namespace
-{
-    QDateTime MakeDate( const std::string& str )
-    {
-        // $$$$ AGE 2007-10-12: ...
-        QString extended( str.c_str() );
-        extended.insert( 13, ':' ); extended.insert( 11, ':' );
-        extended.insert(  6, '-' ); extended.insert(  4, '-' );
-        return QDateTime::fromString( extended, Qt::ISODate );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: PositionsPlugin constructor
 // Created: ABR 2011-04-01
 // -----------------------------------------------------------------------------
-PositionsPlugin::PositionsPlugin( const std::string& filename, int exportFrequency )
+PositionsPlugin::PositionsPlugin( const std::string& filename, unsigned int exportFrequency )
     : filepath_       ( filename )
     , exportFrequency_( exportFrequency )
     , firstTick_      ( true )
@@ -81,8 +69,8 @@ void PositionsPlugin::Receive( const sword::SimToClient& message )
 {
     if( message.message().has_control_begin_tick() )
     {
-        currentTime_ = MakeDate( message.message().control_begin_tick().date_time().data() );
-        if( firstTick_ || lastExportTime_.secsTo( currentTime_ ) >= exportFrequency_ )
+        currentTime_ = boost::posix_time::from_iso_string( message.message().control_begin_tick().date_time().data() );
+        if( firstTick_ || currentTime_ - lastExportTime_ >= boost::posix_time::seconds( exportFrequency_ ) )
             Export();
         firstTick_ = false;
     }
@@ -120,10 +108,10 @@ void PositionsPlugin::Export()
 // -----------------------------------------------------------------------------
 void PositionsPlugin::SaveTime()
 {
-    if( ! currentTime_.isValid() )
+    if( currentTime_.is_not_a_date_time() )
         return;
     lastExportTime_ = currentTime_;
-    times_.push_back( lastExportTime_.toString().ascii() );
+    times_.push_back( boost::posix_time::to_simple_string( lastExportTime_ ) );
 }
 
 // -----------------------------------------------------------------------------
