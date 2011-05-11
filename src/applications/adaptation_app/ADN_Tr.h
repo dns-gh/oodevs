@@ -12,6 +12,7 @@
 
 #include "ENT/ENT_Tr_ABC.h"
 #include "ADN_Enums.h"
+#include "clients_kernel/Tools.h"
 
 // =============================================================================
 /** @class  ADN_Tr
@@ -125,12 +126,5 @@ public:
     static T_ConverterMissionParameterType missionParameterTypeConverter_ [];
     //@}
 };
-
-
-namespace tools
-{
-    QString translate( const char* context, const char* what );
-}
-
 
 #endif // __ADN_Tr_h_

@@ -713,16 +713,3 @@ void ADN_Tr::InitTranslations()
     InitTr( munitionTirIndirectConverter_ , "ADN_Tr" );
     InitTr( missionParameterTypeConverter_, "ADN_Tr" );
 }
-
-// -----------------------------------------------------------------------------
-// Name: tools::translate
-// Created: HBD 2010-09-24
-// -----------------------------------------------------------------------------
-QString tools::translate( const char* context, const char* what )
-{
-    if( qApp )
-        return qApp->translate( context, what );
-    else
-        return QString::fromLatin1( what );
-
-}
