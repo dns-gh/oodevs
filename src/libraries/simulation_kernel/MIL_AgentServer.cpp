@@ -68,7 +68,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pResourceNetworkModel_( new resource::ResourceNetworkModel() )
     , pProcessMonitor_      ( new ProcessMonitor() )
     , lastStep_             ( clock() )
-    , pauseAtStartup_       ( config_.GetPausedAtStartup() )
+    , nextPause_            ( config_.GetPausedAtStartup() ? 1 : 0 )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
@@ -84,7 +84,7 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
         pCheckPointManager_ = new MIL_CheckPointManager( config_ );
         pEntityManager_->CreateUrbanObjects( *pUrbanModel_, config_ );
         pEntityManager_->ReadODB( config_ );
-        Resume();
+        Resume( nextPause_ );
     }
     timerManager_.Register( *this );
     MT_LOG_STARTUP_MESSAGE( "-------------------------" );
@@ -225,11 +225,8 @@ void MIL_AgentServer::OnTimer()
     if( config_.GetEndTick() == nCurrentTimeStep_ )
         nSimState_ = eSimStopped;
 
-    if( pauseAtStartup_ )
-    {
-        pauseAtStartup_ = false;
+    if( nextPause_ > 0 && --nextPause_ == 0 )
         Pause();
-    }
 }
 
 //-----------------------------------------------------------------------------
@@ -359,7 +356,7 @@ void MIL_AgentServer::load( MIL_CheckPointInArchive& file )
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );
     nSimState_ = eSimPaused;
     if( nSimState == eSimRunning )
-        Resume();
+        Resume( nextPause_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,8 +432,9 @@ void MIL_AgentServer::Pause()
 // Name: MIL_AgentServer::Resume
 // Created: AGE 2007-08-10
 // -----------------------------------------------------------------------------
-void MIL_AgentServer::Resume()
+void MIL_AgentServer::Resume( unsigned int ticks )
 {
+    nextPause_ = ticks;
     client::ControlResumeAck msg;
     if( nSimState_ != eSimPaused )
         msg().set_error_code( sword::ControlAck::error_not_paused );

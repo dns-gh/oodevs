@@ -26,6 +26,7 @@
 #include "res/connecting.xpm"
 #include "res/notconnected.xpm"
 #include "res/play.xpm"
+#include "res/step.xpm"
 #include "res/stop.xpm"
 #include "res/textsmall.xpm"
 #include "res/textbig.xpm"

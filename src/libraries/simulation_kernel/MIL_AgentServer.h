@@ -87,7 +87,7 @@ public:
     virtual void SendControlInformation() const;
     virtual void Stop();
     virtual void Pause();
-    virtual void Resume();
+    virtual void Resume( unsigned int ticks );
     virtual void SetTimeFactor( unsigned timeFactor );
     virtual void SetRealTime( const std::string& realTime );
     //@}
@@ -192,7 +192,7 @@ private:
     MIL_PropagationManager* pPropagationManager_;
     ProcessMonitor* pProcessMonitor_;
     long lastStep_;
-    bool pauseAtStartup_;
+    unsigned int nextPause_;
     //@}
 
 private:

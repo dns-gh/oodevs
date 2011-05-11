@@ -30,7 +30,7 @@ public:
     virtual void SendControlInformation() const = 0;
     virtual void Stop() = 0;
     virtual void Pause() = 0;
-    virtual void Resume() = 0;
+    virtual void Resume( unsigned int ticks ) = 0;
     virtual void SetTimeFactor( unsigned timeFactor ) = 0;
     virtual void SetRealTime( const std::string& realTime ) = 0;
     //@}

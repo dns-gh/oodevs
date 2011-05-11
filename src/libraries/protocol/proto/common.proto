@@ -494,6 +494,7 @@ message ControlPause {
     @see ControlResumeAck
 */
 message ControlResume {
+    required uint32 tick = 1 [default = 0]; //!< Resume for "tick" ticks before to pause again
 }
 
 /** @struct ControlChangeTimeFactor

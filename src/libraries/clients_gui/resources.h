@@ -22,6 +22,7 @@ DECLARE_ICON( connected );
 DECLARE_ICON( connecting );
 DECLARE_ICON( notconnected );
 DECLARE_ICON( play );
+DECLARE_ICON( step );
 DECLARE_ICON( stop );
 DECLARE_ICON( textsmall );
 DECLARE_ICON( textbig );

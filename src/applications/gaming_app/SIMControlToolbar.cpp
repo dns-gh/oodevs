@@ -101,6 +101,12 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
     pPlayButton_->setEnabled( false );
 
+    pStepButton_ = new QToolButton( this );
+    pStepButton_->setAccel( Key_S );
+    pStepButton_->setIconSet( MAKE_ICON( step ) );
+    pStepButton_->setTextLabel( tr( "Step (S)" ) );
+    pStepButton_->setEnabled( false );
+
     new QLabel( " ", this );
     new QLabel( tr( "Speed factor: " ), this );
 
@@ -146,6 +152,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
 
     connect( pConnectButton_, SIGNAL( clicked() ), SLOT( SlotConnectDisconnect() ) );
     connect( pPlayButton_,    SIGNAL( clicked() ), SLOT( SlotPlayPause() ) );
+    connect( pStepButton_,    SIGNAL( clicked() ), SLOT( SlotStep() ) );
     connect( pSpeedButton_,   SIGNAL( clicked() ), SLOT( SlotSpeedChange() ) );
     connect( pSpeedSpinBox_ , SIGNAL( valueChanged( int ) ), SLOT( SlotOnSpinBoxChange( int ) ) );
     connect( pCheckpointButton_, SIGNAL( clicked() ), SLOT( SlotCheckpoint() ) );
@@ -218,6 +225,26 @@ void SIMControlToolbar::SlotPlayPause()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SIMControlToolbar::SlotStep
+// Created: SBO 2011-05-11
+// -----------------------------------------------------------------------------
+void SIMControlToolbar::SlotStep()
+{
+    if( hasReplay_ )
+    {
+        replay::ControlResume message;
+        message().set_tick( 1 );
+        message.Send( publisher_ );
+    }
+    if( hasSimulation_ )
+    {
+        simulation::ControlResume  message;
+        message().set_tick( 1 );
+        message.Send( publisher_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: SIMControlToolbar::SlotSpeedChange
 // Created: APE 2004-04-26
 // -----------------------------------------------------------------------------
@@ -274,6 +301,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
             pConnectButton_->setTextLabel( tr( "Disconnect (C)" ) );
             pConnectButton_->setPopup( 0 );
             pPlayButton_->setEnabled( true );
+            pStepButton_->setEnabled( true );
             if( !pSpeedSpinBox_->isEnabled() )
                 pSpeedSpinBox_->setEnabled( true );
             if( !pCheckpointButton_->isEnabled() )
@@ -291,6 +319,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
                 pConnectButton_->setPopupDelay( 0 );
             }
             pPlayButton_->setEnabled( false );
+            pStepButton_->setEnabled( false );
             pSpeedSpinBox_->setEnabled( false );
             pSpeedButton_->setEnabled( false );
             pCheckpointButton_->setEnabled( false );

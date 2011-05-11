@@ -60,6 +60,7 @@ private slots:
     //@{
     void SlotConnectDisconnect();
     void SlotPlayPause();
+    void SlotStep();
     void SlotOnSpinBoxChange( int );
     void SlotCheckpoint();
     void SlotNamedCheckPoint();
@@ -87,6 +88,7 @@ private:
     Publisher_ABC&      publisher_;
     QToolButton*        pConnectButton_;
     QToolButton*        pPlayButton_;
+    QToolButton*        pStepButton_;
     QToolButton*        pSpeedButton_;
     QSpinBox*           pSpeedSpinBox_;
     QToolButton*        pCheckpointButton_;
