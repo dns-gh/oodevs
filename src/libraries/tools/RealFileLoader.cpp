@@ -149,7 +149,11 @@ std::auto_ptr< xml::xistream > RealFileLoader::UpgradeToLastVersion( const std::
             xis = migration.UpgradeFile( xis, schema );
             observer.NotifyFileMigrated( inputFileName, migration.GetFromVersion(), migration.GetToVersion() );
         }
-        boost::algorithm::replace_first( schema, migration.GetFromVersion(), migration.GetToVersion() );
+        std::stringstream from;
+        from << "/" << migration.GetFromVersion(); // $$$$ LDCDon't replace 4.3.0 because it has 3.0 inside. Otherwise: 4.3.0 -> 4.4.2.0 or somesuch...
+        std::stringstream to;
+        to << "/" << migration.GetToVersion();
+        boost::algorithm::replace_first( schema, from.str(), to.str() );
     }
     return xis;
 }
