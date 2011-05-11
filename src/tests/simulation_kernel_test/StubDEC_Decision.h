@@ -13,7 +13,7 @@ public:
     {
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis.start( "main" );
-        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+        std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         model_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false ) );
         SetModel( *model_ );
     }

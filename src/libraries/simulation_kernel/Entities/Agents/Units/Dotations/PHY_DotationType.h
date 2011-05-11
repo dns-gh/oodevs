@@ -82,11 +82,11 @@ private:
         eEnergie = 8,
     };
 
-    typedef std::map< std::string, const PHY_DotationType*, sCaseInsensitiveLess > T_DotationTypeMap;
-    typedef T_DotationTypeMap::const_iterator                                      CIT_DotationTypeMap;
+    typedef std::map< std::string, const PHY_DotationType* > T_DotationTypeMap;
+    typedef T_DotationTypeMap::const_iterator              CIT_DotationTypeMap;
 
-    typedef std::map< std::string, const PHY_DotationCategory*, sCaseInsensitiveLess > T_DotationCategoryMap;
-    typedef T_DotationCategoryMap::const_iterator                                      CIT_DotationCategoryMap;
+    typedef std::map< std::string, const PHY_DotationCategory* > T_DotationCategoryMap;
+    typedef T_DotationCategoryMap::const_iterator              CIT_DotationCategoryMap;
 
     typedef std::map< unsigned int, const PHY_DotationCategory* > T_DotationCategoryIDMap;
     typedef T_DotationCategoryIDMap::const_iterator       CIT_DotationCategoryIDMap;

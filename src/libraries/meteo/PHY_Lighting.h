@@ -29,7 +29,7 @@ class PHY_Lighting : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_Lighting*, sCaseInsensitiveLess > T_LightingMap;
+    typedef std::map< std::string, const PHY_Lighting* > T_LightingMap;
     typedef T_LightingMap::const_iterator                                    CIT_LightingMap;
     //@}
 

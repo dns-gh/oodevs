@@ -56,10 +56,10 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_RadarType*, sCaseInsensitiveLess > T_RadarTypeMap;
-    typedef T_RadarTypeMap::const_iterator                                      CIT_RadarTypeMap;
+    typedef std::map< std::string, const PHY_RadarType* > T_RadarTypeMap;
+    typedef T_RadarTypeMap::const_iterator             CIT_RadarTypeMap;
 
-    typedef std::vector< bool >                                                 T_ActivityVector;
+    typedef std::vector< bool > T_ActivityVector;
     //@}
 
 private:

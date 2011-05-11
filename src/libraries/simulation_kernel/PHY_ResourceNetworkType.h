@@ -30,8 +30,8 @@ class PHY_ResourceNetworkType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_ResourceNetworkType*, sCaseInsensitiveLess > T_ResourceNetworkMap;
-    typedef T_ResourceNetworkMap::const_iterator                                        CIT_ResourceNetworkMap;
+    typedef std::map< std::string, const PHY_ResourceNetworkType* > T_ResourceNetworkMap;
+    typedef T_ResourceNetworkMap::const_iterator CIT_ResourceNetworkMap;
     //@}
 
 public:

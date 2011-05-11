@@ -64,8 +64,8 @@ private:
     typedef std::map< unsigned int, const MIL_FragOrderType* > T_MissionIDMap;
     typedef T_MissionIDMap::const_iterator             CIT_MissionIDMap;
 
-    typedef std::map< std::string, const MIL_FragOrderType*, sCaseInsensitiveLess > T_MissionNameMap;
-    typedef T_MissionNameMap::const_iterator                                        CIT_MissionNameMap;
+    typedef std::map< std::string, const MIL_FragOrderType* > T_MissionNameMap;
+    typedef T_MissionNameMap::const_iterator CIT_MissionNameMap;
     //@}
 
 private:

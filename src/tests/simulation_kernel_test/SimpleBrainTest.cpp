@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE( InstantiateDEC_PopulationDecision )
 {
     xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
     xis >> xml::start( "main" );
-    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+    std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
     DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false );
     StubMIL_PopulationType type( model );
     StubMIL_Population population( type );
@@ -145,7 +145,7 @@ namespace
             // NOTHING
         }
         xml::xistringstream xis;
-        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+        std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         DEC_Model model;
         StubMIL_PopulationType type;
         StubMIL_Population population;
@@ -217,7 +217,7 @@ namespace
             // NOTHING
         }
         xml::xistringstream xis;
-        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+        std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         DEC_Model model;
         StubMIL_PopulationType type;
         StubMIL_Population population;

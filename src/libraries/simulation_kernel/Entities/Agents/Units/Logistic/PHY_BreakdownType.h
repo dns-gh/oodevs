@@ -69,8 +69,8 @@ private:
     };
     //@}
 
-    typedef std::map< std::string, const PHY_BreakdownType*, sCaseInsensitiveLess > T_BreakdownMap;
-    typedef T_BreakdownMap::const_iterator                                        CIT_BreakdownMap;
+    typedef std::map< std::string, const PHY_BreakdownType* > T_BreakdownMap;
+    typedef T_BreakdownMap::const_iterator                  CIT_BreakdownMap;
     //@}
     //! @name Helpers
     //@{

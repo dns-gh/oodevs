@@ -74,8 +74,8 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const MIL_FireClass*, sCaseInsensitiveLess > T_FireClassMap;
-    typedef T_FireClassMap::const_iterator                                    CIT_FireClassMap;
+    typedef std::map< std::string, const MIL_FireClass* > T_FireClassMap;
+    typedef T_FireClassMap::const_iterator              CIT_FireClassMap;
 
     struct ExtinguisherAgentEffect
     {

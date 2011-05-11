@@ -23,8 +23,8 @@ class PHY_InfrastructureType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_InfrastructureType*, sCaseInsensitiveLess > T_InfrastructureMap;
-    typedef T_InfrastructureMap::const_iterator                                        CIT_InfrastructureMap;
+    typedef std::map< std::string, const PHY_InfrastructureType* > T_InfrastructureMap;
+    typedef T_InfrastructureMap::const_iterator CIT_InfrastructureMap;
 
     struct MedicalProperties
     {

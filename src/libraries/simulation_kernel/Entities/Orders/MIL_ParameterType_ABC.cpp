@@ -39,7 +39,7 @@ void MIL_ParameterType_ABC::Initialize()
 {
     RegisterParameterType( std::string("bool"), eBool );
     RegisterParameterType( std::string("Boolean"), eBool );
-    RegisterParameterType( std::string("enumeration"), eEnumeration );
+    RegisterParameterType( std::string("Enumeration"), eEnumeration );
     RegisterParameterType( std::string("Point"), ePoint );
     RegisterParameterType( std::string("Polygon"), ePolygon );
     RegisterParameterType( std::string("Location" ), eLocation );
@@ -58,15 +58,15 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType( std::string("DotationType"), eResourceType );
     RegisterParameterType( std::string("ResourceType"), eResourceType );
     RegisterParameterType( std::string("EquipmentType"), eEquipmentType );
-    RegisterParameterType( std::string("datetime"), eDateTime );
+    RegisterParameterType( std::string("DateTime"), eDateTime );
     RegisterParameterType( std::string("Integer"), eInteger );
-    RegisterParameterType( std::string("numeric"), eNumeric );
+    RegisterParameterType( std::string("Numeric"), eNumeric );
     RegisterParameterType( std::string("GenObject"), ePlannedWork );
     RegisterParameterType( std::string("PlannedWork"), ePlannedWork );
     RegisterParameterType( std::string("MaintenancePriorities"), eMaintenancePriorities );
     RegisterParameterType( std::string("MedicalPriorities"), eMedicalPriorities );
     RegisterParameterType( std::string("IndirectFire"), eIndirectFire );
-    RegisterParameterType( std::string("string"), eString );;
+    RegisterParameterType( std::string("String"), eString );;
     RegisterParameterType( std::string("UrbanBlock"), eUrbanKnowledge );
     RegisterParameterType( std::string("UrbanKnowledge"), eUrbanKnowledge );
     RegisterParameterType( std::string("LocationComposite"), eLocationComposite );

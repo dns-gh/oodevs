@@ -30,8 +30,8 @@ class PHY_Precipitation : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_Precipitation*, sCaseInsensitiveLess > T_PrecipitationMap;
-    typedef T_PrecipitationMap::const_iterator                                    CIT_PrecipitationMap;
+    typedef std::map< std::string, const PHY_Precipitation* > T_PrecipitationMap;
+    typedef T_PrecipitationMap::const_iterator CIT_PrecipitationMap;
     //@}
 
 public:

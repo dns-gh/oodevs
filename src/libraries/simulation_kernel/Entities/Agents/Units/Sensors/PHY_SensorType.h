@@ -56,8 +56,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_SensorType*, sCaseInsensitiveLess > T_SensorTypeMap;
-    typedef T_SensorTypeMap::const_iterator                                      CIT_SensorTypeMap;
+    typedef std::map< std::string, const PHY_SensorType* > T_SensorTypeMap;
+    typedef T_SensorTypeMap::const_iterator              CIT_SensorTypeMap;
     //@}
 
 private:

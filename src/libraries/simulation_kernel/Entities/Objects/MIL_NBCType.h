@@ -71,8 +71,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const MIL_NBCType*, sCaseInsensitiveLess > T_NBCTypeMap;
-    typedef T_NBCTypeMap::const_iterator                                    CIT_NBCTypeMap;
+    typedef std::map< std::string, const MIL_NBCType* > T_NBCTypeMap;
+    typedef T_NBCTypeMap::const_iterator              CIT_NBCTypeMap;
     //@}
 
 private:

@@ -24,8 +24,8 @@ class MIL_PopulationAttitude : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const MIL_PopulationAttitude*, sCaseInsensitiveLess > T_AttitudeMap;
-    typedef T_AttitudeMap::const_iterator                                              CIT_AttitudeMap;
+    typedef std::map< std::string, const MIL_PopulationAttitude* > T_AttitudeMap;
+    typedef T_AttitudeMap::const_iterator CIT_AttitudeMap;
     //@}
 
 public:

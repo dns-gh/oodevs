@@ -68,8 +68,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const MIL_NbcAgentType*, sCaseInsensitiveLess > T_NbcAgentTypeMap;
-    typedef T_NbcAgentTypeMap::const_iterator                                    CIT_NbcAgentTypeMap;
+    typedef std::map< std::string, const MIL_NbcAgentType* > T_NbcAgentTypeMap;
+    typedef T_NbcAgentTypeMap::const_iterator              CIT_NbcAgentTypeMap;
 
     typedef std::vector< double >                    T_HumanPoisonousVector;
     typedef T_HumanPoisonousVector::const_iterator CIT_HumanPoisonousVector;

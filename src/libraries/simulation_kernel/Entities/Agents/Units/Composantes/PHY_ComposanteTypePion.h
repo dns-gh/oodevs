@@ -202,23 +202,23 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, PHY_ComposanteTypePion*, sCaseInsensitiveLess >  T_ComposanteTypeMap;
-    typedef T_ComposanteTypeMap::const_iterator                                   CIT_ComposanteTypeMap;
+    typedef std::map< std::string, PHY_ComposanteTypePion* >  T_ComposanteTypeMap;
+    typedef T_ComposanteTypeMap::const_iterator             CIT_ComposanteTypeMap;
 
-    typedef std::map< const PHY_WeaponType*, bool >                                 T_WeaponTypeMap;
-    typedef T_WeaponTypeMap::const_iterator                                       CIT_WeaponTypeMap;
+    typedef std::map< const PHY_WeaponType*, bool >           T_WeaponTypeMap;
+    typedef T_WeaponTypeMap::const_iterator                 CIT_WeaponTypeMap;
 
-    typedef std::map< const PHY_SensorType*, double >                               T_SensorTypeMap;
-    typedef T_SensorTypeMap::const_iterator                                       CIT_SensorTypeMap;
+    typedef std::map< const PHY_SensorType*, double >         T_SensorTypeMap;
+    typedef T_SensorTypeMap::const_iterator                 CIT_SensorTypeMap;
 
-    typedef std::set< const PHY_RadarType* >                                        T_RadarTypeSet;
-    typedef T_RadarTypeSet::const_iterator                                        CIT_RadarTypeSet;
+    typedef std::set< const PHY_RadarType* >                  T_RadarTypeSet;
+    typedef T_RadarTypeSet::const_iterator                  CIT_RadarTypeSet;
 
-    typedef std::vector< const PHY_ComposanteTypeObjectData* >                      T_ObjectDataVector;
-    typedef T_ObjectDataVector::const_iterator                                    CIT_ObjectDataVector;
+    typedef std::vector< const PHY_ComposanteTypeObjectData* > T_ObjectDataVector;
+    typedef T_ObjectDataVector::const_iterator               CIT_ObjectDataVector;
 
-    typedef std::vector< PHY_DotationConsumptions* >                                T_ConsumptionVector;
-    typedef T_ConsumptionVector::const_iterator                                   CIT_ConsumptionVector;
+    typedef std::vector< PHY_DotationConsumptions* > T_ConsumptionVector;
+    typedef T_ConsumptionVector::const_iterator    CIT_ConsumptionVector;
 
     struct sNTICapability
     {

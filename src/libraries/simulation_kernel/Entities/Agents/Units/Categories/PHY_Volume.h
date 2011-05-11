@@ -29,8 +29,8 @@ class PHY_Volume : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_Volume*, sCaseInsensitiveLess > T_VolumeMap;
-    typedef T_VolumeMap::const_iterator                                      CIT_VolumeMap;
+    typedef std::map< std::string, const PHY_Volume* > T_VolumeMap;
+    typedef T_VolumeMap::const_iterator              CIT_VolumeMap;
     //@}
 
 public:

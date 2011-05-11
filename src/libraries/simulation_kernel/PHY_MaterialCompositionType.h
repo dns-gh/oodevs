@@ -23,8 +23,8 @@ class PHY_MaterialCompositionType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_MaterialCompositionType*, sCaseInsensitiveLess > T_MaterialCompositionMap;
-    typedef T_MaterialCompositionMap::const_iterator                                        CIT_MaterialCompositionMap;
+    typedef std::map< std::string, const PHY_MaterialCompositionType* > T_MaterialCompositionMap;
+    typedef T_MaterialCompositionMap::const_iterator CIT_MaterialCompositionMap;
 
     struct AttritionData
     {

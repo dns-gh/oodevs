@@ -63,8 +63,8 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< std::string, const MIL_KnowledgeGroupType*, sCaseInsensitiveLess > T_KnowledgeGroupTypeMap;
-    typedef T_KnowledgeGroupTypeMap::const_iterator                                    CIT_KnowledgeGroupTypeMap;
+    typedef std::map< std::string, const MIL_KnowledgeGroupType* > T_KnowledgeGroupTypeMap;
+    typedef T_KnowledgeGroupTypeMap::const_iterator CIT_KnowledgeGroupTypeMap;
     //@}
 
     //! @name Helper

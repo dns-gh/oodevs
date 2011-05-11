@@ -33,8 +33,8 @@ class PHY_Experience : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_Experience*, sCaseInsensitiveLess > T_ExperienceMap;
-    typedef T_ExperienceMap::const_iterator                                      CIT_ExperienceMap;
+    typedef std::map< std::string, const PHY_Experience* > T_ExperienceMap;
+    typedef T_ExperienceMap::const_iterator              CIT_ExperienceMap;
     //@}
 
 public:

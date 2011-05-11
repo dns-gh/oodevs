@@ -23,8 +23,8 @@ class PHY_AccomodationType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_AccomodationType*, sCaseInsensitiveLess > T_AccomodationMap;
-    typedef T_AccomodationMap::const_iterator                                        CIT_AccomodationMap;
+    typedef std::map< std::string, const PHY_AccomodationType* > T_AccomodationMap;
+    typedef T_AccomodationMap::const_iterator CIT_AccomodationMap;
     //@}
 
 public:

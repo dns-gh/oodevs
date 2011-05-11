@@ -29,7 +29,7 @@ class DEC_Model : public DEC_Model_ABC
 {
 public:
              DEC_Model( const std::string& strName, xml::xistream& xis, const std::string& strSourcePath,
-                        const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes, bool isMasalife );
+                        const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes, bool isMasalife );
     virtual ~DEC_Model();
 };
 

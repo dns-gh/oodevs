@@ -91,13 +91,13 @@ protected:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const MIL_AgentTypePion*, sCaseInsensitiveLess > T_PionTypeMap;
-    typedef T_PionTypeMap::const_iterator                                           CIT_PionTypeMap;
+    typedef std::map< std::string, const MIL_AgentTypePion* > T_PionTypeMap;
+    typedef T_PionTypeMap::const_iterator                   CIT_PionTypeMap;
 
     typedef const MIL_AgentTypePion* (*T_PionTypeAllocator)( const std::string& strName, const std::string& strType, xml::xistream& xis );
 
-    typedef std::map< std::string, T_PionTypeAllocator, sCaseInsensitiveLess > T_PionTypeAllocatorMap;
-    typedef T_PionTypeAllocatorMap::const_iterator                             CIT_PionTypeAllocatorMap;
+    typedef std::map< std::string, T_PionTypeAllocator > T_PionTypeAllocatorMap;
+    typedef T_PionTypeAllocatorMap::const_iterator     CIT_PionTypeAllocatorMap;
 
     typedef std::map< TerrainData, double >             T_DistanceAvantPointMap;
     typedef T_DistanceAvantPointMap::const_iterator     CIT_DistanceAvantPointMap;

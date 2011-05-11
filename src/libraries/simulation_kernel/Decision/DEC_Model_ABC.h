@@ -54,7 +54,7 @@ public:
 protected:
     //! @name Constructors
     //@{
-    DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes, bool isMasalife );
+    DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes, bool isMasalife );
     //@}
 
 private:
@@ -65,13 +65,13 @@ private:
 
     //! @name Initialization
     //@{
-    void InitializeMissions( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
+    void InitializeMissions( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes );
     void InitializeMissionFragOrders( xml::xistream& xis, const MIL_MissionType_ABC& missionType );
     //@}
 
     //! @name Helpers
     //@{
-    void ReadMission( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes );
+    void ReadMission( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes );
     void ReadFragOrder( xml::xistream& xis, const MIL_MissionType_ABC& missionType );
     void ReadFragOrder( xml::xistream& xis );
     //@}

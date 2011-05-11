@@ -59,8 +59,8 @@ private:
         eNatureAtlas_None           = 2048
     };
 
-    typedef std::map< std::string, const PHY_NatureAtlas*, sCaseInsensitiveLess > T_NatureAtlasMap;
-    typedef T_NatureAtlasMap::const_iterator                                      CIT_NatureAtlasMap;
+    typedef std::map< std::string, const PHY_NatureAtlas* > T_NatureAtlasMap;
+    typedef T_NatureAtlasMap::const_iterator              CIT_NatureAtlasMap;
     //@}
 
 private:

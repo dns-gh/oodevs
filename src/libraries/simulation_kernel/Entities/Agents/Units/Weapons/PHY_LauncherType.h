@@ -53,12 +53,12 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_LauncherType*, sCaseInsensitiveLess > T_LauncherTypeMap;
-    typedef T_LauncherTypeMap::const_iterator                                       CIT_LauncherTypeMap;
+    typedef std::map< std::string, const PHY_LauncherType* > T_LauncherTypeMap;
+    typedef T_LauncherTypeMap::const_iterator CIT_LauncherTypeMap;
 
-    typedef std::vector< double >                     T_PhModificatorValueVector;
-    typedef std::vector< T_PhModificatorValueVector >   T_PhModificatorsVector;
-    typedef T_PhModificatorsVector::const_iterator      CIT_PhModificatorsVector;
+    typedef std::vector< double > T_PhModificatorValueVector;
+    typedef std::vector< T_PhModificatorValueVector > T_PhModificatorsVector;
+    typedef T_PhModificatorsVector::const_iterator CIT_PhModificatorsVector;
     //@}
 
 private:

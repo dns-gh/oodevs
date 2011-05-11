@@ -23,8 +23,8 @@ class PHY_RoofShapeType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_RoofShapeType*, sCaseInsensitiveLess > T_RoofShapeMap;
-    typedef T_RoofShapeMap::const_iterator                                        CIT_RoofShapeMap;
+    typedef std::map< std::string, const PHY_RoofShapeType* > T_RoofShapeMap;
+    typedef T_RoofShapeMap::const_iterator CIT_RoofShapeMap;
     //@}
 
 public:

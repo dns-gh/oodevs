@@ -30,8 +30,8 @@ public:
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_RoePopulation*, sCaseInsensitiveLess > T_RoePopulationMap;
-    typedef T_RoePopulationMap::const_iterator                                      CIT_RoePopulationMap;
+    typedef std::map< std::string, const PHY_RoePopulation* > T_RoePopulationMap;
+    typedef T_RoePopulationMap::const_iterator              CIT_RoePopulationMap;
     //@}
 
 public:

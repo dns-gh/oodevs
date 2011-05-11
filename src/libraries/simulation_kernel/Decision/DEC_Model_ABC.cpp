@@ -21,7 +21,7 @@
 // Name: DEC_Model_ABC constructor
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
-DEC_Model_ABC::DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes, bool isMasalife )
+DEC_Model_ABC::DEC_Model_ABC( const std::string& strModel, xml::xistream& xis, const std::string& strSourcePath, const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes, bool isMasalife )
     : strModel_      ( strModel )
     , isMasalife_    ( isMasalife )
     , strIncludePath_( strSourcePath )
@@ -67,7 +67,7 @@ bool DEC_Model_ABC::FileChanged( const std::string& strFileName, time_t since )
 // Name: DEC_Model_ABC::InitializeMissions
 // Created: NLD 2003-11-24
 // -----------------------------------------------------------------------------
-void DEC_Model_ABC::InitializeMissions( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes )
+void DEC_Model_ABC::InitializeMissions( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes )
 {
     availableMissions_.clear();
     availableFragOrdersPerMission_.clear();
@@ -83,11 +83,11 @@ void DEC_Model_ABC::InitializeMissions( xml::xistream& xis, const std::map< std:
 // Name: DEC_Model_ABC::ReadMission
 // Created: ABL 2007-07-26
 // -----------------------------------------------------------------------------
-void DEC_Model_ABC::ReadMission( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >& missionTypes )
+void DEC_Model_ABC::ReadMission( xml::xistream& xis, const std::map< std::string, const MIL_MissionType_ABC* >& missionTypes )
 {
     std::string strMission;
     xis >> xml::attribute( "name", strMission );
-    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess >::const_iterator it = missionTypes.find( strMission );
+    std::map< std::string, const MIL_MissionType_ABC* >::const_iterator it = missionTypes.find( strMission );
     if( it == missionTypes.end() )
         xis.error( "Invalid mission name '" + strMission + "' for model '" + GetName() + "'" );
     const MIL_MissionType_ABC* pType = it->second;

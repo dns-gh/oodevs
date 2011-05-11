@@ -82,8 +82,8 @@ protected:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const MIL_PopulationType*, sCaseInsensitiveLess > T_PopulationMap;
-    typedef T_PopulationMap::const_iterator                                        CIT_PopulationMap;
+    typedef std::map< std::string, const MIL_PopulationType* > T_PopulationMap;
+    typedef T_PopulationMap::const_iterator CIT_PopulationMap;
     //@}
 
 private:

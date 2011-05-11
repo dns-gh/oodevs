@@ -28,8 +28,8 @@ class PHY_Morale : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_Morale*, sCaseInsensitiveLess > T_MoraleMap;
-    typedef T_MoraleMap::const_iterator                                      CIT_MoraleMap;
+    typedef std::map< std::string, const PHY_Morale* > T_MoraleMap;
+    typedef T_MoraleMap::const_iterator              CIT_MoraleMap;
     //@}
 
 public:

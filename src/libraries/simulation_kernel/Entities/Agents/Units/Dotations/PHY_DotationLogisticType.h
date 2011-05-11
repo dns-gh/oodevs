@@ -23,8 +23,8 @@ class PHY_DotationLogisticType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_DotationLogisticType*, sCaseInsensitiveLess > T_DotationLogisticTypeMap;
-    typedef T_DotationLogisticTypeMap::const_iterator                                      CIT_DotationLogisticTypeMap;
+    typedef std::map< std::string, const PHY_DotationLogisticType* > T_DotationLogisticTypeMap;
+    typedef T_DotationLogisticTypeMap::const_iterator              CIT_DotationLogisticTypeMap;
     //@}
 
     //! @name Statics

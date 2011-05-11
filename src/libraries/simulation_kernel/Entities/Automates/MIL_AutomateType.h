@@ -92,13 +92,13 @@ protected:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const MIL_AutomateType*, sCaseInsensitiveLess > T_AutomateTypeMap;
-    typedef T_AutomateTypeMap::const_iterator                                      CIT_AutomateTypeMap;
+    typedef std::map< std::string, const MIL_AutomateType* > T_AutomateTypeMap;
+    typedef T_AutomateTypeMap::const_iterator              CIT_AutomateTypeMap;
 
     typedef const MIL_AutomateType* (*T_AutomateTypeAllocator)( const std::string& strName, xml::xistream& xis );
 
-    typedef std::map< std::string, T_AutomateTypeAllocator, sCaseInsensitiveLess > T_AutomateTypeAllocatorMap;
-    typedef T_AutomateTypeAllocatorMap::const_iterator                             CIT_AutomateTypeAllocatorMap;
+    typedef std::map< std::string, T_AutomateTypeAllocator > T_AutomateTypeAllocatorMap;
+    typedef T_AutomateTypeAllocatorMap::const_iterator     CIT_AutomateTypeAllocatorMap;
 
     struct sCompositionBounds
     {

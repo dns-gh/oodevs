@@ -32,9 +32,9 @@ class PHY_HumanProtection : private boost::noncopyable
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string , const PHY_HumanProtection*, sCaseInsensitiveLess > T_HumanProtectionMap;
-    typedef T_HumanProtectionMap::iterator                                            IT_HumanProtectionMap;
-    typedef T_HumanProtectionMap::const_iterator                                     CIT_HumanProtectionMap;
+    typedef std::map< std::string , const PHY_HumanProtection* > T_HumanProtectionMap;
+    typedef T_HumanProtectionMap::iterator                      IT_HumanProtectionMap;
+    typedef T_HumanProtectionMap::const_iterator               CIT_HumanProtectionMap;
 
     typedef std::list< std::string >        T_InjuryTypes;
     typedef T_InjuryTypes::iterator        IT_InjuryTypes;

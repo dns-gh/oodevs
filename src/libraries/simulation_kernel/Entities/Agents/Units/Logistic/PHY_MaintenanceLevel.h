@@ -23,8 +23,8 @@ class PHY_MaintenanceLevel : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_MaintenanceLevel*, sCaseInsensitiveLess > T_MaintenanceLevelMap;
-    typedef T_MaintenanceLevelMap::const_iterator                                      CIT_MaintenanceLevelMap;
+    typedef std::map< std::string, const PHY_MaintenanceLevel* > T_MaintenanceLevelMap;
+    typedef T_MaintenanceLevelMap::const_iterator              CIT_MaintenanceLevelMap;
 
     static PHY_MaintenanceLevel nti1_;
     static PHY_MaintenanceLevel nti2_;

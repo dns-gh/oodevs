@@ -23,8 +23,8 @@ class PHY_RadarClass : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_RadarClass*, sCaseInsensitiveLess > T_RadarClassMap;
-    typedef T_RadarClassMap::const_iterator                                      CIT_RadarClassMap;
+    typedef std::map< std::string, const PHY_RadarClass* > T_RadarClassMap;
+    typedef T_RadarClassMap::const_iterator              CIT_RadarClassMap;
 
     static PHY_RadarClass radar_;
     static PHY_RadarClass tapping_;

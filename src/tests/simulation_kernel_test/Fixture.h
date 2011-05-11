@@ -29,7 +29,7 @@ struct FixturePion : private boost::noncopyable
     {
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms' id='12' name='stuff'/>" );
         xis >> xml::start( "main" );
-        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+        std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
 
         pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false ) );
         MockMIL_Time_ABC time;
@@ -54,7 +54,7 @@ struct FixtureAutomate : private boost::noncopyable
     {
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
         xis >> xml::start( "main" );
-        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+        std::map< std::string, const MIL_MissionType_ABC* > missionTypes;
         pModel_.reset( new DEC_Model( "test", xis, BOOST_RESOLVE( "." ), missionTypes, false ) );
         pType_.reset( new StubMIL_AutomateType( *pModel_ ) );
         pAutomat_.reset( new StubMIL_Automate( *pType_ ) );

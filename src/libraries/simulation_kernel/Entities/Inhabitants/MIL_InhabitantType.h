@@ -75,8 +75,8 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const MIL_InhabitantType*, sCaseInsensitiveLess > T_InhabitantMap;
-    typedef T_InhabitantMap::const_iterator                                        CIT_InhabitantMap;
+    typedef std::map< std::string, const MIL_InhabitantType* > T_InhabitantMap;
+    typedef T_InhabitantMap::const_iterator                  CIT_InhabitantMap;
     //@}
 
 private:

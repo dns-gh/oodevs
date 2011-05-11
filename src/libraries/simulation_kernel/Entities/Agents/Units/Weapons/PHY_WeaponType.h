@@ -98,9 +98,9 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::pair< std::string, std::string >                                    T_WeaponTypeKey;
-    typedef std::map< T_WeaponTypeKey, const PHY_WeaponType*, sCaseInsensitiveLess > T_WeaponTypeMap;
-    typedef T_WeaponTypeMap::const_iterator                                          CIT_WeaponTypeMap;
+    typedef std::pair< std::string, std::string >              T_WeaponTypeKey;
+    typedef std::map< T_WeaponTypeKey, const PHY_WeaponType* > T_WeaponTypeMap;
+    typedef T_WeaponTypeMap::const_iterator                  CIT_WeaponTypeMap;
     //@}
 
 private:

@@ -63,8 +63,8 @@ private:
       eNatureLevel_xxxxx = 13
     };
 
-    typedef std::map< std::string, const PHY_NatureLevel*, sCaseInsensitiveLess > T_NatureLevelMap;
-    typedef T_NatureLevelMap::const_iterator                                      CIT_NatureLevelMap;
+    typedef std::map< std::string, const PHY_NatureLevel* > T_NatureLevelMap;
+    typedef T_NatureLevelMap::const_iterator              CIT_NatureLevelMap;
     //@}
 
 private:

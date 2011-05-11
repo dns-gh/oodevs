@@ -31,8 +31,8 @@ class PHY_Protection : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_Protection*, sCaseInsensitiveLess > T_ProtectionMap;
-    typedef T_ProtectionMap::const_iterator                                    CIT_ProtectionMap;
+    typedef std::map< std::string, const PHY_Protection* > T_ProtectionMap;
+    typedef T_ProtectionMap::const_iterator              CIT_ProtectionMap;
     //@}
 
 public:

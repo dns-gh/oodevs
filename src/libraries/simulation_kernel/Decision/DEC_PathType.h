@@ -32,8 +32,8 @@ public:
     static const DEC_PathType mineClearance_;
     static const DEC_PathType logistic_;
 
-    typedef std::map< std::string, const DEC_PathType*, sCaseInsensitiveLess > T_PathTypeMap;
-    typedef T_PathTypeMap::const_iterator                                      CIT_PathTypeMap;
+    typedef std::map< std::string, const DEC_PathType* > T_PathTypeMap;
+    typedef T_PathTypeMap::const_iterator              CIT_PathTypeMap;
     //@}
 
 public:

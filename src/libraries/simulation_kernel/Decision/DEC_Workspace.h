@@ -65,10 +65,10 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const DEC_Model_ABC*, sCaseInsensitiveLess > T_ModelMap;
-    typedef T_ModelMap::const_iterator                                          CIT_ModelMap;
-    typedef std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > T_MissionTypeNameMap;
-    typedef std::map< std::string, T_ModelMap* >                                T_ModelTypeMap;
+    typedef std::map< std::string, const DEC_Model_ABC* > T_ModelMap;
+    typedef T_ModelMap::const_iterator                  CIT_ModelMap;
+    typedef std::map< std::string, const MIL_MissionType_ABC* > T_MissionTypeNameMap;
+    typedef std::map< std::string, T_ModelMap* >                T_ModelTypeMap;
     //@}
 
     //! @name Helpers

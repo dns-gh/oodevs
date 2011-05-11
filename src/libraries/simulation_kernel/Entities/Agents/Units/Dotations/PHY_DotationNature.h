@@ -47,8 +47,8 @@ public:
 
 private:
     //! @name Types
-    typedef std::map< std::string, const PHY_DotationNature*, sCaseInsensitiveLess > T_DotationNatureMap;
-    typedef T_DotationNatureMap::const_iterator                                    CIT_DotationNatureMap;
+    typedef std::map< std::string, const PHY_DotationNature* > T_DotationNatureMap;
+    typedef T_DotationNatureMap::const_iterator              CIT_DotationNatureMap;
     //@}
 
 private:

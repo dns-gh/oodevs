@@ -58,8 +58,8 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_MaintenanceWorkRate*, sCaseInsensitiveLess > T_WorkRateMap;
-    typedef T_WorkRateMap::const_iterator                                                 CIT_WorkRateMap;
+    typedef std::map< std::string, const PHY_MaintenanceWorkRate* > T_WorkRateMap;
+    typedef T_WorkRateMap::const_iterator                         CIT_WorkRateMap;
     //@}
 
 private:

@@ -33,8 +33,8 @@ class PHY_Tiredness : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< std::string, const PHY_Tiredness*, sCaseInsensitiveLess > T_TirednessMap;
-    typedef T_TirednessMap::const_iterator                                      CIT_TirednessMap;
+    typedef std::map< std::string, const PHY_Tiredness* > T_TirednessMap;
+    typedef T_TirednessMap::const_iterator              CIT_TirednessMap;
     //@}
 
 public:
