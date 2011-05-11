@@ -58,7 +58,6 @@
 #include "TimelinePanel.h"
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
-#include "XPSPlayer.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
@@ -388,8 +387,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pMissionPanel_->hide();
     replayerToolbar->hide();
     aar->SetStartup();
-
-    new XPSPlayer( this, controllers_ );
 }
 
 // -----------------------------------------------------------------------------
