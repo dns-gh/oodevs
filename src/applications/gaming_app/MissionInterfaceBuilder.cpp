@@ -48,6 +48,7 @@
 #include "actions_gui/ParamPolygonList.h"
 #include "actions_gui/ParamPopulationKnowledge.h"
 #include "actions_gui/ParamResourceNetwork.h"
+#include "actions_gui/ParamResourceNetworkList.h"
 #include "actions_gui/ParamUrbanBlock.h"
 #include "actions_gui/ParamStringField.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
@@ -131,6 +132,7 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["locationcompositelist"] = &MissionInterfaceBuilder::BuildLocationCompositeList;
 
     builderFunctors_["resourcenetwork"]       = &MissionInterfaceBuilder::BuildResourceNetwork;
+    builderFunctors_["resourcenetworklist"]   = &MissionInterfaceBuilder::BuildResourceNetworkList;
 }
 
 // -----------------------------------------------------------------------------
@@ -560,4 +562,13 @@ actions::gui::Param_ABC& MissionInterfaceBuilder::BuildUrbanBlock( const kernel:
 actions::gui::Param_ABC& MissionInterfaceBuilder::BuildResourceNetwork( const kernel::OrderParameter& parameter ) const
 {
     return *new actions::gui::ParamResourceNetwork( missionInterface_, parameter, controllers_.controller_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionInterfaceBuilder::BuildResourceNetworkList
+// Created: LDC 2011-05-11
+// -----------------------------------------------------------------------------
+actions::gui::Param_ABC& MissionInterfaceBuilder::BuildResourceNetworkList( const kernel::OrderParameter& parameter ) const
+{
+    return *new actions::gui::ParamResourceNetworkList( missionInterface_, parameter, controllers_.actions_, controllers_.controller_ );
 }

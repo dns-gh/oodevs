@@ -122,6 +122,7 @@ private:
 
     actions::gui::Param_ABC& BuildUrbanBlock           ( const kernel::OrderParameter& parameter ) const;
     actions::gui::Param_ABC& BuildResourceNetwork      ( const kernel::OrderParameter& parameter ) const;
+    actions::gui::Param_ABC& BuildResourceNetworkList  ( const kernel::OrderParameter& parameter ) const;
 
     template < class T >
     actions::gui::ParamComboBox<T>& BuildVarList( const kernel::OrderParameter& parameter ) const
