@@ -7,6 +7,17 @@
     </message>
 </context>
 <context>
+    <name>Affinities</name>
+    <message>
+        <source>Affinities</source>
+        <translation>Affinités</translation>
+    </message>
+    <message>
+        <source>Affinities/%1</source>
+        <translation>Affinités/%1</translation>
+    </message>
+</context>
+<context>
     <name>Agent</name>
     <message>
         <source>Info/Identifier</source>

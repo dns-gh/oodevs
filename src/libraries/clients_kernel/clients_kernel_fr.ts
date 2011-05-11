@@ -430,10 +430,6 @@
 <context>
     <name>tools</name>
     <message>
-        <source>Unknown</source>
-        <translation>Inconnu</translation>
-    </message>
-    <message>
         <source>No clouds</source>
         <translation>Sans nuage</translation>
     </message>
@@ -472,6 +468,10 @@
     <message>
         <source>New moon</source>
         <translation>Nouvelle lune</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Inconnu</translation>
     </message>
 </context>
 </TS>

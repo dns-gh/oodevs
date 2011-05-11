@@ -2282,6 +2282,17 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_UrbanInfrastructure_Type</name>
+    <message>
+        <source>New</source>
+        <translation>Nouveau</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_UrbanMaterial_Type</name>
     <message>
         <source>New</source>
@@ -3529,6 +3540,13 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>Volumes</source>
         <translation>Volumes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Population_UrbanEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation>Attitudes</translation>
     </message>
 </context>
 <context>

@@ -54,7 +54,7 @@ NatureEditionCategory::~NatureEditionCategory()
 void NatureEditionCategory::OnComboChange()
 {
     const QString current = box_->currentText();
-    if( tools::translate( "models::app6", current_ ) != current )
+    if( tools::findTranslation( "models::app6", current_ ) != current )
     {
         current_ = internalNames_[current].c_str();
         delete next_; next_ = 0;
@@ -71,10 +71,10 @@ void NatureEditionCategory::StartCategory( const std::string& title )
 {
     if( current_.isNull() )
     {
-        label_->setText( tools::translate( "models::app6", title.c_str() ) );
+        label_->setText( tools::findTranslation( "models::app6", title.c_str() ) );
         box_->clear();
         internalNames_.clear();
-        internalNames_[ tools::translate( "models::app6", "undefined" ) ] = "undefined";
+        internalNames_[ tools::findTranslation( "models::app6", "undefined" ) ] = "undefined";
     }
 }
 
@@ -86,7 +86,7 @@ void NatureEditionCategory::AddChoice( SymbolRule* rule, const std::string& name
 {
     if( current_.isNull() )
     {
-        QString translatedName = tools::translate( "models::app6", name.c_str() );
+        QString translatedName = tools::findTranslation( "models::app6", name.c_str() );
         internalNames_[ translatedName ] = name;
     }
     else if( rule && name == current_.ascii() )
@@ -140,7 +140,7 @@ void NatureEditionCategory::SetNature( const QString& nature )
 {
     if( nature.isEmpty() )
     {
-        Select( tools::translate( "models::app6", "undefined" ) );
+        Select( tools::findTranslation( "models::app6", "undefined" ) );
         if( next_ )
             next_->SetNature( nature );
         return;
@@ -166,7 +166,7 @@ void NatureEditionCategory::SetNature( const QString& nature )
 // -----------------------------------------------------------------------------
 void NatureEditionCategory::Select( const QString& value )
 {
-    QString translatedValue = tools::translate( "models::app6",  value );
+    QString translatedValue = tools::findTranslation( "models::app6",  value );
     for( int i = 0; i < box_->count(); ++i )
     {
         if( translatedValue == box_->text( i ) )

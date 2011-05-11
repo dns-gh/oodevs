@@ -13,9 +13,9 @@ Path.cpp \
 Point.cpp \
 Polygon.cpp \
 Rectangle.cpp \
+StockAttribute_ABC.cpp \
 Tools.cpp \
 TristateOption.cpp \
 Units.cpp \
-StockAttribute_ABC.cpp \
 
 TRANSLATIONS = clients_kernel_fr.ts clients_kernel_es.ts

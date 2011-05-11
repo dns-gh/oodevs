@@ -1,30 +1,29 @@
 HEADERS = 
 
-SOURCES = Application.cpp \
-AffinitiesDialog.cpp \
+SOURCES = AffinitiesDialog.cpp \
 AgentAffinitiesDialog.cpp \
-PeopleAffinitiesDialog.cpp \
+Application.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
 ExerciseCreationDialog.cpp \
 ExerciseDialog.cpp \
 ExportDialog.cpp \
 ExportFilter.cpp \
+FileLoaderObserver.cpp \
 FileToolbar.cpp \
 ImportOrbatDialog.cpp \
+InhabitantCreationPanel.cpp \
+InitialStateDialog.cpp \
+InitialStateTableCrew.cpp \
+InitialStateTableEquipments.cpp \
+InitialStateTableResources.cpp \
 LocalWeathersList.cpp \
 LogisticSuperiorEditor.inl \
 MainWindow.cpp \
 Menu.cpp \
 ModelBuilder.cpp \
-InhabitantCreationPanel.cpp \
-InhabitantListView.cpp \
-InitialStateDialog.cpp \
-InitialStateTableCrew.cpp \
-InitialStateTableEquipments.cpp \
-InitialStateTableResources.cpp \
 ObjectCreationPanel.cpp \
-PopulationListView.cpp \
+PeopleAffinitiesDialog.cpp \
 PopulationRepartitionEditor.cpp \
 PositionEditor.cpp \
 ProfileDialog.cpp \

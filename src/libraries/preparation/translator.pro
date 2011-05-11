@@ -2,6 +2,7 @@ HEADERS =
 
 SOURCES = ActivityTimeAttribute.cpp \
 Agent.cpp \
+AgentFactory.cpp \
 AgentPositions.cpp \
 AgentsModelChecker.cpp \
 Automat.cpp \
@@ -15,7 +16,6 @@ FloodAttribute.cpp \
 Formation.cpp \
 InfrastructureAttribute.cpp \
 Inhabitant.cpp \
-Affinities.cpp \
 InhabitantPositions.cpp \
 InputToxicCloudAttribute.cpp \
 Intelligence.cpp \
@@ -31,10 +31,12 @@ NBCAttribute.cpp \
 Object.cpp \
 ObstacleAttribute.cpp \
 OccupantAttribute.cpp \
+PeopleAffinities.cpp \
 Population.cpp \
 ProfileFactory.cpp \
 ProfilesModel.cpp \
 ScoresModel.cpp \
+StockAttribute.cpp \
 Stocks.cpp \
 StructuralStateAttribute.cpp \
 SuccessFactorsModel.cpp \

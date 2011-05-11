@@ -2,6 +2,7 @@ HEADERS =
 
 SOURCES = ActivityTimeAttribute.cpp \
 Affinities.cpp \
+AfterActionFunction.cpp \
 Agent.cpp \
 AgentKnowledge.cpp \
 AgentPositions.cpp \
@@ -9,6 +10,8 @@ Attributes.cpp \
 Automat.cpp \
 AutomatDecisions.cpp \
 AutomatHierarchies.cpp \
+BurnAttribute.cpp \
+BurnSurfaceAttribute.cpp \
 BypassAttribute.cpp \
 ConstructionAttribute.cpp \
 Contaminations.cpp \
@@ -18,14 +21,12 @@ DelayAttribute.cpp \
 Dotations.cpp \
 Equipments.cpp \
 FireAttribute.cpp \
-BurnAttribute.cpp \
-BurnSurfaceAttribute.cpp \
 FloodAttribute.cpp \
 Formation.cpp \
 HumanFactors.cpp \
+InfrastructureAttribute.cpp \
 Inhabitant.cpp \
 Intelligence.cpp \
-InfrastructureAttribute.cpp \
 IntelligenceFactory.cpp \
 KnowledgeGroup.cpp \
 Lima.cpp \
@@ -52,7 +53,6 @@ Profile.cpp \
 Reinforcements.cpp \
 ResourceNetwork.cpp \
 Score.cpp \
-StockAttribute.cpp \
 StructuralStateAttribute.cpp \
 SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
@@ -63,4 +63,3 @@ UserProfileFactory.cpp \
 UserProfilesModel.cpp \
 
 TRANSLATIONS = gaming_fr.ts gaming_es.ts
- 							 

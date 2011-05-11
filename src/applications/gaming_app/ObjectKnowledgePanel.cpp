@@ -40,51 +40,51 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
     , subSelected_ ( controllers )
 {
     pKnowledgeListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
-    pKnowledgeListView_->AddColumn(  tools::translate( "ObjectKnowledgePanel", "Known objects" ) );
+    pKnowledgeListView_->AddColumn( tools::translate( "ObjectKnowledgePanel", "Known objects" ) );
 
     display_ = new DisplayBuilder( this, factory );
-    display_->AddGroup( tools::translate( "Object", "Information" ) )
-                .AddLabel( tools::translate( "Object", "Identifier:" ) )
-                .AddLabel( tools::translate( "Object", "Associated object:" ) )
-                .AddLabel( tools::translate( "Object", "Location:" ) )
-                .AddLabel( tools::translate( "Object", "Type:" ) )
-                .AddLabel( tools::translate( "Object", "Construction:" ) )
-                .AddLabel( tools::translate( "Object", "Construction dotation:" ) )
-                .AddLabel( tools::translate( "Object", "Mining:" ) )
-                .AddLabel( tools::translate( "Object", "Development dotation:" ) )
-                .AddLabel( tools::translate( "Object", "Bypass:" ) )
-                .AddLabel( tools::translate( "Object", "Obstacle type:" ) )
-                .AddLabel( tools::translate( "Object", "Reserved obstacle activated:" ) )
-                .AddLabel( tools::translate( "Object", "Perceived:" ) )
-                .AddLabel( tools::translate( "Object", "Relevance:" ) );
+    display_->AddGroup( tools::findTranslation( "Object", "Information" ) )
+                .AddLabel( tools::findTranslation( "Object", "Identifier:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Associated object:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Location:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Type:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Construction:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Construction dotation:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Mining:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Development dotation:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Bypass:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Obstacle type:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Reserved obstacle activated:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Perceived:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Relevance:" ) );
 
-    display_->AddGroup( tools::translate( "Object", "Crossing site" ) )
-                .AddLabel( tools::translate( "Object", "Width:" ) )
-                .AddLabel( tools::translate( "Object", "Depth:" ) )
-                .AddLabel( tools::translate( "Object", "Stream speed:" ) )
-                .AddLabel( tools::translate( "Object", "Build river banks:" ) );
+    display_->AddGroup( tools::findTranslation( "Object", "Crossing site" ) )
+                .AddLabel( tools::findTranslation( "Object", "Width:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Depth:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Stream speed:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Build river banks:" ) );
 
-    display_->AddGroup( tools::translate( "Object", "Camp" ) )
-                .AddLabel( tools::translate( "Object", "TC2:" ) );
+    display_->AddGroup( tools::findTranslation( "Object", "Camp" ) )
+                .AddLabel( tools::findTranslation( "Object", "TC2:" ) );
 
-    display_->AddGroup( tools::translate( "NBC", "NBC" ) )
-                .AddLabel( tools::translate( "NBC", "Danger:" ) )
-                .AddLabel( tools::translate( "NBC", "NBC agent(s):" ) );
+    display_->AddGroup( tools::findTranslation( "NBC", "NBC" ) )
+                .AddLabel( tools::findTranslation( "NBC", "Danger:" ) )
+                .AddLabel( tools::findTranslation( "NBC", "NBC agent(s):" ) );
 
-    display_->AddGroup( tools::translate( "Object", "Logistic route" ) )
-                .AddLabel( tools::translate( "Object", "Equipped:" ) )
-                .AddLabel( tools::translate( "Object", "Flow:" ) )
-                .AddLabel( tools::translate( "Object", "Width:" ) )
-                .AddLabel( tools::translate( "Object", "Length:" ) )
-                .AddLabel( tools::translate( "Object", "Maximum weight:" ) );
+    display_->AddGroup( tools::findTranslation( "Object", "Logistic route" ) )
+                .AddLabel( tools::findTranslation( "Object", "Equipped:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Flow:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Width:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Length:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Maximum weight:" ) );
 
-    display_->AddGroup( tools::translate( "Object", "Mine parameters" ) )
-                .AddLabel( tools::translate( "Object", "Activity time:" ) )
-                .AddLabel( tools::translate( "Object", "Density:" ) );
+    display_->AddGroup( tools::findTranslation( "Object", "Mine parameters" ) )
+                .AddLabel( tools::findTranslation( "Object", "Activity time:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Density:" ) );
 
-    display_->AddGroup( tools::translate( "Object", "Fire" ) )
-                .AddLabel( tools::translate( "Object", "Fire class:" ) )
-                .AddLabel( tools::translate( "Object", "Fire temperature:" ) );
+    display_->AddGroup( tools::findTranslation( "Object", "Fire" ) )
+                .AddLabel( tools::findTranslation( "Object", "Fire class:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Fire temperature:" ) );
 
     pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tools::translate( "ObjectKnowledgePanel", "Agent" ) );

@@ -44,6 +44,14 @@
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The signatures for the following files do not exist or are invalid : </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following files do not match their xsd : </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CommunicationListView</name>

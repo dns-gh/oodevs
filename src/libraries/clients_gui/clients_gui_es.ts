@@ -1311,6 +1311,13 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::ResourceNetworkPrototype_ABC</name>
+    <message>
+        <source>Resource network</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::StatusBar</name>
     <message>
         <source>---</source>
@@ -1338,6 +1345,25 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Object infos</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::StockPrototype_ABC</name>
+    <message>
+        <source>Stock parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stock:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max stock:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

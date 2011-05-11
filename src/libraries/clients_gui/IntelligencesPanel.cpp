@@ -55,7 +55,7 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
         while( it.HasMoreElements() )
         {
             const HierarchyLevel_ABC& level = it.NextElement();
-            levelCombo_->AddItem( tools::translate( "models::app6", level.GetName() ), &level );
+            levelCombo_->AddItem( tools::findTranslation( "models::app6", level.GetName() ), &level );
         }
         connect( levelCombo_, SIGNAL( activated( int ) ), SLOT( UpdateSymbol() ) );
     }

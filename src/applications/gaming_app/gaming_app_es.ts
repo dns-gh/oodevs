@@ -140,6 +140,29 @@
     </message>
 </context>
 <context>
+    <name>AgentKnowledge</name>
+    <message>
+        <source>Unit knowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Known units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished">Detalles</translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perception level</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AgentListView</name>
     <message>
         <source>Unit Change Superior</source>
@@ -1017,6 +1040,52 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>InhabitantChangeAlertedStateDialog</name>
+    <message>
+        <source>Change alert state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alerted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InhabitantChangeConfinedStateDialog</name>
+    <message>
+        <source>Change confine state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>InhabitantChangeHealthStateDialog</name>
     <message>
         <source>Wounded:</source>
@@ -1606,22 +1675,6 @@ Motivo: %3
         <source>Maintenance system state</source>
         <translation>Estado del sistema de mantenimiento</translation>
     </message>
-    <message>
-        <source>System status</source>
-        <translation>Estado del sistema</translation>
-    </message>
-    <message>
-        <source>Working scheme</source>
-        <translation>Esquema de trabajo</translation>
-    </message>
-    <message>
-        <source>Priorities</source>
-        <translation>Prioridades</translation>
-    </message>
-    <message>
-        <source>Tactical priorities</source>
-        <translation>Prioridades tácticas</translation>
-    </message>
 </context>
 <context>
     <name>MedicalCapacityUpdateDialog</name>
@@ -1763,18 +1816,6 @@ Motivo: %3
     <message>
         <source>Medical system state</source>
         <translation>Estado del sistema médico</translation>
-    </message>
-    <message>
-        <source>System status</source>
-        <translation>Estado del sistema</translation>
-    </message>
-    <message>
-        <source>Priorities</source>
-        <translation>Prioridades</translation>
-    </message>
-    <message>
-        <source>Tactical priorities</source>
-        <translation>Prioridades tácticas</translation>
     </message>
 </context>
 <context>
@@ -2303,48 +2344,12 @@ Motivo: %3
         <translation>Detalles</translation>
     </message>
     <message>
-        <source>Identifier:</source>
-        <translation>Identificador:</translation>
-    </message>
-    <message>
-        <source>Side:</source>
-        <translation>Bando:</translation>
-    </message>
-    <message>
         <source>Concentration</source>
         <translation>Concentración</translation>
     </message>
     <message>
-        <source>Alive people:</source>
-        <translation>Gente viva:</translation>
-    </message>
-    <message>
-        <source>Dead people:</source>
-        <translation>Gente muerta:</translation>
-    </message>
-    <message>
-        <source>Mood:</source>
-        <translation>Actitud:</translation>
-    </message>
-    <message>
-        <source>Perceived:</source>
-        <translation>Percibido:</translation>
-    </message>
-    <message>
-        <source>Relevance:</source>
-        <translation>Relevancia:</translation>
-    </message>
-    <message>
         <source>Flow</source>
         <translation>Flujo</translation>
-    </message>
-    <message>
-        <source>Heading:</source>
-        <translation>Dirección:</translation>
-    </message>
-    <message>
-        <source>Speed:</source>
-        <translation>Velocidad:</translation>
     </message>
     <message>
         <source>Crowd knowledges</source>
@@ -2352,14 +2357,6 @@ Motivo: %3
     </message>
     <message>
         <source>Known crowds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Associated crowd:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Critical intelligence:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2403,6 +2400,25 @@ Motivo: %3
     </message>
     <message>
         <source>Type-in value then press &apos;Enter&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PopulationOptionChooser</name>
+    <message>
+        <source>Population Display Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished">Off</translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Occupation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2594,6 +2610,10 @@ Motivo: %3
         <source>Speed factor: </source>
         <translation>Factor de velocidad: </translation>
     </message>
+    <message>
+        <source>Step (S)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Score</name>
@@ -2717,10 +2737,6 @@ Motivo: %3
     <message>
         <source>Supply system state</source>
         <translation>Estado de sistema de abastecimiento</translation>
-    </message>
-    <message>
-        <source>System status</source>
-        <translation>Estado del sistema</translation>
     </message>
 </context>
 <context>
@@ -3112,6 +3128,14 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     <name>gaming_app::Action</name>
     <message>
         <source>Object Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object Destruction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

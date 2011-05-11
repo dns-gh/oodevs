@@ -100,6 +100,13 @@
     </message>
 </context>
 <context>
+    <name>Application</name>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Attributes</name>
     <message>
         <source>Info/Operational state</source>

@@ -32,9 +32,9 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
 {
     setMargin( 2 );
     setFrameStyle( QFrame::Plain );
-    AddColumn( tools::translate( "Action", "Parameter" ) );
-    AddColumn( tools::translate( "Action", "Value" ) );
-    AddColumn( tools::translate( "ActionTiming", "Time" ) );
+    AddColumn( tools::findTranslation( "Action", "Parameter" ) );
+    AddColumn( tools::findTranslation( "Action", "Value" ) );
+    AddColumn( tools::findTranslation( "ActionTiming", "Time" ) );
     setResizeMode( QListView::AllColumns );
     setColumnAlignment( 2, Qt::AlignRight );
     setSorting( 2, false );

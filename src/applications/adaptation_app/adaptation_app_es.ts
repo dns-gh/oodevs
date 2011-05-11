@@ -2280,6 +2280,17 @@ tirador</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_UrbanInfrastructure_Type</name>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_UrbanMaterial_Type</name>
     <message>
         <source>New</source>
@@ -3527,6 +3538,13 @@ Asegúrese que el archivo existe.</translation>
     <message>
         <source>Volumes</source>
         <translation>Volumenes</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Population_UrbanEffect_Attitude_ListView</name>
+    <message>
+        <source>Attitudes</source>
+        <translation>Actitudes</translation>
     </message>
 </context>
 <context>

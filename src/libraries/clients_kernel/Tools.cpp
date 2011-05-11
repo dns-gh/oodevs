@@ -27,6 +27,15 @@ QString tools::translate( const char* context, const char* what )
 }
 
 // -----------------------------------------------------------------------------
+// Name: tools::findTranslation
+// Created: SBO 2011-05-11
+// -----------------------------------------------------------------------------
+QString tools::findTranslation( const char* context, const char* what )
+{
+    return tools::translate( context, what );
+}
+
+// -----------------------------------------------------------------------------
 // Name: tools::Unknown
 // Created: AGE 2006-08-23
 // -----------------------------------------------------------------------------

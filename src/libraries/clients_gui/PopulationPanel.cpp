@@ -36,11 +36,11 @@ PopulationPanel::PopulationPanel( QWidget* parent, PanelStack_ABC& panel, Contro
 {
     display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tools::translate( "gui::PopulationPanel", "Information" ) )
-                .AddLabel( tools::translate( "gui::PopulationPanel", "Name:" ), true )
-                .AddLabel( tools::translate( "gui::PopulationPanel", "Healthy people:" ) )
-                .AddLabel( tools::translate( "gui::PopulationPanel", "Wounded people:" ) )
-                .AddLabel( tools::translate( "gui::PopulationPanel", "Contaminated people:" ) )
-                .AddLabel( tools::translate( "gui::PopulationPanel", "Dead people:" ) );
+                .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Name:" ), true )
+                .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Healthy people:" ) )
+                .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Wounded people:" ) )
+                .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Contaminated people:" ) )
+                .AddLabel( tools::findTranslation( "gui::PopulationPanel", "Dead people:" ) );
 
     pPartsListView_ = new ListDisplayer< PopulationPanel >( this, *this, factory );
     pPartsListView_->AddColumn( tools::translate( "gui::PopulationPanel", "Chunks" ) )

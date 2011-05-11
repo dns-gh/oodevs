@@ -25,6 +25,7 @@
 namespace tools
 {
     QString translate( const char* context, const char* what );
+    QString findTranslation( const char* context, const char* what );
 
     QString ToString( kernel::E_TroopHealthState nState );
     QString ToString( kernel::E_PerceptionResult nResult );

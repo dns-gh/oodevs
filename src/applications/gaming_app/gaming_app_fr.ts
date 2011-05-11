@@ -140,6 +140,29 @@
     </message>
 </context>
 <context>
+    <name>AgentKnowledge</name>
+    <message>
+        <source>Unit knowledge</source>
+        <translation>Connaissance agent</translation>
+    </message>
+    <message>
+        <source>Known units</source>
+        <translation>Agents connus</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Détails</translation>
+    </message>
+    <message>
+        <source>Unit</source>
+        <translation>Agent</translation>
+    </message>
+    <message>
+        <source>Perception level</source>
+        <translation>Niveau de perception</translation>
+    </message>
+</context>
+<context>
     <name>AgentListView</name>
     <message>
         <source>Unit Change Superior</source>
@@ -1017,6 +1040,52 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>InhabitantChangeAlertedStateDialog</name>
+    <message>
+        <source>Change alert state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alerted</source>
+        <translation>Alerté</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
+    </message>
+</context>
+<context>
+    <name>InhabitantChangeConfinedStateDialog</name>
+    <message>
+        <source>Change confine state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confined</source>
+        <translation>Confiné</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
+    </message>
+</context>
+<context>
     <name>InhabitantChangeHealthStateDialog</name>
     <message>
         <source>Wounded:</source>
@@ -1606,22 +1675,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Maintenance system state</source>
         <translation>Etat de la chaîne maintenance</translation>
     </message>
-    <message>
-        <source>System status</source>
-        <translation>Etat du système</translation>
-    </message>
-    <message>
-        <source>Working scheme</source>
-        <translation>Régime de travail</translation>
-    </message>
-    <message>
-        <source>Priorities</source>
-        <translation>Priorités</translation>
-    </message>
-    <message>
-        <source>Tactical priorities</source>
-        <translation>Priorités tactiques</translation>
-    </message>
 </context>
 <context>
     <name>MedicalCapacityUpdateDialog</name>
@@ -1763,18 +1816,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Medical system state</source>
         <translation>Etat de la chaîne médicale</translation>
-    </message>
-    <message>
-        <source>System status</source>
-        <translation>Etat du système</translation>
-    </message>
-    <message>
-        <source>Priorities</source>
-        <translation>Priorités</translation>
-    </message>
-    <message>
-        <source>Tactical priorities</source>
-        <translation>Priorités tactiques</translation>
     </message>
 </context>
 <context>
@@ -2303,48 +2344,12 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Détails</translation>
     </message>
     <message>
-        <source>Identifier:</source>
-        <translation>Identifiant:</translation>
-    </message>
-    <message>
-        <source>Side:</source>
-        <translation>Camp:</translation>
-    </message>
-    <message>
         <source>Concentration</source>
         <translation>Concentration</translation>
     </message>
     <message>
-        <source>Alive people:</source>
-        <translation>Personnes en vie:</translation>
-    </message>
-    <message>
-        <source>Dead people:</source>
-        <translation>Personnes décédées:</translation>
-    </message>
-    <message>
-        <source>Mood:</source>
-        <translation>Attitude:</translation>
-    </message>
-    <message>
-        <source>Perceived:</source>
-        <translation>Perçue:</translation>
-    </message>
-    <message>
-        <source>Relevance:</source>
-        <translation>Pertinence:</translation>
-    </message>
-    <message>
         <source>Flow</source>
         <translation>Flux</translation>
-    </message>
-    <message>
-        <source>Heading:</source>
-        <translation>Direction:</translation>
-    </message>
-    <message>
-        <source>Speed:</source>
-        <translation>Vitesse:</translation>
     </message>
     <message>
         <source>Crowd knowledges</source>
@@ -2353,14 +2358,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Known crowds</source>
         <translation>Foules connues</translation>
-    </message>
-    <message>
-        <source>Associated crowd:</source>
-        <translation>Foule associée:</translation>
-    </message>
-    <message>
-        <source>Critical intelligence:</source>
-        <translation>Renseignement critique:</translation>
     </message>
 </context>
 <context>
@@ -2404,6 +2401,25 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Type-in value then press &apos;Enter&apos;</source>
         <translation>Saisir une valeur et appuyer sur &apos;Entrée&apos;</translation>
+    </message>
+</context>
+<context>
+    <name>PopulationOptionChooser</name>
+    <message>
+        <source>Population Display Options</source>
+        <translation>Options d&apos;affichage de population</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Désactivé</translation>
+    </message>
+    <message>
+        <source>Density</source>
+        <translation>Densité</translation>
+    </message>
+    <message>
+        <source>Occupation</source>
+        <translation>Occupation</translation>
     </message>
 </context>
 <context>
@@ -2594,6 +2610,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Speed factor: </source>
         <translation>Jeu accéléré: </translation>
     </message>
+    <message>
+        <source>Step (S)</source>
+        <translation>Pas à pas (S)</translation>
+    </message>
 </context>
 <context>
     <name>Score</name>
@@ -2717,10 +2737,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Supply system state</source>
         <translation>Etat de la chaîne ravitaillement</translation>
-    </message>
-    <message>
-        <source>System status</source>
-        <translation>Etat du système</translation>
     </message>
 </context>
 <context>
@@ -3113,6 +3129,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Object Creation</source>
         <translation>Création d&apos;objet</translation>
+    </message>
+    <message>
+        <source>Object Update</source>
+        <translation>Mise à jour d&apos;objet</translation>
+    </message>
+    <message>
+        <source>Object Destruction</source>
+        <translation>Destruction d&apos;objet</translation>
     </message>
 </context>
 <context>
