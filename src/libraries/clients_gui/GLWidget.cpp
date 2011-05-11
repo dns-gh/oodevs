@@ -776,8 +776,8 @@ void GlWidget::DrawApp6Symbol( const std::string& symbol, const std::string& sty
     const float svgDeltaX = -20;
     const float svgDeltaY = -80;
     const float svgWidth = 360;
-    float adaptiveFactor ( 1 );
-    if( factor < 0 )   //zoom-adaptive view
+    float adaptiveFactor = 1;
+    if( factor < 0 )
     {
         adaptiveFactor = GetAdaptiveZoomFactor();
         factor = - factor;

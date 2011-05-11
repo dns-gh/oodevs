@@ -8,7 +8,6 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_FileLogger.h"
 #include "MT_Tools/MT_Logger.h"
-#include <tools/Win32/Win32Exception.h>
 #include <tools/win32/FlexLm.h>
 #include <masalloc/masalloc.h>
 #pragma warning( push )
