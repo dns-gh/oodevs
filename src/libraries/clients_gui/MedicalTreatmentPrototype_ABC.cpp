@@ -14,6 +14,7 @@
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "tools/Iterator.h"
 #include "clients_gui/ValuedListItem.h"
+#include "clients_gui/LoadableLineEdit.h"
 #include "Tools.h"
 
 using namespace kernel;
@@ -31,12 +32,12 @@ MedicalTreatmentPrototype_ABC::MedicalTreatmentPrototype_ABC( QWidget* parent, c
     {
         QHBox* canvas = new QHBox( vbox );
         new QLabel( tools::translate( "gui::MedicalTreatmentPrototype_ABC", "Hospital ID:" ), canvas );
-        referenceID_ = new QLineEdit( canvas );
+        referenceID_ = new LoadableLineEdit( canvas, "AHA_NUM" );
     }
     {
         QHBox* canvas = new QHBox( vbox );
         new QLabel( tools::translate( "gui::MedicalTreatmentPrototype_ABC", "Doctors:" ), canvas );
-        doctors_ = new QSpinBox( 0, 1000, 1, canvas );
+        doctors_ = new LoadableSpinBox( 0, 1000, 1, canvas );
     }
     {
         QVBox* bedCapacities = new QVBox( vbox );
@@ -85,4 +86,16 @@ void MedicalTreatmentPrototype_ABC::showEvent( QShowEvent* e )
 bool MedicalTreatmentPrototype_ABC::CheckValidity() const
 {
     return referenceID_->text().length() > 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentPrototype_ABC::SetLoader
+// Created: BCI 2011-05-10
+// -----------------------------------------------------------------------------
+void MedicalTreatmentPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
+{
+    referenceID_->SetLoader( loader );
+    doctors_->SetLoader( loader );
+    for( CIT_Capacities it = capacities_.begin(); it != capacities_.end(); ++it )
+        it->baseline_->SetLoader( loader );
 }

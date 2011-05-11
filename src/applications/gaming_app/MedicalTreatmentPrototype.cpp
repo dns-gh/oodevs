@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "MedicalTreatmentPrototype.h"
 #include "clients_kernel/MedicalTreatmentType.h"
+#include "clients_gui/LoadableLineEdit.h"
 #include "protocol/Protocol.h"
 #include "tools/Iterator.h"
 #include "actions/ParameterList.h"

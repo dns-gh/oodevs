@@ -12,13 +12,12 @@
 
 #include "ObjectAttributePrototype_ABC.h"
 #include "tools/Resolver_ABC.h"
+#include "LoadableSpinBox.h"
 #include "ValuedListItem.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <geometry/Types.h>
 
-class QSpinBox;
 class QLabel;
-class QLineEdit;
 
 namespace kernel
 {
@@ -29,6 +28,7 @@ namespace kernel
 
 namespace gui
 {
+    class LoadableLineEdit;
 
 // =============================================================================
 /** @class  MedicalTreatmentPrototype_ABC
@@ -48,6 +48,7 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     virtual void Commit() = 0;
     //@}
 
@@ -68,17 +69,11 @@ protected:
         {
             QHBox* hbox = new QHBox( parent );
             new QLabel( QString( name.c_str() ), hbox );
-            baseline_ = new QSpinBox( 0, 500, 1, hbox );
-        }
-
-        Capacity( const Capacity& rhs )
-            : name_ ( rhs.name_ )
-            , baseline_ ( rhs.baseline_ )
-        {
+            baseline_ = new LoadableSpinBox( 0, 500, 1, hbox );
         }
 
         std::string name_;
-        QSpinBox*   baseline_;
+        LoadableSpinBox* baseline_;
     };
     typedef boost::ptr_vector< Capacity >::const_iterator CIT_Capacities;
     //@}
@@ -88,8 +83,8 @@ protected:
     //@{
     const tools::Resolver_ABC< kernel::MedicalTreatmentType, std::string >& resolver_;
     boost::ptr_vector< Capacity > capacities_;
-    QSpinBox*    doctors_;
-    QLineEdit*   referenceID_;
+    LoadableSpinBox*    doctors_;
+    LoadableLineEdit*   referenceID_;
     //@}
 };
 

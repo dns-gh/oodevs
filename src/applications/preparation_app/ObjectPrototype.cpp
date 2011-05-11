@@ -15,6 +15,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
+#include "clients_gui/LoadableLineEdit.h"
 #include "ConstructionPrototype.h"
 #include "ObstaclePrototype.h"
 #include "NBCPrototype.h"
@@ -182,7 +183,7 @@ namespace
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model, ObjectsModel& objectsModel, const UrbanModel& urbanModel, ParametersLayer& layer, const tools::GeneralConfig& config )
-    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, model.detection_, objectsModel, urbanModel, config, creation_ ) )
+: ObjectPrototype_ABC( parent, controllers, model.coordinateConverter_, model.objectTypes_, layer, FactoryBuilder( controllers, model.objectTypes_, model.detection_, objectsModel, urbanModel, config, creation_ ) )
     , model_   ( objectsModel )
     , creation_( 0 )
 {
@@ -199,16 +200,13 @@ ObjectPrototype::~ObjectPrototype()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPrototype::Commit
+// Name: ObjectPrototype::DoCommit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ObjectPrototype::Commit()
+void ObjectPrototype::DoCommit()
 {
-    if( CheckValidity() )
-    {
-        creation_ = model_.CreateObject( *teams_->GetValue(), *objectTypes_->GetValue(), name_->text(), *location_ );
-        if( creation_ )
-            ObjectPrototype_ABC::Commit();
-        creation_ = 0;
-    }
+    creation_ = model_.CreateObject( *teams_->GetValue(), *objectTypes_->GetValue(), GetCurrentName(), GetCurrentLocation() );
+    if( creation_ )
+        ObjectPrototype_ABC::DoCommit();
+    creation_ = 0;
 }

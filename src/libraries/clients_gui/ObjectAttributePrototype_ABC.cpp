@@ -30,3 +30,12 @@ ObjectAttributePrototype_ABC::~ObjectAttributePrototype_ABC()
 {
     // NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributePrototype_ABC::SetLoader
+// Created: BCI 2011-05-09
+// -----------------------------------------------------------------------------
+void ObjectAttributePrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* /*loader*/ )
+{
+    //NOTHING
+}

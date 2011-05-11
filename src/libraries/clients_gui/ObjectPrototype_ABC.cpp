@@ -17,6 +17,7 @@
 #include "ParametersLayer.h"
 #include "Tools.h"
 #include "RichLabel.h"
+#include "ObjectPrototypeShapeFileLoader.h"
 #include "ObjectAttributePrototypeContainer.h"
 #include "ObjectAttributePrototypeFactory_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -26,6 +27,7 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Team_ABC.h"
+#include "LoadableLineEdit.h"
 
 using namespace kernel;
 using namespace gui;
@@ -34,16 +36,17 @@ using namespace gui;
 // Name: ObjectPrototype_ABC constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const tools::Resolver_ABC< ObjectType, std::string >& resolver,
+ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controllers, const kernel::CoordinateConverter_ABC& coordinateConverter, const tools::Resolver_ABC< ObjectType, std::string >& resolver,
                                          ParametersLayer& layer, const ObjectAttributePrototypeFactory_ABC& factory )
     : QGroupBox( 2, Qt::Horizontal, tr( "Information" ), parent )
+    , coordinateConverter_( coordinateConverter )
     , controllers_( controllers )
     , resolver_  ( resolver )
     , location_  ( 0 )
     , attributes_( new ObjectAttributePrototypeContainer( resolver, factory, new QGroupBox( 1, Qt::Horizontal, tr( "Attributes" ), parent ) ) )
 {
     new QLabel( tr( "Name:" ), this );
-    name_ = new QLineEdit( this );
+    name_ = new LoadableLineEdit( this, "NAME" );
 
     new QLabel( tr( "Side:" ), this );
     teams_ = new ValuedComboBox< const Team_ABC* >( this );
@@ -59,6 +62,9 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     locationLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
     locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );
+
+    QPushButton* loadFromFileButton = new QPushButton(  tr( "Load from file" ), this );
+    connect( loadFromFileButton, SIGNAL( clicked() ), this, SLOT( LoadFromFile() ) );
 
     // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
 
@@ -147,7 +153,7 @@ bool ObjectPrototype_ABC::CheckValidity() const
     if( !objectTypes_->count() || !objectTypes_->GetValue() )
         return false;
 
-    if( ! location_ )
+    if( !location_ && !loader_.get() )
     {
         position_->Warn( 3000 );
         return false;
@@ -161,7 +167,7 @@ bool ObjectPrototype_ABC::CheckValidity() const
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::Clean()
 {
-    name_->setText( "" );
+    name_->clear();
     ResetLocation();
 }
 
@@ -171,9 +177,33 @@ void ObjectPrototype_ABC::Clean()
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::Commit()
 {
+    if( loader_.get() )
+    {
+        loader_->StartLoad();
+        while( loader_->LoadNext() )
+            if( CheckValidity() )
+                DoCommit();
+        name_->clear();
+        ResetLocation();
+    }
+    else
+    {
+        if( CheckValidity() )
+        {
+            DoCommit();
+            name_->clear();
+            ResetLocation();
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::DoCommit
+// Created: BCI 2011-05-10
+// -----------------------------------------------------------------------------
+void ObjectPrototype_ABC::DoCommit()
+{
     attributes_->Commit();
-    name_->setText( "" );
-    ResetLocation();
 }
 
 // -----------------------------------------------------------------------------
@@ -266,4 +296,61 @@ void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geom
     if( isVisible() )
         if( const kernel::ObjectType* type = objectTypes_->GetValue() )
             tools.DrawTacticalGraphics( type->GetSymbol(), location, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::LoadFromFile
+// Created: BCI 2011-05-09
+// -----------------------------------------------------------------------------
+void ObjectPrototype_ABC::LoadFromFile()
+{
+    const ObjectType* type = objectTypes_->Count() != 0 ? objectTypes_->GetValue() : 0;
+    if( !type )
+        return;
+
+    QString filename = QFileDialog::getOpenFileName(
+        QString::null,
+        "Shapefile (*.shp)",
+        this,
+        "open file dialog",
+        tr( "Choose a file" ) );
+
+    if( filename.isNull() )
+        return;
+
+    try
+    {
+        loader_.reset();
+        loader_.reset( new ObjectPrototypeShapeFileLoader( coordinateConverter_, this, filename, *type ) );
+    } catch( const ObjectPrototypeLoader_ABC::LoadCancelledException& )
+    {
+        //NOTHING
+    }
+    catch( const std::exception& e )
+    {
+        QMessageBox::warning( this, tr( "Cannot load %1" ).arg( filename ), e.what(), QMessageBox::Ok, QMessageBox::NoButton );
+    }
+    name_->SetLoader( loader_.get() );
+    attributes_->SetLoader( loader_.get() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::GetCurrentName
+// Created: BCI 2011-05-10
+// -----------------------------------------------------------------------------
+QString ObjectPrototype_ABC::GetCurrentName() const
+{
+    return name_->text();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype_ABC::GetCurrentLocation
+// Created: BCI 2011-05-10
+// -----------------------------------------------------------------------------
+const kernel::Location_ABC& ObjectPrototype_ABC::GetCurrentLocation() const
+{
+    if( loader_.get() )
+        return loader_->GetCurrentLocation();    
+    else
+        return *location_;        
 }

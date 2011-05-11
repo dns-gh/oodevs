@@ -78,6 +78,7 @@ const ObjectAttributePrototypeContainer::T_AttributeContainer* ObjectAttributePr
     Hide();
     if( it != attributes_.end() )
         current_ = it->second; // throw std::runtime_error( "Unable to select " + type.GetType() + " object type." );
+    SetLoader( 0 );
     Show();
     return current_.get();
 }
@@ -125,4 +126,14 @@ void ObjectAttributePrototypeContainer::Show()
 {
     if( current_.get() )
         std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::show, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributePrototypeContainer::SetLoader
+// Created: BCI 2011-05-09
+// -----------------------------------------------------------------------------
+void ObjectAttributePrototypeContainer::SetLoader( ObjectPrototypeLoader_ABC* loader )
+{
+    if( current_.get() )
+        std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::SetLoader, _1, loader ) );
 }

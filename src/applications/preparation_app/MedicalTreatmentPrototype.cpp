@@ -16,6 +16,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "preparation/TeamsModel.h"
 #include "clients_gui/ValuedListItem.h"
+#include "clients_gui/LoadableLineEdit.h"
 #include "preparation/MedicalTreatmentAttribute.h"
 // #include "MedicalShapeLoader.h"
 

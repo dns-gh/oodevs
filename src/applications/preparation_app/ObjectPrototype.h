@@ -41,9 +41,10 @@ public:
     virtual ~ObjectPrototype();
     //@}
 
+protected:
     //! @name Operations
     //@{
-    virtual void Commit();
+    virtual void DoCommit();
     //@}
 
 private:

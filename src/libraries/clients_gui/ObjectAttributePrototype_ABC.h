@@ -15,6 +15,7 @@
 
 namespace gui
 {
+    class ObjectPrototypeLoader_ABC;
 
 // =============================================================================
 /** @class  ObjectAttributePrototype_ABC
@@ -36,6 +37,7 @@ public:
     //@{
     virtual bool CheckValidity() const = 0;
     virtual void Commit() = 0;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 };
 

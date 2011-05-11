@@ -17,6 +17,7 @@
 #include "clients_kernel/tools.h"
 #include "ShapeHandler_ABC.h"
 #include "ValuedComboBox.h"
+#include "ObjectPrototypeLoader_ABC.h"
 
 namespace kernel
 {
@@ -26,6 +27,7 @@ namespace kernel
     class ModelLoaded;
     class ModelUnLoaded;
     class GlTools_ABC;
+    class CoordinateConverter_ABC;
 }
 
 namespace gui
@@ -37,6 +39,7 @@ namespace gui
     class ParametersLayer;
     class RichLabel;
     class SymbolIcons;
+    class LoadableLineEdit;
 
 // =============================================================================
 /** @class  ObjectPrototype_ABC
@@ -56,7 +59,7 @@ class ObjectPrototype_ABC : public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype_ABC( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver
+             ObjectPrototype_ABC( QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& coordinateConverter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver
                                 , ParametersLayer& layer, const ObjectAttributePrototypeFactory_ABC& factory );
     virtual ~ObjectPrototype_ABC();
     //@}
@@ -73,13 +76,14 @@ public:
 public slots:
     //! @name Slots
     //@{
-    virtual void Commit();
+    void Commit();
     //@}
 
 private slots:
     //! @name Slots
     //@{
     void OnTypeChanged();
+    void LoadFromFile();
     //@}
 
 private:
@@ -103,21 +107,31 @@ private:
     //@}
 
 protected:
+    //! @name Helpers
+    //@{
+    virtual void DoCommit();
+    QString GetCurrentName() const;
+    const kernel::Location_ABC& GetCurrentLocation() const;
+    //@}
+
     //! @name Member data
     //@{
+    const kernel::CoordinateConverter_ABC& coordinateConverter_;
     kernel::Controllers& controllers_;
     const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver_;
-
     ValuedComboBox< const kernel::Team_ABC* >* teams_;
     ValuedComboBox< const kernel::ObjectType* >* objectTypes_;
-    QLineEdit* name_;
+    LoadableLineEdit* name_;
     LocationCreator* locationCreator_;
-    kernel::Location_ABC* location_;
     QLabel* locationLabel_;
     RichLabel* position_;
 
     std::auto_ptr< ObjectAttributePrototypeContainer > attributes_;
     //@}
+
+private:
+    kernel::Location_ABC* location_;
+    std::auto_ptr< ObjectPrototypeLoader_ABC > loader_;
 };
 
 }

@@ -46,10 +46,15 @@ public:
 
     //! @name Operations
     //@{
-    void Commit( actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation );
+    void SetCommitContext( actions::ActionsModel& currentActionsModel, const kernel::Time_ABC& currentSimulationTime );
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual void DoCommit();
+    //@}
+
     //! @name Copy/Assignment
     //@{
     ObjectPrototype( const ObjectPrototype& );            //!< Copy constructor
@@ -61,6 +66,8 @@ private:
     //@{
     actions::parameters::ParameterList* attributesList_;
     const StaticModel& static_;
+    actions::ActionsModel* currentActionsModel_;
+    const kernel::Time_ABC* currentSimulationTime_;
     //@}
 };
 

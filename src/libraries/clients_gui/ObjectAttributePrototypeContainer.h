@@ -28,6 +28,7 @@ class QWidget;
 namespace gui
 {
     class ObjectAttributePrototype_ABC;
+    class ObjectPrototypeLoader_ABC;
 
 // =============================================================================
 /** @class  ObjectPrototypeFactory_ABC
@@ -59,6 +60,7 @@ public:
     void Show();
 
     const T_AttributeContainer* Select( const kernel::ObjectType& type );
+    void SetLoader( ObjectPrototypeLoader_ABC* loader );
     virtual void NotifyUpdated( /*const ModelLoaded& */); // $$$$ JCR 2009-04-03: Enregistrer aupres du controleur
     //@}
 

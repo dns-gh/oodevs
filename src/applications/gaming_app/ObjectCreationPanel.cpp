@@ -49,7 +49,8 @@ ObjectCreationPanel::~ObjectCreationPanel()
 // -----------------------------------------------------------------------------
 void ObjectCreationPanel::Commit()
 {
-    created_->Commit( actionsModel_, simulation_ );
+    created_->SetCommitContext( actionsModel_, simulation_ );
+    created_->Commit();
 }
 
 // -----------------------------------------------------------------------------

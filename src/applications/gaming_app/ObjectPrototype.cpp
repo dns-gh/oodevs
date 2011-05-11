@@ -36,6 +36,7 @@
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
+#include "clients_gui/LoadableLineEdit.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
@@ -193,8 +194,10 @@ namespace
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectPrototype::ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ParametersLayer& layer )
-    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, *FactoryMaker( controllers, model.objectTypes_, attributesList_ ) )
-    , static_( model )
+: ObjectPrototype_ABC( parent, controllers, model.coordinateConverter_, model.objectTypes_, layer, *FactoryMaker( controllers, model.objectTypes_, attributesList_ ) )
+, static_( model )
+, currentActionsModel_( 0 )
+, currentSimulationTime_( 0 )
 {
     // NOTHING
 }
@@ -209,12 +212,22 @@ ObjectPrototype::~ObjectPrototype()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectPrototype::Commit
+// Name: ObjectPrototype::SetCommitContext
+// Created: BCI 2011-05-11
+// -----------------------------------------------------------------------------
+void ObjectPrototype::SetCommitContext( actions::ActionsModel& currentActionsModel, const kernel::Time_ABC& currentSimulationTime )
+{
+    currentActionsModel_ = &currentActionsModel;
+    currentSimulationTime_ = &currentSimulationTime;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype::DoCommit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ObjectPrototype::Commit( actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation )
+void ObjectPrototype::DoCommit()
 {
-    if( CheckValidity() )
+    if( currentActionsModel_ && currentSimulationTime_ )
     {
         kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "create_object" );
         ObjectMagicAction* action = new ObjectMagicAction( 0, actionType, controllers_.controller_, true );
@@ -222,19 +235,16 @@ void ObjectPrototype::Commit( actions::ActionsModel& actionsModel, const kernel:
         tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
 
         action->AddParameter( *new String( it.NextElement(), objectTypes_->GetValue()->GetType() ) );
-        kernel::Point point;
-        action->AddParameter( *new Location( it.NextElement(), static_.coordinateConverter_, location_? *location_ : point ) );
+        action->AddParameter( *new Location( it.NextElement(), static_.coordinateConverter_, GetCurrentLocation() ) );
         action->AddParameter( *new String( it.NextElement(), name_->text().isEmpty() ? "" : name_->text().ascii() ) );
         action->AddParameter( *new Army( it.NextElement(), *teams_->GetValue(), controllers_.controller_ ) );
 
         attributesList_ = new ParameterList( it.NextElement() );
         action->AddParameter( *attributesList_ );
 
-        ObjectPrototype_ABC::Commit();
+        ObjectPrototype_ABC::DoCommit();
 
-        action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation ) );
-        action->RegisterAndPublish( actionsModel );
-
-        ObjectPrototype_ABC::Clean();
+        action->Attach( *new actions::ActionTiming( controllers_.controller_, *currentSimulationTime_ ) );
+        action->RegisterAndPublish( *currentActionsModel_ );
     }
 }

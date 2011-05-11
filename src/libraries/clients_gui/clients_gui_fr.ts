@@ -1056,6 +1056,18 @@ Voulez-vous le supprimer?</translation>
         <source>Attributes</source>
         <translation>Attributs</translation>
     </message>
+    <message>
+        <source>Choose a file</source>
+        <translation>Choisir un fichier</translation>
+    </message>
+    <message>
+        <source>Cannot load %1</source>
+        <translation>Impossible de charger %1</translation>
+    </message>
+    <message>
+        <source>Load from file</source>
+        <translation>Charger depuis un fichier</translation>
+    </message>
 </context>
 <context>
     <name>gui::ObstaclePrototype_ABC</name>
