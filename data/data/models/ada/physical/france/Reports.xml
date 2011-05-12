@@ -426,10 +426,10 @@
   <report category="operational" id="293" message="Travaux impossibles : pas de dotation"/>
   <report category="operational" id="294" message="Début embarquement"/>
   <report category="operational" id="295" message="Début débarquement"/>
-  <report category="operational" id="296" message="Debut du ratissage du bloc urbain"/>
-  <report category="operational" id="297" message="Fin du ratissage du bloc urbain"/>
-  <report category="operational" id="298" message="Debut du ratissage de la zone"/>
-  <report category="operational" id="299" message="Fin du ratissage de la zone"/>
+  <report category="operational" id="296" message="Debut fouille du bloc urbain"/>
+  <report category="operational" id="297" message="Fin fouille du bloc urbain"/>
+  <report category="operational" id="298" message="Debut fouille de la zone"/>
+  <report category="operational" id="299" message="Fin fouille de la zone"/>
   <report category="operational" id="300" message="Munition interdite : %1">
     <parameter type="ResourceType"/>
   </report>
@@ -511,6 +511,8 @@
   </report>
   <report category="operational" id="361" message="Le bloc urbain n'est pas traficable"/>
   <report category="operational" id="362" message="Début de deploiement"/>
+  <report category="operational" id="363" message="Début fouille du point"/>
+  <report category="operational" id="364" message="Fouille du point terminée"/>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -522,4 +524,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="0100106405" -->
+<!-- signature="4002217870" -->

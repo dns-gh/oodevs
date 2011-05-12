@@ -3,6 +3,7 @@
   <units>
     <unit dia-type="france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.PlatoonINF">
       <missions>
+        <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
@@ -80,6 +81,7 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.Mortier">
       <missions>
+        <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
@@ -121,6 +123,7 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.PlatoonABC">
       <missions>
+        <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
@@ -192,6 +195,7 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.PEI">
       <missions>
+        <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
@@ -240,6 +244,7 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.PIA">
       <missions>
+        <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
@@ -316,6 +321,7 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Platoon" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.PC">
       <missions>
+        <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
@@ -11692,4 +11698,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0992314684" -->
+<!-- signature="1465402747" -->
