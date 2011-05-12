@@ -495,22 +495,22 @@
     </parameter>
   </report>
   <report category="operational" id="351" message="Pas de drone disponible"/>
-  <report category="operational" id="357" message="Début de valorisation pour l'objet : %1">
+  <report category="operational" id="355" message="Début de valorisation pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report category="operational" id="358" message="Fin de valorisation pour l'objet : %1">
+  <report category="operational" id="356" message="Fin de valorisation pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report category="operational" id="359" message="La mission ne peut être effectuée sur un automate sans mission"/>
+  <report category="operational" id="357" message="La mission ne peut être effectuée sur un automate sans mission"/>
+  <report category="operational" id="358" message="Renseignement critique recueilli : %1">
+    <parameter type="String"/>
+  </report>
+  <report category="operational" id="359" message="La cible ne possède pas de renseignement critique"/>
   <report category="operational" id="360" message="Renseignement critique recueilli : %1">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="361" message="La cible ne possède pas de renseignement critique"/>
-  <report category="operational" id="362" message="Renseignement critique recueilli : %1">
-    <parameter type="String"/>
-  </report>
-  <report category="operational" id="363" message="Le bloc urbain n'est pas traficable"/>
-  <report category="operational" id="364" message="Début de deploiement"/>
+  <report category="operational" id="361" message="Le bloc urbain n'est pas traficable"/>
+  <report category="operational" id="362" message="Début de deploiement"/>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -522,4 +522,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="4225478164" -->
+<!-- signature="0100106405" -->
