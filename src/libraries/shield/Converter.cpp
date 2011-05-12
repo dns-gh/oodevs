@@ -39,7 +39,6 @@
 #include "proto/ClientToSim.pb.cc"
 #include "proto/AdminToLauncher.pb.cc"
 #pragma warning( pop )
-#include <boost/assign/list_of.hpp>
 
 using namespace shield;
 

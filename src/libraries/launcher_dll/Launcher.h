@@ -22,11 +22,6 @@ namespace sword
     class ProfilesListRequest;
 }
 
-namespace kernel
-{
-    class Controllers;
-}
-
 namespace tools
 {
     class Loader_ABC;
@@ -80,7 +75,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const Config& config_;
     std::auto_ptr< tools::RealFileLoaderObserver_ABC > fileLoaderObserver_;
     std::auto_ptr< tools::Loader_ABC > fileLoader_;
     std::auto_ptr< LauncherService > server_;

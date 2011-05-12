@@ -25,11 +25,10 @@ using namespace launcher;
 // Created: SBO 2010-09-29
 // -----------------------------------------------------------------------------
 Launcher::Launcher( const Config& config )
-    : config_   ( config )
-    , fileLoaderObserver_( new tools::NullFileLoaderObserver() )
-    , fileLoader_( new tools::DefaultLoader( *fileLoaderObserver_ ) )
-    , server_   ( new LauncherService( config.GetLauncherPort() ) )
-    , processes_( new ProcessService( config, *fileLoader_ ) )
+    : fileLoaderObserver_( new tools::NullFileLoaderObserver() )
+    , fileLoader_        ( new tools::DefaultLoader( *fileLoaderObserver_ ) )
+    , server_            ( new LauncherService( config.GetLauncherPort() ) )
+    , processes_         ( new ProcessService( config, *fileLoader_ ) )
 {
     server_->RegisterMessage( *this, &Launcher::HandleAdminToLauncher );
 }
@@ -77,7 +76,7 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const sword::
 // -----------------------------------------------------------------------------
 void Launcher::HandleRequest( const std::string& endpoint, const sword::ConnectionRequest& message )
 {
-    launcher::ConnectionAck response;
+    ConnectionAck response;
     const bool valid = sword::CheckCompatibility( message.client_version() );
     response().set_error_code( valid ? sword::ConnectionAck::success : sword::ConnectionAck::incompatible_protocol_version );
     response().mutable_server_version()->set_value( sword::ProtocolVersion().value() );
@@ -95,7 +94,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Connecti
 // -----------------------------------------------------------------------------
 void Launcher::HandleRequest( const std::string& endpoint, const sword::ExercicesListRequest& /*message*/ )
 {
-    launcher::ExercicesListResponse response;
+    ExercicesListResponse response;
     response().set_error_code( sword::ExercicesListResponse::success );
     processes_->SendExerciseList( response() );
     response.Send( server_->ResolveClient( endpoint ) );
@@ -107,7 +106,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Exercice
 // -----------------------------------------------------------------------------
 void Launcher::HandleRequest( const std::string& endpoint, const sword::ControlStartExercise& message )
 {
-    launcher::ControlStartExerciseAck response;
+    ControlStartExerciseAck response;
     response().mutable_exercise()->set_name( message.exercise().name() );
     response().mutable_exercise()->set_port( message.exercise().port() );
     response().set_error_code( processes_->StartExercise( message ) );
@@ -121,7 +120,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::ControlS
 // -----------------------------------------------------------------------------
 void Launcher::HandleRequest( const std::string& endpoint, const sword::ControlStopExercise& message )
 {
-    launcher::ControlStopExerciseAck response;
+    ControlStopExerciseAck response;
     response().mutable_exercise()->set_name( message.exercise().name() );
     response().mutable_exercise()->set_port( message.exercise().port() );
     response().set_error_code( processes_->StopExercise( message ) );
@@ -135,7 +134,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::ControlS
 // -----------------------------------------------------------------------------
 void Launcher::HandleRequest( const std::string& endpoint, const sword::ProfilesListRequest& /*message*/ )
 {
-    launcher::ProfileDescriptionList response;
+    ProfileDescriptionList response;
     processes_->SendProfileList( response() );
     response.Send( server_->ResolveClient( endpoint ) );
 }
