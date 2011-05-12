@@ -108,4 +108,5 @@ void LoadableField::SelectProbableField()
             }
         }
     }
+    FieldSelected( QString::null );
 }
