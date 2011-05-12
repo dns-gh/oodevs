@@ -10,31 +10,32 @@
 #include "stdlib.h"
 #include "mission_tester_pch.h"
 #include "ParameterFactory.h"
-#include "actions/Direction.h"
-#include "actions/Automat.h"
 #include "actions/Agent.h"
+#include "actions/AgentKnowledge.h"
+#include "actions/AtlasNature.h"
+#include "actions/Automat.h"
+#include "actions/Bool.h"
 #include "actions/DateTime.h"
+#include "actions/Direction.h"
+#include "actions/DotationType.h"
 #include "actions/Enumeration.h"
+#include "actions/Lima.h"
+#include "actions/Limit.h"
 #include "actions/MaintenancePriorities.h"
 #include "actions/MedicalPriorities.h"
-#include "actions/AtlasNature.h"
-#include "actions/Bool.h"
-#include "actions/Limit.h"
-#include "actions/Lima.h"
 #include "actions/Numeric.h"
+#include "actions/ObjectKnowledge.h"
+#include "actions/ObstacleType.h"
+#include "actions/ParameterList.h"
 #include "actions/Path.h"
 #include "actions/Point.h"
 #include "actions/Polygon.h"
-#include "actions/AgentKnowledge.h"
-#include "actions/ObjectKnowledge.h"
-#include "actions/ObstacleType.h"
 #include "actions/PopulationKnowledge.h"
 #include "actions/UrbanBlock.h"
-#include "actions/ParameterList.h"
-#include "clients_kernel/Lines.h"
-#include "clients_kernel/DotationType.h"
-#include "clients_kernel/Point.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/Lines.h"
+#include "clients_kernel/Point.h"
 #include <boost/assign/list_of.hpp>
 
 using namespace mission_tester;
@@ -81,26 +82,18 @@ namespace
         std::string y = RandomInt( min, max );
         return ( prefixe + alphaX + alphaY + x + y );
     }
-
-    std::string ReadPoint( std::string point, xml::xisubstream xis )
-    {
-        xis >> xml::start( "points" )
-              >> xml::start( point );
-        return ( xis.attribute< std::string >( "value", "ppp" ) );
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParameterFactory constructor
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-ParameterFactory::ParameterFactory( const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, const kernel::EntityResolver_ABC& entityResolver, xml::xistream& xis/*, tools::Resolver_ABC< kernel::DotationType >& dotationTypeResolver*/ )
-    : converter_           ( converter )
-    , controller_          ( controller )
-    , entityResolver_      ( entityResolver )
-    //, dotationTypeResolver_( dotationTypeResolver )
-    , upperLeft_           ( ReadPoint( "upperLeftPoint", xis ) )
-    , lowerRight_          ( ReadPoint( "lowerRightPoint", xis ) )
+ParameterFactory::ParameterFactory( const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, const kernel::EntityResolver_ABC& entityResolver, xml::xistream& xis )
+    : converter_     ( converter )
+    , controller_    ( controller )
+    , entityResolver_( entityResolver )
+    , upperLeft_     ( xis.attribute< std::string >( "upper-left-point", "ppp" ) )
+    , lowerRight_    ( xis.attribute< std::string >( "lower-right-point", "ppp" ) )
 {
     srand( time( NULL ) );	
 }
@@ -142,26 +135,12 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateParameter( const
         return CreateNatureAtlasParameter( parameter );
     if( parameter.GetType() == "enumeration" )
         return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Enumeration( parameter, rand() % 2 ) );
-
     if( parameter.GetType() == "datetime" )
         return CreateDateTimeParameter( parameter );
     if( parameter.GetType() == "automat" )
         return CreateAutomatParameter( parameter );
     if( parameter.GetType() == "agent" )
         return CreateAgentParameter( parameter );
-
-    /*if( parameter.GetType() == "locationcomposite" )
-        return CreatePointParameter( parameter );
-    if( parameter.GetType() == "plannedwork" )
-        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::ObstacleType( parameter, 1 ) );
-    if( parameter.GetType() == "objectknowledge" )
-        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::ObjectKnowledge( parameter, controller_ ) );
-    if( parameter.GetType() == "agentknowledge" )
-        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::AgentKnowledge( parameter, controller_ ) );
-    if( parameter.GetType() == "crowdknowledge" )
-        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::PopulationKnowledge( parameter, controller_ ) );
-    if( parameter.GetType() == "urbanknowledge" )
-        return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::UrbanBlock( parameter, controller_ ) );*/
     return std::auto_ptr< actions::Parameter_ABC >();
 }
 
@@ -249,7 +228,6 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateAutomatParameter
     return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::Automat( parameter, 11, entityResolver_, controller_ ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ParameterFactory::CreateAgentParameter
 // Created: PHC 2011-04-19
@@ -287,15 +265,6 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateNatureAtlasParam
     const kernel::AtlasNature atlas( "atlasNature", value );
     return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::AtlasNature( parameter, atlas ) );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ParameterFactory::CreateResourceTypeParameter
-// Created: RCD 2011-04-28
-// -----------------------------------------------------------------------------
-/*std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateResourceTypeParameter( const kernel::OrderParameter& parameter ) const
-{
-    return std::auto_ptr< actions::Parameter_ABC >( new actions::parameters::DotationType( parameter, 1, dotationTypeResolver_ ) );
-}*/
 
 // -----------------------------------------------------------------------------
 // Name: ParameterFactory::CreateDateTimeParameter
@@ -344,7 +313,6 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreateMedicalPrioritie
     std::string priorities;
     int num = 4;
     unsigned int PrioritiesList[ 4 ] = { 2, 3, 4, 5 };
-
     unsigned int prioritiesQuantity = rand() % 5;
     for( unsigned int it = 1; it <= prioritiesQuantity; ++it )
     {

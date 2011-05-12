@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "mission_tester_pch.h"
-#include "Config.h"
 #include "Client.h" 
+#include "Config.h"
 #include "ConsoleLogger.h"
 #include "Exercise.h"
 #include "Facade.h"
@@ -39,16 +39,18 @@ Config::Config( int argc, char** argv )
         ( "configuration", bpo::value< std::string >( &configurationFile_ ) , "set configuration file" );
     AddOptions( desc );
     Parse( argc, argv );
-    xml::xifstream xis( configurationFile_ );
+    xml::xifstream xis( configurationFile_, xml::internal_grammar() );
     xis >> xml::start( "configuration" )
-            >> xml::content( "host", host_ )
-            >> xml::content( "port", port_ )
-            >> xml::content( "login", login_ )
-            >> xml::content( "output", logFile_ )
-            >> xml::content( "scheduler", scheduler_ )
-            >> xml::content( "timeout", timeout_ )
-            >> xml::start( "password" ) >> xml::optional >> password_ >> xml::end;
-    xibs_.reset( new xml::xibufferstream( xis >> xml::start( "parameters" ) ) );
+          >> xml::start( "initialization" )
+            >> xml::attribute( "host", host_ )
+            >> xml::attribute( "port", port_ )
+            >> xml::attribute( "login", login_ )
+            >> xml::attribute( "output", logFile_ )
+            >> xml::attribute( "scheduler", scheduler_ )
+            >> xml::attribute( "timeout", timeout_ )
+            >> xml::optional >> xml::attribute( "password", password_ )
+          >> xml::end;
+    xibs_.reset( new xml::xibufferstream( xis >> xml::start( "points" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +77,7 @@ void Config::ConfigureLogging( Facade& facade ) const
         }
         catch( ... )
         {
-            // $$$$ PHC 2011-04-07: Unable to create log file
+            throw std::runtime_error( __FUNCTION__ " unable to create log file '" + logFile_ + "'" );
         }
     }
 }
