@@ -18,6 +18,8 @@
 
 namespace gui
 {
+    class LoadableCheckBox;
+    class LoadableTimeEdit;
 
 // =============================================================================
 /** @class  ObstaclePrototype_ABC
@@ -39,6 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 
 signals:
@@ -70,8 +73,8 @@ protected:
     //! @name Member data
     //@{
     ValuedComboBox< E_DemolitionTargetType >* types_;
-    QCheckBox*                                activation_;
-    QTimeEdit*                                activationTime_;
+    LoadableCheckBox*                         activation_;
+    LoadableTimeEdit*                         activationTime_;
     //@}
 };
 

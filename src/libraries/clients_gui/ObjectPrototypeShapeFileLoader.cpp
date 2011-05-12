@@ -13,6 +13,7 @@
 
 #include "clients_gui_pch.h"
 #include "ObjectPrototypeShapeFileLoader.h"
+#include "Tools.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/Point.h"
@@ -32,33 +33,43 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
 , coordinateConverter_( coordinateConverter )
 {
     OGRRegisterAll();
-    dataSource_ = OGRSFDriverRegistrar::Open( filename.ascii(), FALSE );
+    dataSource_.reset( OGRSFDriverRegistrar::Open( filename.ascii(), FALSE ), OGRDataSource::DestroyDataSource );
     if( dataSource_ == NULL )
         throw std::runtime_error( parent->tr( "Cannot load shapefile %1" ).arg( filename ).ascii() );
 
-    QStringList layerNames;
+    QStringList loadableLayerNames;
+    QString unloadableLayerExplanations;
     for( int i=0, count=dataSource_->GetLayerCount(); i<count; ++i )
     {
         OGRLayer* layer = dataSource_->GetLayer( i );
-        if( !CanLoadLayer( *layer, objectType ) )
-            continue;
-        layerNames.push_back( layer->GetName() );
+        QString unloadableExplanation;
+        if( !CanLoadLayer( *layer, objectType, unloadableExplanation ) )
+            unloadableLayerExplanations += tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot load layer %1 : %2" ).arg( layer->GetName() ).arg( unloadableExplanation ); 
+        else
+            loadableLayerNames.push_back( layer->GetName() );
     }
 
-    bool ok;
-    QString layerName = QInputDialog::getItem( parent->tr( "Select layer" ), parent->tr( "Loadable layer:" ), layerNames, 1, false, &ok, parent );
-    if( !ok )
+    if( loadableLayerNames.empty() )
+        throw std::runtime_error(  tools::translate( "gui::ObjectPrototypeShapeFileLoader", "No layer to load.\n%1" ).arg( unloadableLayerExplanations ).ascii() );
+
+    QString layerName;
+    if( loadableLayerNames.size() == 1 )
+        layerName = *loadableLayerNames.begin();
+    else
     {
-        OGRDataSource::DestroyDataSource( dataSource_ );
-        throw LoadCancelledException();
+        bool ok;
+        layerName = QInputDialog::getItem( tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Select layer" ), unloadableLayerExplanations, loadableLayerNames, 1, false, &ok, parent );
+        if( !ok )
+            throw LoadCancelledException();
     }
 
     currentLayer_ = dataSource_->GetLayerByName( layerName.ascii() );
     if( !currentLayer_ )
-        throw std::runtime_error( parent->tr( "Cannot read layer %1" ).arg( layerName ).ascii() );
+        throw std::runtime_error( tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot read layer %1" ).arg( layerName ).ascii() );
 
     for( int i=0, count=currentLayer_->GetLayerDefn()->GetFieldCount(); i<count; ++i )
         fields_.push_back( currentLayer_->GetLayerDefn()->GetFieldDefn( i )->GetNameRef() );
+    fields_.sort();
 }
 
 // -----------------------------------------------------------------------------
@@ -67,17 +78,25 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
 // -----------------------------------------------------------------------------
 ObjectPrototypeShapeFileLoader::~ObjectPrototypeShapeFileLoader()
 {
-    OGRDataSource::DestroyDataSource( dataSource_ );
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPrototypeShapeFileLoader::CanLoadLayer
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
-bool ObjectPrototypeShapeFileLoader::CanLoadLayer( OGRLayer& layer, const kernel::ObjectType& objectType )
+bool ObjectPrototypeShapeFileLoader::CanLoadLayer( OGRLayer& layer, const kernel::ObjectType& objectType, QString& unloadableExplanation )
 {
-    if ( !layer.GetSpatialRef() || layer.GetSpatialRef()->GetEPSGGeogCS() != 4326 ) //Only WGS84
+    if ( !layer.GetSpatialRef() )
+    {
+        unloadableExplanation = tools::translate( "gui::ObjectPrototypeShapeFileLoader", "no spatial reference" );
         return false;
+    }
+    if( layer.GetSpatialRef()->GetEPSGGeogCS() != 4326 )
+    {
+        unloadableExplanation = tools::translate( "gui::ObjectPrototypeShapeFileLoader", "spatial reference must be WGS84" );
+        return false;
+    }
     return true;
 }
 
@@ -106,6 +125,15 @@ QString ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsString( const QStr
 int ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsInt( const QString& fieldName ) const
 {
     return currentFeature_->GetFieldAsInteger( fieldName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsBool
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+bool ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsBool( const QString& fieldName ) const
+{
+    return currentFeature_->GetFieldAsInteger( fieldName ) != 0;
 }
 
 // -----------------------------------------------------------------------------

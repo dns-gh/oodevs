@@ -12,11 +12,10 @@
 
 #include "ObjectAttributePrototype_ABC.h"
 
-class QSpinBox;
-class QCheckBox;
-
 namespace gui
 {
+    class LoadableSpinBox;
+    class LoadableCheckBox;
 
 // =============================================================================
 /** @class  CrossingSitePrototype_ABC
@@ -36,15 +35,16 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    QSpinBox* width_;
-    QSpinBox* depth_;
-    QSpinBox* speed_;
-    QCheckBox* needsConstruction_;
+    LoadableSpinBox*  width_;
+    LoadableSpinBox*  depth_;
+    LoadableSpinBox*  speed_;
+    LoadableCheckBox* needsConstruction_;
     //@}
 };
 

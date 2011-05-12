@@ -14,6 +14,8 @@
 
 namespace gui {
 
+    class LoadableTimeEdit;
+
 // =============================================================================
 /** @class  DelayPrototype_ABC
     @brief  DelayPrototype_ABC
@@ -32,12 +34,13 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    QTimeEdit* delayTime_;
+    LoadableTimeEdit* delayTime_;
     //@}
 };
 

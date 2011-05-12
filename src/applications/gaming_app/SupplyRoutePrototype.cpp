@@ -12,6 +12,8 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
+#include "clients_gui/LoadableCheckBox.h"
+#include "clients_gui/LoadableSpinBox.h"
 
 using namespace sword;
 using namespace gui;
@@ -45,7 +47,7 @@ void SupplyRoutePrototype::Commit()
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "SupplyRoute" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_supply_route );
-    list.AddBool( "Equipped", equipped_->isOn() );
+    list.AddBool( "Equipped", equipped_->isChecked() );
     list.AddQuantity( "MaxWeight", maxWeight_->value() );
     list.AddQuantity( "Width", width_->value() );
     list.AddQuantity( "Length", length_->value() );

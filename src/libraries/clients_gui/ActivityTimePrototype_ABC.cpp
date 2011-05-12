@@ -12,6 +12,7 @@
 #include "clients_gui_pch.h"
 #include "ActivityTimePrototype_ABC.h"
 #include "Tools.h"
+#include "LoadableTimeEdit.h"
 
 using namespace gui;
 
@@ -23,7 +24,7 @@ ActivityTimePrototype_ABC::ActivityTimePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ActivityTimePrototype_ABC", "Activity time" ) )
 {
     new QLabel( tools::translate( "gui::ActivityTimePrototype_ABC", "Activity time:" ), this );
-    activityTime_ = new QTimeEdit( this );
+    activityTime_ = new LoadableTimeEdit( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,4 +43,13 @@ ActivityTimePrototype_ABC::~ActivityTimePrototype_ABC()
 bool ActivityTimePrototype_ABC::CheckValidity() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActivityTimePrototype_ABC::SetLoader
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void ActivityTimePrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
+{
+    activityTime_->SetLoader( loader );
 }

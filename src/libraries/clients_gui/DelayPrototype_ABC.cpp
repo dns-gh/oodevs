@@ -12,6 +12,7 @@
 #include "clients_gui_pch.h"
 #include "DelayPrototype_ABC.h"
 #include "Tools.h"
+#include "LoadableTimeEdit.h"
 
 using namespace gui;
 
@@ -23,7 +24,7 @@ DelayPrototype_ABC::DelayPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::DelayPrototype_ABC", "Delay time" ) )
 {
     new QLabel( tools::translate( "gui::DelayPrototype_ABC", "Delay time:" ), this );
-    delayTime_ = new QTimeEdit( this );
+    delayTime_ = new LoadableTimeEdit( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,4 +43,13 @@ DelayPrototype_ABC::~DelayPrototype_ABC()
 bool DelayPrototype_ABC::CheckValidity() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DelayPrototype_ABC::SetLoader
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void DelayPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
+{
+    delayTime_->SetLoader( loader );
 }

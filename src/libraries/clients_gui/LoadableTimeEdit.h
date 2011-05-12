@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __LoadableSpinBox_h_
-#define __LoadableSpinBox_h_
+#ifndef __LoadableTimeEdit_h_
+#define __LoadableTimeEdit_h_
 
 #include "LoadableField.h"
 
@@ -16,33 +16,31 @@ namespace gui
 {
 
 // =============================================================================
-/** @class  LoadableSpinBox
-    @brief  Spin box that can be filled from a file or manually.
+/** @class  LoadableTimeEdit
+    @brief  Time edit widget that can be filled from a file or manually.
 */
 // Created: BCI 2011-05-09
 // =============================================================================
-class LoadableSpinBox : public LoadableFieldTemplate< QSpinBox >
+class LoadableTimeEdit : public LoadableFieldTemplate< QTimeEdit >
 {
 public:
 
     //! @name Constructors/Destructor
     //@{
-             LoadableSpinBox( int minValue, int maxValue, int step, QWidget* parent, const QString& probableName = QString() );
-    virtual ~LoadableSpinBox();
+             LoadableTimeEdit( QWidget* parent, const QString& probableName = QString() );
+    virtual ~LoadableTimeEdit();
     //@}
 
     //! @name Operations
     //@{
-    int value() const;
-    void setSuffix( const QString& );
-    void setValue( int );
+    QTime time() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    LoadableSpinBox( const LoadableSpinBox& );            //!< Copy constructor
-    LoadableSpinBox& operator=( const LoadableSpinBox& ); //!< Assignment operator
+    LoadableTimeEdit( const LoadableTimeEdit& );            //!< Copy constructor
+    LoadableTimeEdit& operator=( const LoadableTimeEdit& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -57,4 +55,4 @@ private:
 
 } // end namespace gui
 
-#endif // __LoadableSpinBox_h_
+#endif // __LoadableTimeEdit_h_

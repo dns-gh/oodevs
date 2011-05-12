@@ -14,6 +14,7 @@
 
 namespace gui
 {
+    class LoadableTimeEdit;
 
 // =============================================================================
 /** @class  PropagationPrototype_ABC
@@ -33,12 +34,13 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    QTimeEdit*  activityTime_;
+    LoadableTimeEdit*  activityTime_;
     //@}
 };
 

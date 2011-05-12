@@ -14,6 +14,7 @@
 #include "clients_gui/ValuedListItem.h"
 #include "protocol/ClientSenders.h"
 #include "actions/ParameterList.h"
+#include "clients_gui/LoadableSpinBox.h"
 
 using namespace kernel;
 using namespace gui;

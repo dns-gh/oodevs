@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __LoadableSpinBox_h_
-#define __LoadableSpinBox_h_
+#ifndef __LoadableCheckBox_h_
+#define __LoadableCheckBox_h_
 
 #include "LoadableField.h"
 
@@ -16,33 +16,31 @@ namespace gui
 {
 
 // =============================================================================
-/** @class  LoadableSpinBox
-    @brief  Spin box that can be filled from a file or manually.
+/** @class  LoadableCheckBox
+    @brief  Check box that can be filled from a file or manually.
 */
 // Created: BCI 2011-05-09
 // =============================================================================
-class LoadableSpinBox : public LoadableFieldTemplate< QSpinBox >
+class LoadableCheckBox : public LoadableFieldTemplate< QCheckBox >
 {
 public:
 
     //! @name Constructors/Destructor
     //@{
-             LoadableSpinBox( int minValue, int maxValue, int step, QWidget* parent, const QString& probableName = QString() );
-    virtual ~LoadableSpinBox();
+             LoadableCheckBox( const QString& text, QWidget* parent, const QString& probableName = QString() );
+    virtual ~LoadableCheckBox();
     //@}
 
     //! @name Operations
     //@{
-    int value() const;
-    void setSuffix( const QString& );
-    void setValue( int );
+    bool isChecked() const;
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    LoadableSpinBox( const LoadableSpinBox& );            //!< Copy constructor
-    LoadableSpinBox& operator=( const LoadableSpinBox& ); //!< Assignment operator
+    LoadableCheckBox( const LoadableCheckBox& );            //!< Copy constructor
+    LoadableCheckBox& operator=( const LoadableCheckBox& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -57,4 +55,4 @@ private:
 
 } // end namespace gui
 
-#endif // __LoadableSpinBox_h_
+#endif // __LoadableCheckBox_h_

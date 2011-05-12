@@ -11,6 +11,7 @@
 #include "DelayPrototype.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/LoadableTimeEdit.h"
 #include "preparation/DelayAttribute.h"
 
 using namespace kernel;

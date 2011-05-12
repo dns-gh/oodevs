@@ -12,6 +12,7 @@
 #include "clients_kernel/FireClass.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/LoadableSpinBox.h"
 #include "preparation/FireAttribute.h"
 
 using namespace kernel;

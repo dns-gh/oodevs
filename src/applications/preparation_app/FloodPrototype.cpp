@@ -12,6 +12,7 @@
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/LoadableSpinBox.h"
 #include "preparation/FloodAttribute.h"
 
 using namespace kernel;
@@ -48,7 +49,7 @@ void FloodPrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         FloodAttribute* attribute = new FloodAttribute( dico, detection_, creation_->Get< Positions>(), controllers_ );
-        attribute->SetValues( depth_->text().toInt(), refDist_->text().toInt() );
+        attribute->SetValues( depth_->value(), refDist_->value() );
         creation_->Attach( *attribute );
     }
 }

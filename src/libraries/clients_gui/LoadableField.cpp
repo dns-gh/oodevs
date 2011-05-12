@@ -80,15 +80,6 @@ QString LoadableField::GetField() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: LoadableField::SetDefaultValueWidget
-// Created: BCI 2011-05-10
-// -----------------------------------------------------------------------------
-void LoadableField::SetDefaultValueWidget( QWidget* w )
-{
-    defaultValueWidget_ = w;
-}
-
-// -----------------------------------------------------------------------------
 // Name: LoadableField::FieldSelected
 // Created: BCI 2011-05-10
 // -----------------------------------------------------------------------------

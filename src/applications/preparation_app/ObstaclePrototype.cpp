@@ -11,6 +11,7 @@
 #include "ObstaclePrototype.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/LoadableCheckBox.h"
 #include "preparation/ObstacleAttribute.h"
 
 using namespace kernel;

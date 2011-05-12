@@ -27,7 +27,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-             LoadableLineEdit( QWidget* parent, const QString& probableName );
+             LoadableLineEdit( QWidget* parent, const QString& probableName = QString() );
     virtual ~LoadableLineEdit();
     //@}
 
@@ -35,6 +35,8 @@ public:
     //@{
     void clear();
     QString text() const;
+    void setText( const QString& );
+    void setValidator( const QValidator * );
     //@}
 
 private:

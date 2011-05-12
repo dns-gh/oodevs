@@ -42,7 +42,34 @@ int LoadableSpinBox::value() const
     {
         QString field = GetField();
         if( !field.isNull() ) 
-            return currentLoader_->GetCurrentFieldValueAsInt( field );
+        {
+            int value = currentLoader_->GetCurrentFieldValueAsInt( field );
+            int max = GetDefaultValueWidget()->maxValue();
+            if( value > max )
+                return max;
+            int min = GetDefaultValueWidget()->minValue();
+            if( value < min )
+                return min;
+            return value;
+        }
     }
     return GetDefaultValueWidget()->value();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LoadableSpinBox::setSuffix
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void LoadableSpinBox::setSuffix( const QString& str )
+{
+    GetDefaultValueWidget()->setSuffix( str );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LoadableSpinBox::setValue
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void LoadableSpinBox::setValue( int n )
+{
+    GetDefaultValueWidget()->setValue( n );
 }

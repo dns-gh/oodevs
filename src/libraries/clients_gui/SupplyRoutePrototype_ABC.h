@@ -14,6 +14,8 @@
 
 namespace gui
 {
+    class LoadableSpinBox;
+    class LoadableCheckBox;
 
 // =============================================================================
 /** @class  SupplyRoutePrototype_ABC
@@ -33,15 +35,16 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 protected:
     //! @name Member data
     //@{
-    QSpinBox* flow_;
-    QSpinBox* width_;
-    QSpinBox* length_;
-    QSpinBox* maxWeight_;
-    QCheckBox* equipped_;
+    LoadableSpinBox* flow_;
+    LoadableSpinBox* width_;
+    LoadableSpinBox* length_;
+    LoadableSpinBox* maxWeight_;
+    LoadableCheckBox* equipped_;
     //@}
 };
 

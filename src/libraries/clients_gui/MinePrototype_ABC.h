@@ -14,6 +14,7 @@
 
 namespace gui
 {
+    class LoadableLineEdit;
 
 // =============================================================================
 /** @class  MinePrototype_ABC
@@ -34,12 +35,13 @@ public:
     //@{
     void SetMineField( bool minefield ); // $$$$ SBO 2009-04-03: never called
     virtual bool CheckValidity() const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    QLineEdit* density_;
+    LoadableLineEdit* density_;
     QLabel* densityLabel_;
     QHBox* densityBox_;
     //@}

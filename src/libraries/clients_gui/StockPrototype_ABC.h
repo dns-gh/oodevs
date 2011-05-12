@@ -23,6 +23,7 @@ namespace kernel
 namespace gui
 {
     class RichLabel;
+    class LoadableSpinBox;
 
 // =============================================================================
 /** @class  StockPrototype_ABC
@@ -44,6 +45,7 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 
 private slots:
@@ -65,9 +67,9 @@ protected:
         {}
         RichLabel* dotationLabel_;
         ValuedComboBox< const kernel::DotationType* >* dotationType_;
-        QSpinBox* stock_;
+        LoadableSpinBox* stock_;
         RichLabel* maxStockLabel_;
-        QSpinBox* maxStock_;
+        LoadableSpinBox* maxStock_;
     };
 
     //! @name Member data

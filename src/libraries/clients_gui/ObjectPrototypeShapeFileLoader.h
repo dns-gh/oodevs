@@ -16,6 +16,8 @@
 
 #include "ObjectPrototypeLoader_ABC.h"
 
+#include <boost/shared_ptr.hpp>
+
 class OGRDataSource;
 class OGRLayer;
 class OGRFeature;
@@ -54,6 +56,7 @@ public:
     virtual const kernel::Location_ABC& GetCurrentLocation() const;
     virtual QString GetCurrentFieldValueAsString( const QString& ) const;
     virtual int GetCurrentFieldValueAsInt( const QString& ) const;
+    virtual bool GetCurrentFieldValueAsBool( const QString& ) const;
     //@}
 
 private:
@@ -65,7 +68,7 @@ private:
 
     //! @name Helpers
     //@{
-    static bool CanLoadLayer( OGRLayer& layer, const kernel::ObjectType& objectType );
+    static bool CanLoadLayer( OGRLayer& layer, const kernel::ObjectType& objectType, QString& unloadableExplanation );
     //@}
 
 private:
@@ -74,7 +77,7 @@ private:
     QStringList fields_;
     const kernel::ObjectType& objectType_;
     const kernel::CoordinateConverter_ABC& coordinateConverter_;
-    OGRDataSource* dataSource_;
+    boost::shared_ptr< OGRDataSource > dataSource_;
     OGRLayer* currentLayer_;
     OGRFeature* currentFeature_;
     std::auto_ptr< kernel::Location_ABC > currentLocation_;

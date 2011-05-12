@@ -11,6 +11,7 @@
 #include "FloodPrototype.h"
 #include "actions/ParameterList.h"
 #include "protocol/Protocol.h"
+#include "clients_gui/LoadableSpinBox.h"
 
 using namespace gui;
 
@@ -42,6 +43,6 @@ void FloodPrototype::Commit()
 {
     actions::parameters::ParameterList& list = attributesList_->AddList( "Flood" );
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction::flood );
-    list.AddQuantity( "Depth", depth_->text().toInt() );
-    list.AddQuantity( "RefDist", refDist_->text().toInt() );
+    list.AddQuantity( "Depth", depth_->value() );
+    list.AddQuantity( "RefDist", refDist_->value() );
 }

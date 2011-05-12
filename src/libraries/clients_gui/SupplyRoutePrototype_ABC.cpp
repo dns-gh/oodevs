@@ -13,6 +13,8 @@
 #include "SupplyRoutePrototype_ABC.h"
 #include "clients_kernel/Units.h"
 #include "Tools.h"
+#include "LoadableSpinBox.h"
+#include "LoadableCheckBox.h"
 
 using namespace gui;
 
@@ -24,22 +26,22 @@ SupplyRoutePrototype_ABC::SupplyRoutePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::SupplyRoutePrototype_ABC", "Logistic route" ) )
 {
     new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Flow:" ), this );
-    flow_ = new QSpinBox( 1, 10000, 1, this );
+    flow_ = new LoadableSpinBox( 1, 10000, 1, this );
     flow_->setSuffix( kernel::Units::vehiclesPerHour.AsString() );
 
     new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Width:" ), this );
-    width_ = new QSpinBox( 1, 10000, 1, this );
+    width_ = new LoadableSpinBox( 1, 10000, 1, this );
     width_->setSuffix( kernel::Units::meters.AsString() );
 
     new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Length:" ), this );
-    length_ = new QSpinBox( 1, 10000, 1, this );
+    length_ = new LoadableSpinBox( 1, 10000, 1, this );
     length_->setSuffix( kernel::Units::meters.AsString() );
 
     new QLabel( tools::translate( "gui::SupplyRoutePrototype_ABC", "Maximum weight:" ), this );
-    maxWeight_ = new QSpinBox( 1, 10000, 1, this );
+    maxWeight_ = new LoadableSpinBox( 1, 10000, 1, this );
     maxWeight_->setSuffix( kernel::Units::tons.AsString() );
 
-    equipped_ = new QCheckBox( tools::translate( "gui::SupplyRoutePrototype_ABC", "Equipped:" ), this );
+    equipped_ = new LoadableCheckBox( tools::translate( "gui::SupplyRoutePrototype_ABC", "Equipped:" ), this );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,4 +60,17 @@ SupplyRoutePrototype_ABC::~SupplyRoutePrototype_ABC()
 bool SupplyRoutePrototype_ABC::CheckValidity() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRoutePrototype_ABC::SetLoader
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void SupplyRoutePrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
+{
+    flow_->SetLoader( loader );
+    width_->SetLoader( loader );
+    length_->SetLoader( loader );
+    maxWeight_->SetLoader( loader );
+    equipped_->SetLoader( loader );
 }

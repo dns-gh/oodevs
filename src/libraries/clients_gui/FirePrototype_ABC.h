@@ -21,6 +21,7 @@ namespace kernel
 
 namespace gui
 {
+    class LoadableSpinBox;
 
 // =============================================================================
 /** @class  FirePrototype_ABC
@@ -41,6 +42,7 @@ public:
     //@{
     void SetHasFirePropagation( bool );
     virtual bool CheckValidity() const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 
     //! @name Helpers
@@ -54,7 +56,7 @@ protected:
     //@{
     const tools::Resolver_ABC< kernel::FireClass, std::string >& resolver_;
     ValuedComboBox< const kernel::FireClass* >* fireClass_;
-    QSpinBox* maxCombustionEnergy_;
+    LoadableSpinBox* maxCombustionEnergy_;
     bool hasFirePropagation_;
     //@}
 };

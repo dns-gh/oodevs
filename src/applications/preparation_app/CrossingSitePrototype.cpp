@@ -12,6 +12,8 @@
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/LoadableSpinBox.h"
+#include "clients_gui/LoadableCheckBox.h"
 #include "preparation/CrossingSiteAttribute.h"
 
 using namespace kernel;
@@ -50,7 +52,7 @@ void CrossingSitePrototype::Commit()
         attribute->SetWidth( width_->value() );
         attribute->SetDepth( depth_->value() );
         attribute->SetFlowSpeed( speed_->value() );
-        attribute->SetConstruction( needsConstruction_->isOn() );
+        attribute->SetConstruction( needsConstruction_->isChecked() );
         creation_->Attach( *attribute );
     }
 }

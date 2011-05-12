@@ -14,6 +14,8 @@
 #include "moc_ObstaclePrototype_ABC.cpp"
 #include "ValuedListItem.h"
 #include "Tools.h"
+#include "LoadableCheckBox.h"
+#include "LoadableTimeEdit.h"
 
 using namespace gui;
 
@@ -40,22 +42,19 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
         types_ = new ValuedComboBox< E_DemolitionTargetType >( this );
     }
     {
-        QLabel* label = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Reserved obstacle activated:" ), this );
-        activation_ = new QCheckBox( this );
-        label->hide();
+        activation_ = new LoadableCheckBox( tools::translate( "gui::ObstaclePrototype_ABC", "Reserved obstacle activated:" ), this );
         activation_->hide();
-        connect( this, SIGNAL( ToggleActivable( bool ) ), label, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleActivable( bool ) ), activation_, SLOT( setShown( bool ) ) );
     }
     {
         QLabel* label = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ), this );
-        activationTime_ = new QTimeEdit( this );
+        activationTime_ = new LoadableTimeEdit( this );
         label->hide();
         activationTime_->hide();
         connect( this, SIGNAL( ToggleActivable( bool ) ), label, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleActivable( bool ) ), activationTime_, SLOT( setShown( bool ) ) );
-        connect( activation_, SIGNAL( toggled( bool ) ), label, SLOT( setDisabled( bool ) ) );
-        connect( activation_, SIGNAL( toggled( bool ) ), activationTime_, SLOT( setDisabled( bool ) ) );
+        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), label, SLOT( setDisabled( bool ) ) );
+        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activationTime_, SLOT( setDisabled( bool ) ) );
     }
     connect( types_, SIGNAL( activated( int ) ), this, SLOT( OnObstacleTypeChanged() ) );
 }
@@ -120,7 +119,18 @@ int ObstaclePrototype_ABC::GetActivationTime() const
     if( IsActivated() )
         return 0;
 
-    return 3600 * activationTime_->time().hour() +
-           60 * activationTime_->time().minute() +
-           activationTime_->time().second();
+    QTime t = activationTime_->time();
+    return 3600 * t.hour() +
+           60 *  t.minute() +
+                 t.second();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstaclePrototype_ABC::SetLoader
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void ObstaclePrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
+{
+    activation_->SetLoader( loader );
+    activationTime_->SetLoader( loader );
 }

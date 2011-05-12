@@ -12,6 +12,7 @@
 #include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_gui/LoadableSpinBox.h"
 #include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------

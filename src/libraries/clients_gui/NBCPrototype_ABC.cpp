@@ -16,6 +16,7 @@
 #include "RichLabel.h"
 #include "ValuedListItem.h"
 #include "Tools.h"
+#include "LoadableSpinBox.h"
 
 using namespace kernel;
 using namespace gui;
@@ -30,7 +31,7 @@ NBCPrototype_ABC::NBCPrototype_ABC( QWidget* parent, const tools::Resolver_ABC< 
     , maxToxic_( maxToxic )
 {
     new QLabel( tools::translate( "gui::NBCPrototype_ABC", "Danger level:" ), this );
-    danger_ = new QSpinBox( 0, 10, 1, this );
+    danger_ = new LoadableSpinBox( 0, 10, 1, this );
     nbcAgentsLabel_ = new RichLabel( tools::translate( "gui::NBCPrototype_ABC", "NBC agent(s):" ), this );
     nbcAgents_ = new QListView( this );
     if( maxToxic == 1 )
@@ -110,4 +111,13 @@ unsigned NBCPrototype_ABC::GetAgentCount() const
         if( item->isSelected() )
             ++selected;
     return selected;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NBCPrototype_ABC::SetLoader
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void NBCPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
+{
+    danger_->SetLoader( loader );
 }

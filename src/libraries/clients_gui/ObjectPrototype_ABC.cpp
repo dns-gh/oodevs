@@ -63,8 +63,9 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
 
     locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );
 
-    QPushButton* loadFromFileButton = new QPushButton(  tr( "Load from file" ), this );
-    connect( loadFromFileButton, SIGNAL( clicked() ), this, SLOT( LoadFromFile() ) );
+    loadFromFileButton_ = new QPushButton(  tr( "Load from file" ), this );
+    loadFromFileButton_->setToggleButton( true );
+    connect( loadFromFileButton_, SIGNAL( toggled(bool) ), this, SLOT( LoadFromFile(bool) ) );
 
     // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
 
@@ -243,6 +244,7 @@ void ObjectPrototype_ABC::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::OnTypeChanged()
 {
+    LoadFromFile( false );
     if( objectTypes_->Count() != 0 )
     {
         const ObjectType* type = objectTypes_->GetValue();
@@ -302,34 +304,39 @@ void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geom
 // Name: ObjectPrototype_ABC::LoadFromFile
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::LoadFromFile()
+void ObjectPrototype_ABC::LoadFromFile( bool mustLoadFromFile )
 {
-    const ObjectType* type = objectTypes_->Count() != 0 ? objectTypes_->GetValue() : 0;
-    if( !type )
-        return;
-
-    QString filename = QFileDialog::getOpenFileName(
-        QString::null,
-        "Shapefile (*.shp)",
-        this,
-        "open file dialog",
-        tr( "Choose a file" ) );
-
-    if( filename.isNull() )
-        return;
-
-    try
+    loader_.reset();
+    if( mustLoadFromFile )
     {
-        loader_.reset();
-        loader_.reset( new ObjectPrototypeShapeFileLoader( coordinateConverter_, this, filename, *type ) );
-    } catch( const ObjectPrototypeLoader_ABC::LoadCancelledException& )
-    {
-        //NOTHING
+        const ObjectType* type = objectTypes_->Count() != 0 ? objectTypes_->GetValue() : 0;
+        if( type )
+        {
+            QString filename = QFileDialog::getOpenFileName(
+                QString::null,
+                "Shapefile (*.shp)",
+                this,
+                "open file dialog",
+                tr( "Choose a file" ) );
+
+            if( !filename.isNull() )
+            {
+                try
+                {
+                    loader_.reset( new ObjectPrototypeShapeFileLoader( coordinateConverter_, this, filename, *type ) );
+                } catch( const ObjectPrototypeLoader_ABC::LoadCancelledException& )
+                {
+                    //NOTHING
+                }
+                catch( const std::exception& e )
+                {
+                    QMessageBox::warning( this, tr( "Cannot load %1" ).arg( filename ), e.what(), QMessageBox::Ok, QMessageBox::NoButton );
+                }
+            }
+        }
     }
-    catch( const std::exception& e )
-    {
-        QMessageBox::warning( this, tr( "Cannot load %1" ).arg( filename ), e.what(), QMessageBox::Ok, QMessageBox::NoButton );
-    }
+
+    loadFromFileButton_->setOn( loader_.get() != 0 );
     name_->SetLoader( loader_.get() );
     attributes_->SetLoader( loader_.get() );
 }

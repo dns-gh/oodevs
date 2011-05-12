@@ -55,3 +55,21 @@ void LoadableLineEdit::clear()
 {
     GetDefaultValueWidget()->setText( QString::null );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LoadableLineEdit::setText
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void LoadableLineEdit::setText( const QString& s )
+{
+    GetDefaultValueWidget()->setText( s );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LoadableLineEdit::setValidator
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void LoadableLineEdit::setValidator( const QValidator* v )
+{
+    GetDefaultValueWidget()->setValidator( v );
+}

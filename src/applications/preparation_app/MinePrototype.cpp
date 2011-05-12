@@ -12,6 +12,7 @@
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/LoadableLineEdit.h"
 #include "preparation/MineAttribute.h"
 
 using namespace kernel;

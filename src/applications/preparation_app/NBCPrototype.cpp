@@ -16,6 +16,7 @@
 #include "preparation/NBCAttribute.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ValuedListItem.h"
+#include "clients_gui/LoadableSpinBox.h"
 
 using namespace kernel;
 using namespace gui;
@@ -55,7 +56,7 @@ void NBCPrototype::Commit()
             for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
                 if( item->isSelected() )
                     attribute->AddAgent( *static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >() );
-            attribute->SetDanger( danger_->text().toUInt() );
+            attribute->SetDanger( danger_->value() );
         }
         creation_->Attach( *attribute );
     }

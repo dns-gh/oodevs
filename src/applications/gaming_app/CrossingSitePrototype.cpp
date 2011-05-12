@@ -10,6 +10,8 @@
 #include "gaming_app_pch.h"
 #include "CrossingSitePrototype.h"
 #include "clients_kernel/Units.h"
+#include "clients_gui/LoadableSpinBox.h"
+#include "clients_gui/LoadableCheckBox.h"
 #include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
 
@@ -47,5 +49,5 @@ void CrossingSitePrototype::Commit()
     list.AddQuantity( "Width", width_->value() );
     list.AddQuantity( "Depth", depth_->value() );
     list.AddQuantity( "FlowRate", speed_->value() );
-    list.AddBool( "BanksRequireFitting", needsConstruction_->isOn() );
+    list.AddBool( "BanksRequireFitting", needsConstruction_->isChecked() );
 }

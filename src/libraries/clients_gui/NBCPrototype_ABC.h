@@ -22,6 +22,7 @@ namespace kernel
 namespace gui
 {
     class RichLabel;
+    class LoadableSpinBox;
 
 // =============================================================================
 /** @class  NBCPrototype_ABC
@@ -41,6 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 
 private:
@@ -61,7 +63,7 @@ protected:
     const tools::Resolver_ABC< kernel::NBCAgent >& resolver_;
     int maxToxic_;
     RichLabel* nbcAgentsLabel_;
-    QSpinBox* danger_;
+    LoadableSpinBox* danger_;
     QListView* nbcAgents_;
     ValuedComboBox< std::string >* nbcStates_;
     //@}

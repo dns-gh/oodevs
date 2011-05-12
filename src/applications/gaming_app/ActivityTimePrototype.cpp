@@ -12,6 +12,7 @@
 #include "clients_kernel/Units.h"
 #include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
+#include "clients_gui/LoadableTimeEdit.h"
 
 using namespace sword;
 using namespace kernel;

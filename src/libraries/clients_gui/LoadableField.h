@@ -37,7 +37,6 @@ public:
 
     //! @name Operations
     //@{
-    void SetDefaultValueWidget( QWidget* );
     void SetLoader( const ObjectPrototypeLoader_ABC* );
     QString GetField() const;
     //@}
@@ -59,12 +58,14 @@ private:
     //@}
 
 protected:
+    const ObjectPrototypeLoader_ABC* currentLoader_;
+    QWidget* defaultValueWidget_;
+
+private:
     //! @name Member data
     //@{
     const QString probableName_;
-    QWidget* defaultValueWidget_;
     QComboBox* fieldName_;
-    const ObjectPrototypeLoader_ABC* currentLoader_;
     //@}
 };
 
@@ -77,6 +78,12 @@ public:
     {
         //NOTHING
     }
+
+    void SetDefaultValueWidget( T* w )
+    {
+        defaultValueWidget_ = w;
+    }
+
 
     T* GetDefaultValueWidget() const
     {

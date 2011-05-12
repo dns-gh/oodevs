@@ -11,6 +11,8 @@
 #include "SupplyRoutePrototype.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_gui/LoadableSpinBox.h"
+#include "clients_gui/LoadableCheckBox.h"
 #include "preparation/SupplyRouteAttribute.h"
 
 using namespace kernel;
@@ -51,7 +53,7 @@ void SupplyRoutePrototype::Commit()
             attribute->SetWidth( width_->value() );
             attribute->SetLength( length_->value() );
             attribute->SetMaxWeight( maxWeight_->value() );
-            attribute->SetEquipped( equipped_->isOn() );
+            attribute->SetEquipped( equipped_->isChecked() );
         }
         creation_->Attach( *attribute );
     }

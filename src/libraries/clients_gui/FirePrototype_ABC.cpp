@@ -14,6 +14,7 @@
 #include "clients_kernel/FireClass.h"
 #include "tools/Iterator.h"
 #include "Tools.h"
+#include "LoadableSpinBox.h"
 
 using namespace gui;
 
@@ -30,7 +31,7 @@ FirePrototype_ABC::FirePrototype_ABC( QWidget* parent, const tools::Resolver_ABC
     fireClass_ = new ValuedComboBox< const kernel::FireClass* >( this );
 
     new QLabel( tools::translate( "gui::FirePrototype_ABC", "Max combustion energy:" ), this );
-    maxCombustionEnergy_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, this );
+    maxCombustionEnergy_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, this );
 
     FillTypes();
 }
@@ -90,4 +91,13 @@ void FirePrototype_ABC::showEvent( QShowEvent* e )
 bool FirePrototype_ABC::CheckValidity() const
 {
     return fireClass_->count() && fireClass_->GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FirePrototype_ABC::SetLoader
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void FirePrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
+{
+    maxCombustionEnergy_->SetLoader( loader );
 }

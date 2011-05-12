@@ -13,6 +13,7 @@
 #include "FloodPrototype_ABC.h"
 #include "Tools.h"
 #include "clients_kernel/Units.h"
+#include "LoadableSpinBox.h"
 
 using namespace gui;
 
@@ -24,15 +25,12 @@ FloodPrototype_ABC::FloodPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::FloodPrototype_ABC", "Flood" ) )
 {
     new QLabel( tools::translate( "gui::FloodPrototype_ABC", "Depth:" ), this );
-    QHBox* box1 = new QHBox( this );
-    depth_ = new QLineEdit( QString::number( 0 ), box1 );
-    depth_->setValidator( new QIntValidator( 0, std::numeric_limits< int >::max(), depth_ ) );
-    new QLabel( kernel::Units::meters.AsString(), box1 );
+    depth_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, this );
+    depth_->setSuffix( kernel::Units::meters.AsString() );
+
     new QLabel( tools::translate( "gui::FloodPrototype_ABC", "Reference distance:" ), this );
-    QHBox* box2 = new QHBox( this );
-    refDist_ = new QLineEdit( QString::number( 0 ), box2 );
-    refDist_->setValidator( new QIntValidator( 0, std::numeric_limits< int >::max(), refDist_ ) );
-    new QLabel( kernel::Units::meters.AsString(), box2 );
+    refDist_ = new LoadableSpinBox( 0, std::numeric_limits< int >::max(), 1, this );
+    refDist_->setSuffix( kernel::Units::meters.AsString() );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,4 +49,14 @@ FloodPrototype_ABC::~FloodPrototype_ABC()
 bool FloodPrototype_ABC::CheckValidity() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodPrototype_ABC::SetLoader
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void FloodPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
+{
+    depth_->SetLoader( loader );
+    refDist_->SetLoader( loader );
 }

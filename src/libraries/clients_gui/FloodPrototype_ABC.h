@@ -13,6 +13,7 @@
 #include "ObjectAttributePrototype_ABC.h"
 
 namespace gui {
+    class LoadableSpinBox;
 
 // =============================================================================
 /** @class  FloodPrototype_ABC
@@ -32,13 +33,14 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity() const;
+    virtual void SetLoader( ObjectPrototypeLoader_ABC* loader );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    QLineEdit* depth_;
-    QLineEdit* refDist_;
+    LoadableSpinBox* depth_;
+    LoadableSpinBox* refDist_;
     //@}
 };
 

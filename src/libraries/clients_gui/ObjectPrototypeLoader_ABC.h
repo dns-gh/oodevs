@@ -49,6 +49,7 @@ public:
     virtual const kernel::Location_ABC& GetCurrentLocation() const = 0;
     virtual QString GetCurrentFieldValueAsString( const QString& ) const = 0;
     virtual int GetCurrentFieldValueAsInt( const QString& ) const = 0;
+    virtual bool GetCurrentFieldValueAsBool( const QString& ) const = 0;
     //@}
 
 private:

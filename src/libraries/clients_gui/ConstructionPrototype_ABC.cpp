@@ -12,6 +12,7 @@
 #include "clients_gui_pch.h"
 #include "ConstructionPrototype_ABC.h"
 #include "Tools.h"
+#include "LoadableSpinBox.h"
 #include "clients_kernel/Units.h"
 
 using namespace gui;
@@ -24,7 +25,7 @@ ConstructionPrototype_ABC::ConstructionPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::ConstructionPrototype_ABC", "Construction" ) )
 {
     new QLabel( tools::translate( "gui::ConstructionPrototype_ABC", "Construction:" ), this );
-    completion_ = new QSpinBox( 1, 100, 1, this );
+    completion_ = new LoadableSpinBox( 1, 100, 1, this );
     completion_->setSuffix( kernel::Units::percentage.AsString() );
     completion_->setValue( 100 );
 }
@@ -45,4 +46,13 @@ ConstructionPrototype_ABC::~ConstructionPrototype_ABC()
 bool ConstructionPrototype_ABC::CheckValidity() const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConstructionPrototype_ABC::SetLoader
+// Created: BCI 2011-05-12
+// -----------------------------------------------------------------------------
+void ConstructionPrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
+{
+    completion_->SetLoader( loader );
 }
