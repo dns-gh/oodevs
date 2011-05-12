@@ -114,6 +114,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -184,6 +185,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -231,6 +233,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -306,6 +309,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -346,6 +350,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -409,6 +414,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -448,6 +454,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -500,6 +507,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -569,6 +577,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -609,6 +618,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -646,6 +656,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -7739,6 +7750,7 @@
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
@@ -7804,6 +7816,7 @@
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -7832,6 +7845,7 @@
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -11620,6 +11634,7 @@
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Population"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
@@ -11677,4 +11692,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1429786707" -->
+<!-- signature="0992314684" -->
