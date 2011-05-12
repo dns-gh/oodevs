@@ -1085,7 +1085,9 @@ void InitFunctions()
     if( functors.empty() )
     {
         functors[ "Boolean" ] = BoolFunction;
+        functors[ "String" ] = StringFunction;
         functors[ "string" ] = StringFunction;
+        functors[ "Enumeration" ] = EnumerationFunction;
         functors[ "enumeration" ] = EnumerationFunction;
         functors[ "DateTime" ] = GDHFunction;
         functors[ "datetime" ] = GDHFunction;
@@ -1124,7 +1126,9 @@ void InitFunctions()
         functors[ "ObjectiveList" ] = ObjectiveListFunction;
 
         functorsBM[ "Boolean" ] = BoolFunctionBM;
+        functorsBM[ "String" ] = StringFunctionBM;
         functorsBM[ "string" ] = StringFunctionBM;
+        functorsBM[ "Enumeration" ] = EnumerationFunctionBM;
         functorsBM[ "enumeration" ] = EnumerationFunctionBM;
         functorsBM[ "DateTime" ] = GDHFunctionBM;
         functorsBM[ "datetime" ] = GDHFunctionBM;
