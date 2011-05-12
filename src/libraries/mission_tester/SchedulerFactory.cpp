@@ -43,3 +43,12 @@ std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAgentScheduler() const
 {
     return std::auto_ptr< Scheduler_ABC >( new Scheduler( filterFactory_->Create( "agent" ), delta_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAutomatScheduler
+// Created: PHC 2011-05-12
+// -----------------------------------------------------------------------------
+std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAutomatScheduler() const
+{
+    return std::auto_ptr< Scheduler_ABC >( new Scheduler( filterFactory_->Create( "automat" ), delta_ ) );
+}

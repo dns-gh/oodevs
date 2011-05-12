@@ -23,13 +23,16 @@ namespace kernel
 namespace sword
 {
     class UnitCreation;
+    class AutomatCreation;
 }
 
 namespace mission_tester
 {
     class Agent;
+    class Automat;
     class Scheduler_ABC;
     class Listener_ABC;
+
 // =============================================================================
 /** @class  Model
     @brief  Model
@@ -80,11 +83,13 @@ private:
     //! @name Helpers
     //@{
     void CreateAgent( const sword::UnitCreation& message );
+    void CreateAutomat( const sword::AutomatCreation& message );
     //@}
 
     //! @name Types
     //@{
     typedef std::map< unsigned long, boost::shared_ptr< Agent > > T_Agents;
+    typedef std::map< unsigned long, boost::shared_ptr< Automat > > T_Automats;
     //@}
 
 private:
@@ -93,6 +98,7 @@ private:
     std::vector< const Listener_ABC* > listeners_;
     const kernel::StaticModel& staticModel_;
     T_Agents agents_;
+    T_Automats automats_;
     Scheduler_ABC& scheduler_;
     //@}
 };

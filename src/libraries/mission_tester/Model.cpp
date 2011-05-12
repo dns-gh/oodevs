@@ -9,6 +9,7 @@
 
 #include "mission_tester_pch.h"
 #include "Agent.h"
+#include "Automat.h"
 #include "Listener_ABC.h"
 #include "Model.h"
 #include "Scheduler_ABC.h"
@@ -48,6 +49,8 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
 {
     if( message.message().has_unit_creation() )
          CreateAgent( message.message().unit_creation() );
+    if( message.message().has_automat_creation() )
+         CreateAutomat( message.message().automat_creation() );
     if( message.message().has_order_ack() )
         if( !message.message().order_ack().error_code() )
             BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
@@ -87,6 +90,17 @@ void Model::CreateAgent( const sword::UnitCreation& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::CreateAutomat
+// Created: PHC 2011-05-12
+// -----------------------------------------------------------------------------
+void Model::CreateAutomat( const sword::AutomatCreation& message )
+{
+    boost::shared_ptr< Automat > automat( new Automat( message, staticModel_.types_ ) );
+    automats_[ message.automat().id() ] = automat;
+    scheduler_.Schedule( automat );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::FindAgent
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
@@ -114,18 +128,24 @@ kernel::Agent_ABC& Model::GetAgent( unsigned int id ) const
 // Name: Model::FindAutomat
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* Model::FindAutomat( unsigned int /*id*/ ) const
+kernel::Automat_ABC* Model::FindAutomat( unsigned int id ) const
 {
-    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+    T_Automats::const_iterator it = automats_.find( id );
+    if( it != automats_.end() )
+        return it->second.get();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Model::GetAutomat
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC& Model::GetAutomat( unsigned int /*id*/ ) const
+kernel::Automat_ABC& Model::GetAutomat( unsigned int id ) const
 {
-    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+    T_Automats::const_iterator it = automats_.find( id );
+    if( it != automats_.end() )
+        return *it->second;
+    throw std::runtime_error( __FUNCTION__ ": unknown automat '" + boost::lexical_cast< std::string >( id ) + "'." );
 }
 
 // -----------------------------------------------------------------------------

@@ -76,7 +76,7 @@ Config::Config( int argc, char** argv )
 // -----------------------------------------------------------------------------
 Config::~Config()
 {
-    // NOTHING
+    xibs_.release();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,5 +143,7 @@ std::auto_ptr< Scheduler_ABC > Config::CreateScheduler( SchedulerFactory& factor
 {
     if( entityType_ == agent )
         return factory.CreateAgentScheduler();
-    throw std::runtime_error( __FUNCTION__ "unhandled scheduler factory to be created" );
+    if( entityType_ == automat )
+        return factory.CreateAutomatScheduler();
+    return std::auto_ptr< Scheduler_ABC >();
 }

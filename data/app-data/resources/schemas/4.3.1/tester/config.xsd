@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
-    
+
     <xs:element name="configuration" type="T_Configuration"/>
-    
+
     <xs:complexType name="T_Configuration" >
         <xs:sequence>
             <xs:element name="initialization" type="T_Initialization"/>
@@ -20,7 +20,7 @@
         <xs:attribute name="scheduler" use="required" type="xs:nonNegativeInteger"/>
         <xs:attribute name="timeout"   use="required" type="xs:nonNegativeInteger"/>
     </xs:complexType>
-    
+
     <xs:complexType name="T_Points">
         <xs:attribute name="upper-left-point"  use="required" type="xs:string"/>
         <xs:attribute name="lower-right-point" use="required" type="xs:string"/>

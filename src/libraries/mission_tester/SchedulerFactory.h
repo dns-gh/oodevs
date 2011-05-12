@@ -36,6 +36,7 @@ public:
     //! @name Operations
     //@{
     std::auto_ptr< Scheduler_ABC > CreateAgentScheduler() const;
+    std::auto_ptr< Scheduler_ABC > CreateAutomatScheduler() const;
     //@}
 
 private:
