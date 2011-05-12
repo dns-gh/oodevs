@@ -4348,6 +4348,14 @@
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="france.military.crowd.tasks.FaireMouvement" dia-type="france.military.crowd.tasks.FaireMouvement" id="3004" name="FOULES Faire Mouvement">
+      <parameter dia-name="objectifs" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
     <mission dia-behavior="france.military.crowd.tasks.Agresser" dia-type="france.military.crowd.tasks.Agresser" id="3001" name="FOULES Agresser">
       <parameter dia-name="objectif" name="Cible" optional="false" type="LocationComposite">
         <choice>
@@ -4362,7 +4370,6 @@
       <parameter dia-name="objectif" name="Destination" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
-          <parameter type="Agent"/>
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
@@ -4560,4 +4567,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0133143952" -->
+<!-- signature="3453273822" -->
