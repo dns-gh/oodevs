@@ -97,6 +97,17 @@
     </message>
 </context>
 <context>
+    <name>LodgingPrototype_ABC</name>
+    <message>
+        <source>Lodging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>R&#xe8;gle GL</name>
     <message>
         <source>2D: %1m

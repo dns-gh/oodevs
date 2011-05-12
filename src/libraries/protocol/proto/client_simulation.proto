@@ -191,6 +191,7 @@ message ObjectMagicAction {
         alerted            = 22;
         evacuated          = 23;
         resource_network   = 24;
+        lodging            = 25;
     }
     required ObjectId          object     = 1; //!< The object identifier
     required Type              type       = 2; //!< The type of magic action

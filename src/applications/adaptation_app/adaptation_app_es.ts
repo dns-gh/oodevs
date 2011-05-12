@@ -3179,6 +3179,10 @@ tirador</translation>
         <source>Type</source>
         <translation>Tipo</translation>
     </message>
+    <message>
+        <source>Lodging</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

@@ -58,15 +58,6 @@ void ActivityTimeAttribute::Display( kernel::Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::DisplayInTooltip
-// Created: JCR 2008-06-10
-// -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DisplayInTooltip( Displayer_ABC& /*displayer*/ ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ActivityTimeAttribute::SerializeAttributes
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------

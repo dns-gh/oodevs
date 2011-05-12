@@ -3,84 +3,79 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "DelayAttribute.h"
+#include "LodgingAttribute.h"
+#include "Tools.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute constructor
-// Created: JSR 2010-07-06
+// Name: LodgingAttribute constructor
+// Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( kernel::PropertiesDictionary& dico )
-    : delay_( 0, Units::hours )
+LodgingAttribute::LodgingAttribute( kernel::PropertiesDictionary& dico )
 {
     CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute constructor
-// Created: JSR 2010-07-06
+// Name: LodgingAttribute constructor
+// Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-DelayAttribute::DelayAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
-    : delay_( 0, Units::hours )
+LodgingAttribute::LodgingAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
 {
-    xis >> xml::attribute( "value", delay_.value_ );
+    xis >> xml::attribute( "capacity", lodgingCapacity_ );
     CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute destructor
-// Created: JSR 2010-07-06
+// Name: LodgingAttribute destructor
+// Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-DelayAttribute::~DelayAttribute()
+LodgingAttribute::~LodgingAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::Display
-// Created: JSR 2010-07-06
+// Name: LodgingAttribute::DisplayInTooltip
+// Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-void DelayAttribute::Display( kernel::Displayer_ABC& displayer ) const
+void LodgingAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Information" ) )
-             .Display( tools::translate( "Object", "Delay time:" ), delay_ );
+    displayer.Display( tools::translate( "Object", "Capacity:" ), lodgingCapacity_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::SerializeAttributes
-// Created: JSR 2010-07-06
+// Name: LogisticAttribute::SerializeAttributes
+// Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-void DelayAttribute::SerializeAttributes( xml::xostream& xos ) const
+void LodgingAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "delay" )
-            << xml::attribute( "value", delay_.value_ )
+    xos << xml::start( "lodging" )
+        << xml::attribute( "capacity", lodgingCapacity_ )
         << xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::SetDelay
-// Created: JSR 2010-07-06
+// Name: LodgingAttribute::SetLodgingCapacity
+// Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-void DelayAttribute::SetDelay( unsigned int time )
+void LodgingAttribute::SetLodgingCapacity( unsigned int capacity )
 {
-    delay_.value_ = time;
+    lodgingCapacity_ = capacity;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DelayAttribute::CreateDictionary
-// Created: JSR 2010-07-06
+// Name: LodgingAttribute::CreateDictionary
+// Created: MMC 2011-05-02
 // -----------------------------------------------------------------------------
-void DelayAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
+void LodgingAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    dico.Register( *this, tools::translate( "DelayAttribute", "Info/Delay parameters/Delay" ), delay_ );
+    dico.Register( *this, tools::translate( "LodgingAttribute", "Info/Lodging attributes/Capacity" ), lodgingCapacity_ );
 }

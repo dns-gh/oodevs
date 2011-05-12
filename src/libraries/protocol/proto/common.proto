@@ -494,7 +494,7 @@ message ControlPause {
     @see ControlResumeAck
 */
 message ControlResume {
-    required uint32 tick = 1 [default = 0]; //!< Resume for "tick" ticks before to pause again
+    optional uint32 tick = 1; //!< Resume for "tick" ticks before to pause again
 }
 
 /** @struct ControlChangeTimeFactor
@@ -1011,6 +1011,13 @@ message ObjectAttributeMine {
    optional int32        percentage = 4; //!< The percentage of completion
 }
 
+/** @struct ObjectAttributeLodging
+    @brief Defines an object attribute lodging
+*/
+message ObjectAttributeLodging {
+   optional int32 capacity   = 1; //!< The resource type
+}
+
 /** @struct ObjectAttributeLogistic
     @brief Defines an object attribute logistic
 */
@@ -1259,6 +1266,7 @@ message ObjectAttributes {
    optional ObjectAttributeBurn              burn               = 18; //!< @copybrief ObjectAttributeBurn
    optional ObjectAttributeFlood             flood              = 19; //!< @copybrief ObjectAttributeFlood
    optional ObjectAttributeBurnSurface       burn_surface       = 20; //!< @copybrief ObjectAttributeBurnSurface
+   optional ObjectAttributeLodging           lodging            = 21; //!< @copybrief ObjectAttributeBurnSurface   
 }
 
 /** @struct Marker

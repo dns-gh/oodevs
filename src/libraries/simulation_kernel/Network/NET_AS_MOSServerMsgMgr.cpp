@@ -78,7 +78,7 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
     else if( wrapper.message().has_control_pause() )
         simulation_.Pause();
     else if( wrapper.message().has_control_resume() )
-        simulation_.Resume( wrapper.message().control_resume().tick() );
+        simulation_.Resume( wrapper.message().control_resume().has_tick() ? wrapper.message().control_resume().tick() : 0 );
     else if( wrapper.message().has_control_change_time_factor() )
         simulation_.SetTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
     else if( wrapper.message().has_control_date_time_change() )

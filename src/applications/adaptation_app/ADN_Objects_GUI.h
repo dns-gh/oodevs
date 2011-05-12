@@ -116,6 +116,7 @@ public:
         ePopulationCapacityPresent,
         ePopulationFilter_Density,
         eResourceNetworkCapacityPresent,
+        eLodgingCapacityPresent,
         eNbrGuiElements
     };
 

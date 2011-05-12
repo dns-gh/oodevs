@@ -219,6 +219,7 @@ void WatershedLayer::MakeGlTexture()
     unsigned short maxElevation = elevation_.MaximumElevation();
     if( maxElevation == 0 )
         return;
+    height_ = std::min( height_, maxElevation );
     std::vector< Color > colors;
     colors.resize( gradientSize_ );
     Color color;

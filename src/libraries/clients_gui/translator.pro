@@ -42,6 +42,7 @@ LocationCreator.cpp \
 LocationEditorBox.cpp \
 LocationEditorToolbar.cpp \
 Logger.cpp \
+LodgingPrototype_ABC.cpp \
 LogisticPrototype_ABC.cpp \
 MedicalTreatmentPrototype_ABC.cpp \
 MetricsLayer.cpp \

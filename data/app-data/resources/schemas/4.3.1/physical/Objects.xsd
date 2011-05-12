@@ -321,6 +321,7 @@
 			<xs:element name="supply" minOccurs="0"/>
 			<xs:element name="supply-route" minOccurs="0"/>
 			<xs:element name="bridging" minOccurs="0"/>
+			<xs:element name="lodging" minOccurs="0"/>
 			<xs:element name="medical" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>

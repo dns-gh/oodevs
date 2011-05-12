@@ -9,20 +9,21 @@
 
 #include "gaming_app_pch.h"
 #include "ObjectPrototype.h"
+#include "ActivityTimePrototype.h"
 #include "CrossingSitePrototype.h"
-#include "SupplyRoutePrototype.h"
-#include "LogisticPrototype.h"
-#include "NBCPrototype.h"
-#include "MinePrototype.h"
-#include "ObstaclePrototype.h"
-#include "MedicalTreatmentPrototype.h"
+#include "DelayPrototype.h"
 #include "FirePrototype.h"
 #include "FirePropagationModifierPrototype.h"
-#include "ActivityTimePrototype.h"
-#include "DelayPrototype.h"
 #include "FloodPrototype.h"
+#include "LodgingPrototype.h"
+#include "LogisticPrototype.h"
+#include "MedicalTreatmentPrototype.h"
+#include "MinePrototype.h"
+#include "NBCPrototype.h"
+#include "ObstaclePrototype.h"
 #include "ResourceNetworkPrototype.h"
 #include "StockPrototype.h"
+#include "SupplyRoutePrototype.h"
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Location.h"
@@ -88,6 +89,11 @@ namespace
     //void BypassableAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
     //{
     //}
+
+    void LodgingAttribute( T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
+    {
+        container.push_back( new LodgingPrototype( parent, attributesList ) );
+    }
 
     void LogisticAttribute( T_AttributeContainer& container, QWidget* parent, kernel::Controllers& controllers, ParameterList*& attributesList )
     {
@@ -173,6 +179,7 @@ namespace
         factory->Register( "supply-route"              , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "bridging"                  , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "flood"                     , boost::bind( &Capacity< FloodPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "lodging"                   , boost::bind( &LodgingAttribute, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "logistic"                  , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( attributesList ) ) );
         factory->Register( "medical"                   , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         factory->Register( "contamination"             , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );

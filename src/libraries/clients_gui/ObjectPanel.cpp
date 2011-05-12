@@ -104,6 +104,7 @@ void ObjectPanel::NotifySelected( const Object_ABC* object )
             UpdateExtension< FireAttribute_ABC >( *selected_ );
             UpdateExtension< MedicalTreatmentAttribute_ABC >( *selected_ );
             UpdateExtension< LogisticAttribute_ABC >( *selected_ );
+            UpdateExtension< LodgingAttribute_ABC >( *selected_ );
             UpdateExtension< CrossingSiteAttribute_ABC >( *selected_ );
             UpdateExtension< SupplyRouteAttribute_ABC >( *selected_ );
             UpdateExtension< ActivityTimeAttribute_ABC >( *selected_ );
@@ -211,6 +212,15 @@ void ObjectPanel::NotifyUpdated( const ObstacleAttribute_ABC& attributes )
 // Created: AGE 2006-02-17
 // -----------------------------------------------------------------------------
 void ObjectPanel::NotifyUpdated( const LogisticAttribute_ABC& attributes )
+{
+    DisplayIfNeeded( attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPanel::NotifyUpdated
+// Created: AGE 2006-02-17
+// -----------------------------------------------------------------------------
+void ObjectPanel::NotifyUpdated( const LodgingAttribute_ABC& attributes )
 {
     DisplayIfNeeded( attributes );
 }

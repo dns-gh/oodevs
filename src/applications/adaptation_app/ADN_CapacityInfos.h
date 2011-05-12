@@ -74,6 +74,7 @@ enum E_Capacities
     eBurnCapacity,
     eUniversalCapacity,
     eResourceNetworkCapacity,
+    eLodgingCapacity,
     eStockCapacity
 };
 

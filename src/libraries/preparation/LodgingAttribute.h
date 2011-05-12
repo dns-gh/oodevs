@@ -3,16 +3,15 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ActivityTimeAttribute_h_
-#define __ActivityTimeAttribute_h_
+#ifndef __LodgingAttribute_h_
+#define __LodgingAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include "clients_kernel/Units.h"
 
 namespace kernel
 {
@@ -26,38 +25,40 @@ namespace xml
 }
 
 // =============================================================================
-/** @class  ActivityTimeAttribute
-    @brief  ActivityTimeAttribute
+/** @class  LodgingAttribute
+    @brief  LodgingAttribute
 */
-// Created: SBO 2007-02-08
+// Created: MARTIN 2011-05-02
 // =============================================================================
-class ActivityTimeAttribute : public kernel::ActivityTimeAttribute_ABC
-                            , public kernel::Serializable_ABC
+class LodgingAttribute : public kernel::ObjectExtension 
+                       , public kernel::Serializable_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActivityTimeAttribute( kernel::PropertiesDictionary& dico );
-             ActivityTimeAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
-    virtual ~ActivityTimeAttribute();
+             LodgingAttribute( kernel::PropertiesDictionary& dico );
+             LodgingAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico );
+
+    virtual ~LodgingAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
 
-    //! @name Modifiers
+    //! @name Operations
     //@{
-    void SetActivityTime( unsigned int time );
+    void SetLodgingCapacity( unsigned int );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ActivityTimeAttribute( const ActivityTimeAttribute& );            //!< Copy constructor
-    ActivityTimeAttribute& operator=( const ActivityTimeAttribute& ); //!< Assignment operator
+    LodgingAttribute( const LodgingAttribute& );            //!< Copy constructor
+    LodgingAttribute& operator=( const LodgingAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
@@ -68,8 +69,8 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::UnitedValue< unsigned int > activityTime_;
+    unsigned int lodgingCapacity_;
     //@}
 };
 
-#endif // __ActivityTimeAttribute_h_
+#endif // __LodgingAttribute_h_

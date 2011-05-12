@@ -31,6 +31,7 @@ IntelligenceFactory.cpp \
 KnowledgeGroup.cpp \
 Lima.cpp \
 Limit.cpp \
+LodgingAttribute.cpp \
 LogMaintenanceConsign.cpp \
 LogMedicalConsign.cpp \
 LogSupplyConsign.cpp \

@@ -80,15 +80,6 @@ void FloodAttribute::Display( Displayer_ABC& displayer ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FloodAttribute::DisplayInTooltip
-// Created: JSR 2010-12-07
-// -----------------------------------------------------------------------------
-void FloodAttribute::DisplayInTooltip( Displayer_ABC& ) const
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: FloodAttribute::SerializeAttributes
 // Created: JSR 2010-12-07
 // -----------------------------------------------------------------------------

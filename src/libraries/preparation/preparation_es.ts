@@ -290,6 +290,13 @@
     </message>
 </context>
 <context>
+    <name>LodgingAttribute</name>
+    <message>
+        <source>Info/Lodging attributes/Capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LogisticAttribute</name>
     <message>
         <source>Info/Camp attributes/Superior</source>
@@ -562,6 +569,10 @@
     </message>
     <message>
         <source>Max combustion energy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacity:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

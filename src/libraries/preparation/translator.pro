@@ -23,6 +23,7 @@ KnowledgeGroup.cpp \
 Lima.cpp \
 Limit.cpp \
 LocalWeather.cpp \
+LodgingAttribute.cpp \
 LogisticAttribute.cpp \
 LogisticBaseStates.cpp \
 MedicalTreatmentAttribute.cpp \

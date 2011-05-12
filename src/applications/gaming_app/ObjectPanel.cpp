@@ -66,7 +66,8 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
                 .AddLabel( tools::findTranslation( "Object", "Build river banks:" ) );
 
     GetBuilder().AddGroup( tools::findTranslation( "Object", "Camp" ) )
-                .AddLabel( tools::findTranslation( "Object", "TC2:" ) );
+                .AddLabel( tools::findTranslation( "Object", "TC2:" ) )
+                .AddLabel( tools::findTranslation( "Object", "Lodging capacity:" ) );
 
     GetBuilder().AddGroup( tools::findTranslation( "NBC", "NBC" ) )
                 .AddLabel( tools::findTranslation( "NBC", "Danger:" ) )

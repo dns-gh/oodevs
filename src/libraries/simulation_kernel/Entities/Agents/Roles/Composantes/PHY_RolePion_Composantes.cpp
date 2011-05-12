@@ -1471,6 +1471,18 @@ void PHY_RolePion_Composantes::DestroyAllComposantes()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetNbrUsableHumans
+// Created: MMC 2011-05-09
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Composantes::GetNbrUsableHumans() const
+{
+    unsigned int count = 0;
+    for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+       count += ( **it ).GetNbrUsableHumans();
+    return count;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::Execute //@TODO MGD use OnComponentComputer hierarchie
 // Created: MGD 2009-09-15
 // -----------------------------------------------------------------------------

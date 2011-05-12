@@ -389,6 +389,11 @@
           </xs:all>
         </xs:complexType>
       </xs:element>
+	  <xs:element name="lodging" minOccurs="0">
+        <xs:complexType>
+          <xs:attribute name="capacity" type="xs:nonNegativeInteger" use="required"/>
+        </xs:complexType>
+	  </xs:element>
     </xs:all>
   </xs:complexType>
 </xs:schema>

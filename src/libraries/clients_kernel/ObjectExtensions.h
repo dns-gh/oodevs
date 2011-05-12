@@ -45,6 +45,7 @@ namespace kernel
         virtual bool IsReservedObstacle() const = 0;
         virtual bool IsReservedObstacleActivated() const = 0;
     };
+    class LodgingAttribute_ABC : public ObjectExtension {};
     class LogisticAttribute_ABC : public ObjectExtension {};
     class CrossingSiteAttribute_ABC : public ObjectExtension {};
     class SupplyRouteAttribute_ABC : public ObjectExtension {};

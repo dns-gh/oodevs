@@ -16,6 +16,7 @@
 #include "MineAttribute.h"
 #include "SupplyRouteAttribute.h"
 #include "CrossingSiteAttribute.h"
+#include "LodgingAttribute.h"
 #include "LogisticAttribute.h"
 #include "ActivityTimeAttribute.h"
 #include "DelayAttribute.h"
@@ -66,6 +67,9 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
 {
     if( attributes.has_logistic() && entity.Retrieve< kernel::LogisticAttribute_ABC >() == 0 )
         entity.Attach< kernel::LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );
+
+    if( attributes.has_lodging() && entity.Retrieve< kernel::LodgingAttribute_ABC >() == 0 )
+        entity.Attach< kernel::LodgingAttribute_ABC >( *new LodgingAttribute( controllers_.controller_, model_.agents_ ) );
 
     if( attributes.has_construction() && entity.Retrieve< kernel::ConstructionAttribute_ABC >() == 0 )
         entity.Attach< kernel::ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_ ) );

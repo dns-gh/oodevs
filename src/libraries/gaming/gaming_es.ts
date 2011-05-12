@@ -300,6 +300,34 @@
         <source>Critical intelligence:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Satisfaction/Lodging</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfaction/Security</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfaction/Health</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Satisfaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lodging:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Security:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Health:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>
@@ -1189,6 +1217,14 @@
     </message>
     <message>
         <source>Nb burning cells:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capacity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lodging capacity:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

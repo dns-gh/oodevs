@@ -123,6 +123,7 @@ message MsgObjectMagicAction {
         structural_state   = 18;
         infrastructure     = 19;
         usages             = 20;
+        lodging            = 21;
    }
    
    required Common.ObjectId             object     = 1;

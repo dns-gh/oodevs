@@ -727,6 +727,10 @@ message ObjectAttributeLogistic {
    required AutomatId tc2 = 1;
 }
 
+message ObjectAttributeLodging {
+   optional int32 capacity = 1;
+}
+
 message ObjectAttributeInteractionHeight {
    required float height = 1;
 }
@@ -870,9 +874,10 @@ message ObjectAttributes {
    optional ObjectAttributeStock             stock               = 14;
    optional ObjectAttributeNBCType           nbc_agent           = 15;   
    optional ObjectAttributeEffectDelay       effect_delay        = 16;
-   optional ObjectAttributeResourceNetwork   resource_networks    = 17;     //not in scipio V1.stab
-   optional ObjectAttributeBurn              burn                 = 18;
-   optional ObjectAttributeBurnSurface       burn_surface         = 19;
+   optional ObjectAttributeResourceNetwork   resource_networks   = 17;     //not in scipio V1.stab
+   optional ObjectAttributeBurn              burn                = 18;
+   optional ObjectAttributeBurnSurface       burn_surface        = 19;
+   optional ObjectAttributeLodging           lodging             = 20;
 }
 
 message MsgMarker {

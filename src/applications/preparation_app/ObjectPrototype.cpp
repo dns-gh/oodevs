@@ -17,15 +17,16 @@
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
 #include "clients_gui/LoadableLineEdit.h"
 #include "ConstructionPrototype.h"
-#include "ObstaclePrototype.h"
-#include "NBCPrototype.h"
+#include "CrossingSitePrototype.h"
 #include "FirePrototype.h"
-#include "StockPrototype.h"
 #include "FloodPrototype.h"
+#include "LodgingPrototype.h"
+#include "LogisticPrototype.h"
 #include "MedicalTreatmentPrototype.h"
 #include "MinePrototype.h"
-#include "LogisticPrototype.h"
-#include "CrossingSitePrototype.h"
+#include "NBCPrototype.h"
+#include "ObstaclePrototype.h"
+#include "StockPrototype.h"
 #include "ResourceNetworkPrototype.h"
 #include "SupplyRoutePrototype.h"
 #include "InputPropagationPrototype.h"
@@ -54,6 +55,11 @@ namespace
 
     void BypassableAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
     {
+    }
+
+    void LodgingAttribute( T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
+    {
+        container.push_back( new LodgingPrototype( parent, object ) );
     }
 
     void LogisticAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, Object_ABC*& object )
@@ -160,6 +166,7 @@ namespace
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( object ) ) );
 
         factory->Register( "flood"                     , boost::bind( &::FloodAttribute, _2, _3, boost::ref( controllers ), boost::cref( detection ), boost::ref( object ) ) );
+        factory->Register( "lodging"                   , boost::bind( &::LodgingAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "logistic"                  , boost::bind( &::LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "interact-with-enemy"       , boost::bind( &::InteractWithEnemyAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "interference"              , boost::bind( &::InterferenceAttribute, _2, _3, boost::ref( object ) ) );

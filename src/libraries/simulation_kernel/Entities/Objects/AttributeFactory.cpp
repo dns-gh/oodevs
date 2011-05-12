@@ -17,6 +17,7 @@
 #include "FloodAttribute.h"
 #include "InteractionHeightAttribute.h"
 #include "InputToxicCloudAttribute.h"
+#include "LodgingAttribute.h"
 #include "LogisticAttribute.h"
 #include "MedicalTreatmentAttribute.h"
 #include "MineAttribute.h"
@@ -96,6 +97,15 @@ namespace
             object.GetAttribute< FloodAttribute >() = FloodAttribute( xis, object.GetLocalisation() );
         }
     };
+
+    template<>
+    struct AddBuilder< LodgingAttribute >
+    {
+        static void Add( Object& object, xml::xistream& xis )
+        {
+            object.GetAttribute< LodgingAttribute >().Load( xis );
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -122,6 +132,7 @@ AttributeFactory::AttributeFactory()
     Register( "delay", boost::bind( &AddBuilder< DelayAttribute >::Add, _1, _2 ) );
     Register( "resources", boost::bind( &AddBuilder< ResourceNetworkAttribute >::Add, _1, _2 ) );
     Register( "flood", boost::bind( &AddBuilder< FloodAttribute >::Add, _1, _2 ) );
+    Register( "lodging", boost::bind( &AddBuilder< LodgingAttribute >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,6 +207,9 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
                 break;
             case ObjectMagicAction::effect_delay:
                 object.GetAttribute< DelayAttribute >() = DelayAttribute( attributes );
+                break;
+            case ObjectMagicAction::lodging:
+                object.GetAttribute< LodgingAttribute >() = LodgingAttribute( attributes );
                 break;
             case ObjectMagicAction::logistic:
                 object.GetAttribute< LogisticAttribute >() = LogisticAttribute( attributes );

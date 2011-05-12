@@ -402,6 +402,11 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eResourceNetworkCapacityPresent ] = & resourceNetwork->GetConnector();
     }
 
+    ADN_GroupBox* lodging = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Lodging" ), hBox );
+    {
+        vInfosConnectors[ eLodgingCapacityPresent ] = & lodging->GetConnector();
+    }
+
     // Connect the list to the interface.
     pList->SetItemConnectors( vInfosConnectors );
 

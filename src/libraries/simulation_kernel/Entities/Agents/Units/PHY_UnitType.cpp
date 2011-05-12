@@ -347,7 +347,7 @@ void PHY_UnitType::InstanciateComposantes( PHY_RolePion_Composantes& role ) cons
         const PHY_ComposanteTypePion& compType = *itComposanteType->first;
         const sComposanteTypeData& compData = itComposanteType->second;
         for( unsigned int i = 0; i < compData.nNbr_; ++i )
-            compType.InstanciateComposante( role, compData.nNbrHumanInCrew_, compData.bMajor_, compData.bLoadable_, compData.bCanBePartOfConvoy_ );
+            compType.InstanciateComposante( role, compData.nNbrHumanInCrew_ , compData.bMajor_, compData.bLoadable_, compData.bCanBePartOfConvoy_ );
     }
 }
 

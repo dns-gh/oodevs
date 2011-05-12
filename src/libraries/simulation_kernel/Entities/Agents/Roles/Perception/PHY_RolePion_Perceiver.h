@@ -170,6 +170,7 @@ public:
     const MIL_KnowledgeGroup& GetKnowledgeGroup() const;
     MIL_Agent_ABC& GetPion() const;
     double GetMaxAgentPerceptionDistance() const;
+    double GetMaxTheoreticalcAgentPerceptionDistance() const;
     void GetMainPerceptionDirection( MT_Vector2D& vDirection ) const;
 
     bool IsPeriphericalVisionEnabled() const;

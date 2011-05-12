@@ -18,6 +18,7 @@
 #include "BurnAttribute.h"
 #include "FloodAttribute.h"
 #include "BurnSurfaceAttribute.h"
+#include "LodgingAttribute.h"
 #include "LogisticAttribute.h"
 #include "KnowledgeGroup.h"
 #include "MedicalTreatmentAttribute.h"
@@ -101,8 +102,8 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
         CreateOrUpdate< MineAttribute >( message );
     if( message.has_logistic() )
         CreateOrUpdate< LogisticAttribute >( message, model_ );
-    if( message.has_mine() )
-        CreateOrUpdate< MineAttribute >( message );
+    if( message.has_lodging() )
+        CreateOrUpdate< LodgingAttribute >( message, model_ );
     if( message.has_bypass() )
         CreateOrUpdate< BypassAttribute >( message );
     if( message.has_crossing_site() )

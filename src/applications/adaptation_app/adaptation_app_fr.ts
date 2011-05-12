@@ -3181,6 +3181,10 @@ du tireur</translation>
         <source>Resource network element</source>
         <translation>Element d&apos;un réseau de ressource</translation>
     </message>
+    <message>
+        <source>Lodging</source>
+        <translation>Hébergement</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

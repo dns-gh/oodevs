@@ -65,6 +65,9 @@ void MIL_AffinitiesMap::ReadAffinity( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AffinitiesMap::WriteODB( xml::xostream& xos ) const
 {
+    if ( affinities_.empty() )
+        return;
+
     xos << xml::start( "adhesions" );
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         xos << xml::start( "adhesion" )

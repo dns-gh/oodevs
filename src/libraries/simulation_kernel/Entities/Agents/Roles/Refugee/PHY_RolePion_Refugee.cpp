@@ -12,12 +12,22 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Refugee.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Automates/MIL_Automate.h"
+#include "Entities/MIL_Army_ABC.h"
+#include "Entities/Objects/LodgingAttribute.h"
+#include "Entities/Objects/LogisticAttribute.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
+#include "simulation_kernel/Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/TransportNotificationHandler_ABC.h"
+
 
 BOOST_CLASS_EXPORT_IMPLEMENT( refugee::PHY_RolePion_Refugee )
 
@@ -48,6 +58,10 @@ PHY_RolePion_Refugee::PHY_RolePion_Refugee( MIL_AgentPion& pion )
     , bManaged_   ( false )
     , pCamp_      ( 0 )
     , bHasChanged_( true )
+    , nbrHumansLodgingManaged_  ( 0 )
+    , lodgingSatisfaction_      ( 0.0f )
+    , securitySatisfaction_     ( 0.5f )
+    , healthSatisfaction_       ( 0.0f )
 {
     // NOTHING
 }
@@ -70,7 +84,11 @@ void PHY_RolePion_Refugee::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Refugee >( *this )
          & bManaged_
-         & const_cast< MIL_Object_ABC*& >( pCamp_ );
+         & const_cast< MIL_Object_ABC*& >( pCamp_ )
+         & nbrHumansLodgingManaged_;
+         & lodgingSatisfaction_;
+         & securitySatisfaction_;
+         & healthSatisfaction_;
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +98,10 @@ void PHY_RolePion_Refugee::serialize( Archive& file, const unsigned int )
 void PHY_RolePion_Refugee::Update( bool /*bIsDead*/ )
 {
     if( pCamp_ && pCamp_->IsMarkedForDestruction() )
-        pCamp_ = 0;
+        UnmanageLodgingCamp();
+    
+    UpdateSecuritySatisfaction();
+
     if( HasChanged() )
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
@@ -93,9 +114,9 @@ void PHY_RolePion_Refugee::Orientate( MIL_AgentPion& pionManaging )
 {
     if( !pion_.GetType().IsRefugee() )
         return;
-    pCamp_       = 0;
     bManaged_    = true;
     bHasChanged_ = true;
+    UnmanageLodgingCamp();
     pion_.GetAutomate().NotifyRefugeeOriented( pionManaging );
     bool bTransportOnlyLoadable = false;
     pionManaging.Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pion_, bTransportOnlyLoadable );
@@ -109,7 +130,6 @@ void PHY_RolePion_Refugee::Release( MIL_AgentPion& callerAgent )
 {
     if( !pion_.GetType().IsRefugee() || !bManaged_ )
         return;
-    pCamp_       = 0;
     bManaged_    = false;
     bHasChanged_ = true;
     pion_.GetAutomate().NotifyRefugeeReleased();
@@ -122,6 +142,9 @@ void PHY_RolePion_Refugee::Release( MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Refugee::ReleaseCamp( MIL_AgentPion& callerAgent, const MIL_Object_ABC& camp )
 {
+    if ( pCamp_ && ( pCamp_ != &camp ) )
+        UnmanageLodgingCamp();
+
     if( !pion_.GetType().IsRefugee() || !bManaged_ )
         return;
     pCamp_       = &camp;
@@ -129,6 +152,7 @@ void PHY_RolePion_Refugee::ReleaseCamp( MIL_AgentPion& callerAgent, const MIL_Ob
     bHasChanged_ = true;
     pion_.GetAutomate().NotifyRefugeeReleased( camp );
     callerAgent.Apply( &transport::TransportNotificationHandler_ABC::MagicUnloadPion, pion_ );
+    ManageLodgingCamp();
 }
 
 // -----------------------------------------------------------------------------
@@ -149,6 +173,9 @@ bool PHY_RolePion_Refugee::IsManaged( const MIL_Object_ABC& camp ) const
 void PHY_RolePion_Refugee::SendFullState( client::UnitAttributes& msg ) const
 {
     msg().set_refugees_managed( bManaged_ );
+    msg().set_refugees_lodging_satisf( lodgingSatisfaction_ );
+    msg().set_refugees_security_satisf( securitySatisfaction_ );
+    msg().set_refugees_health_satisf( healthSatisfaction_ );  
 }
 
 // -----------------------------------------------------------------------------
@@ -162,12 +189,56 @@ void PHY_RolePion_Refugee::SendChangedState( client::UnitAttributes& msg ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::GetNbrHumansCampManaged
+// Created: MMC 2011-05-09
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Refugee::GetNbrHumansCampManaged() const
+{
+    return nbrHumansLodgingManaged_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::GetNbrHumansCampUnmanaged
+// Created: MMC 2011-05-09
+// -----------------------------------------------------------------------------
+unsigned int PHY_RolePion_Refugee::GetNbrHumansCampUnmanaged() const
+{
+    const PHY_RolePion_Composantes& composantes = pion_.GetRole< PHY_RolePion_Composantes >();
+    unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
+    if ( nbrUsableHumans == 0 )
+        return 0;
+    if ( nbrHumansLodgingManaged_ > nbrUsableHumans )
+        return nbrUsableHumans;
+
+    return (nbrUsableHumans - nbrHumansLodgingManaged_);
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Refugee::Clean
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Refugee::Clean()
 {
     bHasChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::UpdateCampSatisfaction
+// Created: MMC 2011-05-09
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Refugee::UpdateLodgingSatisfaction( unsigned int nbrHumansCampManaged )
+{
+    float prevSatisf = lodgingSatisfaction_;
+    nbrHumansLodgingManaged_ = nbrHumansCampManaged;
+
+    PHY_RolePion_Composantes& composantes = pion_.GetRole< PHY_RolePion_Composantes >();
+    unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
+
+    if ( nbrUsableHumans > 0 )
+        lodgingSatisfaction_ = std::min( 1.0f, float( nbrHumansCampManaged ) / float( nbrUsableHumans) );
+
+    if ( prevSatisf != lodgingSatisfaction_ )
+        bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -188,4 +259,89 @@ bool PHY_RolePion_Refugee::IsManaged() const
     return bManaged_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::ManagedLodgingCamp
+// Created: MMC 2011-05-09
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Refugee::ManageLodgingCamp()
+{
+    if ( !pCamp_ )
+        UpdateLodgingSatisfaction( 0 );
+
+    LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pCamp_ )->RetrieveAttribute< LodgingAttribute >();
+    if ( pLodgingAttribute )
+        pLodgingAttribute->ManageRefugee( pion_ );
+
+    UpdateHealthSatisfaction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::UnmanagedLodgingCamp
+// Created: MMC 2011-05-09
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Refugee::UnmanageLodgingCamp()
+{
+    if ( !pCamp_ )
+        return;
+
+    LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pCamp_ )->RetrieveAttribute< LodgingAttribute >();
+    if ( pLodgingAttribute )
+        pLodgingAttribute->UnmanageRefugee( pion_ );
+
+    pCamp_ = 0;
+    UpdateHealthSatisfaction();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::UpdateSecuritySatisfaction
+// Created: MMC 2011-05-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Refugee::UpdateSecuritySatisfaction()
+{
+    float prevSatisf = securitySatisfaction_;
+    securitySatisfaction_ = 0.5f;
+    nearbyUnitsAffinity.resetAffinitySum(   pion_.GetRole< PHY_RolePion_Perceiver >().GetMaxTheoreticalcAgentPerceptionDistance(),
+                                            pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    if ( nearbyUnitsAffinity.maxSqrDistance > 0.01 /*epsilon*/ )
+    {
+        class_mem_fun_void_t< PHY_RolePion_Refugee, DEC_Knowledge_Agent > methodAffinityAgent( & PHY_RolePion_Refugee::AddAffinityNearUnit, *this );
+        pion_.GetKnowledgeGroup().GetKnowledge().ApplyOnKnowledgesAgent( methodAffinityAgent );
+
+        if ( nearbyUnitsAffinity.absAffinitySum_ > 0.0f )
+            securitySatisfaction_ = 0.5f * ( nearbyUnitsAffinity.affinitySum_/nearbyUnitsAffinity.absAffinitySum_ + 1.0f );
+    }
+
+    if ( prevSatisf != securitySatisfaction_ )
+        bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::UpdateHealthSatisfaction
+// Created: MMC 2011-05-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Refugee::UpdateHealthSatisfaction()
+{
+    float prevSatisf = healthSatisfaction_;
+    healthSatisfaction_ = pion_.GetAutomate().GetTC2() ? 1.0f : 0.0f;
+    if ( prevSatisf != healthSatisfaction_ )
+        bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Refugee::AddAffinityNearUnit
+// Created: MMC 2011-05-10
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Refugee::AddAffinityNearUnit( DEC_Knowledge_Agent& agent )
+{
+    const MIL_Army_ABC* army = agent.GetArmy();
+    if ( army && ( agent.GetPosition().SquareDistance( nearbyUnitsAffinity.position ) < nearbyUnitsAffinity.maxSqrDistance ) )
+    {
+        float agentAffinity = pion_.GetAffinity( army->GetID() );
+        nearbyUnitsAffinity.affinitySum_ += agentAffinity;
+        nearbyUnitsAffinity.absAffinitySum_ += fabs( agentAffinity );
+    }
+}
+
 } // namespace refugee
+
+

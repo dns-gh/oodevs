@@ -118,6 +118,7 @@ public:
     virtual void RepairAllComposantes();
     virtual void DestroyRandomComposante();
     virtual void DestroyAllComposantes();
+    unsigned int GetNbrUsableHumans() const;
     //@}
 
     //! @name Pret de composantes

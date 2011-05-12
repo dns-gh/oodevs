@@ -112,7 +112,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_        ( *new MIL_PionOrderManager( *this ) )
     , algorithmFactories_  ( algorithmFactories )
-    , pAffinities_         ( 0 )
+    , pAffinities_         ( new MIL_AffinitiesMap )
 {
     automate.RegisterPion( *this );
 }
@@ -306,8 +306,8 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
                 << xml::attribute( "content", criticalIntelligence_ )
             << xml::end;
     }
-    if( pAffinities_.get() )
-        pAffinities_->WriteODB( xos );
+
+    pAffinities_->WriteODB( xos );
     xos << xml::end;// unit
 }
 
@@ -472,14 +472,11 @@ void MIL_AgentPion::UpdateNetwork()
     GetRole< network::NET_RolePion_Dotations >().SendChangedState();
     GetRole< network::NET_RolePion_Dotations >().Clean();
 
-    if( pAffinities_.get() )
-    {
-        client::UnitAttributes attributesMsg;
-        attributesMsg().mutable_unit()->set_id( GetID() );
-        pAffinities_->UpdateNetwork( attributesMsg );
-        if( attributesMsg().has_adhesions() )
-            attributesMsg.Send( NET_Publisher_ABC::Publisher() );
-    }
+    client::UnitAttributes attributesMsg;
+    attributesMsg().mutable_unit()->set_id( GetID() );
+    pAffinities_->UpdateNetwork( attributesMsg );
+    if( attributesMsg().has_adhesions() )
+        attributesMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -633,8 +630,8 @@ void MIL_AgentPion::SendCreation() const
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
-    if( pAffinities_.get() )
-        pAffinities_->SendFullState( attributesMsg );
+
+    pAffinities_->SendFullState( attributesMsg );
     if( !criticalIntelligence_.empty() || !extensions_.empty() || attributesMsg().has_adhesions() )
         attributesMsg.Send( NET_Publisher_ABC::Publisher() );
 }

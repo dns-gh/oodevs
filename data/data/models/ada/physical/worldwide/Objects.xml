@@ -283,6 +283,7 @@
     <logistic/>
   </object>
   <object geometry="polygon" name="Refugee Holding Area" symbol="G*SPAH----****X" type="refugees camp">
+    <lodging/>
     <logistic/>
   </object>
   <object geometry="point" name="Checkpoint" symbol="G*GPGPPK--****X" type="checkpoint">
@@ -407,4 +408,4 @@
     <time-limited/>
   </object>
 </objects>
-<!-- signature="1599880109" -->
+<!-- signature="0852256484" -->

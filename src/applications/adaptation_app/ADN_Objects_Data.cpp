@@ -1165,6 +1165,7 @@ INIT_DATA( ADN_CapacityInfos_Flood,                   "Flood",                  
 INIT_DATA( ADN_CapacityInfos_Universal,               "Universal",               "universal" );
 INIT_DATA( ADN_CapacityInfos_Stock,                   "Stock",                   "stock" );
 INIT_DATA( ADN_CapacityInfos_ResourceNetwork,         "ResourceNetwork",         "resources" );
+INIT_DATA( ADN_CapacityInfos_Lodging,                 "Lodging",                 "lodging" );
 
 #pragma warning( pop )
 
@@ -1249,6 +1250,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_Universal::TAG ].reset( new ADN_CapacityInfos_Universal() );
     capacities_[ ADN_CapacityInfos_Stock::TAG ].reset( new ADN_CapacityInfos_Stock() );
     capacities_[ ADN_CapacityInfos_ResourceNetwork::TAG ].reset( new ADN_CapacityInfos_ResourceNetwork() );
+    capacities_[ ADN_CapacityInfos_Lodging::TAG ].reset( new ADN_CapacityInfos_Lodging() );
 }
 
 // -----------------------------------------------------------------------------

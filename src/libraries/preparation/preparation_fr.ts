@@ -290,6 +290,13 @@
     </message>
 </context>
 <context>
+    <name>LodgingAttribute</name>
+    <message>
+        <source>Info/Lodging attributes/Capacity</source>
+        <translation>Info/Attributs d&apos;hébergement/Capacité</translation>
+    </message>
+</context>
+<context>
     <name>LogisticAttribute</name>
     <message>
         <source>Info/Camp attributes/Superior</source>
@@ -563,6 +570,10 @@
     <message>
         <source>Reference distance:</source>
         <translation>Distance de référence:</translation>
+    </message>
+    <message>
+        <source>Capacity:</source>
+        <translation>Capacité:</translation>
     </message>
 </context>
 <context>
