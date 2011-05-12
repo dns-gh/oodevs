@@ -26,6 +26,17 @@
 using namespace mission_tester;
 namespace bpo = boost::program_options;
 
+namespace
+{
+    E_EntityType StringToEntityType( const std::string& entityType )
+    {
+        if( entityType == "agent" )
+            return agent;
+        if( entityType == "automat" )
+            return automat;
+        throw std::runtime_error( __FUNCTION__ " unknown entity type '" + entityType + "'" );
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: Config constructor
 // Created: PHC 2011-04-07
@@ -50,6 +61,12 @@ Config::Config( int argc, char** argv )
             >> xml::attribute( "timeout", timeout_ )
             >> xml::optional >> xml::attribute( "password", password_ )
           >> xml::end;
+    std::string entityType;
+    xis   >> xml::start( "filters" )
+            >> xml::attribute( "entity-type", entityType )
+          >> xml::end;
+    entityType_ = StringToEntityType( entityType );
+
     xibs_.reset( new xml::xibufferstream( xis >> xml::start( "points" ) ) );
 }
 
@@ -116,4 +133,15 @@ std::auto_ptr< Timeout > Config::CreateTimeout() const
 std::auto_ptr< Exercise > Config::CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher ) const
 {
     return std::auto_ptr< Exercise >( new Exercise( entities, staticModel, publisher, *xibs_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::auto_ptr< Scheduler_ABC > Config::CreateScheduler
+// Created: PHC 2011-05-12
+// -----------------------------------------------------------------------------
+std::auto_ptr< Scheduler_ABC > Config::CreateScheduler( SchedulerFactory& factory ) const
+{
+    if( entityType_ == agent )
+        return factory.CreateAgentScheduler();
+    throw std::runtime_error( __FUNCTION__ "unhandled scheduler factory to be created" );
 }

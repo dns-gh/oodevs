@@ -32,6 +32,7 @@ namespace mission_tester
    class Client;
    class Exercise;
    class Facade;
+   class Scheduler_ABC;
    class SchedulerFactory;
    class Timeout;
 
@@ -57,6 +58,7 @@ public:
     virtual void ConfigureLogging( Facade& facade ) const = 0;
     virtual std::auto_ptr< Timeout > CreateTimeout() const = 0;
     virtual std::auto_ptr< Exercise > CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher ) const = 0;
+    virtual std::auto_ptr< Scheduler_ABC > CreateScheduler( SchedulerFactory& factory ) const = 0;
     //@}
 };
 }

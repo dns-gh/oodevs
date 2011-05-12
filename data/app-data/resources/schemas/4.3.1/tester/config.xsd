@@ -6,7 +6,8 @@
     <xs:complexType name="T_Configuration" >
         <xs:sequence>
             <xs:element name="initialization" type="T_Initialization"/>
-            <xs:element name="points" type="T_Points"/>
+            <xs:element name="points"         type="T_Points"/>
+            <xs:element name="filters"        type="T_Filters"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -24,5 +25,16 @@
         <xs:attribute name="upper-left-point"  use="required" type="xs:string"/>
         <xs:attribute name="lower-right-point" use="required" type="xs:string"/>
     </xs:complexType>
+
+    <xs:complexType name="T_Filters">
+        <xs:attribute name="entity-type" use="required" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:simpleType name="T_EntityType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="agent"/>
+            <xs:enumeration value="automat"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

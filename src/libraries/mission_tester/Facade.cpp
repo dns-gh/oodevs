@@ -33,8 +33,8 @@ using namespace mission_tester;
 Facade::Facade( const tools::ExerciseConfig& config, const MainFactory_ABC& mainFactory )
     : mainFactory_( mainFactory ) 
     , staticModel_( new kernel::StaticModel() )
+    , factory_    ( mainFactory_.CreateSchedulerFactory() )
 {
-    factory_ = mainFactory_.CreateSchedulerFactory();
     staticModel_->Load( config );
     mainFactory_.ConfigureLogging( *this );
 }
@@ -54,7 +54,7 @@ Facade::~Facade()
 // -----------------------------------------------------------------------------
 void Facade::Run()
 {
-    boost::shared_ptr< Scheduler_ABC > scheduler( factory_->CreateAgentScheduler() );
+    boost::shared_ptr< Scheduler_ABC > scheduler( mainFactory_.CreateScheduler( *factory_ ) );
     Model model( *staticModel_, *scheduler );
     std::auto_ptr< Client > client = mainFactory_.CreateClient( model );
     std::auto_ptr< Exercise > exercise = mainFactory_.CreateExercise( model, *staticModel_, *client );

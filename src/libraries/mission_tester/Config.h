@@ -28,7 +28,15 @@ namespace mission_tester
 {
     class Facade;
     class Client;
+    class Scheduler_ABC;
+    class SchedulerFactory;
     class Timeout;
+
+    enum E_EntityType
+    {
+        agent = 0,
+        automat
+    };
 
 // =============================================================================
 /** @class  Config
@@ -54,6 +62,7 @@ public:
     virtual std::auto_ptr< SchedulerFactory > CreateSchedulerFactory() const;
     virtual std::auto_ptr< Timeout > CreateTimeout() const;
     virtual std::auto_ptr< Exercise > CreateExercise( kernel::EntityResolver_ABC& entities, const kernel::StaticModel& staticModel, Publisher_ABC& publisher ) const;
+    virtual std::auto_ptr< Scheduler_ABC > CreateScheduler( SchedulerFactory& factory ) const;
     //@}
 
 private:
@@ -74,6 +83,7 @@ private:
     unsigned int timeout_;
     unsigned int scheduler_;
     std::auto_ptr< xml::xibufferstream > xibs_;
+    E_EntityType entityType_;
     //@}
 };
 }
