@@ -348,3 +348,12 @@ void DEC_KnowledgeAgentFunctions::UnitDecisionalState( const DEC_Knowledge_Agent
     msg().set_value( value.c_str() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::GetAgentIdFromKnowledge
+// Created: EVH 2011-05-12
+// -----------------------------------------------------------------------------
+unsigned int DEC_KnowledgeAgentFunctions::GetAgentIdFromKnowledge( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    return pKnowledge->GetAgentKnown().GetID();
+}

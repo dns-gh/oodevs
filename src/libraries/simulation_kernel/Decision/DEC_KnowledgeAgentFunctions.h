@@ -60,6 +60,7 @@ public:
     static bool  IsDefinitivelyIlluminated              ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  CanBeIlluminate                        ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  CanIlluminate                          ( const MIL_AgentPion& callerAgent );
+    static unsigned int GetAgentIdFromKnowledge         ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     //@}
 };
 

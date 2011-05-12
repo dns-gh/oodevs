@@ -126,10 +126,12 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
 
     // Urban knowledges accessors
     brain[ "DEC_NiveauDeProtectionMaterielComposantes" ] = &DEC_KnowledgeAgentFunctions::GetMaterialComposantesProtectionLevel;
+    brain[ "DEC_GetAgentIdFromKnowledge" ] = &DEC_KnowledgeAgentFunctions::GetAgentIdFromKnowledge;
 
     //limas / Missions
     brain[ "DEC_GetRawMission" ] = &DEC_AgentFunctions::GetMission;
     brain[ "DEC_HasMission" ] = &DEC_AgentFunctions::HasMission;
+    brain[ "DEC_GetDirectionDanger" ] = &DEC_AgentFunctions::GetDirectionDanger;
 
 
     //Calculs de positions
@@ -145,9 +147,6 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
 
     // Refugies
     brain[ "DEC_Refugies_EstDebarqueDansCamp" ] = &DEC_ActionFunctions::Refugees_IsUnloadedInCamp;
-
-    // Missions
-    brain[ "DEC_GetDirectionDanger" ] = &DEC_AgentFunctions::GetDirectionDanger;
 
     // Critical Intelligence
     brain[ "DEC_ObtenirRenseignementCritiqueSurPion" ] = &DEC_KnowledgeAgentFunctions::GetCriticalIntelligence;
