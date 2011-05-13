@@ -23,7 +23,7 @@
 #include "MIL_DotationTypeParameter.h"
 #include "MIL_EnumerationParameter.h"
 #include "MIL_EquipmentTypeParameter.h"
-#include "MIL_IntegerParameter.h"1
+#include "MIL_IntegerParameter.h"
 #include "MIL_LimaListParameter.h"
 #include "MIL_ListParameter.h"
 #include "MIL_LocationParameter.h"
