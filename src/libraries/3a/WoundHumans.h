@@ -73,7 +73,8 @@ private:
     //@{
     int rankMask_;
     int stateMask_;
-    FilterHelper< int > filter_;
+    FilterHelper< int > selectFilter_;
+    std::map< int, int > fireDamages_;
     //@}
 };
 

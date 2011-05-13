@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __PopulationStates_h_
-#define __PopulationStates_h_
+#ifndef __PopulationUrbanOccupation_h_
+#define __PopulationUrbanOccupation_h_
 
 #include "Extractors.h"
 #include "FilterHelper.h"
@@ -17,12 +17,12 @@ namespace extractors
 {
 
 // =============================================================================
-/** @class  PopulationStates
-    @brief  PopulationStates
+/** @class  PopulationUrbanOccupation
+    @brief  PopulationUrbanOccupation
 */
-// Created: FPO 2011-05-05
+// Created: FPO 2011-05-12
 // =============================================================================
-class PopulationStates : public Extractor< NumericValue >
+class PopulationUrbanOccupation : public Extractor< NumericValue >
 {
 public:
     //! @name Types
@@ -33,9 +33,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-                 PopulationStates();
-    explicit PopulationStates( xml::xistream& xis );
-    virtual     ~PopulationStates();
+             PopulationUrbanOccupation();
+    explicit PopulationUrbanOccupation( xml::xistream& xis );
+    virtual ~PopulationUrbanOccupation();
     //@}
 
     //! @name Operations
@@ -48,25 +48,12 @@ public:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    struct State
-    {
-        State( bool isAsked = false ) : isAsked_( isAsked ), quantity_( 0 ) { }
-        bool isAsked_;
-        int quantity_;
-    };
-    //@}
-
-private:
     //! @name Member data
     //@{
-    State healthy_;
-    State wounded_;
-    State dead_;
+    FilterHelper< int > filter_;
     //@}
 };
 
 }
 
-#endif // __PopulationStates_h_
+#endif // __PopulationUrbanOccupation_h_

@@ -85,8 +85,9 @@ WoundHumans::~WoundHumans()
 // Created: FPO 2011-05-02
 // -----------------------------------------------------------------------------
 WoundHumans::WoundHumans( xml::xistream& xis )
-: rankMask_ ( ReadRanks( xis ) )
-, stateMask_( ReadStates( xis ) )
+    : selectFilter_ ( xis, "select" )
+    , rankMask_ ( ReadRanks( xis ) )
+    , stateMask_( ReadStates( xis ) )
 {
     // NOTHING
 }
@@ -105,7 +106,7 @@ float WoundHumans::Extract( const sword::SimToClient& wrapper ) const
         for( int e = 0; e < damages.humans().elem_size(); ++e )
         {
             const UnitHumanFireDamage& damage = damages.humans().elem( e );
-            if( ( rankMask_ & ( 1 << damage.rank() ) ) != 0 )
+            if( ( rankMask_ & ( 1 << damage.rank() ) ) != 0 && selectFilter_.IsAllowed( damages.target().id() ) )
                 for( unsigned int i = 0; i < nHumanDamageStates; ++i )
                     if( ( stateMask_ & ( 1 << i ) ) != 0 )
                         result += ( damage.*humanDamageData[i] )();

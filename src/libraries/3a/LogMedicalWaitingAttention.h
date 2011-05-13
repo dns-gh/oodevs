@@ -44,7 +44,7 @@ public:
     {
         return ( wrapper.message().has_log_medical_handling_update() && wrapper.message().log_medical_handling_update().has_state() );
     }
-    float Extract( const sword::SimToClient& wrapper );
+    int Extract( const sword::SimToClient& wrapper );
     //@}
 
 private:

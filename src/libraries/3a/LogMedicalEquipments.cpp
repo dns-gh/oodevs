@@ -34,14 +34,14 @@ namespace
             return true;
         FilterHelper< std::string > equipments( xis, "types" );
         bool result = false;
-        if( equipments.IsAllowed( logEquipements[index] ) )
+        if( equipments.IsAllowed( logEquipements[ index ] ) )
                 result = true;
         return result;
     }
 
-    float addToResult( const sword::SeqOfLogMedicalEquipmentAvailability& equipments )
+    int addToResult( const sword::SeqOfLogMedicalEquipmentAvailability& equipments )
     {
-        float result = 0;
+        int result = 0;
         for( int u = 0; u < equipments.elem_size(); ++u )
         {
             const sword::LogMedicalEquipmentAvailability& equip = equipments.elem( u );
@@ -76,10 +76,10 @@ LogMedicalEquipments::~LogMedicalEquipments()
 // Name: LogMedicalEquipments::Extract
 // Created: FPO 2011-05-03
 // -----------------------------------------------------------------------------
-float LogMedicalEquipments::Extract( const sword::SimToClient& wrapper )
+int LogMedicalEquipments::Extract( const sword::SimToClient& wrapper )
 {
     const sword::LogMedicalState& logstate = wrapper.message().log_medical_state();
-    float result = 0;
+    int result = 0;
 
     if( ambulances_releve_.isAsked_ && logstate.has_evacuation_ambulances() )
     {

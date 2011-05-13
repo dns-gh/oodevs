@@ -83,8 +83,16 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
         Extract< attributes::Equipments, IdentifierValue >( name, xis, result );
     else if( value == "humans" )
         Extract< attributes::Humans, IdentifierValue >( name, xis, result );
-    else if( value == "populations" )
+    else if( value == "population-states" )
         Extract< attributes::PopulationStates, IdentifierValue >( name, xis, result );
+    else if( value == "crowd-states" )
+        Extract< attributes::CrowdConcentration, IdentifierValue >( name, xis, result );
+    else if( value == "satisfaction" )
+        Extract< attributes::PopulationSatisfaction, IdentifierValue >( name, xis, result );
+    else if( value == "population-in-selected-blocks" )
+        Extract< attributes::PopulationUrbanOccupation, IdentifierValue >( name, xis, result );
+    else if( value == "infrastructure-functional-state" )
+        Extract< attributes::PopulationUrbanOccupation, IdentifierValue >( name, xis, result );
     else if( value == "stocks" )
         Extract< attributes::LogSupplyStocks, IdentifierValue >( name, xis, result );
     else if( value == "maintenance-handling-unit" )
@@ -101,10 +109,10 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
         Extract< events::WoundHumans, extractors::WoundHumans::IdentifierValue >( name, xis, result );
     else if( value == "ambulances" )
         Extract< attributes::LogMedicalEquipments, IdentifierValue >( name, xis, result );
-    else if( value == "waiting-for-medical" )
-        Extract< attributes::LogMedicalWaitingAttention, IdentifierValue >( name, xis, result );
     else if( value == "maintenance" )
         Extract< attributes::LogMaintenanceEquipments, IdentifierValue >( name, xis, result );
+    else if( value == "waiting-for-medical" )
+        Extract< attributes::LogMedicalWaitingAttention, IdentifierValue >( name, xis, result );
     else if( value == "detecting-unit" )
         Extract< attributes::Detections, IdentifierValue >( name, xis, result );
     else if( value == "mounted" )

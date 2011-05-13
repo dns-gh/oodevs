@@ -46,7 +46,7 @@ public:
             wrapper.message().log_maintenance_state().has_repairers() ||
             wrapper.message().log_maintenance_state().has_haulers() ) );
     }
-    float Extract( const sword::SimToClient& wrapper );
+    int Extract( const sword::SimToClient& wrapper );
     //@}
 
 private:
@@ -56,7 +56,7 @@ private:
     {
         Equip( bool isAsked = false ) : isAsked_( isAsked ), quantity_( 0 ) { }
         bool isAsked_;
-        float quantity_;
+        int quantity_;
     };
     //@}
 

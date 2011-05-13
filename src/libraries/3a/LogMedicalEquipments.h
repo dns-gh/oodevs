@@ -46,7 +46,7 @@ public:
                  wrapper.message().log_medical_state().has_evacuation_ambulances() ||
                  wrapper.message().log_medical_state().has_collection_ambulances() ) );
     }
-    float Extract( const sword::SimToClient& wrapper );
+    int Extract( const sword::SimToClient& wrapper );
     //@}
 
 private:
@@ -56,7 +56,7 @@ private:
     {
         Equip( bool isAsked = false ) : isAsked_( isAsked ), quantity_( 0 ) { }
         bool isAsked_;
-        float quantity_;
+        int quantity_;
     };
     //@}
 

@@ -7,27 +7,37 @@
 //
 // *****************************************************************************
 
-#include "PopulationStates.h"
+#include "CrowdConcentration.h"
 
 using namespace sword;
 using namespace extractors;
 
 // -----------------------------------------------------------------------------
-// Name: PopulationStates constructor
-// Created: FPO 2011-05-05
+// Name: CrowdConcentration constructor
+// Created: FPO 2011-05-13
 // -----------------------------------------------------------------------------
-PopulationStates::PopulationStates()
+CrowdConcentration::CrowdConcentration()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrowdConcentration destructor
+// Created: FPO 2011-05-13
+// -----------------------------------------------------------------------------
+CrowdConcentration::~CrowdConcentration()
 {
     // NOTHING
 }
 
 namespace
 {
-    const char* populationStates[ 3 ] =
+    const char* populationStates[ 4 ] =
     {
         "healthy",
         "wounded",
         "dead",
+        "contaminated",
     };
     bool ReadMask( xml::xistream& xis, unsigned int index )
     {
@@ -42,34 +52,26 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationStates constructor
-// Created: FPO 2011-05-05
+// Name: CrowdConcentration constructor
+// Created: FPO 2011-05-13
 // -----------------------------------------------------------------------------
-PopulationStates::PopulationStates( xml::xistream& xis )
-    : healthy_( ReadMask ( xis, 0 ) )
-    , wounded_( ReadMask ( xis, 1 ) )
-    , dead_   ( ReadMask ( xis, 2 ) )
+CrowdConcentration::CrowdConcentration( xml::xistream& xis )
+    : healthy_     ( ReadMask ( xis, 0 ) )
+    , wounded_     ( ReadMask ( xis, 1 ) )
+    , dead_        ( ReadMask ( xis, 2 ) )
+    , contaminated_( ReadMask ( xis, 3 ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: PopulationStates destructor
-// Created: FPO 2011-05-05
+// Name: CrowdConcentration::Extract
+// Created: FPO 2011-05-13
 // -----------------------------------------------------------------------------
-PopulationStates::~PopulationStates()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationStates::Extract
-// Created: FPO 2011-05-05
-// -----------------------------------------------------------------------------
-int PopulationStates::Extract( const sword::SimToClient& wrapper )
+int CrowdConcentration::Extract( const sword::SimToClient& wrapper )
 {
     int result = 0;
-    const PopulationUpdate& update = wrapper.message().population_update();
+    const CrowdConcentrationUpdate& update = wrapper.message().crowd_concentration_update();
 
     if( healthy_.isAsked_ && update.has_healthy() )
         healthy_.quantity_ = update.healthy();
@@ -77,9 +79,13 @@ int PopulationStates::Extract( const sword::SimToClient& wrapper )
         wounded_.quantity_ = update.wounded();
     if( dead_.isAsked_ && update.has_dead() )
         dead_.quantity_ = update.dead();
+    if( contaminated_.isAsked_ && update.has_contaminated() )
+        contaminated_.quantity_ = update.contaminated();
 
     result += healthy_.quantity_;
     result += wounded_.quantity_;
     result += dead_.quantity_;
+    result += contaminated_.quantity_;
+
     return result;
 }
