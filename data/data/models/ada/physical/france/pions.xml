@@ -11194,7 +11194,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PlatoonINF" id="425" name="Section . CBT INF VAB CDS OFF" type="Pion INF">
+  <unit decisional-model="Masalife.PlatoonINF" id="425" name="Section . CBT INF VAB CDS OFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -11226,7 +11226,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PlatoonINF" id="426" name="Section . CDT CIE INF VAB" type="Pion INF">
+  <unit decisional-model="Masalife.PlatoonINF" id="426" name="Section . CDT CIE INF VAB" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="2" crew="3" type="VBL 7,62"/>
@@ -11256,7 +11256,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PlatoonABC" id="427" name="Peloton . LECLERC CDP OFF" type="Pion ABC">
+  <unit decisional-model="Masalife.PlatoonABC" id="427" name="Peloton . LECLERC CDP OFF" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
@@ -11283,7 +11283,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="10" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.combat.support.artillery.roles.Artillery" id="428" name="Section de Tir . AUF1 CDS OFF" type="Pion ASS">
+  <unit decisional-model="Masalife.Artillerie" id="428" name="Section de Tir . AUF1 CDS OFF" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="Char AUF1"/>
@@ -11321,7 +11321,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.combat.support.engineer.roles.Engineer" id="429" name="Groupe GEN . EBG" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie" id="429" name="Groupe GEN . EBG" type="Pion GEN">
     <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="EBG"/>
@@ -11340,7 +11340,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.combat.support.engineer.roles.Engineer" id="430" name="Groupe GEN . MPG" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie" id="430" name="Groupe GEN . MPG" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="MPG"/>
@@ -11522,7 +11522,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.combat.support.artillery.roles.Artillery" id="437" name="PC . Batterie ASS" type="Pion ASS">
+  <unit decisional-model="Masalife.Artillerie" id="437" name="PC . Batterie ASS" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -11550,7 +11550,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="sword.military.platoon.terrorism.roles.Sniper" id="438" name="Tireur" type="Pion ASY">
+  <unit decisional-model="Masalife.Sniper" id="438" name="Tireur" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Tireur Elite"/>
@@ -11575,7 +11575,7 @@
     <efficiencies combat="50" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="sword.military.platoon.roles.PlatoonTest" id="439" name="Pion de tests" type="Pion INF">
+  <unit decisional-model="Masalife.PlatoonTest" id="439" name="Pion de tests" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -11628,7 +11628,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PIA" id="441" name="PIA Dominante INF" type="Pion INF">
+  <unit decisional-model="Masalife.PIA" id="441" name="PIA Dominante INF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -11662,7 +11662,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PIA" id="442" name="PIA Dominante ABC" type="Pion ABC">
+  <unit decisional-model="Masalife.PIA" id="442" name="PIA Dominante ABC" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
@@ -11696,7 +11696,7 @@
     <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PIA" id="443" name="PIA Dominante Reco" type="Pion RENS">
+  <unit decisional-model="Masalife.PIA" id="443" name="PIA Dominante Reco" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VBL MILAN"/>
@@ -11725,7 +11725,7 @@
     <efficiencies combat="10" combat-support="10" counter-mobility-support="0" engineering-support="5" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PC" id="444" name="PC SGTIA" type="Pion INF">
+  <unit decisional-model="Masalife.PC" id="444" name="PC SGTIA" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -11757,7 +11757,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PlatoonINF" id="445" name="Section . CBT INF VAB CDS SOFF" type="Pion INF">
+  <unit decisional-model="Masalife.PlatoonINF" id="445" name="Section . CBT INF VAB CDS SOFF" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
@@ -11789,7 +11789,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.Mortier" id="446" name="Groupe . MO81 VAB" type="Pion INF">
+  <unit decisional-model="Masalife.Mortier" id="446" name="Groupe . MO81 VAB" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Equipe Mortier 81"/>
@@ -11820,7 +11820,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="80"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PlatoonABC" id="447" name="Peloton . LECLERC CDP SOFF" type="Pion ABC">
+  <unit decisional-model="Masalife.PlatoonABC" id="447" name="Peloton . LECLERC CDP SOFF" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="Char LECLERC"/>
@@ -11847,7 +11847,7 @@
     <efficiencies combat="100" combat-support="80" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="10" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PlatoonABC" id="448" name="Peloton . d appui direct" type="Pion ABC">
+  <unit decisional-model="Masalife.PlatoonABC" id="448" name="Peloton . d appui direct" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/light"/>
     <equipments>
       <equipment count="1" crew="2" type="VBL CDT"/>
@@ -11874,7 +11874,7 @@
     <efficiencies combat="50" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.PC" id="449" name="Peloton . LECLERC CDT ESC" type="Pion ABC">
+  <unit decisional-model="Masalife.PC" id="449" name="Peloton . LECLERC CDT ESC" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VBL CDT"/>
@@ -11905,7 +11905,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.terrorism.roles.Terrorist" id="450" name="Terroriste V1STAB" type="Pion ASY">
+  <unit decisional-model="Masalife.Terroriste" id="450" name="Terroriste V1STAB" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="Terroriste"/>
@@ -11930,7 +11930,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="ONG Intervention" id="451" name="ONG Intervention" type="Pion GEN">
+  <unit decisional-model="Masalife.ONG Intervention" id="451" name="ONG Intervention" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="MPG"/>
@@ -11951,7 +11951,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.terrorism.roles.IndividuIsole" id="452" name="Pion test individu isole" type="Pion Civilian">
+  <unit decisional-model="Masalife.Individu Isole" id="452" name="Pion test individu isole" type="Pion Civilian">
     <nature atlas-nature="None" level="none" nature-app6="undefined"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Foule"/>
@@ -11971,7 +11971,7 @@
     <repartition children="0" female="0" male="1"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="ONG LOG" id="453" name="ONG Soutien LOG" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.ONG LOG" id="453" name="ONG Soutien LOG" type="Pion LOG TC2">
     <nature atlas-nature="None" level="ooo" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment convoyer="true" count="1" crew="2" type="Camion Citerne Semi remorque 30m3"/>
@@ -11995,7 +11995,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.Milice" id="454" name="MILICE . CDT" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="454" name="MILICE . CDT" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Milicien VL MIT 14.5"/>
@@ -12022,7 +12022,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="france.military.platoon.roles.Milice" id="455" name="MILICE . Miliciens" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="455" name="MILICE . Miliciens" type="Pion MILICE">
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Milicien VL MIT 14.5"/>
@@ -12051,4 +12051,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3299113157" -->
+<!-- signature="3698105010" -->

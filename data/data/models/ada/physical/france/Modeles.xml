@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Models.xsd">
   <units>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.PlatoonINF">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PlatoonINF">
       <missions>
         <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
@@ -79,7 +79,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.Mortier">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Mortier">
       <missions>
         <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
@@ -121,7 +121,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.PlatoonABC">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PlatoonABC">
       <missions>
         <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
@@ -193,7 +193,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.PEI">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PEI">
       <missions>
         <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
@@ -242,7 +242,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.PIA">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PIA">
       <missions>
         <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
@@ -319,7 +319,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.PC">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PC">
       <missions>
         <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
@@ -361,7 +361,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="sword.military.platoon.roles.PlatoonTest">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PlatoonTest">
       <missions>
         <mission name="TEST Advance"/>
         <mission name="TEST AnimateObjects"/>
@@ -425,7 +425,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="france.military.platoon.combat.support.artillery.roles.Artillery">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Artillerie">
       <missions>
         <mission name="ASS Assurer la Mise En Oeuvre">
           <fragorder name="Appliquer les feux"/>
@@ -465,7 +465,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="france.military.platoon.combat.support.engineer.roles.Engineer">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -518,7 +518,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="ONG Intervention">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ONG Intervention">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -552,7 +552,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="sword.military.platoon.individual.roles.Individual" file="BMPion.bms" masalife="true" name="sword.military.platoon.terrorism.roles.Sniper">
+    <unit dia-type="sword.military.platoon.individual.roles.Individual" file="BMPion.bms" masalife="true" name="Masalife.Sniper">
       <missions>
         <mission name="Embuscade"/>
         <mission name="COMMUNES Decrocher"/>
@@ -589,7 +589,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.terrorism.roles.Individu" file="BMPion.bms" masalife="true" name="france.military.platoon.terrorism.roles.Terrorist">
+    <unit dia-type="france.military.platoon.terrorism.roles.Individu" file="BMPion.bms" masalife="true" name="Masalife.Terroriste">
       <missions>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
@@ -630,7 +630,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.terrorism.roles.Individu" file="BMPion.bms" masalife="true" name="france.military.platoon.terrorism.roles.IndividuIsole">
+    <unit dia-type="france.military.platoon.terrorism.roles.Individu" file="BMPion.bms" masalife="true" name="Masalife.Individu Isole">
       <missions>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
@@ -7628,7 +7628,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="ONG LOG">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ONG LOG">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -7664,7 +7664,7 @@
         <fragorder name="Arreter Silence Radar"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="france.military.platoon.roles.Milice">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Milice">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
@@ -7705,7 +7705,7 @@
     </unit>
   </units>
   <automats>
-    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="france.military.company.roles.SGTIA">
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.SGTIA">
       <missions>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
@@ -7764,7 +7764,7 @@
         <fragorder name="Embarquer"/>
       </fragorders>
     </automat>
-    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="ONG">
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ONG">
       <missions>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
@@ -7798,7 +7798,7 @@
         <fragorder name="Embarquer"/>
       </fragorders>
     </automat>
-    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="france.military.company.combat.support.artillery.roles.Battery">
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Artillerie">
       <missions>
         <mission name="ASS SeDeployer"/>
         <mission name="ASS Illumination et Tir Synchronise"/>
@@ -7829,7 +7829,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
-    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="sword.military.company.terrorism.roles.SniperCompany">
+    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.SniperCompany">
       <missions>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Decrocher"/>
@@ -11620,7 +11620,7 @@
         <fragorder name="Changer Regles Engagement Population"/>
       </fragorders>
     </automat>
-    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="france.military.company.roles.Milice">
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Milice">
       <missions>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
@@ -11674,7 +11674,7 @@
         <fragorder name="Population Changer Attitude"/>
       </fragorders>
     </crowd>
-    <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="france.military.crowd.roles.Foule">
+    <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="Masalife.Foule">
       <missions>
         <mission name="COMMUNES AllerA">
           <fragorder name="Population Changer Attitude"/>
@@ -11701,4 +11701,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1510916204" -->
+<!-- signature="1889006864" -->

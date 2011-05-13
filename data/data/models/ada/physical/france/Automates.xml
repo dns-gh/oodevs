@@ -1015,7 +1015,7 @@
   <automat decisional-model="GTIA" id="671" name="GTIA" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton LECLERC CDT ESC"/>
   </automat>
-  <automat decisional-model="france.military.company.roles.SGTIA" id="672" name="SGTIA" type="Automate SGTIA">
+  <automat decisional-model="Masalife.SGTIA" id="672" name="SGTIA" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Section . CBT INF VAB CDS OFF"/>
     <unit max-occurs="2" min-occurs="2" type="Section . CDT CIE INF VAB"/>
     <unit max-occurs="2" min-occurs="2" type="Peloton . LECLERC CDP OFF"/>
@@ -1032,20 +1032,20 @@
     <unit max-occurs="3" min-occurs="3" type="Section CBT INF VAB CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="Section CBT INF VAB CDS SOFF"/>
   </automat>
-  <automat decisional-model="france.military.company.combat.support.artillery.roles.Battery" id="675" name="Batterie ASS . AUF1" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.Artillerie" id="675" name="Batterie ASS . AUF1" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC . Batterie ASS"/>
     <unit max-occurs="2" min-occurs="2" type="Section de Tir . AUF1 CDS OFF"/>
   </automat>
-  <automat decisional-model="sword.military.company.terrorism.roles.SniperCompany" id="676" name="Tireurs" type="Automate ASY">
+  <automat decisional-model="Masalife.SniperCompany" id="676" name="Tireurs" type="Automate ASY">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Tireur"/>
   </automat>
-  <automat decisional-model="france.military.company.roles.SGTIA" id="677" name="SGTIA PIA" type="Automate SGTIA">
+  <automat decisional-model="Masalife.SGTIA" id="677" name="SGTIA PIA" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC SGTIA"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante ABC"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante INF"/>
     <unit max-occurs="3" min-occurs="1" type="PIA Dominante Reco"/>
   </automat>
-  <automat decisional-model="france.military.company.roles.SGTIA" id="678" name="SGTIA INF" type="Automate SGTIA">
+  <automat decisional-model="Masalife.SGTIA" id="678" name="SGTIA INF" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Section . CDT CIE INF VAB"/>
     <unit max-occurs="2" min-occurs="2" type="Section . CBT INF VAB CDS SOFF"/>
     <unit max-occurs="1" min-occurs="1" type="Section . CBT INF VAB CDS OFF"/>
@@ -1056,7 +1056,7 @@
     <unit max-occurs="3" type="PIA Dominante INF"/>
     <unit max-occurs="3" type="PIA Dominante Reco"/>
   </automat>
-  <automat decisional-model="france.military.company.roles.SGTIA" id="679" name="SGTIA ABC" type="Automate SGTIA">
+  <automat decisional-model="Masalife.SGTIA" id="679" name="SGTIA ABC" type="Automate SGTIA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton . LECLERC CDT ESC"/>
     <unit max-occurs="2" min-occurs="2" type="Peloton . LECLERC CDP SOFF"/>
     <unit max-occurs="2" min-occurs="1" type="Peloton . LECLERC CDP OFF"/>
@@ -1067,13 +1067,13 @@
     <unit max-occurs="3" type="PIA Dominante INF"/>
     <unit max-occurs="3" type="PIA Dominante Reco"/>
   </automat>
-  <automat decisional-model="ONG" id="680" name="ONG" type="Automate LOG TC2">
+  <automat decisional-model="Masalife.Automate.ONG" id="680" name="ONG" type="Automate LOG TC2">
     <unit command-post="true" min-occurs="1" type="ONG Soutien LOG"/>
     <unit min-occurs="1" type="ONG Intervention"/>
   </automat>
-  <automat decisional-model="france.military.company.roles.Milice" id="681" name="MILICE" type="Automate MILICE">
+  <automat decisional-model="Masalife.Automate.Milice" id="681" name="MILICE" type="Automate MILICE">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="MILICE . CDT"/>
     <unit max-occurs="2" min-occurs="2" type="MILICE . Miliciens"/>
   </automat>
 </automats>
-<!-- signature="3457510580" -->
+<!-- signature="1568373093" -->
