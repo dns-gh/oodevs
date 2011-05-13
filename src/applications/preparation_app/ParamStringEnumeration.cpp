@@ -84,6 +84,10 @@ namespace
         {
             content += GetValue().ascii();
         }
+        virtual std::string SerializeType() const
+        {
+            return "string";
+        }
     };
 }
 
