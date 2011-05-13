@@ -33,7 +33,7 @@ BOOST_AUTO_TEST_CASE( SessionOption_RemoveOptionTest )
 {
     frontend::CreateSession session( "dummy path" );
     session.SetDefaultValues();
-	session.SetOption( "session/config/dispatcher/plugins/shield", "" );
+    session.SetOption( "session/config/dispatcher/plugins/shield", "" );
     BOOST_CHECK( session.HasOption( "session/config/dispatcher/plugins/recorder" ) );
     BOOST_CHECK( session.HasOption( "session/config/dispatcher/plugins/shield" ) );
     session.RemoveOption( "session/config/dispatcher/plugins/recorder" );

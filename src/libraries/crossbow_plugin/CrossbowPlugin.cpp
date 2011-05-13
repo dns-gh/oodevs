@@ -60,16 +60,16 @@ namespace
     };
 }
 
-class CrossbowPlugin::ListenerThread : public boost::thread 
+class CrossbowPlugin::ListenerThread : public boost::thread
 {
 public:
-    ListenerThread( CrossbowPublisher& crossbow, int frequency ) 
+    ListenerThread( CrossbowPublisher& crossbow, int frequency )
         : boost::thread( boost::bind( &CrossbowPlugin::ListenerThread::Run, this ) )
         , crossbow_ ( crossbow ), frequency_ ( frequency ) {}
-    
+
     void Run()
     {
-        while ( true ) 
+        while ( true )
         {
             crossbow_.UpdateListeners();
             boost::this_thread::sleep( boost::posix_time::milliseconds( frequency_ ) );
@@ -94,7 +94,7 @@ CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream&
     try
     {
         crossbowPublisher_.reset( new CrossbowPublisher( config, model, staticModel, publisher, xis ) );
-        listeners_.reset( new ListenerThread( *crossbowPublisher_, 500 ) ); 
+        listeners_.reset( new ListenerThread( *crossbowPublisher_, 500 ) );
         MT_LOG_INFO_MSG( "CrossbowPlugin : registered." )
     }
     catch ( std::exception& ex )

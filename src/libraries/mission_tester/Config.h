@@ -45,7 +45,7 @@ namespace mission_tester
 // Created: PHC 2011-04-07
 // =============================================================================
 class Config : private boost::base_from_member< std::auto_ptr< tools::RealFileLoaderObserver_ABC > >
-             , public tools::ExerciseConfig 
+             , public tools::ExerciseConfig
              , public MainFactory_ABC
 {
 public:

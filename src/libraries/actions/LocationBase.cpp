@@ -95,8 +95,8 @@ void LocationBase::ReadPoint( xml::xistream& xis )
     if( result.size() == 2 ) //Location in WGS84
     {
         point = converter_.ConvertFromGeo( geometry::Point2d( boost::lexical_cast< double >( result[ 0 ] ),
-                                                      boost::lexical_cast< double >( result[ 1 ] ) ) );    
-    }   
+                                                      boost::lexical_cast< double >( result[ 1 ] ) ) );
+    }
     else
         point = converter_.ConvertToXY( mgrs );
 

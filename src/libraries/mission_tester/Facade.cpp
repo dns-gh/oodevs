@@ -31,7 +31,7 @@ using namespace mission_tester;
 // Created: PHC 2011-04-05
 // -----------------------------------------------------------------------------
 Facade::Facade( const tools::ExerciseConfig& config, const MainFactory_ABC& mainFactory )
-    : mainFactory_( mainFactory ) 
+    : mainFactory_( mainFactory )
     , staticModel_( new kernel::StaticModel() )
     , factory_    ( mainFactory_.CreateSchedulerFactory() )
 {

@@ -118,7 +118,7 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
 // Created: LDC 2011-05-05
 // -----------------------------------------------------------------------------
 void RegisterPopulationFunctions( directia::brain::Brain& brain )
-{    
+{
     // Population
     brain[ "DEC_Agent_CanaliserPopulation" ] =
         boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_AgentFunctions::ChannelPopulations, _1 ) );
@@ -137,7 +137,7 @@ void RegisterPopulationFunctions( directia::brain::Brain& brain )
 // Created: LDC 2011-05-05
 // -----------------------------------------------------------------------------
 void RegisterAgentKnowledgeFunctions( directia::brain::Brain& brain )
-{        
+{
     brain[ "DEC_ConnaissanceAgent_EtatOps" ] =
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetOperationalState, _1 ) );
     brain[ "DEC_ConnaissanceAgent_EstDetruitTactique" ] =

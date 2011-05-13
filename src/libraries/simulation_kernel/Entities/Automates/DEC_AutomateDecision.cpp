@@ -493,7 +493,7 @@ MIL_Automate& DEC_AutomateDecision::GetAutomate() const
     assert( pEntity_ );
     return *pEntity_;
 }
-  
+
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GetKnowledgeGroup
 // Created: LDC 2011-05-05

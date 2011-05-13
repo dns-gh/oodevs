@@ -22,7 +22,7 @@ namespace xml
 {
     class xistream;
 }
-    
+
 class SwordClient;
 
 namespace edxl

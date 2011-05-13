@@ -42,7 +42,7 @@ public:
     //@{
     bool HasValue( const sword::SimToClient& wrapper ) const
     {
-        return ( wrapper.message().has_log_medical_state() && ( 
+        return ( wrapper.message().has_log_medical_state() && (
                  wrapper.message().log_medical_state().has_evacuation_ambulances() ||
                  wrapper.message().log_medical_state().has_collection_ambulances() ) );
     }

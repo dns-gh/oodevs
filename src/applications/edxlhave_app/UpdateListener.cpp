@@ -177,7 +177,7 @@ void UpdateListener::SendHospital( xml::xistream& xis )
             >> xml::optional >> xml::start( "HospitalFacilityStatus" )
                 >> xml_bind( boost::bind( &UpdateListener::UpdateFacilityStatus, this, _1, boost::ref( *parameters ) ) )
             >> xml::end;
-        message.set_context( 0 ); 
+        message.set_context( 0 );
         client_.Send( message );
     }
     else

@@ -219,7 +219,7 @@ bool XmlNode::RemoveNode( const std::string& path )
     XmlNode* node = GetChildNode( path );
     if ( !node )
         return false;
-    
+
     XmlNode* parentNode = GetChildNode( path, true );
     if ( !parentNode )
         return false;

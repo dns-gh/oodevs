@@ -1635,7 +1635,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestWaintingForMedicalAttention, Fixture )
     task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 4, 4, 5, 4 };
     TestTools::MakeExpectation( publisher, expectedResult );
-    task->Commit(); 
+    task->Commit();
 }
 
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
