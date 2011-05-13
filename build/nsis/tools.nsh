@@ -527,7 +527,7 @@ Function adobeReader
     ClearErrors
     ReadRegStr $0 HKCR "CLSID\{CA8A9780-280D-11CF-A24D-444553540000}" ""
     IfErrors 0 +3
-        MessageBox MB_YESNO|MB_ICONQUESTION "$(OT_INSTALL_ADOBE_READER)" /SD IDNO IDNO +2
+        MessageBox MB_YESNO|MB_ICONQUESTION "$(OT_INSTALL_ADOBE_READER)" /SD IDYES IDNO +2
             ExecShell "open" "http://www.adobe.com/products/acrobat/readstep2.html"
     Pop $0
 FunctionEnd
@@ -570,19 +570,19 @@ FunctionEnd
 ; Init register for uninstaller
 ;------------------------------------------------------------------------------
 Function un.OT.InitRegister
-
-    !ifdef EXO_PACK
-        ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory"
-        StrCmp $INSTDATADIR "" 0 +3
-            Call un.MultiUser.InstallMode.CurrentUser
+    !ifdef MULTIUSER_INCLUDED
+        !ifdef EXO_PACK
             ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory"
-    !else
-        ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory"
-        StrCmp $INSTDATADIR "" 0 +3 ; verification au cas ou le desinstalleur est lance directement via le .exe, et non via ControlPanel Add/Remove program
-            Call un.MultiUser.InstallMode.CurrentUser
-            ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory"        
+            StrCmp $INSTDATADIR "" 0 +3
+                Call un.MultiUser.InstallMode.CurrentUser
+                ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "${UNINSTALL_LOG}Directory"
+        !else
+            ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory"
+            StrCmp $INSTDATADIR "" 0 +3 ; verification au cas ou le desinstalleur est lance directement via le .exe, et non via ControlPanel Add/Remove program
+                Call un.MultiUser.InstallMode.CurrentUser
+                ReadRegStr $INSTDATADIR ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common" "DataDirectory"        
+        !endif
     !endif
-
 FunctionEnd
 
 
