@@ -266,8 +266,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter, Fixture )
 
 //CREATE PROCEDURE dbo.[AAAT_MELEE-APPUI_NOMBRE_DE_COUPS_DIRECTS_TIRES_PAR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2]
 //(
-//  @TDebut DATETIME,           -- Date de debut de l'intervalle
-//  @TFin DATETIME,         -- Date de fin de l'intervalle
+//  @TDebut DATETIME,               -- Date de debut de l'intervalle
+//  @TFin DATETIME,                 -- Date de fin de l'intervalle
 //  @Unites  unit_id_tablename,     -- Groupe d'unites
 //  @Resultat tablename OUTPUT      -- Table contenant le résultat
 //)
@@ -280,9 +280,9 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='direct-fire-unit' id='fires'/>"
-                             "    <transform function='is-one-of' type='unsigned long' select='12,42' input='fires' id='selected-fires'/>"
-                             "    <transform function='filter' type='unsigned long' input='selected-fires,fires' id='the-fires'/>"
-                             "    <reduce type='unsigned long' function='count' input='the-fires' id='count'/>"
+                             "    <transform function='is-one-of' type='unsigned int' select='12,42' input='fires' id='selected-fires'/>"
+                             "    <transform function='filter' type='unsigned int' input='selected-fires,fires' id='the-fires'/>"
+                             "    <reduce type='unsigned int' function='count' input='the-fires' id='count'/>"
                              "    <result function='plot' input='count' type='unsigned'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
@@ -639,12 +639,13 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestHumans, Fixture )
     int state[8] = { 0, 0, 1, 0, 0, 0, 0, 0 };
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeHumanVariation( state, 42 ) );
+    task->Receive( TestTools::MakeHumanVariation( state, 43 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeHumanVariation( state, 42 ) );
     task->Receive( TestTools::EndTick() );
     {
-        double expectedResult[] = { 1, 1 };
+        double expectedResult[] = { 2, 2 };
         TestTools::MakeExpectation( publisher, expectedResult );
     }
     task->Commit();
@@ -1489,7 +1490,11 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogHaulers, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 2, 2 };
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeMaintenance( 12, 15, 11 ) );
+    task->Receive( TestTools::MakeMaintenance( 4, 5, 10 ) );
+    task->Receive( TestTools::EndTick() );
+    double expectedResult[] = { 2, 2, 5 };
     TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
@@ -1587,19 +1592,21 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestStocks, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestPopulationStates, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='populations' states='dead' id='populations'/>"
-                             "    <reduce type='int' function='sum' input='populations' id='sum'/>"
+                             "    <extract function='population-states' states='dead' id='populations'/>"
+                             "    <transform function='domain' type='int' select='40' input='populations' id='domained-populations'/>"
+                             "    <reduce type='int' function='sum' input='domained-populations' id='sum'/>"
                              "    <result function='plot' input='sum' type='int'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::UpdatePopulation( 1, 2, 3, 40 ) );
+    task->Receive( TestTools::UpdatePopulationStates( 1, 2, 3, 40 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::UpdatePopulationbis( 0, 2, 40 ) );
+    task->Receive( TestTools::UpdatePopulationStatesbis( 0, 2, 40 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::UpdatePopulation( 0, 2, 5, 40 ) );
+    task->Receive( TestTools::UpdatePopulationStates( 10, 22, 55, 41 ) );
+    task->Receive( TestTools::UpdatePopulationStates( 0, 2, 5, 40 ) );
     task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 3, 3, 5 };
     TestTools::MakeExpectation( publisher, expectedResult );
@@ -1607,10 +1614,96 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestPopulationStates, Fixture )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade_TestWaintingForMedicalAttention
+// Name: Facade_TestPopulationSatisfaction
+// Created: FPO 2011-05-05
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestPopulationSatisfaction, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='satisfaction' type='health' id='satisfaction'/>"
+                             "    <reduce type='int' function='mean' input='satisfaction' id='mean'/>"
+                             "    <result function='plot' input='mean' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdatePopulationSatisfaction( 1.5f, 2.3f, 3.4f, 40 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdatePopulationSatisfaction( 5.6f, 5.5f, 10.4f, 99 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdatePopulationSatisfaction( 3.5f, 2.3f, 13.4f, 99 ) );
+    task->Receive( TestTools::EndTick() );
+    double expectedResult[] = { 2.3, 2.3, 3.9, 2.3 };
+    TestTools::MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestPopulationInBlocks
+// Created: FPO 2011-05-12
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestPopulationInBlocks, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='population-in-selected-blocks' blocks='12,17,14' id='popuinblocks'/>"
+                             "    <reduce type='int' function='sum' input='popuinblocks' id='sum'/>"
+                             "    <result function='plot' input='sum' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    std::map< unsigned long, int > blocks;
+    std::map< unsigned long, int > blocks2;
+    blocks[ 12 ] = 15;
+    blocks[ 17 ] = 5;
+    blocks2[ 12 ] = 13;
+    blocks2[ 46 ] = 103;
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdatePopulationInBlocks( 10, blocks ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdatePopulationInBlocks( 10, blocks2 ) );
+    task->Receive( TestTools::UpdatePopulationInBlocks( 11, blocks ) );
+    task->Receive( TestTools::EndTick() );
+    double expectedResult[] = { 20, 20, 33 };
+    TestTools::MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestCrowdStates
+// Created: FPO 2011-05-13
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestCrowdStates, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='crowd-states' states='dead' id='crowds'/>"
+                             "    <transform function='domain' type='int' select='10' input='crowds' id='domained-crowds'/>"
+                             "    <reduce type='int' function='sum' input='domained-crowds' id='sum'/>"
+                             "    <result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdateCrowdDeadConcentration( 10, 11 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::UpdateCrowdDeadConcentration( 10, 15 ) );
+    task->Receive( TestTools::EndTick() );
+    double expectedResult[] = { 11, 11, 15 };
+    TestTools::MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestWaitingForMedicalAttention
 // Created: FPO 2011-05-09
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( Facade_TestWaintingForMedicalAttention, Fixture )
+BOOST_FIXTURE_TEST_CASE( Facade_TestWaitingForMedicalAttention, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='waiting-for-medical' id='wounded'/>"
@@ -1632,11 +1725,46 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestWaintingForMedicalAttention, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::CreateMedicalConsign( 15, 31, false ) );
+
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 4, 4, 5, 4 };
+    double expectedResult[] = { 2, 2, 2, 1 };
     TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestWaitingForMedicalAttentionInZone
+// Created: FPO 2011-05-09
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestWaitingForMedicalAttentionInZone, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='waiting-for-medical' id='wounded'/>"
+                             "    <transform function='domain' type='int' select='12,15' input='wounded' id='domained-wounded'/>"
+                             "    <reduce type='int' function='sum' input='domained-wounded' id='sum'/>"
+                             "    <result function='plot' input='sum' type='int'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateMedicalConsign( 12, 13, true ) );
+    task->Receive( TestTools::CreateMedicalConsign( 12, 15, true ) );
+    task->Receive( TestTools::CreateMedicalConsign( 12, 18, true ) );
+    task->Receive( TestTools::CreateMedicalConsign( 15, 18, true ) );
+    task->Receive( TestTools::CreateMedicalConsign( 16, 19, true ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateMedicalConsign( 15, 31, true ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::CreateMedicalConsign( 15, 31, false ) );
+    task->Receive( TestTools::EndTick() );
+    double expectedResult[] = { 2, 2, 2, 1 };
+    TestTools::MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
 
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]

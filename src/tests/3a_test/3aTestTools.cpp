@@ -230,7 +230,7 @@ sword::SimToClient TestTools::MakeMaintenance( int repairersNumber, int haulersN
 // Name: 3aTestTools::UpdatePopulation
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
-sword::SimToClient TestTools::UpdatePopulation( int healthy, int wounded, int dead, unsigned long id )
+sword::SimToClient TestTools::UpdatePopulationStates( int healthy, int wounded, int dead, unsigned long id )
 {
     SimToClient result;
     PopulationUpdate& updatestates = *result.mutable_message()->mutable_population_update();
@@ -245,13 +245,61 @@ sword::SimToClient TestTools::UpdatePopulation( int healthy, int wounded, int de
 // Name: 3aTestTools::UpdatePopulationbis
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
-sword::SimToClient TestTools::UpdatePopulationbis( int healthy, int wounded, unsigned long id )
+sword::SimToClient TestTools::UpdatePopulationStatesbis( int healthy, int wounded, unsigned long id )
 {
     SimToClient result;
     PopulationUpdate& updatestates = *result.mutable_message()->mutable_population_update();
     updatestates.mutable_id()->set_id( id );
     updatestates.set_healthy( healthy );
     updatestates.set_wounded( wounded );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::UpdatePopulationSatisfaction
+// Created: FPO 2011-05-10
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::UpdatePopulationSatisfaction( float lodging, float health, float safety, unsigned long id )
+{
+    SimToClient result;
+    PopulationUpdate& update = *result.mutable_message()->mutable_population_update();
+    PopulationUpdate_Satisfaction& satisfaction = *update.mutable_satisfaction();
+    update.mutable_id()->set_id( id );
+    satisfaction.set_lodging( lodging );
+    satisfaction.set_health( health );
+    satisfaction.set_safety( safety );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::UpdatePopulationInBlocks
+// Created: FPO 2011-05-12
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::UpdatePopulationInBlocks( unsigned long populationId, std::map < unsigned long, int > blocks )
+{
+    SimToClient result;
+    PopulationUpdate& update = *result.mutable_message()->mutable_population_update();
+    update.mutable_id()->set_id( populationId );
+    for( std::map< unsigned long, int >::const_iterator it = blocks.begin(); it != blocks.end(); ++it )
+    {
+        PopulationUpdate_BlockOccupation& block = *update.add_occupations();
+        block.mutable_object()->set_id( it->first );
+        PopulationUpdate_BlockOccupation_UsageOccupation& occupation = *block.add_persons();
+        occupation.set_number( it->second );
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::UpdateCrowdDeadConcentration
+// Created: FPO 2011-05-13
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::UpdateCrowdDeadConcentration( unsigned long crowdId, int dead )
+{
+    SimToClient result;
+    CrowdConcentrationUpdate& update = *result.mutable_message()->mutable_crowd_concentration_update();
+    update.mutable_crowd()->set_id( crowdId );
+    update.set_dead( dead );
     return result;
 }
 
@@ -303,12 +351,14 @@ sword::SimToClient TestTools::StopFire( unsigned fire_id, unsigned int target_id
 // Name: 3aTestTools::CreateConsign
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
-sword::SimToClient TestTools::CreateConsign( unsigned long id, unsigned long unit_id )
+sword::SimToClient TestTools::CreateConsign( unsigned long id, unsigned long unit_id, unsigned long equip_id, unsigned long breakdown_id )
 {
     SimToClient result;
     LogMaintenanceHandlingCreation& creation = *result.mutable_message()->mutable_log_maintenance_handling_creation();
     creation.mutable_request()->set_id( id );
-    creation.mutable_unit()->set_id( unit_id ) ;
+    creation.mutable_unit()->set_id( unit_id );
+    creation.mutable_equipement()->set_id( equip_id );
+    creation.mutable_breakdown()->set_id( breakdown_id );
     return result;
 }
 
