@@ -29,6 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_ResourceNetworkParameter( const sword::ResourceNetworkElement& message );
+    explicit MIL_ResourceNetworkParameter( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
     virtual ~MIL_ResourceNetworkParameter();
     //@}
 

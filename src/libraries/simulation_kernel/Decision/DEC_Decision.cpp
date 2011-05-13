@@ -30,6 +30,7 @@
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_UrbanObjectFunctions.h"
+#include "DEC_ResourceNetwork.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Orders/MIL_FragOrder.h"
@@ -268,6 +269,7 @@ void RegisterResourceNetworkFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ReseauRessource_Position" ] = &DEC_ResourceNetworkFunctions::GetResourceNetworkPosition;
     brain[ "DEC_ReseauRessource_DesactiverElement" ] = &DEC_ResourceNetworkFunctions::DeactivateRessourceNetworkElement;
     brain[ "DEC_ReseauRessource_ActiverElement" ] = &DEC_ResourceNetworkFunctions::ActivateRessourceNetworkElement;
+    brain.Register( "GetTypeName", &DEC_ResourceNetwork::GetTypeName );
 }
 
 // -----------------------------------------------------------------------------
@@ -435,6 +437,8 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_AssignMissionDirectionParameter" ] = &MIL_MissionParameterFactory::SetDirectionParameter;
     brain[ "DEC_AssignMissionDotationTypeParameter" ] = &MIL_MissionParameterFactory::SetDotationTypeParameter;
     brain[ "DEC_AssignMissionNumericTypeParameter" ] = &MIL_MissionParameterFactory::SetNumericTypeParameter;
+    brain[ "DEC_AssignMissionResourceNetworkParameter" ] = &MIL_MissionParameterFactory::SetResourceNetworkParameter;
+    brain[ "DEC_AssignMissionResourceNetworkListParameter" ] = &MIL_MissionParameterFactory::SetResourceNetworkListParameter;
     brain[ "DEC_IsMissionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
     directia::tools::binders::ScriptRef initParameterFunction = brain[ "InitTaskParameter" ];
     brain[ "DEC_FillMissionParameters" ] =
@@ -912,6 +916,17 @@ bool ResourceNetworkFunctionBM( directia::brain::Brain& /*brain*/, directia::too
     return false;
 }
 
+bool ResourceNetworkListFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< boost::shared_ptr< DEC_ResourceNetwork > > value;
+    if( element.ToResourceNetworkList( value ) )
+    {
+        refMission[ name ] = value;
+        return true;
+    }
+    return false;
+}
+
 void EquipmentTypeFunction( const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     const PHY_ComposanteTypePion* value = 0;
@@ -1164,6 +1179,7 @@ void InitFunctions()
         functorsBM[ "ResourceType" ] = DotationTypeFunctionBM;
         functorsBM[ "ResourceTypeList" ] = DotationTypeListFunctionBM;
         functorsBM[ "ResourceNetwork" ] = ResourceNetworkFunctionBM;
+        functorsBM[ "ResourceNetworkList" ] = ResourceNetworkListFunctionBM;
     }
 }
 

@@ -42,6 +42,7 @@ public:
     //@{
     unsigned int GetObjectId() const;
     const std::string& GetResource() const;
+    const std::string& GetTypeName() const;
     //@}
 
 private:

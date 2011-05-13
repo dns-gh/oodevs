@@ -531,6 +531,7 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="GENIE Detruire point du reseau"/>
         <mission name="GENIE Realiser Camps"/>
       </missions>
       <fragorders>
@@ -7775,6 +7776,7 @@
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="GENIE Detruire point du reseau"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="LOGISTIQUE Se Deployer">
           <fragorder name="Modifier Priorites Blesses"/>
@@ -11630,6 +11632,7 @@
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="GENIE Detruire point du reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -11698,4 +11701,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1465402747" -->
+<!-- signature="3085324407" -->

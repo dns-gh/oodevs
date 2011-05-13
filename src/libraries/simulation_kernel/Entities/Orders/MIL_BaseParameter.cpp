@@ -373,6 +373,15 @@ bool MIL_BaseParameter::ToResourceNetwork( boost::shared_ptr< DEC_ResourceNetwor
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToResourceNetworkList
+// Created: LMT 2011-05-12
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToResourceNetworkList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::Append
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------

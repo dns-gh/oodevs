@@ -23,6 +23,16 @@ MIL_ResourceNetworkParameter::MIL_ResourceNetworkParameter( const sword::Resourc
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ResourceNetworkParameter constructor
+// Created: LMT 2011-05-12
+// -----------------------------------------------------------------------------
+MIL_ResourceNetworkParameter::MIL_ResourceNetworkParameter( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork )
+    : pResourceNetwork_( resourceNetwork )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ResourceNetworkParameter destructor
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------

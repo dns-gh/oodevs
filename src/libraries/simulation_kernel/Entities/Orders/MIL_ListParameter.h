@@ -51,6 +51,7 @@ public:
     virtual bool ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& ) const;
     virtual bool ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen_Object > >& ) const;
     virtual bool ToDotationTypeList( std::vector< const PHY_DotationCategory* >& ) const;
+    virtual bool ToResourceNetworkList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const;
 
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param );
     //@}

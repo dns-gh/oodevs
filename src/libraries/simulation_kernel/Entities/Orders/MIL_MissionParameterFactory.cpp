@@ -314,6 +314,16 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
+// Created: LMT 2011-05-12
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork )
+{
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_ResourceNetworkParameter( resourceNetwork ) );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::Copy
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
@@ -631,4 +641,27 @@ void MIL_MissionParameterFactory::SetUrbanBlockListParameter( boost::shared_ptr<
 void MIL_MissionParameterFactory::SetDirectionParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< MT_Vector2D > direction )
 {
     pMission->SetParameter( parameter, CreateDirection( direction ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetResourceNetworkParameter
+// Created: LMT 2011-05-12
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetResourceNetworkParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork )
+{
+    pMission->SetParameter( parameter, Create( resourceNetwork ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetResourceNetworkListParameter
+// Created: LMT 2011-05-12
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetResourceNetworkListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr<class DEC_ResourceNetwork> >& resourceNetworkList )
+{
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > paramList;
+    for( std::vector< boost::shared_ptr<class DEC_ResourceNetwork> >::const_iterator it = resourceNetworkList.begin(); it != resourceNetworkList.end(); ++it )
+        if( *it )
+            paramList.push_back( Create( *it ) );
+    boost::shared_ptr< MIL_ListParameter > listParam( new MIL_ListParameter( pMission->GetPion().GetKnowledge(), paramList ) );
+    pMission->SetParameter( parameter, listParam );
 }

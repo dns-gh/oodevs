@@ -266,6 +266,21 @@ bool MIL_ListParameter::ToDotationTypeList( std::vector< const PHY_DotationCateg
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_ListParameter::ToResourceNetworkList
+// Created: LMT 2011-05-12
+// -----------------------------------------------------------------------------
+bool MIL_ListParameter::ToResourceNetworkList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& result ) const
+{
+    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    {
+        boost::shared_ptr< DEC_ResourceNetwork > param;
+        if( !(*it)->ToResourceNetwork( param ) )
+            return false;
+        result.push_back( param );
+    }
+    return true;
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ListParameter::Append

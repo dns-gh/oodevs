@@ -58,3 +58,13 @@ const std::string& DEC_ResourceNetwork::GetResource() const
 {
     return resource_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetwork::GetTypeName
+// Created: LMT 2011-05-12
+// -----------------------------------------------------------------------------
+const std::string& DEC_ResourceNetwork::GetTypeName() const
+{
+    static const std::string result( "boost::shared_ptr<class DEC_ResourceNetwork>" );
+    return result;
+}

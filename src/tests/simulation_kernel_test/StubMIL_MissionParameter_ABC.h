@@ -183,6 +183,8 @@ public:
     { throw; }
     virtual bool ToResourceNetwork( boost::shared_ptr< DEC_ResourceNetwork >& ) const
     { throw; }
+    virtual bool ToResourceNetworkList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const
+    { throw; }
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param )
     { throw; }
     //@}
