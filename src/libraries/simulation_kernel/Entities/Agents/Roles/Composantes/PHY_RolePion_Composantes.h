@@ -187,7 +187,7 @@ public:
     virtual void GetVisibleVolumes( T_ComposanteVolumeSet& volumes ) const;
     virtual void BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
     virtual const PHY_ComposantePion* GetMajorComposante() const;
-    virtual double GetMajorComponentWeight( bool loadedWeight = false ) const;
+    virtual double GetMajorComponentWeight() const;
     virtual double GetAttritionIndexComposante( int idMaterial ) const;
     //@}
 

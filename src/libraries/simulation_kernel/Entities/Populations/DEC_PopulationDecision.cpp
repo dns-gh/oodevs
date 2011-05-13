@@ -195,7 +195,6 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
         boost::function< std::vector< boost::shared_ptr< TER_Localisation > >() >(boost::bind( &DEC_PopulationFunctions::GetCurrentLocations, boost::cref( GetPopulation() ) ) );
 
     // Move
-    brain[ "DEC_IsPointInUrbanBlockTrafficable" ] = boost::function< bool( MT_Vector2D&, bool ) >( boost::lambda::constant( true ) ); // $$$$ _RC_ LGY 2010-12-27: Pour une population, un point dans un block urbain est toujours accessible?
     brain[ "DEC_Agent_NiveauInstallation" ] = boost::bind( &DEC_PopulationFunctions::GetMovingState, boost::ref( GetPopulation() ) );
     brain[ "DEC_HasFlow" ] = boost::function< bool() >( boost::bind( &DEC_PopulationFunctions::HasFlow, boost::ref( GetPopulation() ) ) );
     brain[ "DEC_Population_HasReachedBlockBorder" ] = boost::function< bool( const UrbanObjectWrapper* ) >( boost::bind( &DEC_PopulationFunctions::HasReachedBlockBorder, boost::ref( GetPopulation() ), _1 ) );
