@@ -6,7 +6,7 @@
 	<settings>
 		<setting attribute="@fom" type="string" default="Vr-Link.fed">
 			<descriptions>
-				<description lang="en" name="FOM"><![CDATA[Federate Object Model.]]></description>
+				<description lang="en" name="FOM"><![CDATA[Federation Object Model.]]></description>
 			</descriptions>
 		</setting>
 		<setting attribute="@models" type="string" default="../data/simulationModelSets/default.sms">
