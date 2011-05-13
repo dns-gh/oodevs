@@ -28,13 +28,22 @@ class LauncherToAdmin
 public:
     //! @name Operations
     //@{
-    static void Convert( const sword::ConnectionAck& from, MsgsLauncherToAdmin::MsgConnectionAck* to );
-    static void Convert( const sword::ExercicesListResponse& from, MsgsLauncherToAdmin::MsgExercicesListResponse* to );
-    static void Convert( const sword::ControlStartExerciseAck& from, MsgsLauncherToAdmin::MsgControlStartAck* to );
-    static void Convert( const sword::ControlStopExerciseAck& from, MsgsLauncherToAdmin::MsgControlStopAck* to );
-    static void Convert( const sword::ConnectedProfileList& from, MsgsLauncherToAdmin::MsgConnectedProfileList* to );
-    static void Convert( const sword::ProfileDescriptionList& from, MsgsAuthenticationToClient::MsgProfileDescriptionList* to );
-    static void Convert( const sword::SimulationComponentState& from, MsgsLauncherToAdmin::MsgSimulationComponentState* to );
+    static void Convert( const sword::ConnectionResponse& from, MsgsLauncherToAdmin::MsgConnectionResponse* to );
+    static void Convert( const sword::ExerciseListResponse& from, MsgsLauncherToAdmin::MsgExerciseListResponse* to );
+    static void Convert( const sword::SessionListResponse& from, MsgsLauncherToAdmin::MsgSessionListResponse* to );
+    static void Convert( const sword::SessionStartResponse& from, MsgsLauncherToAdmin::MsgSessionStartResponse* to );
+    static void Convert( const sword::SessionStopResponse& from, MsgsLauncherToAdmin::MsgSessionStopResponse* to );
+    static void Convert( const sword::ProfileListResponse& from, MsgsLauncherToAdmin::MsgProfileListResponse* to );
+    static void Convert( const sword::ConnectedProfileListResponse& from, MsgsLauncherToAdmin::MsgConnectedProfileListResponse* to );
+    static void Convert( const sword::SessionStatus& from, MsgsLauncherToAdmin::MsgSessionStatus* to );
+    static void Convert( const sword::SessionParameterChangeResponse& from, MsgsLauncherToAdmin::MsgSessionParameterChangeResponse* to );
+    static void Convert( const sword::SessionCommandExecutionResponse& from, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse* to );
+    static void Convert( const sword::CheckpointListResponse& from, MsgsLauncherToAdmin::MsgCheckpointListResponse* to );
+    static void Convert( const sword::CheckpointDeleteResponse& from, MsgsLauncherToAdmin::MsgCheckpointDeleteResponse* to );
+    static void Convert( const sword::SessionNotification& from, MsgsLauncherToAdmin::MsgSessionNotification* to );
+    static void Convert( const sword::ControlInformation& from, MsgsLauncherToAdmin::MsgControlInformation* to );
+    static void Convert( const sword::ClientConnectionNotification& from, MsgsLauncherToAdmin::MsgClientConnectionNotification* to );
+
     //@}
 };
 

@@ -26,86 +26,269 @@ namespace
 // Name: LauncherToAdmin::Convert
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void LauncherToAdmin::Convert( const sword::ConnectionAck& from, MsgsLauncherToAdmin::MsgConnectionAck* to )
+void LauncherToAdmin::Convert( const sword::ConnectionResponse& from, MsgsLauncherToAdmin::MsgConnectionResponse* to )
 {
-    CONVERT_ENUM( error_code, ( sword::ConnectionAck::success, MsgsLauncherToAdmin::MsgConnectionAck::success )
-                              ( sword::ConnectionAck::invalid_connection, MsgsLauncherToAdmin::MsgConnectionAck::invalid_connection )
-                              ( sword::ConnectionAck::incompatible_protocol_version, MsgsLauncherToAdmin::MsgConnectionAck::incompatible_protocol_version )
-                              ( sword::ConnectionAck::exercise_already_running, MsgsLauncherToAdmin::MsgConnectionAck::exercise_already_running ) );
-    CONVERT( context );
+    CONVERT_ENUM( error_code, ( sword::ConnectionResponse::success, MsgsLauncherToAdmin::MsgConnectionResponse::success )
+                              ( sword::ConnectionResponse::incompatible_protocol_version, MsgsLauncherToAdmin::MsgConnectionResponse::incompatible_protocol_version ) );
     CONVERT_VERSION( server_version );
-    CONVERT_CB( dispatcher_address, ConvertNetworkAddress );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LauncherToAdmin::Convert
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void LauncherToAdmin::Convert( const sword::ExercicesListResponse& from, MsgsLauncherToAdmin::MsgExercicesListResponse* to )
+void LauncherToAdmin::Convert( const sword::ExerciseListResponse& from, MsgsLauncherToAdmin::MsgExerciseListResponse* to )
 {
-    CONVERT_ENUM( error_code, ( sword::ExercicesListResponse::success, MsgsLauncherToAdmin::MsgExercicesListResponse::success )
-                              ( sword::ExercicesListResponse::failure, MsgsLauncherToAdmin::MsgExercicesListResponse::failure ) );
-    for( int i = 0; i < from.exercise().size(); ++i )
-        ConvertExercise( from.exercise( i ), to->add_exercise() );
+    CONVERT_SIMPLE_LIST( exercise, ConvertSimple );
+//    for(int i=0; i< from.exercise().size(); ++i )
+//        ConvertSimple(from.exercise(i), to->add_exercise() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LauncherToAdmin::Convert
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void LauncherToAdmin::Convert( const sword::ControlStartExerciseAck& from, MsgsLauncherToAdmin::MsgControlStartAck* to )
+void LauncherToAdmin::Convert( const sword::SessionListResponse& from, MsgsLauncherToAdmin::MsgSessionListResponse* to )
 {
-    CONVERT_ENUM( error_code, ( sword::ControlStartExerciseAck::success, MsgsLauncherToAdmin::MsgControlStartAck::success )
-                              ( sword::ControlStartExerciseAck::bad_exercise_name, MsgsLauncherToAdmin::MsgControlStartAck::bad_exercise_name )
-                              ( sword::ControlStartExerciseAck::exercise_already_running, MsgsLauncherToAdmin::MsgControlStartAck::exercise_already_running )
-                              ( sword::ControlStartExerciseAck::invalid_checkpoint, MsgsLauncherToAdmin::MsgControlStartAck::invalid_checkpoint ) );
-    CONVERT_CB( exercise, ConvertExercise );
+    CONVERT_ENUM( error_code, ( sword::SessionListResponse::success, MsgsLauncherToAdmin::MsgSessionListResponse::success )
+                              ( sword::SessionListResponse::invalid_exercise_name, MsgsLauncherToAdmin::MsgSessionListResponse::invalid_exercise_name ) );
+    CONVERT( exercise );
+    CONVERT_SIMPLE_LIST( session, ConvertSimple );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LauncherToAdmin::Convert
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void LauncherToAdmin::Convert( const sword::ControlStopExerciseAck& from, MsgsLauncherToAdmin::MsgControlStopAck* to )
+void LauncherToAdmin::Convert( const sword::SessionStartResponse& from, MsgsLauncherToAdmin::MsgSessionStartResponse* to )
 {
-    CONVERT_ENUM( error_code, ( sword::ControlStopExerciseAck::success, MsgsLauncherToAdmin::MsgControlStopAck::success )
-                              ( sword::ControlStopExerciseAck::bad_exercise_name, MsgsLauncherToAdmin::MsgControlStopAck::bad_exercise_name )
-                              ( sword::ControlStopExerciseAck::exercise_not_running, MsgsLauncherToAdmin::MsgControlStopAck::exercise_not_running ) );
-    CONVERT_CB( exercise, ConvertExercise );
-    CONVERT_SIMULATION_STATE( simulation_state );
+    CONVERT_ENUM( type, ( sword::SessionStartResponse::simulation, MsgsLauncherToAdmin::MsgSessionStartResponse::simulation )
+                        ( sword::SessionStartResponse::dispatch, MsgsLauncherToAdmin::MsgSessionStartResponse::dispatch )
+                        ( sword::SessionStartResponse::replay, MsgsLauncherToAdmin::MsgSessionStartResponse::replay ) );
+    CONVERT_ENUM( error_code, ( sword::SessionStartResponse::success, MsgsLauncherToAdmin::MsgSessionStartResponse::success )
+                              ( sword::SessionStartResponse::invalid_exercise_name, MsgsLauncherToAdmin::MsgSessionStartResponse::invalid_exercise_name )
+                              ( sword::SessionStartResponse::invalid_checkpoint, MsgsLauncherToAdmin::MsgSessionStartResponse::invalid_checkpoint )
+                              ( sword::SessionStartResponse::session_already_running, MsgsLauncherToAdmin::MsgSessionStartResponse::session_already_running ) );
+    CONVERT( exercise );
+    CONVERT( session );
+    CONVERT( checkpoint );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LauncherToAdmin::Convert
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void LauncherToAdmin::Convert( const sword::ConnectedProfileList& from, MsgsLauncherToAdmin::MsgConnectedProfileList* to )
+void LauncherToAdmin::Convert( const sword::SessionStopResponse& from, MsgsLauncherToAdmin::MsgSessionStopResponse* to )
 {
-    CONVERT_ENUM( error_code, ( sword::ConnectedProfileList::success, MsgsLauncherToAdmin::MsgConnectedProfileList::success )
-                              ( sword::ConnectedProfileList::failure, MsgsLauncherToAdmin::MsgConnectedProfileList::failure ) );
-    CONVERT_ENUM( context, ( sword::ConnectedProfileList::spontaneous, MsgsLauncherToAdmin::MsgConnectedProfileList::spontaneous )
-                           ( sword::ConnectedProfileList::upon_request, MsgsLauncherToAdmin::MsgConnectedProfileList::upon_request ) );
-    for( int i = 0; i < from.exercise().size(); ++i )
-        ConvertProfile( from.exercise( i ), to->add_exercise() );
+    CONVERT_ENUM( error_code, ( sword::SessionStopResponse::success, MsgsLauncherToAdmin::MsgSessionStopResponse::success )
+                              ( sword::SessionStopResponse::invalid_exercise_name, MsgsLauncherToAdmin::MsgSessionStopResponse::invalid_exercise_name )
+                              ( sword::SessionStopResponse::invalid_session_name, MsgsLauncherToAdmin::MsgSessionStopResponse::invalid_session_name )
+                              ( sword::SessionStopResponse::session_not_running, MsgsLauncherToAdmin::MsgSessionStopResponse::session_not_running ) );
+    CONVERT( exercise );
+    CONVERT( session );
+}
+
+namespace
+{
+    template< typename From, typename To >
+    void LocalConvertProfile( const From& from, To* to )
+    {
+        ConvertProfileDescription( from, to );
+        CONVERT_LIST( read_only_formations, elem, ConvertIdentifier );
+        CONVERT_LIST( read_write_formations, elem, ConvertIdentifier );
+        CONVERT_LIST_TO( read_only_automates, read_only_automata, elem, ConvertIdentifier );
+        CONVERT_LIST_TO( read_write_automates, read_write_automata, elem, ConvertIdentifier );
+        CONVERT_LIST( read_only_parties, elem, ConvertIdentifier );
+        CONVERT_LIST( read_write_parties, elem, ConvertIdentifier );
+        CONVERT_LIST( read_only_crowds, elem, ConvertIdentifier );
+        CONVERT_LIST( read_write_crowds, elem, ConvertIdentifier );
+        // TODO AHC write_populations
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: LauncherToAdmin::Convert
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void LauncherToAdmin::Convert( const sword::ProfileDescriptionList& from, MsgsAuthenticationToClient::MsgProfileDescriptionList* to )
+void LauncherToAdmin::Convert( const sword::ProfileListResponse& from, MsgsLauncherToAdmin::MsgProfileListResponse* to )
 {
-    for( int i = 0; i < from.elem().size(); ++i )
-        ConvertProfileDescription( from.elem( i ), to->add_elem() );
+    CONVERT_ENUM( error_code, ( sword::ProfileListResponse::success, MsgsLauncherToAdmin::MsgProfileListResponse::success )
+                              ( sword::ProfileListResponse::invalid_exercise_name, MsgsLauncherToAdmin::MsgProfileListResponse::invalid_exercise_name ) );
+    CONVERT( exercise );
+    CONVERT_SIMPLE_LIST(profile, LocalConvertProfile);
 }
 
 // -----------------------------------------------------------------------------
 // Name: LauncherToAdmin::Convert
-// Created: MCO 2010-12-01
+// Created: AHC 2011-05-12
 // -----------------------------------------------------------------------------
-void LauncherToAdmin::Convert( const sword::SimulationComponentState& from, MsgsLauncherToAdmin::MsgSimulationComponentState* to )
+void LauncherToAdmin::Convert( const sword::ConnectedProfileListResponse& from, MsgsLauncherToAdmin::MsgConnectedProfileListResponse* to )
 {
-    CONVERT_SIMULATION_STATE( simulation_state );
-    CONVERT_ENUM( dispatcher_state, ( sword::available, Common::available )
-                                    ( sword::unavailable, Common::unavailable ) );
+    CONVERT_ENUM( error_code, ( sword::ConnectedProfileListResponse::success, MsgsLauncherToAdmin::MsgConnectedProfileListResponse::success )
+                              ( sword::ConnectedProfileListResponse::invalid_exercise_name, MsgsLauncherToAdmin::MsgConnectedProfileListResponse::invalid_exercise_name )
+                              ( sword::ConnectedProfileListResponse::invalid_session_name, MsgsLauncherToAdmin::MsgConnectedProfileListResponse::invalid_session_name )
+                              ( sword::ConnectedProfileListResponse::session_not_running, MsgsLauncherToAdmin::MsgConnectedProfileListResponse::session_not_running ) );
+    CONVERT( exercise );
+    CONVERT( session );
+    CONVERT_SIMPLE_LIST(profile, LocalConvertProfile);
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherToAdmin::Convert
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void LauncherToAdmin::Convert( const sword::SessionStatus& from, MsgsLauncherToAdmin::MsgSessionStatus* to )
+{
+    CONVERT_ENUM( status, ( sword::SessionStatus::starting, MsgsLauncherToAdmin::MsgSessionStatus::starting )
+                              ( sword::SessionStatus::running, MsgsLauncherToAdmin::MsgSessionStatus::running )
+                              ( sword::SessionStatus::paused, MsgsLauncherToAdmin::MsgSessionStatus::paused )
+                              ( sword::SessionStatus::not_running, MsgsLauncherToAdmin::MsgSessionStatus::not_running ) );
+    CONVERT( exercise );
+    CONVERT( session );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherToAdmin::Convert
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void LauncherToAdmin::Convert( const sword::SessionParameterChangeResponse& from, MsgsLauncherToAdmin::MsgSessionParameterChangeResponse* to )
+{
+    CONVERT_ENUM( error_code, ( sword::SessionParameterChangeResponse::success, MsgsLauncherToAdmin::MsgSessionParameterChangeResponse::success )
+                              ( sword::SessionParameterChangeResponse::invalid_exercise_name, MsgsLauncherToAdmin::MsgSessionParameterChangeResponse::invalid_exercise_name )
+                              ( sword::SessionParameterChangeResponse::invalid_session_name, MsgsLauncherToAdmin::MsgSessionParameterChangeResponse::invalid_session_name )
+                              ( sword::SessionParameterChangeResponse::session_not_running, MsgsLauncherToAdmin::MsgSessionParameterChangeResponse::session_not_running ) );
+    CONVERT( exercise );
+    CONVERT( session );
+    CONVERT( checkpoint_frequency );
+    CONVERT( acceleration_factor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherToAdmin::Convert
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void LauncherToAdmin::Convert( const sword::SessionCommandExecutionResponse& from, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse* to )
+{
+    CONVERT_ENUM( error_code, ( sword::SessionCommandExecutionResponse::success, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::success )
+                              ( sword::SessionCommandExecutionResponse::invalid_exercise_name, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::invalid_exercise_name )
+                              ( sword::SessionCommandExecutionResponse::invalid_session_name, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::invalid_session_name )
+                              ( sword::SessionCommandExecutionResponse::session_not_running, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::session_not_running )
+                              ( sword::SessionCommandExecutionResponse::invalid_checkpoint, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::invalid_checkpoint )
+                              ( sword::SessionCommandExecutionResponse::session_already_paused, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::session_already_paused )
+                              ( sword::SessionCommandExecutionResponse::session_already_running, MsgsLauncherToAdmin::MsgSessionCommandExecutionResponse::session_already_running ) );
+    CONVERT( exercise );
+    CONVERT( session );
+    CONVERT( saved_checkpoint );
+    CONVERT( running );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherToAdmin::Convert
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void LauncherToAdmin::Convert( const sword::CheckpointListResponse& from, MsgsLauncherToAdmin::MsgCheckpointListResponse* to )
+{
+    CONVERT_ENUM( error_code, ( sword::CheckpointListResponse::success, MsgsLauncherToAdmin::MsgCheckpointListResponse::success )
+                              ( sword::CheckpointListResponse::invalid_exercise_name, MsgsLauncherToAdmin::MsgCheckpointListResponse::invalid_exercise_name )
+                              ( sword::CheckpointListResponse::invalid_session_name, MsgsLauncherToAdmin::MsgCheckpointListResponse::invalid_session_name ) );
+    CONVERT( exercise );
+    CONVERT( session );
+    CONVERT_SIMPLE_LIST( checkpoint, ConvertSimple );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherToAdmin::Convert
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void LauncherToAdmin::Convert( const sword::CheckpointDeleteResponse& from, MsgsLauncherToAdmin::MsgCheckpointDeleteResponse* to )
+{
+    CONVERT_ENUM( error_code, ( sword::CheckpointDeleteResponse::success, MsgsLauncherToAdmin::MsgCheckpointDeleteResponse::success )
+                              ( sword::CheckpointDeleteResponse::invalid_exercise_name, MsgsLauncherToAdmin::MsgCheckpointDeleteResponse::invalid_exercise_name )
+                              ( sword::CheckpointDeleteResponse::invalid_session_name, MsgsLauncherToAdmin::MsgCheckpointDeleteResponse::invalid_session_name ) );
+    CONVERT( exercise );
+    CONVERT( session );
+    CONVERT( checkpoint );
+}
+
+namespace
+{
+    void ConvertUnitCreation(const sword::SessionNotification::UnitCreation& from, MsgsLauncherToAdmin::MsgSessionNotification::UnitCreation* to)
+    {
+        for(int i=0; i< from.extensions().size(); ++i)
+        {
+            const sword::Extension& extFrom = from.extensions(i);
+            MsgsLauncherToAdmin::Extension* extTo = to->add_extensions();
+            for(int j=0; j<extFrom.entries().size() ; ++j)
+                ConvertExtensionEntry(extFrom.entries(j), extTo->add_entries() );
+        }
+    }
+    void ConvertFormationCreation(const sword::SessionNotification::FormationCreation& from, MsgsLauncherToAdmin::MsgSessionNotification::FormationCreation* to)
+    {
+        for(int i=0; i< from.extensions().size(); ++i)
+        {
+            const sword::Extension& extFrom = from.extensions(i);
+            MsgsLauncherToAdmin::Extension* extTo = to->add_extensions();
+            for(int j=0; j<extFrom.entries().size() ; ++j)
+                ConvertExtensionEntry(extFrom.entries(j), extTo->add_entries() );
+        }
+    }
+    void ConvertProfileCreation(const sword::SessionNotification::ProfileCreation& from, MsgsLauncherToAdmin::MsgSessionNotification::ProfileCreation* to)
+    {
+        CONVERT_CB( profile, ConvertProfileDescription );
+    }
+    void ConvertProfileUpdate(const sword::SessionNotification::ProfileUpdate& from, MsgsLauncherToAdmin::MsgSessionNotification::ProfileUpdate* to)
+    {
+        CONVERT( login );
+        CONVERT_CB( profile, ConvertProfileDescription );
+    }
+
+    void ConvertNotification(const sword::SessionNotification::Notification& from, MsgsLauncherToAdmin::MsgSessionNotification::Notification* to)
+    {
+        CONVERT_CB( unit_creation, ConvertUnitCreation );
+        CONVERT_CB( formation_creation, ConvertFormationCreation );
+        CONVERT_CB( profile_creation, ConvertProfileCreation );
+        CONVERT_CB( profile_update, ConvertProfileUpdate );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherToAdmin::Convert
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void LauncherToAdmin::Convert( const sword::SessionNotification& from, MsgsLauncherToAdmin::MsgSessionNotification* to )
+{
+    CONVERT( exercise );
+    CONVERT( session );
+    CONVERT_CB( notification, ConvertNotification );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherToAdmin::Convert
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void LauncherToAdmin::Convert( const sword::ControlInformation& from, MsgsLauncherToAdmin::MsgControlInformation* to )
+{
+    CONVERT( current_tick );
+    CONVERT( tick_duration );
+    CONVERT( time_factor );
+    to->set_pathfind_request_number( 0 ); // TODO AHC
+    to->set_last_checkpoint_build_duration( 0 ); // TODO AHC
+}
+
+namespace
+{
+    void ConvertConnectionNotification(const sword::ClientConnectionNotification::ClientConnection& from, MsgsLauncherToAdmin::MsgClientConnectionNotification::ClientConnection* to)
+    {
+        CONVERT( login );
+        CONVERT( connected );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherToAdmin::Convert
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void LauncherToAdmin::Convert( const sword::ClientConnectionNotification& from, MsgsLauncherToAdmin::MsgClientConnectionNotification* to )
+{
+    CONVERT_SIMPLE_LIST( connection, ConvertConnectionNotification );
 }

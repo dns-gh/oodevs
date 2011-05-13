@@ -25,57 +25,143 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgConnectionRequest& 
 // Name: AdminToLauncher::Convert
 // Created: MCO 2010-12-01
 // -----------------------------------------------------------------------------
-void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgControlStart& from, sword::ControlStartExercise* to )
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgSessionStartRequest& from, sword::SessionStartRequest* to )
 {
-    CONVERT_CB( exercise, ConvertExercise );
-    CONVERT_ENUM( mode, ( MsgsAdminToLauncher::MsgControlStart::play, sword::ControlStartExercise::play )
-                        ( MsgsAdminToLauncher::MsgControlStart::replay, sword::ControlStartExercise::replay ) );
-    CONVERT( use_after_action_analysis );
-    CONVERT( use_external_systems );
+    CONVERT( exercise );
+    CONVERT_ENUM( type, ( MsgsAdminToLauncher::MsgSessionStartRequest::simulation, sword::SessionStartRequest::simulation )
+                        ( MsgsAdminToLauncher::MsgSessionStartRequest::dispatch, sword::SessionStartRequest::dispatch )
+                        ( MsgsAdminToLauncher::MsgSessionStartRequest::replay, sword::SessionStartRequest::replay ) );
+    CONVERT( session );
+    CONVERT( checkpoint );
+    CONVERT_SIMPLE_LIST( parameter, ConvertParameter );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdminToLauncher::ConvertParameter
+// Created: AHC 2011-05-13
+// -----------------------------------------------------------------------------
+void AdminToLauncher::ConvertParameter( const MsgsAdminToLauncher::SessionParameter& from, sword::SessionParameter* to)
+{
+    CONVERT( key );
+    CONVERT( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdminToLauncher::Convert
+// Created: MCO 2010-12-01
+// -----------------------------------------------------------------------------
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgSessionStopRequest& from, sword::SessionStopRequest* to )
+{
+    CONVERT( exercise );
+    CONVERT( session );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdminToLauncher::Convert
+// Created: AC 2011-05-12
+// -----------------------------------------------------------------------------
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgSessionListRequest& from, sword::SessionListRequest* to )
+{
+    CONVERT( exercise );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdminToLauncher::Convert
+// Created: MCO 2010-12-01
+// -----------------------------------------------------------------------------
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgExerciseListRequest& /*from*/, sword::ExerciseListRequest* /*to*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdminToLauncher::Convert
+// Created: MCO 2010-12-01
+// -----------------------------------------------------------------------------
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgProfileListRequest& from, sword::ProfileListRequest* to )
+{
+    CONVERT( exercise );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdminToLauncher::Convert
+// Created: MCO 2010-12-01
+// -----------------------------------------------------------------------------
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgConnectedProfileListRequest& from, sword::ConnectedProfileListRequest* to )
+{
+    CONVERT( exercise );
+    CONVERT( session );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdminToLauncher::Convert
+// Created: MCO 2010-12-01
+// -----------------------------------------------------------------------------
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgSessionParameterChangeRequest& from, sword::SessionParameterChangeRequest* to )
+{
+    CONVERT( exercise );
+    CONVERT( session );
+    CONVERT( checkpoint_frequency );
+    CONVERT( acceleration_factor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdminToLauncher::Convert
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgSessionCommandExecutionRequest& from, sword::SessionCommandExecutionRequest* to )
+{
+    CONVERT( exercise );
+    CONVERT( session );
+    CONVERT( save_checkpoint );
+    CONVERT( set_running );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdminToLauncher::Convert
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgCheckpointListRequest& from, sword::CheckpointListRequest* to )
+{
+    CONVERT( exercise );
+    CONVERT( session );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AdminToLauncher::Convert
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgCheckpointDeleteRequest& from, sword::CheckpointDeleteRequest* to )
+{
+    CONVERT( exercise );
+    CONVERT( session );
     CONVERT( checkpoint );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AdminToLauncher::Convert
-// Created: MCO 2010-12-01
+// Created: AHC 2011-05-12
 // -----------------------------------------------------------------------------
-void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgControlStop& from, sword::ControlStopExercise* to )
+void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgSessionNotification& from, sword::SessionNotificationRequest* to )
 {
-    CONVERT_CB( exercise, ConvertExercise );
+    CONVERT( exercise );
+    CONVERT( session );
+    CONVERT_CB( notification, ConvertNotification );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AdminToLauncher::Convert
-// Created: MCO 2010-12-01
+// Name: AdminToLauncher::ConvertNotification
+// Created: AHC 2011-05-12
 // -----------------------------------------------------------------------------
-void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgExercicesListRequest& from, sword::ExercicesListRequest* to )
+void AdminToLauncher::ConvertNotification( const MsgsAdminToLauncher::MsgSessionNotification::Notification& from, sword::SessionNotificationRequest::Notification* to )
 {
-    CONVERT( context );
+    CONVERT_CB( directory_change, ConvertDirectoryChange );
 }
-
 // -----------------------------------------------------------------------------
-// Name: AdminToLauncher::Convert
-// Created: MCO 2010-12-01
+// Name: AdminToLauncher::ConvertNotification
+// Created: AHC 2011-05-12
 // -----------------------------------------------------------------------------
-void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgProfilesListRequest& from, sword::ProfilesListRequest* to )
-{
-    CONVERT( context );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AdminToLauncher::Convert
-// Created: MCO 2010-12-01
-// -----------------------------------------------------------------------------
-void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgConnectedProfilesListRequest& from, sword::ConnectedProfilesListRequest* to )
-{
-    CONVERT( context );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AdminToLauncher::Convert
-// Created: MCO 2010-12-01
-// -----------------------------------------------------------------------------
-void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification& /*from*/, sword::AdminDirectoryChangeNotification* /*to*/ )
+void AdminToLauncher::ConvertDirectoryChange( const MsgsAdminToLauncher::MsgSessionNotification::DirectoryChange& /*from*/, sword::SessionNotificationRequest::DirectoryChange* /*to*/ )
 {
     // NOTHING
 }

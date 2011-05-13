@@ -151,15 +151,7 @@
 <context>
     <name>LauncherClient</name>
     <message>
-        <source>invalid connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>incompatible protocol version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>exercise already running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -167,15 +159,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>bad exercise name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>invalid checkpoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>exercise not running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -183,11 +167,31 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to start exercise: %1.</source>
+        <source>Failed to stop exercise: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to stop exercise: %1.</source>
+        <source>success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid exercise name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>session already running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid session name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>session not running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to start session: %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

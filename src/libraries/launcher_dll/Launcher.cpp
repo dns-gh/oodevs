@@ -62,12 +62,26 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const sword::
         HandleRequest( endpoint, message.message().connection_request() );
     else if( message.message().has_exercise_list_request() )
         HandleRequest( endpoint, message.message().exercise_list_request() );
-    else if( message.message().has_control_start() )
-        HandleRequest( endpoint, message.message().control_start() );
-    else if( message.message().has_control_stop() )
-        HandleRequest( endpoint, message.message().control_stop() );
+    else if( message.message().has_session_start_request() )
+        HandleRequest( endpoint, message.message().session_start_request() );
+    else if( message.message().has_session_stop_request() )
+        HandleRequest( endpoint, message.message().session_stop_request() );
+    else if( message.message().has_session_list_request() )
+        HandleRequest( endpoint, message.message().session_list_request() );
     else if( message.message().has_profile_list_request() )
         HandleRequest( endpoint, message.message().profile_list_request() );
+    else if( message.message().has_connected_profile_list_request() )
+        HandleRequest( endpoint, message.message().connected_profile_list_request() );
+    else if( message.message().has_session_parameter_change_request() )
+        HandleRequest( endpoint, message.message().session_parameter_change_request() );
+    else if( message.message().has_session_command_execution_request() )
+        HandleRequest( endpoint, message.message().session_command_execution_request() );
+    else if( message.message().has_checkpoint_list_request() )
+        HandleRequest( endpoint, message.message().checkpoint_list_request() );
+    else if( message.message().has_checkpoint_delete_request() )
+        HandleRequest( endpoint, message.message().checkpoint_delete_request() );
+    else if( message.message().has_session_notification() )
+        HandleRequest( endpoint, message.message().session_notification() );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,15 +90,10 @@ void Launcher::HandleAdminToLauncher( const std::string& endpoint, const sword::
 // -----------------------------------------------------------------------------
 void Launcher::HandleRequest( const std::string& endpoint, const sword::ConnectionRequest& message )
 {
-    ConnectionAck response;
+    ConnectionResponse response;
     const bool valid = sword::CheckCompatibility( message.client_version() );
-    response().set_error_code( valid ? sword::ConnectionAck::success : sword::ConnectionAck::incompatible_protocol_version );
+    response().set_error_code( valid ? sword::ConnectionResponse::success : sword::ConnectionResponse::incompatible_protocol_version );
     response().mutable_server_version()->set_value( sword::ProtocolVersion().value() );
-//    if( valid )
-    {
-        response().mutable_dispatcher_address()->set_ip( "127.0.0.1" ); // $$$$ SBO 2010-09-30: ???
-        response().mutable_dispatcher_address()->set_port( 30001 );     // $$$$ SBO 2010-09-30: ???
-    }
     response.Send( server_->ResolveClient( endpoint ) );
 }
 
@@ -92,10 +101,9 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Connecti
 // Name: Launcher::HandleRequest
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::ExercicesListRequest& /*message*/ )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::ExerciseListRequest& /*message*/ )
 {
-    ExercicesListResponse response;
-    response().set_error_code( sword::ExercicesListResponse::success );
+    ExerciseListResponse response;
     processes_->SendExerciseList( response() );
     response.Send( server_->ResolveClient( endpoint ) );
 }
@@ -104,13 +112,12 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Exercice
 // Name: Launcher::HandleRequest
 // Created: SBO 2010-10-06
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::ControlStartExercise& message )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionStartRequest& message )
 {
-    ControlStartExerciseAck response;
-    response().mutable_exercise()->set_name( message.exercise().name() );
-    response().mutable_exercise()->set_port( message.exercise().port() );
-    response().set_error_code( processes_->StartExercise( message ) );
-    response().mutable_exercise()->set_running( response().error_code() == sword::ControlStartExerciseAck::success );
+    SessionStartResponse response;
+    response().set_exercise( message.exercise() );
+    response().set_session( message.session() );
+    response().set_error_code( processes_->StartSession( message ) );
     response.Send( server_->ResolveClient( endpoint ) );
 }
 
@@ -118,13 +125,12 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::ControlS
 // Name: Launcher::HandleRequest
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::ControlStopExercise& message )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionStopRequest& message )
 {
-    ControlStopExerciseAck response;
-    response().mutable_exercise()->set_name( message.exercise().name() );
-    response().mutable_exercise()->set_port( message.exercise().port() );
-    response().set_error_code( processes_->StopExercise( message ) );
-    response().mutable_exercise()->set_running( false );
+    SessionStopResponse response;
+    response().set_exercise( message.exercise() );
+    response().set_session( message.session() );
+    response().set_error_code( processes_->StopSession( message ) );
     response.Send( server_->ResolveClient( endpoint ) );
 }
 
@@ -132,9 +138,69 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::ControlS
 // Name: Launcher::HandleRequest
 // Created: SBO 2010-11-19
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::ProfilesListRequest& /*message*/ )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::ProfileListRequest& /*message*/ )
 {
-    ProfileDescriptionList response;
+    ProfileListResponse response;
     processes_->SendProfileList( response() );
     response.Send( server_->ResolveClient( endpoint ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Launcher::HandleRequest
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionListRequest& /*message*/ )
+{
+    // TODO AHC
+}
+
+// -----------------------------------------------------------------------------
+// Name: Launcher::HandleRequest
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void Launcher::HandleRequest( const std::string& endpoint, const sword::ConnectedProfileListRequest& /*message*/ )
+{
+    // TODO AHC
+}
+
+// -----------------------------------------------------------------------------
+// Name: Launcher::HandleRequest
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionParameterChangeRequest& /*message*/ )
+{
+    // TODO AHC
+}
+
+// -----------------------------------------------------------------------------
+// Name: Launcher::HandleRequest
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionCommandExecutionRequest& /*message*/ )
+{
+    // TODO AHC
+}
+// -----------------------------------------------------------------------------
+// Name: Launcher::HandleRequest
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void Launcher::HandleRequest( const std::string& endpoint, const sword::CheckpointListRequest& /*message*/ )
+{
+    // TODO AHC
+}
+// -----------------------------------------------------------------------------
+// Name: Launcher::HandleRequest
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void Launcher::HandleRequest( const std::string& endpoint, const sword::CheckpointDeleteRequest& /*message*/ )
+{
+    // TODO AHC
+}
+// -----------------------------------------------------------------------------
+// Name: Launcher::HandleRequest
+// Created: AHC 2011-05-12
+// -----------------------------------------------------------------------------
+void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionNotificationRequest& /*message*/ )
+{
+    // TODO AHC
 }

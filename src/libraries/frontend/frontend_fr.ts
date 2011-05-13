@@ -155,40 +155,44 @@
         <translation>Impossible de joindre le service launcher: %1.</translation>
     </message>
     <message>
-        <source>Failed to start exercise: %1.</source>
-        <translation>Impossible de démarrer l&apos;exercice: %1.</translation>
-    </message>
-    <message>
         <source>Failed to stop exercise: %1.</source>
         <translation>Impossible d&apos;arrêter l&apos;exercice: %1.</translation>
-    </message>
-    <message>
-        <source>invalid connection</source>
-        <translation>connexion invalide</translation>
     </message>
     <message>
         <source>incompatible protocol version</source>
         <translation>version du protocol incompatible</translation>
     </message>
     <message>
-        <source>exercise already running</source>
-        <translation>l&apos;exercice est déjà démarré</translation>
-    </message>
-    <message>
         <source>unknown error</source>
         <translation>erreur inconnue</translation>
-    </message>
-    <message>
-        <source>bad exercise name</source>
-        <translation>nom d&apos;exercice incorrect</translation>
     </message>
     <message>
         <source>invalid checkpoint</source>
         <translation>point de reprise invalide</translation>
     </message>
     <message>
-        <source>exercise not running</source>
-        <translation>l&apos;exercice n&apos;est pas démarré</translation>
+        <source>success</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>invalid exercise name</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>session already running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid session name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>session not running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to start session: %1.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -202,104 +206,104 @@
     <name>RandomPluginConfigPanel</name>
     <message>
         <source>Random Generator</source>
-        <translation>Générateur Aléatoire</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Seed:</source>
-        <translation>Graine:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Context:</source>
-        <translation>Contexte:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fire</source>
-        <translation>Tir</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Wounds</source>
-        <translation>Blessures</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Perception</source>
-        <translation>Perception</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Breakdowns</source>
-        <translation>Pannes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Distribution:</source>
-        <translation>Distribution:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Linear</source>
-        <translation>Linéaire</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Gaussian</source>
-        <translation>Gaussienne</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Standard deviation:</source>
-        <translation>Ecart-type:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mean:</source>
-        <translation>Moyenne:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Set as default</source>
-        <translation>Définir par défaut</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Random</source>
-        <translation>Aléatoire</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SessionConfigPanel</name>
     <message>
         <source>Session name:</source>
-        <translation>Nom de la session:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Session comments:</source>
-        <translation>Commentaires de la session:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exercise number:</source>
-        <translation>Numéro de l&apos;exercice:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Session</source>
-        <translation>Session</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SpawnCommand</name>
     <message>
+        <source>Could not start process: %1, error: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Starting...</source>
-        <translation>Démarrage...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Started</source>
-        <translation>Démarré</translation>
-    </message>
-    <message>
-        <source>Could not start process: %1, error: %2</source>
-        <translation>Impossible de démarrer le processus: %1, erreur: %2</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>StartExercise</name>
     <message>
         <source>Starting simulation...</source>
-        <translation>Démarrage de la simulation...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Simulation started</source>
-        <translation>Simulation démarrée</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -310,7 +314,7 @@
     </message>
     <message>
         <source>Host: </source>
-        <translation type="unfinished">Hôte:</translation>
+        <translation type="unfinished">Hôte: </translation>
     </message>
     <message>
         <source>Use SSL: </source>

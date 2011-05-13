@@ -52,10 +52,10 @@ public:
 
     //! @name Operations
     //@{
-    void SendExerciseList( sword::ExercicesListResponse& message );
-    sword::ControlStartExerciseAck::ErrorCode StartExercise( const sword::ControlStartExercise& message );
-    sword::ControlStopExerciseAck::ErrorCode StopExercise( const sword::ControlStopExercise& message );
-    void SendProfileList( sword::ProfileDescriptionList& message );
+    void SendExerciseList( sword::ExerciseListResponse& message );
+    sword::SessionStartResponse::ErrorCode StartSession( const sword::SessionStartRequest& message );
+    sword::SessionStopResponse::ErrorCode StopSession( const sword::SessionStopRequest& message );
+    void SendProfileList( sword::ProfileListResponse& message );
     bool IsRunning( const std::string& exercise ) const;
     virtual void NotifyStopped();
     virtual void NotifyError( const std::string& error );

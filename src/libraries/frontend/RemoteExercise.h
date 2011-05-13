@@ -40,6 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory, const sword::Exercise& message, kernel::Controller& controller );
+             RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory, const std::string& exercise, kernel::Controller& controller );
     virtual ~RemoteExercise();
     //@}
 

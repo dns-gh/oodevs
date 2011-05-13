@@ -61,7 +61,7 @@ void ResponseHandlerProxy::Register( boost::shared_ptr< ResponseHandler_ABC > ha
 // Name: ResponseHandlerProxy::Handle
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const sword::ExercicesListResponse& message )
+void ResponseHandlerProxy::Handle( const sword::ExerciseListResponse& message )
 {
     UpdateHandlers( message );
 }
@@ -70,7 +70,7 @@ void ResponseHandlerProxy::Handle( const sword::ExercicesListResponse& message )
 // Name: ResponseHandlerProxy::Handle
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const sword::ControlStartExerciseAck& message )
+void ResponseHandlerProxy::Handle( const sword::SessionStartResponse& message )
 {
     UpdateHandlers( message );
 }
@@ -79,7 +79,7 @@ void ResponseHandlerProxy::Handle( const sword::ControlStartExerciseAck& message
 // Name: ResponseHandlerProxy::Handle
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const sword::ControlStopExerciseAck& message )
+void ResponseHandlerProxy::Handle( const sword::SessionStopResponse& message )
 {
     UpdateHandlers( message );
 }
@@ -88,7 +88,7 @@ void ResponseHandlerProxy::Handle( const sword::ControlStopExerciseAck& message 
 // Name: ResponseHandlerProxy::Handle
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void ResponseHandlerProxy::Handle( const sword::ProfileDescriptionList& message )
+void ResponseHandlerProxy::Handle( const sword::ProfileListResponse& message )
 {
     UpdateHandlers( message );
 }

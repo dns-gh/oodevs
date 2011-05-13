@@ -103,44 +103,44 @@ bool LauncherClient::Connected() const
 
 namespace
 {
-    QString MessageString( const sword::ConnectionAck::ErrorCode& error )
+    QString MessageString( const sword::ConnectionResponse::ErrorCode& error )
     {
         switch( error )
         {
-        case sword::ConnectionAck::invalid_connection:
-            return tools::translate( "LauncherClient", "invalid connection" );
-        case sword::ConnectionAck::incompatible_protocol_version:
+        case sword::ConnectionResponse::success:
+            return tools::translate( "LauncherClient", "success" );
+        case sword::ConnectionResponse::incompatible_protocol_version:
             return tools::translate( "LauncherClient", "incompatible protocol version" );
-        case sword::ConnectionAck::exercise_already_running:
-            return tools::translate( "LauncherClient", "exercise already running" );
         default:
             return tools::translate( "LauncherClient", "unknown error" );
         }
     }
 
-    QString MessageString( const sword::ControlStartExerciseAck::ErrorCode& error )
+    QString MessageString( const sword::SessionStartResponse::ErrorCode& error )
     {
         switch( error )
         {
-        case sword::ControlStartExerciseAck::bad_exercise_name:
-            return tools::translate( "LauncherClient", "bad exercise name" );
-        case sword::ControlStartExerciseAck::exercise_already_running:
-            return tools::translate( "LauncherClient", "exercise already running" );
-        case sword::ControlStartExerciseAck::invalid_checkpoint:
+        case sword::SessionStartResponse::invalid_exercise_name:
+            return tools::translate( "LauncherClient", "invalid exercise name" );
+        case sword::SessionStartResponse::session_already_running:
+            return tools::translate( "LauncherClient", "session already running" );
+        case sword::SessionStartResponse::invalid_checkpoint:
             return tools::translate( "LauncherClient", "invalid checkpoint" );
         default:
             return tools::translate( "LauncherClient", "unknown error" );
         }
     }
 
-    QString MessageString( const sword::ControlStopExerciseAck::ErrorCode& error )
+    QString MessageString( const sword::SessionStopResponse::ErrorCode& error )
     {
         switch( error )
         {
-        case sword::ControlStopExerciseAck::bad_exercise_name:
-            return tools::translate( "LauncherClient", "bad exercise name" );
-        case sword::ControlStopExerciseAck::exercise_not_running:
-            return tools::translate( "LauncherClient", "exercise not running" );
+        case sword::SessionStopResponse::invalid_exercise_name:
+            return tools::translate( "LauncherClient", "invalid exercise name" );
+        case sword::SessionStopResponse::invalid_session_name:
+            return tools::translate( "LauncherClient", "invalid session name" );
+        case sword::SessionStopResponse::session_not_running:
+            return tools::translate( "LauncherClient", "session not running" );
         default:
             return tools::translate( "LauncherClient", "unknown error" );
         }
@@ -153,13 +153,13 @@ namespace
 // -----------------------------------------------------------------------------
 void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, const sword::LauncherToAdmin& message )
 {
-    if( message.message().has_connection_ack() )
+    if( message.message().has_connection_response() )
     {
-        if( message.message().connection_ack().error_code() != sword::ConnectionAck::success )
+        if( message.message().connection_response().error_code() != sword::ConnectionResponse::success )
         {
             if( handler_ )
                 handler_->OnConnectionFailed( tools::translate( "LauncherClient", "Failed to contact launcher service: %1." )
-                                                .arg( MessageString( message.message().connection_ack().error_code() ) ).ascii() );
+                                                .arg( MessageString( message.message().connection_response().error_code() ) ).ascii() );
             ResetConnection();
         }
         else if( handler_ )
@@ -170,21 +170,21 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, con
     }
     else if( message.message().has_exercise_list_response() )
         responseHandler_->Handle( message.message().exercise_list_response() );
-    else if( message.message().has_profiles_description() )
-        responseHandler_->Handle( message.message().profiles_description() );
-    else if( message.message().has_control_start_ack() )
+    else if( message.message().has_profile_list_response() )
+        responseHandler_->Handle( message.message().profile_list_response() );
+    else if( message.message().has_session_start_response() )
     {
-        if( message.message().control_start_ack().error_code() != sword::ControlStartExerciseAck::success )
-            handler_->OnError( tools::translate( "LauncherClient", "Failed to start exercise: %1." )
-                                .arg( MessageString( message.message().control_start_ack().error_code() ) ).ascii() );
-        responseHandler_->Handle( message.message().control_start_ack() );
+        if( message.message().session_start_response().error_code() != sword::SessionStartResponse::success )
+            handler_->OnError( tools::translate( "LauncherClient", "Failed to start session: %1." )
+                                .arg( MessageString( message.message().session_start_response().error_code() ) ).ascii() );
+        responseHandler_->Handle( message.message().session_start_response() );
     }
-    else if( message.message().has_control_stop_ack() )
+    else if( message.message().has_session_stop_response() )
     {
-        if( message.message().control_stop_ack().error_code() != sword::ControlStopExerciseAck::success )
+        if( message.message().session_stop_response().error_code() != sword::SessionStopResponse::success )
             handler_->OnError( tools::translate( "LauncherClient", "Failed to stop exercise: %1." )
-                                .arg( MessageString( message.message().control_stop_ack().error_code() ) ).ascii() );
-        responseHandler_->Handle( message.message().control_stop_ack() );
+                                .arg( MessageString( message.message().session_stop_response().error_code() ) ).ascii() );
+        responseHandler_->Handle( message.message().session_stop_response() );
     }
 }
 
@@ -196,7 +196,7 @@ void LauncherClient::QueryExerciseList()
 {
     if( Connected() )
     {
-        launcher::ExercicesListRequest message;
+        launcher::ExerciseListRequest message;
         message.Send( *publisher_ );
     }
 }
@@ -209,7 +209,7 @@ void LauncherClient::QueryProfileList()
 {
     if( Connected() )
     {
-        launcher::ProfilesListRequest message;
+        launcher::ProfileListRequest message;
         message.Send( *publisher_ );
     }
 }

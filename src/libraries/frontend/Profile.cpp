@@ -116,9 +116,9 @@ void Profile::VisitProfiles( const tools::GeneralConfig& config, const tools::Lo
 // Name: Profile::Send
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-void Profile::Send( sword::ProfileDescription& message ) const
+void Profile::Send( sword::Profile& message ) const
 {
     message.set_login( login_ );
-    message.set_password( !password_.empty() );
+    message.set_password( password_ );
     message.set_supervisor( supervisor_ );
 }

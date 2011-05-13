@@ -13,6 +13,7 @@
 #pragma warning( push, 0 )
 #include "protocol/proto/admin_launcher.pb.h"
 #include "protocol/proto/launcher_admin.pb.h"
+#include "protocol/proto/client_simulation.pb.h"
 #pragma warning( pop )
 
 #endif // __protocol_Launcher_h__

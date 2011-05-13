@@ -29,13 +29,23 @@ public:
     //! @name Operations
     //@{
     static void Convert( const MsgsAdminToLauncher::MsgConnectionRequest& from, sword::ConnectionRequest* to );
-    static void Convert( const MsgsAdminToLauncher::MsgControlStart& from, sword::ControlStartExercise* to );
-    static void Convert( const MsgsAdminToLauncher::MsgControlStop& from, sword::ControlStopExercise* to );
-    static void Convert( const MsgsAdminToLauncher::MsgExercicesListRequest& from, sword::ExercicesListRequest* to );
-    static void Convert( const MsgsAdminToLauncher::MsgProfilesListRequest& from, sword::ProfilesListRequest* to );
-    static void Convert( const MsgsAdminToLauncher::MsgConnectedProfilesListRequest& from, sword::ConnectedProfilesListRequest* to );
-    static void Convert( const MsgsAdminToLauncher::MsgAdminDirectoryChangeNotification& from, sword::AdminDirectoryChangeNotification* to );
+    static void Convert( const MsgsAdminToLauncher::MsgSessionStartRequest& from, sword::SessionStartRequest* to );
+    static void Convert( const MsgsAdminToLauncher::MsgSessionStopRequest& from, sword::SessionStopRequest* to );
+    static void Convert( const MsgsAdminToLauncher::MsgExerciseListRequest& from, sword::ExerciseListRequest* to );
+    static void Convert( const MsgsAdminToLauncher::MsgSessionListRequest& from, sword::SessionListRequest* to );
+    static void Convert( const MsgsAdminToLauncher::MsgProfileListRequest& from, sword::ProfileListRequest* to );
+    static void Convert( const MsgsAdminToLauncher::MsgConnectedProfileListRequest& from, sword::ConnectedProfileListRequest* to );
+    static void Convert( const MsgsAdminToLauncher::MsgSessionParameterChangeRequest& from, sword::SessionParameterChangeRequest* to );
+    static void Convert( const MsgsAdminToLauncher::MsgSessionCommandExecutionRequest& from, sword::SessionCommandExecutionRequest* to );
+    static void Convert( const MsgsAdminToLauncher::MsgCheckpointListRequest& from, sword::CheckpointListRequest* to );
+    static void Convert( const MsgsAdminToLauncher::MsgCheckpointDeleteRequest& from, sword::CheckpointDeleteRequest* to );
+    static void Convert( const MsgsAdminToLauncher::MsgSessionNotification& from, sword::SessionNotificationRequest* to );
     //@}
+
+private:
+    static void ConvertParameter( const MsgsAdminToLauncher::SessionParameter& from, sword::SessionParameter* to);
+    static void ConvertNotification( const MsgsAdminToLauncher::MsgSessionNotification::Notification& from, sword::SessionNotificationRequest::Notification* to );
+    static void ConvertDirectoryChange( const MsgsAdminToLauncher::MsgSessionNotification::DirectoryChange& from, sword::SessionNotificationRequest::DirectoryChange* to );
 };
 
 }

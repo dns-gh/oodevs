@@ -59,17 +59,13 @@ ProcessService::~ProcessService()
 // Name: ProcessService::SendExerciseList
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------
-void ProcessService::SendExerciseList( sword::ExercicesListResponse& message )
+void ProcessService::SendExerciseList( sword::ExerciseListResponse& message )
 {
     const QStringList exercises = frontend::commands::ListExercises( config_ );
     for( QStringList::const_iterator it = exercises.begin(); it != exercises.end(); ++it )
     {
         const std::string name = (*it).ascii();
-        sword::Exercise& exercise = *message.mutable_exercise()->Add();
-        exercise.set_name( name );
-        exercise.set_running( IsRunning( name ) );
-        //if( exercise.running() ) // $$$$ LDC 2011-03-10: Why? If port is not set, replay will be unable to connect to port 0.
-        exercise.set_port( 10001 ); // $$$$ SBO 2010-10-26: TODO: handle port configuration/multiple exercises
+        message.add_exercise(name);;
     }
 }
 
@@ -77,33 +73,33 @@ void ProcessService::SendExerciseList( sword::ExercicesListResponse& message )
 // Name: ProcessService::StartExercise
 // Created: SBO 2010-10-07
 // -----------------------------------------------------------------------------
-sword::ControlStartExerciseAck::ErrorCode ProcessService::StartExercise( const sword::ControlStartExercise& message )
+sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const sword::SessionStartRequest& message )
 {
     const std::string session = "multiplayer"; // $$$$ SBO 2010-10-28: TODO: add session to message
-    const std::string exercise = message.exercise().name();
+    const std::string exercise = message.exercise();
     const std::string checkpoint = message.has_checkpoint() ? message.checkpoint() : "";
     if( ! frontend::commands::ExerciseExists( config_, exercise ) )
-        return sword::ControlStartExerciseAck::bad_exercise_name;
+        return sword::SessionStartResponse::invalid_exercise_name;
     if( IsRunning( exercise ) )
-        return sword::ControlStartExerciseAck::exercise_already_running;
+        return sword::SessionStartResponse::session_already_running;
     if( message.has_checkpoint() && ! frontend::commands::CheckpointExists( config_, exercise, session, checkpoint ) )
-        return sword::ControlStartExerciseAck::invalid_checkpoint;
+        return sword::SessionStartResponse::invalid_checkpoint;
     {
         frontend::CreateSession action( config_, exercise, session );
         action.SetDefaultValues();
-        action.SetOption( "session/config/dispatcher/plugins/shield/@server", "30001" );
-        action.SetOption( "session/config/simulation/time/@paused", true );
-        action.SetOption( "session/config/simulation/time/@factor", 1 );
-        action.SetOption( "session/config/simulation/checkpoint/@frequency", "600s" );
-        action.SetOption( "session/config/simulation/checkpoint/@keep", "10" );
-        if( message.has_use_after_action_analysis() && message.use_after_action_analysis() )
-            action.SetOption( "session/config/dispatcher/plugins/recorder", "" );
-        else
-            action.RemoveOption( "session/config/dispatcher/plugins/recorder" );
+        for(int i=0; i<message.parameter().size() ; ++i)
+        {
+            const sword::SessionParameter& parameter = message.parameter(i);
+            action.SetOption( parameter.key(), parameter.value() );
+        }
+//        if( message.has_use_after_action_analysis() && message.use_after_action_analysis() )
+//            action.SetOption( "session/config/dispatcher/plugins/recorder", "" );
+//        else
+//            action.RemoveOption( "session/config/dispatcher/plugins/recorder" );
         action.Commit();
     }
     boost::shared_ptr< frontend::SpawnCommand > command;
-    if( message.mode() == sword::ControlStartExercise::play )
+    if( message.type() == sword::SessionStartRequest::simulation )
         command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), true ) );
     else
         command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, true ) );
@@ -113,25 +109,25 @@ sword::ControlStartExerciseAck::ErrorCode ProcessService::StartExercise( const s
         processes_[ exercise ] = wrapper;
     }
     wrapper->Start();
-    return sword::ControlStartExerciseAck::success;
+    return sword::SessionStartResponse::success;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProcessService::StopExercise
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
-sword::ControlStopExerciseAck::ErrorCode ProcessService::StopExercise( const sword::ControlStopExercise& message )
+sword::SessionStopResponse::ErrorCode ProcessService::StopSession( const sword::SessionStopRequest& message )
 {
-    const std::string name = message.exercise().name();
+    const std::string name = message.exercise();
     std::map< std::string, boost::weak_ptr< frontend::ProcessWrapper > >::iterator it = processes_.find( name );
     if( it != processes_.end() && ! it->second.expired() )
     {
         boost::shared_ptr< frontend::ProcessWrapper > process( it->second );
         process->Stop();
-        return sword::ControlStopExerciseAck::success;
+        return sword::SessionStopResponse::success;
     }
-    return frontend::commands::ExerciseExists( config_, name ) ? sword::ControlStopExerciseAck::exercise_not_running
-                                                               : sword::ControlStopExerciseAck::bad_exercise_name;
+    return frontend::commands::ExerciseExists( config_, name ) ? sword::SessionStopResponse::session_not_running
+                                                               : sword::SessionStopResponse::invalid_exercise_name;
 }
 
 // -----------------------------------------------------------------------------
@@ -172,14 +168,14 @@ namespace
 {
     struct ProfileCollector : public frontend::ProfileVisitor_ABC
     {
-        explicit ProfileCollector( sword::ProfileDescriptionList& message )
+        explicit ProfileCollector( sword::ProfileListResponse& message )
             : message_( message )
         {}
         virtual void Visit( const frontend::Profile& profile )
         {
-            profile.Send( *message_.add_elem() );
+            profile.Send( *message_.add_profile() );
         }
-        sword::ProfileDescriptionList& message_;
+        sword::ProfileListResponse& message_;
     };
 }
 
@@ -189,7 +185,7 @@ namespace
 //        exercise name should be added to profile list request
 // Created: SBO 2010-11-19
 // -----------------------------------------------------------------------------
-void ProcessService::SendProfileList( sword::ProfileDescriptionList& message )
+void ProcessService::SendProfileList( sword::ProfileListResponse& message )
 {
     boost::recursive_mutex::scoped_lock locker( mutex_ );
     for( std::map< std::string, boost::weak_ptr< frontend::ProcessWrapper > >::const_iterator it = processes_.begin(); it != processes_.end(); ++it )

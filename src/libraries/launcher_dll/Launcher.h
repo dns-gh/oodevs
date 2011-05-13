@@ -16,10 +16,17 @@
 namespace sword
 {
     class ConnectionRequest;
-    class ControlStartExercise;
-    class ControlStopExercise;
-    class ExercicesListRequest;
-    class ProfilesListRequest;
+    class SessionStartRequest;
+    class SessionStopRequest;
+    class ExerciseListRequest;
+    class SessionListRequest;
+    class ProfileListRequest;
+    class ConnectedProfileListRequest;
+    class SessionParameterChangeRequest;
+    class SessionCommandExecutionRequest;
+    class CheckpointListRequest;
+    class CheckpointDeleteRequest;
+    class SessionNotificationRequest;
 }
 
 namespace tools
@@ -66,10 +73,17 @@ private:
     //! @name Helpers
     //@{
     void HandleRequest( const std::string& endpoint, const sword::ConnectionRequest& message );
-    void HandleRequest( const std::string& endpoint, const sword::ExercicesListRequest& message );
-    void HandleRequest( const std::string& endpoint, const sword::ControlStartExercise& message );
-    void HandleRequest( const std::string& endpoint, const sword::ControlStopExercise& message );
-    void HandleRequest( const std::string& endpoint, const sword::ProfilesListRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::ExerciseListRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::SessionStartRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::SessionStopRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::SessionListRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::ProfileListRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::ConnectedProfileListRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::SessionParameterChangeRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::CheckpointListRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::CheckpointDeleteRequest& message );
+    void HandleRequest( const std::string& endpoint, const sword::SessionNotificationRequest& message );
     //@}
 
 private:

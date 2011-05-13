@@ -9,57 +9,111 @@
 
 package MsgsAdminToLauncher;
 
-import "Common.proto";
-import "ClientToSim.proto";
 import "Version.proto";
 
+// request connection to launcher
 message MsgConnectionRequest {
-   required Version.ProtocolVersion client_version = 1;
+   required Version.ProtocolVersion client_version = 1; //!< launcher client version, used to check compatibility
 }
 
-message MsgControlStart {
-   enum GameMode {
-        play  = 0;
-        replay = 1;
+// retrieve list of exercises available on launcher
+message MsgExerciseListRequest {}
+
+// retrieve session list for an exercise
+message MsgSessionListRequest {
+    required string exercise = 1; //!< exercise from which to list sessions
+}
+
+message SessionParameter {
+    required string key   = 1;
+    required string value = 2;
+}
+
+// start a session using the given exercise/session.
+message MsgSessionStartRequest {
+    enum Type {
+        simulation = 0; //!< starts a simulation. Starts an embedded dispatcher if specified in session.
+        dispatch   = 1; //!< starts a dispatcher.
+        replay     = 2; //!< starts a replayer.
     }
-   required Common.MsgExercise  exercise                  = 1;
-   required GameMode            mode                      = 2;
-   optional bool	            use_after_action_analysis = 3;
-   optional bool	            use_external_systems 	  = 4;
-   optional string              checkpoint                = 5;
+    required string exercise               = 1;                          //!< exercise to be started
+    required string session                = 2 [ default = "default" ];  //!< session name (created with default parameters if it does not exist)
+    required Type   type                   = 3;                          //!< type of exercise session to start
+    optional string checkpoint             = 4;                          //!< load the specified checkpoint
+    repeated SessionParameter   parameter  = 5;                          //!< list of overloaded session parameters
 }
 
-message MsgControlStop {
-	required Common.MsgExercise exercise = 1;
+// stop a given running session
+message MsgSessionStopRequest {
+    required string exercise = 1;                         //!< exercise to stop
+    required string session  = 2 [ default = "default" ]; //!< session to stop
 }
 
-message MsgExercicesListRequest {
-    optional int32   context = 1;
+// retrieve list of profiles for a given exercise
+message MsgProfileListRequest {
+    required string exercise = 1; //!< exercise to list profiles from
 }
 
-message MsgProfilesListRequest {
-    optional int32 context = 1;
+// retrieve list of connected profiles for a given exercise/session
+message MsgConnectedProfileListRequest {
+    required string exercise = 1;                         //!< exercise to list connected profiles from
+    required string session  = 2 [ default = "default" ]; //!< session to list connected profiles from
 }
 
-message MsgConnectedProfilesListRequest {
-    optional int32 context = 1;
+// change session parameters
+message MsgSessionParameterChangeRequest {
+    required string exercise             = 1;                         //!< exercise to change parameter from
+    required string session              = 2 [ default = "default" ]; //!< session to change parameter from
+    optional uint32 checkpoint_frequency = 3;                         //!< if set, change checkpoint frequency
+    optional uint32 acceleration_factor  = 4;                         //!< if set, change acceleration factor
 }
 
-message MsgAdminDirectoryChangeNotification {}
+// request command execution to running session
+message MsgSessionCommandExecutionRequest {
+    required string     exercise        = 1;                         //!< exercise to send command to
+    required string     session         = 2 [ default = "default" ]; //!< session to send command to
+    optional string     save_checkpoint = 3;                         //!< if set, save a checkpoint with specified name or default (timestamp)
+    required bool       set_running     = 4;                         //!< if set to false, send a pause command; if set to true, set a resume command
+}
+
+// retrieve list of checkpoints for a given exercise/session
+message MsgCheckpointListRequest {
+    required string exercise = 1;                         //!< exercise to list checkpoint from
+    required string session  = 2 [ default = "default" ]; //!< session to list checkpoint from
+}
+
+// delete checkpoint for a given exercise/session
+message MsgCheckpointDeleteRequest {
+    required string exercise   = 1;                         //!< exercise to delete checkpoint from
+    required string session    = 2 [ default = "default" ]; //!< session to delete checkpoint from
+    optional string checkpoint = 3;                         //!< delete all checkpoints if not specified
+}
+
+// notification to specified exercise/session
+message MsgSessionNotification {
+    message DirectoryChange {}
+    message Notification {
+        optional DirectoryChange    directory_change = 1;
+    }
+    required string         exercise      = 1; //!< exercise to send notification to
+    required string         session       = 2; //!< session to send notification to
+    required Notification   notification  = 3; //!< notifiaction to send
+}
 
 message MsgAdminToLauncher {
     message Content {
-        optional MsgConnectionRequest                              connection_request                = 1;
-        optional MsgControlStart                                   control_start                     = 2;
-        optional MsgControlStop                                    control_stop                      = 3;
-        optional MsgExercicesListRequest                           exercise_list_request             = 4;
-        optional MsgProfilesListRequest                            profile_list_request              = 5;
-        optional MsgConnectedProfilesListRequest                   connected_profile_list_request    = 6;
-        optional MsgAdminDirectoryChangeNotification               notification                      = 7;
-        optional MsgsClientToSim.MsgControlCheckPointSetFrequency  control_checkpoint_set_frequency  = 8;
-        optional MsgsClientToSim.MsgControlCheckPointSaveNow       control_checkpoint_save_now       = 9;
-        optional MsgsClientToSim.MsgControlCheckPointListRequest   control_checkpoint_list_request   = 10;
-        optional MsgsClientToSim.MsgControlCheckPointDeleteRequest control_checkpoint_delete_request = 11;
+        optional MsgConnectionRequest              connection_request                = 1;
+        optional MsgSessionStartRequest            session_start_request             = 2;
+        optional MsgSessionStopRequest             session_stop_request              = 3;
+        optional MsgExerciseListRequest            exercise_list_request             = 4;
+        optional MsgSessionListRequest             session_list_request              = 5;
+        optional MsgProfileListRequest             profile_list_request              = 6;
+        optional MsgConnectedProfileListRequest    connected_profile_list_request    = 7;
+        optional MsgSessionParameterChangeRequest  session_parameter_change_request  = 8;
+        optional MsgSessionCommandExecutionRequest session_command_execution_request = 9;
+        optional MsgCheckpointListRequest          checkpoint_list_request           = 10;
+        optional MsgCheckpointDeleteRequest        checkpoint_delete_request         = 11;
+        optional MsgSessionNotification            session_notification              = 12;
     }
     optional int32   context = 1;
     required Content message = 2;

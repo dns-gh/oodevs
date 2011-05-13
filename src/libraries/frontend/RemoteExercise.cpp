@@ -32,6 +32,21 @@ RemoteExercise::RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFa
 }
 
 // -----------------------------------------------------------------------------
+// Name: RemoteExercise constructor
+// Created: SBO 2010-10-01
+// -----------------------------------------------------------------------------
+RemoteExercise::RemoteExercise( const Host_ABC& host, const ExerciseIdentifierFactory_ABC& factory, const std::string& exercise, kernel::Controller& controller )
+    : controller_( controller )
+    , host_      ( host )
+    , name_      ( exercise )
+    , id_        ( factory.CreateIdentifier( name_ ) )
+    , port_      ( 0 )
+    , running_   ( false )
+{
+    controller_.Create( *(Exercise_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: RemoteExercise destructor
 // Created: SBO 2010-10-01
 // -----------------------------------------------------------------------------

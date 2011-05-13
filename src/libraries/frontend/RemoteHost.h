@@ -53,10 +53,10 @@ public:
 
     //! @name Operation
     //@{
-    virtual void Handle( const sword::ExercicesListResponse& message );
-    virtual void Handle( const sword::ControlStartExerciseAck& message );
-    virtual void Handle( const sword::ControlStopExerciseAck& message );
-    virtual void Handle( const sword::ProfileDescriptionList& message );
+    virtual void Handle( const sword::ExerciseListResponse& message );
+    virtual void Handle( const sword::SessionStartResponse& message );
+    virtual void Handle( const sword::SessionStopResponse& message );
+    virtual void Handle( const sword::ProfileListResponse& message );
     //@}
 
 private:

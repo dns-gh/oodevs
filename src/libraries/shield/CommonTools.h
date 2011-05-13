@@ -353,6 +353,12 @@ namespace shield
         CONVERT( role );
         CONVERT( percentage );
     }
+    template< typename From, typename To >
+    void ConvertExtensionEntry( const From& from, To* to)
+    {
+        CONVERT( name );
+        CONVERT( value );
+    }
 }
 
 #endif // shield_Common_h

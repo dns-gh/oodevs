@@ -160,10 +160,10 @@ namespace
 {
     MOCK_BASE_CLASS( MockResponseHandler, frontend::ResponseHandler_ABC )
     {
-        MOCK_METHOD_EXT( Handle, 1, void( const sword::ExercicesListResponse& ), HandleExercisesListResponse );
-        MOCK_METHOD_EXT( Handle, 1, void( const sword::ControlStartExerciseAck& ), HandleControlStartAck );
-        MOCK_METHOD_EXT( Handle, 1, void( const sword::ControlStopExerciseAck& ), HandleControlStopAck );
-        MOCK_METHOD_EXT( Handle, 1, void( const sword::ProfileDescriptionList& ), HandleProfileDescriptionList );
+        MOCK_METHOD_EXT( Handle, 1, void( const sword::ExerciseListResponse& ), HandleExerciseListResponse );
+        MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionStartResponse& ), HandleSessionStartResponse );
+        MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionStopResponse& ), HandleSessionStopResponse );
+        MOCK_METHOD_EXT( Handle, 1, void( const sword::ProfileListResponse& ), HandlProfileListResponse );
     };
 }
 

@@ -14,10 +14,10 @@
 
 namespace sword
 {
-    class ControlStartExerciseAck;
-    class ControlStopExerciseAck;
-    class ExercicesListResponse;
-    class ProfileDescriptionList;
+    class ExerciseListResponse;
+    class SessionStartResponse;
+    class SessionStopResponse;
+    class ProfileListResponse;
 }
 
 namespace frontend
@@ -39,10 +39,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Handle( const sword::ExercicesListResponse& message ) = 0;
-    virtual void Handle( const sword::ControlStartExerciseAck& message ) = 0;
-    virtual void Handle( const sword::ControlStopExerciseAck& message ) = 0;
-    virtual void Handle( const sword::ProfileDescriptionList& message ) = 0;
+    virtual void Handle( const sword::ExerciseListResponse& message ) = 0;
+    virtual void Handle( const sword::SessionStartResponse& message ) = 0;
+    virtual void Handle( const sword::SessionStopResponse& message ) = 0;
+    virtual void Handle( const sword::ProfileListResponse& message ) = 0;
     //@}
 };
 

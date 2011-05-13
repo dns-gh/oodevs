@@ -37,6 +37,12 @@ namespace shield
     }
 }
 
+template <typename T>
+inline void ConvertSimple(const T& from, T* to)
+{
+    *to = from;
+}
+
 #define CONVERT_TO( from_field, to_field ) \
     if( from.has_##from_field() ) \
         to->set_##to_field( from.from_field() )
@@ -83,6 +89,11 @@ namespace shield
     }
 #define CONVERT_LIST( field, elem, callback ) \
     CONVERT_LIST_TO( field, field, elem, callback )
+
+#define CONVERT_SIMPLE_LIST( field, callback ) \
+    to->mutable_##field(); \
+    for( int i = 0; i< from.field().size(); ++i) \
+        callback( from.field(i) , to->add_##field() );
 
 #define CONVERT_ENUM_LIST( elem, mapping ) \
     for( int i = 0; i < from.elem().size(); ++i ) \

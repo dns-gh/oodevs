@@ -26,48 +26,99 @@ BOOST_FIXTURE_TEST_CASE( connection_request_to_launcher_is_converted_when_versio
     converter.ReceiveAdminToLauncher( "client endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( control_start_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
+BOOST_FIXTURE_TEST_CASE( session_start_request_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
 {
-    FillExercice( content.mutable_control_start()->mutable_exercise() );
-    content.mutable_control_start()->set_mode( MsgsAdminToLauncher::MsgControlStart::replay );
-    content.mutable_control_start()->set_use_after_action_analysis( true );
-    content.mutable_control_start()->set_use_external_systems( true );
-    content.mutable_control_start()->set_checkpoint( "checkpoint" );
-    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { control_start { exercise { name: \"name\" running: true port: 7 } mode: replay use_after_action_analysis: true use_external_systems: true checkpoint: \"checkpoint\" } }" ) );
+    content.mutable_session_start_request()->set_exercise( "name" );
+    content.mutable_session_start_request()->set_session( "session" );
+    content.mutable_session_start_request()->set_type( MsgsAdminToLauncher::MsgSessionStartRequest::dispatch );
+    content.mutable_session_start_request()->set_checkpoint( "checkpoint" );
+    MsgsAdminToLauncher::SessionParameter* param1 = content.mutable_session_start_request()->add_parameter(); param1->set_key("key1"); param1->set_value("value1");
+    MsgsAdminToLauncher::SessionParameter* param2 = content.mutable_session_start_request()->add_parameter(); param2->set_key("key2"); param2->set_value("value2");
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_start_request { exercise: \"name\" session: \"session\" type: dispatch checkpoint: \"checkpoint\" "
+            "parameter { key: \"key1\" value: \"value1\" } parameter { key: \"key2\" value: \"value2\" } } }" ) );
     converter.ReceiveAdminToLauncher( "client endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( control_stop_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
+BOOST_FIXTURE_TEST_CASE( session_stop_request_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
 {
-    FillExercice( content.mutable_control_stop()->mutable_exercise() );
-    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { control_stop { exercise { name: \"name\" running: true port: 7 } } }" ) );
+    content.mutable_session_stop_request()->set_exercise( "name" );
+    content.mutable_session_stop_request()->set_session( "session" );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_stop_request { exercise: \"name\" session: \"session\" } }" ) );
     converter.ReceiveAdminToLauncher( "client endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( exercise_list_request_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
 {
-    content.mutable_exercise_list_request()->set_context( 7 );
-    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { exercise_list_request { context: 7 } }" ) );
+    content.mutable_exercise_list_request();
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { exercise_list_request { } }" ) );
+    converter.ReceiveAdminToLauncher( "client endpoint", msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_list_request_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
+{
+    content.mutable_session_list_request()->set_exercise( "name" );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_list_request { exercise: \"name\" } }" ) );
     converter.ReceiveAdminToLauncher( "client endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( profile_list_request_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
 {
-    content.mutable_profile_list_request()->set_context( 7 );
-    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { profile_list_request { context: 7 } }" ) );
+    content.mutable_profile_list_request()->set_exercise( "name" );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { profile_list_request { exercise: \"name\" } }" ) );
     converter.ReceiveAdminToLauncher( "client endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( connected_profile_list_request_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
 {
-    content.mutable_connected_profile_list_request()->set_context( 7 );
-    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { connected_profile_list_request { context: 7 } }" ) );
+    content.mutable_connected_profile_list_request()->set_exercise( "name" );
+    content.mutable_connected_profile_list_request()->set_session( "session" );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { connected_profile_list_request { exercise: \"name\" session: \"session\" } }" ) );
     converter.ReceiveAdminToLauncher( "client endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( notification_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
+BOOST_FIXTURE_TEST_CASE( session_parameter_change_request_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
 {
-    content.mutable_notification();
-    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { notification { } }" ) );
+    content.mutable_session_parameter_change_request()->set_exercise( "name" );
+    content.mutable_session_parameter_change_request()->set_session( "session" );
+    content.mutable_session_parameter_change_request()->set_checkpoint_frequency( 420 );
+    content.mutable_session_parameter_change_request()->set_acceleration_factor( 42 );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_parameter_change_request { exercise: \"name\" session: \"session\" checkpoint_frequency: 420 acceleration_factor: 42 } }" ) );
     converter.ReceiveAdminToLauncher( "client endpoint", msg );
 }
+
+BOOST_FIXTURE_TEST_CASE( session_command_execution_request_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
+{
+    content.mutable_session_command_execution_request()->set_exercise( "name" );
+    content.mutable_session_command_execution_request()->set_session( "session" );
+    content.mutable_session_command_execution_request()->set_save_checkpoint( "checkpoint" );
+    content.mutable_session_command_execution_request()->set_set_running( false );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_command_execution_request { exercise: \"name\" session: \"session\" save_checkpoint: \"checkpoint\" set_running: false } }" ) );
+    converter.ReceiveAdminToLauncher( "client endpoint", msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( checkpoint_list_request_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
+{
+    content.mutable_checkpoint_list_request()->set_exercise( "name" );
+    content.mutable_checkpoint_list_request()->set_session( "session" );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { checkpoint_list_request { exercise: \"name\" session: \"session\" } }" ) );
+    converter.ReceiveAdminToLauncher( "client endpoint", msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( checkpoint_delete_request_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
+{
+    content.mutable_checkpoint_delete_request()->set_exercise( "name" );
+    content.mutable_checkpoint_delete_request()->set_session( "session" );
+    content.mutable_checkpoint_delete_request()->set_checkpoint( "checkpoint" );
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { checkpoint_delete_request { exercise: \"name\" session: \"session\" checkpoint: \"checkpoint\" } }" ) );
+    converter.ReceiveAdminToLauncher( "client endpoint", msg );
+}
+
+BOOST_FIXTURE_TEST_CASE(session_notification_to_launcher_is_converted, ContextFixture< MsgsAdminToLauncher::MsgAdminToLauncher > )
+{
+    content.mutable_session_notification()->set_exercise( "name" );
+    content.mutable_session_notification()->set_session( "session" );
+    content.mutable_session_notification()->mutable_notification()->mutable_directory_change();
+    MOCK_EXPECT( server, SendAdminToLauncher ).once().with( constraint( msg, "context: 42 message { session_notification { exercise: \"name\" session: \"session\" notification { directory_change { } } } }" ) );
+    converter.ReceiveAdminToLauncher( "client endpoint", msg );
+}
+
