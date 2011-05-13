@@ -93,7 +93,7 @@ void ParameterList::DisplayTooltip( const kernel::Viewport_ABC& viewport, const 
 void ParameterList::Serialize( xml::xostream& xos ) const
 {
     Parameter_ABC::Serialize( xos );
-    xos << xml::attribute( "type", parameter_.GetType() );
+    xos << xml::attribute( "type", "list" );
 }
 
 // -----------------------------------------------------------------------------
@@ -179,6 +179,15 @@ void ParameterList::AddQuantity( const std::string& name, int value )
 void ParameterList::AddString( const std::string& name, const std::string& value )
 {
     AddParameter( *new String( OrderParameter( name, "string", false ), value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterList::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string ParameterList::SerializeType() const
+{
+    return GetType();
 }
 
 }

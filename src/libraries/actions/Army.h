@@ -49,6 +49,11 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual std::string SerializeType() const;
+    //@}
+
     //! @name Copy/Assignment
     //@{
     Army( const Army& );            //!< Copy constructor

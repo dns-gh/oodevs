@@ -94,7 +94,7 @@ template< typename T >
 void Parameter< T >::Serialize( xml::xostream& xos ) const
 {
     Parameter_ABC::Serialize( xos );
-    xos << xml::attribute( "type", parameter_.GetType() );
+    xos << xml::attribute( "type", SerializeType() );
 }
 
 // -----------------------------------------------------------------------------

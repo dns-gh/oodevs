@@ -146,3 +146,12 @@ bool Location::IsSet() const
 {
     return IsValid();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Location::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Location::SerializeType() const
+{
+    return "location";
+}

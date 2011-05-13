@@ -65,3 +65,12 @@ void PathPoint::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PathPoint::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string PathPoint::SerializeType() const
+{
+    return "pathpoint";
+}

@@ -26,7 +26,6 @@
 #include "actions_gui/ParamDotationTypeList.h"
 #include "actions_gui/ParamEquipmentList.h"
 #include "actions_gui/ParamHumanWoundList.h"
-#include "actions_gui/ParamIntelligenceList.h"
 #include "actions_gui/ParamLimaList.h"
 #include "actions_gui/ParamLocation.h"
 #include "actions_gui/ParamLocationComposite.h"
@@ -535,15 +534,6 @@ actions::gui::Param_ABC& MissionInterfaceBuilder::BuildLimaList( const OrderPara
 actions::gui::Param_ABC& MissionInterfaceBuilder::BuildDotationTypeList( const kernel::OrderParameter& parameter ) const
 {
     return *new actions::gui::ParamDotationTypeList( missionInterface_, parameter, staticModel_.objectTypes_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionInterfaceBuilder::BuildIntelligenceList
-// Created: SBO 2007-10-29
-// -----------------------------------------------------------------------------
-actions::gui::Param_ABC& MissionInterfaceBuilder::BuildIntelligenceList( const kernel::OrderParameter& parameter ) const
-{
-    return *new actions::gui::ParamIntelligenceList( missionInterface_, parameter, converter_, controllers_.actions_, controllers_.controller_ );
 }
 
 // -----------------------------------------------------------------------------

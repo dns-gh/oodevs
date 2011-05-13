@@ -105,3 +105,12 @@ void Army::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Army::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Army::SerializeType() const
+{
+    return "army";
+}

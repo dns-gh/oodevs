@@ -82,3 +82,12 @@ void Bool::CommitTo( T_Setter setter ) const
 {
     setter( GetValue() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Bool::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Bool::SerializeType() const
+{
+    return "bool";
+}

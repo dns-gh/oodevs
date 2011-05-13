@@ -57,3 +57,12 @@ void DotationTypeList::CommitTo( std::string& content ) const
     StringSerializer serializer( content );
     Accept( serializer );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DotationTypeList::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string DotationTypeList::SerializeType() const
+{
+    return "resourcetype";
+}

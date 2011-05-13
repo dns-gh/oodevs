@@ -92,3 +92,12 @@ void Numeric::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Numeric::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Numeric::SerializeType() const
+{
+    return "numeric";
+}

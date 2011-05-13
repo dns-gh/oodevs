@@ -37,6 +37,11 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual std::string SerializeType() const;
+    //@}
+
     //! @name Copy/Assignment
     //@{
     DotationTypeList( const DotationTypeList& );            //!< Copy constructor

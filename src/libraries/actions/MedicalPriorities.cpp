@@ -123,3 +123,12 @@ bool MedicalPriorities::IsSet() const
 {
     return !priorities_.empty();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MedicalPriorities::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string MedicalPriorities::SerializeType() const
+{
+    return "medicalpriorities";
+}

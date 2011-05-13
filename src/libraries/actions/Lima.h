@@ -67,6 +67,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual std::string SerializeType() const;
     virtual void Serialize( xml::xostream& xos ) const;
     void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     //@}

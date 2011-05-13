@@ -56,6 +56,12 @@ public:
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     virtual geometry::Point2f GetPosition() const;
     //@}
+
+private:
+    //! @name Helpers
+    //@{
+    virtual std::string SerializeType() const;
+    //@}
 };
 
 }

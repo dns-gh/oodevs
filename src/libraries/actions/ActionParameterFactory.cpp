@@ -90,7 +90,12 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
 {
     // $$$$ SBO 2007-10-11: we should create a parameter of the real type in order to be able (later) to edit parameters
     if( message.null_value() || message.value_size() == 0 )
-        return new parameters::String( parameter, tools::translate( "ActionParameterFactory", "not set" ).ascii() );
+    {
+        if( parameter.IsList() )
+            return new parameters::ParameterList( parameter );
+        else
+            return new parameters::String( parameter, tools::translate( "ActionParameterFactory", "not set" ).ascii() );
+    }
     else if( !parameter.IsList() && message.value_size() == 1 )
         return CreateParameter( parameter, message.value().Get( 0 ), entity );
     else
@@ -276,21 +281,15 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new parameters::Enumeration( parameter, xis ) );
     else if( type == "agent" )
         param.reset( new parameters::Agent( parameter, xis, entities_, controller_ ) );
-    else if( type == "automate" )
-        param.reset( new parameters::Automat( parameter, xis, entities_, controller_ ) );
-    else if( type == "automat" )
+    else if( type == "automate" || type == "automat" )
         param.reset( new parameters::Automat( parameter, xis, entities_, controller_ ) );
     else if( type == "army" )
         param.reset( new parameters::Army( parameter, xis, entities_, controller_ ) );
     else if( type == "formation" )
         param.reset( new parameters::Formation( parameter, xis, entities_, controller_ ) );
-    else if( type == "dotationtype" )
+    else if( type == "dotationtype" || type == "resourcetype" )
         param.reset( new parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
-    else if( type == "resourcetype" )
-        param.reset( new parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
-    else if( type == "genobject" )
-        param.reset( new parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
-    else if( type == "plannedwork" )
+    else if( type == "genobject" || type == "plannedwork" )
         param.reset( new parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, entities_, xis, controller_ ) );
     else if( type == "natureatlas" )
         param.reset( new parameters::AtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );

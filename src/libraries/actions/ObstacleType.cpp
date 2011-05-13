@@ -64,3 +64,12 @@ void ObstacleType::CommitTo( T_Setter setter ) const
 {
     setter( sword::ObstacleType_DemolitionTargetType( value_ ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleType::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string ObstacleType::SerializeType() const
+{
+    return "obstacletype";
+}

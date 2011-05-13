@@ -64,6 +64,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual std::string SerializeType() const;
     void ReadLima( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     //@}
 };

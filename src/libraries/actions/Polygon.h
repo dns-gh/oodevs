@@ -40,6 +40,11 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual std::string SerializeType() const;
+    //@}
+
     //! @name Copy/Assignment
     //@{
     Polygon( const Polygon& );            //!< Copy constructor

@@ -8,7 +8,6 @@ ParamAgentKnowledgeList.cpp \
 ParamAgentList.cpp \
 ParamAutomatList.cpp \
 ParamHumanWoundList.cpp \
-ParamIntelligenceList.cpp \
 ParamLimaList.cpp \
 ParamLocationCompositeList.cpp \
 ParamLocationList.cpp \

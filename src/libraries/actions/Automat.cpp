@@ -104,3 +104,12 @@ void Automat::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Automat::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Automat::SerializeType() const
+{
+    return "automat";
+}

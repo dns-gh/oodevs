@@ -77,3 +77,12 @@ void Level::Serialize( xml::xostream& xos ) const
     Parameter< QString >::Serialize( xos );
     xos << xml::attribute( "value", level_.GetName().ascii() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Level::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Level::SerializeType() const
+{
+    return "level";
+}

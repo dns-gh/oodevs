@@ -77,3 +77,12 @@ void Formation::CommitTo( sword::MissionParameter_Value& message ) const
     if( IsSet() )
         Entity< Formation_ABC >::CommitTo( *message.mutable_formation() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Formation::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Formation::SerializeType() const
+{
+    return "formation";
+}

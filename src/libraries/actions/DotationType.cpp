@@ -97,3 +97,12 @@ void DotationType::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DotationType::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string DotationType::SerializeType() const
+{
+    return "resourcetype";
+}

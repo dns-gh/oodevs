@@ -8,7 +8,6 @@ ActionsModel.cpp \
 AtlasNature.cpp \
 EngineerConstruction.cpp \
 FragOrder.cpp \
-Intelligence.cpp \
 Knowledge_ABC.inl \
 Lima.cpp \
 LimaList.cpp \

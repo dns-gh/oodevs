@@ -50,6 +50,11 @@ protected:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual std::string SerializeType() const;
+    //@}
+
     //! @name Copy/Assignment
     //@{
     Limit( const Limit& );            //!< Copy constructor

@@ -47,6 +47,11 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual std::string SerializeType() const;
+    //@}
+
     //! @name Copy/Assignment
     //@{
     Point( const Point& );            //!< Copy constructor

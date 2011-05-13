@@ -128,3 +128,12 @@ void Objective::Accept( ParameterVisitor_ABC& visitor ) const
     visitor.Visit( *this );
     Parameter< QString >::Accept( visitor );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Objective::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Objective::SerializeType() const
+{
+    return "objective";
+}

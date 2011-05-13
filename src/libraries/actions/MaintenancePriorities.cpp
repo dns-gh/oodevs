@@ -141,3 +141,12 @@ bool MaintenancePriorities::IsSet() const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MaintenancePriorities::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string MaintenancePriorities::SerializeType() const
+{
+    return "maintenancepriorities";
+}

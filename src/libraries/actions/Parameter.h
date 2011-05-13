@@ -56,6 +56,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyValueSet() {};
+    virtual std::string SerializeType() const = 0;
     //@}
 
 private:

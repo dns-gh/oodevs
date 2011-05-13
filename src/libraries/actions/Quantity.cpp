@@ -91,3 +91,12 @@ void Quantity::Serialize( xml::xostream& xos ) const
     Parameter< int >::Serialize( xos );
     xos << xml::attribute( "value", GetValue() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Quantity::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Quantity::SerializeType() const
+{
+    return "quantity";
+}

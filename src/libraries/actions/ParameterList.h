@@ -76,6 +76,11 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    virtual std::string SerializeType() const;
+    //@}
+
     //! @name Member data
     //@{
     kernel::OrderParameter parameter_;

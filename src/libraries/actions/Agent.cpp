@@ -94,3 +94,12 @@ void Agent::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Agent::SerializeType() const
+{
+    return std::string( "agent" );
+}

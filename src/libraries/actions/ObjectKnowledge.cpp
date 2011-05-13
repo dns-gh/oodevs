@@ -120,3 +120,12 @@ void ObjectKnowledge::CommitTo( sword::ObjectKnowledgeId& message ) const
 {
     Entity< ObjectKnowledge_ABC >::CommitTo< sword::ObjectKnowledgeId >( message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledge::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string ObjectKnowledge::SerializeType() const
+{
+    return "objectknowledge";
+}

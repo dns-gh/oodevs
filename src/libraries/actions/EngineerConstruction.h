@@ -74,6 +74,7 @@ private:
     //! @name Helpers
     //@{
     void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller );
+    virtual std::string SerializeType() const;
     virtual void Serialize( xml::xostream& xos ) const;
     void SetParameters( const sword::PlannedWork& message, const kernel::EntityResolver_ABC& entities, kernel::Controller& controller );
     //@}

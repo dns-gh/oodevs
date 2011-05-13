@@ -58,6 +58,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    virtual std::string SerializeType() const;
     void AddResourceParameter( const std::string& resource );
     void ReadParameter( xml::xistream& xis );
     void CommitTo( sword::ResourceNetworkElement& resourceNetwork ) const;

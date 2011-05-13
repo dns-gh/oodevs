@@ -80,3 +80,12 @@ void Limit::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( "", GetName() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Limit::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Limit::SerializeType() const
+{
+    return "limit";
+}

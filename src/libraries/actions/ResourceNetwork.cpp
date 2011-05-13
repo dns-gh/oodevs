@@ -173,3 +173,12 @@ void ResourceNetwork::CommitTo( sword::ResourceNetworkElement& resourceNetwork )
         if( it->second->GetType() == "resource" )
             static_cast< const String* >( it->second )->CommitTo( *resourceNetwork.mutable_resource()->mutable_name() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetwork::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string ResourceNetwork::SerializeType() const
+{
+    return "resourcenetwork";
+}

@@ -192,3 +192,12 @@ void Lima::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Lima::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Lima::SerializeType() const
+{
+    return "phaseline";
+}

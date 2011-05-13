@@ -118,3 +118,12 @@ void DateTime::CommitTo( sword::MissionParameter_Value& message ) const
     if( IsSet() )
         CommitTo( *message.mutable_datetime() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DateTime::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string DateTime::SerializeType() const
+{
+    return "datetime";
+}

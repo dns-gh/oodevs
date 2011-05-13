@@ -123,30 +123,6 @@
         <translation>Valor</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation>Naturaleza</translation>
-    </message>
-    <message>
-        <source>Karma</source>
-        <translation>Karma</translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation>Nivel</translation>
-    </message>
-    <message>
-        <source>Mounted</source>
-        <translation>Embarcado</translation>
-    </message>
-    <message>
-        <source>Formation</source>
-        <translation>Formación</translation>
-    </message>
-    <message>
         <source>Location</source>
         <translation>Posición</translation>
     </message>
@@ -172,10 +148,6 @@
     </message>
     <message>
         <source>Obstacle location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Intelligence location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

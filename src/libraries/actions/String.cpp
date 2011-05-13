@@ -83,3 +83,12 @@ void String::Serialize( xml::xostream& xos ) const
     Parameter< QString >::Serialize( xos );
     xos << xml::attribute( "value", GetValue().ascii() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: String::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string String::SerializeType() const
+{
+    return "string";
+}

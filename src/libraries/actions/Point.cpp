@@ -85,3 +85,12 @@ void Point::CommitTo( sword::CoordLatLong& message ) const
     message = loc.coordinates().elem( 0 );
     Location::Clean( loc );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Point::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Point::SerializeType() const
+{
+    return "point";
+}

@@ -93,3 +93,12 @@ void PopulationKnowledge::CommitTo( sword::CrowdKnowledgeId& message ) const
 {
     Entity< PopulationKnowledge_ABC >::CommitTo< sword::CrowdKnowledgeId >( message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationKnowledge::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string PopulationKnowledge::SerializeType() const
+{
+    return "crowdknowledge";
+}

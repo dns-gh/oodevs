@@ -84,3 +84,11 @@ void KnowledgeGroup::Accept( ParameterVisitor_ABC& visitor ) const
     visitor.Visit( *this );
 }
 
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string KnowledgeGroup::SerializeType() const
+{
+    return "knowledgegroup";
+}

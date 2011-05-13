@@ -114,3 +114,12 @@ void AgentKnowledge::CommitTo( sword::UnitKnowledgeId& message ) const
 {
     Entity< AgentKnowledge_ABC >::CommitTo( message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string AgentKnowledge::SerializeType() const
+{
+    return "agentknowledge";
+}

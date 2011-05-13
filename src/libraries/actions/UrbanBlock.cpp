@@ -159,3 +159,12 @@ void UrbanBlock::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( "", GetName() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanBlock::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string UrbanBlock::SerializeType() const
+{
+    return "urbanblock";
+}

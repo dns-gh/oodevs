@@ -78,3 +78,12 @@ void Enumeration::CommitTo( sword::MissionParameter_Value& message ) const
     if( IsSet() )
         message.set_enumeration( value_.GetId() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Enumeration::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Enumeration::SerializeType() const
+{
+    return "enumeration";
+}

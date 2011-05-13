@@ -129,3 +129,12 @@ bool LimaList::IsSet() const
     return( Parameter< QString >::IsSet() && IsInRange() );
     // $$$$ SBO 2008-03-19: each element must be set as well...
 }
+
+// -----------------------------------------------------------------------------
+// Name: LimaList::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string LimaList::SerializeType() const
+{
+    return "phaseline";
+}

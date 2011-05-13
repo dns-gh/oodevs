@@ -92,3 +92,12 @@ void Identifier::Serialize( xml::xostream& xos ) const
     Parameter< unsigned int >::Serialize( xos );
     xos << xml::attribute( "value", GetValue() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Identifier::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Identifier::SerializeType() const
+{
+    return "identifier";
+}

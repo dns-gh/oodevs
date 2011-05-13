@@ -71,6 +71,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual std::string SerializeType() const;
     virtual void VisitLines     ( const T_PointVector& points );
     virtual void VisitRectangle ( const T_PointVector& ) {};
     virtual void VisitPolygon   ( const T_PointVector& ) {}

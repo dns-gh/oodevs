@@ -117,3 +117,12 @@ void Karma::Serialize( xml::xostream& xos ) const
     Parameter< QString >::Serialize( xos );
     xos << xml::attribute( "value", karma_.GetId() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Karma::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Karma::SerializeType() const
+{
+    return "karma";
+}

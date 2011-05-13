@@ -201,3 +201,12 @@ bool Path::IsSet() const
 {
     return !elements_.empty();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Path::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Path::SerializeType() const
+{
+    return "path";
+}

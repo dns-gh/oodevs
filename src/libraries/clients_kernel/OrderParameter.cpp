@@ -201,6 +201,8 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
         return type;
     if( std::find( aliases_.begin(), aliases_.end(), type ) != aliases_.end() )
         return type;
+    if( type_ == "phaseline" )
+        return "phaseline";
     if( type == "phaselinelist" )
         return "phaseline";
     if( type == "direction" )
@@ -209,5 +211,7 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
         return "intelligence";
     if( type == "location" && type_ == "polygon" )
         return "polygon";
+    if( type == "list" )
+        return type_;
     return "";
 }

@@ -54,6 +54,11 @@ public:
     virtual void CommitTo( sword::MissionParameter_Value& asn ) const;
     void CommitTo( sword::CrowdKnowledgeId& asn ) const;
     //@}
+    
+    //! @name Helpers
+    //@{
+    virtual std::string SerializeType() const;
+    //@}
 };
 
     }

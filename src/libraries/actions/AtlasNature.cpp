@@ -94,3 +94,12 @@ void AtlasNature::Display( kernel::Displayer_ABC& displayer ) const
     displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
              .Item( tools::translate( "Parameter", "Value" ) ).Display( GetValue().GetName() ); // $$$$ SBO 2007-05-24: make a displayer
 }
+
+// -----------------------------------------------------------------------------
+// Name: AtlasNature::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string AtlasNature::SerializeType() const
+{
+    return "natureatlas";
+}

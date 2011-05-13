@@ -131,34 +131,6 @@
         <translation>Position d&apos;obstacle</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation>Nom</translation>
-    </message>
-    <message>
-        <source>Nature</source>
-        <translation>Nature</translation>
-    </message>
-    <message>
-        <source>Karma</source>
-        <translation>Karma</translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation>Niveau</translation>
-    </message>
-    <message>
-        <source>Mounted</source>
-        <translation>Embarqué</translation>
-    </message>
-    <message>
-        <source>Formation</source>
-        <translation>Formation</translation>
-    </message>
-    <message>
-        <source>Intelligence location</source>
-        <translation type="unfinished">Position de renseignement</translation>
-    </message>
-    <message>
         <source>Location</source>
         <translation>Position</translation>
     </message>

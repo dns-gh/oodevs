@@ -111,3 +111,12 @@ bool Direction::IsSet() const
 {
     return !direction_.IsNull();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Direction::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Direction::SerializeType() const
+{
+    return "heading";
+}

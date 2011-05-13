@@ -98,3 +98,12 @@ void Polygon::CommitTo( sword::Location& message ) const
     AsnSerializer serializer( message );
     Accept( serializer );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Polygon::SerializeType
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+std::string Polygon::SerializeType() const
+{
+    return "polygon";
+}
