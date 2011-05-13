@@ -39,12 +39,13 @@ class LAUNCHER_DLL_API LauncherFacade
 public:
     //! @name Constructors/Destructor
     //@{
-             LauncherFacade( int argc, char** argv );
+             LauncherFacade();
     virtual ~LauncherFacade();
     //@}
 
     //! @name Operations
     //@{
+    void Initialize( int argc, char** argv );
     bool Update();
     //@}
 

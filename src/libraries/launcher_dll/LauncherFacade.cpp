@@ -34,8 +34,28 @@ namespace
 // Name: LauncherFacade constructor
 // Created: SBO 2010-11-03
 // -----------------------------------------------------------------------------
-LauncherFacade::LauncherFacade( int argc, char** argv )
-    : config_( new launcher::Config() )
+LauncherFacade::LauncherFacade()
+    : config_  ( new launcher::Config() )
+    , launcher_( 0 )
+    , proxy_   ( 0 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherFacade destructor
+// Created: SBO 2010-11-03
+// -----------------------------------------------------------------------------
+LauncherFacade::~LauncherFacade()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LauncherFacade::Initialize
+// Created: JSR 2011-05-11
+// -----------------------------------------------------------------------------
+void LauncherFacade::Initialize( int argc, char** argv )
 {
     try
     {
@@ -49,15 +69,6 @@ LauncherFacade::LauncherFacade( int argc, char** argv )
     {
         lastError_ = e.what();
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: LauncherFacade destructor
-// Created: SBO 2010-11-03
-// -----------------------------------------------------------------------------
-LauncherFacade::~LauncherFacade()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

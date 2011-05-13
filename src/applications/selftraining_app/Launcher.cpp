@@ -10,18 +10,17 @@
 #include "selftraining_app_pch.h"
 #include "Launcher.h"
 #include "launcher_dll/LauncherFacade.h"
-#include <boost/thread.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: Launcher constructor
 // Created: SBO 2010-11-03
 // -----------------------------------------------------------------------------
 Launcher::Launcher( int argc, char** argv )
-    : launcher_( new LauncherFacade( argc, argv ) )
-    , running_( true )
-    , thread_( new boost::thread( boost::bind( &Launcher::Run, this ) ) )
+    : launcher_( new LauncherFacade() )
+    , running_ ( true )
+    , thread_  ( new boost::thread( boost::bind( &Launcher::Run, this ) ) )
 {
-    // NOTHING
+    launcher_->Initialize( argc, argv );
 }
 
 // -----------------------------------------------------------------------------
