@@ -79,10 +79,10 @@ namespace
     struct Fixture : ApplicationFixture
     {
         Fixture()
-            : launcher( argc, &args[0] )
-            , client  ( controllers.controller_ )
+            : client  ( controllers.controller_ )
             , timeout ( timeOut )
         {
+            launcher.Initialize( argc, &args[0] );
             BOOST_REQUIRE_MESSAGE( launcher.GetLastError().empty(), launcher.GetLastError() );
             MOCK_EXPECT( handler, OnConnectionSucceeded ).once();
             client.Connect( defaultHost, PORT, handler );
