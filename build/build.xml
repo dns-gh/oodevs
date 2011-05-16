@@ -283,7 +283,7 @@
 
     <target name="applications.clients" description="build Sword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app,
-                     application.loadtester_app,application.import_app,application.wise_driver_dll,
+                     application.loadtester_app,application.import_app,application.wise_driver_dll,library.vrforces_plugin_dll,
                      application.mission_tester_app,application.orbat_generator_app,application.edxlhave_app"/>
 
     <target name="applications.frontends" description="build Sword Frontend executables"
