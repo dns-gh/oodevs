@@ -127,7 +127,7 @@ void PopulationFlow::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 unsigned int PopulationFlow::GetHealthyHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    return nHealthyHumans_;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +136,7 @@ unsigned int PopulationFlow::GetHealthyHumans() const
 // -----------------------------------------------------------------------------
 unsigned int PopulationFlow::GetWoundedHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    return nWoundedHumans_;
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ unsigned int PopulationFlow::GetWoundedHumans() const
 // -----------------------------------------------------------------------------
 unsigned int PopulationFlow::GetContaminatedHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    return nContaminatedHumans_;
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +154,7 @@ unsigned int PopulationFlow::GetContaminatedHumans() const
 // -----------------------------------------------------------------------------
 unsigned int PopulationFlow::GetDeadHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    return nDeadHumans_;
 }
 
 // -----------------------------------------------------------------------------

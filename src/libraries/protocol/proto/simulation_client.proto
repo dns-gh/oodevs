@@ -1725,6 +1725,10 @@ message CrowdUpdate {
    optional PartyAdhesions adhesions            = 3; //!< The party adhesions
    optional string        critical_intelligence = 4; //!< The crowd critical intelligence
    optional float         armed_individuals     = 5; //!< The armed individuals proportion between 0 and 1
+   optional int32         healthy               = 6; //!< The number of healthy persons
+   optional int32         wounded               = 7; //!< The number of wounded persons
+   optional int32         contaminated          = 8; //!< The number of contaminated persons
+   optional int32         dead                  = 9; //!< The number of dead persons
 }
 
 /** @struct CrowdDestruction

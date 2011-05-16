@@ -1644,6 +1644,10 @@ void SimulationToClient::Convert( const sword::CrowdUpdate& from, MsgsSimToClien
             ConvertPartyAdhesion( from.adhesions().adhesion( i ), to->mutable_adhesions()->add_adhesion() );
     CONVERT( critical_intelligence );
     CONVERT( armed_individuals );
+    CONVERT( healthy );
+    CONVERT( wounded );
+    CONVERT( contaminated );
+    CONVERT( dead );
 }
 
 // -----------------------------------------------------------------------------

@@ -82,6 +82,7 @@ public:
     MIL_Population& GetPopulation() const;
     const MIL_PopulationAttitude& GetAttitude() const;
     unsigned int GetID() const;
+    bool HasHumansChanged() const;
     unsigned int GetAllHumans() const;
     unsigned int GetTotalLivingHumans() const;
     unsigned int GetHealthyHumans() const;
@@ -123,7 +124,6 @@ protected:
     //! @name Network
     //@{
     bool HasAttitudeChanged() const;
-    bool HasHumansChanged() const;
     //@}
 
     //! @name Events

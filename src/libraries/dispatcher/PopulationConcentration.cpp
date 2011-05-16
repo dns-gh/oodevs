@@ -118,7 +118,7 @@ void PopulationConcentration::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 unsigned int PopulationConcentration::GetHealthyHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    return nHealthyHumans_;
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ unsigned int PopulationConcentration::GetHealthyHumans() const
 // -----------------------------------------------------------------------------
 unsigned int PopulationConcentration::GetWoundedHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    return nWoundedHumans_;
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +136,7 @@ unsigned int PopulationConcentration::GetWoundedHumans() const
 // -----------------------------------------------------------------------------
 unsigned int PopulationConcentration::GetContaminatedHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    return nContaminatedHumans_;
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ unsigned int PopulationConcentration::GetContaminatedHumans() const
 // -----------------------------------------------------------------------------
 unsigned int PopulationConcentration::GetDeadHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    return nDeadHumans_;
 }
 
 // -----------------------------------------------------------------------------

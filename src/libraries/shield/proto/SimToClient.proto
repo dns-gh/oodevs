@@ -952,6 +952,10 @@ message MsgCrowdUpdate {
    optional Common.PartyAdhesions adhesions             = 3;
    optional string                critical_intelligence = 4;
    optional float                 armed_individuals     = 5;
+   optional int32                 healthy               = 6;
+   optional int32                 wounded               = 7;
+   optional int32                 contaminated          = 8;
+   optional int32                 dead                  = 9;
 }
 
 message MsgCrowdDestruction {

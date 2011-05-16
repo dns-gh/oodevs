@@ -1252,9 +1252,9 @@ void MIL_Population::SendCreation() const
         entry->set_name( it->first );
         entry->set_value( it->second );
     }
-    asnMsg().mutable_repartition()->set_male( rMale_ );
-    asnMsg().mutable_repartition()->set_female( rFemale_ );
-    asnMsg().mutable_repartition()->set_children( rChildren_ );
+    asnMsg().mutable_repartition()->set_male( static_cast< float >( rMale_ ) );
+    asnMsg().mutable_repartition()->set_female( static_cast< float >( rFemale_ ) );
+    asnMsg().mutable_repartition()->set_children( static_cast< float >( rChildren_ ) );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
     if( asnMsg().has_extension() )
         asnMsg().mutable_extension()->mutable_entries()->Clear();
@@ -1279,8 +1279,12 @@ void MIL_Population::SendFullState() const
     GetRole< DEC_PopulationDecision >().SendFullState( asnMsg );
     if( !criticalIntelligence_.empty() )
         asnMsg().set_critical_intelligence( criticalIntelligence_ );
-    asnMsg().set_armed_individuals( rArmedIndividuals_ );
+    asnMsg().set_armed_individuals( static_cast< float >( rArmedIndividuals_ ) );
     pAffinities_->SendFullState( asnMsg );
+    asnMsg().set_healthy( GetHealthyHumans() );
+    asnMsg().set_wounded( GetWoundedHumans() );
+    asnMsg().set_contaminated( GetContaminatedHumans() );
+    asnMsg().set_dead( GetDeadHumans() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SendFullState();
@@ -1306,10 +1310,17 @@ void MIL_Population::UpdateNetwork()
         if( criticalIntelligenceChanged_ )
             asnMsg().set_critical_intelligence( criticalIntelligence_ );
         if( armedIndividualsChanged_ )
-            asnMsg().set_armed_individuals( rArmedIndividuals_ );
+            asnMsg().set_armed_individuals( static_cast< float >( rArmedIndividuals_ ) );
         criticalIntelligenceChanged_ = false;
         armedIndividualsChanged_ = false;
         pAffinities_->UpdateNetwork( asnMsg );
+        if( HasHumansChanged() )
+        {
+            asnMsg().set_healthy( GetHealthyHumans() );
+            asnMsg().set_wounded( GetWoundedHumans() );
+            asnMsg().set_contaminated( GetContaminatedHumans() );
+            asnMsg().set_dead( GetDeadHumans() );
+        }
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -1467,6 +1478,21 @@ void MIL_Population::UpdateBarycenter()
         vBarycenter_->rX_ = currentBarycenter.rX_;
         vBarycenter_->rY_ = currentBarycenter.rY_;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::HasHumansChanged
+// Created: JSR 2011-05-16
+// -----------------------------------------------------------------------------
+bool MIL_Population::HasHumansChanged() const
+{
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        if( ( **itConcentration ).HasHumansChanged() )
+            return true;
+    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
+        if( ( **itFlow ).HasHumansChanged() )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

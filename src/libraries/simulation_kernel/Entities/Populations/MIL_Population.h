@@ -209,6 +209,7 @@ private:
     //@{
     void GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, double& rMinDistance ) const;
     void UpdateBarycenter();
+    bool HasHumansChanged() const;
     //@}
 
 private:

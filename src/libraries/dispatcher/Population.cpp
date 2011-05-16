@@ -224,6 +224,10 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     }
     asn().set_critical_intelligence( criticalIntelligence_ );
     asn().set_armed_individuals( armedIndividuals_ );
+    asn().set_healthy( GetHealthyHumans() );
+    asn().set_wounded( GetWoundedHumans() );
+    asn().set_contaminated( GetContaminatedHumans() );
+    asn().set_dead( GetDeadHumans() );
     asn.Send( publisher );
     if( order_.get() )
         order_->Send( publisher );
@@ -277,7 +281,18 @@ const kernel::PopulationType& Population::GetType() const
 // -----------------------------------------------------------------------------
 unsigned int Population::GetHealthyHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    unsigned int nbr = 0;
+    {
+        tools::Iterator< const kernel::PopulationConcentration_ABC& > it = tools::Resolver< kernel::PopulationConcentration_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            nbr += it.NextElement().GetHealthyHumans();
+    }
+    {
+        tools::Iterator< const kernel::PopulationFlow_ABC& > it = tools::Resolver< kernel::PopulationFlow_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            nbr += it.NextElement().GetHealthyHumans();
+    }
+    return nbr;
 }
 
 // -----------------------------------------------------------------------------
@@ -286,7 +301,18 @@ unsigned int Population::GetHealthyHumans() const
 // -----------------------------------------------------------------------------
 unsigned int Population::GetWoundedHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    unsigned int nbr = 0;
+    {
+        tools::Iterator< const kernel::PopulationConcentration_ABC& > it = tools::Resolver< kernel::PopulationConcentration_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            nbr += it.NextElement().GetWoundedHumans();
+    }
+    {
+        tools::Iterator< const kernel::PopulationFlow_ABC& > it = tools::Resolver< kernel::PopulationFlow_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            nbr += it.NextElement().GetWoundedHumans();
+    }
+    return nbr;
 }
 
 // -----------------------------------------------------------------------------
@@ -295,7 +321,18 @@ unsigned int Population::GetWoundedHumans() const
 // -----------------------------------------------------------------------------
 unsigned int Population::GetContaminatedHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    unsigned int nbr = 0;
+    {
+        tools::Iterator< const kernel::PopulationConcentration_ABC& > it = tools::Resolver< kernel::PopulationConcentration_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            nbr += it.NextElement().GetContaminatedHumans();
+    }
+    {
+        tools::Iterator< const kernel::PopulationFlow_ABC& > it = tools::Resolver< kernel::PopulationFlow_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            nbr += it.NextElement().GetContaminatedHumans();
+    }
+    return nbr;
 }
 
 // -----------------------------------------------------------------------------
@@ -304,5 +341,16 @@ unsigned int Population::GetContaminatedHumans() const
 // -----------------------------------------------------------------------------
 unsigned int Population::GetDeadHumans() const
 {
-    throw std::runtime_error( __FUNCTION__ " not implemented" );
+    unsigned int nbr = 0;
+    {
+        tools::Iterator< const kernel::PopulationConcentration_ABC& > it = tools::Resolver< kernel::PopulationConcentration_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            nbr += it.NextElement().GetDeadHumans();
+    }
+    {
+        tools::Iterator< const kernel::PopulationFlow_ABC& > it = tools::Resolver< kernel::PopulationFlow_ABC >::CreateIterator();
+        while( it.HasMoreElements() )
+            nbr += it.NextElement().GetDeadHumans();
+    }
+    return nbr;
 }
