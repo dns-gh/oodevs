@@ -161,6 +161,8 @@ void RegisterAgentKnowledgeFunctions( directia::brain::Brain& brain )
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsMoving, _1 ) );
     brain[ "DEC_ConnaissanceAgent_EstPrisonnier" ] =
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsPrisoner, _1 ) );
+    brain[ "DEC_ConnaissanceAgent_EstRenduAMonCamp" ] = &DEC_KnowledgeAgentFunctions::IsSurrenderToMyArmy;
+    brain[ "DEC_ConnaissanceAgent_EstRefugie" ] = &DEC_KnowledgeAgentFunctions::IsRefugee;
     brain[ "DEC_ConnaissanceAgent_EstMort" ] =
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsDead, _1 ) );
     brain[ "DEC_ConnaissanceAgent_Verrouiller" ] =

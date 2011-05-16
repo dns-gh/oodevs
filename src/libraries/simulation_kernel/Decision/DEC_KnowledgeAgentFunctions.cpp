@@ -16,7 +16,9 @@
 #include "Entities/Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
@@ -197,6 +199,21 @@ bool DEC_KnowledgeAgentFunctions::IsPrisoner( boost::shared_ptr< DEC_Knowledge_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsSurrenderToMyArmy
+// Created: EVH 2011-05-16
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeAgentFunctions::IsSurrenderToMyArmy( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+    {
+        const MIL_Army_ABC* surrenderTo = pKnowledge->GetAgentKnown().GetRole< surrender::PHY_RoleInterface_Surrender >().GetArmySurrenderedTo();
+        if( surrenderTo )
+            return &callerAgent.GetPion().GetArmy() == surrenderTo;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsDead
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
@@ -356,4 +373,13 @@ void DEC_KnowledgeAgentFunctions::UnitDecisionalState( const DEC_Knowledge_Agent
 unsigned int DEC_KnowledgeAgentFunctions::GetAgentIdFromKnowledge( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     return pKnowledge->GetAgentKnown().GetID();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsRefugee
+// Created: EVH 2011-05-16
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeAgentFunctions::IsRefugee( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    return pKnowledge->GetAgentKnown().GetType().IsRefugee();
 }

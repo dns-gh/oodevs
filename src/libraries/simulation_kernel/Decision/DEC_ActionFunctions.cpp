@@ -28,6 +28,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "simulation_kernel/RefugeeActionsNotificationHandler_ABC.h"
 
+
 #include <boost/foreach.hpp>
 
 namespace
@@ -139,6 +140,19 @@ bool DEC_ActionFunctions::Refugees_IsUnloadedInCamp( boost::shared_ptr< DEC_Know
     if( IsNotCampKnowledgeOrHasLogisticCapacity( pKnowledge, pCampKnowledge ) )
         return false;
     return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Refugee >().IsManaged( *pCampKnowledge->GetObjectKnown() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::Knowledge_Load
+// Created: EVH 2011-05-16
+// -----------------------------------------------------------------------------
+void DEC_ActionFunctions::Knowledge_Load( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+    {
+        bool transportOnlyLoadable = false;
+        callerAgent.GetPion().Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pKnowledge->GetAgentKnown(), transportOnlyLoadable );
+    }
 }
 
 // -----------------------------------------------------------------------------
