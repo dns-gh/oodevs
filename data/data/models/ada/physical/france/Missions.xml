@@ -1539,6 +1539,13 @@
       <parameter dia-name="dotation_" name="Munition" optional="false" type="ResourceType"/>
       <parameter dia-name="installationCible_" name="Installation cible" optional="false" type="ObjectKnowledge"/>
     </mission>
+    <mission dia-behavior="MIS_Pion_SInfiltrer" dia-type="T_Mission_Pion_SInfiltrer" id="403" name="Sinfiltrer">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
+    </mission>
     <mission dia-behavior="test.military.platoon.tasks.MoveTowardCrossroad" dia-type="test.military.platoon.tasks.MoveTowardCrossroad" id="2010" name="TEST MoveToAgentKnowledgeList">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4589,4 +4596,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0702520511" -->
+<!-- signature="0431522120" -->

@@ -77,3 +77,4 @@ include "Appui/Rens/Pions/Rohum/RBRR/Common/Missions/SExfiltrer.bms"
 include "Appui/Rens/Pions/Rohum/RBRR/Pat recherche RASIT/Missions/Missions.bms"
 
 
+include "Common/Pions/Missions/SInfiltrer.bms"

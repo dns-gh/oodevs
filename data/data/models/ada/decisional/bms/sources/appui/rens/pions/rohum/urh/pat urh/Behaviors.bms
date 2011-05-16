@@ -76,3 +76,4 @@ include "Appui/Rens/Pions/Rohum/URH/Common/Missions/SExfiltrer.bms"
 
 
 
+include "Common/Pions/Missions/SInfiltrer.bms"

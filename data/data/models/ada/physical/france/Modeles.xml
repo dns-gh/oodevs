@@ -3971,6 +3971,7 @@
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
         <mission name="Franchir"/>
+        <mission name="Sinfiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -4009,6 +4010,7 @@
         <mission name="Stationner"/>
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
+        <mission name="Sinfiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -4048,6 +4050,7 @@
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
         <mission name="Franchir"/>
+        <mission name="Sinfiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -4086,6 +4089,7 @@
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
         <mission name="Franchir"/>
+        <mission name="Sinfiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -4125,6 +4129,7 @@
         <mission name="Orienter Refugies"/>
         <mission name="Prendre En Compte Prisonniers"/>
         <mission name="Franchir"/>
+        <mission name="Sinfiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -11701,4 +11706,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1889006864" -->
+<!-- signature="1394132618" -->
