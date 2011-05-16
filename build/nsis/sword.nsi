@@ -53,6 +53,7 @@ Section "!${PRODUCT_NAME}"
     File "${OUTDIR}\release\applications\replayer_app\*.exe"
     File "${OUTDIR}\release\applications\selftraining_app\*.exe"
     File "${OUTDIR}\release\applications\package_app\*.exe"
+    File "${OUTDIR}\release\applications\launcher_app\*.exe"
     File "${RUNDIR}\gradients.xml"
     File "${RUNDIR}\preferences.xml"
     File "${RUNDIR}\functions.xml"
@@ -164,6 +165,7 @@ SectionGroupEnd
 
 ; ------------------------------------------------------------------------------
 Section "Uninstall"
+    !insertmacro OT.KillService
     !insertmacro OT.KillRunning
     !insertmacro OT.UninstallAdditionalComponent "Terrain"
     !insertmacro OT.RemoveMasaLifeIde
@@ -172,6 +174,7 @@ SectionEnd
 
 ; ------------------------------------------------------------------------------
 Function .onInit
+    !insertmacro OT.KillService
     !insertmacro OT.CheckRunning
     !insertmacro OT.ChooseLanguage
 

@@ -57,6 +57,7 @@ Var /GLOBAL INSTDATADIR
 ; Include
 !include "version.nsh"
 !include "MultiUser.nsh"
+!include "service.nsh"
 !include "MUI.nsh"
 ; ------------------------------------------------------------------------------
 ; INSTALLER
@@ -89,6 +90,8 @@ Var /GLOBAL INSTDATADIR
 !insertmacro MUI_PAGE_DIRECTORY
 ; Installation page
 !insertmacro MUI_PAGE_INSTFILES
+; Service installation page
+Page custom ServiceInstallationDialog.Prepare ServiceInstallationDialog.Leave
 ; Finish page
 !insertmacro MUI_PAGE_FINISH
 
