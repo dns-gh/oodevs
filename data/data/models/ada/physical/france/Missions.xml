@@ -4377,7 +4377,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.crowd.tasks.FaireMouvement" dia-type="france.military.crowd.tasks.FaireMouvement" id="3004" name="FOULES Faire Mouvement">
+    <mission dia-behavior="france.military.crowd.tasks.FaireMouvement" dia-type="france.military.crowd.tasks.FaireMouvement" id="3004" name="COMMUNES Faire Mouvement">
       <parameter dia-name="objectifs" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -4596,4 +4596,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0431522120" -->
+<!-- signature="3618341726" -->
