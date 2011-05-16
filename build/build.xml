@@ -151,14 +151,15 @@
     </target>
 
     <target name="library.vrforces_plugin_dll" depends="library.clients_kernel,library.vrforces_plugin" description="build vrforces_plugin dynamic library" if="is-vc80">
-        <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces,protobuf" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
+        <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xalan,xerces,protobuf" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="libFedtime,
                   matrixRT,mtlRT,vlHLA13RT,vlRT,vlutilRT,vrfcontrolHLA13,
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
-                  lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
             <syslibset libs="shell32,user32"/>
             <defineset define="VRFORCES_PLUGIN_DLL_EXPORTS"/>
             <linkerarg value="/FIXED:NO"/>
