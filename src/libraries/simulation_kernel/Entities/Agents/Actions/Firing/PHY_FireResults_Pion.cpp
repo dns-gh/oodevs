@@ -24,8 +24,9 @@
 // Created: NLD 2005-11-15
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target )
-    : firer_( firer )
-    , nID_  ( idManager_.GetFreeId() )
+    : firer_ ( firer )
+    , nID_   ( idManager_.GetFreeId() )
+    , direct_( true )
 {
     client::StartUnitFire asnMsg;
     asnMsg().mutable_fire()->set_id( nID_ );
@@ -40,8 +41,9 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MIL_Population& target )
-    : firer_( firer )
-    , nID_  ( idManager_.GetFreeId() )
+    : firer_ ( firer )
+    , nID_   ( idManager_.GetFreeId() )
+    , direct_( true )
 {
     client::StartUnitFire asnMsg;
     asnMsg().mutable_fire()->set_id( nID_ );
@@ -56,8 +58,9 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
 // Created: NLD 2005-11-15
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT_Vector2D& targetPosition, const PHY_DotationCategory& dotationCategory )
-    : firer_( firer )
-    , nID_  ( idManager_.GetFreeId() )
+    : firer_ ( firer )
+    , nID_   ( idManager_.GetFreeId() )
+    , direct_( false )
 {
     client::StartUnitFire asnMsg;
     asnMsg().mutable_fire()->set_id( nID_ );
@@ -81,6 +84,7 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
         Serialize( *asnMsg().mutable_crowds_damages() );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
+    SendDamagesPion( firer_, nID_, direct_ );
     // $$$$ Merde pour VABF Popu
     const T_PopulationDamagesMap& populationDamages = GetPopulationDamages();
     for( CIT_PopulationDamagesMap it = populationDamages.begin(); it != populationDamages.end(); ++it )
@@ -92,7 +96,6 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
         unsigned int scattered = damages.GetNbrScatteredHumans();
         MIL_Report::PostEvent( population, MIL_Report::eReport_ConfrontationWithPopulation, dead, wounded, scattered );
         MIL_Report::PostEvent( firer_    , MIL_Report::eReport_ConfrontationWithPopulation, dead, wounded, scattered );
-
     }
 }
 

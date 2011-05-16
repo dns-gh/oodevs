@@ -2025,6 +2025,10 @@ void AgentServerMsgMgr::OnReceiveSimToClient2( const std::string&, const sword::
         OnReceiveChangePopulationMagicActionAck( wrapper.message().change_population_magic_action_ack(), wrapper.context() );
     else if( wrapper.message().has_burning_cell_request_ack() )
         OnReceiveBurningCellRequestAck( wrapper.message().burning_cell_request_ack(), wrapper.context() );
+    else if( wrapper.message().has_unit_damaged_by_unit_fire() || wrapper.message().has_crowd_damaged_by_unit_fire() || wrapper.message().has_unit_damaged_by_crowd_fire() )
+    {
+        // unused
+    }
     else
         UnhandledMessage( &wrapper.message() );
 }

@@ -39,12 +39,31 @@ PHY_FireDamages_Population::~PHY_FireDamages_Population()
 // Name: PHY_FireDamages_Population::Serialize
 // Created: JVT 04-03-29
 //-----------------------------------------------------------------------------
-void PHY_FireDamages_Population::Serialize( const MIL_Population& target, sword::CrowdFireDamages& asn ) const
+void PHY_FireDamages_Population::Serialize( const MIL_Population& target, sword::CrowdFireDamages& msg ) const
 {
-    asn.mutable_target()->set_id( target.GetID() );
-    asn.set_dead( nNbrKilledHumans_ );
-    asn.set_wounded( nNbrWoundedHumans_ );
-    asn.set_scattered( nNbrScatteredHumans_ );
+    msg.mutable_target()->set_id( target.GetID() );
+    DoSerializeDamages( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Population::SerializeDamages
+// Created: JSR 2011-05-13
+// -----------------------------------------------------------------------------
+void PHY_FireDamages_Population::SerializeDamages( sword::CrowdDamagedByUnitFire& msg ) const
+{
+    DoSerializeDamages( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Population::DoSerializeDamages
+// Created: JSR 2011-05-13
+// -----------------------------------------------------------------------------
+template< typename T >
+void PHY_FireDamages_Population::DoSerializeDamages( T& msg ) const
+{
+    msg.set_dead( nNbrKilledHumans_ );
+    msg.set_wounded( nNbrWoundedHumans_ );
+    msg.set_scattered( nNbrScatteredHumans_ );
 }
 
 // -----------------------------------------------------------------------------

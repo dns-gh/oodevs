@@ -12,11 +12,11 @@
 #ifndef __PHY_FireResults_Pion_h_
 #define __PHY_FireResults_Pion_h_
 
-#include "MIL.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 
 class MIL_Agent_ABC;
 class MIL_Population;
+class MT_Vector2D;
 class PHY_DotationCategory;
 
 // =============================================================================
@@ -40,7 +40,8 @@ private:
     //! @name Member data
     //@{
     const MIL_Agent_ABC& firer_;
-    const unsigned int           nID_;
+    const unsigned int nID_;
+    const bool direct_;
     //@}
 };
 

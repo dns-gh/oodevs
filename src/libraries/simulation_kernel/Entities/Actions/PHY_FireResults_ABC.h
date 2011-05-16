@@ -72,7 +72,8 @@ protected:
     //@{
     void Serialize( sword::UnitsFireDamages& asn ) const;
     void Serialize( sword::CrowdsFireDamages& asn ) const;
-
+    void SendDamagesPion( const MIL_Agent_ABC& firer, unsigned int fireId, bool direct ) const;
+    void SendDamagesCrowd( const MIL_Population& firer, unsigned int fireId ) const;
     static MIL_IDManager idManager_;
     //@}
 

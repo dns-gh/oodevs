@@ -76,27 +76,54 @@ void PHY_FireDamages_Agent::NotifyHumanWoundChanged( const Human_ABC& human, con
 void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, sword::UnitFireDamages& asn ) const
 {
     asn.mutable_target()->set_id( target.GetID() );
+    DoSerializeDamages( asn );
+}
 
-    asn.mutable_equipments();
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Agent::SerializeDamages
+// Created: JSR 2011-05-13
+// -----------------------------------------------------------------------------
+void PHY_FireDamages_Agent::SerializeDamages( sword::UnitDamagedByUnitFire& msg ) const
+{
+    DoSerializeDamages( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Agent::SerializeDamages
+// Created: JSR 2011-05-13
+// -----------------------------------------------------------------------------
+void PHY_FireDamages_Agent::SerializeDamages( sword::UnitDamagedByCrowdFire& msg ) const
+{
+    DoSerializeDamages( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_FireDamages_Agent::DoSerializeDamages
+// Created: JSR 2011-05-13
+// -----------------------------------------------------------------------------
+template< typename T >
+void PHY_FireDamages_Agent::DoSerializeDamages( T& msg ) const
+{
+    msg.mutable_equipments();
     // Composantes
     for( CIT_ComposanteResults itResult = composanteResults_.begin(); itResult != composanteResults_.end(); ++itResult )
     {
-        const PHY_ComposanteType_ABC& type   = *itResult->first;
-        const T_ComposanteStates&      states =  itResult->second;
+        const PHY_ComposanteType_ABC& type = *itResult->first;
+        const T_ComposanteStates& states = itResult->second;
 
-        sword::UnitEquipmentFireDamage& asnEquipement = *asn.mutable_equipments()->add_elem();
+        sword::UnitEquipmentFireDamage& asnEquipement = *msg.mutable_equipments()->add_elem();
         asnEquipement.mutable_equipement()->set_id( type.GetMosID().id() );
         asnEquipement.set_available( states[ PHY_ComposanteState::undamaged_.GetID() ] );
         asnEquipement.set_repairable( states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] );
         asnEquipement.set_unavailable( states[ PHY_ComposanteState::dead_.GetID() ] );
     }
 
-    asn.mutable_humans();
+    msg.mutable_humans();
     // Humans
     for( PHY_HumanRank::CIT_HumanRankMap it = PHY_HumanRank::GetHumanRanks().begin(); it != PHY_HumanRank::GetHumanRanks().end(); ++it )
     {
         const PHY_HumanRank& rank = *it->second;
-        sword::UnitHumanFireDamage& personnel = *asn.mutable_humans()->add_elem();
+        sword::UnitHumanFireDamage& personnel = *msg.mutable_humans()->add_elem();
         const T_HumansPerWoundVector& wounds = humanResults_[ rank.GetID() ];
         personnel.set_rank( rank.GetAsnID() );
         personnel.set_alive( wounds[ PHY_HumanWound::notWounded_.GetID() ] );

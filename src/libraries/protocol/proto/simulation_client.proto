@@ -1094,6 +1094,39 @@ message Explosion {
     optional CrowdsFireDamages crowds_damages = 3; //!< The resulting damages dealt to crowds
 }
 
+message UnitDamagedByUnitFire
+{
+    required UnitId                       unit        = 1; //!< The target unit identifier
+    required UnitId                       firer       = 2; //!< The firer unit identifier
+    required FireId                       fire        = 3; //!< The fire identifier
+    required bool                         direct_fire = 4; //!< Whether the fire is direct or not
+    required bool                         fratricide  = 5; //!< Whether the fire is fratricide or not
+    required SeqOfUnitHumanFireDamage     humans      = 6; //!< The damages to the humans
+    required SeqOfUnitEquipmentFireDamage equipments  = 7; //!< The damages to the equipments
+}
+
+message CrowdDamagedByUnitFire
+{
+    required CrowdId crowd       = 1; //!< The target crowd identifier
+    required UnitId  firer       = 2; //!< The firer unit identifier
+    required FireId  fire        = 3; //!< The fire identifier
+    required bool    direct_fire = 4; //!< Whether the fire is direct or not
+    required bool    fratricide  = 5; //!< Whether the fire is fratricide or not
+    required int32   dead        = 6; //!< The number of dead persons
+    required int32   wounded     = 7; //!< The number of wounded persons
+    required int32   scattered   = 8; //!< The number of scattered persons
+}
+
+message UnitDamagedByCrowdFire
+{
+    required UnitId                       unit       = 1; //!< The target unit identifier
+    required CrowdId                      firer      = 2; //!< The firer crowd identifier
+    required FireId                       fire       = 3; //!< The fire identifier
+    required bool                         fratricide = 4; //!< Whether the fire is fratricide or not
+    required SeqOfUnitHumanFireDamage     humans     = 5; //!< The damages to the humans
+    required SeqOfUnitEquipmentFireDamage equipments = 6; //!< The damages to the equipments
+}
+
 /** @struct StartFireEffect
     @brief Notifies of a start fire effect
 */
@@ -2347,95 +2380,98 @@ message SimToClient {
         optional StartCrowdFire                         start_crowd_fire                          = 47;  //!< @copybrief StartCrowdFire
         optional StopCrowdFire                          stop_crowd_fire                           = 48;  //!< @copybrief StopCrowdFire
         optional Explosion                              explosion                                 = 49;  //!< @copybrief Explosion
-        optional StartFireEffect                        start_fire_effect                         = 50;  //!< @copybrief StartFireEffect
-        optional StopFireEffect                         stop_fire_effect                          = 51;  //!< @copybrief StopFireEffect
-        optional Report                                 report                                    = 52;  //!< @copybrief Report
-        optional InvalidateReport                       invalidate_report                         = 53;  //!< @copybrief InvalidateReport
-        optional Trace                                  trace                                     = 54;  //!< @copybrief Trace
-        optional DecisionalState                        decisional_state                          = 55;  //!< @copybrief DecisionalState
-        optional DebugPoints                            debug_points                              = 56;  //!< @copybrief DebugPoints
-        optional UnitVisionCones                        unit_vision_cones                         = 57;  //!< @copybrief UnitVisionCones
-        optional UnitDetection                          unit_detection                            = 58;  //!< @copybrief UnitDetection
-        optional ObjectDetection                        object_detection                          = 59;  //!< @copybrief ObjectDetection
-        optional CrowdConcentrationDetection            crowd_concentration_detection             = 60;  //!< @copybrief CrowdConcentrationDetection
-        optional CrowdFlowDetection                     crowd_flow_detection                      = 61;  //!< @copybrief CrowdFlowDetection
-        optional UnitOrder                              unit_order                                = 62;  //!< @copybrief UnitOrder
-        optional AutomatOrder                           automat_order                             = 63;  //!< @copybrief AutomatOrder
-        optional CrowdOrder                             crowd_order                               = 64;  //!< @copybrief CrowdOrder
-        optional ObjectCreation                         object_creation                           = 65;  //!< @copybrief ObjectCreation
-        optional ObjectDestruction                      object_destruction                        = 66;  //!< @copybrief ObjectDestruction
-        optional ObjectUpdate                           object_update                             = 67;  //!< @copybrief ObjectUpdate
-        optional ObjectKnowledgeCreation                object_knowledge_creation                 = 68;  //!< @copybrief ObjectKnowledgeCreation
-        optional ObjectKnowledgeUpdate                  object_knowledge_update                   = 69;  //!< @copybrief ObjectKnowledgeUpdate
-        optional ObjectKnowledgeDestruction             object_knowledge_destruction              = 70;  //!< @copybrief ObjectKnowledgeDestruction
-        optional LogMedicalHandlingCreation             log_medical_handling_creation             = 71;  //!< @copybrief LogMedicalHandlingCreation
-        optional LogMedicalHandlingUpdate               log_medical_handling_update               = 72;  //!< @copybrief LogMedicalHandlingUpdate
-        optional LogMedicalHandlingDestruction          log_medical_handling_destruction          = 73;  //!< @copybrief LogMedicalHandlingDestruction
-        optional LogMedicalState                        log_medical_state                         = 74;  //!< @copybrief LogMedicalState
-        optional LogMaintenanceHandlingCreation         log_maintenance_handling_creation         = 75;  //!< @copybrief LogMaintenanceHandlingCreation
-        optional LogMaintenanceHandlingUpdate           log_maintenance_handling_update           = 76;  //!< @copybrief LogMaintenanceHandlingUpdate
-        optional LogMaintenanceHandlingDestruction      log_maintenance_handling_destruction      = 77;  //!< @copybrief LogMaintenanceHandlingDestruction
-        optional LogMaintenanceState                    log_maintenance_state                     = 78;  //!< @copybrief LogMaintenanceState
-        optional LogSupplyHandlingCreation              log_supply_handling_creation              = 79;  //!< @copybrief LogSupplyHandlingCreation
-        optional LogSupplyHandlingUpdate                log_supply_handling_update                = 80;  //!< @copybrief LogSupplyHandlingUpdate
-        optional LogSupplyHandlingDestruction           log_supply_handling_destruction           = 81;  //!< @copybrief LogSupplyHandlingDestruction
-        optional LogSupplyState                         log_supply_state                          = 82;  //!< @copybrief LogSupplyState
-        optional LogSupplyQuotas                        log_supply_quotas                         = 83;  //!< @copybrief LogSupplyQuotas
-        optional CrowdCreation                          crowd_creation                            = 84;  //!< @copybrief CrowdCreation
-        optional CrowdUpdate                            crowd_update                              = 85;  //!< @copybrief CrowdUpdate
-        optional CrowdConcentrationCreation             crowd_concentration_creation              = 86;  //!< @copybrief CrowdConcentrationCreation
-        optional CrowdConcentrationDestruction          crowd_concentration_destruction           = 87;  //!< @copybrief CrowdConcentrationDestruction
-        optional CrowdConcentrationUpdate               crowd_concentration_update                = 88;  //!< @copybrief CrowdConcentrationUpdate
-        optional CrowdFlowCreation                      crowd_flow_creation                       = 89;  //!< @copybrief CrowdFlowCreation
-        optional CrowdFlowDestruction                   crowd_flow_destruction                    = 90;  //!< @copybrief CrowdFlowDestruction
-        optional CrowdFlowUpdate                        crowd_flow_update                         = 91;  //!< @copybrief CrowdFlowUpdate
-        optional CrowdKnowledgeCreation                 crowd_knowledge_creation                  = 92;  //!< @copybrief CrowdKnowledgeCreation
-        optional CrowdKnowledgeUpdate                   crowd_knowledge_update                    = 93;  //!< @copybrief CrowdKnowledgeUpdate
-        optional CrowdKnowledgeDestruction              crowd_knowledge_destruction               = 94;  //!< @copybrief CrowdKnowledgeDestruction
-        optional CrowdConcentrationKnowledgeCreation    crowd_concentration_knowledge_creation    = 95;  //!< @copybrief CrowdConcentrationKnowledgeCreation
-        optional CrowdConcentrationKnowledgeDestruction crowd_concentration_knowledge_destruction = 96;  //!< @copybrief CrowdConcentrationKnowledgeDestruction
-        optional CrowdConcentrationKnowledgeUpdate      crowd_concentration_knowledge_update      = 97;  //!< @copybrief CrowdConcentrationKnowledgeUpdate
-        optional CrowdFlowKnowledgeCreation             crowd_flow_knowledge_creation             = 98;  //!< @copybrief CrowdFlowKnowledgeCreation
-        optional CrowdFlowKnowledgeDestruction          crowd_flow_knowledge_destruction          = 99;  //!< @copybrief CrowdFlowKnowledgeDestruction
-        optional CrowdFlowKnowledgeUpdate               crowd_flow_knowledge_update               = 100; //!< @copybrief CrowdFlowKnowledgeUpdate
-        optional FolkCreation                           folk_creation                             = 101; //!< @copybrief FolkCreation
-        optional FolkGraphUpdate                        folk_graph_update                         = 102; //!< @copybrief FolkGraphUpdate
-        optional ControlGlobalWeatherAck                control_global_weather_ack                = 103; //!< @copybrief ControlGlobalWeatherAck
-        optional ControlLocalWeatherAck                 control_local_weather_ack                 = 104; //!< @copybrief ControlLocalWeatherAck
-        optional ControlCheckPointSaveBegin             control_checkpoint_save_begin             = 105; //!< @copybrief ControlCheckPointSaveBegin
-        optional ControlCheckPointSetFrequencyAck       control_checkpoint_set_frequency_ack      = 106; //!< @copybrief ControlCheckPointSetFrequencyAck
-        optional ControlCheckPointSaveNowAck            control_checkpoint_save_now_ack           = 107; //!< @copybrief ControlCheckPointSaveNowAck
-        optional ControlSendCurrentStateBegin           control_send_current_state_begin          = 108; //!< @copybrief ControlSendCurrentStateBegin
-        optional ControlSendCurrentStateEnd             control_send_current_state_end            = 109; //!< @copybrief ControlSendCurrentStateEnd
-        optional UrbanCreation                          urban_creation                            = 110; //!< @copybrief UrbanCreation
-        optional UrbanUpdate                            urban_update                              = 111; //!< @copybrief UrbanUpdate
-        optional UrbanKnowledgeCreation                 urban_knowledge_creation                  = 112; //!< @copybrief UrbanKnowledgeCreation
-        optional UrbanKnowledgeUpdate                   urban_knowledge_update                    = 113; //!< @copybrief UrbanKnowledgeUpdate
-        optional UrbanKnowledgeDestruction              urban_knowledge_destruction               = 114; //!< @copybrief UrbanKnowledgeDestruction
-        optional StockResource                          stock_resource                            = 115; //!< @copybrief StockResource
-        optional UrbanDetection                         urban_detection                           = 116; //!< @copybrief UrbanDetection
-        optional KnowledgeGroupMagicActionAck           knowledge_group_magic_action_ack          = 117; //!< @copybrief KnowledgeGroupMagicActionAck
-        optional KnowledgeGroupCreation                 knowledge_group_creation                  = 118; //!< @copybrief KnowledgeGroupCreation
-        optional KnowledgeGroupUpdate                   knowledge_group_update                    = 119; //!< @copybrief KnowledgeGroupUpdate
-        optional KnowledgeGroupCreationAck              knowledge_group_creation_ack              = 120; //!< @copybrief KnowledgeGroupCreationAck
-        optional KnowledgeGroupUpdateAck                knowledge_group_update_ack                = 121; //!< @copybrief KnowledgeGroupUpdateAck
-        optional KnowledgeGroupDestruction              knowledge_group_destruction               = 122; //!< @copybrief KnowledgeGroupDestruction
-        optional ActionCreateFireOrderAck               action_create_fire_order_ack              = 123; //!< @copybrief ActionCreateFireOrderAck
-        optional ControlGlobalWeather                   control_global_weather                    = 124; //!< @copybrief ControlGlobalWeather
-        optional ControlLocalWeatherCreation            control_local_weather_creation            = 125; //!< @copybrief ControlLocalWeatherCreation
-        optional ControlLocalWeatherDestruction         control_local_weather_destruction         = 126; //!< @copybrief ControlLocalWeatherDestruction
-        optional ControlCheckPointListAck               control_checkpoint_list_ack               = 127; //!< @copybrief ControlCheckPointListAck
-        optional ControlCheckPointList                  control_checkpoint_list                   = 128; //!< @copybrief ControlCheckPointList
-        optional ControlCheckPointDeleteAck             control_checkpoint_delete_ack             = 129; //!< @copybrief ControlCheckPointDeleteAck
-        optional LogSupplyPullFlowAck                   log_supply_pull_flow_ack                  = 130; //!< @copybrief LogSupplyPullFlowAck
-        optional FormationDestruction                   formation_destruction                     = 131; //!< @copybrief FormationDestruction
-        optional AutomatDestruction                     automat_destruction                       = 132; //!< @copybrief AutomatDestruction
-        optional CrowdDestruction                       crowd_destruction                         = 133; //!< @copybrief CrowdDestruction
-        optional PopulationCreation                     population_creation                       = 134; //!< @copybrief PopulationCreation
-        optional PopulationUpdate                       population_update                         = 135; //!< @copybrief PopulationUpdate
-        optional ChangePopulationMagicActionAck         change_population_magic_action_ack        = 136; //!< @copybrief ChangePopulationMagicActionAck
-        optional FragOrder                              frag_order                                = 137; //!< @copybrief FragOrder
-        optional BurningCellRequestAck                  burning_cell_request_ack                  = 139; //!< @copybrief BurningCellRequestAck
+        optional UnitDamagedByUnitFire                  unit_damaged_by_unit_fire                 = 50;  //!< @copybrief UnitDamagedByUnitFire
+        optional CrowdDamagedByUnitFire                 crowd_damaged_by_unit_fire                = 51;  //!< @copybrief CrowdDamagedByUnitFire
+        optional UnitDamagedByCrowdFire                 unit_damaged_by_crowd_fire                = 52;  //!< @copybrief UnitDamagedByCrowdFire
+        optional StartFireEffect                        start_fire_effect                         = 53;  //!< @copybrief StartFireEffect
+        optional StopFireEffect                         stop_fire_effect                          = 54;  //!< @copybrief StopFireEffect
+        optional Report                                 report                                    = 55;  //!< @copybrief Report
+        optional InvalidateReport                       invalidate_report                         = 56;  //!< @copybrief InvalidateReport
+        optional Trace                                  trace                                     = 57;  //!< @copybrief Trace
+        optional DecisionalState                        decisional_state                          = 58;  //!< @copybrief DecisionalState
+        optional DebugPoints                            debug_points                              = 59;  //!< @copybrief DebugPoints
+        optional UnitVisionCones                        unit_vision_cones                         = 60;  //!< @copybrief UnitVisionCones
+        optional UnitDetection                          unit_detection                            = 61;  //!< @copybrief UnitDetection
+        optional ObjectDetection                        object_detection                          = 62;  //!< @copybrief ObjectDetection
+        optional CrowdConcentrationDetection            crowd_concentration_detection             = 63;  //!< @copybrief CrowdConcentrationDetection
+        optional CrowdFlowDetection                     crowd_flow_detection                      = 64;  //!< @copybrief CrowdFlowDetection
+        optional UnitOrder                              unit_order                                = 65;  //!< @copybrief UnitOrder
+        optional AutomatOrder                           automat_order                             = 66;  //!< @copybrief AutomatOrder
+        optional CrowdOrder                             crowd_order                               = 67;  //!< @copybrief CrowdOrder
+        optional ObjectCreation                         object_creation                           = 68;  //!< @copybrief ObjectCreation
+        optional ObjectDestruction                      object_destruction                        = 69;  //!< @copybrief ObjectDestruction
+        optional ObjectUpdate                           object_update                             = 70;  //!< @copybrief ObjectUpdate
+        optional ObjectKnowledgeCreation                object_knowledge_creation                 = 71;  //!< @copybrief ObjectKnowledgeCreation
+        optional ObjectKnowledgeUpdate                  object_knowledge_update                   = 72;  //!< @copybrief ObjectKnowledgeUpdate
+        optional ObjectKnowledgeDestruction             object_knowledge_destruction              = 73;  //!< @copybrief ObjectKnowledgeDestruction
+        optional LogMedicalHandlingCreation             log_medical_handling_creation             = 74;  //!< @copybrief LogMedicalHandlingCreation
+        optional LogMedicalHandlingUpdate               log_medical_handling_update               = 75;  //!< @copybrief LogMedicalHandlingUpdate
+        optional LogMedicalHandlingDestruction          log_medical_handling_destruction          = 76;  //!< @copybrief LogMedicalHandlingDestruction
+        optional LogMedicalState                        log_medical_state                         = 77;  //!< @copybrief LogMedicalState
+        optional LogMaintenanceHandlingCreation         log_maintenance_handling_creation         = 78;  //!< @copybrief LogMaintenanceHandlingCreation
+        optional LogMaintenanceHandlingUpdate           log_maintenance_handling_update           = 79;  //!< @copybrief LogMaintenanceHandlingUpdate
+        optional LogMaintenanceHandlingDestruction      log_maintenance_handling_destruction      = 80;  //!< @copybrief LogMaintenanceHandlingDestruction
+        optional LogMaintenanceState                    log_maintenance_state                     = 81;  //!< @copybrief LogMaintenanceState
+        optional LogSupplyHandlingCreation              log_supply_handling_creation              = 82;  //!< @copybrief LogSupplyHandlingCreation
+        optional LogSupplyHandlingUpdate                log_supply_handling_update                = 83;  //!< @copybrief LogSupplyHandlingUpdate
+        optional LogSupplyHandlingDestruction           log_supply_handling_destruction           = 84;  //!< @copybrief LogSupplyHandlingDestruction
+        optional LogSupplyState                         log_supply_state                          = 85;  //!< @copybrief LogSupplyState
+        optional LogSupplyQuotas                        log_supply_quotas                         = 86;  //!< @copybrief LogSupplyQuotas
+        optional CrowdCreation                          crowd_creation                            = 87;  //!< @copybrief CrowdCreation
+        optional CrowdUpdate                            crowd_update                              = 88;  //!< @copybrief CrowdUpdate
+        optional CrowdConcentrationCreation             crowd_concentration_creation              = 89;  //!< @copybrief CrowdConcentrationCreation
+        optional CrowdConcentrationDestruction          crowd_concentration_destruction           = 90;  //!< @copybrief CrowdConcentrationDestruction
+        optional CrowdConcentrationUpdate               crowd_concentration_update                = 91;  //!< @copybrief CrowdConcentrationUpdate
+        optional CrowdFlowCreation                      crowd_flow_creation                       = 92;  //!< @copybrief CrowdFlowCreation
+        optional CrowdFlowDestruction                   crowd_flow_destruction                    = 93;  //!< @copybrief CrowdFlowDestruction
+        optional CrowdFlowUpdate                        crowd_flow_update                         = 94;  //!< @copybrief CrowdFlowUpdate
+        optional CrowdKnowledgeCreation                 crowd_knowledge_creation                  = 95;  //!< @copybrief CrowdKnowledgeCreation
+        optional CrowdKnowledgeUpdate                   crowd_knowledge_update                    = 96;  //!< @copybrief CrowdKnowledgeUpdate
+        optional CrowdKnowledgeDestruction              crowd_knowledge_destruction               = 97;  //!< @copybrief CrowdKnowledgeDestruction
+        optional CrowdConcentrationKnowledgeCreation    crowd_concentration_knowledge_creation    = 98;  //!< @copybrief CrowdConcentrationKnowledgeCreation
+        optional CrowdConcentrationKnowledgeDestruction crowd_concentration_knowledge_destruction = 99;  //!< @copybrief CrowdConcentrationKnowledgeDestruction
+        optional CrowdConcentrationKnowledgeUpdate      crowd_concentration_knowledge_update      = 100; //!< @copybrief CrowdConcentrationKnowledgeUpdate
+        optional CrowdFlowKnowledgeCreation             crowd_flow_knowledge_creation             = 101; //!< @copybrief CrowdFlowKnowledgeCreation
+        optional CrowdFlowKnowledgeDestruction          crowd_flow_knowledge_destruction          = 102; //!< @copybrief CrowdFlowKnowledgeDestruction
+        optional CrowdFlowKnowledgeUpdate               crowd_flow_knowledge_update               = 103; //!< @copybrief CrowdFlowKnowledgeUpdate
+        optional FolkCreation                           folk_creation                             = 104; //!< @copybrief FolkCreation
+        optional FolkGraphUpdate                        folk_graph_update                         = 105; //!< @copybrief FolkGraphUpdate
+        optional ControlGlobalWeatherAck                control_global_weather_ack                = 106; //!< @copybrief ControlGlobalWeatherAck
+        optional ControlLocalWeatherAck                 control_local_weather_ack                 = 107; //!< @copybrief ControlLocalWeatherAck
+        optional ControlCheckPointSaveBegin             control_checkpoint_save_begin             = 108; //!< @copybrief ControlCheckPointSaveBegin
+        optional ControlCheckPointSetFrequencyAck       control_checkpoint_set_frequency_ack      = 109; //!< @copybrief ControlCheckPointSetFrequencyAck
+        optional ControlCheckPointSaveNowAck            control_checkpoint_save_now_ack           = 110; //!< @copybrief ControlCheckPointSaveNowAck
+        optional ControlSendCurrentStateBegin           control_send_current_state_begin          = 111; //!< @copybrief ControlSendCurrentStateBegin
+        optional ControlSendCurrentStateEnd             control_send_current_state_end            = 112; //!< @copybrief ControlSendCurrentStateEnd
+        optional UrbanCreation                          urban_creation                            = 113; //!< @copybrief UrbanCreation
+        optional UrbanUpdate                            urban_update                              = 114; //!< @copybrief UrbanUpdate
+        optional UrbanKnowledgeCreation                 urban_knowledge_creation                  = 115; //!< @copybrief UrbanKnowledgeCreation
+        optional UrbanKnowledgeUpdate                   urban_knowledge_update                    = 116; //!< @copybrief UrbanKnowledgeUpdate
+        optional UrbanKnowledgeDestruction              urban_knowledge_destruction               = 117; //!< @copybrief UrbanKnowledgeDestruction
+        optional StockResource                          stock_resource                            = 118; //!< @copybrief StockResource
+        optional UrbanDetection                         urban_detection                           = 119; //!< @copybrief UrbanDetection
+        optional KnowledgeGroupMagicActionAck           knowledge_group_magic_action_ack          = 120; //!< @copybrief KnowledgeGroupMagicActionAck
+        optional KnowledgeGroupCreation                 knowledge_group_creation                  = 121; //!< @copybrief KnowledgeGroupCreation
+        optional KnowledgeGroupUpdate                   knowledge_group_update                    = 122; //!< @copybrief KnowledgeGroupUpdate
+        optional KnowledgeGroupCreationAck              knowledge_group_creation_ack              = 123; //!< @copybrief KnowledgeGroupCreationAck
+        optional KnowledgeGroupUpdateAck                knowledge_group_update_ack                = 124; //!< @copybrief KnowledgeGroupUpdateAck
+        optional KnowledgeGroupDestruction              knowledge_group_destruction               = 125; //!< @copybrief KnowledgeGroupDestruction
+        optional ActionCreateFireOrderAck               action_create_fire_order_ack              = 126; //!< @copybrief ActionCreateFireOrderAck
+        optional ControlGlobalWeather                   control_global_weather                    = 127; //!< @copybrief ControlGlobalWeather
+        optional ControlLocalWeatherCreation            control_local_weather_creation            = 128; //!< @copybrief ControlLocalWeatherCreation
+        optional ControlLocalWeatherDestruction         control_local_weather_destruction         = 129; //!< @copybrief ControlLocalWeatherDestruction
+        optional ControlCheckPointListAck               control_checkpoint_list_ack               = 130; //!< @copybrief ControlCheckPointListAck
+        optional ControlCheckPointList                  control_checkpoint_list                   = 131; //!< @copybrief ControlCheckPointList
+        optional ControlCheckPointDeleteAck             control_checkpoint_delete_ack             = 132; //!< @copybrief ControlCheckPointDeleteAck
+        optional LogSupplyPullFlowAck                   log_supply_pull_flow_ack                  = 133; //!< @copybrief LogSupplyPullFlowAck
+        optional FormationDestruction                   formation_destruction                     = 134; //!< @copybrief FormationDestruction
+        optional AutomatDestruction                     automat_destruction                       = 135; //!< @copybrief AutomatDestruction
+        optional CrowdDestruction                       crowd_destruction                         = 136; //!< @copybrief CrowdDestruction
+        optional PopulationCreation                     population_creation                       = 137; //!< @copybrief PopulationCreation
+        optional PopulationUpdate                       population_update                         = 138; //!< @copybrief PopulationUpdate
+        optional ChangePopulationMagicActionAck         change_population_magic_action_ack        = 139; //!< @copybrief ChangePopulationMagicActionAck
+        optional FragOrder                              frag_order                                = 140; //!< @copybrief FragOrder
+        optional BurningCellRequestAck                  burning_cell_request_ack                  = 141; //!< @copybrief BurningCellRequestAck
     }
     /** @property context
         @brief Identifies the request matching the response

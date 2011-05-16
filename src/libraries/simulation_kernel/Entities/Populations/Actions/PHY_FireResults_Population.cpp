@@ -23,10 +23,10 @@ PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& fi
     : firer_( firer )
     , nID_  ( idManager_.GetFreeId() )
 {
-    client::StartCrowdFire asnMsg;
-    asnMsg().mutable_fire()->set_id( nID_ );
-    asnMsg().mutable_firing_crowd()->set_id( firer_.GetID() );
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    client::StartCrowdFire msg;
+    msg().mutable_fire()->set_id( nID_ );
+    msg().mutable_firing_crowd()->set_id( firer_.GetID() );
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,8 +35,9 @@ PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& fi
 // -----------------------------------------------------------------------------
 PHY_FireResults_Population::~PHY_FireResults_Population()
 {
-    client::StopCrowdFire asnMsg;
-    asnMsg().mutable_fire()->set_id( nID_ );
-    Serialize( *asnMsg().mutable_units_damages() );
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    client::StopCrowdFire msg;
+    msg().mutable_fire()->set_id( nID_ );
+    Serialize( *msg().mutable_units_damages() );
+    msg.Send( NET_Publisher_ABC::Publisher() );
+    SendDamagesCrowd( firer_, nID_ );
 }

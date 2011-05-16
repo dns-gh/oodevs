@@ -15,6 +15,8 @@
 namespace sword
 {
     class UnitFireDamages;
+    class UnitDamagedByUnitFire;
+    class UnitDamagedByCrowdFire;
 }
 
 class Human_ABC;
@@ -45,6 +47,8 @@ public:
     //! @name Network
     //@{
     void Serialize( const MIL_Agent_ABC& target, sword::UnitFireDamages& asn ) const;
+    void SerializeDamages( sword::UnitDamagedByUnitFire& msg ) const;
+    void SerializeDamages( sword::UnitDamagedByCrowdFire& msg ) const;
     //@}
 
 private:
@@ -58,6 +62,13 @@ private:
     typedef std::vector< T_HumansPerWoundVector >  T_HumansPerRankVector;
     typedef T_HumansPerRankVector::iterator        IT_HumansPerRankVector;
     typedef T_HumansPerRankVector::const_iterator  CIT_HumansPerRankVector;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void DoSerializeDamages( T& msg ) const;
     //@}
 
 private:

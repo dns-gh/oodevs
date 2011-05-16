@@ -15,6 +15,7 @@
 namespace sword
 {
     class CrowdFireDamages;
+    class CrowdDamagedByUnitFire;
 }
 
 class MIL_Population;
@@ -46,7 +47,15 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( const MIL_Population& target, sword::CrowdFireDamages& asn ) const;
+    void Serialize( const MIL_Population& target, sword::CrowdFireDamages& msg ) const;
+    void SerializeDamages( sword::CrowdDamagedByUnitFire& msg ) const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void DoSerializeDamages( T& msg ) const;
     //@}
 
 private:
