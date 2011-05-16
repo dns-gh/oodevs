@@ -11,16 +11,26 @@
 #include "Launcher.h"
 #include "launcher_dll/LauncherFacade.h"
 
+namespace
+{
+    std::auto_ptr< LauncherFacade > CreateFacade( int argc, char** argv )
+    {
+        std::auto_ptr< LauncherFacade > facade( new LauncherFacade() );
+        facade->Initialize( argc, argv );
+        return facade;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Launcher constructor
 // Created: SBO 2010-11-03
 // -----------------------------------------------------------------------------
 Launcher::Launcher( int argc, char** argv )
-    : launcher_( new LauncherFacade() )
+    : launcher_( CreateFacade( argc, argv ) )
     , running_ ( true )
     , thread_  ( new boost::thread( boost::bind( &Launcher::Run, this ) ) )
 {
-    launcher_->Initialize( argc, argv );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
