@@ -70,8 +70,6 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\libRTI-NG.dll"
     File "${RUNDIR}\librtiInternalIntercept.dll"
     File "${RUNDIR}\userDdm.dll"
-    File "${RUNDIR}\hla_plugin-${PLATFORM}-mt.dll"
-    File "${RUNDIR}\libFedTime1516e.dll"
 !endif
     File /x "qt-*d.dll" "${RUNDIR}\qt-*.dll"
     File /x "*D.dll" "${RUNDIR}\xerces*.dll"
