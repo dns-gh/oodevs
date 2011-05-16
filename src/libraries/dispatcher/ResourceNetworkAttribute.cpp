@@ -101,6 +101,7 @@ void ResourceNetworkAttribute::Update( const sword::ResourceNetwork& from )
     to.critical_ = from.has_critical() ? from.critical() : false;
     to.maxConsumption_ = from.has_max_consumption() ? from.max_consumption() : 0;
     to.currentConsumption_ = from.has_current_consumption() ? from.current_consumption() : 0;
+    to.functionalState_ = from.functional_state();
     for( int j = 0; j < from.link_size(); ++j )
     {
         const sword::ResourceNetwork_Link& linkFrom = from.link( j );
@@ -139,6 +140,7 @@ void ResourceNetworkAttribute::Send( sword::ResourceNetwork& message, const Reso
         message.set_consumption( network.consumption_ );
         message.set_critical( network.critical_ );
     }
+    message.set_functional_state( network.functionalState_ );
     for( std::vector< ResourceNetwork::Link >::const_iterator it = network.links_.begin(); it != network.links_.end(); ++it )
     {
         sword::ResourceNetwork_Link* link = message.add_link();

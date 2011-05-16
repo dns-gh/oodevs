@@ -982,6 +982,7 @@ message ResourceNetwork {
     optional uint32              max_production      = 10; //!< The maximum production
     optional uint32              max_consumption     = 11; //!< The maximum consumption
     optional uint32              current_consumption = 12; //!< The current consumption
+    optional float               functional_state    = 13; //!< The functional state
 }
 
 /** @struct ObjectAttributeResourceNetwork

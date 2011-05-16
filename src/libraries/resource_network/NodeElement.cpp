@@ -36,6 +36,7 @@ NodeElement::NodeElement()
     , modifier_           ( 1. )
     , needUpdate_         ( true )
     , functionalState_    ( 0 )
+    , oldFunctionalState_ ( 0 )
     , consumptionState_   ( 0 )
 {
     // NOTHING
@@ -62,6 +63,7 @@ NodeElement::NodeElement( unsigned long resourceId, const std::string& resourceN
     , modifier_           ( 1. )
     , needUpdate_         ( true )
     , functionalState_    ( 0 )
+    , oldFunctionalState_ ( 0 )
     , consumptionState_   ( 0 )
 {
     // NOTHING
@@ -88,6 +90,7 @@ NodeElement::NodeElement( xml::xistream& xis, unsigned long resourceId, const st
     , modifier_           ( 1. )
     , needUpdate_         ( true )
     , functionalState_    ( 0 )
+    , oldFunctionalState_ ( 0 )
     , consumptionState_   ( 0 )
 {
     Update( xis );
@@ -114,6 +117,7 @@ NodeElement::NodeElement( const urban::ResourceNetworkAttribute::ResourceNode& n
     , modifier_           ( 1. )
     , needUpdate_         ( true )
     , functionalState_    ( 0 )
+    , oldFunctionalState_ ( 0 )
     , consumptionState_   ( 0 )
 {
     for( std::vector< urban::ResourceNetworkAttribute::ResourceLink >::const_iterator it = node.links_.begin(); it != node.links_.end(); ++it )
@@ -141,6 +145,7 @@ NodeElement::NodeElement( const NodeElement& from )
     , modifier_           ( from.modifier_ )
     , needUpdate_         ( true )
     , functionalState_    ( 0 )
+    , oldFunctionalState_ ( 0 )
     , consumptionState_   ( 0 )
 {
     for( CIT_ResourceLinks it = from.links_.begin(); it != from.links_.end(); ++it )
@@ -250,7 +255,7 @@ void NodeElement::Consume( float& functionalState )
         maxConsumption_ += externalConsumption;
         externalConsumption_ = 0;
     }
-    if( currentConsumption != currentConsumption_ || maxConsumption != maxConsumption_ )
+    if( currentConsumption != currentConsumption_ || maxConsumption != maxConsumption_ || std::abs( functionalState_ - oldFunctionalState_ ) > 0.01 )
         needUpdate_ = true;
 }
 
@@ -418,6 +423,8 @@ void NodeElement::Serialize( sword::ResourceNetwork& msg ) const
     msg.set_critical( consumptionCritical_ );
     msg.set_max_consumption( maxConsumption_ );
     msg.set_current_consumption( currentConsumption_ );
+    msg.set_functional_state( functionalState_ );
+    oldFunctionalState_ = functionalState_;
     for( CIT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
         ( *it )->Serialize( *msg.add_link() );
     needUpdate_ = false;

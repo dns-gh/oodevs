@@ -1227,6 +1227,7 @@ namespace
         CONVERT( initial_stock );
         CONVERT( max_production );
         CONVERT( max_consumption );
+        CONVERT( functional_state );
     }
     template< typename From, typename To >
     void ConvertObjectAttributes( const From& from, To* to )

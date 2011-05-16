@@ -692,17 +692,18 @@ message ResourceNetwork
         required int32    capacity = 2;
         required uint32   flow     = 3;
     }
-    required ResourceNetworkType resource        = 1;
-    repeated Link                link            = 2;
-    required bool                enabled         = 3;
-    optional uint32              max_stock       = 4;
-    optional uint32              stock           = 5;
-    optional uint32              production      = 6;
-    optional uint32              consumption     = 7;
-    optional bool                critical        = 8;
-    optional uint32              initial_stock   = 9;
-    optional uint32              max_production  = 10;
-    optional uint32              max_consumption = 11;
+    required ResourceNetworkType resource         = 1;
+    repeated Link                link             = 2;
+    required bool                enabled          = 3;
+    optional uint32              max_stock        = 4;
+    optional uint32              stock            = 5;
+    optional uint32              production       = 6;
+    optional uint32              consumption      = 7;
+    optional bool                critical         = 8;
+    optional uint32              initial_stock    = 9;
+    optional uint32              max_production   = 10;
+    optional uint32              max_consumption  = 11;
+    optional float               functional_state = 12;
 }
 
 message ObjectAttributeResourceNetwork {

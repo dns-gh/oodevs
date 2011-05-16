@@ -126,6 +126,7 @@ private:
     float modifier_;
     mutable bool needUpdate_;
     float functionalState_;
+    mutable float oldFunctionalState_;
     float consumptionState_;
     //@}
 };

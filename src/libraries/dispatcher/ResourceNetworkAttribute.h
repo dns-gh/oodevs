@@ -47,6 +47,7 @@ class ResourceNetworkAttribute : public UrbanObjectAttribute_ABC
         unsigned int maxConsumption_;
         unsigned int currentConsumption_;
         bool critical_;
+        float functionalState_;
     };
 
 public:
