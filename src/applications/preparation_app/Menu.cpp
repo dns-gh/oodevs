@@ -66,21 +66,19 @@ namespace
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
 Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& exportDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
-    : QMenuBar      ( pParent )
-    , saveMenuItem_ ( 0 )
-    , exerciceMenuItem_ ( 0 )
-    , profileMenuItem_ ( 0 )
+    : QMenuBar    ( pParent )
+    , controllers_( controllers )
 {
     QPopupMenu* menu = new QPopupMenu( this );
     menu->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
     menu->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
-    menu->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), CTRL + Key_W );
+    Wrap( menu->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), CTRL + Key_W ) );
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I );
-    menu->insertItem( tools::translate( "Menu", "&Export..." ), &exportDialog, SLOT( exec() ), CTRL + Key_E );
+    Wrap( menu->insertItem( tools::translate( "Menu", "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I ) );
+    Wrap( menu->insertItem( tools::translate( "Menu", "&Export..." ), &exportDialog, SLOT( exec() ), CTRL + Key_E ) );
     menu->insertSeparator();
-    menu->insertItem( MAKE_ICON( save ), tools::translate( "Menu", "&Save" )   , parent(), SLOT( Save() ),   CTRL + Key_S );
-    menu->insertItem( MAKE_ICON( saveas ), tools::translate( "Menu", "Save &As" ), parent(), SLOT( SaveAs() ), CTRL + SHIFT + Key_S );
+    saveItem_ = menu->insertItem( MAKE_ICON( save ), tools::translate( "Menu", "&Save" )   , parent(), SLOT( Save() ),   CTRL + Key_S );
+    Wrap( menu->insertItem( MAKE_ICON( saveas ), tools::translate( "Menu", "Save &As" ), parent(), SLOT( SaveAs() ), CTRL + SHIFT + Key_S ) );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
     insertItem( tools::translate( "Menu", "&File" ), menu );
@@ -89,7 +87,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "View/Edit..." ), &profileDialog, SLOT( exec() ) );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
-    profileMenuItem_ = insertItem( tools::translate( "Menu", "&Profiles" ), menu );
+    Wrap( insertItem( tools::translate( "Menu", "&Profiles" ), menu ) );
 
     menu = new QPopupMenu( this );
     QPopupMenu* subMenu = new QPopupMenu( menu );
@@ -103,7 +101,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
         resourceMenu->AddItem( tools::translate( "Menu", "Selected: outgoing links" ), 3 );
         subMenu->insertItem( MakePixmap( "logistic_links" ), tools::translate( "Menu", "Resource networks" ), resourceMenu );
     }
-    menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
+    Wrap( menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu ) );
 
     subMenu = new QPopupMenu( menu );
     AddSubMenu3( subMenu, tools::translate( "Menu", "Small text" )    , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
@@ -123,7 +121,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     gridMenu->AddItem( tools::translate( "Menu", "10km" ), 10.0f );
     subMenu->insertItem( tools::translate( "Menu", "Grid" ), gridMenu );
 
-    menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu );
+    Wrap( menu->insertItem( tools::translate( "Menu", "Terrain..." ), subMenu ) );
     menu->insertSeparator();
 
     OptionMenu< bool >* boolMenu = new OptionMenu< bool >( menu, controllers.options_, "3D" );
@@ -135,23 +133,23 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
 
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), CTRL + Key_P );
-    insertItem( tools::translate( "Menu", "&Display" ), menu );
+    Wrap( insertItem( tools::translate( "Menu", "&Display" ), menu ) );
 
     menu = new QPopupMenu( this );
     menu->insertItem( tools::translate( "Menu", "Properties..." ), &exerciseDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Scores..." ), &scoreDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Success factors..." ), &successFactorDialog, SLOT( exec() ) );
-    exerciceMenuItem_ = insertItem( tools::translate( "Menu", "&Exercise" ), menu );
+    Wrap( insertItem( tools::translate( "Menu", "&Exercise" ), menu ) );
 
     menu = pParent->createDockWindowMenu();
     insertItem( tools::translate( "Menu", "&Windows" ), menu );
-//    menu->setDisabled( true );
 
     menu = new QPopupMenu( this );
     menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Key_F1 );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppVersion() ), license ), SLOT( exec() ) );
     insertItem( tools::translate( "Menu", "&?" ), menu );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,7 +158,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
 // -----------------------------------------------------------------------------
 Menu::~Menu()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,7 +167,25 @@ Menu::~Menu()
 // -----------------------------------------------------------------------------
 void Menu::EnableSaveItem( bool status )
 {
-    setItemEnabled( saveMenuItem_, status );
+    setItemEnabled( saveItem_, status );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::NotifyUpdated
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+void Menu::NotifyUpdated( const kernel::ModelLoaded& )
+{
+    EnableItems( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::NotifyUpdated
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+void Menu::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    EnableItems( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -178,6 +194,15 @@ void Menu::EnableSaveItem( bool status )
 // -----------------------------------------------------------------------------
 void Menu::EnableItems( bool status )
 {
-    setItemEnabled( exerciceMenuItem_, status );
-    setItemEnabled( profileMenuItem_  , status );
+    for( std::vector< int >::const_iterator it = exerciseItems_.begin(); it != exerciseItems_.end(); ++it )
+        setItemEnabled( *it, status );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::Wrap
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+void Menu::Wrap( int item )
+{
+    exerciseItems_.push_back( item );
 }

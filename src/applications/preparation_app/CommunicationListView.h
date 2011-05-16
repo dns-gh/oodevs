@@ -15,7 +15,6 @@
 
 namespace kernel
 {
-    class ModelLoaded;
     class KnowledgeGroup_ABC; // LTO
     class Team_ABC; // LTO
 }
@@ -29,7 +28,6 @@ class ModelBuilder;
 // Created: SBO 2006-09-25
 // =============================================================================
 class CommunicationListView : public gui::HierarchyListView< kernel::CommunicationHierarchies >
-                            , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                             , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
@@ -55,7 +53,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual bool Drop( const kernel::Entity_ABC& draggedEntity, const kernel::Entity_ABC& target );

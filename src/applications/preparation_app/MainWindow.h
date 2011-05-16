@@ -123,6 +123,7 @@ private:
     void SetWindowTitle( bool needsSaving );
     void SetNeedsSaving( bool status );
     bool CheckSaving();
+    void EnableWorkspace( bool enabled );
     //@}
 
 private:

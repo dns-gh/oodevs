@@ -46,15 +46,6 @@ CommunicationListView::~CommunicationListView()
 
 // -----------------------------------------------------------------------------
 // Name: CommunicationListView::NotifyUpdated
-// Created: SBO 2006-09-26
-// -----------------------------------------------------------------------------
-void CommunicationListView::NotifyUpdated( const ModelLoaded& )
-{
-    clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CommunicationListView::NotifyUpdated
 // Created: SBO 2006-09-28
 // -----------------------------------------------------------------------------
 void CommunicationListView::NotifyUpdated( const kernel::Entity_ABC& entity )

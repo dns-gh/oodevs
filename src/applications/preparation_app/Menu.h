@@ -10,15 +10,18 @@
 #ifndef __Menu_h_
 #define __Menu_h_
 
+#include "tools/ElementObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <qmenubar.h>
 
 class QMainWindow;
 class QDialog;
-class QPopupMenu;
 
 namespace kernel
 {
     class Controllers;
+    class ModelLoaded;
+    class ModelUnLoaded;
 }
 
 namespace gui
@@ -34,6 +37,10 @@ namespace gui
 // Created: SBO 2006-04-28
 // =============================================================================
 class Menu : public QMenuBar
+           , private boost::noncopyable
+           , public tools::Observer_ABC
+           , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+           , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT;
 
@@ -48,16 +55,24 @@ public:
 
     //! @name Operations
     //@{
+    virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     void EnableSaveItem( bool status );
-    void EnableItems( bool status );
     //@}
 
-    private:
+private:
+    //! @name Helpers
+    //@{
+    void EnableItems( bool status );
+    void Wrap( int item );
+    //@}
+
+private:
     //! @name Member data
     //@{
-    int saveMenuItem_;
-    int exerciceMenuItem_;
-    int profileMenuItem_;
+    kernel::Controllers& controllers_;
+    std::vector< int > exerciseItems_;
+    int saveItem_;
     //@}
 };
 

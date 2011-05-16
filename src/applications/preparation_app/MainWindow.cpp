@@ -264,14 +264,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QDialog* exportDialog = new ExportDialog( this, config_ );
     ScoreDialog* scoreDialog = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_, config_ );
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
-    fileToolBar_ = new FileToolbar( this );
+    fileToolBar_ = new FileToolbar( this, controllers );
     new DisplayToolbar( this, controllers );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
     new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *exportDialog, *scoreDialog, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
-    menu_->EnableItems( false );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
@@ -285,6 +284,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     controllers_.Register( *this );
 
     SetWindowTitle( false );
+    EnableWorkspace( false );
     ReadSettings();
     ReadOptions();
 
@@ -428,7 +428,6 @@ void MainWindow::Open()
 // -----------------------------------------------------------------------------
 bool MainWindow::Load()
 {
-    menu_->EnableItems( true );
     WriteOptions();
     try
     {
@@ -463,13 +462,25 @@ bool MainWindow::Load()
 // -----------------------------------------------------------------------------
 void MainWindow::Close()
 {
-    if( !CheckSaving() )
+    if( model_.IsLoaded() && !CheckSaving() )
         return;
     model_.Purge();
     staticModel_.Purge();
     selector_->Close();
     SetWindowTitle( false );
-    menu_->EnableItems( false );
+    EnableWorkspace( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::EnableWorkspace
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+void MainWindow::EnableWorkspace( bool enabled )
+{
+    QPtrList< QDockWindow > docks = dockWindows();
+    for( QPtrList< QDockWindow >::iterator it = docks.begin(); it != docks.end(); ++it )
+        if( *it != fileToolBar_ )
+            (*it)->setEnabled( enabled );
 }
 
 // -----------------------------------------------------------------------------
@@ -489,6 +500,7 @@ void MainWindow::LoadExercise()
         if( errors )
             QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                 , tr( "The following entities cannot be loaded: " ) + "\n" + loadingErrors.c_str() );
+        EnableWorkspace( true );
     }
     catch( std::exception& e )
     {

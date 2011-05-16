@@ -10,7 +10,16 @@
 #ifndef __FileToolbar_h_
 #define __FileToolbar_h_
 
+#include "tools/ElementObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <qtoolbar.h>
+
+namespace kernel
+{
+    class Controllers;
+    class ModelLoaded;
+    class ModelUnLoaded;
+}
 
 // =============================================================================
 /** @class  FileToolbar
@@ -19,26 +28,33 @@
 // Created: SBO 2006-12-13
 // =============================================================================
 class FileToolbar : public QToolBar
+                  , private boost::noncopyable
+                  , public tools::Observer_ABC
+                  , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                  , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FileToolbar( QMainWindow* pParent );
+             FileToolbar( QMainWindow* parent, kernel::Controllers& controllers );
     virtual ~FileToolbar();
     //@}
 
     //! @name Operations
     //@{
     void EnableSaveItem( bool status );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& );
+    virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     //@}
 
-    private:
+private:
     //! @name Member data
     //@{
-        QToolButton* saveButton_;
-        QToolButton* saveAsButton_;
+    kernel::Controllers& controllers_;
+    QToolButton* saveButton_;
+    QToolButton* saveAsButton_;
     //@}
 };
 

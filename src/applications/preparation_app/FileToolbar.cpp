@@ -11,20 +11,23 @@
 #include "FileToolbar.h"
 #include "moc_FileToolbar.cpp"
 #include "icons.h"
+#include "clients_kernel/Controllers.h"
 
 // -----------------------------------------------------------------------------
 // Name: FileToolbar constructor
 // Created: SBO 2006-12-13
 // -----------------------------------------------------------------------------
-FileToolbar::FileToolbar( QMainWindow* pParent )
-    : QToolBar      ( pParent, "File Toolbar" )
-    , saveButton_   ( 0 )
+FileToolbar::FileToolbar( QMainWindow* parent, kernel::Controllers& controllers )
+    : QToolBar   ( parent, "File Toolbar" )
+    , saveButton_( 0 )
+    , controllers_( controllers )
 {
     setLabel( tr( "Standard" ) );
-    new QToolButton( MAKE_ICON( new )   , tr( "New"  )  , tr( "File" ), pParent, SLOT( New() )   , this );
-    new QToolButton( MAKE_ICON( open )  , tr( "Open" )  , tr( "File" ), pParent, SLOT( Open() )  , this );
-    saveButton_ = new QToolButton( MAKE_ICON( save )  , tr( "Save" )  , tr( "File" ), pParent, SLOT( Save() )  , this );
-    saveAsButton_ = new QToolButton( MAKE_ICON( saveas )  , tr( "Save As" )  , tr( "File" ), pParent, SLOT( SaveAs() )  , this );
+    new QToolButton( MAKE_ICON( new ), tr( "New"  ), tr( "File" ), parent, SLOT( New() ), this );
+    new QToolButton( MAKE_ICON( open ), tr( "Open" ), tr( "File" ), parent, SLOT( Open() ), this );
+    saveButton_ = new QToolButton( MAKE_ICON( save ), tr( "Save" ), tr( "File" ), parent, SLOT( Save() ), this );
+    saveAsButton_ = new QToolButton( MAKE_ICON( saveas ), tr( "Save As" ), tr( "File" ), parent, SLOT( SaveAs() ), this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,15 +36,32 @@ FileToolbar::FileToolbar( QMainWindow* pParent )
 // -----------------------------------------------------------------------------
 FileToolbar::~FileToolbar()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FileToolbar destructor
+// Name: FileToolbar::EnableSaveItem
 // Created: SBO 2006-12-13
 // -----------------------------------------------------------------------------
 void FileToolbar::EnableSaveItem( bool status )
 {
     saveButton_->setEnabled( status );
-    saveAsButton_->setEnabled( status );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileToolbar::NotifyUpdated
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+void FileToolbar::NotifyUpdated( const kernel::ModelLoaded& )
+{
+    saveAsButton_->setEnabled( true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileToolbar::NotifyUpdated
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+void FileToolbar::NotifyUpdated( const kernel::ModelUnLoaded& )
+{
+    saveAsButton_->setEnabled( false );
 }

@@ -15,11 +15,11 @@
 
 namespace kernel
 {
-    class ModelLoaded;
     class Formation_ABC;
     class Automat_ABC;
     class Agent_ABC;
     class FormationLevels;
+    class HierarchyLevel_ABC;
 }
 
 class AutomatDecisions;
@@ -33,7 +33,6 @@ class ModelBuilder;
 // Created: SBO 2006-08-29
 // =============================================================================
 class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
-                       , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                        , public tools::ElementObserver_ABC< AutomatDecisions >
                        , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
@@ -70,7 +69,6 @@ private:
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
 
-    virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::Entity_ABC& );
     virtual void NotifyUpdated( const AutomatDecisions& );
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
@@ -83,6 +81,7 @@ private:
     virtual bool Drop( const kernel::Agent_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Automat_ABC& item, const kernel::Entity_ABC& target );
     virtual bool Drop( const kernel::Formation_ABC& item, const kernel::Entity_ABC& target );
+    void AddFormationMenu( kernel::ContextMenu& menu, const kernel::HierarchyLevel_ABC& root );
     //@}
 
 private:

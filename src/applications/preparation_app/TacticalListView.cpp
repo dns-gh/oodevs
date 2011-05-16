@@ -44,7 +44,7 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
     connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( QListViewItem*, int, const QString& ) ) );
-
+    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
     controllers.Update( *this );
 }
 
@@ -88,16 +88,6 @@ void TacticalListView::Display( const Entity_ABC& entity, gui::ValuedListItem* i
     else if( entity.Retrieve< CommandPostAttributes >() )
         item->setPixmap( 1, commandPost_ );
     HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalListView::NotifyUpdated
-// Created: SBO 2006-08-30
-// -----------------------------------------------------------------------------
-void TacticalListView::NotifyUpdated( const ModelLoaded& )
-{
-    clear(); // $$$$ SBO 2006-09-28: ajouter ModelUnLoaded + disconnect ?
-    connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( QListViewItem*, const QPoint&, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -170,12 +160,8 @@ void TacticalListView::NotifyContextMenu( const Entity_ABC&, kernel::ContextMenu
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
 {
-    if( !isVisible() )
-        return;
-    QPopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
-    const HierarchyLevel_ABC* level = levels_.GetRoot();
-    while( level && ( level = level->GetNext() ) )
-        subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().ascii() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
+    if( const kernel::HierarchyLevel_ABC* root = levels_.GetRoot() )
+        AddFormationMenu( menu, *root );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,15 +170,21 @@ void TacticalListView::NotifyContextMenu( const Team_ABC&, ContextMenu& menu )
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyContextMenu( const Formation_ABC& formation, ContextMenu& menu )
 {
+    if( const kernel::HierarchyLevel_ABC* root = formation.GetLevel().GetNext() )
+        AddFormationMenu( menu, *root );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::AddFormationMenu
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+void TacticalListView::AddFormationMenu( kernel::ContextMenu& menu, const kernel::HierarchyLevel_ABC& root )
+{
     if( !isVisible() )
         return;
-    const HierarchyLevel_ABC* level = &formation.GetLevel();
-    if( level && level->GetNext() )
-    {
-        QPopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
-        while( level && ( level = level->GetNext() ) )
-            subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().ascii() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
-    }
+    QPopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
+    for( const kernel::HierarchyLevel_ABC* level = &root; level; level = level->GetNext() )
+        subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().ascii() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
 }
 
 // -----------------------------------------------------------------------------
