@@ -404,6 +404,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Agent_EstMort" ] = boost::bind( &DEC_AgentFunctions::IsDead, boost::cref( GetPion() ) );
     brain[ "DEC_Agent_NiveauInstallation" ] = boost::bind( &DEC_AgentFunctions::GetPosture, boost::cref( GetPion() ) );
     brain[ "DEC_Agent_RoePopulation" ] = boost::bind( &DEC_AgentFunctions::GetRoePopulation, boost::cref( GetPion() ) );
+    brain[ "DEC_Agent_EstDansFoule" ] = boost::bind( &DEC_AgentFunctions::IsInCrowd, boost::cref( GetPion() ) );
     brain[ "DEC_HasDotation" ] =
         boost::function< bool ( const PHY_DotationCategory* ) >( boost::bind( &DEC_AgentFunctions::HasDotation, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_CanUseDotation" ] =
@@ -443,10 +444,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::CanRelievePion, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Suicide" ] = boost::bind( &DEC_AgentFunctions::Suicide, boost::ref( GetPion() ) );
 
-
-    // Population
-    brain[ "DEC_GetAdhesionPopulation" ] =
-        boost::function< float (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAffinity , boost::cref( GetPion() ), _1 ) );
     // Agent knowledge accessors
     brain[ "DEC_ConnaissanceAgent_NiveauDePerceptionCourant" ] =
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) );
@@ -468,7 +465,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::CanBeIlluminate, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceAgent_PeutIlluminer" ] =
         boost::function< bool() >( boost::bind( &DEC_KnowledgeAgentFunctions::CanIlluminate, boost::cref( GetPion() ) ) );
-
+    brain[ "DEC_ConnaissanceAgent_EstDansFoule" ] =
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsInCrowd, boost::ref( GetPion() ), _1 ) );
+  
     // Object knowledges accessors
     brain[ "DEC_ConnaissanceObjet_EstUnEnnemi" ] =
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsAnEnemy, boost::cref( GetPion() ), _1 ) );
@@ -514,6 +513,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< int (int, float, const PHY_DotationCategory*) >(boost::bind( &DEC_KnowledgePopulationFunctions::Exterminate, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_ConnaissancePopulation_HasFlow" ] =
         boost::function< bool (int) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasFlow, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_GetAdhesionPopulation" ] =
+        boost::function< float (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAffinity , boost::cref( GetPion() ), _1 ) );
 
     // Urban knowledges accessors
     brain[ "DEC_Connaissances_BlocUrbain" ] =

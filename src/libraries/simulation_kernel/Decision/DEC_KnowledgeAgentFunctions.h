@@ -35,6 +35,7 @@ public:
     static bool  IsMoving          ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsPerceivingAgent ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsInDetectionCone ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const MT_Vector2D* direction, double angle );
+    static bool  IsInCrowd         ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  KillOfficers      ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
     static int   GetMaxPerceptionLevelForKnowledgeGroup ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

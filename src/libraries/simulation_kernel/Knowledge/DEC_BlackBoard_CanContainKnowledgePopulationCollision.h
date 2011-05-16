@@ -60,6 +60,7 @@ public:
     //@{
     void                               GetKnowledgesPopulationCollision( T_KnowledgePopulationCollisionVector& container ) const;
     DEC_Knowledge_PopulationCollision* GetKnowledgePopulationCollision ( const MIL_Population& populationCollision ) const;
+    bool HasCollision() const;
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesPopulationCollision( UnaryFunction& fct ) const

@@ -46,6 +46,7 @@ public:
     virtual void Clean() = 0;
     virtual bool HasChanged() const = 0;
     virtual double GetCollidingPopulationDensity() const = 0;
+    virtual bool HasCollision() const = 0;
     //@}
 
 private:

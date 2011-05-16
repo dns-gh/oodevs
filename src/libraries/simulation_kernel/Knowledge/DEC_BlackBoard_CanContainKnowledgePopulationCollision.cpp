@@ -114,3 +114,12 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::GetKnowledgesPopulat
     for( CIT_KnowledgePopulationCollisionMap itKnowledge = knowledgePopulationCollisionMap_.begin(); itKnowledge != knowledgePopulationCollisionMap_.end(); ++itKnowledge )
         container.push_back( itKnowledge->second );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgePopulationCollision::HasCollision
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+bool DEC_BlackBoard_CanContainKnowledgePopulationCollision::HasCollision() const
+{
+    return !knowledgePopulationCollisionMap_.empty();
+}

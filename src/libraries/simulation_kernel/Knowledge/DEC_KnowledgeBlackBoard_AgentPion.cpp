@@ -442,6 +442,15 @@ bool DEC_KnowledgeBlackBoard_AgentPion::IsPerceived( const MIL_Population& popul
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::HasCollision
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeBlackBoard_AgentPion::HasCollision() const
+{
+    return pKnowledgePopulationCollisionContainer_->HasCollision();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsColliding
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------

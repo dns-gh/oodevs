@@ -24,6 +24,7 @@
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
@@ -648,6 +649,15 @@ int DEC_AgentFunctions::GetPosture( const MIL_Agent_ABC& callerAgent )
 bool DEC_AgentFunctions::IsInCity( const MIL_Agent_ABC& callerAgent )
 {
     return callerAgent.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsInCrowd
+// Created: DDA 2011-05-13
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsInCrowd( const MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.Get< PHY_RoleInterface_Population >().HasCollision();
 }
 
 // -----------------------------------------------------------------------------

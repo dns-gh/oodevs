@@ -100,6 +100,7 @@ public:
     bool IsPrisoner() const;
     bool IsRefugeeManaged() const;
     bool IsDead() const;
+    bool IsInCrowd() const;
     unsigned int GetID() const;
     double GetAltitude() const;
     const MT_Vector2D& GetPosition() const;

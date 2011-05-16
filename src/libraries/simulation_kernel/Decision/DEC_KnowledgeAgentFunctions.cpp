@@ -74,6 +74,17 @@ bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& caller
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsInCrowd
+// Created: DDA 2011-05-13
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeAgentFunctions::IsInCrowd( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( !pKnowledge || !pKnowledge->IsValid() )
+        return false;
+    return pKnowledge->IsInCrowd();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsPerceivedByAgent
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------

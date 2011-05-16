@@ -28,6 +28,7 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -948,6 +949,15 @@ double DEC_Knowledge_Agent::GetMajorOperationalState() const
 bool DEC_Knowledge_Agent::IsDead() const
 {
     return dataDetection_.IsDead();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsInCrowd
+// Created: DDA 2011-05-13
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsInCrowd() const
+{
+    return pAgentKnown_->GetKnowledge().HasCollision();
 }
 
 // -----------------------------------------------------------------------------

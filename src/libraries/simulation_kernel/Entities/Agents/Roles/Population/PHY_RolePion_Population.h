@@ -59,7 +59,8 @@ public:
 
     virtual bool IsInvulnerable        () const;
 
-    double GetCollidingPopulationDensity() const;
+    virtual double GetCollidingPopulationDensity() const;
+    virtual bool HasCollision() const;
     //@}
 
 

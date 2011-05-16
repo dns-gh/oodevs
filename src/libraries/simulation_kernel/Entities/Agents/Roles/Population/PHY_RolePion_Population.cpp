@@ -138,6 +138,15 @@ double PHY_RolePion_Population::GetCollidingPopulationDensity() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::HasCollision
+// Created: LDC 2011-05-13
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Population::HasCollision() const
+{
+    return pion_.GetKnowledge().HasCollision();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population::Update
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
