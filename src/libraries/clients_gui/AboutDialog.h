@@ -44,7 +44,7 @@ private:
 
     //! @name Helpers
     //@{
-    QPixmap GetSplashScreen() const;
+    QString GetSplashScreen() const;
     //@}
 
 private:

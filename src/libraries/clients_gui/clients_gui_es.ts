@@ -10,12 +10,12 @@
         <translation>www.masagroup.net</translation>
     </message>
     <message>
-        <source>images/gui/splash_swordot.jpg</source>
-        <translation>images/gui/splash_swordot.jpg</translation>
-    </message>
-    <message>
         <source>&#xa9; 2011 MASA Group</source>
         <translation>© 2011 MASA Group</translation>
+    </message>
+    <message>
+        <source>images/gui/splash_swordot.png</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1438,12 +1438,16 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::TerrainPreference</name>
     <message>
-        <source>Line thickness: </source>
-        <translation>Epaisseur du trait: </translation>
+        <source></source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source> px</source>
-        <translation> px</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

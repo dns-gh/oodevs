@@ -10,7 +10,10 @@
 #ifndef __SizeButton_h_
 #define __SizeButton_h_
 
-#include <qtoolbutton.h>
+#pragma warning( push, 0 )
+#include <qslider.h>
+#include <qlabel.h>
+#pragma warning( pop )
 
 namespace gui
 {
@@ -21,7 +24,7 @@ namespace gui
 */
 // Created: SBO 2006-04-05
 // =============================================================================
-class SizeButton : public QToolButton
+class SizeButton : public QSlider
 {
     Q_OBJECT;
 
@@ -57,12 +60,12 @@ private:
 private:
     //! @name Member data
     //@{
-    QSlider*    slider_;
-    float       size_;
-    QString     prefix_;
-    bool        valueLabel_;
-    bool changed_;
-    float previous_;
+    float   size_;
+    QString prefix_;
+	QLabel	label_;
+    bool    changed_;
+    float   previous_;
+	bool	valueLabel_;
     //@}
 };
 

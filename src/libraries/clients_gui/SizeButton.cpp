@@ -10,39 +10,32 @@
 #include "clients_gui_pch.h"
 #include "SizeButton.h"
 #include "moc_SizeButton.cpp"
-
-#include <qpopupmenu.h>
-#include <qslider.h>
+#include <math.h>
 
 using namespace gui;
-
 // -----------------------------------------------------------------------------
 // Name: SizeButton constructor
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-SizeButton::SizeButton( QWidget* parent /*= 0*/, const char* name /*= 0*/, float value /*= 1*/ )
-    : QToolButton( parent, name )
-    , slider_( 0 )
+SizeButton::SizeButton( QWidget* parent /* = 0*/, const char* name /* = 0*/, float value /* = 1*/ )
+	: QSlider( parent, name )
+	, label_( parent )
     , size_( value )
     , prefix_()
-    , valueLabel_( false )
     , changed_( false )
     , previous_( value )
 {
-    setAutoRaise( true );
-    setText( name );
-    QPopupMenu* menu = new QPopupMenu( this );
-    setPopupDelay( 1 );
-    slider_ = new QSlider( 0, 20, 1, 0, Qt::Horizontal, menu );
-    slider_->setTickmarks( QSlider::Below );
-    slider_->setTickInterval( 2 );
-
-    menu->insertItem( slider_ );
-    setPopup( menu );
-    connect( slider_, SIGNAL( valueChanged( int ) ), this, SLOT( OnValueChanged( int ) ) );
-
-    slider_->setValue( int( 2 * value ) );
+	setTickmarks( QSlider::Below );
+	setRange( 0, 20 ); 
+	setTickInterval( 2 );
+	setPageStep( 1 );
+	setOrientation( Qt::Horizontal );
+	label_.setText( QString( name ).append( QString::number( 1 ) ).append( prefix_ ) );
+	
+	connect( this, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
+    setValue( int( 2 * value ) );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: SizeButton destructor
@@ -64,7 +57,14 @@ void SizeButton::OnValueChanged( int value )
     size_ = value * 0.5f;
     changed_ = true;
     if( valueLabel_ )
-        setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_ ) );
+	{
+		if ( size_ == 10 )
+			label_.setText( QString( name() ).append( " " ).append( QString::number( size_ ) ).append( prefix_ ) );
+		else if ( size_ == floor( size_ ) )
+			label_.setText( QString( name() ).append( "   " ).append( QString::number( size_ ) ).append( prefix_ ) );
+		else
+			label_.setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_ ) );
+	}
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +76,7 @@ void SizeButton::EnableValueLabel( const QString& prefix /*= ""*/ )
     if( !prefix.isEmpty() )
         prefix_ = prefix;
     valueLabel_ = true;
-    OnValueChanged( slider_->value() );
+    OnValueChanged( value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +85,7 @@ void SizeButton::EnableValueLabel( const QString& prefix /*= ""*/ )
 // -----------------------------------------------------------------------------
 void SizeButton::SetSize( float value )
 {
-    slider_->setValue( int( value * 2.f ) );
+    setValue( int( value * 2.f ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +106,14 @@ void SizeButton::Revert()
     changed_ = false;
     size_ = previous_;
     if( valueLabel_ )
-        setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_ ) );
+	{
+		if ( size_ == 10 )
+			label_.setText( QString( name() ).append( " " ).append( QString::number( size_ ) ).append( prefix_ ) );
+		else if ( size_ == floor( size_ ) )
+			label_.setText( QString( name() ).append( "   " ).append( QString::number( size_ ) ).append( prefix_ ) );
+		else
+			label_.setText( QString( name() ).append( "" ).append( QString::number( size_ ) ).append( prefix_ ) );
+	}
 }
 
 // -----------------------------------------------------------------------------

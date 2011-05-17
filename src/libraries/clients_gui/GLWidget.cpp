@@ -706,18 +706,6 @@ void GlWidget::DrawLife( const Point2f& where, float h, float factor /*= 1.f*/ )
     glPopAttrib();
 }
 
-namespace
-{
-    int GenerateList( const QFont& font )
-    {
-        int result = glGenLists( 256 );
-        HDC glHdc = qt_display_dc();
-        SelectObject( glHdc, font.handle() );
-        if( !wglUseFontBitmaps( glHdc, 0, 256, result ) )
-            return 0;
-        return result;
-    }
-}
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::Print
@@ -725,37 +713,16 @@ namespace
 // -----------------------------------------------------------------------------
 void GlWidget::Print( const std::string& message, const Point2f& where ) const
 {
-    glRasterPos2fv( (const float*)&where );
-    if( !baseFont_ )
-    {
-        const_cast< GlWidget* >( this )->baseFont_ = GenerateList( QFont() );
-        if( !baseFont_ ) // GenerateList can fail
-            return;
-    }
-    glListBase( baseFont_ );
-    glCallLists( message.length(), GL_UNSIGNED_BYTE, message.c_str() );
+   Print( message, where, QFont() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: GlWidget::Print
 // Created: AGE 2007-06-20
 // -----------------------------------------------------------------------------
-void GlWidget::Print( const std::string& message, const geometry::Point2f& where, const QFont& font ) const
+void GlWidget::Print( const std::string& message, const geometry::Point2f& where, const QFont& /*font*/ ) const
 {
-    glRasterPos2fv( (const float*)&where );
-    int listBase = 0;
-    CIT_Fonts it = fonts_.find( font );
-    if( it == fonts_.end() )
-    {
-        listBase = GenerateList( font );
-        if( !listBase ) // GenerateList can fail
-            return;
-        const_cast< GlWidget* >( this )->fonts_[ font ] = listBase;
-    }
-    else
-        listBase = it->second;
-    glListBase( listBase );
-    glCallLists( message.length(), GL_UNSIGNED_BYTE, message.c_str() );
+   const_cast< GlWidget*>( this )->renderText( where.X(), where.Y(), 2, message.c_str(), QFont() );
 }
 
 // -----------------------------------------------------------------------------

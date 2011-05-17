@@ -24,7 +24,7 @@ using namespace gui;
 // Created: SBO 2006-05-04
 // -----------------------------------------------------------------------------
 AboutDialog::AboutDialog( QWidget* parent, ItemFactory_ABC& factory, const QString& line, const QString& license )
-    : QDialog( parent, 0, FALSE, WStyle_Splash )
+: QDialog( parent, 0, true, Qt::WStyle_Splash )
 {
     setCaption( tr( "About" ) );
     QPixmap pixmap( GetSplashScreen() );
@@ -77,10 +77,10 @@ QSize AboutDialog::sizeHint() const
 // Name: AboutDialog::GetSplashScreen
 // Created: SBO 2008-08-19
 // -----------------------------------------------------------------------------
-QPixmap AboutDialog::GetSplashScreen() const
+QString AboutDialog::GetSplashScreen() const
 {
-    const QString filename = tools::translate( "Application", "images/gui/splash_swordot.jpg" );
+    const QString filename = tools::translate( "Application", "images/gui/splash_swordot.png" );
     if( filename.isNull() || filename.isEmpty() )
-        return QImage( tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash_swordot.jpg" ).c_str() );
-    return QImage( tools::GeneralConfig::BuildResourceChildFile( filename.ascii() ).c_str() );
+        return tools::GeneralConfig::BuildResourceChildFile( "images/gui/splash_swordot.png" ).c_str();
+    return tools::GeneralConfig::BuildResourceChildFile( filename.ascii() ).c_str();
 }
