@@ -428,9 +428,9 @@ void MainWindow::Open()
 // -----------------------------------------------------------------------------
 bool MainWindow::Load()
 {
-    WriteOptions();
     try
     {
+        WriteOptions();
         model_.Purge();
         selector_->Close();
         selector_->Load();

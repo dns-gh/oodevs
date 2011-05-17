@@ -65,8 +65,7 @@ private:
     //@}
 };
 
-    }
-
+}
 }
 
 #endif // __ActionParameterResourceNetwork_h_

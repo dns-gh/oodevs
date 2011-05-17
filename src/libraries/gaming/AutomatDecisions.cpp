@@ -29,11 +29,11 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publisher, const Automat_ABC& agent )
     : controller_( controller )
-    , publisher_( publisher )
-    , agent_( agent )
-    , model_( agent.GetType().GetDecisionalModel() )
-    , bEmbraye_( false )
-    , current_( 0 )
+    , publisher_ ( publisher )
+    , agent_     ( agent )
+    , model_     ( agent.GetType().GetDecisionalModel() )
+    , bEmbraye_  ( false )
+    , current_   ( 0 )
 {
     // NOTHING
 }
