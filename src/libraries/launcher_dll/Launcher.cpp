@@ -183,14 +183,20 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionC
 {
     // TODO AHC
 }
+
 // -----------------------------------------------------------------------------
 // Name: Launcher::HandleRequest
 // Created: AHC 2011-05-12
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::CheckpointListRequest& /*message*/ )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::CheckpointListRequest& message )
 {
-    // TODO AHC
+    CheckpointListResponse response;
+    response().set_exercise( message.exercise() );
+    response().set_session( message.session() );
+    processes_->SendCheckpointList( response(), message.exercise(), message.session() );
+    response.Send( server_->ResolveClient( endpoint ) );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Launcher::HandleRequest
 // Created: AHC 2011-05-12
@@ -199,6 +205,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Checkpoi
 {
     // TODO AHC
 }
+
 // -----------------------------------------------------------------------------
 // Name: Launcher::HandleRequest
 // Created: AHC 2011-05-12

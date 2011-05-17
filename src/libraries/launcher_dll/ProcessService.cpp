@@ -17,18 +17,10 @@
 #include "frontend/StartExercise.h"
 #include "frontend/StartDispatcher.h"
 #include "frontend/StartReplay.h"
-#include "client_proxy/SwordProxy.h"
-#include "tools/Loader_ABC.h"
 #include "SwordFacade.h"
 #include "LauncherService.h"
 #include "LauncherPublisher.h"
 #include "protocol/SimulationSenders.h"
-#include <qstringlist.h>
-
-namespace
-{
-
-}
 
 using namespace launcher;
 
@@ -37,9 +29,9 @@ using namespace launcher;
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------
 ProcessService::ProcessService( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const LauncherService& server )
-    : config_( config )
+    : config_    ( config )
     , fileLoader_( fileLoader )
-    , server_( server )
+    , server_    ( server )
 {
     // NOTHING
 }
@@ -226,6 +218,17 @@ void ProcessService::SendProfileList( sword::ProfileListResponse& message )
             frontend::Profile::VisitProfiles( config_, fileLoader_, it->first.first, collector );
             return;
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessService::SendCheckpointList
+// Created: LGY 2011-05-17
+// -----------------------------------------------------------------------------
+void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message, const std::string& exercice, const std::string& session )
+{
+    const QStringList exercises = frontend::commands::ListCheckpoints( config_, exercice, session );
+    for( QStringList::const_iterator it = exercises.begin(); it != exercises.end(); ++it )
+        message.add_checkpoint( ( *it ).ascii() );
 }
 
 // -----------------------------------------------------------------------------

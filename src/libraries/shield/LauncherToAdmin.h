@@ -43,7 +43,6 @@ public:
     static void Convert( const sword::SessionNotification& from, MsgsLauncherToAdmin::MsgSessionNotification* to );
     static void Convert( const sword::ControlInformation& from, MsgsLauncherToAdmin::MsgControlInformation* to );
     static void Convert( const sword::ClientConnectionNotification& from, MsgsLauncherToAdmin::MsgClientConnectionNotification* to );
-
     //@}
 };
 

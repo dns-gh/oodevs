@@ -18,7 +18,6 @@
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <boost/noncopyable.hpp>
-#include <boost/weak_ptr.hpp>
 
 namespace tools
 {
@@ -34,7 +33,7 @@ class LauncherService;
 
 // =============================================================================
 /** @class  ProcessService
-    @brief  ProcessService
+    @brief  Process service
 */
 // Created: SBO 2010-09-30
 // =============================================================================
@@ -45,7 +44,7 @@ class ProcessService : private boost::enable_shared_from_this< ProcessService >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ProcessService( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const LauncherService& server );
+             ProcessService( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const LauncherService& server );
     virtual ~ProcessService();
     //@}
 
@@ -53,17 +52,23 @@ public:
     //@{
     void SendExerciseList( sword::ExerciseListResponse& message );
     void SendSessionList( sword::SessionListResponse& message );
+    void SendProfileList( sword::ProfileListResponse& message );
+    void SendCheckpointList( sword::CheckpointListResponse& message, const std::string& exercice, const std::string& session );
     sword::SessionStartResponse::ErrorCode StartSession( const sword::SessionStartRequest& message );
     sword::SessionStopResponse::ErrorCode StopSession( const sword::SessionStopRequest& message );
-    void SendProfileList( sword::ProfileListResponse& message );
     bool IsRunning( const std::string& exercise, const std::string& session ) const;
-    void ExecuteCommand(const std::string& endpoint, const sword::SessionCommandExecutionRequest& message);
+    void ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message );
     virtual void NotifyStopped();
     virtual void NotifyError( const std::string& error );
     //@}
 
 private:
+    //! @name Types
+    //@{
     typedef std::map< std::pair<std::string, std::string>, boost::weak_ptr< SwordFacade > > ProcessContainer;
+    //@}
+
+private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
