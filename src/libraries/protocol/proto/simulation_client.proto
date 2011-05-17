@@ -339,24 +339,6 @@ message ActionCreateFireOrderAck {
     required ErrorCode error_code = 2; //!< Reason for the failure of the request @see ErrorCode @todo change field index to 1
 }
 
-/** @struct ChangePopulationMagicActionAck
-    @brief Acknowledges a population change magic action request
-    @see ChangePopulationMagicAction
-*/
-message ChangePopulationMagicActionAck {
-    /** @enum ErrorCode
-        @brief Reason for the failure of the population change magic action
-    */
-    enum ErrorCode {
-        no_error                 = 0; //!< Operation succeeded @todo make error_code optional and remove no_error
-        error_invalid_population = 1; //!< Operation failed because no existing population with the provided identifier could be found.
-        error_invalid_adhesion   = 2; //!< Operation failed because no existing party with the provided identifier could be found
-        error_invalid_number     = 3; //!< Operation failed because of an invalid number (for instance a negative number of dead was provided) @todo change numbers to unsigned integers ?
-        error_invalid_parameter  = 4; //!< Operation failed because one of the parameters is invalid
-    }
-    required ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
-}
-
 /** @struct BurningCellRequestAck
     @brief An acknowledgement message to a burning cell request
     @see BurningCellRequest
@@ -2480,10 +2462,9 @@ message SimToClient {
         optional CrowdDestruction                       crowd_destruction                         = 136; //!< @copybrief CrowdDestruction
         optional PopulationCreation                     population_creation                       = 137; //!< @copybrief PopulationCreation
         optional PopulationUpdate                       population_update                         = 138; //!< @copybrief PopulationUpdate
-        optional ChangePopulationMagicActionAck         change_population_magic_action_ack        = 139; //!< @copybrief ChangePopulationMagicActionAck
-        optional FragOrder                              frag_order                                = 140; //!< @copybrief FragOrder
-        optional BurningCellRequestAck                  burning_cell_request_ack                  = 141; //!< @copybrief BurningCellRequestAck
-        optional FormationUpdate                        formation_update                          = 142; //!< @copybrief FormationUpdate
+        optional FragOrder                              frag_order                                = 139; //!< @copybrief FragOrder
+        optional BurningCellRequestAck                  burning_cell_request_ack                  = 140; //!< @copybrief BurningCellRequestAck
+        optional FormationUpdate                        formation_update                          = 141; //!< @copybrief FormationUpdate
     }
     /** @property context
         @brief Identifies the request matching the response

@@ -291,8 +291,8 @@ void MIL_Inhabitant::UpdateNetwork()
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg )
 {
-    client::ChangePopulationMagicActionAck ack;
-    ack().set_error_code( sword::ChangePopulationMagicActionAck::no_error );
+    client::UnitMagicActionAck ack;
+    ack().set_error_code( sword::UnitActionAck::no_error );
     try
     {
         switch( msg.type() )
@@ -316,7 +316,7 @@ void MIL_Inhabitant::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
             assert( false );
         }
     }
-    catch( NET_AsnException< sword::ChangePopulationMagicActionAck::ErrorCode >& e )
+    catch( NET_AsnException< sword::UnitActionAck::ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
@@ -330,7 +330,7 @@ void MIL_Inhabitant::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
 void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 3)
-        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
+        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
     const sword::MissionParameter& healthy = msg.parameters().elem( 0 );
     const sword::MissionParameter& wounded = msg.parameters().elem( 1 );
@@ -338,13 +338,11 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
 
     if( healthy.value_size() != 1 || !healthy.value().Get( 0 ).has_quantity() ||
         wounded.value_size() != 1 || !wounded.value().Get( 0 ).has_quantity() ||
-        dead.value_size() != 1    || !dead.value().Get( 0 ).has_quantity() )
-        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
-
-    if( healthy.value().Get( 0 ).quantity() < 0 ||
+        dead.value_size() != 1    || !dead.value().Get( 0 ).has_quantity() ||
+        healthy.value().Get( 0 ).quantity() < 0 ||
         wounded.value().Get( 0 ).quantity() < 0 ||
         dead.value().Get( 0 ).quantity() < 0 )
-        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_number );
+        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
     nNbrHealthyHumans_ = healthy.value().Get( 0 ).quantity();
     nNbrWoundedHumans_ = wounded.value().Get( 0 ).quantity();
@@ -362,7 +360,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
 void MIL_Inhabitant::OnReceiveMsgChangeAlertedState( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
+        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
     pLivingArea_->SetAlerted( msg.parameters().elem( 0 ).value( 0 ).booleanvalue() );
 }
@@ -374,7 +372,7 @@ void MIL_Inhabitant::OnReceiveMsgChangeAlertedState( const sword::UnitMagicActio
 void MIL_Inhabitant::OnReceiveMsgChangeConfinedState( const sword::UnitMagicAction& msg )
 {
     if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
+        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
 
     pLivingArea_->SetConfined( msg.parameters().elem( 0 ).value( 0 ).booleanvalue() );
 }

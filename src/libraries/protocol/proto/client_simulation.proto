@@ -263,7 +263,7 @@ message ControlEnableVisionCones {
 
 /** @struct ChangePopulationMagicAction
     @brief A change population magic action.
-    @see ChangePopulationMagicActionAck
+    @see UnitMagicActionAck
 */
 message ChangePopulationMagicAction {
     required PopulationId   tasker     = 1; //!< The population identifier @todo rename to population

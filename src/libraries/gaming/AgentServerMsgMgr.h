@@ -35,7 +35,6 @@ namespace sword
     class ChangeDiplomacyAck;
     class ChangeLogisticLinks;
     class ChangeLogisticLinksAck;
-    class ChangePopulationMagicActionAck;
     class ControlBeginTick;
     class ControlChangeTimeFactorAck;
     class ControlCheckPointSaveEnd;
@@ -429,11 +428,9 @@ private:
     void OnReceiveStartCrowdFire   ( const sword::StartCrowdFire& message );
     void OnReceiveStopCrowdFire    ( const sword::StopCrowdFire&  message );
 
-
     // Population
     void OnPopulationCreation                   ( const sword::PopulationCreation&              message );
     void OnPopulationUpdate                     ( const sword::PopulationUpdate&                message );
-    void OnReceiveChangePopulationMagicActionAck( const sword::ChangePopulationMagicActionAck&  message, unsigned long nCtx );
 
     // Crowd
     void OnCrowdCreation                ( const sword::CrowdCreation&                 message );

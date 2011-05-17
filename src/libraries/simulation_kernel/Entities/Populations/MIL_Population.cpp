@@ -1133,7 +1133,7 @@ void MIL_Population::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
         woundedParam.value_size() != 1 || !woundedParam.value().Get( 0 ).has_quantity() ||
         contaminatedParam.value_size() != 1 || !contaminatedParam.value().Get( 0 ).has_quantity() ||
         deadParam.value_size() != 1 || !deadParam.value().Get( 0 ).has_quantity() )
-        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
+        throw NET_AsnException< sword::CrowdMagicActionAck::ErrorCode >( sword::CrowdMagicActionAck::error_invalid_parameter );
     unsigned int healthy = healthyParam.value().Get( 0 ).quantity();
     unsigned int wounded = woundedParam.value().Get( 0 ).quantity();
     unsigned int contaminated = contaminatedParam.value().Get( 0 ).quantity();

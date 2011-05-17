@@ -29,7 +29,6 @@ namespace client
     GENERATE_MESSAGE( sword::SimToClient, sword, ChangeDiplomacyAck                     , change_diplomacy_ack                      )
     GENERATE_MESSAGE( sword::SimToClient, sword, ChangeLogisticLinks                    , automat_change_logistic_links             )
     GENERATE_MESSAGE( sword::SimToClient, sword, ChangeLogisticLinksAck                 , automat_change_logistic_links_ack         )
-    GENERATE_MESSAGE( sword::SimToClient, sword, ChangePopulationMagicActionAck         , change_population_magic_action_ack        )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlBeginTick                       , control_begin_tick                        )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlChangeTimeFactorAck             , control_change_time_factor_ack            )
     GENERATE_MESSAGE( sword::SimToClient, sword, ControlCheckPointSaveBegin             , control_checkpoint_save_begin             )
