@@ -853,34 +853,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, F
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade_TestCloseCombatPower
-// Created: ABR 2011-02-14
-// -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( Facade_TestCloseCombatPower, Fixture )
-/*{
-    xml::xistringstream xis( "<indicator>"
-                             "   <extract function='close-combat-power' id='closecombat'/>"
-                             "   <reduce  function='select' id='myselect' input='closecombat' key='42' type='float'/>"
-                             "   <result  function='plot' input='myselect' type='float'/>"
-                             "</indicator>" );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    int variation[5] = { 1, 1, 1, 1, 0 };
-    sword::SimToClient message = TestTools::MakeEquipementVariation( variation, 42u );
-    std::map< int, sword::EquipmentDotations_EquipmentDotation > equipments;
-    MOCK_EXPECT( model, ComputePower ).once().with( equipments, &TestTools::IsCloseCombatPower ).returns( 10.f );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( message );
-    task->Receive( TestTools::EndTick() );
-    MOCK_EXPECT( model, ComputePower ).once().with( equipments, &TestTools::IsCloseCombatPower ).returns( 11.f );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( message );
-    task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 10, 11 };
-    TestTools::MakeExpectation( publisher, expectedResult );
-    task->Commit();
-}*/
-
-// -----------------------------------------------------------------------------
 // Name: Facade_TestProductOnTwoExtractors
 // Created: ABR 2011-02-14
 // -----------------------------------------------------------------------------
