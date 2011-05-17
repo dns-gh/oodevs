@@ -61,6 +61,7 @@ public:
 
     virtual double GetCollidingPopulationDensity() const;
     virtual bool HasCollision() const;
+    virtual bool HasCollisionWithCrowd( const MIL_Population& population ) const;
     //@}
 
 

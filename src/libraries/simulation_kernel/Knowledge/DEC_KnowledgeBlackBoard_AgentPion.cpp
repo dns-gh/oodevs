@@ -451,6 +451,15 @@ bool DEC_KnowledgeBlackBoard_AgentPion::HasCollision() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_AgentPion::HasCollisionWithCrowd
+// Created: DDA 2011-05-17
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeBlackBoard_AgentPion::HasCollisionWithCrowd( const MIL_Population& population ) const
+{
+    return ( pKnowledgePopulationCollisionContainer_->GetKnowledgePopulationCollision( population ) != 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetPopulationsColliding
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------

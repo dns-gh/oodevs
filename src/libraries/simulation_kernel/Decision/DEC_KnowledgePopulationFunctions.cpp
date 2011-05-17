@@ -185,6 +185,20 @@ float DEC_KnowledgePopulationFunctions::GetCrowdAffinity( const MIL_AgentPion& c
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetCrowdAttitude
+// Created: DDA 2011-05-17
+// -----------------------------------------------------------------------------
+int DEC_KnowledgePopulationFunctions::GetCrowdAttitude( const MIL_AgentPion& callerAgent, int knowledgeId )
+{
+    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    if( pKnowledge )
+    {
+        return pKnowledge->GetPopulationKnown().GetAttitude().GetID();
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: boost::shared_ptr<MT_Vector2D> DEC_KnowledgePopulationFunctions::GetFlowHead
 // Created: EVH 2011-05-10
 // -----------------------------------------------------------------------------

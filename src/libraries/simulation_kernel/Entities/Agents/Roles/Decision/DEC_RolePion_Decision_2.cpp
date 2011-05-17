@@ -515,6 +515,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool (int) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasFlow, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_GetAdhesionPopulation" ] =
         boost::function< float (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAffinity , boost::cref( GetPion() ), _1 ) );
+    brain[ "DEC_GetAttitudePopulation" ] =
+        boost::function< int (int) > (boost::bind ( &DEC_KnowledgePopulationFunctions::GetCrowdAttitude , boost::cref( GetPion() ), _1 ) );
 
     // Urban knowledges accessors
     brain[ "DEC_Connaissances_BlocUrbain" ] =

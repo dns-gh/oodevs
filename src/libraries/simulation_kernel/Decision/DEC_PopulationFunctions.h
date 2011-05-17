@@ -19,6 +19,7 @@ class TER_Localisation;
 class MT_Vector2D;
 class DEC_Knowledge_Object;
 class UrbanObjectWrapper;
+class DEC_Knowledge_Agent;
 
 
 // =============================================================================
@@ -44,6 +45,7 @@ public:
 
     // Knowledge agents
     static int GetKnowledgeAgentRoePopulation ( unsigned int agentId );
+    static bool IsAgentInside( const MIL_Population& caller, DEC_Decision_ABC* pAgent );
 
     // Knowledge objects
     static const TER_Localisation* GetKnowledgeObjectLocalisation( boost::shared_ptr< DEC_Knowledge_Object > knowledge );

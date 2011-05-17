@@ -151,7 +151,11 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     // Self
     brain[ "DEC_GetPosition" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >() >( boost::bind( &DEC_PopulationFunctions::GetBarycenter, boost::cref( GetPopulation() ) ) );
-
+    
+    // Agents
+    brain[ "DEC_Agent_EstDansFoule" ] =
+        boost::function< bool(  DEC_Decision_ABC* ) >( boost::bind( &DEC_PopulationFunctions::IsAgentInside, boost::ref( GetPopulation() ), _1 ) );
+  
     // Knowledge agents
     brain[ "DEC_ConnaissanceAgent_RoePopulation" ] =
         boost::function< int ( int ) > ( boost::bind(&DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation, _1 ) );

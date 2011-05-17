@@ -16,6 +16,7 @@
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -24,12 +25,14 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/QueryValidity.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::DecisionalState
@@ -107,6 +110,16 @@ int DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation( unsigned int agentI
     const MIL_AgentPion* pAgent = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( agentId );
     assert( pAgent  );
     return pAgent->GetRole< DEC_RolePion_Decision >().GetRoePopulation().GetID();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::IsAgentInside
+// Created: DDA 2011-05-17
+// -----------------------------------------------------------------------------
+bool DEC_PopulationFunctions::IsAgentInside( const MIL_Population& caller, DEC_Decision_ABC* pAgent )
+{
+    MIL_AgentPion& pion = pAgent->GetPion() ;
+    return pion.Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( caller ); 
 }
 
 // -----------------------------------------------------------------------------

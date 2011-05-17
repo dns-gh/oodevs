@@ -122,6 +122,7 @@ public:
     void GetPopulationsColliding( T_KnowledgePopulationDiaIDVector& container ) const;
     void GetPopulationsAttacking( T_KnowledgePopulationDiaIDVector& container ) const;
     bool HasCollision() const;
+    bool HasCollisionWithCrowd( const MIL_Population& population ) const;
     bool IsPopulationAttacking( const DEC_Knowledge_Population& knowledge ) const;
 
     //Urban

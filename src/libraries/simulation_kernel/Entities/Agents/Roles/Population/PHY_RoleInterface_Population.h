@@ -15,6 +15,8 @@
 #include "MT_Tools/Role_ABC.h"
 #include <boost/serialization/access.hpp>
 
+class MIL_Population;
+
 // =============================================================================
 // @class  PHY_RoleInterface_Population
 // Created: JVT 2004-08-03
@@ -47,6 +49,7 @@ public:
     virtual bool HasChanged() const = 0;
     virtual double GetCollidingPopulationDensity() const = 0;
     virtual bool HasCollision() const = 0;
+    virtual bool HasCollisionWithCrowd( const MIL_Population& population ) const = 0;
     //@}
 
 private:

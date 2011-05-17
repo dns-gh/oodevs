@@ -147,6 +147,15 @@ bool PHY_RolePion_Population::HasCollision() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::HasCollisionWithCrowd
+// Created: DDA 2011-05-17
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Population::HasCollisionWithCrowd( const MIL_Population& population ) const
+{
+    return pion_.GetKnowledge().HasCollisionWithCrowd( population );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Population::Update
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
