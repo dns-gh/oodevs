@@ -16,6 +16,7 @@ using namespace extractors;
 // Created: FPO 2011-05-13
 // -----------------------------------------------------------------------------
 StructuralStates::StructuralStates()
+    : hasInfrastructure_( false )
 {
     // NOTHING
 }
@@ -34,6 +35,7 @@ StructuralStates::~StructuralStates()
 // Created: FPO 2011-05-13
 // -----------------------------------------------------------------------------
 StructuralStates::StructuralStates( xml::xistream& /*xis*/ )
+    : hasInfrastructure_( false )
 {
     // NOTHING
 }

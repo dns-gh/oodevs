@@ -40,19 +40,18 @@ StaticModel::~StaticModel()
 // Name: StaticModel::ComputePower
 // Created: ABR 2011-02-11
 // -----------------------------------------------------------------------------
-float StaticModel::ComputePower( const sword::UnitAttributes& message, const extractors::PowerExtractor_ABC& extractor ) const
+float StaticModel::ComputePower( const std::map< int, sword::EquipmentDotations_EquipmentDotation >& equipments, const extractors::PowerExtractor_ABC& extractor ) const
 {
     double res = 0;
-    for( int i = 0; i < message.equipment_dotations().elem().size(); ++i )
+    for( std::map< int, sword::EquipmentDotations_EquipmentDotation >::const_iterator it = equipments.begin(); it != equipments.end(); ++it )
     {
-        const sword::EquipmentDotations_EquipmentDotation equipmentMsg = message.equipment_dotations().elem( i );
-        unsigned int powerValue = extractor.GetPowerValue( powerIndicators_->tools::Resolver< PowerIndicator, unsigned long >::Get( equipmentMsg.type().id() ) );
+        unsigned int powerValue = extractor.GetPowerValue( powerIndicators_->tools::Resolver< PowerIndicator, unsigned long >::Get( it->second.type().id() ) );
         double equipmentRes = 0;
-        equipmentRes += equipmentMsg.available() * powerModificators_->GetAvailableModificator();
-        equipmentRes += equipmentMsg.repairable() * powerModificators_->GetRepairableModificator();
-        equipmentRes += equipmentMsg.repairing() * powerModificators_->GetRepairingModificator();
-        equipmentRes += equipmentMsg.captured() * powerModificators_->GetCapturedModificator();
-        equipmentRes += equipmentMsg.unavailable() * powerModificators_->GetUnavailableModificator();
+        equipmentRes += it->second.available() * powerModificators_->GetAvailableModificator();
+        equipmentRes += it->second.repairable() * powerModificators_->GetRepairableModificator();
+        equipmentRes += it->second.repairing() * powerModificators_->GetRepairingModificator();
+        equipmentRes += it->second.captured() * powerModificators_->GetCapturedModificator();
+        equipmentRes += it->second.unavailable() * powerModificators_->GetUnavailableModificator();
         res += equipmentRes * powerValue;
     }
     return static_cast< float >( res );

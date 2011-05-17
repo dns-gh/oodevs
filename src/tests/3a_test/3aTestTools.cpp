@@ -397,3 +397,36 @@ sword::SimToClient TestTools::CreateMedicalConsign( unsigned long unitId, unsign
     else update.set_state( sword::LogMedicalHandlingUpdate::diagnosing );
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::CreateFunctionalState
+// Created: FPO 2011-05-16
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::CreateFunctionalState( unsigned long objectId, int stateValue )
+{
+    SimToClient result;
+    UrbanUpdate& update = *result.mutable_message()->mutable_urban_update();
+    update.mutable_object()->set_id( objectId );
+    UrbanAttributes& attributes = *update.mutable_attributes();
+    UrbanAttributes_Infrastructures_Infrastructure & infrastructure = *attributes.mutable_infrastructures()->mutable_infrastructure();
+    infrastructure.set_type( "piscine" );
+    infrastructure.set_active( true );
+    infrastructure.set_threshold( 50 );
+    attributes.mutable_structure()->set_state( stateValue );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::UpdateFunctionalState
+// Created: FPO 2011-05-16
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::UpdateFunctionalState( unsigned long objectId, int stateValue )
+{
+    SimToClient result;
+    UrbanUpdate& update = *result.mutable_message()->mutable_urban_update();
+    update.mutable_object()->set_id( objectId );
+    UrbanAttributes& attributes = *update.mutable_attributes();
+    attributes.mutable_structure()->set_state( stateValue );
+    return result;
+}
+

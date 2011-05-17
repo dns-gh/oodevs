@@ -11,6 +11,7 @@
 #define aar_StaticModel_ABC_h
 
 #include <boost/noncopyable.hpp>
+#include <map>
 
 namespace extractors
 {
@@ -20,6 +21,7 @@ namespace extractors
 namespace sword
 {
     class UnitAttributes;
+    class EquipmentDotations_EquipmentDotation;
 }
 
 namespace aar
@@ -43,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual float ComputePower( const sword::UnitAttributes& message, const extractors::PowerExtractor_ABC& extractor ) const = 0;
+    virtual float ComputePower( const std::map< int, sword::EquipmentDotations_EquipmentDotation >& message, const extractors::PowerExtractor_ABC& extractor ) const = 0;
     //@}
 };
 

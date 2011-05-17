@@ -62,6 +62,8 @@ public:
     static sword::SimToClient DestroyConsign( unsigned long id );
     static bool IsCloseCombatPower( const extractors::PowerExtractor_ABC& extractor );
     static sword::SimToClient CreateMedicalConsign( unsigned long unitId, unsigned long requestId, bool isWaiting );
+    static sword::SimToClient CreateFunctionalState( unsigned long objectId, int stateValue );
+    static sword::SimToClient UpdateFunctionalState( unsigned long objectId, int stateValue );
 
     template< std::size_t N >
     static void MakeExpectation( MockClientPublisher& mocker, double (&data)[N] );

@@ -124,6 +124,9 @@ namespace extractors
     {
     public:
         virtual unsigned int GetPowerValue( const aar::PowerIndicator& powerIndicator ) const = 0;
+
+    protected:
+        std::map< int, sword::EquipmentDotations_EquipmentDotation > equipments_;
     };
 
     struct PowerExtractor : public Extractor< NumericValue >
@@ -136,9 +139,15 @@ namespace extractors
         {
             return message.has_equipment_dotations();
         }
-        NumericValue Extract( const sword::UnitAttributes& message ) const
+        NumericValue Extract( const sword::UnitAttributes& message )
         {
-            return NumericValue( model_->ComputePower( message, *this ) );
+            for( int i = 0; i < message.equipment_dotations().elem_size(); ++i )
+            {
+                int index = message.equipment_dotations().elem( i ).type().id();
+                const sword::EquipmentDotations_EquipmentDotation& value = message.equipment_dotations().elem( i );
+                equipments_[ index ] = value;
+            }
+            return NumericValue( model_->ComputePower( equipments_, *this ) );
         }
     };
 

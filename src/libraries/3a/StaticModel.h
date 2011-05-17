@@ -12,7 +12,6 @@
 
 #include "StaticModel_ABC.h"
 #include <memory>
-
 namespace extractors
 {
     struct PowerExtractor_ABC;
@@ -45,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual float ComputePower( const sword::UnitAttributes& message, const extractors::PowerExtractor_ABC& Extractor ) const;
+    virtual float ComputePower( const std::map< int, sword::EquipmentDotations_EquipmentDotation >& message, const extractors::PowerExtractor_ABC& Extractor ) const;
     //@}
 
 private:

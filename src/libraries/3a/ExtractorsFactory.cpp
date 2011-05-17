@@ -66,6 +66,7 @@ namespace
 // -----------------------------------------------------------------------------
 // Name: ExtractorsFactory::CreateElement
 // Created: AGE 2008-08-04
+// FIX ME : Renommer les chaines de façon cohérente
 // -----------------------------------------------------------------------------
 void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& xis, Task& result ) const
 {
@@ -88,12 +89,12 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
         Extract< attributes::PopulationStates, IdentifierValue >( name, xis, result );
     else if( value == "crowd-states" )
         Extract< attributes::CrowdConcentration, IdentifierValue >( name, xis, result );
-    else if( value == "satisfaction" )
+    else if( value == "satisfactions" )
         Extract< attributes::PopulationSatisfaction, IdentifierValue >( name, xis, result );
     else if( value == "population-in-selected-blocks" )
         Extract< attributes::PopulationUrbanOccupation, IdentifierValue >( name, xis, result );
-    else if( value == "infrastructure-functional-state" )
-        Extract< attributes::PopulationUrbanOccupation, IdentifierValue >( name, xis, result );
+    else if( value == "infrastructures-functional-states" )
+        Extract< attributes::StructuralStates, IdentifierValue >( name, xis, result );
     else if( value == "stocks" )
         Extract< attributes::LogSupplyStocks, IdentifierValue >( name, xis, result );
     else if( value == "maintenance-handling-unit" )

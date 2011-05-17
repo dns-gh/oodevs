@@ -56,8 +56,8 @@ namespace
 // Created: FPO 2011-05-04
 // -----------------------------------------------------------------------------
 LogMaintenanceEquipments::LogMaintenanceEquipments( xml::xistream& xis )
-    : repairers_ ( ReadMask ( xis, 0 ) )
-    , haulers_ ( ReadMask ( xis, 1 ) )
+    : repairers_( ReadMask ( xis, 0 ) )
+    , haulers_( ReadMask ( xis, 1 ) )
 {
     // NOTHING
 }

@@ -42,7 +42,6 @@ PopulationUrbanOccupation::PopulationUrbanOccupation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 // Name: PopulationUrbanOccupation::Extract
 // Created: FPO 2011-05-12
-//FIX ME : Virer la map
 // -----------------------------------------------------------------------------
 int PopulationUrbanOccupation::Extract( const sword::SimToClient& wrapper )
 {
