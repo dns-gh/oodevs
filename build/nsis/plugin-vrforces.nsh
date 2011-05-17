@@ -14,7 +14,7 @@
     !define PLUGIN_VERSION "1.0"
 !endif
 !ifndef REQUIRED_PRODUCT_VERSION
-    !define REQUIRED_PRODUCT_VERSION "${APP_VERSION_MAJOR}"
+    !define REQUIRED_PRODUCT_VERSION "${APP_VERSION_MINOR}"
 !endif
 
 !macro Plugin.AddApplications

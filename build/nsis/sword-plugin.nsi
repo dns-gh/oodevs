@@ -12,7 +12,7 @@
 !define PRODUCT_SUITE_NAME "SWORD"
 !define PRODUCT_NAME "${PLUGIN_NAME}"
 
-!define UNINSTALL_LOG "uninstall_vrforces"
+!define UNINSTALL_LOG "uninstall_${PLUGIN_NAME}"
 
 !define INSTDIR_REG_ROOT "SHELL_CONTEXT"
 !define INSTDIR_REG_KEY  "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
