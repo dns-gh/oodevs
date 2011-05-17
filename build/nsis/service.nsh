@@ -25,8 +25,8 @@ Function ServiceInstallationDialog.Leave
     SendMessage $InstallService ${BM_GETCHECK} 0 0 $0
 
      ${if} $0 = ${BST_CHECKED}
-        ExecWait '"$INSTDIR\applications\launcher_app.exe --i"'
-        ExecWait '"$INSTDIR\applications\launcher_app.exe --s"'
+        ExecWait '"$INSTDIR\applications\launcher_app.exe" "--i"'
+        ExecWait '"$INSTDIR\applications\launcher_app.exe" "--s"'
      ${endif}
 
     !insertmacro MUI_PAGE_FUNCTION_CUSTOM LEAVE
