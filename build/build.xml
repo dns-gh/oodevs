@@ -1223,18 +1223,15 @@
     <target name="package.otpack.defense.scipio" description="package du defense-scipio otpack">
         <pack name="defense-scipio" description="defense-scipio exercises package">
             <include name="data/models/ada/physical/scipio-1.9.2/**"/>
-            <include name="data/propagations/test/**"/>
-            <include name="exercises/Porto - 1.9.2/**"/>
             <include name="exercises/BMDrosoville-1.9.2/**"/>
-            <include name="exercises/tests/test1_increment1_v1stab/**"/>
             <include name="exercises/Poseidon VA/**"/>
+            <include name="exercises/Poseidon VA LOG/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Missions Communes/**"/>
             <include name="exercises/exercisesVA/Poseidon VA pions/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Automates/**"/>
             <include name="exercises/AToutFaire/**"/>
             <include name="data/terrains/Porto/**"/>
             <include name="data/terrains/Drosoville/**"/>
-            <include name="data/terrains/Mailly/**"/>
             <include name="data/terrains/PortoV3Lite/**"/>
             <include name="data/terrains/PortoV3/**"/>
         </pack>
