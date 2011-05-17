@@ -12,7 +12,6 @@
 
 #include "ModelFunction_ABC.h"
 #include "ValueHandler_ABC.h"
-#include <memory>
 #include <boost/shared_ptr.hpp>
 
 // =============================================================================
@@ -27,9 +26,17 @@ class DispatchedFunction : public ModelFunction_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DispatchedFunction( const K& key, ValueHandler_ABC< K >& keyHandler, boost::shared_ptr< ModelFunction_ABC > base )
-                 : key_( key ), keyHandler_( keyHandler ), base_( base ) {}
-    virtual ~DispatchedFunction() {}
+    DispatchedFunction( const K& key, ValueHandler_ABC< K >& keyHandler, boost::shared_ptr< ModelFunction_ABC > base )
+        : key_       ( key )
+        , keyHandler_( keyHandler )
+        , base_      ( base )
+    {
+        // NOTHING
+    }
+    virtual ~DispatchedFunction()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations

@@ -11,6 +11,7 @@
 #define __FunctionFactory_h_
 
 #include <string>
+#include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/ptr_container/ptr_vector.hpp>
 
@@ -28,7 +29,7 @@ class ElementFactory_ABC;
 */
 // Created: AGE 2007-09-11
 // =============================================================================
-class FunctionFactory
+class FunctionFactory : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -45,12 +46,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FunctionFactory( const FunctionFactory& );            //!< Copy constructor
-    FunctionFactory& operator=( const FunctionFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateFunction( const std::string& type, xml::xistream& xis, Task& result );

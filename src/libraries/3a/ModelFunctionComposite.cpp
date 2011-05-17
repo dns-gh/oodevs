@@ -9,7 +9,6 @@
 
 #include "ModelFunctionComposite.h"
 #include <boost/bind.hpp>
-#include <algorithm>
 
 // -----------------------------------------------------------------------------
 // Name: ModelFunctionComposite constructor

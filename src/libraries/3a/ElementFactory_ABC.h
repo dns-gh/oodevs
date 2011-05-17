@@ -31,8 +31,8 @@ class ElementFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ElementFactory_ABC() {};
-    virtual ~ElementFactory_ABC() {};
+             ElementFactory_ABC() {}
+    virtual ~ElementFactory_ABC() {}
     //@}
 
     //! @name Operations

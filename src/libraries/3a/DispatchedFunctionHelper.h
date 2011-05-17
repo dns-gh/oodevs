@@ -13,12 +13,8 @@
 #include "DispatchedFunction.h"
 #include "ModelFunction.h"
 #include "Dispatcher.h"
-#include "Attributes.h"
-#include "Extractors.h"
 #include <boost/bind.hpp>
 #include <boost/bind/protect.hpp>
-#include <boost/function.hpp>
-#include <boost/utility.hpp>
 
 namespace xml
 {
@@ -47,7 +43,11 @@ struct DispatcherFactoryHelper
 template< typename Value >
 struct ValueFunctionFactory
 {
-    explicit ValueFunctionFactory( const Value& value ) : value_( value ) {}
+    explicit ValueFunctionFactory( const Value& value )
+        : value_( value )
+    {
+        // NOTHING
+    }
     typedef typename Value::Type Type;
     boost::shared_ptr< ModelFunction_ABC > operator()( ValueHandler_ABC< Type >& valueHandler ) const
     {
@@ -62,7 +62,11 @@ struct DispatcherFactory
     typedef typename KeyValue::Type K;
     typedef typename Value   ::Type T;
 
-    DispatcherFactory() : value_() {}
+    DispatcherFactory()
+        : value_()
+    {
+        // NOTHING
+    }
     explicit DispatcherFactory( xml::xistream& xis )
         : value_()
     {

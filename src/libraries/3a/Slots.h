@@ -10,14 +10,6 @@
 #ifndef __Slots_h_
 #define __Slots_h_
 
-namespace xml
-{
-    class xistream;
-    class xostream;
-}
-
-class Task;
-
 // =============================================================================
 /** @class  Slot_ABC
     @brief  Slot_ABC

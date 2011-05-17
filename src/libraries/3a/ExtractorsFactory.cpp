@@ -72,7 +72,8 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
     if( type != "extract" )
         return;
     std::string value, name;
-    xis >> xml::attribute( "function", value ) >> xml::attribute( "id", name );
+    xis >> xml::attribute( "function", value )
+        >> xml::attribute( "id", name );
     if( value == "operational-state" )
         Extract< attributes::OperationalState, IdentifierValue >( name, xis, result );
     else if( value == "position" )

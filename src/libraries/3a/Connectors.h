@@ -12,12 +12,11 @@
 
 #include "Functions.h"
 #include "HandlerToFunction.h"
-#include "Slots.h"
 #include "ValueHandler_ABC.h"
 #include "KeyMarshaller.h"
 
 #pragma warning (push)
-#pragma warning (disable : 4355 4702 )
+#pragma warning (disable : 4355 )
 #include <vector>
 #include <boost/bind.hpp>
 
@@ -32,13 +31,13 @@ class Connector_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Connector_ABC() {};
-    virtual ~Connector_ABC() {};
+             Connector_ABC() {}
+    virtual ~Connector_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Connect( Slot_ABC& slot, unsigned i ) = 0;
+    virtual void Connect( Slot_ABC& slot, unsigned int i ) = 0;
     //@}
 };
 
@@ -55,12 +54,16 @@ class FunctionConnector : public Function1_ABC< K, A >
 public:
     //! @name Constructors/Destructor
     //@{
-    FunctionConnector() : handlers_( *this ) {};
+    FunctionConnector()
+        : handlers_( *this )
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations
     //@{
-    virtual void Connect( Slot_ABC& slot, unsigned i )
+    virtual void Connect( Slot_ABC& slot, unsigned int i )
     {
         next_.push_back( & slot.Cast< Function1_ABC< K, A > >( i ) );
     };
@@ -111,7 +114,7 @@ class HandlerConnector : public ValueHandler_ABC< T >
 public:
     //! @name Constructors/Destructor
     //@{
-    HandlerConnector() {};
+    HandlerConnector() {}
     //@}
 
     //! @name Operations

@@ -10,12 +10,13 @@
 #include "Task.h"
 #include "Connectors.h"
 #include "Result_ABC.h"
-#include <xeumeuleu/xml.hpp>
 #include "dispatcher/MessageLoader_ABC.h"
 #pragma warning( push )
 #pragma warning( disable : 4996 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
+#include <protocol/protocol.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: Task constructor
@@ -112,7 +113,7 @@ void Task::Connect( const std::string& name, const std::string& input )
 {
     std::vector< std::string > inputs;
     boost::algorithm::split( inputs, input, boost::algorithm::is_any_of( "," ) );
-    for( unsigned i = 0; i < inputs.size(); ++i )
+    for( unsigned int i = 0; i < inputs.size(); ++i )
         Connect( name, inputs[i], i );
 }
 
@@ -129,7 +130,7 @@ void Task::Connect( const std::string& name, const std::string& input, unsigned 
     else if( itS == slots_.end() )
         throw std::runtime_error( "Could not connect '" + input + "' to '" + name + "' : could not find '" + name + "'" );
     else
-        itC->second->Connect( *(itS->second), i );
+        itC->second->Connect( *( itS->second ), i );
 }
 
 // -----------------------------------------------------------------------------

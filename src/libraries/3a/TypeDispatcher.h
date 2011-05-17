@@ -10,10 +10,11 @@
 #ifndef __TypeDispatcher_h_
 #define __TypeDispatcher_h_
 
-#include <xeumeuleu/xml.hpp>
 #include "Position.h"
 #include "Zone.h"
 #include "Types.h"
+#include <boost/noncopyable.hpp>
+#include <xeumeuleu/xml.hpp>
 
 class Task;
 
@@ -23,7 +24,7 @@ class Task;
 */
 // Created: AGE 2007-10-08
 // =============================================================================
-class TypeDispatcher
+class TypeDispatcher : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -94,13 +95,6 @@ private:
     {
         throw std::runtime_error( "Unknown type '" + type + "'" );
     }
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    TypeDispatcher( const TypeDispatcher& );            //!< Copy constructor
-    TypeDispatcher& operator=( const TypeDispatcher& ); //!< Assignment operator
     //@}
 
 private:

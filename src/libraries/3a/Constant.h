@@ -29,8 +29,13 @@ public:
     //@{
     Constant( xml::xistream& xis, ValueHandler_ABC< Return_Type >& handler )
         : ModelFunction< ConstantValue< T > >( handler, ConstantValue< T >( ReadValue< T >( xis ) ) )
-        {}
-    virtual ~Constant() {}
+    {
+        // NOTHING
+    }
+    virtual ~Constant()
+    {
+        // NOTHING
+    }
     //@}
 
     //! @name Operations

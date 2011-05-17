@@ -12,6 +12,7 @@
 
 #include "ModelFunctionComposite.h"
 #include "dispatcher/MessageHandler_ABC.h"
+#include <map>
 #include <boost/enable_shared_from_this.hpp>
 
 class Connector_ABC;
@@ -76,7 +77,7 @@ private:
     //@{
     void Connect( const std::string& , xml::xistream& xis );
     void Connect( const std::string& name, const std::string& input );
-    void Connect( const std::string& name, const std::string& input, unsigned i );
+    void Connect( const std::string& name, const std::string& input, unsigned int i );
     //@}
 
 private:
