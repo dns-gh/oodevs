@@ -126,6 +126,7 @@
         <build-lib name="hla_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces,protobuf" pattern="hla_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="HLA,libFedTime1516e,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
@@ -151,14 +152,16 @@
     </target>
 
     <target name="library.vrforces_plugin_dll" depends="library.clients_kernel,library.vrforces_plugin" description="build vrforces_plugin dynamic library" if="is-vc80">
-        <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces,protobuf" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
+        <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xalan,xerces,protobuf" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="libFedtime,
                   matrixRT,mtlRT,vlHLA13RT,vlRT,vlutilRT,vrfcontrolHLA13,
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
-                  lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}">
+                  lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}">
             <syslibset libs="shell32,user32"/>
             <defineset define="VRFORCES_PLUGIN_DLL_EXPORTS"/>
             <linkerarg value="/FIXED:NO"/>
@@ -173,6 +176,7 @@
         <build-lib name="dis_plugin_dll" outtype="shared" depends="boost,qt,terrain,xalan,xerces,protobuf" pattern="dis_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -289,11 +293,13 @@
     <target name="applications.frontends" description="build Sword Frontend executables"
             depends="application.selftraining_app,application.launcher_app,application.frontend_app,application.package_app"/>
 
-    <target name="application.launcher_dll" depends="library.clients_gui,library.frontend,library.protocol,library.shield" description="build Sword launcher dll">
+    <target name="application.launcher_dll" depends="library.client_proxy,library.clients_gui,library.frontend,library.protocol,library.shield" description="build Sword launcher dll">
         <build-lib name="launcher_dll" outtype="shared" mode="release" depends="boost,qt,xerces,xalan,protobuf" pattern="launcher-${platform}-mt"
             libs="zipstream,zlib1,tools,
                   lib${ant.project.name}_clients_gui-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
+                  lib${ant.project.name}_client_proxy-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_frontend-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -398,9 +404,9 @@
     <target name="application.adaptation_app" depends="library.ENT,library.clients_gui" description="build Sword Adaptation executable">
         <build-app name="adaptation_app" depends="qt,xerces,xalan,boost,flexlm" excludes="**/XmlResources.cpp"
                    libs="svgl,zipstream,
-                         lib${ant.project.name}_ENT-${platform}-mt
-                         lib${ant.project.name}_clients_gui-${platform}-mt
-                         lib${ant.project.name}_clients_kernel-${platform}-mt
+                         lib${ant.project.name}_ENT-${platform}-mt,
+                         lib${ant.project.name}_clients_gui-${platform}-mt,
+                         lib${ant.project.name}_clients_kernel-${platform}-mt,
                          lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                          lib${ant.project.name}_tools-${platform}-mt" pch-excludes="qtundo.cpp">
             <syslibset libs="gdi32,advapi32,user32,shell32"/>
@@ -414,6 +420,7 @@
                          lib${ant.project.name}_actions_gui-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
                          lib${ant.project.name}_clients_kernel-${platform}-mt,
+                         lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_ENT-${platform}-mt,
                          lib${ant.project.name}_protocol-${platform}-mt,
                          lib${ant.project.name}_meteo-${platform}-mt@{suffix},
@@ -445,6 +452,7 @@
                          lib${ant.project.name}_actions_gui-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
                          lib${ant.project.name}_clients_kernel-${platform}-mt,
+                         lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_ENT-${platform}-mt,
                          lib${ant.project.name}_protocol-${platform}-mt,
                          lib${ant.project.name}_indicators-${platform}-mt,
@@ -464,6 +472,7 @@
                     lib${ant.project.name}_frontend-${platform}-mt,
                     lib${ant.project.name}_clients_gui-${platform}-mt,
                     lib${ant.project.name}_clients_kernel-${platform}-mt
+                    lib${ant.project.name}_MT_Tools-${platform}-mt,
                     lib${ant.project.name}_protocol-${platform}-mt,
                     lib${ant.project.name}_tools-${platform}-mt">
             <syslibset libs="gdi32,shell32,htmlhelp,advapi32"/>
@@ -478,6 +487,7 @@
                     lib${ant.project.name}_frontend-${platform}-mt,
                     lib${ant.project.name}_clients_gui-${platform}-mt,
                     lib${ant.project.name}_clients_kernel-${platform}-mt,
+                    lib${ant.project.name}_MT_Tools-${platform}-mt,
                     lib${ant.project.name}_protocol-${platform}-mt,
                     lib${ant.project.name}_tools-${platform}-mt">
             <syslibset libs="gdi32,shell32,htmlhelp,advapi32"/>
@@ -516,6 +526,7 @@
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
                   lib${ant.project.name}_client_proxy-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">
@@ -638,6 +649,7 @@
         <build-test name="hla_plugin" depends="boost,qt,terrain,xerces,protobuf"
             libs="HLA,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
@@ -660,6 +672,7 @@
                   lib${ant.project.name}_indicators-${platform}-mt,
                   lib${ant.project.name}_clients_gui-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_preparation-${platform}-mt,
                   lib${ant.project.name}_flood-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt">
@@ -673,6 +686,7 @@
                   lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_actions-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt">
         </build-test>
     </target>
@@ -680,6 +694,7 @@
     <target name="dispatcher_test" depends="library.dispatcher,library.messenger_plugin">
         <build-test name="dispatcher" depends="boost,qt,xerces,terrain,protobuf"
             libs="lib${ant.project.name}_clients_kernel-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_dispatcher-${platform}-mt,
@@ -697,6 +712,7 @@
             libs="launcher-${platform}-mt@{suffix},tools,
                   lib${ant.project.name}_frontend-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt">
@@ -710,6 +726,7 @@
                   lib${ant.project.name}_client_proxy-${platform}-mt,
                   lib${ant.project.name}_actions-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt">
@@ -1063,7 +1080,7 @@
     <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.plugins" description="package the installers and packs"/>
 
     <!-- Package plugins -->
-    <target name="package.plugins" depends="package.plugin.vrforces" description="package plugin individual installers"/>
+    <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla" description="package plugin individual installers"/>
     
     <target name="package.plugin.vrforces" description="create vrforces plugin installer">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
@@ -1074,6 +1091,15 @@
         </nsis>
     </target>
     
+    <target name="package.plugin.hla" description="create hla plugin installer">
+        <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DPLUGIN=plugin-hla"/>
+            <arg value="/DPLUGIN_VERSION=1.0"/>
+        </nsis>
+    </target>
+
     <!-- Package misc -->
     <target name="package.patch" description="create a patch installer">
         <nsis name="sword-patch" script="patchs/sword-patch.nsi" license="true">
@@ -1212,18 +1238,15 @@
     <target name="package.otpack.defense.scipio" description="package du defense-scipio otpack">
         <pack name="defense-scipio" description="defense-scipio exercises package">
             <include name="data/models/ada/physical/scipio-1.9.2/**"/>
-            <include name="data/propagations/test/**"/>
-            <include name="exercises/Porto - 1.9.2/**"/>
             <include name="exercises/BMDrosoville-1.9.2/**"/>
-            <include name="exercises/tests/test1_increment1_v1stab/**"/>
             <include name="exercises/Poseidon VA/**"/>
+            <include name="exercises/Poseidon VA LOG/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Missions Communes/**"/>
             <include name="exercises/exercisesVA/Poseidon VA pions/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Automates/**"/>
             <include name="exercises/AToutFaire/**"/>
             <include name="data/terrains/Porto/**"/>
             <include name="data/terrains/Drosoville/**"/>
-            <include name="data/terrains/Mailly/**"/>
             <include name="data/terrains/PortoV3Lite/**"/>
             <include name="data/terrains/PortoV3/**"/>
         </pack>
@@ -1312,7 +1335,6 @@
         <update name="qt" version="3.3.8"/>
         <update name="boost"/>
         <update name="boost" package="geometry" todir="${include.dir}"/>
-        <update name="rti"/>
         <update name="masalife/brain" version="${masalife.version}"/>
         <update name="masalife/brain" version="${masalife.version}" package="bmc" todir="${bin.dir}"/>
         <update name="masalife/brain" version="${masalife.version}" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
