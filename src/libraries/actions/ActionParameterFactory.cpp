@@ -41,6 +41,7 @@
 #include "ParameterList.h"
 #include "KnowledgeGroup.h"
 #include "ResourceNetwork.h"
+#include "ExtensionList.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
@@ -174,6 +175,8 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         return new parameters::ResourceNetwork( parameter, message.resourcenetwork(), entities_, controller_ );
     if( message.list_size() )
         return new parameters::ParameterList( parameter );
+    if( message.has_extensionlist() )
+        return new parameters::ExtensionList( parameter, message.extensionlist() );
     return 0;
 }
 
@@ -309,6 +312,12 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new parameters::KnowledgeGroup( parameter, xis, entities_, controller_ ) );
     else if( type == "resourcenetwork" )
         param.reset( new parameters::ResourceNetwork( parameter, xis, entities_, controller_ ) );
+    else if( type == "extensionlist" )
+    {
+        parameters::ParameterList* extensionList = new parameters::ExtensionList( parameter );
+        param.reset( extensionList );
+        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *extensionList );
+    }
     else
         return false;
     return true;
