@@ -1244,6 +1244,7 @@
             <include name="exercises/exercisesVA/Poseidon VA Missions Communes/**"/>
             <include name="exercises/exercisesVA/Poseidon VA pions/**"/>
             <include name="exercises/exercisesVA/Poseidon VA Automates/**"/>
+            <include name="exercises/exercisesVA/Poseidon VA Acteurs Civils/**"/>
             <include name="exercises/AToutFaire/**"/>
             <include name="data/terrains/Porto/**"/>
             <include name="data/terrains/Drosoville/**"/>
