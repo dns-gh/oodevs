@@ -226,8 +226,8 @@ void ProcessService::SendProfileList( sword::ProfileListResponse& message )
 // -----------------------------------------------------------------------------
 void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message, const std::string& exercice, const std::string& session )
 {
-    const QStringList exercises = frontend::commands::ListCheckpoints( config_, exercice, session );
-    for( QStringList::const_iterator it = exercises.begin(); it != exercises.end(); ++it )
+    const QStringList checkpoints = frontend::commands::ListCheckpoints( config_, exercice, session );
+    for( QStringList::const_iterator it = checkpoints.begin(); it != checkpoints.end(); ++it )
         message.add_checkpoint( ( *it ).ascii() );
 }
 
@@ -235,7 +235,7 @@ void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message,
 // Name: ProcessService::ExecuteCommand
 // Created: SBO 2010-11-19
 // -----------------------------------------------------------------------------
-void ProcessService::ExecuteCommand(const std::string& endpoint, const sword::SessionCommandExecutionRequest& message)
+void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message )
 {
     ProcessContainer::const_iterator it = processes_.find( std::make_pair(message.exercise(), message.session()) );
     if( processes_.end() == it )
