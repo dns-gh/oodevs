@@ -20,6 +20,7 @@
 !macro Plugin.AddApplications
     ${SetOutPath} "$INSTDIR\applications"
     ${File} "${RUNDIR}\" "boost_serialization-vc80-mt-1_44.dll"
+    ${File} "${RUNDIR}\" "boost_signals-vc80-mt-1_44.dll"
     ${File} "${RUNDIR}\" "extMtl.dll"
     ${File} "${RUNDIR}\" "geometry.dll"
     ${File} "${RUNDIR}\" "loggerControlHLA13RT.dll"
