@@ -312,7 +312,7 @@
     <rule type="logistic" flying="true" autonomous="true" inherits="base"/>
   </unit-rules>
   <population-rules>
-    <rule type="base" cost-out-of-channeling="50" channeling-range="1000"/>
+    <rule type="base" cost-out-of-channeling="5000" channeling-range="1"/>
   </population-rules>
 </pathfind>
 <!-- signature="4158121732" -->
