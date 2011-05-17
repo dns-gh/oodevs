@@ -1,14 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 04-03-24 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Meteo/RawVisionData/PHY_AmmoEffect.h $
-// $Author: Nld $
-// $Modtime: 17/03/05 14:55 $
-// $Revision: 2 $
-// $Workfile: PHY_AmmoEffect.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
-
+// Copyright (c) 2004 MASA Group
+//
+// *****************************************************************************
 #ifndef __PHY_AmmoEffect_h_
 #define __PHY_AmmoEffect_h_
 

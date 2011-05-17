@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 03-03-29 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Meteo/RawVisionData/PHY_RawVisionDataIterator.inl $
-// $Author: Nld $
-// $Modtime: 19/10/04 13:54 $
-// $Revision: 1 $
-// $Workfile: PHY_RawVisionDataIterator.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionDataIterator::GetCurrentEnv
@@ -18,11 +16,11 @@ PHY_RawVisionData::envBits PHY_RawVisionDataIterator::GetCurrentEnv() const
 {
     assert( pCurrentCell_ );
     if( bIsInGround_ )
-        return (PHY_RawVisionData::envBits)( pCurrentCell_->GetEnv() | PHY_RawVisionData::eVisionGround );
+        return static_cast< PHY_RawVisionData::envBits >( pCurrentCell_->GetEnv() | PHY_RawVisionData::eVisionGround );
     else if( bIsInEnv_ )
         return pCurrentCell_->GetEnv();
     else 
-        return (PHY_RawVisionData::envBits)PHY_RawVisionData::eVisionEmpty;
+        return static_cast< PHY_RawVisionData::envBits >( PHY_RawVisionData::eVisionEmpty );
 }
 
 //-----------------------------------------------------------------------------
@@ -52,7 +50,7 @@ const weather::PHY_Precipitation& PHY_RawVisionDataIterator::GetPrecipitation() 
 inline
 double PHY_RawVisionDataIterator::Length() const
 {
-    return rLenght_;
+    return rLength_;
 }
 
 //-----------------------------------------------------------------------------

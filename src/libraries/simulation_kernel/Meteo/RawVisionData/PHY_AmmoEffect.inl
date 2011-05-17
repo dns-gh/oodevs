@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 04-03-24 $
-// $Archive: /MVW_v10/Build/SDK/MIL/Src/Meteo/RawVisionData/PHY_AmmoEffect.inl $
-// $Author: Nld $
-// $Modtime: 17/03/05 14:55 $
-// $Revision: 2 $
-// $Workfile: PHY_AmmoEffect.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2004 MASA Group
+//
+// *****************************************************************************
 
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 
@@ -31,7 +29,6 @@ bool PHY_AmmoEffect::HandleAmmo( const PHY_IndirectFireDotationClass& ammoClass 
 {
     return ammoClass_ == ammoClass;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: PHY_AmmoEffect::GetNextEffect

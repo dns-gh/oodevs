@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 03-06-05 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Meteo/RawVisionData/PHY_RawVisionDataIterator.h $
-// $Author: Nld $
-// $Modtime: 19/10/04 13:54 $
-// $Revision: 1 $
-// $Workfile: PHY_RawVisionDataIterator.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
 
 #ifndef __PHY_RawVisionDataIterator_h_
 #define __PHY_RawVisionDataIterator_h_
@@ -86,25 +84,25 @@ protected:
     E_IteratorState eIteratorState_;
 
     // Distance parcourue dans la cellule courrante
-    double rLenght_;
+    double rLength_;
 
     // Distance totale restant à parcourir ( condition de fin )
     double rRemainingLength_;
 
     // Prochaine position de l'itérateur
-    double    rAlreadyUsedDX_;        // Projection de la distance déjà parcourue sur l'axe des x dans la précédente itération
-    int         nNextCellCol_;
-    int         nNextCellRow_;
-    MT_Vector3D vOutPoint_;             // X, Y dans l'espace de l'algorithme, Z non transformée
+    double rAlreadyUsedDX_; // Projection de la distance déjà parcourue sur l'axe des x dans la précédente itération
+    int nNextCellCol_;
+    int nNextCellRow_;
+    MT_Vector3D vOutPoint_; // X, Y dans l'espace de l'algorithme, Z non transformée
 
     // Informations sur l'environnement précedent
     double rGroundCoeff_;
     double rEnvCoeff_;
 
     // Environnement courrant
-    const PHY_RawVisionData::sCell*  pCurrentCell_;
-    bool                             bIsInGround_;
-    bool                             bIsInEnv_;
+    const PHY_RawVisionData::sCell* pCurrentCell_;
+    bool bIsInGround_;
+    bool bIsInEnv_;
 };
 
 #include "PHY_RawVisionDataIterator.inl"

@@ -1,14 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 03-03-29 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Meteo/RawVisionData/PHY_RawVisionDataIterator.cpp $
-// $Author: Age $
-// $Modtime: 8/02/05 16:23 $
-// $Revision: 2 $
-// $Workfile: PHY_RawVisionDataIterator.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
-
+// Copyright (c) 2003 MASA Group
+//
+// *****************************************************************************
 #include "simulation_kernel_pch.h"
 #include "PHY_RawVisionDataIterator.h"
 #include "MIL_AgentServer.h"
@@ -29,33 +26,33 @@ void PHY_RawVisionDataIterator::AlignFirstPointOnGrid()
     // calcul de la longueur réelle parcourue                                       -> rLenght
     if( fabs( rNextY - ++nNextCellRow_ ) < rIteratorEpsilon )
     {
-        vOutPoint_.rX_  = ++nNextCellCol_;
-        vOutPoint_.rY_  = nNextCellRow_;
-        rLenght_        = rDl_ * ( 1. - rAlreadyUsedDX_ );
+        vOutPoint_.rX_ = ++nNextCellCol_;
+        vOutPoint_.rY_ = nNextCellRow_;
+        rLength_ = rDl_ * ( 1. - rAlreadyUsedDX_ );
         rAlreadyUsedDX_ = 0.;
     }
     else if( rNextY < nNextCellRow_ )
     {
-        vOutPoint_.rX_  = ++nNextCellCol_;
-        vOutPoint_.rY_  = rNextY;
+        vOutPoint_.rX_ = ++nNextCellCol_;
+        vOutPoint_.rY_ = rNextY;
         --nNextCellRow_;
-        rLenght_        = rDl_ * ( 1. - rAlreadyUsedDX_ );
+        rLength_ = rDl_ * ( 1. - rAlreadyUsedDX_ );
         rAlreadyUsedDX_ = 0.;
     }
     else
     {
-        double rOld   = rAlreadyUsedDX_;
-        vOutPoint_.rY_  = nNextCellRow_;
-        vOutPoint_.rX_  = rA1_ * vOutPoint_.rY_ + rB1_;
-        rAlreadyUsedDX_ = vOutPoint_.rX_ - (int)vOutPoint_.rX_;
-        rLenght_        = rDl_ * ( rAlreadyUsedDX_ - rOld );
+        double rOld = rAlreadyUsedDX_;
+        vOutPoint_.rY_ = nNextCellRow_;
+        vOutPoint_.rX_ = rA1_ * vOutPoint_.rY_ + rB1_;
+        rAlreadyUsedDX_ = vOutPoint_.rX_ - static_cast< int >( vOutPoint_.rX_ );
+        rLength_ = rDl_ * ( rAlreadyUsedDX_ - rOld );
 
         assert( rAlreadyUsedDX_ > 0. && rAlreadyUsedDX_ < 1. );
     }
 
-    assert( rLenght_ > 0. );
+    assert( rLength_ > 0. );
 
-    rRemainingLength_ -= rLenght_;
+    rRemainingLength_ -= rLength_;
 
     // condition de fin
     if( rRemainingLength_ < rIteratorEpsilon )
@@ -65,12 +62,12 @@ void PHY_RawVisionDataIterator::AlignFirstPointOnGrid()
             if( eIteratorState_ == eRunning )
             { // placement correct du dernier point
                 vOutPoint_.rX_ += rRemainingLength_ / rDl_;
-                rLenght_       += rRemainingLength_;
-                vOutPoint_.rY_  = rA0_ * vOutPoint_.rX_ + rB0_;
+                rLength_ += rRemainingLength_;
+                vOutPoint_.rY_ = rA0_ * vOutPoint_.rX_ + rB0_;
 
                 eIteratorState_ = eLastPoint;
 
-                assert ( rLenght_ > 0. );
+                assert( rLength_ > 0. );
             }
             else
             { // fin de validité de l'itérateur
@@ -81,12 +78,12 @@ void PHY_RawVisionDataIterator::AlignFirstPointOnGrid()
         else
         { // arrivée sur le dernier point ( qui se trouve sur un axe )
             rRemainingLength_ = -1;
-            eIteratorState_   = eLastPoint;
+            eIteratorState_ = eLastPoint;
         }
     }
 
     // calcul de la hauteur de LOS en point de sortie
-    vOutPoint_.rZ_ += rLenght_ * rDz_;
+    vOutPoint_.rZ_ += rLength_ * rDz_;
 }
 
 //-----------------------------------------------------------------------------
@@ -105,13 +102,13 @@ _ le calcul de la longueur parcourue se fait par rapport au ratio de la projecti
 _ le calcul du gradian de hauteur se fait par projection de ce gradian sur la longueur
 */
 PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginPos, const MT_Vector3D& vEndPos )
-    : data_             ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
-    , rDz_              ( vEndPos.rZ_ - vBeginPos.rZ_ )
-    , eIteratorState_   ( eRunning )
-    , nNextCellCol_     ( 0 )
-    , nNextCellRow_     ( 0 )
-    , vOutPoint_        ( vBeginPos )
-    , pCurrentCell_     ( 0 )
+    : data_          ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
+    , rDz_           ( vEndPos.rZ_ - vBeginPos.rZ_ )
+    , eIteratorState_( eRunning )
+    , nNextCellCol_  ( 0 )
+    , nNextCellRow_  ( 0 )
+    , vOutPoint_     ( vBeginPos )
+    , pCurrentCell_  ( 0 )
 {
     double rDx = vEndPos.rX_ - vOutPoint_.rX_;
     double rDy = vEndPos.rY_ - vOutPoint_.rY_;
@@ -144,8 +141,8 @@ PHY_RawVisionDataIterator::PHY_RawVisionDataIterator( const MT_Vector3D& vBeginP
 
     ToAlgorithmSpace( vOutPoint_.rX_, vOutPoint_.rY_ );
 
-    rAlreadyUsedDX_ = ( vOutPoint_.rX_ -= ( nCellColOffset_ = (int)floor( vOutPoint_.rX_ ) ) );
-    vOutPoint_.rY_ -= ( nCellRowOffset_ = (int)floor( vOutPoint_.rY_ ) );
+    rAlreadyUsedDX_ = ( vOutPoint_.rX_ -= ( nCellColOffset_ = static_cast< int >( floor( vOutPoint_.rX_ ) ) ) );
+    vOutPoint_.rY_ -= ( nCellRowOffset_ = static_cast< int >( floor( vOutPoint_.rY_ ) ) );
 
     assert( vOutPoint_.rX_ >= 0. && vOutPoint_.rX_ < 1. );
     assert( vOutPoint_.rY_ >= 0. && vOutPoint_.rY_ < 1. );
@@ -206,7 +203,7 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++()
         nCellYOffset    = 1;
         vOutPoint_.rX_  = ++nNextCellCol_;
         vOutPoint_.rY_  = nNextCellRow_;
-        rLenght_        = rDl_ * ( 1. - rAlreadyUsedDX_ );
+        rLength_        = rDl_ * ( 1. - rAlreadyUsedDX_ );
         rNextY          = 0.;
         rAlreadyUsedDX_ = 0.;
     }
@@ -216,8 +213,8 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++()
         vOutPoint_.rX_  = ++nNextCellCol_;
         vOutPoint_.rY_  = rNextY;
         --nNextCellRow_;
-        rLenght_        = rDl_ * ( 1. - rAlreadyUsedDX_ );
-        rNextY         -= (int)rNextY;
+        rLength_        = rDl_ * ( 1. - rAlreadyUsedDX_ );
+        rNextY         -= static_cast< int >( rNextY );
         rAlreadyUsedDX_ = 0.;
     }
     else
@@ -228,17 +225,17 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++()
         vOutPoint_.rY_  = nNextCellRow_;
         vOutPoint_.rX_  = rA1_ * vOutPoint_.rY_ + rB1_;
         rAlreadyUsedDX_ = vOutPoint_.rX_ - static_cast< int >( vOutPoint_.rX_ );
-        rLenght_        = rDl_ * rAlreadyUsedDX_;
+        rLength_        = rDl_ * rAlreadyUsedDX_;
         rNextY          = rAlreadyUsedDX_;
 
         assert( rAlreadyUsedDX_ > 0. && rAlreadyUsedDX_ < 1. );
     }
 
-    assert( rLenght_ > 0. );
+    assert( rLength_ > 0. );
     assert( rNextY >= 0. );
     assert( rNextY < 1. );
 
-    rRemainingLength_ -= rLenght_;
+    rRemainingLength_ -= rLength_;
 
     // condition de fin
     if( rRemainingLength_ < rIteratorEpsilon )
@@ -248,12 +245,12 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++()
             if( eIteratorState_ == eRunning )
             { // placement correct du dernier point
                 vOutPoint_.rX_ += rRemainingLength_ / rDl_;
-                rLenght_       += rRemainingLength_;
+                rLength_       += rRemainingLength_;
                 vOutPoint_.rY_  = rA0_ * vOutPoint_.rX_ + rB0_;
 
                 eIteratorState_ = eLastPoint;
 
-                assert ( rLenght_ > 0. );
+                assert ( rLength_ > 0. );
             }
             else
             { // fin de validité de l'itérateur
@@ -269,7 +266,7 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++()
     }
 
     // calcul de la hauteur de LOS en point de sortie
-    vOutPoint_.rZ_ += rLenght_ * rDz_;
+    vOutPoint_.rZ_ += rLength_ * rDz_;
 
     // calcul de la hauteur du SOL en point de sortie
     int nRealCellCol = nNextCellCol_ + nCellColOffset_;
@@ -286,10 +283,10 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++()
     rGroundCoeff_ = vOutPoint_.rZ_ - rGroundHeight;
 
     double rOldEnvCoeff = rEnvCoeff_;
-    rEnvCoeff_    = rGroundCoeff_ - pCurrentCell_->GetEnvHeight();
+    rEnvCoeff_ = rGroundCoeff_ - pCurrentCell_->GetEnvHeight();
 
-    bIsInGround_  = ( rGroundCoeff_ < 0. ) || ( ( rGroundCoeff_ * rOldGroundCoeff ) < 0. );
-    bIsInEnv_     = ( rEnvCoeff_ < 0. ) || ( rEnvCoeff_ * rOldEnvCoeff < 0. );
+    bIsInGround_ = ( rGroundCoeff_ < 0. ) || ( ( rGroundCoeff_ * rOldGroundCoeff ) < 0. );
+    bIsInEnv_ = ( rEnvCoeff_ < 0. ) || ( rEnvCoeff_ * rOldEnvCoeff < 0. );
 
     return *this;
 }

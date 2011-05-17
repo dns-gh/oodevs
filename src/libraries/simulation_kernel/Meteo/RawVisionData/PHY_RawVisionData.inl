@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 02-11-05 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Meteo/RawVisionData/PHY_RawVisionData.inl $
-// $Author: Jvt $
-// $Modtime: 29/10/04 10:43 $
-// $Revision: 2 $
-// $Workfile: PHY_RawVisionData.inl $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #include "MT_Tools/MT_LinearInterpolation.h"
 
@@ -21,7 +19,6 @@ const PHY_RawVisionData::sCell& PHY_RawVisionData::operator () ( unsigned int co
     return ( col < nNbrCol_ && row < nNbrRow_ ) ? ppCells_[ col ][ row ] : emptyCell_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::operator
 // Created: JVT 02-11-15
@@ -31,7 +28,6 @@ const PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( const MT_Vector2
 {
     return operator () ( GetCol( pos.rX_ ), GetRow( pos.rY_ ) );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::operator
@@ -43,7 +39,6 @@ const PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( double x, double
     return operator () ( GetCol( x ), GetRow( y ) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::operator
 // Created: JVT 04-03-24
@@ -53,7 +48,6 @@ PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( double rCol, double rR
 {
     unsigned int nCol = GetCol( rCol );
     unsigned int nRow = GetRow( rRow );
-
     return ( nCol < nNbrCol_ && nRow < nNbrRow_ ) ? ppCells_[ nCol ][ nRow ] : emptyCell_;
 }
 
@@ -108,7 +102,6 @@ double PHY_RawVisionData::GetAltitude( const MT_Vector2D& pos ) const
     return GetAltitude( pos.rX_, pos.rY_ );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetVisionObject
 // Created: JVT 03-07-04
@@ -118,7 +111,6 @@ PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D
 {
     return operator() ( pos ).GetEnv();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetWind
@@ -130,7 +122,6 @@ const weather::PHY_Meteo::sWindData& PHY_RawVisionData::GetWind( const MT_Vector
     return operator() ( vPos ).GetWind();    
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetVisionObject
 // Created: JVT 03-07-04
@@ -141,7 +132,6 @@ PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( double rX_, doubl
     return operator () ( rX_, rY_ ).GetEnv();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::Getcol
 // Created: JVT 02-11-05
@@ -149,9 +139,8 @@ PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( double rX_, doubl
 inline
 unsigned int PHY_RawVisionData::GetCol( double x ) const
 {
-    return (unsigned int)( x / rCellSize_ );
+    return static_cast< unsigned int >( x / rCellSize_ );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::Getrow
@@ -160,7 +149,7 @@ unsigned int PHY_RawVisionData::GetCol( double x ) const
 inline
 unsigned int PHY_RawVisionData::GetRow( double y ) const
 {
-    return (unsigned int)( y / rCellSize_);
+    return static_cast< unsigned int >( y / rCellSize_);
 }
 
 //-----------------------------------------------------------------------------
@@ -183,7 +172,6 @@ double PHY_RawVisionData::GetMinAltitude() const
     return rMinAltitude_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetMaxAltitude
 // Created: FBD 03-02-13
@@ -204,7 +192,6 @@ const weather::PHY_Meteo::sWindData& PHY_RawVisionData::sCell::GetWind() const
     return pMeteo ? pMeteo->GetWind() : pGlobalMeteo_->GetWind();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::GetVisionObjectsInSurface
 // Created: NLD 2004-11-17
@@ -220,26 +207,27 @@ void PHY_RawVisionData::GetVisionObjectsInSurface( const T& localisation, unsign
     const unsigned int nYBegin = GetRow( localisation.GetBoundingBox().GetBottom() );
     const unsigned int nYEnd   = GetRow( localisation.GetBoundingBox().GetTop() );
     
-    for ( unsigned int nX = GetCol( localisation.GetBoundingBox().GetLeft() ); nX <= nXEnd; ++nX )
-        for ( unsigned int nY = nYBegin; nY <= nYEnd; ++nY )
+    for( unsigned int nX = GetCol( localisation.GetBoundingBox().GetLeft() ); nX <= nXEnd; ++nX )
+        for( unsigned int nY = nYBegin; nY <= nYEnd; ++nY )
         {
-            if ( !localisation.IsInside( MT_Vector2D( nX * rCellSize_, nY * rCellSize_ ) ) )
+            if( !localisation.IsInside( MT_Vector2D( nX * rCellSize_, nY * rCellSize_ ) ) )
                 continue;
 
             const envBits env = operator () ( nX, nY ).GetEnv();
 
-            if ( env == eVisionEmpty )
+            if( env == eVisionEmpty )
                 ++nEmptySurface;
             else
             {
-                if ( env & eVisionForest )
+                if( env & eVisionForest )
                     ++nForestSurface;
-                if ( env & eVisionUrban )
+                if( env & eVisionUrban )
                     ++nUrbanSurface;
             }
         }
 
-    nEmptySurface  *= ( unsigned int) ( rCellSize_ * rCellSize_ );
-    nForestSurface *= ( unsigned int) ( rCellSize_ * rCellSize_ );
-    nUrbanSurface  *= ( unsigned int) ( rCellSize_ * rCellSize_ );
+    unsigned int cellSizeSquare = static_cast< unsigned int >( rCellSize_ * rCellSize_ );
+    nEmptySurface  *= cellSizeSquare;
+    nForestSurface *= cellSizeSquare;
+    nUrbanSurface  *= cellSizeSquare;
 }

@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 02-11-05 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Meteo/RawVisionData/PHY_RawVisionData.cpp $
-// $Author: Jvt $
-// $Modtime: 11/04/05 10:32 $
-// $Revision: 12 $
-// $Workfile: PHY_RawVisionData.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2002 MASA Group
+//
+// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RawVisionData.h"
@@ -19,7 +17,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include "tools/InputBinaryStream.h"
 #include "tools/WorldParameters.h"
-#include <xeumeuleu/xml.hpp>
 
 PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
 const weather::PHY_Meteo* PHY_RawVisionData::sCell::pGlobalMeteo_;
@@ -66,8 +63,8 @@ PHY_RawVisionData::PHY_RawVisionData( weather::PHY_Meteo& globalMeteo, tools::Wo
 //-----------------------------------------------------------------------------
 PHY_RawVisionData::~PHY_RawVisionData()
 {
-    for ( unsigned int i = nNbrCol_; i; )
-        delete [] ppCells_[--i];
+    for( unsigned int i = nNbrCol_; i; )
+        delete [] ppCells_[ --i ];
     delete [] ppCells_;
     ppCells_ = 0;
 }
@@ -95,9 +92,9 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
     if( pMeteo )
         pMeteo->IncRef( ( nXEnd - nXBeg + 1 ) * ( nYEnd - nYBeg + 1 ) );
 
-    while ( nXBeg <= nXEnd )
+    while( nXBeg <= nXEnd )
     {
-        for ( unsigned int y = nYBeg; y <= nYEnd; ++y )
+        for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             sCell& cell = ppCells_[ nXBeg ][ y ];
             if( cell.pMeteo )
@@ -125,9 +122,9 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
     if( nYEnd < nYBeg )
         std::swap( nYEnd, nYBeg );
 
-    while ( nXBeg <= nXEnd )
+    while( nXBeg <= nXEnd )
     {
-        for ( unsigned int y = nYBeg; y <= nYEnd; ++y )
+        for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             sCell& cell = ppCells_[ nXBeg ][ y ];
             if( cell.pMeteo == pMeteo )
@@ -145,18 +142,17 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
 void PHY_RawVisionData::RegisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponClass )
 {
     const MT_Rect bb = surface.GetBoundingBox();
-    double x = floor( bb.GetLeft()   / rCellSize_ ) * rCellSize_;
+    double x = floor( bb.GetLeft() / rCellSize_ ) * rCellSize_;
     const double xMax = ceil ( bb.GetRight()  / rCellSize_ ) * rCellSize_;
     const double yMin = floor( bb.GetBottom() / rCellSize_ ) * rCellSize_;
     const double yMax = ceil ( bb.GetTop()    / rCellSize_ ) * rCellSize_;
-    for ( ; x < xMax; x+=rCellSize_ )
-        for ( double y = yMin; y < yMax; y+=rCellSize_ )
+    for( ; x < xMax; x += rCellSize_ )
+        for( double y = yMin; y < yMax; y += rCellSize_ )
             if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
                 sCell& cell = operator () ( x, y );
                 if( &cell == &emptyCell_ )
                     continue;
-
                 PHY_AmmoEffect* pEffect = new PHY_AmmoEffect( weaponClass, cell.pEffects );
                 cell.pEffects = pEffect;
             }
@@ -174,8 +170,8 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
     double y          = floor( bb.GetBottom() / rCellSize_ ) * rCellSize_;
     const double yMax = ceil ( bb.GetTop()    / rCellSize_ ) * rCellSize_;
 
-    for ( ; x < xMax; x+=rCellSize_ )
-        for ( ; y < yMax; y+=rCellSize_ )
+    for( ; x < xMax; x += rCellSize_ )
+        for( ; y < yMax; y += rCellSize_ )
             if( surface.IsInside( MT_Vector2D( x, y ) ) )
             {
                 sCell& cell = operator () ( x, y );
@@ -185,7 +181,7 @@ void PHY_RawVisionData::UnregisterWeatherEffect( const MT_Ellipse& surface, cons
                 PHY_AmmoEffect* pPrevEffect = 0;
                 PHY_AmmoEffect* pEffect = cell.pEffects;
 
-                while ( pEffect && !pEffect->HandleAmmo( weaponClass ) )
+                while( pEffect && !pEffect->HandleAmmo( weaponClass ) )
                 {
                     pPrevEffect = pEffect;
                     pEffect     = pEffect->GetNextEffect();
@@ -217,22 +213,22 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
     if( !archive )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Cannot open file %s", strFile.c_str() ) );
 
-    if( ! ( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
+    if( !( archive >> rCellSize_ >> nNbrRow_ >> nNbrCol_ ) )
        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Error reading file %s", strFile.c_str() ) );
 
     assert( !ppCells_ );
     ppCells_ = new sCell*[ nNbrCol_ ];
 
-    for ( unsigned int x = 0; x < nNbrCol_; ++x )
+    for( unsigned int x = 0; x < nNbrCol_; ++x )
     {
         sCell* pTmp = new sCell[ nNbrRow_ ];
         ppCells_[ x ] = pTmp;
 
-        for ( unsigned int i = 0; i < nNbrRow_; ++i )
+        for( unsigned int i = 0; i < nNbrRow_; ++i )
         {
             pTmp->pMeteo   = 0;
             pTmp->pEffects = 0;
-            archive.Read( (char*)pTmp++, 4 );
+            archive.Read( reinterpret_cast< char* >( pTmp++ ), 4 );
             if( !archive )
                 throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Error reading file %s", strFile.c_str() ) );
         }
@@ -250,17 +246,17 @@ void PHY_RawVisionData::CalcMinMaxAltitude()
 {
     short nMaxAltitude = std::numeric_limits< short >::min();
     short nMinAltitude = std::numeric_limits< short >::max();
-    for ( unsigned int nX = 0; nX < nNbrCol_ ; ++nX  )
+    for( unsigned int nX = 0; nX < nNbrCol_; ++nX  )
     {
-        for ( unsigned int nY = 0; nY < nNbrRow_ ; ++nY )
+        for( unsigned int nY = 0; nY < nNbrRow_; ++nY )
         {
-            short nAltitude = ppCells_[nX][nY].h;
+            short nAltitude = ppCells_[ nX ][ nY ].h;
             if( nAltitude < nMinAltitude )
                 nMinAltitude = nAltitude;
             if( nAltitude > nMaxAltitude )
                 nMaxAltitude = nAltitude;
         }
     }
-    rMaxAltitude_ = (double)nMaxAltitude;
-    rMinAltitude_ = (double)nMinAltitude;
+    rMaxAltitude_ = static_cast< double >( nMaxAltitude );
+    rMinAltitude_ = static_cast< double >( nMinAltitude );
 }
