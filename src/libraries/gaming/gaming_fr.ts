@@ -615,10 +615,6 @@
         <translation>Info/Nom</translation>
     </message>
     <message>
-        <source>Details/</source>
-        <translation>Details/</translation>
-    </message>
-    <message>
         <source>Alive:</source>
         <translation>Vivants:</translation>
     </message>

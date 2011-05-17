@@ -36,9 +36,6 @@ Inhabitant::Inhabitant( Model_ABC& model, const sword::PopulationCreation& msg )
     , safetySatisfaction_ ( 0 )
     , lodgingSatisfaction_( 0 )
 {
-    if( msg.has_extension() )
-        for( int i = 0; i < msg.extension().entries_size(); ++i )
-            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     for( int i = 0; i < msg.objects_size(); ++i )
         urbanObjectId_.push_back( msg.objects( i ).id() );
     side_.Register( *this );
@@ -96,6 +93,9 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
             const sword::PartyAdhesion& adhesion = msg.adhesions().adhesion( i );
             affinities_[ adhesion.party().id() ] = adhesion.value();
         }
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
 }
 
 // -----------------------------------------------------------------------------
@@ -110,12 +110,6 @@ void Inhabitant::SendCreation( ClientPublisher_ABC& publisher ) const
     msg().mutable_type()->set_id( nType_ );
     msg().set_text( text_ );
     msg().set_name( strName_ );
-    BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
-    {
-        sword::Extension_Entry* entry = msg().mutable_extension()->add_entries();
-        entry->set_name( extension.first );
-        entry->set_value( extension.second );
-    }
     BOOST_FOREACH( int id, urbanObjectId_ )
     {
         msg().add_objects()->set_id( id );
@@ -169,6 +163,12 @@ void Inhabitant::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         sword::PartyAdhesion& adhesion = *msg().mutable_adhesions()->add_adhesion();
         adhesion.mutable_party()->set_id( affinity.first );
         adhesion.set_value( affinity.second );
+    }
+    for( T_Extensions::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    {
+        sword::Extension_Entry* entry = msg().mutable_extension()->add_entries();
+        entry->set_name( it->first );
+        entry->set_value( it->second );
     }
     msg.Send( publisher );
 }

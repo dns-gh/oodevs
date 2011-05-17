@@ -426,10 +426,19 @@ void SimulationToClient::Convert( const sword::FormationCreation& from, MsgsSimT
     CONVERT_ID( parent );
     ConvertNatureLevel( from, to );
     CONVERT( name );
-    CONVERT_CB( extension, ConvertExtension );
     CONVERT( app6symbol );
     ConvertLogisticLevel( from, to );
     CONVERT_CB( color, ConvertRgbColor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SimulationToClient::Convert
+// Created: ABR 2011-05-11
+// -----------------------------------------------------------------------------
+void SimulationToClient::Convert( const sword::FormationUpdate& from, MsgsSimToClient::MsgFormationUpdate* to )
+{
+    CONVERT_ID( formation );
+    CONVERT_CB( extension, ConvertExtension );
 }
 
 // -----------------------------------------------------------------------------
@@ -457,7 +466,6 @@ void SimulationToClient::Convert( const sword::AutomatCreation& from, MsgsSimToC
     CONVERT_CB( parent, ConvertParentEntity );
     CONVERT_ID( party );
     CONVERT_ID( knowledge_group );
-    CONVERT_CB( extension, ConvertExtension );
     CONVERT( app6symbol );
     ConvertLogisticLevel( from, to );
     CONVERT_CB( color, ConvertRgbColor );
@@ -510,6 +518,7 @@ void SimulationToClient::Convert( const sword::AutomatAttributes& from, MsgsSimT
     ConvertMeetingEngagementStatus( from, to );
     ConvertOperationalStatus( from, to );
     ConvertRulesOfEngagement( from, to );
+    CONVERT_CB( extension, ConvertExtension );
 }
 
 // -----------------------------------------------------------------------------
@@ -1628,7 +1637,6 @@ void SimulationToClient::Convert( const sword::CrowdCreation& from, MsgsSimToCli
     CONVERT_ID( type );
     CONVERT_TO( name, nom );
     CONVERT_ID( party );
-    CONVERT_CB( extension, ConvertExtension );
     CONVERT_CB( repartition, ConvertRepartition );
 }
 
@@ -1649,6 +1657,7 @@ void SimulationToClient::Convert( const sword::CrowdUpdate& from, MsgsSimToClien
     CONVERT( wounded );
     CONVERT( contaminated );
     CONVERT( dead );
+    CONVERT_CB( extension, ConvertExtension );
 }
 
 // -----------------------------------------------------------------------------
@@ -2295,7 +2304,6 @@ void SimulationToClient::Convert( const sword::PopulationCreation& from, MsgsSim
     CONVERT_ID( party );
     CONVERT_ID( type );
     CONVERT( name );
-    CONVERT_CB( extension, ConvertExtension );
     for( int i = 0; i < from.objects().size(); ++i )
         to->add_objects()->set_id( from.objects( i ).id() );
 }
@@ -2360,4 +2368,5 @@ void SimulationToClient::Convert( const sword::PopulationUpdate& from, MsgsSimTo
     CONVERT( motivation );
     for( int i = 0; i < from.occupations().size(); ++i )
         ConvertBlockOccupation( from.occupations( i ), to->add_occupations() );
+    CONVERT_CB( extension, ConvertExtension );
 }

@@ -11,29 +11,31 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Army.h"
+
+#include "Entities/Inhabitants/MIL_Inhabitant.h"
+#include "Entities/Objects/MIL_ObjectManager.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Populations/MIL_Population.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/KnowledgeVisitor_ABC.h"
-#include "Entities/Populations/MIL_Population.h"
-#include "Entities/Inhabitants/MIL_Inhabitant.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Objects/MIL_ObjectManager.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "MIL_Formation.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MIL_EntityManager.h"
+#include "MIL_Formation.h"
+#include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_ScipioException.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Tools/MIL_DictionaryExtensions.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/ArmyFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/InhabitantFactory_ABC.h"
-#include "simulation_kernel/PopulationFactory_ABC.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h" // LTO
-#include "MT_Tools/MT_ScipioException.h"
-#include "MT_Tools/MT_Logger.h"
+#include "simulation_kernel/PopulationFactory_ABC.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -98,9 +100,10 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
         >> xml::start( "populations" )
             >> xml::list( "population", *this, &MIL_Army::ReadPopulation, populationFactory )
         >> xml::end
-    >> xml::optional >> xml::start( "inhabitants" )
-        >> xml::list( "inhabitant", *this, &MIL_Army::ReadInhabitant, inhabitantFactory )
+        >> xml::optional >> xml::start( "inhabitants" )
+            >> xml::list( "inhabitant", *this, &MIL_Army::ReadInhabitant, inhabitantFactory )
         >> xml::end;
+    pExtensions_.reset( new MIL_DictionaryExtensions( xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,6 +115,7 @@ MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::strin
     , armyFactory_         ( armyFactory )
     , diplomacyConverter_  ( diplomacyConverter )
     , pKnowledgeBlackBoard_( 0 )
+    , pExtensions_       ( 0 )
 {
     // NOTHING
 }
@@ -171,11 +175,13 @@ namespace boost
 // -----------------------------------------------------------------------------
 void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    MIL_DictionaryExtensions* pExtensions;
     file >> boost::serialization::base_object< MIL_Army_ABC >( *this );
     file >> const_cast< std::string& >( strName_ );
     file >> const_cast< unsigned int& >( nID_ );
     file >> nType_;
     file >> diplomacies_;
+    file >> pExtensions;
     {
         unsigned int nNbr;
         file >> nNbr;
@@ -227,6 +233,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
         }
     }
     file >> pKnowledgeBlackBoard_;
+    pExtensions_.reset( pExtensions );
 }
 
 // -----------------------------------------------------------------------------
@@ -235,11 +242,13 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
+    const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Army_ABC >( *this );
     file << const_cast< std::string& >( strName_ );
     file << const_cast< unsigned int& >( nID_ );
     file << nType_;
     file << diplomacies_;
+    file << pExtensions;
     {
         unsigned int size = knowledgeGroups_.size();
         file << size;
@@ -299,31 +308,33 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "name", strName_ )
             << xml::attribute( "type", diplomacyConverter_.RevertConvert( nType_ ) );
 
-    xos     << xml::start( "communication" );
+    pExtensions_->WriteODB( xos );
+
+    xos << xml::start( "communication" );
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         if( !it->second->IsJammed() )
             it->second->WriteODB( xos );
-    xos     << xml::end;
+    xos << xml::end;
 
-    xos     << xml::start( "tactical" );
+    xos << xml::start( "tactical" );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref(xos) ) );
-    xos     << xml::end;
+    xos << xml::end;
 
-    xos     << xml::start( "logistics" );
+    xos << xml::start( "logistics" );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteLogisticLinksODB, _1, boost::ref(xos) ) );
-    xos     << xml::end;
+    xos << xml::end;
 
-    xos     << xml::start( "objects" );
+    xos << xml::start( "objects" );
     tools::Resolver< MIL_Object_ABC >::Apply( boost::bind( &MIL_Object_ABC::WriteODB, _1, boost::ref(xos) ) );
-    xos     << xml::end;
+    xos << xml::end;
 
-    xos     << xml::start( "populations" );
+    xos << xml::start( "populations" );
     tools::Resolver< MIL_Population >::Apply( boost::bind( &MIL_Population::WriteODB, _1, boost::ref(xos) ) );
-    xos     << xml::end;
+    xos << xml::end;
 
-    xos     << xml::start( "inhabitants" );
+    xos << xml::start( "inhabitants" );
     tools::Resolver< MIL_Inhabitant >::Apply( boost::bind( &MIL_Inhabitant::WriteODB, _1, boost::ref(xos) ) );
-    xos     << xml::end;
+    xos << xml::end;
 
     xos << xml::end;
 }
@@ -628,6 +639,7 @@ void MIL_Army::SendCreation() const
     asn().mutable_party()->set_id( nID_ );
     asn().set_name( strName_.c_str() );
     asn().set_type( sword::EnumDiplomacy( nType_ ) );
+    pExtensions_->SendFullState( asn );
     asn.Send( NET_Publisher_ABC::Publisher() );
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendCreation();

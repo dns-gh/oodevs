@@ -47,9 +47,6 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
     , order_            ( 0 )
     , symbol_           ( msg.app6symbol() )
 {
-    if( msg.has_extension() )
-        for( int i = 0; i < msg.extension().entries_size(); ++i )
-            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( ! parentFormation_ && ! parentAutomat_ )
         throw std::runtime_error( __FUNCTION__ ": invalid parent for automat " + msg.name() );
     knowledgeGroup_->Register( *this );
@@ -239,6 +236,9 @@ void Automat::DoUpdate( const sword::AutomatAttributes& msg )
         nOperationalState_ = msg.operational_state();
     if( msg.has_roe()  )
         nRoe_ = msg.roe();
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
 }
 
 // -----------------------------------------------------------------------------
@@ -249,7 +249,6 @@ void Automat::DoUpdate( const sword::DecisionalState& asnMsg )
 {
     decisionalInfos_.Update( asnMsg );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Automat::DoUpdate
@@ -281,12 +280,6 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
         if( parentAutomat_ )
             asn().mutable_parent()->mutable_automat()->set_id( parentAutomat_->GetId() );
         asn().set_logistic_level( sword::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
-        for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
-        {
-            sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
-            entry->set_name( it->first );
-            entry->set_value( it->second );
-        }
         asn.Send( publisher );
     }
     if( logisticEntity_.GetLogisticLevel() != kernel::LogisticLevel::none_ )
@@ -312,6 +305,12 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_meeting_engagement( nCloseCombatState_);
         asn().set_operational_state( nOperationalState_ );
         asn().set_roe( nRoe_ );
+        for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+        {
+            sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+            entry->set_name( it->first );
+            entry->set_value( it->second );
+        }
         asn.Send( publisher );
     }
     {

@@ -42,9 +42,7 @@ class Automat : public kernel::EntityImplementation< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( const sword::AutomatCreation& message, kernel::Controller& controller,
-                      const tools::Resolver_ABC< kernel::AutomatType >& resolver,
-                      const kernel::StaticModel& staticModel );
+             Automat( const sword::AutomatCreation& message, kernel::Controller& controller, const tools::Resolver_ABC< kernel::AutomatType >& resolver );
     virtual ~Automat();
     //@}
 

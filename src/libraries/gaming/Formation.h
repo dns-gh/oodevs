@@ -18,6 +18,7 @@
 namespace sword
 {
     class FormationCreation;
+    class FormationUpdate;
     class LogisticLevel;
 }
 
@@ -33,14 +34,14 @@ namespace kernel
 // Created: AGE 2006-10-19
 // =============================================================================
 class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
+                , public kernel::Updatable_ABC< sword::FormationUpdate >
                 , public kernel::Extension_ABC
                 , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const sword::FormationCreation& message, kernel::Controller& controller,
-                        const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver, const kernel::StaticModel& staticModel );
+             Formation( const sword::FormationCreation& message, kernel::Controller& controller, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver );
     virtual ~Formation();
     //@}
 
@@ -68,15 +69,17 @@ private:
     void InitializeSymbol() const;
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;
     bool HasAggregatedSubordinate() const;
+    void DoUpdate( const sword::FormationUpdate& message );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controller&               controller_;
     const kernel::HierarchyLevel_ABC& level_;
-    const kernel::LogisticLevel* logisticLevel_;
-    mutable std::string symbolPath_; // $$$$ RC LDC: code duplication with preparation
-    mutable std::string levelPath_;
+    const kernel::LogisticLevel*      logisticLevel_;
+    mutable std::string               symbolPath_; // $$$$ RC LDC: code duplication with preparation
+    mutable std::string               levelPath_;
     //@}
 };
 

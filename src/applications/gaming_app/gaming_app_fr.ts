@@ -602,6 +602,13 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>ExtensionsPanel</name>
+    <message>
+        <source>Change extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FireCreationPanel</name>
     <message>
         <source>Strike</source>
@@ -2275,13 +2282,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>OrbatAttributesDialog</name>
-    <message>
-        <source>Extensions</source>
-        <translation>Extensions</translation>
-    </message>
-</context>
-<context>
     <name>OrbatToolbar</name>
     <message>
         <source>Aggregate all automats</source>
@@ -3148,6 +3148,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Last tick speed factor/Mean speed factor</source>
         <translation>Facteur d&apos;accélération dernier tick/moyen</translation>
+    </message>
+    <message>
+        <source>Validate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -9,31 +9,31 @@
 
 #include "gaming_app_pch.h"
 #include "Dialogs.h"
+
+#include "AgentChangeAffinitiesDialog.h"
 #include "BriefingDialog.h"
 #include "ChangeDiplomacyDialog.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "CreateFormationDialog.h"
-#include "AgentChangeAffinitiesDialog.h"
-#include "PopulationChangeAffinitiesDialog.h"
 #include "InhabitantChangeAffinitiesDialog.h"
-#include "InhabitantChangeHealthStateDialog.h"
 #include "InhabitantChangeAlertedStateDialog.h"
 #include "InhabitantChangeConfinedStateDialog.h"
+#include "InhabitantChangeHealthStateDialog.h"
 #include "InhabitantExtractCrowdDialog.h"
+#include "LivingAreaDialog.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "LogisticSupplyPullFlowDialog.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "MedicalCapacityUpdateDialog.h"
-#include "OrbatAttributesDialog.h"
-#include "LivingAreaDialog.h"
+#include "PopulationChangeAffinitiesDialog.h"
 #include "PopulationChangeHealthStateDialog.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
-#include "gaming/TeamsModel.h"
 #include "gaming/StaticModel.h"
+#include "gaming/TeamsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: Dialogs constructor
@@ -54,7 +54,6 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new MedicalCapacityUpdateDialog( parent, controllers, actionsModel, staticModel, simulation, publisher, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );
     new CreateFormationDialog( parent, controllers, model.formations_, profile, actionsModel, simulation );
-    new OrbatAttributesDialog( parent, controllers );
     new AgentChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new PopulationChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new InhabitantChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );

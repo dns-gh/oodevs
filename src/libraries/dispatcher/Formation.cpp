@@ -36,14 +36,12 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
     , logisticEntity_( model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve( msg.logistic_level() ) )
     , parent_( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
 {
-    if( msg.has_extension() )
-        for( int i = 0; i < msg.extension().entries_size(); ++i )
-            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     if( parent_ )
         parent_->Register( *this );
     else
         team_.Register( *this );
     RegisterSelf( logisticEntity_ );
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -124,12 +122,6 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
     message().set_logistic_level( sword::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
-    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
-    {
-        sword::Extension_Entry* entry = message().mutable_extension()->add_entries();
-        entry->set_name( it->first );
-        entry->set_value( it->second );
-    }
     message.Send( publisher );
 
     if( logisticEntity_.GetLogisticLevel() != kernel::LogisticLevel::none_ )
@@ -147,6 +139,17 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Formation::SendFullUpdate( ClientPublisher_ABC& publisher) const
 {
+    {
+        client::FormationUpdate asn;
+        asn().mutable_formation()->set_id( GetId() );
+        for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+        {
+            sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+            entry->set_name( it->first );
+            entry->set_value( it->second );
+        }
+        asn.Send( publisher );
+    }
     if( logisticEntity_.GetLogisticLevel() != kernel::LogisticLevel::none_)
     {
         client::ChangeLogisticLinks asn;
@@ -271,4 +274,15 @@ const kernel::LogisticLevel& Formation::GetLogisticLevel() const
 void Formation::DoUpdate( const sword::ChangeLogisticLinks& )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::DoUpdate
+// Created: ABR 2011-05-11
+// -----------------------------------------------------------------------------
+void Formation::DoUpdate( const sword::FormationUpdate& msg )
+{
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
 }

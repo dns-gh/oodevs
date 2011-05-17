@@ -602,6 +602,13 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>ExtensionsPanel</name>
+    <message>
+        <source>Change extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FireCreationPanel</name>
     <message>
         <source>Reporter:</source>
@@ -2275,13 +2282,6 @@ Motivo: %3
     </message>
 </context>
 <context>
-    <name>OrbatAttributesDialog</name>
-    <message>
-        <source>Extensions</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>OrbatToolbar</name>
     <message>
         <source>Aggregate all automats</source>
@@ -3148,6 +3148,14 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     <message>
         <source>Last tick speed factor/Mean speed factor</source>
         <translation>Último factor de velocidad de ticks/ factor de velocidad</translation>
+    </message>
+    <message>
+        <source>Validate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

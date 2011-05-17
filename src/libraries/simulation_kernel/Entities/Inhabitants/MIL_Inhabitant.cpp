@@ -22,8 +22,9 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_AffinitiesMap.h"
+#include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MIL_IDManager.h"
 #include <boost/foreach.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Inhabitant )
@@ -66,6 +67,9 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , nNbrDeadHumans_         ( 0 )
     , nNbrWoundedHumans_      ( 0 )
     , healthStateChanged_     ( false )
+    , pSatisfactions_         ( new MIL_InhabitantSatisfactions( xis ) )
+    , pAffinities_            ( new MIL_AffinitiesMap( xis ) )
+    , pExtensions_            ( new MIL_DictionaryExtensions( xis ) )
 {
     idManager_.Lock( nID_ );
     xis >> xml::start( "composition" )
@@ -75,18 +79,12 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
         >> xml::end
         >> xml::start( "information" )
             >> xml::optional >> text_
-        >> xml::end
-        >> xml::optional >> xml::start( "extensions" )
-            >> xml::list( "entry", *this, &MIL_Inhabitant::ReadExtension )
         >> xml::end;
-
     pLivingArea_.reset( new MIL_LivingArea( xis, nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_, *this ) );
     pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
     type_.InitializeSchedule( *pSchedule_ );
-    pSatisfactions_.reset( new MIL_InhabitantSatisfactions( xis ) );
     pArmy_->RegisterInhabitant( *this );
     pSatisfactions_->ComputeHealthSatisfaction( pLivingArea_->HealthCount() );
-    pAffinities_.reset( new MIL_AffinitiesMap( xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,6 +99,9 @@ MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     , pPopulationMovingObject_( 0 )
     , pLivingArea_            ( 0 )
     , pSchedule_              ( 0 )
+    , pSatisfactions_         ( 0 )
+    , pAffinities_            ( 0 )
+    , pExtensions_            ( 0 )
     , nNbrHealthyHumans_      ( 0 )
     , nNbrDeadHumans_         ( 0 )
     , nNbrWoundedHumans_      ( 0 )
@@ -128,6 +129,7 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
     MIL_LivingArea* pLivingArea;
     MIL_InhabitantSatisfactions* pSatisfactions;
     MIL_AffinitiesMap* pAffinities;
+    MIL_DictionaryExtensions* pExtensions;
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file >> const_cast< unsigned int& >( nID_ )
          >> const_cast< MIL_Army_ABC*& >( pArmy_ );
@@ -138,22 +140,12 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> nNbrWoundedHumans_
          >> pSatisfactions
          >> pLivingArea
-         >> pAffinities;
+         >> pAffinities
+         >> pExtensions;
     pLivingArea_.reset( pLivingArea );
     pSatisfactions_.reset( pSatisfactions );
     pAffinities_.reset( pAffinities );
-    unsigned int size;
-    file >> size;
-    {
-        std::string first;
-        std::string second;
-        for( unsigned int i = 0; i < size; ++i )
-        {
-            file >> first
-                >> second;
-            extensions_[ first ] = second;
-        }
-    }
+    pExtensions_.reset( pExtensions );
     pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
     type_.InitializeSchedule( *pSchedule_ );
 }
@@ -167,6 +159,7 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
     const MIL_LivingArea* const pLivingArea = pLivingArea_.get();
     const MIL_InhabitantSatisfactions* const pSatisfactions = pSatisfactions_.get();
     const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
+    const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file << nID_
          << pArmy_
@@ -176,13 +169,8 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << nNbrWoundedHumans_
          << pSatisfactions
          << pLivingArea
-         << pAffinities;
-    unsigned int size;
-    size = extensions_.size();
-    file << size;
-    for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
-        file << it->first
-             << it->second;
+         << pAffinities
+         << pExtensions;
 }
 
 // -----------------------------------------------------------------------------
@@ -202,30 +190,10 @@ void MIL_Inhabitant::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "dead", nNbrDeadHumans_ )
         << xml::end
         << xml::content( "information", text_ );
-    if( !extensions_.empty() )
-    {
-        xos << xml::start( "extensions" );
-        BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
-        {
-            xos << xml::start( "entry" )
-                    << xml::attribute( "key", extension.first )
-                    << xml::attribute( "value", extension.second )
-                << xml::end;
-        }
-        xos << xml::end;
-    }
     pLivingArea_->WriteODB( xos );
     pSatisfactions_->WriteODB( xos );
     pAffinities_->WriteODB( xos );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Inhabitant::ReadExtension
-// Created: SLG 2010-11-29
-// -----------------------------------------------------------------------------
-void MIL_Inhabitant::ReadExtension( xml::xistream& xis )
-{
-    extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
+    pExtensions_->WriteODB( xos );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,12 +208,6 @@ void MIL_Inhabitant::SendCreation() const
     msg().mutable_party()->set_id( pArmy_->GetID() );
     msg().set_text( text_ );
     msg().set_name( GetName() );
-    BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
-    {
-        sword::Extension_Entry* entry = msg().mutable_extension()->add_entries();
-        entry->set_name( extension.first );
-        entry->set_value( extension.second );
-    }
     pLivingArea_->SendCreation( msg );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -261,9 +223,10 @@ void MIL_Inhabitant::SendFullState() const
     msg().set_healthy( nNbrHealthyHumans_ );
     msg().set_dead( nNbrDeadHumans_ );
     msg().set_wounded( nNbrWoundedHumans_ );
-    pAffinities_->SendFullState( msg );
     pLivingArea_->SendFullState( msg );
     pSatisfactions_->SendFullState( msg );
+    pAffinities_->SendFullState( msg );
+    pExtensions_->SendFullState( msg );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -285,7 +248,7 @@ void MIL_Inhabitant::UpdateState()
     MIL_LivingArea::T_Blocks angryBlocks;
     for( MIL_InhabitantType::CIT_ConsumptionsMap it = consumptions.begin(); it != consumptions.end(); ++it )
     {
-        float satisfaction = pLivingArea_->Consume( *it->first, it->second, angryBlocks );
+        float satisfaction = pLivingArea_->Consume( *it->first, static_cast< unsigned int >( it->second ), angryBlocks );
         pSatisfactions_->SetResourceSatisfaction( *it->first, satisfaction );
     }
     std::map< std::string, unsigned int > occupations;
@@ -313,10 +276,11 @@ void MIL_Inhabitant::UpdateNetwork()
         msg().set_wounded( nNbrWoundedHumans_ );
         msg().set_dead( nNbrDeadHumans_ );
     }
-    pAffinities_->UpdateNetwork( msg );
     pLivingArea_->UpdateNetwork( msg );
     pSatisfactions_->UpdateNetwork( msg );
-    if( healthStateChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() || msg().has_adhesions() )
+    pAffinities_->UpdateNetwork( msg );
+    pExtensions_->UpdateNetwork( msg );
+    if( healthStateChanged_ || msg().occupations_size() > 0 || msg().has_satisfaction() || msg().has_adhesions() || msg().has_extension() )
         msg.Send( NET_Publisher_ABC::Publisher() );
     healthStateChanged_ = false;
 }
@@ -325,7 +289,7 @@ void MIL_Inhabitant::UpdateNetwork()
 // Name: MIL_Inhabitant::OnReceiveInhabitantMagicAction
 // Created: ABR 2011-01-26
 // -----------------------------------------------------------------------------
-void MIL_Inhabitant::OnReceiveInhabitantMagicAction( const sword::UnitMagicAction& msg )
+void MIL_Inhabitant::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg )
 {
     client::ChangePopulationMagicActionAck ack;
     ack().set_error_code( sword::ChangePopulationMagicActionAck::no_error );
@@ -336,14 +300,17 @@ void MIL_Inhabitant::OnReceiveInhabitantMagicAction( const sword::UnitMagicActio
         case sword::UnitMagicAction::inhabitant_change_health_state:
             OnReceiveMsgChangeHealthState( msg );
             break;
-        case sword::UnitMagicAction::inhabitant_change_affinities:
-            pAffinities_->OnReceiveMsgChangeAffinities( msg );
-            break;
         case sword::UnitMagicAction::inhabitant_change_alerted_state:
             OnReceiveMsgChangeAlertedState( msg );
             break;
         case sword::UnitMagicAction::inhabitant_change_confined_state:
             OnReceiveMsgChangeConfinedState( msg );
+            break;
+        case sword::UnitMagicAction::inhabitant_change_affinities:
+            pAffinities_->OnReceiveMsgChangeAffinities( msg );
+            break;
+        case sword::UnitMagicAction::change_extension:
+            pExtensions_->OnReceiveMsgChangeExtensions( msg );
             break;
         default:
             assert( false );

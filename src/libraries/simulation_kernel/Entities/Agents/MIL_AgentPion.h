@@ -33,10 +33,11 @@ namespace xml
 
 class DEC_Decision_ABC;
 class DEC_KnowledgeBlackBoard_AgentPion;
+class MIL_AffinitiesMap;
 class MIL_Army;
 class MIL_Automate;
+class MIL_DictionaryExtensions;
 class MIL_EntityManager;
-class MIL_AffinitiesMap;
 
 // =============================================================================
 /** @class  MIL_AgentPion
@@ -149,7 +150,6 @@ private:
     //! @name Operations
     //@{
     void UpdatePhysicalState();
-    void ReadExtension( xml::xistream& xis );
     //@}
 
     //! @name Magic actions
@@ -166,11 +166,6 @@ private:
     void OnReceiveCreateWound( const sword::MissionParameters& asn );
     //@}
 
-    //! @name Types
-    //@{
-    typedef std::map< std::string, std::string > T_Extensions;
-    //@}
-
     //! @name Serialization
     //@{
     template< typename Archive > friend void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const unsigned int version );
@@ -180,15 +175,15 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_AgentTypePion* pType_;
-    bool bIsPC_;
-    std::string criticalIntelligence_;
-    MIL_Automate* pAutomate_;
-    const AlgorithmsFactories& algorithmFactories_;
-    DEC_KnowledgeBlackBoard_AgentPion* pKnowledgeBlackBoard_;
-    MIL_PionOrderManager& orderManager_;
-    T_Extensions extensions_;
-    std::auto_ptr< MIL_AffinitiesMap > pAffinities_;
+    const MIL_AgentTypePion*                    pType_;
+    bool                                        bIsPC_;
+    std::string                                 criticalIntelligence_;
+    MIL_Automate*                               pAutomate_;
+    const AlgorithmsFactories&                  algorithmFactories_;
+    DEC_KnowledgeBlackBoard_AgentPion*          pKnowledgeBlackBoard_;
+    MIL_PionOrderManager&                       orderManager_;
+    std::auto_ptr< MIL_AffinitiesMap >          pAffinities_;
+    std::auto_ptr< MIL_DictionaryExtensions >   pExtensions_;
     //@}
 };
 

@@ -33,6 +33,7 @@ DotationsListView.cpp \
 EfficientRangeDialog.cpp \
 EquipmentsListView.cpp \
 EventToolbar.cpp \
+ExtensionsPanel.cpp \
 FireCreationPanel.cpp \
 FireResultListView.cpp \
 HumansListView.cpp \

@@ -245,6 +245,7 @@ void Converter::ReceiveSimToClient( const std::string& /*from*/, const sword::Si
     FORWARD( client_, SimulationToClient, control_date_time_change_ack )
     FORWARD( client_, SimulationToClient, control_checkpoint_save_end )
     FORWARD( client_, SimulationToClient, formation_creation )
+    FORWARD( client_, SimulationToClient, formation_update )
     FORWARD( client_, SimulationToClient, party_creation )
     FORWARD( client_, SimulationToClient, automat_creation )
     FORWARD( client_, SimulationToClient, automat_attributes )

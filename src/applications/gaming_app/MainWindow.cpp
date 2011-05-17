@@ -23,6 +23,7 @@
 #include "CreationPanels.h"
 #include "Dialogs.h"
 #include "EventToolbar.h"
+#include "ExtensionsPanel.h"
 #include "FogLayer.h"
 #include "FormationLayer.h"
 #include "icons.h"
@@ -61,6 +62,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
@@ -333,7 +335,6 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
         connect( timelinePanel, SIGNAL( PlanificationModeChange() ), this, SLOT( OnNameChanged() ) );
         timelinePanel->hide();
     }
-
     // Score panel
     {
         ScorePanel* scorePanel = new ScorePanel( this, controllers_, *factory, *interpreter, *plotFactory, *indicatorExportDialog, model_.scores_, config );
@@ -341,14 +342,12 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
         setDockEnabled( scorePanel, Qt::DockTop, false );
         scorePanel->hide();
     }
-
     // Notes panel
     {
         NotesPanel* notePanel = new NotesPanel( this, controllers_.controller_, *factory, model_.notes_, publisher );
         moveDockWindow( notePanel, Qt::DockRight );
         setDockEnabled( notePanel, Qt::DockTop, false );
     }
-
     // Message panel
     {
         QDockWindow* messageDock = new MessagePanel( this, controllers_, publisher, network.GetCommands() );
@@ -358,13 +357,20 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
         setDockEnabled( messageDock, Qt::DockRight, false );
         moveDockWindow( messageDock, Qt::DockTop, true, -1 );
     }
-
     // ResourceNetwork panel
     {
         QDockWindow* pResourceWnd = new ResourceLinksDialog( this, controllers, model_.actions_, staticModel, simulation );
         moveDockWindow( pResourceWnd, Qt::DockLeft );
         setDockEnabled( pResourceWnd, Qt::DockTop, false );
         pResourceWnd->hide();
+    }
+    // Extensions panel
+    {
+        pExtensionsPanel_ = new ExtensionsPanel( this, controllers, model, staticModel_, simulation, *factory, *icons, profile, "ExtensionsPanel" );
+        moveDockWindow( pExtensionsPanel_, Qt::DockLeft );
+        setDockEnabled( pExtensionsPanel_, Qt::DockTop, false );
+        setAppropriate( pExtensionsPanel_, false );
+        pExtensionsPanel_->hide();
     }
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
@@ -516,6 +522,13 @@ void MainWindow::Load()
         selector_->Close();
         selector_->Load();
         staticModel_.Load( config_ );
+        if( staticModel_.extensionTypes_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" ) )
+            setAppropriate( pExtensionsPanel_, true );
+        else
+        {
+            setAppropriate( pExtensionsPanel_, false );
+            pExtensionsPanel_->hide();
+        }
         ReadOptions();
     }
     catch( xml::exception& e )

@@ -25,6 +25,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_AffinitiesMap.h"
+#include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_World.h"
@@ -87,6 +88,8 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
+    , pAffinities_                ( new MIL_AffinitiesMap( xis ) )
+    , pExtensions_                ( new MIL_DictionaryExtensions( xis ) )
 {
     idManager_.Lock( nID_ );
     std::string strAttitude;
@@ -104,11 +107,7 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
         >> xml::end
         >> xml::optional >> xml::start( "critical-intelligence" )
             >> xml::attribute( "content", criticalIntelligence_ )
-        >> xml::end
-        >> xml::optional >> xml::start( "extensions" )
-            >> xml::list( "entry", *this, &MIL_Population::ReadExtension )
         >> xml::end;
-    pAffinities_.reset( new MIL_AffinitiesMap( xis ) );
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
     RegisterRole( *new DEC_PopulationDecision( *this, gcPause, gcMult ) );
     RegisterRole( *new DEC_Representations() );
@@ -141,6 +140,8 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
+    , pAffinities_                ( 0 )
+    , pExtensions_                ( 0 )
 {
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
     vBarycenter_.reset( new MT_Vector2D() );
@@ -169,6 +170,8 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     , bHasDoneMagicMove_          ( false )
     , criticalIntelligenceChanged_( false )
     , armedIndividualsChanged_    ( false )
+    , pAffinities_                ( new MIL_AffinitiesMap() )
+    , pExtensions_                ( new MIL_DictionaryExtensions() )
 {
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( "calme" );
     pKnowledge_ = new DEC_PopulationKnowledge( *this );
@@ -178,7 +181,6 @@ MIL_Population::MIL_Population( const MIL_PopulationType& type, MIL_Army_ABC& ar
     MIL_PopulationConcentration* pConcentration = new MIL_PopulationConcentration( *this, point, number );
     concentrations_.push_back( pConcentration );
     pArmy_->RegisterPopulation( *this );
-    pAffinities_.reset( new MIL_AffinitiesMap() );
     vBarycenter_.reset( new MT_Vector2D() );
     UpdateBarycenter();
 }
@@ -223,6 +225,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> const_cast< MIL_Army_ABC*& >( pArmy_ );
     idManager_.Lock( nID_ );
     MIL_AffinitiesMap* pAffinities;
+    MIL_DictionaryExtensions* pExtensions;
     unsigned int nAttitudeID;
     file >> nAttitudeID;
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
@@ -240,8 +243,10 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> rOverloadedPionMaxSpeed_
          >> pKnowledge_
          >> bHasDoneMagicMove_
-         >> pAffinities;
+         >> pAffinities
+         >> pExtensions;
     pAffinities_.reset( pAffinities );
+    pExtensions_.reset( pExtensions );
     MT_Vector2D tmp;
     file >> tmp;
     vBarycenter_.reset( new MT_Vector2D( tmp ) );
@@ -260,6 +265,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
+    const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     unsigned attitude = pDefaultAttitude_->GetID();
     file << nID_
@@ -279,6 +285,7 @@ void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << pKnowledge_
          << bHasDoneMagicMove_
          << pAffinities
+         << pExtensions
          << (*vBarycenter_);
     SaveRole< DEC_PopulationDecision >( *this, file );
 }
@@ -323,28 +330,8 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
                 << xml::attribute( "content", criticalIntelligence_ )
             << xml::end;
     pAffinities_->WriteODB( xos );
-    if( !extensions_.empty() )
-    {
-        xos << xml::start( "extensions" );
-        BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
-        {
-            xos << xml::start( "entry" )
-                    << xml::attribute( "key", extension.first )
-                    << xml::attribute( "value", extension.second )
-                << xml::end;
-        }
-        xos << xml::end;
-    }
+    pExtensions_->WriteODB( xos );
     xos << xml::end; // population
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Population::ReadExtension
-// Created: JSR 2010-10-08
-// -----------------------------------------------------------------------------
-void MIL_Population::ReadExtension( xml::xistream& xis )
-{
-    extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -460,7 +447,6 @@ void MIL_Population::UpdateState()
         else
             ++itFlow;
     }
-
     // Concentrations
     for( IT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); )
     {
@@ -1016,7 +1002,7 @@ void MIL_Population::OnReceiveFragOrder( const sword::FragOrder& msg )
 // Name: MIL_Population::OnReceiveCrowdMagicAction
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveCrowdMagicAction( const sword::UnitMagicAction& msg )
+void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg )
 {
     switch( msg.type() )
     {
@@ -1026,14 +1012,17 @@ void MIL_Population::OnReceiveCrowdMagicAction( const sword::UnitMagicAction& ms
     case sword::UnitMagicAction::crowd_change_health_state:
         OnReceiveMsgChangeHealthState( msg );
         break;
-    case sword::UnitMagicAction::crowd_change_affinities:
-        pAffinities_->OnReceiveMsgChangeAffinities( msg );
-        break;
     case sword::UnitMagicAction::crowd_change_armed_individuals:
         OnReceiveMsgChangeArmedIndividuals( msg);
         break;
     case sword::UnitMagicAction::crowd_change_attitude:
         OnReceiveMsgChangeAttitude( msg );
+        break;
+    case sword::UnitMagicAction::crowd_change_affinities:
+        pAffinities_->OnReceiveMsgChangeAffinities( msg );
+        break;
+    case sword::UnitMagicAction::change_extension:
+        pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
     default:
         assert( false );
@@ -1246,18 +1235,10 @@ void MIL_Population::SendCreation() const
     asnMsg().mutable_type()->set_id( pType_->GetID() );
     asnMsg().mutable_party()->set_id( pArmy_->GetID() );
     asnMsg().set_name( GetName() );
-    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
-    {
-        sword::Extension_Entry* entry = asnMsg().mutable_extension()->add_entries();
-        entry->set_name( it->first );
-        entry->set_value( it->second );
-    }
     asnMsg().mutable_repartition()->set_male( static_cast< float >( rMale_ ) );
     asnMsg().mutable_repartition()->set_female( static_cast< float >( rFemale_ ) );
     asnMsg().mutable_repartition()->set_children( static_cast< float >( rChildren_ ) );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-    if( asnMsg().has_extension() )
-        asnMsg().mutable_extension()->mutable_entries()->Clear();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
         ( **it ).SendCreation();
     for( CIT_ConcentrationVector it = trashedConcentrations_.begin(); it != trashedConcentrations_.end(); ++it )
@@ -1281,6 +1262,7 @@ void MIL_Population::SendFullState() const
         asnMsg().set_critical_intelligence( criticalIntelligence_ );
     asnMsg().set_armed_individuals( static_cast< float >( rArmedIndividuals_ ) );
     pAffinities_->SendFullState( asnMsg );
+    pExtensions_->SendFullState( asnMsg );
     asnMsg().set_healthy( GetHealthyHumans() );
     asnMsg().set_wounded( GetWoundedHumans() );
     asnMsg().set_contaminated( GetContaminatedHumans() );
@@ -1302,7 +1284,7 @@ void MIL_Population::SendFullState() const
 // -----------------------------------------------------------------------------
 void MIL_Population::UpdateNetwork()
 {
-    if( GetRole< DEC_PopulationDecision >().HasStateChanged() || criticalIntelligenceChanged_ || armedIndividualsChanged_ || pAffinities_->HasChanged() )
+    if( GetRole< DEC_PopulationDecision >().HasStateChanged() || criticalIntelligenceChanged_ || armedIndividualsChanged_ || pAffinities_->HasChanged() || pExtensions_->HasChanged() || HasHumansChanged() )
     {
         client::CrowdUpdate asnMsg;
         asnMsg().mutable_crowd()->set_id( nID_ );
@@ -1314,6 +1296,7 @@ void MIL_Population::UpdateNetwork()
         criticalIntelligenceChanged_ = false;
         armedIndividualsChanged_ = false;
         pAffinities_->UpdateNetwork( asnMsg );
+        pExtensions_->UpdateNetwork( asnMsg );
         if( HasHumansChanged() )
         {
             asnMsg().set_healthy( GetHealthyHumans() );

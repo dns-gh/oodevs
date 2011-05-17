@@ -491,7 +491,7 @@ message PartyCreation {
    required PartyId       party     = 1; //!< The party identifier @see PartyId
    required string        name      = 2; //!< The party name
    required EnumDiplomacy type      = 3; //!< @todo Relation to what ?
-   optional Extension     extension = 4; //!< @todo What is that ?
+   optional Extension     extension = 4; //!< The extension fields
    optional RgbColor      color     = 5; //!< The party color @see RgbColor
 }
 
@@ -513,11 +513,18 @@ message FormationCreation {
     optional FormationId       parent                = 3;  //!< The parent formation identifier @see FormationId
     required EnumNatureLevel   level                 = 4;  //!< @todo What's this ?
     required string            name                  = 5;  //!< The formation name
-    optional Extension         extension             = 6;  //!< @todo What's this ?
-    required string            app6symbol            = 7;  //!< The formation APP-6 symbol
-    required EnumLogisticLevel logistic_level        = 8;  //!< @todo What's this ?
-    optional RgbColor          color                 = 9;  //!< The formation color @see RgbColor
-    optional ParentEntity      logistic_base_organic = 10; //!< @deprecated
+    required string            app6symbol            = 6;  //!< The formation APP-6 symbol
+    required EnumLogisticLevel logistic_level        = 7;  //!< @todo What's this ?
+    optional RgbColor          color                 = 8;  //!< The formation color @see RgbColor
+    optional ParentEntity      logistic_base_organic = 9;  //!< @deprecated
+}
+
+/** @struct FormationUpdate
+    @brief A formation update message
+*/
+message FormationUpdate {
+    required FormationId       formation             = 1;  //!< The formation identifier @see FormationId
+    optional Extension         extension             = 2;  //!< The extension fields
 }
 
 /** @struct FormationDestruction
@@ -537,10 +544,9 @@ message AutomatCreation {
     required ParentEntity      parent          = 4;  //!< The automat parent @see ParentEntity
     required PartyId           party           = 5;  //!< The automat party @see PartyId
     optional KnowledgeGroupId  knowledge_group = 6;  //!< The automat knowledge group @see KnowledgeGroupId
-    optional Extension         extension       = 7;  //!< @todo What's this ?
-    required string            app6symbol      = 8;  //!< The automat APP-6 symbol
-    required EnumLogisticLevel logistic_level  = 9;  //!< The automat logistic level @see EnumLogisticLevel
-    optional RgbColor          color           = 10; //!< The automat color @see RgbColor
+    required string            app6symbol      = 7;  //!< The automat APP-6 symbol
+    required EnumLogisticLevel logistic_level  = 8;  //!< The automat logistic level @see EnumLogisticLevel
+    optional RgbColor          color           = 9;  //!< The automat color @see RgbColor
 }
 
 /** @struct RulesOfEngagement
@@ -606,6 +612,7 @@ message AutomatAttributes {
    optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement
    optional AutomatId                   tc2_organic           = 7; //!< @deprecated
    optional ParentEntity                logistic_base_organic = 8; //!< @deprecated
+   optional Extension                   extension             = 9;  //!< The extension fields
 }
 
 /** @struct AutomatDestruction
@@ -859,9 +866,9 @@ message UnitAttributes {
     optional bool                        prisoner                   = 43; //!< Whether the unit has been made prisoner or not
     optional bool                        refugees_managed           = 44; //!< Whether refugees are being handled by the unit or not
     optional Satisfaction                satisfaction               = 45; //!< The satisfaction @see Satisfaction
-    optional string                      critical_intelligence      = 46; //!<  The current critical intelligence
+    optional string                      critical_intelligence      = 46; //!< The current critical intelligence
     optional PartyAdhesions              adhesions                  = 47; //!< The party adhesions
-    optional Extension                   extension                  = 48; //!< @todo What's this ?
+    optional Extension                   extension                  = 48; //!< The extension fields
     optional float                       refugees_lodging_satisf    = 49;
     optional float                       refugees_security_satisf   = 50;
     optional float                       refugees_health_satisf     = 51;        
@@ -1712,23 +1719,23 @@ message CrowdCreation {
    required CrowdType        type        = 2; //!< The crowd type
    optional string           name        = 3; //!< The crowd name
    required PartyId          party       = 4; //!< The crowd party
-   optional Extension        extension   = 5; //!< @todo What's this ?
-   required HumanRepartition repartition = 6; //!< The crowd repartition @see HumanRepartition
+   required HumanRepartition repartition = 5; //!< The crowd repartition @see HumanRepartition
 }
 
 /** @struct CrowdUpdate
     @brief Notifies of the update of a crowd
 */
 message CrowdUpdate {
-   required CrowdId       crowd                 = 1; //!< The crowd identifier
-   optional int32         domination            = 2; //!< The crowd domination
-   optional PartyAdhesions adhesions            = 3; //!< The party adhesions
-   optional string        critical_intelligence = 4; //!< The crowd critical intelligence
-   optional float         armed_individuals     = 5; //!< The armed individuals proportion between 0 and 1
-   optional int32         healthy               = 6; //!< The number of healthy persons
-   optional int32         wounded               = 7; //!< The number of wounded persons
-   optional int32         contaminated          = 8; //!< The number of contaminated persons
-   optional int32         dead                  = 9; //!< The number of dead persons
+   required CrowdId        crowd                 = 1; //!< The crowd identifier
+   optional int32          domination            = 2; //!< The crowd domination
+   optional PartyAdhesions adhesions             = 3; //!< The party adhesions
+   optional string         critical_intelligence = 4; //!< The crowd critical intelligence
+   optional float          armed_individuals     = 5; //!< The armed individuals proportion between 0 and 1
+   optional int32          healthy               = 6; //!< The number of healthy persons
+   optional int32          wounded               = 7; //!< The number of wounded persons
+   optional int32          contaminated          = 8; //!< The number of contaminated persons
+   optional int32          dead                  = 9; //!< The number of dead persons
+   optional Extension      extension             = 10; //!< The extension fields
 }
 
 /** @struct CrowdDestruction
@@ -2275,8 +2282,7 @@ message PopulationCreation {
     required PopulationType type      = 3; //!< The population type
     required string         name      = 4; //!< The population name
     required string         text      = 5; //!< @deprecated should be an extension entry
-    optional Extension      extension = 6; //!< The extension
-    repeated ObjectId       objects   = 7; //!< The object identifiers of urban blocks where the population live
+    repeated ObjectId       objects   = 6; //!< The object identifiers of urban blocks where the population live
 }
 
 /** @struct PopulationUpdate
@@ -2333,6 +2339,7 @@ message PopulationUpdate {
     optional Satisfaction    satisfaction = 6; //!< The current satisfaction
     optional string          motivation   = 7; //!< The current motivation @see MotivationSatisfaction
     repeated BlockOccupation occupations  = 8; //!< The current block occupations
+    optional Extension       extension    = 9; //!< The extension fields
 }
 
 message SimToClient {
@@ -2476,6 +2483,7 @@ message SimToClient {
         optional ChangePopulationMagicActionAck         change_population_magic_action_ack        = 139; //!< @copybrief ChangePopulationMagicActionAck
         optional FragOrder                              frag_order                                = 140; //!< @copybrief FragOrder
         optional BurningCellRequestAck                  burning_cell_request_ack                  = 141; //!< @copybrief BurningCellRequestAck
+        optional FormationUpdate                        formation_update                          = 142; //!< @copybrief FormationUpdate
     }
     /** @property context
         @brief Identifies the request matching the response

@@ -193,10 +193,6 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_refugees_managed() )
         bRefugeesManaged_ = message.refugees_managed() != 0;
 
-    if( message.has_extension() )
-        for( int i = 0; i < message.extension().entries_size(); ++i )
-            extensions_[ message.extension().entries( i ).name() ] = message.extension().entries( i ).value();
-
     if( message.has_critical_intelligence() )
         criticalIntelligence_ = message.critical_intelligence();
 
@@ -330,13 +326,4 @@ float Attributes::ComputePostureFactor( const std::vector< float >& factors ) co
 {
     const float ratio = 0.01f * nPostureCompletionPourcentage_;
     return factors.at( nOldPosture_ ) * ( 1.f - ratio ) + factors.at( nCurrentPosture_ ) * ratio;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Attributes::GetExtensions
-// Created: JSR 2010-10-11
-// -----------------------------------------------------------------------------
-const std::map< std::string, std::string >& Attributes::GetExtensions() const
-{
-    return extensions_;
 }

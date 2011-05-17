@@ -280,11 +280,15 @@ message MsgFormationCreation {
     optional Common.FormationId       parent                = 3;
     required Common.EnumNatureLevel   level                 = 4;
     required string                   name                  = 5;
-    optional Common.Extension         extension             = 6;
-    required string                   app6symbol            = 7;
-    required Common.EnumLogisticLevel logistic_level        = 8;
-    optional Common.RgbColor          color                 = 9;
-    optional Common.ParentEntity      logistic_base_organic = 10;
+    required string                   app6symbol            = 6;
+    required Common.EnumLogisticLevel logistic_level        = 7;
+    optional Common.RgbColor          color                 = 8;
+    optional Common.ParentEntity      logistic_base_organic = 9;
+}
+
+message MsgFormationUpdate {
+    required Common.FormationId       formation = 1;
+    optional Common.Extension         extension = 2;
 }
 
 message MsgFormationDestruction {
@@ -298,10 +302,9 @@ message MsgAutomatCreation {
     required Common.ParentEntity           parent          = 4;
     required Common.PartyId                party           = 5;
     optional Common.KnowledgeGroupId       knowledge_group = 6;
-    optional Common.Extension              extension       = 7;
-    required string                        app6symbol      = 8;
-    required Common.EnumLogisticLevel      logistic_level  = 9;
-    optional Common.RgbColor               color           = 10;
+    required string                        app6symbol      = 7;
+    required Common.EnumLogisticLevel      logistic_level  = 8;
+    optional Common.RgbColor               color           = 9;
 }
 
 message RulesOfEngagement {
@@ -331,6 +334,7 @@ message MsgAutomatAttributes {
    optional RulesOfEngagement.Value            roe                   = 6;
    optional Common.AutomatId                   tc2_organic           = 7;
    optional Common.ParentEntity                logistic_base_organic = 8;
+   optional Common.Extension                   extension             = 9;
 }
 
 message MsgAutomatDestruction {
@@ -942,8 +946,7 @@ message MsgCrowdCreation {
    required Common.CrowdType        type        = 2;
    optional string                  nom         = 3;
    required Common.PartyId          party       = 4;
-   optional Common.Extension        extension   = 5;
-   required Common.HumanRepartition repartition = 6;
+   required Common.HumanRepartition repartition = 5;
 }
 
 message MsgCrowdUpdate {
@@ -956,6 +959,7 @@ message MsgCrowdUpdate {
    optional int32                 wounded               = 7;
    optional int32                 contaminated          = 8;
    optional int32                 dead                  = 9;
+   optional Common.Extension      extension             = 10;
 }
 
 message MsgCrowdDestruction {
@@ -1250,8 +1254,7 @@ message MsgPopulationCreation {
     required Common.PartyId        party     = 2;
     required Common.PopulationType type      = 3;
     required string                name      = 4;
-    optional Common.Extension      extension = 5;
-    repeated Common.ObjectId       objects   = 6;
+    repeated Common.ObjectId       objects   = 5;
 }
 
 message MsgPopulationUpdate {
@@ -1287,6 +1290,7 @@ message MsgPopulationUpdate {
     optional Satisfaction          satisfaction = 6;
     optional string                motivation   = 7; 
     repeated BlockOccupation       occupations  = 8;
+    optional Common.Extension      extension    = 9;
 }
 
 // Message container
@@ -1318,8 +1322,8 @@ message MsgSimToClient {
         optional MsgControlResumeAck                            control_resume_ack                             = 24;
         optional MsgControlChangeTimeFactorAck                  control_change_time_factor_ack                 = 25;
         optional MsgControlDatetimeChangeAck                    control_date_time_change_ack                   = 26;
-        optional MsgControlCheckPointSaveEnd                    control_checkpoint_save_end                    = 27; 
-        optional MsgFormationCreation                           formation_creation                             = 28;   
+        optional MsgControlCheckPointSaveEnd                    control_checkpoint_save_end                    = 27;
+        optional MsgFormationCreation                           formation_creation                             = 28;
         optional MsgPartyCreation                               party_creation                                 = 29;
         optional MsgAutomatCreation                             automat_creation                               = 30;
         optional MsgAutomatAttributes                           automat_attributes                             = 31;
@@ -1424,6 +1428,7 @@ message MsgSimToClient {
         optional MsgCrowdDestruction                            crowd_destruction                              = 133;
         optional MsgPopulationCreation                          population_creation                            = 134;
         optional MsgPopulationUpdate                            population_update                              = 135;
+        optional MsgFormationUpdate                             formation_update                               = 136;
     }
     optional int32   context = 1;
     required Content message = 2;

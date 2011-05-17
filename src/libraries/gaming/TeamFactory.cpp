@@ -9,34 +9,36 @@
 
 #include "gaming_pch.h"
 #include "TeamFactory.h"
-#include "StaticModel.h"
+
 #include "AgentsModel.h"
 #include "AggregatedPositions.h"
 #include "ConvexHulls.h"
+#include "DictionaryExtensions.h"
 #include "Diplomacies.h"
 #include "Dotations.h"
 #include "EntityIntelligences.h"
 #include "Equipments.h"
 #include "Formation.h"
 #include "FormationHierarchy.h"
+#include "FormationLives.h"
+#include "Lives_ABC.h"
+#include "LogisticConsigns.h"
+#include "LogisticLinks.h"
 #include "Model.h"
 #include "ObjectKnowledges.h"
+#include "Quotas.h"
+#include "StaticModel.h"
 #include "StaticModel.h"
 #include "Team.h"
 #include "TeamHierarchies.h"
-#include "TeamsModel.h"
 #include "TeamTacticalHierarchies.h"
+#include "TeamsModel.h"
 #include "Troops.h"
 #include "UrbanKnowledges.h"
-#include "clients_kernel/FormationLevels.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/AgentTypes.h"
-#include "LogisticLinks.h"
-#include "LogisticConsigns.h"
-#include "FormationLives.h"
-#include "Lives_ABC.h"
-#include "Quotas.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/FormationLevels.h"
+#include "clients_kernel/ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor
@@ -76,6 +78,7 @@ kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach<kernel::Dotations_ABC>( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
+    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
     result->Update( message );
     result->Polish();
     return result;
@@ -91,7 +94,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
         (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Formation_ABC >::Get( message.parent().id() ) :
         (kernel::Entity_ABC*) &model_.teams_.Resolver< kernel::Team_ABC >::Get( message.party().id() );
 
-    Formation* result = new Formation( message, controllers_.controller_, model_.static_.levels_, static_ );
+    Formation* result = new Formation( message, controllers_.controller_, model_.static_.levels_ );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::TacticalHierarchies >    ( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
@@ -104,6 +107,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     result->Attach< kernel::Dotations_ABC >  ( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new ConvexHulls( *result ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 4.f ) );
+    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
     result->Update( message );
     result->Polish();
     return result;

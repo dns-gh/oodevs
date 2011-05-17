@@ -53,7 +53,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              Inhabitant( const sword::PopulationCreation& message, kernel::Controllers& controllers, const UrbanModel& model, const tools::Resolver_ABC< kernel::InhabitantType >& typeResolver,
-                         const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::StaticModel& staticModel );
+                         const tools::Resolver_ABC< kernel::DotationType >& dotationResolver );
     virtual ~Inhabitant();
     //@}
 
@@ -93,8 +93,6 @@ private:
     typedef std::map< unsigned int, gui::TerrainObjectProxy* > T_UrbanObjectVector;
     typedef T_UrbanObjectVector::const_iterator              CIT_UrbanObjectVector;
 
-    typedef std::map< std::string, std::string > T_Extensions;
-
     typedef std::map< std::string, unsigned int >       T_MotivationSatisfactions;
     typedef T_MotivationSatisfactions::const_iterator CIT_MotivationSatisfactions;
 
@@ -117,7 +115,6 @@ private:
     T_MotivationSatisfactions motivationSatisfactions_;
     T_ResourceSatisfactions resourceSatisfactions_;
     T_UrbanObjectVector livingUrbanObject_;
-    T_Extensions extensions_;
     //@}
 };
 

@@ -17,7 +17,6 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/InhabitantType.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Styles.h"
@@ -33,7 +32,7 @@ using namespace kernel;
 // Created: SLG 2010-12-05
 // -----------------------------------------------------------------------------
 Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& controllers, const UrbanModel& model, const tools::Resolver_ABC< InhabitantType >& typeResolver,
-                        const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const kernel::StaticModel& staticModel )
+                        const tools::Resolver_ABC< kernel::DotationType >& dotationResolver )
     : EntityImplementation< Inhabitant_ABC >( controllers.controller_, message.id().id(), QString( message.name().c_str() ) )
     , controllers_     ( controllers )
     , type_            ( typeResolver.Get( message.type().id() ) )
@@ -44,16 +43,6 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controllers& c
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
-    if( message.has_extension() )
-    {
-        DictionaryExtensions* extensions = new DictionaryExtensions( "orbat-attributes", staticModel.extensionTypes_ );
-        for( int i = 0; i < message.extension().entries_size(); ++i )
-        {
-            extensions->SetValue( message.extension().entries( i ).name(), message.extension().entries( i ).value() );
-            extensions_[ message.extension().entries( i ).name() ] = message.extension().entries( i ).value();
-        }
-        Attach( *extensions );
-    }
     for( int i = 0; i < message.objects_size(); ++i )
     {
         int id = message.objects( i ).id();
@@ -92,11 +81,6 @@ void Inhabitant::CreateDictionary( Controller& controller )
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Health" ), self.healthSatisfaction_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Safety" ), self.safetySatisfaction_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Lodging" ), self.lodgingSatisfaction_ );
-    BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
-    {
-        QString info = tools::translate( "Inhabitant", "Details/" ) + extension.first.c_str();
-        dictionary.Register( *static_cast< const Entity_ABC* >( this ), info, extension.second );
-    }
 }
 
 namespace

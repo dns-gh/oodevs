@@ -58,7 +58,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              Population( const sword::CrowdCreation& message, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter,
-                         const tools::Resolver_ABC< kernel::PopulationType >& typeResolver, const kernel::StaticModel& staticModel );
+                         const tools::Resolver_ABC< kernel::PopulationType >& typeResolver );
     virtual ~Population();
     //@}
 

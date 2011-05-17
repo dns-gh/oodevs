@@ -237,12 +237,19 @@ BOOST_FIXTURE_TEST_CASE( formation_creation_to_client_is_converted, ContextFixtu
     content.mutable_formation_creation()->mutable_parent()->set_id( 8 );
     content.mutable_formation_creation()->set_level( sword::ooo );
     content.mutable_formation_creation()->set_name( "name" );
-    FillExtension( content.mutable_formation_creation()->mutable_extension()->add_entries() );
-    FillExtension( content.mutable_formation_creation()->mutable_extension()->add_entries() );
     content.mutable_formation_creation()->set_app6symbol( "app6" );
     content.mutable_formation_creation()->set_logistic_level( sword::combat_train );
     FillRgbColor( content.mutable_formation_creation()->mutable_color() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { formation_creation { formation { id: 6 } party { id: 7 } parent { id: 8 } level: ooo name: \"name\" extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } app6symbol: \"app6\" logistic_level: tc2 color { red: 12 green: 42 blue: 77 } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { formation_creation { formation { id: 6 } party { id: 7 } parent { id: 8 } level: ooo name: \"name\" app6symbol: \"app6\" logistic_level: tc2 color { red: 12 green: 42 blue: 77 } } }" ) );
+    converter.ReceiveSimToClient( "unused endpoint", msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( formation_update_to_client_is_converted, ContextFixture< sword::SimToClient > )
+{
+    content.mutable_formation_update()->mutable_formation()->set_id( 6 );
+    FillExtension( content.mutable_formation_update()->mutable_extension()->add_entries() );
+    FillExtension( content.mutable_formation_update()->mutable_extension()->add_entries() );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { formation_update { formation { id: 6 } extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -267,12 +274,10 @@ BOOST_FIXTURE_TEST_CASE( automat_creation_to_client_is_converted, ContextFixture
     content.mutable_automat_creation()->mutable_parent()->mutable_formation()->set_id( 10 );
     content.mutable_automat_creation()->mutable_party()->set_id( 11 );
     content.mutable_automat_creation()->mutable_knowledge_group()->set_id( 12 );
-    FillExtension( content.mutable_automat_creation()->mutable_extension()->add_entries() );
-    FillExtension( content.mutable_automat_creation()->mutable_extension()->add_entries() );
     content.mutable_automat_creation()->set_app6symbol( "app6" );
     content.mutable_automat_creation()->set_logistic_level( sword::combat_train );
     FillRgbColor( content.mutable_automat_creation()->mutable_color() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_creation { automat { id: 7 } type { id: 8 } nom: \"name\" parent { automat { id: 9 } formation { id: 10 } } party { id: 11 } knowledge_group { id: 12 } extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } app6symbol: \"app6\" logistic_level: tc2 color { red: 12 green: 42 blue: 77 } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_creation { automat { id: 7 } type { id: 8 } nom: \"name\" parent { automat { id: 9 } formation { id: 10 } } party { id: 11 } knowledge_group { id: 12 } app6symbol: \"app6\" logistic_level: tc2 color { red: 12 green: 42 blue: 77 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -284,7 +289,9 @@ BOOST_FIXTURE_TEST_CASE( automat_attributes_to_client_is_converted, ContextFixtu
     content.mutable_automat_attributes()->set_meeting_engagement( sword::avoiding );
     content.mutable_automat_attributes()->set_operational_state( sword::operational );
     content.mutable_automat_attributes()->set_roe( sword::RulesOfEngagement::free_fire );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_attributes { automat { id: 7 } etat_automate: embraye rapport_de_force: neutre combat_de_rencontre: etat_esquive etat_operationnel: operationnel roe: tir_libre } }" ) );
+    FillExtension( content.mutable_automat_attributes()->mutable_extension()->add_entries() );
+    FillExtension( content.mutable_automat_attributes()->mutable_extension()->add_entries() );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_attributes { automat { id: 7 } etat_automate: embraye rapport_de_force: neutre combat_de_rencontre: etat_esquive etat_operationnel: operationnel roe: tir_libre extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -1275,12 +1282,10 @@ BOOST_FIXTURE_TEST_CASE( crowd_creation_to_client_is_converted, ContextFixture< 
     content.mutable_crowd_creation()->mutable_type()->set_id( 8 );
     content.mutable_crowd_creation()->set_name( "name" );
     content.mutable_crowd_creation()->mutable_party()->set_id( 9 );
-    FillExtension( content.mutable_crowd_creation()->mutable_extension()->add_entries() );
     content.mutable_crowd_creation()->mutable_repartition()->set_male( 0.5f );
     content.mutable_crowd_creation()->mutable_repartition()->set_female( 0.3f );
     content.mutable_crowd_creation()->mutable_repartition()->set_children( 0.2f );
-    FillExtension( content.mutable_crowd_creation()->mutable_extension()->add_entries() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_creation { crowd { id: 7 } type { id: 8 } nom: \"name\" party { id: 9 } extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } repartition { male: 0.5 female: 0.3 children: 0.2 } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_creation { crowd { id: 7 } type { id: 8 } nom: \"name\" party { id: 9 } repartition { male: 0.5 female: 0.3 children: 0.2 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -1288,7 +1293,9 @@ BOOST_FIXTURE_TEST_CASE( crowd_update_to_client_is_converted, ContextFixture< sw
 {
     content.mutable_crowd_update()->mutable_crowd()->set_id( 7 );
     content.mutable_crowd_update()->set_domination( 8 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_update { crowd { id: 7 } domination: 8 } }" ) );
+    FillExtension( content.mutable_crowd_update()->mutable_extension()->add_entries() );
+    FillExtension( content.mutable_crowd_update()->mutable_extension()->add_entries() );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { crowd_update { crowd { id: 7 } domination: 8 extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -1769,11 +1776,9 @@ BOOST_FIXTURE_TEST_CASE( population_creation_to_client_is_converted, ContextFixt
     content.mutable_population_creation()->mutable_type()->set_id( 9 );
     content.mutable_population_creation()->set_name( "name" );
     content.mutable_population_creation()->set_text( "text" );
-    FillExtension( content.mutable_population_creation()->mutable_extension()->add_entries() );
-    FillExtension( content.mutable_population_creation()->mutable_extension()->add_entries() );
     content.mutable_population_creation()->add_objects()->set_id( 27 );
     content.mutable_population_creation()->add_objects()->set_id( 28 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { population_creation { id { id: 7 } party { id: 8 } type { id: 9 } name: \"name\" extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } objects { id: 27 } objects { id: 28 } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { population_creation { id { id: 7 } party { id: 8 } type { id: 9 } name: \"name\" objects { id: 27 } objects { id: 28 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -1833,6 +1838,8 @@ BOOST_FIXTURE_TEST_CASE( population_update_to_client_is_converted, ContextFixtur
     content.mutable_population_update()->set_motivation( "office" );
     FillBlockOccupation( content.mutable_population_update()->add_occupations() );
     FillBlockOccupation( content.mutable_population_update()->add_occupations() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { population_update { id { id: 7 } healthy: 8 wounded: 9 dead: 10 adhesions { adhesion { party { id: 20 } value: 21 } adhesion { party { id: 20 } value: 21 } } satisfaction { resources { resource { id: 30 } value: 31 } resources { resource { id: 30 } value: 31 } motivations { motivation: \"office\" percentage: 41 } motivations { motivation: \"office\" percentage: 41 } lodging: 50 health: 50 safety: 50 } motivation: \"office\" occupations { object { id: 12 } persons { usage: \"office\" number: 42 } persons { usage: \"office\" number: 42 } } occupations { object { id: 12 } persons { usage: \"office\" number: 42 } persons { usage: \"office\" number: 42 } } } }" ) );
+    FillExtension( content.mutable_population_update()->mutable_extension()->add_entries() );
+    FillExtension( content.mutable_population_update()->mutable_extension()->add_entries() );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { population_update { id { id: 7 } healthy: 8 wounded: 9 dead: 10 adhesions { adhesion { party { id: 20 } value: 21 } adhesion { party { id: 20 } value: 21 } } satisfaction { resources { resource { id: 30 } value: 31 } resources { resource { id: 30 } value: 31 } motivations { motivation: \"office\" percentage: 41 } motivations { motivation: \"office\" percentage: 41 } lodging: 50 health: 50 safety: 50 } motivation: \"office\" occupations { object { id: 12 } persons { usage: \"office\" number: 42 } persons { usage: \"office\" number: 42 } } occupations { object { id: 12 } persons { usage: \"office\" number: 42 } persons { usage: \"office\" number: 42 } } extension { entries { name: \"name2\" value: \"value\" } entries { name: \"name2\" value: \"value\" } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }

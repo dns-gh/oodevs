@@ -26,7 +26,7 @@ using namespace kernel;
 // Name: Agent constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Agent::Agent( const sword::UnitCreation& message, Controller& controller,  const tools::Resolver_ABC< AgentType >& resolver )
+Agent::Agent( const sword::UnitCreation& message, Controller& controller, const tools::Resolver_ABC< AgentType >& resolver )
     : EntityImplementation< Agent_ABC >( controller, message.unit().id(), QString( message.name().c_str() ) )
     , type_( resolver.Get( message.type().id() ) )
     , isPc_ ( false )

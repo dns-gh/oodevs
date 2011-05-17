@@ -615,10 +615,6 @@
         <translation type="unfinished">Info/Nombre</translation>
     </message>
     <message>
-        <source>Details/</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Alive:</source>
         <translation type="unfinished">Vivos:</translation>
     </message>

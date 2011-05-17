@@ -18,6 +18,7 @@ namespace sword
     enum EnumNatureLevel;
     class ChangeLogisticLinks;
     class FormationCreation;
+    class FormationUpdate;
 }
 
 namespace dispatcher
@@ -32,7 +33,9 @@ namespace dispatcher
 // Created: NLD 2006-09-19
 // =============================================================================
 class Formation : public dispatcher::Formation_ABC
+                , public kernel::Extension_ABC
                 , public kernel::Updatable_ABC< sword::ChangeLogisticLinks >
+                , public kernel::Updatable_ABC< sword::FormationUpdate >
 {
 public:
     //! @name Constructors/Destructor
@@ -57,7 +60,8 @@ public:
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    virtual void DoUpdate( const sword::ChangeLogisticLinks&  msg );
+    virtual void DoUpdate( const sword::ChangeLogisticLinks& msg );
+    virtual void DoUpdate( const sword::FormationUpdate& msg );
 
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
 
@@ -85,16 +89,16 @@ private:
 private:
     //! @name Member data
     //@{
-    const Model_ABC&                            model_;
-    const std::string                           name_;
-    dispatcher::Team_ABC&                       team_;
-    const kernel::HierarchyLevel_ABC&           level_;
-    std::string                                 symbol_;
-    LogisticEntity                              logisticEntity_;
-    dispatcher::Formation_ABC*                  parent_;
+    const Model_ABC&                             model_;
+    const std::string                            name_;
+    dispatcher::Team_ABC&                        team_;
+    const kernel::HierarchyLevel_ABC&            level_;
+    std::string                                  symbol_;
+    LogisticEntity                               logisticEntity_;
+    dispatcher::Formation_ABC*                   parent_;
     tools::Resolver< dispatcher::Formation_ABC > formations_;
-    tools::Resolver< dispatcher::Automat_ABC > automats_;
-    std::map< std::string, std::string > extensions_;
+    tools::Resolver< dispatcher::Automat_ABC >   automats_;
+    std::map< std::string, std::string >         extensions_;
     //@}
 };
 

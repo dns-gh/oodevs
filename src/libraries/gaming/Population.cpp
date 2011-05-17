@@ -15,7 +15,6 @@
 #include "PopulationPartPositionsProxy.h"
 #include "Tools.h"
 #include "clients_kernel/StaticModel.h"
-#include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/PopulationType.h"
@@ -31,11 +30,7 @@ using namespace kernel;
 // Name: Population constructor
 // Created: HME 2005-09-29
 // -----------------------------------------------------------------------------
-Population::Population( const sword::CrowdCreation& message,
-                        Controllers& controllers,
-                        const CoordinateConverter_ABC& converter,
-                        const tools::Resolver_ABC< PopulationType >& typeResolver,
-                        const StaticModel& staticModel )
+Population::Population( const sword::CrowdCreation& message, Controllers& controllers, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< PopulationType >& typeResolver )
     : EntityImplementation< Population_ABC >( controllers.controller_, message.crowd().id(), QString( message.name().c_str() ) )
     , controllers_         ( controllers )
     , converter_           ( converter )
@@ -49,13 +44,6 @@ Population::Population( const sword::CrowdCreation& message,
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.crowd().id() );
-    if( message.has_extension() )
-    {
-        DictionaryExtensions* extensions = new DictionaryExtensions( "orbat-attributes", staticModel.extensionTypes_ );
-        for( int i = 0; i < message.extension().entries_size(); ++i )
-            extensions->SetValue( message.extension().entries( i ).name(), message.extension().entries( i ).value() );
-        Attach( *extensions );
-    }
     RegisterSelf( *this );
     CreateDictionary( controllers_.controller_ );
     controllers_.Register( *this );

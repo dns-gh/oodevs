@@ -32,15 +32,16 @@ namespace xml
 class DEC_PopulationDecision;
 class DEC_PopulationKnowledge;
 class MIL_AffinitiesMap;
+class MIL_Agent_ABC;
+class MIL_AgentPion;
+class MIL_Army_ABC;
+class MIL_DictionaryExtensions;
 class MIL_Formation;
 class MIL_PopulationType;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
 class MIL_PopulationElement_ABC;
 class MIL_PopulationAttitude;
-class MIL_Army_ABC;
-class MIL_Agent_ABC;
-class MIL_AgentPion;
 class PHY_Volume;
 class PHY_FireResults_Population;
 class TER_Localisation;
@@ -162,7 +163,7 @@ public:
     void SendCreation() const;
     void SendFullState() const;
     void UpdateNetwork();
-    void OnReceiveCrowdMagicAction( const sword::UnitMagicAction& asnMsg );
+    void OnReceiveUnitMagicAction( const sword::UnitMagicAction& asnMsg );
     void OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicAction& asn );
     //@}
 
@@ -200,11 +201,6 @@ private:
     void OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& asn );
     //@}
 
-    //! @name Network
-    //@{
-    void ReadExtension( xml::xistream& xis );
-    //@}
-
     //! @name Helpers
     //@{
     void GetClosestPointAndDistance( const TER_Localisation& loc, MT_Vector2D& closestPoint, double& rMinDistance ) const;
@@ -222,41 +218,39 @@ private:
     typedef std::vector< MIL_PopulationFlow* > T_FlowVector;
     typedef T_FlowVector::iterator            IT_FlowVector;
     typedef T_FlowVector::const_iterator     CIT_FlowVector;
-
-    typedef std::map< std::string, std::string > T_Extensions;
     //@}
 
 private:
     //! @name Member Data
     //@{
-    const MIL_PopulationType* pType_;
-    const unsigned int nID_;
-    MIL_Army_ABC* pArmy_;
-    const MIL_PopulationAttitude* pDefaultAttitude_;
-    double rArmedIndividuals_;
-    double rNewArmedIndividuals_;
-    double rMale_;
-    double rFemale_;
-    double rChildren_;
-    std::string criticalIntelligence_;
-    T_ConcentrationVector concentrations_;
-    T_FlowVector flows_;
-    T_ConcentrationVector trashedConcentrations_;
-    T_FlowVector trashedFlows_;
-    DEC_PopulationKnowledge* pKnowledge_;
-    MIL_PopulationOrderManager orderManager_;
-    boost::shared_ptr< MT_Vector2D > vBarycenter_;
+    const MIL_PopulationType*                   pType_;
+    const unsigned int                          nID_;
+    MIL_Army_ABC*                               pArmy_;
+    const MIL_PopulationAttitude*               pDefaultAttitude_;
+    double                                      rArmedIndividuals_;
+    double                                      rNewArmedIndividuals_;
+    double                                      rMale_;
+    double                                      rFemale_;
+    double                                      rChildren_;
+    std::string                                 criticalIntelligence_;
+    T_ConcentrationVector                       concentrations_;
+    T_FlowVector                                flows_;
+    T_ConcentrationVector                       trashedConcentrations_;
+    T_FlowVector                                trashedFlows_;
+    DEC_PopulationKnowledge*                    pKnowledge_;
+    MIL_PopulationOrderManager                  orderManager_;
+    boost::shared_ptr< MT_Vector2D >            vBarycenter_;
     // Pion effects
-    bool bPionMaxSpeedOverloaded_;
-    double rOverloadedPionMaxSpeed_;
-    bool bBlinded_;
+    bool                                        bPionMaxSpeedOverloaded_;
+    double                                      rOverloadedPionMaxSpeed_;
+    bool                                        bBlinded_;
     // Misc
-    bool bHasDoneMagicMove_;
-    bool criticalIntelligenceChanged_;
-    bool armedIndividualsChanged_;
-    T_Extensions extensions_;
-    std::auto_ptr< MIL_AffinitiesMap > pAffinities_;
-    double urbanBlockAngriness_;
+    bool                                        bHasDoneMagicMove_;
+    bool                                        criticalIntelligenceChanged_;
+    bool                                        armedIndividualsChanged_;
+    std::auto_ptr< MIL_AffinitiesMap >          pAffinities_;
+    std::auto_ptr< MIL_DictionaryExtensions >   pExtensions_;
+    double                                      urbanBlockAngriness_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Population* population, const unsigned int /*version*/ );

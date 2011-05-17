@@ -22,13 +22,19 @@ namespace xml
     class xistream;
 }
 
-class MIL_Army_ABC;
+namespace sword
+{
+    class UnitMagicAction;
+}
+
 class PHY_NatureLevel;
 class FormationFactory_ABC;
 class AutomateFactory_ABC;
+class MIL_AgentPion;
 class MIL_Automate;
 class MIL_AutomateLOG;
-class MIL_AgentPion;
+class MIL_Army_ABC;
+class MIL_DictionaryExtensions;
 template < typename T > class PHY_ActionLogistic;
 
 // =============================================================================
@@ -86,6 +92,8 @@ public:
     void SendCreation() const;
     void SendFullState() const;
     void SendLogisticLinks() const;
+    void UpdateNetwork() const;
+    void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg );
     //@}
 
 private:
@@ -99,18 +107,12 @@ private:
     //@{
     void InitializeFormation( xml::xistream& xis, FormationFactory_ABC& formationFactory );
     void InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC& automateFactory );
-    void ReadExtension( xml::xistream& xis );
     //@}
 
     //! @name Serialization
     //@{
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Formation* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_Formation* role, const unsigned int /*version*/ );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< std::string, std::string > T_Extensions;
     //@}
 
 private:
@@ -120,9 +122,9 @@ private:
     MIL_Army_ABC* pArmy_;
     MIL_Formation* pParent_;
     const PHY_NatureLevel* pLevel_;
-    std::auto_ptr<MIL_AutomateLOG> pBrainLogistic_;
+    std::auto_ptr< MIL_AutomateLOG > pBrainLogistic_;
     boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > > pLogisticAction_;
-    T_Extensions extensions_;
+    std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
     //@}
 };
 

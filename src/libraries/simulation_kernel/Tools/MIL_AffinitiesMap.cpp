@@ -65,9 +65,8 @@ void MIL_AffinitiesMap::ReadAffinity( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AffinitiesMap::WriteODB( xml::xostream& xos ) const
 {
-    if ( affinities_.empty() )
+    if( affinities_.empty() )
         return;
-
     xos << xml::start( "adhesions" );
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         xos << xml::start( "adhesion" )
@@ -75,24 +74,6 @@ void MIL_AffinitiesMap::WriteODB( xml::xostream& xos ) const
                 << xml::attribute( "value", it->second )
             << xml::end;
     xos << xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AffinitiesMap::OnReceiveMsgChangeAffinities
-// Created: ABR 2011-02-03
-// -----------------------------------------------------------------------------
-void MIL_AffinitiesMap::OnReceiveMsgChangeAffinities( const sword::UnitMagicAction& msg )
-{
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
-        throw NET_AsnException< sword::ChangePopulationMagicActionAck_ErrorCode >( sword::ChangePopulationMagicActionAck::error_invalid_parameter );
-    const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list = msg.parameters().elem( 0 ).value();
-    affinities_.clear();
-    for( int i = 0; i < list.size(); ++i )
-    {
-        sword::MissionParameter_Value element = list.Get( i );
-        affinities_[ element.list( 0 ).identifier() ] = element.list( 1 ).areal();
-    }
-    hasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -147,4 +128,22 @@ float MIL_AffinitiesMap::GetAffinity( unsigned long teamID ) const
     if( it == affinities_.end() )
         return 0.f;
     return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AffinitiesMap::OnReceiveMsgChangeAffinities
+// Created: ABR 2011-02-03
+// -----------------------------------------------------------------------------
+void MIL_AffinitiesMap::OnReceiveMsgChangeAffinities( const sword::UnitMagicAction& msg )
+{
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
+        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list = msg.parameters().elem( 0 ).value();
+    affinities_.clear();
+    for( int i = 0; i < list.size(); ++i )
+    {
+        sword::MissionParameter_Value element = list.Get( i );
+        affinities_[ element.list( 0 ).identifier() ] = element.list( 1 ).areal();
+    }
+    hasChanged_ = true;
 }

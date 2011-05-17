@@ -30,22 +30,13 @@ using namespace kernel;
 // Name: Automat constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Automat::Automat( const sword::AutomatCreation& message, Controller& controller,
-                  const tools::Resolver_ABC< kernel::AutomatType >& resolver,
-                  const kernel::StaticModel& staticModel )
+Automat::Automat( const sword::AutomatCreation& message, Controller& controller, const tools::Resolver_ABC< kernel::AutomatType >& resolver )
     : EntityImplementation< Automat_ABC >( controller, message.automat().id(), QString( message.name().c_str() ) )
     , type_( resolver.Get( message.type().id() ) )
     , logisticLevel_ ( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.automat().id() );
-    if( message.has_extension() )
-    {
-        DictionaryExtensions* extensions = new DictionaryExtensions( "orbat-attributes", staticModel.extensionTypes_ );
-        for( int i = 0; i < message.extension().entries_size(); ++i )
-            extensions->SetValue( message.extension().entries( i ).name(), message.extension().entries( i ).value() );
-        Attach( *extensions );
-    }
     RegisterSelf( *this );
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );

@@ -207,6 +207,8 @@ void Model::Update( const sword::SimToClient& wrapper )
         knowledgeGroups_.Get( wrapper.message().knowledge_group_update().knowledge_group().id() ).Update( wrapper.message().knowledge_group_update() );
     else if( wrapper.message().has_formation_creation() )
         CreateUpdate< Formation >( formations_, wrapper.message().formation_creation().formation().id(), wrapper.message().formation_creation(), staticModel_.levels_ );
+    else if( wrapper.message().has_formation_update() )
+        formations_.Get( wrapper.message().formation_update().formation().id() ).Update( wrapper.message().formation_update() );
     else if( wrapper.message().has_formation_destruction() )
         Destroy( formations_, wrapper.message().formation_destruction().formation().id(), wrapper.message().formation_destruction() );
     else if( wrapper.message().has_unit_creation() )

@@ -31,20 +31,21 @@ namespace xml
 class ArmyFactory_ABC;
 class AutomateFactory_ABC;
 class DEC_KnowledgeBlackBoard_Army;
-class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
+class DEC_Knowledge_Object;
 class DEC_Knowledge_Population;
 class FormationFactory_ABC;
+class InhabitantFactory_ABC;
 class KnowledgeGroupFactory_ABC;
-class MIL_KnowledgeGroup;
+class MIL_AutomateLOG;
+class MIL_DictionaryExtensions;
 class MIL_Formation;
 class MIL_Inhabitant;
-class MIL_Population;
-class MIL_Object_ABC;
+class MIL_KnowledgeGroup;
 class MIL_ObjectManager;
+class MIL_Object_ABC;
+class MIL_Population;
 class PopulationFactory_ABC;
-class InhabitantFactory_ABC;
-class MIL_AutomateLOG;
 
 // =============================================================================
 // @class  MIL_Army
@@ -154,7 +155,7 @@ private:
     void ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory ); // LTO
     void ReadLogisticLink( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, bool isTC2 );
     void ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory,
-            FormationFactory_ABC& formationFactory , MIL_AutomateLOG* pSuperior, bool isTC2 );
+                          FormationFactory_ABC& formationFactory , MIL_AutomateLOG* pSuperior, bool isTC2 );
     void ReadDiplomacy( xml::xistream& xis );
     //@}
 
@@ -176,6 +177,7 @@ private:
     ArmyFactory_ABC& armyFactory_;
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
     const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter_;
+    std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
     //@}
 };
 

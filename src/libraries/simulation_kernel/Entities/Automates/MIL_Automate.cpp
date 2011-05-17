@@ -42,6 +42,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
+#include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
@@ -143,6 +144,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
     //, pLogisticAction_               ( 0 )
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
+    , pExtensions_                   ( 0 )
 {
     // NOTHING
 }
@@ -174,6 +176,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pArmySurrenderedTo_            ( 0 )
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
+    , pExtensions_                   ( new MIL_DictionaryExtensions() )
 {
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( knowledgeGroup );
     if( !pKnowledgeGroup_ )
@@ -273,6 +276,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    MIL_DictionaryExtensions* pExtensions;
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this )
          >> pTC2_
          >> pNominalTC2_;
@@ -294,7 +298,9 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> bAutomateModeChanged_
          >> pKnowledgeBlackBoard_
          >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
-         >> nTickRcDotationSupplyQuerySent_;
+         >> nTickRcDotationSupplyQuerySent_
+         >> pExtensions;
+    pExtensions_.reset( pExtensions );
 }
 
 // -----------------------------------------------------------------------------
@@ -303,6 +309,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
+    const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this )
          << pTC2_
          << pNominalTC2_
@@ -319,7 +326,8 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
          << bAutomateModeChanged_
          << pKnowledgeBlackBoard_
          << pArmySurrenderedTo_
-         << nTickRcDotationSupplyQuerySent_;
+         << nTickRcDotationSupplyQuerySent_
+         << pExtensions;
 }
 
 // -----------------------------------------------------------------------------
@@ -335,9 +343,7 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
     RegisterRole( *new DEC_Representations() );
     xis >> xml::list( "unit", *this, &MIL_Automate::ReadUnitSubordinate )
         >> xml::list( "automat", *this, &MIL_Automate::ReadAutomatSubordinate );
-    xis >> xml::optional >> xml::start( "extensions" )
-        >> xml::list( "entry", *this, &MIL_Automate::ReadExtension )
-        >> xml::end;
+    pExtensions_.reset( new MIL_DictionaryExtensions( xis ) );
     if( !pPionPC_ )
         xis.error( "Automat's command post is not defined" );
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
@@ -377,15 +383,6 @@ void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
     MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, xis ); // Auto-registration
     if( isPc )
         pPionPC_ = &pion;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::ReadExtension
-// Created: JSR 2010-10-11
-// -----------------------------------------------------------------------------
-void MIL_Automate::ReadExtension( xml::xistream& xis )
-{
-    extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -446,18 +443,7 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
         ( **it ).WriteODB( xos );
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         ( **it ).WriteODB( xos );
-    if( !extensions_.empty() )
-    {
-        xos << xml::start( "extensions" );
-        BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
-        {
-            xos << xml::start( "entry" )
-                    << xml::attribute( "key", extension.first )
-                    << xml::attribute( "value", extension.second )
-                << xml::end;
-        }
-        xos << xml::end;
-    }
+    pExtensions_->WriteODB( xos );
     xos << xml::end; // automat
 }
 
@@ -557,13 +543,14 @@ void MIL_Automate::CleanKnowledges()
 // -----------------------------------------------------------------------------
 void MIL_Automate::UpdateNetwork() const
 {
-    if( bAutomateModeChanged_ || GetRole< DEC_AutomateDecision >().HasStateChanged() )
+    if( bAutomateModeChanged_ || GetRole< DEC_AutomateDecision >().HasStateChanged() || pExtensions_->HasChanged() )
     {
         client::AutomatAttributes msg;
         msg().mutable_automat()->set_id( nID_ );
         if( bAutomateModeChanged_ )
             msg().set_mode( bEngaged_ ? sword::engaged : sword::disengaged );
         GetRole< DEC_AutomateDecision >().SendChangedState( msg );
+        pExtensions_->UpdateNetwork( msg );
         msg.Send( NET_Publisher_ABC::Publisher() );
     }
     pDotationSupplyManager_->SendChangedState();
@@ -864,20 +851,12 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     message().set_name( GetName() );
-    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
-    {
-        sword::Extension_Entry* entry = message().mutable_extension()->add_entries();
-        entry->set_name( it->first );
-        entry->set_value( it->second );
-    }
     assert( pParentAutomate_ || pParentFormation_ );
     if( pParentAutomate_ )
         message().mutable_parent()->mutable_automat()->set_id( pParentAutomate_->GetID() );
     else if( pParentFormation_ )
         message().mutable_parent()->mutable_formation()->set_id( pParentFormation_->GetID() );
     message.Send( NET_Publisher_ABC::Publisher(), context );
-    if( message().has_extension() )
-        message().mutable_extension()->mutable_entries()->Clear();
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).SendCreation();
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
@@ -894,6 +873,7 @@ void MIL_Automate::SendFullState() const
     message().mutable_automat()->set_id( nID_ );
     message().set_mode( bEngaged_ ? sword::engaged : sword::disengaged );
     GetRole< DEC_AutomateDecision >().SendFullState( message );
+    pExtensions_->SendFullState( message );
     message.Send( NET_Publisher_ABC::Publisher() );
     SendLogisticLinks();
     pDotationSupplyManager_->SendFullState();
@@ -1034,6 +1014,9 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         CancelSurrender();
         for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             ( **itPion ).OnReceiveMagicCancelSurrender();
+        break;
+    case sword::UnitMagicAction::change_extension:
+        pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
     default:
         pPionPC_->OnReceiveUnitMagicAction( msg, armies );

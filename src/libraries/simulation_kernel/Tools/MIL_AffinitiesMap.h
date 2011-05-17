@@ -10,7 +10,6 @@
 #ifndef __MIL_AffinitiesMap_h_
 #define __MIL_AffinitiesMap_h_
 
-#include <map>
 #include "MIL.h"
 
 namespace xml
@@ -34,6 +33,14 @@ class MIL_AffinitiesMap : private boost::noncopyable
 {
 
 public:
+    //! @name Static public Member data
+    //@{
+    static double interrogateDelayForMinimumAffinity_;
+    static double interrogateDelayForNeutralAffinity_;
+    static double interrogateDelayForMaximumAffinity_;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              MIL_AffinitiesMap();
@@ -43,7 +50,6 @@ public:
 
     //! @name Operations
     //@{
-    void WriteODB( xml::xostream& xos ) const;
     template< typename T >
     void SendFullState( T& msg ) const;
     template< typename T >
@@ -58,6 +64,7 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     void load( MIL_CheckPointInArchive& file, const unsigned int );
     void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
+    void WriteODB( xml::xostream& xos ) const;
     //@}
 
 private:
@@ -78,11 +85,6 @@ private:
     //@{
     T_Affinities affinities_;
     bool hasChanged_;
-
-public:
-    static double interrogateDelayForMinimumAffinity_;
-    static double interrogateDelayForNeutralAffinity_;
-    static double interrogateDelayForMaximumAffinity_;
     //@}
 };
 
@@ -113,12 +115,7 @@ void MIL_AffinitiesMap::UpdateNetwork( T& msg )
     if( hasChanged_ )
     {
         msg().mutable_adhesions();
-        for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
-        {
-            sword::PartyAdhesion& adhesion = *msg().mutable_adhesions()->add_adhesion();
-            adhesion.mutable_party()->set_id( it->first );
-            adhesion.set_value( it->second );
-        }
+        SendFullState( msg );
         hasChanged_ = false;
     }
 }

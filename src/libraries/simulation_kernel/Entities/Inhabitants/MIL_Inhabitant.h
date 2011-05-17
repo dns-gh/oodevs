@@ -28,6 +28,7 @@ namespace xml
 
 class MIL_AffinitiesMap;
 class MIL_Army_ABC;
+class MIL_DictionaryExtensions;
 class MIL_Object_ABC;
 class MIL_InhabitantType;
 class MIL_StructuralStateNotifier_ABC;
@@ -63,7 +64,7 @@ public:
     void SendFullState() const;
     void UpdateState();
     void UpdateNetwork();
-    void OnReceiveInhabitantMagicAction( const sword::UnitMagicAction& msg );
+    void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg );
     //@}
 
     //! @name CheckPoints
@@ -101,11 +102,6 @@ private:
     void OnReceiveMsgChangeConfinedState( const sword::UnitMagicAction& msg );
     //@}
 
-    //! @name Network
-    //@{
-    void ReadExtension( xml::xistream& xis );
-    //@}
-
     //! @name Helpers
     //@{
     void DestroyInhabitantMovingObject();
@@ -113,29 +109,22 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, std::string > T_Extensions;
-    typedef T_Extensions::const_iterator       CIT_Extensions;
-    //@}
-
-private:
     //! @name Member Data
     //@{
-    const MIL_InhabitantType& type_;
-    const unsigned int nID_;
-    MIL_Army_ABC* pArmy_;
-    std::auto_ptr< MIL_LivingArea > pLivingArea_;
-    std::auto_ptr< MIL_Schedule_ABC > pSchedule_;
-    MIL_Object_ABC* pPopulationMovingObject_;
+    const MIL_InhabitantType&                    type_;
+    const unsigned int                           nID_;
+    MIL_Army_ABC*                                pArmy_;
+    MIL_Object_ABC*                              pPopulationMovingObject_;
+    std::auto_ptr< MIL_LivingArea >              pLivingArea_;
+    std::auto_ptr< MIL_Schedule_ABC >            pSchedule_;
     std::auto_ptr< MIL_InhabitantSatisfactions > pSatisfactions_;
-    std::auto_ptr< MIL_AffinitiesMap > pAffinities_;
-    std::string text_;
-    unsigned long nNbrHealthyHumans_;
-    unsigned long nNbrDeadHumans_;
-    unsigned long nNbrWoundedHumans_;
-    bool healthStateChanged_;
-    T_Extensions extensions_;
+    std::auto_ptr< MIL_AffinitiesMap >           pAffinities_;
+    std::auto_ptr< MIL_DictionaryExtensions >    pExtensions_;
+    std::string                                  text_;
+    unsigned long                                nNbrHealthyHumans_;
+    unsigned long                                nNbrDeadHumans_;
+    unsigned long                                nNbrWoundedHumans_;
+    bool                                         healthStateChanged_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Inhabitant* inhabitant, const unsigned int /*version*/ );

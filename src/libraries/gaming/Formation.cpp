@@ -13,7 +13,6 @@
 #include "Diplomacies.h"
 #include "clients_kernel/StaticModel.h"
 #include "clients_kernel/App6Symbol.h"
-#include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -29,20 +28,14 @@ using namespace kernel;
 // Name: Formation constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Formation::Formation( const sword::FormationCreation& message, Controller& controller, const tools::Resolver_ABC< HierarchyLevel_ABC >& resolver, const kernel::StaticModel& staticModel )
+Formation::Formation( const sword::FormationCreation& message, Controller& controller, const tools::Resolver_ABC< HierarchyLevel_ABC >& resolver )
     : EntityImplementation< Formation_ABC >( controller, message.formation().id(), QString( message.name().c_str() ) )
+    , controller_   ( controller )
     , level_        ( resolver.Get( message.level() ) )
     , logisticLevel_( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( level_.GetName() ).arg( message.formation().id() );
-    if( message.has_extension() )
-    {
-        DictionaryExtensions* extensions = new DictionaryExtensions( "orbat-attributes", staticModel.extensionTypes_ );
-        for( int i = 0; i < message.extension().entries_size(); ++i )
-            extensions->SetValue( message.extension().entries( i ).name(), message.extension().entries( i ).value() );
-        Attach( *extensions );
-    }
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -141,4 +134,13 @@ bool Formation::HasAggregatedSubordinate() const
     while( it.HasMoreElements() )
         return IsAggregated( it.NextElement() );
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::DoUpdate
+// Created: ABR 2011-05-11
+// -----------------------------------------------------------------------------
+void Formation::DoUpdate( const sword::FormationUpdate& message )
+{
+    controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }

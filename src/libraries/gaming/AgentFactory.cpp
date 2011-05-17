@@ -9,82 +9,83 @@
 
 #include "gaming_pch.h"
 #include "AgentFactory.h"
-#include "Model.h"
-#include "Agent.h"
-#include "Automat.h"
-#include "Population.h"
-#include "Inhabitant.h"
+
 #include "Affinities.h"
-#include "InhabitantHierarchies.h"
-#include "InhabitantPositions.h"
+#include "Agent.h"
+#include "AgentConvexHulls.h"
+#include "AgentDetections.h"
+#include "AgentHierarchies.h"
+#include "AgentHierarchiesCommunication.h"
+#include "AgentPositions.h"
+#include "AgentsModel.h"
+#include "AggregatedPositions.h"
 #include "Attributes.h"
+#include "Automat.h"
+#include "AutomatDecisions.h"
+#include "AutomatHierarchies.h"
+#include "AutomatLives.h"
+#include "AutomatTacticalHierarchies.h"
+#include "Borrowings.h"
 #include "Contaminations.h"
+#include "ConvexHulls.h"
 #include "DebugPoints.h"
+#include "DecisionalStates.h"
+#include "Decisions.h"
+#include "DictionaryExtensions.h"
 #include "Dotations.h"
 #include "Equipments.h"
-#include "HumanFactors.h"
-#include "Borrowings.h"
-#include "Lendings.h"
-#include "MissionParameters.h"
-#include "LogisticLinks.h"
-#include "Paths.h"
-#include "Reinforcements.h"
-#include "Reports.h"
-#include "Transports.h"
-#include "Troops.h"
-#include "MaintenanceStates.h"
-#include "MedicalStates.h"
-#include "SupplyStates.h"
-#include "ObjectDetections.h"
-#include "AgentDetections.h"
-#include "VisionCones.h"
-#include "LivingArea.h"
-#include "AgentsModel.h"
-#include "ObjectsModel.h"
-#include "TeamsModel.h"
-#include "KnowledgeGroupsModel.h"
-#include "LogisticsModel.h"
-#include "LimitsModel.h"
-#include "AgentFactory.h"
-#include "PopulationDetections.h"
-#include "LogisticConsigns.h"
-#include "Logistics.h"
 #include "Explosions.h"
-#include "Decisions.h"
-#include "AutomatDecisions.h"
 #include "Fires.h"
-#include "AgentPositions.h"
-#include "PopulationPositions.h"
+#include "HumanFactors.h"
+#include "Inhabitant.h"
+#include "InhabitantHierarchies.h"
+#include "InhabitantPositions.h"
+#include "KnowledgeGroupsModel.h"
+#include "Lendings.h"
+#include "LimitsModel.h"
 #include "Lives.h"
 #include "Lives_ABC.h"
-#include "PopulationDecisions.h"
+#include "LivingArea.h"
+#include "LogisticConsigns.h"
+#include "LogisticLinks.h"
+#include "Logistics.h"
+#include "LogisticsModel.h"
 #include "MagicOrders.h"
-#include "StaticModel.h"
-#include "AgentHierarchies.h"
-#include "AutomatLives.h"
-#include "AggregatedPositions.h"
-#include "AutomatHierarchies.h"
-#include "AutomatTacticalHierarchies.h"
-#include "PopulationHierarchies.h"
+#include "MaintenanceStates.h"
+#include "MedicalStates.h"
+#include "MissionParameters.h"
+#include "Model.h"
+#include "ObjectDetections.h"
+#include "ObjectsModel.h"
+#include "Paths.h"
 #include "PcAttributes.h"
-#include "ConvexHulls.h"
-#include "AgentConvexHulls.h"
-#include "DecisionalStates.h"
-#include "Speeds.h"
-#include "Weapons.h"
+#include "Population.h"
+#include "PopulationDecisions.h"
+#include "PopulationDetections.h"
+#include "PopulationHierarchies.h"
+#include "PopulationPositions.h"
 #include "Quotas.h"
+#include "Reinforcements.h"
+#include "Reports.h"
+#include "Speeds.h"
+#include "StaticModel.h"
+#include "SupplyStates.h"
+#include "TeamsModel.h"
+#include "Transports.h"
+#include "Troops.h"
 #include "UrbanPerceptions.h"
-#include "AgentHierarchiesCommunication.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/TacticalHierarchies.h"
+#include "VisionCones.h"
+#include "Weapons.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/CommandPostAttributes.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -117,7 +118,7 @@ AgentFactory::~AgentFactory()
 // -----------------------------------------------------------------------------
 kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message )
 {
-    Automat* result = new Automat( message, controllers_.controller_, static_.types_, static_ );
+    Automat* result = new Automat( message, controllers_.controller_, static_.types_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
 
     result->Attach< kernel::CommunicationHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
@@ -145,7 +146,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach( *new DebugPoints( static_.coordinateConverter_ ) );
     result->Attach( *new ConvexHulls( *result ) );
     result->Attach( *new DecisionalStates() );
-
+    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
     result->Update( message );
     result->Polish();
 
@@ -192,6 +193,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new Speeds( static_.coordinateConverter_ ) );
     result->Attach( *new Weapons( controllers_, static_.objectTypes_, static_.objectTypes_ ) );
     result->Attach( *new Affinities( *result,controllers_.controller_, model_.teams_, dico ) );
+    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
     AttachExtensions( *result );
 
     result->Update( message );
@@ -206,13 +208,14 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 // -----------------------------------------------------------------------------
 kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& message )
 {
-    Population* result = new Population( message, controllers_, static_.coordinateConverter_, static_.types_, static_ );
+    Population* result = new Population( message, controllers_, static_.coordinateConverter_, static_.types_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new PopulationPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
     result->Attach( *new DecisionalStates() );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dico ) );
+    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
     AttachExtensions( *result );
     result->Polish();
     return result;
@@ -224,12 +227,13 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
 // -----------------------------------------------------------------------------
 kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& message )
 {
-    Inhabitant* result = new Inhabitant( message, controllers_, model_.urbanObjects_, static_.types_, static_.objectTypes_, static_ );
+    Inhabitant* result = new Inhabitant( message, controllers_, model_.urbanObjects_, static_.types_, static_.objectTypes_ );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::Positions >( *new InhabitantPositions( *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dico ) );
     result->Attach< kernel::LivingArea_ABC >( *new LivingArea( message, result->GetId(), controllers_.controller_, model_.urbanObjects_ ) );
+    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
     result->Polish();
     return result;
 }

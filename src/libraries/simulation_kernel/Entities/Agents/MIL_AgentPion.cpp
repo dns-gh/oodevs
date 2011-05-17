@@ -64,6 +64,7 @@
 #include "Network/NET_AsnException.h"
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_AffinitiesMap.h"
+#include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
@@ -88,15 +89,12 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , orderManager_        ( *new MIL_PionOrderManager( *this ) )
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( new MIL_AffinitiesMap( xis ) )
+    , pExtensions_         ( new MIL_DictionaryExtensions( xis ) )
 {
     automate.RegisterPion( *this, false );
     xis >> xml::optional
-            >> xml::start( "critical-intelligence" )
+            >> xml::start( "critical-intelligence" ) // $$$$ ABR 2011-05-12: Factorize critical intelligence like affinities or extensions
                 >> xml::attribute( "content", criticalIntelligence_ )
-            >> xml::end
-        >> xml::optional
-            >> xml::start( "extensions" )
-                >> xml::list( "entry", *this, &MIL_AgentPion::ReadExtension )
             >> xml::end;
 }
 
@@ -112,7 +110,8 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , orderManager_        ( *new MIL_PionOrderManager( *this ) )
     , algorithmFactories_  ( algorithmFactories )
-    , pAffinities_         ( new MIL_AffinitiesMap )
+    , pAffinities_         ( new MIL_AffinitiesMap() )
+    , pExtensions_         ( new MIL_DictionaryExtensions() )
 {
     automate.RegisterPion( *this );
 }
@@ -130,6 +129,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFac
     , orderManager_        ( *new MIL_PionOrderManager( *this ) )
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( 0 )
+    , pExtensions_         ( 0 )
 {
     // NOTHING
 }
@@ -183,12 +183,14 @@ void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned 
 void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_AffinitiesMap* pAffinities;
+    MIL_DictionaryExtensions* pExtensions;
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file >> const_cast< bool& >( bIsPC_ )
          >> pAutomate_
       // >> actions_ // actions non sauvegardées
          >> pKnowledgeBlackBoard_
-         >> pAffinities;
+         >> pAffinities
+         >> pExtensions;
     LoadRole< network::NET_RolePion_Dotations >( file, *this );
     LoadRole< PHY_RolePion_Reinforcement >( file, *this );
     LoadRole< PHY_RolePion_Posture >( file, *this );
@@ -222,6 +224,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     RegisterRole( *new DEC_Representations() );
     RegisterRole( *new PHY_RolePion_TerrainAnalysis( *this ) );
     pAffinities_.reset( pAffinities );
+    pExtensions_.reset( pExtensions );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,12 +235,14 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
 {
     assert( pType_ );
     const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
+    const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file << bIsPC_
         << pAutomate_
         // << actions_ // actions non sauvegardées
         << pKnowledgeBlackBoard_
-        << pAffinities;
+        << pAffinities
+        << pExtensions;
     SaveRole< network::NET_RolePion_Dotations >( *this, file );
     SaveRole< PHY_RolePion_Reinforcement >( *this, file );
     SaveRole< PHY_RolePion_Posture >( *this, file );
@@ -279,35 +284,23 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
     assert( pType_ );
     xos << xml::start( "unit" );
     MIL_Entity_ABC::WriteODB( xos ) ;
-    xos     << xml::attribute( "id", GetID() )
-            << xml::attribute( "type", pType_->GetName() )
-            << xml::attribute( "command-post", bIsPC_ )
-            << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
+    xos << xml::attribute( "id", GetID() )
+        << xml::attribute( "type", pType_->GetName() )
+        << xml::attribute( "command-post", bIsPC_ )
+        << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
     GetRole< PHY_RolePion_Composantes >().WriteODB( xos ); // Equipments + Humans
     GetRole< dotation::PHY_RolePion_Dotations >().WriteODB( xos ); // Dotations
     const PHY_RoleInterface_Supply* role = RetrieveRole< PHY_RoleInterface_Supply >();//@TODO verify
     if( role )
         role->WriteODB( xos ); // Stocks
-    if( !extensions_.empty() )
-    {
-        xos << xml::start( "extensions" );
-        BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
-        {
-            xos << xml::start( "entry" )
-                << xml::attribute( "key", extension.first )
-                << xml::attribute( "value", extension.second )
-                << xml::end;
-        }
-        xos << xml::end;
-    }
     if( criticalIntelligence_ != "" )
     {
         xos << xml::start( "critical-intelligence" )
                 << xml::attribute( "content", criticalIntelligence_ )
             << xml::end;
     }
-
     pAffinities_->WriteODB( xos );
+    pExtensions_->WriteODB( xos );
     xos << xml::end;// unit
 }
 
@@ -446,15 +439,6 @@ void MIL_AgentPion::UpdatePhysicalState()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::ReadExtension
-// Created: JSR 2010-10-08
-// -----------------------------------------------------------------------------
-void MIL_AgentPion::ReadExtension( xml::xistream& xis )
-{
-    extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::UpdateState
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
@@ -471,12 +455,14 @@ void MIL_AgentPion::UpdateNetwork()
 {
     GetRole< network::NET_RolePion_Dotations >().SendChangedState();
     GetRole< network::NET_RolePion_Dotations >().Clean();
-
-    client::UnitAttributes attributesMsg;
-    attributesMsg().mutable_unit()->set_id( GetID() );
-    pAffinities_->UpdateNetwork( attributesMsg );
-    if( attributesMsg().has_adhesions() )
-        attributesMsg.Send( NET_Publisher_ABC::Publisher() );
+    if( pAffinities_->HasChanged() || pExtensions_->HasChanged() )
+    {
+        client::UnitAttributes msg;
+        msg().mutable_unit()->set_id( GetID() );
+        pAffinities_->UpdateNetwork( msg );
+        pExtensions_->UpdateNetwork( msg );
+        msg.Send( NET_Publisher_ABC::Publisher() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -617,23 +603,6 @@ void MIL_AgentPion::SendCreation() const
     creationMsg().mutable_automat()->set_id( GetAutomate().GetID() );
     creationMsg().set_pc( bIsPC_ );
     creationMsg.Send( NET_Publisher_ABC::Publisher() );
-    // TODO à mettre dans UnitCreation quand l'erreur dans le protocole pourra être corrigée (extensions dans creation et pas attributes)
-
-    client::UnitAttributes attributesMsg;
-    attributesMsg().mutable_unit()->set_id( GetID() );
-    if( !criticalIntelligence_.empty() )
-        attributesMsg().set_critical_intelligence( criticalIntelligence_ );
-    if( extensions_.size() )
-        for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
-        {
-            sword::Extension_Entry* entry = attributesMsg().mutable_extension()->add_entries();
-            entry->set_name( it->first );
-            entry->set_value( it->second );
-        }
-
-    pAffinities_->SendFullState( attributesMsg );
-    if( !criticalIntelligence_.empty() || !extensions_.empty() || attributesMsg().has_adhesions() )
-        attributesMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -642,6 +611,13 @@ void MIL_AgentPion::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::SendFullState() const
 {
+    client::UnitAttributes msg;
+    msg().mutable_unit()->set_id( GetID() );
+    if( !criticalIntelligence_.empty() )
+        msg().set_critical_intelligence( criticalIntelligence_ );
+    pAffinities_->SendFullState( msg );
+    pExtensions_->SendFullState( msg );
+    msg.Send( NET_Publisher_ABC::Publisher() );
     GetRole< network::NET_RolePion_Dotations >().SendFullState();
 }
 
@@ -951,6 +927,9 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         break;
     case sword::UnitMagicAction::unit_change_affinities:
         pAffinities_->OnReceiveMsgChangeAffinities( msg );
+        break;
+    case sword::UnitMagicAction::change_extension:
+        pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
     default:
         assert( false );

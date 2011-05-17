@@ -663,6 +663,15 @@ void AgentServerMsgMgr::OnReceiveFormationCreation( const sword::FormationCreati
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveFormationUpdate
+// Created: ABR 2011-05-12
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveFormationUpdate( const sword::FormationUpdate& message )
+{
+    GetModel().teams_.GetFormation( message.formation().id() ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgCheckPointSaveBegin
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
@@ -1818,6 +1827,8 @@ void AgentServerMsgMgr::OnReceiveSimToClient( const std::string& from, const swo
         OnReceiveMsgPartyCreation              ( wrapper.message().party_creation() );
     else if( wrapper.message().has_formation_creation() )
         OnReceiveFormationCreation         ( wrapper.message().formation_creation() );
+    else if( wrapper.message().has_formation_update() )
+        OnReceiveFormationUpdate           ( wrapper.message().formation_update() );
     else if( wrapper.message().has_unit_knowledge_creation() )
         OnReceiveUnitKnowledgeCreation     ( wrapper.message().unit_knowledge_creation() );
     else if( wrapper.message().has_unit_knowledge_update() )

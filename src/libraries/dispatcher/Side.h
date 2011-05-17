@@ -16,10 +16,10 @@
 
 namespace sword
 {
-    class ChangeDiplomacy;
     enum EnumDiplomacy;
-    class PartyCreation;
+    class ChangeDiplomacy;
     class ChangeDiplomacyAck;
+    class PartyCreation;
 }
 
 namespace dispatcher
@@ -92,6 +92,7 @@ private:
     tools::Resolver< dispatcher::Object_ABC >         objects_;
     tools::Resolver< dispatcher::Population_ABC >     populations_;
     tools::Resolver< dispatcher::Inhabitant_ABC >     inhabitants_;
+    std::map< std::string, std::string >              extensions_;
     //@}
 };
 

@@ -32,6 +32,9 @@ Side::Side( const Model_ABC& model, const sword::PartyCreation& msg )
     , model_( model )
     , nType_( msg.type() )
 {
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     switch( nType_ )
     {
         case sword::unknown: karma_ = kernel::Karma::unknown_; break;
@@ -81,6 +84,12 @@ void Side::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_party()->set_id( GetId() );
     asn().set_name( GetName() );
     asn().set_type( nType_ );
+    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    {
+        sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+        entry->set_name( it->first );
+        entry->set_value( it->second );
+    }
     asn.Send( publisher );
 }
 

@@ -819,16 +819,6 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else
                 throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
-        case UnitMagicAction::crowd_total_destruction:
-        case UnitMagicAction::crowd_change_health_state:
-        case UnitMagicAction::crowd_change_attitude:
-        case UnitMagicAction::crowd_change_affinities:
-        case UnitMagicAction::crowd_change_armed_individuals:
-            if( MIL_Population* pPopulation = populationFactory_->Find ( id ) )
-                pPopulation->OnReceiveCrowdMagicAction( message );
-            else
-                throw NET_AsnException< CrowdMagicActionAck_ErrorCode >( CrowdMagicActionAck::error_invalid_unit );
-            break;
         case UnitMagicAction::create_fire_order:
             ProcessMagicActionCreateFireOrder( message, nCtx );
             break;
@@ -878,20 +868,17 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else
                 throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
-        case UnitMagicAction::inhabitant_change_health_state:
-        case UnitMagicAction::inhabitant_change_affinities:
-        case UnitMagicAction::inhabitant_change_alerted_state:
-            if( MIL_Inhabitant* pInhabitant = inhabitantFactory_->Find ( id ) )
-                pInhabitant->OnReceiveInhabitantMagicAction( message );
-            else
-                throw NET_AsnException< ChangePopulationMagicActionAck_ErrorCode >( ChangePopulationMagicActionAck::error_invalid_population );
-            break;
-
         default:
-            if( MIL_Automate* pAutomate = FindAutomate( id ) )
+            if( MIL_Formation* pFormation = FindFormation( id ) )
+                pFormation->OnReceiveUnitMagicAction( message );
+            else if( MIL_Automate* pAutomate = FindAutomate( id ) )
                 pAutomate->OnReceiveUnitMagicAction( message, *armyFactory_ );
             else if( MIL_AgentPion* pPion = FindAgentPion( id ) )
                 pPion->OnReceiveUnitMagicAction( message, *armyFactory_ );
+            else if( MIL_Population* pPopulation = FindPopulation( id ) )
+                pPopulation->OnReceiveUnitMagicAction( message );
+            else if( MIL_Inhabitant* pInhabitant = FindInhabitant( id ) )
+                pInhabitant->OnReceiveUnitMagicAction( message );
             else
                 throw NET_AsnException< UnitActionAck::ErrorCode >( UnitActionAck::error_invalid_unit );
             break;

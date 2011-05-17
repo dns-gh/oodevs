@@ -41,9 +41,6 @@ Population::Population( Model_ABC& model, const sword::CrowdCreation& msg )
     , decisionalInfos_ ( model )
     , armedIndividuals_( 0 )
 {
-    if( msg.has_extension() )
-        for( int i = 0; i < msg.extension().entries_size(); ++i )
-            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
     side_.Register( *this );
     RegisterSelf( *this );
 }
@@ -84,6 +81,9 @@ void Population::DoUpdate( const sword::CrowdUpdate& msg )
         criticalIntelligence_ = msg.critical_intelligence();
     if( msg.has_armed_individuals() )
         armedIndividuals_ = msg.armed_individuals();
+    if( msg.has_extension() )
+        for( int i = 0; i < msg.extension().entries_size(); ++i )
+            extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
 }
 
 // -----------------------------------------------------------------------------
@@ -195,12 +195,6 @@ void Population::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().mutable_party()->set_id( side_.GetId() );
     asn().mutable_type()->set_id( nType_ );
     asn().set_name( strName_ );
-    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
-    {
-        sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
-        entry->set_name( it->first );
-        entry->set_value( it->second );
-    }
     asn().mutable_repartition()->set_male( male_ );
     asn().mutable_repartition()->set_female( female_ );
     asn().mutable_repartition()->set_children( children_ );
@@ -228,6 +222,13 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_wounded( GetWoundedHumans() );
     asn().set_contaminated( GetContaminatedHumans() );
     asn().set_dead( GetDeadHumans() );
+
+    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
+    {
+        sword::Extension_Entry* entry = asn().mutable_extension()->add_entries();
+        entry->set_name( it->first );
+        entry->set_value( it->second );
+    }
     asn.Send( publisher );
     if( order_.get() )
         order_->Send( publisher );

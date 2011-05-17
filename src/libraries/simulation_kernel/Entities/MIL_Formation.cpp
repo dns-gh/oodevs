@@ -20,6 +20,7 @@
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "MT_Tools/MT_Logger.h"
+#include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/map.hpp>
@@ -39,10 +40,11 @@ namespace
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory )
     : MIL_Entity_ABC( xis )
-    , nID_    ( xis.attribute< unsigned int >( "id" ) )
-    , pArmy_  ( &army )
-    , pParent_( pParent )
-    , pLevel_ ( 0 )
+    , nID_        ( xis.attribute< unsigned int >( "id" ) )
+    , pArmy_      ( &army )
+    , pParent_    ( pParent )
+    , pLevel_     ( 0 )
+    , pExtensions_( new MIL_DictionaryExtensions( xis ) )
 {
     pLevel_ = PHY_NatureLevel::Find( xis.attribute< std::string >( "level" ) );
     if( !pLevel_ )
@@ -52,11 +54,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     else
         pArmy_->RegisterFormation( *this );
     xis >> xml::list( "formation", *this, &MIL_Formation::InitializeFormation, formationFactory )
-        >> xml::list( "automat", *this, &MIL_Formation::InitializeAutomate, automateFactory )
-        >> xml::optional >> xml::start( "extensions" )
-            >> xml::list( "entry", *this, &MIL_Formation::ReadExtension )
-        >> xml::end;
-
+        >> xml::list( "automat", *this, &MIL_Formation::InitializeAutomate, automateFactory );
     std::string logLevelStr(PHY_LogisticLevel::none_.GetName());
     xis >> xml::optional() >> xml::attribute("logistic-level", logLevelStr);
     const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find(logLevelStr);
@@ -77,10 +75,11 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( int level, const std::string& name, std::string logLevelStr, MIL_Army_ABC& army, MIL_Formation* parent )
     : MIL_Entity_ABC( name )
-    , nID_    ( idManager_.GetFreeId() )
-    , pArmy_  ( &army )
-    , pParent_( parent )
-    , pLevel_ ( 0 )
+    , nID_        ( idManager_.GetFreeId() )
+    , pArmy_      ( &army )
+    , pParent_    ( parent )
+    , pLevel_     ( 0 )
+    , pExtensions_( new MIL_DictionaryExtensions() )
 {
     pLevel_ = PHY_NatureLevel::Find( level );
     if( !pLevel_ )
@@ -89,7 +88,6 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
         pParent_->RegisterFormation( *this );
     else
         pArmy_->RegisterFormation( *this );
-
     if( logLevelStr.empty() )
         logLevelStr = PHY_LogisticLevel::none_.GetName();
     const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find( logLevelStr );
@@ -109,10 +107,11 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
 // -----------------------------------------------------------------------------
 MIL_Formation::MIL_Formation( const std::string& name )
     : MIL_Entity_ABC( name )
-    , nID_    ( 0 )
-    , pArmy_  ( 0 )
-    , pParent_( 0 )
-    , pLevel_ ( 0 )
+    , nID_        ( 0 )
+    , pArmy_      ( 0 )
+    , pParent_    ( 0 )
+    , pLevel_     ( 0 )
+    , pExtensions_( 0 )
 {
     // NOTHING
 }
@@ -152,15 +151,6 @@ void MIL_Formation::InitializeAutomate( xml::xistream& xis, AutomateFactory_ABC&
     {
         MT_LOG_ERROR_MSG( e.what() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Formation::ReadExtension
-// Created: JSR 2010-10-11
-// -----------------------------------------------------------------------------
-void MIL_Formation::ReadExtension( xml::xistream& xis )
-{
-    extensions_[ xis.attribute< std::string >( "key" ) ] = xis.attribute< std::string >( "value" );
 }
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Formation )
@@ -220,16 +210,19 @@ namespace boost
 // -----------------------------------------------------------------------------
 void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-   file >> const_cast< unsigned int& >( nID_ )
-        >> pArmy_
-        >> pParent_;
-   idManager_.Lock( nID_ );
-   unsigned int nLevel;
-   file >> nLevel;
-   pLevel_ = PHY_NatureLevel::Find( nLevel );
-   assert( pLevel_ );
-   file >> tools::Resolver< MIL_Formation >::elements_
-        >> tools::Resolver< MIL_Automate >::elements_;
+    MIL_DictionaryExtensions* pExtensions;
+    file >> const_cast< unsigned int& >( nID_ )
+         >> pArmy_
+         >> pParent_;
+    idManager_.Lock( nID_ );
+    unsigned int nLevel;
+    file >> nLevel;
+    pLevel_ = PHY_NatureLevel::Find( nLevel );
+    assert( pLevel_ );
+    file >> tools::Resolver< MIL_Formation >::elements_
+         >> tools::Resolver< MIL_Automate >::elements_
+         >> pExtensions;
+    pExtensions_.reset( pExtensions );
 }
 
 // -----------------------------------------------------------------------------
@@ -238,6 +231,7 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
+    const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     assert( pLevel_ );
     unsigned int level = pLevel_->GetID();
     file << nID_
@@ -245,7 +239,8 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
          << pParent_
          << level
          << tools::Resolver< MIL_Formation >::elements_
-         << tools::Resolver< MIL_Automate >::elements_;
+         << tools::Resolver< MIL_Automate >::elements_
+         << pExtensions;
 }
 
 // -----------------------------------------------------------------------------
@@ -261,18 +256,7 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "name", GetName() );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref( xos ) ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::WriteODB, _1, boost::ref( xos ) ) );
-    if( !extensions_.empty() )
-    {
-        xos << xml::start( "extensions" );
-        BOOST_FOREACH( const T_Extensions::value_type& extension, extensions_ )
-        {
-            xos << xml::start( "entry" )
-                    << xml::attribute( "key", extension.first )
-                    << xml::attribute( "value", extension.second )
-                << xml::end;
-        }
-        xos << xml::end;
-    }
+    pExtensions_->WriteODB( xos );
     xos << xml::end; // formation
 }
 
@@ -306,15 +290,7 @@ void MIL_Formation::SendCreation() const
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     if( pParent_ )
         message().mutable_parent()->set_id( pParent_->GetID() );
-    for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it != extensions_.end(); ++it )
-    {
-        sword::Extension_Entry* entry = message().mutable_extension()->add_entries();
-        entry->set_name( it->first );
-        entry->set_value( it->second );
-    }
     message.Send( NET_Publisher_ABC::Publisher() );
-    if( message().has_extension() )
-        message().mutable_extension()->mutable_entries()->Clear();
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );//@TODO MGD Move to factory
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendCreation, _1, 0 ) );
 }
@@ -325,9 +301,44 @@ void MIL_Formation::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_Formation::SendFullState() const
 {
+    client::FormationUpdate message;
+    message().mutable_formation()->set_id( nID_ );
+    pExtensions_->SendFullState( message );
+    message.Send( NET_Publisher_ABC::Publisher() );
     SendLogisticLinks();
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1 ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendFullState, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::UpdateNetwork
+// Created: ABR 2011-05-11
+// -----------------------------------------------------------------------------
+void MIL_Formation::UpdateNetwork() const
+{
+    if( pExtensions_->HasChanged() )
+    {
+        client::FormationUpdate message;
+        message().mutable_formation()->set_id( nID_ );
+        pExtensions_->UpdateNetwork( message );
+        message.Send( NET_Publisher_ABC::Publisher() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::OnReceiveUnitMagicAction
+// Created: ABR 2011-05-11
+// -----------------------------------------------------------------------------
+void MIL_Formation::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg )
+{
+    switch( msg.type() )
+    {
+    case sword::UnitMagicAction::change_extension:
+        pExtensions_->OnReceiveMsgChangeExtensions( msg );
+        break;
+    default:
+        break;
+    }
 }
 
 // -----------------------------------------------------------------------------

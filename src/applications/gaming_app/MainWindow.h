@@ -153,6 +153,7 @@ private:
     StatusBar* pStatus_;
     bool connected_;
     MissionPanel* pMissionPanel_;
+    QDockWindow* pExtensionsPanel_;
     QString planifName_;
     bool onPlanif_;
     QString savedState_;
