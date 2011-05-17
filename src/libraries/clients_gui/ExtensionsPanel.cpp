@@ -27,6 +27,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "DiffusionListDialog.h"
 #include "DiffusionListLineEdit.h"
@@ -71,6 +72,7 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     scrollView->setFrameStyle( QFrame::Box | QFrame::Sunken );
     setWidget( scrollView );
     pMainLayout_ = new QVBox( scrollView->viewport() );
+    pExtensionLayout_ = new QVBox( pMainLayout_ );
     scrollView->addChild( pMainLayout_ );
     controllers_.Register( *this );
 }
@@ -113,16 +115,20 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
                 type->GetAttributeTypes( "crowd", attributes );
             else if( typeName == Inhabitant_ABC::typeName_ )
                 type->GetAttributeTypes( "population", attributes );
+            else if( typeName == Team_ABC::typeName_ )
+                type->GetAttributeTypes( "party", attributes );
             if( attributes.size() )
             {
-                pGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Enabled" ), pMainLayout_ );
+                pGroupBox_ = new QGroupBox( 1, Qt::Horizontal, tr( "Enabled" ), pExtensionLayout_ );
                 pGroupBox_->setCheckable( true );
                 pGroupBox_->setMargin( 5 );
                 for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it )
                     AddWidget( **it );
                 UpdateDependencies();
                 const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
-                pGroupBox_->setChecked( ext ? ext->IsEnabled() : false );
+                if( !ext )
+                    return;
+                pGroupBox_->setChecked( ext->IsEnabled() );
                 pGroupBox_->show();
                 connect( pGroupBox_, SIGNAL( toggled( bool ) ), this, SLOT( OnActivationChanged( bool ) ) );
                 return;
@@ -361,10 +367,10 @@ void ExtensionsPanel::DeleteWidgets()
 // -----------------------------------------------------------------------------
 void ExtensionsPanel::OnActivationChanged( bool activate )
 {
-    DictionaryExtensions* ext = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
-    if( !ext )
-        selected_.ConstCast()->Attach( *( ext = new DictionaryExtensions( "orbat-attributes", extensions_ ) ) );
-    ext->SetEnabled( activate );
+    DictionaryExtensions* dico = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
+    if( !dico )
+        return;
+    dico->SetEnabled( activate );
     if( activate )
         Commit();
     else
@@ -438,6 +444,62 @@ void ExtensionsPanel::Commit()
     }
     controllers_.controller_.Update( *selected_ );
     UpdateDependencies();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtensionsPanel::UpdateDisplay
+// Created: ABR 2011-05-16
+// -----------------------------------------------------------------------------
+void ExtensionsPanel::UpdateDisplay()
+{
+    DictionaryExtensions* ext = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
+    ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
+    if( !ext || !type )
+        return;
+    for( CIT_Widgets it = widgets_.begin(); it != widgets_.end(); ++it )
+    {
+        AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( ( *it )->name() );
+        if( attribute )
+        {
+            const bool enabled = ( *it )->isEnabled();
+            QString value = ext->GetValue( ( *it )->name() ).c_str();
+            switch( attribute->GetType() )
+            {
+            case AttributeType::ETypeBoolean:
+                static_cast< QCheckBox* >( *it )->setChecked( ( *it )->isEnabled() );
+                break;
+            case AttributeType::ETypeString:
+            case AttributeType::ETypeAlphanumeric:
+            case AttributeType::ETypeNumeric:
+            case AttributeType::ETypeDiffusionList:
+                {
+                    QLineEdit* edit = static_cast< QLineEdit* >( *it );
+                    edit->setText( enabled ? value : "" );
+                    int pos = 0;
+                    edit->setPaletteBackgroundColor( ( !edit->validator() || edit->validator()->validate( value, pos ) == QValidator::Acceptable ) ? Qt::white : Qt::yellow );
+                }
+                break;
+            case AttributeType::ETypeDictionary:
+                {
+                    QComboBox* combo = static_cast< QComboBox* >( *it );
+                    const std::string& selected = GetDictionaryString( value.ascii(), *attribute, extensions_ );
+                    if( !selected.empty() )
+                        combo->setCurrentText( selected.c_str() );
+                }
+                break;
+            case AttributeType::ETypeLoosyDictionary:
+                {
+                    QComboBox* combo = static_cast< QComboBox* >( *it );
+                    combo->setCurrentText( enabled ? value : "" );
+                    int pos = 0;
+                    combo->setPaletteBackgroundColor( ( !combo->validator() || combo->validator()->validate( value, pos ) == QValidator::Acceptable ) ? Qt::white : Qt::yellow );
+                }
+                break;
+            default:
+                break;
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

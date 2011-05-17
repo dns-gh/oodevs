@@ -10,12 +10,17 @@
 #include "clients_kernel_pch.h"
 #include "DictionaryExtensions.h"
 #include "AttributeType.h"
+#include "Controllers.h"
+#include "Entity_ABC.h"
 #include "ExtensionType.h"
 #include "ExtensionTypes.h"
 #include "DictionaryType.h"
 #include "DictionaryEntryType.h"
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.hpp>
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 using namespace kernel;
 
@@ -23,24 +28,30 @@ using namespace kernel;
 // Name: DictionaryExtensions constructor
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-DictionaryExtensions::DictionaryExtensions( const std::string& extensionType, const ExtensionTypes& resolver )
-    : enabled_      ( false )
+DictionaryExtensions::DictionaryExtensions( kernel::Controllers& controllers, const std::string& extensionType, const ExtensionTypes& resolver )
+    : controllers_  ( controllers )
+    , enabled_      ( false )
     , extensionType_( extensionType )
     , resolver_     ( resolver )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DictionaryExtensions constructor
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
-DictionaryExtensions::DictionaryExtensions( const std::string& extensionType, xml::xistream& xis, const ExtensionTypes& resolver )
-    : enabled_      ( true )
+DictionaryExtensions::DictionaryExtensions( kernel::Controllers& controllers, const std::string& extensionType, xml::xistream& xis, const ExtensionTypes& resolver )
+    : controllers_  ( controllers )
+    , enabled_      ( xis.has_child( "extensions" ) )
     , extensionType_( extensionType )
     , resolver_     ( resolver )
 {
-    xis >> xml::list( "entry", *this, &DictionaryExtensions::ReadExtension );
+    if( enabled_ )
+        xis >> xml::start( "extensions" )
+                >> xml::list( "entry", *this, &DictionaryExtensions::ReadExtension )
+            >> xml::end;
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,7 +60,7 @@ DictionaryExtensions::DictionaryExtensions( const std::string& extensionType, xm
 // -----------------------------------------------------------------------------
 DictionaryExtensions::~DictionaryExtensions()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,39 +72,11 @@ void DictionaryExtensions::SerializeAttributes( xml::xostream& xos ) const
     if( enabled_ && !extensions_.empty() )
     {
         xos << xml::start( "extensions" );
-        std::string value;
         for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
-        {
-            value = it->second;
-            ExtensionType* type = resolver_.tools::StringResolver< ExtensionType >::Find( extensionType_ );
-            if( !type )
-                continue;
-            tools::Iterator< const AttributeType& > attributeIt = type->CreateIterator();
-            while( attributeIt.HasMoreElements() )
-            {
-                const AttributeType& attribute = attributeIt.NextElement();
-                if( attribute.GetType() == AttributeType::ETypeDictionary && attribute.GetName() == it->first )
-                {
-                    std::string dictionary;
-                    std::string kind;
-                    std::string language;
-                    attribute.GetDictionaryValues( dictionary, kind, language );
-                    DictionaryType* dico = resolver_.tools::StringResolver< DictionaryType >::Find( dictionary );
-                    if( !dico )
-                        continue;
-                    DictionaryEntryType* entry = dico->Find( it->second );
-                    if( entry )
-                    {
-                        value = boost::lexical_cast< std::string >( entry->GetId() );
-                        break;
-                    }
-                }
-            }
             xos << xml::start( "entry" )
                     << xml::attribute( "key", it->first )
-                    << xml::attribute( "value", value )
+                    << xml::attribute( "value", GetValueWithDictionnaryLink( it->first ) )
                 << xml::end;
-        }
         xos << xml::end;
     }
 }
@@ -104,11 +87,61 @@ void DictionaryExtensions::SerializeAttributes( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void DictionaryExtensions::ReadExtension( xml::xistream& xis )
 {
-    std::string value = xis.attribute< std::string >( "value" );
     std::string key = xis.attribute< std::string >( "key" );
-    ExtensionType* type = resolver_.tools::StringResolver< ExtensionType >::Find( extensionType_ );
+    std::string value = xis.attribute< std::string >( "value" );
+    SetValueWithDictionnaryLink( key, value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DictionaryExtensions::GetValueWithDictionnaryLink
+// Created: ABR 2011-05-17
+// -----------------------------------------------------------------------------
+std::string DictionaryExtensions::GetValueWithDictionnaryLink( const std::string& name ) const
+{
+    std::string value = GetValue( name );
     try
     {
+        ExtensionType* type = resolver_.tools::StringResolver< ExtensionType >::Find( extensionType_ );
+        if( !type )
+            return "";
+        tools::Iterator< const AttributeType& > attributeIt = type->CreateIterator();
+        while( attributeIt.HasMoreElements() )
+        {
+            const AttributeType& attribute = attributeIt.NextElement();
+            if( attribute.GetType() == AttributeType::ETypeDictionary && attribute.GetName() == name )
+            {
+                std::string dictionary;
+                std::string kind;
+                std::string language;
+                attribute.GetDictionaryValues( dictionary, kind, language );
+                DictionaryType* dico = resolver_.tools::StringResolver< DictionaryType >::Find( dictionary );
+                if( !dico )
+                    continue;
+                DictionaryEntryType* entry = dico->Find( value );
+                if( entry )
+                {
+                    value = boost::lexical_cast< std::string >( entry->GetId() );
+                    break;
+                }
+            }
+        }
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
+    return value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DictionaryExtensions::SetValueWithDictionnaryLink
+// Created: ABR 2011-05-13
+// -----------------------------------------------------------------------------
+void DictionaryExtensions::SetValueWithDictionnaryLink( const std::string& name, std::string value )
+{
+    try
+    {
+        ExtensionType* type = resolver_.tools::StringResolver< ExtensionType >::Find( extensionType_ );
         if( type )
         {
             tools::Iterator< const AttributeType& > attributeIt = type->CreateIterator();
@@ -116,7 +149,7 @@ void DictionaryExtensions::ReadExtension( xml::xistream& xis )
             while( !found && attributeIt.HasMoreElements() )
             {
                 const AttributeType& attribute = attributeIt.NextElement();
-                if( attribute.GetType() == AttributeType::ETypeDictionary && attribute.GetName() == key )
+                if( attribute.GetType() == AttributeType::ETypeDictionary && attribute.GetName() == name )
                 {
                     unsigned int id = boost::lexical_cast< unsigned int >( value );
                     std::string dictionary;
@@ -145,7 +178,33 @@ void DictionaryExtensions::ReadExtension( xml::xistream& xis )
     {
         // NOTHING
     }
-    extensions_[ key ] = value;
+    extensions_[ name ] = value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DictionaryExtensions::NotifyDeleted
+// Created: ABR 2011-05-13
+// -----------------------------------------------------------------------------
+void DictionaryExtensions::NotifyDeleted( const kernel::Entity_ABC& element )
+{
+    std::string& values = extensions_[ resolver_.GetNameByType( AttributeType::ETypeDiffusionList ) ];
+    if( !values.empty() )
+    {
+        const std::string id = boost::lexical_cast< std::string >( element.GetId() );
+        std::vector< std::string > valuesVector;
+        boost::split( valuesVector, values, boost::algorithm::is_any_of( ";" ) );
+        std::vector< std::string >::iterator founded = std::find( valuesVector.begin(), valuesVector.end(), id );
+        if( founded != valuesVector.end() )
+        {
+            valuesVector.erase( founded );
+            values.clear();
+            for( std::vector< std::string >::const_iterator it = valuesVector.begin(); it != valuesVector.end(); ++it )
+            {
+                values += ( values.empty() ) ? "" : ";";
+                values += *it;
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

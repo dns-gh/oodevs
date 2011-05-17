@@ -202,8 +202,10 @@ void DiffusionListDialog::OnGenerateAll()
 // -----------------------------------------------------------------------------
 void DiffusionListDialog::UpdateDisplay()
 {
-    const DictionaryExtensions& dico = selected_->Get< DictionaryExtensions >();
-    text_->setText( dico.GetValue( extensionName_ ).c_str() );
+    const DictionaryExtensions* dico = selected_->Retrieve< DictionaryExtensions >();
+    if( !dico )
+        return;
+    text_->setText( dico->GetValue( extensionName_ ).c_str() );
     list_->UpdateDisplay( text_->text() );
 }
 

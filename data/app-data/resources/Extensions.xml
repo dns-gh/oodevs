@@ -5102,7 +5102,7 @@
         <label text="Nom long unité" language="fr"/>
       </labels>
     </attribute>
-    <attribute extends="unit;automat;formation;crowd" name="Nationalite"  type="dictionary" dictionary="T_Nationalite">
+    <attribute extends="unit;automat;formation;crowd;party" name="Nationalite"  type="dictionary" dictionary="T_Nationalite">
       <labels>
         <label text="Nationalité" language="fr"/>
       </labels>
@@ -5149,4 +5149,4 @@
     </attribute>
   </profile-attributes>
 </extensions>
-<!-- signature="4224235400" -->
+<!-- signature="1161127678" -->

@@ -21,6 +21,7 @@
 #include "Populations.h"
 #include "EntityIntelligences.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/DictionaryExtensions.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -62,6 +63,7 @@ Team_ABC* TeamFactory::CreateTeam()
     result->Attach< IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, 0 ) );
     result->Attach( *new Populations() );
     result->Attach( *new Inhabitants() );
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
     result->Polish();
     return result;
 }
@@ -81,6 +83,7 @@ Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
     result->Attach< IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, 0 ) );
     result->Attach( *new Populations() );
     result->Attach( *new Inhabitants() );
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
     result->Polish();
     return result;
 }

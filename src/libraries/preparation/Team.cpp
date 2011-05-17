@@ -29,20 +29,12 @@ Team::Team( Controller& controller, IdManager& idManager )
     CreateDictionary( controller );
 }
 
-namespace
-{
-    QString ReadName( xml::xistream& xis )
-    {
-        return xis.attribute< std::string >( "name"  ).c_str();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Team constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
 Team::Team( xml::xistream& xis, Controller& controller, IdManager& idManager )
-    : EntityImplementation< Team_ABC >( controller, xis.attribute< unsigned long >( "id" ), ReadName( xis ) )
+    : EntityImplementation< Team_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );

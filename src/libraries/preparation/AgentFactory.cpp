@@ -91,6 +91,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dico, tools::translate( "Affinities", "Affinities" ) ) );
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( commandPost )
         result->Attach( *new CommandPostAttributes( *result ) );
     result->Polish();
@@ -116,6 +117,7 @@ Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, 
     if( type.IsTC2() )
         result->Attach< LogisticBaseHierarchies >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico ) );
     result->Attach( *new TacticalLines() );
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Polish();
     return result;
 }
@@ -136,6 +138,7 @@ Population_ABC* AgentFactory::Create( Entity_ABC& parent, const PopulationType& 
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary ) );
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( Populations* popus = top->Retrieve< Populations >() )
         popus->AddPopulation( *result );
     result->Polish();
@@ -164,10 +167,10 @@ Inhabitant_ABC* AgentFactory::Create( Entity_ABC& parent, const InhabitantType& 
         delete result;
         return 0;
     }
-
     result->Attach< Positions >( positions );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, top ) );
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dico ) );
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( Inhabitants* inhabs = top->Retrieve< Inhabitants >() )
         inhabs->AddInhabitant( *result );
     result->Polish();
@@ -214,12 +217,7 @@ Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
         result->Attach( *new CommandPostAttributes( *result ) );
     if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
-    if( xis.has_child( "extensions" ) )
-    {
-        xis.start( "extensions" );
-        result->Attach( *new DictionaryExtensions( "orbat-attributes", xis, static_.extensions_ ) );
-        xis.end();
-    }
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     result->Polish();
     return result;
 }
@@ -240,12 +238,7 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
     if( result->GetType().IsTC2() )
         result->Attach< LogisticBaseHierarchies >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico ) );
     result->Attach( *new TacticalLines() );
-    if( xis.has_child( "extensions" ) )
-    {
-        xis.start( "extensions" );
-        result->Attach( *new DictionaryExtensions( "orbat-attributes", xis, static_.extensions_ ) );
-        xis.end();
-    }
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     result->Polish();
     return result;
 }
@@ -261,12 +254,7 @@ Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, Team_ABC& parent )
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary ) );
-    if( xis.has_child( "extensions" ) )
-    {
-        xis.start( "extensions" );
-        result->Attach( *new DictionaryExtensions( "orbat-attributes", xis, static_.extensions_ ) );
-        xis.end();
-    }
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     if( Populations* popus = parent.Retrieve< Populations >() )
         popus->AddPopulation( *result );
     result->Polish();
@@ -284,12 +272,7 @@ Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, Team_ABC& parent 
     result->Attach< Positions >( *new InhabitantPositions( xis, static_.coordinateConverter_, model_.urban_, *result, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dico ) );
-    if( xis.has_child( "extensions" ) )
-    {
-        xis.start( "extensions" );
-        result->Attach( *new DictionaryExtensions( "orbat-attributes", xis, static_.extensions_ ) );
-        xis.end();
-    }
+    result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     if( Inhabitants* popus = parent.Retrieve< Inhabitants >() )
         popus->AddInhabitant( *result );
     result->Polish();

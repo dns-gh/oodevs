@@ -54,10 +54,22 @@ public:
     virtual ~ExtensionsPanel();
     //@}
 
-    //! @name Operations
+protected:
+    //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );
     virtual void NotifyDeleted( const kernel::Entity_ABC& element );
+    void AddWidget( const kernel::AttributeType& attribute );
+    void DeleteWidgets();
+    void UpdateDisplay();
+    void UpdateDependencies();
+    //@}
+
+protected slots:
+    //! @name Slots
+    //@{
+    virtual void OnActivationChanged( bool );
+    virtual void Commit();
     //@}
 
 private:
@@ -67,29 +79,15 @@ private:
     typedef T_Widgets::const_iterator   CIT_Widgets;
     //@}
 
-private:
-    //! @name Helpers
-    //@{
-    void AddWidget( const kernel::AttributeType& attribute );
-    void DeleteWidgets();
-    void UpdateDependencies();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnActivationChanged( bool );
-    void Commit();
-    //@}
-
-private:
+protected:
     //! @name Member data
     //@{
     kernel::Controllers&                      controllers_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     const kernel::ExtensionTypes&             extensions_;
     DiffusionListDialog*                      diffusionDialog_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
     QVBox*                                    pMainLayout_;
+    QVBox*                                    pExtensionLayout_;
     QGroupBox*                                pGroupBox_;
     T_Widgets                                 widgets_;
     //@}

@@ -156,6 +156,7 @@ bool AttributeType::IsActive( const std::map< std::string, std::string >& extens
     if( dependencies_.empty() )
         return true;
     bool active = operator_ == EOperatorAND;
+    bool hasChanged = false;
     for( CIT_Dependencies dep = dependencies_.begin(); dep != dependencies_.end(); ++dep )
         for( std::map< std::string, std::string >::const_iterator ext = extensions.begin(); ext != extensions.end(); ++ext )
             if( ( *dep )->GetName() == ext->first )
@@ -164,7 +165,8 @@ bool AttributeType::IsActive( const std::map< std::string, std::string >& extens
                     active = active && ( *dep )->Allow( ext->second );
                 else if( operator_ == EOperatorOR )
                     active = active || ( *dep )->Allow( ext->second );
+                hasChanged = true;
                 break;
             }
-    return active;
+    return hasChanged ? active : false;;
 }

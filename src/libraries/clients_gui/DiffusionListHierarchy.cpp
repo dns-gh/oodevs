@@ -257,7 +257,7 @@ void DiffusionListHierarchy::Initialize( SafePointer< Entity_ABC > selected, con
         if( !dico )
             continue;
         ExtensionType* type = dico->GetExtensionTypes().tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
-        if( !type )
+        if( !type || dico->GetExtensions().size() == 0 )
             continue;
         AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( dico->GetExtensionTypes().GetNameByType( AttributeType::ETypeDiffusionList ) );
         if( !attribute )

@@ -13,7 +13,7 @@
 
 using namespace kernel;
 
-const QString Team_ABC::typeName_ = "team";
+const QString Team_ABC::typeName_ = "party";
 
 // -----------------------------------------------------------------------------
 // Name: Team_ABC constructor
