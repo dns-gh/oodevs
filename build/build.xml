@@ -126,6 +126,7 @@
         <build-lib name="hla_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces,protobuf" pattern="hla_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="HLA,libFedTime1516e,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
@@ -156,6 +157,7 @@
                   matrixRT,mtlRT,vlHLA13RT,vlRT,vlutilRT,vrfcontrolHLA13,
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
                   lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}
@@ -174,6 +176,7 @@
         <build-lib name="dis_plugin_dll" outtype="shared" depends="boost,qt,terrain,xalan,xerces,protobuf" pattern="dis_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -295,6 +298,7 @@
             libs="zipstream,zlib1,tools,
                   lib${ant.project.name}_clients_gui-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_client_proxy-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_frontend-${platform}-mt@{suffix},
@@ -400,9 +404,9 @@
     <target name="application.adaptation_app" depends="library.ENT,library.clients_gui" description="build Sword Adaptation executable">
         <build-app name="adaptation_app" depends="qt,xerces,xalan,boost,flexlm" excludes="**/XmlResources.cpp"
                    libs="svgl,zipstream,
-                         lib${ant.project.name}_ENT-${platform}-mt
-                         lib${ant.project.name}_clients_gui-${platform}-mt
-                         lib${ant.project.name}_clients_kernel-${platform}-mt
+                         lib${ant.project.name}_ENT-${platform}-mt,
+                         lib${ant.project.name}_clients_gui-${platform}-mt,
+                         lib${ant.project.name}_clients_kernel-${platform}-mt,
                          lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                          lib${ant.project.name}_tools-${platform}-mt" pch-excludes="qtundo.cpp">
             <syslibset libs="gdi32,advapi32,user32,shell32"/>
@@ -416,6 +420,7 @@
                          lib${ant.project.name}_actions_gui-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
                          lib${ant.project.name}_clients_kernel-${platform}-mt,
+                         lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_ENT-${platform}-mt,
                          lib${ant.project.name}_protocol-${platform}-mt,
                          lib${ant.project.name}_meteo-${platform}-mt@{suffix},
@@ -447,6 +452,7 @@
                          lib${ant.project.name}_actions_gui-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
                          lib${ant.project.name}_clients_kernel-${platform}-mt,
+                         lib${ant.project.name}_MT_Tools-${platform}-mt,
                          lib${ant.project.name}_ENT-${platform}-mt,
                          lib${ant.project.name}_protocol-${platform}-mt,
                          lib${ant.project.name}_indicators-${platform}-mt,
@@ -466,6 +472,7 @@
                     lib${ant.project.name}_frontend-${platform}-mt,
                     lib${ant.project.name}_clients_gui-${platform}-mt,
                     lib${ant.project.name}_clients_kernel-${platform}-mt
+                    lib${ant.project.name}_MT_Tools-${platform}-mt,
                     lib${ant.project.name}_protocol-${platform}-mt,
                     lib${ant.project.name}_tools-${platform}-mt">
             <syslibset libs="gdi32,shell32,htmlhelp,advapi32"/>
@@ -480,6 +487,7 @@
                     lib${ant.project.name}_frontend-${platform}-mt,
                     lib${ant.project.name}_clients_gui-${platform}-mt,
                     lib${ant.project.name}_clients_kernel-${platform}-mt,
+                    lib${ant.project.name}_MT_Tools-${platform}-mt,
                     lib${ant.project.name}_protocol-${platform}-mt,
                     lib${ant.project.name}_tools-${platform}-mt">
             <syslibset libs="gdi32,shell32,htmlhelp,advapi32"/>
@@ -518,6 +526,7 @@
                   lib${ant.project.name}_actions-${platform}-mt@{suffix},
                   lib${ant.project.name}_client_proxy-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">
@@ -640,6 +649,7 @@
         <build-test name="hla_plugin" depends="boost,qt,terrain,xerces,protobuf"
             libs="HLA,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
@@ -662,6 +672,7 @@
                   lib${ant.project.name}_indicators-${platform}-mt,
                   lib${ant.project.name}_clients_gui-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_preparation-${platform}-mt,
                   lib${ant.project.name}_flood-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt">
@@ -675,6 +686,7 @@
                   lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_actions-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt">
         </build-test>
     </target>
@@ -682,6 +694,7 @@
     <target name="dispatcher_test" depends="library.dispatcher,library.messenger_plugin">
         <build-test name="dispatcher" depends="boost,qt,xerces,terrain,protobuf"
             libs="lib${ant.project.name}_clients_kernel-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_dispatcher-${platform}-mt,
@@ -699,6 +712,7 @@
             libs="launcher-${platform}-mt@{suffix},tools,
                   lib${ant.project.name}_frontend-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt">
@@ -712,6 +726,7 @@
                   lib${ant.project.name}_client_proxy-${platform}-mt,
                   lib${ant.project.name}_actions-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt,
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_tools-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt,
                   lib${ant.project.name}_ENT-${platform}-mt">
