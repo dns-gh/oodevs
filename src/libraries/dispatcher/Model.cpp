@@ -113,7 +113,14 @@ void Model::Receive( const sword::SimToClient& wrapper )
     }
     else if( wrapper.message().has_control_send_current_state_end() )
         MT_LOG_INFO_MSG( "Dispatcher - Model initialized" );
-    Update( wrapper );
+    try
+    {
+        Update( wrapper );
+    }
+    catch( std::runtime_error& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

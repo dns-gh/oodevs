@@ -10,12 +10,17 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_AgentTypePion.h"
+
+#include "AlgorithmsFactories.h"
 #include "MIL_AgentPion.h"
+#include "MIL_AgentServer.h"
+
 #include "Tools/MIL_Tools.h"
 #include "Units/PHY_UnitType.h"
 
-#include "Decision/DEC_Workspace.h"
+#include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Workspace.h"
 
 #include "Entities/Specialisations/ALAT/MIL_AgentTypePionALAT.h"
 #include "Entities/Specialisations/RENS/MIL_AgentTypePionRENS.h"
@@ -62,13 +67,9 @@
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
 
-#include "simulation_kernel/AlgorithmsFactories.h"
-
-#include "Decision/DEC_Representations.h"
-
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 
-#include "MIL_AgentServer.h"
+#include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
@@ -151,10 +152,21 @@ void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
     const MIL_AgentTypePion*& pType = pionTypes_[ strName ];
     if( pType )
         xis.error( "Pion type already defined" );
-    pType = (*itPionAllocator->second)( strName, strType, xis );
+    try
+    {
+        pType = (*itPionAllocator->second)( strName, strType, xis );
+    }
+    catch( std::runtime_error& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+        pType = 0;
+    }
 
-    if( !ids_.insert( pType->GetID() ).second )
-        xis.error( "Pion type ID already used" );
+    if( pType )
+    {
+        if( !ids_.insert( pType->GetID() ).second )
+            xis.error( "Pion type ID already used" );
+    }
 }
 
 // -----------------------------------------------------------------------------

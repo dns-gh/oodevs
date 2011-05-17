@@ -370,7 +370,10 @@ void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
         xis.error( "Automat's command post already defined" );
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
-        xis.error( "Unknown pawn type" );
+    {
+        MT_LOG_ERROR_MSG( "Automate: Unit not created - Unknown type : " <<  xis.attribute< std::string >( "type" ) );
+        return;
+    }
     MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, xis ); // Auto-registration
     if( isPc )
         pPionPC_ = &pion;

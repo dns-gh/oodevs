@@ -25,6 +25,7 @@
 #include "InhabitantType.h"
 #include "SensorType.h"
 #include "SymbolFactory.h"
+#include "MT_Tools/MT_Logger.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
@@ -261,9 +262,16 @@ void AgentTypes::ReadAgents( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadAgentType( xml::xistream& xis )
 {
-    AgentType* type = new AgentType( xis, *this, unitModels_, *symbolFactory_ );
-    tools::Resolver< AgentType >         ::Register( type->GetId(), *type );
-    tools::Resolver< AgentType, std::string >::Register( type->GetName(), *type );
+    try
+    {
+        AgentType* type = new AgentType( xis, *this, unitModels_, *symbolFactory_ );
+        tools::Resolver< AgentType >         ::Register( type->GetId(), *type );
+        tools::Resolver< AgentType, std::string >::Register( type->GetName(), *type );
+    }
+    catch( std::runtime_error& e )
+    {
+        MT_LOG_ERROR_MSG( "exception caught: " << e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -282,9 +290,16 @@ void AgentTypes::ReadAutomats( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void AgentTypes::ReadAutomatType( xml::xistream& xis )
 {
-    AutomatType* type = new AutomatType( xis, *this, automatModels_ );
-    tools::Resolver< AutomatType >         ::Register( type->GetId(), *type );
-    tools::Resolver< AutomatType, std::string >::Register( type->GetName(), *type );
+    try
+    {
+        AutomatType* type = new AutomatType( xis, *this, automatModels_ );
+        tools::Resolver< AutomatType >         ::Register( type->GetId(), *type );
+        tools::Resolver< AutomatType, std::string >::Register( type->GetName(), *type );
+    }
+    catch( std::runtime_error& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+    }
 }
 
 // -----------------------------------------------------------------------------

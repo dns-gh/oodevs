@@ -107,10 +107,21 @@ void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
     if( pType )
         xis.error( "Automate type already defined" );
 
-    pType = (*itAutomateAllocator->second)( strName, xis );
+    try
+    {
+        pType = (*itAutomateAllocator->second)( strName, xis );
+    }
+    catch( std::runtime_error& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+        pType = 0;
+    }
 
-    if( !ids_.insert( pType->GetID() ).second )
-        xis.error( "Automate type ID already used" );
+    if( pType )
+    {
+        if( !ids_.insert( pType->GetID() ).second )
+            xis.error( "Automate type ID already used" );
+    }
 }
 
 // -----------------------------------------------------------------------------
