@@ -3,11 +3,11 @@
   <units>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PlatoonINF">
       <missions>
-        <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
@@ -19,6 +19,7 @@
           <fragorder name="Deboucher"/>
         </mission>
         <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Barrer"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Couvrir"/>
@@ -27,6 +28,7 @@
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Fixer"/>
+        <mission name="MELEE Fouiller"/>
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
         </mission>
@@ -34,15 +36,11 @@
         <mission name="MELEE Illuminer"/>
         <mission name="MELEE Intercepter"/>
         <mission name="MELEE Interdire"/>
-        <mission name="STABILISATION Interdire foule"/>
-        <mission name="MELEE Barrer"/>
-        <mission name="STABILISATION Controler foule"/>
-        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Neutraliser"/>
+        <mission name="MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Recueillir"/>
         <mission name="MELEE Relever"/>
-        <mission name="STABILISATION Renseigner sur foule"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
@@ -50,7 +48,10 @@
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="STABILISATION Animer Poste De Controle"/>
-        <mission name="COMMUNES Interroger"/>
+        <mission name="STABILISATION Interdire foule"/>
+        <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Canaliser foules"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -81,7 +82,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Mortier">
       <missions>
-        <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
@@ -94,6 +94,7 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Fouiller"/>
         <mission name="MELEE Soutenir"/>
       </missions>
       <fragorders>
@@ -123,11 +124,11 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PlatoonABC">
       <missions>
-        <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
@@ -139,23 +140,21 @@
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
+        <mission name="MELEE Barrer"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Contre Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="MELEE Detruire"/>
         <mission name="MELEE Controler"/>
-        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Couvrir"/>
+        <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
         <mission name="MELEE Fixer"/>
         <mission name="MELEE Flanc-Garder"/>
+        <mission name="MELEE Fouiller"/>
         <mission name="MELEE Freiner"/>
         <mission name="MELEE Interdire"/>
-        <mission name="STABILISATION Interdire foule"/>
-        <mission name="MELEE Barrer"/>
-        <mission name="STABILISATION Controler foule"/>
         <mission name="MELEE Jalonner">
           <fragorder name="Decrocher"/>
         </mission>
@@ -163,12 +162,14 @@
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Reduire"/>
         <mission name="MELEE Relever"/>
-        <mission name="STABILISATION Renseigner sur foule"/>
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Tenir"/>
-        <mission name="COMMUNES Interroger"/>
+        <mission name="STABILISATION Canaliser foules"/>
+        <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Interdire foule"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -195,11 +196,11 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PEI">
       <missions>
-        <mission name="MELEE Fouiller"/>
+        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
-        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
@@ -208,15 +209,16 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Controler"/>
-        <mission name="STABILISATION Controler foule"/>
-        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
+        <mission name="MELEE Fouiller"/>
         <mission name="MELEE Jalonner">
           <fragorder name="Decrocher"/>
         </mission>
+        <mission name="MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="MELEE Surveiller"/>
-        <mission name="COMMUNES Interroger"/>
+        <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Canaliser foules"/>
         <mission name="STABILISATION Renseigner sur foule"/>
       </missions>
       <fragorders>
@@ -244,11 +246,11 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PIA">
       <missions>
-        <mission name="MELEE Fouiller"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
@@ -257,32 +259,30 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="MELEE Appuyer"/>
-        <mission name="MELEE Boucler"/>
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
+        <mission name="MELEE Boucler"/>
+        <mission name="MELEE Barrer"/>
         <mission name="MELEE Contre Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
         <mission name="MELEE Controler"/>
-        <mission name="STABILISATION Controler foule"/>
-        <mission name="STABILISATION Canaliser foules"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Eclairer"/>
         <mission name="MELEE Escorter"/>
-        <mission name="MELEE Jalonner">
-          <fragorder name="Decrocher"/>
-        </mission>
+        <mission name="MELEE Fouiller"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Intercepter"/>
         <mission name="MELEE Interdire"/>
-        <mission name="STABILISATION Interdire foule"/>
+        <mission name="MELEE Jalonner">
+          <fragorder name="Decrocher"/>
+        </mission>
         <mission name="MELEE Neutraliser"/>
-        <mission name="MELEE Barrer"/>
+        <mission name="MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Relever"/>
-        <mission name="STABILISATION Renseigner sur foule"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Soutenir"/>
         <mission name="MELEE Surveiller"/>
@@ -290,9 +290,12 @@
           <fragorder name="Abandonner travaux"/>
         </mission>
         <mission name="STABILISATION Animer Poste De Controle"/>
+        <mission name="STABILISATION Controler foule"/>
+        <mission name="STABILISATION Canaliser foules"/>
+        <mission name="STABILISATION Interdire foule"/>
+        <mission name="STABILISATION Renseigner sur foule"/>
         <mission name="GENIE Degager Obstacles"/>
         <mission name="GENIE OuvrirItineraire"/>
-        <mission name="COMMUNES Interroger"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -321,11 +324,11 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.PC">
       <missions>
-        <mission name="MELEE Fouiller"/>
+        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
-        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
@@ -333,7 +336,7 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="COMMUNES Interroger"/>
+        <mission name="MELEE Fouiller"/>
         <mission name="STABILISATION Renseigner sur foule"/>
       </missions>
       <fragorders>
@@ -431,9 +434,9 @@
           <fragorder name="Appliquer les feux"/>
         </mission>
         <mission name="ASS Coordonner le Tir et l'Ilumination"/>
+        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
-        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
@@ -467,9 +470,9 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie">
       <missions>
+        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
-        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
@@ -520,9 +523,9 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ONG Intervention">
       <missions>
+        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
-        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
@@ -555,9 +558,9 @@
     <unit dia-type="sword.military.platoon.individual.roles.Individual" file="BMPion.bms" masalife="true" name="Masalife.Sniper">
       <missions>
         <mission name="Embuscade"/>
+        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
-        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
@@ -591,9 +594,10 @@
     </unit>
     <unit dia-type="france.military.platoon.terrorism.roles.Individu" file="BMPion.bms" masalife="true" name="Masalife.Terroriste">
       <missions>
-        <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -605,7 +609,6 @@
         <mission name="ASY Prendre un Otage"/>
         <mission name="GENIE Detruire point du reseau"/>
         <mission name="S'Infiltrer"/>
-        <mission name="COMMUNES Interroger"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -638,8 +641,8 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="S'Infiltrer"/>
         <mission name="COMMUNES Interroger"/>
+        <mission name="S'Infiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7635,9 +7638,9 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ONG LOG">
       <missions>
+        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
-        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
@@ -7671,10 +7674,11 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Milice">
       <missions>
+        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
-        <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
@@ -7682,8 +7686,8 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="COMMUNES Interroger"/>
         <mission name="GENIE Detruire point du reseau"/>
+        <mission name="ASY Prendre un Otage"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7712,16 +7716,16 @@
   <automats>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.SGTIA">
       <missions>
+        <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
-        <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -7731,13 +7735,13 @@
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Effectuer un raid"/>
+        <mission name="MELEE Escorter"/>
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
         </mission>
-        <mission name="MELEE Escorter"/>
         <mission name="MELEE Harceler"/>
-        <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Interdire"/>
+        <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
@@ -7771,16 +7775,16 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.ONG">
       <missions>
+        <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Prendre en compte Prisonniers"/>
-        <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="GENIE Detruire point du reseau"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="LOGISTIQUE Se Deployer">
@@ -7805,17 +7809,17 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Artillerie">
       <missions>
-        <mission name="ASS SeDeployer"/>
         <mission name="ASS Illumination et Tir Synchronise"/>
-        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="ASS SeDeployer"/>
         <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Prendre en compte Prisonniers"/>
-        <mission name="COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7836,15 +7840,15 @@
     </automat>
     <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.SniperCompany">
       <missions>
-        <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Prendre en compte Prisonniers"/>
-        <mission name="COMMUNES Se Faire Decontaminer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -11706,4 +11710,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0278424785" -->
+<!-- signature="0491327851" -->
