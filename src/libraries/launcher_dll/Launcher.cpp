@@ -28,7 +28,7 @@ Launcher::Launcher( const Config& config )
     : fileLoaderObserver_( new tools::NullFileLoaderObserver() )
     , fileLoader_        ( new tools::DefaultLoader( *fileLoaderObserver_ ) )
     , server_            ( new LauncherService( config.GetLauncherPort() ) )
-    , processes_         ( new ProcessService( config, *fileLoader_ ) )
+    , processes_         ( new ProcessService( config, *fileLoader_, *server_ ) )
 {
     server_->RegisterMessage( *this, &Launcher::HandleAdminToLauncher );
 }
@@ -149,9 +149,12 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::ProfileL
 // Name: Launcher::HandleRequest
 // Created: AHC 2011-05-12
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionListRequest& /*message*/ )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionListRequest& message )
 {
-    // TODO AHC
+    SessionListResponse response;
+    response().set_exercise( message.exercise() );
+    processes_->SendSessionList( response() );
+    response.Send( server_->ResolveClient( endpoint ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +179,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionP
 // Name: Launcher::HandleRequest
 // Created: AHC 2011-05-12
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionCommandExecutionRequest& /*message*/ )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message )
 {
     // TODO AHC
 }

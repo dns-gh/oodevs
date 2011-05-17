@@ -65,9 +65,6 @@ void RemoteHost::StartSimulation( const std::string& exercise, const std::string
     message().set_exercise( exercise );
     message().set_session( session );
     message().set_type( sword::SessionStartRequest::simulation );
-    //  TODO AHC
-//    message().set_use_after_action_analysis( true );
-//    message().set_use_external_systems( true );
 //    message().set_checkpoint( checkpoint );
     message.Send( publisher_ );
 }
@@ -82,9 +79,6 @@ void RemoteHost::StartReplay( const std::string& exercise, const std::string& se
     message().set_exercise( exercise );
     message().set_session( session );
     message().set_type( sword::SessionStartRequest::replay );
-    // TODO AHC
-//message().set_use_after_action_analysis( true );
-//message().set_use_external_systems( true );
     message.Send( publisher_ );
 }
 

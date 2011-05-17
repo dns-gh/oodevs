@@ -26,13 +26,12 @@ namespace tools
     class Loader_ABC;
 }
 
-namespace frontend
-{
-    class ProcessWrapper;
-}
-
 namespace launcher
 {
+
+class SwordFacade;
+class LauncherService;
+
 // =============================================================================
 /** @class  ProcessService
     @brief  ProcessService
@@ -46,27 +45,31 @@ class ProcessService : private boost::enable_shared_from_this< ProcessService >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ProcessService( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader );
+    explicit ProcessService( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const LauncherService& server );
     virtual ~ProcessService();
     //@}
 
     //! @name Operations
     //@{
     void SendExerciseList( sword::ExerciseListResponse& message );
+    void SendSessionList( sword::SessionListResponse& message );
     sword::SessionStartResponse::ErrorCode StartSession( const sword::SessionStartRequest& message );
     sword::SessionStopResponse::ErrorCode StopSession( const sword::SessionStopRequest& message );
     void SendProfileList( sword::ProfileListResponse& message );
-    bool IsRunning( const std::string& exercise ) const;
+    bool IsRunning( const std::string& exercise, const std::string& session ) const;
+    void ExecuteCommand(const std::string& endpoint, const sword::SessionCommandExecutionRequest& message);
     virtual void NotifyStopped();
     virtual void NotifyError( const std::string& error );
     //@}
 
 private:
+    typedef std::map< std::pair<std::string, std::string>, boost::weak_ptr< SwordFacade > > ProcessContainer;
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
     const tools::Loader_ABC& fileLoader_;
-    std::map< std::string, boost::weak_ptr< frontend::ProcessWrapper > > processes_;
+    const LauncherService& server_;
+    ProcessContainer processes_;
     boost::recursive_mutex mutex_;
     //@}
 };

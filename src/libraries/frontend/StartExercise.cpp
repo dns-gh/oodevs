@@ -9,6 +9,7 @@
 
 #include "frontend_pch.h"
 #include "StartExercise.h"
+#include "StartDispatcher.h"
 #include "StartEdxl.h"
 #include "ConfigurationManipulator.h"
 #include "SimulationMonitor.h"
@@ -19,23 +20,6 @@ using namespace frontend;
 
 namespace
 {
-    class StartDispatcher : public SpawnCommand
-    {
-    public:
-        StartDispatcher( const tools::GeneralConfig& config, bool attach, const QString& dispatcher_path,
-                         const QString& exercise, const QString& session, const QString& checkpoint = "" )
-            : SpawnCommand( config, "dispatcher_app.exe", attach )
-        {
-            if( dispatcher_path.length() > 0 )
-                SetWorkingDirectory( dispatcher_path );
-            AddRootDirArgument();
-            AddExerciseArgument( exercise );
-            AddSessionArgument( session );
-            if( !checkpoint.isEmpty() )
-                AddArgument( "--checkpoint=" + checkpoint );
-        }
-    };
-
     bool HasEmbeddedDispatcher( const ConfigurationManipulator& config )
     {
         return config.GetValue< bool >( "session/config/simulation/dispatcher/@embedded" );
@@ -61,7 +45,7 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) )
     {
         std::string dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ) );
-        dispatcher_.reset( new ::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session ) );
+        dispatcher_.reset( new frontend::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session ) );
     }
     AddRootDirArgument();
     AddExerciseArgument( exercise );
@@ -83,7 +67,7 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) )
     {
         std::string dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ) );
-        std::auto_ptr< StartDispatcher > dispatcher( new ::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session, checkpoint ) );
+        std::auto_ptr< StartDispatcher > dispatcher( new frontend::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session, checkpoint ) );
         dispatcher_ = dispatcher;
     }
     AddRootDirArgument();
