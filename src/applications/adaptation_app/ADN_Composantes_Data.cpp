@@ -1505,7 +1505,7 @@ void ADN_Composantes_Data::ObjectInfos::ReadArchive( xml::xistream& input )
     bCoeffDestructionTime_      = coeffDestructionTime_ != "-1s";
     bValorizationTime_          = valorizationTime_ != "-1s";
     bDevalorizationTime_        = devalorizationTime_ != "-1s";
-    bExtinguishingTime_         = bExtinguishingTime_ != "-1s";
+    bExtinguishingTime_         = extinguishingTime_ != "-1s";
     bCoeffCircTime_             = rCoeffCirc_ != 0;
     bSpeedCirc_                 = rSpeedCirc_ != 0;
     bSpeedNotCirc_              = rSpeedNotCirc_ != 0;
