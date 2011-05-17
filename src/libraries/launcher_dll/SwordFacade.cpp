@@ -12,6 +12,8 @@
 #include "client_proxy/SwordProxy.h"
 #include "frontend/ProcessWrapper.h"
 #include "frontend/CommandLineTools.h"
+#include "protocol/ClientSenders.h"
+#include "protocol/MessengerSenders.h"
 
 namespace launcher
 {
@@ -48,6 +50,7 @@ void SwordFacade::Start()
         if(isDispatcher_)
         {
             client_.reset( new SwordProxy("localhost", frontend::DispatcherPort(1), "Supervisor", "" ));
+            client_->RegisterMessageHandler(this);
             client_->Connect(this);
         }
     }
@@ -63,6 +66,7 @@ void SwordFacade::Stop()
         if( IsConnected() && client_.get() )
         {
             client_->Disconnect();
+            client_->UnregisterMessageHandler(this);
             client_.reset();
         }
         process_->Stop();
@@ -116,19 +120,9 @@ void SwordFacade::OnAuthenticationFailed( const std::string& profile, const std:
 // Name: SwordFacade::RegisterMessageHandler
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::RegisterMessageHandler( SwordMessageHandler_ABC* handler )
+void SwordFacade::RegisterMessageHandler( int context, std::auto_ptr<SwordMessageHandler_ABC> handler )
 {
-    if( client_.get() )
-        client_->RegisterMessageHandler( handler );
-}
-// -----------------------------------------------------------------------------
-// Name: SwordFacade::UnregisterMessageHandler
-// Created: AHC 2011-05-16
-// -----------------------------------------------------------------------------
-void SwordFacade::UnregisterMessageHandler( SwordMessageHandler_ABC* handler )
-{
-    if( client_.get())
-        client_->RegisterMessageHandler( handler );
+    messageHandlers_[context] = handler;
 }
 // -----------------------------------------------------------------------------
 // Name: SwordFacade::Send
@@ -139,4 +133,31 @@ void SwordFacade::Send( const sword::ClientToSim& message ) const
     if( client_.get() && IsConnected() )
         client_->Send( message );
 }
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::OnReceiveMessage
+// Created: AHC 2011-05-16
+// -----------------------------------------------------------------------------
+void SwordFacade::OnReceiveMessage( const sword::SimToClient& message )
+{
+    HandlerContainer::iterator it = messageHandlers_.find(message.context() );
+    if( messageHandlers_.end() != it )
+    {
+        it->second->OnReceiveMessage(message);
+        messageHandlers_.erase(message.context());
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::OnReceiveMessage
+// Created: AHC 2011-05-16
+// -----------------------------------------------------------------------------
+void SwordFacade::OnReceiveMessage( const sword::MessengerToClient& message )
+{
+    HandlerContainer::iterator it = messageHandlers_.find(message.context() );
+    if( messageHandlers_.end() != it )
+    {
+        it->second->OnReceiveMessage(message);
+        messageHandlers_.erase(message.context());
+    }
+}
+
 }

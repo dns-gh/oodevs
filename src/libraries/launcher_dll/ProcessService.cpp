@@ -17,11 +17,87 @@
 #include "frontend/StartExercise.h"
 #include "frontend/StartDispatcher.h"
 #include "frontend/StartReplay.h"
+#include "client_proxy/SwordMessageHandler_ABC.h"
 #include "SwordFacade.h"
 #include "LauncherService.h"
 #include "LauncherPublisher.h"
 #include "protocol/SimulationSenders.h"
+#include "protocol/ClientSenders.h"
+namespace launcher
+{
 
+    struct ClientMessageHandlerBase : public SwordMessageHandler_ABC, boost::noncopyable
+    {
+    protected:
+        //! @name Constructors/Destructor
+        //@{
+        ClientMessageHandlerBase(LauncherPublisher& publisher, SwordFacade& client,
+                const std::string& exercise, const std::string& session)
+            : publisher_(publisher)
+            , client_(client)
+            , exercise_(exercise)
+            , session_(session)
+        {}
+        //@}
+    public:
+        //! @name Operations
+        //@{
+        virtual void OnReceiveMessage( const sword::SimToClient& /*message*/ ) {}
+        virtual void OnReceiveMessage( const sword::MessengerToClient& /*message*/ ) {}
+        //@}
+
+    protected:
+        template <typename T> void Send(T& message)
+        {
+            message.Send( publisher_ );
+        }
+        const std::string& exercise() const { return exercise_; }
+        const std::string& session() const { return session_; }
+
+    private:
+        LauncherPublisher& publisher_;
+        SwordFacade& client_;
+        std::string exercise_;
+        std::string session_;
+    };
+    struct PauseResumeMessageHandler : public ClientMessageHandlerBase
+    {
+        //! @name Constructors/Destructor
+        //@{
+        PauseResumeMessageHandler(LauncherPublisher& publisher, SwordFacade& client,
+                const std::string& exercise, const std::string& session)
+            : ClientMessageHandlerBase(publisher, client, exercise, session)
+        {
+        }
+        //@}
+
+        virtual void OnReceiveMessage( const sword::SimToClient& message )
+        {
+            if( message.message().has_control_pause_ack() )
+            {
+                SessionCommandExecutionResponse response;
+                response().set_exercise( exercise() );
+                response().set_session( session() );
+                response().set_error_code( message.message().control_pause_ack().error_code() == sword::ControlAck::no_error ?
+                        sword::SessionCommandExecutionResponse::success :
+                        sword::SessionCommandExecutionResponse::session_already_paused);
+                response().set_running( false );
+                Send( response );
+            }
+            if( message.message().has_control_resume_ack() )
+            {
+                SessionCommandExecutionResponse response;
+                response().set_exercise( exercise() );
+                response().set_session( session() );
+                response().set_error_code( message.message().control_pause_ack().error_code() == sword::ControlAck::no_error ?
+                        sword::SessionCommandExecutionResponse::success :
+                        sword::SessionCommandExecutionResponse::session_already_running);
+                response().set_running( false );
+                Send( response );
+            }
+        }
+    };
+}
 using namespace launcher;
 
 // -----------------------------------------------------------------------------
@@ -111,10 +187,6 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const sword
             const sword::SessionParameter& parameter = message.parameter(i);
             action.SetOption( parameter.key(), parameter.value() );
         }
-//        if( message.has_use_after_action_analysis() && message.use_after_action_analysis() )
-//            action.SetOption( "session/config/dispatcher/plugins/recorder", "" );
-//        else
-//            action.RemoveOption( "session/config/dispatcher/plugins/recorder" );
         action.Commit();
     }
     boost::shared_ptr< frontend::SpawnCommand > command;
@@ -233,11 +305,13 @@ void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message,
 
 // -----------------------------------------------------------------------------
 // Name: ProcessService::ExecuteCommand
-// Created: SBO 2010-11-19
+// Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
 void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message )
 {
     ProcessContainer::const_iterator it = processes_.find( std::make_pair(message.exercise(), message.session()) );
+    static int context = 1;
+
     if( processes_.end() == it )
     {
         SessionCommandExecutionResponse response;
@@ -257,6 +331,8 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         return;
     }
     boost::shared_ptr<SwordFacade> client( it->second );
+    client->RegisterMessageHandler( ++context,
+            std::auto_ptr<SwordMessageHandler_ABC>(new PauseResumeMessageHandler(server_.ResolveClient( endpoint ), *client.get(), message.exercise(), message.session() ) ) );
     if( message.set_running() )
     {
         simulation::ControlResume request;
@@ -269,14 +345,9 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
     }
     if( message.has_save_checkpoint() )
     {
+
         simulation::ControlCheckPointSaveNow request;
         request().set_name( message.save_checkpoint() );
         request.Send( *client );
     }
-    SessionCommandExecutionResponse response;
-    response().set_exercise( message.exercise() );
-    response().set_session( message.session() );
-    response().set_error_code( sword::SessionCommandExecutionResponse::success );
-    response.Send( server_.ResolveClient( endpoint ) );
-    // TODO retrieve dispatcher response
 }

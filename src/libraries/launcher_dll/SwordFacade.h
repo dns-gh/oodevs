@@ -11,8 +11,11 @@
 #ifndef __LAUNCHER_SWORDFACADE_H__
 #define __LAUNCHER_SWORDFACADE_H__
 
+#include <map>
 #include <boost/shared_ptr.hpp>
 #include "client_proxy/SwordConnectionHandler_ABC.h"
+#include "client_proxy/SwordMessageHandler_ABC.h"
+
 
 class SwordProxy;
 class SwordMessageHandler_ABC;
@@ -27,6 +30,8 @@ namespace frontend
 namespace sword
 {
     class ClientToSim;
+    class SimToClient;
+    class MessengerToClient;
 }
 
 namespace launcher
@@ -37,7 +42,7 @@ namespace launcher
 */
 // Created: AHC 2011-05-16
 // =============================================================================
-class SwordFacade : public SwordConnectionHandler_ABC
+class SwordFacade : public SwordConnectionHandler_ABC, public SwordMessageHandler_ABC
 {
 public:
     //! @name Constructor/destructor
@@ -62,9 +67,11 @@ public:
     void OnConnectionError( const std::string& endpoint, const std::string& reason );
     void OnAuthenticationSucceeded( const std::string& profile );
     void OnAuthenticationFailed( const std::string& profile, const std::string& reason );
+    // SwordMessageHandler_ABC interface
+    void OnReceiveMessage( const sword::SimToClient& message );
+    void OnReceiveMessage( const sword::MessengerToClient& message );
     //
-    void RegisterMessageHandler( SwordMessageHandler_ABC* handler );
-    void UnregisterMessageHandler( SwordMessageHandler_ABC* handler );
+    void RegisterMessageHandler( int context, std::auto_ptr<SwordMessageHandler_ABC> handler );
     void Send( const sword::ClientToSim& message ) const;
     //@}
 
@@ -75,7 +82,8 @@ private:
     boost::shared_ptr<frontend::ProcessWrapper> process_;
     boost::shared_ptr<SwordProxy> client_;
     boost::shared_ptr<SwordConnectionHandler_ABC> connectionHandler_;
-
+    typedef std::map<int, boost::shared_ptr<SwordMessageHandler_ABC> > HandlerContainer;
+    HandlerContainer messageHandlers_;
 
 };
 
