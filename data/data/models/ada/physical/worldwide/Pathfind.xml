@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<pathfind xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" model-version="4.4.1" xsi:noNamespaceSchemaLocation="schemas/4.3.0/physical/Pathfind.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<pathfind model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Pathfind.xsd">
   <configuration distance-threshold="15000" max-calculation-time="15s"/>
   <unit-rules>
     <rule autonomous="false" flying="false" type="base">
@@ -98,7 +98,7 @@
         <object-cost type="checkpoint" value="10000"/>
       </object-costs>
       <enemies cost-at-security-range="25" cost-on-contact="10"/>
-      <population-costs security-range="50" maximum="100" outside-of-population="100">
+      <population-costs maximum="100" outside-of-population="100" security-range="50">
         <population-cost attitude="calme" contact-cost="0"/>
         <population-cost attitude="agitee" contact-cost="0"/>
         <population-cost attitude="excitee" contact-cost="0"/>
@@ -313,4 +313,4 @@
     <rule channeling-range="1000" cost-out-of-channeling="50" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="3315098614" -->
+<!-- signature="2101647636" -->
