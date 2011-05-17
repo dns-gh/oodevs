@@ -13,6 +13,7 @@
 #include "DispatchedFunction.h"
 #include "ModelFunction.h"
 #include "Dispatcher.h"
+#include "StaticModel_ABC.h"
 #include <boost/bind.hpp>
 #include <boost/bind/protect.hpp>
 

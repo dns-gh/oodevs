@@ -15,6 +15,7 @@
 #include "3a/Task.h"
 #include "3a/StaticModel.h"
 #include "MT_Tools/MT_Logger.h"
+#include "protocol/protocol.h"
 #include "tools/SessionConfig.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem/operations.hpp>
