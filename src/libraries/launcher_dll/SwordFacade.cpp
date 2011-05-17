@@ -42,14 +42,14 @@ SwordFacade::~SwordFacade()
 // Name: SwordFacade::Start
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::Start()
+void SwordFacade::Start(const std::string& supervisorProfile, const std::string& supervisorPassword)
 {
     if( process_.get() )
     {
         process_->Start();
         if(isDispatcher_)
         {
-            client_.reset( new SwordProxy("localhost", frontend::DispatcherPort(1), "Supervisor", "" ));
+            client_.reset( new SwordProxy("localhost", frontend::DispatcherPort(1), supervisorProfile, supervisorPassword ));
             client_->RegisterMessageHandler(this);
             client_->Connect(this);
         }

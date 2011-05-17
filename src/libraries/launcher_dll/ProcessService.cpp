@@ -162,7 +162,29 @@ void ProcessService::SendSessionList( sword::SessionListResponse& message )
             message.add_session( key.second );
     }
 }
-
+namespace
+{
+    struct SupervisorProfileCollector : public frontend::ProfileVisitor_ABC
+    {
+        SupervisorProfileCollector()
+            : found_(false)
+            , supervisorProfile_("")
+            , supervisorPassword_("")
+            {}
+        void Visit( const frontend::Profile& profile )
+        {
+            if(!found_ && profile.IsSupervision() )
+            {
+                supervisorProfile_ = profile.GetLogin().ascii();
+                //supervisorPassword_ = profile.GetPassword().ascii();
+                found_ = true;
+            }
+        }
+        std::string supervisorProfile_;
+        std::string supervisorPassword_;
+        bool found_;
+    };
+}
 // -----------------------------------------------------------------------------
 // Name: ProcessService::StartExercise
 // Created: SBO 2010-10-07
@@ -198,12 +220,16 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const sword
     }
     else
         command.reset( new frontend::StartReplay( config_, exercise.c_str(), session.c_str(), 10001, true ) );
+
+    SupervisorProfileCollector profileCollector;
+    frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );
+
     boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( *this, command, message.type() == sword::SessionStartRequest::dispatch ) );
     {
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         processes_[ std::make_pair(exercise, session) ] = wrapper;
     }
-    wrapper->Start();
+    wrapper->Start(profileCollector.supervisorProfile_, profileCollector.supervisorPassword_);
     return sword::SessionStartResponse::success;
 }
 
