@@ -26,11 +26,11 @@ namespace
     {
         bpo::options_description desc( "Allowed options" );
         desc.add_options()
-            ( "help" , "produce help message" )
-            ( "i"    , "Install service" )
-            ( "s"    , "Start service" )
-            ( "k"    , "Kill service" )
-            ( "u"    , "Uninstall service" );
+            ( "help,h"      , "produce help message" )
+            ( "install,i"   , "Install service" )
+            ( "start,s"     , "Start service" )
+            ( "kill,k"      , "Kill service" )
+            ( "uninstall,u" , "Uninstall service" );
         bpo::variables_map vm;
         bpo::store( bpo::command_line_parser( argc, argv ).options( desc ).run(), vm );
         bpo::notify( vm );
@@ -55,13 +55,13 @@ int main( int argc, char* argv[] )
         LauncherService::Initialize( path );
 
         LauncherService& service = LauncherService::Instance();
-        if( vm.count( "i" ) )
+        if( vm.count( "install" ) )
             service.Install();
-        else if( vm.count( "s" ) )
+        else if( vm.count( "start" ) )
             service.RunService();
-        else if( vm.count( "k" ) )
+        else if( vm.count( "kill" ) )
             service.KillService();
-        else if( vm.count( "u" ) )
+        else if( vm.count( "uninstall" ) )
             service.UnInstall();
         else
             service.ExecuteSubProcess();
