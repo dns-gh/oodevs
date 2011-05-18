@@ -38,7 +38,7 @@ ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, c
 
     // connector creation
     pConnector_ = new ADN_Connector_ListView<ArmorInfos>(*this);
-    this->SetDeletionEnabled( true );
+    this->SetDeletionEnabled( true, false );
 }
 
 
@@ -110,8 +110,6 @@ void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
         case 1:
         {
             ArmorInfos* pCurArmor= ( ArmorInfos* ) pCurData_;
-            if( pCurArmor->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )
-                return;
 
             static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurArmor);
             break;

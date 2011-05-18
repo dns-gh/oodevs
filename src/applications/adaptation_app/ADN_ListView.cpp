@@ -37,6 +37,7 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, WFlags f )
     , pCurData_         ( 0 )
     , pObjectCreator_   ( 0 )
     , bDeletionEnabled_ ( false )
+    , bDeletionWarning_ ( true )
     , bPrinting_        ( false )
 {
     connect( this, SIGNAL( onItem( QListViewItem* ) ), this, SLOT( OnOnItem( QListViewItem* ) ) );
@@ -275,7 +276,7 @@ void ADN_ListView::keyReleaseEvent( QKeyEvent* pEvent )
     {
         ADN_Ref_ABC* pCurrentData = (ADN_Ref_ABC*)pCurData_;
 
-        if( ! ADN_GuiTools::DeletionWarning() )
+        if( bDeletionWarning_ && ! ADN_GuiTools::DeletionWarning() )
             return;
 
         // Remove the item from the list.

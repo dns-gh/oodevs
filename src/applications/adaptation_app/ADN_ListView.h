@@ -44,7 +44,7 @@ public:
 
     void setEnabled( bool b );
 
-    void SetDeletionEnabled( bool b );
+    void SetDeletionEnabled( bool enable, bool warning = true );
 
     int ComputeNbrPrintPages( const QSize& painterSize ) const;
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
@@ -80,11 +80,12 @@ protected:
     T_ConnectorVector vItemConnectors_;
 
     bool bDeletionEnabled_;
+    bool bDeletionWarning_;
+    bool bPrinting_;
 
     ADN_ObjectCreator_ABC* pObjectCreator_;
 
     QRect toolTipRect_;
-    bool bPrinting_;
 };
 
 
@@ -115,9 +116,10 @@ void ADN_ListView::SetItemConnectors( const T_ConnectorVector& v )
 // Created: APE 2005-04-06
 // -----------------------------------------------------------------------------
 inline
-void ADN_ListView::SetDeletionEnabled( bool b )
+void ADN_ListView::SetDeletionEnabled( bool enabled, bool warning )
 {
-    bDeletionEnabled_ = b;
+    bDeletionEnabled_ = enabled;
+    bDeletionWarning_ = warning;
 }
 
 
