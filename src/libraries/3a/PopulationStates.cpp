@@ -23,19 +23,13 @@ PopulationStates::PopulationStates()
 
 namespace
 {
-    const char* populationStates[ 3 ] =
-    {
-        "healthy",
-        "wounded",
-        "dead",
-    };
-    bool ReadMask( xml::xistream& xis, unsigned int index )
+    bool ReadMask( xml::xistream& xis, std::string state )
     {
         if( !xis.has_attribute( "states" ) )
             return true;
         FilterHelper< std::string > equipments( xis, "states" );
         bool result = false;
-        if( equipments.IsAllowed( populationStates[index] ) )
+        if( equipments.IsAllowed( state ) )
             result = true;
         return result;
     }
@@ -46,9 +40,9 @@ namespace
 // Created: FPO 2011-05-05
 // -----------------------------------------------------------------------------
 PopulationStates::PopulationStates( xml::xistream& xis )
-    : healthy_( ReadMask ( xis, 0 ) )
-    , wounded_( ReadMask ( xis, 1 ) )
-    , dead_   ( ReadMask ( xis, 2 ) )
+    : healthy_( ReadMask ( xis, "healthy" ) )
+    , wounded_( ReadMask ( xis, "wounded" ) )
+    , dead_   ( ReadMask ( xis, "dead" ) )
 {
     // NOTHING
 }

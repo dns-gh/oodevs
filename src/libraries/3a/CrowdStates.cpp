@@ -7,71 +7,65 @@
 //
 // *****************************************************************************
 
-#include "CrowdConcentration.h"
+#include "CrowdStates.h"
+#include "MT_Tools\MT_Logger.h"
 
 using namespace sword;
 using namespace extractors;
 
 // -----------------------------------------------------------------------------
-// Name: CrowdConcentration constructor
+// Name: CrowdStates constructor
 // Created: FPO 2011-05-13
 // -----------------------------------------------------------------------------
-CrowdConcentration::CrowdConcentration()
+CrowdStates::CrowdStates()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrowdConcentration destructor
+// Name: CrowdStates destructor
 // Created: FPO 2011-05-13
 // -----------------------------------------------------------------------------
-CrowdConcentration::~CrowdConcentration()
+CrowdStates::~CrowdStates()
 {
     // NOTHING
 }
 
 namespace
 {
-    const char* populationStates[ 4 ] =
-    {
-        "healthy",
-        "wounded",
-        "dead",
-        "contaminated",
-    };
-    bool ReadMask( xml::xistream& xis, unsigned int index )
+    bool ReadMask( xml::xistream& xis, const std::string& state )
     {
         if( !xis.has_attribute( "states" ) )
             return true;
-        FilterHelper< std::string > equipments( xis, "states" );
+        FilterHelper< std::string > states( xis, "states" );
         bool result = false;
-        if( equipments.IsAllowed( populationStates[index] ) )
+        if( states.IsAllowed( state ) )
             result = true;
         return result;
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrowdConcentration constructor
+// Name: CrowdStates constructor
 // Created: FPO 2011-05-13
 // -----------------------------------------------------------------------------
-CrowdConcentration::CrowdConcentration( xml::xistream& xis )
-    : healthy_     ( ReadMask ( xis, 0 ) )
-    , wounded_     ( ReadMask ( xis, 1 ) )
-    , dead_        ( ReadMask ( xis, 2 ) )
-    , contaminated_( ReadMask ( xis, 3 ) )
+CrowdStates::CrowdStates( xml::xistream& xis )
+    : healthy_     ( ReadMask ( xis, "healthy" ) )
+    , wounded_     ( ReadMask ( xis, "wounded" ) )
+    , dead_        ( ReadMask ( xis, "dead" ) )
+    , contaminated_( ReadMask ( xis, "contaminated" ) )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: CrowdConcentration::Extract
+// Name: CrowdStates::Extract
 // Created: FPO 2011-05-13
 // -----------------------------------------------------------------------------
-int CrowdConcentration::Extract( const sword::SimToClient& wrapper )
+int CrowdStates::Extract( const sword::SimToClient& wrapper )
 {
     int result = 0;
-    const CrowdConcentrationUpdate& update = wrapper.message().crowd_concentration_update();
+    const CrowdUpdate& update = wrapper.message().crowd_update();
 
     if( healthy_.isAsked_ && update.has_healthy() )
         healthy_.quantity_ = update.healthy();

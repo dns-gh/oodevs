@@ -22,19 +22,13 @@ LogMaintenanceEquipments::LogMaintenanceEquipments()
 
 namespace
 {
-    const char* logEquipements[ 2 ] =
-    {
-        "repairers",
-        "haulers",
-    };
-
-    bool ReadMask( xml::xistream& xis, unsigned int index )
+    bool ReadMask( xml::xistream& xis, std::string equipment )
     {
         if( !xis.has_attribute( "types" ) )
             return true;
         FilterHelper< std::string > equipments( xis, "types" );
         bool result = false;
-        if( equipments.IsAllowed( logEquipements[ index ] ) )
+        if( equipments.IsAllowed( equipment ) )
             result = true;
         return result;
     }
@@ -56,8 +50,8 @@ namespace
 // Created: FPO 2011-05-04
 // -----------------------------------------------------------------------------
 LogMaintenanceEquipments::LogMaintenanceEquipments( xml::xistream& xis )
-    : repairers_( ReadMask ( xis, 0 ) )
-    , haulers_( ReadMask ( xis, 1 ) )
+    : repairers_( ReadMask ( xis, "repairers" ) )
+    , haulers_( ReadMask ( xis, "haulers" ) )
 {
     // NOTHING
 }

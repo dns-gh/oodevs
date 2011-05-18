@@ -28,13 +28,13 @@ namespace
         "ramassage",
     };
 
-    bool ReadMask( xml::xistream& xis, unsigned int index )
+    bool ReadMask( xml::xistream& xis, std::string equipment )
     {
         if( !xis.has_attribute( "types" ) )
             return true;
         FilterHelper< std::string > equipments( xis, "types" );
         bool result = false;
-        if( equipments.IsAllowed( logEquipements[ index ] ) )
+        if( equipments.IsAllowed( equipment ) )
                 result = true;
         return result;
     }
@@ -57,8 +57,8 @@ namespace
 // Created: FPO 2011-05-03
 // -----------------------------------------------------------------------------
 LogMedicalEquipments::LogMedicalEquipments( xml::xistream& xis )
-    : ambulances_releve_ ( ReadMask ( xis, 0 ) )
-    , ambulances_ramassage_ ( ReadMask ( xis, 1 ) )
+    : ambulances_releve_ ( ReadMask ( xis, "releve" ) )
+    , ambulances_ramassage_ ( ReadMask ( xis, "ramassage" ) )
 {
     // NOTHING
 }

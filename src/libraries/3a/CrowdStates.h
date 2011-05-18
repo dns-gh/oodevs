@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __CrowdConcentration_h_
-#define __CrowdConcentration_h_
+#ifndef __CrowdStates_h_
+#define __CrowdStates_h_
 
 #include "Extractors.h"
 #include "FilterHelper.h"
@@ -18,13 +18,12 @@ namespace extractors
 
 
 // =============================================================================
-/** @class  CrowdConcentration
-    @brief  CrowdConcentration
-    FIX ME !!!!!!
+/** @class  CrowdStates
+    @brief  CrowdStates
 */
 // Created: FPO 2011-05-13
 // =============================================================================
-class CrowdConcentration : public Extractor< NumericValue >
+class CrowdStates : public Extractor< NumericValue >
 {
 public:
     //! @name Types
@@ -35,16 +34,16 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             CrowdConcentration();
-    explicit CrowdConcentration( xml::xistream& xis );
-    virtual ~CrowdConcentration();
+             CrowdStates();
+    explicit CrowdStates( xml::xistream& xis );
+    virtual ~CrowdStates();
     //@}
 
     //! @name Operations
     //@{
     bool HasValue( const sword::SimToClient& wrapper ) const
     {
-        return ( wrapper.message().has_crowd_concentration_update() );
+        return ( wrapper.message().has_crowd_update() );
     }
     int Extract( const sword::SimToClient& wrapper );
     //@}
@@ -72,4 +71,4 @@ private:
 
 }
 
-#endif // __CrowdConcentration_h_
+#endif // __CrowdStates_h_

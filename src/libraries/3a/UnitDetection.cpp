@@ -34,7 +34,7 @@ namespace
     int ReadMask( xml::xistream& xis, const std::string& attribute )
     {
         if( xis.attribute< std::string >( attribute ).empty() )
-            return 1;
+            return 0xFFFF;
         FilterHelper< std::string > states( xis, attribute );
         int result = 0;
         for( unsigned i = 0; i < 5; ++i )

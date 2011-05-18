@@ -88,7 +88,7 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
     else if( value == "population-states" )
         Extract< attributes::PopulationStates, IdentifierValue >( name, xis, result );
     else if( value == "crowd-states" )
-        Extract< attributes::CrowdConcentration, IdentifierValue >( name, xis, result );
+        Extract< attributes::CrowdStates, IdentifierValue >( name, xis, result );
     else if( value == "satisfactions" )
         Extract< attributes::PopulationSatisfaction, IdentifierValue >( name, xis, result );
     else if( value == "population-in-selected-blocks" )

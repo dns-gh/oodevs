@@ -31,20 +31,13 @@ PopulationSatisfaction::~PopulationSatisfaction()
 
 namespace
 {
-    const char* types[3] =
-    {
-        "lodging",
-        "health",
-        "safety"
-    };
-
-    bool ReadMask( xml::xistream& xis, unsigned int index )
+    bool ReadMask( xml::xistream& xis, std::string type )
     {
         if( !xis.has_attribute( "type" ) )
             return true;
         FilterHelper< std::string > filter( xis, "type" );
         bool result = false;
-        if( filter.IsAllowed( types[ index ] ) )
+        if( filter.IsAllowed( type ) )
             result = true;
         return result;
     }
@@ -55,9 +48,9 @@ namespace
 // Created: FPO 2011-05-10
 // -----------------------------------------------------------------------------
 PopulationSatisfaction::PopulationSatisfaction( xml::xistream& xis )
-    : lodging_( ReadMask ( xis, 0 ) )
-    , health_ ( ReadMask ( xis, 1 ) )
-    , safety_ ( ReadMask ( xis, 2 ) )
+    : lodging_( ReadMask ( xis, "lodging" ) )
+    , health_ ( ReadMask ( xis, "health" ) )
+    , safety_ ( ReadMask ( xis, "safety" ) )
 {
     // NOTHING
 }
