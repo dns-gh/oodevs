@@ -241,7 +241,7 @@
   <report category="operational" id="179" message="deployment on dedicated area"/>
   <report category="operational" id="180" message="fire request received"/>
   <report category="operational" id="181" message="ready to execute fire"/>
-  <report category="operational" id="182" message="population nearby"/>
+  <report category="operational" id="182" message="crowd nearby"/>
   <report category="operational" id="183" message="sending refugees to camp"/>
   <report category="operational" id="184" message="no refugee camp available"/>
   <report category="operational" id="185" message="surrendered enemy detected"/>
@@ -257,7 +257,7 @@
   <report category="operational" id="195" message="civilian engaged"/>
   <report category="operational" id="196" message="sustaining civilian fire"/>
   <report category="operational" id="197" message="friendly indirect fire"/>
-  <report category="operational" id="198" message="indirect fire on population"/>
+  <report category="operational" id="198" message="indirect fire on crowd"/>
   <report category="operational" id="199" message="CP destroyed"/>
   <report category="operational" id="200" message="wounded just died"/>
   <report category="operational" id="201" message="wounded dead during transportation"/>
@@ -288,29 +288,29 @@
   <report category="operational" id="222" message="holding civilians in position by usage of non lethal means"/>
   <report category="operational" id="223" message="dispersing civilians by active defense means"/>
   <report category="operational" id="224" message="lethal weapons authorized for use"/>
-  <report category="operational" id="225" message="population %1 detected">
+  <report category="operational" id="225" message="crowd %1 detected">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="226" message="assaulted by population %1">
+  <report category="operational" id="226" message="assaulted by crowd %1">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="227" message="retaliation on population %1">
+  <report category="operational" id="227" message="retaliation on crowd %1">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="228" message="threatening population nearby"/>
-  <report category="operational" id="229" message="breaking contact with population"/>
-  <report category="operational" id="230" message="withdrawing from population"/>
-  <report category="operational" id="231" message="controlling population"/>
-  <report category="operational" id="232" message="re-orienting population"/>
-  <report category="operational" id="233" message="blocking population"/>
-  <report category="operational" id="234" message="channeling population"/>
-  <report category="operational" id="235" message="monitoring population"/>
-  <report category="operational" id="236" message="population recognized"/>
-  <report category="operational" id="237" message="almost impossible to hold before population"/>
-  <report category="operational" id="238" message="engaging population with non lethal weapons"/>
-  <report category="operational" id="239" message="engaging population with active defense means"/>
-  <report category="operational" id="240" message="engaging population with lethal weapons"/>
-  <report category="operational" id="241" message="dealing with a %1 population">
+  <report category="operational" id="228" message="threatening crowd nearby"/>
+  <report category="operational" id="229" message="breaking contact with crowd"/>
+  <report category="operational" id="230" message="withdrawing from crowd"/>
+  <report category="operational" id="231" message="controlling crowd"/>
+  <report category="operational" id="232" message="re-orienting crowd"/>
+  <report category="operational" id="233" message="blocking crowd"/>
+  <report category="operational" id="234" message="channeling crowd"/>
+  <report category="operational" id="235" message="monitoring crowd"/>
+  <report category="operational" id="236" message="crowd recognized"/>
+  <report category="operational" id="237" message="almost impossible to hold before crowd"/>
+  <report category="operational" id="238" message="engaging crowd with non lethal weapons"/>
+  <report category="operational" id="239" message="engaging crowd with active defense means"/>
+  <report category="operational" id="240" message="engaging crowd with lethal weapons"/>
+  <report category="operational" id="241" message="dealing with a %1 crowd">
     <parameter type="Enumeration">
       <value id="0" name="quiet"/>
       <value id="1" name="turbulent"/>
@@ -323,7 +323,7 @@
     <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
-  <report category="operational" id="243" message="population is: %1">
+  <report category="operational" id="243" message="crowd is: %1">
     <parameter type="Enumeration">
       <value id="0" name="quiet"/>
       <value id="1" name="turbulent"/>
@@ -333,23 +333,23 @@
   </report>
   <report category="operational" id="244" message="escalation of violence"/>
   <report category="operational" id="245" message="engaging enemy forces"/>
-  <report category="operational" id="246" message="population temporarily brought under control"/>
-  <report category="operational" id="247" message="population temporarily driven back"/>
+  <report category="operational" id="246" message="crowd temporarily brought under control"/>
+  <report category="operational" id="247" message="crowd temporarily driven back"/>
   <report category="operational" id="248" message="clashes resume"/>
-  <report category="operational" id="249" message="population %1 is being assaulted">
+  <report category="operational" id="249" message="crowd %1 is being assaulted">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="250" message="sustaining assault from population %1">
+  <report category="operational" id="250" message="sustaining assault from crowd %1">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="251" message="retaliating to population %1 assault">
+  <report category="operational" id="251" message="retaliating to crowd %1 assault">
     <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="252" message="critical site under attack"/>
   <report category="operational" id="253" message="parking"/>
   <report category="operational" id="254" message="blocked"/>
   <report category="operational" id="255" message="checked"/>
-  <report category="operational" id="256" message="terrorist bombing in population"/>
+  <report category="operational" id="256" message="terrorist bombing in crowd"/>
   <report category="operational" id="257" message="%1 civilians killed by mine explosion, %2 wounded">
     <parameter type="Integer"/>
     <parameter type="Integer"/>
@@ -492,7 +492,21 @@
       <value id="9" name="checkpoint line"/>
     </parameter>
   </report>
+  <report category="operational" id="339" message="Arrived on site"/>
+  <report category="operational" id="340" message="Fire extinguished"/>
+  <report category="operational" id="341" message="Arrived on zone"/>
+  <report category="operational" id="342" message="End of alert"/>
+  <report category="operational" id="343" message="Arrived on garage position"/>
+  <report category="operational" id="344" message="Arrived on site"/>
+  <report category="operational" id="345" message="Extracted"/>
+  <report category="operational" id="346" message="Supplied"/>
+  <report category="operational" id="347" message="Arrived on supply point"/>
+  <report category="operational" id="348" message="Distributed"/>
+  <report category="operational" id="349" message="Confined"/>
+  <report category="operational" id="350" message="Arrived on zone"/>
   <report category="operational" id="351" message="No more drone available"/>
+  <report category="operational" id="352" message="First tour of zone confinement done"/>
+  <report category="operational" id="353" message="Zone confinement in progress"/>
   <report category="operational" id="357" message="Valorization started for object : %1">
     <parameter type="ObjectKnowledge"/>
   </report>

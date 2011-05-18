@@ -241,8 +241,8 @@
   <report category="operational" id="179" message="installation sur zone implantation"/>
   <report category="operational" id="180" message="reception ordre de feu"/>
   <report category="operational" id="181" message="pret au tir"/>
-  <report category="operational" id="182" message="presence population"/>
-  <report category="operational" id="183" message="orientation population vers camp refugies"/>
+  <report category="operational" id="182" message="presence de foule"/>
+  <report category="operational" id="183" message="orientation de la foule vers un camp de refugies"/>
   <report category="operational" id="184" message="pas de camp refugies disponible"/>
   <report category="operational" id="185" message="presence ennemi rendu"/>
   <report category="operational" id="186" message="orientation ennemi rendu vers camp prisonniers"/>
@@ -257,7 +257,7 @@
   <report category="operational" id="195" message="tir sur civil"/>
   <report category="operational" id="196" message="pris à partie par civil"/>
   <report category="operational" id="197" message="tir indirect fratricide"/>
-  <report category="operational" id="198" message="tir indirect sur population"/>
+  <report category="operational" id="198" message="tir indirect sur la foule"/>
   <report category="operational" id="199" message="destruction pc"/>
   <report category="operational" id="200" message="deces blesse"/>
   <report category="operational" id="201" message="deces blesse pendant transport"/>
@@ -287,28 +287,28 @@
   <report category="operational" id="221" message="emploi force interdit face aux foules"/>
   <report category="operational" id="222" message="maintien a distance par moyens non letaux face aux foules"/>
   <report category="operational" id="223" message="armes letales autorisees face aux foules"/>
-  <report category="operational" id="224" message="population detectee : %1">
+  <report category="operational" id="224" message="foule detectee : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="225" message="prise a partie par population : %1">
+  <report category="operational" id="225" message="prise a partie par la foule : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="226" message="riposte contre population : %1">
+  <report category="operational" id="226" message="riposte contre la foule : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="227" message="population dangereuse a proximite"/>
-  <report category="operational" id="228" message="esquive face a population"/>
-  <report category="operational" id="229" message="decrochage face a population"/>
+  <report category="operational" id="227" message="foule dangereuse a proximite"/>
+  <report category="operational" id="228" message="esquive face a la foule"/>
+  <report category="operational" id="229" message="decrochage face a la foule"/>
   <report category="operational" id="230" message="mise en place controle de foule"/>
   <report category="operational" id="231" message="mise en place filtrage"/>
   <report category="operational" id="232" message="animation barrage"/>
   <report category="operational" id="233" message="animation canalisation"/>
-  <report category="operational" id="234" message="collecte renseignements sur populations"/>
-  <report category="operational" id="235" message="population reconnue"/>
-  <report category="operational" id="236" message="situation difficilement tenable face a population"/>
-  <report category="operational" id="237" message="utilisation armes non letales face a population"/>
-  <report category="operational" id="238" message="utilisation armements face a population"/>
-  <report category="operational" id="239" message="debut intervention face a population : %1">
+  <report category="operational" id="234" message="collecte renseignements sur foule"/>
+  <report category="operational" id="235" message="foule reconnue"/>
+  <report category="operational" id="236" message="situation difficilement tenable face a la foule"/>
+  <report category="operational" id="237" message="utilisation armes non letales face a la foule"/>
+  <report category="operational" id="238" message="utilisation armements face a la foule"/>
+  <report category="operational" id="239" message="debut intervention face a la foule : %1">
     <parameter type="Enumeration">
       <value id="0" name="calme"/>
       <value id="1" name="agitee"/>
@@ -316,12 +316,12 @@
       <value id="3" name="agressive"/>
     </parameter>
   </report>
-  <report category="operational" id="240" message="population victime affrontements : %1 morts, %2 blesses, %3 eparpilles">
+  <report category="operational" id="240" message="foule victime affrontements : %1 morts, %2 blesses, %3 eparpilles">
     <parameter type="Integer"/>
     <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
-  <report category="operational" id="241" message="attitude population: %1">
+  <report category="operational" id="241" message="attitude foule: %1">
     <parameter type="Enumeration">
       <value id="0" name="calme"/>
       <value id="1" name="agitee"/>
@@ -331,24 +331,24 @@
   </report>
   <report category="operational" id="242" message="aggravation attitude"/>
   <report category="operational" id="243" message="affrontement avec forces ennemies"/>
-  <report category="operational" id="244" message="population temporairement controlee"/>
-  <report category="operational" id="245" message="population temporairement repoussee"/>
+  <report category="operational" id="244" message="foule temporairement controlee"/>
+  <report category="operational" id="245" message="foule temporairement repoussee"/>
   <report category="operational" id="246" message="reprise des affrontements"/>
-  <report category="operational" id="247" message="agression de population : %1">
+  <report category="operational" id="247" message="agression de foule : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="248" message="agression par population : %1">
+  <report category="operational" id="248" message="agression par foule : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
-  <report category="operational" id="249" message="riposte contre agression par population : %1">
+  <report category="operational" id="249" message="riposte contre agression par foule : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
   <report category="operational" id="250" message="attaque installation"/>
   <report category="operational" id="251" message="en stationnement"/>
   <report category="operational" id="252" message="bloquee"/>
   <report category="operational" id="253" message="filtree"/>
-  <report category="operational" id="254" message="attentat terroriste dans population"/>
-  <report category="operational" id="255" message="population victime explosion mines : %1">
+  <report category="operational" id="254" message="attentat terroriste dans la foule"/>
+  <report category="operational" id="255" message="foule victime explosion mines : %1">
     <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
