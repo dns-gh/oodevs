@@ -64,12 +64,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Launcher( const Launcher& );            //!< Copy constructor
-    Launcher& operator=( const Launcher& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void HandleRequest( const std::string& endpoint, const sword::ConnectionRequest& message );

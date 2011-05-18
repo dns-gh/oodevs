@@ -19,136 +19,13 @@
 #include "frontend/StartReplay.h"
 #include "client_proxy/SwordMessageHandler_ABC.h"
 #include "SwordFacade.h"
+#include "CheckpointMessageHandler.h"
+#include "PauseResumeMessageHandler.h"
+#include "StatusMessageHandler.h"
 #include "LauncherService.h"
-#include "LauncherPublisher.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 
-namespace launcher
-{
-
-    struct ClientMessageHandlerBase : public SwordFacade::MessageHandler, boost::noncopyable
-    {
-    protected:
-        //! @name Constructors/Destructor
-        //@{
-        ClientMessageHandlerBase(LauncherPublisher& publisher, SwordFacade& client,
-                const std::string& exercise, const std::string& session)
-            : publisher_(publisher)
-            , client_(client)
-            , exercise_(exercise)
-            , session_(session)
-        {}
-        //@}
-    public:
-        //! @name Operations
-        //@{
-        virtual bool OnReceiveMessage( const sword::SimToClient& /*message*/ ) { return false; }
-        virtual bool OnReceiveMessage( const sword::MessengerToClient& /*message*/ ) { return false; }
-        //@}
-
-    protected:
-        template <typename T> void Send(T& message)
-        {
-            message.Send( publisher_ );
-        }
-        const std::string& exercise() const { return exercise_; }
-        const std::string& session() const { return session_; }
-
-    private:
-        LauncherPublisher& publisher_;
-        SwordFacade& client_;
-        std::string exercise_;
-        std::string session_;
-    };
-
-    struct PauseResumeMessageHandler : public ClientMessageHandlerBase
-    {
-        //! @name Constructors/Destructor
-        //@{
-        PauseResumeMessageHandler(LauncherPublisher& publisher, SwordFacade& client,
-                const std::string& exercise, const std::string& session)
-            : ClientMessageHandlerBase(publisher, client, exercise, session)
-        {
-        }
-        //@}
-
-        bool OnReceiveMessage( const sword::SimToClient& message )
-        {
-            if( message.message().has_control_pause_ack() )
-            {
-                SessionCommandExecutionResponse response;
-                response().set_exercise( exercise() );
-                response().set_session( session() );
-                response().set_error_code( message.message().control_pause_ack().error_code() == sword::ControlAck::no_error ?
-                        sword::SessionCommandExecutionResponse::success :
-                        sword::SessionCommandExecutionResponse::session_already_paused);
-                response().set_running( false );
-                Send( response );
-            }
-            if( message.message().has_control_resume_ack() )
-            {
-                SessionCommandExecutionResponse response;
-                response().set_exercise( exercise() );
-                response().set_session( session() );
-                response().set_error_code( message.message().control_pause_ack().error_code() == sword::ControlAck::no_error ?
-                        sword::SessionCommandExecutionResponse::success :
-                        sword::SessionCommandExecutionResponse::session_already_running);
-                response().set_running( false );
-                Send( response );
-            }
-            return true;
-        }
-    };
-
-    struct PermanentMessageHandler : public ClientMessageHandlerBase
-    {
-        //! @name Constructors/Destructor
-        //@{
-        PermanentMessageHandler(LauncherPublisher& publisher, SwordFacade& client,
-                const std::string& exercise, const std::string& session)
-            : ClientMessageHandlerBase(publisher, client, exercise, session)
-        {
-        }
-        //@}
-        bool OnReceiveMessage( const sword::SimToClient& message )
-        {
-            if( message.message().has_control_checkpoint_save_end() )
-            {
-                if( message.message().control_checkpoint_save_end().has_name() )
-                {
-                    SessionCommandExecutionResponse response;
-                    response().set_exercise( exercise() );
-                    response().set_session( session() );
-                    response().set_running( true );
-                    response().set_saved_checkpoint( message.message().control_checkpoint_save_end().name() );
-                }
-            }
-            if( message.message().has_control_information() )
-            {
-                SessionStatus response;
-                response().set_exercise( exercise() );
-                response().set_session( session() );
-                switch( message.message().control_information().status() )
-                {
-                case sword::running:
-                    response().set_status( sword::SessionStatus::running );
-                    break;
-                case sword::paused:
-                    response().set_status( sword::SessionStatus::paused );
-                    break;
-                case sword::stopped:
-                    response().set_status( sword::SessionStatus::not_running );
-                    break;
-                case sword::loading:
-                    response().set_status( sword::SessionStatus::starting );
-                    break;
-                }
-            }
-            return false;
-        }
-    };
-}
 using namespace launcher;
 
 // -----------------------------------------------------------------------------
@@ -278,7 +155,8 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
         processes_[ std::make_pair(exercise, session) ] = wrapper;
     }
     wrapper->Start(profileCollector.supervisorProfile_, profileCollector.supervisorPassword_);
-    wrapper->SetPermanentMessageHandler( std::auto_ptr<SwordFacade::MessageHandler> ( new PermanentMessageHandler(server_.ResolveClient( endpoint ), *wrapper.get(), exercise, session ) ) );
+    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new CheckpointMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new StatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     return sword::SessionStartResponse::success;
 }
 
@@ -412,7 +290,7 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
     }
     boost::shared_ptr< SwordFacade > client( it->second );
     client->RegisterMessageHandler(context,
-            std::auto_ptr< SwordFacade::MessageHandler >( new PauseResumeMessageHandler( server_.ResolveClient( endpoint ), *client.get(), message.exercise(), message.session() ) ) );
+            std::auto_ptr< MessageHandler_ABC >( new PauseResumeMessageHandler( server_.ResolveClient( endpoint ), message.exercise(), message.session() ) ) );
     if( message.set_running() )
     {
         simulation::ControlResume request;

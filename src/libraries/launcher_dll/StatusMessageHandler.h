@@ -3,45 +3,38 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __Launcher_ABC_h_
-#define __Launcher_ABC_h_
+#ifndef launcher_StatusMessageHandler_h
+#define launcher_StatusMessageHandler_h
 
-#include <boost/noncopyable.hpp>
-#include <string>
-
-namespace sword
-{
-    class AdminToLauncher;
-}
+#include "ClientMessageHandlerBase.h"
 
 namespace launcher
 {
 // =============================================================================
-/** @class  Launcher_ABC
-    @brief  Launcher_ABC
+/** @class  StatusMessageHandler
+    @brief  Status message handler
 */
-// Created: SBO 2010-09-29
+// Created: LGY 2011-05-18
 // =============================================================================
-class Launcher_ABC : private boost::noncopyable
+class StatusMessageHandler : public ClientMessageHandlerBase
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Launcher_ABC() {}
-    virtual ~Launcher_ABC() {}
+             StatusMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+    virtual ~StatusMessageHandler();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update() = 0;
-    virtual void HandleAdminToLauncher( const std::string& endpoint, const sword::AdminToLauncher& message ) = 0;
+    virtual bool OnReceiveMessage( const sword::SimToClient& message );
     //@}
 };
 
 }
 
-#endif // __Launcher_ABC_h_
+#endif // launcher_StatusMessageHandler_h
