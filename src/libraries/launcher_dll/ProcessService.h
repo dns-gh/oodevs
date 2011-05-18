@@ -65,7 +65,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::pair<std::string, std::string>, boost::weak_ptr< SwordFacade > > ProcessContainer;
+    typedef std::map< std::pair< std::string, std::string >, boost::weak_ptr< SwordFacade > > ProcessContainer;
     //@}
 
 private:

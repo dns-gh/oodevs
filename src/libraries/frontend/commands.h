@@ -13,7 +13,6 @@
 #include <boost/function.hpp>
 #include <qstringlist.h>
 
-
 namespace tools
 {
     class GeneralConfig;
@@ -43,12 +42,13 @@ namespace frontend
         QStringList ListOrders          ( const tools::GeneralConfig& config, const std::string& exercise );
         QStringList ListOtherDirectories( const tools::GeneralConfig& config, const std::string& exercise );
 
-        QStringList ListPackageFiles  ( const std::string& filename );
+        QStringList ListPackageFiles( const std::string& filename );
 
-        void        InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination );
-        void        InstallPackageFile( zip::izipfile& archive, const std::string& destination, boost::function0< void > callback );
+        void InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination );
+        void InstallPackageFile( zip::izipfile& archive, const std::string& destination, boost::function0< void > callback );
 
         bool ExerciseExists( const tools::GeneralConfig& config, const std::string& exercise );
+        bool SessionExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
         bool CheckpointExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session, const std::string& checkpoint );
     }
 }

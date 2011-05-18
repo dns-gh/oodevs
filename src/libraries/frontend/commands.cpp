@@ -286,6 +286,12 @@ namespace frontend
             return exercises.find( exercise.c_str() ) != exercises.end();
         }
 
+        bool SessionExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
+        {
+            const QStringList sessions = ListSessions( config, exercise );
+            return sessions.find( session.c_str() ) != sessions.end();
+        }
+
         bool CheckpointExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session, const std::string& checkpoint )
         {
             const QStringList checkpoints = ListCheckpoints( config, exercise, session );

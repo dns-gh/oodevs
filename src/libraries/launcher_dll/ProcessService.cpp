@@ -144,7 +144,7 @@ void ProcessService::SendExerciseList( sword::ExerciseListResponse& message )
     for( QStringList::const_iterator it = exercises.begin(); it != exercises.end(); ++it )
     {
         const std::string name = (*it).ascii();
-        message.add_exercise(name);
+        message.add_exercise( name );
     }
 }
 
@@ -325,8 +325,13 @@ void ProcessService::SendProfileList( sword::ProfileListResponse& message )
 void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message, const std::string& exercice, const std::string& session )
 {
     const QStringList checkpoints = frontend::commands::ListCheckpoints( config_, exercice, session );
-    for( QStringList::const_iterator it = checkpoints.begin(); it != checkpoints.end(); ++it )
-        message.add_checkpoint( ( *it ).ascii() );
+    if( ! frontend::commands::ExerciseExists( config_, exercice ) )
+        message.set_error_code( sword::CheckpointListResponse::invalid_exercise_name );
+    else if( ! frontend::commands::SessionExists( config_, exercice, session ) )
+        message.set_error_code( sword::CheckpointListResponse::invalid_session_name );
+    else
+        for( QStringList::const_iterator it = checkpoints.begin(); it != checkpoints.end(); ++it )
+            message.add_checkpoint( ( *it ).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -335,7 +340,7 @@ void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message,
 // -----------------------------------------------------------------------------
 void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message )
 {
-    ProcessContainer::const_iterator it = processes_.find( std::make_pair(message.exercise(), message.session()) );
+    ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
     static int context = 1;
 
     if( processes_.end() == it )
@@ -356,9 +361,9 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         response.Send( server_.ResolveClient( endpoint ) );
         return;
     }
-    boost::shared_ptr<SwordFacade> client( it->second );
+    boost::shared_ptr< SwordFacade > client( it->second );
     client->RegisterMessageHandler( ++context,
-            std::auto_ptr<SwordMessageHandler_ABC>(new PauseResumeMessageHandler(server_.ResolveClient( endpoint ), *client.get(), message.exercise(), message.session() ) ) );
+            std::auto_ptr< SwordMessageHandler_ABC >(new PauseResumeMessageHandler( server_.ResolveClient( endpoint ), *client.get(), message.exercise(), message.session() ) ) );
     if( message.set_running() )
     {
         simulation::ControlResume request;
@@ -371,7 +376,6 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
     }
     if( message.has_save_checkpoint() )
     {
-
         simulation::ControlCheckPointSaveNow request;
         request().set_name( message.save_checkpoint() );
         request.Send( *client );

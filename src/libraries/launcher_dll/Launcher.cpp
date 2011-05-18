@@ -181,7 +181,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionP
 // -----------------------------------------------------------------------------
 void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message )
 {
-    processes_->ExecuteCommand(endpoint, message);
+    processes_->ExecuteCommand( endpoint, message );
 }
 
 // -----------------------------------------------------------------------------

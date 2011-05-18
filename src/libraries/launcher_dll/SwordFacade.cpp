@@ -15,8 +15,7 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/MessengerSenders.h"
 
-namespace launcher
-{
+using namespace launcher;
 
 // -----------------------------------------------------------------------------
 // Name: SwordFacade constructor
@@ -28,6 +27,7 @@ SwordFacade::SwordFacade( frontend::ProcessObserver_ABC& observer, boost::shared
     , isAuthenticated_ ( false)
     , process_( new frontend::ProcessWrapper( observer, command) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -36,6 +36,7 @@ SwordFacade::SwordFacade( frontend::ProcessObserver_ABC& observer, boost::shared
 // -----------------------------------------------------------------------------
 SwordFacade::~SwordFacade()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -158,6 +159,4 @@ void SwordFacade::OnReceiveMessage( const sword::MessengerToClient& message )
         it->second->OnReceiveMessage(message);
         messageHandlers_.erase(message.context());
     }
-}
-
 }
