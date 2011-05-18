@@ -23,10 +23,11 @@
 #include "LauncherPublisher.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
+
 namespace launcher
 {
 
-    struct ClientMessageHandlerBase : public SwordMessageHandler_ABC, boost::noncopyable
+    struct ClientMessageHandlerBase : public SwordFacade::MessageHandler, boost::noncopyable
     {
     protected:
         //! @name Constructors/Destructor
@@ -42,8 +43,8 @@ namespace launcher
     public:
         //! @name Operations
         //@{
-        virtual void OnReceiveMessage( const sword::SimToClient& /*message*/ ) {}
-        virtual void OnReceiveMessage( const sword::MessengerToClient& /*message*/ ) {}
+        virtual bool OnReceiveMessage( const sword::SimToClient& /*message*/ ) { return false; }
+        virtual bool OnReceiveMessage( const sword::MessengerToClient& /*message*/ ) { return false; }
         //@}
 
     protected:
@@ -60,6 +61,7 @@ namespace launcher
         std::string exercise_;
         std::string session_;
     };
+
     struct PauseResumeMessageHandler : public ClientMessageHandlerBase
     {
         //! @name Constructors/Destructor
@@ -71,7 +73,7 @@ namespace launcher
         }
         //@}
 
-        virtual void OnReceiveMessage( const sword::SimToClient& message )
+        bool OnReceiveMessage( const sword::SimToClient& message )
         {
             if( message.message().has_control_pause_ack() )
             {
@@ -95,6 +97,55 @@ namespace launcher
                 response().set_running( false );
                 Send( response );
             }
+            return true;
+        }
+    };
+
+    struct PermanentMessageHandler : public ClientMessageHandlerBase
+    {
+        //! @name Constructors/Destructor
+        //@{
+        PermanentMessageHandler(LauncherPublisher& publisher, SwordFacade& client,
+                const std::string& exercise, const std::string& session)
+            : ClientMessageHandlerBase(publisher, client, exercise, session)
+        {
+        }
+        //@}
+        bool OnReceiveMessage( const sword::SimToClient& message )
+        {
+            if( message.message().has_control_checkpoint_save_end() )
+            {
+                if( message.message().control_checkpoint_save_end().has_name() )
+                {
+                    SessionCommandExecutionResponse response;
+                    response().set_exercise( exercise() );
+                    response().set_session( session() );
+                    response().set_running( true );
+                    response().set_saved_checkpoint( message.message().control_checkpoint_save_end().name() );
+                }
+            }
+            if( message.message().has_control_information() )
+            {
+                SessionStatus response;
+                response().set_exercise( exercise() );
+                response().set_session( session() );
+                switch( message.message().control_information().status() )
+                {
+                case sword::running:
+                    response().set_status( sword::SessionStatus::running );
+                    break;
+                case sword::paused:
+                    response().set_status( sword::SessionStatus::paused );
+                    break;
+                case sword::stopped:
+                    response().set_status( sword::SessionStatus::not_running );
+                    break;
+                case sword::loading:
+                    response().set_status( sword::SessionStatus::starting );
+                    break;
+                }
+            }
+            return false;
         }
     };
 }
@@ -173,7 +224,7 @@ namespace
             if(!found_ && profile.IsSupervision() )
             {
                 supervisorProfile_ = profile.GetLogin().ascii();
-                //supervisorPassword_ = profile.GetPassword().ascii();
+                supervisorPassword_ = profile.GetPassword().ascii();
                 found_ = true;
             }
         }
@@ -186,7 +237,7 @@ namespace
 // Name: ProcessService::StartExercise
 // Created: SBO 2010-10-07
 // -----------------------------------------------------------------------------
-sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const sword::SessionStartRequest& message )
+sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::string& endpoint, const sword::SessionStartRequest& message )
 {
     const std::string session = message.session();
     const std::string exercise = message.exercise();
@@ -227,6 +278,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const sword
         processes_[ std::make_pair(exercise, session) ] = wrapper;
     }
     wrapper->Start(profileCollector.supervisorProfile_, profileCollector.supervisorPassword_);
+    wrapper->SetPermanentMessageHandler( std::auto_ptr<SwordFacade::MessageHandler> ( new PermanentMessageHandler(server_.ResolveClient( endpoint ), *wrapper.get(), exercise, session ) ) );
     return sword::SessionStartResponse::success;
 }
 
@@ -359,18 +411,19 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         return;
     }
     boost::shared_ptr< SwordFacade > client( it->second );
-    client->RegisterMessageHandler( ++context,
-            std::auto_ptr< SwordMessageHandler_ABC >( new PauseResumeMessageHandler( server_.ResolveClient( endpoint ), *client.get(), message.exercise(), message.session() ) ) );
+    client->RegisterMessageHandler(context,
+            std::auto_ptr< SwordFacade::MessageHandler >( new PauseResumeMessageHandler( server_.ResolveClient( endpoint ), *client.get(), message.exercise(), message.session() ) ) );
     if( message.set_running() )
     {
         simulation::ControlResume request;
-        request.Send( *client );
+        request.Send( *client, context );
     }
     else
     {
         simulation::ControlPause request;
-        request.Send( *client );
+        request.Send( *client, context );
     }
+    ++context;
     if( message.has_save_checkpoint() )
     {
         simulation::ControlCheckPointSaveNow request;

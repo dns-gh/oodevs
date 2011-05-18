@@ -117,7 +117,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionS
     SessionStartResponse response;
     response().set_exercise( message.exercise() );
     response().set_session( message.session() );
-    response().set_error_code( processes_->StartSession( message ) );
+    response().set_error_code( processes_->StartSession( endpoint, message ) );
     response.Send( server_->ResolveClient( endpoint ) );
 }
 

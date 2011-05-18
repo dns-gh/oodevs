@@ -45,6 +45,20 @@ namespace launcher
 class SwordFacade : public SwordConnectionHandler_ABC, public SwordMessageHandler_ABC
 {
 public:
+    struct MessageHandler
+    {
+        //! @name Constructor/destructor
+        //@{
+        virtual ~MessageHandler() {}
+        //@}
+
+        //! @name Operations
+        //@{
+        virtual bool OnReceiveMessage( const sword::SimToClient& message ) = 0; // return true if handler can be deleted
+        virtual bool OnReceiveMessage( const sword::MessengerToClient& message ) = 0; // return true if handler can be deleted
+        //@}
+    };
+
     //! @name Constructor/destructor
     //@{
     SwordFacade( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > process, bool isDispatcher = false );
@@ -71,7 +85,8 @@ public:
     void OnReceiveMessage( const sword::SimToClient& message );
     void OnReceiveMessage( const sword::MessengerToClient& message );
     //
-    void RegisterMessageHandler( int context, std::auto_ptr<SwordMessageHandler_ABC> handler );
+    void RegisterMessageHandler( int context, std::auto_ptr<MessageHandler> handler );
+    void SetPermanentMessageHandler( std::auto_ptr<MessageHandler> handler );
     void Send( const sword::ClientToSim& message ) const;
     //@}
 
@@ -82,9 +97,9 @@ private:
     boost::shared_ptr<frontend::ProcessWrapper> process_;
     boost::shared_ptr<SwordProxy> client_;
     boost::shared_ptr<SwordConnectionHandler_ABC> connectionHandler_;
-    typedef std::map<int, boost::shared_ptr<SwordMessageHandler_ABC> > HandlerContainer;
+    typedef std::map<int, boost::shared_ptr<MessageHandler> > HandlerContainer;
     HandlerContainer messageHandlers_;
-
+    std::auto_ptr<MessageHandler> permanentHandler_;
 };
 
 }

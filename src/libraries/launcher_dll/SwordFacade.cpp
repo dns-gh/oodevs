@@ -121,9 +121,17 @@ void SwordFacade::OnAuthenticationFailed( const std::string& profile, const std:
 // Name: SwordFacade::RegisterMessageHandler
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::RegisterMessageHandler( int context, std::auto_ptr<SwordMessageHandler_ABC> handler )
+void SwordFacade::RegisterMessageHandler( int context, std::auto_ptr< MessageHandler > handler )
 {
     messageHandlers_[context] = handler;
+}
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::SetPermanentMessageHandler
+// Created: AHC 2011-05-16
+// -----------------------------------------------------------------------------
+void SwordFacade::SetPermanentMessageHandler( std::auto_ptr<MessageHandler> handler )
+{
+    permanentHandler_ = handler;
 }
 // -----------------------------------------------------------------------------
 // Name: SwordFacade::Send
@@ -141,10 +149,12 @@ void SwordFacade::Send( const sword::ClientToSim& message ) const
 void SwordFacade::OnReceiveMessage( const sword::SimToClient& message )
 {
     HandlerContainer::iterator it = messageHandlers_.find(message.context() );
+    permanentHandler_->OnReceiveMessage( message );
     if( messageHandlers_.end() != it )
     {
-        it->second->OnReceiveMessage(message);
-        messageHandlers_.erase(message.context());
+        bool handled = it->second->OnReceiveMessage(message);
+        if( handled )
+            messageHandlers_.erase(message.context());
     }
 }
 // -----------------------------------------------------------------------------
@@ -153,10 +163,12 @@ void SwordFacade::OnReceiveMessage( const sword::SimToClient& message )
 // -----------------------------------------------------------------------------
 void SwordFacade::OnReceiveMessage( const sword::MessengerToClient& message )
 {
+    permanentHandler_->OnReceiveMessage( message );
     HandlerContainer::iterator it = messageHandlers_.find(message.context() );
     if( messageHandlers_.end() != it )
     {
-        it->second->OnReceiveMessage(message);
-        messageHandlers_.erase(message.context());
+        bool handled = it->second->OnReceiveMessage(message);
+        if ( handled )
+            messageHandlers_.erase(message.context());
     }
 }

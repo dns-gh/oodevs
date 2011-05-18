@@ -55,6 +55,7 @@ public:
     //! @name Accessors
     //@{
     QString GetLogin() const;
+    QString GetPassword() const;
     bool IsSupervision() const;
     bool IsValid() const;
     //@}

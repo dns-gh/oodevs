@@ -54,7 +54,7 @@ public:
     void SendSessionList( sword::SessionListResponse& message );
     void SendProfileList( sword::ProfileListResponse& message );
     void SendCheckpointList( sword::CheckpointListResponse& message, const std::string& exercice, const std::string& session );
-    sword::SessionStartResponse::ErrorCode StartSession( const sword::SessionStartRequest& message );
+    sword::SessionStartResponse::ErrorCode StartSession( const std::string& endpoint, const sword::SessionStartRequest& message );
     sword::SessionStopResponse::ErrorCode StopSession( const sword::SessionStopRequest& message );
     bool IsRunning( const std::string& exercise, const std::string& session ) const;
     void ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message );
