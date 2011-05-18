@@ -108,7 +108,6 @@ unsigned int Note::GetParent() const
     return parent_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Note::GetDesc
 // Created: HBD 2010-02-10
@@ -126,4 +125,3 @@ QString Note::GetNumber() const
 {
     return noteNumber_.c_str();
 }
-
