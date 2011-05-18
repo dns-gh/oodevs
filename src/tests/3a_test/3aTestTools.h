@@ -54,7 +54,7 @@ public:
     static sword::SimToClient UpdatePopulationStatesbis( int healthy, int wounded, unsigned long id );
     static sword::SimToClient UpdatePopulationSatisfaction ( float lodging, float health, float safety, unsigned long id );
     static sword::SimToClient UpdatePopulationInBlocks( unsigned long populationId, std::map < unsigned long, int > );
-    static sword::SimToClient UpdateCrowdDeadConcentration( unsigned long crowdId, int dead );
+    static sword::SimToClient UpdateCrowdDeadState( unsigned long crowdId, int dead );
     static sword::SimToClient CreateDirectFire( unsigned fire_id, unsigned long firer );
     static sword::SimToClient CreateIndirectFire( unsigned fire_id, unsigned long firer );
     static sword::SimToClient StopFire( unsigned fire_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0 );

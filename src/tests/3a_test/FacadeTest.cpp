@@ -35,6 +35,9 @@ namespace
         {
             currentTick_ = 1;
         }
+        ~Fixture()
+        {
+        }
         MockClientPublisher publisher;
         MockStaticModel model;
         AarFacade facade;
@@ -853,10 +856,37 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, F
 }
 
 // -----------------------------------------------------------------------------
+// Name: Facade_TestCloseCombatPower
+// Created: ABR 2011-02-14
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestCloseCombatPower, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "   <extract function='close-combat-power' id='closecombat'/>"
+                             "   <reduce  function='select' id='myselect' input='closecombat' key='42' type='float'/>"
+                             "   <result  function='plot' input='myselect' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int variation[5] = { 1, 1, 1, 1, 0 };
+    sword::SimToClient message = TestTools::MakeEquipementVariation( variation, 42u );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 10.f );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( message );
+    task->Receive( TestTools::EndTick() );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 11.f );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( message );
+    task->Receive( TestTools::EndTick() );
+    double expectedResult[] = { 10, 11 };
+    TestTools::MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Facade_TestProductOnTwoExtractors
 // Created: ABR 2011-02-14
 // -----------------------------------------------------------------------------
-/*BOOST_FIXTURE_TEST_CASE( Facade_TestProductOnTwoExtractors, Fixture )
+BOOST_FIXTURE_TEST_CASE( Facade_TestProductOnTwoExtractors, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "   <extract function='operational-state' id='opstate'/>"
@@ -869,22 +899,20 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, F
     int variation[5] = { 1, 1, 1, 1, 0 };
     sword::SimToClient  message1 = TestTools::MakeEquipementVariation( variation, 42u );
     sword::SimToClient  message2 = TestTools::MakeEquipementVariation( variation, 123u );
-    const sword::UnitAttributes& attributes1 = message1.message().unit_attributes();
-    const sword::UnitAttributes& attributes2 = message2.message().unit_attributes();
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &TestTools::IsCloseCombatPower ).returns( 10.f );
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes2 ), &TestTools::IsCloseCombatPower ).returns( 1000.f );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 10.f );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 1000.f );
     task->Receive( TestTools::BeginTick() );
     task->Receive( message1 );
     task->Receive( message2 );
     task->Receive( TestTools::OperationalState( 50, 42 ) );
     task->Receive( TestTools::EndTick() ); // expect 10 * 0.5
     mock::verify();
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &TestTools::IsCloseCombatPower ).returns( 20.f );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 20.f );
     task->Receive( TestTools::BeginTick() );
     task->Receive( message1 );
     task->Receive( TestTools::OperationalState( 25, 42 ) );
     task->Receive( TestTools::EndTick() ); // expect 20 * 0.25
-    MOCK_EXPECT( model, ComputePower ).once().with( mock::same( attributes1 ), &TestTools::IsCloseCombatPower ).returns( 30.f );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsCloseCombatPower ).returns( 30.f );
     task->Receive( TestTools::BeginTick() );
     task->Receive( message1 );
     task->Receive( TestTools::OperationalState( 100, 42 ) );
@@ -894,7 +922,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, F
     double expectedResult[] = { 5, 5, 30, 30 };
     TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
-}*/
+}
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestAvailableEquipmentsForUnitList
@@ -1659,12 +1687,12 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestCrowdStates, Fixture )
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::UpdateCrowdDeadConcentration( 10, 11 ) );
+    task->Receive( TestTools::UpdateCrowdDeadState( 10, 11 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::UpdateCrowdDeadConcentration( 10, 15 ) );
+    task->Receive( TestTools::UpdateCrowdDeadState( 10, 15 ) );
     task->Receive( TestTools::EndTick() );
     double expectedResult[] = { 11, 11, 15 };
     TestTools::MakeExpectation( publisher, expectedResult );

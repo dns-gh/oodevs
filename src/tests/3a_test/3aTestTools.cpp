@@ -294,10 +294,10 @@ sword::SimToClient TestTools::UpdatePopulationInBlocks( unsigned long population
 // Name: 3aTestTools::UpdateCrowdDeadConcentration
 // Created: FPO 2011-05-13
 // -----------------------------------------------------------------------------
-sword::SimToClient TestTools::UpdateCrowdDeadConcentration( unsigned long crowdId, int dead )
+sword::SimToClient TestTools::UpdateCrowdDeadState( unsigned long crowdId, int dead )
 {
     SimToClient result;
-    CrowdConcentrationUpdate& update = *result.mutable_message()->mutable_crowd_concentration_update();
+    CrowdUpdate& update = *result.mutable_message()->mutable_crowd_update();
     update.mutable_crowd()->set_id( crowdId );
     update.set_dead( dead );
     return result;
