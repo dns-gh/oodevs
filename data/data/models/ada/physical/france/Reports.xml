@@ -284,9 +284,9 @@
   <report category="operational" id="220" message="trace id : %1">
     <parameter type="Integer"/>
   </report>
-  <report category="operational" id="221" message="emploi force interdit"/>
-  <report category="operational" id="222" message="maintien a distance par moyens non letaux"/>
-  <report category="operational" id="223" message="armes letales autorisees"/>
+  <report category="operational" id="221" message="emploi force interdit face aux foules"/>
+  <report category="operational" id="222" message="maintien a distance par moyens non letaux face aux foules"/>
+  <report category="operational" id="223" message="armes letales autorisees face aux foules"/>
   <report category="operational" id="224" message="population detectee : %1">
     <parameter type="CrowdKnowledge"/>
   </report>
@@ -524,4 +524,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="4002217870" -->
+<!-- signature="1804745692" -->
