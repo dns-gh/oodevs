@@ -142,10 +142,7 @@ void ProcessService::SendExerciseList( sword::ExerciseListResponse& message )
 {
     const QStringList exercises = frontend::commands::ListExercises( config_ );
     for( QStringList::const_iterator it = exercises.begin(); it != exercises.end(); ++it )
-    {
-        const std::string name = (*it).ascii();
-        message.add_exercise( name );
-    }
+        message.add_exercise( (*it).ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,14 +151,14 @@ void ProcessService::SendExerciseList( sword::ExerciseListResponse& message )
 // -----------------------------------------------------------------------------
 void ProcessService::SendSessionList( sword::SessionListResponse& message )
 {
-    const QStringList exercises = frontend::commands::ListExercises( config_ );
     for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
     {
-        const std::pair<std::string, std::string>& key = it->first;
+        const std::pair< std::string, std::string >& key = it->first;
         if( key.first == message.exercise() )
             message.add_session( key.second );
     }
 }
+
 namespace
 {
     struct SupervisorProfileCollector : public frontend::ProfileVisitor_ABC
@@ -363,7 +360,7 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
     }
     boost::shared_ptr< SwordFacade > client( it->second );
     client->RegisterMessageHandler( ++context,
-            std::auto_ptr< SwordMessageHandler_ABC >(new PauseResumeMessageHandler( server_.ResolveClient( endpoint ), *client.get(), message.exercise(), message.session() ) ) );
+            std::auto_ptr< SwordMessageHandler_ABC >( new PauseResumeMessageHandler( server_.ResolveClient( endpoint ), *client.get(), message.exercise(), message.session() ) ) );
     if( message.set_running() )
     {
         simulation::ControlResume request;
