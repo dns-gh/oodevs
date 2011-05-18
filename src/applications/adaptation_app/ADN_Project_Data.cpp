@@ -295,8 +295,10 @@ void ADN_Project_Data::SetFile( const std::string& strFile )
 // -----------------------------------------------------------------------------
 void ADN_Project_Data::FilesNeeded( T_StringList& /*vFiles*/ ) const
 {
+#ifndef NDEBUG
     ADN_Project_Data* that = const_cast< ADN_Project_Data* >( this );
     assert( ! that->szFile_.GetFileName().GetData().empty() );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -368,7 +370,7 @@ void ADN_Project_Data::FilterNode( const std::string& node, xml::xistream& xis, 
                 << xml::end;
         for( std::map< std::string, std::string >::const_iterator it = addedObjects_.begin(); it != addedObjects_.end(); ++it )
         {
-            if( it->second == type )
+            if( ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( it->first ) && it->second == type )
                 xos << xml::start( node )
                         << xml::attribute( "type", it->first )
                         << xml::attribute( "value", value )
@@ -422,9 +424,8 @@ void ADN_Project_Data::Save()
     }
     tools::WriteXmlCrc32Signature( szFile );
     // Update pathfind.xml
-    if( !addedObjects_.empty() )
+    std::string path = workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData();
     {
-        std::string path = workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData();
         xml::xifstream xis( path );
         xml::xofstream xos( path );
         xis >> xml::start( "pathfind" );
@@ -432,13 +433,13 @@ void ADN_Project_Data::Save()
         ADN_Tools::AddSchema( xos, "Pathfind" );
         xis >> xml::list( boost::bind( &ADN_Project_Data::FilterNode, this, _2, _3, boost::ref( xos ) ) );
     }
+    tools::WriteXmlCrc32Signature( path );
     addedObjects_.clear();
 
     // Save XML Signature for files not loaded, bypassing "temp" folder
     ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData(), "ObjectNames" );
     ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData(), "HumanProtections" );
     ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData(), "MedicalTreatment" );
-    ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData(), "Pathfind" );
     // ?? Same thing to do ??1
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "DrawingTemplates.xml" );
