@@ -32,6 +32,7 @@ namespace sword
 namespace dispatcher
 {
     class ClientPublisher_ABC;
+    class Profile_ABC;
 }
 
 namespace tools
@@ -57,6 +58,7 @@ namespace score
 {
     class IndicatorBuilder;
     class Score;
+    class ScoreAnnouncer;
 
     struct Variable
     {
@@ -96,6 +98,7 @@ public:
     void RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const sword::PlotRequest& request );
     void Export() const;
     void SimplifiedExport( const std::string& path ) const;
+    void SendInformation( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     //@}
 
 private:
@@ -125,6 +128,7 @@ private:
     T_Tasks tasks_;
     std::auto_ptr< IndicatorBuilder > builder_;
     std::auto_ptr< aar::StaticModel > model_;
+    std::auto_ptr< ScoreAnnouncer > announcer_;
     T_Scores scores_;
     QDateTime initialDateTime_;
     bool dateTimeInitialized_;

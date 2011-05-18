@@ -9,8 +9,10 @@
 
 #include "score_plugin_pch.h"
 #include "Score.h"
+#include "ClientAnnouncer_ABC.h"
 #include "protocol/AarSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include <xeumeuleu/xml.hpp>
 
 using namespace plugins::score;
 
@@ -18,9 +20,11 @@ using namespace plugins::score;
 // Name: Score constructor
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-Score::Score()
+Score::Score( xml::xisubstream xis )
+    : xml_( new xml::xibufferstream( xis ) )
 {
-    // NOTHING
+    xis >> xml::optional >> xml::start( "profiles" )
+            >> xml::list( "profile", *this, &Score::ReadProfile );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,12 +37,21 @@ Score::~Score()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Score::ReadProfile
+// Created: SBO 2011-05-17
+// -----------------------------------------------------------------------------
+void Score::ReadProfile( xml::xistream& xis )
+{
+    profiles_.push_back( xis.attribute< std::string >( "name" ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Score::Update
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
 void Score::Update( const sword::Indicator& message )
 {
-    push_back( message.value() );
+    values_.push_back( message.value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,12 +60,54 @@ void Score::Update( const sword::Indicator& message )
 // -----------------------------------------------------------------------------
 void Score::Send( dispatcher::ClientPublisher_ABC& publisher, int context ) const
 {
-    std::vector< double > values; values.reserve( size() );
-    std::copy( begin(), end(), std::back_inserter( values ) );
+    std::vector< double > values; values.reserve( values_.size() );
+    std::copy( values_.begin(), values_.end(), std::back_inserter( values ) );
     aar::PlotResult result;
     result().set_identifier( context );
     result().set_error( "" );
-    for( std::vector< double >::const_iterator it = begin(); it != end(); ++it )
+    for( std::vector< double >::const_iterator it = values_.begin(); it != values_.end(); ++it )
         result().mutable_values()->Add( static_cast< float >( *it ) );
     result.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::Size
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+unsigned int Score::Size() const
+{
+    return values_.size();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::GetValue
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+double Score::GetValue( unsigned int index ) const
+{
+    return values_.at( index );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::Serialize
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+void Score::Serialize( xml::xostream& xos ) const
+{
+    xos << xml::start( "score" )
+            << *xml_
+        << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::Accept
+// Created: SBO 2011-05-17
+// -----------------------------------------------------------------------------
+void Score::Accept( ClientAnnouncer_ABC& visitor )
+{
+    if( profiles_.empty() )
+        visitor.Visit( shared_from_this() );
+    else
+        for( std::vector< std::string >::const_iterator it = profiles_.begin(); it != profiles_.end(); ++it )
+            visitor.Visit( *it, shared_from_this() );
 }

@@ -10,6 +10,8 @@
 #ifndef __Score_h_
 #define __Score_h_
 
+#include <boost/enable_shared_from_this.hpp>
+#include <boost/noncopyable.hpp>
 #include <vector>
 
 namespace sword
@@ -17,20 +19,24 @@ namespace sword
     class Indicator;
 }
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace dispatcher
 {
     class ClientPublisher_ABC;
+}
+
+namespace xml
+{
+    class xibufferstream;
+    class xistream;
+    class xisubstream;
+    class xostream;
 }
 
 namespace plugins
 {
 namespace score
 {
+    class ClientAnnouncer_ABC;
 
 // =============================================================================
 /** @class  Score
@@ -38,26 +44,42 @@ namespace score
 */
 // Created: SBO 2009-04-29
 // =============================================================================
-class Score : public std::vector< double >
+class Score : private boost::noncopyable
+            , public boost::enable_shared_from_this< Score >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Score();
+    explicit Score( xml::xisubstream xis );
     virtual ~Score();
+    //@}
+
+    //! @name Accessors
+    //@{
+    unsigned int Size() const;
+    double GetValue( unsigned int index ) const;
     //@}
 
     //! @name Operations
     //@{
     void Update( const sword::Indicator& message );
     void Send( dispatcher::ClientPublisher_ABC& publisher, int context ) const;
+    void Serialize( xml::xostream& xos ) const;
+    void Accept( ClientAnnouncer_ABC& visitor );
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    Score( const Score& );            //!< Copy constructor
-    Score& operator=( const Score& ); //!< Assignment operator
+    void ReadProfile( xml::xistream& xis );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::auto_ptr< xml::xibufferstream > xml_;
+    std::vector< double > values_;
+    std::vector< std::string > profiles_;
     //@}
 };
 

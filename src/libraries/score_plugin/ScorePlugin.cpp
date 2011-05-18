@@ -102,22 +102,9 @@ void ScorePlugin::OnReceive( const std::string& client, const sword::ClientToAar
 // Name: ScorePlugin::NotifyClientAuthenticated
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-void ScorePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& )
+void ScorePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
 {
-    std::string content;
-    aar::AarInformation message;
-    const std::string file = config_.GetScoresFile();
-    if( bfs::exists( bfs::path( file, bfs::native ) ) )
-    {
-        std::string line;
-        std::ifstream is( file.c_str() );
-        while( std::getline( is, line ) )
-            content += line;
-        message().set_information( content.c_str() );
-    }
-    else
-        message().set_information( "" );
-    message.Send( client );
+    scores_->SendInformation( client, profile );
 }
 
 // -----------------------------------------------------------------------------

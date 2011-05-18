@@ -11,6 +11,7 @@
 #include "ScoresModel.h"
 #include "IndicatorBuilder.h"
 #include "Score.h"
+#include "ScoreAnnouncer.h"
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
 #include "3a/StaticModel.h"
@@ -47,9 +48,10 @@ namespace
 ScoresModel::ScoresModel( const tools::SessionConfig& config, dispatcher::ClientPublisher_ABC& clients )
     : clients_            ( clients )
     , builder_            ( new IndicatorBuilder( config ) )
+    , model_              ( new aar::StaticModel( config ) )
+    , announcer_          ( new ScoreAnnouncer() )
     , dateTimeInitialized_( false )
     , tickDuration_       ( 0 )
-    , model_              ( new aar::StaticModel( config ) )
     , sessionDir_         ( config.GetSessionDir() )
 {
     // NOTHING
@@ -84,10 +86,12 @@ void ScoresModel::Load( const std::string& file )
 // -----------------------------------------------------------------------------
 void ScoresModel::ReadIndicators( xml::xistream& xis )
 {
-    scores_[ xis.attribute< std::string >( "name" ) ] = T_Score( new Score() );
+    T_Score score( new Score( xis ) );
+    scores_[ xis.attribute< std::string >( "name" ) ] = score;
     xis >> xml::start( "indicators" )
             >> xml::list( "indicator", *this, &ScoresModel::ReadIndicator )
         >> xml::end;
+    score->Accept( *announcer_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,8 +261,8 @@ unsigned int ScoresModel::AddHeader( std::ostream& file ) const
     {
         file << separator << score.first;
         if ( ! size )
-            size = score.second->size();
-        else if ( size != score.second->size() )
+            size = score.second->Size();
+        else if ( size != score.second->Size() )
             throw std::runtime_error( __FUNCTION__ ": not the same number of score." );
     }
     file << std::endl;
@@ -273,6 +277,15 @@ void ScoresModel::AddLine( std::ostream& file, unsigned int index ) const
 {
     file << index << separator << initialDateTime_.addSecs( index * tickDuration_ ).toString( Qt::ISODate ).ascii();
     BOOST_FOREACH( const T_Scores::value_type& score, scores_ )
-        file << separator << score.second->at( index );
+        file << separator << score.second->GetValue( index );
     file << std::endl;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoresModel::SendInformation
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+void ScoresModel::SendInformation( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
+{
+    announcer_->Announce( client, profile );
 }
