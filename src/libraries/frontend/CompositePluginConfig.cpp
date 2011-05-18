@@ -93,7 +93,10 @@ void CompositePluginConfig::Commit( const std::string& exercise, const std::stri
 // -----------------------------------------------------------------------------
 void CompositePluginConfig::Add( const tools::GeneralConfig& config, xml::xistream& xis )
 {
-    PluginConfig_ABC* plugin = new PluginConfig( tabs_, config, xis );
-    plugins_.push_back( plugin );
-    tabs_->addTab( plugin, plugin->GetName() );
+    std::auto_ptr< PluginConfig_ABC > plugin( new PluginConfig( tabs_, config, xis ) );
+    if( plugin->IsAvailable() )
+    {
+        plugins_.push_back( plugin.release() );
+        tabs_->addTab( plugins_.back(), plugins_.back()->GetName() );
+    }
 }
