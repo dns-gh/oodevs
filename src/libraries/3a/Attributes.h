@@ -23,8 +23,8 @@
 #include "LogMedicalWaitingAttention.h"
 #include "PopulationSatisfaction.h"
 #include "PopulationUrbanOccupation.h"
-#include "CrowdConcentration.h"
 #include "StructuralStates.h"
+#include "CrowdStates.h"
 
 // =============================================================================
 /** @namespace  Attributes
@@ -104,7 +104,7 @@ typedef Attribute< extractors::LogSupplyStocks >            LogSupplyStocks;
 typedef Attribute< extractors::PopulationStates >           PopulationStates;
 typedef Attribute< extractors::PopulationSatisfaction >     PopulationSatisfaction;
 typedef Attribute< extractors::PopulationUrbanOccupation >  PopulationUrbanOccupation;
-typedef Attribute< extractors::CrowdConcentration >         CrowdConcentration;
+typedef Attribute< extractors::CrowdStates >                CrowdStates;
 typedef Attribute< extractors::StructuralStates >           StructuralStates;
 
 struct Detections : public ContinuousValue< extractors::UnitDetection::Type >
