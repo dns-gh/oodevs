@@ -10,9 +10,9 @@
 #include "preparation_pch.h"
 #include "SuccessFactor.h"
 #include "ProfilesModel.h"
+#include "ProfileSelection.h"
 #include "SuccessFactorActions.h"
 #include "SuccessFactorConditions.h"
-#include "SuccessFactorProfiles.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include <xeumeuleu/xml.hpp>
@@ -24,7 +24,7 @@
 SuccessFactor::SuccessFactor( const QString& name, kernel::Controllers& controllers )
     : controller_( controllers.controller_ )
     , name_( name )
-    , profiles_( new SuccessFactorProfiles( controllers ) )
+    , profiles_( new ProfileSelection( controllers ) )
     , conditions_( new SuccessFactorConditions( controllers ) )
     , actions_( new SuccessFactorActions() )
 {
@@ -38,7 +38,7 @@ SuccessFactor::SuccessFactor( const QString& name, kernel::Controllers& controll
 SuccessFactor::SuccessFactor( xml::xistream& xis, kernel::Controllers& controllers, const ProfilesModel& profiles, const ScoresModel& scores, const SuccessFactorActionTypes& actionTypes )
     : controller_( controllers.controller_ )
     , name_( xis.attribute< std::string >( "name" ).c_str() )
-    , profiles_( new SuccessFactorProfiles( controllers, xis, profiles ) )
+    , profiles_( new ProfileSelection( controllers, xis, profiles ) )
     , conditions_( new SuccessFactorConditions( controllers, xis, scores ) )
     , actions_( new SuccessFactorActions( xis, actionTypes ) )
 {
@@ -67,7 +67,7 @@ QString SuccessFactor::GetName() const
 // Name: SuccessFactor::GetProfiles
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-SuccessFactorProfiles& SuccessFactor::GetProfiles() const
+ProfileSelection& SuccessFactor::GetProfiles() const
 {
     return *profiles_;
 }

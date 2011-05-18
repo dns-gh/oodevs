@@ -12,6 +12,7 @@
 #include "moc_ScoreEditor.cpp"
 #include "ScoreGaugeConfiguration.h"
 #include "ScorePrimitivesLibrary.h"
+#include "ScoreProfilesPage.h"
 #include "ScoreVariablesList.h"
 #include "ScoreSyntaxHighlighter.h"
 #include "indicators/Gauge.h"
@@ -164,6 +165,10 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
             gauge_ = new ScoreGaugeConfiguration( tabs, controllers, staticModel.gaugeTypes_ );
             tabs->addTab( gauge_, tr( "Gauge" ) );
         }
+        {
+            profiles_ = new ScoreProfilesPage( tabs, controllers );
+            tabs->addTab( profiles_, tr( "Profiles" ) );
+        }
         grid->addWidget( tabs, 1, 0 );
     }
     {
@@ -196,6 +201,7 @@ void ScoreEditor::StartEdit( Score_ABC& score )
     name_->setText( score.GetName() );
     variables_->StartEdit( score.GetVariables() );
     gauge_->StartEdit( score.GetGauge() );
+    profiles_->StartEdit( score.GetProfiles() );
     formula_->setText( score.GetFormula() );
     show();
     emit Show();
@@ -223,6 +229,7 @@ void ScoreEditor::CommitTo( Score_ABC& score )
     concrete.SetFormula( formula_->text() );
     concrete.SetVariables( variables_->GetValue() );
     concrete.SetGauge( gauge_->GetValue() );
+    concrete.SetProfiles( profiles_->CreateResult() );
 }
 
 // -----------------------------------------------------------------------------

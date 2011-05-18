@@ -32,6 +32,7 @@ namespace gui
 
 class Score_ABC;
 class ScoreGaugeConfiguration;
+class ScoreProfilesPage;
 class ScoreVariablesList;
 class ScoresModel;
 class StaticModel;
@@ -95,6 +96,7 @@ private:
     QLabel* help_;
     ScoreVariablesList* variables_;
     ScoreGaugeConfiguration* gauge_;
+    ScoreProfilesPage* profiles_;
     //@}
 };
 

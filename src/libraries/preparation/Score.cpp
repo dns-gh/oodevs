@@ -9,7 +9,9 @@
 
 #include "preparation_pch.h"
 #include "Score.h"
+#include "ProfileSelection.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "indicators/ElementFactory.h"
 #include "indicators/FormulaParser.h"
 #include "indicators/Gauge.h"
@@ -40,13 +42,14 @@ namespace
 // Name: Score constructor
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
-Score::Score( xml::xistream& xis, kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory )
-    : controller_( &controller )
+Score::Score( xml::xistream& xis, kernel::Controllers& controllers, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory, const ProfilesModel& profilesModel )
+    : controller_( &controllers.controller_ )
     , indicators_( indicators )
     , name_      ( xis.attribute< std::string >( "name" ).c_str() )
     , formula_   ( ReadFormula( xis ) )
     , gauge_     ( ReadGauge( xis, gaugeFactory ) )
     , variables_ ( new indicators::Variables( xis ) )
+    , profiles_  ( new ProfileSelection( controllers, xis, profilesModel ) )
 {
     controller_->Create( *static_cast< Score_ABC* >( this ) );
 }
@@ -55,13 +58,14 @@ Score::Score( xml::xistream& xis, kernel::Controller& controller, const indicato
 // Name: Score constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-Score::Score( const QString& name, kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory )
-    : controller_( &controller )
+Score::Score( const QString& name, kernel::Controllers& controllers, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory )
+    : controller_( &controllers.controller_ )
     , indicators_( indicators )
     , name_      ( name )
     , formula_   ()
     , gauge_     ( gaugeFactory.Create() )
     , variables_ ( new indicators::Variables() )
+    , profiles_  ( new ProfileSelection( controllers ) )
 {
     controller_->Create( *static_cast< Score_ABC* >( this ) );
 }
@@ -77,6 +81,7 @@ Score::Score( const Score& score )
     , formula_   ( score.formula_ )
     , gauge_     ( new indicators::Gauge( *score.gauge_ ) )
     , variables_ ( new indicators::Variables( *score.variables_ ) )
+    , profiles_  ( new ProfileSelection( *score.profiles_ ) )
 {
     // NOTHING
 }
@@ -132,6 +137,17 @@ const indicators::Variables& Score::GetVariables() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Score::GetProfiles
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+const ProfileSelection& Score::GetProfiles() const
+{
+    if( !profiles_.get() )
+        throw std::runtime_error( __FUNCTION__ );
+    return *profiles_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Score::Serialize
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
@@ -145,6 +161,8 @@ void Score::Serialize( xml::xostream& xos ) const
     xos << xml::end;
     variables_->Serialize( xos );
     SerializeIndicators( xos );
+    if( profiles_->Count() )
+        profiles_->Serialize( xos );
     xos << xml::end;
 }
 
@@ -230,6 +248,17 @@ void Score::SetGauge( const indicators::Gauge& gauge )
 void Score::SetVariables( const indicators::Variables& variables )
 {
     *variables_ = variables;
+    if( controller_ )
+        controller_->Update( *static_cast< Score_ABC* >( this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Score::SetProfiles
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+void Score::SetProfiles( std::auto_ptr< ProfileSelection > profiles )
+{
+    profiles_ = profiles;
     if( controller_ )
         controller_->Update( *static_cast< Score_ABC* >( this ) );
 }

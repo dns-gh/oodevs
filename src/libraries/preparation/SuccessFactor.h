@@ -10,6 +10,8 @@
 #ifndef __SuccessFactor_h_
 #define __SuccessFactor_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Controller;
@@ -23,11 +25,11 @@ namespace xml
 }
 
 class ProfilesModel;
+class ProfileSelection;
 class ScoresModel;
 class SuccessFactorActions;
 class SuccessFactorActionTypes;
 class SuccessFactorConditions;
-class SuccessFactorProfiles;
 
 // =============================================================================
 /** @class  SuccessFactor
@@ -35,7 +37,7 @@ class SuccessFactorProfiles;
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactor
+class SuccessFactor : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -48,7 +50,7 @@ public:
     //! @name Accessors
     //@{
     QString GetName() const;
-    SuccessFactorProfiles& GetProfiles() const;
+    ProfileSelection& GetProfiles() const;
     SuccessFactorConditions& GetConditions() const;
     SuccessFactorActions& GetActions() const;
     //@}
@@ -60,18 +62,11 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SuccessFactor( const SuccessFactor& );            //!< Copy constructor
-    SuccessFactor& operator=( const SuccessFactor& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
     QString name_;
-    std::auto_ptr< SuccessFactorProfiles > profiles_;
+    std::auto_ptr< ProfileSelection > profiles_;
     std::auto_ptr< SuccessFactorConditions > conditions_;
     std::auto_ptr< SuccessFactorActions > actions_;
     //@}

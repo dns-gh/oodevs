@@ -1192,6 +1192,10 @@ Do you want to save anyway?</source>
         <source>Gauge</source>
         <translation>Instrumento</translation>
     </message>
+    <message>
+        <source>Profiles</source>
+        <translation>Perfiles</translation>
+    </message>
 </context>
 <context>
     <name>ScoreGaugeConfiguration</name>

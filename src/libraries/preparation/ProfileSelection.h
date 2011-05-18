@@ -7,11 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __SuccessFactorProfiles_h_
-#define __SuccessFactorProfiles_h_
+#ifndef __ProfileSelection_h_
+#define __ProfileSelection_h_
 
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -28,21 +29,22 @@ class ProfilesModel;
 class UserProfile;
 
 // =============================================================================
-/** @class  SuccessFactorProfiles
-    @brief  SuccessFactorProfiles
+/** @class  ProfileSelection
+    @brief  A set of selected profiles
 */
 // Created: SBO 2009-06-15
 // =============================================================================
-class SuccessFactorProfiles : public tools::Resolver< const UserProfile, QString >
-                            , public tools::Observer_ABC
-                            , public tools::ElementObserver_ABC< UserProfile >
+class ProfileSelection : public tools::Resolver< const UserProfile, QString >
+                       , public tools::Observer_ABC
+                       , public tools::ElementObserver_ABC< UserProfile >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SuccessFactorProfiles( kernel::Controllers& controllers );
-             SuccessFactorProfiles( kernel::Controllers& controllers, xml::xistream& xis, const ProfilesModel& model );
-    virtual ~SuccessFactorProfiles();
+    explicit ProfileSelection( kernel::Controllers& controllers );
+             ProfileSelection( const ProfileSelection& );
+             ProfileSelection( kernel::Controllers& controllers, xml::xistream& xis, const ProfilesModel& model );
+    virtual ~ProfileSelection();
     //@}
 
     //! @name Operations
@@ -53,8 +55,7 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    SuccessFactorProfiles( const SuccessFactorProfiles& );            //!< Copy constructor
-    SuccessFactorProfiles& operator=( const SuccessFactorProfiles& ); //!< Assignment operator
+    ProfileSelection& operator=( const ProfileSelection& );
     //@}
 
     //! @name Helpers
@@ -71,4 +72,4 @@ private:
     //@}
 };
 
-#endif // __SuccessFactorProfiles_h_
+#endif // __ProfileSelection_h_

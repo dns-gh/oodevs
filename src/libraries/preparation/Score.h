@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Controller;
+    class Controllers;
 }
 
 namespace indicators
@@ -30,6 +31,8 @@ namespace xml
     class xistream;
 }
 
+class ProfilesModel;
+
 // =============================================================================
 /** @class  Score
     @brief  Score
@@ -42,8 +45,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              Score( const Score& );
-             Score( xml::xistream& xis, kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory );
-             Score( const QString& name, kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory );
+             Score( xml::xistream& xis, kernel::Controllers& controllers, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory, const ProfilesModel& profilesModel );
+             Score( const QString& name, kernel::Controllers& controllers, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory );
     virtual ~Score();
     //@}
 
@@ -53,6 +56,7 @@ public:
     virtual QString GetFormula() const;
     virtual const indicators::Gauge& GetGauge() const;
     virtual const indicators::Variables& GetVariables() const;
+    virtual const ProfileSelection& GetProfiles() const;
     //@}
 
     //! @name Setters
@@ -61,6 +65,7 @@ public:
     void SetFormula( const QString& formula );
     void SetGauge( const indicators::Gauge& gauge );
     void SetVariables( const indicators::Variables& variables );
+    void SetProfiles( std::auto_ptr< ProfileSelection > profiles );
     //@}
 
     //! @name Operations
@@ -90,6 +95,7 @@ private:
     QString formula_;
     std::auto_ptr< indicators::Gauge > gauge_;
     std::auto_ptr< indicators::Variables > variables_;
+    std::auto_ptr< ProfileSelection > profiles_;
     //@}
 };
 

@@ -10,7 +10,7 @@
 #include "preparation_app_pch.h"
 #include "SuccessFactorProfileList.h"
 #include "clients_kernel/Controllers.h"
-#include "preparation/SuccessFactorProfiles.h"
+#include "preparation/ProfileSelection.h"
 #include "preparation/UserProfile.h"
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ SuccessFactorProfileList::~SuccessFactorProfileList()
 // Name: SuccessFactorProfileList::StartEdit
 // Created: SBO 2009-06-16
 // -----------------------------------------------------------------------------
-void SuccessFactorProfileList::StartEdit( const SuccessFactorProfiles& profiles )
+void SuccessFactorProfileList::StartEdit( const ProfileSelection& profiles )
 {
     clearSelection();
     tools::Iterator< const UserProfile& > it( profiles.CreateIterator() );
@@ -50,7 +50,7 @@ void SuccessFactorProfileList::StartEdit( const SuccessFactorProfiles& profiles 
 // Name: SuccessFactorProfileList::CommitTo
 // Created: SBO 2009-06-17
 // -----------------------------------------------------------------------------
-void SuccessFactorProfileList::CommitTo( SuccessFactorProfiles& profiles ) const
+void SuccessFactorProfileList::CommitTo( ProfileSelection& profiles ) const
 {
     profiles.Clear();
     for( unsigned int i = 0; i < count() && i < profiles_.size(); ++i )

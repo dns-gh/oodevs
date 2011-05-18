@@ -20,8 +20,10 @@ namespace indicators
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
 }
+
+class Model;
 
 // =============================================================================
 /** @class  ScoreFactory
@@ -34,7 +36,7 @@ class ScoreFactory : public ScoreFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreFactory( kernel::Controller& controller, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory );
+             ScoreFactory( kernel::Controllers& controllers, const indicators::Primitives& indicators, const indicators::GaugeFactory_ABC& gaugeFactory, const Model& model );
     virtual ~ScoreFactory();
     //@}
 
@@ -45,18 +47,12 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ScoreFactory( const ScoreFactory& );            //!< Copy constructor
-    ScoreFactory& operator=( const ScoreFactory& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     const indicators::Primitives& indicators_;
     const indicators::GaugeFactory_ABC& gaugeFactory_;
+    const Model& model_;
     //@}
 };
 

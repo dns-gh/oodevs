@@ -21,6 +21,8 @@ namespace xml
     class xostream;
 }
 
+class ProfileSelection;
+
 // =============================================================================
 /** @class  Score_ABC
     @brief  Score_ABC
@@ -42,6 +44,7 @@ public:
     virtual QString GetFormula() const = 0;
     virtual const indicators::Gauge& GetGauge() const = 0;
     virtual const indicators::Variables& GetVariables() const = 0;
+    virtual const ProfileSelection& GetProfiles() const = 0;
     //@}
 
     //! @name Operations

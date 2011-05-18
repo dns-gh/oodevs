@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "SuccessFactorProfiles.h"
+#include "ProfileSelection.h"
 #include "ProfilesModel.h"
 #include "UserProfile.h"
 #include "clients_kernel/Controllers.h"
@@ -16,42 +16,57 @@
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
-// Name: SuccessFactorProfiles constructor
+// Name: ProfileSelection constructor
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-SuccessFactorProfiles::SuccessFactorProfiles( kernel::Controllers& controllers )
+ProfileSelection::ProfileSelection( kernel::Controllers& controllers )
     : controllers_( controllers )
 {
     controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SuccessFactorProfiles constructor
+// Name: ProfileSelection constructor
+// Created: SBO 2011-05-16
+// -----------------------------------------------------------------------------
+ProfileSelection::ProfileSelection( const ProfileSelection& selection )
+    : controllers_( selection.controllers_ )
+{
+    tools::Iterator< const UserProfile& > it( selection.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        const UserProfile& profile = it.NextElement();
+        Register( profile.GetLogin(), profile );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileSelection constructor
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-SuccessFactorProfiles::SuccessFactorProfiles( kernel::Controllers& controllers, xml::xistream& xis, const ProfilesModel& model )
+ProfileSelection::ProfileSelection( kernel::Controllers& controllers, xml::xistream& xis, const ProfilesModel& model )
     : controllers_( controllers )
 {
-    xis >> xml::start( "profiles" )
-            >> xml::list( "profile", *this, &SuccessFactorProfiles::ReadProfile, model )
+    xis >> xml::optional() >> xml::start( "profiles" )
+            >> xml::list( "profile", *this, &ProfileSelection::ReadProfile, model )
         >> xml::end;
     controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SuccessFactorProfiles destructor
+// Name: ProfileSelection destructor
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-SuccessFactorProfiles::~SuccessFactorProfiles()
+ProfileSelection::~ProfileSelection()
 {
     controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: SuccessFactorProfiles::ReadProfiles
+// Name: ProfileSelection::ReadProfiles
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-void SuccessFactorProfiles::ReadProfile( xml::xistream& xis, const ProfilesModel& model )
+void ProfileSelection::ReadProfile( xml::xistream& xis, const ProfilesModel& model )
 {
     const std::string name = xis.attribute< std::string >( "name" );
     if( const UserProfile* profile = model.Find( name.c_str() ) )
@@ -59,10 +74,10 @@ void SuccessFactorProfiles::ReadProfile( xml::xistream& xis, const ProfilesModel
 }
 
 // -----------------------------------------------------------------------------
-// Name: SuccessFactorProfiles::Serialize
+// Name: ProfileSelection::Serialize
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-void SuccessFactorProfiles::Serialize( xml::xostream& xos ) const
+void ProfileSelection::Serialize( xml::xostream& xos ) const
 {
     xos << xml::start( "profiles" );
     BOOST_FOREACH( const T_Elements::value_type profile, elements_ )
@@ -73,10 +88,10 @@ void SuccessFactorProfiles::Serialize( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SuccessFactorProfiles::NotifyUpdated
+// Name: ProfileSelection::NotifyUpdated
 // Created: SBO 2009-06-17
 // -----------------------------------------------------------------------------
-void SuccessFactorProfiles::NotifyUpdated( const UserProfile& profile )
+void ProfileSelection::NotifyUpdated( const UserProfile& profile )
 {
     BOOST_FOREACH( T_Elements::value_type element, elements_ )
         if( element.second == &profile && element.first != profile.GetLogin() )
@@ -88,10 +103,10 @@ void SuccessFactorProfiles::NotifyUpdated( const UserProfile& profile )
 }
 
 // -----------------------------------------------------------------------------
-// Name: SuccessFactorProfiles::NotifyDeleted
+// Name: ProfileSelection::NotifyDeleted
 // Created: SBO 2009-06-15
 // -----------------------------------------------------------------------------
-void SuccessFactorProfiles::NotifyDeleted( const UserProfile& profile )
+void ProfileSelection::NotifyDeleted( const UserProfile& profile )
 {
     Remove( profile.GetLogin() );
 }

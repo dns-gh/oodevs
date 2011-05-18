@@ -3,14 +3,15 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2009 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __SuccessFactorProfileList_h_
-#define __SuccessFactorProfileList_h_
+#ifndef __ScoreProfilesPage_h_
+#define __ScoreProfilesPage_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -19,40 +20,36 @@ namespace kernel
 
 class ProfileSelection;
 class UserProfile;
+class QCheckListItem;
 
 // =============================================================================
-/** @class  SuccessFactorProfileList
-    @brief  SuccessFactorProfileList
+/** @class  ScoreProfilesPage
+    @brief  ScoreProfilesPage
 */
-// Created: SBO 2009-06-15
+// Created: SBO 2011-05-16
 // =============================================================================
-class SuccessFactorProfileList : public QListBox
-                               , public tools::Observer_ABC
-                               , public tools::ElementObserver_ABC< UserProfile >
+class ScoreProfilesPage : public QVBox
+                        , private boost::noncopyable
+                        , public tools::Observer_ABC
+                        , public tools::ElementObserver_ABC< UserProfile >
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             SuccessFactorProfileList( QWidget* parent, kernel::Controllers& controllers );
-    virtual ~SuccessFactorProfileList();
+             ScoreProfilesPage( QWidget* parent, kernel::Controllers& controllers );
+    virtual ~ScoreProfilesPage();
     //@}
 
     //! @name Operations
     //@{
     void StartEdit( const ProfileSelection& profiles );
-    void CommitTo( ProfileSelection& profiles ) const;
+    std::auto_ptr< ProfileSelection > CreateResult() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SuccessFactorProfileList( const SuccessFactorProfileList& );            //!< Copy constructor
-    SuccessFactorProfileList& operator=( const SuccessFactorProfileList& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void Select( const UserProfile& profile );
     virtual void NotifyCreated( const UserProfile& profile );
     virtual void NotifyUpdated( const UserProfile& profile );
     virtual void NotifyDeleted( const UserProfile& profile );
@@ -60,7 +57,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< const UserProfile* > T_Profiles;
+    typedef std::map< const UserProfile*, QCheckListItem* > T_Profiles;
     //@}
 
 private:
@@ -68,7 +65,8 @@ private:
     //@{
     kernel::Controllers& controllers_;
     T_Profiles profiles_;
+    QListView* list_;
     //@}
 };
 
-#endif // __SuccessFactorProfileList_h_
+#endif // __ScoreProfilesPage_h_

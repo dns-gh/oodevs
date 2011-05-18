@@ -1192,6 +1192,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Gauge</source>
         <translation>Jauge</translation>
     </message>
+    <message>
+        <source>Profiles</source>
+        <translation>Profils</translation>
+    </message>
 </context>
 <context>
     <name>ScoreGaugeConfiguration</name>

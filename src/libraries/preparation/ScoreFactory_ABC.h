@@ -10,6 +10,8 @@
 #ifndef __ScoreFactory_ABC_h_
 #define __ScoreFactory_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace xml
 {
     class xistream;
@@ -23,7 +25,7 @@ class Score_ABC;
 */
 // Created: SBO 2009-04-16
 // =============================================================================
-class ScoreFactory_ABC
+class ScoreFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
