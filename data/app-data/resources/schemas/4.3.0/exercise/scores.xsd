@@ -392,6 +392,27 @@
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
+                            <xs:element name="profiles" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Defines profiles access restrictions. If not present, score is available to for all profiles</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence maxOccurs="unbounded">
+										<xs:element name="profile">
+											<xs:annotation>
+												<xs:documentation>Defines a profile having access to the score</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="name" use="required">
+													<xs:annotation>
+														<xs:documentation>Profile name/login</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
 						</xs:sequence>
 						<xs:attribute name="name" type="xs:string" use="required">
 							<xs:annotation>
