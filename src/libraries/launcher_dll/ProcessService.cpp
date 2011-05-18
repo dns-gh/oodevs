@@ -289,23 +289,40 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         return;
     }
     boost::shared_ptr< SwordFacade > client( it->second );
-    client->RegisterMessageHandler(context,
-            std::auto_ptr< MessageHandler_ABC >( new PauseResumeMessageHandler( server_.ResolveClient( endpoint ), message.exercise(), message.session() ) ) );
-    if( message.set_running() )
+    if( message.has_set_running() )
+        ExecutePauseResume( endpoint, message.exercise(), message.session(), message.set_running(), context, *client );
+    ++context;
+    if( message.has_save_checkpoint() )
+        SaveCheckpoint( message.save_checkpoint(), *client );
+}
+// -----------------------------------------------------------------------------
+// Name: ProcessService::ExecutePauseResume
+// Created: LGY 2011-05-18
+// -----------------------------------------------------------------------------
+void ProcessService::ExecutePauseResume( const std::string& endpoint, const std::string& exercise, const std::string& session,
+                                         bool running, int context, SwordFacade& facade )
+{
+    facade.RegisterMessageHandler( context,
+        std::auto_ptr< MessageHandler_ABC >( new PauseResumeMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+    if( running )
     {
         simulation::ControlResume request;
-        request.Send( *client, context );
+        request.Send( facade, context );
     }
     else
     {
         simulation::ControlPause request;
-        request.Send( *client, context );
+        request.Send( facade, context );
     }
-    ++context;
-    if( message.has_save_checkpoint() )
-    {
-        simulation::ControlCheckPointSaveNow request;
-        request().set_name( message.save_checkpoint() );
-        request.Send( *client );
-    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessService::SaveCheckpoint
+// Created: LGY 2011-05-18
+// -----------------------------------------------------------------------------
+void ProcessService::SaveCheckpoint( const std::string& name, SwordFacade& facade )
+{
+    simulation::ControlCheckPointSaveNow request;
+    request().set_name( name );
+    request.Send( facade );
 }

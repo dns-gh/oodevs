@@ -63,6 +63,14 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ExecutePauseResume( const std::string& endpoint, const std::string& exercise, const std::string& session,
+                             bool running, int context, SwordFacade& facade );
+    void SaveCheckpoint( const std::string& name, SwordFacade& facade );
+    //@}
+
+private:
     //! @name Types
     //@{
     typedef std::map< std::pair< std::string, std::string >, boost::weak_ptr< SwordFacade > > ProcessContainer;

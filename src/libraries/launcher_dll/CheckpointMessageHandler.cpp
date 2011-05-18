@@ -42,7 +42,6 @@ bool CheckpointMessageHandler::OnReceiveMessage( const sword::SimToClient& messa
         if( message.message().control_checkpoint_save_end().has_name() )
         {
             SessionCommandExecutionResponse response;
-            response().set_running( true );
             response().set_saved_checkpoint( message.message().control_checkpoint_save_end().name() );
             Send( response );
         }
