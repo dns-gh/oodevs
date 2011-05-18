@@ -73,6 +73,7 @@ public:
     //@{
     bool HasWeaponsNotReady () const;
     bool HasWeaponsAndNoAmmo() const;
+    bool IsTemporarilyBlocked() const;
     unsigned int GetNbrWeaponsUsable() const;
     //@}
 
@@ -128,6 +129,7 @@ private:
           bool                   bHasWeaponsReady_;
           bool                   bHasWeaponsNotReady_;
           bool                   bHasWeaponsAndNoAmmo_;
+          bool                   bTemporarilyBlocked_;
 
 public:
     // Factor applied to number of components that can fire in urban areas.

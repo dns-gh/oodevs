@@ -84,7 +84,7 @@ const PHY_DotationCategory& PHY_Weapon::GetDotationCategory() const
 // -----------------------------------------------------------------------------
 double PHY_Weapon::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
 {
-    return type_.GetMaxRangeToFireOn( firer, targetComposanteType, rWantedPH );
+    return type_.GetMaxRangeToFireOn( firer, targetComposanteType, rWantedPH, 0 );
 }
 
 // -----------------------------------------------------------------------------

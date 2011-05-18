@@ -140,7 +140,7 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
         self.eActionTir = self.eActionTir or nil
         if( ModuleBegins() ) then
             do
-                self.actionExaction = DEC__StartTirDirectSurComposantesMajeures( eActionTirDirect_None, self._namedParams.repEni, 100, eTirDirectNormal )
+                self.actionExaction = DEC__StartTirDirectSurComposantesMajeures( -1, self._namedParams.repEni, 100, eTirDirectNormal )
                 DEC_RC( eRC_ExecutionAttentat )
             end
         end

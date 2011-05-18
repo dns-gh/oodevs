@@ -72,13 +72,15 @@ void PHY_DirectFireData::sComposanteWeapons::RemoveWeapon( PHY_Weapon& weapon )
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
 PHY_DirectFireData::PHY_DirectFireData( MIL_AgentPion& firer, E_ComposanteFiringType nComposanteFiringType, E_FiringMode nFiringMode, double rPercentageComposantesToUse, const PHY_AmmoDotationClass* pAmmoDotationClass /* = 0 */ )
-    : bHasWeaponsNotReady_        ( false )
-    , bHasWeaponsAndNoAmmo_       ( false )
-    , firer_                      ( firer )
+    : firer_                      ( firer )
     , nComposanteFiringType_      ( nComposanteFiringType )
     , nFiringMode_                ( nFiringMode )
     , rPercentageComposantesToUse_( rPercentageComposantesToUse )
     , pAmmoDotationClass_         ( pAmmoDotationClass )
+    , bHasWeaponsReady_           ( true )
+    , bHasWeaponsNotReady_        ( false )
+    , bHasWeaponsAndNoAmmo_       ( false )
+    , bTemporarilyBlocked_        ( false )
 {
     assert( rPercentageComposantesToUse_  >= 0. && rPercentageComposantesToUse_ <= 1. );
 }
@@ -164,7 +166,8 @@ bool PHY_DirectFireData::CanFire( const PHY_ComposantePion& /*firer*/ )
 {
     if( !firer_.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
         return true;
-    return( MT_Random::GetInstance().rand32_io( 0u, 100u ) < PHY_DirectFireData::nUrbanCoefficient_ );
+    bTemporarilyBlocked_ = !( MT_Random::GetInstance().rand32_io( 0u, 100u ) < PHY_DirectFireData::nUrbanCoefficient_ );
+    return bTemporarilyBlocked_;
 }
 
 // -----------------------------------------------------------------------------
@@ -331,6 +334,15 @@ bool PHY_DirectFireData::HasWeaponsNotReady() const
 bool PHY_DirectFireData::HasWeaponsAndNoAmmo() const
 {
     return bHasWeaponsAndNoAmmo_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DirectFireData::IsTemporarilyBlocked
+// Created: LDC 2011-05-16
+// -----------------------------------------------------------------------------
+bool PHY_DirectFireData::IsTemporarilyBlocked() const
+{
+    return bTemporarilyBlocked_;
 }
 
 // -----------------------------------------------------------------------------

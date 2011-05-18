@@ -39,8 +39,7 @@ includedFiles["sources/glaise/glaise_common/pions/actions/Actions - POP - Tir.bm
 
     select = function( self )
                 self.bReprise = self.bReprise or false
-        self.actionTirSurPop = self.actionTirSurPop or DEC_StartTirSurPopulation( self._namedParams.pop )
-        actionCallbacks[  ] = function( arg ) eActionTirDirect_None = arg end
+        self.actionTirSurPop = self.actionTirSurPop or DEC__StartTirSurPopulation( self._namedParams.pop )
 
         --[[// Reprise
 ]]if( self.bReprise ) then

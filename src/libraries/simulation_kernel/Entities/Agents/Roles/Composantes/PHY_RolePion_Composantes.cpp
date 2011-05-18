@@ -1118,14 +1118,14 @@ double PHY_RolePion_Composantes::GetDangerosity( const DEC_Knowledge_AgentCompos
 // Name: PHY_RolePion_Composantes::GetMaxRangeToFireOn
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_RolePion_Composantes::GetMaxRangeToFireOn( const DEC_Knowledge_Agent& target, double rWantedPH ) const
+double PHY_RolePion_Composantes::GetMaxRangeToFireOn( const DEC_Knowledge_Agent& target, double rWantedPH, const PHY_DotationCategory* dotation ) const
 {
     // Get back the most dangerous composante type of the target (from our point of view ...)
     const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
     double rRange = 0;
     if( pTargetComposante )
         for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-            rRange = std::max( rRange, ( **it ).GetMaxRangeToFireOn( *pTargetComposante, rWantedPH ) );
+            rRange = std::max( rRange, ( **it ).GetMaxRangeToFireOn( *pTargetComposante, rWantedPH, dotation ) );
     return rRange;
 }
 

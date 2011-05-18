@@ -132,7 +132,7 @@ public:
     virtual void ApplyFlood                 ( const MIL_FloodEffectManipulator& flood ) = 0;
     virtual double GetDangerosity           ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const = 0;
     virtual double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
-    virtual double GetMaxRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
+    virtual double GetMaxRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH, const PHY_DotationCategory* dotation = 0 ) const = 0;
     virtual double GetMinRangeToFireOn              ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMaxRangeToFireOnActualPosture ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;
     virtual double GetMinRangeToFireOnActualPosture ( const DEC_Knowledge_Agent& target, double rWantedPH ) const = 0;

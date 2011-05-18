@@ -160,6 +160,8 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
             return eRunning;
         if( firerWeapons.HasWeaponsAndNoAmmo() )
             return eNoAmmo;
+        if( firerWeapons.IsTemporarilyBlocked() )
+            return eTemporarilyBlocked;
         return eNoCapacity;
     }
     pion_.NotifyAttacking ( *pTarget );

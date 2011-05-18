@@ -306,9 +306,11 @@ double PHY_WeaponType::GetDangerosity( const MIL_Agent_ABC& firer, const PHY_Com
 // Name: PHY_WeaponType::GetMaxRangeToFireOn
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const
+double PHY_WeaponType::GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH, const PHY_DotationCategory* dotation ) const
 {
     assert( pDotationCategory_ );
+    if( dotation && dotation != pDotationCategory_ )
+        return 0.;
 
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( firer.GetAlgorithms().dotationComputerFactory_->Create() );
     MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( firer );

@@ -27,9 +27,19 @@ using namespace firing;
 // -----------------------------------------------------------------------------
 float DEC_FireFunctions::GetMaxRangeToFireOnEnemy( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH )
 {
+    return GetMaxRangeToFireOnEnemyWithDotation( callerAgent, pKnowledge, rWantedPH, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::GetMaxRangeToFireOnEnemyWithDotation
+// Created: LDC 2011-05-16
+// -----------------------------------------------------------------------------
+float DEC_FireFunctions::GetMaxRangeToFireOnEnemyWithDotation( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH, const PHY_DotationCategory* dotation )
+{
     if( !pKnowledge || !pKnowledge->IsValid() )
         return -1.f;
-    return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToFireOn( *pKnowledge, rWantedPH ) );
+    return MIL_Tools::ConvertSimToMeter( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToFireOn( *pKnowledge, rWantedPH, dotation ) );
+
 }
 
 // -----------------------------------------------------------------------------

@@ -58,7 +58,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( ApplyFlood, 1 );
     MOCK_METHOD( GetDangerosity, 2 );
     MOCK_METHOD( GetOnlyLoadableMaxRangeToFireOn, 2 );
-    MOCK_METHOD( GetMaxRangeToFireOn, 2 );
+    MOCK_METHOD( GetMaxRangeToFireOn, 3 );
     MOCK_METHOD( GetMinRangeToFireOn, 2 );
     MOCK_METHOD( GetMaxRangeToFireOnActualPosture, 2 );
     MOCK_METHOD( GetMinRangeToFireOnActualPosture, 2 );

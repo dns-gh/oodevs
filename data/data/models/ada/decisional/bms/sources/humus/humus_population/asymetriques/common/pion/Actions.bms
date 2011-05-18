@@ -114,8 +114,7 @@ includedFiles["sources/humus/humus_population/asymetriques/common/pion/Actions.b
         self.eActionTir = self.eActionTir or nil
         if( ModuleBegins() ) then
             do
-                self.actionExaction = DEC_StartTirDirectSurComposantesMajeures( self._namedParams.repEni, 100, eTirDirectNormal )
-                actionCallbacks[ self.actionExaction ] = function( arg ) eActionTirDirect_None = arg end
+                self.actionExaction = DEC__StartTirDirectSurComposantesMajeures( self._namedParams.repEni, 100, eTirDirectNormal )
 
                 DEC_RC( eRC_ExecutionAttentat )
             end

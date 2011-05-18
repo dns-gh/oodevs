@@ -461,17 +461,17 @@ double PHY_ComposantePion::GetDangerosity( const DEC_Knowledge_AgentComposante& 
 double PHY_ComposantePion::GetOnlyLoadableMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH ) const
 {
     assert( pType_ );
-    return bLoadable_ && CanFireWhenUnloaded() ? pType_->GetMaxRangeToFireOn( pRole_->GetPion(), compTarget.GetType(), rWantedPH ) : 0.;
+    return bLoadable_ && CanFireWhenUnloaded() ? pType_->GetMaxRangeToFireOn( pRole_->GetPion(), compTarget.GetType(), rWantedPH, 0 ) : 0.;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetMaxRangeToFireOn
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-double PHY_ComposantePion::GetMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH ) const
+double PHY_ComposantePion::GetMaxRangeToFireOn( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH, const PHY_DotationCategory* dotation ) const
 {
     assert( pType_ );
-    return CanFire() ? pType_->GetMaxRangeToFireOn( pRole_->GetPion(), compTarget.GetType(), rWantedPH ) : 0.;
+    return CanFire() ? pType_->GetMaxRangeToFireOn( pRole_->GetPion(), compTarget.GetType(), rWantedPH, dotation ) : 0.;
 }
 
 // -----------------------------------------------------------------------------

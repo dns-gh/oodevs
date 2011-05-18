@@ -19,9 +19,10 @@ namespace xml
     class xistream;
 }
 
+class MIL_Agent_ABC;
+class PHY_DotationCategory;
 class PHY_Protection;
 class PHY_Volume;
-class MIL_Agent_ABC;
 
 // =============================================================================
 // @class  PHY_ComposanteType_ABC
@@ -44,7 +45,7 @@ public:
     //! @name Operations
     //@{
     virtual double GetDangerosity     ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& target, double rDistBtwSourceAndTarget ) const = 0;
-    virtual double GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const = 0;
+    virtual double GetMaxRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH, const PHY_DotationCategory* dotation ) const = 0;
     virtual double GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const = 0;
     //@}
 

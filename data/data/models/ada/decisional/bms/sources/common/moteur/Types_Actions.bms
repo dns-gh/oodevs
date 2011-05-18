@@ -39,7 +39,8 @@ eActionTirDirect_NoCapacity = 2
 eActionTirDirect_NoAmmo = 3
 eActionTirDirect_Running = 4
 eActionTirDirect_Finished = 5
-eActionTirDirect_None = 6
+eActionTirDirect_TemporarilyBlocked = 6
+eActionTirDirect_None = 7
 --[[// -> le tir est terminé parceque le pion adverse est détruit
 ]]--[[// -> le tir est terminé car il ne reste aucune composante ayant la capacité de tirer
 ]]--[[// -> le tir est terminé parque qu'il reste des composante capables de tirer mais qu'il ne reste plus de munition adéquates
