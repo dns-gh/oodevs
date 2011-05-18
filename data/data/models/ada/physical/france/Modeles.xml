@@ -603,6 +603,7 @@
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="ASY Assassiner Officiers"/>
         <mission name="ASY Commettre un Attentat"/>
         <mission name="ASY Commettre un Attentat Suicide"/>
         <mission name="ASY Se Dissimuler"/>
@@ -11711,4 +11712,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0464413803" -->
+<!-- signature="1880521282" -->

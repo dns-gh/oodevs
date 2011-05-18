@@ -2605,6 +2605,20 @@
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="france.military.platoon.terrorism.tasks.AssassinerOfficiers" dia-type="france.military.platoon.terrorism.tasks.AssassinerOfficiers" id="2141" name="ASY Assassiner Officiers">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="unit" name="Cible de l'attentat" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="meetingPoint" name="Position de repli" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
     <mission dia-behavior="france.military.platoon.stabilisation.tasks.InterdireFoule" dia-type="france.military.platoon.stabilisation.tasks.InterdireFoule" id="2135" name="STABILISATION Interdire foule">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4610,4 +4624,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0908699133" -->
+<!-- signature="3432710200" -->
