@@ -10,15 +10,17 @@
 #include "selftraining_app_pch.h"
 #include "CreateExerciceWidget.h"
 #include "moc_CreateExerciceWidget.cpp"
-#include "ScenarioEditPage.h"
 #include "clients_gui/Tools.h"
+#include "clients_gui/ValuedListItem.h"
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
-#include "clients_gui/ValuedListItem.h"
+#include "frontend/ListViewHelper.h"
+#include "ScenarioEditPage.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
 #include <xeumeuleu/xml.hpp>
-#include <QCheckBox.h>
+#include <qheader.h>
+#include <qcombobox.h>
 
 namespace
 {
@@ -64,18 +66,17 @@ CreateExerciceWidget::CreateExerciceWidget( ScenarioEditPage& page, QWidget* par
         saveAsGroupBox_->setChecked( false );
         connect( saveAsGroupBox_, SIGNAL( toggled( bool ) ), &page, SLOT( ToggleChanged( bool ) ) );
         {
-            QVBox* box = Style( new QVBox( saveAsGroupBox_ ) );
-            Style( new QLabel(  tools::translate( "CreateExerciceWidget", "Exercise to copy:" ), box ) );
-            exerciseList_ = Style( new QListBox( box ) );
+            Style( new QLabel( tools::translate( "CreateExerciceWidget", "Exercise to copy:" ), saveAsGroupBox_ ) );
+            exerciseList_ = Style( new QListBox( saveAsGroupBox_ ) );
             connect( exerciseList_, SIGNAL( clicked( QListBoxItem* ) ), SLOT( OnSelectionChanged( QListBoxItem* ) ) );
         }
         {
-            QVBox* box = Style( new QVBox( saveAsGroupBox_ ) );
-            scriptCheckBox_ = Style( new QCheckBox( tools::translate( "CreateExerciceWidget", "Copy scripts" ), box ) );
-            scoresCheckBox_ = Style( new QCheckBox( tools::translate( "CreateExerciceWidget", "Copy scores" ), box ) );
-            metaDataCheckBox_ = Style( new QCheckBox( tools::translate( "CreateExerciceWidget", "Copy meta data" ), box ) );
-            drawingsCheckBox_ = Style( new QCheckBox( tools::translate( "CreateExerciceWidget", "Copy drawings" ), box ) );
-            successFactorsCheckBox_ = Style( new QCheckBox( tools::translate( "CreateExerciceWidget", "Copy success factors" ), box ) );
+            Style( new QLabel( tools::translate( "CreateExerciceWidget", "Content to copy:" ), saveAsGroupBox_ ) );
+            contentList_ = Style( new QListView( saveAsGroupBox_ ) );
+            contentList_->addColumn( "exercise features" );
+            contentList_->setResizeMode( QListView::AllColumns );
+            contentList_->header()->hide();
+            contentList_->adjustSize();
         }
     }
     UpdateExercises();
@@ -96,6 +97,23 @@ CreateExerciceWidget::~CreateExerciceWidget()
 // -----------------------------------------------------------------------------
 void CreateExerciceWidget::Update()
 {
+    QListBoxItem* item = exerciseList_->selectedItem();
+    if( item )
+    {
+        std::string exercise( item->text().ascii() );
+        contentList_->clear();
+        contentList_->insertItem( frontend::BuildExerciseFeatures( exercise, config_, contentList_ ) );
+    }
+    else
+        UpdateExercises();
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreateExerciceWidget::UpdateExercises
+// Created: ABR 2011-04-14
+// -----------------------------------------------------------------------------
+void CreateExerciceWidget::UpdateExercises()
+{
     editTerrainList_->clear();
     editTerrainList_->insertItem( tools::translate( "CreateExerciceWidget", "Terrain:" ) );
     editTerrainList_->insertStringList( frontend::commands::ListTerrains( config_ ) );
@@ -111,7 +129,9 @@ void CreateExerciceWidget::Update()
     if( editModelList_->count() == 2 )
         editModelList_->setCurrentItem( 1 );
     editModelList_->setShown( editModelList_->count() > 2 );
-    UpdateExercises();
+
+    exerciseList_->clear();
+    exerciseList_->insertStringList( frontend::commands::ListExercises( config_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,11 +160,7 @@ void CreateExerciceWidget::CreateExercise()
             params.terrain_ = terrain;
             params.model_ = model.front().ascii();
             params.physical_ = model.back().ascii();
-            params.copyScript_ = scriptCheckBox_->isChecked();
-            params.copyScores_ = scoresCheckBox_->isChecked();
-            params.copyDrawing_ = drawingsCheckBox_->isChecked();
-            params.copyMetaData_ = metaDataCheckBox_->isChecked();
-            params.copySuccessFactors_ = successFactorsCheckBox_->isChecked();
+            params.iterator_ = QListViewItemIterator( contentList_ );
             frontend::CreateExerciseAsCopyOf( config_, params );
         }
         else
@@ -172,6 +188,8 @@ bool CreateExerciceWidget::EnableEditButton()
 // -----------------------------------------------------------------------------
 void CreateExerciceWidget::OnSelectionChanged( QListBoxItem* item )
 {
+    if( !item )
+        return;
     std::auto_ptr< xml::xistream > xis= fileLoader_.LoadFile( config_.GetExerciseFile( item->text().ascii() ) );
     std::string terrain, physical;
     *xis >> xml::start( "exercise" )
@@ -193,15 +211,6 @@ void CreateExerciceWidget::OnSelectionChanged( QListBoxItem* item )
         if( index != -1 )
             editModelList_->setCurrentItem( index + 1 );
     }
+    Update();
     page_.UpdateEditButton();
-}
-
-// -----------------------------------------------------------------------------
-// Name: CreateExerciceWidget::UpdateExercises
-// Created: ABR 2011-04-14
-// -----------------------------------------------------------------------------
-void CreateExerciceWidget::UpdateExercises()
-{
-    exerciseList_->clear();
-    exerciseList_->insertStringList( frontend::commands::ListExercises( config_ ) );
 }

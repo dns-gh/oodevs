@@ -153,23 +153,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copy scripts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy scores</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy meta data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy drawings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy success factors</source>
+        <source>Content to copy:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

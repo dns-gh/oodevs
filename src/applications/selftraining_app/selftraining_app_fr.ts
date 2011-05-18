@@ -153,24 +153,8 @@
         <translation>Exercice à copier:</translation>
     </message>
     <message>
-        <source>Copy scripts</source>
-        <translation>Copier les scripts</translation>
-    </message>
-    <message>
-        <source>Copy scores</source>
-        <translation>Copier les scores</translation>
-    </message>
-    <message>
-        <source>Copy meta data</source>
-        <translation>Copier les méta données</translation>
-    </message>
-    <message>
-        <source>Copy drawings</source>
-        <translation>Copier les dessins</translation>
-    </message>
-    <message>
-        <source>Copy success factors</source>
-        <translation>Copier les facteurs de succès</translation>
+        <source>Content to copy:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

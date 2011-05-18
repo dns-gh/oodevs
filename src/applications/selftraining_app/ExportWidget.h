@@ -62,9 +62,6 @@ private:
     //! @name Helpers
     //@{
     void UpdateExercises();
-    void BuildCategory( QListViewItem* parent, const QStringList& list, const QString& base, const std::string& category );
-    QListViewItem* BuildExerciseFeatures( const std::string& exercise );
-    QListViewItem* BuildExerciseData( const std::string& exercise );
     bool BrowseClicked();
     void WriteContent( zip::ozipfile& archive ) const;
     //@}
@@ -85,13 +82,13 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    const tools::Loader_ABC& fileLoader_;
-    ScenarioEditPage& page_;
-    QListBox*  list_;
-    T_Package package_;
-    QTextEdit* description_;
-    QListView* content_;
-    QProgressBar* progress_;
+    const tools::Loader_ABC&    fileLoader_;
+    ScenarioEditPage&           page_;
+    QListBox*                   list_;
+    T_Package                   package_;
+    QTextEdit*                  description_;
+    QListView*                  content_;
+    QProgressBar*               progress_;
     //@}
 };
 

@@ -10,6 +10,8 @@
 #ifndef __CreateExercise_h_
 #define __CreateExercise_h_
 
+#include <qlistview.h>
+
 namespace tools
 {
     class GeneralConfig;
@@ -27,11 +29,7 @@ namespace frontend
         std::string terrain_;
         std::string model_;
         std::string physical_;
-        bool copyScript_;
-        bool copyScores_;
-        bool copyDrawing_;
-        bool copyMetaData_;
-        bool copySuccessFactors_;
+        QListViewItemIterator iterator_;
     };
 
     void CreateExercise( const tools::GeneralConfig& config, const std::string& name,

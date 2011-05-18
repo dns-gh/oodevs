@@ -10,9 +10,7 @@
 #ifndef __CreateExerciceWidget_h_
 #define __CreateExerciceWidget_h_
 
-#include <qcombobox.h>
 #include <qgroupbox.h>
-#include <qlineedit.h>
 #include <boost/noncopyable.hpp>
 
 class ScenarioEditPage;
@@ -23,7 +21,9 @@ namespace tools
     class Loader_ABC;
 }
 
-class QCheckBox;
+class QListView;
+class QLineEdit;
+class QComboBox;
 
 // =============================================================================
 /** @class  CreateExerciceWidget
@@ -66,18 +66,14 @@ private:
     //! @name Member data
     //@{
     const tools::GeneralConfig& config_;
-    const tools::Loader_ABC& fileLoader_;
-    ScenarioEditPage& page_;
-    QLineEdit* editName_;
-    QComboBox* editTerrainList_;
-    QComboBox* editModelList_;
-    QGroupBox* saveAsGroupBox_;
-    QListBox*  exerciseList_;
-    QCheckBox* scriptCheckBox_;
-    QCheckBox* scoresCheckBox_;
-    QCheckBox* metaDataCheckBox_;
-    QCheckBox* drawingsCheckBox_;
-    QCheckBox* successFactorsCheckBox_;
+    const tools::Loader_ABC&    fileLoader_;
+    ScenarioEditPage&           page_;
+    QLineEdit*                  editName_;
+    QComboBox*                  editTerrainList_;
+    QComboBox*                  editModelList_;
+    QGroupBox*                  saveAsGroupBox_;
+    QListBox*                   exerciseList_;
+    QListView*                  contentList_;
     //@}
 };
 

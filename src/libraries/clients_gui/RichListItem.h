@@ -12,6 +12,7 @@
 
 #include <qlistview.h>
 #include <boost/noncopyable.hpp>
+#include <vector>
 
 namespace gui
 {
