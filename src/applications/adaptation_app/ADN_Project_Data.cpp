@@ -425,6 +425,7 @@ void ADN_Project_Data::Save()
     tools::WriteXmlCrc32Signature( szFile );
     // Update pathfind.xml
     std::string path = workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData();
+    if( bfs::exists( bfs::path( path ) ) )
     {
         xml::xifstream xis( path );
         xml::xofstream xos( path );
