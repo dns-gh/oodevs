@@ -14,6 +14,8 @@
 
 namespace kernel
 {
+    class Controllers;
+    class DetectionMap;
     class Object_ABC;
 }
 
@@ -28,7 +30,7 @@ class AltitudeModifierPrototype : public gui::AltitudeModifierPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AltitudeModifierPrototype( QWidget* parent, kernel::Object_ABC*& creation );
+             AltitudeModifierPrototype( QWidget* parent, kernel::Object_ABC*& creation, kernel::Controllers& controllers, kernel::DetectionMap& detection );
     virtual ~AltitudeModifierPrototype();
     //@}
 
@@ -41,6 +43,8 @@ private:
     //! @name Member data
     //@{
     kernel::Object_ABC*& creation_;
+    kernel::Controllers& controllers_;
+    kernel::DetectionMap& detection_;
     //@}
 };
 

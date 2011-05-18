@@ -102,9 +102,9 @@ namespace
         container.push_back( new ResourceNetworkPrototype( parent, object, controllers, urbanModel, objectsModel, resources ) );
     }
 
-    void AltitudeModifierAttribute( T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
+    void AltitudeModifierAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, DetectionMap& detection, Object_ABC*& object )
     {
-        container.push_back( new AltitudeModifierPrototype( parent, object ) );
+        container.push_back( new AltitudeModifierPrototype( parent, object, controllers, detection ) );
     }
 
     template< typename T >
@@ -160,7 +160,7 @@ namespace
     /*
     * Register capacity tag
     */
-    ObjectAttributePrototypeFactory_ABC& FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, const DetectionMap& detection, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const tools::GeneralConfig& config, Object_ABC*& object )
+    ObjectAttributePrototypeFactory_ABC& FactoryBuilder( Controllers& controllers, const ObjectTypes& resolver, DetectionMap& detection, ObjectsModel& objectsModel, const UrbanModel& urbanModel, const tools::GeneralConfig& config, Object_ABC*& object )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
         factory->Register( "constructor"               , boost::bind( &::ConstructorAttribute, _1, _2, _3, boost::ref( object ) ) );
@@ -176,7 +176,7 @@ namespace
         factory->Register( "logistic"                  , boost::bind( &::LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( object ) ) );
         factory->Register( "interact-with-enemy"       , boost::bind( &::InteractWithEnemyAttribute, _2, _3, boost::ref( object ) ) );
         factory->Register( "interference"              , boost::bind( &::InterferenceAttribute, _2, _3, boost::ref( object ) ) );
-        factory->Register( "altitude-modifier"         , boost::bind( &::AltitudeModifierAttribute, _2, _3, boost::ref( object ) ) );
+        factory->Register( "altitude-modifier"         , boost::bind( &::AltitudeModifierAttribute, _2, _3, boost::ref( controllers ), boost::ref( detection ), boost::ref( object ) ) );
 
         factory->Register( "medical"                   , boost::bind( &::MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( object ) ) );
         factory->Register( "stock"                     , boost::bind( &::StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( config ), boost::ref( object ) ) );

@@ -62,9 +62,9 @@ FloodModel& FloodModel::operator=( const FloodModel& from )
 // Name: FloodModel::ComputePolygons
 // Created: JSR 2010-12-08
 // -----------------------------------------------------------------------------
-void FloodModel::GenerateFlood( const Point2f& center, int depth, int refDist )
+void FloodModel::GenerateFlood( const Point2f& center, int depth, int refDist, bool force )
 {
-    if( depth == oldDepth_ && refDist == refDist_ )
+    if( !force && ( depth == oldDepth_ && refDist == refDist_ ) )
         return;
     Reset();
     oldDepth_ = depth;
@@ -96,9 +96,9 @@ void FloodModel::GenerateFlood( const Point2f& center, int depth, int refDist )
 // Name: FloodModel::GenerateFlood
 // Created: JSR 2010-12-21
 // -----------------------------------------------------------------------------
-void FloodModel::GenerateFlood( const Point2d& center, int depth, int refDist )
+void FloodModel::GenerateFlood( const Point2d& center, int depth, int refDist, bool force )
 {
-    GenerateFlood( Point2f( static_cast< float >( center.X() ), static_cast< float >( center.Y() ) ), depth, refDist );
+    GenerateFlood( Point2f( static_cast< float >( center.X() ), static_cast< float >( center.Y() ) ), depth, refDist, force );
 }
 
 // -----------------------------------------------------------------------------

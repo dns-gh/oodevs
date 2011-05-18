@@ -43,6 +43,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/function.hpp>
 #include <boost/bind.hpp>
 
 using namespace kernel;
@@ -119,6 +120,16 @@ namespace
     };
 
     template<>
+    struct AttributeBuilder< AltitudeModifierAttribute_ABC >
+    {
+        template< typename T, typename Helper >
+        static void Attach( Object_ABC& result, PropertiesDictionary& dico, Helper& helper, xml::xistream& xis, Controllers& controllers )
+        {
+            result.Attach( *new T( xis, helper, result, dico, controllers ) );
+        }
+    };
+
+    template<>
     struct AttributeBuilder< ResourceNetwork_ABC >
     {
         template< typename T  >
@@ -182,7 +193,7 @@ void ObjectFactory::Initialize()
     factory->Register( "delay"              , BIND_ATTACH_ATTRIBUTE( DelayAttribute, _1, _2, _3 ) );
     factory->Register( "fire"               , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( FireAttribute, FireClass, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "flood"              , BIND_ATTACH_ATTRIBUTE_HELPER( FloodAttribute, DetectionMap, _1, _2, boost::cref( staticModel_.detection_ ), _3, boost::ref( controllers_ ) ) );
-    factory->Register( "altitude-modifier"  , BIND_ATTACH_ATTRIBUTE( AltitudeModifierAttribute, _1, _2, _3 ) );
+    factory->Register( "altitude-modifier"  , BIND_ATTACH_ATTRIBUTE_HELPER( AltitudeModifierAttribute, DetectionMap, _1, _2, boost::ref( staticModel_.detection_ ), _3, boost::ref( controllers_ ) ) );
     factory->Register( "input-toxic-cloud"  ,
                        boost::bind( &AttributeBuilder< ToxicCloudAttribute_ABC >::Attach< InputToxicCloudAttribute >, _1, _2, _3 ) );
     factory->Register( "lodging"            , BIND_ATTACH_ATTRIBUTE( LodgingAttribute, _1, _2, _3 ) );

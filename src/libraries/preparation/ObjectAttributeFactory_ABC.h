@@ -10,6 +10,8 @@
 #ifndef __ObjectAttributeFactory_ABC_h_
 #define __ObjectAttributeFactory_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace xml
 {
     class xistream;
@@ -17,13 +19,10 @@ namespace xml
 
 namespace kernel
 {
-    class Extension_ABC;
     class PropertiesDictionary;
 }
 
-#include <boost/function.hpp>
-
-class ObjectAttributeFactory_ABC
+class ObjectAttributeFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -35,13 +34,6 @@ public:
     //! @name Register
     //@{
     virtual void Create( const std::string& attribute, kernel::Object_ABC& object, kernel::PropertiesDictionary& dico, xml::xistream& xis ) = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectAttributeFactory_ABC( const ObjectAttributeFactory_ABC& );            //!< Copy constructor
-    ObjectAttributeFactory_ABC& operator=( const ObjectAttributeFactory_ABC& ); //!< Assignment operator
     //@}
 };
 

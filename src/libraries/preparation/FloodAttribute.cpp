@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "FloodAttribute.h"
 #include "Tools.h"
+#include "clients_kernel/AltitudeModified.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -109,6 +110,20 @@ void FloodAttribute::NotifyUpdated( const FloodAttribute& attribute )
     if( &attribute == this )
     {
         floodModel_->GenerateFlood( positions_.GetPosition(), depth_.value_, refDist_.value_ );
+        floodDrawer_->ResetTexture();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodAttribute::NotifyUpdated
+// Created: JSR 2011-05-18
+// -----------------------------------------------------------------------------
+void FloodAttribute::NotifyUpdated( const AltitudeModified& attribute )
+{
+    const geometry::Point2f& center = positions_.GetPosition();
+    if( attribute.polygon_.Intersect( center, static_cast< float >( refDist_.value_ ) ) )
+    {
+        floodModel_->GenerateFlood( center, depth_.value_, refDist_.value_, true );
         floodDrawer_->ResetTexture();
     }
 }

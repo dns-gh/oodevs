@@ -69,6 +69,7 @@ public:
     const short* Data( unsigned int x, unsigned int y ) const;
     unsigned int Unmap( float distance ) const;
     short ElevationAt( const geometry::Point2f& point ) const;
+    void ModifyAltitude( const geometry::Polygon2f& polygon, short heightOffset );
     //@}
 
     //! @name Accessors
@@ -131,6 +132,13 @@ inline
 short DetectionMap::ElevationAt( const geometry::Point2f& point ) const
 {
     return map_ ? map_->ElevationAt( point ) : 0;
+}
+
+inline
+void DetectionMap::ModifyAltitude( const geometry::Polygon2f& polygon, short heightOffset )
+{
+    if( map_ )
+        map_->ModifyAltitude( polygon, heightOffset );
 }
 
 inline
