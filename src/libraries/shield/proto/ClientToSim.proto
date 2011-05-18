@@ -124,6 +124,7 @@ message MsgObjectMagicAction {
         infrastructure     = 19;
         usages             = 20;
         lodging            = 21;
+        altitude_modifier  = 22;
    }
    
    required Common.ObjectId             object     = 1;

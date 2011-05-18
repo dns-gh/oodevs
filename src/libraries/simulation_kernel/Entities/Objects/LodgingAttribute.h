@@ -27,16 +27,18 @@ namespace xml
 // Created: MMC 2011-05-04
 // =============================================================================
 class LodgingAttribute : public ObjectAttribute_ABC
-    , private UpdatableAttribute_ABC
+                       , private UpdatableAttribute_ABC
 {
 public:
-
+    //! @name Types
+    //@{
     typedef DEC_Knowledge_ObjectAttributeProxyRecon< LodgingAttribute > T_KnowledgeProxyType;
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
-    LodgingAttribute();
+             LodgingAttribute();
     explicit LodgingAttribute( xml::xistream& xis );
     explicit LodgingAttribute( const sword::MissionParameter_Value& attributes );
     virtual ~LodgingAttribute();

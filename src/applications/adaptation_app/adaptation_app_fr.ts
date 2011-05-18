@@ -3185,6 +3185,10 @@ du tireur</translation>
         <source>Lodging</source>
         <translation>Hébergement</translation>
     </message>
+    <message>
+        <source>Altitude modifier</source>
+        <translation>Modificateur d&apos;altitude</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

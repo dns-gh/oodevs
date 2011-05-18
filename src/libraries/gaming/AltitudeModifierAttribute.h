@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ActivityTimeAttribute_h_
-#define __ActivityTimeAttribute_h_
+#ifndef __AltitudeModifierAttribute_h_
+#define __AltitudeModifierAttribute_h_
 
 #include "clients_kernel/ObjectExtensions.h"
 
@@ -19,18 +19,18 @@ namespace kernel
 }
 
 // =============================================================================
-/** @class  ActivityTimeAttribute
-    @brief  ActivityTimeAttribute
+/** @class  AltitudeModifierAttribute
+    @brief  AltitudeModifierAttribute
 */
-// Created: SBO 2007-02-08
+// Created: JSR 2011-05-17
 // =============================================================================
-class ActivityTimeAttribute : public kernel::ActivityTimeAttribute_ABC
+class AltitudeModifierAttribute : public kernel::AltitudeModifierAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActivityTimeAttribute( kernel::Controller& controller );
-    virtual ~ActivityTimeAttribute();
+    explicit AltitudeModifierAttribute( kernel::Controller& controller );
+    virtual ~AltitudeModifierAttribute();
     //@}
 
     //! @name Operations
@@ -43,8 +43,8 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    ActivityTimeAttribute( const ActivityTimeAttribute& );            //!< Copy constructor
-    ActivityTimeAttribute& operator=( const ActivityTimeAttribute& ); //!< Assignment operator
+    AltitudeModifierAttribute( const AltitudeModifierAttribute& );            //!< Copy constructor
+    AltitudeModifierAttribute& operator=( const AltitudeModifierAttribute& ); //!< Assignment operator
     //@}
 
     //! @name Updatable_ABC
@@ -60,8 +60,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    unsigned int activityTime_;
+    unsigned int height_;
     //@}
 };
 
-#endif // __ActivityTimeAttribute_h_
+#endif // __AltitudeModifierAttribute_h_

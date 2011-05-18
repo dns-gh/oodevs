@@ -214,6 +214,8 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Objects_GUI::eFloodCapacity_HurtHumansE ]->Connect( &flood.nNbHurtHumansE_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eFloodCapacity_DeadHumans ]->Connect( &flood.nNbDeadHumans_, bConnect );
 
+    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_AltitudeModifier >( ADN_Objects_GUI::eAltitudeModifierCapacityPresent );
+
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Universal >( ADN_Objects_GUI::eUniversalCapacityPresent );
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Stock >( ADN_Objects_GUI::eStockCapacityPresent );

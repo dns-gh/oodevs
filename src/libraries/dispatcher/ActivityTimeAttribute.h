@@ -39,7 +39,7 @@ public:
 private:
     //! @name Member data
     //@{
-    unsigned int nActivityTime_;
+    int nActivityTime_;
     //@}
 
 };

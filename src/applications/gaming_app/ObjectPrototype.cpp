@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ObjectPrototype.h"
 #include "ActivityTimePrototype.h"
+#include "AltitudeModifierPrototype.h"
 #include "CrossingSitePrototype.h"
 #include "DelayPrototype.h"
 #include "FirePrototype.h"
@@ -186,6 +187,7 @@ namespace
         factory->Register( "fire-propagation-modifier" , boost::bind( &Capacity< FirePropagationModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "resources"                 , boost::bind( &ResourceNetworkAttribute, _2, _3, boost::ref( attributesList ) ) );
         factory->Register( "stock"                     , boost::bind( &StockAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
+        factory->Register( "altitude-modifier"         , boost::bind( &Capacity< AltitudeModifierPrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
 
         boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders( new FinalizableBuilders() );
         factory->Register( "burn"                      , boost::bind( &FinalizableBuilders::AddBurn, pFinalizableBuilders, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );

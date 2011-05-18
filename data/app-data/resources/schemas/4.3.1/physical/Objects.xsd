@@ -75,6 +75,7 @@
 			<xs:enumeration value="urban block"/>
 			<xs:enumeration value="seal off area"/>
 			<xs:enumeration value="flood"/>
+			<xs:enumeration value="dam"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_ConsumptionMode">
@@ -387,6 +388,7 @@
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
+			<xs:element name="altitude-modifier" minOccurs="0"/>
 			<xs:element name="universal" minOccurs="0"/>
 			<xs:element name="stock" minOccurs="0"/>
 		</xs:all>

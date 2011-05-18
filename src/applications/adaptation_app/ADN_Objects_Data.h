@@ -119,6 +119,7 @@ public:
     typedef helpers::ADN_CapacityInfos_Default< helpers::eStockCapacity >             ADN_CapacityInfos_Stock;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eResourceNetworkCapacity >   ADN_CapacityInfos_ResourceNetwork;
     typedef helpers::ADN_CapacityInfos_Default< helpers::eLodgingCapacity >           ADN_CapacityInfos_Lodging;
+    typedef helpers::ADN_CapacityInfos_Default< helpers::eAltitudeModifierCapacity >  ADN_CapacityInfos_AltitudeModifier;
 
     class ADN_CapacityInfos_Attrition
         : public helpers::ADN_CapacityInfos_Default< helpers::eAttritionCapacity >

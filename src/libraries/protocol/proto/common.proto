@@ -1112,8 +1112,8 @@ message ObjectAttributeSupplyRoute {
     @brief Defines an object attribute flood
 */
 message ObjectAttributeFlood {
-   required int32 depth              = 1; //!< The depth @todo unit ?
-   required int32 reference_distance = 2; //!< @todo What's this ? unit ?
+   required int32 depth              = 1; //!< The depth in meters
+   required int32 reference_distance = 2; //!< The flood maximum radius in meters
 }
 
 /** @struct LocatedQuantity
@@ -1243,6 +1243,13 @@ message ObjectAttributeNBCType {
    required int32        source_life_duration = 3; //!< The life duration of the source @todo unit ? @todo rename to duration
 }
 
+/** @struct ObjectAttributeAltitudeModifier
+    @brief Defines an object attribute altitude modifier
+*/
+message ObjectAttributeAltitudeModifier {
+   required int32 height = 1; //!< The height in meters
+}
+
 /** @struct ObjectAttributes
     @brief Encapsulates an object attribute
 */
@@ -1268,6 +1275,7 @@ message ObjectAttributes {
    optional ObjectAttributeFlood             flood              = 19; //!< @copybrief ObjectAttributeFlood
    optional ObjectAttributeBurnSurface       burn_surface       = 20; //!< @copybrief ObjectAttributeBurnSurface
    optional ObjectAttributeLodging           lodging            = 21; //!< @copybrief ObjectAttributeBurnSurface   
+   optional ObjectAttributeAltitudeModifier  altitude_modifier  = 22; //!< @copybrief ObjectAttributeAltitudeModifier   
 }
 
 /** @struct Marker

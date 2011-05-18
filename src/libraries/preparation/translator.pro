@@ -5,6 +5,7 @@ Agent.cpp \
 AgentFactory.cpp \
 AgentPositions.cpp \
 AgentsModelChecker.cpp \
+AltitudeModifierAttribute.cpp \
 Automat.cpp \
 BypassAttribute.cpp \
 ConstructionAttribute.cpp \

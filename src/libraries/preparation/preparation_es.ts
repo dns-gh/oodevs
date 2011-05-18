@@ -59,6 +59,13 @@
     </message>
 </context>
 <context>
+    <name>AltitudeModifierAttribute</name>
+    <message>
+        <source>Info/Altitude modifier/Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Automat</name>
     <message>
         <source>Info/Identifier</source>
@@ -573,6 +580,10 @@
     </message>
     <message>
         <source>Capacity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Altitude modifier:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

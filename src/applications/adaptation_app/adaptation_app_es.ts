@@ -3183,6 +3183,10 @@ tirador</translation>
         <source>Lodging</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Altitude modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

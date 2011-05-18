@@ -57,6 +57,7 @@ namespace kernel
     class OccupantAttribute_ABC : public ObjectExtension {};
     class DelayAttribute_ABC : public ObjectExtension {};
     class FloodAttribute_ABC : public ObjectExtension {};
+    class AltitudeModifierAttribute_ABC : public ObjectExtension {};
 }
 
 #endif // __ObjectExtensions_h_

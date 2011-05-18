@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "AttributeFactory.h"
 #include "Object.h"
+#include "AltitudeModifierAttribute.h"
 #include "ConstructionAttribute.h"
 #include "CrossingSiteAttribute.h"
 #include "DelayAttribute.h"
@@ -132,6 +133,7 @@ AttributeFactory::AttributeFactory()
     Register( "delay", boost::bind( &AddBuilder< DelayAttribute >::Add, _1, _2 ) );
     Register( "resources", boost::bind( &AddBuilder< ResourceNetworkAttribute >::Add, _1, _2 ) );
     Register( "flood", boost::bind( &AddBuilder< FloodAttribute >::Add, _1, _2 ) );
+    Register( "altitude-modifier", boost::bind( &AddBuilder< AltitudeModifierAttribute >::Add, _1, _2 ) );
     Register( "lodging", boost::bind( &AddBuilder< LodgingAttribute >::Add, _1, _2 ) );
 }
 
@@ -243,6 +245,9 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
                 break;
             case ObjectMagicAction::resource_network:
                 object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( object );
+                break;
+            case ObjectMagicAction::altitude_modifier:
+                object.GetAttribute< AltitudeModifierAttribute >() = AltitudeModifierAttribute( attributes );
                 break;
             default:
                 break;

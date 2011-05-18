@@ -1,51 +1,48 @@
-
 // *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __LodgingAttribute_h_
-#define __LodgingAttribute_h_
+#ifndef __AltitudeModifierAttribute_h_
+#define __AltitudeModifierAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
-#include "tools/Resolver.h"
-#include <boost/noncopyable.hpp>
 
 namespace dispatcher
 {
+
 // =============================================================================
-/** @class  LodgingAttribute
-@brief  LodgingAttribute
+/** @class  AltitudeModifierAttribute
+    @brief  AltitudeModifierAttribute
 */
-// Created: MMC 2011-05-04
+// Created: JSR 2011-05-17
 // =============================================================================
-class LodgingAttribute : private boost::noncopyable
-                       , public ObjectAttribute_ABC
+class AltitudeModifierAttribute : public ObjectAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    LodgingAttribute( const sword::ObjectAttributes& asnMsg );
-    virtual ~LodgingAttribute();
+    explicit AltitudeModifierAttribute( const sword::ObjectAttributes& msg );
+    virtual ~AltitudeModifierAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const sword::ObjectAttributes& asnMsg );
-    virtual void Send( sword::ObjectAttributes& asnMsg ) const;
+    virtual void Update( const sword::ObjectAttributes& msg );
+    virtual void Send  ( sword::ObjectAttributes& msg ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    unsigned int capacity_;
+    unsigned int height_;
     //@}
 };
 
 }
 
-#endif // __LodgingAttribute_h_
+#endif // __AltitudeModifierAttribute_h_

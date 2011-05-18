@@ -33,6 +33,8 @@ namespace sword
     class ObjectAttributeBurn;
     class ObjectAttributeBurnSurface;
     class ObjectAttributeFlood;
+    class ObjectAttributeLodging;
+    class ObjectAttributeAltitudeModifier;
 }
 
 namespace plugins
@@ -86,6 +88,8 @@ private:
     void Update( const sword::ObjectAttributeBurn& burn );
     void Update( const sword::ObjectAttributeBurnSurface& burn_surface );
     void Update( const sword::ObjectAttributeFlood& flood );
+    void Update( const sword::ObjectAttributeLodging& lodging );
+    void Update( const sword::ObjectAttributeAltitudeModifier& altitude_modifier );
     //@}
 
 public:

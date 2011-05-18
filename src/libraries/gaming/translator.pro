@@ -6,6 +6,7 @@ AfterActionFunction.cpp \
 Agent.cpp \
 AgentKnowledge.cpp \
 AgentPositions.cpp \
+AltitudeModifierAttribute.cpp \
 Attributes.cpp \
 Automat.cpp \
 AutomatDecisions.cpp \

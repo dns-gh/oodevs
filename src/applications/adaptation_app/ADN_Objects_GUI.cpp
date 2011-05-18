@@ -364,11 +364,9 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eDelayCapacityPresent ] = & delay->GetConnector();
     }
 
-    ADN_GroupBox* firePropagationModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Fire propagation modifier" ), hBox );
+    ADN_GroupBox* altitudeModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Altitude modifier" ), hBox );
     {
-        vInfosConnectors[ eFirePropagationModifierPresent ] = & firePropagationModifier->GetConnector();
-        ADN_Table_Objects_FirePropagationModifier* pFirePropagationModifierTable = new ADN_Table_Objects_FirePropagationModifier( firePropagationModifier );
-        vInfosConnectors[eFirePropagationModifier_Modifiers] = &pFirePropagationModifierTable->GetConnector();
+        vInfosConnectors[ eAltitudeModifierCapacityPresent ] = & altitudeModifier->GetConnector();
     }
 
     ADN_GroupBox* flood = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Flood" ), hBox );
@@ -380,6 +378,13 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 3" ), vInfosConnectors[ eFloodCapacity_HurtHumans3 ], tr( "%" ), ePercentage  );
         builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded extreme seriousness" ), vInfosConnectors[ eFloodCapacity_HurtHumansE ], tr( "%" ), ePercentage  );
         builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eFloodCapacity_DeadHumans ], tr( "%" ), ePercentage  );
+    }
+
+    ADN_GroupBox* firePropagationModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Fire propagation modifier" ), hBox );
+    {
+        vInfosConnectors[ eFirePropagationModifierPresent ] = & firePropagationModifier->GetConnector();
+        ADN_Table_Objects_FirePropagationModifier* pFirePropagationModifierTable = new ADN_Table_Objects_FirePropagationModifier( firePropagationModifier );
+        vInfosConnectors[eFirePropagationModifier_Modifiers] = &pFirePropagationModifierTable->GetConnector();
     }
 
     ADN_GroupBox* burn = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Burn" ), hBox );

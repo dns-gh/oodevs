@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "ObjectAttributeContainer.h"
+#include "AltitudeModifierAttribute.h"
 #include "BypassAttribute.h"
 #include "ConstructionAttribute.h"
 #include "CrossingSiteAttribute.h"
@@ -103,7 +104,7 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
     if( message.has_logistic() )
         CreateOrUpdate< LogisticAttribute >( message, model_ );
     if( message.has_lodging() )
-        CreateOrUpdate< LodgingAttribute >( message, model_ );
+        CreateOrUpdate< LodgingAttribute >( message );
     if( message.has_bypass() )
         CreateOrUpdate< BypassAttribute >( message );
     if( message.has_crossing_site() )
@@ -136,6 +137,8 @@ void ObjectAttributeContainer::Update( const sword::ObjectAttributes& message )
         CreateOrUpdate< NBCTypeAttribute >( message );
     if( message.has_flood() )
         CreateOrUpdate< FloodAttribute >( message );
+    if( message.has_altitude_modifier() )
+        CreateOrUpdate< AltitudeModifierAttribute >( message );
 }
 
 // -----------------------------------------------------------------------------

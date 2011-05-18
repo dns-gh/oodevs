@@ -3,50 +3,50 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "LodgingAttribute.h"
-#include "protocol/Protocol.h"
+#include "AltitudeModifierAttribute.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
-// Name: LodgingAttribute constructor
-// Created: MMC 2011-05-04
+// Name: AltitudeModifierAttribute constructor
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-LodgingAttribute::LodgingAttribute( const sword::ObjectAttributes& asnMsg )
-    : capacity_( 0 )
+AltitudeModifierAttribute::AltitudeModifierAttribute( const sword::ObjectAttributes& msg )
+    : height_( 0 )
 {
-    Update( asnMsg );
+    Update( msg );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LodgingAttribute destructor
-// Created: MMC 2011-05-04
+// Name: AltitudeModifierAttribute destructor
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-LodgingAttribute::~LodgingAttribute()
+AltitudeModifierAttribute::~AltitudeModifierAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: LodgingAttribute::Update
-// Created: MMC 2011-05-04
+// Name: AltitudeModifierAttribute::Update
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void LodgingAttribute::Update( const sword::ObjectAttributes& asnMsg )
+void AltitudeModifierAttribute::Update( const sword::ObjectAttributes& msg )
 {
-    if ( asnMsg.has_lodging() )
-        capacity_ = asnMsg.lodging().capacity();
+    if( msg.has_altitude_modifier() )
+        height_ = msg.altitude_modifier().height();
 }
 
 // -----------------------------------------------------------------------------
-// Name: LodgingAttribute::Send
-// Created: MMC 2011-05-04
+// Name: AltitudeModifierAttribute::Send
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void LodgingAttribute::Send( sword::ObjectAttributes& asnMsg ) const
+void AltitudeModifierAttribute::Send( sword::ObjectAttributes& msg ) const
 {
-    asnMsg.mutable_lodging()->set_capacity( capacity_ );
+    msg.mutable_altitude_modifier()->set_height( height_ );
 }

@@ -141,26 +141,28 @@ ObjectAttributeUpdater::~ObjectAttributeUpdater()
 
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributes& msg )
 {
-    CHECK_ATTRIBUTE_UPDATE( activity_time   );
-    CHECK_ATTRIBUTE_UPDATE( bypass          );
-    CHECK_ATTRIBUTE_UPDATE( construction    );
-    CHECK_ATTRIBUTE_UPDATE( crossing_site   );
-    CHECK_ATTRIBUTE_UPDATE( effect_delay    );
-    CHECK_ATTRIBUTE_UPDATE( fire            );
+    CHECK_ATTRIBUTE_UPDATE( activity_time );
+    CHECK_ATTRIBUTE_UPDATE( bypass );
+    CHECK_ATTRIBUTE_UPDATE( construction );
+    CHECK_ATTRIBUTE_UPDATE( crossing_site );
+    CHECK_ATTRIBUTE_UPDATE( effect_delay );
+    CHECK_ATTRIBUTE_UPDATE( fire );
     CHECK_ATTRIBUTE_UPDATE( interaction_height );
-    CHECK_ATTRIBUTE_UPDATE( logistic        );
+    CHECK_ATTRIBUTE_UPDATE( logistic );
     CHECK_ATTRIBUTE_UPDATE( medical_treatment );
-    CHECK_ATTRIBUTE_UPDATE( mine            );
-    CHECK_ATTRIBUTE_UPDATE( nbc             );
-    CHECK_ATTRIBUTE_UPDATE( nbc_agent       );
-    CHECK_ATTRIBUTE_UPDATE( obstacle        );
+    CHECK_ATTRIBUTE_UPDATE( mine );
+    CHECK_ATTRIBUTE_UPDATE( nbc );
+    CHECK_ATTRIBUTE_UPDATE( nbc_agent );
+    CHECK_ATTRIBUTE_UPDATE( obstacle );
     CHECK_ATTRIBUTE_UPDATE( resource_networks );
-    CHECK_ATTRIBUTE_UPDATE( stock           );
-    CHECK_ATTRIBUTE_UPDATE( supply_route    );
-    CHECK_ATTRIBUTE_UPDATE( toxic_cloud     );
-    CHECK_ATTRIBUTE_UPDATE( burn            );
-    CHECK_ATTRIBUTE_UPDATE( burn_surface    );
-    CHECK_ATTRIBUTE_UPDATE( flood           );
+    CHECK_ATTRIBUTE_UPDATE( stock );
+    CHECK_ATTRIBUTE_UPDATE( supply_route );
+    CHECK_ATTRIBUTE_UPDATE( toxic_cloud );
+    CHECK_ATTRIBUTE_UPDATE( burn );
+    CHECK_ATTRIBUTE_UPDATE( burn_surface );
+    CHECK_ATTRIBUTE_UPDATE( flood );
+    CHECK_ATTRIBUTE_UPDATE( lodging );
+    CHECK_ATTRIBUTE_UPDATE( altitude_modifier );
 }
 
 /*
@@ -487,4 +489,23 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeBurnSurface& /*
 void ObjectAttributeUpdater::Update( const sword::ObjectAttributeFlood& /*flood*/ )
 {
     RowManipulator row( *updater_, *inserter_, "Flood" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JSR 2011-05-17
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeLodging& /*lodging*/ )
+{
+    RowManipulator row( *updater_, *inserter_, "Lodging" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectAttributeUpdater::Update
+// Created: JSR 2011-05-17
+// -----------------------------------------------------------------------------
+void ObjectAttributeUpdater::Update( const sword::ObjectAttributeAltitudeModifier& /*altitude_modifier*/ )
+{
+    RowManipulator row( *updater_, *inserter_, "AltitudeModifier" );
+
 }

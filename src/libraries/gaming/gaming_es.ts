@@ -1223,6 +1223,10 @@
         <source>Lodging capacity:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Altitude modifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Profile</name>

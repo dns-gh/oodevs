@@ -12,6 +12,7 @@
 #include "ObjectPrototype.h"
 
 #include "ActivableCapacity.h"
+#include "AltitudeModifierCapacity.h"
 #include "AttitudeModifierCapacity.h"
 #include "AttritionCapacity.h"
 #include "AvoidanceCapacity.h"
@@ -174,6 +175,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "propagation", boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1, _2 ) );
     RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders, _1 ) );
     DoRegister( "flood", boost::bind( &AddBuilder< FloodCapacity >::Add, _1, _2 ) );
+    DoRegister( "altitude-modifier", boost::bind( &AddBuilder< AltitudeModifierCapacity >::Add, _1, _2 ) );
     DoRegister( "universal", boost::bind( &AddBuilder< UniversalCapacity >::Add, _1, _2 ) );
     DoRegister( "fire-propagation-modifier", boost::bind( &AddBuilder< FirePropagationModifierCapacity >::Add, _1, _2 ) );
 }

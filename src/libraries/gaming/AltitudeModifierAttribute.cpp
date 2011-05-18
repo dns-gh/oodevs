@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "ActivityTimeAttribute.h"
+#include "AltitudeModifierAttribute.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -17,81 +17,81 @@
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute constructor
-// Created: SBO 2007-02-08
+// Name: AltitudeModifierAttribute constructor
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::ActivityTimeAttribute( Controller& controller )
-    : controller_  ( controller )
-    , activityTime_( 0 )
+AltitudeModifierAttribute::AltitudeModifierAttribute( Controller& controller )
+    : controller_( controller )
+    , height_    ( 0 )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute destructor
-// Created: SBO 2007-02-08
+// Name: AltitudeModifierAttribute destructor
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::~ActivityTimeAttribute()
+AltitudeModifierAttribute::~AltitudeModifierAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::Display
-// Created: SBO 2007-02-08
+// Name: AltitudeModifierAttribute::Display
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::Display( Displayer_ABC& displayer ) const
+void AltitudeModifierAttribute::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Mine parameters" ) )
-             .Display( tools::translate( "Object", "Activity time:" ), activityTime_ / 3600. * Units::hours );
+    displayer.Group( tools::translate( "Object", "Information" ) )
+             .Display( tools::translate( "Object", "Altitude modifier:" ), height_ * Units::meters );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::DisplayInTooltip
-// Created: JCR 2008-06-10
+// Name: AltitudeModifierAttribute::DisplayInTooltip
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
-{
-    Display( displayer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::DisplayInSummary
-// Created: JCR 2008-08-25
-// -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DisplayInSummary( Displayer_ABC& displayer ) const
+void AltitudeModifierAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     Display( displayer );
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T >     void ActivityTimeAttribute::UpdateData
-// Created: JCR 2008-08-25
+// Name: AltitudeModifierAttribute::DisplayInSummary
+// Created: JSR 2011-05-17
+// -----------------------------------------------------------------------------
+void AltitudeModifierAttribute::DisplayInSummary( Displayer_ABC& displayer ) const
+{
+    Display( displayer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AltitudeModifierAttribute::DoUpdate
+// Created: JSR 2011-05-17
+// -----------------------------------------------------------------------------
+void AltitudeModifierAttribute::DoUpdate( const sword::ObjectUpdate& message )
+{
+    UpdateData( message.attributes() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AltitudeModifierAttribute::DoUpdate
+// Created: JSR 2011-05-17
+// -----------------------------------------------------------------------------
+void AltitudeModifierAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
+{
+    UpdateData( message.attributes() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AltitudeModifierAttribute::UpdateData
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 template< typename T >
-void ActivityTimeAttribute::UpdateData( const T& message )
+void AltitudeModifierAttribute::UpdateData( const T& message )
 {
-    if( message.has_activity_time() )
+    if( message.has_altitude_modifier() )
     {
-        activityTime_ = static_cast< unsigned int >( message.activity_time().value() );
-        controller_.Update( *static_cast< ActivityTimeAttribute_ABC* >( this ) );
+        height_ = message.altitude_modifier().height();
+        controller_.Update( *static_cast< AltitudeModifierAttribute_ABC* >( this ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::DoUpdate
-// Created: JCR 2008-08-25
-// -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DoUpdate( const sword::ObjectUpdate& message )
-{
-    UpdateData( message.attributes() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::DoUpdate
-// Created: JCR 2008-08-25
-// -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
-{
-    UpdateData( message.attributes() );
 }

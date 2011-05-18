@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
 #include "preparation_pch.h"
-#include "ActivityTimeAttribute.h"
+#include "AltitudeModifierAttribute.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "Tools.h"
@@ -17,70 +17,70 @@
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute constructor
-// Created: SBO 2007-02-08
+// Name: AltitudeModifierAttribute constructor
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::ActivityTimeAttribute( PropertiesDictionary& dico )
-    : activityTime_( 0, Units::hours )
+AltitudeModifierAttribute::AltitudeModifierAttribute( PropertiesDictionary& dico )
+    : height_( 0, Units::meters)
 {
     CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute constructor
-// Created: SBO 2007-02-08
+// Name: AltitudeModifierAttribute constructor
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::ActivityTimeAttribute( xml::xistream& xis, PropertiesDictionary& dico )
-    : activityTime_( 0, Units::hours )
+AltitudeModifierAttribute::AltitudeModifierAttribute( xml::xistream& xis, PropertiesDictionary& dico )
+    : height_( 0, Units::meters)
 {
-    xis >> xml::attribute( "value", activityTime_.value_ );
+    xis >> xml::attribute( "height", height_.value_ );
     CreateDictionary( dico );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute destructor
-// Created: SBO 2007-02-08
+// Name: AltitudeModifierAttribute destructor
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::~ActivityTimeAttribute()
+AltitudeModifierAttribute::~AltitudeModifierAttribute()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::Display
-// Created: SBO 2007-02-08
+// Name: AltitudeModifierAttribute::Display
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::Display( Displayer_ABC& displayer ) const
+void AltitudeModifierAttribute::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Mine parameters" ) )
-             .Display( tools::translate( "Object", "Activity time:" ), activityTime_ );
+    displayer.Group( tools::translate( "Object", "Information" ) )
+             .Display( tools::translate( "Object", "Altitude modifier:" ), height_ * Units::meters );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::SerializeAttributes
-// Created: SBO 2007-02-08
+// Name: AltitudeModifierAttribute::SerializeAttributes
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::SerializeAttributes( xml::xostream& xos ) const
+void AltitudeModifierAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "activity-time" )
-            << xml::attribute( "value", activityTime_.value_ )
+    xos << xml::start( "altitude-modifier" )
+            << xml::attribute( "height", height_.value_ )
         << xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: MineAttribute::SetActivityTime
-// Created: SBO 2007-02-08
+// Name: AltitudeModifierAttribute::SetHeight
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::SetActivityTime( unsigned int time )
+void AltitudeModifierAttribute::SetHeight( unsigned int height )
 {
-    activityTime_.value_ = time;
+    height_.value_ = height;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::CreateDictionary
-// Created: SBO 2007-02-08
+// Name: AltitudeModifierAttribute::CreateDictionary
+// Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::CreateDictionary( PropertiesDictionary& dico )
+void AltitudeModifierAttribute::CreateDictionary( PropertiesDictionary& dico )
 {
-    dico.Register( *this, tools::translate( "ActivityTimeAttribute", "Info/Mine parameters/Activity time" ), activityTime_ );
+    dico.Register( *this, tools::translate( "AltitudeModifierAttribute", "Info/Altitude modifier/Height" ), height_ );
 }

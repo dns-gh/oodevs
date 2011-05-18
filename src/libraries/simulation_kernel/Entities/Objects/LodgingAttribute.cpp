@@ -11,14 +11,9 @@
 #include "LodgingAttribute.h"
 #include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "MIL_AgentServer.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Refugee/PHY_RolePion_Refugee.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
-#include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Automates/MIL_AutomateType.h"
-#include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -34,8 +29,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyRecon< LodgingAt
 // Created: MMC 2011-05-04
 // -----------------------------------------------------------------------------
 LodgingAttribute::LodgingAttribute( xml::xistream& xis )
+    : capacity_( xis.attribute< unsigned int >( "capacity" ) )
 {
-    xis >> xml::attribute( "lodging-capacity", capacity_ );
+   // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -43,9 +39,9 @@ LodgingAttribute::LodgingAttribute( xml::xistream& xis )
 // Created: MMC 2011-05-04
 // -----------------------------------------------------------------------------
 LodgingAttribute::LodgingAttribute( const sword::MissionParameter_Value& attributes  )
-    : capacity_ ( 0 )
+    : capacity_( attributes.list( 1 ).quantity() )
 {
-    capacity_ = attributes.list( 1 ).quantity();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -53,11 +49,10 @@ LodgingAttribute::LodgingAttribute( const sword::MissionParameter_Value& attribu
 // Created: MMC 2011-05-04
 // -----------------------------------------------------------------------------
 LodgingAttribute::LodgingAttribute()
-: capacity_ ( 0 )
+    : capacity_( 0 )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LodgingAttribute destructor
@@ -179,7 +174,7 @@ bool LodgingAttribute::Update( const LodgingAttribute& rhs )
 // -----------------------------------------------------------------------------
 void LodgingAttribute::ManageRefugee( MIL_AgentPion& pion )
 {
-    if ( std::find( refugees_.begin(), refugees_.end(), &pion ) != refugees_.end() )
+    if( std::find( refugees_.begin(), refugees_.end(), &pion ) != refugees_.end() )
         return;
 
     unsigned int nbrRefugees = GetNbrManagedHumansRefugees();
@@ -193,7 +188,7 @@ void LodgingAttribute::ManageRefugee( MIL_AgentPion& pion )
     PHY_RolePion_Refugee& refugeeRole = pion.GetRole< PHY_RolePion_Refugee >();
     unsigned int nbrHumans = composantes.GetNbrUsableHumans();    
 
-    if ( nbrHumans <= nbrFreeLodging  )
+    if( nbrHumans <= nbrFreeLodging  )
         refugeeRole.UpdateLodgingSatisfaction( nbrHumans );
     else
         refugeeRole.UpdateLodgingSatisfaction( nbrFreeLodging );
@@ -206,7 +201,7 @@ void LodgingAttribute::ManageRefugee( MIL_AgentPion& pion )
 void LodgingAttribute::UnmanageRefugee( MIL_AgentPion& pion )
 {
     IT_RefugeesVector it = std::find( refugees_.begin(), refugees_.end(), &pion );
-    if ( it == refugees_.end() )
+    if( it == refugees_.end() )
         return;
     
     PHY_RolePion_Refugee& refugeeRole = pion.GetRole< PHY_RolePion_Refugee >();
@@ -214,7 +209,7 @@ void LodgingAttribute::UnmanageRefugee( MIL_AgentPion& pion )
     refugeeRole.UpdateLodgingSatisfaction( 0 );
     refugees_.erase( it );
 
-    for ( CIT_RefugeesVector itRefugee = refugees_.begin(); itRefugee != refugees_.end(); ++itRefugee )
+    for( CIT_RefugeesVector itRefugee = refugees_.begin(); itRefugee != refugees_.end(); ++itRefugee )
     {
         if ( nbrFreeLodging == 0 )
             break;
@@ -222,7 +217,7 @@ void LodgingAttribute::UnmanageRefugee( MIL_AgentPion& pion )
         MIL_AgentPion* pPion = *itRefugee;
         PHY_RolePion_Refugee& curRefugeeRole = pPion->GetRole< PHY_RolePion_Refugee >();
         unsigned int unmanaged = curRefugeeRole.GetNbrHumansCampUnmanaged();
-        if ( unmanaged >= nbrFreeLodging )
+        if( unmanaged >= nbrFreeLodging )
         {
             curRefugeeRole.UpdateLodgingSatisfaction( nbrFreeLodging );
             break;
@@ -235,15 +230,14 @@ void LodgingAttribute::UnmanageRefugee( MIL_AgentPion& pion )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LodgingAttribute::GetNbrManagedHumansRefugees
 // Created: MMC 2011-05-09
 // -----------------------------------------------------------------------------
 unsigned int LodgingAttribute::GetNbrManagedHumansRefugees() const
 {
-    unsigned count = 0;
-    for ( CIT_RefugeesVector itRefugee = refugees_.begin(); itRefugee != refugees_.end(); ++itRefugee )
+    unsigned int count = 0;
+    for( CIT_RefugeesVector itRefugee = refugees_.begin(); itRefugee != refugees_.end(); ++itRefugee )
     {
         MIL_AgentPion* pPion = *itRefugee;
         PHY_RolePion_Refugee& refugeeRole = pPion->GetRole< PHY_RolePion_Refugee >();

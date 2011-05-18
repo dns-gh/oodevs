@@ -59,6 +59,13 @@
     </message>
 </context>
 <context>
+    <name>AltitudeModifierAttribute</name>
+    <message>
+        <source>Info/Altitude modifier/Height</source>
+        <translation>Info/Modificateur d&apos;altitude/Hauteur</translation>
+    </message>
+</context>
+<context>
     <name>Automat</name>
     <message>
         <source>Info/Identifier</source>
@@ -574,6 +581,10 @@
     <message>
         <source>Capacity:</source>
         <translation>Capacité:</translation>
+    </message>
+    <message>
+        <source>Altitude modifier:</source>
+        <translation>Modificateur d&apos;altitude:</translation>
     </message>
 </context>
 <context>

@@ -75,6 +75,7 @@ enum E_Capacities
     eUniversalCapacity,
     eResourceNetworkCapacity,
     eLodgingCapacity,
+    eAltitudeModifierCapacity,
     eStockCapacity
 };
 

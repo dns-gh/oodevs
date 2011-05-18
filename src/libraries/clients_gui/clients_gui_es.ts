@@ -170,6 +170,17 @@
     </message>
 </context>
 <context>
+    <name>gui::AltitudeModifierPrototype_ABC</name>
+    <message>
+        <source>Altitude modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::AutomatsLayer</name>
     <message>
         <source>Aggregate</source>

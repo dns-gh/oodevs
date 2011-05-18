@@ -42,8 +42,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              FloodAttribute();
-    explicit FloodAttribute( xml::xistream& xis, const TER_Localisation& objectLocation );
-    explicit FloodAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& objectLocation );
+             FloodAttribute( xml::xistream& xis, const TER_Localisation& objectLocation );
+             FloodAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& objectLocation );
     virtual ~FloodAttribute();
     //@}
 
