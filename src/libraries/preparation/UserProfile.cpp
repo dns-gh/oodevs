@@ -326,6 +326,7 @@ void UserProfile::SetUserRole( const std::string& role )
 // -----------------------------------------------------------------------------
 UserProfile& UserProfile::operator=( const UserProfile& p )
 {
+    const bool changed = login_ != p.login_ || password_ != p.password_ || supervisor_ != p.supervisor_;
     login_            = p.login_;
     password_         = p.password_;
     supervisor_       = p.supervisor_;
@@ -338,5 +339,7 @@ UserProfile& UserProfile::operator=( const UserProfile& p )
     writeAutomats_    = p.writeAutomats_;
     writePopulations_ = p.writePopulations_;
     userRole_         = p.userRole_;
+    if( !isClone_ && changed )
+        controller_.Update( *this );
     return *this;
 }
