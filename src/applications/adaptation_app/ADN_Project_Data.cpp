@@ -427,14 +427,16 @@ void ADN_Project_Data::Save()
     std::string path = workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData();
     if( bfs::exists( bfs::path( path ) ) )
     {
-        xml::xifstream xis( path );
-        xml::xofstream xos( path );
-        xis >> xml::start( "pathfind" );
-        xos << xml::start( "pathfind" );
-        ADN_Tools::AddSchema( xos, "Pathfind" );
-        xis >> xml::list( boost::bind( &ADN_Project_Data::FilterNode, this, _2, _3, boost::ref( xos ) ) );
+        {
+            xml::xifstream xis( path );
+            xml::xofstream xos( path );
+            xis >> xml::start( "pathfind" );
+            xos << xml::start( "pathfind" );
+            ADN_Tools::AddSchema( xos, "Pathfind" );
+            xis >> xml::list( boost::bind( &ADN_Project_Data::FilterNode, this, _2, _3, boost::ref( xos ) ) );
+        }
+        tools::WriteXmlCrc32Signature( path );
     }
-    tools::WriteXmlCrc32Signature( path );
     addedObjects_.clear();
 
     // Save XML Signature for files not loaded, bypassing "temp" folder
