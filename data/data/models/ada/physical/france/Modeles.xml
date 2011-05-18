@@ -11631,6 +11631,7 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Milice">
       <missions>
+        <mission name="ASY Prendre un Otage"/>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Decrocher"/>
@@ -11710,4 +11711,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0491327851" -->
+<!-- signature="3525844394" -->
