@@ -88,7 +88,7 @@ void MIL_ObjectManipulator::Construct( double rDeltaPercentage )
 {
     if( StructuralCapacity* pCapacity = object_.Retrieve< StructuralCapacity >() )
         pCapacity->Build( rDeltaPercentage );
-    else
+    if( ConstructionAttribute* pAttribute = object_.RetrieveAttribute< ConstructionAttribute >() )
         object_.GetAttribute< ConstructionAttribute >().Build( rDeltaPercentage );
 }
 
