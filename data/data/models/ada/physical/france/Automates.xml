@@ -1036,7 +1036,7 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="PC . Batterie ASS"/>
     <unit max-occurs="2" min-occurs="2" type="Section de Tir . AUF1 CDS OFF"/>
   </automat>
-  <automat decisional-model="Masalife.SniperCompany" id="676" name="Tireurs" type="Automate ASY">
+  <automat decisional-model="Masalife.Automate.MonoPion" id="676" name="Tireurs" type="Automate ASY">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Tireur"/>
   </automat>
   <automat decisional-model="Masalife.SGTIA" id="677" name="SGTIA PIA" type="Automate SGTIA">
@@ -1075,5 +1075,8 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="MILICE . CDT"/>
     <unit max-occurs="2" min-occurs="2" type="MILICE . Miliciens"/>
   </automat>
+  <automat decisional-model="Masalife.Automate.MonoPion" id="682" name="IndividusIsoles" type="Automate REFUGIE">
+    <unit command-post="true" max-occurs="3" min-occurs="1" type="Individu Isole"/>
+  </automat>
 </automats>
-<!-- signature="1568373093" -->
+<!-- signature="2548425963" -->

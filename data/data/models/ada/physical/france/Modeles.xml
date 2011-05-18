@@ -7838,7 +7838,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
-    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.SniperCompany">
+    <automat dia-type="sword.military.company.terrorism.roles.SniperCompany" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.MonoPion">
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES FaireMouvement"/>
@@ -11711,4 +11711,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3525844394" -->
+<!-- signature="0464413803" -->

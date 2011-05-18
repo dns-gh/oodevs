@@ -11951,7 +11951,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="60" engineering-support="60" mobility-support="60" protection-support="60" recon="60" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Individu Isole" id="452" name="Pion test individu isole" type="Pion Civilian">
+  <unit decisional-model="Masalife.Individu Isole" id="452" name="Individu Isole" type="Pion Civilian">
     <nature atlas-nature="None" level="none" nature-app6="undefined"/>
     <equipments>
       <equipment count="1" crew="1" loadable="true" major="true" type="Foule"/>
@@ -12051,4 +12051,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3698105010" -->
+<!-- signature="1073049973" -->
