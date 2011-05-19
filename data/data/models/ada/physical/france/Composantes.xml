@@ -24531,7 +24531,7 @@
     </logistic-functions>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="236" max-slope="0.6" name="Terroriste" protection="Combattant" size="Personnel" weight="0.08">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="236" max-slope="0.6" name="Terroriste IED" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="30">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="6"/>
@@ -33328,5 +33328,184 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="340" max-slope="0.6" name="Terroriste Sniper et IED" protection="Combattant" size="Personnel" weight="0.08">
+    <speeds max="30">
+      <speed terrain="unknown" value="15"/>
+      <speed terrain="forest" value="6"/>
+      <speed terrain="orchard" value="5"/>
+      <speed terrain="swamp" value="2"/>
+      <speed terrain="dune" value="3"/>
+      <speed terrain="urban area" value="6"/>
+      <speed terrain="lake" value="0"/>
+      <speed terrain="glacier" value="5"/>
+      <speed terrain="forest edge" value="6"/>
+      <speed terrain="suburb" value="30"/>
+      <speed terrain="waterfront" value="3"/>
+      <speed terrain="orchard edge" value="4"/>
+      <speed terrain="swamp edge" value="4"/>
+      <speed terrain="dune edge" value="4"/>
+      <speed terrain="glacier edge" value="4"/>
+      <speed terrain="country road" value="30"/>
+      <speed terrain="highway" value="30"/>
+      <speed terrain="main road" value="30"/>
+      <speed terrain="secondary road" value="30"/>
+      <speed terrain="stream" value="1"/>
+      <speed terrain="river" value="1"/>
+      <speed terrain="main river" value="0"/>
+      <speed terrain="bridge" value="30"/>
+      <speed terrain="cliff" value="0"/>
+      <speed terrain="railroad" value="5"/>
+      <speed terrain="crossroad" value="30"/>
+      <speed terrain="mountain" value="0"/>
+      <speed terrain="mountain edge" value="0"/>
+    </speeds>
+    <composition>
+      <category name="munition">
+        <resource capacity="2" logistic-threshold="0" name="IED" normalized-consumption="0"/>
+        <resource capacity="20" logistic-threshold="30" name="Cart 7.62mm Balle Ord" normalized-consumption="1"/>
+      </category>
+      <category name="ration">
+        <resource capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <resource capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="1.8" type="Oeil"/>
+      <sensor height="2" type="Oreille"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions>
+      <consumption status="ArretMoteurEteint">
+        <resource category="ration" name="Eau" value="0.25"/>
+        <resource category="ration" name="Vivre" value="0.04"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems>
+      <weapon-system launcher="Main" munition="IED"/>
+      <weapon-system launcher="Fusil Precision FRF2" munition="Cart 7.62mm Balle Ord"/>
+    </weapon-systems>
+    <human-protections/>
+    <objects/>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="341" max-slope="0.6" name="Terroriste Sniper" protection="Combattant" size="Personnel" weight="0.08">
+    <speeds max="30">
+      <speed terrain="unknown" value="15"/>
+      <speed terrain="forest" value="6"/>
+      <speed terrain="orchard" value="5"/>
+      <speed terrain="swamp" value="2"/>
+      <speed terrain="dune" value="3"/>
+      <speed terrain="urban area" value="6"/>
+      <speed terrain="lake" value="0"/>
+      <speed terrain="glacier" value="5"/>
+      <speed terrain="forest edge" value="6"/>
+      <speed terrain="suburb" value="30"/>
+      <speed terrain="waterfront" value="3"/>
+      <speed terrain="orchard edge" value="4"/>
+      <speed terrain="swamp edge" value="4"/>
+      <speed terrain="dune edge" value="4"/>
+      <speed terrain="glacier edge" value="4"/>
+      <speed terrain="country road" value="30"/>
+      <speed terrain="highway" value="30"/>
+      <speed terrain="main road" value="30"/>
+      <speed terrain="secondary road" value="30"/>
+      <speed terrain="stream" value="1"/>
+      <speed terrain="river" value="1"/>
+      <speed terrain="main river" value="0"/>
+      <speed terrain="bridge" value="30"/>
+      <speed terrain="cliff" value="0"/>
+      <speed terrain="railroad" value="5"/>
+      <speed terrain="crossroad" value="30"/>
+      <speed terrain="mountain" value="0"/>
+      <speed terrain="mountain edge" value="0"/>
+    </speeds>
+    <composition>
+      <category name="munition">
+        <resource capacity="30" logistic-threshold="30" name="Cart 7.62mm Balle Ord" normalized-consumption="1"/>
+      </category>
+      <category name="ration">
+        <resource capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <resource capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="1.8" type="Oeil"/>
+      <sensor height="2" type="Oreille"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions>
+      <consumption status="ArretMoteurEteint">
+        <resource category="ration" name="Eau" value="0.25"/>
+        <resource category="ration" name="Vivre" value="0.04"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems>
+      <weapon-system launcher="Fusil Precision FRF2" munition="Cart 7.62mm Balle Ord"/>
+    </weapon-systems>
+    <human-protections/>
+    <objects/>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="342" max-slope="0.6" name="Terroriste RPG" protection="Combattant" size="Personnel" weight="0.08">
+    <speeds max="30">
+      <speed terrain="unknown" value="15"/>
+      <speed terrain="forest" value="6"/>
+      <speed terrain="orchard" value="5"/>
+      <speed terrain="swamp" value="2"/>
+      <speed terrain="dune" value="3"/>
+      <speed terrain="urban area" value="6"/>
+      <speed terrain="lake" value="0"/>
+      <speed terrain="glacier" value="5"/>
+      <speed terrain="forest edge" value="6"/>
+      <speed terrain="suburb" value="30"/>
+      <speed terrain="waterfront" value="3"/>
+      <speed terrain="orchard edge" value="4"/>
+      <speed terrain="swamp edge" value="4"/>
+      <speed terrain="dune edge" value="4"/>
+      <speed terrain="glacier edge" value="4"/>
+      <speed terrain="country road" value="30"/>
+      <speed terrain="highway" value="30"/>
+      <speed terrain="main road" value="30"/>
+      <speed terrain="secondary road" value="30"/>
+      <speed terrain="stream" value="1"/>
+      <speed terrain="river" value="1"/>
+      <speed terrain="main river" value="0"/>
+      <speed terrain="bridge" value="30"/>
+      <speed terrain="cliff" value="0"/>
+      <speed terrain="railroad" value="5"/>
+      <speed terrain="crossroad" value="30"/>
+      <speed terrain="mountain" value="0"/>
+      <speed terrain="mountain edge" value="0"/>
+    </speeds>
+    <composition>
+      <category name="munition">
+        <resource capacity="5" logistic-threshold="0" name="RO 80 EXPL AC" normalized-consumption="1"/>
+      </category>
+      <category name="ration">
+        <resource capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+        <resource capacity="9" logistic-threshold="30" name="Vivre" normalized-consumption="3"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="1.8" type="Oeil"/>
+      <sensor height="2" type="Oreille"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions>
+      <consumption status="ArretMoteurEteint">
+        <resource category="ration" name="Eau" value="0.25"/>
+        <resource category="ration" name="Vivre" value="0.04"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems>
+      <weapon-system launcher="Lance Roquette" munition="RO 80 EXPL AC"/>
+    </weapon-systems>
+    <human-protections/>
+    <objects/>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
 </equipments>
-<!-- signature="0045023988" -->
+<!-- signature="0740657429" -->

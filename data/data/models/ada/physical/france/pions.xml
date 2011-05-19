@@ -7086,7 +7086,7 @@
   <unit decisional-model="Terroriste" id="270" name="Terroriste" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
-      <equipment count="1" crew="1" major="true" type="Terroriste"/>
+      <equipment count="1" crew="1" major="true" type="Terroriste IED"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
@@ -11500,7 +11500,7 @@
   <unit decisional-model="Terroriste" id="436" is-autonomous="true" name="LTO Terroriste robot" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
-      <equipment count="1" crew="0" major="true" type="Terroriste"/>
+      <equipment count="1" crew="0" major="true" type="Terroriste IED"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
@@ -11905,10 +11905,10 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Terroriste" id="450" name="Terroriste V1STAB" type="Pion ASY">
+  <unit decisional-model="Masalife.Terroriste" id="450" name="Terroriste IED" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
-      <equipment count="1" crew="1" major="true" type="Terroriste"/>
+      <equipment count="1" crew="1" major="true" type="Terroriste IED"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
@@ -12050,5 +12050,62 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="Masalife.Terroriste" id="456" name="Terroriste RPG" type="Pion INF">
+    <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="Terroriste RPG"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Terroriste" id="457" name="Terroriste Sniper" type="Pion INF">
+    <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="Terroriste Sniper"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Terroriste" id="458" name="Terroriste Sniper et IED" type="Pion INF">
+    <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
+    <equipments>
+      <equipment count="1" crew="1" major="true" type="Terroriste Sniper et IED"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="1s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="1073049973" -->
+<!-- signature="1566516232" -->
