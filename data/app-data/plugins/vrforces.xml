@@ -4,7 +4,7 @@
 		<description lang="en" name="VrForces"><![CDATA[Communication plugin to connect with MäK VrForces.]]></description>
 	</descriptions>
 	<settings>
-		<setting attribute="@fom" type="string" default="Vr-Link.fed">
+		<setting attribute="@fom" type="string" default="VR-Link.xml">
 			<descriptions>
 				<description lang="en" name="FOM"><![CDATA[Federation Object Model.]]></description>
 			</descriptions>

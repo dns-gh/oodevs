@@ -142,9 +142,10 @@
         <build-lib name="vrforces_plugin" pattern="lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <includepath path="${include.dir}/vrforces"/>
             <includepath path="${include.dir}/vrlink"/>
-            <includepath path="${include.dir}/RTI_1.3/HLA"/>
+            <includepath path="${include.dir}/mak"/>
             <defineset define="DtDISVERS=5"/>
             <defineset define="DtHLA=1"/>
+            <defineset define="DtHLA_1516=1"/>
             <defineset define="RTI_USES_STD_FSTREAM=1"/>
             <defineset define="DtRPR=1"/>
             <defineset define="DT_USE_DLL=1"/>
@@ -153,8 +154,8 @@
 
     <target name="library.vrforces_plugin_dll" depends="library.clients_kernel,library.vrforces_plugin" description="build vrforces_plugin dynamic library" if="is-vc80">
         <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xalan,xerces,protobuf" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
-            libs="libFedtime,
-                  matrixRT,mtlRT,vlHLA13RT,vlRT,vlutilRT,vrfcontrolHLA13,
+            libs="libFedtime1516,
+                  matrixRT,mtlRT,vlHLA1516RT,vlRT,vlutilRT,vrfcontrolHLA1516,
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
@@ -1353,7 +1354,7 @@
         <update name="protobuf"/>
         <update name="vcredist" package="vcredist"/>
         <update name="openssl"/>
-        <update name="mak" version="4.0"/><!-- overwrites rti -->
+        <update name="mak"/>
         <update name="wise"/>
         <antcall target="deploy-application-data"/>
         <update-database database="directia.core.bml" dir="${models.dir}/directia.core"/>
