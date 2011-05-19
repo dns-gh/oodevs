@@ -207,45 +207,44 @@ void LauncherToAdmin::Convert( const sword::CheckpointDeleteResponse& from, Msgs
                               ( sword::CheckpointDeleteResponse::invalid_session_name, MsgsLauncherToAdmin::MsgCheckpointDeleteResponse::invalid_session_name ) );
     CONVERT( exercise );
     CONVERT( session );
-    CONVERT( checkpoint );
+    CONVERT_SIMPLE_LIST( checkpoint, ConvertSimple );
 }
 
 namespace
 {
-    void ConvertUnitCreation(const sword::SessionNotification::UnitCreation& from, MsgsLauncherToAdmin::MsgSessionNotification::UnitCreation* to)
+    void ConvertUnitUpdate( const sword::SessionNotification::UnitUpdate& from, MsgsLauncherToAdmin::MsgSessionNotification::UnitUpdate* to )
     {
-        for(int i=0; i< from.extensions().size(); ++i)
+        for( int i = 0; i< from.extensions().size(); ++i )
         {
-            const sword::Extension& extFrom = from.extensions(i);
+            const sword::Extension& extFrom = from.extensions( i );
             MsgsLauncherToAdmin::Extension* extTo = to->add_extensions();
-            for(int j=0; j<extFrom.entries().size() ; ++j)
-                ConvertExtensionEntry(extFrom.entries(j), extTo->add_entries() );
+            for( int j = 0; j < extFrom.entries().size(); ++j )
+                ConvertExtensionEntry( extFrom.entries( j ), extTo->add_entries() );
         }
     }
-    void ConvertFormationCreation(const sword::SessionNotification::FormationCreation& from, MsgsLauncherToAdmin::MsgSessionNotification::FormationCreation* to)
+    void ConvertFormationUpdate( const sword::SessionNotification::FormationUpdate& from, MsgsLauncherToAdmin::MsgSessionNotification::FormationUpdate* to )
     {
-        for(int i=0; i< from.extensions().size(); ++i)
+        for( int i=0; i< from.extensions().size(); ++i )
         {
-            const sword::Extension& extFrom = from.extensions(i);
+            const sword::Extension& extFrom = from.extensions( i );
             MsgsLauncherToAdmin::Extension* extTo = to->add_extensions();
-            for(int j=0; j<extFrom.entries().size() ; ++j)
-                ConvertExtensionEntry(extFrom.entries(j), extTo->add_entries() );
+            for( int j = 0; j < extFrom.entries().size(); ++j )
+                ConvertExtensionEntry( extFrom.entries( j ), extTo->add_entries() );
         }
     }
-    void ConvertProfileCreation(const sword::SessionNotification::ProfileCreation& from, MsgsLauncherToAdmin::MsgSessionNotification::ProfileCreation* to)
+    void ConvertProfileCreation( const sword::SessionNotification::ProfileCreation& from, MsgsLauncherToAdmin::MsgSessionNotification::ProfileCreation* to )
     {
         CONVERT_CB( profile, ConvertProfileDescription );
     }
-    void ConvertProfileUpdate(const sword::SessionNotification::ProfileUpdate& from, MsgsLauncherToAdmin::MsgSessionNotification::ProfileUpdate* to)
+    void ConvertProfileUpdate( const sword::SessionNotification::ProfileUpdate& from, MsgsLauncherToAdmin::MsgSessionNotification::ProfileUpdate* to )
     {
-        CONVERT( login );
         CONVERT_CB( profile, ConvertProfileDescription );
     }
 
-    void ConvertNotification(const sword::SessionNotification::Notification& from, MsgsLauncherToAdmin::MsgSessionNotification::Notification* to)
+    void ConvertNotification( const sword::SessionNotification::Notification& from, MsgsLauncherToAdmin::MsgSessionNotification::Notification* to )
     {
-        CONVERT_CB( unit_creation, ConvertUnitCreation );
-        CONVERT_CB( formation_creation, ConvertFormationCreation );
+        CONVERT_CB( unit_update, ConvertUnitUpdate );
+        CONVERT_CB( formation_update, ConvertFormationUpdate );
         CONVERT_CB( profile_creation, ConvertProfileCreation );
         CONVERT_CB( profile_update, ConvertProfileUpdate );
     }

@@ -15,6 +15,7 @@ import "Version.proto";
 
 message RoleType { required uint32 id = 1; }
 
+message UnitId           { required uint32              id = 1; }
 message AutomatId        { required uint32              id = 1; }
 message AutomatIdList    { repeated AutomatId         elem = 1; }
 message FormationId      { required uint32              id = 1; }
@@ -93,7 +94,7 @@ message MsgSessionStartResponse {
     required ErrorCode error_code = 1 [ default = success ];    //!< operation return code
     required string    exercise   = 2;                          //!< started exercise
     required string    session    = 3;                          //!< started session
-    required string    checkpoint = 4;                          //!< checkpoint started, if any
+    optional string    checkpoint = 4;                          //!< checkpoint started, if any
     required Type      type       = 5;                          //!< type of exercise session started
 }
 
@@ -204,27 +205,28 @@ message MsgCheckpointDeleteResponse {
     required ErrorCode error_code = 1 [ default = success ];   //!< operation return code
     required string    exercise   = 2;                         //!< exercise for which checkpoints are to be deleted
     required string    session    = 3;                         //!< session for which checkpoints are to be deleted
-    optional string    checkpoint = 4;                         //!< list of deleted checkpoints for specified session
+    repeated string    checkpoint = 4;                         //!< list of deleted checkpoints for specified session
 }
 
 // notification from specified exercise/session
 message MsgSessionNotification {
-    message UnitCreation {
-       repeated Extension extensions = 1;
+    message UnitUpdate {
+       required UnitId    unit       = 1;
+       repeated Extension extensions = 2;
     }
-    message FormationCreation { 
-       repeated Extension extensions = 1;
+    message FormationUpdate {
+       repeated FormationId formation  = 1;
+       repeated Extension   extensions = 2;
     }
     message ProfileCreation { 
         required Profile profile = 1;
     }
     message ProfileUpdate { 
-        required string     login   = 1;
-        required Profile    profile = 2;
+        required Profile profile = 1;
     }
     message Notification {
-        optional UnitCreation       unit_creation        = 1;
-        optional FormationCreation  formation_creation   = 2;
+        optional UnitUpdate         unit_update          = 1;
+        optional FormationUpdate    formation_update     = 2;
         optional ProfileCreation    profile_creation     = 3;
         optional ProfileUpdate      profile_update       = 4;
     }
