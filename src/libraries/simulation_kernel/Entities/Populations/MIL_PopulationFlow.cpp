@@ -12,9 +12,10 @@
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
 #include "MIL_PopulationType.h"
-#include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Population_Path.h"
@@ -249,6 +250,7 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
 void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
     object.NotifyPopulationMovingOutside( *this );
+    pSplittingObject_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -257,14 +259,18 @@ void MIL_PopulationFlow::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 double MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*environment*/, const MIL_Object_ABC& object ) const
 {
-    if( !CanObjectInteractWith( object ) )
-        return GetMaxSpeed();
-    const PopulationAttribute* attr = object.RetrieveAttribute< PopulationAttribute >();
-    if( !attr )
-        return GetMaxSpeed();
-    if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &object )
-        return GetMaxSpeed();
-    return 0.; // First collision with 'splitting' object => stop the move (concentration will be created on collision point ...)
+    double result = GetMaxSpeed();
+    if( CanObjectInteractWith( object ) )
+    {
+        result = object().ApplySpeedPolicy( object().GetMaxSpeed(), result, result, GetPopulation() );
+        const PopulationAttribute* attr = object.RetrieveAttribute< PopulationAttribute >();
+        if( attr )
+        {   
+            if( !pSourceConcentration_ || pSourceConcentration_->GetSplittingObject() != &object )
+                return 0.; // First collision with 'splitting' object => stop the move (concentration will be created on collision point ...)
+        }
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -414,7 +420,7 @@ bool MIL_PopulationFlow::ManageObjectSplit()
 // Name: MIL_PopulationFlow::ApplyMove
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double /*rSpeed*/, double /*rWalkedDistance*/ )
+void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector2D& direction, double rSpeed, double /*rWalkedDistance*/ )
 {
     if( ManageSplit() )
         return;
@@ -439,7 +445,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
     SetSpeed( rWalkedDistance );
     // Head management
     SetHeadPosition( position );
-    if( bHeadMoveFinished_ && !pDestConcentration_ )
+    if( ( bHeadMoveFinished_ || rSpeed == 0 ) && !pDestConcentration_ )
     {
         pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
         pDestConcentration_->RegisterPushingFlow( *this );

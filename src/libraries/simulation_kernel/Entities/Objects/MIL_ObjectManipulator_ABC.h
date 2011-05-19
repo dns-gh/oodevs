@@ -11,6 +11,7 @@
 #define __MIL_ObjectManipulator_ABC_h_
 
 class MIL_Agent_ABC;
+class MIL_Entity_ABC;
 
 // =============================================================================
 /** @class  MIL_ObjectManipulator_ABC
@@ -69,7 +70,8 @@ public:
     //! @name Speed
     //@{
     virtual bool HasMobilityInfluence() const = 0;
-    virtual double ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, const MIL_Agent_ABC& agent ) const = 0;
+    virtual double ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, const MIL_Entity_ABC& agent ) const = 0;
+    virtual double GetMaxSpeed() const = 0;
     //@}
 
     //! @name

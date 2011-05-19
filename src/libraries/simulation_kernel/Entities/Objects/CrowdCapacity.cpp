@@ -109,15 +109,19 @@ void CrowdCapacity::Instanciate( MIL_Object_ABC& object ) const
 // Name: CrowdCapacity::ApplySpeedPolicy
 // Created: SLG 2011-01-27
 // -----------------------------------------------------------------------------
-double CrowdCapacity::ApplySpeedPolicy( const MIL_Agent_ABC& pion ) const
+double CrowdCapacity::ApplySpeedPolicy( const MIL_Entity_ABC& entity ) const
 {
     double rMaxSpeed = std::numeric_limits< double >::max();
     if ( type_ )
     {
         std::set< const PHY_Volume* > volumes_;
-        pion.GetRole< PHY_RolePion_Composantes >().GetVisibleVolumes( volumes_ );
-        for( std::set< const PHY_Volume* >::const_iterator itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
-            rMaxSpeed = std::min( rMaxSpeed, type_->GetPionMaxSpeed( *MIL_PopulationAttitude::Find( 0 ), densityFactor_ * type_->GetDefaultFlowDensity(), **itVolume ) );
+        const PHY_RolePion_Composantes* role = entity.RetrieveRole< PHY_RolePion_Composantes >();
+        if( role )
+        {
+            role->GetVisibleVolumes( volumes_ );
+            for( std::set< const PHY_Volume* >::const_iterator itVolume = volumes_.begin(); itVolume != volumes_.end(); ++itVolume )
+                rMaxSpeed = std::min( rMaxSpeed, type_->GetPionMaxSpeed( *MIL_PopulationAttitude::Find( 0 ), densityFactor_ * type_->GetDefaultFlowDensity(), **itVolume ) );
+        }
     }
     return rMaxSpeed;
 }

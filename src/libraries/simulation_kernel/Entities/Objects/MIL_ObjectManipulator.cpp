@@ -361,7 +361,7 @@ bool MIL_ObjectManipulator::CanBeAnimatedBy( const MIL_Agent_ABC& agent ) const
 // Name: MIL_ObjectManipulator::ApplySpeedPolicy
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, const MIL_Agent_ABC& agent ) const
+double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, const MIL_Entity_ABC& agent ) const
 {
     double speed = std::numeric_limits< double >::max();
     const MobilityCapacity* capacity = object_.Retrieve< MobilityCapacity >();
@@ -372,6 +372,20 @@ double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, 
     if ( crowdcapacity )
         speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( agent ) );
     return speed;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManipulator::GetMaxSpeed
+// Created: LDC 2011-05-19
+// -----------------------------------------------------------------------------
+double MIL_ObjectManipulator::GetMaxSpeed() const
+{
+    const BypassableCapacity* bypass = object_.Retrieve< BypassableCapacity >();
+    if( bypass && bypass->IsBypassed( object_ ) )
+        return bypass->GetBypassSpeed();
+    if( const MobilityCapacity* mobility = object_.Retrieve< MobilityCapacity >() )
+        return mobility->GetDefaultSpeed();
+    return std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------

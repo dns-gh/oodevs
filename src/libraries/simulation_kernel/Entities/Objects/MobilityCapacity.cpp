@@ -137,15 +137,12 @@ double MobilityCapacity::GetDefaultSpeed() const
 // -----------------------------------------------------------------------------
 double MobilityCapacity::ApplySpeedPolicy( double rAgentSpeedWithinObject, double rAgentSpeedWithinEnvironment, double rAgentMaxSpeed, double structural ) const
 {
-    assert( rAgentSpeedWithinObject      <= rAgentMaxSpeed );
-    assert( rAgentSpeedWithinEnvironment <= rAgentMaxSpeed );
-
     switch( nSpeedPolicy_ )
     {
-        case eSpeedPolicy_Slowest             : return std::min( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment );
+        case eSpeedPolicy_Slowest             : return std::min( std::min( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment ), rAgentMaxSpeed );
         case eSpeedPolicy_AgentMaxSpeed       : return rAgentMaxSpeed * rSpeedPolicyMaxSpeedAgentFactor_;
-        case eSpeedPolicy_ObjectMaxSpeed      : return rAgentSpeedWithinObject; // rDefaultSpeed_ ?
-        case eSpeedPolicy_UrbanObjectMaxSpeed : return rAgentSpeedWithinObject * ComputeStructuralFactor( structural );
+        case eSpeedPolicy_ObjectMaxSpeed      : return std::min( rAgentSpeedWithinObject, rAgentMaxSpeed ); // rDefaultSpeed_ ?
+        case eSpeedPolicy_UrbanObjectMaxSpeed : return std::min( rAgentSpeedWithinObject, rAgentMaxSpeed ) * ComputeStructuralFactor( structural );
     }
     return 0.;
 }

@@ -30,6 +30,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/BuildableCapacity.h"
@@ -999,12 +1000,7 @@ double PHY_ComposanteTypePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
         if( pObjectData )
             return pObjectData->GetMaxSpeed( object );
     }
-    const BypassableCapacity* bypass = object.Retrieve< BypassableCapacity >();
-    if( bypass && bypass->IsBypassed( object ) )
-        return bypass->GetBypassSpeed();
-    if( const MobilityCapacity* mobility = object.Retrieve< MobilityCapacity >() )
-        return mobility->GetDefaultSpeed();
-    return std::numeric_limits< double >::max();
+    return object().GetMaxSpeed();
 }
 
 // -----------------------------------------------------------------------------

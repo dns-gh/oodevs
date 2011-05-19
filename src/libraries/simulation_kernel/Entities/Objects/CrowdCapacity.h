@@ -15,7 +15,7 @@
 #include <boost/serialization/export.hpp>
 
 class MIL_PopulationType;
-class MIL_Agent_ABC;
+class MIL_Entity_ABC;
 
 // =============================================================================
 /** @class  CrowdCapacity
@@ -44,7 +44,7 @@ public:
     //@{
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
-    double ApplySpeedPolicy( const MIL_Agent_ABC& pion ) const;
+    double ApplySpeedPolicy( const MIL_Entity_ABC& entity ) const;
     double GetDensity() const;
     void SetDensityFactor( double densityFactor );
     //@}
