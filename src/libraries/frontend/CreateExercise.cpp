@@ -51,61 +51,51 @@ namespace
                 << xml::end
         << xml::end;
     }
-    void CopyXmlFieldAndXmlFile( xml::xistream& xis, xml::xostream& xos, const bfs::path& dirFrom, const bfs::path& dirTo, std::vector< std::string >& fileCopied, const std::string& name )
+    void CopyXmlFields( xml::xistream& xis, xml::xostream& xos, const std::string& fields )
     {
-        if( xis.has_child( name ) )
-        {
-            std::string filename;
-            xis >> xml::start( name ) >> xml::attribute( "file", filename ) >> xml::end;
-            xos << xml::start( name ) << xml::attribute( "file", filename ) << xml::end;
-            assert( bfs::exists( dirFrom / filename ) );
-            assert( !bfs::exists( dirTo / filename ) );
-            fileCopied.push_back( filename );
-            bfs::copy_file( dirFrom / bfs::path( filename, bfs::native ), dirTo / bfs::path( filename, bfs::native ) );
-        }
+        std::vector< std::string > fieldsVector;
+        boost::algorithm::split( fieldsVector, fields, boost::is_any_of( ";" ) );
+        for( std::vector< std::string >::const_iterator it = fieldsVector.begin(); it != fieldsVector.end(); ++it )
+            if( xis.has_child( *it ) )
+            {
+                xis >> xml::start( *it );
+                xos << xml::content( *it, xis );
+                xis >> xml::end;
+            }
     }
-    void CopyXmlField( xml::xistream& xis, xml::xostream& xos, const std::string& name )
-    {
-        if( xis.has_child( name ) )
-        {
-            xis >> xml::start( name );
-            xos << xml::content( name, xis );
-            xis >> xml::end;
-        }
-    }
-    void CopyDirectory( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, int depth ) // use depth=-1 for full copy
+    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const QListViewItemIterator* files, int depth = -1 );
+    void CopyDirectory( const bfs::path& from, const bfs::path& baseFrom, const bfs::path& baseTo, const QListViewItemIterator* files, int depth )
     {
         bfs::directory_iterator end_itr;
         for( bfs::directory_iterator it( from ); it != end_itr; ++it )
-            if( bfs::is_directory( it->status() ) )
+        {
+            if( files )
             {
-                if( it->path().extension() == ".svn" || depth == 0 )
+                bool founded = false;
+                for( QListViewItemIterator iterator = *files; iterator.current() && !founded; ++iterator )
+                    if( std::string( iterator.current()->text( 0 ).ascii() ).find( it->path().leaf() ) != std::string::npos )
+                        founded = true;
+                if( founded )
                     continue;
-                std::string dup_path = it->path().string();
-                boost::algorithm::replace_first( dup_path, baseFrom.string(), baseTo.string() );
-                bfs::create_directory( bfs::path( dup_path ) );
-                CopyDirectory( it->path(), bfs::path( to ), baseFrom, baseTo, ( depth > 0 ) ? depth - 1 : depth );
             }
-            else
-            {
-                std::string fileTo = it->path().string();
-                boost::algorithm::replace_first( fileTo, baseFrom.string(), baseTo.string() );
-                bfs::copy_file( it->path(), bfs::path( fileTo ) );
-            }
+            std::string filename = it->path().string();
+            boost::algorithm::replace_first( filename, baseFrom.string(), baseTo.string() );
+            Copy( it->path(), filename, baseFrom, baseTo, files, ( depth > 0 ) ? depth - 1 : depth );
+        }
     }
-    void CopyIfExist( const std::string& filename, const bfs::path& dirFrom, const bfs::path& dirTo, int depthIfDirectory = -1 )
+    void Copy( const bfs::path& from, const bfs::path& to, const bfs::path& baseFrom, const bfs::path& baseTo, const QListViewItemIterator* files, int depth )
     {
-        bfs::path from = dirFrom / bfs::path( filename, bfs::native );
-        bfs::path to = dirTo / bfs::path( filename, bfs::native );
         if( bfs::exists( from ) )
         {
             if( bfs::is_directory( from ) )
             {
+                if( from.extension() == ".svn" || depth == 0 )
+                    return;
                 if( !bfs::exists( to ) )
                     bfs::create_directories( to );
-                CopyDirectory( from, to, from, to, depthIfDirectory );
+                CopyDirectory( from, baseFrom, baseTo, files, depth );
             }
-            else
+            else if( !bfs::exists( to ) )
                 bfs::copy_file( from, to );
         }
     }
@@ -129,64 +119,39 @@ namespace frontend
     }
     void CreateExerciseAsCopyOf( const tools::GeneralConfig& config, const ExerciseCopyParameters& params )
     {
-
         const bfs::path dirFrom = bfs::path( config.GetExerciseDir( params.from_ ), bfs::native  );
-        const bfs::path dirTo = bfs::path( config.GetExerciseDir( params.to_ ), bfs::native  );
+        const bfs::path dirTo = bfs::path( config.GetExerciseDir( params.to_ ), bfs::native );
         bfs::create_directories( dirTo );
-        const bfs::path filenameFrom = dirFrom / bfs::path( "exercise.xml", bfs::native );
-        const bfs::path filenameTo = dirTo / bfs::path( "exercise.xml", bfs::native );
-        xml::xifstream xis( filenameFrom.string() );
-        xml::xofstream xos( filenameTo.string() );
-        std::vector< std::string > filesCopied;
-        filesCopied.push_back( "exercise.xml" );
-
         // Copy exercise.xml and linked file
-        xis >> xml::start( "exercise" );
-        xos << xml::start( "exercise" );
-        tools::SchemaWriter().WriteExerciseSchema( xos, "exercise" );
-        CopyXmlField( xis, xos, "meta" );
-        CopyXmlField( xis, xos, "population" );
-        CopyXmlField( xis, xos, "propagations" );
-        CopyXmlFieldAndXmlFile( xis, xos, dirFrom, dirTo, filesCopied, "profiles" );
-        CopyXmlFieldAndXmlFile( xis, xos, dirFrom, dirTo, filesCopied, "orbat" );
-        CopyXmlFieldAndXmlFile( xis, xos, dirFrom, dirTo, filesCopied, "urbanstate" );
-        CopyXmlFieldAndXmlFile( xis, xos, dirFrom, dirTo, filesCopied, "weather" );
-        CopyXmlFieldAndXmlFile( xis, xos, dirFrom, dirTo, filesCopied, "urban" );
-        CopyXmlFieldAndXmlFile( xis, xos, dirFrom, dirTo, filesCopied, "scores" );
-        CopyXmlFieldAndXmlFile( xis, xos, dirFrom, dirTo, filesCopied, "success-factors" );
-        xos << xml::start( "terrain" ) << xml::attribute( "name", params.terrain_ ) << xml::end
-            << xml::start( "model" ) << xml::attribute( "dataset", params.model_ ) << xml::attribute( "physical", params.physical_ ) << xml::end;
-        xis >> xml::end;
-        xos << xml::end;
-        tools::WriteXmlCrc32Signature( filenameTo.string() );
-
-        // Copy other files
-        bfs::directory_iterator end_itr;
-        for( bfs::directory_iterator it( dirFrom ); it != end_itr; ++it )
         {
-            if( bfs::is_directory( it->status() ) )
-                continue;
-            std::string filename = it->path().string();
-            boost::algorithm::replace_first( filename, dirFrom.string() + "/", "" );
-            if( std::find( filesCopied.begin(), filesCopied.end(), filename ) == filesCopied.end() )
-                CopyIfExist( filename, dirFrom, dirTo );
+            const std::string filenameFrom( ( dirFrom / "exercise.xml" ).native_file_string() );
+            const std::string filenameTo( ( dirTo / "exercise.xml" ).native_file_string() );
+            xml::xifstream xis( filenameFrom );
+            xml::xofstream xos( filenameTo );
+            xis >> xml::start( "exercise" );
+            xos << xml::start( "exercise" );
+            tools::SchemaWriter().WriteExerciseSchema( xos, "exercise" );
+            CopyXmlFields( xis, xos, "meta;population;propagations;profiles;orbat;urbanstate;weather;urban;scores;success" );
+            xos << xml::start( "terrain" ) << xml::attribute( "name", params.terrain_ ) << xml::end
+                << xml::start( "model" ) << xml::attribute( "dataset", params.model_ ) << xml::attribute( "physical", params.physical_ ) << xml::end;
+            xis >> xml::end;
+            xos << xml::end;
+            tools::WriteXmlCrc32Signature( filenameTo );
         }
-
-        // Copy checked repository
-        for( QListViewItemIterator iterator = params.iterator_; iterator.current(); ++ iterator )
+        // Copy checked path
+        for( QListViewItemIterator iterator = params.iterator_; iterator.current(); ++iterator )
         {
-            frontend::CheckListItem* item = static_cast< frontend::CheckListItem* >( iterator.current() );
+            QCheckListItem* item = static_cast< QCheckListItem* >( iterator.current() );
             if( item && item->isOn() )
             {
                 std::string file( item->text( 0 ).ascii() );
-                if( file == "exercises" || file == "exercises/" + params.from_ )
-                    continue;
-                if( file.find( "exercises/" + params.from_ ) == std::string::npos )
+                if( file == "exercises" || file.find( "exercises/" + params.from_ ) == std::string::npos )
                     continue;
                 else
                     boost::algorithm::replace_first( file, "exercises/" + params.from_, "" );
-
-                CopyIfExist( file, dirFrom, dirTo, item->IsRecursive() ? -1 : 0 );
+                bfs::path from( dirFrom / file );
+                bfs::path to( dirTo / file );
+                Copy( from, to, from, to, ( item->childCount() != 0 ) ? &params.iterator_ : 0 );
             }
         }
     }

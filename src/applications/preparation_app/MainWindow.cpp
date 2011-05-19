@@ -573,17 +573,17 @@ void MainWindow::SaveAs()
                                       QLineEdit::Normal, tr( "Type exercise name here" ), &ok, this );
         if( ok && !name.isEmpty() )
         {
-            exerciseDirectory = bfs::path( tools::GeneralConfig::BuildChildPath( config_.GetExercisesDir(), name.ascii() ), bfs::native );
+            exerciseDirectory = bfs::path( config_.GetExercisesDir(), bfs::native ) / name.ascii();
             exist = frontend::commands::ExerciseExists( config_, name.ascii() ) || bfs::exists( exerciseDirectory );
         }
         else
             return;
     } while( exist );
-
     bfs::create_directories( exerciseDirectory );
-    bfs::path exerciseFile = bfs::path( config_.tools::GeneralConfig::GetExerciseFile( name.ascii() ) );
-    bfs::copy_file( bfs::path( config_.GetExerciseFile() ), exerciseFile );
+    bfs::path exerciseFile( config_.tools::GeneralConfig::GetExerciseFile( name.ascii() ) );
+    bfs::copy_file( config_.GetExerciseFile(), exerciseFile );
     config_.LoadExercise( exerciseFile.string() );
+    needsSaving_ = true;
     Save();
 }
 
