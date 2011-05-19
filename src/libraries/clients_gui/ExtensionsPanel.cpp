@@ -83,7 +83,6 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
 // -----------------------------------------------------------------------------
 ExtensionsPanel::~ExtensionsPanel()
 {
-    delete diffusionDialog_;
     DeleteWidgets();
     controllers_.Unregister( *this );
 }

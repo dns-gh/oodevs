@@ -94,17 +94,17 @@ void DictionaryExtensions::DoUpdate( const sword::UnitAttributes& message )
 template< typename T >
 void DictionaryExtensions::Update( const T& message )
 {
-    bool enabled = false;
     if( message.has_extension() )
     {
+        bool enabled = false;
         for( int i = 0; i < message.extension().entries_size(); ++i )
         {
             std::string value = message.extension().entries( i ).value();
             SetValueWithDictionnaryLink( message.extension().entries( i ).name(), value );
             enabled = enabled || !value.empty();
         }
+        SetEnabled( enabled );
     }
-    SetEnabled( enabled );
 }
 
 // -----------------------------------------------------------------------------
