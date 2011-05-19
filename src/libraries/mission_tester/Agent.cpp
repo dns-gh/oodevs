@@ -9,54 +9,20 @@
 
 #include "mission_tester_pch.h"
 #include "Agent.h"
-#include "Exercise.h"
+#include "Entity.h"
 #include "Filter_ABC.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/ActionController.h"
 #include "protocol/Protocol.h"
-#include "clients_kernel/Mission.h"
-#include "clients_kernel/DecisionalModel.h"
-#include "clients_kernel/MissionType.h"
 
 using namespace mission_tester;
 
 namespace
 {
-    template< typename T >
-    unsigned long Count( const tools::Resolver_ABC< T >& resolver )
+    const kernel::DecisionalModel& ResolveModel( unsigned long id, const tools::Resolver_ABC< kernel::AgentType >& resolver )
     {
-        unsigned long result = 0;
-        for( tools::Iterator< const T& > it( resolver.CreateIterator() ); it.HasMoreElements(); it.NextElement(), ++result );
-        return result;
+        return resolver.Get( id ).GetDecisionalModel();
     }
-    template< typename T >
-    class InfiniteIterator : private boost::noncopyable
-                           , public tools::Iterator_ABC< const T& >
-    {
-    public:
-        explicit InfiniteIterator( const tools::Resolver_ABC< T >& resolver )
-            : resolver_( resolver )
-            , count_( Count( resolver_ ) )
-            , current_( resolver_.CreateIterator() )
-        {}
-        virtual ~InfiniteIterator() {}
-        virtual bool HasMoreElements() const
-        {
-            return count_ > 0;
-        }
-        virtual const T& NextElement()
-        {
-            if( !current_.HasMoreElements() )
-                current_ = resolver_.CreateIterator();
-            if( current_.HasMoreElements() )
-                return current_.NextElement();
-            throw std::runtime_error( __FUNCTION__ ": trying to access empty resolver!" );
-        }
-
-    private:
-        const tools::Resolver_ABC< T >& resolver_;
-        const unsigned long count_;
-        tools::Iterator< const T& > current_;
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -64,11 +30,9 @@ namespace
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
 Agent::Agent( const sword::UnitCreation& message, const tools::Resolver_ABC< kernel::AgentType >& resolver )
-    : id_         ( message.unit().id() )
-    , name_       ( message.name().c_str() )
-    , type_       ( resolver.Get( message.type().id() ) )
-    , commandPost_( message.pc() )
-    , current_    ( new InfiniteIterator< kernel::Mission >( GetType().GetDecisionalModel() ) )
+    : Entity( message.unit().id(), message.name().c_str(), ResolveModel( message.type().id(), resolver ) )
+    , isPc_ ( message.pc() )
+    , type_ ( resolver.Get( message.type().id() ) )
 {
     // NOTHING
 }
@@ -83,26 +47,8 @@ Agent::~Agent()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::GetName
-// Created: PHC 2011-03-28
-// -----------------------------------------------------------------------------
-QString Agent::GetName() const
-{
-    return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::GetId
-// Created: PHC 2011-03-28
-// -----------------------------------------------------------------------------
-unsigned long Agent::GetId() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Agent::GetType
-// Created: PHC 2011-03-28
+// Created: PHC 2011-05-18
 // -----------------------------------------------------------------------------
 const kernel::AgentType& Agent::GetType() const
 {
@@ -111,39 +57,13 @@ const kernel::AgentType& Agent::GetType() const
 
 // -----------------------------------------------------------------------------
 // Name: Agent::IsCommandPost
-// Created: PHC 2011-03-28
+// Created: PHC 2011-05-18
 // -----------------------------------------------------------------------------
 bool Agent::IsCommandPost() const
 {
-    return commandPost_;
+    return isPc_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: Agent::Select
-// Created: PHC 2011-03-28
-// -----------------------------------------------------------------------------
-void Agent::Select( kernel::ActionController& /*controller*/ ) const
-{
-    throw std::runtime_error( __FUNCTION__ ": not to be called" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::ContextMenu
-// Created: PHC 2011-03-28
-// -----------------------------------------------------------------------------
-void Agent::ContextMenu( kernel::ActionController& /*controller*/, const QPoint& /*where*/ ) const
-{
-    throw std::runtime_error( __FUNCTION__ ": not to be called" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::Activate
-// Created: PHC 2011-03-28
-// -----------------------------------------------------------------------------
-void Agent::Activate( kernel::ActionController& /*controller*/ ) const
-{
-    throw std::runtime_error( __FUNCTION__ ": not to be called" );
-}
 
 // -----------------------------------------------------------------------------
 // Name: Agent::Matches
@@ -155,25 +75,55 @@ bool Agent::Matches( const Filter_ABC& filter ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::Trigger
-// Created: PHC 2011-04-04
+// Name: Agent::GetTypeName
+// Created: PHC 2011-05-17
 // -----------------------------------------------------------------------------
-bool Agent::Trigger( State_ABC& /*state*/ )
+QString Agent::GetTypeName() const
 {
-    return true; // $$$$ PHC 2011-04-04: TODO
+    return "agent";
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::DoSomething
-// Created: PHC 2011-04-06
+// Name: Agent::GetName
+// Created: PHC 2011-05-18
 // -----------------------------------------------------------------------------
-bool Agent::StartMission( Exercise& exercise )
+QString Agent::GetName() const
 {
-    if( current_->HasMoreElements() )
-    {
-        const kernel::Mission& mission( current_->NextElement() );
-        const kernel::MissionType& missionType( mission.GetType() );
-        return exercise.CreateAction( *this, missionType );
-    }
-    return false;
+    return Entity::GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetId
+// Created: PHC 2011-05-18
+// -----------------------------------------------------------------------------
+unsigned long Agent::GetId() const
+{
+    return Entity::GetId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Select
+// Created: PHC 2011-05-18
+// -----------------------------------------------------------------------------
+void Agent::Select( kernel::ActionController& controller ) const
+{
+    Entity::Select( controller );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::ContextMenu
+// Created: PHC 2011-05-18
+// -----------------------------------------------------------------------------
+void Agent::ContextMenu( kernel::ActionController& controller, const QPoint& where ) const
+{
+    Entity::ContextMenu( controller, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Activate
+// Created: PHC 2011-05-18
+// -----------------------------------------------------------------------------
+void Agent::Activate( kernel::ActionController& controller ) const
+{
+    Entity::Activate( controller );
 }

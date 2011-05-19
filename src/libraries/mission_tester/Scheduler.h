@@ -32,7 +32,7 @@ class Scheduler : public Scheduler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Scheduler( std::auto_ptr< Filter_ABC > filter, unsigned int delta  );
+             Scheduler( std::auto_ptr< Filter_ABC > filter, unsigned int delta, bool withFragOrders );
     virtual ~Scheduler();
     //@}
 
@@ -56,6 +56,7 @@ private:
     T_Schedulables::iterator next_;
     boost::posix_time::ptime last_;
     unsigned int delta_;
+    bool withFragOrders_;
     //@}
 };
 }

@@ -7,71 +7,75 @@
 //
 // *****************************************************************************
 
-#ifndef __Agent_h_
-#define __Agent_h_
+#ifndef __Entity_h_
+#define __Entity_h_
 
-#include "Entity.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "Schedulable_ABC.h"
+#include "clients_kernel/Entity_ABC.h"
 #include "tools/Resolver_ABC.h"
 #pragma warning( push, 0 )
 #include <qstring.h>
 #pragma warning( pop )
-
-namespace kernel
-{
-    class AgentType;
-    class ActionController;
-}
 
 namespace sword
 {
     class UnitCreation;
 }
 
+namespace kernel
+{
+    class FragOrder;
+    class Mission;
+    class DecisionalModel;
+}
+
 namespace mission_tester
 {
+    class Exercise;
 // =============================================================================
 /** @class  Agent
     @brief  Agent
 */
 // Created: PHC 2011-03-28
 // =============================================================================
-class Agent : public Entity
-            , public kernel::Agent_ABC
+class Entity : public Schedulable_ABC
+             , public kernel::Entity_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const sword::UnitCreation& message, const tools::Resolver_ABC< kernel::AgentType >& resolver );
-    virtual ~Agent();
+             Entity( const unsigned long id, const QString& name, const kernel::DecisionalModel& decisionalModel );
+    virtual ~Entity();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual const kernel::AgentType& GetType() const;
-    virtual bool IsCommandPost() const;
-
-    virtual bool Matches( const Filter_ABC& filter ) const;
-    virtual QString GetTypeName() const;
-    //@}
-
-    //! @name Entity_ABC
+public:
+    //! @name Accessors
     //@{
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
+
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
+
+    virtual bool Trigger( State_ABC& state );
+    virtual bool Matches( const Filter_ABC& filter ) const;
+    virtual bool Start( Exercise& exercise, bool withFragOrders );
+    bool StartMission( Exercise& exercise );
+    bool StartFragOrder( Exercise& exercise );
+
+    virtual QString GetTypeName() const;
     //@}
 
 private:
-    //! @name member data
+    //! @name Member data
     //@{
-    const kernel::AgentType& type_;
-    const bool isPc_;
+    const unsigned long id_;
+    const QString name_;
+    std::auto_ptr< tools::Iterator_ABC< const kernel::Mission& > > currentMission_;
+    std::auto_ptr< tools::Iterator_ABC< const kernel::FragOrder& > > currentFragOrder_;
     //@}
 };
 }
 
-#endif // __Agent_h_
+#endif // __Entity_h_

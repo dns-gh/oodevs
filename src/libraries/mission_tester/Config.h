@@ -82,6 +82,7 @@ private:
     std::string logFile_;
     unsigned int timeout_;
     unsigned int scheduler_;
+    bool withFragOrders_;
     std::auto_ptr< xml::xibufferstream > xibs_;
     E_EntityType entityType_;
     //@}

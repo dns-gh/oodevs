@@ -56,12 +56,15 @@ public:
 
     //! @name Listener
     //@{
-    virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
+    virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const;
+    virtual void FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const;
     virtual void MissionAcknowledged( const sword::Tasker& tasker ) const;
+    virtual void FragOrderAcknowledged( const sword::Tasker& tasker ) const;
     virtual void MissionErrorAck( const sword::Tasker& tasker ) const;
+    virtual void FragOrderErrorAck( const sword::Tasker& tasker ) const;
     virtual void ConnectionSucceeded( const std::string& endpoint ) const;
     virtual void AuthenticationSucceeded( const std::string& profile ) const;
-    virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const;
+    virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const;
     //@}
 
 private:

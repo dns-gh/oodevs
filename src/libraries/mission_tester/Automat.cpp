@@ -9,55 +9,20 @@
 
 #include "mission_tester_pch.h"
 #include "Automat.h"
-#include "Exercise.h"
+#include "Entity.h"
 #include "Filter_ABC.h"
-#include "clients_kernel/AutomatType.h"
 #include "protocol/Protocol.h"
-#include "clients_kernel/Mission.h"
-#include "clients_kernel/DecisionalModel.h"
-#include "clients_kernel/MissionType.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/LogisticLevel.h"
 
 using namespace mission_tester;
 
 namespace
 {
-    template< typename T >
-    unsigned long Count( const tools::Resolver_ABC< T >& resolver )
+    const kernel::DecisionalModel& ResolveDecisionalModel( unsigned long id, const tools::Resolver_ABC< kernel::AutomatType >& resolver )
     {
-        unsigned long result = 0;
-        for( tools::Iterator< const T& > it( resolver.CreateIterator() ); it.HasMoreElements(); it.NextElement(), ++result );
-        return result;
+        return resolver.Get( id ).GetDecisionalModel();
     }
-    template< typename T >
-    class InfiniteIterator : private boost::noncopyable
-                           , public tools::Iterator_ABC< const T& >
-    {
-    public:
-        explicit InfiniteIterator( const tools::Resolver_ABC< T >& resolver )
-            : resolver_( resolver )
-            , count_   ( Count( resolver_ ) )
-            , current_ ( resolver_.CreateIterator() )
-        {}
-        virtual ~InfiniteIterator() {}
-        virtual bool HasMoreElements() const
-        {
-            return count_ > 0;
-        }
-        virtual const T& NextElement()
-        {
-            if( !current_.HasMoreElements() )
-                current_ = resolver_.CreateIterator();
-            if( current_.HasMoreElements() )
-                return current_.NextElement();
-            throw std::runtime_error( __FUNCTION__ ": trying to access empty resolver!" );
-        }
-
-    private:
-        const tools::Resolver_ABC< T >& resolver_;
-        const unsigned long count_;
-        tools::Iterator< const T& > current_;
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -65,11 +30,9 @@ namespace
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
 Automat::Automat( const sword::AutomatCreation& message, const tools::Resolver_ABC< kernel::AutomatType >& resolver )
-    : id_           ( message.automat().id() )
-    , name_         ( message.name().c_str() )
-    , type_         ( resolver.Get( message.type().id() ) )
+    : Entity        ( message.automat().id(), message.name().c_str(), ResolveDecisionalModel( message.type().id(), resolver ) )
     , logisticLevel_( kernel::LogisticLevel::Resolve( message.logistic_level() ) )
-    , current_      ( new InfiniteIterator< kernel::Mission >( GetType().GetDecisionalModel() ) )
+    , type_         ( resolver.Get( message.type().id() ) )
 {
     // NOTHING
 }
@@ -84,26 +47,8 @@ Automat::~Automat()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::GetName
-// Created: PHC 2011-03-28
-// -----------------------------------------------------------------------------
-QString Automat::GetName() const
-{
-    return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::GetId
-// Created: PHC 2011-03-28
-// -----------------------------------------------------------------------------
-unsigned long Automat::GetId() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Automat::GetType
-// Created: PHC 2011-03-28
+// Created: PHC 2011-05-18
 // -----------------------------------------------------------------------------
 const kernel::AutomatType& Automat::GetType() const
 {
@@ -111,30 +56,12 @@ const kernel::AutomatType& Automat::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::Select
-// Created: PHC 2011-03-28
+// Name: Automat::GetLogisticLevel
+// Created: PHC 2011-05-18
 // -----------------------------------------------------------------------------
-void Automat::Select( kernel::ActionController& /*controller*/ ) const
+const kernel::LogisticLevel& Automat::GetLogisticLevel() const
 {
-    throw std::runtime_error( __FUNCTION__ ": not to be called" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::ContextMenu
-// Created: PHC 2011-03-28
-// -----------------------------------------------------------------------------
-void Automat::ContextMenu( kernel::ActionController& /*controller*/, const QPoint& /*where*/ ) const
-{
-    throw std::runtime_error( __FUNCTION__ ": not to be called" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::Activate
-// Created: PHC 2011-03-28
-// -----------------------------------------------------------------------------
-void Automat::Activate( kernel::ActionController& /*controller*/ ) const
-{
-    throw std::runtime_error( __FUNCTION__ ": not to be called" );
+    return logisticLevel_;
 }
 
 // -----------------------------------------------------------------------------
@@ -147,34 +74,55 @@ bool Automat::Matches( const Filter_ABC& filter ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::Trigger
-// Created: PHC 2011-04-04
+// Name: Automat::GetTypeName
+// Created: PHC 2011-05-17
 // -----------------------------------------------------------------------------
-bool Automat::Trigger( State_ABC& /*state*/ )
+QString Automat::GetTypeName() const
 {
-    return true;
+    return "automat";
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::DoSomething
-// Created: PHC 2011-04-06
+// Name: Automat::GetName
+// Created: PHC 2011-05-18
 // -----------------------------------------------------------------------------
-bool Automat::StartMission( Exercise& exercise )
+QString Automat::GetName() const
 {
-    if( current_->HasMoreElements() )
-    {
-        const kernel::Mission& mission( current_->NextElement() );
-        const kernel::MissionType& missionType( mission.GetType() );
-        return exercise.CreateAction( *this, missionType );
-    }
-    return false;
+    return Entity::GetName();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Automat::GetLogisticLevel
-// Created: PHC 2011-05-12
+// Name: Automat::GetId
+// Created: PHC 2011-05-18
 // -----------------------------------------------------------------------------
-const kernel::LogisticLevel& Automat::GetLogisticLevel( void ) const
+unsigned long Automat::GetId() const
 {
-    return logisticLevel_;
+    return Entity::GetId();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Select
+// Created: PHC 2011-05-18
+// -----------------------------------------------------------------------------
+void Automat::Select( kernel::ActionController& controller ) const
+{
+    Entity::Select( controller );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::ContextMenu
+// Created: PHC 2011-05-18
+// -----------------------------------------------------------------------------
+void Automat::ContextMenu( kernel::ActionController& controller, const QPoint& where ) const
+{
+    Entity::ContextMenu( controller, where );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Activate
+// Created: PHC 2011-05-18
+// -----------------------------------------------------------------------------
+void Automat::Activate( kernel::ActionController& controller ) const
+{
+    Entity::Activate( controller );
 }

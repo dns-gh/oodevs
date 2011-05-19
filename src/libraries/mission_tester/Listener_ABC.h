@@ -15,7 +15,7 @@
 namespace kernel
 {
     class Entity_ABC;
-    class MissionType;
+    class OrderType;
     class OrderParameter;
 }
 
@@ -44,12 +44,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const = 0;
+    virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const = 0;
+    virtual void FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const = 0;
     virtual void MissionAcknowledged( const sword::Tasker& tasker ) const = 0;
+    virtual void FragOrderAcknowledged( const sword::Tasker& tasker ) const = 0;
     virtual void MissionErrorAck( const sword::Tasker& tasker ) const = 0;
+    virtual void FragOrderErrorAck( const sword::Tasker& tasker ) const = 0;
     virtual void ConnectionSucceeded( const std::string& endpoint ) const = 0;
     virtual void AuthenticationSucceeded( const std::string& profile ) const = 0;
-    virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const = 0;
+    virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const = 0;
     //@}
 };
 }

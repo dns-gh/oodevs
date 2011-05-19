@@ -18,6 +18,7 @@ class Publisher_ABC;
 
 namespace actions
 {
+    class Action_ABC;
     class ActionFactory;
     class ParameterFactory_ABC;
     class ActionParameterFactory;
@@ -34,7 +35,9 @@ namespace kernel
     class StaticModel;
     class Time_ABC;
     class Entity_ABC;
+    class FragOrderType;
     class MissionType;
+    class OrderType;
 }
 
 namespace xml
@@ -64,15 +67,18 @@ public:
 
     //! @name operations
     //@{
-    bool CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
+    bool CreateFragOrder( const kernel::Entity_ABC& target, const kernel::FragOrderType& mission ) const;
+    bool CreateMission( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
+    bool CreateOrder( const kernel::Entity_ABC& target, const kernel::OrderType& order, actions::Action_ABC* action ) const;
     void Register( const Listener_ABC& listener );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void NotifyInvalidParameter( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const;
-    void NotifyMissionCreated( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
+    void NotifyInvalidParameter( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const;
+    void NotifyMissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const;
+    void NotifyFragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const;
     //@}
 
 private:

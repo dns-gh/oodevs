@@ -29,7 +29,7 @@ class SchedulerFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SchedulerFactory( unsigned int delta );
+    explicit SchedulerFactory( unsigned int delta, bool withFragOrders );
     virtual ~SchedulerFactory();
     //@}
 
@@ -44,6 +44,7 @@ private:
     //@{
     std::auto_ptr< FilterFactory_ABC > filterFactory_;
     const unsigned int delta_;
+    bool withFragOrders_;
     //@}
 };
 }

@@ -51,13 +51,25 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
          CreateAgent( message.message().unit_creation() );
     if( message.message().has_automat_creation() )
          CreateAutomat( message.message().automat_creation() );
-    if( message.message().has_order_ack() )
-        if( !message.message().order_ack().error_code() )
+
+    if( message.message().has_frag_order_ack() )
+    {
+        if( message.message().frag_order_ack().error_code() )
             BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
-                listener->MissionAcknowledged( message.message().order_ack().tasker() );
+                listener->FragOrderErrorAck( message.message().frag_order_ack().tasker() );
         else
             BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+                listener->FragOrderAcknowledged( message.message().frag_order_ack().tasker() );
+    }
+    if( message.message().has_order_ack() )
+    {
+        if( message.message().order_ack().error_code() )
+            BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
                 listener->MissionErrorAck( message.message().order_ack().tasker() );
+        else 
+            BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+                listener->MissionAcknowledged( message.message().order_ack().tasker() );
+    }
 }
 
 // -----------------------------------------------------------------------------

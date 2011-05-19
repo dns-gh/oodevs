@@ -20,7 +20,9 @@
 #include "client_proxy/SwordMessagePublisher_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/OrderType.h"
 #include "clients_kernel/MissionType.h"
+#include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/StaticModel.h"
@@ -110,13 +112,42 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: Exercise::CreateAction
+// Name: Exercise::CreateMission
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-bool Exercise::CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
+bool Exercise::CreateMission( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
 {
     std::auto_ptr< actions::Action_ABC > action( actionFactory_->CreateAction( target, mission ) );
-    tools::Iterator< const kernel::OrderParameter& > params( mission.Resolver< kernel::OrderParameter >::CreateIterator() );
+    if( CreateOrder( target, mission, action.get() ) )
+    { 
+        NotifyMissionCreated( target, mission );
+        return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::CreateFragOrder
+// Created: PHC 2011-04-06
+// -----------------------------------------------------------------------------
+bool Exercise::CreateFragOrder( const kernel::Entity_ABC& target, const kernel::FragOrderType& mission ) const
+{
+    std::auto_ptr< actions::Action_ABC > action( actionFactory_->CreateAction( target, mission ) );
+    if( CreateOrder( target, mission, action.get() ) )
+    { 
+        NotifyFragOrderCreated( target, mission );
+        return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::CreateOrder
+// Created: PHC 2011-04-06
+// -----------------------------------------------------------------------------
+bool Exercise::CreateOrder( const kernel::Entity_ABC& target, const kernel::OrderType& order, actions::Action_ABC* action ) const
+{
+    tools::Iterator< const kernel::OrderParameter& > params( order.Resolver< kernel::OrderParameter >::CreateIterator() );
     while( params.HasMoreElements() )
     {
         const kernel::OrderParameter& param = params.NextElement();
@@ -125,14 +156,13 @@ bool Exercise::CreateAction( const kernel::Entity_ABC& target, const kernel::Mis
             action->AddParameter( *parameter.release() );
         else
         {
-            NotifyInvalidParameter( target, mission, param );
+            NotifyInvalidParameter( target, order, param );
             return false;
         }
     }
     Logger logger;
     action->Publish( logger );
     action->Publish( publisher_ );
-    NotifyMissionCreated( target, mission );
     return true;
 }
 
@@ -149,7 +179,7 @@ void Exercise::Register( const Listener_ABC& listener )
 // Name: Exercise::NotifyInvalidParameter
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-void Exercise::NotifyInvalidParameter( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const
+void Exercise::NotifyInvalidParameter( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const
 {
     BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
         listener->ParameterCreationFailed( target, mission, parameter );
@@ -159,8 +189,18 @@ void Exercise::NotifyInvalidParameter( const kernel::Entity_ABC& target, const k
 // Name: Exercise::NotifyMissionCreated
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-void Exercise::NotifyMissionCreated( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
+void Exercise::NotifyMissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const
 {
     BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
         listener->MissionCreated( target, mission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::NotifyFragOrderCreated
+// Created: PHC 2011-05-19
+// -----------------------------------------------------------------------------
+void Exercise::NotifyFragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const
+{
+    BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+        listener->FragOrderCreated( target, mission );
 }

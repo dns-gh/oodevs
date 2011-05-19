@@ -64,6 +64,7 @@ Config::Config( int argc, char** argv )
     std::string entityType;
     xis   >> xml::start( "filters" )
             >> xml::attribute( "entity-type", entityType )
+            >> xml::attribute( "fragorders", withFragOrders_ )
           >> xml::end;
     entityType_ = StringToEntityType( entityType );
 
@@ -114,7 +115,7 @@ std::auto_ptr< Client > Config::CreateClient( SwordMessageHandler_ABC& handler )
 // -----------------------------------------------------------------------------
 std::auto_ptr< SchedulerFactory > Config::CreateSchedulerFactory( ) const
 {
-    return std::auto_ptr< SchedulerFactory >( new SchedulerFactory( scheduler_ ) );
+    return std::auto_ptr< SchedulerFactory >( new SchedulerFactory( scheduler_, withFragOrders_ ) );
 }
 
 // -----------------------------------------------------------------------------

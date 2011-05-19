@@ -19,10 +19,11 @@ using namespace mission_tester;
 // Name: Scheduler constructor
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------
-Scheduler::Scheduler( std::auto_ptr< Filter_ABC > filter, unsigned int delta )
-    : filter_( filter )
-    , last_  ( bpt::second_clock::local_time() )
-    , delta_ ( delta )
+Scheduler::Scheduler( std::auto_ptr< Filter_ABC > filter, unsigned int delta, bool withFragOrders )
+    : filter_        ( filter )
+    , last_          ( bpt::second_clock::local_time() )
+    , delta_         ( delta )
+    , withFragOrders_( withFragOrders )
 {
     // NOTHING
 }
@@ -62,7 +63,7 @@ void Scheduler::Step( Exercise& exercise )
         {
             if( next_ == schedulables_.end() )
                 next_ = schedulables_.begin();
-            if( (*next_)->StartMission( exercise ) )
+            if( (*next_)->Start( exercise, withFragOrders_ ) )
                 last_ = current;
             ++next_;
         }

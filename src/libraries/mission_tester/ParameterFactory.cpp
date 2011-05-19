@@ -161,7 +161,6 @@ std::auto_ptr< actions::Parameter_ABC > ParameterFactory::CreatePhaselineParamet
                              "  <parameter name='Horaire' type='datetime' value='20771023T120000'/>"
                              "</parameter>" );
     xis >> xml::start( "parameter" );
-    std::cout << "apres start";
     list->AddParameter( *new actions::parameters::Lima( converter_, xis ) );
     return list;
 }

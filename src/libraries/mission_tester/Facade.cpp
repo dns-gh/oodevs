@@ -104,10 +104,20 @@ void Facade::AddListener( boost::shared_ptr< Listener_ABC > listener )
 // Name: Facade::MissionCreated
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-void Facade::MissionCreated( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
+void Facade::MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const
 {
     BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
         listener->MissionCreated( target, mission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::FragOrderCreated
+// Created: PHC 2011-05-19
+// -----------------------------------------------------------------------------
+void Facade::FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const
+{
+    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+        listener->FragOrderCreated( target, mission );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,6 +131,16 @@ void Facade::MissionAcknowledged( const sword::Tasker& tasker ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Facade::FragOrderAcknowledged
+// Created: PHC 2011-05-19
+// -----------------------------------------------------------------------------
+void Facade::FragOrderAcknowledged( const sword::Tasker& tasker ) const
+{
+    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+        listener->FragOrderAcknowledged( tasker );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Facade::MissionErrorAck
 // Created: PHC 2011-04-08
 // -----------------------------------------------------------------------------
@@ -128,6 +148,16 @@ void Facade::MissionErrorAck( const sword::Tasker& tasker ) const
 {
     BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
         listener->MissionErrorAck( tasker );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade::FragOrderErrorAck
+// Created: PHC 2011-05-19
+// -----------------------------------------------------------------------------
+void Facade::FragOrderErrorAck( const sword::Tasker& tasker ) const
+{
+    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+        listener->FragOrderErrorAck( tasker );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,7 +184,7 @@ void Facade::AuthenticationSucceeded( const std::string& profile ) const
 // Name: Facade::ParameterCreationFailed
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-void Facade::ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::MissionType& mission, const kernel::OrderParameter& parameter ) const
+void Facade::ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const
 {
     BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
         listener->ParameterCreationFailed( target, mission, parameter );
