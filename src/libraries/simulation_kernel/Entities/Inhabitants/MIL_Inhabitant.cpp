@@ -291,36 +291,26 @@ void MIL_Inhabitant::UpdateNetwork()
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg )
 {
-    client::UnitMagicActionAck ack;
-    ack().set_error_code( sword::UnitActionAck::no_error );
-    try
+    switch( msg.type() )
     {
-        switch( msg.type() )
-        {
-        case sword::UnitMagicAction::inhabitant_change_health_state:
-            OnReceiveMsgChangeHealthState( msg );
-            break;
-        case sword::UnitMagicAction::inhabitant_change_alerted_state:
-            OnReceiveMsgChangeAlertedState( msg );
-            break;
-        case sword::UnitMagicAction::inhabitant_change_confined_state:
-            OnReceiveMsgChangeConfinedState( msg );
-            break;
-        case sword::UnitMagicAction::inhabitant_change_affinities:
-            pAffinities_->OnReceiveMsgChangeAffinities( msg );
-            break;
-        case sword::UnitMagicAction::change_extension:
-            pExtensions_->OnReceiveMsgChangeExtensions( msg );
-            break;
-        default:
-            assert( false );
-        }
+    case sword::UnitMagicAction::inhabitant_change_health_state:
+        OnReceiveMsgChangeHealthState( msg );
+        break;
+    case sword::UnitMagicAction::inhabitant_change_alerted_state:
+        OnReceiveMsgChangeAlertedState( msg );
+        break;
+    case sword::UnitMagicAction::inhabitant_change_confined_state:
+        OnReceiveMsgChangeConfinedState( msg );
+        break;
+    case sword::UnitMagicAction::inhabitant_change_affinities:
+        pAffinities_->OnReceiveMsgChangeAffinities( msg );
+        break;
+    case sword::UnitMagicAction::change_extension:
+        pExtensions_->OnReceiveMsgChangeExtensions( msg );
+        break;
+    default:
+        assert( false );
     }
-    catch( NET_AsnException< sword::UnitActionAck::ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
