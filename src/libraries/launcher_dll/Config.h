@@ -34,6 +34,7 @@ public:
     //! @name Operations
     //@{
     unsigned short GetLauncherPort() const;
+    bool           GetTestMode() const;
     //@}
 
 private:

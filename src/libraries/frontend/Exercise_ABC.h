@@ -39,8 +39,10 @@ public:
     virtual bool IsRunning() const = 0;
     virtual bool IsHostedBy( const std::string& host ) const = 0;
     virtual void Start( const std::string& session ) const = 0;
+    virtual void StartDispatcher( const std::string& session ) const = 0;
     virtual void Replay( const std::string& session ) const = 0;
     virtual void Stop( const std::string& session ) const = 0;
+    virtual void QueryProfileList() const = 0;
     //@}
 
     //! @name Operations

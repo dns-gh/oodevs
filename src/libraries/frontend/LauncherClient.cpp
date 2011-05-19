@@ -202,19 +202,6 @@ void LauncherClient::QueryExerciseList()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LauncherClient::QueryProfileList
-// Created: SBO 2010-11-22
-// -----------------------------------------------------------------------------
-void LauncherClient::QueryProfileList()
-{
-    if( Connected() )
-    {
-        launcher::ProfileListRequest message;
-        message.Send( *publisher_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: LauncherClient::ResetConnection
 // Created: SBO 2010-10-22
 // -----------------------------------------------------------------------------

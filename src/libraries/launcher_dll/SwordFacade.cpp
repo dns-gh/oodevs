@@ -44,11 +44,12 @@ SwordFacade::~SwordFacade()
 // Name: SwordFacade::Start
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::Start(const std::string& supervisorProfile, const std::string& supervisorPassword)
+void SwordFacade::Start(const std::string& supervisorProfile, const std::string& supervisorPassword, bool testMode)
 {
     if( process_.get() )
     {
-        process_->Start();
+        if( !testMode )
+            process_->Start();
         if(isDispatcher_)
         {
             client_.reset( new SwordProxy("localhost", frontend::DispatcherPort(1), supervisorProfile, supervisorPassword ));
@@ -79,7 +80,7 @@ void SwordFacade::Stop()
 // Name: SwordFacade::OnConnectionSucceeded
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::OnConnectionSucceeded( const std::string& endpoint )
+void SwordFacade::OnConnectionSucceeded( const std::string& /*endpoint*/ )
 {
     isConnected_ = true;
 }
@@ -88,7 +89,7 @@ void SwordFacade::OnConnectionSucceeded( const std::string& endpoint )
 // Name: SwordFacade::OnConnectionFailed
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::OnConnectionFailed( const std::string& endpoint, const std::string& reason )
+void SwordFacade::OnConnectionFailed( const std::string& /*endpoint*/, const std::string& /*reason*/ )
 {
     isConnected_ = false;
 }
@@ -96,7 +97,7 @@ void SwordFacade::OnConnectionFailed( const std::string& endpoint, const std::st
 // Name: SwordFacade::OnConnectionError
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::OnConnectionError( const std::string& endpoint, const std::string& reason )
+void SwordFacade::OnConnectionError( const std::string& /*endpoint*/, const std::string& /*reason*/ )
 {
     isConnected_ = false;
     isAuthenticated_ = false;
@@ -105,7 +106,7 @@ void SwordFacade::OnConnectionError( const std::string& endpoint, const std::str
 // Name: SwordFacade::OnAuthenticationSucceeded
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::OnAuthenticationSucceeded( const std::string& profile )
+void SwordFacade::OnAuthenticationSucceeded( const std::string& /*profile*/ )
 {
     isAuthenticated_ = true;
 }
@@ -113,7 +114,7 @@ void SwordFacade::OnAuthenticationSucceeded( const std::string& profile )
 // Name: SwordFacade::OnAuthenticationFailed
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::OnAuthenticationFailed( const std::string& profile, const std::string& reason )
+void SwordFacade::OnAuthenticationFailed( const std::string& /*profile*/, const std::string& /*reason*/ )
 {
     isAuthenticated_ = false;
 }

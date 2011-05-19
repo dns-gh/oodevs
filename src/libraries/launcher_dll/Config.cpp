@@ -56,6 +56,7 @@ Config::Config()
     po::options_description desc( "Launcher options" );
     desc.add_options()
         ( "launcher-port", po::value( &launcherPort_ ), "specify the launcher server port number" )
+        ( "test", "enable test mode" )
     ;
     AddOptions( desc );
 }
@@ -76,4 +77,13 @@ Config::~Config()
 unsigned short Config::GetLauncherPort() const
 {
     return launcherPort_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetTestMode
+// Created: AHC 2011-05-19
+// -----------------------------------------------------------------------------
+bool Config::GetTestMode() const
+{
+    return IsSet( "test" );
 }

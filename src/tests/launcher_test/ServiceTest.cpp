@@ -14,9 +14,11 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/LauncherClient.h"
 #include "frontend/ResponseHandler_ABC.h"
+#include "frontend/CommandLineTools.h"
 #include "launcher_dll/LauncherFacade.h"
 #include "protocol/LauncherSenders.h"
 #include <tools/ElementObserver_ABC.h>
+#include <tools/ServerNetworker.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/assign.hpp>
 #pragma warning( push, 0 )
@@ -54,12 +56,26 @@ namespace
         MOCK_METHOD( OnConnectionLost, 1 );
         MOCK_METHOD( OnError, 1 );
     };
+    MOCK_BASE_CLASS( MockDispatcher, tools::ServerNetworker )
+    {
+        MockDispatcher(unsigned short port)
+            : tools::ServerNetworker( port )
+        {
+            AllowConnections();
+            RegisterMessage( *this, &MockDispatcher::Receive );
+        }
+        MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToSim& ), Receive );
+        MOCK_METHOD_EXT( ConnectionSucceeded, 1, void( const std::string& ), ConnectionSucceeded );
+        MOCK_METHOD_EXT( ConnectionFailed, 2, void( const std::string&, const std::string& ), ConnectionFailed );
+        MOCK_METHOD_EXT( ConnectionError, 2, void( const std::string&, const std::string& ), ConnectionError );
+        std::string host;
+    };
 
     struct ApplicationFixture
     {
         ApplicationFixture()
             : varg( MakeArg() )
-            , args( boost::assign::list_of< char* >( "" )( "--root-dir=../../data" )( &varg[0] ) )
+            , args( boost::assign::list_of< char* >( "" )( "--root-dir=../../data" )("--test")( &varg[0] ) )
             , argc( args.size() )
             , app( argc, &args[0] )
         {}
@@ -81,6 +97,7 @@ namespace
         Fixture()
             : client  ( controllers.controller_ )
             , timeout ( timeOut )
+            , dispatcher( frontend::DispatcherPort( 1 ) )
         {
             launcher.Initialize( argc, &args[0] );
             BOOST_REQUIRE_MESSAGE( launcher.GetLastError().empty(), launcher.GetLastError() );
@@ -88,15 +105,22 @@ namespace
             client.Connect( defaultHost, PORT, handler );
             while( !client.Connected() && !timeout.Expired() )
             {
-                client.Update();
-                launcher.Update();
+                Update();
             }
         }
+        void Update()
+        {
+            client.Update();
+            launcher.Update();
+            dispatcher.Update();
+        }
+
         LauncherFacade launcher;
         kernel::Controllers controllers;
         frontend::LauncherClient client;
         MockConnectionHandler handler;
         Timeout timeout;
+        MockDispatcher dispatcher;
     };
 }
 
@@ -150,8 +174,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanListAvailableExercises, Fixture )
     timeout.Start();
     while( !listener.Check() && !timeout.Expired() )
     {
-        client.Update();
-        launcher.Update();
+        Update();
     }
     BOOST_CHECK( listener.Check() );
 }
@@ -163,7 +186,7 @@ namespace
         MOCK_METHOD_EXT( Handle, 1, void( const sword::ExerciseListResponse& ), HandleExerciseListResponse );
         MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionStartResponse& ), HandleSessionStartResponse );
         MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionStopResponse& ), HandleSessionStopResponse );
-        MOCK_METHOD_EXT( Handle, 1, void( const sword::ProfileListResponse& ), HandlProfileListResponse );
+        MOCK_METHOD_EXT( Handle, 1, void( const sword::ProfileListResponse& ), HandleProfileListResponse );
     };
 }
 
@@ -172,40 +195,38 @@ namespace
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
 // $$$$ MCO : this seems to deadlock because for some reason the simulation process isn't started (but shouldn't deadlock anyway...)
-//BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, Fixture )
-//{
-//    BOOST_REQUIRE( client.Connected() );
-//    ExerciseListener listener( controllers );
-//    client.QueryExerciseList();
-//    timeout.Start();
-//    while( !listener.Check() && !timeout.Expired() )
-//    {
-//        client.Update();
-//        launcher.Update();
-//    }
-//    BOOST_REQUIRE( listener.Check() );
-//    {
-//        const frontend::Exercise_ABC* exercise = listener.exercises_.front();
-//        BOOST_REQUIRE( exercise );
-//        exercise->Start( "default" );
-//        timeout.Start();
-//        while( !exercise->IsRunning() && !timeout.Expired() )
-//        {
-//            client.Update();
-//            launcher.Update();
-//        }
-//        BOOST_REQUIRE( exercise->IsRunning() );
-//    }
-//    {
-//        boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
-//        MOCK_EXPECT( handler, HandleProfileDescriptionList ).once();
-//        client.Register( handler );
-//        client.QueryProfileList();
-//        timeout.Start();
-//        while( !timeout.Expired() )
-//        {
-//            client.Update();
-//            launcher.Update();
-//        }
-//    }
-//}
+BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, Fixture )
+{
+    BOOST_REQUIRE( client.Connected() );
+    ExerciseListener listener( controllers );
+    client.QueryExerciseList();
+    timeout.Start();
+    while( !listener.Check() && !timeout.Expired() )
+    {
+        Update();
+    }
+    BOOST_REQUIRE( listener.Check() );
+    {
+        const frontend::Exercise_ABC* exercise = listener.exercises_.front();
+        BOOST_REQUIRE( exercise );
+        exercise->StartDispatcher( "default" );
+        timeout.Start();
+        while( !exercise->IsRunning() && !timeout.Expired() )
+        {
+            Update();
+        }
+        BOOST_REQUIRE( exercise->IsRunning() );
+    }
+    {
+        const frontend::Exercise_ABC* exercise = listener.exercises_.front();
+        boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+        MOCK_EXPECT( handler, HandleProfileListResponse ).once();
+        client.Register( handler );
+        exercise->QueryProfileList( );
+        timeout.Start();
+        while( !timeout.Expired() )
+        {
+            Update();
+        }
+    }
+}

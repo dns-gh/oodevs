@@ -118,6 +118,19 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionS
     response().set_exercise( message.exercise() );
     response().set_session( message.session() );
     response().set_error_code( processes_->StartSession( endpoint, message ) );
+    switch(message.type())
+    {
+    case sword::SessionStartRequest::simulation:
+        response().set_type( sword::SessionStartResponse::simulation );
+        break;
+    case sword::SessionStartRequest::dispatch:
+        response().set_type( sword::SessionStartResponse::dispatch );
+        break;
+    case sword::SessionStartRequest::replay:
+        response().set_type( sword::SessionStartResponse::replay );
+        break;
+    }
+    response().set_checkpoint( message.has_checkpoint() ? message.checkpoint() : "" );
     response.Send( server_->ResolveClient( endpoint ) );
 }
 
@@ -138,10 +151,12 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionS
 // Name: Launcher::HandleRequest
 // Created: SBO 2010-11-19
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::ProfileListRequest& /*message*/ )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::ProfileListRequest& message )
 {
     ProfileListResponse response;
+    response().set_exercise( message.exercise() );
     processes_->SendProfileList( response() );
+    response().set_error_code( sword::ProfileListResponse::success );
     response.Send( server_->ResolveClient( endpoint ) );
 }
 

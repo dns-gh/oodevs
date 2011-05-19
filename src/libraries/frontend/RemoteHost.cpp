@@ -65,7 +65,19 @@ void RemoteHost::StartSimulation( const std::string& exercise, const std::string
     message().set_exercise( exercise );
     message().set_session( session );
     message().set_type( sword::SessionStartRequest::simulation );
-//    message().set_checkpoint( checkpoint );
+    message.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::StartDispatcher
+// Created: AHC 2011-05-19
+// -----------------------------------------------------------------------------
+void RemoteHost::StartDispatcher( const std::string& exercise, const std::string& session ) const
+{
+    launcher::SessionStartRequest message;
+    message().set_exercise( exercise );
+    message().set_session( session );
+    message().set_type( sword::SessionStartRequest::dispatch );
     message.Send( publisher_ );
 }
 
@@ -93,6 +105,17 @@ void RemoteHost::StopSession( const std::string& exercise, const std::string& se
     message().set_session( session );
     message.Send( publisher_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::QueryProfileList
+// Created: SBO 2010-11-22
+// -----------------------------------------------------------------------------
+void RemoteHost::QueryProfileList(const std::string& exercise) const
+{
+    launcher::ProfileListRequest message;
+    message().set_exercise( exercise );
+    message.Send( publisher_ );
+ }
 
 // -----------------------------------------------------------------------------
 // Name: RemoteHost::Handle

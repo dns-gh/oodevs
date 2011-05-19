@@ -19,6 +19,7 @@
 #include "frontend/StartReplay.h"
 #include "client_proxy/SwordMessageHandler_ABC.h"
 #include "SwordFacade.h"
+#include "Config.h"
 #include "CheckpointMessageHandler.h"
 #include "PauseResumeMessageHandler.h"
 #include "StatusMessageHandler.h"
@@ -32,7 +33,7 @@ using namespace launcher;
 // Name: ProcessService constructor
 // Created: SBO 2010-09-30
 // -----------------------------------------------------------------------------
-ProcessService::ProcessService( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const LauncherService& server )
+ProcessService::ProcessService( const launcher::Config& config, const tools::Loader_ABC& fileLoader, const LauncherService& server )
     : config_    ( config )
     , fileLoader_( fileLoader )
     , server_    ( server )
@@ -154,7 +155,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         processes_[ std::make_pair(exercise, session) ] = wrapper;
     }
-    wrapper->Start(profileCollector.supervisorProfile_, profileCollector.supervisorPassword_);
+    wrapper->Start(profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_.GetTestMode() );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new CheckpointMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new StatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     return sword::SessionStartResponse::success;

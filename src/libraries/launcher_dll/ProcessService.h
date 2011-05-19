@@ -30,6 +30,7 @@ namespace launcher
 
 class SwordFacade;
 class LauncherService;
+class Config;
 
 // =============================================================================
 /** @class  ProcessService
@@ -44,7 +45,7 @@ class ProcessService : private boost::enable_shared_from_this< ProcessService >
 public:
     //! @name Constructors/Destructor
     //@{
-             ProcessService( const tools::GeneralConfig& config, const tools::Loader_ABC& fileLoader, const LauncherService& server );
+             ProcessService( const launcher::Config& config, const tools::Loader_ABC& fileLoader, const LauncherService& server );
     virtual ~ProcessService();
     //@}
 
@@ -79,7 +80,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
+    const launcher::Config& config_;
     const tools::Loader_ABC& fileLoader_;
     const LauncherService& server_;
     ProcessContainer processes_;

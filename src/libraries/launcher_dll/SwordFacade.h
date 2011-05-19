@@ -61,7 +61,7 @@ public:
 
     //! @name Operations
     //@{
-    void Start(const std::string& supervisorProfile, const std::string& supervisorPassword);
+    void Start(const std::string& supervisorProfile, const std::string& supervisorPassword, bool testMode = false);
     void Stop();
     // SwordConnectionHandler_ABC interface
     void OnConnectionSucceeded( const std::string& endpoint );

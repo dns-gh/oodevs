@@ -55,7 +55,6 @@ public:
     bool Connected() const;
     void Register( boost::shared_ptr< ResponseHandler_ABC > handler );
     void QueryExerciseList();
-    void QueryProfileList();
     //@}
 
 private:

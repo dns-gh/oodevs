@@ -110,6 +110,15 @@ void RemoteExercise::Start( const std::string& session ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: RemoteExercise::StartDispatcher
+// Created: AHC 2011-05-19
+// -----------------------------------------------------------------------------
+void RemoteExercise::StartDispatcher( const std::string& session ) const
+{
+    host_.StartDispatcher( name_, session );
+}
+
+// -----------------------------------------------------------------------------
 // Name: RemoteExercise::Start
 // Created: SBO 2010-11-12
 // -----------------------------------------------------------------------------
@@ -135,4 +144,13 @@ void RemoteExercise::SetRunning( bool running )
 {
     running_ = running;
     controller_.Update( *(Exercise_ABC*)this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteExercise::SetRunning
+// Created: SBO 2010-10-26
+// -----------------------------------------------------------------------------
+void RemoteExercise::QueryProfileList() const
+{
+    host_.QueryProfileList( name_ );
 }

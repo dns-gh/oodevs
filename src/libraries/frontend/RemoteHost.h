@@ -47,8 +47,10 @@ public:
     //@{
     virtual std::string GetId() const;
     virtual void StartSimulation( const std::string& exercise, const std::string& session ) const;
+    virtual void StartDispatcher( const std::string& exercise, const std::string& session ) const;
     virtual void StartReplay( const std::string& exercise, const std::string& session ) const;
     virtual void StopSession( const std::string& exercise, const std::string& session ) const;
+    virtual void QueryProfileList(const std::string& exercise) const;
     //@}
 
     //! @name Operation
