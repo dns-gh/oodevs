@@ -66,6 +66,7 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
     loadFromFileButton_ = new QPushButton(  tr( "Load from file" ), this );
     loadFromFileButton_->setToggleButton( true );
     connect( loadFromFileButton_, SIGNAL( toggled(bool) ), this, SLOT( LoadFromFile(bool) ) );
+    loadFromFilePathLabel_ = new QLabel( this );
 
     // $$$$ AGE 2006-08-11: L'initialisation du reste est delayée... C'est pas terrible
 
@@ -307,11 +308,13 @@ void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geom
 void ObjectPrototype_ABC::LoadFromFile( bool mustLoadFromFile )
 {
     loader_.reset();
+    loadFromFilePathLabel_->setText( QString::null );
     if( mustLoadFromFile )
     {
         const ObjectType* type = objectTypes_->Count() != 0 ? objectTypes_->GetValue() : 0;
         if( type )
         {
+
             QString filename = QFileDialog::getOpenFileName(
                 QString::null,
                 "Shapefile (*.shp)",
@@ -324,6 +327,7 @@ void ObjectPrototype_ABC::LoadFromFile( bool mustLoadFromFile )
                 try
                 {
                     loader_.reset( new ObjectPrototypeShapeFileLoader( coordinateConverter_, this, filename, *type ) );
+                    loadFromFilePathLabel_->setText( filename );
                 } catch( const ObjectPrototypeLoader_ABC::LoadCancelledException& )
                 {
                     //NOTHING

@@ -142,6 +142,7 @@ bool ObjectPrototypeShapeFileLoader::GetCurrentFieldValueAsBool( const QString& 
 // -----------------------------------------------------------------------------
 bool ObjectPrototypeShapeFileLoader::LoadNext()
 {
+    QString cannotLoadStr = tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot load SHP feature %1 : %2"  );
     while( ( currentFeature_ = currentLayer_->GetNextFeature() ) != 0 )
     {
         switch( currentFeature_->GetGeometryRef()->getGeometryType() )
@@ -159,7 +160,11 @@ bool ObjectPrototypeShapeFileLoader::LoadNext()
                     currentLocation_->AddPoint( xy );
                     return true;
                 }
+                else
+                    loadReports_.push_back( cannotLoadStr.arg( currentFeature_->GetFID() ).arg( "outside terrain boundaries" ) );
             }
+            else
+                loadReports_.push_back( cannotLoadStr.arg( currentFeature_->GetFID() ).arg( "object type cannot have point shape" ) );
             break;
         case wkbPolygon:
             if( objectType_.CanBePolygon() )
@@ -178,12 +183,15 @@ bool ObjectPrototypeShapeFileLoader::LoadNext()
                     else
                     {
                         isInBoundaries = false;
+                        loadReports_.push_back( cannotLoadStr.arg( currentFeature_->GetFID() ).arg( "outside terrain boundaries" ) );
                         break;
                     }
                 }
                 if( isInBoundaries )
                     return true;
             }
+            else
+                loadReports_.push_back( cannotLoadStr.arg( currentFeature_->GetFID() ).arg( "object type cannot have polygon shape" ) );
             break;
         }
     }
@@ -207,4 +215,13 @@ void ObjectPrototypeShapeFileLoader::StartLoad()
 const kernel::Location_ABC& ObjectPrototypeShapeFileLoader::GetCurrentLocation() const
 {
     return *currentLocation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototypeShapeFileLoader::GetLoadReport
+// Created: BCI 2011-05-19
+// -----------------------------------------------------------------------------
+QString ObjectPrototypeShapeFileLoader::GetLoadReport() const
+{
+    return loadReports_.join( "\n" );
 }

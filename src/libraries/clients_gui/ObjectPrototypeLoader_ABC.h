@@ -46,6 +46,7 @@ public:
     virtual QStringList GetFields() const = 0;
     virtual void StartLoad() = 0;
     virtual bool LoadNext() = 0;
+    virtual QString GetLoadReport() const = 0;
     virtual const kernel::Location_ABC& GetCurrentLocation() const = 0;
     virtual QString GetCurrentFieldValueAsString( const QString& ) const = 0;
     virtual int GetCurrentFieldValueAsInt( const QString& ) const = 0;
