@@ -21,6 +21,18 @@
 
 namespace bfs = boost::filesystem;
 
+namespace
+{
+    void DeleteDirectory( const bfs::path path, std::vector< std::string >& result )
+    {
+        if( bfs::exists( path ) && bfs::is_directory( path ) )
+        {
+            result.push_back( path.leaf() );
+            bfs::remove_all( path );
+        }
+    }
+}
+
 namespace frontend
 {
     namespace commands
@@ -138,6 +150,19 @@ namespace frontend
         QStringList ListCheckpoints( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session )
         {
             return ListDirectories( config.GetCheckpointsDir( exercise, session ), &IsValidCheckpoint );
+        }
+
+        std::vector< std::string > RemoveCheckpoint( const tools::GeneralConfig& config, const std::string& exercise,
+                                                     const std::string& session, const boost::optional< std::string >& checkpoint )
+        {
+            std::vector< std::string > result;
+            const bfs::path path( config.GetCheckpointsDir( exercise, session ) );
+            if( checkpoint )
+                DeleteDirectory( bfs::path( path / *checkpoint ), result );
+            else
+                for( bfs::directory_iterator it( path ); it != bfs::directory_iterator(); ++it )
+                    DeleteDirectory( bfs::path( *it ), result );
+            return result;
         }
 
         bool IsValidModel( const bfs::path& record )

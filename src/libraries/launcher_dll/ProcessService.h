@@ -18,6 +18,7 @@
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <boost/noncopyable.hpp>
+#include <boost/optional.hpp>
 
 namespace tools
 {
@@ -55,6 +56,8 @@ public:
     void SendSessionList( sword::SessionListResponse& message );
     void SendProfileList( sword::ProfileListResponse& message );
     void SendCheckpointList( sword::CheckpointListResponse& message, const std::string& exercice, const std::string& session );
+    void RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const boost::optional< std::string >& checkpoint,
+                           const std::string& exercice, const std::string& session );
     sword::SessionStartResponse::ErrorCode StartSession( const std::string& endpoint, const sword::SessionStartRequest& message );
     sword::SessionStopResponse::ErrorCode StopSession( const sword::SessionStopRequest& message );
     bool IsRunning( const std::string& exercise, const std::string& session ) const;

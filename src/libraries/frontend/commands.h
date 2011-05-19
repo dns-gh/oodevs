@@ -11,7 +11,9 @@
 #define __commands_h_
 
 #include <boost/function.hpp>
+#include <boost/optional.hpp>
 #include <qstringlist.h>
+#include <vector>
 
 namespace tools
 {
@@ -31,7 +33,7 @@ namespace frontend
     namespace commands
     {
         QStringList ListTerrains        ( const tools::GeneralConfig& config );
-        QStringList ListExercises       ( const tools::GeneralConfig& config, const std::string& subDirs = ""  );
+        QStringList ListExercises       ( const tools::GeneralConfig& config, const std::string& subDirs = "" );
         QStringList ListSessions        ( const tools::GeneralConfig& config, const std::string& exercise );
         QStringList ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const std::string& exercise );
         QStringList ListCheckpoints     ( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
@@ -41,11 +43,13 @@ namespace frontend
         QStringList ListScripts         ( const tools::GeneralConfig& config, const std::string& exercise );
         QStringList ListOrders          ( const tools::GeneralConfig& config, const std::string& exercise );
         QStringList ListOtherDirectories( const tools::GeneralConfig& config, const std::string& exercise );
-
-        QStringList ListPackageFiles( const std::string& filename );
+        QStringList ListPackageFiles    ( const std::string& filename );
 
         void InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination );
         void InstallPackageFile( zip::izipfile& archive, const std::string& destination, boost::function0< void > callback );
+
+        std::vector< std::string > RemoveCheckpoint( const tools::GeneralConfig& config, const std::string& exercise,
+                                                     const std::string& session, const boost::optional< std::string >& checkpoint );
 
         bool ExerciseExists( const tools::GeneralConfig& config, const std::string& exercise );
         bool SessionExists( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );

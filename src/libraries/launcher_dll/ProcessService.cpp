@@ -26,6 +26,7 @@
 #include "LauncherService.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
+#include <boost/foreach.hpp>
 
 using namespace launcher;
 
@@ -263,6 +264,25 @@ void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message,
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProcessService::RemoveCheckpoint
+// Created: LGY 2011-05-19
+// -----------------------------------------------------------------------------
+void ProcessService::RemoveCheckpoint( sword::CheckpointDeleteResponse& message, const boost::optional< std::string >& checkpoint,
+                                       const std::string& exercice, const std::string& session )
+{
+    if( ! frontend::commands::ExerciseExists( config_, exercice ) )
+        message.set_error_code( sword::CheckpointDeleteResponse::invalid_exercise_name );
+    else if( ! frontend::commands::SessionExists( config_, exercice, session ) )
+        message.set_error_code( sword::CheckpointDeleteResponse::invalid_session_name );
+    else
+    {
+        const std::vector< std::string > result = frontend::commands::RemoveCheckpoint( config_, exercice, session, checkpoint );
+        BOOST_FOREACH( const std::string& name, result )
+            message.add_checkpoint( name );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProcessService::ExecuteCommand
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
@@ -296,6 +316,7 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
     if( message.has_save_checkpoint() )
         SaveCheckpoint( message.save_checkpoint(), *client );
 }
+
 // -----------------------------------------------------------------------------
 // Name: ProcessService::ExecutePauseResume
 // Created: LGY 2011-05-18
