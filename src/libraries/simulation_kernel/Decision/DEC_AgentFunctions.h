@@ -70,6 +70,7 @@ public:
     static bool AreHumanTransportersReady( const MIL_Agent_ABC& callerAgent );
     static void DisableHumanTransportersNow( MIL_Agent_ABC& callerAgent );
     static void RecoverHumanTransportersNow( MIL_Agent_ABC& callerAgent );
+    static bool CanMount( DEC_Decision_ABC& callerAgent );
 
     // Etat décisionnel
     static int  GetRulesOfEngagementState( const MIL_Agent_ABC& callerAgent );

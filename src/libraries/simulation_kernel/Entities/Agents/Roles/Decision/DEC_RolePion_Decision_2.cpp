@@ -150,6 +150,9 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
 
     // Critical Intelligence
     brain[ "DEC_ObtenirRenseignementCritiqueSurPion" ] = &DEC_KnowledgeAgentFunctions::GetCriticalIntelligence;
+
+    // Mount/dismount
+    brain[ "DEC_CanMount" ] = &DEC_AgentFunctions::CanMount;
 }
 
 // -----------------------------------------------------------------------------
@@ -675,7 +678,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Geometrie_CalculerTrafficableBarycentreLocalisation" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( TER_Localisation* ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisationBarycenter, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_IsPointInUrbanBlockTrafficable" ] =
-        boost::function< bool( MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable, boost::ref( GetPion() ), _1 ) );
+        boost::function< bool( MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable, boost::ref( GetPion() ), _1, boost::cref( false ) ) );
     brain[ "DEC_Geometrie_PositionAdvanceAlongFuseau" ] =
         boost::function< double( MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Geometrie_GetLeavingAreaPosition" ] =

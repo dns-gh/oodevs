@@ -1076,13 +1076,13 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlock( const MT_Vector2D& point, const
 // Name: DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable
 // Created: LMT 2010-10-18
 // -----------------------------------------------------------------------------
-bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point )
+bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion, const MT_Vector2D& point, bool loadedWeight )
 {
     if( const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
     {
         const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
         if( const urban::Architecture* architecture = terrainObject.GetArchitecture() )
-            return architecture->GetTrafficability() >= pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+            return architecture->GetTrafficability() >= pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( loadedWeight );
     }
     return true;
 }

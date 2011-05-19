@@ -19,6 +19,7 @@
 #include "UrbanLocationComputerFactory_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 #include <urban/Model.h>
@@ -265,4 +266,18 @@ void PHY_RolePion_UrbanLocation::Execute( moving::SpeedComputer_ABC& algorithm )
     if( urbanObject_ )
         if( const urban::Architecture* architecture = urbanObject_->GetArchitecture() )
             algorithm.AddModifier( 1. - architecture->GetOccupation(), true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_UrbanLocation::CanMount
+// Created: LMT 2011-05-18
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_UrbanLocation::CanMount() const
+{
+    if ( urbanObject_ )
+    {
+        if( const urban::Architecture* architecture = urbanObject_->GetArchitecture() )
+            return architecture->GetTrafficability() >= pion_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
+    }
+    return true;
 }

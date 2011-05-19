@@ -113,7 +113,7 @@ public:
     virtual const PHY_Composante_ABC* GetMajorComposante       () const = 0;
     virtual       double              GetOperationalState      () const = 0;
     virtual       double              GetMajorOperationalState () const = 0;
-    virtual       double              GetMajorComponentWeight   () const = 0;
+    virtual       double              GetMajorComponentWeight   ( bool loadedWeight = false ) const = 0;
     //@}
 
     //! @name Fire

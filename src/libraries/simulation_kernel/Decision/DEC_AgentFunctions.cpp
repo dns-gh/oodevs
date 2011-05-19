@@ -466,6 +466,15 @@ bool DEC_AgentFunctions::AreHumanTransportersReady( const MIL_Agent_ABC& callerA
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanMount
+// Created: LMT 2011-05-18
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanMount( DEC_Decision_ABC& callerAgent )
+{
+    return callerAgent.GetPion().Get< PHY_RoleInterface_UrbanLocation >().CanMount();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::NotifyForceRatioStateChanged
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------

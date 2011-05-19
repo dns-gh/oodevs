@@ -28,6 +28,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_UrbanLocation, PHY_RoleInterface_UrbanLoc
     MOCK_METHOD_EXT( ComputeRatioPionInside, 2, float( const geometry::Polygon2f&, float ), ComputeRatioPionInsidePolygon );
     MOCK_METHOD( GetCurrentUrbanBlock, 0 );
     MOCK_METHOD( IsInCity, 0 );
+    MOCK_METHOD( CanMount, 0 );
     MOCK_METHOD( MagicMove, 1 );
 };
 

@@ -66,6 +66,7 @@ public:
     virtual float ComputeRatioPionInside( const geometry::Polygon2f& polygon, float modificator ) const;
     void Execute( posture::PostureComputer_ABC& algorithm ) const;
     void Execute( moving::SpeedComputer_ABC& algorithm ) const;
+    virtual bool CanMount() const;
     //@}
 
     //! @name Event handlers

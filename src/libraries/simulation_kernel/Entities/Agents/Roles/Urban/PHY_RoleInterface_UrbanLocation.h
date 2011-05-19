@@ -57,6 +57,7 @@ public:
     //@{
     virtual const UrbanObjectWrapper* GetCurrentUrbanBlock() const = 0;
     virtual bool IsInCity() const = 0;
+    virtual bool CanMount() const = 0;
     //@}
 
 private:
