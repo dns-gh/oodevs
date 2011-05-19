@@ -212,11 +212,11 @@ message MsgCheckpointDeleteResponse {
 message MsgSessionNotification {
     message UnitUpdate {
        required UnitId    unit       = 1;
-       repeated Extension extensions = 2;
+       optional Extension extensions = 2;
     }
     message FormationUpdate {
        repeated FormationId formation  = 1;
-       repeated Extension   extensions = 2;
+       optional Extension   extensions = 2;
     }
     message ProfileCreation { 
         required Profile profile = 1;

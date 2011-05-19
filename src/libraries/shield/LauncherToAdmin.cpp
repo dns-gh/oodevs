@@ -214,23 +214,15 @@ namespace
 {
     void ConvertUnitUpdate( const sword::SessionNotification::UnitUpdate& from, MsgsLauncherToAdmin::MsgSessionNotification::UnitUpdate* to )
     {
-        for( int i = 0; i< from.extensions().size(); ++i )
-        {
-            const sword::Extension& extFrom = from.extensions( i );
-            MsgsLauncherToAdmin::Extension* extTo = to->add_extensions();
-            for( int j = 0; j < extFrom.entries().size(); ++j )
-                ConvertExtensionEntry( extFrom.entries( j ), extTo->add_entries() );
-        }
+        if( from.has_extensions() )
+            for( int j = 0; j < from.extensions().entries().size(); ++j )
+                ConvertExtensionEntry( from.extensions().entries( j ), to->mutable_extensions()->add_entries() );
     }
     void ConvertFormationUpdate( const sword::SessionNotification::FormationUpdate& from, MsgsLauncherToAdmin::MsgSessionNotification::FormationUpdate* to )
     {
-        for( int i=0; i< from.extensions().size(); ++i )
-        {
-            const sword::Extension& extFrom = from.extensions( i );
-            MsgsLauncherToAdmin::Extension* extTo = to->add_extensions();
-            for( int j = 0; j < extFrom.entries().size(); ++j )
-                ConvertExtensionEntry( extFrom.entries( j ), extTo->add_entries() );
-        }
+        if( from.has_extensions() )
+            for( int j = 0; j < from.extensions().entries().size(); ++j )
+                ConvertExtensionEntry( from.extensions().entries( j ), to->mutable_extensions()->add_entries() );
     }
     void ConvertProfileCreation( const sword::SessionNotification::ProfileCreation& from, MsgsLauncherToAdmin::MsgSessionNotification::ProfileCreation* to )
     {
