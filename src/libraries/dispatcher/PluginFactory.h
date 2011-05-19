@@ -38,6 +38,7 @@ namespace dispatcher
     class ClientsNetworker;
     class CompositePlugin;
     class CompositeRegistrable;
+    class Logger_ABC;
     class PluginFactory_ABC;
     class Services;
 
@@ -79,6 +80,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< PluginFactory_ABC* > T_Factories;
+    typedef std::vector< boost::shared_ptr< Logger_ABC > > T_Loggers;
     //@}
 
 private:
@@ -89,6 +91,7 @@ private:
     const kernel::StaticModel& staticModel_;
     SimulationPublisher_ABC& simulation_;
     ClientsNetworker& clients_;
+    T_Loggers loggers_;
     CompositePlugin& handler_;
     CompositeRegistrable& registrables_;
     T_Factories factories_;

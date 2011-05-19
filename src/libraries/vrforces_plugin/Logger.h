@@ -3,51 +3,49 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2009 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __Logger_h_
-#define __Logger_h_
+#ifndef __vrforces_Logger_h_
+#define __vrforces_Logger_h_
 
-#include "tools/win32/ProcessMonitor.h"
+#include "dispatcher/Logger_ABC.h"
 
+namespace plugins
+{
+namespace vrforces
+{
 // =============================================================================
 /** @class  Logger
     @brief  Logger
 */
-// Created: LDC 2009-09-09
+// Created: SBO 2011-05-19
 // =============================================================================
-namespace dispatcher
+class Logger : public dispatcher::Logger_ABC
 {
-class Logger
-{
+
 public:
     //! @name Constructors/Destructor
     //@{
-             Logger();
+    explicit Logger( dispatcher::Logger_ABC& logger );
     virtual ~Logger();
     //@}
 
     //! @name Operations
     //@{
-    void Update();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Logger( const Logger& );            //!< Copy constructor
-    Logger& operator=( const Logger& ); //!< Assignment operator
+    virtual void LogInfo( const std::string& message );
+    virtual void LogError( const std::string& message );
+    virtual void LogWarning( const std::string& message );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ProcessMonitor monitor_;
-    int next_;
+    dispatcher::Logger_ABC& logger_;
     //@}
 };
 }
+}
 
-#endif // __Logger_h_
+#endif // __vrforces_Logger_h_

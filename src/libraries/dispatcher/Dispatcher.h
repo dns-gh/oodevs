@@ -22,16 +22,15 @@ namespace kernel
 
 namespace dispatcher
 {
+    class ClientsNetworker;
     class Config;
     class Model;
-    class SimulationNetworker;
-    class ClientsNetworker;
+    class MemoryLogger;
     class PluginFactory_ABC;
     class PluginFactory;
     class Services;
-    class Logger;
     class Shield;
-
+    class SimulationNetworker;
 // =============================================================================
 /** @class  Dispatcher
     @brief  Dispatcher
@@ -76,7 +75,7 @@ private:
     std::auto_ptr< SimulationNetworker >  simulationNetworker_;
     std::auto_ptr< Shield >               shield_;
     std::auto_ptr< PluginFactory >        factory_;
-    std::auto_ptr< Logger >               logger_;
+    std::auto_ptr< MemoryLogger >         memoryLogger_;
     std::auto_ptr< Application_ABC >      qapp_;
 };
 

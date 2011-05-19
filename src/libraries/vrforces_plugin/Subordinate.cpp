@@ -13,7 +13,9 @@
 #include "AggregatedState_ABC.h"
 #include "AggregatedPosition_ABC.h"
 #include "Facade.h"
+#include "dispatcher/Logger_ABC.h"
 #pragma warning( push, 0 )
+#include <boost/lexical_cast.hpp>
 #include <vl/aggPub.h>
 #include <vl/aggregateSR.h>
 #include <vl/reflEntList.h>
@@ -41,13 +43,14 @@ namespace
 // Name: Subordinate constructor
 // Created: SBO 2011-03-23
 // -----------------------------------------------------------------------------
-Subordinate::Subordinate( const DtEntityType& type, DtAggregatePublisher& publisher, DtReal heading, const std::string& identifier, DtVrfRemoteController& controller, const DtSimulationAddress& address, Facade& vrForces, Agent& superior )
+Subordinate::Subordinate( const DtEntityType& type, DtAggregatePublisher& publisher, DtReal heading, const std::string& identifier, DtVrfRemoteController& controller, const DtSimulationAddress& address, Facade& vrForces, Agent& superior, dispatcher::Logger_ABC& logger )
     : identifier_( std::string( publisher.asr()->entityId().string() ) + identifier )
     , entityId_  ( DtEntityIdentifier::nullId() )
     , controller_( controller )
     , address_   ( address )
     , vrForces_  ( vrForces )
     , superior_  ( superior )
+    , logger_    ( logger )
     , reflected_ ( 0 )
 {
     vrForces_.AddListener( *this );
@@ -87,7 +90,7 @@ void Subordinate::OnCreate( const DtString& /*name*/, const DtEntityIdentifier& 
         if( reflected_ )
             vrForces_.RemoveListener( *this );
     }
-    DtInfo << "Subordinate created with identifier: " << id.string() << std::endl;
+    logger_.LogInfo( std::string( "Subordinate created with identifier: " ) + id.string() );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,7 +123,7 @@ void Subordinate::OnUpdate( DtReflectedEntity* reflected )
     {
         state_ = reflected_->esr()->damageState();
         superior_.NotifyUpdated( *this );
-        DtInfo << "Subordinate '" << entityId_.string() << "' updated." << std::endl;
+        logger_.LogInfo( std::string( "Subordinate '" ) + entityId_.string() + std::string( "' updated." ) );
     }
 }
 
@@ -145,7 +148,7 @@ void Subordinate::SetDestination( const DtVector& location )
         if( reflected_ )
         {
             controller_.moveToLocation( reflected_->esr()->markingText(), location, true, address_ );
-            DtInfo << "Task 'move to location' assigned to entity '" << reflected_->name() << "'" << std::endl;
+            logger_.LogInfo( std::string( "Task 'move to location' assigned to entity '" ) + boost::lexical_cast< std::string >( reflected_->name() ) + "'" );
             destination_ = DtVector::zero();
         }
         else

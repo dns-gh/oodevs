@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "DllConfig.h"
+#include "dispatcher/Logger_ABC.h"
 #include "hla_plugin/HlaPlugin.h"
 #include <windows.h>
 
@@ -20,18 +21,43 @@ namespace dispatcher
 // Name: CreateInstance
 // Created: SBO 2011-01-28
 // -----------------------------------------------------------------------------
-HLA_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& /*simulation*/, const dispatcher::Config& config, xml::xistream& xis )
+HLA_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& /*simulation*/, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
 {
-    return new plugins::hla::HlaPlugin( model, config, xis );
+    try
+    {
+        logger.LogInfo( "Initialization..." );
+        return new plugins::hla::HlaPlugin( model, config, xis );
+    }
+    catch( std::exception& e )
+    {
+        logger.LogError( std::string( "Initialization failed cause: " ) + e.what() );
+    }
+    catch( ... )
+    {
+        logger.LogError( "Initialization failed (unhandled error)." );
+    }
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DestroyInstance
 // Created: SBO 2011-01-28
 // -----------------------------------------------------------------------------
-HLA_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin )
+HLA_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatcher::Logger_ABC& logger )
 {
-    delete plugin;
+    try
+    {
+        logger.LogInfo( "Destruction..." );
+        delete plugin;
+    }
+    catch( std::exception& e )
+    {
+        logger.LogError( std::string( "Destruction failed cause: " ) + e.what() );
+    }
+    catch( ... )
+    {
+        logger.LogError( "Destruction failed (unhandled error)." );
+    }
 }
 
 // -----------------------------------------------------------------------------

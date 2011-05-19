@@ -17,6 +17,7 @@
 namespace dispatcher
 {
     class Config;
+    class Logger_ABC;
     class Model_ABC;
 }
 
@@ -60,7 +61,7 @@ class Plugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis );
+             Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis );
     virtual ~Plugin();
     //@}
 

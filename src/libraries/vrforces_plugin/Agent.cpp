@@ -19,6 +19,7 @@
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/ComponentType.h"
+#include "dispatcher/Logger_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "protocol/Protocol.h"
 #include "protocol/SimulationSenders.h"
@@ -69,10 +70,11 @@ namespace
 // Name: Agent constructor
 // Created: SBO 2011-01-21
 // -----------------------------------------------------------------------------
-Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message, const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation, const rpr::EntityTypeResolver_ABC& entityTypes, dispatcher::SimulationPublisher_ABC& simulation )
+Agent::Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message, const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation, const rpr::EntityTypeResolver_ABC& entityTypes, dispatcher::SimulationPublisher_ABC& simulation, dispatcher::Logger_ABC& logger )
     : disaggregation_( disaggregation )
     , swordPublisher_( simulation )
     , connection_    ( connection )
+    , logger_        ( logger )
     , vrForces_      ( vrForces )
     , id_            ( message.unit().id() )
     , heading_       ( 0 )
@@ -273,7 +275,9 @@ void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSi
                 AddSubordinateEntity( controller, address, list.entityType(), id );
             }
     }
-    DtInfo << "Request pseudo aggregate with id: " << aggregatePublisher_->asr()->entityId() << "type: " << type.string() << std::endl;
+    logger_.LogInfo( std::string( "Request pseudo aggregate with id: " ) 
+                   + boost::lexical_cast< std::string >( aggregatePublisher_->asr()->entityId() )
+                   + std::string( "type: " ) + type.string() );
 }
 
 // -----------------------------------------------------------------------------
@@ -282,7 +286,7 @@ void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSi
 // -----------------------------------------------------------------------------
 void Agent::AddSubordinateEntity( DtVrfRemoteController& controller, const DtSimulationAddress& address, const DtEntityType& type, const std::string& identifier )
 {
-    boost::shared_ptr< Subordinate > subordinate( new Subordinate( type, *aggregatePublisher_, heading_, identifier, controller, address, vrForces_, *this ) );
+    boost::shared_ptr< Subordinate > subordinate( new Subordinate( type, *aggregatePublisher_, heading_, identifier, controller, address, vrForces_, *this, logger_ ) );
     subordinates_.push_back( subordinate );
 }
 
@@ -342,7 +346,7 @@ void Agent::OnCreatePseudoAggregate( const DtString& /*name*/, const DtEntityIde
             (*it)->SetSuperior( id );
             (*it)->SetDestination( that->destination_ );
         }
-        DtInfo << "Pseudo aggregate created with identifier: " << id.string() << std::endl;
+        that->logger_.LogInfo( std::string( "Pseudo aggregate created with identifier: " ) + id.string() );
     }
 }
 
@@ -441,5 +445,4 @@ void Agent::NotifyStateChanged() const
     MakeParameter( message ); // parameter 4: ammo
     MakeParameter( message ); // parameter 5: stocks
     message.Send( swordPublisher_ );
-    DtInfo << message().DebugString();
 }

@@ -18,6 +18,11 @@
 #pragma warning( pop )
 #include <boost/bind.hpp>
 
+namespace dispatcher
+{
+    class Logger_ABC;
+}
+
 namespace plugins
 {
 namespace dis
@@ -35,7 +40,7 @@ class UdpNetwork
 public:
     //! @name Constructors/Destructor
     //@{
-             UdpNetwork( const std::string& target, unsigned short port );
+             UdpNetwork( const std::string& target, unsigned short port, dispatcher::Logger_ABC& logger );
     virtual ~UdpNetwork();
     //@}
 
@@ -70,6 +75,7 @@ private:
 protected:
     //! @name Member data
     //@{
+    dispatcher::Logger_ABC& logger_;
     boost::asio::ip::udp::endpoint target_;
     boost::asio::io_service service_;
     boost::asio::ip::udp::socket socket_;

@@ -15,6 +15,7 @@
 #include "SimulationPublisher_ABC.h"
 #include "ClientsNetworker.h"
 #include "DispatcherPlugin.h"
+#include "FileLogger.h"
 #include "PluginFactory_ABC.h"
 #include "rights_plugin/RightsPlugin.h"
 #include "logger_plugin/LoggerPlugin.h"
@@ -122,8 +123,8 @@ namespace
         return boost::filesystem::basename( p ) + EXTENSION + boost::filesystem::extension( p );
     }
 
-    typedef dispatcher::Plugin_ABC* (*CreateFunctor)( dispatcher::Model_ABC&, dispatcher::SimulationPublisher_ABC&, const dispatcher::Config&, xml::xistream& );
-    typedef void (*DestroyFunctor)( dispatcher::Plugin_ABC* );
+    typedef dispatcher::Plugin_ABC* (*CreateFunctor)( dispatcher::Model_ABC&, dispatcher::SimulationPublisher_ABC&, const dispatcher::Config&, dispatcher::Logger_ABC&, xml::xistream& );
+    typedef void (*DestroyFunctor)( dispatcher::Plugin_ABC*, dispatcher::Logger_ABC& );
 
     template< typename T >
     T LoadFunction( HMODULE& module, const std::string& name )
@@ -149,7 +150,12 @@ void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
             throw std::runtime_error( "failed to load library: '" + library + "'" );
         CreateFunctor createFunction = LoadFunction< CreateFunctor >( module, "CreateInstance" );
         DestroyFunctor destroyFunction = LoadFunction< DestroyFunctor >( module, "DestroyInstance" );
-        handler_.Add( boost::shared_ptr< Plugin_ABC >( createFunction( model_, simulation_, config_, xis ), destroyFunction ) );
+        boost::shared_ptr< Logger_ABC > logger( new FileLogger( config_.BuildSessionChildFile( name + "_plugin.log" ) ) );
+        boost::shared_ptr< Plugin_ABC > plugin( createFunction( model_, simulation_, config_, *logger, xis ), boost::bind( destroyFunction, _1, boost::ref( *logger ) ) );
+        if( !plugin.get() )
+            throw std::runtime_error( "CreateFunctor returned an error (see details in plugin log file)" );
+        loggers_.push_back( logger );
+        handler_.Add( plugin );
         MT_LOG_INFO_MSG( "Plugin '" << name << "' loaded (file: " << library << ")" );
     }
     catch( std::exception& e )

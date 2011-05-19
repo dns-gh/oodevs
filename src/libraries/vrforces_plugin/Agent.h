@@ -24,6 +24,7 @@ class DtVrfRemoteController;
 
 namespace dispatcher
 {
+    class Logger_ABC;
     class SimulationPublisher_ABC;
 }
 
@@ -72,7 +73,7 @@ public:
     //@{
              Agent( const kernel::Agent_ABC& agent, DtExerciseConn& connection, Facade& vrForces, const sword::UnitCreation& message
                   , const ForceResolver_ABC& forces, const DisaggregationStrategy_ABC& disaggregation
-                  , const rpr::EntityTypeResolver_ABC& entityTypes, dispatcher::SimulationPublisher_ABC& simulation );
+                  , const rpr::EntityTypeResolver_ABC& entityTypes, dispatcher::SimulationPublisher_ABC& simulation, dispatcher::Logger_ABC& logger );
     virtual ~Agent();
     //@}
 
@@ -125,6 +126,7 @@ private:
     const DisaggregationStrategy_ABC& disaggregation_;
     dispatcher::SimulationPublisher_ABC& swordPublisher_;
     DtExerciseConn& connection_;
+    dispatcher::Logger_ABC& logger_;
     Facade& vrForces_;
     const unsigned long id_;
     unsigned short heading_;

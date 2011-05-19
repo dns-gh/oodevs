@@ -24,6 +24,11 @@ class DtString;
 class DtVector;
 class DtVrfRemoteController;
 
+namespace dispatcher
+{
+    class Logger_ABC;
+}
+
 namespace plugins
 {
 namespace vrforces
@@ -47,7 +52,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Subordinate( const DtEntityType& type, DtAggregatePublisher& publisher, DtReal heading, const std::string& identifier
-                        , DtVrfRemoteController& controller, const DtSimulationAddress& address, Facade& vrForces, Agent& superior );
+                        , DtVrfRemoteController& controller, const DtSimulationAddress& address, Facade& vrForces, Agent& superior, dispatcher::Logger_ABC& logger );
     virtual ~Subordinate();
     //@}
 
@@ -73,6 +78,7 @@ private:
     const DtSimulationAddress& address_;
     Facade& vrForces_;
     Agent& superior_;
+    dispatcher::Logger_ABC& logger_;
     DtReflectedEntity* reflected_;
     DtEntityIdentifier superiorId_;
     DtVector destination_;

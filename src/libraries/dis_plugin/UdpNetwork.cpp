@@ -9,7 +9,7 @@
 
 #include "dis_plugin_pch.h"
 #include "UdpNetwork.h"
-#include "MT_Tools/MT_Logger.h"
+#include "dispatcher/Logger_ABC.h"
 #include <boost/lexical_cast.hpp>
 #include <iostream>
 #pragma warning( disable : 4503 4355 )
@@ -22,8 +22,9 @@ namespace i = boost::asio::ip;
 // Name: UdpNetwork constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-UdpNetwork::UdpNetwork( const std::string& target, unsigned short port )
-    : socket_    ( service_, boost::asio::ip::udp::v4() )
+UdpNetwork::UdpNetwork( const std::string& target, unsigned short port, dispatcher::Logger_ABC& logger )
+    : logger_    ( logger )
+    , socket_    ( service_, boost::asio::ip::udp::v4() )
     , terminated_( false )
     , thread_    ( boost::bind( &UdpNetwork::Start, this ) )
 {
@@ -32,13 +33,13 @@ UdpNetwork::UdpNetwork( const std::string& target, unsigned short port )
         const i::udp::resolver::query query( i::udp::v4(), target, boost::lexical_cast< std::string >( port ) );
         i::udp::resolver resolver( service_ );
         target_ = *resolver.resolve( query );
-        MT_LOG_INFO_MSG( "DIS - Starting on " + target_.address().to_string() );
+        logger_.LogInfo( "DIS - Starting on " + target_.address().to_string() );
         i::multicast::enable_loopback option( true );
         socket_.set_option( option );
     }
     catch( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "DIS - " + std::string( e.what() ) );
+        logger_.LogError( "DIS - " + std::string( e.what() ) );
     }
 }
 
@@ -56,7 +57,7 @@ UdpNetwork::~UdpNetwork()
     }
     catch( std::exception& e )
     {
-        std::cerr << "error destroying udp network : " << e.what() << std::endl;
+        logger_.LogError( std::string( "Error destroying udp network: " ) + e.what() );
     }
 }
 
@@ -91,5 +92,5 @@ void UdpNetwork::Stop()
 void UdpNetwork::Sent( boost::shared_ptr< std::string > message, const boost::system::error_code& error )
 {
     if( error )
-        MT_LOG_ERROR_MSG( "DIS - " + error.message() );
+        logger_.LogError( "DIS - " + error.message() );
 }

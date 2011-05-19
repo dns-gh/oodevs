@@ -13,7 +13,7 @@
 #include "SimulationNetworker.h"
 #include "ClientsNetworker.h"
 #include "Config.h"
-#include "Logger.h"
+#include "MemoryLogger.h"
 #include "PluginFactory.h"
 #include "Services.h"
 #include "StaticModel.h"
@@ -39,7 +39,7 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config ) )
     , shield_             ( new Shield( config ) )
     , factory_            ( new PluginFactory( config, *model_, *staticModel_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_, *services_, maxConnections ) )
-    , logger_             ( new Logger() )
+    , memoryLogger_       ( new MemoryLogger() )
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     handler_->AddHandler( clientsNetworker_ );
@@ -85,7 +85,7 @@ void Dispatcher::Update()
     clientsNetworker_->Update();
     simulationNetworker_->Update();
     handler_->Update();
-    logger_->Update();
+    memoryLogger_->Update();
     shield_->Update();
 }
 

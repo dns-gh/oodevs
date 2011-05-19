@@ -17,11 +17,11 @@
 #include <set>
 
 class DtExerciseConn;
-class DtFilePrinter;
 
 namespace dispatcher
 {
     class Config;
+    class Logger_ABC;
     class Model_ABC;
     class SimulationPublisher_ABC;
 }
@@ -63,7 +63,7 @@ class Plugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Plugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, xml::xistream& xis );
+             Plugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis );
     virtual ~Plugin();
     //@}
 
@@ -98,7 +98,7 @@ private:
     dispatcher::SimulationPublisher_ABC& simulation_;
     std::auto_ptr< ForceResolver_ABC > forceResolver_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > typeResolver_;
-    std::auto_ptr< DtFilePrinter > logger_;
+    std::auto_ptr< dispatcher::Logger_ABC > logger_;
     std::auto_ptr< DtExerciseConn > connection_;
     std::auto_ptr< Facade > vrForces_;
     std::auto_ptr< DisaggregationStrategy_ABC > disaggregator_;

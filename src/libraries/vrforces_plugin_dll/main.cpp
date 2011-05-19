@@ -9,6 +9,7 @@
 
 #include "DllConfig.h"
 #include "dispatcher/Config.h"
+#include "dispatcher/Logger_ABC.h"
 #include "vrforces_plugin/Plugin.h"
 #include <fstream>
 #include <windows.h>
@@ -17,22 +18,20 @@
 // Name: CreateInstance
 // Created: SBO 2011-01-28
 // -----------------------------------------------------------------------------
-VRFORCES_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, xml::xistream& xis )
+VRFORCES_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
 {
-    const std::string logFile( config.BuildSessionChildFile( "vrforces_dll_crash.log" ) );
     try
     {
-        return new plugins::vrforces::Plugin( model, simulation, config, xis );
+        logger.LogInfo( "Initialization..." );
+        return new plugins::vrforces::Plugin( model, simulation, config, logger, xis );
     }
     catch( std::exception& e )
     {
-        std::ofstream log( logFile.c_str() );
-        log << "Initialization failed cause: " << e.what() << std::endl;
+        logger.LogError( std::string( "Initialization failed cause: " ) + e.what() );
     }
     catch( ... )
     {
-        std::ofstream log( logFile.c_str() );
-        log << "Initialization failed (unhandled error)." << std::endl;
+        logger.LogError( "Initialization failed (unhandled error)." );
     }
     return 0;
 }
@@ -41,13 +40,21 @@ VRFORCES_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Mode
 // Name: DestroyInstance
 // Created: SBO 2011-01-28
 // -----------------------------------------------------------------------------
-VRFORCES_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin )
+VRFORCES_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatcher::Logger_ABC& logger )
 {
     try
     {
+        logger.LogInfo( "Destruction..." );
         delete plugin;
     }
-    catch( ... ) {}
+    catch( std::exception& e )
+    {
+        logger.LogError( std::string( "Destruction failed cause: " ) + e.what() );
+    }
+    catch( ... )
+    {
+        logger.LogError( "Destruction failed (unhandled error)." );
+    }
 }
 
 // -----------------------------------------------------------------------------

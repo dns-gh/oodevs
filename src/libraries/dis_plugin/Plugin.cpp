@@ -40,9 +40,9 @@ namespace
 // Name: Plugin constructor
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-Plugin::Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis )
+Plugin::Plugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
     : model_    ( model )
-    , network_  ( new UdpNetwork( xis.attribute< std::string >( "server" ), xis.attribute< unsigned short >( "port" ) ) )
+    , network_  ( new UdpNetwork( xis.attribute< std::string >( "server" ), xis.attribute< unsigned short >( "port" ), logger ) )
     , converter_( new kernel::CoordinateConverter( config ) )
     , timeStep_ ( ReadTimeStep( config.GetSessionFile() ) )
     , platforms_( new tic::PlatformDelegateFactory( *converter_, static_cast< float >( timeStep_ ) ) )

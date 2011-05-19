@@ -13,6 +13,7 @@
 #include "DisaggregationStrategy.h"
 #include "Facade.h"
 #include "ForceResolver.h"
+#include "Logger.h"
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Model_ABC.h"
@@ -21,7 +22,6 @@
 #pragma warning( push, 0 )
 #include <vl/exConnInit.h>
 #include <vl/exerciseConn.h>
-#include <vlutil/vlprint.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
 
@@ -31,21 +31,16 @@ using namespace plugins::vrforces;
 // Name: Plugin constructor
 // Created: SBO 2011-01-19
 // -----------------------------------------------------------------------------
-Plugin::Plugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, xml::xistream& xis )
+Plugin::Plugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
     : model_        ( model )
     , simulation_   ( simulation )
     , forceResolver_( new ForceResolver( model_ ) )
     , typeResolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
-    , logger_       ( new DtFilePrinter( config.BuildSessionChildFile( "vrforces.log" ).c_str() ) )
+    , logger_       ( new Logger( logger ) )
     , connection_   ( new DtExerciseConn( DtVrlApplicationInitializer( 0, 0, "VR-Forces Plugin" ) ) )
     , vrForces_     ( new Facade( *connection_, xis ) )
     , disaggregator_( new DisaggregationStrategy( *vrForces_ ) )
 {
-    DtWarn.attachPrinter( logger_.get() );
-    DtInfo.attachPrinter( logger_.get() );
-    DtVerbose.attachPrinter( logger_.get() );
-    DtFatal.attachPrinter( logger_.get() );
-    DtDebug.attachPrinter( logger_.get() );
     connection_->setDestroyFedExecFlag( false );
 }
 
@@ -118,7 +113,7 @@ void Plugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& /*client*/ )
 // -----------------------------------------------------------------------------
 void Plugin::Create( const sword::UnitCreation& message )
 {
-    agents_[ message.unit().id() ].reset( new Agent( model_.Agents().Get( message.unit().id() ), *connection_, *vrForces_, message, *forceResolver_, *disaggregator_, *typeResolver_, simulation_ ) );
+    agents_[ message.unit().id() ].reset( new Agent( model_.Agents().Get( message.unit().id() ), *connection_, *vrForces_, message, *forceResolver_, *disaggregator_, *typeResolver_, simulation_, *logger_ ) );
 }
 
 // -----------------------------------------------------------------------------
