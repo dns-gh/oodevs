@@ -19,7 +19,7 @@ MOCK_BASE_CLASS( MockSchedulable, Schedulable_ABC )
 {
     MOCK_METHOD( Trigger, 1 )
     MOCK_METHOD( Matches, 1 )
-    MOCK_METHOD( StartMission, 1 )
+    MOCK_METHOD( Start, 2 )
 };
 
 MOCK_BASE_CLASS( MockFactory, FilterFactory_ABC )
@@ -47,7 +47,7 @@ namespace
             return true;
         }
         virtual std::string SchedulableName() const { return "testAgent"; }
-        virtual bool StartMission( Exercise& /*exercise*/ ) { return true; }
+        virtual bool Start( Exercise& /*exercise*/, bool /*withFragOrders*/ ) { return true; }
         const std::string type_;
     };
 }
@@ -55,7 +55,7 @@ namespace
 BOOST_AUTO_TEST_CASE( scheduler_schedules_a_schedulable )
 {
     Filter_ABC* filter = new MockFilter();
-    Scheduler scheduler( std::auto_ptr< Filter_ABC >( filter ), 500u );
+    Scheduler scheduler( std::auto_ptr< Filter_ABC >( filter ), 500u, false );
     boost::shared_ptr< MockSchedulable > schedulable( new MockSchedulable );
     MOCK_EXPECT( schedulable, Matches ).once().with( mock::same( *filter ) ).returns( true );
     scheduler.Schedule( schedulable );
@@ -76,7 +76,7 @@ namespace
     {
         FilterFixture()
             : factory_             ( FilterFactoryStub() )
-            , agentScheduler_      ( factory_->Create( "agent" ), 500u )
+            , agentScheduler_      ( factory_->Create( "agent" ), 500u, false )
             , agentSchedulable_    ( new Schedulable( "agent" ) )
             , automatonSchedulable_( new Schedulable( "automat" ) )
         {}
