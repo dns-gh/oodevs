@@ -130,8 +130,9 @@ BOOST_FIXTURE_TEST_CASE( checkpoint_delete_response_from_launcher_is_converted, 
     content.mutable_checkpoint_delete_response()->set_error_code( sword::CheckpointDeleteResponse::invalid_exercise_name );
     content.mutable_checkpoint_delete_response()->set_exercise("name") ;
     content.mutable_checkpoint_delete_response()->set_session("session") ;
-    content.mutable_checkpoint_delete_response()->set_checkpoint("checkpoint1") ;
-    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { checkpoint_delete_response { error_code: invalid_exercise_name exercise: \"name\" session: \"session\" checkpoint: \"checkpoint1\" } }" ) );
+    content.mutable_checkpoint_delete_response()->add_checkpoint("checkpoint1") ;
+    content.mutable_checkpoint_delete_response()->add_checkpoint("checkpoint2") ;
+    MOCK_EXPECT( client, SendLauncherToAdmin ).once().with( constraint( msg, "context: 42 message { checkpoint_delete_response { error_code: invalid_exercise_name exercise: \"name\" session: \"session\" checkpoint: \"checkpoint1\" checkpoint: \"checkpoint2\" } }" ) );
     converter.ReceiveLauncherToAdmin( "unused endpoint", msg );
 }
 
