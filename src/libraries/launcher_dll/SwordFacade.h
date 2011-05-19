@@ -64,14 +64,14 @@ public:
     void Start(const std::string& supervisorProfile, const std::string& supervisorPassword, bool testMode = false);
     void Stop();
     // SwordConnectionHandler_ABC interface
-    void OnConnectionSucceeded( const std::string& endpoint );
-    void OnConnectionFailed( const std::string& endpoint, const std::string& reason );
-    void OnConnectionError( const std::string& endpoint, const std::string& reason );
-    void OnAuthenticationSucceeded( const std::string& profile );
-    void OnAuthenticationFailed( const std::string& profile, const std::string& reason );
+    virtual void OnConnectionSucceeded( const std::string& endpoint );
+    virtual void OnConnectionFailed( const std::string& endpoint, const std::string& reason );
+    virtual void OnConnectionError( const std::string& endpoint, const std::string& reason );
+    virtual void OnAuthenticationSucceeded( const std::string& profile );
+    virtual void OnAuthenticationFailed( const std::string& profile, const std::string& reason );
     // SwordMessageHandler_ABC interface
-    void OnReceiveMessage( const sword::SimToClient& message );
-    void OnReceiveMessage( const sword::MessengerToClient& message );
+    virtual void OnReceiveMessage( const sword::SimToClient& message );
+    virtual void OnReceiveMessage( const sword::MessengerToClient& message );
     //
     void RegisterMessageHandler( int context, std::auto_ptr< MessageHandler_ABC > handler );
     void AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC > handler );
