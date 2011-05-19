@@ -1331,40 +1331,54 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFires, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFire, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='fire-human-damage' id='damages' ranks='officer,sub-officer,troopers' states='dead'/>"
-                             "    <extract function='direct-fire-unit' id='units'/>"
-                             "    <transform function='is-one-of' type='unsigned long' select='12,42' input='units' id='selected-fires'/>"
-                             "    <transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
-                             "    <reduce type='float' function='sum' input='the-damages' id='sum'/>"
+                             "    <extract function='fire-human-damages' id='damages' ranks='officer,sub-officer,troopers' states='dead'/>"
+                             "    <transform function='domain' type='int' select='12,17' input='damages' id='domained-damages'/>"
+                             "    <reduce type='float' function='sum' input='domained-damages' id='sum'/>"
                              "    <result function='plot' input='sum' type='float'/>"
                              "</indicator>" );
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::CreateDirectFire( 12, 12 ) );
-    task->Receive( TestTools::CreateDirectFire( 13, 13 ) );
+    task->Receive( TestTools::MakeUnitDamages( 12, 13, 0, 3 ) );
+    task->Receive( TestTools::MakeUnitDamages( 12, 23, 0, 5 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 12, 26, 2, 5 ) );
-    task->Receive( TestTools::StopFire( 13, 14 ) );
-    task->Receive( TestTools::CreateDirectFire( 14, 14 ) );
-    task->Receive( TestTools::CreateDirectFire( 15, 15 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 13, 13 ) );
-    task->Receive( TestTools::StopFire( 14, 12 ) );
-    task->Receive( TestTools::StopFire( 15, 14 ) );
+    task->Receive( TestTools::MakeUnitDamages( 17, 23, 0, 1 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::CreateDirectFire( 16, 15 ) );
-    task->Receive( TestTools::CreateDirectFire( 17, 42 ) );
+    task->Receive( TestTools::EndTick() );
+    double expectedResult[] = { 8, 0, 1, 0 };
+    TestTools::MakeExpectation( publisher, expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestHumansLossFromDirectFire
+// Created: FPO 2011-05-19
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestHumansLossFromDirectFire, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='fire-human-loss' id='damages' ranks='officer,sub-officer,troopers' states='dead'/>"
+                             "    <transform function='domain' type='int' select='13,23' input='damages' id='domained-damages'/>"
+                             "    <reduce type='float' function='sum' input='domained-damages' id='sum'/>"
+                             "    <result function='plot' input='sum' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeUnitDamages( 12, 13, 0, 3 ) );
+    task->Receive( TestTools::MakeUnitDamages( 12, 23, 0, 5 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 16, 17 ) );
-    task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
-    task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
-    task->Receive( TestTools::StopFire( 17, 16, 4, 6 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 0., 5., 0., 0., 6. };
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeUnitDamages( 17, 23, 0, 1 ) );
+    task->Receive( TestTools::MakeUnitDamages( 12, 23, 0, 5 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    double expectedResult[] = { 8, 0, 6, 0 };
     TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }
@@ -1376,13 +1390,11 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFire, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFireInZone, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='fire-human-damage' id='damages' ranks='officer,sub-officer,troopers' states='dead'/>"
-                             "    <extract function='direct-fire-unit' id='units'/>"
+                             "    <extract function='fire-human-damages' id='damages' ranks='officer,sub-officer,troopers' states='dead'/>"
                              "    <extract function='position' id='positions'/>"
                              "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
-                             "    <transform function='compose' type='position' input='positions,units' id='fire-positions'/>"
-                             "    <transform function='contains' input='circle,fire-positions' id='selected-fires'/>"
-                             "    <transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
+                             "    <transform function='contains' input='circle,positions' id='selected-units'/>"
+                             "    <transform function='filter' type='float' input='selected-units,damages' id='the-damages'/>"
                              "    <reduce type='float' function='sum' input='the-damages' id='sum'/>"
                              "    <result function='plot' input='sum' type='float'/>"
                              "</indicator>" );
@@ -1394,33 +1406,15 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFireInZone, Fixture )
     task->Receive( TestTools::MakePosition( "31TBN7728449242", 15 ) );
     task->Receive( TestTools::MakePosition( "31TBN7728449220", 42 ) );
     task->Receive( TestTools::MakePosition( "31TCM1543486826", 16 ) );
-    task->Receive( TestTools::CreateDirectFire( 12, 12 ) );
-    task->Receive( TestTools::CreateDirectFire( 13, 13 ) );
-    task->Receive( TestTools::CreateDirectFire( 97, 16 ) );
+    task->Receive( TestTools::MakeUnitDamages( 12, 13, 0, 1 ) );
+    task->Receive( TestTools::MakeUnitDamages( 16, 21, 0, 2 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 12, 18, 5, 4 ) );
-    task->Receive( TestTools::StopFire( 13, 19 ) );
-    task->Receive( TestTools::StopFire( 97, 19, 3, 7 ) );
-    task->Receive( TestTools::CreateDirectFire( 14, 14 ) );
-    task->Receive( TestTools::CreateDirectFire( 15, 15 ) );
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 13, 14 ) );
-    task->Receive( TestTools::StopFire( 14, 13 ) );
-    task->Receive( TestTools::StopFire( 15, 18 ) );
+    task->Receive( TestTools::MakeUnitDamages( 12, 13, 0, 11 ) );
     task->Receive( TestTools::EndTick() );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::CreateDirectFire( 16, 15 ) );
-    task->Receive( TestTools::CreateDirectFire( 17, 42 ) );
-    task->Receive( TestTools::EndTick() );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 16, 13 ) );
-    task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
-    task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
-    task->Receive( TestTools::StopFire( 17, 17, 3, 5 ) );
-    task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 0, 4, 0, 0, 5 };
+    double expectedResult[] = { 1, 0, 11 };
     TestTools::MakeExpectation( publisher, expectedResult );
     task->Commit();
 }

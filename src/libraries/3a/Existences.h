@@ -12,6 +12,7 @@
 
 #include "Values.h"
 #include "Extractors.h"
+#include "FireHumanDamages.h"
 
 // =============================================================================
 /** @namespace  Existences
@@ -39,8 +40,8 @@ namespace existences
     };
 
 typedef Existence< extractors::MaintenanceHandlingUnitId > MaintenanceHandlingUnitId;
-typedef Existence< extractors::DirectFireUnitId          > DirectFireUnitId;
-typedef Existence< extractors::IndirectFireUnitId        > IndirectFireUnitId;
+typedef Existence< extractors::DirectFireUnitId >          DirectFireUnitId;
+typedef Existence< extractors::IndirectFireUnitId >        IndirectFireUnitId;
 
 }
 

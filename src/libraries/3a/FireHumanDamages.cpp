@@ -97,19 +97,15 @@ FireHumanDamages::FireHumanDamages( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 float FireHumanDamages::Extract( const sword::SimToClient& wrapper ) const
 {
-    const StopUnitFire& stop = wrapper.message().stop_unit_fire();
+    const UnitDamagedByUnitFire& damages = wrapper.message().unit_damaged_by_unit_fire();
     float result = 0;
-    for( int u = 0; u < stop.units_damages().elem_size(); ++u )
+    for( int e = 0; e < damages.humans().elem_size(); ++e )
     {
-        const UnitFireDamages& damages = stop.units_damages().elem( u );
-        for( int e = 0; e < damages.humans().elem_size(); ++e )
-        {
-            const UnitHumanFireDamage& damage = damages.humans().elem( e );
-            if( ( rankMask_ & ( 1 << damage.rank() ) ) != 0 )
-                for( unsigned int i = 0; i < nHumanDamageStates; ++i )
-                    if( ( stateMask_ & ( 1 << i ) ) != 0 )
-                        result += ( damage.*humanDamageData[i] )();
-        }
+        const UnitHumanFireDamage& damage = damages.humans().elem( e );
+        if( ( rankMask_ & ( 1 << damage.rank() ) ) != 0 )
+            for( unsigned int i = 0; i < nHumanDamageStates; ++i )
+                if( ( stateMask_ & ( 1 << i ) ) != 0 )
+                    result += ( damage.*humanDamageData[i] )();
     }
     return result;
 }

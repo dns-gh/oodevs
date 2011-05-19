@@ -105,8 +105,10 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
         Extract< existences::IndirectFireUnitId, IdentifierValue >( name, xis, result );
     else if( value == "fire-component-damage" )
         Extract< events::FireComponentDamages, IdentifierValue >( name, xis, result );
-    else if( value == "fire-human-damage" )
-        Extract< events::FireHumanDamages, IdentifierValue >( name, xis, result );
+    else if( value == "fire-human-damages" )
+        Extract< events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueFirer >( name, xis, result );
+    else if( value == "fire-human-loss" )
+        Extract< events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueTarget >( name, xis, result );
     else if( value == "woundhumans" )
         Extract< events::WoundHumans, extractors::WoundHumans::IdentifierValue >( name, xis, result );
     else if( value == "ambulances" )

@@ -27,7 +27,6 @@ namespace extractors
 // =============================================================================
 class WoundHumans : public Extractor< NumericValue >
 {
-
 public:
     struct IdentifierValue : public IdentifierValue_ABC
     {
@@ -54,7 +53,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              WoundHumans();
-    /*implicit*/ WoundHumans( xml::xistream& xis );
+    /*explicit*/ WoundHumans( xml::xistream& xis );
     virtual ~WoundHumans();
     //@}
 

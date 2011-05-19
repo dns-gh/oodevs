@@ -13,6 +13,8 @@
 #include "Extractors.h"
 #include "FilterHelper.h"
 
+#include "IdentifierValue_ABC.h"
+
 namespace extractors
 {
 
@@ -25,6 +27,32 @@ namespace extractors
 class FireHumanDamages : public Extractor< NumericValue >
 {
 public:
+    struct IdentifierValueFirer : public IdentifierValue_ABC
+    {
+        enum { has_parameter = false };
+        //! @name Operations
+        //@{
+        virtual void Receive( const sword::SimToClient& wrapper )
+        {
+            if( wrapper.message().has_unit_damaged_by_unit_fire() )
+                Set( wrapper.message().unit_damaged_by_unit_fire().firer().id() );
+        }
+        //@}
+    };
+    struct IdentifierValueTarget : public IdentifierValue_ABC
+    {
+        enum { has_parameter = false };
+        //! @name Operations
+        //@{
+        virtual void Receive( const sword::SimToClient& wrapper )
+        {
+            if( wrapper.message().has_unit_damaged_by_unit_fire() )
+                Set( wrapper.message().unit_damaged_by_unit_fire().unit().id() );
+        }
+        //@}
+    };
+
+public:
     //! @name Types
     //@{
     enum { has_parameter = true };
@@ -34,15 +62,23 @@ public:
     //! @name Constructors/Destructor
     //@{
              FireHumanDamages();
-    /*implicit*/ FireHumanDamages( xml::xistream& xis );
+    /*explicit*/ FireHumanDamages( xml::xistream& xis );
     virtual ~FireHumanDamages();
     //@}
 
     //! @name Operations
     //@{
+    bool IsCreation( const sword::SimToClient& wrapper ) const
+    {
+        return wrapper.message().has_control_begin_tick();
+    }
+    bool IsDestruction( const sword::SimToClient& wrapper ) const
+    {
+        return wrapper.message().has_control_end_tick();
+    }
     bool HasValue( const sword::SimToClient& wrapper ) const
     {
-        return wrapper.message().has_stop_unit_fire();
+        return wrapper.message().has_unit_damaged_by_unit_fire();
     }
     float Extract( const sword::SimToClient& wrapper ) const;
     //@}

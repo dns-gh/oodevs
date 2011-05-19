@@ -58,6 +58,7 @@ public:
     static sword::SimToClient CreateDirectFire( unsigned fire_id, unsigned long firer );
     static sword::SimToClient CreateIndirectFire( unsigned fire_id, unsigned long firer );
     static sword::SimToClient StopFire( unsigned fire_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0 );
+    static sword::SimToClient MakeUnitDamages( unsigned int firer_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0 );
     static sword::SimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0, unsigned long equip_id = 0, unsigned long breakdown_id = 0 );
     static sword::SimToClient DestroyConsign( unsigned long id );
     static bool IsCloseCombatPower( const extractors::PowerExtractor_ABC& extractor );

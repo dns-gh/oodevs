@@ -39,8 +39,23 @@ namespace events
         Extractor extractor_;
     };
 
+    template< typename Extractor >
+    struct Period : public TickValue< typename Extractor::Type >
+    {
+        enum { has_parameter = Extractor::has_parameter };
+
+        explicit Period( const Extractor& extractor = Extractor() )
+            : extractor_( extractor ) {}
+        void Receive( const sword::SimToClient& message )
+        {
+            if( extractor_.HasValue( message ) )
+                Set( extractor_.Extract( message ) );
+        }
+        Extractor extractor_;
+    };
+
 typedef Event< extractors::FireComponentDamages > FireComponentDamages;
-typedef Event< extractors::FireHumanDamages > FireHumanDamages;
+typedef Period< extractors::FireHumanDamages > FireHumanDamages;
 typedef Event< extractors::WoundHumans > WoundHumans;
 
 }

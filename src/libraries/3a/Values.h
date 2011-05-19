@@ -126,6 +126,35 @@ struct PulsedValue : public Value< T >
 };
 
 // =============================================================================
+/** @class  TickValue
+@brief  "tick" value
+*/
+// Created: FPO 2011-05-19
+// =============================================================================
+template< typename T >
+struct TickValue : public Value< T >
+{
+    TickValue()
+        : value_(), set_( false ) {}
+    void Prepare()
+    {
+        value_ = 0;
+    }
+    void Push( ValueHandler_ABC< Type >& handler )
+    {
+        if( set_ )
+            handler.Handle( value_ );
+    }
+    void Set( const Type& value )
+    {
+        value_ += value;
+        set_ = true;
+    }
+    Type value_;
+    bool set_;
+};
+
+// =============================================================================
 /** @function  EvaluateValue
 */
 // Created: AGE 2007-08-30

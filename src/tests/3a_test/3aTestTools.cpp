@@ -348,6 +348,21 @@ sword::SimToClient TestTools::StopFire( unsigned fire_id, unsigned int target_id
 }
 
 // -----------------------------------------------------------------------------
+// Name: 3aTestTools::MakeUnitDamages
+// Created: FPO 2011-05-18
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::MakeUnitDamages( unsigned int firer_id, unsigned int target_id, unsigned long damage_count /*= 0*/, unsigned long deadhumans_count /*= 0*/ )
+{
+    SimToClient result;
+    UnitDamagedByUnitFire& damage = *result.mutable_message()->mutable_unit_damaged_by_unit_fire();
+    damage.mutable_firer()->set_id( firer_id );
+    damage.mutable_equipments()->add_elem()->set_unavailable( damage_count );
+    damage.mutable_humans()->add_elem()->set_dead( deadhumans_count );
+    damage.mutable_unit()->set_id( target_id );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: 3aTestTools::CreateConsign
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
