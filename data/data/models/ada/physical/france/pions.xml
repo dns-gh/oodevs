@@ -11979,6 +11979,7 @@
       <equipment count="2" crew="1" type="TRM 4000"/>
       <equipment count="5" crew="3" major="true" type="AMBULANCE J5 3 PAX"/>
       <equipment count="1" crew="2" type="VTL R 2 Pers"/>
+      <equipment count="1" crew="3" type="KrAZ 255B"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
@@ -12108,4 +12109,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1566516232" -->
+<!-- signature="3905112646" -->
