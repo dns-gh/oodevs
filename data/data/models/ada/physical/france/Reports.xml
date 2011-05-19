@@ -381,7 +381,7 @@
   </report>
   <report category="operational" id="267" message="fin degagement"/>
   <report category="operational" id="268" message="tir direct impossible"/>
-  <report category="operational" id="269" message="tir indirect sur la cible : %1">
+  <report category="operational" id="269" message="Premier coup parti sur la cible : %1">
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="270" message="pas de capacité de tir"/>
@@ -405,7 +405,7 @@
   <report category="operational" id="282" message="Fin des travaux pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report category="operational" id="283" message="Fin du tir indirect sur la cible : %1">
+  <report category="operational" id="283" message="Tir execute sur la cible : %1">
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="284" message="Debut de neutralisation de la cible : %1">
@@ -513,6 +513,7 @@
   <report category="operational" id="362" message="Début de deploiement"/>
   <report category="operational" id="363" message="Début fouille du point"/>
   <report category="operational" id="364" message="Fouille du point terminée"/>
+  <report category="operational" id="365" message="Tir impossible : le tireur n'est pas deployee"/>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -524,4 +525,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="0790411889" -->
+<!-- signature="1462595485" -->
