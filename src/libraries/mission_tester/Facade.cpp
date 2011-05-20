@@ -104,7 +104,7 @@ void Facade::AddListener( boost::shared_ptr< Listener_ABC > listener )
 // Name: Facade::MissionCreated
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-void Facade::MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const
+void Facade::MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission )
 {
     BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
         listener->MissionCreated( target, mission );
@@ -114,7 +114,7 @@ void Facade::MissionCreated( const kernel::Entity_ABC& target, const kernel::Ord
 // Name: Facade::FragOrderCreated
 // Created: PHC 2011-05-19
 // -----------------------------------------------------------------------------
-void Facade::FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const
+void Facade::FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission )
 {
     BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
         listener->FragOrderCreated( target, mission );
@@ -124,9 +124,9 @@ void Facade::FragOrderCreated( const kernel::Entity_ABC& target, const kernel::O
 // Name: Facade::MissionAknowledged
 // Created: PHC 2011-04-08
 // -----------------------------------------------------------------------------
-void Facade::MissionAcknowledged( const sword::Tasker& tasker ) const
+void Facade::MissionAcknowledged( const sword::Tasker& tasker )
 {
-    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+    BOOST_FOREACH( T_Listeners::value_type& listener, listeners_ )
         listener->MissionAcknowledged( tasker );
 }
 
@@ -134,9 +134,9 @@ void Facade::MissionAcknowledged( const sword::Tasker& tasker ) const
 // Name: Facade::FragOrderAcknowledged
 // Created: PHC 2011-05-19
 // -----------------------------------------------------------------------------
-void Facade::FragOrderAcknowledged( const sword::Tasker& tasker ) const
+void Facade::FragOrderAcknowledged( const sword::Tasker& tasker )
 {
-    BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
+    BOOST_FOREACH( T_Listeners::value_type& listener, listeners_ )
         listener->FragOrderAcknowledged( tasker );
 }
 

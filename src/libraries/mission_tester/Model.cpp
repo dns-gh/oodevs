@@ -58,7 +58,7 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
             BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
                 listener->FragOrderErrorAck( message.message().frag_order_ack().tasker() );
         else
-            BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+            BOOST_FOREACH( Listener_ABC* listener, listeners_ )
                 listener->FragOrderAcknowledged( message.message().frag_order_ack().tasker() );
     }
     if( message.message().has_order_ack() )
@@ -67,7 +67,7 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
             BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
                 listener->MissionErrorAck( message.message().order_ack().tasker() );
         else 
-            BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+            BOOST_FOREACH( Listener_ABC* listener, listeners_ )
                 listener->MissionAcknowledged( message.message().order_ack().tasker() );
     }
 }
@@ -94,7 +94,7 @@ void Model::OnReceiveMessage( const sword::AuthenticationToClient& /*message*/ )
 // Name: Model::Register
 // Created: PHC 2011-04-08
 // -----------------------------------------------------------------------------
-void Model::Register( const Listener_ABC& listener )
+void Model::Register( Listener_ABC& listener )
 {
     listeners_.push_back( &listener );
 }

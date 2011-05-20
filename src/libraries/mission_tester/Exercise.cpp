@@ -115,7 +115,7 @@ namespace
 // Name: Exercise::CreateMission
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-bool Exercise::CreateMission( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const
+bool Exercise::CreateMission( const kernel::Entity_ABC& target, const kernel::MissionType& mission )
 {
     std::auto_ptr< actions::Action_ABC > action( actionFactory_->CreateAction( target, mission ) );
     if( CreateOrder( target, mission, action.get() ) )
@@ -130,7 +130,7 @@ bool Exercise::CreateMission( const kernel::Entity_ABC& target, const kernel::Mi
 // Name: Exercise::CreateFragOrder
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-bool Exercise::CreateFragOrder( const kernel::Entity_ABC& target, const kernel::FragOrderType& mission ) const
+bool Exercise::CreateFragOrder( const kernel::Entity_ABC& target, const kernel::FragOrderType& mission )
 {
     std::auto_ptr< actions::Action_ABC > action( actionFactory_->CreateAction( target, mission ) );
     if( CreateOrder( target, mission, action.get() ) )
@@ -170,7 +170,7 @@ bool Exercise::CreateOrder( const kernel::Entity_ABC& target, const kernel::Orde
 // Name: Exercise::Register
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-void Exercise::Register( const Listener_ABC& listener )
+void Exercise::Register( Listener_ABC& listener )
 {
     listeners_.push_back( &listener );
 }
@@ -189,9 +189,9 @@ void Exercise::NotifyInvalidParameter( const kernel::Entity_ABC& target, const k
 // Name: Exercise::NotifyMissionCreated
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-void Exercise::NotifyMissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const
+void Exercise::NotifyMissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission )
 {
-    BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+    BOOST_FOREACH( Listener_ABC* listener, listeners_ )
         listener->MissionCreated( target, mission );
 }
 
@@ -199,8 +199,8 @@ void Exercise::NotifyMissionCreated( const kernel::Entity_ABC& target, const ker
 // Name: Exercise::NotifyFragOrderCreated
 // Created: PHC 2011-05-19
 // -----------------------------------------------------------------------------
-void Exercise::NotifyFragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const
+void Exercise::NotifyFragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission )
 {
-    BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+    BOOST_FOREACH( Listener_ABC* listener, listeners_ )
         listener->FragOrderCreated( target, mission );
 }

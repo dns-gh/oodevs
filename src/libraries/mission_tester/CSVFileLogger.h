@@ -7,27 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __Logger_h_
-#define __Logger_h_
+#ifndef __CSVFileLogger_h_
+#define __CSVFileLogger_h_
 
-#include "Listener_ABC.h"
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include "FileLogger.h"
 
 namespace mission_tester
 {
 // =============================================================================
-/** @class  Logger
-    @brief  Logger
+/** @class  CSVFileLogger
+    @brief  CSVFileLogger
 */
 // Created: PHC 2011-04-06
 // =============================================================================
-class Logger : public Listener_ABC
+class CSVFileLogger : public FileLogger
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Logger( std::ostream& os );
-    virtual ~Logger();
+    explicit CSVFileLogger( const std::string& filename );
+    virtual ~CSVFileLogger();
     //@}
 
     //! @name Operations
@@ -38,28 +37,15 @@ public:
     virtual void FragOrderAcknowledged( const sword::Tasker& tasker );
     virtual void MissionErrorAck( const sword::Tasker& tasker ) const;
     virtual void FragOrderErrorAck( const sword::Tasker& tasker ) const;
+    virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const;
     virtual void ConnectionSucceeded( const std::string& endpoint ) const;
     virtual void AuthenticationSucceeded( const std::string& profile ) const;
-    virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const;
     //@}
 
-protected:
+private:
     //! @name Helpers
     //@{
     void Created( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const std::string& orderType );
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::map< unsigned int, std::pair< unsigned int, std::string > > T_Missions;
-    typedef T_Missions::iterator                                            IT_Missions;
-    //@}
-
-    //! @name Member data
-    //@{
-    std::ostream& os_;
-    std::auto_ptr< boost::posix_time::time_facet > facet_;
-    T_Missions missions_;
     //@}
 };
 }

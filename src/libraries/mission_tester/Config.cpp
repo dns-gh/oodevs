@@ -14,6 +14,7 @@
 #include "Exercise.h"
 #include "Facade.h"
 #include "FileLogger.h"
+#include "CSVFileLogger.h"
 #include "SchedulerFactory.h"
 #include "Timeout.h"
 #include "client_proxy/SwordMessageHandler_ABC.h"
@@ -22,6 +23,7 @@
 #include <boost/program_options.hpp>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
+#include "Scheduler_ABC.h"
 
 using namespace mission_tester;
 namespace bpo = boost::program_options;
@@ -92,6 +94,7 @@ void Config::ConfigureLogging( Facade& facade ) const
         try
         {
             facade.AddListener( boost::shared_ptr< Listener_ABC >( new FileLogger( logFile_ ) ) );
+            facade.AddListener( boost::shared_ptr< Listener_ABC >( new CSVFileLogger( logFile_ ) ) );
         }
         catch( ... )
         {
@@ -137,7 +140,7 @@ std::auto_ptr< Exercise > Config::CreateExercise( kernel::EntityResolver_ABC& en
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::auto_ptr< Scheduler_ABC > Config::CreateScheduler
+// Name: Config::CreateScheduler
 // Created: PHC 2011-05-12
 // -----------------------------------------------------------------------------
 std::auto_ptr< Scheduler_ABC > Config::CreateScheduler( SchedulerFactory& factory ) const
@@ -146,5 +149,5 @@ std::auto_ptr< Scheduler_ABC > Config::CreateScheduler( SchedulerFactory& factor
         return factory.CreateAgentScheduler();
     if( entityType_ == automat )
         return factory.CreateAutomatScheduler();
-    return std::auto_ptr< Scheduler_ABC >();
+    return 0;
 }

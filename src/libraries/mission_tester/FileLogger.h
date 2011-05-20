@@ -36,12 +36,6 @@ private:
     //@{
     typedef boost::base_from_member< std::auto_ptr< std::ostream > > T_Stream;
     //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::auto_ptr< std::ostream > stream_;
-    //@}
 };
 }
 

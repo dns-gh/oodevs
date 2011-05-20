@@ -57,7 +57,7 @@ public:
     virtual void OnReceiveMessage( const sword::MessengerToClient& message );
     virtual void OnReceiveMessage( const sword::AuthenticationToClient& message );
 
-    void Register( const Listener_ABC& listener );
+    void Register( Listener_ABC& listener );
     //@}
 
     //! @name Resolvers
@@ -96,7 +96,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::vector< const Listener_ABC* > listeners_;
+    std::vector< Listener_ABC* > listeners_;
     const kernel::StaticModel& staticModel_;
     T_Agents agents_;
     T_Automats automats_;

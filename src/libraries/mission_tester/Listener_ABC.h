@@ -44,10 +44,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const = 0;
-    virtual void FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const = 0;
-    virtual void MissionAcknowledged( const sword::Tasker& tasker ) const = 0;
-    virtual void FragOrderAcknowledged( const sword::Tasker& tasker ) const = 0;
+    virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) = 0;
+    virtual void FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) = 0;
+    virtual void MissionAcknowledged( const sword::Tasker& tasker ) = 0;
+    virtual void FragOrderAcknowledged( const sword::Tasker& tasker ) = 0;
     virtual void MissionErrorAck( const sword::Tasker& tasker ) const = 0;
     virtual void FragOrderErrorAck( const sword::Tasker& tasker ) const = 0;
     virtual void ConnectionSucceeded( const std::string& endpoint ) const = 0;

@@ -67,25 +67,25 @@ public:
 
     //! @name operations
     //@{
-    bool CreateFragOrder( const kernel::Entity_ABC& target, const kernel::FragOrderType& mission ) const;
-    bool CreateMission( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
+    bool CreateFragOrder( const kernel::Entity_ABC& target, const kernel::FragOrderType& mission );
+    bool CreateMission( const kernel::Entity_ABC& target, const kernel::MissionType& mission );
     bool CreateOrder( const kernel::Entity_ABC& target, const kernel::OrderType& order, actions::Action_ABC* action ) const;
-    void Register( const Listener_ABC& listener );
+    void Register( Listener_ABC& listener );
     //@}
 
 private:
     //! @name Helpers
     //@{
     void NotifyInvalidParameter( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const;
-    void NotifyMissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const;
-    void NotifyFragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission ) const;
+    void NotifyMissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
+    void NotifyFragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     //@}
 
 private:
     //! @name members data
     //@{
     Publisher_ABC& publisher_;
-    std::vector< const Listener_ABC* > listeners_;
+    std::vector< Listener_ABC* > listeners_;
     std::auto_ptr< kernel::Controller > controller_;
     std::auto_ptr< kernel::Time_ABC > time_;
     std::auto_ptr< kernel::AgentKnowledgeConverter_ABC > agentKnowledgeConverter_;
