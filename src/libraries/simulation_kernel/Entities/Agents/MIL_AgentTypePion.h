@@ -84,9 +84,12 @@ public:
     //@}
 
 protected:
+    //! @name // $$$$ _RC_ SBO 2011-05-20: only for test purpose...
+    //@{
     explicit MIL_AgentTypePion( const DEC_Model_ABC* pModel );
     template< typename T >
-        MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* pUnitTypeType /*Used only to determine T type*/ );
+    MIL_AgentTypePion( const std::string& strName, xml::xistream& xis, T* pUnitTypeType /*Used only to determine T type*/ );
+    //@}
 
 private:
     //! @name Types
