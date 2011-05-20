@@ -17,9 +17,10 @@
 // Name: ObjectPrototype constructor
 // Created: JCR 2008-05-23
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( const std::string& type, unsigned int id )
+ObjectPrototype::ObjectPrototype( const std::string& type, unsigned int id, double pointSize )
     : type_ ( type )
     , id_ ( id )
+    , pointSize_( pointSize )
 {
     // NOTHING
 }
@@ -67,4 +68,13 @@ const MIL_ObjectType_ABC& ObjectPrototype::GetType() const
 void ObjectPrototype::Build( MIL_Object_ABC& object ) const
 {
     std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Instanciate, _1, boost::ref( object ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPrototype::GetPointSize
+// Created: LDC 2011-05-20
+// -----------------------------------------------------------------------------
+double ObjectPrototype::GetPointSize() const
+{
+    return pointSize_;
 }

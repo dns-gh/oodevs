@@ -112,7 +112,7 @@ void MIL_Object_ABC::Unregister()
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
 {
-    TER_Object_ABC::Initialize( localisation );
+    TER_Object_ABC::Initialize( localisation, pType_->GetPointSize() );
     // Notify the agent natively inside the object that they are inside it
     TER_Agent_ABC::T_AgentPtrVector agentsInsideObject;
     TER_World::GetWorld().GetAgentManager().GetListWithinLocalisation( GetLocalisation(), agentsInsideObject );

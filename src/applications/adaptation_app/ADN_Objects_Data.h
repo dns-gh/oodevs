@@ -637,6 +637,7 @@ public:
         ADN_Type_String strName_;
         ADN_Type_String strType_;
         ADN_Type_String geometries_;
+        ADN_Type_Double pointSize_;
         ADN_TypePtr_InVector_ABC< ADN_Symbols_Data::SymbolInfo > symbol_;
 
         typedef std::map< std::string, boost::shared_ptr< helpers::ADN_TypeCapacity_Infos > > T_CapacityMap;

@@ -1177,7 +1177,8 @@ INIT_DATA( ADN_CapacityInfos_AltitudeModifier,        "AltitudeModifier",       
 ADN_Objects_Data::ObjectInfos::ObjectInfos( const std::string& type )
     : ADN_Ref_ABC()
     , strType_   ( type )
-    , geometries_ ( "polygon" )
+    , geometries_( "polygon" )
+    , pointSize_ ( 0. )
 {
     symbol_.SetParentNode( *this );
     geometries_.SetParentNode( *this );
@@ -1189,9 +1190,10 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos( const std::string& type )
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ObjectInfos::ObjectInfos()
-    : ADN_Ref_ABC ()
-    , strType_    ()
-    , geometries_ ( "polygon" )
+    : ADN_Ref_ABC()
+    , strType_   ()
+    , geometries_( "polygon" )
+    , pointSize_ ( 0. )
 {
     symbol_.SetParentNode( *this );
     geometries_.SetParentNode( *this );
@@ -1295,6 +1297,7 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& xis )
         >> xml::attribute( "type", strType_ )
         >> xml::attribute( "geometry", geometries_ )
         >> xml::optional >> xml::attribute( "symbol", code )
+        >> xml::optional >> xml::attribute( "point-size", pointSize_ )
         >> xml::list( *this, &ADN_Objects_Data::ObjectInfos::ReadCapacityArchive );
 
     ADN_Symbols_Data& symbolsData = ADN_Workspace::GetWorkspace().GetSymbols().GetData();
@@ -1313,6 +1316,8 @@ void ADN_Objects_Data::ObjectInfos::WriteArchive( xml::xostream& xos )
         << xml::attribute( "name", strName_ )
         << xml::attribute( "geometry", geometries_.GetData() )
         << xml::attribute( "symbol", code );
+    if( pointSize_.GetData() )
+        xos << xml::attribute( "point-size", pointSize_.GetData() );
     if( strType_ == "" )
         xos << xml::attribute( "type", strName_ );
     else

@@ -100,7 +100,9 @@ void MIL_ObjectLoader::ReadObjectPrototype( xml::xistream& xis )
     boost::shared_ptr< ObjectPrototype >& prototype = prototypes_[ type ];
     if( prototype.get() )
         throw std::runtime_error( __FUNCTION__ " - Object type redefinition: " + type );
-    prototype.reset( new ObjectPrototype( type, prototypes_.size() ) );
+    double pointSize = 250.;
+    xis >> xml::optional() >> xml::attribute( "point-size", pointSize );
+    prototype.reset( new ObjectPrototype( type, prototypes_.size(), pointSize ) );
     xis >> xml::list( *this, &MIL_ObjectLoader::ReadCapacity, *prototype );
     factory_->FinalizeCreate( *prototype );
 }
@@ -164,7 +166,8 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& 
         return 0;
     }
     TER_Localisation location;
-    if( ! NET_ASN_Tools::ReadLocation( message.elem( 1 ).value( 0 ).location(), location ) )
+    double rPointSize = it->second->GetPointSize();
+    if( ! NET_ASN_Tools::ReadLocation( message.elem( 1 ).value( 0 ).location(), location, rPointSize ) )
         return 0;
     Object* pObject = new Object( *it->second, army, &location, message.elem( 2 ).value( 0 ).acharstr() );
 

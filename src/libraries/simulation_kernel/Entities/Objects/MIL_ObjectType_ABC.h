@@ -28,14 +28,11 @@ public:
     virtual ~MIL_ObjectType_ABC() {}
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
     virtual unsigned int GetID() const = 0;
     virtual const std::string& GetName() const = 0;
-    //@}
-
-    //! @name
-    //@{
+    virtual double GetPointSize() const = 0;
     template< typename Capacity >
     const Capacity* GetCapacity() const;
     //@}

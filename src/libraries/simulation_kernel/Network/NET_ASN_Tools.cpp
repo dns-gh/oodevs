@@ -29,7 +29,7 @@ namespace bpt = boost::posix_time;
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
 // static
-bool NET_ASN_Tools::ReadLocation( const Location& asnLocalisation, TER_Localisation& localisation )
+bool NET_ASN_Tools::ReadLocation( const Location& asnLocalisation, TER_Localisation& localisation, double rPointSize )
 {
     //$$$$ ACCEDER DIRECTEMENT A LA LOCALISATION (EVITER COPIE)
     T_PointVector pointVector;
@@ -40,7 +40,7 @@ bool NET_ASN_Tools::ReadLocation( const Location& asnLocalisation, TER_Localisat
         NET_ASN_Tools::ReadPoint( asnLocalisation.coordinates().elem(i), vPos );
         pointVector.push_back( vPos );
     }
-    return localisation.Reset( (TER_Localisation::E_LocationType)asnLocalisation.type(), pointVector );
+    return localisation.Reset( (TER_Localisation::E_LocationType)asnLocalisation.type(), pointVector, rPointSize );
 }
 
 //-----------------------------------------------------------------------------

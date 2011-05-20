@@ -13,6 +13,7 @@
 #define __ADN_Objects_GUI_h_
 
 #include "ADN_GUI_ABC.h"
+#include "ADN_EditLine.h"
 
 class QWidget;
 class ADN_Objects;
@@ -34,6 +35,7 @@ public:
     {
         eName = 0,
         eGeometry,
+        ePointSize,
         eSymbol,
         eActivableCapacityPresent,
         eAttritionCapacityPresent,
@@ -139,6 +141,7 @@ public:
         //! @name slots
         //@{
         void OnSpeedImpactComboChanged();
+        void OnGeometryChanged( const QString& );
         //@}
 
 private:
@@ -147,6 +150,7 @@ private:
     ADN_Objects_Data& data_;
     QComboBox* pSpeedImpactCombo_;
     QWidget* pMaxAgentSpeed_;
+    ADN_EditLine_Double* pPointDistance_;
     QGroupBox* pGroup_;
     //@}
 };

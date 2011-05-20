@@ -80,9 +80,9 @@ public:
     //-------------------------------------------------------------------------
     //@{
     // $$$$ JVT : ?????
-    bool Reset( E_LocationType nType, const T_PointVector& pointVector );
+    bool Reset( E_LocationType nType, const T_PointVector& pointVector, double rPointSize = 250. );
     void Reset();
-    void Reset( const TER_Localisation& localisation );
+    void Reset( const TER_Localisation& localisation, double rPointSize = 0. );
     void Reset( const MT_Vector2D& vPos );
     bool Reset( const T_PointVector& pointVector );
     bool Reset( const T_PointList&   pointList   );
@@ -155,11 +155,11 @@ private:
     /** @name Tools */
     //-------------------------------------------------------------------------
     //@{
-    bool Initialize();
+    bool Initialize( double rPointSize = 250. );
 
     bool InitializePolygon  ();
     bool InitializeLine     ();
-    bool InitializePoint    ();
+    bool InitializePoint    ( double rPointSize );
     bool InitializeSector   ();
     bool InitializeCircle   ();
     bool InitializeEllipse  ();

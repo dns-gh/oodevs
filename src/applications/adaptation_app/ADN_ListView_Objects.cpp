@@ -92,6 +92,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     vItemConnectors_[ ADN_Objects_GUI::eName ]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eGeometry ]->Connect( &pInfos->geometries_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::ePointSize ]->Connect( &pInfos->pointSize_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eSymbol ]->Connect( &pInfos->symbol_, bConnect );
 
     // process capacities

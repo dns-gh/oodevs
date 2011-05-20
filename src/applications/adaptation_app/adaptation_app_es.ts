@@ -3187,6 +3187,10 @@ tirador</translation>
         <source>Altitude modifier</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Point effect distance</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

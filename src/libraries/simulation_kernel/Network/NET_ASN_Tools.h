@@ -91,7 +91,7 @@ public:
     static bool ReadPoint( const sword::Point& asn, MT_Vector2D& vPoint );
     static void ReadPoint( const sword::CoordLatLong& asn, MT_Vector2D& vPoint );
     static bool ReadPointList( const sword::PointList& asn, T_PointVector& pointVector );
-    static bool ReadLocation( const sword::Location& asn, TER_Localisation& localisation );
+    static bool ReadLocation( const sword::Location& asn, TER_Localisation& localisation, double rPointSize = 250. );
     static void ReadDirection( const sword::Heading& asn, MT_Vector2D& vDir );
     static void ReadGDH( const sword::DateTime& asn, unsigned int& realTimeSec );
     static void ReadTick( const sword::DateTime& asn, unsigned int& simTick );

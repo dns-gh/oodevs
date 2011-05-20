@@ -164,9 +164,8 @@ bool TER_Localisation::InitializeLine()
 // Created: NLD 2003-09-24
 // -----------------------------------------------------------------------------
 inline
-bool TER_Localisation::InitializePoint()
+bool TER_Localisation::InitializePoint( double rRectSize )
 {
-    static double rRectSize = 250;
     if( pointVector_.size() < 1 )
         return false;
     // Transformation du point en rectangle
@@ -317,7 +316,7 @@ bool TER_Localisation::InitializeEllipse()
 // Created: NLD 2003-07-25
 // Last modified: JVT 03-09-02
 //-----------------------------------------------------------------------------
-bool TER_Localisation::Initialize()
+bool TER_Localisation::Initialize( double rPointSize )
 {
     switch( nType_ )
     {
@@ -325,7 +324,7 @@ bool TER_Localisation::Initialize()
         case eEllipse : return InitializeEllipse();
         case eLine    : return InitializeLine   ();
         case ePolygon : return InitializePolygon();
-        case ePoint   : return InitializePoint  ();
+        case ePoint   : return InitializePoint  ( rPointSize );
         case eSector  : return InitializeSector ();
         case eNone:
         default:
@@ -350,12 +349,12 @@ void TER_Localisation::Reset()
 // Name: TER_Localisation::Reset
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
-bool TER_Localisation::Reset( E_LocationType nType, const T_PointVector& pointVector )
+bool TER_Localisation::Reset( E_LocationType nType, const T_PointVector& pointVector, double rPointSize )
 {
     Reset();
     nType_       = nType;
     pointVector_ = pointVector;
-    return Initialize();
+    return Initialize( rPointSize );
 }
 
 // -----------------------------------------------------------------------------
@@ -407,7 +406,7 @@ bool TER_Localisation::Reset( const T_PointList& pointList )
 // Name: TER_Localisation::Reset
 // Created: NLD 2003-07-25
 //-----------------------------------------------------------------------------
-void TER_Localisation::Reset( const TER_Localisation& localisation )
+void TER_Localisation::Reset( const TER_Localisation& localisation, double pointSize )
 {
     Reset();
     nType_         = localisation.GetType        ();
@@ -415,13 +414,35 @@ void TER_Localisation::Reset( const TER_Localisation& localisation )
     bWasCircle_    = localisation.WasACircle     ();
     vCircleCenter_ = localisation.GetCircleCenter();
     rCircleRadius_ = localisation.GetCircleRadius();
-    if( nType_ == ePolygon )
-        polygon_ = localisation.polygon_;
-    else if( nType_ == eLine )
-        polyline_ = localisation.polyline_;
-    else if( nType_ == ePoint )
-        polygon_ = localisation.polygon_;
-    boundingBox_ = localisation.boundingBox_;
+    if( nType_ == ePoint )
+    {
+        if( !pointSize || pointSize*2 == localisation.boundingBox_.GetWidth() )
+        {
+            polygon_ = localisation.polygon_;
+            boundingBox_ = localisation.boundingBox_;
+        }
+        else
+        {
+            const MT_Vector2D& point = localisation.boundingBox_.GetCenter();
+            T_PointVector pointsTmp;
+            pointsTmp.reserve( 5 );
+            pointsTmp.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( point.rX_ - pointSize, point.rY_ - pointSize ) ));
+            pointsTmp.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( point.rX_ + pointSize, point.rY_ - pointSize ) ));
+            pointsTmp.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( point.rX_ + pointSize, point.rY_ + pointSize ) ));
+            pointsTmp.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( point.rX_ - pointSize, point.rY_ + pointSize ) ));
+            pointsTmp.push_back( TER_World::GetWorld().ClipPointInsideWorld( MT_Vector2D( point.rX_ - pointSize, point.rY_ - pointSize ) ));
+            polygon_.Reset( pointsTmp );
+            boundingBox_.Set( pointsTmp[0], pointsTmp[2] );
+        }
+    }
+    else
+    {
+        if( nType_ == ePolygon )
+            polygon_ = localisation.polygon_;
+        else if( nType_ == eLine )
+            polyline_ = localisation.polyline_;
+        boundingBox_ = localisation.boundingBox_;
+    }
 }
 
 //-----------------------------------------------------------------------------

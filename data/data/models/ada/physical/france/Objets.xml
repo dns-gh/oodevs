@@ -293,7 +293,7 @@
   <object geometry="polygon" name="Camp de réfugiés" symbol="G*SPAH----****X" type="refugees camp">
     <logistic/>
   </object>
-  <object geometry="point" name="Poste de contrôle" symbol="G*GPGPPK--****X" type="checkpoint">
+  <object geometry="point" name="Poste de contrôle" point-size="100" symbol="G*GPGPPK--****X" type="checkpoint">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
@@ -377,4 +377,4 @@
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="2330032806" -->
+<!-- signature="2073918812" -->

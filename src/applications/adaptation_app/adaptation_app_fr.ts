@@ -3189,6 +3189,10 @@ du tireur</translation>
         <source>Altitude modifier</source>
         <translation>Modificateur d&apos;altitude</translation>
     </message>
+    <message>
+        <source>Point effect distance</source>
+        <translation>Distance d&apos;effet pour un point</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

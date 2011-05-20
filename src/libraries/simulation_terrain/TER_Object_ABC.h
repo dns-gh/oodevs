@@ -52,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    void Initialize( const TER_Localisation& localisation );
+    void Initialize( const TER_Localisation& localisation, double pointSize = 250. );
     void Terminate();
 
     virtual bool IsInside( const MT_Vector2D& vPos ) const;

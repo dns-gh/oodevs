@@ -27,7 +27,7 @@ class ObjectPrototype : public MIL_ObjectType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPrototype( const std::string& type, unsigned int id );
+             ObjectPrototype( const std::string& type, unsigned int id, double pointSize );
     virtual ~ObjectPrototype();
     //@}
 
@@ -43,6 +43,7 @@ public:
     const MIL_ObjectType_ABC& GetType() const;
     unsigned int GetID() const;
     const std::string& GetName() const;
+    double GetPointSize() const;
     //@}
 
 private:
@@ -57,6 +58,7 @@ private:
     //@{
     const std::string type_;
     unsigned int id_;
+    double pointSize_;
     std::vector< ObjectCapacity_ABC* > capacities_;
     //@}
 };

@@ -134,6 +134,7 @@
 		<xs:complexContent>
 			<xs:extension base="T_ObjectCapacities">
 				<xs:attribute name="geometry" type="T_GeometryList" use="optional"/>
+				<xs:attribute name="point-size" type="xs:double" use="optional"/>
 				<xs:attribute name="name" type="xs:string" use="required"/>
 				<xs:attribute name="symbol" type="T_App6Symbol" use="optional"/>
 				<xs:attribute name="type" type="xs:string" use="required"/>

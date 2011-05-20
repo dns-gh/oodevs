@@ -37,9 +37,9 @@ TER_Object_ABC::~TER_Object_ABC()
 // Name: TER_Object_ABC::Initialize
 // Created: AGE 2005-01-31
 // -----------------------------------------------------------------------------
-void TER_Object_ABC::Initialize( const TER_Localisation& localisation )
+void TER_Object_ABC::Initialize( const TER_Localisation& localisation, double pointSize )
 {
-    location_.Reset( localisation );
+    location_.Reset( localisation, pointSize );
     InsertInWorld();
 }
 

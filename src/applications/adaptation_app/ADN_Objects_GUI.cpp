@@ -124,8 +124,11 @@ void ADN_Objects_GUI::Build()
     QWidget* pHolder = builder.AddFieldHolder( pGroup_ );
 
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name"),  vInfosConnectors[ eName ] );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "Geometry"), vInfosConnectors[ eGeometry ] );
+    ADN_EditLine_String* geometry = builder.AddField< ADN_EditLine_String >( pHolder, tr( "Geometry"), vInfosConnectors[ eGeometry ] );
     builder.SetEnabled( false );
+    pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Point effect distance"), vInfosConnectors[ ePointSize ] );
+    connect( geometry, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnGeometryChanged ( const QString& ) ) );
+    pPointDistance_->SetAutoEnabled( false );
     QComboBox* combo = builder.AddField< ADN_ComboBox_Symbols< ADN_Symbols_Data::SymbolInfo > >( pHolder, tr( "Symbol"), vInfosConnectors[ eSymbol ] );
     combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
 
@@ -432,6 +435,15 @@ void ADN_Objects_GUI::Build()
 void ADN_Objects_GUI::OnSpeedImpactComboChanged()
 {
     pMaxAgentSpeed_->setEnabled( pSpeedImpactCombo_->currentText() == ADN_Tr::ConvertFromSpeedImpact( eSpeedImpact_VitesseMaxAgent, ENT_Tr_ABC::eToTr ).c_str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_GUI::OnGeometryChanged
+// Created: LDC 2011-05-20
+// -----------------------------------------------------------------------------
+void ADN_Objects_GUI::OnGeometryChanged( const QString& geometry )
+{
+    pPointDistance_->setEnabled( geometry == "point" );
 }
 
 // -----------------------------------------------------------------------------
