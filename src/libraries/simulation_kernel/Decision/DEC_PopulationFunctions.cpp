@@ -265,6 +265,16 @@ std::string DEC_PopulationFunctions::GetSzName( MIL_Population& callerPopulation
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetDominationState
+// Created: LDC 2011-05-20
+// -----------------------------------------------------------------------------
+double DEC_PopulationFunctions::GetDominationState( DEC_Decision_ABC& callerPopulation )
+{
+    DEC_PopulationDecision* pop = dynamic_cast< DEC_PopulationDecision* >( &callerPopulation );
+    return pop ? pop->GetDominationState() : 0.;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::GetMission
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------

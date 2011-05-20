@@ -514,6 +514,7 @@
   <report category="operational" id="363" message="Début fouille du point"/>
   <report category="operational" id="364" message="Fouille du point terminée"/>
   <report category="operational" id="365" message="Tir impossible : le tireur n'est pas deployee"/>
+  <report category="operational" id="366" message="La foule est sous controle, l'agression est impossible"/>
   <report category="operational" id="3015" message="demande un renfort technique"/>
   <report category="operational" id="3016" message="demande un renforcement de %1 camion pour lutter contre incendie de classe %2">
     <parameter type="Integer"/>
@@ -525,4 +526,4 @@
   <report category="operational" id="3018" message="demande un renfort de police"/>
   <report category="operational" id="3019" message="demande un renfort médical"/>
 </reports>
-<!-- signature="1462595485" -->
+<!-- signature="2313174203" -->
