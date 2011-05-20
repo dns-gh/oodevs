@@ -49,7 +49,7 @@ bool PauseResumeMessageHandler::OnReceiveMessage( const sword::SimToClient& mess
     if( message.message().has_control_resume_ack() )
     {
         SessionCommandExecutionResponse response;
-        response().set_error_code( message.message().control_pause_ack().error_code() == sword::ControlAck::no_error ?
+        response().set_error_code( message.message().control_resume_ack().error_code() == sword::ControlAck::no_error ?
                                    sword::SessionCommandExecutionResponse::success :
                                    sword::SessionCommandExecutionResponse::session_already_running );
         response().set_running( true );

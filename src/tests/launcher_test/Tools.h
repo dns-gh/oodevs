@@ -11,10 +11,12 @@
 #include <qapplication.h>
 #pragma warning( pop )
 
+#include "protocol/AuthenticationSenders.h"
+
 namespace launcher_test
 {
     const std::string   defaultHost = "127.0.0.1";
-    const unsigned int  timeOut     = 50000;
+    const unsigned int  timeOut     = 5000;
 
     struct Timeout : private boost::noncopyable
     {
@@ -46,13 +48,13 @@ namespace launcher_test
     {
         MockDispatcher(unsigned short port)
             : tools::ServerNetworker( port )
+            , authPerformed( false )
         {
             AllowConnections();
             RegisterMessage<MockDispatcher,sword::ClientToSim>( *this, &MockDispatcher::Receive );
             RegisterMessage<MockDispatcher,sword::ClientToAuthentication>( *this, &MockDispatcher::Receive );
         }
         MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToSim& ), ReceiveSim );
-        MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToAuthentication& ), ReceiveAuth );
         MOCK_METHOD_EXT( ConnectionSucceeded, 1, void( const std::string& ), ConnectionSucceeded );
         MOCK_METHOD_EXT( ConnectionFailed, 2, void( const std::string&, const std::string& ), ConnectionFailed );
         MOCK_METHOD_EXT( ConnectionError, 2, void( const std::string&, const std::string& ), ConnectionError );
@@ -65,10 +67,22 @@ namespace launcher_test
 
         bool AuthenticationPerformed() const
         {
-            return host.length() != 0 && authMessage.IsInitialized();
+            return authPerformed;
         }
+        void Receive(const std::string& /*endpoint*/, const sword::ClientToAuthentication& msg)
+        {
+            if( msg.message().has_authentication_request() )
+            {
+                authentication::AuthenticationResponse response;
+                *response().mutable_server_version() = msg.message().authentication_request().version();
+                response().set_error_code( sword::AuthenticationResponse::success );
+                response.Send( *this, msg.has_context() ? msg.context() : 1 );
+                authPerformed = true;
+            }
+        }
+
         std::string host;
-        sword::ClientToAuthentication authMessage;
+        bool authPerformed;
     };
 
     struct ApplicationFixture
@@ -92,6 +106,33 @@ namespace launcher_test
         int argc;
         QApplication app;
     };
+
+    class ExerciseListener : private boost::noncopyable
+                           , public tools::Observer_ABC
+                           , public tools::ElementObserver_ABC< frontend::Exercise_ABC >
+    {
+    public:
+        explicit ExerciseListener( kernel::Controllers& controllers )
+            : controllers_( controllers )
+        {
+            controllers_.Register( *this );
+        }
+        virtual ~ExerciseListener()
+        {
+            controllers_.Unregister( *this );
+        }
+        virtual void NotifyCreated( const frontend::Exercise_ABC& exercise )
+        {
+            exercises_.push_back( &exercise );
+        }
+        bool Check() const
+        {
+            return exercises_.size() > 0;
+        }
+        kernel::Controllers& controllers_;
+        std::vector< const frontend::Exercise_ABC* > exercises_;
+    };
+
     struct Fixture : ApplicationFixture
     {
         Fixture()
@@ -121,6 +162,40 @@ namespace launcher_test
         MockConnectionHandler handler;
         Timeout timeout;
         MockDispatcher dispatcher;
+    };
+    struct ExerciseFixture : Fixture
+    {
+        ExerciseFixture() 
+            : Fixture()
+            , exerciceListener( controllers )
+            , SESSION( "default" )
+        {
+            BOOST_REQUIRE( client.Connected() );
+            
+            client.QueryExerciseList();
+            timeout.Start();
+            while( !exerciceListener.Check() && !timeout.Expired() )
+            {
+                Update();
+            }
+            BOOST_REQUIRE( exerciceListener.Check() );
+            {
+                exercise = exerciceListener.exercises_.front();
+                BOOST_REQUIRE( exercise );
+                MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
+                exercise->StartDispatcher( SESSION );
+                timeout.Start();
+                while( (!exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && !timeout.Expired() )
+                {
+                    Update();
+                }
+                BOOST_REQUIRE( exercise->IsRunning() );
+            }
+        }
+
+        ExerciseListener exerciceListener;
+        const frontend::Exercise_ABC* exercise;        
+        const std::string SESSION;
     };
 }
 

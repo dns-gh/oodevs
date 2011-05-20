@@ -39,34 +39,6 @@ BOOST_FIXTURE_TEST_CASE( ClientCanConnectToServer, Fixture )
     BOOST_CHECK( client.Connected() );
 }
 
-namespace
-{
-    class ExerciseListener : private boost::noncopyable
-                           , public tools::Observer_ABC
-                           , public tools::ElementObserver_ABC< frontend::Exercise_ABC >
-    {
-    public:
-        explicit ExerciseListener( kernel::Controllers& controllers )
-            : controllers_( controllers )
-        {
-            controllers_.Register( *this );
-        }
-        virtual ~ExerciseListener()
-        {
-            controllers_.Unregister( *this );
-        }
-        virtual void NotifyCreated( const frontend::Exercise_ABC& exercise )
-        {
-            exercises_.push_back( &exercise );
-        }
-        bool Check() const
-        {
-            return exercises_.size() > 0;
-        }
-        kernel::Controllers& controllers_;
-        std::vector< const frontend::Exercise_ABC* > exercises_;
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: ClientCanListAvailableExercises
@@ -102,33 +74,11 @@ namespace
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
 
-BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, Fixture )
+BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, ExerciseFixture )
 {
-    BOOST_REQUIRE( client.Connected() );
-    ExerciseListener listener( controllers );
-    client.QueryExerciseList();
-    timeout.Start();
-    while( !listener.Check() && !timeout.Expired() )
-    {
-        Update();
-    }
-    BOOST_REQUIRE( listener.Check() );
-    {
-        const frontend::Exercise_ABC* exercise = listener.exercises_.front();
-        BOOST_REQUIRE( exercise );
-        MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
-        MOCK_EXPECT( dispatcher, ReceiveAuth ).once().with( mock::any, mock::retrieve( dispatcher.authMessage ) );
-        exercise->StartDispatcher( "default" );
-        timeout.Start();
-        while( (!exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && !timeout.Expired() )
-        {
-            Update();
-        }
-        BOOST_REQUIRE( exercise->IsRunning() );
-    }
+    BOOST_REQUIRE( exercise->IsRunning() );
     {
         sword::ProfileListResponse launcherResponse;
-        const frontend::Exercise_ABC* exercise = listener.exercises_.front();
         boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
         MOCK_EXPECT( handler, HandleProfileListResponse ).once().with( mock::retrieve( launcherResponse ) );
         client.Register( handler );
@@ -141,39 +91,13 @@ BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, Fixture )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ClientCanPauseExercise
 // Created: AHC 2010-05-19
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, Fixture )
+BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
 {
-    static const std::string SESSION("default");
-
-    BOOST_REQUIRE( client.Connected() );
-    ExerciseListener listener( controllers );
-    client.QueryExerciseList();
-    timeout.Start();
-    while( !listener.Check() && !timeout.Expired() )
-    {
-        Update();
-    }
-    BOOST_REQUIRE( listener.Check() );   
-    const frontend::Exercise_ABC* exercise = listener.exercises_.front();
-    // connect to dispatcher
-    {
-        BOOST_REQUIRE( exercise );
-        MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
-        MOCK_EXPECT( dispatcher, ReceiveAuth ).once().with( mock::any, mock::retrieve( dispatcher.authMessage ) );
-        exercise->StartDispatcher( SESSION );
-        timeout.Start();
-        while( (!exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && 
-                !timeout.Expired() )
-        {
-            Update();
-        }
-        BOOST_REQUIRE( exercise->IsRunning() );
-    }
+    BOOST_REQUIRE( exercise->IsRunning() );
     // send pause request
     {
         sword::ClientToSim pauseMsg;
@@ -187,7 +111,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, Fixture )
         LAUNCHER_CHECK_MESSAGE( pauseMsg, "context: 1 message { control_pause { } }" );
     }
     // retrieve pause response
-    /*{
+    {
         sword::SessionCommandExecutionResponse launcherResponse;
         boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
         MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
@@ -201,6 +125,84 @@ BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, Fixture )
         {
             Update();
         }
-        LAUNCHER_CHECK_MESSAGE( launcherResponse, "context: 1 message { control_pause { } }" );
-    }*/
+        LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"9_cases\" session: \"default\" running: false" );
+    }
 }
+
+// -----------------------------------------------------------------------------
+// Name: ClientCanResumeExercise
+// Created: AHC 2010-05-20
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
+{
+    BOOST_REQUIRE( exercise->IsRunning() );
+    // send resume request
+    {
+        sword::ClientToSim pauseMsg;
+        MOCK_EXPECT( dispatcher, ReceiveSim ).once().with( mock::any , mock::retrieve( pauseMsg ) );        
+        exercise->Resume( SESSION );
+        timeout.Start();
+        while( !pauseMsg.IsInitialized()&& !timeout.Expired() )
+        {
+            Update();
+        }
+        LAUNCHER_CHECK_MESSAGE( pauseMsg, "context: 2 message { control_resume { } }" );
+    }
+    // retrieve resume response
+    {
+        sword::SessionCommandExecutionResponse launcherResponse;
+        boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+        MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
+        client.Register( handler );
+
+        client::ControlResumeAck dispatcherResponse;
+        dispatcherResponse().set_error_code( sword::ControlAck::error_not_paused );
+        dispatcherResponse.Send( dispatcher, 2 );
+        timeout.Start();
+        while( !launcherResponse.IsInitialized() && !timeout.Expired() )
+        {
+            Update();
+        }
+        LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: session_already_running exercise: \"9_cases\" session: \"default\" running: true" );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientCanSaveCheckPoint
+// Created: AHC 2010-05-20
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( ClientCanSaveCheckPoint, ExerciseFixture )
+{
+    static const std::string CHECKPOINT( "checkpoint" );
+    BOOST_REQUIRE( exercise->IsRunning() );
+    // send checkpoint request
+    {
+        sword::ClientToSim pauseMsg;
+        MOCK_EXPECT( dispatcher, ReceiveSim ).once().with( mock::any , mock::retrieve( pauseMsg ) );        
+        exercise->SaveCheckpoint( SESSION, CHECKPOINT );
+        timeout.Start();
+        while( !pauseMsg.IsInitialized()&& !timeout.Expired() )
+        {
+            Update();
+        }
+        LAUNCHER_CHECK_MESSAGE( pauseMsg, "context: 0 message { control_checkpoint_save_now { name: \"checkpoint\" } }" );
+    }
+    // retrieve checkpoint response
+    {
+        sword::SessionCommandExecutionResponse launcherResponse;
+        boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+        MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
+        client.Register( handler );
+
+        client::ControlCheckPointSaveEnd dispatcherResponse;
+        dispatcherResponse().set_name( CHECKPOINT );
+        dispatcherResponse.Send( dispatcher, 0 );
+        timeout.Start();
+        while( !launcherResponse.IsInitialized() && !timeout.Expired() )
+        {
+            Update();
+        }
+        LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"9_cases\" session: \"default\" saved_checkpoint: \"checkpoint\"" );
+    }
+}
+
