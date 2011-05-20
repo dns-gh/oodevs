@@ -47,12 +47,14 @@ ParamDirection::~ParamDirection()
 QWidget* ParamDirection::BuildInterface( QWidget* parent )
 {
     QHBox* box = new QHBox( parent ); // $$$$ SBO 2007-03-16: should be removed... but need some changes in order context interface
+    box->setSpacing( 5 );
     new QLabel( GetName(), box );
     QDial* dial = new QDial( 0, 359, 1, 0, box );
     dial->setWrapping( true );
     dial->setMaximumSize( 50, 50 );
     connect( dial, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
     dial->setValue( value_ );
+    box->setStretchFactor( dial, 1 );
     return box;
 }
 

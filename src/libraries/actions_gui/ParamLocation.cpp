@@ -64,6 +64,7 @@ QWidget* ParamLocation::BuildInterface( QWidget* parent )
     pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
     creator_ = new ::gui::LocationCreator( box, GetName(), layer_, *this );
     SetShapeFilter( filter_.point_, filter_.line_, filter_.polygon_, filter_.circle_, filter_.rectangle_ );
+    box->setStretchFactor( pShapeLabel_, 1 );
     return box;
 }
 

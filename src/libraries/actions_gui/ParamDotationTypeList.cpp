@@ -48,7 +48,8 @@ QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
 {
     list_ = new QListView( parent );
     list_->setRootIsDecorated( true );
-    list_->addColumn( "name" ); list_->addColumn( "id", 0 );
+    list_->addColumn( "name" );
+    list_->addColumn( "id", 0 );
     list_->setSorting( -1, true );
     list_->header()->hide();
     list_->header()->setResizeEnabled( false, 1 );

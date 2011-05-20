@@ -58,6 +58,7 @@ QWidget* ParamPoint::BuildInterface( QWidget* parent )
     pPosLabel_->setMinimumWidth( 100 );
     pPosLabel_->setAlignment( Qt::AlignCenter );
     pPosLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    box->setStretchFactor( pPosLabel_, 1 );
     return box;
 }
 

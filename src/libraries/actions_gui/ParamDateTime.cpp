@@ -62,6 +62,7 @@ QWidget* ParamDateTime::BuildInterface( QWidget* parent )
     new QLabel( GetName(), box );
     QDateTimeEdit* edit = new QDateTimeEdit( box );
     edit->setDateTime( date_ );
+    box->setStretchFactor( edit, 1 );
     connect( edit, SIGNAL( valueChanged( const QDateTime& ) ), SLOT( OnChanged( const QDateTime& ) ) );
     return box;
 }

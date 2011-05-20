@@ -48,6 +48,7 @@ QWidget* ParamStringField::BuildInterface( QWidget* parent )
     pLabel_ = new ::gui::RichLabel( GetName(), box );
     pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     pEdit_ = new QLineEdit( "", box );
+    box->setStretchFactor( pEdit_, 1 );
     return box;
 }
 

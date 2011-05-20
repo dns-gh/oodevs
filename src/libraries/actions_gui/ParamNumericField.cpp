@@ -51,6 +51,7 @@ QWidget* ParamNumericField::BuildInterface( QWidget* parent )
     pLabel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     pEdit_ = new QLineEdit( "0", box );
     SetLimits( 0.f, 99999.f );
+    box->setStretchFactor( pEdit_, 1 );
     return box;
 }
 

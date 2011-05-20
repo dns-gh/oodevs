@@ -103,6 +103,7 @@ QWidget* ParamComboBox<T>::BuildInterface( QWidget* parent )
     comboBox_->setSorting( true );
     for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
         comboBox_->AddItem( it->first, it->second );
+    box->setStretchFactor( comboBox_, 1 );
     return box;
 }
 

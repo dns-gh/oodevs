@@ -243,9 +243,9 @@ void ParametersLayer::Start( ShapeHandler_ABC& handler, const Location_ABC& loca
 // -----------------------------------------------------------------------------
 void ParametersLayer::Reset()
 {
-    delete current_;
     current_ = 0;
     NotifyDone();
+    delete current_;
 }
 
 // -----------------------------------------------------------------------------
@@ -259,7 +259,8 @@ void ParametersLayer::NotifyDone()
         editor_.EndEdit();
         ShapeHandler_ABC* handler = handler_;
         Location_ABC* location = current_;
-        handler_ = 0; current_ = 0;
+        handler_ = 0;
+        current_ = 0;
         if( location )
             handler->Handle( *location );
         cursors_->SelectTool( QCursor(), false );

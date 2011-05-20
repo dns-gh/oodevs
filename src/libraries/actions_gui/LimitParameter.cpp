@@ -60,6 +60,7 @@ QWidget* LimitParameter::BuildInterface( QWidget* parent )
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignCenter );
     entityLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
+    box->setStretchFactor( entityLabel_, 1 );
     return box;
 }
 
