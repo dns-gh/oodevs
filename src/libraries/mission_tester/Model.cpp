@@ -82,6 +82,15 @@ void Model::OnReceiveMessage( const sword::MessengerToClient& /*message*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::OnReceiveMessage
+// Created: LGY 2011-05-20
+// -----------------------------------------------------------------------------
+void Model::OnReceiveMessage( const sword::AuthenticationToClient& /*message*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::Register
 // Created: PHC 2011-04-08
 // -----------------------------------------------------------------------------

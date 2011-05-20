@@ -55,6 +55,7 @@ public:
     //@{
     virtual void OnReceiveMessage( const sword::SimToClient& message );
     virtual void OnReceiveMessage( const sword::MessengerToClient& message );
+    virtual void OnReceiveMessage( const sword::AuthenticationToClient& message );
 
     void Register( const Listener_ABC& listener );
     //@}
