@@ -72,11 +72,19 @@ public:
     // SwordMessageHandler_ABC interface
     virtual void OnReceiveMessage( const sword::SimToClient& message );
     virtual void OnReceiveMessage( const sword::MessengerToClient& message );
+    virtual void OnReceiveMessage( const sword::AuthenticationToClient& message );
     //
     void RegisterMessageHandler( int context, std::auto_ptr< MessageHandler_ABC > handler );
     void AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC > handler );
 
     void Send( const sword::ClientToSim& message ) const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void Update( const T& message );
     //@}
 
 private:

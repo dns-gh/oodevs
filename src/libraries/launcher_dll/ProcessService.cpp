@@ -24,6 +24,7 @@
 #include "PauseResumeMessageHandler.h"
 #include "StatusMessageHandler.h"
 #include "LauncherService.h"
+#include "NotificationMessageHandler.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
@@ -156,9 +157,10 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         processes_[ std::make_pair(exercise, session) ] = wrapper;
     }
-    wrapper->Start(profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_.GetTestMode() );
+    wrapper->Start( profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_.GetTestMode() );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new CheckpointMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new StatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     return sword::SessionStartResponse::success;
 }
 

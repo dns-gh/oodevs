@@ -77,6 +77,12 @@ private:
     void HandleSimToClient( const std::string& endpoint, const sword::SimToClient& message );
     //@}
 
+    //! @name Helpers
+    //@{
+    template< typename T >
+    void UpdateHandlers( const T& message );
+    //@}
+
     //! @name Types
     //@{
     typedef std::vector< SwordMessageHandler_ABC* > T_Handlers;

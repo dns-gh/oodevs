@@ -136,6 +136,7 @@ void SwordClient::HandleAuthenticationToClient( const std::string& /*endpoint*/,
         else
             connectionHandler_->OnAuthenticationFailed( profile_, ToString( message.message().authentication_response().error_code() ) );
     }
+    UpdateHandlers( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -153,9 +154,7 @@ void SwordClient::HandleDispatcherToClient( const std::string& /*endpoint*/, con
 // -----------------------------------------------------------------------------
 void SwordClient::HandleMessengerToClient( const std::string& /*endpoint*/, const sword::MessengerToClient& message )
 {
-    if( loggedIn_ )
-        for( T_Handlers::iterator it = messageHandlers_.begin(); it != messageHandlers_.end(); ++it )
-            (*it)->OnReceiveMessage( message );
+    UpdateHandlers( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,9 +172,7 @@ void SwordClient::HandleReplayToClient( const std::string& /*endpoint*/, const s
 // -----------------------------------------------------------------------------
 void SwordClient::HandleSimToClient( const std::string& /*endpoint*/, const sword::SimToClient& message )
 {
-    if( loggedIn_ )
-        for( T_Handlers::iterator it = messageHandlers_.begin(); it != messageHandlers_.end(); ++it )
-            (*it)->OnReceiveMessage( message );
+    UpdateHandlers( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,4 +206,16 @@ void SwordClient::SendMessage( const sword::ClientToSim& message ) const
 {
     if( publisher_.get() )
         publisher_->Send( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SwordClient::UpdateHandlers
+// Created: LGY 2011-05-19
+// -----------------------------------------------------------------------------
+template< typename T >
+void SwordClient::UpdateHandlers( const T& message )
+{
+    if( loggedIn_ )
+        for( T_Handlers::iterator it = messageHandlers_.begin(); it != messageHandlers_.end(); ++it )
+            (*it)->OnReceiveMessage( message );
 }

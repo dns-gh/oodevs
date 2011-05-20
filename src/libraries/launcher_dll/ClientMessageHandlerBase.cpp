@@ -50,3 +50,12 @@ bool ClientMessageHandlerBase::OnReceiveMessage( const sword::MessengerToClient&
 {
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ClientMessageHandlerBase::OnReceiveMessage
+// Created: LGY 2011-05-18
+// -----------------------------------------------------------------------------
+bool ClientMessageHandlerBase::OnReceiveMessage( const sword::AuthenticationToClient& /*message*/ )
+{
+    return false;
+}

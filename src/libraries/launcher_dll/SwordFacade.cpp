@@ -14,6 +14,7 @@
 #include "frontend/CommandLineTools.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/MessengerSenders.h"
+#include "protocol/AuthenticationSenders.h"
 #include <boost/foreach.hpp>
 
 using namespace launcher;
@@ -26,7 +27,7 @@ SwordFacade::SwordFacade( frontend::ProcessObserver_ABC& observer, boost::shared
     : isDispatcher_( isDispatcher )
     , isConnected_( false )
     , isAuthenticated_ ( false)
-    , process_( new frontend::ProcessWrapper( observer, command) )
+    , process_( new frontend::ProcessWrapper( observer, command ) )
 {
     // NOTHING
 }
@@ -150,15 +151,7 @@ void SwordFacade::Send( const sword::ClientToSim& message ) const
 // -----------------------------------------------------------------------------
 void SwordFacade::OnReceiveMessage( const sword::SimToClient& message )
 {
-    BOOST_FOREACH( T_Handler handler, permanentHandler_ )
-        handler->OnReceiveMessage( message );
-    HandlerContainer::iterator it = messageHandlers_.find(message.context() );
-    if( messageHandlers_.end() != it )
-    {
-        bool handled = it->second->OnReceiveMessage( message );
-        if( handled )
-            messageHandlers_.erase(message.context() );
-    }
+    Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,6 +159,24 @@ void SwordFacade::OnReceiveMessage( const sword::SimToClient& message )
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
 void SwordFacade::OnReceiveMessage( const sword::MessengerToClient& message )
+{
+    Update( message );
+}
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::OnReceiveMessage
+// Created: LGY 2011-05-19
+// -----------------------------------------------------------------------------
+void SwordFacade::OnReceiveMessage( const sword::AuthenticationToClient& message )
+{
+    Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::Update
+// Created: LGY 2011-05-19
+// -----------------------------------------------------------------------------
+template< typename T >
+void SwordFacade::Update( const T& message )
 {
     BOOST_FOREACH( T_Handler handler, permanentHandler_ )
         handler->OnReceiveMessage( message );

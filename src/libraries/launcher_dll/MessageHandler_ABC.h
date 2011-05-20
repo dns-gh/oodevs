@@ -16,6 +16,7 @@ namespace sword
 {
     class SimToClient;
     class MessengerToClient;
+    class AuthenticationToClient;
 }
 
 namespace launcher
@@ -39,6 +40,7 @@ public:
     //@{
     virtual bool OnReceiveMessage( const sword::SimToClient& message ) = 0;
     virtual bool OnReceiveMessage( const sword::MessengerToClient& message ) = 0;
+    virtual bool OnReceiveMessage( const sword::AuthenticationToClient& message ) = 0;
     //@}
 };
 
