@@ -188,9 +188,9 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::Connecte
 // Name: Launcher::HandleRequest
 // Created: AHC 2011-05-12
 // -----------------------------------------------------------------------------
-void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionParameterChangeRequest& /*message*/ )
+void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionParameterChangeRequest& message )
 {
-    // TODO AHC
+    processes_->ChangeParameter( endpoint, message );
 }
 
 // -----------------------------------------------------------------------------

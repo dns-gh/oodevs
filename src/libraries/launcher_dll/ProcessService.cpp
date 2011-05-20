@@ -25,6 +25,7 @@
 #include "StatusMessageHandler.h"
 #include "LauncherService.h"
 #include "NotificationMessageHandler.h"
+#include "ControlInformationMessageHandler.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
@@ -164,6 +165,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new CheckpointMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new StatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+    wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new ControlInformationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     return sword::SessionStartResponse::success;
 }
 
@@ -363,5 +365,47 @@ void ProcessService::Update()
     for(ProcessContainer::iterator it = processes_.begin(); processes_.end() != it; ++it)
     {
         it->second->Update();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessService::ChangeParameter
+// Created: AHC 2011-05-20
+// -----------------------------------------------------------------------------
+void ProcessService::ChangeParameter( const std::string& endpoint, const sword::SessionParameterChangeRequest& message )
+{
+    ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
+    static int context = 1;
+
+    if( processes_.end() == it )
+    {
+        SessionParameterChangeResponse response;
+        response().set_exercise( message.exercise() );
+        response().set_session( message.session() );
+        response().set_error_code( sword::SessionParameterChangeResponse::invalid_session_name );
+        response.Send( server_.ResolveClient( endpoint ) );
+        return;
+    }
+    if( !it->second->IsConnected() )
+    {
+        SessionParameterChangeResponse response;
+        response().set_exercise( message.exercise() );
+        response().set_session( message.session() );
+        response().set_error_code( sword::SessionParameterChangeResponse::session_not_running );
+        response.Send( server_.ResolveClient( endpoint ) );
+        return;
+    }
+    boost::shared_ptr< SwordFacade > client( it->second );
+    if( message.has_acceleration_factor() )
+    {
+        simulation::ControlChangeTimeFactor request;
+        request().set_time_factor( message.acceleration_factor() );
+        request.Send( *client, 0 );
+    }
+    if( message.has_checkpoint_frequency() )
+    {
+        simulation::ControlCheckPointSetFrequency request;
+        request().set_frequency( message.checkpoint_frequency() );
+        request.Send( *client, 0 );
     }
 }

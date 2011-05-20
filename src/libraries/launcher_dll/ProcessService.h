@@ -62,6 +62,7 @@ public:
     sword::SessionStopResponse::ErrorCode StopSession( const sword::SessionStopRequest& message );
     bool IsRunning( const std::string& exercise, const std::string& session ) const;
     void ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message );
+    void ChangeParameter( const std::string& endpoint, const sword::SessionParameterChangeRequest& message );
     virtual void NotifyStopped();
     virtual void NotifyError( const std::string& error );
     void Update();
