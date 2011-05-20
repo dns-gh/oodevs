@@ -207,7 +207,6 @@ void MIL_PopulationConcentration::Move( const MT_Vector2D& destination )
     if( pPullingFlow_ || IsNearPosition( destination ) )
         return;
     pPullingFlow_ = &GetPopulation().CreateFlow( *this );
-    pPullingFlow_->Move( destination );
 }
 
 // -----------------------------------------------------------------------------

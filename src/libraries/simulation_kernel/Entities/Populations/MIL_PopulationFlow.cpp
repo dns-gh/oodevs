@@ -263,12 +263,6 @@ double MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*envir
     if( CanObjectInteractWith( object ) )
     {
         result = object().ApplySpeedPolicy( object().GetMaxSpeed(), result, result, GetPopulation() );
-        const PopulationAttribute* attr = object.RetrieveAttribute< PopulationAttribute >();
-        if( attr )
-        {   
-            if( !pSourceConcentration_ || pSourceConcentration_->GetSplittingObject() != &object )
-                return 0.; // First collision with 'splitting' object => stop the move (concentration will be created on collision point ...)
-        }
     }
     return result;
 }
@@ -384,7 +378,7 @@ bool MIL_PopulationFlow::ManageSplit()
     bFlowShapeUpdated_ = true;
     UpdateLocation();
     DetachFromDestConcentration();
-    pHeadPath_ = pTailPath_; ///$$$ Degueu : destruction de pHeadPath ... (newFlow.pHeadPath_ = pHeadPath_)
+    pHeadPath_ = pTailPath_; //$$$ Degueu : destruction de pHeadPath ... (newFlow.pHeadPath_ = pHeadPath_)
     pTailPath_.reset();
     const int nNbrHumans = static_cast< unsigned int >( GetLocation().GetArea() * rDensityBeforeSplit );
     newFlow.PushHumans( PullHumans( GetAllHumans() - nNbrHumans ) );
@@ -436,13 +430,15 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         const double rArea = GetLocation().GetArea();
         if( rArea )
             nNbrHumans = static_cast< unsigned int >( rWalkedDistance * ( GetAllHumans() / rArea ) );
-        else
+        if( nNbrHumans == 0 ) // $$$$ ABR 2011-05-20: to prevent ghost flow
             nNbrHumans = GetAllHumans();
     }
     if( nNbrHumans == 0 )
         return;
     SetDirection( direction );
     SetSpeed( rWalkedDistance );
+    if( pSourceConcentration_ )
+        nNbrHumans = std::min( nNbrHumans, pSourceConcentration_->GetAllHumans() );
     // Head management
     SetHeadPosition( position );
     if( ( bHeadMoveFinished_ || rSpeed == 0 ) && !pDestConcentration_ )
@@ -450,7 +446,6 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
         pDestConcentration_->RegisterPushingFlow( *this );
     }
-
     if( pDestConcentration_ )
     {
         if( pDestConcentration_->GetSplittingObject() )
@@ -619,7 +614,6 @@ void MIL_PopulationFlow::SendChangedState() const
         NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     if( bSpeedUpdated_ )
         asnMsg().set_speed( static_cast< unsigned int >( MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ) );
-
     if( HasHumansChanged() )
     {
         asnMsg().set_healthy( GetHealthyHumans() );
