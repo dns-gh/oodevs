@@ -35,7 +35,7 @@ MiniViews::MiniViews( QMainWindow* parent, Controllers& controllers )
     , selected_   ( controllers_ )
 {
     setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Minimum );
-    setResizeEnabled( false );
+    setResizeEnabled( true );
     setCloseMode( Always );
     parent->setDockEnabled( this, Qt::DockTop, false );
     setCaption( tr( "Miniviews" ) );

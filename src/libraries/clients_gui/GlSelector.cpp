@@ -115,14 +115,16 @@ void GlSelector::Clean()
     {
         widget3d_->makeCurrent();
         proxy_.Reset3d();
-        delete widget3d_; widget3d_ = 0;
+        delete widget3d_;
+        widget3d_ = 0;
     }
     if( widget2d_ )
     {
         widget2d_->makeCurrent();
         proxy_.Reset2d();
-        delete widget2d_; widget2d_ = 0;
-        emit Widget2dChanged( widget2d_ );
+        emit Widget2dChanged( 0 );
+        delete widget2d_;
+        widget2d_ = 0;
     }
 }
 
