@@ -42,7 +42,7 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_Composantes, PHY_RoleInterface_Composante
     MOCK_METHOD( GetMajorComposante, 0 );
     MOCK_METHOD( GetOperationalState, 0 );
     MOCK_METHOD( GetMajorOperationalState, 0 );
-    MOCK_METHOD( GetMajorComponentWeight, 0 );
+    MOCK_METHOD( GetMajorComponentWeight, 1 );
     MOCK_METHOD( IsNeutralized, 0 );
     MOCK_METHOD_EXT( GetComposantesAbleToBeFired, 3, void( PHY_Composante_ABC::T_ComposanteVector&, unsigned int, bool ), GetComposantesAbleToBeFired3 );
     MOCK_METHOD_EXT( GetComposantesAbleToBeFired, 2, void( PHY_Composante_ABC::T_ComposanteVector&, bool ), GetComposantesAbleToBeFired2 );
