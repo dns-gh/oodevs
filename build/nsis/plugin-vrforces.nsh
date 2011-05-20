@@ -23,6 +23,7 @@
     ${File} "${RUNDIR}\" "boost_signals-vc80-mt-1_44.dll"
     ${File} "${RUNDIR}\" "extMtl.dll"
     ${File} "${RUNDIR}\" "geometry.dll"
+    ${File} "${RUNDIR}\" "libFedtime1516.dll"
     ${File} "${RUNDIR}\" "loggerControlHLA1516RT.dll"
     ${File} "${RUNDIR}\" "makSettingsManager.dll"
     ${File} "${RUNDIR}\" "matrixRT.dll"
