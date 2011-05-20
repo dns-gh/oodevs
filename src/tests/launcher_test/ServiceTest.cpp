@@ -17,112 +17,18 @@
 #include "frontend/CommandLineTools.h"
 #include "launcher_dll/LauncherFacade.h"
 #include "protocol/LauncherSenders.h"
+#include "protocol/AuthenticationSenders.h"
+#include "protocol/ClientSenders.h"
 #include <tools/ElementObserver_ABC.h>
 #include <tools/ServerNetworker.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/assign.hpp>
-#pragma warning( push, 0 )
-#include <qapplication.h>
-#pragma warning( pop )
 
-namespace
-{
-    const std::string   defaultHost = "127.0.0.1";
-    const unsigned int  timeOut     = 5000;
+#include "Tools.h"
 
-    struct Timeout : private boost::noncopyable
-    {
-        explicit Timeout( unsigned int duration )
-            : duration_( duration )
-        {
-            Start();
-        }
-        void Start()
-        {
-            start_ = boost::posix_time::microsec_clock::universal_time();
-        }
-        bool Expired() const
-        {
-            return ( boost::posix_time::microsec_clock::universal_time() - start_ ).total_milliseconds() > duration_;
-        }
-        const unsigned int duration_;
-        boost::posix_time::ptime start_;
-    };
+using namespace launcher_test;
 
-    MOCK_BASE_CLASS( MockConnectionHandler, frontend::ConnectionHandler_ABC )
-    {
-        MOCK_METHOD( OnConnectionSucceeded, 0 );
-        MOCK_METHOD( OnConnectionFailed, 1 );
-        MOCK_METHOD( OnConnectionLost, 1 );
-        MOCK_METHOD( OnError, 1 );
-    };
-    MOCK_BASE_CLASS( MockDispatcher, tools::ServerNetworker )
-    {
-        MockDispatcher(unsigned short port)
-            : tools::ServerNetworker( port )
-        {
-            AllowConnections();
-            RegisterMessage( *this, &MockDispatcher::Receive );
-        }
-        MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToSim& ), Receive );
-        MOCK_METHOD_EXT( ConnectionSucceeded, 1, void( const std::string& ), ConnectionSucceeded );
-        MOCK_METHOD_EXT( ConnectionFailed, 2, void( const std::string&, const std::string& ), ConnectionFailed );
-        MOCK_METHOD_EXT( ConnectionError, 2, void( const std::string&, const std::string& ), ConnectionError );
-        std::string host;
-    };
 
-    struct ApplicationFixture
-    {
-        ApplicationFixture()
-            : varg( MakeArg() )
-            , args( boost::assign::list_of< char* >( "" )( "--root-dir=../../data" )("--test")( &varg[0] ) )
-            , argc( args.size() )
-            , app( argc, &args[0] )
-        {}
-        std::vector< char > MakeArg()
-        {
-            const std::string arg( "--launcher-port=" + boost::lexical_cast< std::string >( PORT ) );
-            std::vector< char > result( arg.begin(), arg.end() );
-            result.push_back( 0 );
-            return result;
-        }
-        std::string arg;
-        std::vector< char > varg;
-        std::vector< char* > args;
-        int argc;
-        QApplication app;
-    };
-    struct Fixture : ApplicationFixture
-    {
-        Fixture()
-            : client  ( controllers.controller_ )
-            , timeout ( timeOut )
-            , dispatcher( frontend::DispatcherPort( 1 ) )
-        {
-            launcher.Initialize( argc, &args[0] );
-            BOOST_REQUIRE_MESSAGE( launcher.GetLastError().empty(), launcher.GetLastError() );
-            MOCK_EXPECT( handler, OnConnectionSucceeded ).once();
-            client.Connect( defaultHost, PORT, handler );
-            while( !client.Connected() && !timeout.Expired() )
-            {
-                Update();
-            }
-        }
-        void Update()
-        {
-            client.Update();
-            launcher.Update();
-            dispatcher.Update();
-        }
-
-        LauncherFacade launcher;
-        kernel::Controllers controllers;
-        frontend::LauncherClient client;
-        MockConnectionHandler handler;
-        Timeout timeout;
-        MockDispatcher dispatcher;
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: ClientCanConnectToServer
@@ -187,6 +93,7 @@ namespace
         MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionStartResponse& ), HandleSessionStartResponse );
         MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionStopResponse& ), HandleSessionStopResponse );
         MOCK_METHOD_EXT( Handle, 1, void( const sword::ProfileListResponse& ), HandleProfileListResponse );
+        MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionCommandExecutionResponse& ), HandleSessionCommandExecutionResponse );
     };
 }
 
@@ -194,7 +101,7 @@ namespace
 // Name: ClientCanStartExercise
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-// $$$$ MCO : this seems to deadlock because for some reason the simulation process isn't started (but shouldn't deadlock anyway...)
+
 BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, Fixture )
 {
     BOOST_REQUIRE( client.Connected() );
@@ -209,24 +116,91 @@ BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, Fixture )
     {
         const frontend::Exercise_ABC* exercise = listener.exercises_.front();
         BOOST_REQUIRE( exercise );
+        MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
+        MOCK_EXPECT( dispatcher, ReceiveAuth ).once().with( mock::any, mock::retrieve( dispatcher.authMessage ) );
         exercise->StartDispatcher( "default" );
         timeout.Start();
-        while( !exercise->IsRunning() && !timeout.Expired() )
+        while( (!exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && !timeout.Expired() )
         {
             Update();
         }
         BOOST_REQUIRE( exercise->IsRunning() );
     }
     {
+        sword::ProfileListResponse launcherResponse;
         const frontend::Exercise_ABC* exercise = listener.exercises_.front();
         boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
-        MOCK_EXPECT( handler, HandleProfileListResponse ).once();
+        MOCK_EXPECT( handler, HandleProfileListResponse ).once().with( mock::retrieve( launcherResponse ) );
         client.Register( handler );
         exercise->QueryProfileList( );
         timeout.Start();
-        while( !timeout.Expired() )
+        while( !launcherResponse.IsInitialized() && !timeout.Expired() )
         {
             Update();
         }
     }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ClientCanPauseExercise
+// Created: AHC 2010-05-19
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, Fixture )
+{
+    static const std::string SESSION("default");
+
+    BOOST_REQUIRE( client.Connected() );
+    ExerciseListener listener( controllers );
+    client.QueryExerciseList();
+    timeout.Start();
+    while( !listener.Check() && !timeout.Expired() )
+    {
+        Update();
+    }
+    BOOST_REQUIRE( listener.Check() );   
+    const frontend::Exercise_ABC* exercise = listener.exercises_.front();
+    // connect to dispatcher
+    {
+        BOOST_REQUIRE( exercise );
+        MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
+        MOCK_EXPECT( dispatcher, ReceiveAuth ).once().with( mock::any, mock::retrieve( dispatcher.authMessage ) );
+        exercise->StartDispatcher( SESSION );
+        timeout.Start();
+        while( (!exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && 
+                !timeout.Expired() )
+        {
+            Update();
+        }
+        BOOST_REQUIRE( exercise->IsRunning() );
+    }
+    // send pause request
+    {
+        sword::ClientToSim pauseMsg;
+        MOCK_EXPECT( dispatcher, ReceiveSim ).once().with( mock::any , mock::retrieve( pauseMsg ) );        
+        exercise->Pause( SESSION );
+        timeout.Start();
+        while( !pauseMsg.IsInitialized()&& !timeout.Expired() )
+        {
+            Update();
+        }
+        LAUNCHER_CHECK_MESSAGE( pauseMsg, "context: 1 message { control_pause { } }" );
+    }
+    // retrieve pause response
+    /*{
+        sword::SessionCommandExecutionResponse launcherResponse;
+        boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+        MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
+        client.Register( handler );
+
+        client::ControlPauseAck dispatcherResponse;
+        dispatcherResponse().set_error_code( sword::ControlAck::no_error );
+        dispatcherResponse.Send( dispatcher, 1 );
+        timeout.Start();
+        while( !launcherResponse.IsInitialized() && !timeout.Expired() )
+        {
+            Update();
+        }
+        LAUNCHER_CHECK_MESSAGE( launcherResponse, "context: 1 message { control_pause { } }" );
+    }*/
 }

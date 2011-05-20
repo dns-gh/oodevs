@@ -51,6 +51,9 @@ public:
     virtual void StartReplay( const std::string& exercise, const std::string& session ) const;
     virtual void StopSession( const std::string& exercise, const std::string& session ) const;
     virtual void QueryProfileList(const std::string& exercise) const;
+    virtual void Pause( const std::string& exercise, const std::string& session) const;
+    virtual void Resume( const std::string& exercise, const std::string& session) const;
+    virtual void SaveCheckpoint( const std::string& exercise, const std::string& session, const std::string& name) const;
     //@}
 
     //! @name Operation
@@ -59,6 +62,8 @@ public:
     virtual void Handle( const sword::SessionStartResponse& message );
     virtual void Handle( const sword::SessionStopResponse& message );
     virtual void Handle( const sword::ProfileListResponse& message );
+    virtual void Handle( const sword::SessionCommandExecutionResponse& message );
+
     //@}
 
 private:

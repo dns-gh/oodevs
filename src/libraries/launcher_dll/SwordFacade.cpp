@@ -23,11 +23,11 @@ using namespace launcher;
 // Name: SwordFacade constructor
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-SwordFacade::SwordFacade( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command, bool isDispatcher )
+SwordFacade::SwordFacade( bool isDispatcher )
     : isDispatcher_( isDispatcher )
     , isConnected_( false )
     , isAuthenticated_ ( false)
-    , process_( new frontend::ProcessWrapper( observer, command ) )
+    , process_( )
 {
     // NOTHING
 }
@@ -45,18 +45,20 @@ SwordFacade::~SwordFacade()
 // Name: SwordFacade::Start
 // Created: AHC 2011-05-16
 // -----------------------------------------------------------------------------
-void SwordFacade::Start(const std::string& supervisorProfile, const std::string& supervisorPassword, bool testMode)
+void SwordFacade::Start(frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command,
+                        const std::string& supervisorProfile, const std::string& supervisorPassword, bool testMode)
 {
-    if( process_.get() )
+    if( !testMode )
     {
-        if( !testMode )
-            process_->Start();
-        if(isDispatcher_)
-        {
-            client_.reset( new SwordProxy("localhost", frontend::DispatcherPort(1), supervisorProfile, supervisorPassword ));
-            client_->RegisterMessageHandler(this);
-            client_->Connect(this);
-        }
+        boost::shared_ptr<frontend::ProcessWrapper> wrapper( new frontend::ProcessWrapper( observer, command) );
+        wrapper->Start();
+        process_ = wrapper;
+    }
+    if(isDispatcher_)
+    {
+        client_.reset( new SwordProxy("localhost", frontend::DispatcherPort(1), supervisorProfile, supervisorPassword ));
+        client_->RegisterMessageHandler(this);
+        client_->Connect(this);
     }
 }
 // -----------------------------------------------------------------------------
@@ -65,7 +67,7 @@ void SwordFacade::Start(const std::string& supervisorProfile, const std::string&
 // -----------------------------------------------------------------------------
 void SwordFacade::Stop()
 {
-    if( process_.get() )
+    if( !process_.expired() )
     {
         if( IsConnected() && client_.get() )
         {
@@ -73,7 +75,7 @@ void SwordFacade::Stop()
             client_->UnregisterMessageHandler(this);
             client_.reset();
         }
-        process_->Stop();
+        process_.lock()->Stop();
     }
 }
 
@@ -187,4 +189,23 @@ void SwordFacade::Update( const T& message )
         if ( handled )
             messageHandlers_.erase( message.context() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::IsRunning
+// Created: AHC 2011-05-19
+// -----------------------------------------------------------------------------
+bool SwordFacade::IsRunning() const
+{
+    return !process_.expired();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::Update
+// Created: AHC 2011-05-19
+// -----------------------------------------------------------------------------
+void SwordFacade::Update() const
+{
+    if( client_.get() )
+        client_->Update();
 }

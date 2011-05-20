@@ -151,6 +151,14 @@ void RemoteHost::Handle( const sword::ProfileListResponse& /*message*/ )
 {
     // $$$$ SBO 2010-11-22: TODO, handle profile list
 }
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::Handle
+// Created: AHC 2011-05-20
+// -----------------------------------------------------------------------------
+void RemoteHost::Handle( const sword::SessionCommandExecutionResponse& /*message*/ )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: RemoteHost::Handle
@@ -161,4 +169,43 @@ void RemoteHost::Handle( const sword::SessionStopResponse& message )
     std::map< std::string, boost::shared_ptr< Exercise_ABC > >::iterator it = exercises_.find( message.exercise() );
     if( it != exercises_.end() )
         it->second->SetRunning( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::Pause
+// Created: AHC
+// -----------------------------------------------------------------------------
+void RemoteHost::Pause(const std::string& exercise, const std::string& session) const
+{
+    launcher::SessionCommandExecutionRequest message;
+    message().set_exercise( exercise );
+    message().set_session( session );
+    message().set_set_running( false );
+    message.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::Resume
+// Created: AHC
+// -----------------------------------------------------------------------------
+void RemoteHost::Resume(const std::string& exercise, const std::string& session) const
+{
+    launcher::SessionCommandExecutionRequest message;
+    message().set_exercise( exercise );
+    message().set_session( session );
+    message().set_set_running( true );
+    message.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::SaveCheckpoint
+// Created: AHC
+// -----------------------------------------------------------------------------
+void RemoteHost::SaveCheckpoint(const std::string& exercise, const std::string& session, const std::string& name) const
+{
+    launcher::SessionCommandExecutionRequest message;
+    message().set_exercise( exercise );
+    message().set_session( session );
+    message().set_save_checkpoint( name );
+    message.Send( publisher_ );
 }

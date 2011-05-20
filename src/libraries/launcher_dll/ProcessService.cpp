@@ -53,13 +53,16 @@ ProcessService::~ProcessService()
     {
         boost::shared_ptr< SwordFacade > process;
         boost::recursive_mutex::scoped_lock locker( mutex_ );
-        for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
-            if( ! it->second.expired() )
+        for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); )
+        {
+            if( it->second->IsRunning() )
             {
-                boost::shared_ptr< SwordFacade > weak( it->second );
-                process = weak;
+                process = it->second;
                 break;
             }
+            else
+                it = processes_.erase(it);
+        }
         if( process.get() )
             process->Stop();
     }
@@ -152,12 +155,12 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     SupervisorProfileCollector profileCollector;
     frontend::Profile::VisitProfiles( config_, fileLoader_, exercise, profileCollector );
 
-    boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( *this, command, message.type() == sword::SessionStartRequest::dispatch ) );
+    boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( message.type() == sword::SessionStartRequest::dispatch ) );
     {
         boost::recursive_mutex::scoped_lock locker( mutex_ );
         processes_[ std::make_pair(exercise, session) ] = wrapper;
     }
-    wrapper->Start( profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_.GetTestMode() );
+    wrapper->Start(*this, command, profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_.GetTestMode() );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new CheckpointMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new StatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
@@ -172,7 +175,7 @@ sword::SessionStopResponse::ErrorCode ProcessService::StopSession( const sword::
 {
     const std::string name = message.exercise();
     ProcessContainer::iterator it = processes_.find( std::make_pair(message.exercise(), message.session() ) );
-    if( it != processes_.end() && ! it->second.expired() )
+    if( it != processes_.end() )
     {
         boost::shared_ptr< SwordFacade > process( it->second );
         process->Stop();
@@ -189,7 +192,7 @@ sword::SessionStopResponse::ErrorCode ProcessService::StopSession( const sword::
 bool ProcessService::IsRunning( const std::string& exercise, const std::string& session ) const
 {
     ProcessContainer::const_iterator it = processes_.find( std::make_pair(exercise, session) );
-    return it != processes_.end() && ! it->second.expired();
+    return it != processes_.end() && ( config_.GetTestMode() || it->second->IsRunning() );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,7 +203,7 @@ void ProcessService::NotifyStopped()
 {
     boost::recursive_mutex::scoped_lock locker( mutex_ );
     for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); )
-        if( it->second.expired() )
+        if( !it->second->IsRunning() )
             it = processes_.erase( it );
         else
             ++it;
@@ -241,7 +244,7 @@ void ProcessService::SendProfileList( sword::ProfileListResponse& message )
 {
     boost::recursive_mutex::scoped_lock locker( mutex_ );
     for( ProcessContainer::const_iterator it = processes_.begin(); it != processes_.end(); ++it )
-        if( !it->second.expired() )
+        if( it->first.first == message.exercise() )
         {
             ProfileCollector collector( message );
             frontend::Profile::VisitProfiles( config_, fileLoader_, it->first.first, collector );
@@ -302,7 +305,7 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         response.Send( server_.ResolveClient( endpoint ) );
         return;
     }
-    if( it->second.expired() || !it->second.lock()->IsConnected() )
+    if( !it->second->IsConnected() )
     {
         SessionCommandExecutionResponse response;
         response().set_exercise( message.exercise() );
@@ -349,4 +352,16 @@ void ProcessService::SaveCheckpoint( const std::string& name, SwordFacade& facad
     simulation::ControlCheckPointSaveNow request;
     request().set_name( name );
     request.Send( facade );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessService::Update
+// Created: AHC 2010-05-19
+// -----------------------------------------------------------------------------
+void ProcessService::Update()
+{
+    for(ProcessContainer::iterator it = processes_.begin(); processes_.end() != it; ++it)
+    {
+        it->second->Update();
+    }
 }

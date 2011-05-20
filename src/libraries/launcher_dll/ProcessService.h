@@ -64,6 +64,7 @@ public:
     void ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message );
     virtual void NotifyStopped();
     virtual void NotifyError( const std::string& error );
+    void Update();
     //@}
 
 private:
@@ -77,7 +78,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::pair< std::string, std::string >, boost::weak_ptr< SwordFacade > > ProcessContainer;
+    typedef std::map< std::pair< std::string, std::string >, boost::shared_ptr< SwordFacade > > ProcessContainer;
     //@}
 
 private:

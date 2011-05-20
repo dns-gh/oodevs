@@ -15,6 +15,7 @@
 #include <vector>
 #include <memory>
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include "client_proxy/SwordConnectionHandler_ABC.h"
 #include "client_proxy/SwordMessageHandler_ABC.h"
 #include "MessageHandler_ABC.h"
@@ -44,12 +45,13 @@ namespace launcher
 */
 // Created: AHC 2011-05-16
 // =============================================================================
-class SwordFacade : public SwordConnectionHandler_ABC, public SwordMessageHandler_ABC
+class SwordFacade : public SwordConnectionHandler_ABC
+                  , public SwordMessageHandler_ABC
 {
 public:
     //! @name Constructor/destructor
     //@{
-             SwordFacade( frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > process, bool isDispatcher = false );
+             SwordFacade( bool isDispatcher = false );
     virtual ~SwordFacade();
     //@}
 
@@ -61,7 +63,8 @@ public:
 
     //! @name Operations
     //@{
-    void Start(const std::string& supervisorProfile, const std::string& supervisorPassword, bool testMode = false);
+    void Start(frontend::ProcessObserver_ABC& observer, boost::shared_ptr< frontend::SpawnCommand > command,
+        const std::string& supervisorProfile, const std::string& supervisorPassword, bool testMode = false);
     void Stop();
     // SwordConnectionHandler_ABC interface
     virtual void OnConnectionSucceeded( const std::string& endpoint );
@@ -78,6 +81,8 @@ public:
     void AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC > handler );
 
     void Send( const sword::ClientToSim& message ) const;
+    bool IsRunning() const;
+    void Update() const;
     //@}
 
 private:
@@ -100,7 +105,7 @@ private:
     bool isDispatcher_;
     bool isConnected_;
     bool isAuthenticated_;
-    boost::shared_ptr< frontend::ProcessWrapper > process_;
+    boost::weak_ptr< frontend::ProcessWrapper > process_;
     boost::shared_ptr< SwordProxy > client_;
     boost::shared_ptr< SwordConnectionHandler_ABC > connectionHandler_;
     HandlerContainer messageHandlers_;

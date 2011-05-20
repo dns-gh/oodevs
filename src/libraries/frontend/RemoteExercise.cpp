@@ -13,6 +13,7 @@
 #include "Host_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "protocol/Protocol.h"
+#include "protocol/LauncherSenders.h"
 
 using namespace frontend;
 
@@ -147,10 +148,37 @@ void RemoteExercise::SetRunning( bool running )
 }
 
 // -----------------------------------------------------------------------------
-// Name: RemoteExercise::SetRunning
-// Created: SBO 2010-10-26
+// Name: RemoteExercise::QueryProfileList
+// Created: AHC
 // -----------------------------------------------------------------------------
 void RemoteExercise::QueryProfileList() const
 {
     host_.QueryProfileList( name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteExercise::Pause
+// Created: AHC
+// -----------------------------------------------------------------------------
+void RemoteExercise::Pause(const std::string& session) const
+{
+    host_.Pause( name_, session );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteExercise::Resume
+// Created: AHC
+// -----------------------------------------------------------------------------
+void RemoteExercise::Resume(const std::string& session) const
+{
+    host_.Resume( name_, session );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteExercise::SaveCheckpoint
+// Created: AHC
+// -----------------------------------------------------------------------------
+void RemoteExercise::SaveCheckpoint(const std::string& session, const std::string& name) const
+{
+    host_.SaveCheckpoint( name_, session, name );
 }

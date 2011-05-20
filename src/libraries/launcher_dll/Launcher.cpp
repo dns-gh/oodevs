@@ -51,6 +51,8 @@ void Launcher::Update()
 {
     if( server_.get() )
         server_->Update();
+    if( processes_.get() )
+        processes_->Update();
 }
 
 // -----------------------------------------------------------------------------

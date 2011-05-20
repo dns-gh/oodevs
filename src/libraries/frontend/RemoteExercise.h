@@ -56,6 +56,9 @@ public:
     virtual void Replay( const std::string& session ) const;
     virtual void Stop( const std::string& session ) const;
     virtual void QueryProfileList() const;
+    virtual void Pause(const std::string& session) const;
+    virtual void Resume(const std::string& session) const;
+    virtual void SaveCheckpoint(const std::string& session, const std::string& name) const;
     //@}
 
     //! @name Operations
