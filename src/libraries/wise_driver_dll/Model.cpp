@@ -161,6 +161,15 @@ void Model::OnReceiveMessage( const sword::MessengerToClient& message )
         Destroy( drawings_, content.shape_destruction().id().id() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Model::OnReceiveMessage
+// Created: LGY 2011-05-20
+// -----------------------------------------------------------------------------
+void Model::OnReceiveMessage( const sword::AuthenticationToClient& /*message*/ )
+{
+    // NOTHING
+}
+
 namespace
 {
     template< class Entity >

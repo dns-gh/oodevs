@@ -111,6 +111,7 @@ namespace
     {
         MOCK_METHOD_EXT( OnReceiveMessage, 1, void ( const sword::SimToClient& ), OnReceiveMessageSimToClient );
         MOCK_METHOD_EXT( OnReceiveMessage, 1, void ( const sword::MessengerToClient& ), OnReceiveMessageMessengerToClient );
+        MOCK_METHOD_EXT( OnReceiveMessage, 1, void ( const sword::AuthenticationToClient& ), OnReceiveMessageAuthenticationToClient );
     };
 
     std::string MakeHost( const std::string& host, unsigned short port )
@@ -154,6 +155,7 @@ BOOST_AUTO_TEST_CASE( MessageHandlersCanBeRegistered )
     MockMessageHandler messageHandler;
     MOCK_EXPECT( messageHandler, OnReceiveMessageSimToClient ).at_least( 1 );
     MOCK_EXPECT( messageHandler, OnReceiveMessageMessengerToClient ).at_least( 1 );
+    MOCK_EXPECT( messageHandler, OnReceiveMessageAuthenticationToClient ).at_least( 1 );
     client.RegisterMessageHandler( &messageHandler );
     client.Connect( &connectionHandler );
     Timeout timeout( timeOut );
