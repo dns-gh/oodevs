@@ -11,8 +11,13 @@
 #define __edxlhave_PublisherActor_h_
 
 #include "Publisher_ABC.h"
+#ifndef _WIN32_WINNT
+#   define _WIN32_WINNT 0x0501
+#endif
+#pragma warning( push, 0 )
 #include <boost/asio.hpp>
 #include <boost/thread.hpp>
+#pragma warning( pop )
 
 namespace edxl
 {

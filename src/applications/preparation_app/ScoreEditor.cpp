@@ -21,6 +21,7 @@
 #include "preparation/Score.h"
 #include "preparation/ScoresModel.h"
 #include "preparation/StaticModel.h"
+#include "preparation/ProfileSelection.h"
 #include <xeumeuleu/xml.hpp>
 
 namespace

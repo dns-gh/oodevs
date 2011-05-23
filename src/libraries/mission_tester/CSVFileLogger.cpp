@@ -164,7 +164,7 @@ void CSVFileLogger::ParameterCreationFailed( const kernel::Entity_ABC& target, c
 // Name: CSVFileLogger::ConnectionSucceeded
 // Created: PHC 2011-05-20
 // -----------------------------------------------------------------------------
-void CSVFileLogger::ConnectionSucceeded( const std::string& endpoint ) const
+void CSVFileLogger::ConnectionSucceeded( const std::string& /*endpoint*/ ) const
 {
     // NOTHING
 }
@@ -173,7 +173,7 @@ void CSVFileLogger::ConnectionSucceeded( const std::string& endpoint ) const
 // Name: CSVFileLogger::AuthenticationSucceeded
 // Created: PHC 2011-05-20
 // -----------------------------------------------------------------------------
-void CSVFileLogger::AuthenticationSucceeded( const std::string& profile ) const
+void CSVFileLogger::AuthenticationSucceeded( const std::string& /*profile*/ ) const
 {
     os_ << "Date;Message type;Entity ID;Order ID;Info" << std::endl;
 }

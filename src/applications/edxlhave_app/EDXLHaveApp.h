@@ -51,7 +51,7 @@ class EDXLHaveApp
 public:
     //! @name Constructors/Destructor
     //@{
-    EDXLHaveApp( const boost::program_options::variables_map& options );
+             EDXLHaveApp( const boost::program_options::variables_map& options );
     virtual ~EDXLHaveApp();
     //@}
 

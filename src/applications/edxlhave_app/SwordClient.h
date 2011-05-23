@@ -10,11 +10,12 @@
 #ifndef __SwordClient_h_
 #define __SwordClient_h_
 
-#ifdef __GNUG__
-#   pragma interface
+#ifndef _WIN32_WINNT
+#   define _WIN32_WINNT 0x0501
 #endif
-
+#pragma warning( push, 0 )
 #include <boost/asio.hpp>
+#pragma warning( pop )
 #include <boost/function.hpp>
 
 #pragma warning( push, 0 )
