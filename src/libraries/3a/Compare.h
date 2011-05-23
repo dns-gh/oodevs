@@ -85,8 +85,7 @@ private:
         if( op == "greater_equal" ) return bl::_1 >= bl::_2;
         if( op == "equal" )         return bl::_1 == bl::_2;
         if( op == "not_equal" )     return bl::_1 != bl::_2;
-        xis.error( "Invalid operator '" + op + "'" );
-        return T_Operator();
+        throw xis.context() + "Invalid operator '" + op + "'";
     }
     //@}
 

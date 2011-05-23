@@ -10,8 +10,7 @@
 #ifndef __Types_h_
 #define __Types_h_
 
-#pragma warning( push )
-#pragma warning( disable : 4512 )
+#pragma warning( push, 0 )
 #include <boost/variant.hpp>
 #pragma warning( pop )
 #include <iostream>

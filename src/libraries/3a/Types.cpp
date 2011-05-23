@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
+#pragma warning( disable : 4018 4389 4702 ) // $$$$ SBO 2009-05-19: signed/unsigned mismatch
 #include "Types.h"
-#pragma warning( disable : 4018 4389 ) // $$$$ SBO 2009-05-19: signed/unsigned mismatch
 
 namespace
 {
