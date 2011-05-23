@@ -15,6 +15,7 @@
 class DEC_Population_Path;
 class MT_Vector2D;
 class Terrain_Data;
+class TER_World;
 
 // =============================================================================
 // Created: AGE 2005-03-08
@@ -39,13 +40,19 @@ private:
     //@{
     virtual float EvaluateCost( const geometry::Point2f& from, const geometry::Point2f& to );
     virtual float GetCost( const geometry::Point2f& from, const geometry::Point2f& to, const TerrainData& terrainTo, const TerrainData& terrainBetween );
-    double GetChannelingCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    //@}
+
+    //! @name Helpers
+    //@{
+    float GetChannelingCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
+    float GetTerrainCost( const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const DEC_Population_Path& path_;
+    const TER_World& world_;
     //@}
 };
 

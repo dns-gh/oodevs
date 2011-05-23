@@ -60,7 +60,8 @@ void DEC_Agent_PathfinderRule::InitializeAutomateFuseauData( const MT_Vector2D& 
 // Created: AGE 2005-03-23
 // -----------------------------------------------------------------------------
 DEC_Agent_PathfinderRule::DEC_Agent_PathfinderRule( const DEC_Agent_Path& path, const MT_Vector2D& from, const MT_Vector2D& to )
-    : path_                          ( path )
+    : TerrainRule_ABC                ()
+    , path_                          ( path )
     , world_                         ( TER_World::GetWorld() )
     , altitudeData_                  ( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData() )
     , rMaxSpeed_                     ( float( path.GetUnitSpeeds().GetMaxSpeed() ) * 1.1f )

@@ -41,44 +41,44 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_PathClass* pCopyFrom = 0 );
+             DEC_Agent_PathClass( xml::xistream& xis, const DEC_Agent_PathClass* pCopyFrom = 0 );
     virtual ~DEC_Agent_PathClass();
     //@}
 
     //! @name Accessors
     //@{
-          double     GetPreferedTerrainCost              () const;
+          double       GetPreferedTerrainCost              () const;
     const TerrainData& GetPreferedTerrain                  () const;
-          double     GetAvoidedTerrainCost               () const;
+          double       GetAvoidedTerrainCost               () const;
     const TerrainData& GetAvoidedTerrain                   () const;
 
-          double     GetAltitudePreference               () const;
+          double       GetAltitudePreference               () const;
 
-          double     GetComfortFuseauDistance            () const;
-          double     GetFuseauCostPerMeterOut            () const;
-          double     GetFuseauCostPerMeterIn             () const;
-          double     GetMaximumFuseauDistance            () const;
-          double     GetMaximumFuseauDistanceWithAutomata() const;
+          double       GetComfortFuseauDistance            () const;
+          double       GetFuseauCostPerMeterOut            () const;
+          double       GetFuseauCostPerMeterIn             () const;
+          double       GetMaximumFuseauDistance            () const;
+          double       GetMaximumFuseauDistanceWithAutomata() const;
 
-          double     GetAutomateFuseauCostPerMeterOut    () const;
-          double     GetMaximumAutomataFuseauDistance    () const;
+          double       GetAutomateFuseauCostPerMeterOut    () const;
+          double       GetMaximumAutomataFuseauDistance    () const;
 
-          double     GetDangerDirectionBaseCost          () const;
-          double     GetDangerDirectionLinearCost        () const;
+          double       GetDangerDirectionBaseCost          () const;
+          double       GetDangerDirectionLinearCost        () const;
 
           bool         AvoidObjects                        () const;
           bool         AvoidEnemies                        () const;
           bool         HandlePopulations                   () const;
 
-          double     GetEnemyCostOnContact               () const;
-          double     GetEnemyCostAtSecurityRange         () const;
-          double     GetEnemyMaximumCost                 () const;
-          double     GetObjectCost                       ( const MIL_ObjectType_ABC& objectType ) const;
-          double     GetPopulationAttitudeCost           ( const MIL_PopulationAttitude& attitude ) const;
-          double     GetPopulationSecurityRange          () const;
-          double     GetPopulationMaximumCost            () const;
-          double     GetCostOutsideOfPopulation          () const;
-          double     GetThreshold                        () const;
+          double       GetEnemyCostOnContact               () const;
+          double       GetEnemyCostAtSecurityRange         () const;
+          double       GetEnemyMaximumCost                 () const;
+          double       GetObjectCost                       ( const MIL_ObjectType_ABC& objectType ) const;
+          double       GetPopulationAttitudeCost           ( const MIL_PopulationAttitude& attitude ) const;
+          double       GetPopulationSecurityRange          () const;
+          double       GetPopulationMaximumCost            () const;
+          double       GetCostOutsideOfPopulation          () const;
+          double       GetThreshold                        () const;
 
           bool         IsShort                             () const;
     //@}
@@ -126,17 +126,17 @@ private:
 private:
     //! @name Member data
     //@{
-    bool          bShort_;
+    bool bShort_;
 
-    bool          bAvoidObjects_;
-    double      rObstructionThreshold_;
+    bool bAvoidObjects_;
+    double rObstructionThreshold_;
     T_ObjectCosts objectCosts_;
 
-    double    rAltitudePreference_;
+    double rAltitudePreference_;
 
-    double    rPreferedTerrainCost_;
+    double rPreferedTerrainCost_;
     TerrainData preferedTerrain_;
-    double    rAvoidedTerrainCost_;
+    double rAvoidedTerrainCost_;
     TerrainData avoidedTerrain_;
 
     double rMaximumFuseauDistance_;

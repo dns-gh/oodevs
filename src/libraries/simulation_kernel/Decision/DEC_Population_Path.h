@@ -46,7 +46,7 @@ public:
     //! @name Accessors
     //@{
     const T_PopulationPathChannelerVector& GetChannelers             () const;
-          double                         GetCostOutsideOfChanneling() const;
+          double                           GetCostOutsideOfChanneling() const;
     //@}
 
 private:

@@ -29,7 +29,8 @@ DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, cons
     , population_( population )
     , profiler_  ()
 {
-    T_PointVector pointsTmp; pointsTmp.reserve( 2 );
+    T_PointVector pointsTmp;
+    pointsTmp.reserve( 2 );
     pointsTmp.push_back( start );
     pointsTmp.push_back( destination );
     Initialize( pointsTmp );
@@ -42,6 +43,7 @@ DEC_Population_Path::DEC_Population_Path( const MIL_Population& population, cons
 //-----------------------------------------------------------------------------
 DEC_Population_Path::~DEC_Population_Path()
 {
+    // NOTHING
 }
 
  // -----------------------------------------------------------------------------
