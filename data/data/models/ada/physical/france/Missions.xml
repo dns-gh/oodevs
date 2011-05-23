@@ -4462,8 +4462,8 @@
         <value id="2" name="polyvalent"/>
       </parameter>
     </fragorder>
-    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagementPopulation" id="348" name="Changer Regles Engagement Population">
-      <parameter dia-name="orderConduiteChangerReglesEngagementPopulation_" name="Ordre conduite changer regles engagement population" optional="false" type="Enumeration">
+    <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagementPopulation" id="348" name="Changer Regles Engagement Civils">
+      <parameter dia-name="orderConduiteChangerReglesEngagementPopulation_" name="Ordre conduite changer regles engagement civils" optional="false" type="Enumeration">
         <value id="0" name="none"/>
         <value id="1" name="emploi_force_interdit"/>
         <value id="2" name="armes_non_letales_autorisees"/>
@@ -4624,4 +4624,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3432710200" -->
+<!-- signature="0335007569" -->

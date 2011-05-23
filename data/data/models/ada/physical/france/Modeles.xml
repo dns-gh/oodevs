@@ -75,7 +75,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -117,7 +117,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -189,7 +189,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -239,7 +239,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -317,7 +317,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -359,7 +359,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -423,7 +423,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -463,7 +463,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -516,7 +516,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -587,7 +587,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -629,7 +629,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -667,7 +667,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -697,7 +697,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="AirCP" file="Air\Pions\PC\model.bms" masalife="false" name="PC AIR">
@@ -724,7 +724,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="LandingCraft" file="Marine\Pions\Chalands de Debarquement\model.bms" masalife="false" name="Chalands de Debarquement">
@@ -759,7 +759,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="MarineCP" file="Marine\Pions\PC\model.bms" masalife="false" name="PC Marine">
@@ -790,7 +790,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\model.bms" masalife="false" name="PC Alat">
@@ -821,7 +821,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Hah\model.bms" masalife="false" name="Patrouille HAH">
@@ -866,7 +866,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hac\model.bms" masalife="false" name="Patrouille HAC">
@@ -910,7 +910,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HAM">
@@ -953,7 +953,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM">
@@ -995,7 +995,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GeneralPurposeHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\model.bms" masalife="false" name="Patrouille HM Log">
@@ -1035,7 +1035,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Tigre\model.bms" masalife="false" name="Patrouille Tigre">
@@ -1081,7 +1081,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" masalife="false" name="SACP CAROL">
@@ -1122,7 +1122,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" masalife="false" name="SACP ROLAND">
@@ -1164,7 +1164,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" masalife="false" name="SATCP MISTRAL">
@@ -1205,7 +1205,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="VeryShortRangeSurfaceToAirBatteryCP" file="Appui\ArtDsa\Pions\PC MISTRAL\model.bms" masalife="false" name="PC MISTRAL">
@@ -1241,7 +1241,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" masalife="false" name="PC ROLAND CAROL">
@@ -1277,7 +1277,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="TheaterHighAltitudeAeraDefenseCP" file="Appui\ArtDsa\Pions\PC HAWK\model.bms" masalife="false" name="PC HAWK">
@@ -1313,7 +1313,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section GEN">
@@ -1367,7 +1367,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionPCGenie" file="Appui\Genie\Pions\Model.bms" masalife="false" name="PC GEN">
@@ -1403,7 +1403,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionPFM" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section PFM">
@@ -1440,7 +1440,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionDeminageLourd" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section Deminage Lourd">
@@ -1477,7 +1477,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeMADEZ" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe MADEZ">
@@ -1514,7 +1514,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeOT" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe OT">
@@ -1551,7 +1551,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeMFRD" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe MFRD">
@@ -1588,7 +1588,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeEFA" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe EFA">
@@ -1625,7 +1625,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeEBG" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe EBG">
@@ -1663,7 +1663,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeMPG" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe MPG">
@@ -1701,7 +1701,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupePAA" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe PAA">
@@ -1738,7 +1738,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeDISP" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe DISP">
@@ -1775,7 +1775,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionSOUVIM" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section SOUVIM">
@@ -1812,7 +1812,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="DLRG" file="Appui\Genie\Pions\Model.bms" masalife="false" name="DLRG">
@@ -1851,7 +1851,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupePAT" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe PAT">
@@ -1889,7 +1889,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeEnfouisseur" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe Enfouisseur">
@@ -1926,7 +1926,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeMLF" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe MLF">
@@ -1963,7 +1963,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeChantier" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe Chantier">
@@ -2000,7 +2000,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" masalife="false" name="Section INF">
@@ -2072,7 +2072,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.bms" masalife="false" name="Section INF MILAN">
@@ -2113,7 +2113,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.bms" masalife="false" name="Section INF HOT">
@@ -2154,7 +2154,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie_Appui" file="Melee\Inf\Pions\Son Appui\Model.bms" masalife="false" name="Section Appui">
@@ -2194,7 +2194,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.bms" masalife="false" name="Groupe Appui Mortier">
@@ -2233,7 +2233,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" masalife="false" name="PC INF">
@@ -2275,7 +2275,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\model.bms" masalife="false" name="Peloton XL">
@@ -2343,7 +2343,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Peloton_AMX" file="Melee\Abc\Pions\Pel AMX-ERC\model.bms" masalife="false" name="Peloton AMX_ERC">
@@ -2415,7 +2415,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Peloton_AD" file="Melee\Abc\Pions\Pel AD\model.bms" masalife="false" name="Peloton AD">
@@ -2459,7 +2459,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_EI_Milan" file="Melee\Abc\Pions\Pat Milan\model.bms" masalife="false" name="Patrouille Milan">
@@ -2509,7 +2509,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" masalife="false" name="Patrouille EI">
@@ -2557,7 +2557,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.bms" masalife="false" name="PC ABC">
@@ -2594,7 +2594,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" masalife="false" name="PC ASS Tir">
@@ -2630,7 +2630,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PC_Peloton_PIR" file="Melee\Abc\Pions\Pel PIR\model.bms" masalife="false" name="PC Peloton PIR">
@@ -2667,7 +2667,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Groupe_RASIT" file="Melee\Abc\Pions\Grp Rasit\Model.bms" masalife="false" name="Groupe RASIT ABC">
@@ -2704,7 +2704,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Equipe_NBC_Dec" file="Appui\Nbc\Pions\Pat Dec\model.bms" masalife="false" name="Equipe Decontamination NBC">
@@ -2742,7 +2742,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.bms" masalife="false" name="Patrouille Reco NBC">
@@ -2780,7 +2780,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_NBC_RE" file="Appui\Nbc\Pions\Pat RE\model.bms" masalife="false" name="Patrouille RE">
@@ -2817,7 +2817,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PC_NBC" file="Appui\Nbc\Pions\PC NBC\model.bms" masalife="false" name="PC NBC">
@@ -2853,7 +2853,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionLOGTC2" file="Appui\Log\Pions\Model.bms" masalife="false" name="PC TC2">
@@ -2895,7 +2895,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionMaintenance" file="Appui\Log\Pions\Model.bms" masalife="false" name="Section Maintenance">
@@ -2941,7 +2941,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeMaintenanceEvacuation" file="Appui\Log\Pions\Model.bms" masalife="false" name="Groupe Maintenance Evacuation">
@@ -2990,7 +2990,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionTriage" file="Appui\Log\Pions\Model.bms" masalife="false" name="Section Triage Modulaire">
@@ -3034,7 +3034,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="ACA" file="Appui\Log\Pions\Model.bms" masalife="false" name="ACA">
@@ -3082,7 +3082,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="UniteSoin" file="Appui\Log\Pions\Model.bms" masalife="false" name="Unite de soin">
@@ -3126,7 +3126,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="DecontaminationNBC" file="Appui\Log\Pions\Model.bms" masalife="false" name="Decontamination NBC">
@@ -3170,7 +3170,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="UniteSpy" file="Appui\Log\Pions\Model.bms" masalife="false" name="Unite PSY">
@@ -3214,7 +3214,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeRamassage" file="Appui\Log\Pions\Model.bms" masalife="false" name="Groupe Ramassage">
@@ -3264,7 +3264,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionLOG" file="Appui\Log\Pions\Model.bms" masalife="false" name="PC Log">
@@ -3300,7 +3300,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.bms" masalife="false" name="Convoi">
@@ -3337,7 +3337,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.bms" masalife="false" name="Peloton Transport">
@@ -3375,7 +3375,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PionStock" file="Appui\Log\Pions\Model.bms" masalife="false" name="Stock">
@@ -3413,7 +3413,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionTravaux" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section Travaux">
@@ -3453,7 +3453,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" masalife="false" name="Section AUF1">
@@ -3496,7 +3496,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco AUF1\Model.bms" masalife="false" name="Section Reco AUF1">
@@ -3533,7 +3533,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1\Model.bms" masalife="false" name="Section TRF1">
@@ -3576,7 +3576,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco TRF1\Model.bms" masalife="false" name="Section Reco TRF1">
@@ -3613,7 +3613,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.bms" masalife="false" name="Lanceur LRM">
@@ -3655,7 +3655,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco LRM\Model.bms" masalife="false" name="Equipe Reco LRM">
@@ -3692,7 +3692,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\SAM\Model.bms" masalife="false" name="SAM">
@@ -3733,7 +3733,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco SAM\Model.bms" masalife="false" name="Equipe Reco SAM">
@@ -3770,7 +3770,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco COBRA\Model.bms" masalife="false" name="Equipe Reco COBRA">
@@ -3807,7 +3807,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Radar COBRA\Model.bms" masalife="false" name="Radar COBRA">
@@ -3844,7 +3844,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeASS_RATAC" file="Appui\ArtFdp\Pions\Grp RATAC\Model.bms" masalife="false" name="Groupe RATAC">
@@ -3881,7 +3881,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.bms" masalife="false" name="EO">
@@ -3918,7 +3918,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EOP\Model.bms" masalife="false" name="EOP">
@@ -3956,7 +3956,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche blindee\Model.bms" masalife="false" name="Pat recherche blindee">
@@ -3996,7 +3996,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_RBRR_Moto" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche motorisee\Model.bms" masalife="false" name="Pat recherche moto">
@@ -4035,7 +4035,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_RBRR_Nautique" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche nautique\Model.bms" masalife="false" name="Pat recherche nautique">
@@ -4075,7 +4075,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_RBRR_RASIT" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche RASIT\Model.bms" masalife="false" name="Pat recherche RASIT">
@@ -4114,7 +4114,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" masalife="false" name="Pat URH">
@@ -4154,7 +4154,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Section_Coge" file="Appui\Rens\Pions\Roem\Coge\Model.bms" masalife="false" name="Coge">
@@ -4191,7 +4191,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Stations_Lynx" file="Appui\Rens\Pions\Roem\Stations Lynx\Model.bms" masalife="false" name="Stations Linx">
@@ -4228,7 +4228,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Stations_Horizon" file="Appui\Rens\Pions\Radint\Stations Horizon\Model.bms" masalife="false" name="Stations Horizon">
@@ -4262,7 +4262,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Cougar_Horizon" file="Appui\Rens\Pions\Radint\Cougar Horizon\Model.bms" masalife="false" name="Cougar Horizon">
@@ -4292,7 +4292,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Section_CL289_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre CL289\Model.bms" masalife="false" name="Sections mise en oeuvre CL289">
@@ -4327,7 +4327,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Drone_CL289" file="Appui\Rens\Pions\Roim\Drone CL289\Model.bms" masalife="false" name="Drone CL289">
@@ -4354,7 +4354,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Section_SDTI_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre SDTI\Model.bms" masalife="false" name="Sections mise en oeuvre SDTI">
@@ -4388,7 +4388,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Drone_SDTI" file="Appui\Rens\Pions\Roim\Drone SDTI\Model.bms" masalife="false" name="Drone SDTI">
@@ -4415,7 +4415,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Stations_MrodELodee" file="Appui\Rens\Pions\Roem\Stations MROD_ELODEE\Model.bms" masalife="false" name="Stations MROD_ELODEE">
@@ -4450,7 +4450,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Systeme_Stair" file="Appui\Rens\Pions\Roem\Systeme STAIR\Model.bms" masalife="false" name="Systeme STAIR">
@@ -4487,7 +4487,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Systeme_Start" file="Appui\Rens\Pions\Roem\Systeme START_\Model.bms" masalife="false" name="Systeme_START">
@@ -4524,7 +4524,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="section_Elge" file="Appui\Rens\Pions\Roem\ELGE\Model.bms" masalife="false" name="Groupe ELGE">
@@ -4562,7 +4562,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="section_Brovab" file="Appui\Rens\Pions\Roem\BROVAB\Model.bms" masalife="false" name="Groupe BROVAB">
@@ -4599,7 +4599,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" masalife="false" name="Peloton Transport Blindes">
@@ -4637,7 +4637,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.bms" masalife="false" name="Patrouille Circulation">
@@ -4686,7 +4686,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Refugie" file="Population\Refugies\Pions\Refugie\Model.bms" masalife="false" name="Refugie">
@@ -4720,7 +4720,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Milice" file="Population\Milices\Pion\Model.bms" masalife="false" name="Milice">
@@ -4763,7 +4763,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeMATS" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe MATS">
@@ -4800,7 +4800,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeEnergie" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Groupe Energie">
@@ -4837,7 +4837,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeEquipementPoser" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section Equipement zone de poser">
@@ -4874,7 +4874,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionEquipementPlage" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section Equipement Plage">
@@ -4911,7 +4911,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionEau" file="Appui\Genie\Pions\Model.bms" masalife="false" name="Section Traitement Eau">
@@ -4948,7 +4948,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_Viviane" file="Appui\Rens\Pions\Radint\Pat Viviane\Model.bms" masalife="false" name="Patrouille Viviane">
@@ -4978,7 +4978,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PCDIV" file="Appui\Trans\Pions\Model.bms" masalife="false" name="PC DIV">
@@ -5006,7 +5006,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PCTAC" file="Appui\Trans\Pions\Model.bms" masalife="false" name="PC TAC">
@@ -5034,7 +5034,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PCBIA" file="Appui\Trans\Pions\Model.bms" masalife="false" name="PC BIA">
@@ -5062,7 +5062,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionTRANS" file="Appui\Trans\Pions\Model.bms" masalife="false" name="Section TRANS">
@@ -5091,7 +5091,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeInfanterie_Commando" file="Melee\Inf\Pions\Grp Commando\Model.bms" masalife="false" name="Groupe Commando">
@@ -5129,7 +5129,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SampHawk" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" masalife="false" name="SAMP HAWK">
@@ -5170,7 +5170,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PCAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" masalife="false" name="PC Appui Mob">
@@ -5205,7 +5205,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" masalife="false" name="Patrouille BRDM2">
@@ -5246,7 +5246,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" masalife="false" name="Patrouille BRM1">
@@ -5287,7 +5287,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Terroriste" file="Population\Asymetriques\Terroriste\Pion\Model.bms" masalife="false" name="Terroriste">
@@ -5326,7 +5326,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="AntitankHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HR">
@@ -5365,7 +5365,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Peloton_XL" file="Melee\Abc\Pions\Pel XL\Model.bms" masalife="false" name="GLAISE ABC section char lourd">
@@ -5423,7 +5423,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son Vab\Model.bms" masalife="false" name="GLAISE INF section inf">
@@ -5489,7 +5489,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PC_ABC" file="Melee\Abc\Pions\PC\model.bms" masalife="false" name="GLAISE ABC PC">
@@ -5525,7 +5525,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" masalife="false" name="GLAISE ABC patrouille EI">
@@ -5571,7 +5571,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" masalife="false" name="GLAISE ASA section tcp">
@@ -5612,7 +5612,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" masalife="false" name="GLAISE ASS SAM">
@@ -5651,7 +5651,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionGenie" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GLAISE GEN section combat">
@@ -5705,7 +5705,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\PC\Model.bms" masalife="false" name="GLAISE INF PC inf">
@@ -5741,7 +5741,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeInfanterie_Mortier" file="Melee\Inf\Pions\Grp Mortier\Model.bms" masalife="false" name="GLAISE INF groupe appui mortier">
@@ -5780,7 +5780,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" masalife="false" name="GLAISE ASS section tractee">
@@ -5820,7 +5820,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1\Model.bms" masalife="false" name="GLAISE ASS section automoteur">
@@ -5860,7 +5860,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_LRM" file="Appui\ArtFdp\Pions\Lanceur LRM\Model.bms" masalife="false" name="GLAISE ASS section LRM">
@@ -5899,7 +5899,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" masalife="false" name="GLAISE ASS PC ART">
@@ -5935,7 +5935,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="ShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Sacp Roland Carol\model.bms" masalife="false" name="GLAISE ASA section cp">
@@ -5977,7 +5977,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie_HOT" file="Melee\Inf\Pions\Son Hot\Model.bms" masalife="false" name="GLAISE AC section sur vehicule">
@@ -6018,7 +6018,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeEnfouisseur" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GLAISE GEN groupe enfouisseur">
@@ -6055,7 +6055,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeMPG" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GLAISE GEN groupe amenagement terrain">
@@ -6092,7 +6092,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeEFA" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GLAISE GEN groupe franchissement">
@@ -6129,7 +6129,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="VeryShortRangeSurfaceToAirDefenseTroop" file="Appui\ArtDsa\Pions\Satcp Mistral\model.bms" masalife="false" name="GLAISE ASA groupe tcp">
@@ -6170,7 +6170,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_NBC_Reco" file="Appui\Nbc\Pions\Pat Reco\model.bms" masalife="false" name="GLAISE NBC Groupe Reco">
@@ -6208,7 +6208,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionPCGenie" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GLAISE GEN PC">
@@ -6244,7 +6244,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" masalife="false" name="GLAISE RENS Pat URH">
@@ -6281,7 +6281,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Peloton_AMX" file="Melee\Abc\Pions\Pel AMX-ERC\model.bms" masalife="false" name="GLAISE ABC Peloton Reco">
@@ -6347,7 +6347,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="TheaterHighAltitudeDefenseTroop" file="Appui\ArtDsa\Pions\Samp Hawk\Model.bms" masalife="false" name="GLAISE ASA  Section MP">
@@ -6388,7 +6388,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie_MILAN" file="Melee\Inf\Pions\Son Milan\Model.bms" masalife="false" name="Groupe AC MILAN">
@@ -6427,7 +6427,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_EI" file="Melee\Abc\Pions\Pat EI\model.bms" masalife="false" name="PC peloton ERIAC">
@@ -6466,7 +6466,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_EO" file="Appui\ArtFdp\Pions\EO\Model.bms" masalife="false" name="GLAISE ASS EO">
@@ -6503,7 +6503,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Son Reco AUF1\Model.bms" masalife="false" name="GLAISE ASS RECO">
@@ -6540,7 +6540,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="ShortRangeSurfaceToAirDefenseBatteryCP" file="Appui\ArtDsa\Pions\PC ROLAND CAROL\model.bms" masalife="false" name="GLAISE ASA PC">
@@ -6576,7 +6576,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
@@ -6618,7 +6618,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Hap\Model.bms" masalife="false" name="GLAISE ALFT Patrouille A">
@@ -6662,7 +6662,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\Model.bms" masalife="false" name="GLAISE ALFT Patrouille R">
@@ -6701,7 +6701,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="AACCP" file="Appui\Alat\Pions\PC\Model.bms" masalife="false" name="GLAISE ALFT PC">
@@ -6732,7 +6732,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Son ProTerre\Model.bms" masalife="false" name="Section PROTERRE">
@@ -6785,7 +6785,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Grp ProTerre\Model.bms" masalife="false" name="Groupe PROTERRE">
@@ -6842,7 +6842,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Melee\Inf\Pions\Groupe TE\Model.bms" masalife="false" name="Groupe TE">
@@ -6891,7 +6891,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PionTransport" file="Appui\Log\Pions\Model.bms" masalife="false" name="PL Civil">
@@ -6922,7 +6922,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="ChalandsDeDebarquement" file="Marine\Pions\Chalands de Debarquement\model.bms" masalife="false" name="Pion Groupe marine">
@@ -6945,7 +6945,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PatrouilleAssaut" file="Air\Pions\Patrouille Assaut\model.bms" masalife="false" name="Missile balistique">
@@ -6968,7 +6968,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" masalife="false" name="Glaise porteur SCUD">
@@ -6991,7 +6991,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Drone_SDTI" file="Appui\Rens\Pions\Roim\Drone DRAC\Model.bms" masalife="false" name="Drone DRAC">
@@ -7015,7 +7015,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Section_SDTI_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre DRAC\Model.bms" masalife="false" name="Sections mise en oeuvre DRAC">
@@ -7044,7 +7044,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\URB\Section ROHUM\Model.bms" masalife="false" name="Section ROHUM">
@@ -7078,7 +7078,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son AUF1 SIC\Model.bms" masalife="false" name="Section AUF1 Pour SIC">
@@ -7113,7 +7113,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1 SIC\Model.bms" masalife="false" name="Section TRF1 Pour SIC">
@@ -7148,7 +7148,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\SAM SIC\Model.bms" masalife="false" name="SAM Pour SIC">
@@ -7183,7 +7183,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Reco" file="Appui\ArtFdp\Pions\Eqp Reco CAESAR\Model.bms" masalife="false" name="Equipe Reco CAESAR">
@@ -7215,7 +7215,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son CAESAR SIC\Model.bms" masalife="false" name="Section CAESAR Pour SIC">
@@ -7250,7 +7250,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Humus\Humus_Melee\Inf\Pions\PC\Model.bms" masalife="false" name="HUMUS INF PC">
@@ -7279,7 +7279,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Humus\Humus_Melee\Inf\Pions\Sec Inf\Model.bms" masalife="false" name="HUMUS INF Section VTT">
@@ -7320,7 +7320,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie" file="Humus\Humus_Melee\Inf\Pions\Sec Cdo\Model.bms" masalife="false" name="HUMUS INF Section CDO">
@@ -7362,7 +7362,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Terroriste" file="Humus\Humus_Population\Asymetriques\Terroriste\Pion\Model.bms" masalife="false" name="HUMUS Activiste">
@@ -7395,7 +7395,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_RBRR_Blindee" file="Humus\Humus_Rens\Pions\SMP\Model.bms" masalife="false" name="HUMUS RENS SMP">
@@ -7426,7 +7426,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Peloton_AMX" file="Humus\Humus_Melee\Abc\Pions\Pel T55\Model.bms" masalife="false" name="HUMUS ABC Peloton T55">
@@ -7459,7 +7459,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="GroupeInfanterie_Mortier" file="Humus\Humus_Melee\Inf\Pions\Grp Mortier\Model.bms" masalife="false" name="HUMUS INF Groupe Appui Mortier">
@@ -7491,7 +7491,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionInfanterie_MILAN" file="Humus\Humus_Melee\Inf\Pions\Grp AC\Model.bms" masalife="false" name="HUMUS Groupe AC">
@@ -7527,7 +7527,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="Patrouille_EI" file="Humus\Humus_Melee\Abc\Pions\Pat Ecl\Model.bms" masalife="false" name="HUMUS ABC Patrouille Reco">
@@ -7567,7 +7567,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="PC_ABC" file="Humus\Humus_Melee\Abc\Pions\PC\Model.bms" masalife="false" name="HUMUS ABC PC">
@@ -7596,7 +7596,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="SectionEquipementMontagne" file="Appui\Genie\Pions\Model.bms" masalife="false" name="GEN Section Equipt Montagne">
@@ -7634,7 +7634,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ONG LOG">
@@ -7708,7 +7708,7 @@
         <fragorder name="Pion Orienter Capteurs"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -7767,7 +7767,7 @@
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
@@ -7834,7 +7834,7 @@
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -7863,7 +7863,7 @@
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
       </fragorders>
@@ -7887,7 +7887,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.bms" masalife="false" name="Groupe Chalands">
@@ -7916,7 +7916,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="Sgpt Satcp Mistral">
@@ -7952,7 +7952,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" masalife="false" name="Sgpt Sacp Carol">
@@ -7988,7 +7988,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" masalife="false" name="Sgpt Sacp Roland">
@@ -8024,7 +8024,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\model.bms" masalife="false" name="Sgpt Hap Mixte">
@@ -8069,7 +8069,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Tigre\model.bms" masalife="false" name="Sgpt Tigre">
@@ -8112,7 +8112,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" masalife="false" name="Sgpt Hm">
@@ -8148,7 +8148,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" masalife="false" name="Compagnie GEN">
@@ -8191,7 +8191,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Appui\Model.bms" masalife="false" name="Compagnie GEN APPUI">
@@ -8224,7 +8224,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" masalife="false" name="Escadron XL">
@@ -8287,7 +8287,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Escadron_AMX" file="Melee\Abc\Automates\Esc AMX-ERC\model.bms" masalife="false" name="Escadron AMX-ERC">
@@ -8353,7 +8353,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="SSGroupeBlindeEcl" file="Melee\Abc\Automates\Sgpt Blindes Ecl\model.bms" masalife="false" name="Sous groupement Blinde Ecl">
@@ -8396,7 +8396,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="SSGroupeBlindeInf" file="Melee\Abc\Automates\Sgpt Blindes Inf\model.bms" masalife="false" name="Sous groupement Blinde Inf">
@@ -8438,7 +8438,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="SSGroupeCharsEcl" file="Melee\Abc\Automates\Sgpt Chars Ecl\model.bms" masalife="false" name="Sous groupement Chars Ecl">
@@ -8480,7 +8480,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="SSGroupeCharsInf" file="Melee\Abc\Automates\Sgpt Chars Inf\model.bms" masalife="false" name="Sous groupement Chars Inf">
@@ -8521,7 +8521,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="SSGroupeEclBlinde" file="Melee\Abc\Automates\Sgpt Ecl Blindes\model.bms" masalife="false" name="Sous groupement Ecl Blindes">
@@ -8553,7 +8553,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\Pel EEI\model.bms" masalife="false" name="Peloton EI">
@@ -8597,7 +8597,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Peloton_PIR" file="Melee\Abc\Automates\Pel PIR\model.bms" masalife="false" name="Peloton PIR">
@@ -8630,7 +8630,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Section_NBC_Dec" file="Appui\Nbc\Automates\Son Dec\model.bms" masalife="false" name="Section dec">
@@ -8664,7 +8664,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.bms" masalife="false" name="Section reco">
@@ -8698,7 +8698,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Section_NBC_RE" file="Appui\Nbc\Automates\Son RE\model.bms" masalife="false" name="Section RE">
@@ -8731,7 +8731,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" masalife="false" name="Compagnie INF">
@@ -8794,7 +8794,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Sgpt Inf Abc\Model.bms" masalife="false" name="SsGrpt INF ABC">
@@ -8849,7 +8849,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Sgpt Inf Ac\Model.bms" masalife="false" name="SsGrpt INF AC">
@@ -8897,7 +8897,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.bms" masalife="false" name="Compagnie HOT">
@@ -8939,7 +8939,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieLogTC2" file="Appui\Log\Automates\Model.bms" masalife="false" name="TC2">
@@ -8977,7 +8977,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieLog" file="Appui\Log\Automates\Model.bms" masalife="false" name="Log">
@@ -9008,7 +9008,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="EscadronAppuiMob" file="Appui\AppuiMob\Automates\Model.bms" masalife="false" name="Escadron Transport Blindes">
@@ -9041,7 +9041,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="PelotonCirculation" file="Appui\Circulation\Automates\Model.bms" masalife="false" name="Peloton Circulation">
@@ -9085,7 +9085,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" masalife="false" name="Batterie Tir AUF1">
@@ -9118,7 +9118,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco AUF1\Model.bms" masalife="false" name="Batterie Reco AUF1">
@@ -9151,7 +9151,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir LRM\Model.bms" masalife="false" name="Batterie Tir LRM">
@@ -9184,7 +9184,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco LRM\Model.bms" masalife="false" name="Batterie Reco LRM">
@@ -9217,7 +9217,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir TRF1\Model.bms" masalife="false" name="Batterie Tir TRF1">
@@ -9250,7 +9250,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco TRF1\Model.bms" masalife="false" name="Batterie Reco TRF1">
@@ -9283,7 +9283,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir SAM\Model.bms" masalife="false" name="Batterie Tir SAM">
@@ -9316,7 +9316,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco SAM\Model.bms" masalife="false" name="Batterie Reco SAM">
@@ -9349,7 +9349,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat COBRA\Model.bms" masalife="false" name="Batterie COBRA">
@@ -9382,7 +9382,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco COBRA\Model.bms" masalife="false" name="Batterie Reco COBRA">
@@ -9415,7 +9415,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Section RATAC\Model.bms" masalife="false" name="Section RATAC">
@@ -9448,7 +9448,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" masalife="false" name="DLO">
@@ -9482,7 +9482,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLOP\Model.bms" masalife="false" name="DLOP">
@@ -9514,7 +9514,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Cl289" file="Appui\Rens\Automates\Roim\CL289\Model.bms" masalife="false" name="CL289">
@@ -9547,7 +9547,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\SDTI\Model.bms" masalife="false" name="SDTI">
@@ -9579,7 +9579,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" masalife="false" name="CDER RBRR">
@@ -9614,7 +9614,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.bms" masalife="false" name="URH">
@@ -9648,7 +9648,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Brovab" file="Appui\Rens\Automates\Roem\BROVAB\Model.bms" masalife="false" name="BROVAB">
@@ -9681,7 +9681,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Elge" file="Appui\Rens\Automates\Roem\ELGE\Model.bms" masalife="false" name="ELGE">
@@ -9715,7 +9715,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Start_" file="Appui\Rens\Automates\Roem\Systeme START_\Model.bms" masalife="false" name="START_">
@@ -9748,7 +9748,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Stair" file="Appui\Rens\Automates\Roem\Systeme STAIR\Model.bms" masalife="false" name="STAIR">
@@ -9781,7 +9781,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Mrod_Elodee" file="Appui\Rens\Automates\Roem\Stations MROD_ELODEE\Model.bms" masalife="false" name="MROD_ELODEE">
@@ -9814,7 +9814,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Linx" file="Appui\Rens\Automates\Roem\Systeme LINX\Model.bms" masalife="false" name="Systeme Linx">
@@ -9847,7 +9847,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.bms" masalife="false" name="Escadrille Horizon">
@@ -9877,7 +9877,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Refugies" file="Population\Refugies\Automates\Refugie\Model.bms" masalife="false" name="Refugies">
@@ -9907,7 +9907,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" masalife="false" name="DIV">
@@ -9931,7 +9931,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" masalife="false" name="TAC">
@@ -9955,7 +9955,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" masalife="false" name="BIA">
@@ -9979,7 +9979,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieTRANS" file="Appui\Trans\Automates\Model.bms" masalife="false" name="Compagnie TRANS">
@@ -10003,7 +10003,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Viviane" file="Appui\Rens\Automates\Radint\Pat Viviane\Model.bms" masalife="false" name="Viviane">
@@ -10031,7 +10031,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="T_AutomateModeleDEC" file="Population\Milices\Automate\Model.bms" masalife="false" name="Milices">
@@ -10065,7 +10065,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="T_AutomateModeleDEC" file="Melee\Inf\Automates\Son Commando\Model.bms" masalife="false" name="Section Commando">
@@ -10097,7 +10097,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" masalife="false" name="Sgpt Samp Hawk">
@@ -10132,7 +10132,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" masalife="false" name="Peloton RASIT">
@@ -10164,7 +10164,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="T_AutomateModeleDEC" file="Population\Asymetriques\Terroriste\Automate\Model.bms" masalife="false" name="Terroristes">
@@ -10189,7 +10189,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" masalife="false" name="GLAISE ABC cie char lourd">
@@ -10252,7 +10252,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" masalife="false" name="GLAISE INF cie inf">
@@ -10315,7 +10315,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Peloton_EEI" file="Melee\Abc\Automates\Pel EEI\model.bms" masalife="false" name="GLAISE ABC peloton EI">
@@ -10359,7 +10359,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Blindee\Model.bms" masalife="false" name="GLAISE GEN cie combat">
@@ -10402,7 +10402,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" masalife="false" name="GLAISE ASS batterie automoteur">
@@ -10434,7 +10434,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir AUF1\Model.bms" masalife="false" name="GLAISE ASS batterie tractee">
@@ -10466,7 +10466,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Tir LRM\Model.bms" masalife="false" name="GLAISE ASS batterie LRM">
@@ -10498,7 +10498,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie_HOT" file="Melee\Inf\Automates\Cie Hot\Model.bms" masalife="false" name="GLAISE AC cie AC">
@@ -10540,7 +10540,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="GLAISE ASA batterie TCP">
@@ -10576,7 +10576,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="ShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Sacp Roland Carol\Model.bms" masalife="false" name="GLAISE ASA batterie CP">
@@ -10612,7 +10612,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieGenie" file="Appui\Genie\Automates\Cie Appui\Model.bms" masalife="false" name="GLAISE GEN compagnie appui">
@@ -10644,7 +10644,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="VeryShortRangeSurfaceToAirBattery" file="Appui\ArtDsa\Automates\Sgpt Satcp Mistral\Model.bms" masalife="false" name="GLAISE ASA section tcp independante">
@@ -10680,7 +10680,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Section_NBC_Reco" file="Appui\Nbc\Automates\Son Reco\model.bms" masalife="false" name="GLAISE NBC section reco">
@@ -10714,7 +10714,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="SSGroupeBlindeEcl" file="Melee\Abc\Automates\Sgpt Blindes Ecl\model.bms" masalife="false" name="GLAISE ABC Escadron Reco">
@@ -10760,7 +10760,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="TheaterHighAltitudeAeraDefenseBattery" file="Appui\ArtDsa\Automates\Sgpt Samp Hawk\Model.bms" masalife="false" name="GLAISE ASA Batterie MP">
@@ -10795,7 +10795,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.bms" masalife="false" name="GLAISE URH">
@@ -10828,7 +10828,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie Vab\Model.bms" masalife="false" name="Section AC MILAN">
@@ -10868,7 +10868,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Escadron_XL" file="Melee\Abc\Automates\Esc XL\model.bms" masalife="false" name="Peloton ERIAC">
@@ -10916,7 +10916,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\DLO\Model.bms" masalife="false" name="GLAISE ASS DLO">
@@ -10948,7 +10948,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco AUF1\Model.bms" masalife="false" name="GLAISE ASS Bat RECO">
@@ -10980,7 +10980,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\Model.bms" masalife="false" name="GLAISE ALFT esc UH et UM">
@@ -11015,7 +11015,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="AttackHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hap Mixte\Model.bms" masalife="false" name="GLAISE ALFT Esc A et Reco">
@@ -11057,7 +11057,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Cie ProTerre\Model.bms" masalife="false" name="Compagnie PROTERRE">
@@ -11101,7 +11101,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Son ProTerre\Model.bms" masalife="false" name="Section PROTERRE">
@@ -11144,7 +11144,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="T_AutomateModeleDEC" file="appui\PC de CIE\automates\model.bms" masalife="false" name="PC CIE">
@@ -11189,7 +11189,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="EscadrilleAssaut" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="GLAISE ASS SCUD">
@@ -11210,7 +11210,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Escadron_XL" file="Glaise\glaise_Melee\Abc\Automates\cieCharLourd\model.bms" masalife="false" name="GLAISE porteur SCUD">
@@ -11231,7 +11231,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="GroupeChalands" file="Marine\Automates\Groupe Chalands\Model.bms" masalife="false" name="Automate Groupe marine">
@@ -11252,7 +11252,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Melee\Inf\Automates\Section TE\Model.bms" masalife="false" name="Section TE">
@@ -11289,7 +11289,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="GTIA" file="Melee\Abc\Automates\GE40\model.bms" masalife="false" name="GTIA">
@@ -11323,7 +11323,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\DRAC\Model.bms" masalife="false" name="DRAC">
@@ -11352,7 +11352,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\section ROHUM\Model.bms" masalife="false" name="AutomateSection ROHUM">
@@ -11383,7 +11383,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir AUF1\Model.bms" masalife="false" name="Batterie Reco et Tir AUF1">
@@ -11416,7 +11416,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir TRF1\Model.bms" masalife="false" name="Batterie Reco et Tir TRF1">
@@ -11449,7 +11449,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir SAM\Model.bms" masalife="false" name="Batterie Reco et Tir SAM">
@@ -11482,7 +11482,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="BatterieASS" file="Appui\ArtFdp\Automates\Bat Reco Tir CAESAR\Model.bms" masalife="false" name="Batterie Reco et Tir CAESAR">
@@ -11515,7 +11515,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Humus\Humus_Melee\Inf\Automates\Cie Inf\Model.bms" masalife="false" name="HUMUS INF Cie">
@@ -11549,7 +11549,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="CompagnieInfanterie" file="Humus\Humus_Melee\Inf\Automates\Cie Inf Cdo\Model.bms" masalife="false" name="HUMUS INF Cie Cdo">
@@ -11591,7 +11591,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="Peloton_EEI" file="Humus\Humus_Melee\Abc\Automates\Pel Reco\Model.bms" masalife="false" name="HUMUS Reco">
@@ -11627,7 +11627,7 @@
         <fragorder name="Changer les regles d'engagement"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Milice">
@@ -11654,7 +11654,7 @@
         <fragorder name="Passer En Silence Radio Partiel"/>
         <fragorder name="Poursuivre"/>
         <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Population"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Debarquer"/>
@@ -11712,4 +11712,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1880521282" -->
+<!-- signature="1792084573" -->
