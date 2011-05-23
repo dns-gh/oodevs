@@ -11,6 +11,7 @@
 #include "Task.h"
 #include "Connectors.h"
 #include "Result_ABC.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.hpp>
 #include "dispatcher/MessageLoader_ABC.h"
 #pragma warning( push, 0 )
