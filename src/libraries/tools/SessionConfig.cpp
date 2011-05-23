@@ -9,9 +9,7 @@
 
 #include "tools_pch.h"
 #include "SessionConfig.h"
-
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 4511 )
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>

@@ -134,7 +134,7 @@ namespace launcher_test
         }
         bool Check() const
         {
-            return exercises_.size() > 0;
+            return ! exercises_.empty();
         }
         kernel::Controllers& controllers_;
         std::vector< const frontend::Exercise_ABC* > exercises_;

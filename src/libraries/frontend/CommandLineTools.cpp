@@ -16,7 +16,7 @@ namespace frontend
     // Name: SimulationPort
     // Created: SBO 2008-02-20
     // -----------------------------------------------------------------------------
-    unsigned SimulationPort( unsigned exerciseNumber )
+    unsigned short SimulationPort( unsigned exerciseNumber )
     {
         return 10000 + ( exerciseNumber - 1 ) * 2;
     }
@@ -25,7 +25,7 @@ namespace frontend
     // Name: DispatcherPort
     // Created: SBO 2008-02-20
     // -----------------------------------------------------------------------------
-    unsigned DispatcherPort( unsigned exerciseNumber )
+    unsigned short DispatcherPort( unsigned exerciseNumber )
     {
         return SimulationPort( exerciseNumber ) + 1;
     }

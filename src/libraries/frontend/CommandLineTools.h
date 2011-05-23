@@ -12,8 +12,8 @@
 
 namespace frontend
 {
-    unsigned SimulationPort( unsigned exerciseNumber );
-    unsigned DispatcherPort( unsigned exerciseNumber );
+    unsigned short SimulationPort( unsigned exerciseNumber );
+    unsigned short DispatcherPort( unsigned exerciseNumber );
 }
 
 

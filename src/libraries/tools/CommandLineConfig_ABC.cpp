@@ -10,12 +10,11 @@
 #include "tools_pch.h"
 #include "CommandLineConfig_ABC.h"
 #include "Version.h"
-#include <iostream>
-#include <sstream>
-#pragma warning( push )
-#pragma warning( disable: 4127 4512 )
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
+#include <iostream>
+#include <sstream>
 
 namespace po = boost::program_options;
 

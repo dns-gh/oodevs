@@ -11,9 +11,11 @@
 #include "ExerciseConfig.h"
 #include "Loader.h"
 #include <xeumeuleu/xml.hpp>
+#pragma warning( push, 0 )
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#pragma warning( pop )
 #include <boost/bind.hpp>
 
 namespace po = boost::program_options;
