@@ -15,7 +15,6 @@ namespace kernel
 {
 
 LogisticLevel LogisticLevel::none_( (int)sword::none, "none");
-LogisticLevel LogisticLevel::tc2_( (int)sword::combat_train, "tc2");
 LogisticLevel LogisticLevel::logistic_base_( (int)sword::logistic_base, "logistic-base");
 
 // -----------------------------------------------------------------------------
@@ -53,11 +52,8 @@ const std::string& LogisticLevel::GetName() const
 // -----------------------------------------------------------------------------
 const LogisticLevel& LogisticLevel::Resolve( const std::string& name )
 {
-    if( name == tc2_.GetName() )
-        return tc2_;
     if( name == logistic_base_.GetName() )
         return logistic_base_;
-
     return none_;
 }
 
@@ -67,11 +63,8 @@ const LogisticLevel& LogisticLevel::Resolve( const std::string& name )
 // -----------------------------------------------------------------------------
 const LogisticLevel& LogisticLevel::Resolve( int id )
 {
-    if( id == tc2_.GetId() )
-        return tc2_;
     if( id == logistic_base_.GetId() )
         return logistic_base_;
-
     return none_;
 }
 

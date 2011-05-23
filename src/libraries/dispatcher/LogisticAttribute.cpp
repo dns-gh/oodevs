@@ -11,6 +11,8 @@
 #include "LogisticAttribute.h"
 #include "Model_ABC.h"
 #include "Automat_ABC.h"
+#include "Formation_ABC.h"
+#include "LogisticEntity.h"
 #include "protocol/Protocol.h"
 
 using namespace dispatcher;
@@ -21,7 +23,8 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 LogisticAttribute::LogisticAttribute( const Model_ABC& model, const sword::ObjectAttributes& asnMsg )
     : automats_( model.Automats() )
-    , pTC2_( 0 )
+    , formations_( model.Formations() )
+    , pLogisticBase_( 0 )
 {
     Update( asnMsg );
 }
@@ -39,19 +42,33 @@ LogisticAttribute::~LogisticAttribute()
 // Name: LogisticAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogisticAttribute::Update( const sword::ObjectAttributes& asnMsg )
+void LogisticAttribute::Update( const sword::ObjectAttributes& msg )
 {
-    if ( asnMsg.has_logistic()  )
-        pTC2_ = &automats_.Get( asnMsg.logistic().combat_train().id() );
+    if ( msg.has_logistic() && msg.logistic().has_logistic_superior() )
+    {
+        if( msg.logistic().logistic_superior().has_automat() )
+        {
+            Automat_ABC* tmp = automats_.Find( msg.logistic().logistic_superior().automat().id() );
+            if( tmp )
+                pLogisticBase_ = tmp->GetLogisticEntity();
+        }
+        else if( msg.logistic().logistic_superior().has_formation() )
+        {
+            Formation_ABC* tmp = formations_.Find( msg.logistic().logistic_superior().formation().id() );
+            if( tmp )
+                pLogisticBase_ = tmp->GetLogisticEntity();
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void LogisticAttribute::Send( sword::ObjectAttributes& asnMsg ) const
+void LogisticAttribute::Send( sword::ObjectAttributes& msg ) const
 {
-    if( !pTC2_ )
-        throw std::runtime_error( __FUNCTION__ ": logistic superior is not defined" );
-    asnMsg.mutable_logistic()->mutable_combat_train()->set_id( pTC2_->GetId() );
+    if( pLogisticBase_ )
+        pLogisticBase_->Send( *msg.mutable_logistic()->mutable_logistic_superior() );
+    else
+        msg.mutable_logistic();
 }

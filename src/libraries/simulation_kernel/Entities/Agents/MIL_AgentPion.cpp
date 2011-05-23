@@ -1098,6 +1098,15 @@ const MIL_AgentType_ABC& MIL_AgentPion::GetType() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::GetLogisticHierarchy
+// Created: NLD 2011-01-10
+// -----------------------------------------------------------------------------
+logistic::LogisticHierarchy_ABC& MIL_AgentPion::GetLogisticHierarchy() const
+{
+    return GetAutomate().GetLogisticHierarchy();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::IsPC
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
@@ -1141,7 +1150,8 @@ double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > p
 {
     if( pTargetKnowledge->GetMaxPerceptionLevel() < PHY_PerceptionLevel::recognized_
         ||  GetArmy().IsAFriend( *pTargetKnowledge->GetArmy() ) == eTristate_True
-        ||  pTargetKnowledge->IsSurrendered() )
+        ||  pTargetKnowledge->IsSurrendered() 
+        || GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
         return 0.;
     // Target is dead ....
     const DEC_Knowledge_AgentComposante* pTargetMajorComposante = pTargetKnowledge->GetMajorComposante();

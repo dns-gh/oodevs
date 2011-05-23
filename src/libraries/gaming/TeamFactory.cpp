@@ -38,6 +38,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/FormationLevels.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/ObjectTypes.h"
 
 // -----------------------------------------------------------------------------
@@ -99,8 +100,8 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
     result->Attach< kernel::TacticalHierarchies >    ( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
     result->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );
-    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, result->GetLogisticLevel(), dico ) );
-    result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
+    if( result->GetLogisticLevel() != kernel::LogisticLevel::none_ )
+        result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dico ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );

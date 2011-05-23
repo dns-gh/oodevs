@@ -23,10 +23,7 @@ LogisticLevelEditor::LogisticLevelEditor( QWidget* parent, const kernel::Entity_
     : gui::ValuedComboBox< const LogisticLevel* >( parent )
 {
     AddItem( QString( LogisticLevel::none_.GetName().c_str() ), &LogisticLevel::none_ );
-    if( dynamic_cast< kernel::Automat_ABC* >( const_cast< kernel::Entity_ABC* >( &selected ) ) )
-        AddItem( QString( LogisticLevel::tc2_.GetName().c_str() ), &LogisticLevel::tc2_ );
-    if( dynamic_cast< kernel::Formation_ABC* >( const_cast< kernel::Entity_ABC* >( &selected ) ) )
-        AddItem( QString( LogisticLevel::logistic_base_.GetName().c_str() ), &LogisticLevel::logistic_base_ );
+    AddItem( QString( LogisticLevel::logistic_base_.GetName().c_str() ), &LogisticLevel::logistic_base_ );
 }
 
 // -----------------------------------------------------------------------------

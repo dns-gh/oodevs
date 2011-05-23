@@ -163,7 +163,6 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model, std::string& loadin
             >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model, loadingErrors )
         >> xml::end;
     xis >> xml::start( "logistics" )
-            >> xml::list( "tc2", model.agents_, &AgentsModel::ReadLogistic )
             >> xml::list( "logistic-base", model.formations_, &FormationModel::ReadLogistic )
         >> xml::end;
     xis >> xml::start( "objects" )

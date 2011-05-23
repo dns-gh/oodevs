@@ -12,11 +12,19 @@
 
 #include "clients_kernel/ObjectExtensions.h"
 #include "tools/Resolver_ABC.h"
+#include <boost/noncopyable.hpp>
+
+namespace sword
+{
+    class ParentEntity;
+}
 
 namespace kernel
 {
     class Controller;
     class Automat_ABC;
+    class Formation_ABC;
+    class Entity_ABC;
     class Displayer_ABC;
 }
 
@@ -27,11 +35,12 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class LogisticAttribute : public kernel::LogisticAttribute_ABC
+                        , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver );
+             LogisticAttribute( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver );
     virtual ~LogisticAttribute();
     //@}
 
@@ -42,21 +51,13 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    LogisticAttribute( const LogisticAttribute& );            //!< Copy constructor
-    LogisticAttribute& operator=( const LogisticAttribute& ); //!< Assignment operator
-    //@}
-
-    //! @name Types
-    //@{
-    typedef std::vector< unsigned long > T_NbcIds;
-    //@}
 
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::ObjectKnowledgeUpdate& message );
     virtual void DoUpdate( const sword::ObjectUpdate& message );
+
+    kernel::Entity_ABC* FindLogisticEntity( const sword::ParentEntity& message ) const;
 
     template< typename T >
     void UpdateData( const T& message );
@@ -66,8 +67,9 @@ public:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const tools::Resolver_ABC< kernel::Automat_ABC >& resolver_;
-    kernel::Automat_ABC* tc2_;
+    const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
+    const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver_;
+    kernel::Entity_ABC* logisticSuperior_;
     //@}
 };
 

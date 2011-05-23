@@ -70,6 +70,7 @@ private:
     const Population& population_;
     const unsigned long nID_;
     Localisation flow_;
+    Localisation path_;
     unsigned int nDirection_;
     unsigned int nSpeed_;
     unsigned int nHealthyHumans_;

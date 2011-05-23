@@ -16,6 +16,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/Roles/Logistic/PHY_SupplyStockRequestContainer.h"
 #include "Entities/Agents/Roles/Logistic/PHY_SupplyStockState.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Formation.h"
 #include "protocol/ClientSenders.h"
@@ -92,18 +93,12 @@ void MIL_StockSupplyManager::Update()
     if( !bStockSupplyNeeded_ || pExplicitStockSupplyState_ )
         return;
 
-    MIL_AutomateLOG* pLogisticSuperior = 0;
     MIL_AutomateLOG* pLogisticManager = pAutomate_->FindLogisticManager();
-    if( pLogisticManager )
-        pLogisticSuperior = pLogisticManager->GetSuperior();
-    if( !pLogisticSuperior )
+    if( !pLogisticManager || !pLogisticManager->GetLogisticHierarchy().HasSuperior() )
         return;
-
+    
     PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_ );
-    if(pLogisticManager->GetNominalSuperior() != pLogisticSuperior)
-        bStockSupplyNeeded_ = !supplyRequests.Execute( *pLogisticSuperior, *pLogisticManager->GetNominalSuperior(), pExplicitStockSupplyState_ );
-    else
-        bStockSupplyNeeded_ = !supplyRequests.Execute( *pLogisticSuperior, pExplicitStockSupplyState_ );
+    bStockSupplyNeeded_ = !supplyRequests.Execute( pLogisticManager->GetLogisticHierarchy(), pExplicitStockSupplyState_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,9 +144,9 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
 
     bStockSupplyNeeded_ = true;
 
-    // Pas de RC si log non branchée ou si RC envoyé au tick précédent
+    // Pas de RC si RC envoyé au tick précédent
     const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    if( pAutomate_->GetTC2() && ( nCurrentTick > ( nTickRcStockSupplyQuerySent_ + 1 ) || nTickRcStockSupplyQuerySent_ == 0 ) )
+    if( nCurrentTick > ( nTickRcStockSupplyQuerySent_ + 1 ) || nTickRcStockSupplyQuerySent_ == 0 )
         MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_StockSupplyRequest );
     nTickRcStockSupplyQuerySent_ = nCurrentTick;
 }

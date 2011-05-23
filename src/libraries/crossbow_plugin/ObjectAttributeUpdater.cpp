@@ -289,7 +289,10 @@ void ObjectAttributeUpdater::Update( const sword::ObjectAttributeLogistic& logis
 {
     RowManipulator row( *updater_, *inserter_, "Logistic" );
 
-    row.SetProperty( "Identifier", "tc2", ToString( logistic.combat_train().id() ) ); // automat id
+    if( logistic.logistic_superior().has_automat() )
+        row.SetProperty( "Identifier", "tc2", ToString( logistic.logistic_superior().automat().id() ) ); // automat id
+    else if( logistic.logistic_superior().has_formation() )
+        row.SetProperty( "Identifier", "tc2", ToString( logistic.logistic_superior().formation().id() ) ); // automat id
 }
 
 // -----------------------------------------------------------------------------

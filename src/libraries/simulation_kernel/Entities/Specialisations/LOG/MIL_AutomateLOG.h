@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "Entities/Actions/PHY_Actor.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchyOwner_ABC.h"
 
 namespace xml
 {
@@ -26,6 +27,12 @@ namespace sword
     class ParentEntity;
     class MissionParameters;
     class UnitMagicAction;
+}
+
+namespace logistic
+{
+    class LogisticHierarchy;
+    class LogisticHierarchy_ABC;
 }
 
 class MIL_Agent_ABC;
@@ -58,14 +65,8 @@ template < typename T > class PHY_ActionLogistic;
 // Created: JVT 2004-08-03
 // =============================================================================
 class MIL_AutomateLOG : public PHY_Actor
+                      , public logistic::LogisticHierarchyOwner_ABC
 {
-public:
-    struct sDotationQuota
-    {
-        double rQuota_;
-        double rQuotaThreshold_;
-    };
-
 public:
              MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLevel& level);
              MIL_AutomateLOG( MIL_Automate&  automat, const PHY_LogisticLevel& level);
@@ -83,22 +84,18 @@ public:
 
     //! @name Operations
     //@{
-            void UpdateLogistic();
-
-    virtual void UpdateState  ();
-    virtual void Clean        ();
+    void UpdateLogistic();
+    void UpdateState   ();
+    void Clean         ();
     //@}
 
     //! @name Accessors
     //@{
-    unsigned int                    GetID() const;
-    MIL_AutomateLOG*                GetSuperior() const;
-    MIL_AutomateLOG*                GetNominalSuperior    () const;
-    MIL_Army_ABC&                   GetArmy     () const;
-    const MIL_AgentPion*            GetPC      () const;
-    MIL_Automate*                   GetAssociatedAutomat() const;
-    MIL_Formation*                  GetAssociatedFormation() const;
-    const PHY_LogisticLevel&        GetLogisticLevel() const;
+    unsigned int                      GetID() const;
+    logistic::LogisticHierarchy_ABC&  GetLogisticHierarchy() const;
+    MIL_Army_ABC&                     GetArmy     () const;
+    const MIL_AgentPion*              GetPC      () const;
+    const PHY_LogisticLevel&          GetLogisticLevel() const;
     //@}
 
     //! @name Maintenance
@@ -120,31 +117,30 @@ public:
 
     //! @name Supply
     //@{
-    static bool              IsExternalTransaction              ( MIL_Automate& supplied, const MIL_AutomateLOG& supplier );
-    void                     SupplyHandleRequest                ( PHY_SupplyDotationState& supplyDotationState, MIL_Automate& stockSupplier, bool bExternalTransfert  );
-    void                     SupplyHandleRequest                ( PHY_SupplyStockState&    supplyStockState, MIL_Automate& stockSupplier, bool bExternalTransfert     );
-    MIL_AgentPion*           SupplyGetStockPion                ( const PHY_DotationCategory& dotationCategory, double rRequestedValue, bool bExternalTransfert  ) const;
-    bool                     SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory, bool bExternalTransfert  ) const;
-    double                   SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double rRequestedValue, bool bExternalTransfert  ) const;
-    bool                     SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, double rReturnedValue  ) const;
-    MIL_AgentPion*           SupplyCreatePionConvoy             ( const MIL_AgentTypePion& type, bool bExternalTransfert );
-
-
+    void           SupplyHandleRequest                ( PHY_SupplyDotationState& supplyDotationState, MIL_Automate& stockSupplier );
+    void           SupplyHandleRequest                ( PHY_SupplyStockState&    supplyStockState, MIL_Automate& stockSupplier );
+    MIL_AgentPion* SupplyGetStockPion                 ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
+    bool           SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const;
+    double         SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double rRequestedValue ) const;
+    bool           SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, double rReturnedValue ) const;
+    MIL_AgentPion* SupplyCreatePionConvoy             ( const MIL_AgentTypePion& type );
     //@}
 
     //! @name Quotas
     //@{
     double   GetQuota    ( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory ) const;
     void     ConsumeQuota( const MIL_AutomateLOG& supplier, const PHY_DotationCategory& dotationCategory, double rQuotaConsumed );
+
+    virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const;
     //@}
 
     //! @name Network
     //@{
-    virtual void SendFullState                    () const;
-    virtual void WriteLogisticLinksODB            ( xml::xostream& xos ) const;
-    virtual void OnReceiveChangeLogisticLinks  ( const sword::UnitMagicAction& msg );
-    virtual void OnReceiveLogSupplyChangeQuotas( const sword::MissionParameters& msg );
-            void FillParentEntity                 (sword::ParentEntity& msg);
+    void SendFullState   () const;
+    void SendChangedState() const;
+
+    virtual void WriteLogisticLinksODB( xml::xostream& xos ) const;
+            void Serialize( sword::ParentEntity& message ) const;
     //@}
 
 protected:
@@ -153,10 +149,6 @@ protected:
 private:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, sDotationQuota > T_DotationQuotaMap;
-    typedef T_DotationQuotaMap::iterator                            IT_DotationQuotaMap;
-    typedef T_DotationQuotaMap::const_iterator                      CIT_DotationQuotaMap;
-
     typedef std::list< PHY_SupplyConsign_ABC* >  T_SupplyConsignList;
     typedef T_SupplyConsignList::iterator        IT_SupplyConsignList;
     typedef T_SupplyConsignList::const_iterator  CIT_SupplyConsignList;
@@ -170,17 +162,6 @@ private:
     //! @name Tools
     //@{
     template< typename T > void Visit( T& visitor ) const;
-    MIL_AutomateLOG* GetLogisticAutomate   ( unsigned int nID );
-    void             SendQuotas            () const;
-    //@}
-
-    //! @name Tools
-    //@{
-    virtual void SendLogisticLinks    () const;
-    //@}
-    //! @name Helpers
-    //@{
-    void ReadDotation( xml::xistream& xis );
     //@}
 
 private:
@@ -188,16 +169,11 @@ private:
     MIL_Formation*     pAssociatedFormation_;
     const PHY_LogisticLevel* pLogLevel_;
 
-    MIL_AutomateLOG* pNominalSuperior_;
-    MIL_AutomateLOG* pCurrentSuperior_;
+    std::auto_ptr< logistic::LogisticHierarchy > pLogisticHierarchy_;
 
     // Supply
     T_SupplyConsignList supplyConsigns_;
 
-
-    T_DotationQuotaMap    stockQuotasSuperior_;
-    T_DotationQuotaMap    stockQuotasNominalSuperior_;
-    bool                  bQuotasHaveChanged_;
     PHY_SupplyStockState* pExplicitStockSupplyState_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AutomateLOG* pion, const unsigned int /*version*/ );

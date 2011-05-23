@@ -209,6 +209,15 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const un
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Maintenance::FindLogisticManager
+// Created: NLD 2011-01-11
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* PHY_RolePionLOG_Maintenance::FindLogisticManager() const
+{
+    return pion_.FindLogisticManager();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::GetAvailabilityRatio
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------

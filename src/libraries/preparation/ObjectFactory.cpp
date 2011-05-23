@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "ObjectFactory.h"
 #include "AgentsModel.h"
+#include "TeamsModel.h"
 #include "Model.h"
 #include "Object.h"
 #include "Objects.h"
@@ -18,6 +19,7 @@
 #include "ObjectsModel.h"
 #include "ObjectPositions.h"
 #include "StaticModel.h"
+#include "FormationModel.h"
 #include "Team.h"
 #include "UrbanModel.h"
 #include "ActivityTimeAttribute.h"
@@ -107,6 +109,12 @@ namespace
         {
             result.Attach( *new T( xis, helper, dico, controllers ) );
         }
+
+        template< typename T, typename Helper1, typename Helper2 >
+        static void Attach( Object_ABC& result, PropertiesDictionary& dico, const Helper1& helper1, const Helper2& helper2, xml::xistream& xis, Controllers& controllers )
+        {
+            result.Attach( *new T( xis, helper1, helper2, dico, controllers ) );
+        }
     };
 
     template<>
@@ -151,6 +159,9 @@ namespace
 
 #define BIND_ATTACH_ATTRIBUTE_RESOLVER( CLASS, HELPER, P1, P2, P3, P4, P5 ) \
     boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach< CLASS, tools::Resolver_ABC< HELPER > >, P1, P2, P3, P4, P5 )
+
+#define BIND_ATTACH_ATTRIBUTE_RESOLVER2( CLASS, HELPER1, HELPER2, P1, P2, P3, P4, P5, P6 ) \
+    boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach< CLASS, tools::Resolver_ABC< HELPER1 >, tools::Resolver_ABC< HELPER2 > >, P1, P2, P3, P4, P5, P6 )
 
 #define BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( CLASS, HELPER, P1, P2, P3, P4 ) \
     boost::bind( &AttributeBuilder< ##CLASS##_ABC >::Attach< CLASS, tools::Resolver_ABC< HELPER, std::string > >, P1, P2, P3, P4 )
@@ -202,7 +213,7 @@ void ObjectFactory::Initialize()
     factory->Register( "nbc-agents"         , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( NBCAttribute, NBCAgent, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "obstacle"           , BIND_ATTACH_ATTRIBUTE( ObstacleAttribute, _1, _2, _3 ) );
     factory->Register( "supply-route"       , BIND_ATTACH_ATTRIBUTE( SupplyRouteAttribute, _1, _2, _3 ) );
-    factory->Register( "tc2"                , BIND_ATTACH_ATTRIBUTE_RESOLVER( LogisticAttribute, Automat_ABC, _1, _2, boost::cref( model_.agents_ ), _3, boost::ref( controllers_ ) ) );
+    factory->Register( "logistic-base"      , BIND_ATTACH_ATTRIBUTE_RESOLVER2( LogisticAttribute, Automat_ABC, Formation_ABC, _1, _2, boost::cref( model_.agents_ ), boost::cref( model_.formations_ ), _3, boost::ref( controllers_ ) ) );
     factory->Register( "max-size"           , BIND_ATTACH_ATTRIBUTE( OccupantAttribute, _1, _2, _3 ) );
     factory->Register( "stock"              , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( StockAttribute, DotationType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "resources"          ,

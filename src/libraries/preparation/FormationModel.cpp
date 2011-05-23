@@ -19,6 +19,7 @@
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "LogisticBaseStates.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -133,7 +134,5 @@ void FormationModel::ReadLogisticLink( xml::xistream& xis, kernel::Formation_ABC
     if(!entity)
         entity = automatResolver_.Find( id );
     if( entity )
-    {
-        ReadLogisticLink< LogisticBaseHierarchies > ( xis, formation, *entity );
-    }
+        ReadLogisticLink< LogisticHierarchiesBase > ( xis, formation, *entity );
 }

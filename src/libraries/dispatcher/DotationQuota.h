@@ -42,6 +42,11 @@ public:
     void Send( sword::DotationQuota& message ) const;
     //@}
 
+    //! @name Accessors
+    //@{
+    unsigned int GetDotationType() const { return nDotationType_; }
+    //@}
+
 private:
     const unsigned int nDotationType_; // XML reference - no resolved by dispatcher
     unsigned int nQuota_;

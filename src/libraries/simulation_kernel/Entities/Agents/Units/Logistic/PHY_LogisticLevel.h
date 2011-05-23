@@ -27,7 +27,6 @@ public:
     //! @name Manager
     //@{
     static PHY_LogisticLevel none_;
-    static PHY_LogisticLevel tc2_;
     static PHY_LogisticLevel logistic_base_;
     //@}
 
@@ -64,11 +63,12 @@ private:
     ~PHY_LogisticLevel();
 
 private:
-    const std::string             strName_;
-    int                           id_;
+    const std::string strName_;
+    int               id_;
 
 private:
     static T_LogisticLevelMap logisticLevels_;
 };
 
 #endif // __PHY_LogisticLevel_h_
+

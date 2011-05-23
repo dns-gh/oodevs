@@ -153,10 +153,11 @@ private:
     void ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& populationFactory );
     void ReadInhabitant( xml::xistream& xis, InhabitantFactory_ABC& inhabitantFactory );
     void ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgegroupFactory ); // LTO
-    void ReadLogisticLink( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory, bool isTC2 );
-    void ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory,
-                          FormationFactory_ABC& formationFactory , MIL_AutomateLOG* pSuperior, bool isTC2 );
+    void ReadLogisticLink( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory );
+    void ReadLogisticLinkSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory , MIL_AutomateLOG& superior );
     void ReadDiplomacy( xml::xistream& xis );
+
+    MIL_AutomateLOG* FindBrainLogistic( unsigned int nID, AutomateFactory_ABC& automateFactory, FormationFactory_ABC& formationFactory ) const; //$$$ Remplacer par une factory
     //@}
 
     //! @name CheckPoint

@@ -550,13 +550,6 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
 </context>
 <context>
-    <name>LogisticSuperiorEditor</name>
-    <message>
-        <source>None</source>
-        <translation>Aucun</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>Tactical</source>

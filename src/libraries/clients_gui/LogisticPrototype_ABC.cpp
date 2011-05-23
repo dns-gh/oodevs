@@ -13,7 +13,9 @@
 #include "LogisticPrototype_ABC.h"
 #include "moc_LogisticPrototype_ABC.cpp"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/AutomatType.h"
 
 using namespace kernel;
@@ -28,9 +30,9 @@ LogisticPrototype_ABC::LogisticPrototype_ABC( QWidget* parent, Controllers& cont
     , controllers_( controllers )
     , selected_   ( controllers )
 {
-    new QLabel( tr( "TC2:" ), this );
-    tc2s_ = new ValuedComboBox< const Automat_ABC* >( this );
-    connect( tc2s_, SIGNAL( activated( int ) ), this, SLOT( SelectionChanged() ) );
+    new QLabel( tr( "Logistic unit:" ), this );
+    logSuperiors_ = new ValuedComboBox< const Entity_ABC* >( this );
+    connect( logSuperiors_, SIGNAL( activated( int ) ), this, SLOT( SelectionChanged() ) );
     controllers_.Register( *this );
 }
 
@@ -49,7 +51,7 @@ LogisticPrototype_ABC::~LogisticPrototype_ABC()
 // -----------------------------------------------------------------------------
 bool LogisticPrototype_ABC::CheckValidity() const
 {
-    return tc2s_->count() && tc2s_->GetValue();
+    return logSuperiors_->count() && logSuperiors_->GetValue();
 }
 
 // -----------------------------------------------------------------------------
@@ -58,14 +60,33 @@ bool LogisticPrototype_ABC::CheckValidity() const
 // -----------------------------------------------------------------------------
 void LogisticPrototype_ABC::NotifyCreated( const Automat_ABC& automat )
 {
-    if( tc2s_->GetItemIndex( &automat ) != -1 )
+    if( logSuperiors_->GetItemIndex( &automat ) != -1 )
         return;
-    if( automat.GetType().IsTC2() )
-    {
-        tc2s_->AddItem( automat.GetName(), &automat );
-        if( !selected_ )
-            selected_ = &automat;
-    }
+
+    if( automat.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+        return;
+
+    logSuperiors_->AddItem( automat.GetName(), &automat );
+    if( !selected_ )
+        selected_ = &automat;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPrototype_ABC::NotifyCreated
+// Created: SBO 2006-04-19
+// -----------------------------------------------------------------------------
+void LogisticPrototype_ABC::NotifyCreated( const Formation_ABC& formation )
+{
+    if( logSuperiors_->GetItemIndex( &formation ) != -1 )
+        return;
+
+    if( formation.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+        return;
+
+    logSuperiors_->AddItem( formation.GetName(), &formation );
+    if( !selected_ )
+        selected_ = &formation;
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +95,16 @@ void LogisticPrototype_ABC::NotifyCreated( const Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 void LogisticPrototype_ABC::NotifyDeleted( const Automat_ABC& automat )
 {
-    tc2s_->RemoveItem( &automat );
+    logSuperiors_->RemoveItem( &automat );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPrototype_ABC::NotifyDeleted
+// Created: SBO 2006-04-19
+// -----------------------------------------------------------------------------
+void LogisticPrototype_ABC::NotifyDeleted( const Formation_ABC& formation )
+{
+    logSuperiors_->RemoveItem( &formation );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,10 +113,24 @@ void LogisticPrototype_ABC::NotifyDeleted( const Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 void LogisticPrototype_ABC::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    if( isVisible() && agent.GetType().IsTC2() )
+    if( isVisible() && agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
     {
         selected_ = &agent;
-        menu.InsertItem( "Parameter", tr( "Camp's TC2" ), this, SLOT( SetSelected() ) );
+        menu.InsertItem( "Parameter", tr( "Camp's logistic unit" ), this, SLOT( SetSelected() ) );
+    }
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: LogisticPrototype_ABC::NotifyContextMenu
+// Created: AGE 2006-04-21
+// -----------------------------------------------------------------------------
+void LogisticPrototype_ABC::NotifyContextMenu( const Formation_ABC& formation, ContextMenu& menu )
+{
+    if( isVisible() && formation.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+    {
+        selected_ = &formation;
+        menu.InsertItem( "Parameter", tr( "Camp's logistic unit" ), this, SLOT( SetSelected() ) );
     }
 }
 
@@ -97,7 +141,7 @@ void LogisticPrototype_ABC::NotifyContextMenu( const Automat_ABC& agent, Context
 void LogisticPrototype_ABC::SetSelected()
 {
     if( selected_ )
-        tc2s_->SetCurrentItem( selected_ );
+        logSuperiors_->SetCurrentItem( selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,5 +150,5 @@ void LogisticPrototype_ABC::SetSelected()
 // -----------------------------------------------------------------------------
 void LogisticPrototype_ABC::SelectionChanged()
 {
-    selected_ = tc2s_->GetValue();
+    selected_ = logSuperiors_->GetValue();
 }

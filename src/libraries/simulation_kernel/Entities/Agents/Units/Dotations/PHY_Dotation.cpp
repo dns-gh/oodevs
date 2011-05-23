@@ -262,7 +262,7 @@ void PHY_Dotation::ChangeValueUsingTC2( double rCapacityFactor, MIL_AutomateLOG&
         return;
     assert( pCategory_ );
     if( rValueDiff > 0 )
-        rValueDiff = tc2.SupplyGetStock( *pCategory_, rValueDiff, false );
+        rValueDiff = tc2.SupplyGetStock( *pCategory_, rValueDiff );
     else
         tc2.SupplyReturnStock( *pCategory_, -rValueDiff );
     SetValue( rValue_ + rValueDiff );

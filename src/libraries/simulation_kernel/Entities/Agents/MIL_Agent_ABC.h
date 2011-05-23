@@ -28,6 +28,11 @@ class MIL_PionOrderManager;
 class MIL_Population;
 class MT_Vector2D;
 
+namespace logistic
+{
+    class LogisticHierarchy_ABC;
+}
+
 // =============================================================================
 // @class  MIL_Agent_ABC
 // Created: JVT 2004-08-03
@@ -70,6 +75,8 @@ public:
     virtual MIL_PionOrderManager& GetOrderManager() = 0;
 
     virtual void ChangeSuperior( MIL_Automate& newAutomate ) = 0;
+
+    virtual logistic::LogisticHierarchy_ABC& GetLogisticHierarchy() const = 0;
     //@}
 
     //! @name Operations

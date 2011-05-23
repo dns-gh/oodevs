@@ -28,7 +28,7 @@
 LoggerApplication::LoggerApplication( const std::string& hostname, const std::string& logFile, const std::string& login, const std::string& password, bool verbose )
     : login_          ( login )
     , password_       ( password )
-    , bConnectionLost_( false )
+    , bConnectionLost_( false ) 
     , bVerbose_       ( verbose )
 {
     file_.open( logFile.c_str(), std::ios::out | std::ios::trunc );

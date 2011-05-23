@@ -12,6 +12,7 @@
 #include "IntelligenceKarmas.h"
 #include "SuccessFactorActionTypes.h"
 #include "TeamKarmas.h"
+#include "LogisticLevel.h"
 #include "clients_gui/DrawingTypes.h"
 #include "clients_kernel/AccommodationTypes.h"
 #include "clients_kernel/AgentTypes.h"
@@ -53,6 +54,7 @@ StaticModel::StaticModel( Controllers& controllers )
     , indicators_              ( *new indicators::Primitives() )
     , gaugeTypes_              ( *new indicators::GaugeTypes() )
     , successFactorActionTypes_( *new SuccessFactorActionTypes() )
+    , logisticLevels_          ( *new preparation::LogisticLevel() )
 {
     // NOTHING
 }
@@ -77,6 +79,7 @@ StaticModel::~StaticModel()
     delete &detection_;
     delete &coordinateConverter_;
     delete &coordinateSystems_;
+    delete &logisticLevels_;
 }
 
 // -----------------------------------------------------------------------------

@@ -790,18 +790,6 @@
         <translation>Convoyeur:</translation>
     </message>
     <message>
-        <source>Logistic links/TC2</source>
-        <translation>Liens logistiques/TC2</translation>
-    </message>
-    <message>
-        <source>Logistic links</source>
-        <translation>Liens logistiques</translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation>TC2:</translation>
-    </message>
-    <message>
         <source>Equipment:</source>
         <translation>Equipement:</translation>
     </message>
@@ -818,12 +806,12 @@
         <translation>Fournisseur:</translation>
     </message>
     <message>
-        <source>Logistic links/Superior</source>
-        <translation>Liens logistiques/Supérieur</translation>
+        <source>Logistic links</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Superior:</source>
-        <translation>Supérieur:</translation>
+        <source>Logistic links/Superiors</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1028,10 +1016,6 @@
 <context>
     <name>Object</name>
     <message>
-        <source>TC2:</source>
-        <translation>TC2:</translation>
-    </message>
-    <message>
         <source>Type:</source>
         <translation>Type:</translation>
     </message>
@@ -1190,6 +1174,10 @@
     <message>
         <source>Reference distance:</source>
         <translation>Distance de référence:</translation>
+    </message>
+    <message>
+        <source>Logistic Superior:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cell ignition:  %1/%2</source>

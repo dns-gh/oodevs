@@ -16,8 +16,15 @@
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchyOwner_ABC.h"
 #include <tools/Resolver.h>
 #include <map>
+
+namespace logistic
+{
+    class LogisticHierarchy;
+    class LogisticHierarchy_ABC;
+}
 
 namespace sword
 {
@@ -64,6 +71,7 @@ template < typename T > class PHY_ActionLogistic;
 // =============================================================================
 class MIL_Automate : public MIL_Entity_ABC
                    , public MIL_VisitableEntity_ABC< MIL_AgentPion >
+                   , public logistic::LogisticHierarchyOwner_ABC
 {
 public:
     //! @name Types
@@ -101,8 +109,8 @@ public:
 
     //! @name Initialize
     //@{
-            void ReadOverloading ( xml::xistream& xis );
-    virtual void ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis );
+    void ReadOverloading ( xml::xistream& xis );
+    void ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis );
     //@}
 
     //! @name Accessors
@@ -111,7 +119,6 @@ public:
     const MIL_AutomateType&                 GetType          () const;
           MIL_Army_ABC&                     GetArmy          () const;
           MIL_KnowledgeGroup&               GetKnowledgeGroup() const;
-          MIL_AutomateLOG*                  GetTC2           () const;
     const MIL_AutomateOrderManager&         GetOrderManager  () const;
           MIL_AutomateOrderManager&         GetOrderManager  ();
           MIL_AgentPion&                    GetPionPC        () const;
@@ -122,8 +129,10 @@ public:
           DEC_AutomateDecision&             GetDecision      () ;
           DEC_KnowledgeBlackBoard_Automate& GetKnowledge     () const;
           bool                              IsEngaged        () const;
+
+          logistic::LogisticHierarchy_ABC&  GetLogisticHierarchy() const;
+
     // logistics
-    MIL_AutomateLOG*                        GetNominalTC2    () const;
     MIL_AutomateLOG*                        GetBrainLogistic () const;
     MIL_AutomateLOG*                        FindLogisticManager() const; // Returns logistic chief
     //@}
@@ -181,7 +190,6 @@ public:
             void SendCreation                      ( unsigned int context = 0 ) const;
     virtual void SendFullState                     () const;
             void SendKnowledge                     () const;
-    virtual void SendLogisticLinks                 () const;
 
             void OnReceiveOrder                ( const sword::AutomatOrder&                 msg );
             void OnReceiveFragOrder            ( const sword::FragOrder&           msg );
@@ -192,15 +200,15 @@ public:
             void OnReceiveMagicActionMoveTo    ( const sword::UnitMagicAction&     msg );
             void OnReceiveChangeKnowledgeGroup ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
             void OnReceiveChangeSuperior       ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Formation >& formations );
-    virtual void OnReceiveChangeLogisticLinks  ( const sword::UnitMagicAction&     msg );
-    virtual void OnReceiveLogSupplyChangeQuotas( const sword::MissionParameters&            msg );
     virtual void OnReceiveLogSupplyPushFlow    ( const sword::MissionParameters&            msg );
     virtual void OnReceiveLogSupplyPullFlow    ( const sword::MissionParameters&            msg );
+
+    virtual void Serialize( sword::ParentEntity& message ) const;
     //@}
 
     //! @name Misc
     //@{
-    bool     GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const;
+    bool   GetAlivePionsBarycenter( MT_Vector2D& barycenter ) const;
     double GetAlivePionsMaxSpeed  () const;
     //@}
 
@@ -212,6 +220,8 @@ public:
 
     //! @name Logistic : supply
     //@{
+    virtual void NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const;
+
     void NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory );
     void NotifyDotationSupplied    ( const PHY_SupplyDotationState& supplyState );
     void RequestDotationSupply     ();
@@ -238,7 +248,7 @@ protected:
 
     //! @name Tools
     //@{
-    void Surrender( const MIL_Army_ABC& amrySurrenderedTo );
+    void Surrender      ( const MIL_Army_ABC& amrySurrenderedTo );
     void CancelSurrender();
     //@}
 
@@ -275,8 +285,7 @@ private:
     // Surrendered / prisoner
     const MIL_Army_ABC*                                         pArmySurrenderedTo_;
     // Logistic
-    MIL_AutomateLOG*                                            pTC2_;
-    MIL_AutomateLOG*                                            pNominalTC2_;
+    std::auto_ptr< logistic::LogisticHierarchy >                pLogisticHierarchy_;
     std::auto_ptr< MIL_AutomateLOG >                            pBrainLogistic_;
     boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > >  pLogisticAction_;
     std::auto_ptr< MIL_DotationSupplyManager >                  pDotationSupplyManager_;

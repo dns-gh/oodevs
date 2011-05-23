@@ -42,7 +42,6 @@ class PopulationRepartition;
 class EditorFactory : public gui::EditorFactory
                     , public tools::Observer_ABC
                     , public tools::SelectionObserver< kernel::Entity_ABC >
-                    , public tools::Caller< TC2* >
                     , public tools::Caller< LogisticBaseSuperior* >
                     , public tools::Caller< kernel::KnowledgeGroupType** >
                     , public tools::Caller< TeamKarma* >
@@ -50,6 +49,7 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< kernel::NBCAgent** >
                     , public tools::Caller< std::vector< kernel::NBCAgent* >* >
                     , public tools::Caller< kernel::LogisticLevel** >
+                    , public tools::Caller< EntityLogisticLevel* >
                     , public tools::Caller< Enum_PopulationAttitude* >
                     , public tools::Caller< Enum_DemolitionTargetType* >
                     , public tools::Caller< DotationsItem** >
@@ -66,7 +66,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Call( TC2* const& value );
     virtual void Call( LogisticBaseSuperior* const& value );
     virtual void Call( kernel::KnowledgeGroupType** const& value );
     virtual void Call( TeamKarma* const& value );
@@ -77,6 +76,7 @@ public:
     virtual void Call( Enum_DemolitionTargetType* const& value );
     virtual void Call( DotationsItem** const& value );
     virtual void Call( kernel::LogisticLevel** const& value );
+    virtual void Call( EntityLogisticLevel* const& value );    
     virtual void Call( kernel::Moveable_ABC** const& value );
     virtual void Call( EntityAffinity* const& value );
     virtual void Call( PopulationRepartition** const& value );

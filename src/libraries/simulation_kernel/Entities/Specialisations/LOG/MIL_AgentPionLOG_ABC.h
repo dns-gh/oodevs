@@ -43,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    MIL_AutomateLOG* FindLogisticManager() const;
+    MIL_AutomateLOG* FindLogisticManager() const; // Return the brain logistic whom this unit is subordinated to
     void UpdateLogistic(); // Called by the 'PHY_ActionLogistic' action
     //@}
 

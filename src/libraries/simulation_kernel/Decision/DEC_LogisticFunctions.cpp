@@ -22,6 +22,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_LogisticFunctions.h"
 
@@ -533,8 +534,12 @@ void DEC_LogisticFunctions::UndoLendHaulerComposantes( MIL_Agent_ABC& callerAgen
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_LogisticFunctions::PionGetPcTC2( const MIL_Agent_ABC& agent )
 {
-   if (MIL_AutomateLOG* pTC2 = agent.GetAutomate().GetTC2() )
-       return ( &pTC2->GetAssociatedAutomat()->GetPionPC().GetDecision() );
+    if( MIL_AutomateLOG* pTC2 = agent.GetLogisticHierarchy().GetPrimarySuperior() )
+    {
+        const MIL_AgentPion* pc = pTC2->GetPC();
+        if( pc )
+            return const_cast< DEC_Decision_ABC* >( &pc->GetDecision() );
+    }
     return 0;
 }
 
@@ -544,7 +549,11 @@ DEC_Decision_ABC* DEC_LogisticFunctions::PionGetPcTC2( const MIL_Agent_ABC& agen
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_LogisticFunctions::AutomateGetPcTC2( const MIL_Automate& agent )
 {
-    if( MIL_AutomateLOG* pTC2 = agent.GetTC2() )
-        return ( &pTC2->GetAssociatedAutomat()->GetPionPC().GetDecision() );
+    if( MIL_AutomateLOG* pTC2 = agent.GetLogisticHierarchy().GetPrimarySuperior() )
+    {
+        const MIL_AgentPion* pc = pTC2->GetPC();
+        if( pc )
+            return const_cast< DEC_Decision_ABC* >( &pc->GetDecision() );
+    }
     return 0;
 }

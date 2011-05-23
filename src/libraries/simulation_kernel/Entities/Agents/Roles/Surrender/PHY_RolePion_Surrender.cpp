@@ -128,7 +128,6 @@ void PHY_RolePion_Surrender::NotifySurrenderCanceled()
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Surrender::Capture( const MIL_AgentPion& pionTakingPrisoner )
 {
-
     if( !IsSurrendered() )
         return false;
 

@@ -10,6 +10,7 @@
 #ifndef __Formation_h_
 #define __Formation_h_
 
+#include "Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -73,6 +74,7 @@ private:
     //@{
     void CreateDictionary( kernel::Controller& controller );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
+    void SetLogisticLevel( const EntityLogisticLevel& logisticLevel );
     void InitializeSymbol() const;
     bool IsAggregated( const kernel::Entity_ABC& entity ) const;
     bool HasAggregatedSubordinate() const;
@@ -82,7 +84,7 @@ private:
     //! @name Member data
     //@{
     const kernel::HierarchyLevel_ABC* level_;
-    kernel::LogisticLevel* logisticLevel_;
+    EntityLogisticLevel logisticLevel_;
     std::string color_;
     std::string nature_;
     mutable std::string symbolPath_;

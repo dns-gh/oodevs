@@ -238,9 +238,9 @@ BOOST_FIXTURE_TEST_CASE( formation_creation_to_client_is_converted, ContextFixtu
     content.mutable_formation_creation()->set_level( sword::ooo );
     content.mutable_formation_creation()->set_name( "name" );
     content.mutable_formation_creation()->set_app6symbol( "app6" );
-    content.mutable_formation_creation()->set_logistic_level( sword::combat_train );
+    content.mutable_formation_creation()->set_logistic_level( sword::logistic_base );
     FillRgbColor( content.mutable_formation_creation()->mutable_color() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { formation_creation { formation { id: 6 } party { id: 7 } parent { id: 8 } level: ooo name: \"name\" app6symbol: \"app6\" logistic_level: tc2 color { red: 12 green: 42 blue: 77 } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { formation_creation { formation { id: 6 } party { id: 7 } parent { id: 8 } level: ooo name: \"name\" app6symbol: \"app6\" logistic_level: logistic_base color { red: 12 green: 42 blue: 77 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -275,7 +275,7 @@ BOOST_FIXTURE_TEST_CASE( automat_creation_to_client_is_converted, ContextFixture
     content.mutable_automat_creation()->mutable_party()->set_id( 11 );
     content.mutable_automat_creation()->mutable_knowledge_group()->set_id( 12 );
     content.mutable_automat_creation()->set_app6symbol( "app6" );
-    content.mutable_automat_creation()->set_logistic_level( sword::combat_train );
+    content.mutable_automat_creation()->set_logistic_level( sword::logistic_base );
     FillRgbColor( content.mutable_automat_creation()->mutable_color() );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_creation { automat { id: 7 } type { id: 8 } nom: \"name\" parent { automat { id: 9 } formation { id: 10 } } party { id: 11 } knowledge_group { id: 12 } app6symbol: \"app6\" logistic_level: tc2 color { red: 12 green: 42 blue: 77 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
@@ -460,14 +460,35 @@ BOOST_FIXTURE_TEST_CASE( unit_change_superior_to_client_is_converted, ContextFix
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
-BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_to_client_is_converted, ContextFixture< sword::SimToClient > )
+BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_to_client_is_converted_1, ContextFixture< sword::SimToClient > )
 {
     content.mutable_automat_change_logistic_links()->mutable_requester()->mutable_automat()->set_id( 7 );
+    content.mutable_automat_change_logistic_links()->mutable_current_superior()->mutable_automat()->set_id( 12 );
+    content.mutable_automat_change_logistic_links()->mutable_nominal_superior()->mutable_formation()->set_id( 13 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links { requester { automat { id: 7 } } tc2 { id: 12 } } }" ) );
+    converter.ReceiveSimToClient( "unused endpoint", msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_to_client_is_converted_2, ContextFixture< sword::SimToClient > )
+{
     content.mutable_automat_change_logistic_links()->mutable_requester()->mutable_formation()->set_id( 8 );
-    content.mutable_automat_change_logistic_links()->mutable_combat_train()->set_id( 9 );
-    content.mutable_automat_change_logistic_links()->mutable_logistic_base()->mutable_automat()->set_id( 10 );
-    content.mutable_automat_change_logistic_links()->mutable_logistic_base()->mutable_formation()->set_id( 11 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links { requester { automat { id: 7 } formation { id: 8 } } tc2 { id: 9 } logistic_base { automat { id: 10 } formation { id: 11 } } } }" ) );
+    content.mutable_automat_change_logistic_links()->mutable_nominal_superior()->mutable_formation()->set_id( 13 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links { requester { formation { id: 8 } } } }" ) );
+    converter.ReceiveSimToClient( "unused endpoint", msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_to_client_is_converted_3, ContextFixture< sword::SimToClient > )
+{
+    content.mutable_automat_change_logistic_links()->mutable_requester()->mutable_formation()->set_id( 8 );
+    content.mutable_automat_change_logistic_links()->mutable_current_superior()->mutable_formation()->set_id( 13 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links { requester { formation { id: 8 } } logistic_base { formation { id: 13 } } } }" ) );
+    converter.ReceiveSimToClient( "unused endpoint", msg );
+}
+
+BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_to_client_is_converted_4, ContextFixture< sword::SimToClient > )
+{
+    content.mutable_automat_change_logistic_links()->mutable_requester()->mutable_automat()->set_id( 7 );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links { requester { automat { id: 7 } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
@@ -960,7 +981,7 @@ namespace
         a->mutable_mine()->set_percentage( 18 );
         a->mutable_activity_time()->set_value( 19 );
         a->mutable_bypass()->set_percentage( 20 );
-        a->mutable_logistic()->mutable_combat_train()->set_id( 21 );
+        a->mutable_logistic()->mutable_logistic_superior()->mutable_automat()->set_id( 21 );
         a->mutable_nbc()->set_danger_level( 22 );
         a->mutable_nbc()->add_nbc_agents()->set_id( 23 );
         a->mutable_nbc()->add_nbc_agents()->set_id( 24 );
@@ -1269,10 +1290,10 @@ namespace
 BOOST_FIXTURE_TEST_CASE( log_supply_quotas_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
     content.mutable_log_supply_quotas()->mutable_supplied()->mutable_automat()->set_id( 7 );
-    content.mutable_log_supply_quotas()->mutable_supplied()->mutable_formation()->set_id( 8 );
+    content.mutable_log_supply_quotas()->mutable_supplier()->mutable_formation()->set_id( 8 );
     FillDotationQuota( content.mutable_log_supply_quotas()->mutable_quotas()->add_elem() );
     FillDotationQuota( content.mutable_log_supply_quotas()->mutable_quotas()->add_elem() );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_quotas { supplied { automat { id: 7 } formation { id: 8 } } quotas { elem { ressource_id { id: 10 } quota_disponible: 11 } elem { ressource_id { id: 10 } quota_disponible: 11 } } } }" ) );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_quotas { supplied { automat { id: 7 } } quotas { elem { ressource_id { id: 10 } quota_disponible: 11 } elem { ressource_id { id: 10 } quota_disponible: 11 } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 

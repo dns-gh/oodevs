@@ -23,6 +23,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 #include "simulation_kernel/AlgorithmsFactories.h"
@@ -379,9 +380,7 @@ const PHY_ConsumptionType& PHY_RolePion_Dotations::GetConsumptionMode() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationType& dotationType, const PHY_AmmoDotationClass* pAmmoDotationClass, double rCapacityFactor ) const
 {
-
-
-    MIL_AutomateLOG* pTC2 = pion_.GetAutomate().GetTC2();
+    MIL_AutomateLOG* pTC2 = pion_.GetLogisticHierarchy().GetPrimarySuperior();
     if( !pTC2 )
         return;
     assert( pDotations_ );
@@ -394,8 +393,6 @@ void PHY_RolePion_Dotations::ChangeDotationsValueUsingTC2( const PHY_DotationTyp
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Dotations::NotifySupplyNeeded( const PHY_DotationCategory& dotationCategory, bool bNewNeed ) const
 {
-
-
     if( bNewNeed )
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_LogisticDotationThresholdExceeded, dotationCategory );
 

@@ -234,6 +234,17 @@ bool DEC_KnowledgeAgentFunctions::IsDead( boost::shared_ptr< DEC_Knowledge_Agent
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::HasSurrenderedTo
+// Created: NLD 2011-05-03
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeAgentFunctions::HasSurrenderedTo( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* pTarget )
+{
+    return pKnowledge && pKnowledge->IsValid() && pKnowledge->IsSurrendered();
+//
+//    pTarget->
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::Lock
 // Created: NLD 2005-04-21
 // -----------------------------------------------------------------------------

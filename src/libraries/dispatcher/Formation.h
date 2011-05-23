@@ -11,7 +11,6 @@
 #define __Formation_h_
 
 #include "Formation_ABC.h"
-#include "LogisticEntity.h"
 
 namespace sword
 {
@@ -25,6 +24,7 @@ namespace dispatcher
 {
     class Model_ABC;
     class Team_ABC;
+    class LogisticEntity;
 
 // =============================================================================
 /** @class  Formation
@@ -34,7 +34,6 @@ namespace dispatcher
 // =============================================================================
 class Formation : public dispatcher::Formation_ABC
                 , public kernel::Extension_ABC
-                , public kernel::Updatable_ABC< sword::ChangeLogisticLinks >
                 , public kernel::Updatable_ABC< sword::FormationUpdate >
 {
 public:
@@ -51,16 +50,18 @@ public:
     virtual dispatcher::Team_ABC& GetTeam() const;
     virtual const tools::Resolver< dispatcher::Formation_ABC >& GetFormations() const;
     virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomates() const;
+    virtual LogisticEntity* GetLogisticEntity() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
     //! @name Operations
     //@{
+    virtual void Send( sword::ParentEntity& msg ) const;
+
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
 
-    virtual void DoUpdate( const sword::ChangeLogisticLinks& msg );
     virtual void DoUpdate( const sword::FormationUpdate& msg );
 
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
@@ -89,13 +90,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const Model_ABC&                             model_;
-    const std::string                            name_;
-    dispatcher::Team_ABC&                        team_;
-    const kernel::HierarchyLevel_ABC&            level_;
-    std::string                                  symbol_;
-    LogisticEntity                               logisticEntity_;
-    dispatcher::Formation_ABC*                   parent_;
+    const Model_ABC&                            model_;
+    const std::string                           name_;
+    dispatcher::Team_ABC&                       team_;
+    const kernel::HierarchyLevel_ABC&           level_;
+    std::string                                 symbol_;
+    std::auto_ptr< LogisticEntity >             logisticEntity_;
+    dispatcher::Formation_ABC*                  parent_;
     tools::Resolver< dispatcher::Formation_ABC > formations_;
     tools::Resolver< dispatcher::Automat_ABC >   automats_;
     std::map< std::string, std::string >         extensions_;

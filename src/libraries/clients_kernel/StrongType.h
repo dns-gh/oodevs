@@ -55,6 +55,7 @@ private:
 // -----------------------------------------------------------------------------
 template< typename T, typename U >
 StrongType< T, U >::StrongType()
+    : value_()
 {
     // NOTHING
 }

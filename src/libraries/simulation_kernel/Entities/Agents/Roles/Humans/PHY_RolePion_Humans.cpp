@@ -16,6 +16,7 @@
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
@@ -432,7 +433,7 @@ void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MI
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
 {
-    MIL_AutomateLOG* pTC2 = pion_.GetAutomate().GetTC2();
+    MIL_AutomateLOG* pTC2 = pion_.GetLogisticHierarchy().GetPrimarySuperior();
     if( !pTC2 || nEvacuationMode_ == eEvacuationMode_Manual )
     {
         human.SetMedicalState( 0 );

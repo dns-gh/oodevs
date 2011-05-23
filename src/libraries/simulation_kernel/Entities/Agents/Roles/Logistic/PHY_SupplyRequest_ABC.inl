@@ -120,7 +120,7 @@ void PHY_SupplyRequest_ABC< T >::Cancel()
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
 template< typename T > 
-bool PHY_SupplyRequest_ABC< T >::AffectAutomate( MIL_AutomateLOG& supplyingAutomate, bool bExternaltransfert )
+bool PHY_SupplyRequest_ABC< T >::AffectAutomate( MIL_AutomateLOG& supplyingAutomate )
 {
     if( pSupplyingAutomate_ )
     {
@@ -128,7 +128,7 @@ bool PHY_SupplyRequest_ABC< T >::AffectAutomate( MIL_AutomateLOG& supplyingAutom
         return true;
     }
 
-    MIL_AgentPion* pStockPion = supplyingAutomate.SupplyGetStockPion( GetDotationCategory(), rTotalRequestedValue_, bExternaltransfert );
+    MIL_AgentPion* pStockPion = supplyingAutomate.SupplyGetStockPion( GetDotationCategory(), rTotalRequestedValue_ );
     if( !pStockPion )
         return false;
 

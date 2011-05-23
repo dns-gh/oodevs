@@ -16,6 +16,10 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_DotationSupplyManager.h"
 
+namespace logistic 
+{
+    class LogisticHierarchy_ABC;
+}
 
 class PHY_DotationCategory;
 class PHY_Dotation;
@@ -34,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    bool Execute    ( MIL_AutomateLOG* pFirstSupplyingAutomate, MIL_AutomateLOG* pSecondSupplyingAutomate, MIL_DotationSupplyManager::T_SupplyDotationStateMap& dotationSupplies );
+    bool Execute    ( const logistic::LogisticHierarchy_ABC& logisticHierarchy, MIL_DotationSupplyManager::T_SupplyDotationStateMap& dotationSupplies );
     void AddDotation( PHY_Dotation& dotation );
     //@}
 

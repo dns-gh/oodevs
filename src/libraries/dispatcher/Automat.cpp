@@ -16,6 +16,7 @@
 #include "Model.h"
 #include "Report.h"
 #include "Side.h"
+#include "LogisticEntity.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "protocol/ClientPublisher_ABC.h"
@@ -38,7 +39,8 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
     , parentAutomat_    ( msg.parent().has_automat() ? &model.Automats().Get( msg.parent().automat().id() ) : 0 )
     , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
     , pTC2_             ( 0 )
-    , logisticEntity_   ( model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve( msg.logistic_level() ) )
+    , logisticEntity_   ( 0 )
+    , logisticHierarchy_( *this, model.Formations(), model.Automats() )
     , nAutomatState_    ( sword::disengaged )
     , nForceRatioState_ ( sword::ForceRatio::neutral )
     , nCloseCombatState_( sword::pinned_down )
@@ -54,8 +56,16 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
         parentFormation_->Register( *this );
     else if( parentAutomat_ )
         parentAutomat_->Register( *this );
-    RegisterSelf( *this );
-    RegisterSelf(logisticEntity_);
+
+    if( msg.logistic_level() != sword::none )
+    {
+        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) ) );
+        RegisterSelf( *logisticEntity_ );
+        RegisterSelf( logisticEntity_->GetLogisticHierarchy() );
+    }
+    else
+        RegisterSelf( logisticHierarchy_ );
+    RegisterSelf( *this );   
 }
 
 // -----------------------------------------------------------------------------
@@ -123,16 +133,6 @@ void Automat::DoUpdate( const sword::AutomatCreation& msg )
     if( parentAutomat_ && ( msg.parent().has_formation() || ( msg.parent().has_automat()  && msg.parent().automat().id()  != parentAutomat_->GetId() ) ) )
        ChangeSuperior( msg.parent() );
     decisionalInfos_.Clear();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::DoUpdate
-// Created: NLD 2006-10-02
-// -----------------------------------------------------------------------------
-void Automat::DoUpdate( const sword::ChangeLogisticLinks& msg )
-{
-    if( msg.has_combat_train()  )
-        pTC2_ = msg.combat_train().id() == 0 ? 0 : &model_.Automats().Get( msg.combat_train().id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -266,29 +266,24 @@ void Automat::DoUpdate( const sword::AutomatOrder& message )
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
 void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
-{
-    {
-        client::AutomatCreation asn;
-        asn().mutable_automat()->set_id( GetId() );
-        asn().mutable_type()->set_id( type_ );
-        asn().set_name( GetName() );
-        asn().mutable_party()->set_id( team_.GetId() );
-        asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
-        asn().set_app6symbol( symbol_ );
-        if( parentFormation_ )
-            asn().mutable_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
-        if( parentAutomat_ )
-            asn().mutable_parent()->mutable_automat()->set_id( parentAutomat_->GetId() );
-        asn().set_logistic_level( sword::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
-        asn.Send( publisher );
-    }
-    if( logisticEntity_.GetLogisticLevel() != kernel::LogisticLevel::none_ )
-    {
-        client::LogSupplyQuotas asn;
-        asn().mutable_supplied()->mutable_automat()->set_id( GetId() );
-        logisticEntity_.Fill(asn);
-        asn.Send( publisher );
-    }
+{        
+    client::AutomatCreation asn;
+    asn().mutable_automat()->set_id( GetId() );
+    asn().mutable_type()->set_id( type_ );
+    asn().set_name( GetName() );
+    asn().mutable_party()->set_id( team_.GetId() );
+    asn().mutable_knowledge_group()->set_id( knowledgeGroup_->GetId() );
+    asn().set_app6symbol( symbol_ );
+    if( parentFormation_ )
+        asn().mutable_parent()->mutable_formation()->set_id( parentFormation_->GetId() );
+    if( parentAutomat_ )
+        asn().mutable_parent()->mutable_automat()->set_id( parentAutomat_->GetId() );
+    if( logisticEntity_.get() )
+        logisticEntity_->Send( asn() );
+    else
+        asn().set_logistic_level( sword::none );
+
+    asn.Send( publisher ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -330,20 +325,17 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             asn().mutable_superior()->mutable_automat()->set_id( parentAutomat_->GetId() );
         asn.Send( publisher );
     }
-    {
-        client::ChangeLogisticLinks asn;
-        asn().mutable_requester()->mutable_automat()->set_id( GetId() );
-        if( pTC2_ )
-            asn().mutable_combat_train()->set_id( pTC2_->GetId() );
-        logisticEntity_.Fill(asn);
-        asn.Send( publisher );
-    }
     if( order_.get() )
         order_->Send( publisher );
     else
         AutomatOrder::SendNoMission( *this, publisher );
 
     decisionalInfos_.Send( GetId(), publisher );
+
+    if( logisticEntity_.get() )
+        logisticEntity_->SendFullUpdate( publisher );
+    else
+        logisticHierarchy_.SendFullUpdate( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -355,6 +347,15 @@ void Automat::SendDestruction( ClientPublisher_ABC& publisher ) const
     client::AutomatDestruction asn;
     asn().mutable_automat()->set_id( GetId() );
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::Send
+// Created: NLD 2011-01-17
+// -----------------------------------------------------------------------------
+void Automat::Send( sword::ParentEntity& msg ) const
+{
+    msg.mutable_automat()->set_id( GetId() );
 }
 
 namespace
@@ -479,11 +480,23 @@ kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
         throw std::runtime_error( __FUNCTION__ ": automat without a knowledge group." );
     return *knowledgeGroup_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Automat::GetLogisticEntity
+// Created: NLD 2011-01-17
+// -----------------------------------------------------------------------------
+LogisticEntity* Automat::GetLogisticEntity() const
+{
+    return logisticEntity_.get();
+}
+
 // -----------------------------------------------------------------------------
 // Name: Automat::GetLogisticLevel
-// Created: AHC 2010-10-08
+// Created: NLD 2011-01-17
 // -----------------------------------------------------------------------------
 const kernel::LogisticLevel& Automat::GetLogisticLevel() const
 {
-    return logisticEntity_.GetLogisticLevel();
+    if( logisticEntity_.get() )
+        return logisticEntity_->GetLogisticLevel();
+    return kernel::LogisticLevel::none_;
 }

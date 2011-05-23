@@ -46,6 +46,6 @@ void LogisticPrototype::Commit()
     {
         actions::parameters::ParameterList& list = attributesList_->AddList( "Logistic" );
         list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_logistic );
-        list.AddIdentifier( "tc2", tc2s_->GetValue()->GetId() );
+        list.AddIdentifier( "tc2", logSuperiors_->GetValue()->GetId() ); //$$ tc2 à renommer ...
     }
 }

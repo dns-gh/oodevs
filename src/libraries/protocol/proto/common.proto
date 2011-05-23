@@ -1023,7 +1023,7 @@ message ObjectAttributeLodging {
     @brief Defines an object attribute logistic
 */
 message ObjectAttributeLogistic {
-   required AutomatId combat_train = 1; //!< The combat train identifier
+   required ParentEntity logistic_superior = 1; //!< The logistic superior identifier
 }
 
 /** @struct ObjectAttributeInteractionHeight

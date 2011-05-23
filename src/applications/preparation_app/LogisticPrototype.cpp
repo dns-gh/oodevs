@@ -47,7 +47,7 @@ void LogisticPrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         LogisticAttribute* attribute = new LogisticAttribute( dico, controllers_ );
-        attribute->SetTC2( *selected_ );
+        attribute->SetLogisticBase( *selected_ );
         creation_->Attach( *attribute );
     }
 }

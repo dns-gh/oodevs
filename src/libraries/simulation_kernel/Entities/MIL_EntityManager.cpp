@@ -68,6 +68,8 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/BurnSurfaceAttribute.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "Inhabitants/MIL_InhabitantType.h"
 #include "Inhabitants/MIL_Inhabitant.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -111,6 +113,9 @@ using namespace sword;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
 
+// =============================================================================
+// TOOLS
+// =============================================================================
 namespace
 {
     long TaskerToId( const Tasker& tasker )
@@ -140,6 +145,29 @@ MIL_Formation* TaskerToFormation( MIL_EntityManager& manager, const Tasker& task
     return tasker.has_formation() && tasker.formation().has_id() ? manager.FindFormation( tasker.formation().id() ) : 0;
 }
 
+logistic::LogisticHierarchy_ABC* TaskerToLogisticHierarchy( MIL_EntityManager& manager, const Tasker& tasker )
+{
+    // Return the targeted logistic hierarchy
+    // For an automat, which can have its own logistic hierarchy and the logistic hierarchy of its potential logistic brain
+    //  the method returns the logistic BRAIN hierarchy: in this case, the automat's logistic hierarchy is always itself.
+    MIL_Automate* pAutomateTmp = TaskerToAutomat( manager, tasker );
+    if( pAutomateTmp )
+    {
+        if( pAutomateTmp->GetBrainLogistic() )
+            return &pAutomateTmp->GetBrainLogistic()->GetLogisticHierarchy();
+        else
+            return &pAutomateTmp->GetLogisticHierarchy();
+    }
+    MIL_Formation* pFormationTmp = TaskerToFormation( manager, tasker );
+    if( pFormationTmp && pFormationTmp->GetBrainLogistic() )
+        return &pFormationTmp->GetBrainLogistic()->GetLogisticHierarchy();
+    return 0;
+}
+
+// =============================================================================
+// SERIALIZATION
+// =============================================================================
+
 template< typename Archive >
 void save_construct_data( Archive& /*archive*/, const MIL_EntityManager* /*entities*/, const unsigned int /*version*/ )
 {
@@ -158,6 +186,10 @@ void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const u
                                     MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setPause(),
                                     MIL_AgentServer::GetWorkspace().GetConfig().ReadGCParameter_setStepMul() );
 }
+
+// =============================================================================
+// INITIALIZATION
+// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager constructor
@@ -650,10 +682,11 @@ void MIL_EntityManager::UpdateStates()
 {
     profiler_.Start();
     // !! Automate avant Pions (?? => LOG ??)
+    formationFactory_->Apply( boost::bind( &MIL_Formation::UpdateState, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateState, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateState, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateState, _1 ) );
-    inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::UpdateState, _1 ) );
+    formationFactory_->Apply( boost::bind( &MIL_Formation::UpdateNetwork, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::UpdateNetwork, _1 ) );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::UpdateNetwork, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::UpdateNetwork, _1 ) );
@@ -715,6 +748,7 @@ void MIL_EntityManager::Clean()
 {
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::Clean, _1 ) );
     automateFactory_->Apply( boost::bind( &MIL_Automate::Clean, _1 ) );
+    formationFactory_->Apply( boost::bind( &MIL_Formation::Clean, _1 ) );
     populationFactory_->Apply( boost::bind( &MIL_Population::Clean, _1 ) );
 }
 
@@ -819,7 +853,7 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             ProcessAutomateChangeKnowledgeGroup( message, nCtx );
             break;
         case UnitMagicAction::change_logistic_links:
-            ProcessAutomateChangeLogisticLinks( message, nCtx );
+            ProcessChangeLogisticLinks( message, nCtx );
             break;
         case UnitMagicAction::unit_change_superior:
             ProcessUnitChangeSuperior( message, nCtx );
@@ -1199,41 +1233,39 @@ void MIL_EntityManager::ProcessAutomateChangeKnowledgeGroup( const UnitMagicActi
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::ProcessAutomateChangeLogisticLinks
+// Name: MIL_EntityManager::ProcessChangeLogisticLinks
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessAutomateChangeLogisticLinks( const UnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::ProcessChangeLogisticLinks( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::ChangeLogisticLinksAck ack;
     ack().set_error_code( HierarchyModificationAck::no_error_hierarchy );
     try
     {
-        MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
-        MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
-        if( pAutomate )
-            pAutomate->OnReceiveChangeLogisticLinks( message );
+        // Subordinate
+        logistic::LogisticHierarchy_ABC* pSubordinate = TaskerToLogisticHierarchy( *this, message.tasker() );
+        if( !pSubordinate )
+            throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_automate );
 
-        if( pAutomate == 0 && pFormation == 0 )
-            throw NET_AsnException< HierarchyModificationAck_ErrorCode >( HierarchyModificationAck::error_invalid_automate );
-        MIL_AutomateLOG* brainLog = pAutomate != 0 ? pAutomate->GetBrainLogistic() : pFormation->GetBrainLogistic();
-        if( brainLog )
-            brainLog->OnReceiveChangeLogisticLinks( message );
+        std::vector< MIL_AutomateLOG* > superiors;
+        for( int i = 0; i < message.parameters().elem_size(); ++i )
+        {
+            const sword::MissionParameter& parameterSuperior = message.parameters().elem( i );
+            if( !parameterSuperior.null_value() )
+            {
+                MIL_AutomateLOG* pSuperior = FindBrainLogistic( parameterSuperior.value( 0 ) );
+                if( !pSuperior )
+                    throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_supply_automat  ); //$$ Msg d'erreur incohérent
+                superiors.push_back( pSuperior );
+            }
+        }
+        pSubordinate->ChangeLinks( superiors );
     }
     catch( NET_AsnException< HierarchyModificationAck_ErrorCode >& e )
     {
         ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
-
-    if( ack().error_code() == HierarchyModificationAck::no_error_hierarchy )
-    {
-        MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
-        MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
-        if( pAutomate )
-            pAutomate->SendLogisticLinks();
-        else
-            pFormation->SendLogisticLinks();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1308,14 +1340,25 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
     ack().set_ack( LogSupplyChangeQuotasAck::no_error_quotas );
     try
     {
-        MIL_Automate* pAutomat = TaskerToAutomat( *this, message.tasker() );
-        MIL_Formation* pFormation = TaskerToFormation( *this, message.tasker() );
-        if( !pAutomat && !pFormation )
+        if( message.parameters().elem_size() != 2 )
             throw NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >( LogSupplyChangeQuotasAck::error_invalid_receiver );
-        MIL_AutomateLOG* pReceiver = pAutomat ? pAutomat->GetBrainLogistic() : pFormation->GetBrainLogistic();
-        if( !pReceiver )
+
+        // Supplied
+        logistic::LogisticHierarchy_ABC* pSupplied = TaskerToLogisticHierarchy( *this, message.tasker() );
+        if( !pSupplied )
             throw NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >( LogSupplyChangeQuotasAck::error_invalid_receiver );
-        pReceiver->OnReceiveLogSupplyChangeQuotas( message.parameters() );
+
+        // Param 0: supplier
+        MIL_AutomateLOG* pSupplier = FindBrainLogistic( message.parameters().elem( 0 ).value( 0 ) );
+        if( !pSupplier )
+            throw NET_AsnException< sword::LogSupplyChangeQuotasAck::ErrorCode >( sword::LogSupplyChangeQuotasAck_ErrorCode_error_invalid_supplier );
+
+        // Param 1: quotas
+        const sword::MissionParameter& quotas = message.parameters().elem( 1 );
+        const boost::shared_ptr< logistic::LogisticLink_ABC > superiorLink = pSupplied->FindSuperiorLink( *pSupplier );
+        if( superiorLink.get() )
+            superiorLink->OnReceiveChangeQuotas( quotas );
+        //$$ throw sinon ??
     }
     catch( NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >& e )
     {
@@ -1728,6 +1771,36 @@ void MIL_EntityManager::WriteODB( xml::xostream& xos ) const
 MIL_Automate* MIL_EntityManager::FindAutomate( unsigned int nID ) const
 {
     return automateFactory_->Find( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindBrainLogistic
+// Created: NLD 2011-01-10
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* MIL_EntityManager::FindBrainLogistic( unsigned int nID ) const
+{
+    MIL_Formation* pFormation = FindFormation( nID );
+    if( pFormation )
+        return pFormation->GetBrainLogistic();
+    MIL_Automate* pAutomate = FindAutomate( nID );
+    if( pAutomate  )
+        return pAutomate->GetBrainLogistic();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindBrainLogistic
+// Created: NLD 2011-01-10
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* MIL_EntityManager::FindBrainLogistic( const sword::MissionParameter_Value& parameter ) const
+{
+    if( parameter.has_identifier() )
+        return FindBrainLogistic( parameter.identifier() );
+    else if( parameter.has_automat() )
+        return FindBrainLogistic( parameter.automat().id() );
+    else if( parameter.has_formation() )
+        return FindBrainLogistic( parameter.formation().id() );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

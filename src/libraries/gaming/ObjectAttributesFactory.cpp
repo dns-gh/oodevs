@@ -35,6 +35,7 @@
 #include "ResourceNetwork.h"
 #include "ResourceNetworkModel.h"
 #include "StaticModel.h"
+#include "TeamsModel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/PropertiesDictionary.h"
@@ -67,7 +68,7 @@ ObjectAttributesFactory::~ObjectAttributesFactory()
 void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword::ObjectAttributes& attributes ) const
 {
     if( attributes.has_logistic() && entity.Retrieve< kernel::LogisticAttribute_ABC >() == 0 )
-        entity.Attach< kernel::LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );
+        entity.Attach< kernel::LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_, model_.teams_ ) );
 
     if( attributes.has_lodging() && entity.Retrieve< kernel::LodgingAttribute_ABC >() == 0 )
         entity.Attach< kernel::LodgingAttribute_ABC >( *new LodgingAttribute( controllers_.controller_, model_.agents_ ) );

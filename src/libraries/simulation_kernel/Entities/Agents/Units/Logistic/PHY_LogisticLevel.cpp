@@ -20,7 +20,6 @@ PHY_LogisticLevel::T_LogisticLevelMap PHY_LogisticLevel::logisticLevels_;
 // =============================================================================
 
 PHY_LogisticLevel PHY_LogisticLevel::none_( "aucun", sword::none );
-PHY_LogisticLevel PHY_LogisticLevel::tc2_ ( "tc2", sword::combat_train   );
 PHY_LogisticLevel PHY_LogisticLevel::logistic_base_  ( "logistic-base", sword::logistic_base  );
 
 // -----------------------------------------------------------------------------
@@ -30,7 +29,6 @@ PHY_LogisticLevel PHY_LogisticLevel::logistic_base_  ( "logistic-base", sword::l
 void PHY_LogisticLevel::Initialize()
 {
     logisticLevels_[ none_.GetName() ] = &none_;
-    logisticLevels_[ tc2_ .GetName() ] = &tc2_ ;
     logisticLevels_[ logistic_base_  .GetName() ] = &logistic_base_  ;
 }
 

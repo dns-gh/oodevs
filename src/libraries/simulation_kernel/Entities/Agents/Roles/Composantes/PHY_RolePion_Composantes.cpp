@@ -25,6 +25,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
@@ -1240,7 +1241,7 @@ void PHY_RolePion_Composantes::PreprocessRandomBreakdowns( unsigned int nEndDayT
 // -----------------------------------------------------------------------------
 PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante )
 {
-    MIL_AutomateLOG* pTC2 = pion_.GetAutomate().GetTC2();
+    MIL_AutomateLOG* pTC2 = pion_.GetLogisticHierarchy().GetPrimarySuperior();
     if( !pTC2 )
         return 0;
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent

@@ -550,13 +550,6 @@ Por favor seleccione un archivo de orden de batalla para importar.</translation>
     </message>
 </context>
 <context>
-    <name>LogisticSuperiorEditor</name>
-    <message>
-        <source>None</source>
-        <translation>Ninguno</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>Tactical</source>

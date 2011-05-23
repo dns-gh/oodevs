@@ -17,15 +17,13 @@
 // Name: PHY_SupplyConsign_ABC constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate
-        , MIL_Automate& stockSupplier, bool bExternalTransfert )
+PHY_SupplyConsign_ABC::PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate, MIL_Automate& stockSupplier )
     : pSupplyingAutomate_( &supplyingAutomate )
     , pSuppliedAutomate_ ( &suppliedAutomate  )
     , pConvoyingAutomate_( &convoyingAutomate )
     , nTimer_            ( 0 )
     , bHasChanged_       ( true )
     , pStockSupplier_    ( &stockSupplier )
-    , bExternalTransfert_( bExternalTransfert )
 {
     // NOTHING
 }
@@ -64,8 +62,8 @@ void PHY_SupplyConsign_ABC::SendFullState( client::LogSupplyHandlingUpdate& asn 
     assert( pSuppliedAutomate_ );
 
     asn().set_state( (sword::LogSupplyHandlingUpdate::EnumConvoyState ) nState_  );
-    pSupplyingAutomate_->FillParentEntity(*asn().mutable_supplier());
-    pConvoyingAutomate_->FillParentEntity(*asn().mutable_convoy_provider());
+    pSupplyingAutomate_->Serialize(*asn().mutable_supplier());
+    pConvoyingAutomate_->Serialize(*asn().mutable_convoy_provider());
     asn().mutable_convoying_unit()->set_id( 0 );
 }
 

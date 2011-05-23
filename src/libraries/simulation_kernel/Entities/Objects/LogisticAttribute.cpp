@@ -16,8 +16,12 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/ObjectLogisticHierarchy.h"
+#include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "protocol/Protocol.h"
+#include "Checkpoints/SerializationTools.h"
 #include <xeumeuleu/xml.hpp>
+#include <boost/assign/list_of.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( LogisticAttribute )
 
@@ -30,15 +34,13 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyRecon< LogisticA
 // -----------------------------------------------------------------------------
 LogisticAttribute::LogisticAttribute( xml::xistream& xis )
 {
-    unsigned int nTC2;
-    xis >> xml::attribute( "id", nTC2 );
+    unsigned int logSuperiorId;
+    xis >> xml::attribute( "id", logSuperiorId );
 
-    MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nTC2 );
-    if( !pTC2Tmp )
-        xis.error( "Automate TC2 specified is invalid" );
-    if( !pTC2Tmp->GetType().IsLogistic() )
-        xis.error( "Automate TC2 specified is not a logistic automate" );
-    pTC2_ = pTC2Tmp->GetBrainLogistic();
+    MIL_AutomateLOG* pLogSuperior = MIL_AgentServer::GetWorkspace().GetEntityManager().FindBrainLogistic( logSuperiorId );
+    if( !pLogSuperior )
+        xis.error( "Invalid logistic base" );
+    pLogisticHierarchy_.reset( new logistic::ObjectLogisticHierarchy( *pLogSuperior ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,12 +49,10 @@ LogisticAttribute::LogisticAttribute( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 LogisticAttribute::LogisticAttribute( const sword::MissionParameter_Value& attributes )
 {
-    MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( attributes.list( 1 ).identifier() );
-    if( !pTC2Tmp )
-        throw std::runtime_error( "Automate TC2 specified is invalid" );
-    if( !pTC2Tmp->GetType().IsLogistic() )
-        throw std::runtime_error( "Automate TC2 specified is not a logistic automate" );
-    pTC2_ = pTC2Tmp->GetBrainLogistic();
+    MIL_AutomateLOG* pLogSuperior = MIL_AgentServer::GetWorkspace().GetEntityManager().FindBrainLogistic( attributes.list( 1 ).identifier() );
+    if( !pLogSuperior )
+        throw std::runtime_error( "Invalid logistic base" );
+    pLogisticHierarchy_.reset( new logistic::ObjectLogisticHierarchy( *pLogSuperior ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ LogisticAttribute::LogisticAttribute( const sword::MissionParameter_Value& attri
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 LogisticAttribute::LogisticAttribute()
-    : pTC2_ ( 0 )
+    : pLogisticHierarchy_( new logistic::ObjectLogisticHierarchy() )
 {
     // NOTHING
 }
@@ -72,7 +72,7 @@ LogisticAttribute::LogisticAttribute()
 // -----------------------------------------------------------------------------
 LogisticAttribute::~LogisticAttribute()
 {
-    // NOTHING
+    pLogisticHierarchy_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,8 +81,12 @@ LogisticAttribute::~LogisticAttribute()
 // -----------------------------------------------------------------------------
 void LogisticAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "tc2" )
-            << xml::attribute( "id", pTC2_->GetID() )
+    MIL_AutomateLOG* pSuperior = pLogisticHierarchy_->GetPrimarySuperior();
+    if( !pSuperior )
+        return; // It sucks ...
+    
+    xos << xml::start( "logistic-base" )
+            << xml::attribute( "id", pSuperior->GetID() )
         << xml::end;
 }
 
@@ -92,8 +96,8 @@ void LogisticAttribute::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 template < typename Archive > void LogisticAttribute::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    file & pTC2_;
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
+         & pLogisticHierarchy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -118,9 +122,11 @@ void LogisticAttribute::Register( MIL_Object_ABC& object ) const
 // Name: LogisticAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void LogisticAttribute::SendFullState( sword::ObjectAttributes& asn ) const
+void LogisticAttribute::SendFullState( sword::ObjectAttributes& msg ) const
 {
-    asn.mutable_logistic()->mutable_combat_train()->set_id( pTC2_->GetID() );
+    MIL_AutomateLOG* pSuperior = pLogisticHierarchy_->GetPrimarySuperior();
+    if( pSuperior )
+        pSuperior->Serialize( *msg.mutable_logistic()->mutable_logistic_superior() );    
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +148,8 @@ void LogisticAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 LogisticAttribute& LogisticAttribute::operator=( const LogisticAttribute& rhs )
 {
-    pTC2_ = rhs.pTC2_;
+    //$$$ POURRI TMP
+    pLogisticHierarchy_->ChangeLinks( boost::assign::list_of( rhs.pLogisticHierarchy_->GetPrimarySuperior() ) );
     return *this;
 }
 
@@ -152,9 +159,10 @@ LogisticAttribute& LogisticAttribute::operator=( const LogisticAttribute& rhs )
 // -----------------------------------------------------------------------------
 bool LogisticAttribute::Update( const LogisticAttribute& rhs )
 {
-    if( pTC2_ != rhs.pTC2_ )
+    //$$$ POURRI TMP
+    if( rhs.pLogisticHierarchy_->GetPrimarySuperior() != pLogisticHierarchy_->GetPrimarySuperior() )
     {
-        pTC2_ = rhs.pTC2_;
+        pLogisticHierarchy_->ChangeLinks( boost::assign::list_of( rhs.pLogisticHierarchy_->GetPrimarySuperior() ) );
         NotifyAttributeUpdated( eOnUpdate );
         return true;
     }
@@ -162,10 +170,10 @@ bool LogisticAttribute::Update( const LogisticAttribute& rhs )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticAttribute::GetTC2
-// Created: JCR 2008-06-03
+// Name: LogisticAttribute::GetLogisticHierarchy
+// Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG& LogisticAttribute::GetTC2() const
+const logistic::LogisticHierarchy_ABC& LogisticAttribute::GetLogisticHierarchy() const
 {
-    return *pTC2_;
+    return *pLogisticHierarchy_;
 }

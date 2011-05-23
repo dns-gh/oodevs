@@ -12,7 +12,7 @@
 
 #include "Automat_ABC.h"
 #include "DecisionalState.h"
-#include "LogisticEntity.h"
+#include "LogisticHierarchy.h"
 
 namespace sword
 {
@@ -37,6 +37,7 @@ namespace dispatcher
     class Formation_ABC;
     class KnowledgeGroup_ABC;
     class Model_ABC;
+    class LogisticEntity;
 
 // =============================================================================
 /** @class  Automat
@@ -48,8 +49,7 @@ class Automat : public Automat_ABC
               , public kernel::Extension_ABC
               , public kernel::Updatable_ABC< sword::AutomatCreation >
               , public kernel::Updatable_ABC< sword::DecisionalState >
-              , public kernel::Updatable_ABC< sword::AutomatAttributes >
-              , public kernel::Updatable_ABC< sword::ChangeLogisticLinks >
+              , public kernel::Updatable_ABC< sword::AutomatAttributes >              
               , public kernel::Updatable_ABC< sword::AutomatChangeSuperior >
               , public kernel::Updatable_ABC< sword::AutomatChangeKnowledgeGroup >
               , public kernel::Updatable_ABC< sword::AutomatOrder >
@@ -66,6 +66,7 @@ public:
     virtual const kernel::AutomatType& GetType() const;
     virtual bool IsEngaged() const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    virtual LogisticEntity* GetLogisticEntity() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
@@ -74,10 +75,11 @@ public:
     virtual void DoUpdate( const sword::AutomatCreation&    msg );
     virtual void DoUpdate( const sword::DecisionalState&    msg );
     virtual void DoUpdate( const sword::AutomatAttributes&  msg );
-    virtual void DoUpdate( const sword::ChangeLogisticLinks&         msg );
     virtual void DoUpdate( const sword::AutomatChangeSuperior&       msg );
     virtual void DoUpdate( const sword::AutomatChangeKnowledgeGroup& msg );
     virtual void DoUpdate( const sword::AutomatOrder&                msg );
+
+    virtual void Send( sword::ParentEntity& msg ) const;
 
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -130,7 +132,8 @@ private:
     sword::EnumOperationalStatus nOperationalState_;
     sword::RulesOfEngagement_Value nRoe_;
     kernel::Automat_ABC* pTC2_;
-    LogisticEntity       logisticEntity_;
+    std::auto_ptr< LogisticEntity > logisticEntity_;
+    LogisticHierarchy logisticHierarchy_;
     std::auto_ptr< AutomatOrder > order_;
     DecisionalState decisionalInfos_;
     tools::Resolver< dispatcher::Agent_ABC >   agents_;

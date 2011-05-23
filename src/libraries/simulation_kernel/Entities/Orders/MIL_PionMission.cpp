@@ -103,10 +103,6 @@ bool MIL_PionMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrderTy
 void MIL_PionMission::Start( boost::shared_ptr< MIL_Mission_ABC > self )
 {
     assert( !bDIABehaviorActivated_ );
-
-    const transport::PHY_RoleInterface_Transported& roleTransported = pion_.GetRole< transport::PHY_RoleInterface_Transported >();
-    if( roleTransported.IsTransported() )
-        throw std::runtime_error( "Cannot receive mission while transported" );
     pion_.GetDecision().StartMissionBehavior( self );
     bDIABehaviorActivated_ = true;
     Send();

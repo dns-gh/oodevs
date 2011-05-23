@@ -130,11 +130,10 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
         superior = & (( tools::Resolver< kernel::Automat_ABC >&)  ( model_.agents_ )).Get( message.parent().automat().id() );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach< Lives_ABC >( *new AutomatLives( *result ) );
-    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, result->GetLogisticLevel(), dico ) );
+    result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dico ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 2.f ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
-    result->Attach( *new Quotas( controllers_.controller_, static_.objectTypes_ ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );

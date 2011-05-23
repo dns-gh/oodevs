@@ -18,7 +18,6 @@
 #include "gaming/MaintenanceStates.h"
 #include "gaming/MedicalStates.h"
 #include "gaming/SupplyStates.h"
-#include "gaming/Quotas.h"
 
 // =============================================================================
 /** @class  LogisticAvailabilitiesListView_ABC
@@ -151,7 +150,7 @@ private:
 */
 // Created: SBO 2007-02-20
 // =============================================================================
-class QuotasAvailabilitiesListView_ABC : public LogisticAvailabilitiesListView_ABC< QuotasAvailabilitiesListView_ABC, Quotas >
+/*class QuotasAvailabilitiesListView_ABC : public LogisticAvailabilitiesListView_ABC< QuotasAvailabilitiesListView_ABC, Quotas >
 {
 public:
     //! @name Constructors/Destructor
@@ -169,5 +168,5 @@ private:
     QuotasAvailabilitiesListView_ABC& operator=( const QuotasAvailabilitiesListView_ABC& ); //!< Assignment operator
     //@}
 };
-
+*/
 #endif // __LogisticAvailabilitiesListView_ABC_h_

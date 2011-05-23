@@ -188,7 +188,31 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& fro
                         ( MsgsClientToSim::MsgUnitMagicAction::change_extension, sword::UnitMagicAction::change_extension )
                         ( MsgsClientToSim::MsgUnitMagicAction::change_critical_intelligence, sword::UnitMagicAction::change_critical_intelligence )
                         ( MsgsClientToSim::MsgUnitMagicAction::unit_creation, sword::UnitMagicAction::unit_creation ) );
-    CONVERT_LIST( parameters, elem, ConvertMissionParameter );
+    switch( from.type() )
+    {
+        case MsgsClientToSim::MsgUnitMagicAction::change_logistic_links:    ConvertUnitMagicActionChangeLogisticLinks  ( from.parameters(), *to->mutable_parameters() ); break;
+        case MsgsClientToSim::MsgUnitMagicAction::log_supply_change_quotas: ConvertUnitMagicActionLogSupplyChangeQuotas( from.parameters(), *to->mutable_parameters() ); break; 
+        default:
+            CONVERT_LIST( parameters, elem, ConvertMissionParameter );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientToSimulation::Convert
+// Created: NLD 2011-02-08
+// -----------------------------------------------------------------------------
+void ClientToSimulation::ConvertUnitMagicActionChangeLogisticLinks( const Common::MsgMissionParameters& /*from*/, sword::MissionParameters& /*to*/ )
+{
+    //$$ NLD TO BE DONE if useful: Thales doesn't have the original message "documentation" and probably hasn't implemented it
+}
+
+// -----------------------------------------------------------------------------
+// Name: ClientToSimulation::Convert
+// Created: NLD 2011-02-08
+// -----------------------------------------------------------------------------
+void ClientToSimulation::ConvertUnitMagicActionLogSupplyChangeQuotas( const Common::MsgMissionParameters& /*from*/, sword::MissionParameters& /*to*/ )
+{   
+    //$$ NLD TO BE DONE if useful: Thales doesn't have the original message "documentation" and probably hasn't implemented it
 }
 
 // -----------------------------------------------------------------------------

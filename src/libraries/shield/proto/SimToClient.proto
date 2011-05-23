@@ -904,8 +904,8 @@ message SeqOfDotationQuery {
 message MsgLogSupplyHandlingUpdate {
    optional Common.SupplyRequestId      request         = 1;
    optional Common.AutomatId            consumer        = 2;
-   optional Common.ParentEntity            supplier        = 3;
-   optional Common.ParentEntity            convoy_provider = 4;
+   optional Common.ParentEntity         supplier        = 3;
+   optional Common.ParentEntity         convoy_provider = 4;
    optional Common.UnitId               convoying_unit  = 5;
    optional EnumLogSupplyHandlingStatus etat            = 6;
    optional SeqOfDotationQuery          dotations       = 7;

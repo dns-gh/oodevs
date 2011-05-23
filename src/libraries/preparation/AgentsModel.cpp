@@ -13,7 +13,6 @@
 #include "Agent.h"
 #include "Automat.h"
 #include "LogisticBaseStates.h"
-#include "Tc2States.h"
 #include "LimitsModel.h"
 #include "AgentsModelChecker.h"
 #include "DiamondFormation.h"
@@ -331,7 +330,7 @@ void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& aut
     xis >> xml::attribute( "id", id );
     if( Entity_ABC* entity = tools::Resolver< Automat_ABC >::Find( id ) )
     {
-        ReadLogisticLink< TC2Hierarchies >          ( xis, automat, *entity );
+        ReadLogisticLink< LogisticHierarchiesBase >( xis, automat, *entity );
     }
 }
 

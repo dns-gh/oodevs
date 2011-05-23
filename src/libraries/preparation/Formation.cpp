@@ -10,6 +10,9 @@
 #include "preparation_pch.h"
 #include "Formation.h"
 #include "IdManager.h"
+#include "LogisticBaseStates.h"
+#include "clients_gui/Tools.h"
+#include "clients_kernel/LogisticHierarchies.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
@@ -24,6 +27,7 @@
 #include "clients_kernel/App6Symbol.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
+#include <qmessagebox.h>
 
 using namespace kernel;
 
@@ -165,7 +169,7 @@ void Formation::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/Name" ), name_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/LogisticLevel" ), logisticLevel_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Formation", "Info/LogisticLevel" ), logisticLevel_, *this, &Formation::SetLogisticLevel );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,6 +179,39 @@ void Formation::CreateDictionary( kernel::Controller& controller )
 const kernel::LogisticLevel& Formation::GetLogisticLevel() const
 {
     return *logisticLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::SerializeAttributes
+// Created: NLD 2011-01-29
+// -----------------------------------------------------------------------------
+void Formation::SetLogisticLevel( const EntityLogisticLevel& logisticLevel )
+{    
+    //$$$ FACTORISER AVEC Automat
+    if( (*logisticLevel) == kernel::LogisticLevel::none_ )
+    {
+        const kernel::LogisticHierarchiesBase* logHierarchy = Retrieve< kernel::LogisticHierarchiesBase >();
+        if( logHierarchy )
+        {
+            tools::Iterator< const kernel::Entity_ABC& > children = logHierarchy->CreateSubordinateIterator();
+            if( children.HasMoreElements() )
+            {
+                int result = QMessageBox::question( 0, tools::translate( "Application", "SWORD" )
+                                                    , tools::translate( "Application", "By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?" )                                                    , QMessageBox::Yes, QMessageBox::Cancel );
+                if( result == QMessageBox::Cancel )
+                    return;
+
+                while( children.HasMoreElements() )
+                {
+                    const kernel::Entity_ABC& entity = children.NextElement();
+                    LogisticBaseStates* logEntityHierarchy = const_cast< LogisticBaseStates* >( dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< kernel::LogisticHierarchiesBase >() ) );
+                    if( logEntityHierarchy )
+                        logEntityHierarchy->SetSuperior( LogisticBaseSuperior() );
+                }
+            }
+        }
+    }
+    logisticLevel_ = logisticLevel;
 }
 
 // -----------------------------------------------------------------------------

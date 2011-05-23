@@ -19,6 +19,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "MIL_AgentServer.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DotationSupplyManager )
@@ -128,11 +129,11 @@ void MIL_DotationSupplyManager::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::Update()
 {
-    if( !bDotationSupplyNeeded_ || !dotationSupplyStates_.empty() || ( !pAutomate_->GetTC2() && !pAutomate_->GetNominalTC2() ) )
+    if( !bDotationSupplyNeeded_ || !dotationSupplyStates_.empty() || !pAutomate_->GetLogisticHierarchy().HasSuperior() )
         return;
 
     PHY_SupplyDotationRequestContainer supplyRequests( *pAutomate_, bDotationSupplyExplicitlyRequested_ );
-    bDotationSupplyNeeded_ = !supplyRequests.Execute( pAutomate_->GetTC2(), pAutomate_->GetNominalTC2(), dotationSupplyStates_ );
+    bDotationSupplyNeeded_ = !supplyRequests.Execute( pAutomate_->GetLogisticHierarchy(), dotationSupplyStates_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,9 +163,9 @@ void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCa
     }
     bDotationSupplyNeeded_ = true;
 
-    // Pas de RC si log non branchée ou si RC envoyé au tick précédent
+    // Pas de RC si RC envoyé au tick précédent
     const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
-    if( pAutomate_->GetTC2() && ( nCurrentTick > ( nTickRcDotationSupplyQuerySent_ + 1 ) || nTickRcDotationSupplyQuerySent_ == 0 ) )
+    if( ( nCurrentTick > ( nTickRcDotationSupplyQuerySent_ + 1 ) || nTickRcDotationSupplyQuerySent_ == 0 ) )
         MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_DotationSupplyRequest );
     nTickRcDotationSupplyQuerySent_ = nCurrentTick;
 }

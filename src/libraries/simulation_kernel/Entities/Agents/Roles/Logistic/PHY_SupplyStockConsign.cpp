@@ -23,9 +23,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyStockConsign )
 // Name: PHY_SupplyRepairConsign::PHY_SupplyStockConsign
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-PHY_SupplyStockConsign::PHY_SupplyStockConsign( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyStockState& supplyState
-        , MIL_Automate& stockSupplier, bool bExternalTransfert)
-    : PHY_SupplyConsign_ABC( supplyingAutomate, supplyState.GetSuppliedAutomate(), supplyState.GetConvoyer(), stockSupplier, bExternalTransfert )
+PHY_SupplyStockConsign::PHY_SupplyStockConsign( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyStockState& supplyState, MIL_Automate& stockSupplier )
+    : PHY_SupplyConsign_ABC( supplyingAutomate, supplyState.GetSuppliedAutomate(), supplyState.GetConvoyer(), stockSupplier )
     , pSupplyState_        ( &supplyState )
     , pConvoy_             ( 0 )
 {
@@ -150,7 +149,7 @@ void PHY_SupplyStockConsign::EnterStateConvoyForming()
 void PHY_SupplyStockConsign::EnterStateConvoyGoingToLoadingPoint()
 {
     assert( pConvoy_ );
-    pConvoy_->Form(bExternalTransfert_); // Création du pion
+    pConvoy_->Form(); // Création du pion
     pConvoy_->ActivateConvoyMission();
     nTimer_ = 0;
     SetState( eConvoyGoingToLoadingPoint );
@@ -270,7 +269,7 @@ bool PHY_SupplyStockConsign::Update()
 
     switch( GetState() )
     {
-        case eConvoyWaitingForTransporters  : if( pConvoy_->ReserveTransporters( bExternalTransfert_) )  EnterStateConvoyForming                (); break;
+        case eConvoyWaitingForTransporters  : if( pConvoy_->ReserveTransporters() )  EnterStateConvoyForming                (); break;
         case eConvoyForming                 :                                        EnterStateConvoyGoingToLoadingPoint    (); break;
         case eConvoyGoingToLoadingPoint     :                                                                                   break; // Transition gérée par scripts
         case eConvoyLoading                 :                                        EnterStateConvoyGoingToUnloadingPoint  (); break;

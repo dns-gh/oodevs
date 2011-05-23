@@ -15,6 +15,12 @@
 #include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
 #include <boost/serialization/export.hpp>
 
+namespace logistic
+{
+    class ObjectLogisticHierarchy;
+    class LogisticHierarchy_ABC;
+}
+
 namespace xml
 {
     class xistream;
@@ -59,7 +65,7 @@ public:
 
     //! @name virtual
     //@{
-    MIL_AutomateLOG& GetTC2() const;
+    const logistic::LogisticHierarchy_ABC& GetLogisticHierarchy() const;
     //@}
 
     //! @name Copy
@@ -77,7 +83,7 @@ private:
 private:
     //! @name
     //@{
-    MIL_AutomateLOG* pTC2_;
+    std::auto_ptr< logistic::ObjectLogisticHierarchy > pLogisticHierarchy_;
     //@}
 };
 

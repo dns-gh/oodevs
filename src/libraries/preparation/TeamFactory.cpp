@@ -12,6 +12,7 @@
 #include "Model.h"
 #include "StaticModel.h"
 #include "TeamsModel.h"
+#include "FormationModel.h"
 #include "Team.h"
 #include "Diplomacies.h"
 #include "TeamHierarchies.h"

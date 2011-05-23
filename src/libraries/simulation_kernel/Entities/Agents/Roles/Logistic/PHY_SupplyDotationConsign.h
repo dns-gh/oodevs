@@ -24,8 +24,7 @@ class PHY_SupplyDotationState;
 class PHY_SupplyDotationConsign : public PHY_SupplyConsign_ABC
 {
 public:
-             PHY_SupplyDotationConsign( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyDotationState& supplyState
-                     , MIL_Automate& stockSupplier, bool bExternalTransfert);
+             PHY_SupplyDotationConsign( MIL_AutomateLOG& supplyingAutomate, PHY_SupplyDotationState& supplyState, MIL_Automate& stockSupplier );
              PHY_SupplyDotationConsign();
     virtual ~PHY_SupplyDotationConsign();
 

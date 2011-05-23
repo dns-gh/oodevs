@@ -942,12 +942,12 @@ Voulez-vous le supprimer?</translation>
         <translation>Camp</translation>
     </message>
     <message>
-        <source>TC2:</source>
-        <translation>TC2:</translation>
+        <source>Logistic unit:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Camp&apos;s TC2</source>
-        <translation>TC2 du camp</translation>
+        <source>Camp&apos;s logistic unit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

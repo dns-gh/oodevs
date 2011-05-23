@@ -32,8 +32,7 @@ class PHY_SupplyConsign_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate
-                     , MIL_Automate& stockSupplier, bool bExternalTransfert);
+             PHY_SupplyConsign_ABC( MIL_AutomateLOG& supplyingAutomate, const MIL_Automate& suppliedAutomate, MIL_AutomateLOG& convoyingAutomate, MIL_Automate& stockSupplier );
              PHY_SupplyConsign_ABC();
     virtual ~PHY_SupplyConsign_ABC();
     //@}
@@ -115,7 +114,6 @@ protected:
     //! @name Member data
     //@{
     int nTimer_;
-    bool             bExternalTransfert_;
     //@}
 };
 

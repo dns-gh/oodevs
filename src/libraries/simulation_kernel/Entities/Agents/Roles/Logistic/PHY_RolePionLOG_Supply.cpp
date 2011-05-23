@@ -114,6 +114,15 @@ void PHY_RolePionLOG_Supply::ReadOverloading( xml::xistream& xis )
 //
 // =============================================================================
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::FindLogisticManager
+// Created: NLD 2011-01-11
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* PHY_RolePionLOG_Supply::FindLogisticManager() const
+{
+    return pion_.FindLogisticManager();
+}
+
 // =============================================================================
 // Available Convoy //@TODO MGD MERGE all Logictic OnComponentFunctor in one file
 // =============================================================================

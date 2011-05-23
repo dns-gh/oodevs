@@ -9,7 +9,6 @@
 
 #include "preparation_pch.h"
 #include "CommandPostAttributes.h"
-#include "Tc2States.h"
 #include "LogisticBaseStates.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -40,9 +39,7 @@ CommandPostAttributes::~CommandPostAttributes()
 void CommandPostAttributes::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     const kernel::Entity_ABC& superior = entity_.Get< kernel::TacticalHierarchies >().GetUp();
-    if( const Tc2States* tc2 = static_cast< const Tc2States* >( superior.Retrieve< kernel::TC2Hierarchies >() ) )
-        tc2->Draw( where, viewport, tools );
-    if( const LogisticBaseStates* bl = static_cast< const LogisticBaseStates* >( superior.Retrieve< kernel::LogisticBaseHierarchies >() ) )
+    if( const LogisticBaseStates* bl = static_cast< const LogisticBaseStates* >( superior.Retrieve< kernel::LogisticHierarchiesBase >() ) )
         bl->Draw( where, viewport, tools );
 }
 

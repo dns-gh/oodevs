@@ -38,7 +38,6 @@
 #include "StaticModel.h"
 #include "Stocks.h"
 #include "TacticalLines.h"
-#include "Tc2States.h"
 #include "AgentAffinities.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
@@ -50,6 +49,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 
@@ -113,9 +113,10 @@ Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, 
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     Entity_ABC* kg = FindorCreateKnowledgeGroup( parent );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
-    result->Attach< TC2Hierarchies >( *new Tc2States( controllers_.controller_, *result, dico ) );
-    if( type.IsTC2() )
-        result->Attach< LogisticBaseHierarchies >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico ) );
+
+    bool canHaveQuota = result->GetType().IsTC2(); //$$ NAZE
+    result->Attach< kernel::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico, canHaveQuota ) );
+
     result->Attach( *new TacticalLines() );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Polish();
@@ -234,9 +235,10 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
     result->Attach( *new AutomatDecisions( xis, controllers_.controller_, *result ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
-    result->Attach< TC2Hierarchies >        ( *new Tc2States( controllers_.controller_, *result, dico ) );
-    if( result->GetType().IsTC2() )
-        result->Attach< LogisticBaseHierarchies >( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico ) );
+
+    bool canHaveQuota = result->GetType().IsTC2(); //$$ NAZE
+    result->Attach< kernel::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico, canHaveQuota ) );
+
     result->Attach( *new TacticalLines() );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     result->Polish();

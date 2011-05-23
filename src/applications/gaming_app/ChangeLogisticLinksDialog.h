@@ -91,8 +91,8 @@ private:
     const kernel::Time_ABC& simulation_;
     const kernel::Profile_ABC& profile_;
 
-    gui::ValuedComboBox< const kernel::Automat_ABC* >* tc2Combo_;
-    gui::ValuedComboBox< const kernel::Entity_ABC* >* superiorCombo_;
+    gui::ValuedComboBox< const kernel::Entity_ABC* >* nominalSuperiorCombo_;
+    gui::ValuedComboBox< const kernel::Entity_ABC* >* currentSuperiorCombo_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
     const kernel::LogisticLevel* selectedLevel_;
     //@}

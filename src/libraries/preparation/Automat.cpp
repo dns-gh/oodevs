@@ -11,6 +11,8 @@
 #include "Automat.h"
 #include "IdManager.h"
 #include "Tools.h"
+#include "LogisticBaseStates.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controller.h"
@@ -21,8 +23,8 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/App6Symbol.h"
-#include "clients_kernel/LogisticLevel.h"
 #include <xeumeuleu/xml.hpp>
+#include <qmessagebox.h>
 
 using namespace kernel;
 
@@ -33,8 +35,8 @@ using namespace kernel;
 Automat::Automat( const AutomatType& type, Controller& controller, IdManager& idManager )
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
     , type_( type )
-    , logisticLevel_( &kernel::LogisticLevel::none_ )
-{
+    , logisticLevel_( type.IsTC2() ? &LogisticLevel::logistic_base_ : &LogisticLevel::none_ ) // Logistic brain is enabled by default for type "tc2"
+{    
     name_ = type.GetName().c_str() + QString( " [%1]" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -134,8 +136,42 @@ void Automat::CreateDictionary( kernel::Controller& controller )
     Attach( dictionary );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Identifier" ), (const unsigned long)id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/Name" ), name_ );
-    if(type_.IsTC2())
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/LogisticLevel" ), logisticLevel_ );
+    if( type_.IsTC2() ) //$$$ NAZE
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Automat", "Info/LogisticLevel" ), logisticLevel_, *this, &Automat::SetLogisticLevel );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat::SerializeAttributes
+// Created: NLD 2011-01-29
+// -----------------------------------------------------------------------------
+void Automat::SetLogisticLevel( const EntityLogisticLevel& logisticLevel )
+{
+    //$$$ FACTORISER AVEC Automat
+    if( (*logisticLevel) == kernel::LogisticLevel::none_ )
+    {
+        const kernel::LogisticHierarchiesBase* logHierarchy = Retrieve< kernel::LogisticHierarchiesBase >();
+        if( logHierarchy )
+        {
+            tools::Iterator< const kernel::Entity_ABC& > children = logHierarchy->CreateSubordinateIterator();
+            if( children.HasMoreElements() )
+            {
+                int result = QMessageBox::question( 0, tools::translate( "Application", "SWORD" )
+                                                    , tools::translate( "Application", "By disabling the logistic function on this automat, all the logistic subordinates superiors will be reset. Do you want to proceed ?" )
+                                                    , QMessageBox::Yes, QMessageBox::Cancel );
+                if( result == QMessageBox::Cancel )
+                    return;
+
+                while( children.HasMoreElements() )
+                {
+                    const kernel::Entity_ABC& entity = children.NextElement();
+                    LogisticBaseStates* logEntityHierarchy = const_cast< LogisticBaseStates* >( dynamic_cast< const LogisticBaseStates* >( entity.Retrieve< kernel::LogisticHierarchiesBase >() ) );
+                    if( logEntityHierarchy )
+                        logEntityHierarchy->SetSuperior( LogisticBaseSuperior() );
+                }
+            }
+        }
+    }
+    logisticLevel_ = logisticLevel;
 }
 
 // -----------------------------------------------------------------------------
@@ -149,6 +185,7 @@ void Automat::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "type", type_.GetName() );
     if (nature_.length() > 0)
         xos << xml::attribute( "nature", nature_ );
+
     if( *logisticLevel_ != kernel::LogisticLevel::none_ )
         xos << xml::attribute( "logistic-level", logisticLevel_->GetName() );
     if (color_.length() > 0)
@@ -159,7 +196,7 @@ void Automat::SerializeAttributes( xml::xostream& xos ) const
 // Name: Automat::SerializeAttributes
 // Created: AHC 2010-10-07
 // -----------------------------------------------------------------------------
-const kernel::LogisticLevel& Automat::GetLogisticLevel() const
+const LogisticLevel& Automat::GetLogisticLevel() const
 {
     return *logisticLevel_;
 }

@@ -17,6 +17,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include <boost/serialization/vector.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalCollectionAmbulance )
@@ -179,7 +180,7 @@ bool PHY_MedicalCollectionAmbulance::DoLoading()
     if( consigns_.size() == pCompAmbulance_->GetType().GetAmbulanceCollectionCapacity() )
         return true;
 
-    MIL_AutomateLOG* pLogisticManager = pMedical_->GetPion().FindLogisticManager();
+    MIL_AutomateLOG* pLogisticManager = pMedical_->FindLogisticManager();
     if( !pLogisticManager )
         return false;
     return pLogisticManager->MedicalCanCollectionAmbulanceGo( *this );
@@ -206,10 +207,10 @@ bool PHY_MedicalCollectionAmbulance::DoSearchForSortingArea()
     assert( !pSortingArea_ );
     assert( pMedical_ );
 
-    MIL_AutomateLOG* pLogisticManager = pMedical_->GetPion().FindLogisticManager();
+    MIL_AutomateLOG* pLogisticManager = pMedical_->FindLogisticManager();
     if( !pLogisticManager )
         return false;
-    MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetSuperior();
+    MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
     if( !pLogisticSuperior )
         return true; // $$$ Bof : pour sortir les human states qui ne seront jamais traités
     pSortingArea_ = pLogisticSuperior->MedicalReserveForSorting( *this );

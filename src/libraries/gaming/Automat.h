@@ -15,6 +15,7 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "tools/Resolver_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -38,6 +39,7 @@ namespace sword
 class Automat : public kernel::EntityImplementation< kernel::Automat_ABC >
               , public kernel::Extension_ABC
               , public kernel::Drawable_ABC
+              , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -58,12 +60,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Automat( const Automat& );            //!< Copy constructor
-    Automat& operator=( const Automat& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;

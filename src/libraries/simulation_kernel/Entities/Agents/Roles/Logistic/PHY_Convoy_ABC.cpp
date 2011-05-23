@@ -278,7 +278,7 @@ void PHY_Convoy_ABC::UnlockConvoy()
 // Name: PHY_Convoy_ABC::ReserveTransporters
 // Created: NLD 2005-12-14
 // -----------------------------------------------------------------------------
-bool PHY_Convoy_ABC::ReserveTransporters( bool bExternalTransfert)
+bool PHY_Convoy_ABC::ReserveTransporters()
 {
     assert( pConsign_ );
 
@@ -307,7 +307,7 @@ bool PHY_Convoy_ABC::ReserveTransporters( bool bExternalTransfert)
         {
             PHY_ComposantePion* pConveyorComp = 0;
             MIL_AgentPion*      pConveyorPion = 0;
-            if( !pConsign_->GetConvoyer().SupplyGetAvailableConvoyTransporter( pConveyorComp, pConveyorPion, dotationCategory, bExternalTransfert ) )
+            if( !pConsign_->GetConvoyer().SupplyGetAvailableConvoyTransporter( pConveyorComp, pConveyorPion, dotationCategory ) )
                 break; // No more convoys
             PHY_Conveyor* pConveyor = new PHY_Conveyor( *pConveyorComp, *pConveyorPion );
             if( ! conveyors_.insert( std::make_pair( pConveyorComp, pConveyor ) ).second )

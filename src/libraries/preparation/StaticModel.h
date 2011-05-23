@@ -45,6 +45,11 @@ class IntelligenceKarmas;
 class SuccessFactorActionTypes;
 class TeamKarmas;
 
+namespace preparation
+{
+    class LogisticLevel;
+}
+
 // =============================================================================
 /** @class  StaticModel
     @brief  StaticModel
@@ -84,6 +89,7 @@ public:
     indicators::Primitives&          indicators_;
     indicators::GaugeTypes&          gaugeTypes_;
     SuccessFactorActionTypes&        successFactorActionTypes_;
+    preparation::LogisticLevel&      logisticLevels_;
     //@}
 };
 

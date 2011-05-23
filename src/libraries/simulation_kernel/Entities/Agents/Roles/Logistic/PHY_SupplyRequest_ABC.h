@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    bool AffectAutomate( MIL_AutomateLOG& supplyingAutomate, bool bExternaltransfert );
+    bool AffectAutomate( MIL_AutomateLOG& supplyingAutomate );
     bool HasReachedSupplyThreshold() const;
     void ReserveStocks();
 

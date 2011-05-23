@@ -18,8 +18,8 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceTransportConsign )
 
@@ -111,7 +111,7 @@ bool PHY_MaintenanceTransportConsign::DoSearchForUpperLevel()
 
     nTimer_ = 0;
 
-    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
+    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( !pLogisticManager )
         return false;
     if( pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
@@ -119,7 +119,7 @@ bool PHY_MaintenanceTransportConsign::DoSearchForUpperLevel()
         pComposanteState_ = 0;
         return true;
     }
-    MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetSuperior();
+    MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
     if( pLogisticSuperior && pLogisticSuperior->MaintenanceHandleComposanteForTransport( *pComposanteState_ ) )
     {
         pComposanteState_ = 0;
@@ -243,7 +243,7 @@ void PHY_MaintenanceTransportConsign::ChooseStateAfterDiagnostic()
     pComposanteState_->SetComposantePosition( pMaintenance_->GetRole< PHY_RoleInterface_Location>().GetPosition() );
     nTimer_ = 0;
 
-    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().GetPion().FindLogisticManager();
+    MIL_AutomateLOG* pLogisticManager = GetPionMaintenance().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MaintenanceHandleComposanteForRepair( *pComposanteState_ ) )
     {
         pComposanteState_ = 0;

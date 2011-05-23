@@ -287,6 +287,15 @@ void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const unsign
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::FindLogisticManager
+// Created: NLD 2011-01-11
+// -----------------------------------------------------------------------------
+MIL_AutomateLOG* PHY_RolePionLOG_Medical::FindLogisticManager() const
+{
+    return pion_.FindLogisticManager();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::CanCollectionAmbulanceGo
 // Created: NLD 2005-01-13
 // -----------------------------------------------------------------------------

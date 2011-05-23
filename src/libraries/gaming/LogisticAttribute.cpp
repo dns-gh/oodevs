@@ -19,10 +19,11 @@ using namespace kernel;
 // Name: LogisticAttribute constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver )
+LogisticAttribute::LogisticAttribute( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& automatResolver, const tools::Resolver_ABC< Formation_ABC >& formationResolver )
     : controller_( controller )
-    , resolver_( resolver )
-    , tc2_( 0 )
+    , automatResolver_( automatResolver )
+    , formationResolver_( formationResolver )
+    , logisticSuperior_( 0 )
 {
     // NOTHING
 }
@@ -45,7 +46,7 @@ void LogisticAttribute::UpdateData( const T& message )
 {
     if( message.has_logistic()  )
     {
-        tc2_ = resolver_.Find( message.logistic().combat_train().id() );
+        logisticSuperior_ = FindLogisticEntity( message.logistic().logistic_superior() );
         controller_.Update( *(LogisticAttribute_ABC*)this );
     }
 }
@@ -75,7 +76,7 @@ void LogisticAttribute::DoUpdate( const sword::ObjectUpdate& message )
 void LogisticAttribute::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Camp" ) )
-             .Display( tools::translate( "Object", "TC2:" ), tc2_ );
+             .Display( tools::translate( "Object", "Logistic Superior:" ), logisticSuperior_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,4 +86,17 @@ void LogisticAttribute::Display( Displayer_ABC& displayer ) const
 void LogisticAttribute::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 {
     Display( displayer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticAttribute::FindLogisticEntity
+// Created: NLD 2011-01-19
+// -----------------------------------------------------------------------------
+kernel::Entity_ABC* LogisticAttribute::FindLogisticEntity( const sword::ParentEntity& message ) const
+{
+    if( message.has_automat() )
+        return (kernel::Entity_ABC*)automatResolver_.Find( message.automat().id() );
+    else if( message.has_formation() )
+        return (kernel::Entity_ABC*)formationResolver_.Find( message.formation().id() );
+    return 0;
 }

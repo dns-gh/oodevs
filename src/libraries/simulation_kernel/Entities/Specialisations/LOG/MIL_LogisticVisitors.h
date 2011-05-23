@@ -239,12 +239,11 @@ class MedicalCollectionAmbulanceAuthorizedToGoVisitor : public MIL_EntityVisitor
 class SupplyStockAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 {
     public:
-        SupplyStockAvailabilityVisitor( const PHY_DotationCategory& dotationCategory, double rRequestedValue, bool bExternalTransfert )
+        SupplyStockAvailabilityVisitor( const PHY_DotationCategory& dotationCategory, double rRequestedValue )
             : rScore_          ( 0. )
             , dotationCategory_( dotationCategory )
             , rRequestedValue_ ( rRequestedValue )
             , pSelected_       ( 0 )
-            , bExternalTransfert_ ( bExternalTransfert )
         {
         }
 
@@ -270,7 +269,6 @@ class SupplyStockAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPi
         const PHY_DotationCategory&  dotationCategory_;
         const double                 rRequestedValue_;
               MIL_AgentPion*         pSelected_;
-              bool                   bExternalTransfert_; // transfert betweeen BLT <-> BLD and BLD <-> external TC2
 };
 
 class SupplyStockContainerVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
@@ -300,11 +298,10 @@ class SupplyStockContainerVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
 class SupplyConvoyAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 {
     public:
-        SupplyConvoyAvailabilityVisitor( const PHY_DotationCategory& dotationCategory, bool bExternalTransfert )
+        SupplyConvoyAvailabilityVisitor( const PHY_DotationCategory& dotationCategory )
             : dotationCategory_( dotationCategory )
             , pConvoySelected_ ( 0 )
             , pSelected_       ( 0 )
-            , bExternalTransfert_ ( bExternalTransfert )
         {
         }
 
@@ -314,7 +311,7 @@ class SupplyConvoyAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentP
             // We must not use BL internal TC2 for external use
             //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
             //if( bExternalTransfert_ && testBrain )
-            //    return;
+                //return;
 
             if( pSelected_ )
                 return;
@@ -332,17 +329,15 @@ class SupplyConvoyAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentP
         const PHY_DotationCategory&  dotationCategory_;
               PHY_ComposantePion*    pConvoySelected_;
               MIL_AgentPion*         pSelected_;
-              bool                   bExternalTransfert_;
 };
 
 
 class SupplyConvoyCapacityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 {
     public:
-        SupplyConvoyCapacityVisitor( bool bExternalTransfert )
+        SupplyConvoyCapacityVisitor()
             : nScore_   ( std::numeric_limits< int >::min() )
             , pSelected_( 0 )
-            , bExternalTransfert_( bExternalTransfert )
         {
         }
 
@@ -350,9 +345,9 @@ class SupplyConvoyCapacityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
         {
             // NLD 2011-04-07 : Totally bugged ...
             // We must not use BL internal TC2 for external use
-            // MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
-            // if( bExternalTransfert_ && testBrain )
-            //    return;
+            //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
+            //if( bExternalTransfert_ && testBrain )
+                //return;
 
             PHY_RoleInterface_Composantes::T_ComposanteUseMap composanteUse;
             tmp.GetRole< PHY_RoleInterface_Composantes >().GetConvoyTransportersUse( composanteUse );
@@ -369,7 +364,6 @@ class SupplyConvoyCapacityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
     public:
         int             nScore_;
         MIL_AgentPion*  pSelected_;
-        bool            bExternalTransfert_;
 };
 
 
@@ -389,6 +383,64 @@ class PCVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 
     public:
         const MIL_AgentPion*  pSelected_;
+};
+
+
+//$$$$$ TODO pour remplacer le bExternalTransfert
+
+template< typename T >
+class LogisticVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion > 
+{
+public:
+    LogisticVisitor()
+        : score_    ( std::numeric_limits< int >::min() )
+        , pSelected_( 0 )
+    {
+    }
+
+    void Visit( const MIL_AgentPion& tmp )
+    {
+        //$$ TEST pas de sous hierarchie log dans log( = TC2 de la BL)
+        
+        const T* candidate = tmp.RetrieveRole< T >();
+        if( !candidate )
+            return;
+
+        const int newScore = ComputeScore( *candidate );
+        if( newScore > score_ )
+        {
+            score_ = newScore;
+            pSelected_ = const_cast< T* >( candidate );
+        }
+    }
+
+protected:
+    virtual int ComputeScore( const T& role ) = 0;
+
+public:
+    T* pSelected_;
+
+private:
+    int score_;
+};
+
+
+class TestLogisticVisitor : public LogisticVisitor< PHY_RoleInterface_Maintenance >
+{
+public:
+    TestLogisticVisitor( const PHY_ComposantePion& composante )
+        : composante_( composante )
+    {
+    }
+
+private:
+    virtual int ComputeScore( const PHY_RoleInterface_Maintenance& role )
+    {
+        return role.GetAvailabilityScoreForTransport( composante_ );
+    }
+
+private:
+    const PHY_ComposantePion& composante_;
 };
 
 

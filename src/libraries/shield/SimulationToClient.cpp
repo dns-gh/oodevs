@@ -222,9 +222,10 @@ void SimulationToClient::Convert( const sword::LogSupplyPullFlowAck& from, MsgsS
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::LogSupplyChangeQuotasAck& from, MsgsSimToClient::MsgLogSupplyChangeQuotasAck* to )
 {
-    CONVERT_ENUM( ack, ( sword::LogSupplyChangeQuotasAck::no_error_quotas, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::no_error_quotas )
-                       ( sword::LogSupplyChangeQuotasAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_donneur_quotas )
-                       ( sword::LogSupplyChangeQuotasAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receveur_quotas ) );
+    CONVERT_NON_INJECTIVE_ENUM( ack, ack, ( sword::LogSupplyChangeQuotasAck::no_error_quotas, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::no_error_quotas )
+                                          ( sword::LogSupplyChangeQuotasAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_donneur_quotas )
+                                          ( sword::LogSupplyChangeQuotasAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receveur_quotas )
+                                          ( sword::LogSupplyChangeQuotasAck::error_invalid_dotation, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receveur_quotas ));
 }
 
 // -----------------------------------------------------------------------------
@@ -393,13 +394,6 @@ namespace
             ConvertEntry( from.entries( i ), to->add_entries() );
     }
     template< typename From, typename To >
-    void ConvertLogisticLevel( const From& from, To* to )
-    {
-        CONVERT_ENUM( logistic_level, ( sword::none, Common::none )
-                                      ( sword::combat_train, Common::tc2 )
-                                      ( sword::logistic_base, Common::logistic_base ) );
-    }
-    template< typename From, typename To >
     void ConvertRgbColor( const From& from, To* to )
     {
         CONVERT( red );
@@ -427,8 +421,11 @@ void SimulationToClient::Convert( const sword::FormationCreation& from, MsgsSimT
     ConvertNatureLevel( from, to );
     CONVERT( name );
     CONVERT( app6symbol );
-    ConvertLogisticLevel( from, to );
+        
+    CONVERT_ENUM( logistic_level, ( sword::none, Common::none )
+                                  ( sword::logistic_base, Common::logistic_base ) );
     CONVERT_CB( color, ConvertRgbColor );
+    // NB : Don't fill "to->mutable_logistic_base_organic()" (useless)
 }
 
 // -----------------------------------------------------------------------------
@@ -467,7 +464,8 @@ void SimulationToClient::Convert( const sword::AutomatCreation& from, MsgsSimToC
     CONVERT_ID( party );
     CONVERT_ID( knowledge_group );
     CONVERT( app6symbol );
-    ConvertLogisticLevel( from, to );
+    CONVERT_ENUM( logistic_level, ( sword::none, Common::none )
+                                  ( sword::logistic_base, Common::tc2 ) );
     CONVERT_CB( color, ConvertRgbColor );
 }
 
@@ -519,6 +517,7 @@ void SimulationToClient::Convert( const sword::AutomatAttributes& from, MsgsSimT
     ConvertOperationalStatus( from, to );
     ConvertRulesOfEngagement( from, to );
     CONVERT_CB( extension, ConvertExtension );
+    // NB : Don't fill "to->mutable_logistic_base_organic()" and "to->mutable_tc2_organic()" (useless)
 }
 
 // -----------------------------------------------------------------------------
@@ -735,8 +734,18 @@ void SimulationToClient::Convert( const sword::UnitChangeSuperior& from, Common:
 void SimulationToClient::Convert( const sword::ChangeLogisticLinks& from, Common::MsgChangeLogisticLinks* to )
 {
     CONVERT_CB( requester, ConvertParentEntity );
-    CONVERT_ID_TO( combat_train, tc2 );
-    CONVERT_CB( logistic_base, ConvertParentEntity );
+    
+    // Temporary dumb conversion: keep the last superior and transform it to tc2 or logistic_base
+    if( from.superior_size() > 0 )
+    {
+        const sword::ParentEntity& superior = from.superior( from.superior_size() - 1 );
+        if( superior.has_automat() )
+            to->mutable_tc2()->set_id( superior.automat().id() );
+        else if( superior.has_formation() )
+            to->mutable_logistic_base()->mutable_formation()->set_id( superior.formation().id() );
+    }
+    else
+        to->mutable_tc2()->set_id( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -1248,8 +1257,11 @@ namespace
             to->mutable_activity_time()->set_value( from.activity_time().value() );
         if( from.has_bypass() )
             to->mutable_bypass()->set_percentage( from.bypass().percentage() );
-        if( from.has_logistic() )
-            to->mutable_logistic()->mutable_tc2()->set_id( from.logistic().combat_train().id() );
+
+        // NB: Only "automat" type logistic attribute can be converted to old format
+        if( from.has_logistic() && from.logistic().logistic_superior().has_automat() )
+            to->mutable_logistic()->mutable_tc2()->set_id( from.logistic().logistic_superior().automat().id() );
+
         if( from.has_nbc() && from.nbc().has_danger_level() )
             to->mutable_nbc()->set_danger_level( from.nbc().danger_level() );
         CONVERT_LIST( nbc, nbc_agents, ConvertIdentifier );
@@ -1625,6 +1637,7 @@ void SimulationToClient::Convert( const sword::LogSupplyQuotas& from, MsgsSimToC
 {
     CONVERT_CB( supplied, ConvertParentEntity );
     CONVERT_LIST( quotas, elem, ConvertDotationQuota );
+    //NB: Supplier doesn't exist in "to"
 }
 
 // -----------------------------------------------------------------------------

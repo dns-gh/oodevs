@@ -18,6 +18,11 @@
 #include "tools/Resolver.h"
 #include <map>
 
+namespace logistic
+{
+    class LogisticHierarchy_ABC;
+}
+
 namespace sword
 {
     class MissionParameters;
@@ -96,6 +101,8 @@ public:
     virtual float GetAffinity( unsigned long teamID ) const;
 
     bool IsAutonomous() const; // Drones
+
+    virtual logistic::LogisticHierarchy_ABC& GetLogisticHierarchy() const;
     //@}
 
     //! @name Operations

@@ -36,7 +36,6 @@ public:
 
     //! @name Operations
     //@{
-    bool IsValidSuperior( const TC2& superior ) const;
     bool IsValidSuperior( const LogisticBaseSuperior& superior ) const;
     //@}
 

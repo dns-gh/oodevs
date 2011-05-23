@@ -16,19 +16,21 @@ namespace kernel
 {
     class Automat_ABC;
     class Formation_ABC;
+    class Entity_ABC;
     class Karma;
+    class LogisticLevel;
 }
 
 #define DECLARE_SUBTYPE( name, base ) \
 struct name##_{};\
 typedef kernel::StrongType< base, name##_ > name;
 
-DECLARE_SUBTYPE( TC2, const kernel::Automat_ABC* );
-DECLARE_SUBTYPE( LogisticBaseSuperior, const kernel::Formation_ABC* );
+DECLARE_SUBTYPE( LogisticBaseSuperior, const kernel::Entity_ABC* );
 
 DECLARE_SUBTYPE( TeamKarma, const kernel::Karma* );
 DECLARE_SUBTYPE( IntelligenceKarma, const kernel::Karma* );
 
+DECLARE_SUBTYPE( EntityLogisticLevel, const kernel::LogisticLevel* );
 DECLARE_SUBTYPE( EntityAffinity, float );
 
 #endif // __Preparation_Types_h_

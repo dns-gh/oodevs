@@ -32,6 +32,7 @@ namespace sword
     class UnitMagicAction;
     class KnowledgeMagicAction;
     class MagicAction;
+    class MissionParameter_Value;
     class BurningCellRequest;
 }
 
@@ -59,6 +60,7 @@ class MIL_ObjectManager;
 class MIL_Army_ABC;
 class MIL_AgentPion;
 class MIL_Automate;
+class MIL_AutomateLOG;
 class MIL_Config;
 class MIL_Entity_ABC;
 class MIL_Formation;
@@ -106,6 +108,8 @@ public:
 
     //! @name Accessors
     //@{
+            MIL_AutomateLOG*    FindBrainLogistic( unsigned int nID ) const; 
+            MIL_AutomateLOG*    FindBrainLogistic( const sword::MissionParameter_Value& parameter ) const; 
     virtual MIL_Automate*       FindAutomate      ( unsigned int nID ) const;
     virtual MIL_Population*     FindPopulation    ( unsigned int nID ) const;
     virtual MIL_Inhabitant*     FindInhabitant    ( unsigned int nID ) const;
@@ -193,8 +197,8 @@ private:
     //! @name Helpers
     //@{
     void ProcessAutomateChangeKnowledgeGroup( const sword::UnitMagicAction&      message, unsigned int nCtx );
-    void ProcessAutomateChangeLogisticLinks ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessAutomateChangeSuperior      ( const sword::UnitMagicAction&      message, unsigned int nCtx );
+    void ProcessChangeLogisticLinks         ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessUnitChangeSuperior          ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessLogSupplyChangeQuotas       ( const sword::UnitMagicAction&      message, unsigned int nCtx );
     void ProcessLogSupplyPushFlow           ( const sword::UnitMagicAction&      message, unsigned int nCtx );

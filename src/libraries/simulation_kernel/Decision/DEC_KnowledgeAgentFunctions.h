@@ -51,6 +51,7 @@ public:
     static bool IsSurrenderToMyArmy                     ( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsPrisoner                             ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsDead                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static bool  HasSurrenderedTo                       ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* pTarget );
     static int   Lock                                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void  Unlock                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void  UnitDecisionalState                    ( const DEC_Knowledge_Agent& callerAgent, const std::string& key, const std::string& value );

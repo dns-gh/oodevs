@@ -19,6 +19,7 @@
 #include "preparation/StaticModel.h"
 #include "preparation/TeamKarmas.h"
 #include "preparation/IntelligenceKarmas.h"
+#include "preparation/LogisticLevel.h"
 #include "clients_gui/DecimalSpinBox.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Karma.h"
@@ -62,24 +63,11 @@ EditorFactory::~EditorFactory()
 // Name: EditorFactory::Call
 // Created: SBO 2006-10-25
 // -----------------------------------------------------------------------------
-void EditorFactory::Call( TC2* const& value )
-{
-    if( !selected_ )
-        return;
-    LogisticSuperiorEditor< TC2 >* editor = new LogisticSuperiorEditor< TC2 >( parent_, controllers_, model_.agents_, *selected_ );
-    editor->SetCurrentItem( (TC2&)*value );
-    result_ = editor;
-}
-
-// -----------------------------------------------------------------------------
-// Name: EditorFactory::Call
-// Created: SBO 2006-10-25
-// -----------------------------------------------------------------------------
 void EditorFactory::Call( LogisticBaseSuperior* const& value )
 {
     if( !selected_ )
         return;
-    LogisticSuperiorEditor< LogisticBaseSuperior >* editor = new LogisticSuperiorEditor< LogisticBaseSuperior >( parent_, controllers_, model_.formations_, *selected_ );
+    LogisticSuperiorEditor* editor = new LogisticSuperiorEditor( parent_, controllers_, model_.agents_, model_.formations_, *selected_ );
     editor->SetCurrentItem( (LogisticBaseSuperior&)*value );
     result_ = editor;
 }
@@ -150,6 +138,17 @@ void EditorFactory::Call( TeamKarma* const& value )
 void EditorFactory::Call( IntelligenceKarma* const& value )
 {
     SimpleResolverEditor< kernel::Karma, IntelligenceKarmas, IntelligenceKarma >* editor = new SimpleResolverEditor< kernel::Karma, IntelligenceKarmas, IntelligenceKarma >( parent_, staticModel_.intelligenceKarmas_ );
+    editor->SetCurrentItem( *value );
+    result_ = editor;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EditorFactory::Call
+// Created: SBO 2007-11-02
+// -----------------------------------------------------------------------------
+void EditorFactory::Call( EntityLogisticLevel* const& value )
+{
+    SimpleResolverEditor< kernel::LogisticLevel, preparation::LogisticLevel, EntityLogisticLevel >* editor = new SimpleResolverEditor< kernel::LogisticLevel, preparation::LogisticLevel, EntityLogisticLevel >( parent_, staticModel_.logisticLevels_ );
     editor->SetCurrentItem( *value );
     result_ = editor;
 }

@@ -54,7 +54,7 @@ public:
 
     //! @name Operations
     //@{
-    bool ReserveTransporters( bool bExternalTransfert );
+    bool ReserveTransporters();
     double ModifySpeed( double rSpeed ) const;
     //@}
 

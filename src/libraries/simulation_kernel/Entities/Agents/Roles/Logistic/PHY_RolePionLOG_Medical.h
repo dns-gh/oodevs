@@ -107,7 +107,8 @@ public:
 
     //! @name Accessors
     //@{
-    const MIL_AgentPionLOG_ABC& GetPion() const;
+    virtual       MIL_AutomateLOG*      FindLogisticManager() const;
+    virtual const MIL_AgentPionLOG_ABC& GetPion() const;
     //@}
 
     //! @name Network

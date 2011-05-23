@@ -11,6 +11,7 @@
 #define __dispatcher_Formation_ABC_h_
 
 #include "Sendable.h"
+#include "LogisticEntityOwner_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "tools/Resolver.h"
 
@@ -18,6 +19,7 @@ namespace dispatcher
 {
     class Automat_ABC;
     class Team_ABC;
+    class LogisticEntity;
 
 // =============================================================================
 /** @class  Formation_ABC
@@ -26,6 +28,7 @@ namespace dispatcher
 // Created: SBO 2010-06-03
 // =============================================================================
 class Formation_ABC : public Sendable< kernel::Formation_ABC >
+                    , public LogisticEntityOwner_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -41,6 +44,7 @@ public:
     virtual dispatcher::Team_ABC& GetTeam() const = 0;
     virtual const tools::Resolver< dispatcher::Formation_ABC >& GetFormations() const = 0;
     virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomates() const = 0;
+    virtual LogisticEntity* GetLogisticEntity() const = 0;
     //@}
 
     //! @name Operations

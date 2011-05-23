@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
-<orbat model-version="4.2.6">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Blue" type="friend">
       <objects>
@@ -32,7 +32,7 @@
             </points>
           </shape>
           <attributes>
-            <tc2 id="89"/>
+            <logistic-base id="3"/>
           </attributes>
         </object>
         <object id="152" name="Detainee Holding Area [152]" type="prisoners camp">
@@ -45,7 +45,7 @@
             </points>
           </shape>
           <attributes>
-            <tc2 id="89"/>
+            <logistic-base id="3"/>
           </attributes>
         </object>
         <object id="154" name="Bridge (continuous) [154]" type="continuous pontoon bridge">
@@ -150,16 +150,30 @@
           </shape>
           <attributes/>
         </object>
+        <object id="202" name="Detainee Holding Area [202]" type="prisoners camp">
+          <shape type="polygone">
+            <points>
+              <point>30UXU8262122665</point>
+              <point>30TXU8774914860</point>
+              <point>30TYU0145614611</point>
+              <point>30UYU0180728096</point>
+              <point>30UXU8687028857</point>
+            </points>
+          </shape>
+          <attributes>
+            <logistic-base id="190"/>
+          </attributes>
+        </object>
       </objects>
       <tactical>
-        <formation id="3" level="xxxx" name="Pion">
+        <formation id="3" level="xxxx" logistic-level="logistic-base" name="Pion">
           <automat engaged="false" id="11" knowledge-group="6" name="Autres [11]" type="MBT squadron">
             <unit command-post="true" id="24" name="Command post (Major units command post)" position="30UXU3411950733" type="Major units command post"/>
             <unit command-post="false" id="61" name="NBC decontamination troop" position="30UXU4554850499" type="NBC decontamination troop"/>
             <unit command-post="false" id="62" name="NBC reconnaissance troop" position="30UXU4670250711" type="NBC reconnaissance troop"/>
             <unit command-post="false" id="63" name="NBC ROTA troop" position="30UXU4768850815" type="NBC ROTA troop"/>
           </automat>
-          <automat engaged="false" id="89" knowledge-group="6" name="Log [89] [89]" type="Armored battalion combat train" logistic-level="tc2">
+          <automat engaged="false" id="89" knowledge-group="6" name="Log [89] [89]" type="Armored battalion combat train">
             <unit command-post="false" id="13" name="ACA (Medical section)" position="30UXU1965349347" type="Medical section"/>
             <unit command-post="false" id="27" name="Decontamination NBC (Logistic decontamination section)" position="30UXU3781350902" type="Logistic decontamination section"/>
             <unit command-post="false" id="37" name="Groupe Maintenance Evacuation (Maintenance evacuation group)" position="30UXU5151954478" type="Maintenance evacuation group"/>
@@ -170,7 +184,11 @@
             <unit command-post="true" id="68" name="PC TC2 (Logistic CT)" position="30UXU2169744605" type="Logistic CT"/>
             <unit command-post="false" id="69" name="Peloton Transport (Supply group 60m3)" position="30UXU2388744911" type="Supply group 60m3"/>
             <unit command-post="false" id="70" name="Peloton Transport Blindes (Heavy transportation platoon)" position="30UXU2562845049" type="Heavy transportation platoon"/>
-            <unit command-post="false" id="71" name="Pion stock (Ammo supply group)" position="30UXU2683645244" type="Ammo supply group"/>
+            <unit command-post="false" id="71" name="Pion stock (Ammo supply group)" position="30UXU2683645244" type="Ammo supply group">
+              <stocks>
+                <resource name="Kerosene" quantity="1000"/>
+              </stocks>
+            </unit>
             <unit command-post="false" id="76" name="Section Maintenance (Repairs section (corps))" position="30UXU3527146299" type="Repairs section (corps)"/>
             <unit command-post="false" id="77" name="Section Triage Modulaire (Casualty assessment section)" position="30UXU3628946266" type="Casualty assessment section"/>
             <unit command-post="false" id="86" name="Unite PSY (Psychological section)" position="30UXU5232847729" type="Psychological section"/>
@@ -244,16 +262,40 @@
             <unit command-post="true" id="123" name="Ground surveillance radar" position="30UXU1768842121" type="Ground surveillance radar"/>
           </automat>
         </formation>
+        <formation id="190" level="x" logistic-level="logistic-base" name="Formation [190]">
+          <automat engaged="true" id="191" knowledge-group="6" name="Artillery LR FIST [191]" type="Artillery LR FIST">
+            <unit command-post="true" id="192" name="Artillery LRSD" position="30UXU6102735414" type="Artillery LRSD"/>
+          </automat>
+          <automat engaged="true" id="193" knowledge-group="6" logistic-level="logistic-base" name="Logistic combat train [193]" type="Logistic combat train">
+            <unit command-post="true" id="194" name="Logistic CT" position="30UXU5567233967" type="Logistic CT"/>
+          </automat>
+          <automat engaged="true" id="195" knowledge-group="6" logistic-level="logistic-base" name="Brigade combat train [195]" type="Brigade combat train">
+            <unit command-post="true" id="196" name="Battalion CT" position="30UXU9168533632" type="Battalion CT">
+              <stocks>
+                <resource name="Kerosene" quantity="100000"/>
+              </stocks>
+            </unit>
+          </automat>
+          <automat engaged="true" id="199" knowledge-group="6" name="Brigade combat train [199]" type="Brigade combat train">
+            <unit command-post="true" id="200" name="Battalion CT" position="30TYT2570962822" type="Battalion CT"/>
+          </automat>
+        </formation>
       </tactical>
       <communication>
         <knowledge-group id="6" name="Groupe de connaissance [6]" type="Standard"/>
         <knowledge-group id="153" name="Groupe de connaissance [153]" type="Standard"/>
       </communication>
       <populations/>
+      <inhabitants/>
       <logistics>
-        <tc2 id="89">
-          <subordinate id="89"/>
-        </tc2>
+        <logistic-base id="190">
+          <subordinate id="193">
+            <quotas>
+              <resource name="12,7-mm Bullet" quantity="1000"/>
+              <resource name="20-mm Shell" quantity="1000"/>
+            </quotas>
+          </subordinate>
+        </logistic-base>
       </logistics>
     </party>
     <party id="126" name="Rouge" type="enemy">
@@ -491,6 +533,7 @@
       <populations>
         <population attitude="calme" humans="10000" id="155" name="Population standard [155]" position="30UXU2259645029" type="Population standard"/>
       </populations>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="128" name="Vert" type="neutral">
@@ -508,6 +551,7 @@
       <populations>
         <population attitude="calme" humans="10000" id="156" name="Population standard [156]" position="30UXU2472544970" type="Population standard"/>
       </populations>
+      <inhabitants/>
       <logistics/>
     </party>
     <party id="129" name="Turquoise" type="friend">
@@ -525,6 +569,7 @@
       <populations>
         <population attitude="calme" humans="10000" id="157" name="Population standard [157]" position="30UXU2628245049" type="Population standard"/>
       </populations>
+      <inhabitants/>
       <logistics/>
     </party>
   </parties>
@@ -551,4 +596,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2436594026" -->
+<!-- signature="0183128589" -->

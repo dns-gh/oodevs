@@ -18,6 +18,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalSortingConsign )
 
@@ -133,7 +134,7 @@ void PHY_MedicalSortingConsign::EnterStateSearchingForHealingArea()
 // -----------------------------------------------------------------------------
 void PHY_MedicalSortingConsign::DoSearchForHealingArea()
 {
-    MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+    MIL_AutomateLOG* pLogisticManager = GetPionMedical().FindLogisticManager();
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForHealing( *pHumanState_ ) )
     {
         SetState( eFinished );
@@ -166,22 +167,22 @@ bool PHY_MedicalSortingConsign::DoWaitingForCollection()
     assert( pHumanState_ );
     assert( !pDoctor_ );
 
-    MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
-    if(pLogisticManager)
+    MIL_AutomateLOG* pLogisticManager = GetPionMedical().FindLogisticManager();
+    if( !pLogisticManager )
+        return false;
+    
+    MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
+    if( pLogisticSuperior && pLogisticSuperior->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {
-        MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetSuperior();
-        if(pLogisticSuperior && pLogisticSuperior->MedicalHandleHumanForCollection( *pHumanState_ ) )
-        {
-            pHumanState_ = 0;
-            SetState( eFinished );
-            return true;
-        }
-        else if( pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
-        {
-            pHumanState_ = 0;
-            SetState( eFinished );
-            return true;
-        }
+        pHumanState_ = 0;
+        SetState( eFinished );
+        return true;
+    }
+    else if( pLogisticManager->MedicalHandleHumanForCollection( *pHumanState_ ) )
+    {
+        pHumanState_ = 0;
+        SetState( eFinished );
+        return true;
     }
     return false;
 }

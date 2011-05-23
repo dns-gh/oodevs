@@ -790,18 +790,6 @@
         <translation>Convoyer:</translation>
     </message>
     <message>
-        <source>Logistic links/TC2</source>
-        <translation>Enlace logístico/TC2</translation>
-    </message>
-    <message>
-        <source>Logistic links</source>
-        <translation>Enlaces logísticos</translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation>TC2:</translation>
-    </message>
-    <message>
         <source>Equipment:</source>
         <translation>Equipo:</translation>
     </message>
@@ -818,11 +806,11 @@
         <translation>Proveedor:</translation>
     </message>
     <message>
-        <source>Logistic links/Superior</source>
+        <source>Logistic links</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Superior:</source>
+        <source>Logistic links/Superiors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1028,10 +1016,6 @@
 <context>
     <name>Object</name>
     <message>
-        <source>TC2:</source>
-        <translation>TC2:</translation>
-    </message>
-    <message>
         <source>Type:</source>
         <translation>Tipo:</translation>
     </message>
@@ -1189,6 +1173,10 @@
     </message>
     <message>
         <source>Reference distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic Superior:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

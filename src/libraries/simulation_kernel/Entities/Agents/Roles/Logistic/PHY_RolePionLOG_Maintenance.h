@@ -88,6 +88,7 @@ public:
 
     //! @name Accessors
     //@{
+    virtual       MIL_AutomateLOG*      FindLogisticManager() const;
     virtual const MIL_AgentPionLOG_ABC& GetPion() const;
     //@}
 

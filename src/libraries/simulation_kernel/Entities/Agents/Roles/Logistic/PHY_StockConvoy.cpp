@@ -95,14 +95,14 @@ void PHY_StockConvoy::save( MIL_CheckPointOutArchive& file, const unsigned int )
 // Name: PHY_StockConvoy::Form
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-bool PHY_StockConvoy::Form(bool bExternalTransfert)
+bool PHY_StockConvoy::Form()
 {
     assert( pConvoyAgentType_ );
     assert( !pPionConvoy_ );
     assert( pConsign_ );
     assert( pConsign_->GetConvoyer().GetPC() );
 
-    pPionConvoy_ = pConsign_->GetConvoyer().SupplyCreatePionConvoy( *pConvoyAgentType_, bExternalTransfert );
+    pPionConvoy_ = pConsign_->GetConvoyer().SupplyCreatePionConvoy( *pConvoyAgentType_ );
     if(!pPionConvoy_)
         return false;
     pPionConvoy_->GetRole< PHY_RoleInterface_Supply >().AssignConvoy( *this );

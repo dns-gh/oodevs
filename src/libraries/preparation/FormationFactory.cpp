@@ -57,7 +57,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
-    formation->Attach< kernel::LogisticBaseHierarchies>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
+    formation->Attach< kernel::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
     formation->Attach( *new TacticalLines() );
     formation->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
     formation->Polish();
@@ -75,7 +75,7 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
-    formation->Attach< kernel::LogisticBaseHierarchies>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
+    formation->Attach< kernel::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
     formation->Attach( *new TacticalLines() );
     formation->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
     formation->Polish();

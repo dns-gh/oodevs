@@ -23,11 +23,11 @@
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_kernel/Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
-#include "simulation_kernel/Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "simulation_kernel/TransportNotificationHandler_ABC.h"
-
+#include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
+#include "Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
+#include "NetworkNotificationHandler_ABC.h"
+#include "TransportNotificationHandler_ABC.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( refugee::PHY_RolePion_Refugee )
 
@@ -322,7 +322,7 @@ void PHY_RolePion_Refugee::UpdateSecuritySatisfaction()
 void PHY_RolePion_Refugee::UpdateHealthSatisfaction()
 {
     float prevSatisf = healthSatisfaction_;
-    healthSatisfaction_ = pion_.GetAutomate().GetTC2() ? 1.0f : 0.0f;
+    healthSatisfaction_ = pion_.GetAutomate().GetLogisticHierarchy().HasSuperior() ? 1.0f : 0.0f;
     if ( prevSatisf != healthSatisfaction_ )
         bHasChanged_ = true;
 }

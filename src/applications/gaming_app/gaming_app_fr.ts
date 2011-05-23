@@ -336,10 +336,6 @@
 <context>
     <name>ChangeLogisticLinksDialog</name>
     <message>
-        <source>TC2</source>
-        <translation>TC2</translation>
-    </message>
-    <message>
         <source>Logistic links edition</source>
         <translation>Edition des liens logistiques</translation>
     </message>
@@ -364,8 +360,12 @@
         <translation>Changer les Liens Logistiques</translation>
     </message>
     <message>
-        <source>Superior</source>
-        <translation>Supérieur</translation>
+        <source>Nominal superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current superior</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

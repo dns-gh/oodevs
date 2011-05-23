@@ -38,22 +38,14 @@ LogisticSuperior::~LogisticSuperior()
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSuperior::IsValidSuperior
-// Created: SBO 2006-10-26
-// -----------------------------------------------------------------------------
-bool LogisticSuperior::IsValidSuperior( const TC2& superior ) const
-{
-    const kernel::Automat_ABC* automat = (const Automat_ABC*)superior;
-    return IsSameTeam( *automat ) && automat->GetLogisticLevel()==kernel::LogisticLevel::tc2_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticSuperior::IsValidSuperior
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
 bool LogisticSuperior::IsValidSuperior( const LogisticBaseSuperior& superior ) const
 {
-    const kernel::Formation_ABC* formation = (const Formation_ABC*)superior;
-    return IsSameTeam( *formation ) && formation->GetLogisticLevel()==kernel::LogisticLevel::logistic_base_;
+    //const kernel::Formation_ABC* formation = (const Formation_ABC*)superior;
+    //return IsSameTeam( *formation ) && formation->GetLogisticLevel()==kernel::LogisticLevel::logistic_base_;
+    assert( false );
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,4 +65,5 @@ bool LogisticSuperior::IsSameTeam( const kernel::Formation_ABC& formation ) cons
 {
     return &entity_.Get< kernel::TacticalHierarchies >().GetTop() == &formation.Get< kernel::TacticalHierarchies >().GetTop();
 }
+
 

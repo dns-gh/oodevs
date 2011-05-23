@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "LogisticLinks.h"
+#include "LogisticLink.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -20,8 +21,15 @@
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "protocol/Protocol.h"
+#include <boost/foreach.hpp>
 
 using namespace kernel;
+
+
+namespace kernel
+{
+    class Agent_ABC;
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLinks constructor
@@ -29,13 +37,14 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 LogisticLinks::LogisticLinks( Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver,
                      const tools::Resolver_ABC< kernel::Formation_ABC >& formationResolver,
+                     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver,
                      const kernel::LogisticLevel& currentLevel, PropertiesDictionary& dictionary )
-    : controller_( controller )
-    , automatResolver_( automatResolver )
-    , formationResolver_ ( formationResolver )
-    , currentLevel_ ( currentLevel )
-    , tc2_( 0 )
-    , superior_( 0 )
+    : controller_       ( controller )
+    , dictionary_       ( dictionary )
+    , automatResolver_  ( automatResolver )
+    , formationResolver_( formationResolver )
+    , dotationResolver_ ( dotationResolver )
+    , currentLevel_     ( currentLevel )
 {
     CreateDictionary( dictionary );
 }
@@ -55,26 +64,48 @@ LogisticLinks::~LogisticLinks()
 // -----------------------------------------------------------------------------
 void LogisticLinks::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Logistic", "Logistic links/TC2" ), tc2_ );
-    dico.Register( *this, tools::translate( "Logistic", "Logistic links/Superior" ), superior_);
+    dictionary_.Register( *this, tools::translate( "Logistic", "Logistic links/Superiors" ), superiors_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLinks::GetTC2
-// Created: AGE 2006-02-16
+// Name: LogisticLinks::FindLogisticEntity
+// Created: NLD 2011-01-19
 // -----------------------------------------------------------------------------
-Automat_ABC* LogisticLinks::GetTC2() const
+kernel::Entity_ABC* LogisticLinks::FindLogisticEntity( const sword::ParentEntity& message ) const
 {
-    return tc2_;
+    if( message.has_automat() )
+        return (kernel::Entity_ABC*)automatResolver_.Find( message.automat().id() );
+    else if( message.has_formation() )
+        return (kernel::Entity_ABC*)formationResolver_.Find( message.formation().id() );
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLinks::GetSuperior
-// Created: AHC 2010-10-11
+// Name: LogisticHierarchy::FindLogisticLink
+// Created: NLD 2011-01-17
 // -----------------------------------------------------------------------------
-kernel::Entity_ABC* LogisticLinks::GetSuperior() const
+LogisticLink* LogisticLinks::FindLogisticLink( const kernel::Entity_ABC& superior ) const
 {
-    return superior_;
+    BOOST_FOREACH( boost::shared_ptr< LogisticLink > link, superiorLinks_ )
+    {
+        if( &link->GetSuperior() == &superior )
+            return link.get();
+    }
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLinks::DoUpdate
+// Created: AGE 2006-10-11
+// -----------------------------------------------------------------------------
+void LogisticLinks::DoUpdate( const sword::LogSupplyQuotas& message )
+{
+    kernel::Entity_ABC* supplier = FindLogisticEntity( message.supplier() );
+    assert( supplier );
+    LogisticLink* link = FindLogisticLink( *supplier );
+    if( link )
+        link->Update( message.quotas(), dotationResolver_ );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,14 +114,35 @@ kernel::Entity_ABC* LogisticLinks::GetSuperior() const
 // -----------------------------------------------------------------------------
 void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
 {
-    tc2_ = message.has_combat_train() ? automatResolver_.Find( message.combat_train().id() ) : 0;
-    superior_ = message.logistic_base().has_automat() ?
-            (kernel::Entity_ABC*)automatResolver_.Find( message.logistic_base().automat().id() ) :
-            ( message.logistic_base().has_formation() ?
-              (kernel::Entity_ABC*)formationResolver_.Find( message.logistic_base().formation().id() ) : 0
-            );
+    superiorLinks_.clear();
+    superiors_.clear();
+    BOOST_FOREACH( const sword::ParentEntity& parentEntity, message.superior() )
+    {
+        const kernel::Entity_ABC* superior = FindLogisticEntity( parentEntity );
+        assert( superior );
+        superiorLinks_.push_back( boost::shared_ptr< LogisticLink >( new LogisticLink( *superior ) ) );
+        superiors_.push_back( superior );
+    }
+    controller_.Update( *this );
+}
 
-    controller_.Update( *(LogisticLinks_ABC*)this );
+// -----------------------------------------------------------------------------
+// Name: LogisticLinks::HasSuperior
+// Created: AGE 2006-02-22
+// -----------------------------------------------------------------------------
+bool LogisticLinks::HasSuperior( const kernel::Entity_ABC& entity ) const
+{
+    return FindLogisticLink( entity ) != 0;
+    //return currentSuperior_ == &entity || nominalSuperior_ == &entity;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticLinks::HasSuperior
+// Created: NLD 2011-03-29
+// -----------------------------------------------------------------------------
+tools::Iterator< const LogisticLink& > LogisticLinks::CreateSuperiorLinksIterator() const
+{
+    return new tools::SimpleIterator< const LogisticLink&, T_SuperiorLinks >( superiorLinks_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,24 +152,28 @@ void LogisticLinks::DoUpdate( const sword::ChangeLogisticLinks& message )
 void LogisticLinks::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Logistic", "Logistic links" ) )
-                .Display( tools::translate( "Logistic", "TC2:" ),                GetTC2() )
-                .Display( tools::translate( "Logistic", "Superior:" ),           GetSuperior() );
+        .Display( "Superiors", superiors_);
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticLinks::DrawLink
-// Created: AGE 2006-03-17
+// Name: LogisticLinks::Display
+// Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void LogisticLinks::DrawLink( const geometry::Point2f& where, Entity_ABC* agent, const GlTools_ABC& tools, float curve, bool link, bool missing ) const
+const kernel::Entity_ABC* LogisticLinks::GetNominalSuperior() const
 {
-    if( agent && link )
-        tools.DrawCurvedArrow( where, agent->Get< Positions >().GetPosition(), curve );
-    else if( ! agent && missing )
-        tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
+    if( superiorLinks_.empty() )
+        return 0;
+    return &superiorLinks_.front()->GetSuperior();
 }
 
+const kernel::Entity_ABC* LogisticLinks::GetCurrentSuperior() const
+{
+    if( superiorLinks_.empty() )
+        return 0;
+    return &superiorLinks_.back()->GetSuperior();
+}
 
-// -----------------------------------------------------------------------------
+// --------------------------------------------------   ---------------------------
 // Name: LogisticLinks::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
@@ -125,19 +181,22 @@ void LogisticLinks::Draw( const geometry::Point2f& where, const kernel::Viewport
 {
     const bool displayLinks   = tools.ShouldDisplay( "LogisticLinks" );
     const bool displayMissing = tools.ShouldDisplay( "MissingLogisticLinks" ) && viewport.IsHotpointVisible();
-    if( ! displayLinks && ! displayMissing )
+    if( !displayLinks && !displayMissing )
         return;
 
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 3.f );
-
     glColor4f( COLOR_YELLOW );
-    if(currentLevel_==kernel::LogisticLevel::none_ || currentLevel_==kernel::LogisticLevel::tc2_)
-        DrawLink( where, GetTC2(), tools, 0.3f, displayLinks, displayMissing );
 
-    glColor4f( COLOR_MAROON );
-    if(currentLevel_==kernel::LogisticLevel::logistic_base_ || currentLevel_==kernel::LogisticLevel::tc2_)
-        DrawLink( where, GetSuperior(), tools, 0.4f, displayLinks, displayMissing );
-
+    if( superiorLinks_.empty() )
+        tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
+    else
+    {
+        BOOST_FOREACH( boost::shared_ptr< LogisticLink > link, superiorLinks_ )
+        {
+            link->Draw( where, viewport, tools );
+            glColor4f( COLOR_LIGHT_YELLOW );
+        }
+    }
     glPopAttrib();
 }

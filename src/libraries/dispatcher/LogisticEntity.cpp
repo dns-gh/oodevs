@@ -9,29 +9,25 @@
 
 #include "dispatcher_pch.h"
 #include "LogisticEntity.h"
-#include "Automat_ABC.h"
-#include "DotationQuota.h"
-#include "Formation_ABC.h"
-#include "Model_ABC.h"
+#include "LogisticEntityOwner_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "tools/Resolver_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include <boost/bind.hpp>
 
-using namespace dispatcher;
+using namespace dispatcher;   
 
 // -----------------------------------------------------------------------------
 // Name: LogisticEntity constructor
 // Created: AHC 2010-10-11
 // -----------------------------------------------------------------------------
-LogisticEntity::LogisticEntity( const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< Automat_ABC >& automats, const kernel::LogisticLevel& level )
-    : formations_( formations )
-    , automats_  ( automats )
-    , pLogisticLevel_( &level )
-    , pSuperiorFormation_( 0 )
-    , pSuperieurAutomat_( 0 )
+LogisticEntity::LogisticEntity( const LogisticEntityOwner_ABC& owner, const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< Automat_ABC >& automats, const kernel::LogisticLevel& level )
+    : owner_            ( owner )
+    , logisticHierarchy_( *this, formations, automats )
+    , logisticLevel_    ( level )
 {
-    // NOTHING
+    // NOTHING 
 }
 
 // -----------------------------------------------------------------------------
@@ -40,32 +36,6 @@ LogisticEntity::LogisticEntity( const tools::Resolver_ABC< Formation_ABC >& form
 // -----------------------------------------------------------------------------
 LogisticEntity::~LogisticEntity()
 {
-    quotas_.DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEntity::DoUpdate
-// Created: AHC 2010-10-11
-// -----------------------------------------------------------------------------
-void LogisticEntity::DoUpdate( const sword::ChangeLogisticLinks& msg )
-{
-    // TODO Handle error
-    if( msg.logistic_base().has_automat() )
-        pSuperieurAutomat_ = automats_.Find( msg.logistic_base().automat().id() );
-    if( msg.logistic_base().has_formation() )
-        pSuperiorFormation_ = formations_.Find( msg.logistic_base().formation().id() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticEntity::Fill
-// Created: AHC 2010-10-11
-// -----------------------------------------------------------------------------
-void LogisticEntity::Fill( client::ChangeLogisticLinks& msg ) const
-{
-    if( pSuperieurAutomat_ )
-        msg().mutable_logistic_base()->mutable_automat()->set_id( pSuperieurAutomat_->GetId() );
-    else if( pSuperiorFormation_ )
-        msg().mutable_logistic_base()->mutable_formation()->set_id( pSuperiorFormation_->GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,36 +44,51 @@ void LogisticEntity::Fill( client::ChangeLogisticLinks& msg ) const
 // -----------------------------------------------------------------------------
 const kernel::LogisticLevel& LogisticEntity::GetLogisticLevel() const
 {
-    return *pLogisticLevel_;
+    return logisticLevel_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticEntity::DoUpdate
-// Created: NLD 2007-03-29
+// Name: LogisticEntity::GetLogisticHierarchy
+// Created: NLD 2011-01-19
 // -----------------------------------------------------------------------------
-void LogisticEntity::DoUpdate( const sword::LogSupplyQuotas& msg )
+LogisticHierarchy& LogisticEntity::GetLogisticHierarchy()
 {
-    quotas_.DeleteAll();
-    for( int i = 0; i < msg.quotas().elem_size(); ++i )
-    {
-        DotationQuota* quota = new DotationQuota( msg.quotas().elem( i ) );
-        quotas_.Register( msg.quotas().elem( i ).resource().id(), *quota );
-    }
-}
-
-namespace
-{
-    void SerializeQuota( ::sword::SeqOfDotationQuota& message, const DotationQuota& quota )
-    {
-        quota.Send( *message.add_elem() );
-    }
+    return logisticHierarchy_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticEntity::FiGetLogisticLevelll
-// Created: AHC 2010-10-11
+// Name: LogisticEntity::Send
+// Created: NLD 2011-01-17
 // -----------------------------------------------------------------------------
-void LogisticEntity::Fill( client::LogSupplyQuotas& msg ) const
+void LogisticEntity::Send( sword::ParentEntity& msg ) const
 {
-    quotas_.Apply( boost::bind( &SerializeQuota, boost::ref( *msg().mutable_quotas() ), _1 ) );
+    owner_.Send( msg );    
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogisticEntity::Send
+// Created: NLD 2011-01-17
+// -----------------------------------------------------------------------------
+void LogisticEntity::Send( sword::AutomatCreation& msg ) const
+{
+    msg.set_logistic_level( sword::EnumLogisticLevel( logisticLevel_.GetId() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticEntity::Send
+// Created: NLD 2011-01-17
+// -----------------------------------------------------------------------------
+void LogisticEntity::Send( sword::FormationCreation& msg ) const
+{
+    msg.set_logistic_level( sword::EnumLogisticLevel( logisticLevel_.GetId() ) );
+}      
+
+// -----------------------------------------------------------------------------
+// Name: LogisticEntity::SendFullUpdate
+// Created: NLD 2011-01-17
+// -----------------------------------------------------------------------------
+void LogisticEntity::SendFullUpdate( ClientPublisher_ABC& publisher ) const
+{
+    logisticHierarchy_.SendFullUpdate( publisher );
+}
+

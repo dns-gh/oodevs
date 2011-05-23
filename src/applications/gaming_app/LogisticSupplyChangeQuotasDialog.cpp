@@ -16,6 +16,7 @@
 #include "actions/Formation.h"
 #include "actions/ParameterList.h"
 #include "actions/UnitMagicAction.h"
+#include "actions/Identifier.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Dotation.h"
 #include "gaming/LogisticLinks.h"
@@ -245,7 +246,7 @@ void LogisticSupplyChangeQuotasDialog::Show()
         {
             const Automat_ABC& agent = it.NextElement();
             const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
-            if( log && ( log->GetSuperior() == selected_ || ( log->GetSuperior() == 0 && log->GetTC2() == selected_ ) ) )
+            if( log && log->HasSuperior( *selected_ ) && agent.GetLogisticLevel() != LogisticLevel::none_ )
                 targetCombo_->AddItem( agent.GetName(), &agent );
         }
     }
@@ -255,7 +256,7 @@ void LogisticSupplyChangeQuotasDialog::Show()
         {
             const Formation_ABC& agent = it.NextElement();
             const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
-            if( log && log->GetSuperior() == selected_  )
+            if( log && log->HasSuperior( *selected_ ) && agent.GetLogisticLevel() != LogisticLevel::none_ )
                 targetCombo_->AddItem( agent.GetName(), &agent );
         }
     }
@@ -287,7 +288,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( selected_.GetMagicActionType() );
     UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Change Quotas" ), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    action->AddParameter( *selected_.GetParameter( it.NextElement(), controllers_.controller_ ) );
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), (*selected_).GetId() ) );
 
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
     action->AddParameter( *dotations );
@@ -388,7 +389,7 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
         return;
 
     ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( table_->item( row, 0 ) );
-    if( col == 0 )
+    //if( col == 0 )
     {
         if( item.currentItem() == 0 && row != table_->numRows() - 1 )
             table_->removeRow( row );
@@ -401,7 +402,7 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
         }
         table_->setCurrentCell( row, 1 );
     }
-    else if( col == 1 )
+    //else if( col == 1 )
     {
         // $$$$ SBO 2006-07-03: check value/stock
     }

@@ -38,9 +38,7 @@ public:
     //! @name Types
     //@{
     typedef PHY_RoleInterface_Medical RoleInterface;
-
     typedef std::vector< const MIL_Automate* > T_AutomateVector;
-
     typedef std::vector< const PHY_HumanWound* > T_MedicalPriorityVector;
     //@}
 
@@ -103,7 +101,9 @@ public:
     //! @name Accessors
     //@{
     virtual const MIL_AgentPionLOG_ABC& GetPion() const = 0;
+    virtual MIL_AutomateLOG* FindLogisticManager() const = 0;
     //@}
+
 private:
     //! @name Serialization
     //@{

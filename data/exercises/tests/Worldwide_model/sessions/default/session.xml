@@ -11,7 +11,7 @@
       <network server="localhost:10001"/>
     </gaming>
     <simulation>
-      <checkpoint frequency="100000h" keep="1" usecrc="true"/>
+      <checkpoint frequency="1000h" keep="1" usecrc="true"/>
       <debug decisional="false" diadebugger="false" diadebuggerport="15000" networklogger="true" networkloggerport="20000" pathfind="false"/>
       <decisional useonlybinaries="false"/>
       <dispatcher embedded="true"/>

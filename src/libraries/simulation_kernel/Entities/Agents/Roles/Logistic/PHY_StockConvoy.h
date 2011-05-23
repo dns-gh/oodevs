@@ -51,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    bool Form(bool bExternalTransfert);
+    bool Form();
     //@}
 
     //! @name 'Real' convoy operations

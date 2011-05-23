@@ -22,6 +22,11 @@ class MIL_ObjectType_ABC;
 class TER_Localisation;
 class MIL_Object_ABC;
 
+namespace sword
+{
+    class MissionParameter_Value;
+}
+
 // =============================================================================
 /** @class  MIL_EntityManager_ABC
     @brief  MIL_EntityManager_ABC

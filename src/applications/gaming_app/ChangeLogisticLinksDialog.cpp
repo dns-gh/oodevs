@@ -54,18 +54,18 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
 
     QLabel* color = new QLabel( grid );
     color->setPixmap( QPixmap( 10, 10 ) );
-    color->pixmap()->fill( QColor( "yellow" ) );
+    color->pixmap()->fill( QColor( "yellow" ).light( 150 ) );
     color->setMaximumWidth( 10 );
-    QLabel* label = new QLabel( tr( "TC2" ), grid );
+    QLabel* label = new QLabel( tr( "Nominal superior" ), grid );
     label->setMaximumWidth( 150 );
-    tc2Combo_ = new ValuedComboBox< const Automat_ABC* >( grid );
-    tc2Combo_->setMinimumWidth( 200 );
+    nominalSuperiorCombo_ = new ValuedComboBox< const Entity_ABC* >( grid );
+    nominalSuperiorCombo_->setMinimumWidth( 200 );
 
     color = new QLabel( grid );
     color->setPixmap( QPixmap( 10, 10 ) );
-    color->pixmap()->fill( QColor( 128, 0, 0 ) );
-    label = new QLabel( tr( "Superior" ), grid );
-    superiorCombo_ = new ValuedComboBox< const Entity_ABC* >( grid );
+    color->pixmap()->fill( QColor( "yellow" ) );
+    label = new QLabel( tr( "Current superior" ), grid );
+    currentSuperiorCombo_ = new ValuedComboBox< const Entity_ABC* >( grid );
 
     QHBox* box = new QHBox( this );
     layout->addWidget( box );
@@ -76,8 +76,8 @@ ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controlle
     connect( okButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
 
-    tc2Combo_->AddItem( tr( "None" ), 0 );
-    superiorCombo_->AddItem( tr( "None" ), 0 );
+    nominalSuperiorCombo_->AddItem( tr( "None" ), 0 );
+    currentSuperiorCombo_->AddItem( tr( "None" ), 0 );
 
     controllers_.Register( *this );
     hide();
@@ -102,15 +102,12 @@ void ChangeLogisticLinksDialog::Show()
         return;
     const Entity_ABC& agent = *(selected_);
 
-    // $$$$ AGE 2006-08-24: display aussi ?
     const LogisticLinks* log = agent.Retrieve< LogisticLinks >();
     if( !log )
         return;
 
-    tc2Combo_->SetCurrentItem( log->GetTC2() );
-    superiorCombo_->SetCurrentItem( log->GetSuperior() );
-
-    superiorCombo_->setEnabled( *selectedLevel_ != kernel::LogisticLevel::none_ );
+    nominalSuperiorCombo_->SetCurrentItem( log->GetNominalSuperior() );
+    currentSuperiorCombo_->SetCurrentItem( log->GetCurrentSuperior() );
     show();
 }
 
@@ -120,27 +117,22 @@ void ChangeLogisticLinksDialog::Show()
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyCreated( const Automat_ABC& agent )
 {
-    // $$$$ AGE 2006-10-13: add only if agent is seen ?
-    bool isLogistic = agent.GetLogisticLevel() != kernel::LogisticLevel::none_;
-    const AutomatType& type = agent.GetType();
-    if( type.IsTC2() )
-        tc2Combo_->AddItem( agent.GetName(), &agent );
-    if( isLogistic && !type.IsTC2() )
-        superiorCombo_->AddItem( agent.GetName(), &agent );
+    if( agent.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+        return;
+    nominalSuperiorCombo_->AddItem( agent.GetName(), &agent );
+    currentSuperiorCombo_->AddItem( agent.GetName(), &agent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ChangeLogisticLinksDialog::NotifyDeleted
-// Created: SBO 2006-06-30
+// Created: SBO 2006-06-307
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
 {
-    bool isLogistic = agent.GetLogisticLevel() != kernel::LogisticLevel::none_;
-    const AutomatType& type = agent.GetType();
-    if( type.IsTC2() )
-        tc2Combo_->RemoveItem( &agent );
-    if( isLogistic && !type.IsTC2() )
-        superiorCombo_->RemoveItem( &agent );
+    if( agent.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+        return;
+    nominalSuperiorCombo_->RemoveItem( &agent );
+    currentSuperiorCombo_->RemoveItem( &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,10 +141,10 @@ void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyCreated( const Formation_ABC& agent )
 {
-    // $$$$ AGE 2006-10-13: add only if agent is seen ?
-    bool isLogistic = agent.GetLogisticLevel() != kernel::LogisticLevel::none_;
-    if( isLogistic )
-        superiorCombo_->AddItem( agent.GetName(), &agent );
+    if( agent.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+        return;
+    nominalSuperiorCombo_->AddItem( agent.GetName(), &agent );
+    currentSuperiorCombo_->AddItem( agent.GetName(), &agent );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,34 +153,26 @@ void ChangeLogisticLinksDialog::NotifyCreated( const Formation_ABC& agent )
 // -----------------------------------------------------------------------------
 void ChangeLogisticLinksDialog::NotifyDeleted( const Formation_ABC& agent )
 {
-    bool isLogistic = agent.GetLogisticLevel() != kernel::LogisticLevel::none_;
-    if( isLogistic )
-        superiorCombo_->RemoveItem( &agent );
+    if( agent.GetLogisticLevel() == kernel::LogisticLevel::none_ )
+        return;
+    nominalSuperiorCombo_->RemoveItem( &agent );
+    currentSuperiorCombo_->RemoveItem( &agent );
 }
 
 namespace
 {
-    template < typename U, typename T>
-    unsigned int GetIdSpecific( ValuedComboBox< const T* >& combo )
+    template < typename T >
+    actions::Parameter_ABC& Serialize( ValuedComboBox< const T* >& combo, const kernel::OrderParameter& orderParameter )
     {
-        if( combo.isEnabled() )
-        {
-            const T* agent = combo.count() ? combo.GetValue() : 0;
-            return agent && dynamic_cast<const U*>(agent) ? agent->GetId() : 0;
-        }
+        const T* tmp = combo.GetValue();
+        if( tmp )
+            return *new parameters::Identifier( orderParameter, tmp->GetId() );
         else
-            return ( unsigned int ) -1;
-    }
-    template < typename T>
-    unsigned int GetId( ValuedComboBox< const T* >& combo )
-    {
-        if( combo.isEnabled() )
         {
-            const T* agent = combo.count() ? combo.GetValue() : 0;
-            return agent  ? agent->GetId() : 0;
+            parameters::Identifier* newParam = new parameters::Identifier( orderParameter, 0 );
+            newParam->Set( false );
+            return *newParam;
         }
-        else
-            return ( unsigned int ) -1;
     }
 }
 
@@ -204,9 +188,12 @@ void ChangeLogisticLinksDialog::Validate()
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_logistic_links" );
         UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Change Logistic Links"), true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *tc2Combo_ ) ) );
-        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetIdSpecific<kernel::Automat_ABC>( *superiorCombo_ ) ) );
-        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetIdSpecific<kernel::Formation_ABC>( *superiorCombo_ ) ) );
+
+        if( nominalSuperiorCombo_->GetValue() )
+            action->AddParameter( Serialize( *nominalSuperiorCombo_, it.NextElement() ) );
+        if( currentSuperiorCombo_->GetValue() && currentSuperiorCombo_->GetValue() != nominalSuperiorCombo_->GetValue() )
+            action->AddParameter( Serialize( *currentSuperiorCombo_, it.NextElement() ) );
+
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selected_, false ) );
         action->RegisterAndPublish( actionsModel_ );

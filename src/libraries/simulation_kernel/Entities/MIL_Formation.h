@@ -91,9 +91,15 @@ public:
     //@{
     void SendCreation() const;
     void SendFullState() const;
-    void SendLogisticLinks() const;
     void UpdateNetwork() const;
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg );
+    //@}
+
+    //! @name TMP - Renettoyer les boucles d'updates .. Cf. Scipio
+    //@{
+    void UpdateState     ();
+    void UpdateNetwork   ();
+    void Clean           ();
     //@}
 
 private:

@@ -26,7 +26,6 @@ public:
     //! @name Values
     //@{
     static LogisticLevel none_;
-    static LogisticLevel tc2_;
     static LogisticLevel logistic_base_;
 
     //@}

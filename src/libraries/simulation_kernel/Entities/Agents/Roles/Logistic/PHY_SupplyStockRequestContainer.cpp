@@ -18,6 +18,8 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+#include "Entities/Specialisations/LOG/LogisticLink_ABC.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
@@ -148,7 +150,7 @@ bool PHY_SupplyStockRequestContainer::Execute( MIL_AutomateLOG& supplier, PHY_Su
     if( !ApplyQuotas(supplier) )
         return false;
 
-    AffectRequestsToAutomate( );
+    AffectRequestsToAutomate();
 
     if( ( bManual_ && bAtLeastOneSupplySatisfied_ ) || ( !bManual_ && bAtLeastOneExplicitSupplySatisfied_ ) )
         ActivateSupply( pStockSupplyState );
@@ -160,20 +162,24 @@ bool PHY_SupplyStockRequestContainer::Execute( MIL_AutomateLOG& supplier, PHY_Su
 // Name: PHY_SupplyStockRequestContainer::Execute
 // Created: AHC 2010-09-27
 // -----------------------------------------------------------------------------
-bool PHY_SupplyStockRequestContainer::Execute( MIL_AutomateLOG& supplier, MIL_AutomateLOG& secondSupplier, PHY_SupplyStockState*& pStockSupplyState )
+bool PHY_SupplyStockRequestContainer::Execute( const logistic::LogisticHierarchy_ABC& logisticHierarchy, PHY_SupplyStockState*& pStockSupplyState )
 {
     if( requests_.empty() )
         return true;
+  
+    //$$ A REFACTORER / unifier avec PHY_DotationStockRequestContainer
+    bool quotaPassed = ApplyQuotas( logisticHierarchy );
 
-    bool quotaPassed = true;
+    //$$ A refactorer
+/*    bool quotaPassed = true;
     if (&supplier == &secondSupplier)
         quotaPassed = ApplyQuotas(supplier);
     else
-        quotaPassed = ApplyQuotas(supplier, secondSupplier);
-    if( !bManual_ &&  !quotaPassed)
+        quotaPassed = ApplyQuotas(supplier, secondSupplier);*/
+    if( !bManual_ &&  !quotaPassed )
         return false;
 
-    AffectRequestsToAutomate( );
+    AffectRequestsToAutomate();
 
     if( ( bManual_ && bAtLeastOneSupplySatisfied_ ) || ( !bManual_ && bAtLeastOneExplicitSupplySatisfied_ ) )
         ActivateSupply( pStockSupplyState );
@@ -206,9 +212,7 @@ void PHY_SupplyStockRequestContainer::AffectRequestsToAutomate()
     {
         PHY_SupplyStockRequest& request = it->second;
         MIL_AutomateLOG& supplier = *(requestAffectations_[&request]);
-        bool bExternaltransfert = MIL_AutomateLOG::IsExternalTransaction( suppliedAutomate_, supplier );
-
-        if( request.AffectAutomate( supplier, bExternaltransfert ) )
+        if( request.AffectAutomate( supplier ) )
         {
             bAtLeastOneSupplySatisfied_ = true;
             if( request.HasReachedSupplyThreshold() )
@@ -223,7 +227,7 @@ void PHY_SupplyStockRequestContainer::AffectRequestsToAutomate()
 // Name: PHY_SupplyStockRequestContainer::ApplyQuotas
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
-bool PHY_SupplyStockRequestContainer::ApplyQuotas(MIL_AutomateLOG& supplier)
+bool PHY_SupplyStockRequestContainer::ApplyQuotas( MIL_AutomateLOG& supplier )
 {
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); )
     {
@@ -250,32 +254,38 @@ bool PHY_SupplyStockRequestContainer::ApplyQuotas(MIL_AutomateLOG& supplier)
 // Name: PHY_SupplyStockRequestContainer::ApplyQuotas
 // Created: AHC 2010-09-27
 // -----------------------------------------------------------------------------
-bool PHY_SupplyStockRequestContainer::ApplyQuotas( MIL_AutomateLOG& supplier, MIL_AutomateLOG& secondSupplier )
+bool PHY_SupplyStockRequestContainer::ApplyQuotas( const logistic::LogisticHierarchy_ABC& logisticHierarchy )
 {
+    MIL_AutomateLOG* pPrimarySupplier = logisticHierarchy.GetPrimarySuperior();
+
+    tools::Iterator< const logistic::LogisticLink_ABC& > itSuperiorLinks = logisticHierarchy.CreateSuperiorLinksIterator();
+    const tools::Iterator< const logistic::LogisticLink_ABC& > itBegin = logisticHierarchy.CreateSuperiorLinksIterator();
     for( IT_RequestMap it = requests_.begin(); it != requests_.end(); )
     {
         if( !bManual_ )
         {
-            if( suppliedAutomate_.GetQuota(supplier, *it->first ) !=0 )
-            {
-                it->second.ApplyQuota( suppliedAutomate_.GetQuota(supplier, *it->first ) );
-                requestAffectations_[&(it->second)] = &supplier;
-                ++it;
-            }
-            else if( suppliedAutomate_.GetQuota(secondSupplier, *it->first )!=0)
-            {
-                it->second.ApplyQuota( suppliedAutomate_.GetQuota(secondSupplier, *it->first ) );
-                requestAffectations_[&(it->second)] = &secondSupplier;
-                ++it;
-            }
+            itSuperiorLinks = itBegin;
+            if( !itSuperiorLinks.HasMoreElements() )
+                it = requests_.erase( it );
             else
             {
-                it = requests_.erase( it );
+                while( itSuperiorLinks.HasMoreElements() )
+                {
+                    const logistic::LogisticLink_ABC& supplierLink = itSuperiorLinks.NextElement();
+                    double quota = supplierLink.GetQuota( *it->first );
+                    if( quota != 0 )
+                    {
+                        it->second.ApplyQuota( quota );
+                        requestAffectations_[&(it->second)] = &supplierLink.GetSuperior();
+                        ++it;
+                    }
+                }
             }
         }
         else
         {
-            requestAffectations_[&(it->second)] = &supplier;
+            if( pPrimarySupplier )
+                requestAffectations_[&(it->second)] = pPrimarySupplier;
              ++it;
         }
     }
@@ -304,7 +314,7 @@ void PHY_SupplyStockRequestContainer::ActivateSupply( PHY_SupplyStockState*& pSt
                 pConvoyer = request.GetSupplyingAutomate();
             assert( pConvoyer );
             pStockSupplyState = new PHY_SupplyStockState( suppliedAutomate_, *pConvoyer, !bManual_ );
-            request.GetSupplyingAutomate()->SupplyHandleRequest( *pStockSupplyState, request.GetStockPion(), MIL_AutomateLOG::IsExternalTransaction( suppliedAutomate_, *pConvoyer ) );
+            request.GetSupplyingAutomate()->SupplyHandleRequest( *pStockSupplyState, request.GetStockPion() );
         }
 
         request.ReserveStocks();

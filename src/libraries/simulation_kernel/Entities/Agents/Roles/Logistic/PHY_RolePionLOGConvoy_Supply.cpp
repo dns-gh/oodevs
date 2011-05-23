@@ -43,8 +43,8 @@ void load_construct_data( Archive& archive, PHY_RolePionLOGConvoy_Supply* role, 
 // Created: NLD 2005-02-09
 // -----------------------------------------------------------------------------
 PHY_RolePionLOGConvoy_Supply::PHY_RolePionLOGConvoy_Supply( MIL_AgentPion& pion )
-    : pion_             ( pion )
-    , pConvoy_           ( 0 )
+    : pion_   ( pion )
+    , pConvoy_( 0 )
 {
     // NOTHING
 }

@@ -256,7 +256,7 @@
     <name>HomePage</name>
     <message>
         <source>Prepare</source>
-        <translation>Preparar</translation>
+        <translation>ド時代に成すべき</translation>
     </message>
     <message>
         <source>Play</source>

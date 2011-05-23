@@ -39,41 +39,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual QString GetLinkType() const = 0;
+    virtual QString GetLinkType() const { return "logistic-base"; };
     virtual void Load( xml::xistream& xis, const Entity_ABC* superior ) = 0;
     //@}
 };
-
-class LogisticBaseHierarchies : public LogisticHierarchiesBase
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             LogisticBaseHierarchies() {};
-    virtual ~LogisticBaseHierarchies() {};
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual QString GetLinkType() const { return "logistic-base"; };
-    //@}
-};
-
-class TC2Hierarchies : public LogisticHierarchiesBase
-{
-public:
-    //! @name Constructors/Destructor
-    //@{
-             TC2Hierarchies() {};
-    virtual ~TC2Hierarchies() {};
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual QString GetLinkType() const { return "tc2"; };
-    //@}
-};
-
 
 }
 

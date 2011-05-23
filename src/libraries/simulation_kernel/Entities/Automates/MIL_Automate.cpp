@@ -34,6 +34,7 @@
 #include "Entities/Objects/LogisticAttribute.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "Entities/Automates/MIL_DotationSupplyManager.h"
@@ -44,6 +45,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Tools.h"
+#include "Checkpoints/SerializationTools.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.hpp>
@@ -90,7 +92,7 @@ void load_construct_data( Archive& archive, MIL_Automate* automat, const unsigne
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, xml::xistream& xis, unsigned int gcPause, unsigned int gcMult )
-    : MIL_Entity_ABC( xis )
+    : MIL_Entity_ABC                 ( xis )
     , pType_                         ( &type )
     , nID_                           ( nID )
     , pParentFormation_              ( dynamic_cast< MIL_Formation* >( &parent ) )
@@ -106,10 +108,8 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , nTickRcDotationSupplyQuerySent_( 0 )
     , pKnowledgeBlackBoard_          ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
     , pArmySurrenderedTo_            ( 0 )
-    , pTC2_                          ( 0 )
-    , pNominalTC2_                   ( 0 )
+    , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this ) )
     , pBrainLogistic_                ( 0 )
-    //, pLogisticAction_               ( 0 )
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
 {
@@ -125,7 +125,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
 // Created: LDC 2009-04-24
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
-    : MIL_Entity_ABC( "" )
+    : MIL_Entity_ABC                 ( "" )
     , pType_                         ( &type )
     , nID_                           ( nID )
     , pParentFormation_              ( 0 )
@@ -138,10 +138,8 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
     , nTickRcDotationSupplyQuerySent_( 0 )
     , pKnowledgeBlackBoard_          ( 0 )
     , pArmySurrenderedTo_            ( 0 )
-    , pTC2_                          ( 0 )
-    , pNominalTC2_                   ( 0 )
+    , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this ) )
     , pBrainLogistic_                ( 0 )
-    //, pLogisticAction_               ( 0 )
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
     , pExtensions_                   ( 0 )
@@ -154,7 +152,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
 MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context )
-    : MIL_Entity_ABC( name )
+    : MIL_Entity_ABC                 ( name )
     , pType_                         ( &type )
     , nID_                           ( nID )
     , pParentFormation_              ( dynamic_cast< MIL_Formation* >( &parent ) )
@@ -167,10 +165,8 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , recycledPions_                 ()
     , automates_                     ()
     , bAutomateModeChanged_          ( true )
-    , pTC2_                          ( 0 )
-    , pNominalTC2_                   ( 0 )
+    , pLogisticHierarchy_            ( new logistic::LogisticHierarchy( *this ) )
     , pBrainLogistic_                ( 0 )
-    //, pLogisticAction_               ( 0 )
     , nTickRcDotationSupplyQuerySent_( 0 )
     , pKnowledgeBlackBoard_          ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
     , pArmySurrenderedTo_            ( 0 )
@@ -208,7 +204,6 @@ MIL_Automate::~MIL_Automate()
         pParentAutomate_->UnregisterAutomate( *this );
     if( pParentFormation_ )
         pParentFormation_->UnregisterAutomate( *this );
-    pBrainLogistic_.reset( 0 );
     delete pOrderManager_;
 }
 
@@ -278,9 +273,8 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_DictionaryExtensions* pExtensions;
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this )
-         >> pTC2_
-         >> pNominalTC2_;
-    file >> const_cast< unsigned int& >( nID_ );
+         >> boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this )
+         >> const_cast< unsigned int& >( nID_ );
     {
         DEC_AutomateDecision* pRole;
         file >> pRole;
@@ -299,7 +293,17 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pKnowledgeBlackBoard_
          >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
          >> nTickRcDotationSupplyQuerySent_
-         >> pExtensions;
+         >> pExtensions
+         >> pLogisticHierarchy_
+         >> pBrainLogistic_
+         >> pDotationSupplyManager_
+         >> pStockSupplyManager_;
+
+    if( pBrainLogistic_.get() )
+    {
+        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_.get() ) );
+        RegisterAction( pLogisticAction_ );
+    }         
     pExtensions_.reset( pExtensions );
 }
 
@@ -311,8 +315,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 {
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this )
-         << pTC2_
-         << pNominalTC2_
+         << boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this )
          << const_cast< unsigned int& >( nID_ );
     SaveRole< DEC_AutomateDecision >( *this, file );
     file << pParentFormation_
@@ -327,7 +330,11 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
          << pKnowledgeBlackBoard_
          << pArmySurrenderedTo_
          << nTickRcDotationSupplyQuerySent_
-         << pExtensions;
+         << pExtensions
+         << pLogisticHierarchy_
+         << pBrainLogistic_
+         << pDotationSupplyManager_
+         << pStockSupplyManager_;
 }
 
 // -----------------------------------------------------------------------------
@@ -351,16 +358,19 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
         xis.error( "Unknown knowledge group" );
     pKnowledgeGroup_->RegisterAutomate( *this );
 
-    std::string logLevelStr(PHY_LogisticLevel::none_.GetName());
-    xis >> xml::optional() >> xml::attribute("logistic-level", logLevelStr);
-    const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find(logLevelStr);
-    if(logLevel==0 || PHY_LogisticLevel::logistic_base_==*logLevel)
-        xis.error( "Wrong logistic level" );
-    if(PHY_LogisticLevel::tc2_==*logLevel)
+    std::string logLevelStr( PHY_LogisticLevel::none_.GetName() );
+    xis >> xml::optional() >> xml::attribute( "logistic-level", logLevelStr );
+    const PHY_LogisticLevel* pLogLevel = PHY_LogisticLevel::Find( logLevelStr );
+    if( !pLogLevel )
+        xis.error( "Invalid logistic level" );
+    if( *pLogLevel != PHY_LogisticLevel::none_ )
     {
-        pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );
-        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
-        this->RegisterAction( pLogisticAction_ );
+        pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *pLogLevel ) );
+        pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_.get() ) );
+        RegisterAction( pLogisticAction_ );
+
+        // Automat having logistic brain are always there own tc2
+        pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, *pBrainLogistic_, xis ) );
     }
 }
 
@@ -460,10 +470,11 @@ void MIL_Automate::ReadOverloading( xml::xistream& /*refMission*/ )
 // Name: MIL_Automate::ReadLogisticLink
 // Created: NLD 2006-10-19
 // -----------------------------------------------------------------------------
-void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& )
+void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& xis )
 {
-    pTC2_ = &superior;
-    pNominalTC2_ = pTC2_;
+    if( pBrainLogistic_.get() )
+        xis.error( "The logistic link of a logistic automat (usually a TC2) must not be overwritten: it should always be itself" );
+    pLogisticHierarchy_.reset( new logistic::LogisticHierarchy( *this, superior, xis ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -472,15 +483,10 @@ void MIL_Automate::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream& )
 // -----------------------------------------------------------------------------
 void MIL_Automate::WriteLogisticLinksODB( xml::xostream& xos ) const
 {
-    if( pTC2_ )
-    {
-        xos << xml::start( "tc2" )
-                << xml::attribute( "id", pTC2_->GetID() )
-                << xml::start( "subordinate" )
-                    << xml::attribute( "id", GetID() )
-                << xml::end
-            << xml::end;
-    }
+    if( pBrainLogistic_.get() )
+        pBrainLogistic_->WriteLogisticLinksODB( xos );
+    else
+        pLogisticHierarchy_->WriteODB( xos );
 }
 
 // -----------------------------------------------------------------------------
@@ -552,7 +558,11 @@ void MIL_Automate::UpdateNetwork() const
         GetRole< DEC_AutomateDecision >().SendChangedState( msg );
         pExtensions_->UpdateNetwork( msg );
         msg.Send( NET_Publisher_ABC::Publisher() );
-    }
+    }   
+    if( pBrainLogistic_.get() )
+        pBrainLogistic_->SendChangedState();
+    else
+        pLogisticHierarchy_->SendChangedState();
     pDotationSupplyManager_->SendChangedState();
     pStockSupplyManager_->SendChangedState();
 }
@@ -713,7 +723,7 @@ void MIL_Automate::NotifyRefugeeOriented( const MIL_AgentPion& pionManaging )
 {
     if( !pType_->IsRefugee() )
         return;
-    pTC2_ = pionManaging.GetAutomate().GetTC2();
+    pLogisticHierarchy_->SwitchToHierarchy( pionManaging.GetLogisticHierarchy() );
 }
 
 // -----------------------------------------------------------------------------
@@ -724,7 +734,7 @@ void MIL_Automate::NotifyRefugeeReleased()
 {
     if( !pType_->IsRefugee() )
         return;
-    pTC2_ = pNominalTC2_;
+    pLogisticHierarchy_->SwitchBackToNominalHierarchy();
 }
 
 // -----------------------------------------------------------------------------
@@ -735,7 +745,7 @@ void MIL_Automate::NotifyRefugeeReleased( const MIL_Object_ABC& camp )
 {
     if( !pType_->IsRefugee() )
         return;
-    pTC2_ = &camp.GetAttribute< LogisticAttribute >().GetTC2();
+    pLogisticHierarchy_->SwitchToHierarchy( camp.GetAttribute< LogisticAttribute >().GetLogisticHierarchy() ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -748,7 +758,7 @@ void MIL_Automate::Surrender( const MIL_Army_ABC& armySurrenderedTo )
         return;
     pOrderManager_->CancelMission();
     pArmySurrenderedTo_ = &armySurrenderedTo;
-    pTC2_ = 0;
+    pLogisticHierarchy_->DisconnectFromHierarchy();
 }
 
 // -----------------------------------------------------------------------------
@@ -758,7 +768,7 @@ void MIL_Automate::Surrender( const MIL_Army_ABC& armySurrenderedTo )
 void MIL_Automate::CancelSurrender()
 {
     pArmySurrenderedTo_ = 0;
-    pTC2_ = pNominalTC2_;
+    pLogisticHierarchy_->SwitchBackToNominalHierarchy();
 }
 
 // -----------------------------------------------------------------------------
@@ -769,7 +779,7 @@ bool MIL_Automate::NotifyCaptured( const MIL_AgentPion& pionTakingPrisoner )
 {
     if( !IsSurrendered() )
         return false;
-    pTC2_ = pionTakingPrisoner.GetAutomate().GetTC2();
+    pLogisticHierarchy_->SwitchToHierarchy( pionTakingPrisoner.GetLogisticHierarchy() );
     return true;
 }
 
@@ -781,7 +791,7 @@ bool MIL_Automate::NotifyReleased()
 {
     if( !IsSurrendered() )
         return false;
-    pTC2_ = 0;
+    pLogisticHierarchy_->SwitchBackToNominalHierarchy();
     return true;
 }
 
@@ -793,7 +803,7 @@ bool MIL_Automate::NotifyImprisoned( const MIL_Object_ABC& camp )
 {
     if( !IsSurrendered() )
         return false;
-    pTC2_ = &camp.GetAttribute< LogisticAttribute >().GetTC2();
+    pLogisticHierarchy_->SwitchToHierarchy( camp.GetAttribute< LogisticAttribute >().GetLogisticHierarchy() ); 
     return true;
 }
 
@@ -875,9 +885,13 @@ void MIL_Automate::SendFullState() const
     GetRole< DEC_AutomateDecision >().SendFullState( message );
     pExtensions_->SendFullState( message );
     message.Send( NET_Publisher_ABC::Publisher() );
-    SendLogisticLinks();
+    
+    pLogisticHierarchy_->SendFullState();
+    if( pBrainLogistic_.get() )
+        pBrainLogistic_->SendFullState();
     pDotationSupplyManager_->SendFullState();
     pStockSupplyManager_->SendFullState();
+
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).SendFullState();
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
@@ -894,28 +908,6 @@ void MIL_Automate::SendKnowledge() const
     pKnowledgeBlackBoard_->SendFullState();
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         ( **it ).SendKnowledge();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::SendLogisticLinks
-// Created: NLD 2005-02-14
-// -----------------------------------------------------------------------------
-void MIL_Automate::SendLogisticLinks() const
-{
-    client::ChangeLogisticLinks message;
-    message().mutable_requester()->mutable_automat()->set_id( nID_ );
-    if( pTC2_ )
-        message().mutable_combat_train()->set_id( pTC2_->GetID() );
-    if( pBrainLogistic_.get() && pBrainLogistic_->GetSuperior() )
-    {
-        if( pBrainLogistic_->GetSuperior()->GetAssociatedAutomat() )
-            message().mutable_logistic_base()->mutable_automat()->set_id( pBrainLogistic_->GetSuperior()->GetID() );
-        else
-            message().mutable_logistic_base()->mutable_formation()->set_id( pBrainLogistic_->GetSuperior()->GetID() );
-    }
-    message.Send( NET_Publisher_ABC::Publisher() );
-    if( pBrainLogistic_.get() )
-        pBrainLogistic_->SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -1078,29 +1070,6 @@ void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::OnReceiveChangeLogisticLinks
-// Created: NLD 2005-01-17
-// -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveChangeLogisticLinks( const sword::UnitMagicAction& msg )
-{
-    if( IsSurrendered() )
-        throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_agent_surrendered );
-    unsigned int tc2Id = msg.parameters().elem( 0 ).value().Get(0).identifier();
-    if( tc2Id != static_cast< unsigned int >( -1 ) )
-    {
-        if( tc2Id == 0 )
-            pTC2_ = 0;
-        else
-        {
-            MIL_Automate* pTC2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( tc2Id );
-            if( !pTC2 || !pTC2->GetType().IsLogistic() )
-                throw NET_AsnException< sword::HierarchyModificationAck_ErrorCode >( sword::HierarchyModificationAck::error_invalid_supply_automat );
-            pTC2_ = pTC2->GetBrainLogistic();
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveChangeSuperior
 // Created: NLD 2007-04-11
 // -----------------------------------------------------------------------------
@@ -1138,15 +1107,6 @@ void MIL_Automate::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, c
         pParentAutomate_  = pNewAutomate;
         pNewAutomate->RegisterAutomate( *this );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::OnReceiveLogSupplyChangeQuotas
-// Created: NLD 2005-02-03
-// -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveLogSupplyChangeQuotas( const sword::MissionParameters& /*msg*/ )
-{
-    throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
 }
 
 // -----------------------------------------------------------------------------
@@ -1227,6 +1187,7 @@ void MIL_Automate::Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) cons
 {
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         visitor.Visit( **it );
+    //$$ Manque automates_
 }
 
 // -----------------------------------------------------------------------------
@@ -1240,23 +1201,12 @@ DEC_KnowledgeBlackBoard_Automate& MIL_Automate::GetKnowledge() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetTC2
-// Created: NLD 2004-12-23
+// Name: MIL_Automate::GetLogisticHierarchy
+// Created: NLD 2011-01-10
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG* MIL_Automate::GetTC2() const
+logistic::LogisticHierarchy_ABC& MIL_Automate::GetLogisticHierarchy() const
 {
-    return pTC2_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Automate::GetNominalTC2
-// Created: NLD 2007-02-14
-// -----------------------------------------------------------------------------
-MIL_AutomateLOG* MIL_Automate::GetNominalTC2() const
-{
-    if( IsSurrendered() )
-        return 0;
-    return pNominalTC2_;
+    return *pLogisticHierarchy_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1422,4 +1372,26 @@ void MIL_Automate::UnregisterAutomate( MIL_Automate& automate )
 MIL_AutomateLOG* MIL_Automate::GetBrainLogistic () const
 {
     return pBrainLogistic_.get();
+}
+
+// =============================================================================
+// logistic::LogisticHierarchyOwner_ABC
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::Serialize
+// Created: NLD 2011-01-10
+// -----------------------------------------------------------------------------
+void MIL_Automate::Serialize( sword::ParentEntity& message ) const
+{
+    message.mutable_automat()->set_id( GetID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::NotifyQuotaThresholdReached
+// Created: NLD 2011-01-11
+// -----------------------------------------------------------------------------
+void MIL_Automate::NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const
+{
+    MIL_Report::PostEvent( *this, MIL_Report::eReport_QuotaAlmostConsumed, dotationCategory );
 }

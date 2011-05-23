@@ -19,6 +19,11 @@ namespace sword
     class MissionParameter;
 }
 
+namespace logistic 
+{
+    class LogisticHierarchy_ABC;
+}
+
 class PHY_DotationCategory;
 class PHY_DotationStock;
 class PHY_SupplyStockRequest;
@@ -53,8 +58,8 @@ public:
 
     //! @name Operations
     //@{
-    bool Execute ( MIL_AutomateLOG& supplyAutomate, PHY_SupplyStockState*& pStockSupplyState );
-    bool Execute ( MIL_AutomateLOG& supplier, MIL_AutomateLOG& secondSupplier, PHY_SupplyStockState*& pStockSupplyState );
+    bool Execute ( MIL_AutomateLOG& supplier, PHY_SupplyStockState*& pStockSupplyState );
+    bool Execute ( const logistic::LogisticHierarchy_ABC& logisticHierarchy, PHY_SupplyStockState*& pStockSupplyState );   
     void AddStock( PHY_DotationStock& stock );
     //@}
 
@@ -71,8 +76,8 @@ private:
     //! @name Tools
     //@{
     void AffectRequestsToAutomate( );
-    bool ApplyQuotas             ( MIL_AutomateLOG& supplyingAutomate );
-    bool ApplyQuotas             ( MIL_AutomateLOG& supplier, MIL_AutomateLOG& secondSupplier );
+    bool ApplyQuotas             ( MIL_AutomateLOG& supplier );
+    bool ApplyQuotas             ( const logistic::LogisticHierarchy_ABC& logisticHierarchy );
     void ActivateSupply          ( PHY_SupplyStockState*& pStockSupplyState );
     //@}
 

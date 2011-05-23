@@ -58,6 +58,8 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
     MOCK_METHOD( CreateKnowledge, 1 );
     MOCK_METHOD( IsPerceived, 1 );
     MOCK_METHOD( GetKnowledge, 0 );
+
+    MOCK_METHOD( GetLogisticHierarchy, 0 );
 };
 
 #endif // __MockAgent_h_

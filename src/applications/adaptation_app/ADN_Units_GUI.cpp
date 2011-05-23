@@ -121,7 +121,7 @@ void ADN_Units_GUI::Build()
     QGroupBox* pNatureGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Nature" ), pGroup );
 
     QGroupBox* pNatureInternalGroup = new QGroupBox( 2, Qt::Vertical, pNatureGroup );
-    pNatureInternalGroup->setFrameStyle( QFrame::NoFrame );
+    //pNatureInternalGroup->setFrameStyle( QFrame::NoFrame );
     QGroupBox* subLayout = new QGroupBox( 3, Qt::Horizontal, pNatureInternalGroup );
     subLayout->setInsideMargin( 0 );
     subLayout->setInsideSpacing( 0 );
@@ -137,13 +137,13 @@ void ADN_Units_GUI::Build()
 
     // Symbol
     QVBox* pSymbolLayout = new QVBox( pNatureGroup );
-    QLabel* pTestLabel = new QLabel( pSymbolLayout );
+    QLabel* pSymbolLabel = new QLabel( pSymbolLayout );
     pSymbolWidget_ = new ADN_SymbolWidget( pSymbolLayout );
     pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
     pSymbolWidget_->setMinimumSize( 130, 140 );
     pSymbolWidget_->setMaximumSize( 130, 140 );
     connect( natureGui, SIGNAL( textChanged( const QString& ) ), pSymbolWidget_, SLOT( OnNatureChanged( const QString& ) ) );
-    connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pTestLabel, SLOT( setText( const QString& ) ) );
+    connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pSymbolLabel, SLOT( setText( const QString& ) ) );
 
     // Commandement
     QGroupBox* pCommandGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Command" ), pGroup );

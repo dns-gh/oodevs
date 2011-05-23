@@ -12,7 +12,7 @@
 #include "LogisticStatusWidgets.h"
 #include "SupplyConsignsWidget.h"
 #include "SupplyStocksListView.h"
-#include "SupplyQuotasListView.h"
+#include "SupplyQuotasWidget.h"
 #include "SupplyTransportersListView.h"
 #include "gaming/Tools.h"
 
@@ -27,7 +27,9 @@ InfoSupplyDialog::InfoSupplyDialog( QWidget* parent, kernel::Controllers& contro
     tabs->addTab( new SupplyConsignsWidget( tabs, controllers, factory ), tools::translate( "InfoSupplyDialog", "Consigns" ) );
     QVBox* sqbox = new QVBox( tabs );
     new SupplyStocksListView( sqbox, controllers, factory );
-    new SupplyQuotasListView( sqbox, controllers, factory );
+    //new SupplyQuotasListView( sqbox, controllers, factory );
+
+    new SupplyQuotasWidget( sqbox, controllers, factory );
     tabs->addTab( sqbox, tools::translate( "InfoSupplyDialog", "Stocks && Quotas" ) );
     QVBox* tbox = new QVBox( tabs );
     new SupplyTransportersListView( tbox, controllers, factory );
@@ -51,8 +53,8 @@ InfoSupplyDialog::~InfoSupplyDialog()
 bool InfoSupplyDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
     const LogSupplyConsigns* consigns = element.Retrieve< LogSupplyConsigns >();
-    const Quotas* quotas = element.Retrieve< Quotas >();
+    //const Quotas* quotas = element.Retrieve< Quotas >();
     return ( consigns && consigns->IsRelevant() )
-        || ( quotas && quotas->IsRelevant() )
+      //  || ( quotas && quotas->IsRelevant() )
         || element.Retrieve< SupplyStates >();
 }

@@ -115,7 +115,7 @@ namespace
 // -----------------------------------------------------------------------------
 AttributeFactory::AttributeFactory()
 {
-    Register( "tc2", boost::bind( &AddBuilder< LogisticAttribute >::Add, _1, _2 ) );
+    Register( "logistic-base", boost::bind( &AddBuilder< LogisticAttribute >::Add, _1, _2 ) );
     Register( "mine", boost::bind( &AddBuilder< MineAttribute >::Add, _1, _2 ) );
     Register( "construction", boost::bind( &AddBuilder< ConstructionAttribute >::Add, _1, _2 ) );
     Register( "obstacle", boost::bind( &AddBuilder< ObstacleAttribute >::Add, _1, _2 ) );

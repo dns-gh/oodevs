@@ -12,6 +12,7 @@
 #include "Model_ABC.h"
 #include "Automat_ABC.h"
 #include "Team_ABC.h"
+#include "LogisticEntity.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
@@ -27,20 +28,26 @@ using namespace dispatcher;
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
 Formation::Formation( const Model_ABC& model, const sword::FormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels )
-    : Formation_ABC( msg.formation().id(), QString( msg.name().c_str() ) )
-    , model_ ( model )
-    , name_  ( msg.name() )
-    , team_  ( model.Sides().Get( msg.party().id() ) )
-    , level_ ( levels.Get( msg.level() ) )
-    , symbol_( msg.app6symbol() )
-    , logisticEntity_( model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve( msg.logistic_level() ) )
-    , parent_( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
+    : Formation_ABC  ( msg.formation().id(), QString( msg.name().c_str() ) )
+    , model_         ( model )
+    , name_          ( msg.name() )
+    , team_          ( model.Sides().Get( msg.party().id() ) )
+    , level_         ( levels.Get( msg.level() ) )
+    , symbol_        ( msg.app6symbol() )
+    , logisticEntity_( 0 )
+    , parent_        ( msg.has_parent() ? &model.Formations().Get( msg.parent().id() ) : 0 )
 {
     if( parent_ )
         parent_->Register( *this );
     else
         team_.Register( *this );
-    RegisterSelf( logisticEntity_ );
+
+    if( msg.logistic_level() != sword::none )
+    {
+        logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) ) );
+        RegisterSelf( *logisticEntity_ );
+        RegisterSelf( logisticEntity_->GetLogisticHierarchy() );
+    }
     RegisterSelf( *this );
 }
 
@@ -119,18 +126,14 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
     message().set_level( sword::EnumNatureLevel( level_.GetId() ) );
     message().set_name( name_ );
     message().set_app6symbol( symbol_ );
-    message().set_logistic_level( sword::EnumLogisticLevel( logisticEntity_.GetLogisticLevel().GetId() ) );
+    if( logisticEntity_.get() )
+        logisticEntity_->Send( message() );
+    else
+        message().set_logistic_level( sword::none );
+
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
     message.Send( publisher );
-
-    if( logisticEntity_.GetLogisticLevel() != kernel::LogisticLevel::none_ )
-    {
-        client::LogSupplyQuotas asn;
-        asn().mutable_supplied()->mutable_formation()->set_id( GetId() );
-        logisticEntity_.Fill(asn);
-        asn.Send( publisher );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -150,13 +153,8 @@ void Formation::SendFullUpdate( ClientPublisher_ABC& publisher) const
         }
         asn.Send( publisher );
     }
-    if( logisticEntity_.GetLogisticLevel() != kernel::LogisticLevel::none_)
-    {
-        client::ChangeLogisticLinks asn;
-        asn().mutable_requester()->mutable_formation()->set_id( GetId() );
-        logisticEntity_.Fill(asn);
-        asn.Send( publisher );
-    }
+    if( logisticEntity_.get() )
+        logisticEntity_->SendFullUpdate( publisher );    
 }
 
 // -----------------------------------------------------------------------------
@@ -168,6 +166,15 @@ void Formation::SendDestruction( ClientPublisher_ABC& publisher ) const
     client::FormationDestruction asn;
     asn().mutable_formation()->set_id( GetId() );
     asn.Send( publisher );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::Send
+// Created: NLD 2011-01-17
+// -----------------------------------------------------------------------------
+void Formation::Send( sword::ParentEntity& msg ) const
+{
+    msg.mutable_formation()->set_id( GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -259,21 +266,23 @@ const tools::Resolver< dispatcher::Automat_ABC >& Formation::GetAutomates() cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: Formation::GetLogisticLevel
-// Created: AHC 2010-10-08
+// Name: Formation::GetLogisticEntity
+// Created: NLD 2011-01-17
 // -----------------------------------------------------------------------------
-const kernel::LogisticLevel& Formation::GetLogisticLevel() const
+LogisticEntity* Formation::GetLogisticEntity() const
 {
-    return logisticEntity_.GetLogisticLevel();
+    return logisticEntity_.get();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Formation::DoUpdate
-// Created: AHC 2010-10-08
+// Name: Formation::GetLogisticLevel
+// Created: NLD 2011-01-17
 // -----------------------------------------------------------------------------
-void Formation::DoUpdate( const sword::ChangeLogisticLinks& )
+const kernel::LogisticLevel& Formation::GetLogisticLevel() const
 {
-    // NOTHING
+    if( logisticEntity_.get() )
+        return logisticEntity_->GetLogisticLevel();
+    return kernel::LogisticLevel::none_;
 }
 
 // -----------------------------------------------------------------------------

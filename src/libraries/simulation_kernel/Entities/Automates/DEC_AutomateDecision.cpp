@@ -203,7 +203,6 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< void ( const std::string& ) >( boost::bind( &DEC_MiscFunctions::Trace< MIL_Automate >, boost::ref( GetAutomate() ), _1 ) );
 
     // Connaissance
-
     brain[ "DEC_Connaissances_PartageConnaissancesAvec" ] =
         boost::function< void( DEC_Decision_ABC*, float ) >( boost::bind( &DEC_KnowledgeFunctions::ShareKnowledgesWith< MIL_Automate >, boost::cref( GetAutomate() ), _1, _2 ) );
     brain[ "DEC_Connaissances_PartageConnaissancesDansZoneAvec" ] =

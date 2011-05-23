@@ -246,9 +246,8 @@ message ChangeLogisticLinksAck {
     @brief Notifies a change to the logistic links of an automat
 */
 message ChangeLogisticLinks {
-   required ParentEntity requester     = 1; //!< What's this ?
-   optional AutomatId    combat_train  = 2; //!< What's this ?
-   optional ParentEntity logistic_base = 3; //!< What's this ?
+   required ParentEntity requester = 1; //!< Identifier of the automat or formation concerned by the logistic links update
+   repeated ParentEntity superior = 2; //!< The new logistic superiors
 }
 
 /** @struct AutomatChangeSuperiorAck
@@ -316,6 +315,11 @@ message LogSupplyChangeQuotasAck {
         no_error_quotas        = 0; //!< Operation succeeded @todo rename to no_error @todo As error codes are optional, no_error should not exist
         error_invalid_supplier = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found
         error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
+        /** @brief Operation failed because of an dotation parameter.
+            An invalid (non existing) dotation was specified.
+            @todo rename to error_invalid_receiver
+        */
+        error_invalid_dotation = 3;
     }
     optional ErrorCode ack = 1; //!< Reason for the failure of the request @see ErrorCode @todo rename to error_code
 }
@@ -482,8 +486,7 @@ message PartyCreation {
 */
 enum EnumLogisticLevel {
     none          = 0; //!< No logistic @todo rename to no_logistic
-    combat_train  = 1; //!< Combat train
-    logistic_base = 2; //!< Logistic base
+    logistic_base = 1; //!< Logistic base
 }
 
 /** @struct FormationCreation
@@ -495,10 +498,9 @@ message FormationCreation {
     optional FormationId       parent                = 3;  //!< The parent formation identifier @see FormationId
     required EnumNatureLevel   level                 = 4;  //!< @todo What's this ?
     required string            name                  = 5;  //!< The formation name
-    required string            app6symbol            = 6;  //!< The formation APP-6 symbol
-    required EnumLogisticLevel logistic_level        = 7;  //!< @todo What's this ?
-    optional RgbColor          color                 = 8;  //!< The formation color @see RgbColor
-    optional ParentEntity      logistic_base_organic = 9;  //!< @deprecated
+    required string            app6symbol            = 7;  //!< The formation APP-6 symbol
+    required EnumLogisticLevel logistic_level        = 8;  //!< @todo What's this ?
+    optional RgbColor          color                 = 9;  //!< The formation color @see RgbColor
 }
 
 /** @struct FormationUpdate
@@ -592,8 +594,6 @@ message AutomatAttributes {
    optional EnumMeetingEngagementStatus meeting_engagement    = 4; //!< The meeting engagement status
    optional EnumOperationalStatus       operational_state     = 5; //!< The automat operational state
    optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement
-   optional AutomatId                   tc2_organic           = 7; //!< @deprecated
-   optional ParentEntity                logistic_base_organic = 8; //!< @deprecated
    optional Extension                   extension             = 9;  //!< The extension fields
 }
 
@@ -1690,7 +1690,8 @@ message SeqOfDotationQuota {
 */
 message LogSupplyQuotas {
     required ParentEntity       supplied = 1; //!< The parent entity
-    required SeqOfDotationQuota quotas   = 2; //!< The quotas
+    required ParentEntity       supplier = 2; //!< The supplier entity
+    required SeqOfDotationQuota quotas  = 3;  //!< The quotas
 }
 
 /** @struct CrowdCreation

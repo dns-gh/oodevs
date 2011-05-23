@@ -22,6 +22,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_IDManager.h"
+#include "Checkpoints/SerializationTools.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/serialization/map.hpp>
 #include <boost/bind.hpp>
@@ -55,16 +56,16 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
         pArmy_->RegisterFormation( *this );
     xis >> xml::list( "formation", *this, &MIL_Formation::InitializeFormation, formationFactory )
         >> xml::list( "automat", *this, &MIL_Formation::InitializeAutomate, automateFactory );
-    std::string logLevelStr(PHY_LogisticLevel::none_.GetName());
+    std::string logLevelStr( PHY_LogisticLevel::none_.GetName() );
     xis >> xml::optional() >> xml::attribute("logistic-level", logLevelStr);
     const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find(logLevelStr);
-    if(logLevel==0 || PHY_LogisticLevel::tc2_==*logLevel)
-        xis.error( "Wrong logistic level" );
-    if(PHY_LogisticLevel::logistic_base_==*logLevel)
+    if( !logLevel )
+        xis.error( "Invalid logistic level" );
+    if( PHY_LogisticLevel::logistic_base_ == *logLevel )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
-        this->RegisterAction( pLogisticAction_ );
+        RegisterAction( pLogisticAction_ );
     }
     idManager_.Lock( nID_ );
 }
@@ -91,13 +92,13 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
     if( logLevelStr.empty() )
         logLevelStr = PHY_LogisticLevel::none_.GetName();
     const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find( logLevelStr );
-    if( logLevel==0 || PHY_LogisticLevel::tc2_==*logLevel )
-        throw std::runtime_error( "Wrong logistic level" );
-    if( PHY_LogisticLevel::logistic_base_==*logLevel )
+    if( !logLevel )
+        throw std::runtime_error( "Invalid logistic level" );
+    if( *logLevel != PHY_LogisticLevel::none_ )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *logLevel ) );
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
-        this->RegisterAction( pLogisticAction_ );
+        RegisterAction( pLogisticAction_ );
     }
 }
 
@@ -221,7 +222,8 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
     assert( pLevel_ );
     file >> tools::Resolver< MIL_Formation >::elements_
          >> tools::Resolver< MIL_Automate >::elements_
-         >> pExtensions;
+         >> pExtensions
+         >> pBrainLogistic_;
     pExtensions_.reset( pExtensions );
 }
 
@@ -240,7 +242,8 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
          << level
          << tools::Resolver< MIL_Formation >::elements_
          << tools::Resolver< MIL_Automate >::elements_
-         << pExtensions;
+         << pExtensions
+         << pBrainLogistic_;
 }
 
 // -----------------------------------------------------------------------------
@@ -305,7 +308,8 @@ void MIL_Formation::SendFullState() const
     message().mutable_formation()->set_id( nID_ );
     pExtensions_->SendFullState( message );
     message.Send( NET_Publisher_ABC::Publisher() );
-    SendLogisticLinks();
+    if( pBrainLogistic_.get() )
+        pBrainLogistic_->SendFullState();
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1 ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendFullState, _1 ) );
 }
@@ -440,17 +444,41 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_Formation::Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) const
 {
-    VisitorApplyer applyer(visitor);
-    tools::Resolver< MIL_Formation >::Apply(applyer);
-    tools::Resolver< MIL_Automate >::Apply(applyer);
+    VisitorApplyer applyer( visitor );
+    tools::Resolver< MIL_Formation >::Apply( applyer );
+    tools::Resolver< MIL_Automate >::Apply( applyer );
+}
+
+// =============================================================================
+// TMP - Renettoyer les boucles d'updates .. Cf. Scipio
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::UpdateState
+// Created: NLD 2011-01-11
+// -----------------------------------------------------------------------------
+void MIL_Formation::UpdateState()
+{
+   if( pBrainLogistic_.get() )
+        pBrainLogistic_->UpdateState();    
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Formation::SendLogisticLinks
-// Created: AHC 2010-10-13
+// Name: MIL_Formation::UpdateNetwork
+// Created: NLD 2011-01-11
 // -----------------------------------------------------------------------------
-void MIL_Formation::SendLogisticLinks() const
+void MIL_Formation::UpdateNetwork()
+{
+   if( pBrainLogistic_.get() )
+        pBrainLogistic_->SendChangedState();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::Clean
+// Created: NLD 2011-01-11
+// -----------------------------------------------------------------------------
+void MIL_Formation::Clean()
 {
     if( pBrainLogistic_.get() )
-        pBrainLogistic_->SendFullState();
+        pBrainLogistic_->Clean();
 }

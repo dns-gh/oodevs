@@ -26,7 +26,8 @@ namespace kernel
 // Created: AGE 2006-09-19
 // =============================================================================
 template< typename Interface >
-class EntityHierarchies : public Interface, public  tools::Resolver< Entity_ABC >
+class EntityHierarchies : public Interface
+                        , public  tools::Resolver< Entity_ABC >
                         , public Creatable< Interface >
 {
 public:

@@ -19,7 +19,9 @@
 
 namespace kernel
 {
+    class Entity_ABC;
     class Automat_ABC;
+    class Formation_ABC;
     class Controllers;
     class Displayer_ABC;
     class PropertiesDictionary;
@@ -40,12 +42,13 @@ class LogisticAttribute : public kernel::LogisticAttribute_ABC
                         , public kernel::Serializable_ABC
                         , public tools::Observer_ABC
                         , public tools::ElementObserver_ABC< kernel::Automat_ABC >
+                        , public tools::ElementObserver_ABC< kernel::Formation_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              LogisticAttribute( kernel::PropertiesDictionary& dico, kernel::Controllers& controllers );
-             LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::PropertiesDictionary& dico, kernel::Controllers& controllers );
+             LogisticAttribute( xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations, kernel::PropertiesDictionary& dico, kernel::Controllers& controllers );
     virtual ~LogisticAttribute();
     //@}
 
@@ -57,7 +60,7 @@ public:
 
     //! @name Operations
     //@{
-    void SetTC2( const kernel::Automat_ABC& tc2 );
+    void SetLogisticBase( const kernel::Entity_ABC& logisticBase );
     //@}
 
 private:
@@ -70,6 +73,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const kernel::Automat_ABC& entity );
+    virtual void NotifyDeleted( const kernel::Formation_ABC& entity );
     void CreateDictionary( kernel::PropertiesDictionary& dico );
     //@}
 
@@ -77,7 +81,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    TC2 tc2_;
+    LogisticBaseSuperior logisticBase_;
     //@}
 };
 

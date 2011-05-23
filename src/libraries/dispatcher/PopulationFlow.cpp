@@ -52,6 +52,8 @@ void PopulationFlow::DoUpdate( const sword::CrowdFlowUpdate& msg )
 {
     if( msg.has_parts() )
         flow_.Update( msg.parts().location() );
+    if( msg.has_path() )
+        path_.Update( msg.path().location() );
     if( msg.has_direction() )
         nDirection_ = msg.direction().heading();
     if( msg.has_speed() )

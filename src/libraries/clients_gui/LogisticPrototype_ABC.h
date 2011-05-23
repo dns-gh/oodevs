@@ -20,6 +20,8 @@
 namespace kernel
 {
     class Automat_ABC;
+    class Formation_ABC;
+    class Entity_ABC;
     class Controllers;
 }
 
@@ -35,7 +37,9 @@ namespace gui
 class LogisticPrototype_ABC : public ObjectAttributePrototype_ABC
                             , public tools::Observer_ABC
                             , public tools::ElementObserver_ABC< kernel::Automat_ABC >
+                            , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                            , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
     Q_OBJECT;
 
@@ -64,14 +68,18 @@ private:
     virtual void NotifyCreated( const kernel::Automat_ABC& automat );
     virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
     virtual void NotifyContextMenu( const kernel::Automat_ABC&, kernel::ContextMenu& );
+
+    virtual void NotifyCreated( const kernel::Formation_ABC& automat );
+    virtual void NotifyDeleted( const kernel::Formation_ABC& automat );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC&, kernel::ContextMenu& );
     //@}
 
 protected:
     //! @name Member Data
     //@{
     kernel::Controllers& controllers_;
-    ValuedComboBox< const kernel::Automat_ABC* >* tc2s_;
-    kernel::SafePointer< kernel::Automat_ABC > selected_;
+    ValuedComboBox< const kernel::Entity_ABC* >* logSuperiors_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 
