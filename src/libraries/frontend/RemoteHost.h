@@ -65,6 +65,7 @@ public:
     virtual void Handle( const sword::SessionCommandExecutionResponse& message );
     virtual void Handle( const sword::SessionNotification& message );
     virtual void Handle( const sword::SessionParameterChangeResponse& message );
+    virtual void Handle( const sword::SessionStatus& message );
     //@}
 
 private:

@@ -173,10 +173,11 @@ namespace launcher_test
 
     struct ExerciseFixture : Fixture
     {
-        ExerciseFixture() 
+        ExerciseFixture()
             : Fixture()
             , exerciceListener( controllers )
             , SESSION         ( "default" )
+            , exercise        ( 0 )
         {
             BOOST_REQUIRE( client.Connected() );
             

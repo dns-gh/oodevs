@@ -40,14 +40,13 @@ BOOST_FIXTURE_TEST_CASE( ClientCanListAvailableExercises, Fixture )
 // Name: ClientCanStartExercise
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------
-
 BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, ExerciseFixture )
 {
     sword::ProfileListResponse launcherResponse;
     boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
     MOCK_EXPECT( handler, HandleProfileListResponse ).once().with( mock::retrieve( launcherResponse ) );
     client.Register( handler );
-    exercise->QueryProfileList( );
+    exercise->QueryProfileList();
     timeout.Start();
     while( !launcherResponse.IsInitialized() && !timeout.Expired() )
         Update();
@@ -228,9 +227,11 @@ BOOST_FIXTURE_TEST_CASE( NotifyProfileUpdate, ExerciseFixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( NotifyControlInformation, ExerciseFixture )
 {
-    sword::SessionParameterChangeResponse launcherResponse;
+    sword::SessionParameterChangeResponse parameterResponse;
+    sword::SessionStatus statusResponse;
     boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
-    MOCK_EXPECT( handler, HandleSessionParameterChangeResponse ).once().with( mock::retrieve( launcherResponse ) );
+    MOCK_EXPECT( handler, HandleSessionParameterChangeResponse ).once().with( mock::retrieve( parameterResponse ) );
+    MOCK_EXPECT( handler, HandleSessionStatus ).once().with( mock::retrieve( statusResponse ) );
     client.Register( handler );
 
     client::ControlInformation information;
@@ -240,12 +241,13 @@ BOOST_FIXTURE_TEST_CASE( NotifyControlInformation, ExerciseFixture )
     information().set_tick_duration( 41 );
     information().set_time_factor( 40 );
     information().set_checkpoint_frequency( 39 );
-    information().set_status( sword::EnumSimulationState( 0 ) );
+    information().set_status( sword::EnumSimulationState( 1 ) );
     information().set_send_vision_cones( true );
     information().set_profiling_enabled( false );
     information.Send( dispatcher, 12 );
     timeout.Start();
-    while( !launcherResponse.IsInitialized() && !timeout.Expired() )
+    while( !( parameterResponse.IsInitialized() && statusResponse.IsInitialized() ) && !timeout.Expired() )
         Update();
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" checkpoint_frequency: 39 acceleration_factor: 40" );
+    LAUNCHER_CHECK_MESSAGE( parameterResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" checkpoint_frequency: 39 acceleration_factor: 40" );
+    LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" status: paused" );
 }

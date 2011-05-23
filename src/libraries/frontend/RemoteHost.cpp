@@ -151,6 +151,7 @@ void RemoteHost::Handle( const sword::ProfileListResponse& /*message*/ )
 {
     // $$$$ SBO 2010-11-22: TODO, handle profile list
 }
+
 // -----------------------------------------------------------------------------
 // Name: RemoteHost::Handle
 // Created: AHC 2011-05-20
@@ -174,6 +175,15 @@ void RemoteHost::Handle( const sword::SessionNotification& /*message*/ )
 // Created: LGY 2011-05-23
 // -----------------------------------------------------------------------------
 void RemoteHost::Handle( const sword::SessionParameterChangeResponse& /*message*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::Handle
+// Created: LGY 2011-05-23
+// -----------------------------------------------------------------------------
+void RemoteHost::Handle( const sword::SessionStatus& /*message*/ )
 {
     // NOTHING
 }

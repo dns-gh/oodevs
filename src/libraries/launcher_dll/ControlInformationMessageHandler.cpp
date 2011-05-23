@@ -39,7 +39,7 @@ bool ControlInformationMessageHandler::OnReceiveMessage( const sword::SimToClien
     if( message.message().has_control_information() )
     {
         const sword::ControlInformation& control = message.message().control_information();
-        launcher::SessionParameterChangeResponse response;
+        SessionParameterChangeResponse response;
         response().set_error_code( sword::SessionParameterChangeResponse::success );
         response().set_checkpoint_frequency( control.checkpoint_frequency() );
         response().set_acceleration_factor( control.time_factor() );
