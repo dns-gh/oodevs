@@ -186,3 +186,48 @@ BOOST_FIXTURE_TEST_CASE( NotifyFormationExtension, ExerciseFixture )
         Update();
     LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" notification { formation_update { formation { id: 42 } extensions { entries { name: \"name\" value: \"value\" } } } }" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: NotifyProfileCreation
+// Created: LGY 2011-05-23
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( NotifyProfileCreation, ExerciseFixture )
+{
+    sword::SessionNotification launcherResponse;
+    boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+    MOCK_EXPECT( handler, HandleSessionNotification ).once().with( mock::retrieve( launcherResponse ) );
+    client.Register( handler );
+
+    authentication::ProfileCreation creation;
+    creation().mutable_profile()->set_login( "login" );
+    creation().mutable_profile()->set_password( "password" );
+    creation().mutable_profile()->set_supervisor( true );
+    creation.Send( dispatcher, 12 );
+    timeout.Start();
+    while( !launcherResponse.IsInitialized() && !timeout.Expired() )
+        Update();
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" notification { profile_creation { profile { login: \"login\" password: \"password\" supervisor: true } } }" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotifyProfileUpdate
+// Created: LGY 2011-05-23
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( NotifyProfileUpdate, ExerciseFixture )
+{
+    sword::SessionNotification launcherResponse;
+    boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+    MOCK_EXPECT( handler, HandleSessionNotification ).once().with( mock::retrieve( launcherResponse ) );
+    client.Register( handler );
+
+    authentication::ProfileUpdate update;
+    update().set_login( "login" );
+    update().mutable_profile()->set_login( "login" );
+    update().mutable_profile()->set_password( "password" );
+    update().mutable_profile()->set_supervisor( true );
+    update.Send( dispatcher, 12 );
+    timeout.Start();
+    while( !launcherResponse.IsInitialized() && !timeout.Expired() )
+        Update();
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" notification { profile_update { profile { login: \"login\" password: \"password\" supervisor: true } } }" );
+}
