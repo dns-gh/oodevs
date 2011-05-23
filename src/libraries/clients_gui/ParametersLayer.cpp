@@ -243,9 +243,9 @@ void ParametersLayer::Start( ShapeHandler_ABC& handler, const Location_ABC& loca
 // -----------------------------------------------------------------------------
 void ParametersLayer::Reset()
 {
-    current_ = 0;
     NotifyDone();
     delete current_;
+    current_ = 0;
 }
 
 // -----------------------------------------------------------------------------
