@@ -64,6 +64,7 @@ public:
     unsigned int MaxOccurs() const;
     bool IsList() const;
     const OrderParameterValue& GetValue( unsigned int id ) const;
+    const std::string& GetChoice( unsigned int id ) const;
     void AddValue( int id, const std::string& name );
     virtual void Accept( OrderParameterValueVisitor_ABC& visitor ) const;
     virtual void Accept( ChoicesVisitor_ABC& visitor ) const;
@@ -80,10 +81,10 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< unsigned int, OrderParameterValue > T_OrderParameterValues;
-    typedef T_OrderParameterValues::const_iterator      CIT_OrderParameterValues;
-    typedef std::set< std::string >     T_Aliases;
-    typedef T_Aliases::const_iterator CIT_Aliases;
+    typedef std::map< unsigned int, OrderParameterValue >   T_OrderParameterValues;
+    typedef T_OrderParameterValues::const_iterator        CIT_OrderParameterValues;
+    typedef std::set< std::string >                         T_Aliases;
+    typedef T_Aliases::const_iterator                     CIT_Aliases;
     //@}
 
 private:

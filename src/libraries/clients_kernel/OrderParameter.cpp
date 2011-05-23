@@ -116,10 +116,27 @@ unsigned int OrderParameter::MaxOccurs() const
 // -----------------------------------------------------------------------------
 const OrderParameterValue& OrderParameter::GetValue( unsigned int id ) const
 {
-    CIT_OrderParameterValues it = values_.find( id );
-    if( it == values_.end() )
-        throw std::runtime_error( "Undefined enumeration value." ); // $$$$ SBO 2007-05-25:
-    return it->second;
+	CIT_OrderParameterValues it = values_.find( id );
+	if( it == values_.end() )
+		throw std::runtime_error( "Undefined enumeration value." ); // $$$$ SBO 2007-05-25:
+	return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::GetChoice
+// Created: RCD 2011-05-06
+// -----------------------------------------------------------------------------
+const std::string& OrderParameter::GetChoice( unsigned int id ) const
+{
+    CIT_Aliases it = aliases_.begin();
+    while( it != aliases_.end() && id > 0 )
+    {
+        ++it;
+        --id;
+    }
+    if( it == aliases_.end() )
+        throw std::runtime_error( "Undefined location composite parameter type." );
+    return *it;
 }
 
 // -----------------------------------------------------------------------------
