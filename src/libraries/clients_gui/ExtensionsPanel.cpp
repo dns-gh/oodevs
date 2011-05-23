@@ -61,6 +61,7 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     , diffusionDialog_( new DiffusionListDialog( parent, controllers, agents, extensions, factory, icons, profile, "ExtensionPanel_DiffusionListDialog" ) )
     , selected_       ( controllers )
     , pGroupBox_      ( 0 )
+    , updating_       ( false )
 {
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
@@ -382,6 +383,8 @@ void ExtensionsPanel::OnActivationChanged( bool activate )
 // -----------------------------------------------------------------------------
 void ExtensionsPanel::Commit()
 {
+    if( updating_ )
+        return;
     DictionaryExtensions* ext = selected_.ConstCast()->Retrieve< DictionaryExtensions >();
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( !ext || !type )
@@ -455,6 +458,7 @@ void ExtensionsPanel::UpdateDisplay()
     ExtensionType* type = extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
     if( !ext || !type )
         return;
+    updating_ = true;
     for( CIT_Widgets it = widgets_.begin(); it != widgets_.end(); ++it )
     {
         AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( ( *it )->name() );
@@ -499,6 +503,7 @@ void ExtensionsPanel::UpdateDisplay()
             }
         }
     }
+    updating_ = false;
 }
 
 // -----------------------------------------------------------------------------

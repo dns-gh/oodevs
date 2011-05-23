@@ -90,6 +90,7 @@ protected:
     QVBox*                                    pExtensionLayout_;
     QGroupBox*                                pGroupBox_;
     T_Widgets                                 widgets_;
+    bool                                      updating_;
     //@}
 };
 
