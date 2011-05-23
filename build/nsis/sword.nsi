@@ -152,7 +152,6 @@ SectionGroupEnd
 
 ; ------------------------------------------------------------------------------
 Section "Uninstall"
-    !insertmacro OT.KillService
     !insertmacro OT.KillRunning
     !insertmacro OT.UninstallAdditionalComponent "Terrain"
     !insertmacro OT.RemoveMasaLifeIde
@@ -161,7 +160,6 @@ SectionEnd
 
 ; ------------------------------------------------------------------------------
 Function .onInit
-    !insertmacro OT.KillService
     !insertmacro OT.CheckRunning
     !insertmacro OT.ChooseLanguage
 

@@ -7,7 +7,6 @@
 !include "AdvUninstLog.nsh"
 !include "lang.nsh"
 !include "Sections.nsh"
-!include "servicelib.nsh"
 
 !ifndef locate::RMDirEmpty
     !include "Locate.nsh"
@@ -350,24 +349,6 @@ FunctionEnd
     !insertmacro OT._KillRunning "raster_app.exe"
     !insertmacro OT._KillRunning "generation_app.exe"
     !insertmacro OT._KillRunning "terrain_workshop_app.exe"
-
-!macroend
-
-;------------------------------------------------------------------------------
-; Kill Launcher service
-;------------------------------------------------------------------------------
-!macro OT.KillService
-
-    !insertmacro SERVICE "installed" "Launcher" ""
-    Pop $0
-    StrCmp $0 "false" notrunning
-    MessageBox MB_YESNO|MB_ICONQUESTION $(OT_SERVICE_IS_RUNNING) /SD IDYES IDYES kill
-        MessageBox MB_OK $(OT_ABORTING_UNINSTALLATION)
-        Abort
-    kill:
-        !insertmacro SERVICE "stop" "Launcher" ""
-        !insertmacro SERVICE "delete" "Launcher" ""
-    notrunning:
 
 !macroend
 

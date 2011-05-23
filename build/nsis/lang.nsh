@@ -52,20 +52,8 @@ LangString OT_SECTION_DESKTOP_SHORTCUT ${LANG_FRENCH} "Bureau"
 LangString OT_SECTION_QUICKLAUNCH_SHORTCUT ${LANG_ENGLISH} "Quick launch bar"
 LangString OT_SECTION_QUICKLAUNCH_SHORTCUT ${LANG_FRENCH} "Barre de lancement rapide"
 
-LangString SERVICE_TEXT_INSTALLMODE_TITLE ${LANG_ENGLISH} "Launcher service"
-LangString SERVICE_TEXT_INSTALLMODE_TITLE ${LANG_FRENCH} "Service Launcher"
-LangString SERVICE_TEXT_INSTALLMODE_SUBTITLE ${LANG_FRENCH} "Choisissez si vous désirez démarrer le service Launcher"
-LangString SERVICE_TEXT_INSTALLMODE_SUBTITLE ${LANG_ENGLISH} "Select if you want to start the Launcher service"
-LangString SERVICE_INSTALLPAGE_TEXT_TOP ${LANG_ENGLISH} "Service configuration"
-LangString SERVICE_INSTALLPAGE_TEXT_TOP ${LANG_FRENCH} "Configuration du service"
-LangString SERVICE_INSTALLPAGE_TEXT_INSTALL ${LANG_ENGLISH} "Start Launcher service with Windows"
-LangString SERVICE_INSTALLPAGE_TEXT_INSTALL ${LANG_FRENCH} "Démarrer le service Launcher avec Windows"
-
 LangString OT_APPLICATION_IS_RUNNING ${LANG_ENGLISH} "The application '$9' is running, you need to close it to continue uninstallation.$\nDo you want to close it now?"
 LangString OT_APPLICATION_IS_RUNNING ${LANG_FRENCH} "L'application '$9' est en cours d'exécution, vous devez la fermer pour continuer la désinstallation.$\nVoulez-vous la fermer maintenant?"
-
-LangString OT_SERVICE_IS_RUNNING ${LANG_ENGLISH} "The Launcher service is running, you need to close it to continue.$\nDo you want to close it now?"
-LangString OT_SERVICE_IS_RUNNING ${LANG_FRENCH} "Le service Launcher est en cours d'exécution, vous devez le fermer pour continuer.$\nVoulez-vous le fermer maintenant?"
 
 LangString OT_ABORTING_UNINSTALLATION ${LANG_ENGLISH} "Uninstallation aborted."
 LangString OT_ABORTING_UNINSTALLATION ${LANG_FRENCH} "Désinstallation interrompue."
