@@ -424,12 +424,12 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
     //$$ TMP
     unsigned int nNbrHumans = 0;
     if( pSourceConcentration_ )
-        nNbrHumans = static_cast< unsigned int >( rWalkedDistance * pSourceConcentration_->GetPullingFlowsDensity() );
+        nNbrHumans = static_cast< unsigned int >( rWalkedDistance * pSourceConcentration_->GetPullingFlowsDensity() + 0.5f );
     else
     {
         const double rArea = GetLocation().GetArea();
         if( rArea )
-            nNbrHumans = static_cast< unsigned int >( rWalkedDistance * ( GetAllHumans() / rArea ) );
+            nNbrHumans = static_cast< unsigned int >( rWalkedDistance * ( GetAllHumans() / rArea ) + 0.5f );
         if( nNbrHumans == 0 ) // $$$$ ABR 2011-05-20: to prevent ghost flow
             nNbrHumans = GetAllHumans();
     }
@@ -441,7 +441,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         nNbrHumans = std::min( nNbrHumans, pSourceConcentration_->GetAllHumans() );
     // Head management
     SetHeadPosition( position );
-    if( ( bHeadMoveFinished_ || rSpeed == 0 ) && !pDestConcentration_ )
+    if( ( bHeadMoveFinished_ || rSpeed == 0 ) && !pDestConcentration_ && !pSourceConcentration_->IsNearPosition( GetHeadPosition() ) )
     {
         pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
         pDestConcentration_->RegisterPushingFlow( *this );
@@ -451,7 +451,7 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         if( pDestConcentration_->GetSplittingObject() )
         {
             personsPassedThroughObject_ += nNbrHumans;
-            double proportion = std::min( 1., static_cast< double >( personsPassedThroughObject_ ) / GetPopulation().GetAllHumans() );
+            double proportion = std::min( 1., static_cast< double >( personsPassedThroughObject_ ) / GetPopulation().GetAllHumans() + 0.5f );
             double newArmed = armedIndividualsBeforeSplit_ * ( 1 - proportion ) +  GetPopulation().GetNewArmedIndividuals() * proportion;
             GetPopulation().SetArmedIndividuals( newArmed );
         }
@@ -459,7 +459,10 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
     }
     // Tail management
     if( pSourceConcentration_ )
-        PushHumans( pSourceConcentration_->PullHumans( nNbrHumans ) );
+    {
+        if( rSpeed != 0 || pDestConcentration_ )
+            PushHumans( pSourceConcentration_->PullHumans( nNbrHumans ) );
+    }
     else
         UpdateTailPosition( rWalkedDistance );
     if( bFlowShapeUpdated_ )
