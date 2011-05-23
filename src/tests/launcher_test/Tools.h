@@ -10,13 +10,28 @@
 #pragma warning( push, 0 )
 #include <qapplication.h>
 #pragma warning( pop )
-
+#include "clients_kernel/Controllers.h"
+#include "frontend/Config.h"
+#include "frontend/Exercise_ABC.h"
+#include "frontend/LauncherClient.h"
+#include "frontend/CommandLineTools.h"
+#include "launcher_dll/LauncherFacade.h"
+#include "protocol/LauncherSenders.h"
 #include "protocol/AuthenticationSenders.h"
+#include "protocol/ClientSenders.h"
+#include "MockResponseHandler.h"
+#include "MockConnectionHandler.h"
+#include <tools/ElementObserver_ABC.h>
+#include <tools/ServerNetworker.h>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/assign.hpp>
+
+#define LAUNCHER_CHECK_MESSAGE( MSG, EXPECTED ) BOOST_CHECK_EQUAL( MSG.ShortDebugString(), EXPECTED )
 
 namespace launcher_test
 {
-    const std::string   defaultHost = "127.0.0.1";
-    const unsigned int  timeOut     = 5000;
+    const std::string  defaultHost = "127.0.0.1";
+    const unsigned int timeOut     = 5000;
 
     struct Timeout : private boost::noncopyable
     {
@@ -37,22 +52,15 @@ namespace launcher_test
         boost::posix_time::ptime start_;
     };
 
-    MOCK_BASE_CLASS( MockConnectionHandler, frontend::ConnectionHandler_ABC )
-    {
-        MOCK_METHOD( OnConnectionSucceeded, 0 );
-        MOCK_METHOD( OnConnectionFailed, 1 );
-        MOCK_METHOD( OnConnectionLost, 1 );
-        MOCK_METHOD( OnError, 1 );
-    };
     MOCK_BASE_CLASS( MockDispatcher, tools::ServerNetworker )
     {
-        MockDispatcher(unsigned short port)
+        MockDispatcher( unsigned short port )
             : tools::ServerNetworker( port )
-            , authPerformed( false )
+            , authPerformed         ( false )
         {
             AllowConnections();
-            RegisterMessage<MockDispatcher,sword::ClientToSim>( *this, &MockDispatcher::Receive );
-            RegisterMessage<MockDispatcher,sword::ClientToAuthentication>( *this, &MockDispatcher::Receive );
+            RegisterMessage< MockDispatcher, sword::ClientToSim >( *this, &MockDispatcher::Receive );
+            RegisterMessage< MockDispatcher, sword::ClientToAuthentication >( *this, &MockDispatcher::Receive );
         }
         MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToSim& ), ReceiveSim );
         MOCK_METHOD_EXT( ConnectionSucceeded, 1, void( const std::string& ), ConnectionSucceeded );
@@ -60,16 +68,16 @@ namespace launcher_test
         MOCK_METHOD_EXT( ConnectionError, 2, void( const std::string&, const std::string& ), ConnectionError );
 
         template <typename M>
-        void Send(M& msg)
+        void Send( M& msg )
         {
-            ServerNetworker::Send(host, msg);
+            ServerNetworker::Send( host, msg );
         }
 
         bool AuthenticationPerformed() const
         {
             return authPerformed;
         }
-        void Receive(const std::string& /*endpoint*/, const sword::ClientToAuthentication& msg)
+        void Receive( const std::string& /*endpoint*/, const sword::ClientToAuthentication& msg )
         {
             if( msg.message().has_authentication_request() )
             {
@@ -80,7 +88,6 @@ namespace launcher_test
                 authPerformed = true;
             }
         }
-
         std::string host;
         bool authPerformed;
     };
@@ -89,9 +96,9 @@ namespace launcher_test
     {
         ApplicationFixture()
             : varg( MakeArg() )
-            , args( boost::assign::list_of< char* >( "" )( "--root-dir=../../data" )("--test")( &varg[0] ) )
+            , args( boost::assign::list_of< char* >( "" )( "--root-dir=../../data" )( "--test" )( &varg[0] ) )
             , argc( args.size() )
-            , app( argc, &args[0] )
+            , app ( argc, &args[0] )
         {}
         std::vector< char > MakeArg()
         {
@@ -136,8 +143,8 @@ namespace launcher_test
     struct Fixture : ApplicationFixture
     {
         Fixture()
-            : client  ( controllers.controller_ )
-            , timeout ( timeOut )
+            : client    ( controllers.controller_ )
+            , timeout   ( timeOut )
             , dispatcher( frontend::DispatcherPort( 1 ) )
         {
             launcher.Initialize( argc, &args[0] );
@@ -163,12 +170,13 @@ namespace launcher_test
         Timeout timeout;
         MockDispatcher dispatcher;
     };
+
     struct ExerciseFixture : Fixture
     {
         ExerciseFixture() 
             : Fixture()
             , exerciceListener( controllers )
-            , SESSION( "default" )
+            , SESSION         ( "default" )
         {
             BOOST_REQUIRE( client.Connected() );
             
@@ -178,25 +186,34 @@ namespace launcher_test
             {
                 Update();
             }
+
             BOOST_REQUIRE( exerciceListener.Check() );
+            exercise = exerciceListener.exercises_.front();
+            BOOST_REQUIRE( exercise );
+            MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
+            exercise->StartDispatcher( SESSION );
+            timeout.Start();
+            while( (!exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && !timeout.Expired() )
             {
-                exercise = exerciceListener.exercises_.front();
-                BOOST_REQUIRE( exercise );
-                MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
-                exercise->StartDispatcher( SESSION );
-                timeout.Start();
-                while( (!exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && !timeout.Expired() )
-                {
-                    Update();
-                }
-                BOOST_REQUIRE( exercise->IsRunning() );
+                Update();
             }
+            BOOST_REQUIRE( exercise->IsRunning() );
+        }
+
+        void VerifySendRequest( const std::string& expected )
+        {
+            sword::ClientToSim message;
+            MOCK_EXPECT( dispatcher, ReceiveSim ).once().with( mock::any , mock::retrieve( message ) );
+            timeout.Start();
+            while( !message.IsInitialized()&& !timeout.Expired() )
+                Update();
+            LAUNCHER_CHECK_MESSAGE( message, expected.c_str() );
+            mock::verify();
         }
 
         ExerciseListener exerciceListener;
-        const frontend::Exercise_ABC* exercise;        
+        const frontend::Exercise_ABC* exercise;
         const std::string SESSION;
     };
 }
 
-#define LAUNCHER_CHECK_MESSAGE(MSG, EXPECTED) BOOST_CHECK_EQUAL(MSG.ShortDebugString(), EXPECTED)
