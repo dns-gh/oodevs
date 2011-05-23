@@ -112,6 +112,15 @@ void ResponseHandlerProxy::Handle( const sword::SessionNotification& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResponseHandlerProxy::Handle
+// Created: LGY 2011-05-23
+// -----------------------------------------------------------------------------
+void ResponseHandlerProxy::Handle( const sword::SessionParameterChangeResponse& message )
+{
+    UpdateHandlers( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResponseHandlerProxy::UpdateHandlers
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------

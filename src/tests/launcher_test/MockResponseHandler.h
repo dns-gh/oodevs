@@ -28,6 +28,7 @@ MOCK_BASE_CLASS( MockResponseHandler, frontend::ResponseHandler_ABC )
     MOCK_METHOD_EXT( Handle, 1, void( const sword::ProfileListResponse& ), HandleProfileListResponse );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionCommandExecutionResponse& ), HandleSessionCommandExecutionResponse );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionNotification& ), HandleSessionNotification );
+    MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionParameterChangeResponse& ), HandleSessionParameterChangeResponse );
 };
 
 }

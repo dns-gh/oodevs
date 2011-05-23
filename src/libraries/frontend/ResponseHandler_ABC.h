@@ -20,6 +20,7 @@ namespace sword
     class ProfileListResponse;
     class SessionCommandExecutionResponse;
     class SessionNotification;
+    class SessionParameterChangeResponse;
 }
 
 namespace frontend
@@ -47,6 +48,7 @@ public:
     virtual void Handle( const sword::ProfileListResponse& message ) = 0;
     virtual void Handle( const sword::SessionCommandExecutionResponse& message ) = 0;
     virtual void Handle( const sword::SessionNotification& message ) = 0;
+    virtual void Handle( const sword::SessionParameterChangeResponse& message ) = 0;
     //@}
 };
 

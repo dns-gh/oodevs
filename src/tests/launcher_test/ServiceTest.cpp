@@ -32,9 +32,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanListAvailableExercises, Fixture )
     client.QueryExerciseList();
     timeout.Start();
     while( !listener.Check() && !timeout.Expired() )
-    {
         Update();
-    }
     BOOST_CHECK( listener.Check() );
 }
 
@@ -52,9 +50,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, ExerciseFixture )
     exercise->QueryProfileList( );
     timeout.Start();
     while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-    {
         Update();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -78,9 +74,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
         dispatcherResponse.Send( dispatcher, 1 );
         timeout.Start();
         while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-        {
             Update();
-        }
         LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" running: false" );
     }
 }
@@ -106,9 +100,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
         dispatcherResponse.Send( dispatcher, 2 );
         timeout.Start();
         while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-        {
             Update();
-        }
         LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: session_already_running exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" running: true" );
     }
 }
@@ -134,9 +126,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanSaveCheckPoint, ExerciseFixture )
         dispatcherResponse.Send( dispatcher, 0 );
         timeout.Start();
         while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-        {
             Update();
-        }
         LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" saved_checkpoint: \"checkpoint\"" );
     }
 }
@@ -230,4 +220,32 @@ BOOST_FIXTURE_TEST_CASE( NotifyProfileUpdate, ExerciseFixture )
     while( !launcherResponse.IsInitialized() && !timeout.Expired() )
         Update();
     LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" notification { profile_update { profile { login: \"login\" password: \"password\" supervisor: true } } }" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotifyControlInformation
+// Created: LGY 2011-05-23
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( NotifyControlInformation, ExerciseFixture )
+{
+    sword::SessionParameterChangeResponse launcherResponse;
+    boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+    MOCK_EXPECT( handler, HandleSessionParameterChangeResponse ).once().with( mock::retrieve( launcherResponse ) );
+    client.Register( handler );
+
+    client::ControlInformation information;
+    information().set_current_tick( 42 );
+    information().mutable_initial_date_time()->set_data( "initialDate" );
+    information().mutable_date_time()->set_data( "dateTime" );
+    information().set_tick_duration( 41 );
+    information().set_time_factor( 40 );
+    information().set_checkpoint_frequency( 39 );
+    information().set_status( sword::EnumSimulationState( 0 ) );
+    information().set_send_vision_cones( true );
+    information().set_profiling_enabled( false );
+    information.Send( dispatcher, 12 );
+    timeout.Start();
+    while( !launcherResponse.IsInitialized() && !timeout.Expired() )
+        Update();
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" checkpoint_frequency: 39 acceleration_factor: 40" );
 }

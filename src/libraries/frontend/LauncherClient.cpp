@@ -215,6 +215,8 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, con
     }
     else if( message.message().has_session_notification() )
         responseHandler_->Handle( message.message().session_notification() );
+    else if( message.message().has_session_parameter_change_response() )
+        responseHandler_->Handle( message.message().session_parameter_change_response() );
 }
 
 // -----------------------------------------------------------------------------
