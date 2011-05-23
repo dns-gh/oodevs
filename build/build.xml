@@ -1062,14 +1062,14 @@
             <property name="ALIASES" value='""rule=@par Rule:\n" "index=@par Index:\n" "default=@par Default value:\n""'/>
             <property name="WARN_LOGFILE" value="${reports.dir}/doxygen.log"/>
             <property name="GENERATE_HTMLHELP" value="YES"/>
-            <property name="CHM_FILE" value="../SWORD-API_Reference_${version.major}.chm"/>
+            <property name="CHM_FILE" value="${dist.dir}/SWORD-API_Reference_${version.major}.chm"/>
         </doxygen-report>
         <fail message="documentation contains errors, see ${reports.dir}/doxygen.log">
             <condition>
                 <length file="${reports.dir}/doxygen.log" when="greater" length="0"/>
             </condition>
         </fail>
-        <htmlhelp input="${out.dir}/sdk" outdir="${dist.dir}"/>
+        <htmlhelp input="${out.dir}/sdk" outdir="${out.dir}/sdk"/>
     </target>
 
     <!--
