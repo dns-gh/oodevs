@@ -11930,7 +11930,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ONG Intervention" id="451" name="ONG Intervention" type="Pion GEN">
+  <unit decisional-model="Masalife.ONG Intervention" id="451" name="ONG Intervention" type="Pion Organization">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="MPG"/>
@@ -12109,4 +12109,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3905112646" -->
+<!-- signature="2493263433" -->

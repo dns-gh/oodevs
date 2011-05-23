@@ -923,3 +923,12 @@ void DEC_AgentFunctions::IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, co
     for( TER_Agent_ABC::CIT_AgentPtrVector itAgent = agentsDetected.begin(); itAgent != agentsDetected.end(); ++itAgent )
         perceiver.NotifyPerception( static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent(), PHY_PerceptionLevel::identified_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetMilPionType
+// Created: DDA 2011-05-23
+// -----------------------------------------------------------------------------
+std::string DEC_AgentFunctions::GetMilPionType( DEC_Decision_ABC* pion )
+{
+    return pion->GetPion().GetType().GetMilPionType();
+}

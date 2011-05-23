@@ -112,6 +112,7 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
     brain[ "DEC_SetMission" ] =
         boost::function< void( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_AutomateFunctions::SetMission, _1, _2 ) );
     brain[ "DEC_IsMissionPionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
+    brain[ "DEC_Pion_GetMilPionType" ] = &DEC_AgentFunctions::GetMilPionType;
 }
 
 // -----------------------------------------------------------------------------
@@ -177,6 +178,7 @@ void RegisterAgentKnowledgeFunctions( directia::brain::Brain& brain )
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Lock, _1 ) );
     brain[ "DEC_ConnaissanceAgent_Deverrouiller" ] =
         boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Unlock, _1 ) );
+    brain[ "DEC_ConnaissanceAgent_GetMilPionType" ] = &DEC_KnowledgeAgentFunctions::GetMilPionType;
 }
 
 // -----------------------------------------------------------------------------

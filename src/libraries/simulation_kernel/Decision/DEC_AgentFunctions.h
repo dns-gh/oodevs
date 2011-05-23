@@ -50,6 +50,7 @@ public:
     static int  GetPosture( const MIL_Agent_ABC& callerAgent );
     static bool IsInCity( const MIL_Agent_ABC& callerAgent );
     static bool IsInCrowd( const MIL_Agent_ABC& callerAgent );
+    static std::string GetMilPionType( DEC_Decision_ABC* pion );
 
     static bool CanConstructObject( const MIL_Agent_ABC& callerAgent, const std::string& type );
     static bool CanConstructObjectWithLoaded( const MIL_Agent_ABC& callerAgent, const std::string& type );

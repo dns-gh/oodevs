@@ -394,3 +394,12 @@ bool DEC_KnowledgeAgentFunctions::IsRefugee( boost::shared_ptr< DEC_Knowledge_Ag
 {
     return pKnowledge->GetAgentKnown().GetType().IsRefugee();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::GetMilPionType
+// Created: DDA 2011-05-23
+// -----------------------------------------------------------------------------
+std::string DEC_KnowledgeAgentFunctions::GetMilPionType( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    return pKnowledge->GetAgentKnown().GetType().GetMilPionType();
+}
