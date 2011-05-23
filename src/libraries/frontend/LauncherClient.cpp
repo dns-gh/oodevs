@@ -213,6 +213,8 @@ void LauncherClient::HandleLauncherToAdmin( const std::string& /*endpoint*/, con
                                 .arg( MessageString( message.message().session_command_execution_response().error_code() ) ).ascii() );
         responseHandler_->Handle( message.message().session_command_execution_response() );
     }
+    else if( message.message().has_session_notification() )
+        responseHandler_->Handle( message.message().session_notification() );
 }
 
 // -----------------------------------------------------------------------------

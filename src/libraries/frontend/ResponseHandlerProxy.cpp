@@ -103,6 +103,15 @@ void ResponseHandlerProxy::Handle( const sword::SessionCommandExecutionResponse&
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResponseHandlerProxy::Handle
+// Created: LGY 2011-05-23
+// -----------------------------------------------------------------------------
+void ResponseHandlerProxy::Handle( const sword::SessionNotification& message )
+{
+    UpdateHandlers( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResponseHandlerProxy::UpdateHandlers
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------

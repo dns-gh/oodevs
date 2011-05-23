@@ -59,7 +59,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, ExerciseFixture )
 
 // -----------------------------------------------------------------------------
 // Name: ClientCanPauseExercise
-// Created: AHC 2010-05-19
+// Created: AHC 2011-05-19
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
 {
@@ -87,7 +87,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
 
 // -----------------------------------------------------------------------------
 // Name: ClientCanResumeExercise
-// Created: AHC 2010-05-20
+// Created: AHC 2011-05-20
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
 {
@@ -115,7 +115,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
 
 // -----------------------------------------------------------------------------
 // Name: ClientCanSaveCheckPoint
-// Created: AHC 2010-05-20
+// Created: AHC 2011-05-20
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( ClientCanSaveCheckPoint, ExerciseFixture )
 {
@@ -141,3 +141,48 @@ BOOST_FIXTURE_TEST_CASE( ClientCanSaveCheckPoint, ExerciseFixture )
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: NotifyUnitExtension
+// Created: LGY 2011-05-23
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( NotifyUnitExtension, ExerciseFixture )
+{
+    sword::SessionNotification launcherResponse;
+    boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+    MOCK_EXPECT( handler, HandleSessionNotification ).once().with( mock::retrieve( launcherResponse ) );
+    client.Register( handler );
+
+    client::UnitAttributes attributes;
+    attributes().mutable_unit()->set_id( 42 );
+    sword::Extension_Entry* entry = attributes().mutable_extension()->add_entries();
+    entry->set_name( "name" );
+    entry->set_value( "value" );
+    attributes.Send( dispatcher, 12 );
+    timeout.Start();
+    while( !launcherResponse.IsInitialized() && !timeout.Expired() )
+        Update();
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" notification { unit_update { unit { id: 42 } extensions { entries { name: \"name\" value: \"value\" } } } }" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotifyFormationExtension
+// Created: LGY 2011-05-23
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( NotifyFormationExtension, ExerciseFixture )
+{
+    sword::SessionNotification launcherResponse;
+    boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+    MOCK_EXPECT( handler, HandleSessionNotification ).once().with( mock::retrieve( launcherResponse ) );
+    client.Register( handler );
+
+    client::FormationUpdate attributes;
+    attributes().mutable_formation()->set_id( 42 );
+    sword::Extension_Entry* entry = attributes().mutable_extension()->add_entries();
+    entry->set_name( "name" );
+    entry->set_value( "value" );
+    attributes.Send( dispatcher, 12 );
+    timeout.Start();
+    while( !launcherResponse.IsInitialized() && !timeout.Expired() )
+        Update();
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" notification { formation_update { formation { id: 42 } extensions { entries { name: \"name\" value: \"value\" } } } }" );
+}
