@@ -359,16 +359,16 @@
           </xs:attribute>
         </xs:complexType>
       </xs:element>
-      <xs:element name="tc2" minOccurs="0">
+      <xs:element name="logistic-base" minOccurs="0">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Defines attributes related to logistic superior (automat TC2).</xs:documentation>
-          <xs:documentation xml:lang="fr">Définit les attributs concernant le supérieur logistique (automate TC2).</xs:documentation>
+          <xs:documentation xml:lang="en">Defines attributes related to logistic superior.</xs:documentation>
+          <xs:documentation xml:lang="fr">Définit les attributs concernant le supérieur logistique.</xs:documentation>
         </xs:annotation>
         <xs:complexType>
           <xs:attribute name="id" type="xs:nonNegativeInteger" use="required">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Defines reference to the logistic superior (TC2 automat).</xs:documentation>
-              <xs:documentation xml:lang="fr">Identifiant du supérieur logistique (automate TC2).</xs:documentation>
+              <xs:documentation xml:lang="en">Defines reference to the logistic superior.</xs:documentation>
+              <xs:documentation xml:lang="fr">Identifiant du supérieur logistique.</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:complexType>
