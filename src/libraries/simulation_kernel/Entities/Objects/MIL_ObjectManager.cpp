@@ -11,14 +11,16 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectManager.h"
+#include "AltitudeModifierAttribute.h"
 #include "CapacityFactory.h"
+#include "FloodAttribute.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectLoader.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "MIL_Singletons.h"
+#include "UrbanObjectWrapper.h"
 #include "Entities/MIL_Army_ABC.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -63,6 +65,7 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
         if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( it->second ) )
             urbanObjects_.insert( std::make_pair( &wrapper->GetObject(), wrapper ) );
+    FinalizeObjects();
 }
 
 // -----------------------------------------------------------------------------
@@ -117,20 +120,9 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
 {
     if( !pObject )
         return;
-    RegisterDistantObject( pObject );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::RegisterDistantObject
-// Created: SLI 2010-10-04
-// -----------------------------------------------------------------------------
-void MIL_ObjectManager::RegisterDistantObject( MIL_Object_ABC* pObject )
-{
-    if( !pObject )
-        return;
     if( !objects_.insert( std::make_pair( pObject->GetID(), pObject ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
-    pObject->SendCreation(); //$$$ a déplacer ...
+    pObject->SendCreation();
     if( pObject->GetArmy() )
         pObject->GetArmy()->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *pObject ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
 }
@@ -210,17 +202,6 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ObjectManager::CreateDistantObject
-// Created: SLI 2010-10-04
-// -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name )
-{
-    MIL_Object_ABC* pObject = builder_->BuildObject( name, type, army, localisation, sword::ObstacleType_DemolitionTargetType_preliminary );
-    RegisterDistantObject( pObject );
-    return pObject;
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
@@ -286,16 +267,42 @@ void MIL_ObjectManager::ReadUrbanState( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::FinalizeObjects
+// Created: JSR 2011-05-20
+// -----------------------------------------------------------------------------
+void MIL_ObjectManager::FinalizeObjects()
+{
+    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    {
+        AltitudeModifierAttribute* altitude = it->second->RetrieveAttribute< AltitudeModifierAttribute >();
+        if( altitude && altitude->ReadFromODB() )
+            altitude->ModifyAltitude( it->second->GetLocalisation() );
+    }
+    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    {
+        FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >();
+        if( flood && flood->ReadFromODB() )
+            flood->GenerateFlood();
+    }
+    for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    {
+        AltitudeModifierAttribute* altitude = it->second->RetrieveAttribute< AltitudeModifierAttribute >();
+        FloodAttribute* flood = it->second->RetrieveAttribute< FloodAttribute >();
+        if( altitude && !altitude->ReadFromODB() )
+            altitude->ModifyAltitude( it->second->GetLocalisation() );
+        if( flood && !flood->ReadFromODB() )
+            flood->GenerateFlood();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::SendCreation
 // Created: SLG 2010-06-23
 // -----------------------------------------------------------------------------
 void MIL_ObjectManager::SendCreation()
 {
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
-    {
-        MIL_Object_ABC& object = *it->second;
-        object.SendCreation();
-    }
+        it->second->SendCreation();
 }
 
 // -----------------------------------------------------------------------------
@@ -305,10 +312,7 @@ void MIL_ObjectManager::SendCreation()
 void MIL_ObjectManager::SendFullState()
 {
     for( IT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
-    {
-        MIL_Object_ABC& object = *it->second;
-        object.SendFullState();
-    }
+        it->second->SendFullState();
 }
 
 // -----------------------------------------------------------------------------
@@ -327,7 +331,7 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
         if( !pObject )
             nErrorCode = sword::ObjectMagicActionAck::error_invalid_object;
         else
-            (*pObject)().Destroy();
+            ( *pObject )().Destroy();
     }
     else if( msg.type() == sword::ObjectMagicAction::update )
     {

@@ -2280,6 +2280,10 @@ Motivo: %3
         <source>Stop evacuate</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Generate flood</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OrbatToolbar</name>

@@ -9,22 +9,67 @@
 
 #include "gaming_pch.h"
 #include "AltitudeModifierAttribute.h"
+#include "Simulation.h"
 #include "Tools.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Positions.h"
 #include "clients_kernel/Units.h"
 
 using namespace kernel;
+
+namespace
+{
+class LocationVisitor : public LocationVisitor_ABC
+{
+public:
+    //! @name Constructors/Destructor
+    //@{
+    LocationVisitor( geometry::Polygon2f& polygon )
+        : polygon_( polygon )
+    {
+        // NOTHING
+    }
+    virtual ~LocationVisitor()
+    {
+        // NOTHING
+    }
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void VisitLines    ( const T_PointVector& points ) { polygon_ = geometry::Polygon2f( points ); }
+    virtual void VisitRectangle( const T_PointVector& points ) { polygon_ = geometry::Polygon2f( points ); }
+    virtual void VisitPolygon  ( const T_PointVector& points ) { polygon_ = geometry::Polygon2f( points ); }
+    virtual void VisitCircle   ( const geometry::Point2f&, float ) {}
+    virtual void VisitPoint    ( const geometry::Point2f& ) {}
+    virtual void VisitPath     ( const geometry::Point2f&, const T_PointVector& ) {}
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    geometry::Polygon2f& polygon_;
+    //@}
+};
+}
 
 // -----------------------------------------------------------------------------
 // Name: AltitudeModifierAttribute constructor
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
-AltitudeModifierAttribute::AltitudeModifierAttribute( Controller& controller )
-    : controller_( controller )
-    , height_    ( 0 )
+AltitudeModifierAttribute::AltitudeModifierAttribute( Controller& controller, kernel::DetectionMap& detection, const kernel::Entity_ABC& entity )
+    : controller_      ( controller )
+    , detection_       ( detection )
+    , entity_          ( entity )
+    , altitudeModified_( false )
+    , readFromODB_     ( false )
+    , height_          ( 0 )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +78,7 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( Controller& controller )
 // -----------------------------------------------------------------------------
 AltitudeModifierAttribute::~AltitudeModifierAttribute()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,12 +110,62 @@ void AltitudeModifierAttribute::DisplayInSummary( Displayer_ABC& displayer ) con
 }
 
 // -----------------------------------------------------------------------------
+// Name: AltitudeModifierAttribute::NotifyDeleted
+// Created: JSR 2011-05-18
+// -----------------------------------------------------------------------------
+void AltitudeModifierAttribute::NotifyDeleted( const kernel::Object_ABC& entity )
+{
+    if( static_cast< const Entity_ABC* >( &entity ) == &entity_ )
+        ModifyAltitude( -height_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AltitudeModifierAttribute::NotifyUpdated
+// Created: JSR 2011-05-20
+// -----------------------------------------------------------------------------
+void AltitudeModifierAttribute::NotifyUpdated( const Simulation& simulation )
+{
+    if( !altitudeModified_ && simulation.IsInitialized() )
+        ModifyAltitude();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AltitudeModifierAttribute::ReadFromODB
+// Created: JSR 2011-05-20
+// -----------------------------------------------------------------------------
+bool AltitudeModifierAttribute::ReadFromODB() const
+{
+    return readFromODB_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AltitudeModifierAttribute::ModifyAltitude
+// Created: JSR 2011-05-20
+// -----------------------------------------------------------------------------
+void AltitudeModifierAttribute::ModifyAltitude()
+{
+    ModifyAltitude( height_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AltitudeModifierAttribute::DoUpdate
 // Created: JSR 2011-05-17
 // -----------------------------------------------------------------------------
 void AltitudeModifierAttribute::DoUpdate( const sword::ObjectUpdate& message )
 {
-    UpdateData( message.attributes() );
+    if( !message.has_attributes() )
+        return;
+    const sword::ObjectAttributes& attributes = message.attributes();
+    if( attributes.has_altitude_modifier() )
+    {
+        readFromODB_ = attributes.altitude_modifier().from_preparation();
+        int height = attributes.altitude_modifier().height();
+        if( height != height_ )
+        {
+            height_ = height;
+            controller_.Update( *static_cast< AltitudeModifierAttribute_ABC* >( this ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -79,19 +174,31 @@ void AltitudeModifierAttribute::DoUpdate( const sword::ObjectUpdate& message )
 // -----------------------------------------------------------------------------
 void AltitudeModifierAttribute::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes() );
+    if( !message.has_attributes() )
+        return;
+    const sword::ObjectAttributes& attributes = message.attributes();
+    if( attributes.has_altitude_modifier() )
+    {
+        altitudeModified_ = true;
+        int height = attributes.altitude_modifier().height();
+        if( height != height_ )
+        {
+            height_ = height;
+            controller_.Update( *static_cast< AltitudeModifierAttribute_ABC* >( this ) );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: AltitudeModifierAttribute::UpdateData
-// Created: JSR 2011-05-17
+// Name: AltitudeModifierAttribute::ModifyAltitude
+// Created: JSR 2011-05-19
 // -----------------------------------------------------------------------------
-template< typename T >
-void AltitudeModifierAttribute::UpdateData( const T& message )
+void AltitudeModifierAttribute::ModifyAltitude( int heightOffset )
 {
-    if( message.has_altitude_modifier() )
-    {
-        height_ = message.altitude_modifier().height();
-        controller_.Update( *static_cast< AltitudeModifierAttribute_ABC* >( this ) );
-    }
+    altitudeModified_ = true;
+    geometry::Polygon2f polygon;
+    LocationVisitor visitor( polygon );
+    entity_.Get< Positions >().Accept( visitor );
+    if( !polygon.IsEmpty() )
+        detection_.ModifyAltitude( polygon, static_cast< short >( heightOffset ) );
 }

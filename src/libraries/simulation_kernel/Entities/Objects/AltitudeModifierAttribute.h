@@ -12,12 +12,15 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
+#include "knowledge/DEC_Knowledge_ObjectAttributeProxyPassThrough.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
 {
     class xistream;
 }
+
+class TER_Localisation;
 
 // =============================================================================
 /** @class  AltitudeModifierAttribute
@@ -29,11 +32,14 @@ class AltitudeModifierAttribute : public ObjectAttribute_ABC
                                 , public UpdatableAttribute_ABC
 {
 public:
+    typedef DEC_Knowledge_ObjectAttributeProxyPassThrough< AltitudeModifierAttribute > T_KnowledgeProxyType;
+
+public:
     //! @name Constructors/Destructor
     //@{
              AltitudeModifierAttribute();
     explicit AltitudeModifierAttribute( const xml::xistream& xis );
-    explicit AltitudeModifierAttribute( const sword::MissionParameter_Value& attributes );
+    explicit AltitudeModifierAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& localisation );
     virtual ~AltitudeModifierAttribute();
     //@}
 
@@ -46,6 +52,7 @@ public:
     //! @name From ObjectAttribute_ABC
     //@{
     virtual void Register( MIL_Object_ABC& object ) const;
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 
     //! @name ODB
@@ -62,6 +69,13 @@ public:
     //! @name Copy/Assignment
     //@{
     AltitudeModifierAttribute& operator=( const AltitudeModifierAttribute& ); //!< Assignment operator
+    bool Update( const AltitudeModifierAttribute& rhs );
+    //@}
+
+    //! @name Operations
+    //@{
+    bool ReadFromODB() const;
+    void ModifyAltitude( const TER_Localisation& localisation ) const;
     //@}
 
 private:
@@ -73,6 +87,7 @@ private:
 private:
     //! @name Member data
     //@{
+    bool readFromODB_;
     unsigned int height_;
     //@}
 };

@@ -17,6 +17,7 @@
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "gaming/FloodAttribute.h"
 #include "gaming/Object.h"
 #include "protocol/SimulationSenders.h"
 
@@ -119,6 +120,8 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
             AddMagic( tr( "Mine" ), SLOT( MineObject() ), magicMenu );
             AddMagic( tr( "Sweep mines" ), SLOT( SweepMineObject() ), magicMenu );
         }
+        if( entity.Retrieve< FloodAttribute_ABC >() )
+            AddMagic( tr( "Generate flood" ), SLOT( GenerateFlood() ), magicMenu );
         const Object& obj = static_cast< const Object& >( entity );
         if( obj.IsReservedObstacle() )
         {
@@ -397,4 +400,21 @@ void ObjectMagicOrdersInterface::StopEvacuate()
     list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_evacuated );
     list.AddBool( "Evacuated", false );
     actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMagicOrdersInterface::GenerateFlood
+// Created: JSR 2011-05-23
+// -----------------------------------------------------------------------------
+void ObjectMagicOrdersInterface::GenerateFlood()
+{
+    if( !selectedEntity_ )
+        return;
+    FloodAttribute* flood = static_cast< FloodAttribute* >( selectedEntity_.ConstCast()->Retrieve< FloodAttribute_ABC >() );
+    if( !flood )
+        return;
+    ParameterList& list = *new ParameterList( OrderParameter( "Flood", "list", false ) );
+    list.AddIdentifier( "AttributeId", sword::ObjectMagicAction_Attribute_flood );
+    actionsModel_.Publish( *actionsModel_.CreateObjectUpdateMagicAction( *selectedEntity_, list ) );
+    flood->GenerateFlood( true );
 }

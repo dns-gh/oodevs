@@ -118,7 +118,7 @@ void ObjectAttributesFactory::Register( kernel::Entity_ABC& entity, const sword:
         entity.Attach< kernel::FloodAttribute_ABC >( *new FloodAttribute( controllers_.controller_, static_.detection_, entity.Get< kernel::Positions >() ) );
 
     if( attributes.has_altitude_modifier() && entity.Retrieve< kernel::AltitudeModifierAttribute_ABC >() == 0 )
-        entity.Attach< kernel::AltitudeModifierAttribute_ABC >( *new AltitudeModifierAttribute( controllers_.controller_ ) );
+        entity.Attach< kernel::AltitudeModifierAttribute_ABC >( *new AltitudeModifierAttribute( controllers_.controller_, static_.detection_, entity ) );
 
     if( attributes.has_stock() && entity.Retrieve< kernel::StockAttribute_ABC >() == 0 )
         entity.Attach< kernel::StockAttribute_ABC >( *new StockAttribute( controllers_.controller_, static_.objectTypes_ ) );

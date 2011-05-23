@@ -13,6 +13,9 @@
 #include <boost/noncopyable.hpp>
 #include <geometry/types.h>
 
+namespace kernel
+{
+
 // =============================================================================
 /** @class  AltitudeModified
     @brief  AltitudeModified
@@ -41,5 +44,7 @@ public:
     const geometry::Polygon2f& polygon_;
     //@}
 };
+
+}
 
 #endif // __AltitudeModified_h_

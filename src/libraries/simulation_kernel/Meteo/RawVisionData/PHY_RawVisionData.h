@@ -21,6 +21,7 @@ namespace tools
 class PHY_AmmoEffect;
 class MT_Ellipse;
 class PHY_IndirectFireDotationClass;
+class TER_Localisation;
 
 //*****************************************************************************
 // Created: JVT 02-11-05
@@ -30,15 +31,6 @@ class PHY_RawVisionData : public weather::PHY_RawVisionData_ABC
                         , private boost::noncopyable
 {
 public:
-    enum E_AlignType
-    {
-        eTopLeft,
-        eTopRight,
-        eBottomLeft,
-        eBottomRight,
-        eCenter
-    };
-
     // environnement visuel statique
     enum E_VisionObject
     {
@@ -54,17 +46,6 @@ public:
     // cellule de la matrice de vision
     struct sCell
     {
-    private:
-        friend class PHY_RawVisionData;
-
-        unsigned short h  : 16;     // hauteur du sol
-        unsigned char  dh : 8;      // hauteur de la planimétrie
-        envBits        e  : 8;      // champ de bit représentant l'environnement visuel statique
-        weather::PHY_Meteo* pMeteo; // météo locale
-        PHY_AmmoEffect* pEffects;   // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
-
-        static const weather::PHY_Meteo* pGlobalMeteo_;
-
     public:
         sCell()
             : h       ( 0 )
@@ -86,6 +67,18 @@ public:
         {
             return h == rhs.h && dh == rhs.dh && e == rhs.e;
         }
+    private:
+        // $$$$ _RC_ JSR 2011-05-19: TODO à cleaner (virer le friend, rajouter des underscores...)
+        friend class PHY_RawVisionData;
+
+        unsigned short h  : 16;     // hauteur du sol
+        unsigned char  dh : 8;      // hauteur de la planimétrie
+        envBits        e  : 8;      // champ de bit représentant l'environnement visuel statique
+        weather::PHY_Meteo* pMeteo; // météo locale
+        PHY_AmmoEffect* pEffects;   // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
+
+        static const weather::PHY_Meteo* pGlobalMeteo_;
+
     };
 
 public:
@@ -114,6 +107,7 @@ public:
 
     const weather::PHY_Meteo::sWindData& GetWind( const MT_Vector2D& vPos ) const;
 
+    void ModifyAltitude( const TER_Localisation& localisation, short heightOffset );
     double GetMinAltitude() const;
     double GetMaxAltitude() const;
     void CalcMinMaxAltitude();

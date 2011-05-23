@@ -77,16 +77,16 @@ double PHY_RawVisionData::GetAltitude( double rX, double rY ) const
                  nRow, 
                  MT_LinearInterpolation< double >()( 
                     nCol, 
-                    operator () ( nCol, nRow ).GetAltitude(),
+                    operator()( nCol, nRow ).GetAltitude(),
                     nCol + 1,
-                    operator () ( nCol + 1, nRow ).GetAltitude(),
+                    operator()( nCol + 1, nRow ).GetAltitude(),
                     rScaledX ),
                  nRow + 1,
                  MT_LinearInterpolation< double >()(
                     nCol,
-                    operator () ( nCol, nRow + 1 ).GetAltitude(),
+                    operator()( nCol, nRow + 1 ).GetAltitude(),
                     nCol + 1,
-                    operator () ( nCol + 1, nRow + 1 ).GetAltitude(),
+                    operator()( nCol + 1, nRow + 1 ).GetAltitude(),
                     rScaledX ),
                  rY / rCellSize_ );
 }
@@ -109,7 +109,7 @@ double PHY_RawVisionData::GetAltitude( const MT_Vector2D& pos ) const
 inline
 PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D& pos ) const
 {
-    return operator() ( pos ).GetEnv();
+    return operator()( pos ).GetEnv();
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D
 inline
 const weather::PHY_Meteo::sWindData& PHY_RawVisionData::GetWind( const MT_Vector2D& vPos ) const
 {
-    return operator() ( vPos ).GetWind();    
+    return operator()( vPos ).GetWind();    
 }
 
 //-----------------------------------------------------------------------------
@@ -129,7 +129,7 @@ const weather::PHY_Meteo::sWindData& PHY_RawVisionData::GetWind( const MT_Vector
 inline
 PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( double rX_, double rY_ ) const
 {
-    return operator () ( rX_, rY_ ).GetEnv();
+    return operator()( rX_, rY_ ).GetEnv();
 }
 
 //-----------------------------------------------------------------------------
@@ -149,7 +149,7 @@ unsigned int PHY_RawVisionData::GetCol( double x ) const
 inline
 unsigned int PHY_RawVisionData::GetRow( double y ) const
 {
-    return static_cast< unsigned int >( y / rCellSize_);
+    return static_cast< unsigned int >( y / rCellSize_ );
 }
 
 //-----------------------------------------------------------------------------

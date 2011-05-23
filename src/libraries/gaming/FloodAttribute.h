@@ -27,6 +27,8 @@ namespace kernel
     class Positions;
 }
 
+class Simulation;
+
 // =============================================================================
 /** @class  FloodAttribute
     @brief  FloodAttribute
@@ -36,6 +38,8 @@ namespace kernel
 class FloodAttribute : public kernel::FloodAttribute_ABC
                      , public kernel::Drawable_ABC
                      , public flood::ElevationGetter_ABC
+                     , public tools::Observer_ABC
+                     , public tools::ElementObserver_ABC< Simulation >
 {
 public:
     //! @name Constructors/Destructor
@@ -51,6 +55,9 @@ public:
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual short GetElevationAt( const geometry::Point2f& point ) const;
+    virtual void NotifyUpdated( const Simulation& simulation );
+    bool ReadFromODB() const;
+    void GenerateFlood( bool force = false );
     //@}
 
 private:
@@ -77,6 +84,8 @@ private:
     const kernel::Positions& positions_;
     std::auto_ptr< flood::FloodModel > floodModel_;
     std::auto_ptr< flood::FloodDrawer > floodDrawer_;
+    bool floodGenerated_;
+    bool readFromODB_;
     int depth_;
     int refDist_;
     //@}

@@ -247,7 +247,7 @@ void AttributeFactory::Create( Object& object, const sword::MissionParameter& pa
                 object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( object );
                 break;
             case ObjectMagicAction::altitude_modifier:
-                object.GetAttribute< AltitudeModifierAttribute >() = AltitudeModifierAttribute( attributes );
+                object.GetAttribute< AltitudeModifierAttribute >() = AltitudeModifierAttribute( attributes, object.GetLocalisation() );
                 break;
             default:
                 break;

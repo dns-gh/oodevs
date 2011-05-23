@@ -68,7 +68,6 @@ public:
     //@TODO MGD return reference
     MIL_Object_ABC& CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
-    MIL_Object_ABC* CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, sword::ObstacleType_DemolitionTargetType obstacleType );
     MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC* CreateUrbanObject( const urban::TerrainObject_ABC& object );
@@ -82,6 +81,7 @@ public:
 
     //! @name Network
     //@{
+    void FinalizeObjects();
     void SendCreation();
     void SendFullState();
     void OnReceiveObjectMagicAction( const sword::ObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies );
@@ -104,7 +104,6 @@ private:
     //! @name Helpers
     //@{
     void RegisterObject( MIL_Object_ABC* pObject );
-    void RegisterDistantObject( MIL_Object_ABC* pObject );
     void UpdateCapacity( const std::string& capacity, xml::xistream& xis, MIL_Object_ABC& object );
     //@}
 

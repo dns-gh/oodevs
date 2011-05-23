@@ -15,11 +15,12 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_Logger.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "tools/InputBinaryStream.h"
 #include "tools/WorldParameters.h"
 
 PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
-const weather::PHY_Meteo* PHY_RawVisionData::sCell::pGlobalMeteo_;
+const weather::PHY_Meteo* PHY_RawVisionData::sCell::pGlobalMeteo_ = 0;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::sCell::GetPrecipitation
@@ -235,6 +236,27 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
     }
     CalcMinMaxAltitude();
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RawVisionData::ModifyAltitude
+// Created: JSR 2011-05-19
+// -----------------------------------------------------------------------------
+void PHY_RawVisionData::ModifyAltitude( const TER_Localisation& localisation, short heightOffset )
+{
+    const MT_Rect boundingBox = localisation.GetBoundingBox();
+    unsigned int startCol = GetCol( boundingBox.GetLeft() );
+    unsigned int endCol = GetCol( boundingBox.GetRight() );
+    unsigned int startRow = GetCol( boundingBox.GetBottom() );
+    unsigned int endRow = GetCol( boundingBox.GetTop() );
+    for( unsigned int y = startRow; y <= endRow + 1 && y < nNbrRow_; ++y )
+        for( unsigned int x = startCol; x <= endCol + 1 && x < nNbrCol_; ++x )
+            if( localisation.IsInside( MT_Vector2D( x * rCellSize_, y * rCellSize_ ) ) )
+            {
+                int newHeight = static_cast< int >( ppCells_[ x ][ y ].h ) + heightOffset;
+                static const int maxShort = static_cast< int >( std::numeric_limits< short >::max() );
+                ppCells_[ x ][ y ].h = static_cast< short >( std::min( newHeight, maxShort ) );
+            }
 }
 
 //-----------------------------------------------------------------------------

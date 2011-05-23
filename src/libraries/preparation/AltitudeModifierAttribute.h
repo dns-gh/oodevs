@@ -45,7 +45,7 @@ class AltitudeModifierAttribute : public kernel::AltitudeModifierAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AltitudeModifierAttribute( kernel::PropertiesDictionary& dico, kernel::DetectionMap& detection, const kernel::Object_ABC& object, kernel::Controllers& controllers );
+             AltitudeModifierAttribute( kernel::PropertiesDictionary& dico, kernel::DetectionMap& detection, const kernel::Object_ABC& object, kernel::Controllers& controllers );
              AltitudeModifierAttribute( xml::xistream& xis, kernel::DetectionMap& detection, const kernel::Object_ABC& object, kernel::PropertiesDictionary& dico, kernel::Controllers& controllers );
     virtual ~AltitudeModifierAttribute();
     //@}

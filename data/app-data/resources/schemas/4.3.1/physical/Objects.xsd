@@ -75,7 +75,7 @@
 			<xs:enumeration value="urban block"/>
 			<xs:enumeration value="seal off area"/>
 			<xs:enumeration value="flood"/>
-			<xs:enumeration value="dam"/>
+			<xs:enumeration value="dyke"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_ConsumptionMode">

@@ -26,19 +26,20 @@ class FloodAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FloodAttribute( const sword::ObjectAttributes& asnMsg );
+    explicit FloodAttribute( const sword::ObjectAttributes& msg );
     virtual ~FloodAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update( const sword::ObjectAttributes& asnMsg );
-    virtual void Send  ( sword::ObjectAttributes& asnMsg ) const;
+    virtual void Update( const sword::ObjectAttributes& msg );
+    virtual void Send  ( sword::ObjectAttributes& msg ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
+    bool readFromODB_;
     int depth_;
     int refDist_;
     //@}

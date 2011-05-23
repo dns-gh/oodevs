@@ -9,6 +9,8 @@
 
 #include "gaming_pch.h"
 #include "ObjectsModel.h"
+#include "AltitudeModifierAttribute.h"
+#include "FloodAttribute.h"
 #include "ObjectFactory_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 
@@ -39,7 +41,36 @@ ObjectsModel::~ObjectsModel()
 // -----------------------------------------------------------------------------
 void ObjectsModel::Purge()
 {
-    tools::Resolver< Object_ABC >::DeleteAll();
+    DeleteAll();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectsModel::Initialize
+// Created: JSR 2011-05-20
+// -----------------------------------------------------------------------------
+void ObjectsModel::Initialize()
+{
+    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        AltitudeModifierAttribute* altitude = static_cast< AltitudeModifierAttribute* >( it->second->Retrieve< AltitudeModifierAttribute_ABC >() );
+        if( altitude && altitude->ReadFromODB() )
+            altitude->ModifyAltitude();
+    }
+    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        FloodAttribute* flood = static_cast< FloodAttribute* >( it->second->Retrieve< FloodAttribute_ABC >() );
+        if( flood && flood->ReadFromODB() )
+            flood->GenerateFlood();
+    }
+    for( IT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        AltitudeModifierAttribute* altitude = static_cast< AltitudeModifierAttribute* >( it->second->Retrieve< AltitudeModifierAttribute_ABC >() );
+        FloodAttribute* flood = static_cast< FloodAttribute* >( it->second->Retrieve< FloodAttribute_ABC >() );
+        if( altitude && !altitude->ReadFromODB() )
+            altitude->ModifyAltitude();
+        if( flood && flood->ReadFromODB() )
+            flood->GenerateFlood();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -48,10 +79,10 @@ void ObjectsModel::Purge()
 // -----------------------------------------------------------------------------
 void ObjectsModel::CreateObject( const sword::ObjectCreation& message )
 {
-    if( ! tools::Resolver< Object_ABC >::Find( message.object().id() ) )
+    if( ! Find( message.object().id() ) )
     {
         Object_ABC* pObject = objectFactory_.Create( message );
-        tools::Resolver< Object_ABC >::Register( message.object().id(), *pObject );
+        Register( message.object().id(), *pObject );
     }
 }
 
@@ -72,7 +103,7 @@ void ObjectsModel::UpdateObject( const sword::ObjectUpdate& message )
 // -----------------------------------------------------------------------------
 Object_ABC& ObjectsModel::GetObject( unsigned long id )
 {
-    return tools::Resolver< Object_ABC >::Get( id );
+    return Get( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +112,7 @@ Object_ABC& ObjectsModel::GetObject( unsigned long id )
 // -----------------------------------------------------------------------------
 kernel::Object_ABC* ObjectsModel::FindObject( unsigned long id )
 {
-    return tools::Resolver< Object_ABC >::Find( id );
+    return Find( id );
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +121,7 @@ kernel::Object_ABC* ObjectsModel::FindObject( unsigned long id )
 // -----------------------------------------------------------------------------
 void ObjectsModel::DeleteObject( unsigned long id )
 {
-    delete tools::Resolver< Object_ABC >::Find( id );
-    tools::Resolver< Object_ABC >::Remove( id );
+    delete Find( id );
+    Remove( id );
 }
 

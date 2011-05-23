@@ -65,8 +65,8 @@ private:
 AltitudeModifierAttribute::AltitudeModifierAttribute( kernel::PropertiesDictionary& dico, kernel::DetectionMap& detection, const kernel::Object_ABC& object, kernel::Controllers& controllers )
     : detection_  ( detection )
     , object_     ( object )
-    , controllers_( controllers ) // utile?
-    , height_     ( 0, Units::meters)
+    , controllers_( controllers )
+    , height_     ( 0, Units::meters )
     , oldHeight_  ( 0 )
 {
     CreateDictionary( dico );
@@ -81,7 +81,7 @@ AltitudeModifierAttribute::AltitudeModifierAttribute( xml::xistream& xis, kernel
     : detection_  ( detection )
     , object_     ( object )
     , controllers_( controllers )
-    , height_     ( 0, Units::meters)
+    , height_     ( 0, Units::meters )
     , oldHeight_  ( 0 )
 {
     CreateDictionary( dico );

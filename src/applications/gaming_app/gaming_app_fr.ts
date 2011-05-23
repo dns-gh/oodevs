@@ -2280,6 +2280,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Stop evacuate</source>
         <translation>Fin de l&apos;évacuation</translation>
     </message>
+    <message>
+        <source>Generate flood</source>
+        <translation>Générer l'inondation</translation>
+    </message>
 </context>
 <context>
     <name>OrbatToolbar</name>

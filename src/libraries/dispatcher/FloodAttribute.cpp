@@ -17,11 +17,12 @@ using namespace dispatcher;
 // Name: FloodAttribute constructor
 // Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
-FloodAttribute::FloodAttribute( const sword::ObjectAttributes& asnMsg )
-    : depth_  ( 0 )
-    , refDist_( 0 )
+FloodAttribute::FloodAttribute( const sword::ObjectAttributes& msg )
+    : readFromODB_( false )
+    , depth_      ( 0 )
+    , refDist_    ( 0 )
 {
-    Update( asnMsg );
+    Update( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,12 +38,13 @@ FloodAttribute::~FloodAttribute()
 // Name: FloodAttribute::Update
 // Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
-void FloodAttribute::Update( const sword::ObjectAttributes& asnMsg )
+void FloodAttribute::Update( const sword::ObjectAttributes& msg )
 {
-    if( asnMsg.has_flood() )
+    if( msg.has_flood() )
     {
-        depth_ = asnMsg.flood().depth();
-        refDist_ = asnMsg.flood().reference_distance();
+        depth_ = msg.flood().depth();
+        refDist_ = msg.flood().reference_distance();
+        readFromODB_ = msg.flood().from_preparation();
     }
 }
 
@@ -50,8 +52,9 @@ void FloodAttribute::Update( const sword::ObjectAttributes& asnMsg )
 // Name: FloodAttribute::Send
 // Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
-void FloodAttribute::Send( sword::ObjectAttributes& asnMsg ) const
+void FloodAttribute::Send( sword::ObjectAttributes& msg ) const
 {
-    asnMsg.mutable_flood()->set_depth( depth_ );
-    asnMsg.mutable_flood()->set_reference_distance( refDist_ );
+    msg.mutable_flood()->set_depth( depth_ );
+    msg.mutable_flood()->set_reference_distance( refDist_ );
+    msg.mutable_flood()->set_from_preparation( readFromODB_ );
 }

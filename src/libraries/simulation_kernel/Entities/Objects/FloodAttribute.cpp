@@ -28,9 +28,10 @@ using namespace geometry;
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute()
-    : floodModel_( new flood::FloodModel( *this ) )
-    , depth_     ( 0 )
-    , refDist_   ( 0 )
+    : floodModel_ ( new flood::FloodModel( *this ) )
+    , readFromODB_( false )
+    , depth_      ( 0 )
+    , refDist_    ( 0 )
 {
     // NOTHING
 }
@@ -40,13 +41,13 @@ FloodAttribute::FloodAttribute()
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( xml::xistream& xis, const TER_Localisation& objectLocation )
-    : floodModel_( new flood::FloodModel( *this ) )
-    , depth_     ( xis.attribute< int >( "depth" ) )
-    , refDist_   ( xis.attribute< int >( "reference-distance" ) )
-    , location_  ( objectLocation.ComputeBarycenter(), refDist_ )
+    : floodModel_ ( new flood::FloodModel( *this ) )
+    , readFromODB_( true )
+    , depth_      ( xis.attribute< int >( "depth" ) )
+    , refDist_    ( xis.attribute< int >( "reference-distance" ) )
+    , location_   ( objectLocation.ComputeBarycenter(), refDist_ )
 {
-    MT_Vector2D center = location_.ComputeBarycenter();
-    floodModel_->GenerateFlood( Point2d( center.rX_, center.rY_ ), depth_, refDist_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -54,13 +55,13 @@ FloodAttribute::FloodAttribute( xml::xistream& xis, const TER_Localisation& obje
 // Created: JSR 2010-12-16
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( const sword::MissionParameter_Value& attributes, const TER_Localisation& objectLocation )
-    : floodModel_( new flood::FloodModel( *this ) )
-    , depth_     ( attributes.list( 1 ).quantity() )
-    , refDist_   ( attributes.list( 2 ).quantity() )
-    , location_  ( objectLocation.ComputeBarycenter(), refDist_ )
+    : floodModel_ ( new flood::FloodModel( *this ) )
+    , readFromODB_( false )
+    , depth_      ( attributes.list( 1 ).quantity() )
+    , refDist_    ( attributes.list( 2 ).quantity() )
+    , location_   ( objectLocation.ComputeBarycenter(), refDist_ )
 {
-    MT_Vector2D center = location_.ComputeBarycenter();
-    floodModel_->GenerateFlood( Point2d( center.rX_, center.rY_ ), depth_, refDist_ );
+    GenerateFlood();
 }
 
 // -----------------------------------------------------------------------------
@@ -78,6 +79,7 @@ FloodAttribute::~FloodAttribute()
 // -----------------------------------------------------------------------------
 FloodAttribute& FloodAttribute::operator=( const FloodAttribute& from )
 {
+    readFromODB_ = from.readFromODB_;
     depth_ = from.depth_;
     refDist_ = from.refDist_;
     location_.Reset( from.location_ );
@@ -94,6 +96,7 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
     if( depth_ != rhs.depth_ || refDist_ != rhs.refDist_ || !( location_ == rhs.location_ ) )
     {
         NotifyAttributeUpdated( eOnUpdate );
+        readFromODB_ = false;
         depth_ = rhs.depth_;
         refDist_ = rhs.refDist_;
         location_.Reset( rhs.location_ );
@@ -109,11 +112,12 @@ bool FloodAttribute::Update( const FloodAttribute& rhs )
 void FloodAttribute::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
+         >> readFromODB_
          >> depth_
          >> refDist_
          >> location_;
-    MT_Vector2D center = location_.ComputeBarycenter();
-    floodModel_->GenerateFlood( Point2d( center.rX_, center.rY_ ), depth_, refDist_ );
+    // TODO à faire posttraitement
+    //GenerateFlood();
 }
 
 // -----------------------------------------------------------------------------
@@ -123,6 +127,7 @@ void FloodAttribute::load( MIL_CheckPointInArchive& file, const unsigned int )
 void FloodAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< ObjectAttribute_ABC >( *this )
+         << readFromODB_
          << depth_
          << refDist_
          << location_;
@@ -175,6 +180,7 @@ void FloodAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 {
     asn.mutable_flood()->set_depth( depth_ );
     asn.mutable_flood()->set_reference_distance( refDist_ );
+    asn.mutable_flood()->set_from_preparation( readFromODB_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,6 +194,25 @@ void FloodAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
         SendFullState( asn );
         Reset( eOnUpdate );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodAttribute::GenerateFlood
+// Created: JSR 2011-05-20
+// -----------------------------------------------------------------------------
+void FloodAttribute::GenerateFlood( bool force )
+{
+    MT_Vector2D center = location_.ComputeBarycenter();
+    floodModel_->GenerateFlood( Point2d( center.rX_, center.rY_ ), depth_, refDist_, force );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodAttribute::ReadFromODB
+// Created: JSR 2011-05-20
+// -----------------------------------------------------------------------------
+bool FloodAttribute::ReadFromODB() const
+{
+    return readFromODB_;
 }
 
 // -----------------------------------------------------------------------------

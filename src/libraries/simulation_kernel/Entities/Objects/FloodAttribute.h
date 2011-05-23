@@ -82,8 +82,10 @@ public:
     virtual void SendUpdate( sword::ObjectAttributes& asn ) const;
     //@}
 
-    //! @name Accessors
+    //! @name Operations
     //@{
+    void GenerateFlood( bool force = false );
+    bool ReadFromODB() const;
     const TER_Localisation& GetLocalisation() const;
     const std::vector< geometry::Polygon2f* >& GetDeepAreas() const;
     const std::vector< geometry::Polygon2f* >& GetLowAreas() const;
@@ -99,6 +101,7 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< flood::FloodModel > floodModel_;
+    bool readFromODB_;
     int depth_;
     int refDist_;
     TER_Localisation location_;

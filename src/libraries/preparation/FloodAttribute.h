@@ -25,6 +25,7 @@ namespace flood
 
 namespace kernel
 {
+    class AltitudeModified;
     class Controllers;
     class DetectionMap;
     class Positions;
@@ -35,8 +36,6 @@ namespace xml
 {
     class xistream;
 }
-
-class AltitudeModified;
 
 // =============================================================================
 /** @class  FloodAttribute
@@ -49,7 +48,7 @@ class FloodAttribute : public kernel::FloodAttribute_ABC
                      , public kernel::Drawable_ABC
                      , public tools::Observer_ABC
                      , public tools::ElementObserver_ABC< FloodAttribute >
-                     , public tools::ElementObserver_ABC< AltitudeModified >
+                     , public tools::ElementObserver_ABC< kernel::AltitudeModified >
                      , public flood::ElevationGetter_ABC
 {
 public:
@@ -66,7 +65,7 @@ public:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void NotifyUpdated( const FloodAttribute& attribute );
-    virtual void NotifyUpdated( const AltitudeModified& attribute );
+    virtual void NotifyUpdated( const kernel::AltitudeModified& attribute );
     virtual short GetElevationAt( const geometry::Point2f& point ) const;
     //@}
 

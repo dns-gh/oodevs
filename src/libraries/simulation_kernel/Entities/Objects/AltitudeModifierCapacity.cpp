@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "AltitudeModifierCapacity.h"
+#include "AltitudeModifierAttribute.h"
 #include "MIL_Object_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AltitudeModifierCapacity )

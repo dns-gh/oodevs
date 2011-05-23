@@ -74,6 +74,7 @@ private slots:
     void StopConfine();
     void Evacuate();
     void StopEvacuate();
+    void GenerateFlood();
     //@}
 
 private:

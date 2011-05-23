@@ -2246,6 +2246,7 @@ void AgentServerMsgMgr::OnReceiveControlMeteoLocalDestruction( const sword::Cont
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgSendCurrentStateEnd( const sword::ControlSendCurrentStateEnd& message )
 {
+    GetModel().objects_.Initialize();
     simulation_.Update( message );
 }
 

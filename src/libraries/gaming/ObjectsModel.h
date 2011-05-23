@@ -44,6 +44,7 @@ public:
     //! @name Operations
     //@{
     void Purge();
+    void Initialize();
 
     void CreateObject( const sword::ObjectCreation& message );
     void UpdateObject( const sword::ObjectUpdate& message );

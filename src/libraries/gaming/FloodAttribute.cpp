@@ -9,7 +9,9 @@
 
 #include "gaming_pch.h"
 #include "FloodAttribute.h"
+#include "Simulation.h"
 #include "Tools.h"
+#include "clients_kernel/AltitudeModified.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Positions.h"
 #include "flood/FloodDrawer.h"
@@ -22,15 +24,17 @@
 // Created: JSR 2010-12-15
 // -----------------------------------------------------------------------------
 FloodAttribute::FloodAttribute( kernel::Controller& controller, const kernel::DetectionMap& detection, const kernel::Positions& positions )
-    : controller_ ( controller )
-    , detection_  ( detection )
-    , positions_  ( positions )
-    , floodModel_ ( new flood::FloodModel( *this ) )
-    , floodDrawer_( new flood::FloodDrawer( *floodModel_ ) )
-    , depth_      ( 0 )
-    , refDist_    ( 0 )
+    : controller_    ( controller )
+    , detection_     ( detection )
+    , positions_     ( positions )
+    , floodModel_    ( new flood::FloodModel( *this ) )
+    , floodDrawer_   ( new flood::FloodDrawer( *floodModel_ ) )
+    , floodGenerated_( false )
+    , readFromODB_   ( false )
+    , depth_         ( 0 )
+    , refDist_       ( 0 )
 {
-    // NOTHING
+    controller_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +43,7 @@ FloodAttribute::FloodAttribute( kernel::Controller& controller, const kernel::De
 // -----------------------------------------------------------------------------
 FloodAttribute::~FloodAttribute()
 {
-    // NOTHING
+    controller_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,10 +90,39 @@ void FloodAttribute::Draw( const geometry::Point2f& /*where*/, const kernel::Vie
 // -----------------------------------------------------------------------------
 short FloodAttribute::GetElevationAt( const geometry::Point2f& point ) const
 {
-    // TODO rajouter les objets digue
     if( detection_.Extent().IsOutside( point ) )
         return std::numeric_limits< short >::max();
     return detection_.ElevationAt( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodAttribute::NotifyUpdated
+// Created: JSR 2011-05-20
+// -----------------------------------------------------------------------------
+void FloodAttribute::NotifyUpdated( const Simulation& simulation )
+{
+    if( !floodGenerated_ && simulation.IsInitialized() )
+        GenerateFlood();
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodAttribute::ReadFromODB
+// Created: JSR 2011-05-20
+// -----------------------------------------------------------------------------
+bool FloodAttribute::ReadFromODB() const
+{
+    return readFromODB_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FloodAttribute::GenerateFlood
+// Created: JSR 2011-05-20
+// -----------------------------------------------------------------------------
+void FloodAttribute::GenerateFlood( bool force )
+{
+    floodGenerated_ = true;
+    floodModel_->GenerateFlood( positions_.GetPosition(), depth_, refDist_, force );
+    floodDrawer_->ResetTexture();
 }
 
 // -----------------------------------------------------------------------------
@@ -119,10 +152,9 @@ void FloodAttribute::UpdateData( const T& message )
 {
     if( message.has_flood() )
     {
+        readFromODB_ = message.flood().from_preparation();
         depth_ = message.flood().depth();
         refDist_ = message.flood().reference_distance();
         controller_.Update( *static_cast< FloodAttribute_ABC* >( this ) );
-        floodModel_->GenerateFlood( positions_.GetPosition(), depth_, refDist_ );
-        floodDrawer_->ResetTexture();
     }
 }

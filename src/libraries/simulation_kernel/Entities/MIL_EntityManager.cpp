@@ -430,6 +430,8 @@ void MIL_EntityManager::InitializeArmies( xml::xistream& xis )
     xis >> xml::start( "parties" )
         >> xml::list( "party", boost::bind( &ArmyFactory_ABC::Create, boost::ref( *armyFactory_ ), _1 ) )
         >> xml::end;
+
+    pObjectManager_->FinalizeObjects();
 }
 
 // -----------------------------------------------------------------------------
@@ -499,15 +501,6 @@ MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const std::
 MIL_Object_ABC* MIL_EntityManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
 {
     return pObjectManager_->CreateObject( type, army, localisation );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::CreateDistantObject
-// Created: SLI 2010-10-04
-// -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_EntityManager::CreateDistantObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& name )
-{
-    return pObjectManager_->CreateDistantObject( type, army, localisation, name );
 }
 
 // -----------------------------------------------------------------------------
