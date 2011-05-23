@@ -37,7 +37,7 @@ RoadFormation::~RoadFormation()
 // Name: RoadFormation::Start
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void RoadFormation::Start( const geometry::Point2f& at, const geometry::Vector2f& , unsigned int count )
+void RoadFormation::Start( const geometry::Point2f& at, const geometry::Vector2f& , std::size_t count )
 {
     const float distanceBetweenPlatforms = 20.f;
     Fill( at, count, distanceBetweenPlatforms );
@@ -56,7 +56,7 @@ namespace
 // Name: RoadFormation::Fill
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void RoadFormation::Fill( const geometry::Point2f& from, unsigned int count, float length )
+void RoadFormation::Fill( const geometry::Point2f& from, std::size_t count, float length )
 {
     result_.reserve( count );
 

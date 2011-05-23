@@ -14,6 +14,7 @@
 #include "shield/Server_ABC.h"
 #include "shield/ClientListener_ABC.h"
 #include "shield/Converter.h"
+#pragma warning( push, 0 )
 #include "shield/proto/AarToClient.pb.h"
 #include "shield/proto/AuthenticationToClient.pb.h"
 #include "shield/proto/DispatcherToClient.pb.h"
@@ -27,7 +28,6 @@
 #include "shield/proto/ClientToReplay.pb.h"
 #include "shield/proto/ClientToSim.pb.h"
 #include "shield/proto/AdminToLauncher.pb.h"
-#pragma warning( push, 0 )
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )
 

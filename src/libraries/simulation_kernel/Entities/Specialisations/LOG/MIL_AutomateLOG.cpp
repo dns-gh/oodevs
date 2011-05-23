@@ -134,7 +134,7 @@ namespace boost
         template < typename Archive >
         void save( Archive& file, const std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >& map, const unsigned int )
         {
-            unsigned size = map.size();
+            std::size_t size = map.size();
             file << size;
             for( std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >::const_iterator it = map.begin(); it != map.end(); ++it )
             {
@@ -148,7 +148,7 @@ namespace boost
         template < typename Archive >
         void load( Archive& file, std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >& map, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {

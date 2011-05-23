@@ -92,5 +92,5 @@ std::string Command::Argument( unsigned int index ) const
 // -----------------------------------------------------------------------------
 unsigned int Command::ArgumentCount() const
 {
-    return arguments_.empty() ? 0 : arguments_.size() - 1;
+    return static_cast< unsigned >( arguments_.empty() ? 0 : arguments_.size() - 1 );
 }

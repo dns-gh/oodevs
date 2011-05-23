@@ -457,7 +457,7 @@ ADN_Table* ADN_Composantes_GUI::CreateComposanteSpeedsTable()
         pTable->horizontalHeader()->setLabel( n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n, ADN_Tr::eToTr ).c_str() );
     pTable->horizontalHeader()->show();
 
-    pTable->setNumRows( data_.vComposantes_.size() + 1 );
+    pTable->setNumRows( static_cast< int >( data_.vComposantes_.size() + 1 ) );
     builder.AddTableCell( pTable, 0, 0, tr( "Equipment" ) );
     for( uint n = 0; n < eNbrLocation; ++n )
         builder.AddTableCell( pTable, 0, n + 1, ADN_Tr::ConvertFromLocation( (E_Location)n, ADN_Tr::eToTr ).c_str() );

@@ -182,7 +182,7 @@ bool EntityLayerBase::HandleMouseMove( QMouseEvent* , const geometry::Point2f& p
 // Name: EntityLayerBase::ShouldDisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::ShouldDisplayTooltip( unsigned i, const geometry::Point2f& point )
+bool EntityLayerBase::ShouldDisplayTooltip( std::size_t i, const geometry::Point2f& point )
 {
     return i < entities_.size()
         && ShouldDisplay( *entities_[ i ] )
@@ -193,7 +193,7 @@ bool EntityLayerBase::ShouldDisplayTooltip( unsigned i, const geometry::Point2f&
 // Name: EntityLayerBase::DisplayTooltip
 // Created: AGE 2006-06-29
 // -----------------------------------------------------------------------------
-bool EntityLayerBase::DisplayTooltip( unsigned i, const geometry::Point2f& point )
+bool EntityLayerBase::DisplayTooltip( std::size_t i, const geometry::Point2f& point )
 {
     if( !tooltip_.get() )
     {

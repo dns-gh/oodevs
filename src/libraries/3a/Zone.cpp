@@ -7,16 +7,16 @@
 //
 // *****************************************************************************
 
+#pragma warning( disable: 4996 ) // Function call with parameters that may be unsafe
 #include "Zone.h"
 #include "Position.h"
 #include "Circle.h"
 #include "Polygon.h"
-#include <vector>
-#pragma warning( push )
-#pragma warning( disable : 4996 )
+#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 #include <boost/lexical_cast.hpp>
+#include <vector>
 
 namespace
 {

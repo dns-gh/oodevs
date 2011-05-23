@@ -84,8 +84,7 @@ bool MIL_PathParameter::ToPath( std::vector< boost::shared_ptr< MT_Vector2D > >&
 bool MIL_PathParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     elem.mutable_path()->mutable_location()->set_type( sword::Location_Geometry_line );
-    const unsigned int size = path_.size();
-    for( unsigned int i = 0; i < size; ++i )
+    for( std::size_t i = 0; i < path_.size(); ++i )
         MIL_Tools::ConvertCoordSimToMos( *path_[i], *elem.mutable_path()->mutable_location()->mutable_coordinates()->add_elem() );
     return true;
 }

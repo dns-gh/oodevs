@@ -39,7 +39,7 @@ public:
     static const PHY_RadarClass*  Find           ( const std::string& strName );
     static const PHY_RadarClass*  Find           ( unsigned int nID );
     static const T_RadarClassMap& GetRadarClasses();
-    static       unsigned int             GetNbrClasses  ();
+    static       std::size_t      GetNbrClasses  ();
     //@}
 
     //! @name Accessors

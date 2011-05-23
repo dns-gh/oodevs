@@ -79,7 +79,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const DEC_KS_Perception::T_AgentPerceptionMap& map, const unsigned int )
         {
-            unsigned int size = map.size();
+            std::size_t size = map.size();
             file << size;
             for ( DEC_KS_Perception::CIT_AgentPerceptionMap it = map.begin(); it != map.end(); ++it )
             {
@@ -92,7 +92,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, DEC_KS_Perception::T_AgentPerceptionMap& map, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {

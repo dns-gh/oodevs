@@ -321,7 +321,7 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
     pTable->setSorting( false );
     // Fill the table.
     ADN_Equipement_Data::ResourceInfos& ammo = data_.GetDotation( eDotationFamily_Munition );
-    unsigned int nRowSize = armorInfos.size();
+    int nRowSize = static_cast< int >( armorInfos.size() );
     int nRow = 1;
     for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = ammo.categories_.begin(); it != ammo.categories_.end(); ++it )
     {

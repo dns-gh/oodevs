@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Start( const geometry::Point2f& at, const geometry::Vector2f& towards, unsigned int count );
+    virtual void Start( const geometry::Point2f& at, const geometry::Vector2f& towards, std::size_t count );
     virtual void Apply( Movable_ABC* movable );
     //@}
 
@@ -45,7 +45,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Fill( const geometry::Point2f& from, unsigned int count, float legnth );
+    void Fill( const geometry::Point2f& from, std::size_t count, float legnth );
     void AddPoint( const geometry::Point2f& from, const geometry::Point2f& to, float length, float segmentLenght );
     //@}
 

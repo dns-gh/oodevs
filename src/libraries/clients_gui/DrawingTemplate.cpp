@@ -207,7 +207,7 @@ void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_A
     {
         geometry::Rectangle2f boundingBox;
         geometry::Point2f center;
-        const unsigned int count = points.size() - 1;
+        const std::size_t count = points.size() - 1;
         for( CIT_PointVector it = points.begin(); it != points.end() - 1; ++it )
         {
             boundingBox.Incorporate( *it );

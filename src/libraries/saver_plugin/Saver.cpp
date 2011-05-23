@@ -126,7 +126,7 @@ void Saver::CreateNewFragment( bool first /*= false*/ )
     keyIndex_.open( ( currentDirectory / "keyindex" ).string().c_str(), std::ios_base::binary | std::ios_base::out );
     key_     .open( ( currentDirectory / "key"      ).string().c_str(), std::ios_base::binary | std::ios_base::out );
     update_  .open( ( currentDirectory / "update"   ).string().c_str(), std::ios_base::binary | std::ios_base::out );
-    current_.Reset( update_.tellp() );
+    current_.Reset( static_cast< unsigned >( update_.tellp() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ void Saver::EndFrame( const Savable_ABC& message )
     ++frameCount_;
     SaveUpdateMessage( message );
     Flush();
-    current_.Reset( update_.tellp() );
+    current_.Reset( static_cast< unsigned >( update_.tellp() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,12 +167,12 @@ void Saver::EndFrame( const Savable_ABC& message )
 void Saver::SaveKeyFrame( const Savable_ABC& message )
 {
     dispatcher::KeyFrame frame;
-    frame.offset_ = key_.tellp();
+    frame.offset_ = static_cast< unsigned >( key_.tellp() );
     frame.frameNumber_ = frameCount_;
     {
         tools::OutputBinaryWrapper wrapper( key_ );
         message.Serialize( wrapper );
-        frame.size_ = static_cast< long >( key_.tellp() ) - frame.offset_;
+        frame.size_ = static_cast< unsigned >( key_.tellp() ) - frame.offset_;
     }
     {
         tools::OutputBinaryWrapper wrapper( keyIndex_ );
@@ -188,7 +188,7 @@ void Saver::Flush()
 {
     try
     {
-        current_.size_ = static_cast< long >( update_.tellp() ) - current_.offset_;
+        current_.size_ = static_cast< unsigned >( update_.tellp() ) - current_.offset_;
         tools::OutputBinaryWrapper wrapper( index_ );
         wrapper << current_;
         current_.Reset();

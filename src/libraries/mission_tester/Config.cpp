@@ -149,5 +149,5 @@ std::auto_ptr< Scheduler_ABC > Config::CreateScheduler( SchedulerFactory& factor
         return factory.CreateAgentScheduler();
     if( entityType_ == automat )
         return factory.CreateAutomatScheduler();
-    return 0;
+    return std::auto_ptr< Scheduler_ABC >();
 }

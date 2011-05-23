@@ -13,7 +13,6 @@
 #include "Serializer.h"
 #include "tools/asio.h"
 #pragma warning( push, 0 )
-#pragma warning( disable : 4244 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>

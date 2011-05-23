@@ -782,8 +782,7 @@ void GQ_PlotAxis::UpdateTickPeriod()
     if( rRawTickPeriod < rMinTickPeriod_ )
         rRawTickPeriod = rMinTickPeriod_;
 
-    unsigned int nNbrMultiples = tickMultiples_.size();
-    for( unsigned int i = 0; i < nNbrMultiples; ++i )
+    for( std::size_t i = 0; i < tickMultiples_.size(); ++i )
     {
         unsigned int nMultiple = tickMultiples_[i];
 
@@ -897,7 +896,7 @@ void GQ_PlotAxis::DrawX( QPainter& painter, const QColorGroup& colors, const QPo
 
     ++nY0;
 
-    unsigned int nNbrTicks = ticks_.size();
+    std::size_t nNbrTicks = ticks_.size();
 
     if( nNbrTicks == 0 )
         return;
@@ -909,7 +908,7 @@ void GQ_PlotAxis::DrawX( QPainter& painter, const QColorGroup& colors, const QPo
     int nLastXstr = -10;
     int nYstr     = nY0 + nTicksLength_ + metrics.height();
 
-    for( unsigned int i = 0; i < nNbrTicks; ++i )
+    for( std::size_t i = 0; i < nNbrTicks; ++i )
     {
         const T_Tick& tick = ticks_[i];
         double rTick = tick.first;
@@ -965,7 +964,7 @@ void GQ_PlotAxis::DrawY( QPainter& painter, const QColorGroup& colors, const QPo
 
     --nX0;
 
-    unsigned int nNbrTicks = ticks_.size();
+    std::size_t nNbrTicks = ticks_.size();
 
     if( nNbrTicks == 0 )
         return;
@@ -977,7 +976,7 @@ void GQ_PlotAxis::DrawY( QPainter& painter, const QColorGroup& colors, const QPo
     int nLastYstr  = nY0 + 10;
     int nXstrRight = nX0 - nTicksLength_;
 
-    for( unsigned int i = 0; i < nNbrTicks; ++i )
+    for( std::size_t i = 0; i < nNbrTicks; ++i )
     {
         const T_Tick& tick = ticks_[i];
         double rTick = tick.first;
@@ -1069,8 +1068,7 @@ void GQ_PlotAxis::DrawGrid( QPainter& painter, const QColorGroup& colors, const 
 // -----------------------------------------------------------------------------
 void GQ_PlotAxis::DrawVGrid( QPainter& painter, int nY0, int nY1 )
 {
-    unsigned int nNbrTicks = ticks_.size();
-    for( unsigned int i = 0; i < nNbrTicks; ++i )
+    for( std::size_t i = 0; i < ticks_.size(); ++i )
     {
         int nX = ticks_[i].second;
 
@@ -1089,8 +1087,7 @@ void GQ_PlotAxis::DrawVGrid( QPainter& painter, int nY0, int nY1 )
 // -----------------------------------------------------------------------------
 void GQ_PlotAxis::DrawHGrid( QPainter& painter, int nX0, int nX1 )
 {
-    unsigned int nNbrTicks = ticks_.size();
-    for( unsigned int i = 0; i < nNbrTicks; ++i )
+    for( std::size_t i = 0; i < ticks_.size(); ++i )
     {
         int nY = ticks_[i].second;
 

@@ -108,7 +108,7 @@ void Path::VisitPath( const geometry::Point2f& , const T_PointVector& points )
 // Name: Path::AddPoint
 // Created: AGE 2007-07-10
 // -----------------------------------------------------------------------------
-void Path::AddPoint( const geometry::Point2f& p, unsigned i, unsigned count )
+void Path::AddPoint( const geometry::Point2f& p, std::size_t i, std::size_t count )
 {
     Point pt; pt.AddPoint( p );
     QString label;

@@ -124,7 +124,7 @@ private:
 template< typename Archive >
 void NodeProperties::load( Archive& file, const unsigned int )
 {
-    unsigned int nNbr;
+    std::size_t nNbr;
     file >> functionalState_
          >> nNbr;
     unsigned long index;
@@ -142,7 +142,7 @@ void NodeProperties::load( Archive& file, const unsigned int )
 template< typename Archive >
 void NodeProperties::save( Archive& file, const unsigned int ) const
 {
-    unsigned int size = tools::Resolver< NodeElement >::elements_.size();
+    std::size_t size = tools::Resolver< NodeElement >::elements_.size();
     file << functionalState_
          << size;
     for( std::map< unsigned long, NodeElement* >::const_iterator it = tools::Resolver< NodeElement >::elements_.begin(); it != tools::Resolver< NodeElement >::elements_.end(); ++it )

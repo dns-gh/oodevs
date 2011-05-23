@@ -85,8 +85,8 @@ protected:
     virtual void ContextMenu( const kernel::Entity_ABC&, const geometry::Point2f&, const QPoint& );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
 
-    virtual bool ShouldDisplayTooltip( unsigned i, const geometry::Point2f& point );
-    virtual bool DisplayTooltip( unsigned i, const geometry::Point2f& point );
+    virtual bool ShouldDisplayTooltip( std::size_t i, const geometry::Point2f& point );
+    virtual bool DisplayTooltip( std::size_t i, const geometry::Point2f& point );
     virtual bool DisplayTooltip( const kernel::Entity_ABC&, kernel::Displayer_ABC& displayer );
     //@}
 
@@ -105,9 +105,9 @@ private:
     ColorStrategy_ABC& strategy_;
     View_ABC& view_;
     T_Entities entities_;
-    unsigned tooltiped_;
+    std::size_t tooltiped_;
     std::auto_ptr< kernel::GlTooltip_ABC > tooltip_;
-    unsigned selected_;
+    std::size_t selected_;
 
 protected: // $$$$ AGE 2006-05-17:
     const kernel::Profile_ABC& profile_;

@@ -194,7 +194,7 @@ void LayersPanel::OnSelectionChanged( QListViewItem* i )
     QString transparencyLabelText( tr( "Transparency " ) );
     if( it != layers_.end() )
     {
-        currentLayer_ = it - layers_.begin();
+        currentLayer_ = static_cast< int >( it - layers_.begin() );
         transparency_->setValue( int( new_[ currentLayer_ ] * 100 ) );
         for( T_Names::const_iterator nIT = names_.begin(); nIT != names_.end(); ++nIT )
             if( i->text( 0 ).contains( *nIT ) )

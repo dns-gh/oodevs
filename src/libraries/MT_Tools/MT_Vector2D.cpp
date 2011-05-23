@@ -26,18 +26,16 @@ MT_Vector2D MT_ComputeBarycenter( const T_PointVector& points )
         return points.front();
 
     CIT_PointVector itEnd      = points.end();
-    unsigned int            nNbrPoints = points.size();
+    int nNbrPoints = static_cast< int >( points.size() );
     if( points.front() == points.back() )
     {
         itEnd --;
         nNbrPoints--;
     }
-
     assert( nNbrPoints > 0 );
 
     for( CIT_PointVector itPoint = points.begin(); itPoint != itEnd; ++itPoint )
         vBarycenter += *itPoint;
     vBarycenter /= nNbrPoints;
     return vBarycenter;
-
 }

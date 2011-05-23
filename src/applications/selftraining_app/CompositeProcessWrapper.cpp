@@ -11,8 +11,7 @@
 #include "CompositeProcessWrapper.h"
 #include "frontend/ProcessObserver_ABC.h"
 #include "frontend/SpawnCommand.h"
-#pragma warning( push )
-#pragma warning( disable: 4244 )
+#pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>

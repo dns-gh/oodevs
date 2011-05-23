@@ -348,7 +348,7 @@ bool PHY_MedicalCollectionAmbulance::Update()
 // -----------------------------------------------------------------------------
 unsigned int PHY_MedicalCollectionAmbulance::GetNbrHumans() const
 {
-    return consigns_.size();
+    return static_cast< unsigned int >( consigns_.size() );
 }
 
 // -----------------------------------------------------------------------------

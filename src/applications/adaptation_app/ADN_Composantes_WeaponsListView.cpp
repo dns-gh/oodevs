@@ -79,7 +79,7 @@ void ADN_Composantes_WeaponsListView::OnContextMenu( const QPoint& pt )
         // Don't add a weapon to the menu if it already is present in the list.
         if( Contains( pWeapon ) )
             continue;
-        addMenu.insertItem( pWeapon->strName_.GetData().c_str(), 2 + std::distance( vWeapons.begin(), it ) );
+        addMenu.insertItem( pWeapon->strName_.GetData().c_str(), static_cast< int >( 2 + std::distance( vWeapons.begin(), it ) ) );
     }
     ADN_Tools::SortMenu( addMenu );
 

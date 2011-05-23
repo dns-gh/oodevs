@@ -149,7 +149,7 @@ void MIL_PopulationElement_ABC::ApplyLethalDamage( unsigned int nHit, PHY_FireRe
 {
     bHumansUpdated_ = true;
     humans_.ApplyNumberOfDead( nHit );
-    unsigned int nWounds = nHit * MIL_Random::rand_ii( 0.6, 1.25, MIL_Random::eWounds );
+    unsigned int nWounds = static_cast< unsigned >( nHit * MIL_Random::rand_ii( 0.6, 1.25, MIL_Random::eWounds ) );
     humans_.ApplyWounds( nWounds );
     fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
     fireResult.GetDamages( *pPopulation_ ).NotifyHumansWounded( nWounds );

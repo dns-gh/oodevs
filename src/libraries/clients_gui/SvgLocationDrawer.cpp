@@ -170,8 +170,8 @@ void SvgLocationDrawer::DrawOverlined( const T_PointVector& points )
 {
     glPointSize( 4 );
     glVertexPointer( 2, GL_FLOAT, 0, &points.front() );
-    glDrawArrays( GL_LINE_STRIP, 0, points.size() );
-    glDrawArrays( GL_POINTS, 0, points.size() );
+    glDrawArrays( GL_LINE_STRIP, 0, static_cast< GLsizei >( points.size() ) );
+    glDrawArrays( GL_POINTS, 0, static_cast< GLsizei >( points.size() ) );
 }
 
 // -----------------------------------------------------------------------------

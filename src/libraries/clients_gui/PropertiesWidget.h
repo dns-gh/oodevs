@@ -62,7 +62,7 @@ private:
     //! @name Types
     //@{
     typedef std::vector< PropertiesWidget* >  T_SubWidgets;
-    typedef std::map< QString, unsigned int > T_SubCategories;
+    typedef std::map< QString, std::size_t > T_SubCategories;
     typedef T_SubCategories::const_iterator CIT_SubCategories;
     //@}
 

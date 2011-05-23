@@ -11,8 +11,7 @@
 #include "GLSymbols.h"
 #include "SvglRenderer.h"
 #include "tools/GeneralConfig.h"
-#pragma warning( push )
-#pragma warning( disable : 4996 )
+#pragma warning( push, 0 )
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 #include <svgl/Node_ABC.h>

@@ -93,7 +93,7 @@ void ADN_Consumptions_Table::OnContextMenu( int /*row*/, int /*col*/, const QPoi
         if( this->Contains( **it ) )
             continue;
         bDisplayAdd = true;
-        pTargetMenu->insertItem( ( *it )->strName_.GetData().c_str(), 2 + std::distance( vAllResources.begin(), it ) );
+        pTargetMenu->insertItem( ( *it )->strName_.GetData().c_str(), static_cast< int >( 2 + std::distance( vAllResources.begin(), it ) ) );
     }
     ADN_Tools::SortMenu( *pTargetMenu );
     if( !bDisplayAdd && !bDisplayRem )

@@ -7,9 +7,10 @@
 //
 // *****************************************************************************
 
+#pragma warning( disable : 4996 ) // Function call with parameters that may be unsafe
+
 #include "EntityType.h"
-#pragma warning( push )
-#pragma warning( disable : 4100 4127 4996 4511 4512 4702 )
+#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )

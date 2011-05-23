@@ -86,7 +86,7 @@ void ExerciseMenu::ReadResource( xml::xistream& xis, const tools::ExerciseConfig
         >> xml::attribute( "name", name );
     if( file.empty() )
         return;
-    const int id = insertItem( name.c_str(), links_.size() );
+    const int id = insertItem( name.c_str(), static_cast< int >( links_.size() ) );
     file = config.BuildExerciseChildFile( file.c_str() );
     links_.push_back( MakeLink( file ) );
     setItemEnabled( id, bfs::exists( file ) );

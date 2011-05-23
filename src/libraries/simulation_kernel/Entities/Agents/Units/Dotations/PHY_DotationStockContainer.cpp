@@ -75,7 +75,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_DotationStockContainer::T_StockMap& map, const unsigned int )
         {
-            unsigned size = map.size();
+            std::size_t size = map.size();
             file << size;
             for ( PHY_DotationStockContainer::CIT_StockMap it = map.begin(); it != map.end(); ++it )
             {
@@ -88,7 +88,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, PHY_DotationStockContainer::T_StockMap& map, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -113,7 +113,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_DotationStockContainer::T_StockSet& set, const unsigned int )
         {
-            unsigned size= set.size();
+            std::size_t size= set.size();
             file << size;
             for ( PHY_DotationStockContainer::CIT_StockSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
@@ -122,7 +122,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, PHY_DotationStockContainer::T_StockSet& set, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {

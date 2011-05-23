@@ -7,6 +7,8 @@
 //
 // *****************************************************************************
 
+#pragma warning( disable : 4996 ) // Function call with parameters that may be unsafe
+
 #include "EntityTypeResolver.h"
 #include <xeumeuleu/xml.hpp>
 

@@ -36,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
               Message();
-     explicit Message( unsigned long size );
+     explicit Message( std::size_t size );
      virtual ~Message();
     //@}
 
@@ -45,8 +45,8 @@ public:
     Message& operator >>( unsigned long& n );
 
     std::size_t Size() const;
-    void Read ( char* data, unsigned size );
-    void Write( const char* data, unsigned size );
+    void Read ( char* data, std::size_t size );
+    void Write( const char* data, std::size_t size );
     //@}
 
     //! @name Operations
@@ -75,7 +75,7 @@ private:
     //! @name Member data
     //@{
     boost::shared_ptr< T_Data > data_;
-    unsigned readOffset_;
+    std::size_t readOffset_;
     //@}
 };
 

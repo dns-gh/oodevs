@@ -117,8 +117,8 @@ private:
     virtual void RegisterIn( directia::brain::Brain& brain );
     boost::shared_ptr< Variable > CreateVariable( const std::string& name, const std::string& type, const std::string& value );
     void ComputeIndicator( const std::string& name, const std::string& formula, const std::vector< boost::shared_ptr< Variable > >& variables );
-    unsigned int AddHeader( std::ostream& file ) const;
-    void AddLine( std::ostream& file, unsigned int index ) const;
+    std::size_t AddHeader( std::ostream& file ) const;
+    void AddLine( std::ostream& file, std::size_t index ) const;
     //@}
 
 private:

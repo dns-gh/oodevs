@@ -431,8 +431,8 @@ void GQ_Plot::UpdateDataRange()
 // -----------------------------------------------------------------------------
 void GQ_Plot::UpdateLayerBBox( const T_PlotLayer& layer, GQ_PlotDataBBox& bbox )
 {
-    uint nNbrPlots = layer.size();
-    for( uint i = 0; i < nNbrPlots; ++i )
+    std::size_t nNbrPlots = layer.size();
+    for( std::size_t i = 0; i < nNbrPlots; ++i )
     {
         const GQ_PlotData* pData = layer[i];
         assert( pData );
@@ -584,8 +584,8 @@ void GQ_Plot::UpdateDataPlot( const QColorGroup& colors )
             painter.setClipping( true );
         }
 
-        uint nNbrPlots = layer.size();
-        for( uint i = 0; i < nNbrPlots; ++i )
+        std::size_t nNbrPlots = layer.size();
+        for( std::size_t i = 0; i < nNbrPlots; ++i )
         {
             GQ_PlotData* pData = layer[i];
             assert( pData );
@@ -698,8 +698,8 @@ void GQ_Plot::SetLayerVisible( bool bVisible, int nDepth )
         return;
 
     T_PlotLayer& layer = it->second;
-    uint nNbrPlots = layer.size();
-    for( uint i = 0; i < nNbrPlots; ++i )
+    std::size_t nNbrPlots = layer.size();
+    for( std::size_t i = 0; i < nNbrPlots; ++i )
     {
         GQ_PlotData* pData = layer[i];
         assert( pData );
@@ -735,8 +735,8 @@ void GQ_Plot::ClearLayerData( int nDepth )
         return;
 
     T_PlotLayer& layer = it->second;
-    uint nNbrPlots = layer.size();
-    for( uint i = 0; i < nNbrPlots; ++i )
+    std::size_t nNbrPlots = layer.size();
+    for( std::size_t i = 0; i < nNbrPlots; ++i )
     {
         GQ_PlotData* pData = layer[i];
         assert( pData );
@@ -777,22 +777,6 @@ GQ_PlotData* GQ_Plot::GetPlotData( uint nPlotIndex, int nDepth ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: GQ_Plot::GetNumberOfPlotData
-/** @param  nDepth
-    @return
-*/
-// Created: AGN 2003-10-31
-// -----------------------------------------------------------------------------
-uint GQ_Plot::GetNumberOfPlotData( int nDepth /*= 0*/ ) const
-{
-    CIT_LayerMap it = layerMap_.find( nDepth );
-    if( it == layerMap_.end() )
-        return 0;
-    else
-        return it->second.size();
-}
-
-// -----------------------------------------------------------------------------
 // Name: GQ_Plot::FindPlotData
 /** @param  nUserID
     @return
@@ -805,8 +789,8 @@ GQ_PlotData* GQ_Plot::FindPlotData( uint nUserID ) const
     {
         const T_PlotLayer& layer = it->second;
 
-        uint nNbrPlots = layer.size();
-        for( uint i = 0; i < nNbrPlots; ++i )
+        std::size_t nNbrPlots = layer.size();
+        for( std::size_t i = 0; i < nNbrPlots; ++i )
         {
             GQ_PlotData* pData = layer[i];
             assert( pData );
@@ -832,8 +816,8 @@ GQ_PlotData* GQ_Plot::FindPlotData( const QString& name ) const
     {
         const T_PlotLayer& layer = it->second;
 
-        uint nNbrPlots = layer.size();
-        for( uint i = 0; i < nNbrPlots; ++i )
+        std::size_t nNbrPlots = layer.size();
+        for( std::size_t i = 0; i < nNbrPlots; ++i )
         {
             GQ_PlotData* pData = layer[i];
             assert( pData );
@@ -946,8 +930,8 @@ bool GQ_Plot::GetToolTips( const QPoint& refPoint, QRect& tipRect, QStringList& 
     {
         const T_PlotLayer& layer = it->second;
 
-        uint nNbrPlots = layer.size();
-        for( uint i = 0; i < nNbrPlots; ++i )
+        std::size_t nNbrPlots = layer.size();
+        for( std::size_t i = 0; i < nNbrPlots; ++i )
         {
             GQ_PlotData* pData = layer[i];
             assert( pData );

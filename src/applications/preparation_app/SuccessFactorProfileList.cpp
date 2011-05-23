@@ -67,7 +67,7 @@ void SuccessFactorProfileList::Select( const UserProfile& profile )
 {
     T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
-        setSelected( std::distance( profiles_.begin(), it ), true );
+        setSelected( static_cast< int >( std::distance( profiles_.begin(), it ) ), true );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +89,7 @@ void SuccessFactorProfileList::NotifyUpdated( const UserProfile& profile )
     T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
     {
-        const int index = std::distance( profiles_.begin(), it );
+        const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
         if( text( index ) != profile.GetLogin() )
             changeItem( profile.GetLogin(), index );
     }
@@ -104,7 +104,7 @@ void SuccessFactorProfileList::NotifyDeleted( const UserProfile& profile )
     T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
     {
-        removeItem( std::distance( profiles_.begin(), it ) );
+        removeItem( static_cast< int >( std::distance( profiles_.begin(), it ) ) );
         profiles_.erase( it );
     }
 }

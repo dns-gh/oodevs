@@ -73,7 +73,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
          >> rPostureCompletionPercentage_
          >> rPopulationDensity_;
     // Desérialisation des volumes par nom ( données "statiques" )
-    unsigned int nNbr;
+    std::size_t nNbr;
     unsigned int nID;
     file >> nNbr;
     while ( nNbr-- )
@@ -106,7 +106,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
          << rPostureCompletionPercentage_
          << rPopulationDensity_;
     // Serialisation des volumes par nom ( données "statiques" )
-    unsigned size = visionVolumes_.size();
+    std::size_t size = visionVolumes_.size();
     file << size;
     for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
     {

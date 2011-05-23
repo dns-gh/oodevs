@@ -50,7 +50,7 @@ SuccessFactorActions::~SuccessFactorActions()
 void SuccessFactorActions::ReadAction( xml::xistream& xis, const SuccessFactorActionTypes& actionsTypes )
 {
     std::auto_ptr< SuccessFactorAction > action( new SuccessFactorAction( xis, actionsTypes ) );
-    Register( elements_.size(), *action.release() );
+    Register( static_cast< unsigned long >( elements_.size() ), *action.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,5 +71,5 @@ void SuccessFactorActions::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void SuccessFactorActions::AddAction( SuccessFactorAction& action )
 {
-    Register( elements_.size(), action );
+    Register( static_cast< unsigned long >( elements_.size() ), action );
 }

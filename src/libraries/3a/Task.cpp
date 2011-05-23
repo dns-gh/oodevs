@@ -7,16 +7,15 @@
 //
 // *****************************************************************************
 
+#pragma warning( disable: 4996 ) // Function call with parameters that may be unsafe
 #include "Task.h"
 #include "Connectors.h"
 #include "Result_ABC.h"
+#include <xeumeuleu/xml.hpp>
 #include "dispatcher/MessageLoader_ABC.h"
-#pragma warning( push )
-#pragma warning( disable : 4996 )
+#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
-#include <protocol/protocol.h>
-#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: Task constructor

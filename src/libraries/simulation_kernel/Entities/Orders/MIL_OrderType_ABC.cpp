@@ -145,11 +145,11 @@ const std::string& MIL_OrderType_ABC::GetParameterName( unsigned int index ) con
 // -----------------------------------------------------------------------------
 unsigned int MIL_OrderType_ABC::GetParameterIndex( const std::string& name ) const
 {
-    unsigned int size = parameters_.size();
-    for( unsigned int i = 0; i < size; ++i )
+    std::size_t size = parameters_.size();
+    for( std::size_t i = 0; i < size; ++i )
     {
         if( parameters_[i]->GetDIAName() == name )
-            return i;
+            return static_cast< unsigned >( i );
     }
     throw std::runtime_error( "Incorrect parameter name" );
 }

@@ -51,7 +51,7 @@ GQ_PlotDataBBox::GQ_PlotDataBBox( const T_Data& data, uint nFirstPoint, int nNbr
 , rYMin_ ( 0.0 )
 , rYMax_ ( 0.0 )
 {
-    uint nLastPoint = data.size();
+    std::size_t nLastPoint = data.size();
     if( nNbrPoints >= 0 && nFirstPoint + nNbrPoints < nLastPoint )
         nLastPoint = nFirstPoint + nNbrPoints;
 

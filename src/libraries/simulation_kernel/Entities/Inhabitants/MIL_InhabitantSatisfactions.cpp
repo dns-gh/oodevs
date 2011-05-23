@@ -68,7 +68,7 @@ MIL_InhabitantSatisfactions::~MIL_InhabitantSatisfactions()
 // -----------------------------------------------------------------------------
 void MIL_InhabitantSatisfactions::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned int size;
+    std::size_t size;
     file >> healthNeed_
          >> health_
          >> safety_
@@ -99,7 +99,7 @@ void MIL_InhabitantSatisfactions::load( MIL_CheckPointInArchive& file, const uns
 // -----------------------------------------------------------------------------
 void MIL_InhabitantSatisfactions::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned int size = motivations_.size();
+    std::size_t size = motivations_.size();
     file << healthNeed_
          << health_
          << safety_

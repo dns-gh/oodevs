@@ -396,7 +396,7 @@ unsigned int MedicalTreatmentAttribute::MedicalCapacity::Update( unsigned int do
 void MedicalTreatmentAttribute::Update( float delay )
 {
     std::map< int, unsigned int > lockedDoctors;
-    int size = capacities_.size();
+    unsigned int size = static_cast< unsigned >( capacities_.size() );
     unsigned int doctorPerCapacity = doctors_ / size;
     int remain = doctors_ % size;
     for( T_TreatmentCapacityVector::const_iterator it = capacities_.begin(); it != capacities_.end(); ++it )

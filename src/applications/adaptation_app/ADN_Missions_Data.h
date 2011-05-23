@@ -118,8 +118,8 @@ public:
         std::string GetItemName();
         Mission* CreateCopy();
 
-        void ReadArchive ( xml::xistream& input, unsigned int contextLength );
-        void ReadParameter( xml::xistream& input, unsigned int& index, unsigned int contextLength );
+        void ReadArchive ( xml::xistream& input, std::size_t contextLength );
+        void ReadParameter( xml::xistream& input, std::size_t& index, std::size_t contextLength );
         void WriteArchive( xml::xostream& output, const std::string& type, const T_MissionParameter_Vector& context );
 
     public:
@@ -199,7 +199,7 @@ public:
 private:
     void ReadArchive( xml::xistream& input );
     void ReadFragOrder( xml::xistream& input );
-    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, unsigned int contextLength );
+    void ReadMission( xml::xistream& input, T_Mission_Vector& missions, std::size_t contextLength );
     void ReadContext( xml::xistream& input, T_MissionParameter_Vector& context );
     void ReadContextParameter( xml::xistream& input, T_MissionParameter_Vector& context );
     void WriteArchive( xml::xostream& output );

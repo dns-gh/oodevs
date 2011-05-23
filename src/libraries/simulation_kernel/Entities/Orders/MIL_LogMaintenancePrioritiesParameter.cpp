@@ -66,9 +66,7 @@ bool MIL_LogMaintenancePrioritiesParameter::ToMaintenancePriorities( T_Maintenan
 // -----------------------------------------------------------------------------
 bool MIL_LogMaintenancePrioritiesParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    unsigned int size = priorities_.size();
-    if( size )
-        for( unsigned int i = 0; i < size; ++i )
-            elem.mutable_logmaintenancepriorities()->add_elem()->set_id( priorities_[ i ]->GetMosID().id() );
+    for( std::size_t i = 0; i < priorities_.size(); ++i )
+        elem.mutable_logmaintenancepriorities()->add_elem()->set_id( priorities_[ i ]->GetMosID().id() );
     return true;
 }

@@ -13,8 +13,7 @@
 #include "Element_ABC.h"
 #include "PrimitiveParameter.h"
 #include "clients_kernel/Tools.h"
-#pragma warning( push )
-#pragma warning( disable : 4996 )
+#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/regex.hpp>
 #pragma warning( pop )

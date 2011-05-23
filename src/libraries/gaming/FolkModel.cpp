@@ -21,7 +21,6 @@
 FolkModel::FolkModel( kernel::Controller& controller )
     : controller_      ( controller )
     , edgeCount_       ( 0 )
-    , edgeSize_        ( 0 )
     , dirty_           ( false )
     , currentContainer_( -1 )
     , currentProfile_  ( -1 )
@@ -56,7 +55,6 @@ void FolkModel::Update( const sword::FolkCreation& creation )
     for( int i = 0; i < creation.profiles().elem_size(); ++i )
         profiles_.push_back( creation.profiles().elem( i ).data() );
     edgeCount_ = creation.edge_number();
-    edgeSize_ = activities_.size() * profiles_.size() * containers_.size();
 
     boost::array< T_Values::index, 4 > shape = { edgeCount_, containers_.size(), profiles_.size(), activities_.size() };
     values_.reset( new T_Values( shape ) );

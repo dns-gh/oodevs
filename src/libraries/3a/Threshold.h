@@ -13,9 +13,8 @@
 #include "Reductor_ABC.h"
 #include "TypeChecks.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push )
-#pragma warning( disable : 4996 )
-#include <boost/algorithm/string.hpp>
+#pragma warning( push, 0 )
+#include <boost/tokenizer.hpp>
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
 #include <set>
@@ -80,22 +79,26 @@ private:
     //@{
     std::map< double, double > ReadThresholds( xml::xistream& xis )
     {
-        std::vector< std::string > split;
-        std::string list( xis.attribute< std::string >( "thresholds" ) );
-        boost::algorithm::split( split, list, boost::algorithm::is_any_of( "," ) );
+        static const boost::char_separator< char > separator( "," );
+        typedef boost::tokenizer< boost::char_separator< char > > tokenizer;
         std::set< double > ranges;
-        for( std::vector< std::string >::const_iterator it = split.begin(); it != split.end(); ++it )
-            ranges.insert( boost::lexical_cast< double, std::string >( *it ) );
-        ranges.insert( std::numeric_limits< double >::max() );
-
-        list = xis.attribute< std::string >( "values" );
-        boost::algorithm::split( split, list, boost::algorithm::is_any_of( "," ) );
-        if( split.size() < ranges.size() )
         {
-            const std::string lastValue = split.empty() ? "0" : split.back();
-            std::fill_n( std::back_inserter( split ), ranges.size() - split.size(), lastValue );
+            const std::string data = xis.attribute< std::string >( "thresholds" );
+            const tokenizer tokens( data, separator );
+            std::transform( tokens.begin(), tokens.end(), std::inserter( ranges, ranges.begin() ), &boost::lexical_cast< double, std::string > );
+            ranges.insert( std::numeric_limits< double >::max() );
         }
-
+        std::vector< std::string > split;
+        {
+            const std::string data = xis.attribute< std::string >( "values" );
+            const tokenizer tokens( data, separator );
+            split.assign( tokens.begin(), tokens.end() );
+            if( split.size() < ranges.size() )
+            {
+                const std::string lastValue = split.empty() ? "0" : split.back();
+                std::fill_n( std::back_inserter( split ), ranges.size() - split.size(), lastValue );
+            }
+        }
         std::map< double, double > thresholds;
         std::vector< std::string >::iterator valuesIt = split.begin();
         for( std::set< double >::const_iterator it = ranges.begin(); it != ranges.end(); ++it )

@@ -407,7 +407,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     pTable->setTopMargin( 0 );
 
     pTable->setNumRows( 2 );
-    pTable->setNumCols( 7 + sizes.size() + materials.size() + eNbrSensorWeatherModifiers + eNbrTimeCategory + eNbrVisionObjects + eNbrUnitPosture * 2 );
+    pTable->setNumCols( static_cast< int >( 7 + sizes.size() + materials.size() + eNbrSensorWeatherModifiers + eNbrTimeCategory + eNbrVisionObjects + eNbrUnitPosture * 2 ) );
     for( int n = 0; n < pTable->numCols(); ++n )
         pTable->horizontalHeader()->setLabel( n, "" );
 
@@ -423,10 +423,10 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     pTable->AddBoldGridRow( 2 );
 
     int nCol = 7;
-    builder.AddTableCell( pTable, 0, nCol, 1, sizes.size(), tr( "Target size" ) );
+    builder.AddTableCell( pTable, 0, nCol, 1, static_cast< int >( sizes.size() ), tr( "Target size" ) );
     for( uint n = 0; n < sizes.size(); ++n )
         builder.AddTableCell( pTable, 1, nCol + n, sizes[n]->GetData().c_str() );
-    nCol += sizes.size();
+    nCol += static_cast< int >( sizes.size() );
 
     AddHeaders( pTable, nCol, tr( "Weather modifiers" ), ADN_Tr::ConvertFromSensorWeatherModifiers, eNbrSensorWeatherModifiers );
     AddHeaders( pTable, nCol, tr( "Illumination modifiers" ), ADN_Tr::ConvertFromTimeCategory, eNbrTimeCategory );
@@ -454,11 +454,11 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
         builder.AddTableCell<ADN_TableItem_Double>( pTable, &sensor, nRow, 5, sensor.rDistProximity_, eGreaterEqualZero );
 
         int nCol = 7;
-        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifSizes_, sizes.size() );
+        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifSizes_, static_cast< int >( sizes.size() ) );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifWeather_, eNbrSensorWeatherModifiers );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifIlluminations_, eNbrTimeCategory );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifEnvironments_, eNbrVisionObjects );
-        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifUrbanBlocks_, materials.size() );
+        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifUrbanBlocks_, static_cast< int >( materials.size() ) );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifStance_, eNbrUnitPosture );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifTargetStance_, eNbrUnitPosture );
 
@@ -503,9 +503,9 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
         if( ! sensor.bCanDetectObjects_.GetData() || sensor.vTargets_.empty() )
             continue;
 
-        pTable->setNumRows( nRow + sensor.vTargets_.size() );
+        pTable->setNumRows( static_cast< int >( nRow + sensor.vTargets_.size() ) );
         pTable->AddBoldGridRow( nRow );
-        builder.AddTableCell<ADN_TableItem_String>( pTable, &sensor, nRow, 0, sensor.vTargets_.size(), 1, sensor.strName_, eNone, QTableItem::Never );
+        builder.AddTableCell<ADN_TableItem_String>( pTable, &sensor, nRow, 0, static_cast< int >( sensor.vTargets_.size() ), 1, sensor.strName_, eNone, QTableItem::Never );
 
         int nSubRow = 0;
         for( ADN_Sensors_Data::IT_TargetsInfos_Vector it2 = sensor.vTargets_.begin(); it2 != sensor.vTargets_.end(); ++it2, ++nSubRow )
@@ -518,7 +518,7 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
             AddCells( pTable, &sensor, nRow + nSubRow, nCol, target.vModifStance_, eNbrUnitPosture );
         }
 
-        nRow += sensor.vTargets_.size();
+        nRow += static_cast< int >( sensor.vTargets_.size() );
     }
 
     pTable->AdjustColumns( 50 );

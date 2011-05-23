@@ -48,5 +48,5 @@ const char* const* WinArguments::Argv() const
 // -----------------------------------------------------------------------------
 int WinArguments::Argc() const
 {
-    return cArgv_.size();
+    return static_cast< int >( cArgv_.size() );
 }

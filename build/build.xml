@@ -122,7 +122,7 @@
         <build-lib name="hla_plugin" pattern="lib${ant.project.name}_hla_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
 
-    <target name="library.hla_plugin_dll" depends="library.hla_plugin" description="build hla_plugin dynamic library" if="is-vc80">
+    <target name="library.hla_plugin_dll" depends="library.hla_plugin" description="build hla_plugin dynamic library">
         <build-lib name="hla_plugin_dll" outtype="shared" depends="boost,qt,terrain,xerces,protobuf" pattern="hla_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="HLA,libFedTime1516e,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
@@ -188,7 +188,7 @@
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
     </target>
-    
+
     <target name="library.tic" depends="library.dispatcher" description="build tic static library">
         <build-lib name="tic" pattern="lib${ant.project.name}_tic-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
     </target>
@@ -533,12 +533,12 @@
             <syslibset libs="geocoord"/>
         </build-app>
     </target>
-    
+
     <target name="application.orbat_generator_app" depends="library.orbat_generator" description="build application">
         <build-app name="orbat_generator_app" subsystem="console" depends="boost,xerces,xalan"
             libs="lib${ant.project.name}_orbat_generator-${platform}-mt@{suffix}"/>
     </target>
-    
+
     <target name="application.edxlhave_app" depends="library.protocol" description="build edxl_app (Emergency Data Exchange)">
         <build-app name="edxlhave_app" depends="xerces,boost,protobuf,openssl" libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" subsystem="console" >
             <includepath path="${out.dir}/release/libraries/protocol"/>
@@ -576,7 +576,7 @@
             </concat>
         </sequential>
     </macrodef>
-    
+
     <target name="generate-database" description="compile behavior model database">
         <bmc src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
         <extract-knowledges dir="${models.dir}" tofile="${models.dir}/../integration/TaskKnowledge.lua"/>
@@ -942,7 +942,7 @@
         <test-exercise exercise="Cabourg"/>
         <test-exercise exercise="Poseidon VA"/>
     </target>
-    
+
     <macrodef name="test-data-migration">
         <attribute name="exercise"/>
         <attribute name="old-version"/>
@@ -955,7 +955,7 @@
             <copy todir="${data.dir}/data/models/ada/physical/@{temporary-name}">
                 <fileset dir="../data/tests/test_data_migration/@{old-version}/physical"/>
             </copy>
-            <!-- ADN -->           
+            <!-- ADN -->
             <property name="adaptation_test.dir2" value="${run.dir}/adaptation_test/main"/>
             <delete dir="${adaptation_test.dir2}"/>
             <exec executable="${out.dir}/release/applications/adaptation_app/adaptation_app.exe" dir="${run.dir}" failonerror="true" timeout="600000">
@@ -981,7 +981,7 @@
             <delete dir="${data.dir}/exercises/@{temporary-name}"  failonerror="false"/>
         </sequential>
     </macrodef>
-    
+
     <target name="data_migrations_test">
         <test-data-migration old-version="3.0" exercise="CabourgOld"/>
         <test-data-migration old-version="4.2.0" exercise="Cabourg"/>
@@ -1081,8 +1081,8 @@
 
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla" description="package plugin individual installers"/>
-    
-    <target name="package.plugin.vrforces" description="create vrforces plugin installer">
+
+    <target name="package.plugin.vrforces" description="create vrforces plugin installer" if="is-vc80">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
@@ -1090,7 +1090,7 @@
             <arg value="/DPLUGIN_VERSION=1.0"/>
         </nsis>
     </target>
-    
+
     <target name="package.plugin.hla" description="create hla plugin installer">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>

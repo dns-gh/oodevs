@@ -16,7 +16,9 @@
 #include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/AuthenticationSenders.h"
+#pragma warning( push, 0 )
 #include <boost/thread.hpp>
+#pragma warning( pop )
 
 using namespace plugins;
 using namespace plugins::crossbow;

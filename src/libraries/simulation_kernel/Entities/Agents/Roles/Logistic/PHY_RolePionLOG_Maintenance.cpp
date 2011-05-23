@@ -102,7 +102,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const T_MaintenancePriorityVector& vector, const unsigned int )
         {
-            unsigned size = vector.size();
+            std::size_t size = vector.size();
             file << size;
             for ( CIT_MaintenancePriorityVector it = vector.begin(); it != vector.end(); ++it )
             {
@@ -115,7 +115,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, T_MaintenancePriorityVector& vector, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             vector.reserve( nNbr );
             while ( nNbr-- )
@@ -141,7 +141,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const T_AutomateVector& vector, const unsigned int )
         {
-            unsigned size = vector.size();
+            std::size_t size = vector.size();
             file << size;
             for ( CIT_AutomateVector it = vector.begin(); it != vector.end(); ++it )
                 file << *it;
@@ -150,7 +150,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, T_AutomateVector& vector, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             vector.reserve( nNbr );
             while ( nNbr-- )
@@ -177,7 +177,7 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uns
     file >> nID;
     pWorkRate_ = PHY_MaintenanceWorkRate::Find( nID );
     file >> nWorkRateWarningRCTick_;
-    unsigned int nNbr;
+    std::size_t nNbr;
     file >> nNbr;
     consigns_.reserve( nNbr );
     while ( nNbr-- )
@@ -202,7 +202,7 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const un
          << tacticalPriorities_
          << workRate
          << nWorkRateWarningRCTick_;
-    unsigned size = consigns_.size();
+    std::size_t size = consigns_.size();
     file << size;
     for ( CIT_MaintenanceConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
         file << it->first << it->second;

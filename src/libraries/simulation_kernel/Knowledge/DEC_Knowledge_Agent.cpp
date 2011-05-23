@@ -128,7 +128,7 @@ namespace boost
         template < typename Archive >
         void save( Archive& file, const DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& map, const unsigned int )
         {
-            unsigned size = map.size();
+            std::size_t size = map.size();
             file << size;
             for ( DEC_Knowledge_Agent::CIT_PerceptionAutomateSourceMap it = map.begin(); it != map.end(); ++it )
             {
@@ -141,7 +141,7 @@ namespace boost
         template < typename Archive >
         void load( Archive& file, DEC_Knowledge_Agent::T_PerceptionAutomateSourceMap& g, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {

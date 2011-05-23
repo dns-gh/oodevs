@@ -14,8 +14,7 @@
 
 #include <winsock2.h>
 #include <windows.h>
-#pragma warning( push )
-#pragma warning( disable : 4512 4244 )
+#pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
 

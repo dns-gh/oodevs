@@ -35,7 +35,7 @@ DiamondFormation::~DiamondFormation()
 // Name: DiamondFormation::Start
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void DiamondFormation::Start( const geometry::Point2f& at, const geometry::Vector2f& towards, unsigned int count )
+void DiamondFormation::Start( const geometry::Point2f& at, const geometry::Vector2f& towards, std::size_t count )
 {
     points_.resize( 0 );
     const float baseAngle = std::atan2( towards.Y(), towards.X() );

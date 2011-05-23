@@ -125,7 +125,7 @@ namespace
 {
     int GetIntegerParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
     {
-        unsigned int parametersNumber = parameters.size();
+        unsigned int parametersNumber = static_cast< unsigned >( parameters.size() );
         for (unsigned int i = 0; i < parametersNumber; ++i )
         {
             if( type.GetParameterName( i ) == name )
@@ -143,7 +143,7 @@ namespace
 
     std::vector< DEC_Decision_ABC* > GetAutomatListParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
     {
-        unsigned int parametersNumber = parameters.size();
+        unsigned int parametersNumber = static_cast< unsigned >( parameters.size() );
         for (unsigned int i = 0; i < parametersNumber; ++i )
         {
             if( type.GetParameterName( i ) == name )
@@ -158,7 +158,7 @@ namespace
 
     DEC_Decision_ABC* GetAgentParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
     {
-        unsigned int parametersNumber = parameters.size();
+        unsigned int parametersNumber = static_cast< unsigned >( parameters.size() );
         for (unsigned int i = 0; i < parametersNumber; ++i )
         {
             if( type.GetParameterName( i ) == name )
@@ -173,7 +173,7 @@ namespace
 
     boost::shared_ptr< TER_Localisation > GetLocationParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
     {
-        unsigned int parametersNumber = parameters.size();
+        unsigned int parametersNumber = static_cast< unsigned >( parameters.size() );
         for (unsigned int i = 0; i < parametersNumber; ++i )
         {
             if( type.GetParameterName( i ) == name )
@@ -188,7 +188,7 @@ namespace
 
     boost::shared_ptr< MT_Vector2D > GetPointParameter( const std::string& name, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const MIL_FragOrderType& type )
     {
-        unsigned int parametersNumber = parameters.size();
+        unsigned int parametersNumber = static_cast< unsigned >( parameters.size() );
         for (unsigned int i = 0; i < parametersNumber; ++i )
         {
             if( type.GetParameterName( i ) == name )
@@ -218,7 +218,7 @@ int MIL_FragOrder::GetAmbianceMission() const
 // -----------------------------------------------------------------------------
 const PHY_DotationCategory* MIL_FragOrder::GetMunitions() const
 {
-    unsigned int parametersNumber = parameters_.size();
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
     for (unsigned int i = 0; i < parametersNumber; ++i )
     {
         if( type_.GetParameterName( i ) == "munitions_" )
@@ -317,7 +317,7 @@ int MIL_FragOrder::GetOrderConduiteChangerReglesEngagement() const
 // -----------------------------------------------------------------------------
 MIL_FragOrder::T_MedicalPriorityVector MIL_FragOrder::GetOrderConduiteModifierPrioritesBlesses() const
 {
-    unsigned int parametersNumber = parameters_.size();
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
     for (unsigned int i = 0; i < parametersNumber; ++i )
     {
         if( type_.GetParameterName( i ) == "orderConduiteModifierPrioritesBlesses_" )
@@ -336,7 +336,7 @@ MIL_FragOrder::T_MedicalPriorityVector MIL_FragOrder::GetOrderConduiteModifierPr
 // -----------------------------------------------------------------------------
 MIL_FragOrder::T_MaintenancePriorityVector MIL_FragOrder::GetOrderConduiteModifierPrioritesReparations() const
 {
-    unsigned int parametersNumber = parameters_.size();
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
     for (unsigned int i = 0; i < parametersNumber; ++i )
     {
         if( type_.GetParameterName( i ) == "orderConduiteModifierPrioritesReparations_" )
@@ -468,7 +468,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() cons
 {
     static const std::string parameterName( "pointCible_" );
 
-    unsigned int parametersNumber = parameters_.size();
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
     for (unsigned int i = 0; i < parametersNumber; ++i )
     {
         if( type_.GetParameterName( i ) == parameterName )

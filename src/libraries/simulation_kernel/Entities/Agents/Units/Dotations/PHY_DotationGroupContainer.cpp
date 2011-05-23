@@ -66,7 +66,7 @@ namespace serialization
     template< typename Archive >
     void save( Archive& file, const PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int )
     {
-        unsigned size = map.size();
+        std::size_t size = map.size();
         file << size;
         for( PHY_DotationGroupContainer::CIT_DotationGroupMap it = map.begin(); it != map.end(); ++it )
         {
@@ -79,7 +79,7 @@ namespace serialization
     template< typename Archive >
     void load( Archive& file, PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int )
     {
-        unsigned int n;
+        std::size_t n;
         file >> n;
         while( n-- )
         {
@@ -99,7 +99,7 @@ namespace serialization
     template< typename Archive >
     void save( Archive& file, const PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
     {
-        unsigned size = set.size();
+        std::size_t size = set.size();
         file << size;
         for ( PHY_DotationGroupContainer::CIT_DotationSet it = set.begin(); it != set.end(); ++it )
             file << *it;
@@ -108,7 +108,7 @@ namespace serialization
     template< typename Archive >
     void load( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
     {
-        unsigned int n;
+        std::size_t n;
         file >> n;
         while ( n-- )
         {
@@ -449,7 +449,7 @@ void PHY_DotationGroupContainer::SendChangedState( client::UnitAttributes& asn )
 // -----------------------------------------------------------------------------
 void PHY_DotationGroupContainer::SendFullState( client::UnitAttributes& asn ) const
 {
-    unsigned int nNbrDotations = 0;
+    std::size_t nNbrDotations = 0;
     for( CIT_DotationGroupMap itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
     {
         const PHY_DotationGroup::T_DotationMap& dotations = itDotationGroup->second->GetDotations();

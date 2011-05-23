@@ -10,13 +10,12 @@
 #ifndef __FilterHelper_h_
 #define __FilterHelper_h_
 
-#include <set>
-#pragma warning( push )
-#pragma warning( disable : 4996 )
-#include <boost/algorithm/string.hpp>
-#pragma warning( pop )
+#pragma warning( push, 0 )
 #include <boost/lexical_cast.hpp>
+#include <boost/tokenizer.hpp>
+#pragma warning( pop )
 #include <xeumeuleu/xml.hpp>
+#include <set>
 
 // =============================================================================
 /** @class  FilterHelper
@@ -62,12 +61,9 @@ public:
 private:
     void FillAllowedValues( const std::string& values )
     {
-        if( ! values.empty() )
-        {
-            std::vector< std::string > split;
-            boost::algorithm::split( split, values, boost::algorithm::is_any_of( "," ) );
-            std::transform( split.begin(), split.end(), std::inserter( allowed_, allowed_.begin() ), &boost::lexical_cast< T, std::string > );
-        }
+        static const boost::char_separator< char > separator( "," );
+        const boost::tokenizer< boost::char_separator< char > > tokens( values, separator );
+        std::transform( tokens.begin(), tokens.end(), std::inserter( allowed_, allowed_.begin() ), &boost::lexical_cast< T, std::string > );
     }
 
 private:

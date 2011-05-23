@@ -133,7 +133,7 @@ void PHY_MedicalEvacuationAmbulance::EnterStateGoingTo()
         (**itConsign).EnterStateEvacuationGoingTo();
         vHumansBarycenter += (**itConsign).GetHumanState().GetHumanPosition();
     }
-    vHumansBarycenter /= consigns_.size();
+    vHumansBarycenter /= static_cast< double >( consigns_.size() );
 
     nState_ = eGoingTo;
     nTimer_ = pCompAmbulance_->ApproximateTravelTime( pMedical_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition(), vHumansBarycenter );
@@ -188,7 +188,7 @@ void PHY_MedicalEvacuationAmbulance::EnterStateGoingFrom()
         (**itConsign).EnterStateEvacuationGoingFrom();
         vHumansBarycenter += (**itConsign).GetHumanState().GetHumanPosition();
     }
-    vHumansBarycenter /= consigns_.size();
+    vHumansBarycenter /= static_cast< double >( consigns_.size() );
 
     nState_ = eGoingFrom;
     nTimer_ = pCompAmbulance_->ApproximateTravelTime( vHumansBarycenter, pMedical_->GetPion().GetRole< PHY_RoleInterface_Location>().GetPosition() );

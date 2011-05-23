@@ -108,7 +108,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_RolePion_Communications::T_JammerSet& set, const unsigned int )
         {
-            unsigned size = set.size();
+            std::size_t size = set.size();
             file << size;
             for ( PHY_RolePion_Communications::CIT_JammerSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
@@ -117,7 +117,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, PHY_RolePion_Communications::T_JammerSet& set, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {

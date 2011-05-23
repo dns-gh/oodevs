@@ -10,8 +10,10 @@
 #include "shield_test_pch.h"
 #include "shield/Server.h"
 #include "shield/Listener_ABC.h"
+#pragma warning( push, 0 )
 #include "shield/proto/ClientToSim.pb.h"
 #include "shield/proto/SimToClient.pb.h"
+#pragma warning( pop )
 #include "tools/ServerNetworker.h"
 #include "tools/ClientNetworker.h"
 #include "protocol/Simulation.h"

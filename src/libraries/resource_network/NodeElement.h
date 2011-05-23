@@ -138,7 +138,7 @@ private:
 template< typename Archive >
 void NodeElement::load( Archive& file, const unsigned int )
 {
-    unsigned int linksSize;
+    std::size_t linksSize;
     file >> resourceId_
          >> resourceName_
          >> isActivated_
@@ -149,7 +149,7 @@ void NodeElement::load( Archive& file, const unsigned int )
          >> consumptionCritical_
          >> modifier_
          >> linksSize;
-    for( unsigned int i = 0; i < linksSize; ++i )
+    for( std::size_t i = 0; i < linksSize; ++i )
     {
         ResourceLink* link = 0;
         file >> link;
@@ -164,7 +164,7 @@ void NodeElement::load( Archive& file, const unsigned int )
 template< typename Archive >
 void NodeElement::save( Archive& file, const unsigned int ) const
 {
-    unsigned int linksSize = links_.size();
+    std::size_t linksSize = links_.size();
     file << resourceId_
          << resourceName_
          << isActivated_
@@ -175,7 +175,7 @@ void NodeElement::save( Archive& file, const unsigned int ) const
          << consumptionCritical_
          << modifier_
          << linksSize;
-    for( unsigned int i = 0; i < linksSize; ++i )
+    for( std::size_t i = 0; i < linksSize; ++i )
         file << links_[ i ];
 }
 

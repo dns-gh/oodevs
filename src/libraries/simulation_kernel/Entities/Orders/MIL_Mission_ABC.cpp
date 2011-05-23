@@ -165,7 +165,7 @@ void MIL_Mission_ABC::ReleasedByDIA()
 // -----------------------------------------------------------------------------
 void MIL_Mission_ABC::Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor ) const
 {
-    unsigned int parametersNumber = parameters_.size();
+    unsigned int parametersNumber = static_cast< unsigned >( parameters_.size() );
     for (unsigned int i = 0; i < parametersNumber; ++i )
     {
         const std::string& paramName = type_.GetParameterName( i );
@@ -181,9 +181,9 @@ namespace
     {
         if( parameters_.size() <= index )
         {
-            unsigned int currentSize = parameters_.size();
+            std::size_t currentSize = parameters_.size();
             parameters_.resize( index + 1 );
-            for( unsigned int i = currentSize; i < index; ++i )
+            for( std::size_t i = currentSize; i < index; ++i )
             {
                 boost::shared_ptr< MIL_MissionParameter_ABC > dummy ( new MIL_NullParameter() );
                 parameters_[i] = dummy;

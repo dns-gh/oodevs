@@ -107,7 +107,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const T_MedicalPriorityVector& vector, const unsigned int )
         {
-            unsigned size = vector.size();
+            std::size_t size = vector.size();
             file << size;
             for ( CIT_MedicalPriorityVector it = vector.begin(); it != vector.end(); ++it )
             {
@@ -119,7 +119,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, T_MedicalPriorityVector& vector, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             vector.reserve( nNbr );
             while ( nNbr-- )
@@ -143,7 +143,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const T_AutomateVector& vector, const unsigned int )
         {
-            unsigned size = vector.size();
+            std::size_t size = vector.size();
             file << size;
             for ( CIT_AutomateVector it = vector.begin(); it != vector.end(); ++it )
                 file << *it;
@@ -152,7 +152,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, T_AutomateVector& vector, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             vector.reserve( nNbr );
             while ( nNbr-- )
@@ -176,7 +176,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const unsigned int )
         {
-            unsigned size = mmap.size();
+            std::size_t size = mmap.size();
             file << size;
             for ( PHY_RolePionLOG_Medical::CIT_EvacuationAmbulancesMMap it = mmap.begin(); it != mmap.end(); ++it )
             {
@@ -188,7 +188,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, PHY_RolePionLOG_Medical::T_EvacuationAmbulancesMMap& mmap, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -215,7 +215,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const unsigned int )
         {
-            unsigned size = set.size();
+            std::size_t size = set.size();
             file << size;
             for ( PHY_RolePionLOG_Medical::CIT_CollectionAmbulancesSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
@@ -224,7 +224,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, PHY_RolePionLOG_Medical::T_CollectionAmbulancesSet& set, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -253,7 +253,7 @@ void PHY_RolePionLOG_Medical::load( MIL_CheckPointInArchive& file, const unsigne
          >> collectionAmbulances_
          >> reservations_;
 
-    unsigned int nNbr;
+    std::size_t nNbr;
     file >> nNbr;
     consigns_.reserve( nNbr );
     while ( nNbr-- )
@@ -280,7 +280,7 @@ void PHY_RolePionLOG_Medical::save( MIL_CheckPointOutArchive& file, const unsign
          << evacuationAmbulances_
          << collectionAmbulances_
          << reservations_;
-    unsigned size = consigns_.size();
+    std::size_t size = consigns_.size();
     file << size;
     for ( CIT_MedicalConsigns it = consigns_.begin(); it != consigns_.end(); ++it )
         file << it->first << it->second;

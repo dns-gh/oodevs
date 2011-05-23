@@ -120,14 +120,14 @@ void IndicatorExportDialog::OnAccept()
                 file << sep << request->GetName();
             file << std::endl;
         }
-        unsigned int hasData = requests_.size();
-        unsigned int index = 0;
+        std::size_t hasData = requests_.size();
+        std::size_t index = 0;
         while( hasData )
         {
             file << index;
             BOOST_FOREACH( const T_Requests::value_type& request, requests_ )
             {
-                const unsigned int size = request->Result().size();
+                const std::size_t size = request->Result().size();
                 file << sep;
                 if( index < size )
                     file << request->Result()[ index ];

@@ -8,8 +8,10 @@
 // *****************************************************************************
 
 #include "shield_test_pch.h"
+#pragma warning( push, 0 )
 #include <google/protobuf/stubs/common.h>
 #include <boost/lexical_cast.hpp>
+#pragma warning( pop )
 #include <string>
 
 unsigned short PORT = 55000;

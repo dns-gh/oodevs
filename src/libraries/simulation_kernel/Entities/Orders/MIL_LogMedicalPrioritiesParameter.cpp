@@ -65,9 +65,7 @@ bool MIL_LogMedicalPrioritiesParameter::ToMedicalPriorities( T_MedicalPriorityVe
 // -----------------------------------------------------------------------------
 bool MIL_LogMedicalPrioritiesParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
-    unsigned int size = priorities_.size();
-    if( size )
-        for( unsigned int i = 0; i < size; ++i )
-            elem.mutable_logmedicalpriorities()->add_elem( priorities_[ i ]->GetAsnID() );
+    for( std::size_t i = 0; i < priorities_.size(); ++i )
+        elem.mutable_logmedicalpriorities()->add_elem( priorities_[ i ]->GetAsnID() );
     return true;
 }

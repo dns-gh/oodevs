@@ -82,7 +82,7 @@ const PHY_MaterialCompositionType* PHY_MaterialCompositionType::Find( const std:
 // -----------------------------------------------------------------------------
 unsigned int PHY_MaterialCompositionType::Count()
 {
-    return materialCompositions_.size();
+    return static_cast< unsigned >( materialCompositions_.size() );
 }
 
 // -----------------------------------------------------------------------------

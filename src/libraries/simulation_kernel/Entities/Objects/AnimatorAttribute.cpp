@@ -129,9 +129,8 @@ unsigned int AnimatorAttribute::GetMaxAnimators() const
 // -----------------------------------------------------------------------------
 unsigned int AnimatorAttribute::GetCurrent() const
 {
-    return animators_.size();
+    return static_cast< unsigned >( animators_.size() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AnimatorAttribute::GetAnimators

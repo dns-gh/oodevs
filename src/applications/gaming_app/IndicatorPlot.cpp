@@ -116,9 +116,9 @@ void IndicatorPlot::Add( const IndicatorRequest& request )
     T_PlottedRequests::const_iterator it = plots_.find( &request );
     if( it != plots_.end() )
         return;
-    gui::GQ_PlotData* data = new gui::GQ_PlotData( datas_.size() + 1, *this );
-    plotNames_->setText( plotNames_->text() + "<font color='" + GetPlotColor( datas_.size() ).name() + "'>" + request.GetName() + "</font>" + "<br />" );
-    data->SetLinePen( GetPlotColor( datas_.size() ) );
+    gui::GQ_PlotData* data = new gui::GQ_PlotData( static_cast< unsigned >( datas_.size() + 1 ), *this );
+    plotNames_->setText( plotNames_->text() + "<font color='" + GetPlotColor( static_cast< unsigned >( datas_.size() ) ).name() + "'>" + request.GetName() + "</font>" + "<br />" );
+    data->SetLinePen( GetPlotColor( static_cast< unsigned >( datas_.size() ) ) );
     UpdatePlot( data, request, 0 );
     RegisterPlotData( *data );
     datas_.push_back( data );
@@ -140,7 +140,7 @@ void IndicatorPlot::NotifyUpdated( const IndicatorRequest& request )
     {
         gui::GQ_PlotData* data = it->second;
         if( data->Data().size() < request.Result().size() )
-            UpdatePlot( data, request, data->Data().size() - 1 );
+            UpdatePlot( data, request, static_cast< unsigned >( data->Data().size() - 1 ) );
         else if( data->Data().size() > request.Result().size() )
         {
             data->ClearData();
@@ -183,7 +183,7 @@ void IndicatorPlot::UpdatePlot( gui::GQ_PlotData* plot, const IndicatorRequest& 
         max_ = std::max( value, max_ );
     }
     YAxis().SetAxisRange( min_, max_ * 1.1, true );
-    XAxis().SetAxisRange( firstTick, firstTick + request.Result().size(), true );
+    XAxis().SetAxisRange( firstTick, static_cast< double >( firstTick + request.Result().size() ), true );
 }
 
 // -----------------------------------------------------------------------------

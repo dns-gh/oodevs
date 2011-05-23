@@ -11,8 +11,7 @@
 #include "JoinExercise.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
-#pragma warning( push )
-#pragma warning( disable: 4244 )
+#pragma warning( push, 0 )
 #include <boost/thread.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>

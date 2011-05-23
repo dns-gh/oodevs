@@ -338,7 +338,7 @@ ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
     pTable->horizontalHeader()->setLabel( 4, tr( "Reload duration (s)" ) );
     pTable->horizontalHeader()->show();
 
-    pTable->setNumRows( weapons.size() + 1 );
+    pTable->setNumRows( static_cast< int >( weapons.size() + 1 ) );
     builder.AddTableCell( pTable, 0, 0, tr( "Weapon system" ) );
     builder.AddTableCell( pTable, 0, 1, tr( "Rnd per burst" ) );
     builder.AddTableCell( pTable, 0, 2, tr( "Burst duration (s)" ) );
@@ -390,7 +390,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
     ADN_Table* pTable = builder.CreateTable( 0 );
 
     // Setup the header.
-    pTable->setNumCols( distancesSet.size() + 2 );
+    pTable->setNumCols( static_cast< int >( distancesSet.size() + 2 ) );
     pTable->horizontalHeader()->setLabel( 0, tr( "Weapon system" ) );
     pTable->horizontalHeader()->setLabel( 1, tr( "Target size" ) );
     int n = 2;
@@ -415,10 +415,10 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
             continue;
 
         ADN_Weapons_Data::T_PhSizeInfosVector& phsSizeInfos = (*it)->phs_;
-        pTable->setNumRows( pTable->numRows() + phsSizeInfos.size() );
+        pTable->setNumRows( pTable->numRows() + static_cast< int >( phsSizeInfos.size() ) );
         pTable->AddBoldGridRow( nRow );
 
-        builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow, 0, phsSizeInfos.size(), 1, (*it)->strName_, eNone, QTableItem::Never );
+        builder.AddTableCell<ADN_TableItem_String>( pTable, *it, nRow, 0, static_cast< int >( phsSizeInfos.size() ), 1, (*it)->strName_, eNone, QTableItem::Never );
 
         int nSubRow = 0;
         for( ADN_Weapons_Data::IT_PhSizeInfosVector it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2, ++nSubRow )
@@ -436,12 +436,12 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
             for( ADN_Weapons_Data::IT_PhInfosVector it3 = phs.begin(); it3 != phs.end(); ++it3 )
             {
                 std::set<int>::iterator itFound = distancesSet.find( (*it3)->nDistance_.GetData() );
-                int nIndex = std::distance( distancesSet.begin(), itFound );
+                int nIndex = static_cast< int >( std::distance( distancesSet.begin(), itFound ) );
                 ADN_TableItem_Double* pItem = builder.AddTableCell<ADN_TableItem_Double>( pTable, *it, nRow + nSubRow, 2 + nIndex, (*it3)->rPerc_, ePercentage );
                 pItem->UseColor( true );
             }
         }
-        nRow += phsSizeInfos.size();
+        nRow += static_cast< int >( phsSizeInfos.size() );
     }
 
     pTable->AdjustColumns( 50 );
@@ -510,7 +510,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
         if( weapon.bDirect_.GetData() && ! phsSizeInfos.empty() && ! distancesSet.empty() )
         {
             builder.Section( "PHs" );
-            builder.BeginTable( phsSizeInfos.size() + 1, distancesSet.size() + 1  );
+            builder.BeginTable( static_cast< int >( phsSizeInfos.size() + 1 ), static_cast< int >( distancesSet.size() + 1 ) );
 
             int nRow = 1;
             for( ADN_Weapons_Data::IT_PhSizeInfosVector it2 = phsSizeInfos.begin(); it2 != phsSizeInfos.end(); ++it2, ++nRow )
@@ -520,7 +520,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
                 for( ADN_Weapons_Data::IT_PhInfosVector it3 = phs.begin(); it3 != phs.end(); ++it3 )
                 {
                     std::set<int>::iterator itFound = distancesSet.find( (*it3)->nDistance_.GetData() );
-                    int nIndex = std::distance( distancesSet.begin(), itFound );
+                    int nIndex = static_cast< int >( std::distance( distancesSet.begin(), itFound ) );
                     builder.TableItem( nRow, nIndex + 1, (*it3)->rPerc_.GetData() );
                     builder.TableItem( 0, nIndex + 1, QString( "%1m").arg( (*it3)->nDistance_.GetData() ) );
                 }

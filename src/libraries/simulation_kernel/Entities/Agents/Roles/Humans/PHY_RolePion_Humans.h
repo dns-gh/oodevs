@@ -133,7 +133,7 @@ private:
     T_HumanDataVector humansData_;
     unsigned int nNbrUsableHumans_;
     unsigned int nNbrHumans_;
-    unsigned int nNbrHumansDataChanged_;
+    std::size_t nNbrHumansDataChanged_;
     T_HumanSet humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
     // Medical
     T_MedicalHumanStateSet medicalHumanStates_;

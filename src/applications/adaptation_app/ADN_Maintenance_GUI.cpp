@@ -83,7 +83,7 @@ void ADN_Maintenance_GUI::BuildWorkingSchemeTable( QWidget* parent )
     QGroupBox* pGroup = new QHGroupBox( tr( "Shifts durations" ), parent );
 
     ADN_Table* pTable = builder.CreateTable( pGroup );
-    pTable->setNumCols( data_.vWorkingSchemes_.size() );
+    pTable->setNumCols( static_cast< int >( data_.vWorkingSchemes_.size() ) );
     pTable->setNumRows( 2 );
     pTable->verticalHeader()->show();
     pTable->setLeftMargin( 5 );

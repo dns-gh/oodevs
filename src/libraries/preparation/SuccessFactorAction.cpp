@@ -51,7 +51,7 @@ SuccessFactorAction::~SuccessFactorAction()
 void SuccessFactorAction::ReadParameter( xml::xistream& xis )
 {
     std::auto_ptr< SuccessFactorActionParameter > parameter( new SuccessFactorActionParameter( xis ) );
-    Register( elements_.size(), *parameter.release() );
+    Register( static_cast< unsigned long >( elements_.size() ), *parameter.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,5 +82,5 @@ const SuccessFactorActionType& SuccessFactorAction::GetType() const
 // -----------------------------------------------------------------------------
 void SuccessFactorAction::AddParameter( const QString& name, const QString& value )
 {
-    Register( elements_.size(), *new SuccessFactorActionParameter( name, value ) );
+    Register( static_cast< unsigned long >( elements_.size() ), *new SuccessFactorActionParameter( name, value ) );
 }

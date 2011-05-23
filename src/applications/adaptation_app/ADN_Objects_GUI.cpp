@@ -467,7 +467,7 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
     indexBuilder.BeginHtml( tr( "Objects" ) );
 
     ADN_Objects_Data::T_ObjectsInfos_Vector& objects = data_.GetObjectInfos();
-    indexBuilder.BeginTable( objects.size()+1 , 4 );
+    indexBuilder.BeginTable( static_cast< int >( objects.size() + 1 ), 4 );
     indexBuilder.TableItem( 0, 0, tr( "Name" ), true );
     indexBuilder.TableItem( 0, 1, tr( "Type" ), true );
     indexBuilder.TableItem( 0, 2, tr( "Geometry" ), true );

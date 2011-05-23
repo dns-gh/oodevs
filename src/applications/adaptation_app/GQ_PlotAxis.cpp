@@ -779,8 +779,7 @@ void GQ_PlotAxis::UpdateTickPeriod()
     if( rRawTickPeriod < rMinTickPeriod_ )
         rRawTickPeriod = rMinTickPeriod_;
 
-    uint nNbrMultiples = tickMultiples_.size();
-    for( uint i = 0; i < nNbrMultiples; ++i )
+    for( std::size_t i = 0; i < tickMultiples_.size(); ++i )
     {
         uint nMultiple = tickMultiples_[i];
 
@@ -894,7 +893,7 @@ void GQ_PlotAxis::DrawX( QPainter& painter, const QColorGroup& colors, const QPo
 
     ++nY0;
 
-    uint nNbrTicks = ticks_.size();
+    std::size_t nNbrTicks = ticks_.size();
 
     if( nNbrTicks == 0 )
         return;
@@ -962,7 +961,7 @@ void GQ_PlotAxis::DrawY( QPainter& painter, const QColorGroup& colors, const QPo
 
     --nX0;
 
-    uint nNbrTicks = ticks_.size();
+    std::size_t nNbrTicks = ticks_.size();
 
     if( nNbrTicks == 0 )
         return;
@@ -1065,8 +1064,8 @@ void GQ_PlotAxis::DrawGrid( QPainter& painter, const QColorGroup& colors, const 
 // -----------------------------------------------------------------------------
 void GQ_PlotAxis::DrawVGrid( QPainter& painter, int nY0, int nY1 )
 {
-    uint nNbrTicks = ticks_.size();
-    for( uint i = 0; i < nNbrTicks; ++i )
+    std::size_t nNbrTicks = ticks_.size();
+    for( std::size_t i = 0; i < nNbrTicks; ++i )
     {
         int nX = ticks_[i].second;
 
@@ -1085,8 +1084,8 @@ void GQ_PlotAxis::DrawVGrid( QPainter& painter, int nY0, int nY1 )
 // -----------------------------------------------------------------------------
 void GQ_PlotAxis::DrawHGrid( QPainter& painter, int nX0, int nX1 )
 {
-    uint nNbrTicks = ticks_.size();
-    for( uint i = 0; i < nNbrTicks; ++i )
+    std::size_t nNbrTicks = ticks_.size();
+    for( std::size_t i = 0; i < nNbrTicks; ++i )
     {
         int nY = ticks_[i].second;
 

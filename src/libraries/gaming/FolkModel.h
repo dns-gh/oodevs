@@ -91,7 +91,6 @@ private:
     T_Names profiles_;
     T_Names activities_;
     unsigned edgeCount_;
-    unsigned edgeSize_;
 
     std::auto_ptr< T_Values > values_;
 

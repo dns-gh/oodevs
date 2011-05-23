@@ -397,7 +397,7 @@ void GlWidget::DrawLines( const T_PointVector& points ) const
     {
         glEnable( GL_LINE_SMOOTH );
         glVertexPointer( 2, GL_FLOAT, 0, (const void*)(&points.front()) );
-        glDrawArrays( GL_LINE_STRIP, 0, points.size() );
+        glDrawArrays( GL_LINE_STRIP, 0, static_cast< GLsizei >( points.size() ) );
     }
 }
 
@@ -430,7 +430,7 @@ void GlWidget::DrawPolygon( const T_PointVector& points ) const
     glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE );
     glStencilFunc( GL_ALWAYS, 0x1, 0x1 );
     glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
-    glDrawArrays( GL_TRIANGLE_FAN, 0, points.size() );
+    glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( points.size() ) );
     glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
     glStencilFunc( GL_EQUAL, 0x1, 0x1 );
     glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
@@ -439,10 +439,10 @@ void GlWidget::DrawPolygon( const T_PointVector& points ) const
         glGetFloatv( GL_CURRENT_COLOR, color );
         color[3] *= 0.5;
         glColor4fv( color );
-        glDrawArrays( GL_TRIANGLE_FAN, 0, points.size() );
+        glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( points.size() ) );
     glPopAttrib();
     glEnable( GL_LINE_SMOOTH );
-    glDrawArrays( GL_LINE_LOOP, 0, points.size() );
+    glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( points.size() ) );
     glDisable( GL_STENCIL_TEST );
 }
 
@@ -473,18 +473,18 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
     glColorMask( GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE ); // disable writing to color buffer
     glStencilFunc( GL_ALWAYS, 0x1, 0x1 );
     glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
-    glDrawArrays( GL_TRIANGLE_FAN, 0, footprint.size() );
+    glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( footprint.size() ) );
     glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );    // enable writing to color buffer
     glStencilFunc( GL_EQUAL, 0x1, 0x1 );                  // test if it is odd(1)
     glStencilOp( GL_KEEP, GL_INVERT, GL_INVERT );
     glColor4f( color[ 0 ], color[ 1 ], color[ 2 ], color[ 3 ] );
-    glDrawArrays( GL_TRIANGLE_FAN, 0, footprint.size() );
+    glDrawArrays( GL_TRIANGLE_FAN, 0, static_cast< GLsizei >( footprint.size() ) );
     glDisable( GL_STENCIL_TEST );
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
         glLineWidth( 1 );
         color[ 3 ] = urbanColor.Alpha() * 0.6f;
         glColor4fv( color );
-        glDrawArrays( GL_LINE_LOOP, 0, footprint.size() );
+        glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
         //calculating roof geometry:
         Polygon2f::T_Vertices roofPoints = polygon.VerticeCopy();
         for( unsigned int i = 0 ; i < roofPoints.size() ; ++i )
@@ -508,8 +508,8 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
             face.push_back( roofPoints[ next ] );
             face.push_back( footprint[ next ] );
             glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &face.front() ) );
-            glDrawArrays( GL_POLYGON, 0, face.size() );
-            glDrawArrays( GL_LINE_LOOP, 0, face.size() );
+            glDrawArrays( GL_POLYGON, 0, static_cast< GLsizei >( face.size() ) );
+            glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( face.size() ) );
         }
         if( selected )
             color[ 3 ] = std::min ( 1.f, urbanColor.Alpha() * 1.6f );
@@ -517,7 +517,7 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
             color[ 3 ] = urbanColor.Alpha();
         glColor4fv( color );
         glVertexPointer( 2, GL_FLOAT, 0, static_cast< const void* >( &footprint.front() ) );
-        glDrawArrays( GL_LINE_LOOP, 0, footprint.size() );
+        glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
         if( selected )
         {
             UpdateStipple();
@@ -528,7 +528,7 @@ void GlWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const k
             color[ 3 ] = 0.9f;
         }
         glColor4fv( color );
-        glDrawArrays( GL_LINE_LOOP, 0, footprint.size() );
+        glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( footprint.size() ) );
         glDisable( GL_LINE_STIPPLE );
     glPopAttrib();
     if( !name.empty() )

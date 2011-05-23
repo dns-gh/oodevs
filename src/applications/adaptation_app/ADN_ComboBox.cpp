@@ -136,7 +136,7 @@ void ADN_ComboBox::insertItem( const QString& txt, int index )
             if( txt.compare( this->text( index ) ) < 0 )
                 break;
     // Insert index value in model at view place.
-    vItemsEnum_.insert( vItemsEnum_.begin() + index, vItemsEnum_.size() );
+    vItemsEnum_.insert( vItemsEnum_.begin() + index, static_cast< int >( vItemsEnum_.size() ) );
     QComboBox::insertItem( txt, index );
 }
 

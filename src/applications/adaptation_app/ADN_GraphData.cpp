@@ -60,7 +60,7 @@ void ADN_GraphData::DeleteData( void* pRelatedObject )
         if( value.GetRelatedObject() == pRelatedObject )
         {
             // It is. Delete the graphData point and the value.
-            this->DeletePoint( std::distance( graphValueList_.begin(), it ) );
+            this->DeletePoint( static_cast< unsigned int >( std::distance( graphValueList_.begin(), it ) ) );
             it = graphValueList_.erase( it );
             delete &value;
             TouchData();
@@ -69,7 +69,7 @@ void ADN_GraphData::DeleteData( void* pRelatedObject )
         // The value is not related to the object being deleted. Update it in case it has changed
         // as a result of having the other value deleted (for example, it's x coordinate
         // changing because the preceding value was deleted thus avoiding some ugly empty space).
-        this->ChangePoint( std::distance( graphValueList_.begin(), it ), value.GetPoint() );
+        this->ChangePoint( static_cast< unsigned int >( std::distance( graphValueList_.begin(), it ) ), value.GetPoint() );
         ++it;
     }
 }
@@ -83,7 +83,7 @@ void ADN_GraphData::OnDataChanged( ADN_GraphValue& value )
     IT_GraphValue_Vector it = std::find( graphValueList_.begin(), graphValueList_.end(), &value );
     assert( it != graphValueList_.end() );
     T_Point newPoint = value.GetPoint();
-    this->ChangePoint( std::distance( graphValueList_.begin(), it ), newPoint );
+    this->ChangePoint( static_cast< unsigned int >( std::distance( graphValueList_.begin(), it ) ), newPoint );
     TouchData();
 }
 
@@ -101,7 +101,7 @@ void ADN_GraphData::SelectRelatedData( void* pObj )
         ADN_GraphValue* pValue = *it;
         if( pValue->GetRelatedObject() == pObj )
         {
-            SetSelected( std::distance( graphValueList_.begin(), it ), true );
+            SetSelected( static_cast< unsigned int >( std::distance( graphValueList_.begin(), it ) ), true );
         }
     }
 }

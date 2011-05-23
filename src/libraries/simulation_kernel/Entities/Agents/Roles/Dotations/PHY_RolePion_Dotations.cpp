@@ -55,7 +55,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const unsigned int )
         {
-            unsigned size = map.size();
+            std::size_t size = map.size();
             file << size;
             for ( dotation::PHY_RolePion_Dotations::CIT_DotationReservedMap it = map.begin(); it != map.end(); ++it )
             {
@@ -67,7 +67,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, dotation::PHY_RolePion_Dotations::T_DotationReservedMap& map, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {

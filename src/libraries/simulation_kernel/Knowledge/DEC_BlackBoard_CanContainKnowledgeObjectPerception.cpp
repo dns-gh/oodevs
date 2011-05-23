@@ -43,7 +43,7 @@ DEC_BlackBoard_CanContainKnowledgeObjectPerception::~DEC_BlackBoard_CanContainKn
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObjectPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned int nNbr;
+    std::size_t nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -59,7 +59,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::load( MIL_CheckPointInA
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObjectPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned int size = knowledgeObjectPerceptionMap_.size();
+    std::size_t size = knowledgeObjectPerceptionMap_.size();
     file << size;
     for ( CIT_KnowledgeObjectPerceptionMap it = knowledgeObjectPerceptionMap_.begin(); it != knowledgeObjectPerceptionMap_.end(); ++it )
     {

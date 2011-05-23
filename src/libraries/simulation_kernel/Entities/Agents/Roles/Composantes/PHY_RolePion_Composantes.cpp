@@ -66,9 +66,7 @@ PHY_RolePion_Composantes::T_ComposanteTypeProperties::T_ComposanteTypeProperties
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Composantes::T_ComposanteTypeProperties::HasUsableComposantes() const
 {
-    unsigned int i = 0;
-    unsigned int size = nbrsPerState_.size();
-    for( ; i < size; ++i )
+    for( unsigned int i = 0; i < nbrsPerState_.size(); ++i )
         if( nbrsPerState_[i] > 0 && PHY_ComposanteState::Find( i ).IsUsable() )
             return true;
     return false;
@@ -137,7 +135,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_RolePion_Composantes::T_LoanMap& map, const unsigned int )
         {
-            unsigned size = map.size();
+            std::size_t size = map.size();
             file << size;
             for(  PHY_RolePion_Composantes::CIT_LoanMap it = map.begin(); it != map.end(); ++it )
             {
@@ -149,7 +147,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, PHY_RolePion_Composantes::T_LoanMap& map, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -169,7 +167,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_RolePion_Composantes::T_ComposanteTypeMap& map, const unsigned int )
         {
-            unsigned size = map.size();
+            std::size_t size = map.size();
             file << size;
             for(  PHY_RolePion_Composantes::CIT_ComposanteTypeMap it = map.begin(); it != map.end(); ++it )
             {
@@ -183,7 +181,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, PHY_RolePion_Composantes::T_ComposanteTypeMap& map, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while( nNbr-- )
             {

@@ -355,7 +355,7 @@ void PHY_Convoy_ABC::NotifyConveyorDestroyed( PHY_ComposantePion& composante )
 // -----------------------------------------------------------------------------
 unsigned int PHY_Convoy_ABC::GetFormingTime() const
 {
-    return (unsigned int)( formingTime_( conveyors_.size() ) );
+    return (unsigned int)( formingTime_( static_cast< double >( conveyors_.size() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -364,7 +364,7 @@ unsigned int PHY_Convoy_ABC::GetFormingTime() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_Convoy_ABC::GetLoadingTime() const
 {
-    return (unsigned int)( loadingTime_( conveyors_.size() ) );
+    return (unsigned int)( loadingTime_( static_cast< double >( conveyors_.size() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -373,7 +373,7 @@ unsigned int PHY_Convoy_ABC::GetLoadingTime() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_Convoy_ABC::GetUnloadingTime() const
 {
-    return (unsigned int)( unloadingTime_( conveyors_.size() ) );
+    return (unsigned int)( unloadingTime_( static_cast< double >( conveyors_.size() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -384,7 +384,7 @@ double PHY_Convoy_ABC::ModifySpeed( double rSpeed ) const
 {
     if( conveyors_.empty() )
         return rSpeed;
-    return rSpeed * coefSpeedModificator_( conveyors_.size() );
+    return rSpeed * coefSpeedModificator_( static_cast< double >( conveyors_.size() ) );
 }
 
 // -----------------------------------------------------------------------------

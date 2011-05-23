@@ -28,7 +28,7 @@ public:
     //@{
     explicit MessageDecoder( Message& message )
     {
-        const unsigned long size = message.Size();
+        const std::size_t size = message.Size();
         // $$$$ SBO 2009-10-26: Find a way to get rid of new
         char* buffer = new char[ size ];
         message.Read( buffer, size );

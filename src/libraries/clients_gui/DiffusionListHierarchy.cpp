@@ -24,6 +24,7 @@
 #include "ValuedListItem.h"
 #include <boost/lexical_cast.hpp>
 #include <boost/bind.hpp>
+#include <iterator>
 
 using namespace gui;
 using namespace kernel;

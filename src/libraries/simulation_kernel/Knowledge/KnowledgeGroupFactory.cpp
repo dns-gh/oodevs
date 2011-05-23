@@ -78,7 +78,7 @@ void KnowledgeGroupFactory::save( MIL_CheckPointOutArchive& file, const unsigned
 // -----------------------------------------------------------------------------
 void KnowledgeGroupFactory_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned int nNbr;
+    std::size_t nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -94,7 +94,7 @@ void KnowledgeGroupFactory_ABC::load( MIL_CheckPointInArchive& file, const unsig
 // -----------------------------------------------------------------------------
 void KnowledgeGroupFactory_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned int size = elements_.size();
+    std::size_t size = elements_.size();
     file << size;
     for ( std::map< unsigned long, MIL_KnowledgeGroup* >::const_iterator it = elements_.begin(); it != elements_.end(); ++it )
     {

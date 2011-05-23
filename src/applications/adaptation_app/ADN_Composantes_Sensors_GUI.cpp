@@ -99,7 +99,7 @@ void ADN_Composantes_Sensors_GUI::OnContextMenu( int /*row*/, int /*col*/, const
     for( ADN_Sensors_Data::T_SensorsInfos_Vector::iterator it = vAllSensors.begin(); it != vAllSensors.end(); ++it )
     {
         bDisplayAdd = true;
-        pTargetMenu->insertItem( ( *it )->strName_.GetData().c_str(), 2 + std::distance( vAllSensors.begin(), it ) );
+        pTargetMenu->insertItem( ( *it )->strName_.GetData().c_str(), static_cast< int >( 2 + std::distance( vAllSensors.begin(), it ) ) );
     }
     ADN_Tools::SortMenu( *pTargetMenu );
     if( ! bDisplayAdd && !bDisplayRem )

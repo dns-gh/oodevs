@@ -302,7 +302,7 @@ void MIL_Fuseau::TruncateAndReorientLimits( T_PointVector& leftLimit, T_PointVec
     assert( !leftParts.empty() );
     assert( leftParts.size() <= 2 );
 
-    unsigned int nNbParts = leftParts.size();
+    std::size_t nNbParts = leftParts.size();
     if( nNbParts == 1 )
     {
         leftLimit  = leftParts [0];
@@ -1017,11 +1017,11 @@ double MIL_Fuseau::ComputeAdvance( const MT_Vector2D& position ) const
             totalDistances += distance;
             currentAdvance += line.Magnitude();
         }
-        unsigned int length = advances.size();
+        std::size_t length = advances.size();
         if( totalDistances == 0. )
             totalDistances = 1.;
         bool projectionMustBeWeighted = false;
-        for( unsigned int i = 0; i < length; ++i )
+        for( std::size_t i = 0; i < length; ++i )
             if( totalDistances != distances[i] * length )
             {
                 projectionMustBeWeighted = true;

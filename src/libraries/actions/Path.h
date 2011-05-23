@@ -80,7 +80,7 @@ private:
     virtual void VisitPath      ( const geometry::Point2f& first, const T_PointVector& points );
     void AddPoints( const sword::Location& message );
     void ReadPoint( xml::xistream& xis );
-    void AddPoint( const geometry::Point2f& p, unsigned i, unsigned count );
+    void AddPoint( const geometry::Point2f& p, std::size_t i, std::size_t count );
     //@}
 
 private:

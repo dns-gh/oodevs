@@ -71,7 +71,7 @@ void SuccessFactorConditions::NotifyDeleted( const Score_ABC& score )
 void SuccessFactorConditions::ReadCondition( xml::xistream& xis, const ScoresModel& model )
 {
     std::auto_ptr< SuccessFactorCondition > condition( new SuccessFactorCondition( xis, model ) );
-    Register( elements_.size(), *condition.release() );
+    Register( static_cast< unsigned long >( elements_.size() ), *condition.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,5 +111,5 @@ void SuccessFactorConditions::SetOperator( const std::string& op )
 // -----------------------------------------------------------------------------
 void SuccessFactorConditions::AddCondition( SuccessFactorCondition& condition )
 {
-    Register( elements_.size(), condition );
+    Register( static_cast< unsigned long >( elements_.size() ), condition );
 }

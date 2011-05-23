@@ -7,21 +7,18 @@
 //
 // *****************************************************************************
 
-#pragma warning( disable: 4231 4355 )
-
 #ifndef __selftraining_app_pch_h_
 #define __selftraining_app_pch_h_
+
+#pragma warning( disable: 4231 4355 )
 
 #include <string>
 #include <exception>
 #include <map>
 #include <memory>
 
-#pragma warning( push )
-#pragma warning( disable: 4996 )
+#pragma warning( push, 0 )
 #include <qapplication.h>
-//#include <qcstring.h>
-//#include <qdict.h>
 #include <qfont.h>
 #include <qimage.h>
 #include <qlabel.h>

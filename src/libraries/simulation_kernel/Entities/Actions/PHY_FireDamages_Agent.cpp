@@ -27,7 +27,7 @@
 PHY_FireDamages_Agent::PHY_FireDamages_Agent()
     : humanResults_( PHY_HumanRank::GetHumanRanks().size() )
 {
-    const unsigned int nNbrWounds = PHY_HumanWound::GetHumanWounds().size();
+    const std::size_t nNbrWounds = PHY_HumanWound::GetHumanWounds().size();
     for( IT_HumansPerRankVector it = humanResults_.begin(); it != humanResults_.end(); ++it )
         it->resize( nNbrWounds, 0 );
 }

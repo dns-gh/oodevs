@@ -76,8 +76,8 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
          >> bRefugeeManaged_
          >> bDead_
          >> rPopulationDensity_;
+    std::size_t nNbr;
     unsigned int nID;
-    unsigned int nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -114,7 +114,7 @@ void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, con
          << bRefugeeManaged_
          << bDead_
          << rPopulationDensity_;
-    unsigned size = visionVolumes_.size();
+    std::size_t size = visionVolumes_.size();
     file << size;
     for ( CIT_ComposanteVolumeSet it = visionVolumes_.begin(); it != visionVolumes_.end(); ++it )
     {

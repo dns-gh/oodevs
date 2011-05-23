@@ -71,7 +71,7 @@ namespace serialization
     template< typename Archive >
     void save( Archive& file, const PHY_DotationGroup::T_DotationMap& map, const unsigned int )
     {
-        unsigned size = map.size();
+        std::size_t size = map.size();
         file << size;
         for( PHY_DotationGroup::CIT_DotationMap it = map.begin(); it != map.end(); ++it )
         {
@@ -84,7 +84,7 @@ namespace serialization
     template< typename Archive >
     void load( Archive& file, PHY_DotationGroup::T_DotationMap& map, const unsigned int )
     {
-        unsigned int nNbr;
+        std::size_t nNbr;
         file >> nNbr;
         while ( nNbr-- )
         {

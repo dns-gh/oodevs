@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
+#pragma warning( disable: 4996 ) // Function call with parameters that may be unsafe
 #pragma warning( push, 0 )
 #include "proto/version.pb.cc"
 #pragma warning( pop )
-
 #include "Version.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string/split.hpp>

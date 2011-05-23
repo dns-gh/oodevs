@@ -70,7 +70,7 @@ void ConvexHulls::Update( T_PointVector& points, Point2f& leftMost, Point2f& rig
 {
     leftMost_ .Set( std::numeric_limits< float >::infinity(), std::numeric_limits< float >::infinity() );
     rightMost_.Set(-std::numeric_limits< float >::infinity(),-std::numeric_limits< float >::infinity() );
-    unsigned currentSize = points.size();
+    std::size_t currentSize = points.size();
     bool hasChild = false;
     tools::Iterator< const Entity_ABC& > children = holder_.Get< TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )

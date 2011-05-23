@@ -106,8 +106,8 @@ void UpdateListener::FindLastDate( const std::string& response )
 // -----------------------------------------------------------------------------
 void UpdateListener::ReadOrder( xml::xistream& xis )
 {
-    static const unsigned int minLength = std::string( "YYYY-MM-DDTHH:MM:SS" ).length();
-    static const unsigned int maxLength = std::string( "YYYY-MM-DDTHH:MM:SS,fffffffff" ).length();
+    static const std::size_t minLength = std::string( "YYYY-MM-DDTHH:MM:SS" ).length();
+    static const std::size_t maxLength = std::string( "YYYY-MM-DDTHH:MM:SS,fffffffff" ).length();
     std::string when;
     xis >> xml::content( NS( "OrderIssuedWhen", "cbml" ), when );
     if( lastUpdateTime_ < when )

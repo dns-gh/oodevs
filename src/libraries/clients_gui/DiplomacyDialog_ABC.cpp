@@ -162,7 +162,9 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
 QSize DiplomacyDialog_ABC::sizeHint()
 {
     const QRect rect = table_->cellGeometry( 1, 1 );
-    return QSize( ( teams_.size() + 1 ) * rect.width(), teams_.size() * rect.height() + 50 );
+    const std::size_t w = ( teams_.size() + 1 ) * rect.width();
+    const std::size_t h = teams_.size() * rect.height() + 50;
+    return QSize( static_cast< int >( w ), static_cast< int >( h ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,8 +173,8 @@ QSize DiplomacyDialog_ABC::sizeHint()
 // -----------------------------------------------------------------------------
 void DiplomacyDialog_ABC::UpdateTable()
 {
-    table_->setNumCols( teams_.size() );
-    table_->setNumRows( teams_.size() );
+    table_->setNumCols( static_cast< int >( teams_.size() ) );
+    table_->setNumRows( static_cast< int >( teams_.size() ) );
     for( unsigned i = 0; i < teams_.size(); ++i )
     {
         const QString name = teams_.at( i )->GetName();

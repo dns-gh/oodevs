@@ -333,7 +333,7 @@ void ADN_Equipement_AttritionGraph::paintEvent( QPaintEvent* )
         painter.drawText( rc, Qt::AlignLeft, *itString );
     }
 
-    unsigned int columnWidth = ( width() - LeftMargin - Margin - ( columns_.size() - 1 ) * IntervalWidth ) / columns_.size();
+    unsigned int columnWidth = static_cast< unsigned int >( ( width() - LeftMargin - Margin - ( columns_.size() - 1 ) * IntervalWidth ) / columns_.size() );
     unsigned int columnIndex = 0;
     for( IT_Columns column = columns_.begin(); column != columns_.end(); ++column )
     {

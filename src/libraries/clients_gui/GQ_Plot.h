@@ -130,8 +130,6 @@ public:
     int               GetMinDepth() const;
     int               GetMaxDepth() const;
 
-    unsigned int GetNumberOfPlotData( int nDepth = 0 ) const;
-
     iterator begin() const;
     iterator end  () const;
 

@@ -356,7 +356,7 @@ void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString
     indexBuilder.BeginHtml( tr( "Units" ) );
 
     ADN_Units_Data::T_UnitInfos_Vector& units = data_.GetUnitsInfos();
-    indexBuilder.BeginTable( units.size()+1 , 2 );
+    indexBuilder.BeginTable( static_cast< int >( units.size()+1 ), 2 );
     indexBuilder.TableItem( 0, 0, tr( "Name" ), true );
     indexBuilder.TableItem( 0, 1, tr( "Type" ), true );
     int n = 1;

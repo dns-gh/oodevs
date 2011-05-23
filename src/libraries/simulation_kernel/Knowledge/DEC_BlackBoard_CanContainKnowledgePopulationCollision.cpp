@@ -43,7 +43,7 @@ DEC_BlackBoard_CanContainKnowledgePopulationCollision::~DEC_BlackBoard_CanContai
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationCollision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned int nNbr;
+    std::size_t nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -59,7 +59,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::load( MIL_CheckPoint
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned int size = knowledgePopulationCollisionMap_.size();
+    std::size_t size = knowledgePopulationCollisionMap_.size();
     file << size;
     for ( CIT_KnowledgePopulationCollisionMap it = knowledgePopulationCollisionMap_.begin(); it != knowledgePopulationCollisionMap_.end(); ++it )
     {

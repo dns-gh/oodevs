@@ -591,7 +591,7 @@ struct QPointVector_Comp
 // -----------------------------------------------------------------------------
 void GQ_PlotData::PreparePoints( QPointArray& points )
 {
-    uint nLastPoint = pData_->size();
+    uint nLastPoint = static_cast< uint>( pData_->size() );
 
     if( nNbrPoints_ >= 0 && nFirstPoint_ + nNbrPoints_ < nLastPoint )
         nLastPoint = nFirstPoint_ + nNbrPoints_;
@@ -869,7 +869,7 @@ int GQ_PlotData::GetBaseline( uint )
 // -----------------------------------------------------------------------------
 bool GQ_PlotData::GetToolTips( const GQ_PlotDataBBox& bbox, QStringList& tipList ) const
 {
-    uint nLastPoint = pData_->size();
+    std::size_t nLastPoint = pData_->size();
 
     if( nNbrPoints_ >= 0 && nFirstPoint_ + nNbrPoints_ < nLastPoint )
         nLastPoint = nFirstPoint_ + nNbrPoints_;
@@ -1022,7 +1022,7 @@ int GQ_PlotData::DataAt( const T_Point& point )
         for( IT_RangeVector it = barLimits_.begin(); it != barLimits_.end(); ++it )
         {
             if( point.first >= (*it).first && point.first <= (*it).second )
-                return std::distance( barLimits_.begin(), it );
+                return static_cast< int >( std::distance( barLimits_.begin(), it ) );
         }
     }
 

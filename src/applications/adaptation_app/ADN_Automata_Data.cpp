@@ -278,7 +278,7 @@ void ADN_Automata_Data::ReadAutomat( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Automata_Data::WriteArchive( xml::xostream& output )
 {
-    int nMosBaseId = ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos().size() + 1;
+    int nMosBaseId = static_cast< int >( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsInfos().size() + 1 );
     output << xml::start( "automats" );
     ADN_Tools::AddSchema( output, "Automats" );
     int n = 0;

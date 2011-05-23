@@ -192,7 +192,7 @@ float DEC_DIAFunctions::GetRealTime()
 // static
 int DEC_DIAFunctions::ListPoint_Size( std::vector< MT_Vector2D* > list )
 {
-    return list.size();
+    return static_cast< int >( list.size() );
 }
 
 //-----------------------------------------------------------------------------

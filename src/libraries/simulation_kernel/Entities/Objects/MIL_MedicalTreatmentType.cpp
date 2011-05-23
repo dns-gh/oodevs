@@ -167,7 +167,7 @@ const MIL_MedicalTreatmentType* MIL_MedicalTreatmentType::Find( unsigned int nID
 // -----------------------------------------------------------------------------
 unsigned MIL_MedicalTreatmentType::RegisteredCount()
 {
-    return types_.size();
+    return static_cast< unsigned >( types_.size() );
 }
 
 // -----------------------------------------------------------------------------

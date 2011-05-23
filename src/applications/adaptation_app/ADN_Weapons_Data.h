@@ -237,7 +237,7 @@ int ADN_Weapons_Data::GetIndex( WeaponInfos& weapon )
 {
     IT_WeaponInfosVector it = std::find( weapons_.begin(), weapons_.end(), &weapon );
     assert( it != weapons_.end() );
-    return std::distance( weapons_.begin(), it );
+    return static_cast< int >( std::distance( weapons_.begin(), it ) );
 }
 
 #endif // __ADN_Weapons_Data_h_

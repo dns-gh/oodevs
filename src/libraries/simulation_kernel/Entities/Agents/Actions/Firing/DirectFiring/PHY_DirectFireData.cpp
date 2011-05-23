@@ -217,12 +217,12 @@ bool PHY_DirectFireData::sComposanteWeapons::GetBestWeapon( double& rBestScore, 
 // -----------------------------------------------------------------------------
 bool PHY_DirectFireData::sComposanteWeapons::GetRandomWeapon( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pRandomWeapon ) const
 {
-    const unsigned int nRnd = MIL_Random::rand32_ii( 0, weaponsReady_.size() - 1 );
+    const std::size_t nRnd = MIL_Random::rand32_ii( 0, static_cast< unsigned long >( weaponsReady_.size() - 1 ) );
 
     CIT_WeaponVector it = weaponsReady_.begin();
     std::advance( it, nRnd );
 
-    for( unsigned int i = 0; i < weaponsReady_.size(); ++i )
+    for( std::size_t i = 0; i < weaponsReady_.size(); ++i )
     {
         PHY_Weapon& weapon = **it;
         if( weapon.GetDangerosity( firer, target, compTarget.GetType(), false  ) > 0 ) // 'true' = 'don't use PH'
@@ -263,12 +263,12 @@ void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PH
 // -----------------------------------------------------------------------------
 void PHY_DirectFireData::ChooseRandomWeapon( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pRandomFirer, PHY_Weapon*& pRandomWeapon ) const
 {
-    const unsigned int nRnd = MIL_Random::rand32_ii( 0, composantesWeapons_.size() - 1 );
+    const std::size_t nRnd = MIL_Random::rand32_ii( 0, static_cast< unsigned long >( composantesWeapons_.size() - 1 ) );
 
     CIT_ComposanteWeaponsMap it = composantesWeapons_.begin();
     std::advance( it, nRnd );
 
-    for( unsigned int i = 0; i < composantesWeapons_.size(); ++i )
+    for( std::size_t i = 0; i < composantesWeapons_.size(); ++i )
     {
         const sComposanteWeapons& data = it->second;
 
@@ -351,7 +351,7 @@ bool PHY_DirectFireData::IsTemporarilyBlocked() const
 // -----------------------------------------------------------------------------
 unsigned int PHY_DirectFireData::sComposanteWeapons::GetNbrWeaponsUsable() const
 {
-    return weaponsReady_.size();
+    return static_cast< unsigned >( weaponsReady_.size() );
 }
 
 // -----------------------------------------------------------------------------

@@ -65,7 +65,7 @@ namespace
     {
         std::stringstream pattern;
         pattern << "%" << index;
-        unsigned int pos = message.find_first_of( pattern.str() );
+        std::size_t pos = message.find_first_of( pattern.str() );
         if( pos == std::string::npos )
             return;
         message.erase( pos, pattern.str().length() );

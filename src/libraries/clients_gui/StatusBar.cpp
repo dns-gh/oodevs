@@ -76,7 +76,7 @@ QLabel* StatusBar::AddField( QStatusBar* parent, unsigned int size, const QStrin
     field->hide();
     parent->addWidget( field, 0, true );
     menuFields_.push_back( field );
-    const int id = pMenu_->insertItem( title, menuFields_.size() );
+    const int id = pMenu_->insertItem( title, static_cast< int >( menuFields_.size() ) );
     if( checked )
         ParameterSelected( id );
     return field;

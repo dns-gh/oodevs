@@ -95,7 +95,7 @@ DEC_BlackBoard_CanContainKnowledgeUrban::~DEC_BlackBoard_CanContainKnowledgeUrba
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrban::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned int size = 0;
+    std::size_t size = 0;
     file >> size;
     for( unsigned int i = 0; i < size; ++i )
     {
@@ -113,7 +113,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::load( MIL_CheckPointInArchive& fil
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned int size = urbanMapFromConcrete_.size();
+    std::size_t size = urbanMapFromConcrete_.size();
     file << size;
     for( CIT_KnowledgeUrbanMap it = urbanMapFromConcrete_.begin(); it != urbanMapFromConcrete_.end(); ++it )
     {

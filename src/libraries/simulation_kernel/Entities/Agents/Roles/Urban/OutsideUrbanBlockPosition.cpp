@@ -69,9 +69,8 @@ float OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_A
 float OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float /*modificator*/ ) const
 {
     if( polygon.IsInside( geometry::Point2f( result.position_.rX_, result.position_.rY_ ) ) )
-        return 1.0;
-    else
-        return 0.0;
+        return 1.f;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

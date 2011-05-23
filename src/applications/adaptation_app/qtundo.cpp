@@ -17,6 +17,8 @@
 ** not clear to you.
 **
 */
+#pragma warning( push, 0 )
+
 #include "qtundo.h"
 
 #include "moc_qtundo.cpp"

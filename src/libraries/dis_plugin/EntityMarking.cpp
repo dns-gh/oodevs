@@ -19,7 +19,7 @@ using namespace plugins::dis;
 EntityMarking::EntityMarking( const std::string& name )
     : characterSet_( 1 )
 {
-    const unsigned length = std::min( sizeof( marking_ ), name.length() );
+    const std::size_t length = std::min( sizeof( marking_ ), name.length() );
     ::memcpy( marking_, name.c_str(), length );
 }
 

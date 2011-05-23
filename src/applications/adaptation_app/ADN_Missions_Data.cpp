@@ -207,8 +207,7 @@ void ADN_Missions_Data::MissionParameter::ReadChoice( xml::xistream& input )
 {
     std::string name;
     input >> xml::attribute( "type", name );
-    unsigned int nChoices = choices_.size();
-    for( unsigned int i = 0; i < nChoices; ++i )
+    for( std::size_t i = 0; i < choices_.size(); ++i )
     {
         if( choices_[i]->name_ == name )
         {
@@ -254,14 +253,13 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
     }
     for( unsigned int i = 0; i < values_.size(); ++i )
         values_[i]->WriteArchive( output, i );
-    unsigned int nChoices = choices_.size();
     bool hasChoice = false;
-    for( unsigned int i = 0; i < nChoices && !hasChoice; ++i )
+    for( std::size_t i = 0; i < choices_.size() && !hasChoice; ++i )
         hasChoice = choices_[i]->isAllowed_.GetData();
     if( hasChoice )
     {
         output << xml::start( "choice" );
-        for( unsigned int i = 0; i < nChoices; ++i )
+        for( std::size_t i = 0; i < choices_.size(); ++i )
             choices_[i]->WriteArchive( output );
         output << xml::end;
     }
@@ -337,10 +335,10 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::Mission::CreateCopy()
 // Name: ADN_Missions_Data::Mission::ReadArchive
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, unsigned int contextLength )
+void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, std::size_t contextLength )
 {
     std::string doctrineDesc, usageDesc;
-    unsigned int index = 0;
+    std::size_t index = 0;
     input >> xml::attribute( "name", strName_ )
         >> xml::attribute( "dia-type", diaType_ )
         >> xml::optional >> xml::attribute( "dia-behavior", diaBehavior_ )
@@ -360,7 +358,7 @@ void ADN_Missions_Data::Mission::ReadArchive( xml::xistream& input, unsigned int
 // Name: ADN_Missions_Data::Mission::ReadParameter
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::Mission::ReadParameter( xml::xistream& input, unsigned int& index, unsigned int contextLength )
+void ADN_Missions_Data::Mission::ReadParameter( xml::xistream& input, std::size_t& index, std::size_t contextLength )
 {
     index++;
     if( index > contextLength )
@@ -691,7 +689,7 @@ void ADN_Missions_Data::ReadFragOrder( xml::xistream& xis )
 // Name: ADN_Missions_Data::ReadMission
 // Created: AGE 2007-08-16
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, unsigned int contextLength )
+void ADN_Missions_Data::ReadMission( xml::xistream& xis, T_Mission_Vector& missions, std::size_t contextLength )
 {
     std::auto_ptr< ADN_Missions_Data::Mission > spNew( new Mission( xis.attribute< unsigned int >( "id" ) ) );
     spNew->ReadArchive( xis, contextLength );

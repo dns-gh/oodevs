@@ -60,7 +60,7 @@ namespace
     void CheckOutputBuffer( const M& message )
     {
         std::vector< unsigned long > expected;
-        expected.push_back( message.Size() - sizeof( unsigned long ) );
+        expected.push_back( static_cast< unsigned long >( message.Size() ) - sizeof( unsigned long ) );
         const unsigned long tag = tools::MessageIdentifierFactory::GetIdentifier< M >();
         expected.push_back( tag );
         boost::asio::const_buffers_1 buffer = message.MakeOutputBuffer( tag );

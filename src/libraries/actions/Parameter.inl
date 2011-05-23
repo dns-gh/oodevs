@@ -104,7 +104,7 @@ void Parameter< T >::Serialize( xml::xostream& xos ) const
 template< typename T >
 bool Parameter< T >::IsInRange() const
 {
-    unsigned int nElements = elements_.size();
+    std::size_t nElements = elements_.size();
     return parameter_.MinOccurs() <= nElements && parameter_.MaxOccurs() >= nElements;
 }
     }

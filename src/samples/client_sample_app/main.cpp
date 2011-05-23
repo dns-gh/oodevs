@@ -203,7 +203,7 @@ namespace
                                   << std::hex << " tag=" << tag << std::endl;
                     }
                     // remove processed message from buffer
-                    const size_t message_size = size + sizeof( unsigned long );
+                    const std::size_t message_size = size + sizeof( unsigned long );
                     bytes_ = bytes_ - message_size;
                     memcpy( buffer_, buffer_ + message_size, bytes_ );
                 }
@@ -246,7 +246,7 @@ namespace
     private:
         SOCKET socket_;
         char* buffer_;
-        unsigned int bytes_;
+        std::size_t bytes_;
         unsigned int log_level_;
     };
 }

@@ -178,7 +178,7 @@ void ValuedComboBox<T>::RemoveItem( const T& value )
     IT_ValueVector it = std::find( values_.begin(), values_.end(), value );
     if( it == values_.end() )
         return;
-    removeItem( it - values_.begin() );
+    removeItem( static_cast< int >( it - values_.begin() ) );
     values_.erase( it );
 }
 
@@ -205,7 +205,7 @@ int ValuedComboBox<T>::GetItemIndex( const T& value )
     IT_ValueVector it = std::find( values_.begin(), values_.end(), value );
     if( it == values_.end() )
         return -1;
-    return it - values_.begin();
+    return static_cast< int >( it - values_.begin() );
 }
 
 
@@ -240,7 +240,7 @@ void ValuedComboBox<T>::Clear()
 template< typename T >
 unsigned int ValuedComboBox<T>::Count() const
 {
-    return values_.size();
+    return static_cast< unsigned int >( values_.size() );
 }
 
 // -----------------------------------------------------------------------------

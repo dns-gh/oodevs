@@ -307,13 +307,13 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
         result.push_back( point );
     }
 
-    unsigned int nNbrPointsPerSide = pions.size() / 2;
+    std::size_t nNbrPointsPerSide = pions.size() / 2;
 
     // Left side
     MT_Vector2D vDir( vLeftPoint - vBarycenter );
     double rIncr = std::min( vDir.Magnitude() / ( nNbrPointsPerSide + 1 ), rDistMaxBtwPoints );
     vDir.Normalize();
-    for( unsigned int i = 1; i <= nNbrPointsPerSide; ++i )
+    for( std::size_t i = 1; i <= nNbrPointsPerSide; ++i )
     {
         boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( vBarycenter + vDir * ( rIncr * i ) ) );
         result.push_back( point );
@@ -323,7 +323,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
     vDir = MT_Vector2D( vRightPoint - vBarycenter );
     rIncr = std::min( vDir.Magnitude() / ( nNbrPointsPerSide + 1 ), rDistMaxBtwPoints );
     vDir.Normalize();
-    for( unsigned int j = 1; j <= nNbrPointsPerSide; ++j )
+    for( std::size_t j = 1; j <= nNbrPointsPerSide; ++j )
     {
         boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( vBarycenter + vDir * ( rIncr * j ) ) );
         result.push_back( point );
@@ -766,7 +766,7 @@ float DEC_GeometryFunctions::ComputeDistanceFromMiddleLine( const std::vector< D
     MT_Vector2D vBarycenter;
     for( std::vector< DEC_Decision_ABC*>::const_iterator itPion = selPions.begin(); itPion != selPions.end(); ++itPion )
         vBarycenter += (*itPion)->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
-    vBarycenter /= selPions.size();
+    vBarycenter /= static_cast< double >( selPions.size() );
 
     const MT_Vector2D& vReferencePionPosition = pReferencePion->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
 

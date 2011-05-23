@@ -112,7 +112,7 @@ const std::string& PHY_RadarClass::GetName() const
 // Name: PHY_RadarClass::GetNbrClasses
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-unsigned int PHY_RadarClass::GetNbrClasses()
+std::size_t PHY_RadarClass::GetNbrClasses()
 {
     return radarClasses_.size();
 }

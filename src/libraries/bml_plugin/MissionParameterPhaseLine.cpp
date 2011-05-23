@@ -12,7 +12,7 @@
 #include "PointList.h"
 #include "SerializationTools.h"
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push, 1 )
+#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )

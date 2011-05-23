@@ -12,8 +12,8 @@
 
 #include "ModelFunctionComposite.h"
 #include "dispatcher/MessageHandler_ABC.h"
-#include <map>
 #include <boost/enable_shared_from_this.hpp>
+#include <map>
 
 class Connector_ABC;
 class ModelFunction_ABC;

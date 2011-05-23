@@ -71,7 +71,7 @@ void FloodCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
-    unsigned int size;
+    std::size_t size;
     file >> size;
     std::string type;
     double percentage;
@@ -93,7 +93,7 @@ void FloodCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
 {
     file << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
-    unsigned int size = injuries_.size();
+    std::size_t size = injuries_.size();
     file << size;
     for( CIT_InjuryMap it = injuries_.begin(); it != injuries_.end(); ++it )
     {

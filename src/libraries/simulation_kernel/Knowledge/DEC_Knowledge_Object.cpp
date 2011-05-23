@@ -183,7 +183,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
          >> rRelevance_;
 
     // récupération des noms des types
-    unsigned int nSize;
+    std::size_t nSize;
     file >> nSize;
     while( nSize-- )
     {
@@ -227,7 +227,7 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
     file << nTimeLastUpdate_;
     file << rRelevance_;
     // On stocke les types selon leur nom
-    unsigned int size = reconByAgentTypes_.size();
+    std::size_t size = reconByAgentTypes_.size();
     file << size;
     for( CIT_AgentTypeSet it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
     {

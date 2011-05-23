@@ -132,7 +132,7 @@ void UserProfileList::NotifyUpdated( const UserProfile& profile )
     T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
     {
-        const int index = std::distance( profiles_.begin(), it );
+        const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
         if( list_->text( index ) != updated->GetLogin() )
             list_->changeItem( updated->GetLogin(), index );
     }
@@ -147,7 +147,7 @@ void UserProfileList::NotifyDeleted( const UserProfile& profile )
     T_Profiles::iterator it = std::find( profiles_.begin(), profiles_.end(), &profile );
     if( it != profiles_.end() )
     {
-        const int index = std::distance( profiles_.begin(), it );
+        const int index = static_cast< int >( std::distance( profiles_.begin(), it ) );
         const bool selected = list_->isSelected( index );
         list_->removeItem( index );
         profiles_.erase( it );

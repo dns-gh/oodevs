@@ -10,8 +10,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include <tools/win32/FlexLm.h>
 #include <masalloc/masalloc.h>
-#pragma warning( push )
-#pragma warning( disable : 4244 )
+#pragma warning( push, 0 )
 #include <google/protobuf/message.h>
 #pragma warning( pop )
 #include <xeumeuleu/xml.hpp>

@@ -20,7 +20,7 @@ AggregateMarking::AggregateMarking( const std::string& name )
     : markingType_( 1 ) // ASCII
 {
     ::memset( markingData_, 0, sizeof( markingData_ ) );
-    const unsigned length = std::min( sizeof( markingData_ ), name.length() );
+    const std::size_t length = std::min( sizeof( markingData_ ), name.length() );
     ::memcpy( markingData_, name.c_str(), length );
 }
 

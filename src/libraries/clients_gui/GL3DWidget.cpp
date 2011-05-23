@@ -237,10 +237,10 @@ void Gl3dWidget::DrawDecoratedPolygon( const geometry::Polygon2f& polygon, const
         color[ 3 ] = urbanColor.Alpha() * 0.6f;
         glColor4fv( color );
         glLineWidth( 1 );
-        const unsigned int count = footprint.size();
-        for( unsigned int i = 0 ; i < count; ++i )
+        const std::size_t count = footprint.size();
+        for( std::size_t i = 0 ; i < count; ++i )
         {
-            const unsigned int next = ( i + 1 ) % count;
+            const std::size_t next = ( i + 1 ) % count;
             const float elevation = std::max( ElevationAt( footprint[next] ), ElevationAt( footprint[i] ) );
             glBegin( GL_QUADS );
                 glVertex3f( footprint[i].X(), footprint[i].Y(), elevation );

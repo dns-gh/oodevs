@@ -99,7 +99,7 @@ int ADN_GraphData::GetDataIndex( const ADN_GraphValue& value ) const
 {
     CIT_GraphValue_Vector it = std::find( graphValueList_.begin(), graphValueList_.end(), &value );
     assert( it != graphValueList_.end() );
-    return std::distance( graphValueList_.begin(), it );
+    return static_cast< int >( std::distance( graphValueList_.begin(), it ) );
 }
 
 #endif // __ADN_GraphData_h_

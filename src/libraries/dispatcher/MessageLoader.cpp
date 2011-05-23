@@ -290,10 +290,10 @@ namespace dispatcher
         unsigned int size_;
     };
 
-    void YieldMessages( unsigned int pendingMessages )
+    void YieldMessages( std::size_t pendingMessages )
     {
         if( pendingMessages > 10 )
-            tools::thread::Thread::Sleep( pendingMessages / 10 );
+            tools::thread::Thread::Sleep( static_cast< unsigned int >( pendingMessages / 10 ) );
     }
 }
 

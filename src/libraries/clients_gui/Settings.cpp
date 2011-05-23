@@ -101,7 +101,7 @@ namespace
 {
     std::string AddType( const std::string& path, const char type )
     {
-        unsigned int i = path.find_last_of( '/' );
+        std::size_t i = path.find_last_of( '/' );
         if( i == path.npos )
             return type + path;
         return path.substr( 0, i + 1 ) + type + path.substr( i + 1 );

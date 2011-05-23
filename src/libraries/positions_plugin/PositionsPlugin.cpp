@@ -84,7 +84,7 @@ void PositionsPlugin::Receive( const sword::SimToClient& message )
     }
     else if( message.message().has_unit_creation() )
     {
-        teams_.AddUnit( message.message().unit_creation().automat().id(), message.message().unit_creation().unit().id(), message.message().unit_creation().name(), times_.size() );
+        teams_.AddUnit( message.message().unit_creation().automat().id(), message.message().unit_creation().unit().id(), message.message().unit_creation().name(), static_cast< unsigned >( times_.size() ) );
     }
     else if( message.message().has_unit_attributes() && message.message().unit_attributes().has_position() )
     {

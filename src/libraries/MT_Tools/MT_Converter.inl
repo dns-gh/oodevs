@@ -75,7 +75,7 @@ template< typename KEY, typename VALUE, typename CMP >
 template< class Archive >
 void MT_Converter< KEY, VALUE, CMP >::load( Archive& archive, const unsigned int /*version*/ )
 {
-    unsigned int count;
+    std::size_t count;
     archive >> count;
     while( count-- )
     {
@@ -93,7 +93,7 @@ template< typename KEY, typename VALUE, typename CMP >
 template< class Archive >
 void MT_Converter< KEY, VALUE, CMP >::save( Archive& archive, const unsigned int /*version*/ ) const
 {
-    unsigned int size = map_.size();
+    std::size_t size = map_.size();
     archive << size;
     for( CIT_Map it = map_.begin(); it != map_.end(); ++it )
         archive << it->first

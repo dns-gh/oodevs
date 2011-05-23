@@ -27,7 +27,7 @@ Message::Message()
 // Name: Message constructor
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-Message::Message( unsigned long size /*= 0*/ )
+Message::Message( std::size_t size /*= 0*/ )
     : readOffset_( 0 )
     , data_      ( new T_Data( size ) )
 {
@@ -67,7 +67,7 @@ std::size_t Message::Size() const
 // Name: Message::Read
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void Message::Read( char* data, unsigned size )
+void Message::Read( char* data, std::size_t size )
 {
     if( ! size )
         return;
@@ -81,7 +81,7 @@ void Message::Read( char* data, unsigned size )
 // Name: Message::Write
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void Message::Write( const char* data, unsigned size )
+void Message::Write( const char* data, std::size_t size )
 {
     if( ! data_ )
         data_.reset( new T_Data( 2 * sizeof( unsigned long ) ) );

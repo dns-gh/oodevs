@@ -77,7 +77,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& map, const unsigned int )
         {
-            unsigned int size = map.size();
+            std::size_t size = map.size();
             file << size;
             for ( DEC_BlackBoard_CanContainKnowledgeObject::CIT_KnowledgeObjectMap it = map.begin(); it != map.end(); ++it )
             {
@@ -89,7 +89,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeObject::T_KnowledgeObjectMap& map, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {

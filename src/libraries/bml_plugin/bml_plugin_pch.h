@@ -10,6 +10,8 @@
 #ifndef __bml_plugin_pch_h_
 #define __bml_plugin_pch_h_
 
+#pragma warning( disable: 4996 ) // Function call with parameters that may be unsafe
+
 #include <string>
 #include <memory>
 #include <map>

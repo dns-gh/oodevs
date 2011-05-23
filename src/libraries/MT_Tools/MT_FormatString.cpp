@@ -45,15 +45,11 @@ void MT_FormatString::VFormat( const char* pFormat, va_list argList )
     fstr_.erase();
     if( ! pFormat )
         return;
-    int nLength = 1 + 8 * strlen( pFormat );
+    std::size_t nLength = 1 + 8 * strlen( pFormat );
     for( int nCount = -1; nCount < 0; nLength *= 2 )
     {
         std::vector< char > buffer( nLength );
-#ifdef _MSC_VER
         nCount = _vsnprintf( &buffer[0], nLength - 1, pFormat, argList );
-#else
-        nCount = vsnprintf( &buffer[0], nLength - 1, pFormat, argList );
-#endif // _MSC_VER
         if( nCount > 0 )
             fstr_.assign( &buffer[0], nCount );
     }

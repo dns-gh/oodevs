@@ -49,7 +49,7 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( MIL_Automate& callerAutomate, std::
     assert( callerAutomate.IsEngaged() );
     // Découpage
     MIL_Fuseau::T_FuseauPtrList subFuseaux;
-    if( !callerAutomate.GetOrderManager().GetFuseau().SplitIntoSubFuseaux( pions.size(), subFuseaux ) )
+    if( !callerAutomate.GetOrderManager().GetFuseau().SplitIntoSubFuseaux( static_cast< unsigned int >( pions.size() ), subFuseaux ) )
         return;
     // Affectation des fuseaux
     for( std::vector< DEC_Decision_ABC* >::const_iterator itPion = pions.begin(); itPion != pions.end(); ++itPion )

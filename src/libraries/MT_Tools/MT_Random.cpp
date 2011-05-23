@@ -49,7 +49,7 @@ MT_Random::MT_Random( const std::vector< unsigned long >& init_key )
     this->MT_Random::MT_Random( 19650218UL );
     unsigned int i = 1;
     unsigned int j = 0;
-    unsigned int k = __max(  N, init_key.size() );
+    unsigned int k = __max(  N, static_cast< unsigned >( init_key.size() ) );
     for (; k; --k)
     {
         state_[i] = ( state_[i] ^ ( ( state_[i - 1] ^ ( state_[i - 1] >> 30 ) ) * 1664525UL ) ) + init_key[j] + j;

@@ -167,7 +167,7 @@ void ResourceLinksDialog_ABC::Update()
     critical_->setChecked( node.critical_ );
     maxStock_->setValue( node.maxStock_ );
     stock_->setValue( node.stock_ );
-    table_->setNumRows( node.links_.size() );
+    table_->setNumRows( static_cast< int >( node.links_.size() ) );
     table_->setColumnReadOnly( 0, true );
     for( unsigned int j = 0; j < node.links_.size(); ++j )
     {

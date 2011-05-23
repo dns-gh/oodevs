@@ -92,7 +92,7 @@ public:
     void AddItem( const QString& label, const T& value )
     {
         values_.push_back( value );
-        OptionMenuBase::AddItem( label, values_.size() - 1 );
+        OptionMenuBase::AddItem( label, static_cast< int >( values_.size() - 1 ) );
     };
     //@}
 
@@ -116,7 +116,7 @@ public:
                     return;
                 }
             values_.push_back( value.To< T >() );
-            Select( values_.size() - 1 );
+            Select( static_cast< int >( values_.size() ) - 1 );
         }
     };
     //@}

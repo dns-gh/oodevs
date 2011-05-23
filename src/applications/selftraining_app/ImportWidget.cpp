@@ -21,8 +21,7 @@
 #include <qtabbar.h>
 #include <qtabwidget.h>
 #include <xeumeuleu/xml.hpp>
-#pragma warning( push )
-#pragma warning( disable: 4996 )
+#pragma warning( push, 0 )
 #include <zipstream/zipstream.h>
 #pragma warning( pop )
 

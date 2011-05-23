@@ -80,7 +80,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const PHY_Conveyor::T_DotationMap& map, const unsigned int )
         {
-            unsigned size = map.size();
+            std::size_t size = map.size();
             file << size;
             for ( PHY_Conveyor::CIT_DotationMap it = map.begin(); it != map.end(); ++it )
             {
@@ -93,7 +93,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, PHY_Conveyor::T_DotationMap& map, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {

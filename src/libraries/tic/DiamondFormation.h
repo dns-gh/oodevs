@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Start( const geometry::Point2f& at, const geometry::Vector2f& towards, unsigned int count );
+    virtual void Start( const geometry::Point2f& at, const geometry::Vector2f& towards, std::size_t count );
     virtual void Apply( Movable_ABC* movable );
     //@}
 

@@ -69,7 +69,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const DEC_PopulationKnowledge::T_AgentSet& set, const unsigned int )
         {
-            unsigned size = set.size();
+            std::size_t size = set.size();
             file << size;
             for ( DEC_PopulationKnowledge::CIT_AgentSet it = set.begin(); it != set.end(); ++it )
                 file << *it;
@@ -78,7 +78,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, DEC_PopulationKnowledge::T_AgentSet& set, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {

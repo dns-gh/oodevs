@@ -70,7 +70,7 @@ void ADN_Composantes_ActiveProtectionsListView::OnContextMenu( const QPoint& pt 
         // Don't add a ActiveProtections to the menu if it already is present in the list.
         if( Contains( pActiveProtections ) )
             continue;
-        addMenu.insertItem( pActiveProtections->strName_.GetData().c_str(), 2 + std::distance( vActiveProtections.begin(), it ) );
+        addMenu.insertItem( pActiveProtections->strName_.GetData().c_str(), static_cast< int >( 2 + std::distance( vActiveProtections.begin(), it ) ) );
     }
     ADN_Tools::SortMenu( addMenu );
 

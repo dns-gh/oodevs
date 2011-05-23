@@ -120,9 +120,9 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& fil
 {
     file >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
          >> nLastCacheUpdateTick_;
-    unsigned int size = 0;
+    std::size_t size;
     file >> size;
-    for( unsigned int i = 0; i < size; ++i )
+    for( std::size_t i = 0; i < size; ++i )
     {
         MIL_Agent_ABC* agent;
         file >> agent;
@@ -140,7 +140,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& fi
 {
     file << pKnowledgeGroup_
          << nLastCacheUpdateTick_;
-    unsigned int size = realAgentMap_.size();
+    std::size_t size = realAgentMap_.size();
     file << size;
     for( CIT_KnowledgeAgentMap it = realAgentMap_.begin(); it != realAgentMap_.end(); ++it )
     {

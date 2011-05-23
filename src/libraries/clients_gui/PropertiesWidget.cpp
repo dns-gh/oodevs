@@ -191,7 +191,7 @@ PropertiesWidget* PropertiesWidget::CreateWidget( const QString& subItem )
         connect( button_, SIGNAL( toggled( bool ) ), subWidget, SLOT( setShown( bool ) ) );
     subWidgets_.push_back( subWidget );
     categories_[ subItem ] = subWidgets_.size() - 1;
-    layout_->addWidget( subWidget, subWidgets_.size() + 1, 1 );
+    layout_->addWidget( subWidget, static_cast< int >( subWidgets_.size() + 1 ), 1 );
     subWidget->show();
     if( ! table_->numRows() )
         table_->hide();

@@ -102,7 +102,7 @@ void ScoresModel::ReadIndicator( xml::xistream& xis )
 {
     try
     {
-        AarFacade facade( clients_, tasks_.size(), *model_ );
+        AarFacade facade( clients_, static_cast< int >( tasks_.size() ), *model_ );
         tasks_.push_back( facade.CreateTask( xis ) );
     }
     catch( std::exception& e )
@@ -213,8 +213,8 @@ void ScoresModel::Export() const
         {
             bfs::path bfspath( sessionDir_ + "/scores.csv" );
             bfs::ofstream file( bfspath );
-            const unsigned int size = AddHeader( file );
-            for( unsigned int index = 0; index < size; ++index )
+            const std::size_t size = AddHeader( file );
+            for( std::size_t index = 0; index < size; ++index )
                 AddLine( file, index );
             file.close();
         }
@@ -235,7 +235,7 @@ void ScoresModel::SimplifiedExport( const std::string& path ) const
         {
             bfs::path bfspath( path + "/scores.csv" );
             bfs::ofstream file( bfspath );
-            const unsigned int size = AddHeader( file );
+            const std::size_t size = AddHeader( file );
             if( size )
             {
                 AddLine( file, 0 );
@@ -253,16 +253,16 @@ void ScoresModel::SimplifiedExport( const std::string& path ) const
 // Name: ScoresModel::AddHeader
 // Created: FPO 2011-03-24
 // -----------------------------------------------------------------------------
-unsigned int ScoresModel::AddHeader( std::ostream& file ) const
+std::size_t ScoresModel::AddHeader( std::ostream& file ) const
 {
-    unsigned int size = 0;
+    std::size_t size = 0;
     file << "Tick" << separator << "Time";
     BOOST_FOREACH( const T_Scores::value_type& score, scores_ )
     {
         file << separator << score.first;
         if ( ! size )
-            size = score.second->Size();
-        else if ( size != score.second->Size() )
+            size = score.second->size();
+        else if ( size != score.second->size() )
             throw std::runtime_error( __FUNCTION__ ": not the same number of score." );
     }
     file << std::endl;
@@ -273,11 +273,11 @@ unsigned int ScoresModel::AddHeader( std::ostream& file ) const
 // Name: ScoresModel::AddLine
 // Created: FPO 2011-03-24
 // -----------------------------------------------------------------------------
-void ScoresModel::AddLine( std::ostream& file, unsigned int index ) const
+void ScoresModel::AddLine( std::ostream& file, std::size_t index ) const
 {
-    file << index << separator << initialDateTime_.addSecs( index * tickDuration_ ).toString( Qt::ISODate ).ascii();
+    file << index << separator << initialDateTime_.addSecs( static_cast< int >( index * tickDuration_ ) ).toString( Qt::ISODate ).ascii();
     BOOST_FOREACH( const T_Scores::value_type& score, scores_ )
-        file << separator << score.second->GetValue( index );
+        file << separator << score.second->at( index );
     file << std::endl;
 }
 

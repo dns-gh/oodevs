@@ -121,7 +121,7 @@ bool ADN_Connector_Table_ABC::AddItemPrivate(void *obj,bool)
 
         // end of the list of items -> build tab
         if( (size_t)tab_.numRows()!=vDatas_.size())
-            tab_.setNumRows(vDatas_.size());
+            tab_.setNumRows(static_cast< int >(vDatas_.size()));
         int i=0;
         for( std::vector<void*>::iterator it=vDatas_.begin();it!=vDatas_.end();++it,++i)
             AddSubItems(i,*it);

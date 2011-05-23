@@ -551,7 +551,7 @@ void GQ_PlotData::DrawCaption( QPixmap& caption, int nSize )
 // -----------------------------------------------------------------------------
 void GQ_PlotData::PreparePoints( QPointArray& points )
 {
-    unsigned int nLastPoint = pData_->size();
+    unsigned int nLastPoint = static_cast< unsigned >( pData_->size() );
 
     if( nNbrPoints_ >= 0 && nFirstPoint_ + nNbrPoints_ < nLastPoint )
         nLastPoint = nFirstPoint_ + nNbrPoints_;
@@ -791,7 +791,7 @@ int GQ_PlotData::GetBaseline( unsigned int )
 // -----------------------------------------------------------------------------
 bool GQ_PlotData::GetToolTips( const GQ_PlotDataBBox& bbox, QStringList& tipList ) const
 {
-    unsigned int nLastPoint = pData_->size();
+    std::size_t nLastPoint = pData_->size();
 
     if( nNbrPoints_ >= 0 && nFirstPoint_ + nNbrPoints_ < nLastPoint )
         nLastPoint = nFirstPoint_ + nNbrPoints_;

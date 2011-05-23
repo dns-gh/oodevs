@@ -308,7 +308,7 @@ void NodeElement::DoDistributeResource( T_ResourceLinks& links, const ResourceNe
     if( updatedLinks.empty() )
     {
         // every link capacity is infinite or superior to mean, distribute everything
-        int residual = immediateStock_ - links.size() * distributionMean;
+        int residual = immediateStock_ - static_cast< int >( links.size() ) * distributionMean;
         immediateStock_ = 0;
         for( CIT_ResourceLinks it = links.begin(); it != links.end(); ++it )
         {

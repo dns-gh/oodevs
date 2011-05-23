@@ -125,7 +125,7 @@ void ADN_Sensors_Targets_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoint
             continue;
 
         bDisplayAdd = true;
-        pTargetMenu->insertItem( pInfo->strName_.GetData().c_str(), 2 + std::distance( vAllMunitions.begin(), it ) );
+        pTargetMenu->insertItem( pInfo->strName_.GetData().c_str(), static_cast< int >( 2 + std::distance( vAllMunitions.begin(), it ) ) );
     }
 
     if( ! bDisplayAdd && !bDisplayRem )

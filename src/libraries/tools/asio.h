@@ -18,6 +18,8 @@
 #include <boost/asio.hpp>
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
+#undef min
+#undef max
 
 namespace tools
 {
