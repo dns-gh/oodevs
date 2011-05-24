@@ -131,7 +131,10 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchy )
         testIteratorContent< const LogisticLink_ABC >( logHierarchy.CreateSuperiorLinksIterator(), *linkBrainLog1 );
 
         // Change links
-        logHierarchy.ChangeLinks( &brainLog1, &brainLog2 );
+        std::vector< MIL_AutomateLOG* > newLinks;
+        newLinks.push_back( &brainLog1 );
+        newLinks.push_back( &brainLog2 );
+        logHierarchy.ChangeLinks( newLinks );
         BOOST_CHECK_EQUAL( &brainLog2, logHierarchy.GetPrimarySuperior() );
 
         linkBrainLog1 = logHierarchy.FindSuperiorLink( brainLog1 );
@@ -146,7 +149,10 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchy )
         testIteratorContent< const LogisticLink_ABC >( logHierarchy.CreateSuperiorLinksIterator(), *linkBrainLog2, *linkBrainLog1 );
 
         // Change links : nominal and current are the same
-        logHierarchy.ChangeLinks( &brainLog2, &brainLog2 );
+        newLinks.clear();
+        newLinks.push_back( &brainLog2 );
+        newLinks.push_back( &brainLog2 );
+        logHierarchy.ChangeLinks( newLinks );
         BOOST_CHECK_EQUAL( &brainLog2, logHierarchy.GetPrimarySuperior() );
         linkBrainLog2 = logHierarchy.FindSuperiorLink( brainLog2 );
         BOOST_CHECK_NE( (LogisticLink_ABC*)0, linkBrainLog2.get() );
@@ -219,13 +225,20 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchySwitchHierarchy )
     MockMIL_AutomateLOG mainBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG mainBrainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     LogisticHierarchy mainLogHierarchy( mainOwner, mainBrainLog1);
-    mainLogHierarchy.ChangeLinks( &mainBrainLog1, &mainBrainLog2 );
+    std::vector< MIL_AutomateLOG* > newLinks;
+    newLinks.push_back( &mainBrainLog1 );
+    newLinks.push_back( &mainBrainLog2 );
+    mainLogHierarchy.ChangeLinks( newLinks );
 
     MockLogisticHierarchyOwner_ABC newOwner;
     MockMIL_AutomateLOG newBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG newBrainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     LogisticHierarchy newLogHierarchy( mainOwner, newBrainLog1);
-    newLogHierarchy.ChangeLinks( &newBrainLog1, &newBrainLog2 );
+
+    newLinks.clear();
+    newLinks.push_back( &newBrainLog1 );
+    newLinks.push_back( &newBrainLog2 );
+    newLogHierarchy.ChangeLinks( newLinks );
 
     testIteratorContent< MIL_AutomateLOG >( newLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
     testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), mainBrainLog2, mainBrainLog1 );
@@ -280,7 +293,10 @@ BOOST_AUTO_TEST_CASE( TestObjectLogisticHierarchy )
     MockMIL_AutomateLOG mainBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG mainBrainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     LogisticHierarchy mainLogHierarchy( mainOwner, mainBrainLog1);
-    mainLogHierarchy.ChangeLinks( &mainBrainLog1, &mainBrainLog2 );
+    std::vector< MIL_AutomateLOG* > newLinks;
+    newLinks.push_back( &mainBrainLog1 );
+    newLinks.push_back( &mainBrainLog2 );
+    mainLogHierarchy.ChangeLinks( newLinks );
 
     testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), mainBrainLog2, mainBrainLog1 );
 
