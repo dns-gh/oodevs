@@ -98,12 +98,12 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &profiles_;
     delete &intelligences_;
     delete &successFactors_;
     delete &successFactorFactory_;
     delete &scores_;
     delete &scoreFactory_;
-    delete &profiles_;
     delete &profileFactory_;
     delete &resourceObserver_;
     delete &weather_;
