@@ -50,5 +50,6 @@
   <object id="47" type="sensors"/>
   <object id="48" type="sensorsDetectionZone"/>
   <object id="49" type="flood"/>
+  <object id="50" type="dyke"/>
 </objects>
-<!-- signature="3633915813" -->
+<!-- signature="3699751553" -->

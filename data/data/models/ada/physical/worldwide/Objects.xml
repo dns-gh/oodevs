@@ -407,5 +407,8 @@
     <structural value="100"/>
     <time-limited/>
   </object>
+  <object geometry="polygon" name="Dyke" symbol="G*DYKE*********" type="dyke">
+    <altitude-modifier/>
+  </object>
 </objects>
-<!-- signature="0852256484" -->
+<!-- signature="0169085257" -->

@@ -437,7 +437,6 @@
                 </g>
             </marker>
         </template>
-        
         <template code="G*SPPR----****X" name="Rearm, Refuel and Resupply Point (R3P)" type="point">
             <segment/>
             <marker-start>
@@ -527,7 +526,6 @@
                 </g>
             </marker-end>
         </template>
-        
         <template code="G*GPGAD---****X" name="Drop Zone (DZ)" type="polygon">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='3px'/>
@@ -540,7 +538,6 @@
                 </g>
             </marker>
         </template>
-        
         <template code="G*MPOGZ---****X" name="General obstacle zone" type="polygon">
             <segment unit="%">
                 <g stroke="currentColor" stroke-width="4px" fill="none">
@@ -548,7 +545,6 @@
                 </g>
             </segment>
         </template>
-
         <template code="G*MPSP----****X" name="Obstacle free area" type="polygon">
             <segment unit="%">
                 <g stroke="currentColor" stroke-width="4px" fill="none">
@@ -556,7 +552,6 @@
                 </g>
             </segment>
         </template>
-
         <template code="G*FPAN----****X" name="No-Fire Area" type="polygon">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
@@ -569,7 +564,6 @@
                 </g>
             </marker>
         </template>
-        
         <template code="G*MPOFA---****X" name="Mined Area" type="polygon">
             <segment unit="%">
                 <g stroke='currentColor' stroke-width='4px'>
@@ -583,7 +577,6 @@
                 </g>
             </segment>
         </template>
-        
         <template code="G*MPNR----****X" name="NBC Area" type="polygon">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
@@ -596,7 +589,6 @@
                 </g>
             </marker>
         </template>
-        
         <template code="G*EW***********" name="Jamming Area" type="polygon">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
@@ -609,7 +601,6 @@
                 </g>
             </marker>
         </template>
-        
         <template code="G*ZP***********" name="Paralyzing Area" type="polygon">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
@@ -622,7 +613,6 @@
                 </g>
             </marker>
         </template>
-        
         <template code="G*ZA***********" name="Blinding Area" type="polygon">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
@@ -635,7 +625,6 @@
                 </g>
             </marker>
         </template>
-        
         <template code="G*ZD***********" name="Scattering Area" type="polygon">
             <segment unit="%">
                 <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
@@ -648,7 +637,6 @@
                 </g>
             </marker>
         </template>
-        
         <template code="O*VPA-----*****" name="Arson/Fire" type="point">
             <segment/>
             <marker-start unit="m">
@@ -662,7 +650,6 @@
                 </g>
             </marker-start>
         </template>
-        
         <template code="S*GPEVEB--*****" name="Bridge" type="point">
             <segment/>
             <marker-start unit="m">
@@ -675,7 +662,6 @@
                 </g>
             </marker-start>
         </template>
-        
         <template code="S*GPI-----*****" name="Installation" type="point">
             <segment/>
             <marker-start unit="m">
@@ -689,7 +675,6 @@
                 </g>
             </marker-start>
         </template>
-        
         <template code="G*MPSF----****X" name="Safe point" type="point">
             <segment/>
             <marker-start unit="m">
@@ -698,7 +683,6 @@
                 </g>
             </marker-start>
         </template>
-        
         <template code="G*FPAP----****X" name="Position Area for Artillery (PAA)" type="point">
             <segment/>
             <marker-start>
@@ -713,21 +697,32 @@
                 </g>
             </marker-start>
         </template>
-        
         <template code="G*GEHOSP--****X" name="Hospital" type="point">
             <segment/>
             <marker-start unit="m">
-				<g stroke='currentColor' fill='currentColor' fill-opacity='0.75' stroke-width="1px"> 
-					<g transform="matrix(0.23,0,0,-0.23,0,0)">
-						<g transform="translate(-574 -860)">
-							<polygon fill="#ffffff" fill-opacity="0.75" points="1149,859 1149,0 0,0 0,859"/>
-							<path d="m 273.94463,269.89129 0,447.99998 c 0,6.6667 2.33333,12.3334 7,17 4.66667,4.6667 10,7 16,7 l 555,0 c 6.66667,0 12,-2.3333 16,-7 4,-4.6666 6.33333,-10.3333 7,-17 l 0,-577.99998 c 0,-6.66667 -2,-12.33333 -6,-17 -4,-4.66667 -9.66667,-7 -17,-7 l -555,0 c -6,0 -11.33333,2.33333 -16,7 -4.66667,4.66667 -7,10.33333 -7,17 l 0,130 z m 374,403.99998 0,-188.99998 -157,0 0,188.99998 -110,0 0,-488.99998 110,0 0,205 157,0 0,-205 111,0 0,488.99998 -111,0 z"/>
-							<path d="M 1149,859 V -1 H 0 v 860 h 1149 z m -25,-22 H 25 V 21 h 1099 v 816 z"/>
-				  		</g>
-				  	</g>
-				</g>
+                <g stroke='currentColor' fill='currentColor' fill-opacity='0.75' stroke-width="1px"> 
+                    <g transform="matrix(0.23,0,0,-0.23,0,0)">
+                        <g transform="translate(-574 -860)">
+                            <polygon fill="#ffffff" fill-opacity="0.75" points="1149,859 1149,0 0,0 0,859"/>
+                            <path d="m 273.94463,269.89129 0,447.99998 c 0,6.6667 2.33333,12.3334 7,17 4.66667,4.6667 10,7 16,7 l 555,0 c 6.66667,0 12,-2.3333 16,-7 4,-4.6666 6.33333,-10.3333 7,-17 l 0,-577.99998 c 0,-6.66667 -2,-12.33333 -6,-17 -4,-4.66667 -9.66667,-7 -17,-7 l -555,0 c -6,0 -11.33333,2.33333 -16,7 -4.66667,4.66667 -7,10.33333 -7,17 l 0,130 z m 374,403.99998 0,-188.99998 -157,0 0,188.99998 -110,0 0,-488.99998 110,0 0,205 157,0 0,-205 111,0 0,488.99998 -111,0 z"/>
+                            <path d="M 1149,859 V -1 H 0 v 860 h 1149 z m -25,-22 H 25 V 21 h 1099 v 816 z"/>
+                        </g>
+                    </g>
+                </g>
             </marker-start>
+        </template>
+        <template code="G*DYKE*********" name="Dyke" type="polygon">
+            <segment unit="%">
+                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
+            </segment>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.07" y="0.1">D</text>
+                    </g>
+                </g>
+            </marker>
         </template>
     </category>
 </templates>
-<!-- signature="2371097007" -->
+<!-- signature="2410255574" -->
