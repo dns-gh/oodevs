@@ -198,6 +198,15 @@ void ResourceNetworkCapacity::NotifyStructuralStateChanged( float structuralStat
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::ActivateAll
+// Created: JSR 2011-05-24
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::ActivateAll()
+{
+    nodeProperties_->ActivateAll();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::SetActivation
 // Created: JSR 2011-05-04
 // -----------------------------------------------------------------------------

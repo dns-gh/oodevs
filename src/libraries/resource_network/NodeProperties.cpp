@@ -155,6 +155,17 @@ void NodeProperties::Push( int quantity, unsigned long resourceId )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::ActivateAll
+// Created: JSR 2011-05-24
+// -----------------------------------------------------------------------------
+void NodeProperties::ActivateAll()
+{
+    if( Count() == 0 )
+        return;
+    Apply( boost::bind( &NodeElement::SetActivation, _1, true ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::SetActivation
 // Created: JSR 2011-05-04
 // -----------------------------------------------------------------------------

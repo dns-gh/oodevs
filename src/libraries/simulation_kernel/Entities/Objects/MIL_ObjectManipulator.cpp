@@ -86,10 +86,20 @@ void MIL_ObjectManipulator::Construct()
 // -----------------------------------------------------------------------------
 void MIL_ObjectManipulator::Construct( double rDeltaPercentage )
 {
+    double state = 1.;
     if( StructuralCapacity* pCapacity = object_.Retrieve< StructuralCapacity >() )
+    {
         pCapacity->Build( rDeltaPercentage );
+        state = pCapacity->GetStructuralState();
+    }
     if( ConstructionAttribute* pAttribute = object_.RetrieveAttribute< ConstructionAttribute >() )
-        object_.GetAttribute< ConstructionAttribute >().Build( rDeltaPercentage );
+    {
+        pAttribute->Build( rDeltaPercentage );
+        state = std::min( state, pAttribute->GetState() );
+    }
+    if( state >= 0.99 )
+        if( ResourceNetworkCapacity* resourceNetwork = object_.Retrieve< ResourceNetworkCapacity >() )
+            resourceNetwork->ActivateAll();
 }
 
 // -----------------------------------------------------------------------------

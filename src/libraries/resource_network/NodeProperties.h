@@ -69,6 +69,7 @@ public:
     void UpdateState( const ResourceNetworkModel& model );
     void Finalize();
     void Push( int quantity, unsigned long resourceId );
+    void ActivateAll();
     void SetActivation( unsigned long resourceId, bool activated );
     void SetModifier( float modifier );
     void AddConsumption( unsigned long resourceId, double consumption );
