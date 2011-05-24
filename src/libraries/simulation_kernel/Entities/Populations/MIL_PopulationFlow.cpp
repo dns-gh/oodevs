@@ -441,7 +441,8 @@ void MIL_PopulationFlow::ApplyMove( const MT_Vector2D& position, const MT_Vector
         nNbrHumans = std::min( nNbrHumans, pSourceConcentration_->GetAllHumans() );
     // Head management
     SetHeadPosition( position );
-    if( ( bHeadMoveFinished_ || rSpeed == 0 ) && !pDestConcentration_ && !pSourceConcentration_->IsNearPosition( GetHeadPosition() ) )
+    if( ( bHeadMoveFinished_ || rSpeed == 0 ) && !pDestConcentration_ &&
+        ( !pSourceConcentration_ || !pSourceConcentration_->IsNearPosition( GetHeadPosition() ) ) )
     {
         pDestConcentration_ = &GetPopulation().GetConcentration( GetHeadPosition() );
         pDestConcentration_->RegisterPushingFlow( *this );
