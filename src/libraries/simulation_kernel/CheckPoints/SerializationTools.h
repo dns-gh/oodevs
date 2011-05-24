@@ -14,6 +14,9 @@
 // BOOST AUTO_PTR serialization
 // =============================================================================
 
+namespace boost {
+    namespace serialization {
+
 /////////////////////////////////////////////////////////////
 // implement serialization for auto_ptr<T>
 // note: this must be added to the boost namespace in order to
@@ -52,16 +55,6 @@ inline void serialize(
     boost::serialization::split_free(ar, t, file_version);
 }
 
-namespace boost {
-    namespace serialization {
-template<class Archive, class T>
-inline void serialize(
-    Archive & ar,
-    boost::shared_ptr< T > & t,
-    const unsigned int ){
-    ar & t.px; // save the raw pointer
-    //ar & t.pn; // save the shared reference count
-}
     } // end namespace serialization
 } // end namespace boost
 
