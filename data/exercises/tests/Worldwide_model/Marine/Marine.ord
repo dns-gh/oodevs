@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="4410" name="Common - transport embark" target="191" time="2010-08-19T18:01:37" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Units to transport" type="list">
+      <parameter name="Units to transport (item 1)" type="agent" value="200"/>
+    </parameter>
+    <parameter name="Embarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3174822453"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="4420" name="Common - transport disembark" target="191" time="2010-08-19T18:03:07" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Units to disembark" type="list">
+      <parameter name="Units to disembark (item 1)" type="agent" value="200"/>
+    </parameter>
+    <parameter name="Disembarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3131822468"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="135" name="Common - transport" target="191" time="2010-08-19T18:04:37" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Units to transport" type="list">
+      <parameter name="Units to transport (item 1)" type="agent" value="200"/>
+    </parameter>
+    <parameter name="Disembarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3160322902"/>
+      </location>
+    </parameter>
+    <parameter name="Embarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3095022541"/>
+      </location>
+    </parameter>
+    <parameter name="With equipments" type="bool" value="false"/>
+  </action>
+  <action id="138" name="Common - withdraw" target="191" time="2010-08-19T18:07:37" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU3384722078"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="139" name="Common - park" target="191" time="2010-08-19T18:11:57" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3151322471"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="134" name="Common - follow" target="191" time="2010-08-19T18:17:47" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Unit to follow" type="agent" value="200"/>
+  </action>
+  <action id="139" name="Common - park" target="200" time="2010-08-19T18:20:57" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2808822592"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="138" name="Common - withdraw" target="200" time="2010-08-19T18:28:07" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2678622158"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="134" name="Common - follow" target="200" time="2010-08-19T18:34:57" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Unit to follow" type="agent" value="191"/>
+  </action>
+  <action id="139" name="Common - park" target="191" time="2010-08-19T18:41:47" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3764621087"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

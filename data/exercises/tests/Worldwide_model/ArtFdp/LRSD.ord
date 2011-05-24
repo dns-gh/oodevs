@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="36" name="Field Artillery - (Long Range Surveillance Detachment) - collect intelligence on objectives" target="53" time="2010-08-19T18:04:41" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area to observe" type="Polygon">
+      <location type="polygon">
+        <point coordinates="30UXU3188342298"/>
+        <point coordinates="30UXU3382343091"/>
+        <point coordinates="30UXU3392042337"/>
+        <point coordinates="30UXU3211841514"/>
+        <point coordinates="30UXU3188342298"/>
+      </location>
+    </parameter>
+    <parameter name="Deployment area" type="Point">
+      <location type="point">
+        <point coordinates="30UXU3133043243"/>
+      </location>
+    </parameter>
+    <parameter name="Disembarking point" type="Point">
+      <location type="point">
+        <point coordinates="30UXU3015843166"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="14" name="Army Aviation - evacuate" target="84" time="2010-08-19T18:02:31" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Units to support" type="list">
+      <parameter name="Unité 1:Countermobility platoon" type="agent" value="106"/>
+    </parameter>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2387140840"/>
+      </location>
+    </parameter>
+    <parameter name="Replenishment sites" type="list">
+      <parameter name="Connaissance d'objet 1" type="objectknowledge" value="124"/>
+    </parameter>
+  </action>
+  <action id="11" name="Army Aviation - heliport" target="84" time="2010-08-19T18:04:51" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Units to helitransport" type="list">
+      <parameter name="Unité 1:Countermobility platoon" type="agent" value="106"/>
+    </parameter>
+    <parameter name="Disembarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2690039895"/>
+      </location>
+    </parameter>
+    <parameter name="Embarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2663440763"/>
+      </location>
+    </parameter>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2877040138"/>
+      </location>
+    </parameter>
+    <parameter name="Replenishment sites" type="list">
+      <parameter name="Connaissance d'objet 1" type="objectknowledge" value="124"/>
+    </parameter>
+    <parameter name="With equipments" type="bool" value="false"/>
+  </action>
+  <action id="13" name="Army Aviation - helitransport" target="84" time="2010-08-19T18:07:21" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Units to helitransport" type="list">
+      <parameter name="Unité 1:Countermobility platoon" type="agent" value="106"/>
+    </parameter>
+    <parameter name="Disembarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2641840229"/>
+      </location>
+    </parameter>
+    <parameter name="Embarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2603641064"/>
+      </location>
+    </parameter>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2423640501"/>
+      </location>
+    </parameter>
+    <parameter name="Replenishment sites" type="list">
+      <parameter name="Connaissance d'objet 1" type="objectknowledge" value="124"/>
+    </parameter>
+    <parameter name="With equipments" type="bool" value="false"/>
+  </action>
+  <action id="3" name="Army Aviation - resupply" target="84" time="2010-08-19T18:08:41" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Replenishment sites" type="list">
+      <parameter name="Connaissance d'objet 1" type="objectknowledge" value="124"/>
+    </parameter>
+  </action>
+  <action id="140" name="adopt transportation posture" target="84" time="2010-08-19T18:10:01" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Embarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2483241050"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="141" name="deny population crossing" target="84" time="2010-08-19T18:11:01" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2281540011"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="134" name="follow" target="84" time="2010-08-19T18:12:01" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Unit to follow" type="agent" value="106"/>
+  </action>
+  <action id="136" name="go through decontamination process" target="84" time="2010-08-19T18:13:11" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2680339335"/>
+      </location>
+    </parameter>
+    <parameter name="Decontamination site" type="objectknowledge" value="125"/>
+  </action>
+  <action id="133" name="move" target="84" time="2010-08-19T18:14:21" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Route" type="path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30UXU2427238688"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="139" name="park" target="84" time="2010-08-19T18:15:11" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2134239344"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="143" name="report information on populations" target="84" time="2010-08-19T18:16:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2246939852"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="138" name="withdraw" target="84" time="2010-08-19T18:17:30" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="list"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2480938444"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="12" name="Army Aviation - helitransport replenishment sites" target="84" time="2010-08-19T18:20:46" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Disembarking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2674835965"/>
+      </location>
+    </parameter>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2220736234"/>
+      </location>
+    </parameter>
+    <parameter name="Replenishment sites" type="list">
+      <parameter name="Replenishment sites (item 1)" type="objectknowledge" value="124"/>
+    </parameter>
+  </action>
+</actions>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="160" name="ElectronicIntelligence - support" target="47" time="2010-08-19T18:51:03" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Deployment position" type="point">
+      <location type="point">
+        <point coordinates="30UXU2710548990"/>
+      </location>
+    </parameter>
+    <parameter name="Meeting point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2626548713"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

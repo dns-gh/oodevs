@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="155" name="NBC - decontaminate an area" target="61" time="2010-08-19T18:11:05" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU4447452073"/>
+        <point coordinates="30UXU4519552387"/>
+        <point coordinates="30UXU4577551730"/>
+        <point coordinates="30UXU4507151252"/>
+        <point coordinates="30UXU4447452073"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="152" name="NBC - operate a decontamination site" target="61" time="2010-08-19T18:15:15" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="decontamination site position" type="point">
+      <location type="point">
+        <point coordinates="30UXU3985852769"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="3001" name="Security - Move To" target="251" time="2010-08-19T18:43:57" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Destination" type="point">
+      <location type="point">
+        <point coordinates="30UXU2032339758"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="3003" name="Security - Extinguish" target="251" time="2010-08-19T18:53:27" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Target" type="objectknowledge" value="213"/>
+    <parameter name="Parking point" type="point">
+      <location type="point">
+        <point coordinates="30UXU2129041592"/>
+      </location>
+    </parameter>
+  </action>
+</actions>

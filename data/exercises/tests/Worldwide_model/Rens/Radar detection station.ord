@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="161" name="ElectronicIntelligence - report information" target="72" time="2010-08-19T19:31:43" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30UXU2586546041"/>
+        <point coordinates="30UXU2620246876"/>
+        <point coordinates="30UXU2665446827"/>
+        <point coordinates="30UXU2655545952"/>
+        <point coordinates="30UXU2586546041"/>
+      </location>
+    </parameter>
+  </action>
+</actions>
