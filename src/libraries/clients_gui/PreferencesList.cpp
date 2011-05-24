@@ -28,8 +28,7 @@ PreferencesList::PreferencesList( QWidget* parent, QWidgetStack& pages )
     header()->hide();
     setRootIsDecorated( true );
     setSorting( -1 );
-    setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
-    setFixedSize( 150, 340 );
+    setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Preferred );
 }
 
 // -----------------------------------------------------------------------------

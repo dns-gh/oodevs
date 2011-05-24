@@ -41,7 +41,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
 {
     setCaption( tr( "Preferences" ) );
     QGridLayout* grid = new QGridLayout( this, 3, 2 );
-    grid->setColStretch( 0, 1 );
+    grid->setColStretch( 0, 0 );
     grid->setColStretch( 1, 3 );
     grid->setRowStretch( 0, 1 );
     grid->setRowStretch( 1, 5 );
