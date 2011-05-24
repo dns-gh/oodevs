@@ -35,6 +35,7 @@ namespace sword
     class ClientToSim;
     class SimToClient;
     class MessengerToClient;
+    class ClientToAuthentication;
 }
 
 namespace launcher
@@ -81,6 +82,7 @@ public:
     void AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC > handler );
 
     void Send( const sword::ClientToSim& message ) const;
+    void Send( const sword::ClientToAuthentication& message ) const;
     bool IsRunning() const;
     void Update() const;
     //@}

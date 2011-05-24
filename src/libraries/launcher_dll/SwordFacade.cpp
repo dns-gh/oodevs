@@ -147,6 +147,17 @@ void SwordFacade::Send( const sword::ClientToSim& message ) const
     if( client_.get() && IsConnected() )
         client_->Send( message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SwordFacade::Send
+// Created: AHC 2011-05-23
+// -----------------------------------------------------------------------------
+void SwordFacade::Send( const sword::ClientToAuthentication& message ) const
+{
+    if( client_.get() && IsConnected() )
+        client_->Send( message );
+}
+
 // -----------------------------------------------------------------------------
 // Name: SwordFacade::OnReceiveMessage
 // Created: AHC 2011-05-16

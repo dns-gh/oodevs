@@ -18,6 +18,13 @@ package sword;
  *  @{
  */
 
+/** @struct ConnectedProfilesRequest
+    @brief A message sent to request list of connected profiles.
+*/
+message ConnectedProfilesRequest {
+}
+
+
 /** @struct AuthenticationRequest
     @brief A message sent to request authentication.
 
@@ -84,6 +91,7 @@ message ClientToAuthentication {
        optional ProfileCreationRequest    profile_creation_request    = 2; //!< A profile creation request message
        optional ProfileUpdateRequest      profile_update_request      = 3; //!< A profile update request message
        optional ProfileDestructionRequest profile_destruction_request = 4; //!< A profile destruction request message
+       optional ConnectedProfilesRequest  connected_profiles_request  = 5; //!< Connected profiles request message
     }
     /** @property context
         @brief Identifies the request matching the response.

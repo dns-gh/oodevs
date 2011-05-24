@@ -63,6 +63,7 @@ public:
     bool IsRunning( const std::string& exercise, const std::string& session ) const;
     void ExecuteCommand( const std::string& endpoint, const sword::SessionCommandExecutionRequest& message );
     void ChangeParameter( const std::string& endpoint, const sword::SessionParameterChangeRequest& message );
+    void SendConnectedProfiles( const std::string& endpoint, const sword::ConnectedProfileListRequest& message );
     virtual void NotifyStopped();
     virtual void NotifyError( const std::string& error );
     void Update();

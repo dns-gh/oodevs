@@ -42,6 +42,7 @@ public:
     virtual void Pause( const std::string& exercise, const std::string& session) const = 0;
     virtual void Resume( const std::string& exercise, const std::string& session) const = 0;
     virtual void SaveCheckpoint( const std::string& exercise, const std::string& session, const std::string& name) const = 0;
+    virtual void QueryConnectedProfileList( const std::string& exercise, const std::string& session ) const = 0;
     //@}
 };
 

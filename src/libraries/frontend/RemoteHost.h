@@ -54,6 +54,7 @@ public:
     virtual void Pause( const std::string& exercise, const std::string& session) const;
     virtual void Resume( const std::string& exercise, const std::string& session) const;
     virtual void SaveCheckpoint( const std::string& exercise, const std::string& session, const std::string& name) const;
+    virtual void QueryConnectedProfileList( const std::string& exercise, const std::string& session ) const;
     //@}
 
     //! @name Operation
@@ -66,6 +67,7 @@ public:
     virtual void Handle( const sword::SessionNotification& message );
     virtual void Handle( const sword::SessionParameterChangeResponse& message );
     virtual void Handle( const sword::SessionStatus& message );
+    virtual void Handle( const sword::ConnectedProfileListResponse& message );
     //@}
 
 private:

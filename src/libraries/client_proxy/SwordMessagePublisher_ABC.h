@@ -13,6 +13,7 @@
 namespace sword
 {
     class ClientToSim;
+    class ClientToAuthentication;
 }
 
 // =============================================================================
@@ -34,6 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual void Send( const sword::ClientToSim& message ) const = 0;
+    virtual void Send( const sword::ClientToAuthentication& message ) const = 0;
     //@}
 };
 

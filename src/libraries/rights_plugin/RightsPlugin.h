@@ -21,6 +21,7 @@ namespace sword
     class ProfileUpdateRequest;
     class ProfileDestructionRequest;
     class ProfileCreationRequest;
+    class ConnectedProfilesRequest;
 }
 
 namespace tools
@@ -34,6 +35,7 @@ namespace dispatcher
     class Model;
     class Config;
     class CompositeRegistrable;
+    class Profile;
 }
 
 namespace plugins
@@ -84,6 +86,7 @@ private:
     void OnReceiveProfileCreationRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileCreationRequest& message );
     void OnReceiveProfileUpdateRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileUpdateRequest& message );
     void OnReceiveProfileDestructionRequest( dispatcher::ClientPublisher_ABC& client, const sword::ProfileDestructionRequest& message );
+    void OnReceiveConnectedProfilesRequest( dispatcher::ClientPublisher_ABC& client, int context, const sword::ConnectedProfilesRequest& message );
 
     bool IsAuthenticated( const std::string& login ) const;
     //@}
@@ -91,7 +94,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, dispatcher::Profile_ABC* > T_Profiles;
+    typedef std::map< std::string, dispatcher::Profile* > T_Profiles;
     typedef T_Profiles::iterator                             IT_Profiles;
     typedef T_Profiles::const_iterator                      CIT_Profiles;
     //@}

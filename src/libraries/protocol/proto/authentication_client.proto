@@ -166,6 +166,13 @@ message Profile {
     optional RoleType        role                  = 12; // !< The role has no impact on the simulation, it is purely intended for exercise organisation purpose, so that the different roles can be identified (DIREX, ENIEX...). The list of roles can be customized from the file "resources/Extensions.xml"
 }
 
+/** @struct ConnectedProfileList
+    @brief A list of Profile which are connected
+*/
+message ConnectedProfileList {
+    repeated Profile elem = 1; // !< The list of profiles
+}
+
 /** @struct ProfileDescriptionList
     @brief A list of ProfileDescription.
     @todo should be integrated to AuthenticationResponse fields
@@ -207,6 +214,7 @@ message AuthenticationToClient {
         optional ProfileUpdateRequestAck      profile_update_request_ack      = 5; //!< An acknowledge message to profile update request.
         optional ProfileDestruction           profile_destruction             = 6; //!< A profile destruction message.
         optional ProfileDestructionRequestAck profile_destruction_request_ack = 7; //!< An acknowledge message to profile destruction request.
+        optional ConnectedProfileList         connected_profile_list          = 8; //!< List of profiles actually connected
     }
     /** @property context
         @brief Identifies the request matching the response.

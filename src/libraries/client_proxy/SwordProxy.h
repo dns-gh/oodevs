@@ -47,6 +47,7 @@ public:
     //! @name Message senders
     //@{
     virtual void Send( const sword::ClientToSim& message ) const;
+    virtual void Send( const sword::ClientToAuthentication& message ) const;
     //@}
 
 private:

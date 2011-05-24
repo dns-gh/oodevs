@@ -18,6 +18,7 @@ namespace sword
     class AarToClient;
     class AuthenticationToClient;
     class ClientToSim;
+    class ClientToAuthentication;
     class DispatcherToClient;
     class MessengerToClient;
     class ReplayToClient;
@@ -51,6 +52,7 @@ public:
     void RegisterMessageHandler( SwordMessageHandler_ABC& handler );
     void UnregisterMessageHandler( SwordMessageHandler_ABC& handler );
     void SendMessage( const sword::ClientToSim& message ) const;
+    void SendMessage( const sword::ClientToAuthentication& message ) const;
     //@}
 
 private:

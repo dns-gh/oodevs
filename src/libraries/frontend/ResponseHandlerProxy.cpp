@@ -130,6 +130,15 @@ void ResponseHandlerProxy::Handle( const sword::SessionStatus& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResponseHandlerProxy::Handle
+// Created: AHC 2011-05-24
+// -----------------------------------------------------------------------------
+void ResponseHandlerProxy::Handle( const sword::ConnectedProfileListResponse& message )
+{
+    UpdateHandlers( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResponseHandlerProxy::UpdateHandlers
 // Created: SBO 2010-11-22
 // -----------------------------------------------------------------------------

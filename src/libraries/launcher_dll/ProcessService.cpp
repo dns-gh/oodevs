@@ -26,6 +26,7 @@
 #include "LauncherService.h"
 #include "NotificationMessageHandler.h"
 #include "ControlInformationMessageHandler.h"
+#include "ConnectedProfilesMessageHandler.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
 #include <boost/foreach.hpp>
@@ -408,4 +409,40 @@ void ProcessService::ChangeParameter( const std::string& endpoint, const sword::
         request().set_frequency( message.checkpoint_frequency() );
         request.Send( *client, 0 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessService::SendConnectedProfiles
+// Created: AHC 2011-05-20
+// -----------------------------------------------------------------------------
+void ProcessService::SendConnectedProfiles( const std::string& endpoint, const sword::ConnectedProfileListRequest& message )
+{
+
+    ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
+    static int context = 1;
+
+    if( processes_.end() == it )
+    {
+        ConnectedProfileListResponse response;
+        response().set_exercise( message.exercise() );
+        response().set_session( message.session() );
+        response().set_error_code( sword::ConnectedProfileListResponse::invalid_session_name );
+        response.Send( server_.ResolveClient( endpoint ) );
+        return;
+    }
+    if( !it->second->IsConnected() )
+    {
+        ConnectedProfileListResponse response;
+        response().set_exercise( message.exercise() );
+        response().set_session( message.session() );
+        response().set_error_code( sword::ConnectedProfileListResponse::session_not_running );
+        response.Send( server_.ResolveClient( endpoint ) );
+        return;
+    }
+    boost::shared_ptr< SwordFacade > client( it->second );
+
+    client->RegisterMessageHandler( context, std::auto_ptr<MessageHandler_ABC>( new ConnectedProfilesMessageHandler( server_.ResolveClient( endpoint ), message.exercise(), message.session() ) ) );
+    authentication::ConnectedProfilesRequest request;
+    request.Send( *client, context );
+    ++context;
 }

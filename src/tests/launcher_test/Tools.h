@@ -32,6 +32,36 @@ namespace launcher_test
 {
     const std::string  defaultHost = "127.0.0.1";
     const unsigned int timeOut     = 5000;
+    
+    template< typename P >
+    void FillProfileDescription( P* p )
+    {
+        p->set_login( "login" );
+        p->set_password( "password" );
+        p->set_supervisor( true );
+        p->mutable_role()->set_id( 77 );
+    }
+    template< typename P >
+    void FillProfile( P* p )
+    {
+        FillProfileDescription( p );
+        p->mutable_read_only_formations()->add_elem()->set_id( 3 );
+        p->mutable_read_only_formations()->add_elem()->set_id( 5 );
+        p->mutable_read_write_formations()->add_elem()->set_id( 6 );
+        p->mutable_read_write_formations()->add_elem()->set_id( 7 );
+        p->mutable_read_only_automates()->add_elem()->set_id( 8 );
+        p->mutable_read_only_automates()->add_elem()->set_id( 9 );
+        p->mutable_read_write_automates()->add_elem()->set_id( 10 );
+        p->mutable_read_write_automates()->add_elem()->set_id( 11 );
+        p->mutable_read_only_parties()->add_elem()->set_id( 12 );
+        p->mutable_read_only_parties()->add_elem()->set_id( 13 );
+        p->mutable_read_write_parties()->add_elem()->set_id( 14 );
+        p->mutable_read_write_parties()->add_elem()->set_id( 15 );
+        p->mutable_read_only_crowds()->add_elem()->set_id( 16 );
+        p->mutable_read_only_crowds()->add_elem()->set_id( 17 );
+        p->mutable_read_write_crowds()->add_elem()->set_id( 18 );
+        p->mutable_read_write_crowds()->add_elem()->set_id( 19 );
+    }
 
     struct Timeout : private boost::noncopyable
     {
@@ -60,9 +90,10 @@ namespace launcher_test
         {
             AllowConnections();
             RegisterMessage< MockDispatcher, sword::ClientToSim >( *this, &MockDispatcher::Receive );
-            RegisterMessage< MockDispatcher, sword::ClientToAuthentication >( *this, &MockDispatcher::Receive );
+            RegisterMessage< MockDispatcher, sword::ClientToAuthentication >( *this, &MockDispatcher::AutoAuthentification );
         }
         MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToSim& ), ReceiveSim );
+        MOCK_METHOD_EXT( Receive, 2, void( const std::string&, const sword::ClientToAuthentication& ), ReceiveAuth );
         MOCK_METHOD_EXT( ConnectionSucceeded, 1, void( const std::string& ), ConnectionSucceeded );
         MOCK_METHOD_EXT( ConnectionFailed, 2, void( const std::string&, const std::string& ), ConnectionFailed );
         MOCK_METHOD_EXT( ConnectionError, 2, void( const std::string&, const std::string& ), ConnectionError );
@@ -77,7 +108,7 @@ namespace launcher_test
         {
             return authPerformed;
         }
-        void Receive( const std::string& /*endpoint*/, const sword::ClientToAuthentication& msg )
+        void AutoAuthentification( const std::string& endpoint, const sword::ClientToAuthentication& msg )
         {
             if( msg.message().has_authentication_request() )
             {
@@ -87,6 +118,8 @@ namespace launcher_test
                 response.Send( *this, msg.has_context() ? msg.context() : 1 );
                 authPerformed = true;
             }
+            else
+                Receive( endpoint, msg); // forward to mock
         }
         std::string host;
         bool authPerformed;
@@ -205,6 +238,16 @@ namespace launcher_test
         {
             sword::ClientToSim message;
             MOCK_EXPECT( dispatcher, ReceiveSim ).once().with( mock::any , mock::retrieve( message ) );
+            timeout.Start();
+            while( !message.IsInitialized()&& !timeout.Expired() )
+                Update();
+            LAUNCHER_CHECK_MESSAGE( message, expected.c_str() );
+            mock::verify();
+        }
+        void VerifySendAuthRequest( const std::string& expected )
+        {
+            sword::ClientToAuthentication message;
+            MOCK_EXPECT( dispatcher, ReceiveAuth ).once().with( mock::any , mock::retrieve( message ) );
             timeout.Start();
             while( !message.IsInitialized()&& !timeout.Expired() )
                 Update();

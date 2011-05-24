@@ -209,6 +209,16 @@ void SwordClient::SendMessage( const sword::ClientToSim& message ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: SwordClient::SendMessage
+// Created: AHC 2011-05-23
+// -----------------------------------------------------------------------------
+void SwordClient::SendMessage( const sword::ClientToAuthentication& message ) const
+{
+    if( publisher_.get() )
+        publisher_->Send( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SwordClient::UpdateHandlers
 // Created: LGY 2011-05-19
 // -----------------------------------------------------------------------------

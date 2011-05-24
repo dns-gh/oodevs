@@ -200,8 +200,17 @@ void RemoteHost::Handle( const sword::SessionStopResponse& message )
 }
 
 // -----------------------------------------------------------------------------
+// Name: RemoteHost::Handle
+// Created: AHC 2011-05-24
+// -----------------------------------------------------------------------------
+void RemoteHost::Handle( const sword::ConnectedProfileListResponse& /*message*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: RemoteHost::Pause
-// Created: AHC
+// Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
 void RemoteHost::Pause(const std::string& exercise, const std::string& session) const
 {
@@ -214,7 +223,7 @@ void RemoteHost::Pause(const std::string& exercise, const std::string& session) 
 
 // -----------------------------------------------------------------------------
 // Name: RemoteHost::Resume
-// Created: AHC
+// Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
 void RemoteHost::Resume(const std::string& exercise, const std::string& session) const
 {
@@ -227,7 +236,7 @@ void RemoteHost::Resume(const std::string& exercise, const std::string& session)
 
 // -----------------------------------------------------------------------------
 // Name: RemoteHost::SaveCheckpoint
-// Created: AHC
+// Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
 void RemoteHost::SaveCheckpoint(const std::string& exercise, const std::string& session, const std::string& name) const
 {
@@ -235,5 +244,17 @@ void RemoteHost::SaveCheckpoint(const std::string& exercise, const std::string& 
     message().set_exercise( exercise );
     message().set_session( session );
     message().set_save_checkpoint( name );
+    message.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::QueryConnectedProfileList
+// Created: AHC 2010-05-20
+// -----------------------------------------------------------------------------
+void RemoteHost::QueryConnectedProfileList( const std::string& exercise, const std::string& session) const
+{
+    launcher::ConnectedProfileListRequest message;
+    message().set_exercise( exercise );
+    message().set_session( session );
     message.Send( publisher_ );
 }

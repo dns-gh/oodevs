@@ -30,6 +30,7 @@ MOCK_BASE_CLASS( MockResponseHandler, frontend::ResponseHandler_ABC )
     MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionNotification& ), HandleSessionNotification );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionParameterChangeResponse& ), HandleSessionParameterChangeResponse );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionStatus& ), HandleSessionStatus );
+    MOCK_METHOD_EXT( Handle, 1, void( const sword::ConnectedProfileListResponse& ), HandleConnectedProfileList );
 };
 
 }

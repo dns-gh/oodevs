@@ -103,6 +103,8 @@ void RightsPlugin::OnReceive( const std::string& link, const sword::ClientToAuth
             OnReceiveProfileUpdateRequest( GetPublisher( link ), wrapper.message().profile_update_request() );
         if( wrapper.message().has_profile_destruction_request() )
             OnReceiveProfileDestructionRequest( GetPublisher( link ), wrapper.message().profile_destruction_request() );
+        if( wrapper.message().has_connected_profiles_request() )
+            OnReceiveConnectedProfilesRequest( GetPublisher( link ), wrapper.context(), wrapper.message().connected_profiles_request() );
     }
 }
 
@@ -185,6 +187,19 @@ void RightsPlugin::OnReceiveProfileDestructionRequest( ClientPublisher_ABC& clie
     ack().set_login( message.login() );
     ack.Send( client );
 }
+
+// -----------------------------------------------------------------------------
+// Name: RightsPlugin::OnReceiveConnecedProfilesRequest
+// Created: AHC 2011-05-20
+// -----------------------------------------------------------------------------
+void RightsPlugin::OnReceiveConnectedProfilesRequest( ClientPublisher_ABC& client, int context, const sword::ConnectedProfilesRequest& message )
+{
+    authentication::ConnectedProfileList response;
+    for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
+        it->second->Send( *response().add_elem() );
+    response.Send( client, context );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: RightsPlugin::IsAuthenticated

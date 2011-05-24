@@ -59,6 +59,7 @@ public:
     virtual void Pause(const std::string& session) const;
     virtual void Resume(const std::string& session) const;
     virtual void SaveCheckpoint(const std::string& session, const std::string& name) const;
+    virtual void QueryConnectedProfileList(const std::string& session) const;
     //@}
 
     //! @name Operations

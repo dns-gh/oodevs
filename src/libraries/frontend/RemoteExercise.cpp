@@ -149,7 +149,7 @@ void RemoteExercise::SetRunning( bool running )
 
 // -----------------------------------------------------------------------------
 // Name: RemoteExercise::QueryProfileList
-// Created: AHC
+// Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
 void RemoteExercise::QueryProfileList() const
 {
@@ -158,7 +158,7 @@ void RemoteExercise::QueryProfileList() const
 
 // -----------------------------------------------------------------------------
 // Name: RemoteExercise::Pause
-// Created: AHC
+// Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
 void RemoteExercise::Pause(const std::string& session) const
 {
@@ -167,7 +167,7 @@ void RemoteExercise::Pause(const std::string& session) const
 
 // -----------------------------------------------------------------------------
 // Name: RemoteExercise::Resume
-// Created: AHC
+// Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
 void RemoteExercise::Resume(const std::string& session) const
 {
@@ -176,9 +176,18 @@ void RemoteExercise::Resume(const std::string& session) const
 
 // -----------------------------------------------------------------------------
 // Name: RemoteExercise::SaveCheckpoint
-// Created: AHC
+// Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------
 void RemoteExercise::SaveCheckpoint(const std::string& session, const std::string& name) const
 {
     host_.SaveCheckpoint( name_, session, name );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteExercise::QueryConnectedProfileList
+// Created: AHC 2010-05-23
+// -----------------------------------------------------------------------------
+void RemoteExercise::QueryConnectedProfileList(const std::string& session ) const
+{
+    host_.QueryConnectedProfileList( name_, session );
 }
