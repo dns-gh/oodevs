@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<exercise model-version="4.2.6">
+<exercise model-version="4.5.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/exercise/exercise.xsd">
   <meta>
     <briefing/>
     <resources/>
@@ -10,4 +10,4 @@
   <terrain name="Angers_x9"/>
   <model dataset="ada" physical="worldwide"/>
 </exercise>
-<!-- signature="0399326758" -->
+<!-- signature="1937924157" -->
