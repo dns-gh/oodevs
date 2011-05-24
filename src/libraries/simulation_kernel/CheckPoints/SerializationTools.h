@@ -82,7 +82,7 @@ template<class Archive, class T>
 inline void serialize(
     Archive & ar,
     boost::shared_ptr< T > & t,
-    const unsigned int ){
+    const unsigned int file_version ){
     boost::serialization::split_free(ar, t, file_version);
 }
 
