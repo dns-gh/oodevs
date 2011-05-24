@@ -463,8 +463,8 @@ BOOST_FIXTURE_TEST_CASE( unit_change_superior_to_client_is_converted, ContextFix
 BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_to_client_is_converted_1, ContextFixture< sword::SimToClient > )
 {
     content.mutable_automat_change_logistic_links()->mutable_requester()->mutable_automat()->set_id( 7 );
-    content.mutable_automat_change_logistic_links()->mutable_current_superior()->mutable_automat()->set_id( 12 );
-    content.mutable_automat_change_logistic_links()->mutable_nominal_superior()->mutable_formation()->set_id( 13 );
+    content.mutable_automat_change_logistic_links()->add_superior()->mutable_formation()->set_id( 13 );
+    content.mutable_automat_change_logistic_links()->add_superior()->mutable_automat()->set_id( 12 );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links { requester { automat { id: 7 } } tc2 { id: 12 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -472,23 +472,16 @@ BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_to_client_is_converted_1,
 BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_to_client_is_converted_2, ContextFixture< sword::SimToClient > )
 {
     content.mutable_automat_change_logistic_links()->mutable_requester()->mutable_formation()->set_id( 8 );
-    content.mutable_automat_change_logistic_links()->mutable_nominal_superior()->mutable_formation()->set_id( 13 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links { requester { formation { id: 8 } } } }" ) );
+    content.mutable_automat_change_logistic_links()->clear_superior();
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links { requester { formation { id: 8 } } tc2 { id: 0 } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_to_client_is_converted_3, ContextFixture< sword::SimToClient > )
 {
     content.mutable_automat_change_logistic_links()->mutable_requester()->mutable_formation()->set_id( 8 );
-    content.mutable_automat_change_logistic_links()->mutable_current_superior()->mutable_formation()->set_id( 13 );
+    content.mutable_automat_change_logistic_links()->add_superior()->mutable_formation()->set_id( 13 );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links { requester { formation { id: 8 } } logistic_base { formation { id: 13 } } } }" ) );
-    converter.ReceiveSimToClient( "unused endpoint", msg );
-}
-
-BOOST_FIXTURE_TEST_CASE( automat_change_logistic_links_to_client_is_converted_4, ContextFixture< sword::SimToClient > )
-{
-    content.mutable_automat_change_logistic_links()->mutable_requester()->mutable_automat()->set_id( 7 );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { automat_change_logistic_links { requester { automat { id: 7 } } } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
