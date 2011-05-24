@@ -372,7 +372,18 @@ eRC_ArrivedOnEvacuateZone = 353
 eRC_ZoneEvacuationInProgress = 354
 eRC_DebutValorisation = 355
 eRC_FinValorisation = 356
-eNbr = 357
+eRC_EchecRelever = 357
+eRC_criticalIntelligence = 358
+eRC_criticalIntelligenceNone = 359
+eRC_FinTravauxBlocUrbain = 360
+eRC_BUNonTraficable = 361
+eRC_StartDeploy = 362
+eRC_DebutFouillePoint = 363
+eRC_FinFouillePoint = 364
+eRC_NotDeployedIndirectFireImpossible = 365
+eRC_AgressionImpossible = 366
+eRC_NoLogisticSuperior = 367
+eNbr = 368
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion
