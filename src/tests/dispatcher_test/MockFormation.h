@@ -44,11 +44,14 @@ MOCK_BASE_CLASS( MockFormation, dispatcher::Formation_ABC )
     MOCK_METHOD_EXT( SetSuperior, 1, void ( dispatcher::Formation_ABC& ), SetSuperiorFormation );
     MOCK_METHOD_EXT( SetSuperior, 1, void ( dispatcher::Team_ABC& ), SetSuperiorTeam );
     MOCK_METHOD( GetLogisticLevel, 0 );
+    MOCK_METHOD( GetLogisticEntity, 0 );
 
     // Sendable
     MOCK_METHOD( SendCreation, 1 );
     MOCK_METHOD( SendFullUpdate, 1 );
     MOCK_METHOD( SendDestruction, 1 );
+
+    MOCK_METHOD( Send, 1 );
 };
 
 #endif // __MockFormation_h_

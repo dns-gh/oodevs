@@ -32,6 +32,7 @@ MOCK_BASE_CLASS( MockAutomat, dispatcher::Automat_ABC )
 
     // kernel::Automat_ABC
     MOCK_METHOD( GetType, 0 );
+    MOCK_METHOD( GetLogisticEntity, 0 );
 
     // dispatcher::Automat_ABC
     MOCK_METHOD( GetTeam, 0 );
@@ -54,6 +55,10 @@ MOCK_BASE_CLASS( MockAutomat, dispatcher::Automat_ABC )
     MOCK_METHOD( SendFullUpdate, 1 );
     MOCK_METHOD( SendDestruction, 1 );
     MOCK_METHOD( Accept, 1 );
+
+    // dispatcher::LogisticHierarchyOwner_ABC
+    //MOCK_METHOD( LogisticHierarchyOwner_ABC::Send, 1 );
+    MOCK_METHOD_EXT( Send, 1, void ( sword::ParentEntity& ), LogisticHierarchyOwnerSend );
 };
 
 
