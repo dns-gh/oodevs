@@ -25,10 +25,9 @@ using namespace tools;
 DefaultLoader::DefaultLoader( RealFileLoaderObserver_ABC& observer )
     : observer_              ( observer )
     , schemaVersionExtractor_( new SchemaVersionExtractor() )
-    , fileLoader_            ()
 {
-    xml::xifstream migrationsXis( tools::GeneralConfig::BuildResourceChildFile( "migrations.xml" ) );
-    fileLoader_.reset( new RealFileLoader( migrationsXis, *schemaVersionExtractor_ ) );
+    xml::xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "migrations.xml" ) );
+    fileLoader_.reset( new RealFileLoader( xis, *schemaVersionExtractor_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,6 +36,7 @@ DefaultLoader::DefaultLoader( RealFileLoaderObserver_ABC& observer )
 // -----------------------------------------------------------------------------
 DefaultLoader::~DefaultLoader()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -45,8 +45,7 @@ DefaultLoader::~DefaultLoader()
 // -----------------------------------------------------------------------------
 void DefaultLoader::LoadFile( const std::string& fileName, T_Loader loader ) const
 {
-    std::auto_ptr< xml::xistream > xis = fileLoader_->LoadFile( fileName, observer_ );
-    loader( *xis );
+    loader( *fileLoader_->LoadFile( fileName, observer_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,7 +55,7 @@ void DefaultLoader::LoadFile( const std::string& fileName, T_Loader loader ) con
 std::auto_ptr< xml::xistream > DefaultLoader::LoadFile( const std::string& fileName ) const
 {
     return fileLoader_->LoadFile( fileName, observer_ );
-};
+}
 
 // -----------------------------------------------------------------------------
 // Name: DefaultLoader::LoadPhysicalFile
@@ -71,7 +70,7 @@ std::string DefaultLoader::LoadPhysicalFile( const std::string&, T_Loader ) cons
 // Name: DefaultLoader::LoadOptionalPhysicalFile
 // Created: ABR 2011-05-24
 // -----------------------------------------------------------------------------
-std::string DefaultLoader::LoadOptionalPhysicalFile( const std::string& /*rootTag*/, T_Loader /*loader*/ ) const
+std::string DefaultLoader::LoadOptionalPhysicalFile( const std::string&, T_Loader ) const
 {
     throw std::runtime_error( "Invalid call DefaultFileLoader::LoadOptionalPhysicalFile" );
 }
@@ -82,7 +81,7 @@ std::string DefaultLoader::LoadOptionalPhysicalFile( const std::string& /*rootTa
 // -----------------------------------------------------------------------------
 void DefaultLoader::CheckFile( const std::string& fileName ) const
 {
-    std::auto_ptr< xml::xistream > xis = fileLoader_->LoadFile( fileName, observer_ );
+    fileLoader_->LoadFile( fileName, observer_ );
 }
 
 // -----------------------------------------------------------------------------
