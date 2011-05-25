@@ -61,6 +61,7 @@ LogisticLink::LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_Automat
     , superior_     ( &superior )
     , quotasUpdated_( false ) // No quotas
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -71,10 +72,6 @@ LogisticLink::~LogisticLink()
 {
     // NOTHING
 }
-
-// =============================================================================
-// INITIALIZATION
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: LogisticLink::ReadQuota
@@ -123,10 +120,6 @@ void LogisticLink::WriteQuotas( xml::xostream& xos ) const
     xos << xml::end; // quotas
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: LogisticLink::operator==
 // Created: NLD 2011-01-10
@@ -167,10 +160,6 @@ double LogisticLink::GetQuota( const PHY_DotationCategory& dotationCategory ) co
     return it->second.quota_;
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: LogisticLink::SendFullState
 // Created: NLD 2011-01-10
@@ -179,7 +168,7 @@ void LogisticLink::SendFullState() const
 {
     SendQuotas();
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LogisticLink::SendChangedState
 // Created: NLD 2011-01-10
@@ -242,10 +231,6 @@ void LogisticLink::OnReceiveChangeQuotas( const sword::MissionParameter& message
     quotasUpdated_ = true;
 }
 
-// =============================================================================
-// SERIALIZATION
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: LogisticLink::WriteODB
 // Created: NLD 2011-02-03
@@ -256,11 +241,10 @@ void LogisticLink::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "id", superior_->GetID() )
             << xml::start( "subordinate" )
                     << xml::attribute( "id", owner_->GetID() );
-                    WriteQuotas( xos );
+    WriteQuotas( xos );
     xos     << xml::end
         << xml::end;
 }
-
 
 namespace boost
 {
@@ -275,7 +259,7 @@ namespace boost
         template < typename Archive >
         void save( Archive& file, const LogisticLink::T_DotationQuotas& map, const unsigned int )
         {
-            unsigned int size = map.size();
+            std::size_t size = map.size();
             file << size;
             for( LogisticLink::T_DotationQuotas::const_iterator it = map.begin(); it != map.end(); ++it )
             {
@@ -289,7 +273,7 @@ namespace boost
         template < typename Archive >
         void load( Archive& file, LogisticLink::T_DotationQuotas& map, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -317,4 +301,3 @@ void LogisticLink::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< LogisticLink_ABC >( *this )
          & quotas_;
 }
-
