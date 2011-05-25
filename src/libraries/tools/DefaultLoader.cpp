@@ -71,7 +71,7 @@ std::string DefaultLoader::LoadPhysicalFile( const std::string&, T_Loader ) cons
 // Name: DefaultLoader::LoadOptionalPhysicalFile
 // Created: ABR 2011-05-24
 // -----------------------------------------------------------------------------
-std::string DefaultLoader::LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const
+std::string DefaultLoader::LoadOptionalPhysicalFile( const std::string& /*rootTag*/, T_Loader /*loader*/ ) const
 {
     throw std::runtime_error( "Invalid call DefaultFileLoader::LoadOptionalPhysicalFile" );
 }
