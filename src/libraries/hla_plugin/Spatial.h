@@ -51,9 +51,11 @@ private:
         template< typename Archive >
         void Serialize( Archive& archive )
         {
-            unsigned char  padding_[ 3 ] = { 0, 0, 0 };
             worldLocation_.Serialize( archive );
-            archive << isFrozen_ << padding_;
+            archive << static_cast< uint8 >( isFrozen_ )
+                    << static_cast< uint8 >( 0 )
+                    << static_cast< uint8 >( 0 )
+                    << static_cast< uint8 >( 0 );
             orientation_.Serialize( archive );
         }
         rpr::WorldLocation worldLocation_;
