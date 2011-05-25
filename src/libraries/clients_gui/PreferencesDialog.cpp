@@ -44,7 +44,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     grid->setColStretch( 0, 0 );
     grid->setColStretch( 1, 3 );
     grid->setRowStretch( 0, 1 );
-    grid->setRowStretch( 1, 5 );
+    grid->setRowStretch( 1, 6 );
     grid->setRowStretch( 2, 1 );
 
     QHBox* box = new QHBox( this );
@@ -119,7 +119,7 @@ void PreferencesDialog::AddPage( const QString& name, PreferencePanel_ABC& page 
 // -----------------------------------------------------------------------------
 QSize PreferencesDialog::sizeHint() const
 {
-    return QSize( 500, 400 );
+    return QSize( 500, 540 );
 }
 
 // -----------------------------------------------------------------------------
