@@ -94,7 +94,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( config );
     detection_.Load( config );
     extensions_.Load( config );
-    drawings_.Load( config, config.BuildPhysicalChildFile( "DrawingTemplates.xml" ) );
+    drawings_.Load( config );
     indicators_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
     gaugeTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
     successFactorActionTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "SuccessFactorActions.xml" ) );

@@ -42,9 +42,9 @@ DrawingTypes::~DrawingTypes()
 // Name: DrawingTypes::Load
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-void DrawingTypes::Load( const tools::ExerciseConfig& config, const std::string& filename )
+void DrawingTypes::Load( const tools::ExerciseConfig& config )
 {
-    config.GetLoader().LoadFile( filename, boost::bind( &DrawingTypes::Read, this, _1 ) );
+    config.GetLoader().LoadOptionalPhysicalFile( "drawing-templates", boost::bind( &DrawingTypes::Read, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

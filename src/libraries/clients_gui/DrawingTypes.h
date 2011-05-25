@@ -53,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::ExerciseConfig& config, const std::string& filename );
+    void Load( const tools::ExerciseConfig& config );
     void Purge();
     //@}
 
