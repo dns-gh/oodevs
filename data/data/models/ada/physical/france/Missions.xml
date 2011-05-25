@@ -2661,7 +2661,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Sinfiltrer" dia-type="france.military.platoon.tasks.Sinfiltrer" id="2139" name="S'Infiltrer">
+    <mission dia-behavior="france.military.platoon.tasks.Sinfiltrer" dia-type="france.military.platoon.tasks.Sinfiltrer" id="2139" name="MELEE S'Infiltrer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2688,6 +2688,13 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.FaireMouvement" dia-type="france.military.platoon.tasks.ASYSInfiltrer" id="28747" name="ASY S'Infiltrer">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
     </mission>
   </units>
   <automats>
@@ -4624,4 +4631,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0335007569" -->
+<!-- signature="2199824862" -->

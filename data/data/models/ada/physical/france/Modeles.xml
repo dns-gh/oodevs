@@ -494,7 +494,7 @@
         <mission name="GENIE Reprendre Travaux"/>
         <mission name="GENIE Retablir Itineraire"/>
         <mission name="Animer"/>
-        <mission name="S'Infiltrer"/>
+        <mission name="MELEE S'Infiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -609,7 +609,7 @@
         <mission name="ASY Se Dissimuler"/>
         <mission name="ASY Prendre un Otage"/>
         <mission name="GENIE Detruire point du reseau"/>
-        <mission name="S'Infiltrer"/>
+        <mission name="ASY S'Infiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -643,7 +643,7 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="COMMUNES Interroger"/>
-        <mission name="S'Infiltrer"/>
+        <mission name="ASY S'Infiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -11712,4 +11712,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1792084573" -->
+<!-- signature="1989309435" -->
