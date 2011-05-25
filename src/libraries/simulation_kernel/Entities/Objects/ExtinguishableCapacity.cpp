@@ -81,11 +81,10 @@ void ExtinguishableCapacity::Instanciate( MIL_Object_ABC& object ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExtinguishableCapacity::Bypass
+// Name: ExtinguishableCapacity::Extinguish
 // Created: JCR 2008-06-06
 // -----------------------------------------------------------------------------
 void ExtinguishableCapacity::Extinguish( MIL_Object_ABC& /*object*/, int /*extinguisherAgent*/, int /*numberOfFireHoses*/ )
 {
-    int todo = 0;
-    //object.GetAttribute< FireAttribute >().ComputeHeatWhenExtinguishing( (MIL_FireClass::E_FireExtinguisherAgent)extinguisherAgent, numberOfFireHoses );
+    // NOTHING
 }

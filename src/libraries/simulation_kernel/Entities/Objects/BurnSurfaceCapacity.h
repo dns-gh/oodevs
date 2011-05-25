@@ -72,11 +72,6 @@ private:
     explicit BurnSurfaceCapacity( const BurnSurfaceCapacity& );
     //@}
 
-    //! @name Initialize Data
-    //@{
-    void InitializeData( xml::xistream& xis );
-    //@}
-
     //! @name Private member
     //@{
     MIL_BurningCells& burningCells_;

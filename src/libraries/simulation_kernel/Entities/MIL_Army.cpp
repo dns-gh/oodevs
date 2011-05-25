@@ -143,7 +143,7 @@ namespace boost
         template< typename Archive >
         void save( Archive& file, const MIL_Army::T_DiplomacyMap& map, const unsigned int )
         {
-            unsigned size = map.size();
+            std::size_t size = map.size();
             file << size;
             for( MIL_Army::CIT_DiplomacyMap it = map.begin(); it != map.end(); ++it )
             {
@@ -154,7 +154,7 @@ namespace boost
         template< typename Archive >
         void load( Archive& file, MIL_Army::T_DiplomacyMap& map, const unsigned int )
         {
-            unsigned int nNbr;
+            std::size_t nNbr;
             file >> nNbr;
             while( nNbr-- )
             {
@@ -180,7 +180,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> diplomacies_;
     file >> pExtensions;
     {
-        unsigned int nNbr;
+        std::size_t nNbr;
         file >> nNbr;
         while ( nNbr-- )
         {
@@ -190,7 +190,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
         }
     }
     {
-        unsigned int nNbr;
+        std::size_t nNbr;
         file >> nNbr;
         while ( nNbr-- )
         {
@@ -200,7 +200,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
         }
     }
     {
-        unsigned int nNbr;
+        std::size_t nNbr;
         file >> nNbr;
         while ( nNbr-- )
         {
@@ -210,7 +210,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
         }
     }
     {
-        unsigned int nNbr;
+        std::size_t nNbr;
         file >> nNbr;
         while ( nNbr-- )
         {
@@ -220,7 +220,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
         }
     }
     {
-        unsigned int nNbr;
+        std::size_t nNbr;
         file >> nNbr;
         while ( nNbr-- )
         {
@@ -247,7 +247,7 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
     file << diplomacies_;
     file << pExtensions;
     {
-        unsigned int size = knowledgeGroups_.size();
+        std::size_t size = knowledgeGroups_.size();
         file << size;
         for ( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         {
@@ -256,7 +256,7 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
         }
     }
     {
-        unsigned int size = tools::Resolver< MIL_Population >::elements_.size();
+        std::size_t size = tools::Resolver< MIL_Population >::elements_.size();
         file << size;
         for ( std::map< unsigned long, MIL_Population* >::const_iterator it = tools::Resolver< MIL_Population >::elements_.begin(); it != tools::Resolver< MIL_Population >::elements_.end(); ++it )
         {
@@ -265,7 +265,7 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
         }
     }
     {
-        unsigned int size = tools::Resolver< MIL_Inhabitant >::elements_.size();
+        std::size_t size = tools::Resolver< MIL_Inhabitant >::elements_.size();
         file << size;
         for ( std::map< unsigned long, MIL_Inhabitant* >::const_iterator it = tools::Resolver< MIL_Inhabitant >::elements_.begin(); it != tools::Resolver< MIL_Inhabitant >::elements_.end(); ++it )
         {
@@ -274,7 +274,7 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
         }
     }
     {
-        unsigned int size = tools::Resolver< MIL_Formation >::elements_.size();
+        std::size_t size = tools::Resolver< MIL_Formation >::elements_.size();
         file << size;
         for ( std::map< unsigned long, MIL_Formation* >::const_iterator it = tools::Resolver< MIL_Formation >::elements_.begin(); it != tools::Resolver< MIL_Formation >::elements_.end(); ++it )
         {
@@ -283,7 +283,7 @@ void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
         }
     }
     {
-        unsigned int size = tools::Resolver< MIL_Object_ABC >::elements_.size();
+        std::size_t size = tools::Resolver< MIL_Object_ABC >::elements_.size();
         file << size;
         for ( std::map< unsigned long, MIL_Object_ABC* >::const_iterator it = tools::Resolver< MIL_Object_ABC >::elements_.begin(); it != tools::Resolver< MIL_Object_ABC >::elements_.end(); ++it )
         {

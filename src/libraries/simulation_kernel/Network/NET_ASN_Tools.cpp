@@ -474,7 +474,7 @@ void NET_ASN_Tools::WriteLocationList( const T_LocalisationPtrVector& locaList, 
     for (unsigned int i = 0; i < locaList.size(); ++i )
         asnList.add_elem();
     for( CIT_LocalisationPtrVector it = locaList.begin(); it != locaList.end(); ++it )
-        WriteLocation( **it, *asnList.mutable_elem( it - locaList.begin() ) );
+        WriteLocation( **it, *asnList.mutable_elem( static_cast< int >( it - locaList.begin() ) ) );
 }
 
 
@@ -488,7 +488,7 @@ void NET_ASN_Tools::WritePolygonList( const T_LocalisationPtrVector& locaList, P
     if( locaList.empty() )
         return;
     for( CIT_LocalisationPtrVector it = locaList.begin(); it != locaList.end(); ++it )
-        WriteLocation( **it, *asnList.mutable_elem(it - locaList.begin())->mutable_location() );
+        WriteLocation( **it, *asnList.mutable_elem( static_cast< int >( it - locaList.begin() ) )->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
@@ -500,7 +500,7 @@ void NET_ASN_Tools::WritePathList( const T_ItinerairePtrVector& itineraireVector
     if( itineraireVector.empty() )
         return;
     for( CIT_ItinerairePtrVector it = itineraireVector.begin(); it != itineraireVector.end(); ++it )
-        WritePath( **it, *asn.mutable_elem(it - itineraireVector.begin()) );
+        WritePath( **it, *asn.mutable_elem( static_cast< int >( it - itineraireVector.begin() ) ) );
 }
 
 // -----------------------------------------------------------------------------

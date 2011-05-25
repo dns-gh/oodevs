@@ -82,7 +82,7 @@ void MIL_AffinitiesMap::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_AffinitiesMap::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned int size;
+    std::size_t size;
     file >> size;
     {
         unsigned long first;
@@ -102,7 +102,7 @@ void MIL_AffinitiesMap::load( MIL_CheckPointInArchive& file, const unsigned int 
 // -----------------------------------------------------------------------------
 void MIL_AffinitiesMap::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned int size = affinities_.size();
+    std::size_t size = affinities_.size();
     file << size;
     for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         file << it->first

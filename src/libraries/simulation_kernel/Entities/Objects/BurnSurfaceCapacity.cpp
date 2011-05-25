@@ -22,10 +22,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( BurnSurfaceCapacity )
 // Name: BurnSurfaceCapacity::BurnSurfaceCapacity
 // Created: BCI 2010-12-22
 // -----------------------------------------------------------------------------
-BurnSurfaceCapacity::BurnSurfaceCapacity( xml::xistream& xis )
-: burningCells_( MIL_AgentServer::GetWorkspace().GetBurningCells() )
+BurnSurfaceCapacity::BurnSurfaceCapacity( xml::xistream& /*xis*/ )
+    : burningCells_( MIL_AgentServer::GetWorkspace().GetBurningCells() )
 {
-    InitializeData( xis );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +33,17 @@ BurnSurfaceCapacity::BurnSurfaceCapacity( xml::xistream& xis )
 // Created: BCI 2010-12-22
 // -----------------------------------------------------------------------------
 BurnSurfaceCapacity::BurnSurfaceCapacity()
-: burningCells_( MIL_AgentServer::GetWorkspace().GetBurningCells() )
+    : burningCells_( MIL_AgentServer::GetWorkspace().GetBurningCells() )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: BurnSurfaceCapacity constructor
+// Created: BCI 2010-12-22
+// -----------------------------------------------------------------------------
+BurnSurfaceCapacity::BurnSurfaceCapacity( const BurnSurfaceCapacity& other )
+    : burningCells_( other.burningCells_ )
 {
     // NOTHING
 }
@@ -45,26 +55,6 @@ BurnSurfaceCapacity::BurnSurfaceCapacity()
 BurnSurfaceCapacity::~BurnSurfaceCapacity()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: BurnSurfaceCapacity constructor
-// Created: BCI 2010-12-22
-// -----------------------------------------------------------------------------
-BurnSurfaceCapacity::BurnSurfaceCapacity( const BurnSurfaceCapacity& other )
-: burningCells_( other.burningCells_ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: BurnSurfaceCapacity::InitializeSpeed
-// Created: BCI 2010-12-22
-// -----------------------------------------------------------------------------
-void BurnSurfaceCapacity::InitializeData( xml::xistream& /*xis*/ )
-{
-    int todo = 0;
-    //xis >> xml::attribute( "injury-id", injuryID_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +75,6 @@ void BurnSurfaceCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
-
 }
 
 // -----------------------------------------------------------------------------
@@ -126,6 +115,7 @@ void BurnSurfaceCapacity::ProcessAgentMovingInside( MIL_Object_ABC& object, MIL_
 {
     burningCells_.BurnAgent( object, agent );
 }
+
 // -----------------------------------------------------------------------------
 // Name: BurnSurfaceCapacity::ProcessAgentInside
 // Created: BCI 2011-01-06
@@ -134,6 +124,7 @@ void BurnSurfaceCapacity::ProcessAgentInside( MIL_Object_ABC& object, MIL_Agent_
 {
     burningCells_.BurnAgent( object, agent );
 }
+
 // -----------------------------------------------------------------------------
 // Name: BurnSurfaceCapacity::ProcessPopulationInside
 // Created: BCI 2011-01-06

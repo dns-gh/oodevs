@@ -1450,11 +1450,11 @@ bool MIL_Population::IsBlinded() const
 void MIL_Population::UpdateBarycenter()
 {
     MT_Vector2D currentBarycenter;
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        currentBarycenter += ( **itConcentration ).GetPosition();
-    for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
-        currentBarycenter += ( **itFlow ).GetPosition();
-    unsigned int elements = concentrations_.size() + flows_.size();
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        currentBarycenter += (*it)->GetPosition();
+    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+        currentBarycenter += (*it)->GetPosition();
+    double elements = static_cast< double >( concentrations_.size() + flows_.size() );
     if( elements > 0 )
     {
         currentBarycenter = currentBarycenter / elements;

@@ -570,7 +570,6 @@ double MIL_BurningCells::ComputePathCost( const MT_Vector2D& from, const MT_Vect
         return -1.;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_BurningCells::IsTrafficable
 // Created: BCI 2011-01-06

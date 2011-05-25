@@ -78,12 +78,12 @@ void MIL_DictionaryExtensions::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_DictionaryExtensions::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    unsigned int size;
+    std::size_t size;
     file >> size;
     {
         std::string first;
         std::string second;
-        for( unsigned int i = 0; i < size; ++i )
+        for( std::size_t i = 0; i < size; ++i )
         {
             file >> first
                  >> second;
@@ -98,7 +98,7 @@ void MIL_DictionaryExtensions::load( MIL_CheckPointInArchive& file, const unsign
 // -----------------------------------------------------------------------------
 void MIL_DictionaryExtensions::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned int size = extensions_.size();
+    std::size_t size = extensions_.size();
     file << size;
     for( CIT_Extensions it = extensions_.begin(); it != extensions_.end(); ++it )
         file << it->first
