@@ -13,7 +13,11 @@
 #include "FederateFacade.h"
 #include "RtiAmbassadorFactory.h"
 #include "dispatcher/Config.h"
+#include "dispatcher/Logger_ABC.h"
+#include "rpr/EntityTypeResolver.h"
+#include <hla/HLAException.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 
@@ -34,10 +38,12 @@ namespace
 // Name: HlaPlugin constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis )
-    : pFactory_( new RtiAmbassadorFactory() )
-    , pSubject_( new AgentController( model ) )
-    , federate_( new FederateFacade( xis, *pSubject_, *pFactory_, ReadTimeStep( config.GetSessionFile() ) ) )
+HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger )
+    : logger_   ( logger )
+    , pFactory_ ( new RtiAmbassadorFactory() )
+    , pResolver_( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) ) // $$$$ _RC_ SLI 2011-05-02: hard coded filename
+    , pSubject_ ( new AgentController( model, *pResolver_ ) )
+    , federate_ ( new FederateFacade( xis, *pSubject_, *pFactory_, ReadTimeStep( config.GetSessionFile() ) ) )
 {
     // NOTHING
 }
@@ -57,8 +63,23 @@ HlaPlugin::~HlaPlugin()
 // -----------------------------------------------------------------------------
 void HlaPlugin::Receive( const sword::SimToClient& wrapper )
 {
-    if( wrapper.message().has_control_end_tick() )
-        federate_->Step();
+    try
+    {
+        if( wrapper.message().has_control_end_tick() )
+            federate_->Step();
+    }
+    catch( ::hla::HLAException& e )
+    {
+        logger_.LogError( "Step failed cause hla exception: " + std::string( e.what() ) );
+    }
+    catch( std::exception& e )
+    {
+        logger_.LogError( "Step failed cause: " + std::string( e.what() ) );
+    }
+    catch( ... )
+    {
+        logger_.LogError( "Step failed (unhandled error)." );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -14,7 +14,6 @@
 #include "AggregateMarking.h"
 #include "SilentEntity.h"
 #include "SerializationTools.h"
-#include "rpr/EntityType.h"
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
 #include <boost/bind.hpp>
@@ -28,11 +27,12 @@ using namespace plugins::hla;
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 AggregateEntity::AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
-                                  const std::string& name, rpr::ForceIdentifier force )
+                                  const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
     : agent_             ( agent )
     , identifier_        ( identifier )
     , name_              ( name )
     , force_             ( force )
+    , type_              ( type )
     , spatialChanged_    ( true )
     , pSpatial_          ( 0 )
     , compositionChanged_( true )
@@ -128,9 +128,8 @@ void AggregateEntity::FormationChanged( bool isOnRoad )
 // -----------------------------------------------------------------------------
 void AggregateEntity::UpdateEntityType( ::hla::UpdateFunctor_ABC& functor ) const
 {
-    rpr::EntityType type( "1 1 225 1" );
     ::hla::Serializer serializer;
-    type.Serialize( serializer );
+    type_.Serialize( serializer );
     functor.Visit( ::hla::AttributeIdentifier( "EntityType" ), serializer );
 }
 

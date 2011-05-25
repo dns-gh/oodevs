@@ -13,6 +13,7 @@
 #include "EventListener_ABC.h"
 #include "Formation.h"
 #include "rpr/EntityIdentifier.h"
+#include "rpr/EntityType.h"
 #include "rpr/ForceIdentifier.h"
 #include <vector>
 
@@ -42,7 +43,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
-                              const std::string& name, rpr::ForceIdentifier force );
+                              const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
     virtual ~AggregateEntity();
     //@}
 
@@ -86,6 +87,7 @@ private:
     rpr::EntityIdentifier identifier_;
     const std::string name_;
     const rpr::ForceIdentifier force_;
+    const rpr::EntityType type_;
     Formation formation_;
     mutable bool spatialChanged_;
     std::auto_ptr< Spatial > pSpatial_;

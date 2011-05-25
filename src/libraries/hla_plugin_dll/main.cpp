@@ -10,6 +10,7 @@
 #include "DllConfig.h"
 #include "dispatcher/Logger_ABC.h"
 #include "hla_plugin/HlaPlugin.h"
+#include <hla/HLAException.h>
 #include <windows.h>
 
 namespace dispatcher
@@ -26,7 +27,11 @@ HLA_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC
     try
     {
         logger.LogInfo( "Initialization..." );
-        return new plugins::hla::HlaPlugin( model, config, xis );
+        return new plugins::hla::HlaPlugin( model, config, xis, logger );
+    }
+    catch( hla::HLAException& e )
+    {
+        logger.LogError( std::string( "Initialization failed cause hla exception: " ) + e.what() );
     }
     catch( std::exception& e )
     {
@@ -49,6 +54,10 @@ HLA_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatc
     {
         logger.LogInfo( "Destruction..." );
         delete plugin;
+    }
+    catch( hla::HLAException& e )
+    {
+        logger.LogError( std::string( "Destruction failed cause hla exception: " ) + e.what() );
     }
     catch( std::exception& e )
     {

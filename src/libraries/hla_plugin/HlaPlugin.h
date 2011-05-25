@@ -22,6 +22,12 @@ namespace dispatcher
 {
     class Config;
     class Model_ABC;
+    class Logger_ABC;
+}
+
+namespace rpr
+{
+    class EntityTypeResolver_ABC;
 }
 
 namespace plugins
@@ -43,7 +49,7 @@ class HlaPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis );
+             HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger );
     virtual ~HlaPlugin();
     //@}
 
@@ -58,7 +64,9 @@ public:
 private:
     //! @name Member data
     //@{
+    dispatcher::Logger_ABC& logger_;
     std::auto_ptr< RtiAmbassadorFactory_ABC > pFactory_;
+    std::auto_ptr< rpr::EntityTypeResolver_ABC > pResolver_;
     std::auto_ptr< AgentSubject_ABC > pSubject_;
     std::auto_ptr< FederateFacade > federate_;
     //@}

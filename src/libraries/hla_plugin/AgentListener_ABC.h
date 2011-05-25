@@ -14,6 +14,11 @@
 #include <string>
 #include <boost/noncopyable.hpp>
 
+namespace rpr
+{
+    class EntityType;
+}
+
 namespace plugins
 {
 namespace hla
@@ -37,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force ) = 0;
+    virtual void Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type ) = 0;
     //@}
 };
 

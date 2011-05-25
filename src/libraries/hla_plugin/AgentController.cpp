@@ -17,6 +17,7 @@
 #include "dispatcher/Agent.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/Karma.h"
+#include "rpr/EntityTypeResolver_ABC.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
@@ -25,8 +26,9 @@ using namespace plugins::hla;
 // Name: AgentController constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentController::AgentController( dispatcher::Model_ABC& model )
-    : model_( model )
+AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& resolver )
+    : model_   ( model )
+    , resolver_( resolver )
 {
     model_.RegisterFactory( *this );
 }
@@ -62,8 +64,9 @@ namespace
 void AgentController::Create( dispatcher::Agent& entity )
 {
     agents_.push_back( T_Agent( new AgentProxy( entity ) ) );
+    const std::string type = entity.GetType().GetName();
     for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-        (*it)->Created( *agents_.back(), boost::lexical_cast< std::string >( entity.GetId() ) + entity.GetType().GetName(), entity.GetName().ascii(), GetForce( entity ) );
+        (*it)->Created( *agents_.back(), boost::lexical_cast< std::string >( entity.GetId() ) + type, entity.GetName().ascii(), GetForce( entity ), resolver_.Find( type ) );
 }
 
 // -----------------------------------------------------------------------------

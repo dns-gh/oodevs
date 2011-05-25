@@ -21,6 +21,11 @@ namespace dispatcher
     class Agent;
 }
 
+namespace rpr
+{
+    class EntityTypeResolver_ABC;
+}
+
 namespace plugins
 {
 namespace hla
@@ -39,7 +44,7 @@ class AgentController : public AgentSubject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AgentController( dispatcher::Model_ABC& model );
+             AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& resolver );
     virtual ~AgentController();
     //@}
 
@@ -68,6 +73,7 @@ private:
     //! @name Member data
     //@{
     dispatcher::Model_ABC& model_;
+    const rpr::EntityTypeResolver_ABC& resolver_;
     T_Listeners listeners_;
     T_Agents agents_;
     //@}

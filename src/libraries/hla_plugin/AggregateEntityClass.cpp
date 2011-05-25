@@ -71,9 +71,9 @@ AggregateEntityClass::~AggregateEntityClass()
 // Name: AggregateEntityClass::Created
 // Created: SLI 2011-01-10
 // -----------------------------------------------------------------------------
-void AggregateEntityClass::Created( Agent_ABC& agent, const std::string& identifier, const std::string& /*name*/, rpr::ForceIdentifier force )
+void AggregateEntityClass::Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
     rpr::EntityIdentifier id( 1, 1, ++id_ ); // site, application, id
-    entities_.push_back( T_Entity( new AggregateEntity( agent, id, identifier, force ) ) );
+    entities_.push_back( T_Entity( new AggregateEntity( agent, id, name, force, type ) ) );
     hlaClass_->Register( *entities_.back(), identifier );
 }

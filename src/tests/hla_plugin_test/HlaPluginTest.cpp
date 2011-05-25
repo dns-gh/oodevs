@@ -10,6 +10,7 @@
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/FederateFacade.h"
 #include "hla_plugin/AgentListener_ABC.h"
+#include "rpr/EntityType.h"
 #include "MockAgentSubject.h"
 #include "MockRtiAmbassadorFactory.h"
 #include "MockAgent.h"
@@ -95,7 +96,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_publishes_agent_instance, Fixture )
     MOCK_EXPECT( agent, Register ).once().in( s );
     MOCK_EXPECT( rtiAmbassador, ReserveObjectInstance ).once().in( s ).with( "id", mock::any ).calls( boost::bind( &hla::FederateAmbassador_ABC::ReservationSucceded, boost::ref( federateAmbassador ) ) );;
     MOCK_EXPECT( rtiAmbassador, RegisterObjectInstance ).once().in( s ).with( "BaseEntity.AggregateEntity", "id" ).returns( hla::ObjectIdentifier( 42u ) );
-    listener->Created( agent, "id", "name", rpr::Friendly );
+    listener->Created( agent, "id", "name", rpr::Friendly, rpr::EntityType() );
     MOCK_EXPECT( agent, Unregister ).once().in( s );
     MOCK_EXPECT( rtiAmbassador, DeleteObjectInstance ).once().in( s ).with( hla::ObjectIdentifier( 42u ) );
 }
