@@ -383,7 +383,9 @@ eRC_FinFouillePoint = 364
 eRC_NotDeployedIndirectFireImpossible = 365
 eRC_AgressionImpossible = 366
 eRC_NoLogisticSuperior = 367
-eNbr = 368
+eRC_CrossingSiteNotRecon = 368
+eRC_InvalidObject = 369
+eNbr = 370
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion
