@@ -10,7 +10,7 @@
 #ifndef tools_FileLoader_h
 #define tools_FileLoader_h
 
-#include "Loader_ABC.h"
+#include "DefaultLoader.h"
 #include <memory>
 
 namespace tools
@@ -26,28 +26,26 @@ namespace tools
 */
 // Created: NLD 2011-02-14
 // =============================================================================
-class Loader : public Loader_ABC
+class Loader : public DefaultLoader
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    Loader( const ExerciseConfig& config, RealFileLoaderObserver_ABC& observer );
+             Loader( const ExerciseConfig& config, RealFileLoaderObserver_ABC& observer );
     virtual ~Loader();
     //@}
 
     //! @name Operations
     //@{
-    virtual void                           CheckFile       ( const std::string& file ) const;
-    virtual void                           LoadFile        ( const std::string& fileName, T_Loader loader ) const;
-    virtual std::auto_ptr< xml::xistream > LoadFile        ( const std::string& fileName ) const;
-    virtual std::string                    LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
+    virtual std::string LoadPhysicalFile        ( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
+    virtual std::string LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Return the file path/name loaded
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const ExerciseConfig& config_;
-    RealFileLoaderObserver_ABC& observer_;
-    std::auto_ptr< SchemaVersionExtractor_ABC > schemaVersionExtractor_;
-    std::auto_ptr< RealFileLoader_ABC > fileLoader_;
+    //@}
 };
 
 }

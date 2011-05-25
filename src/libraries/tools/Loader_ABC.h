@@ -46,11 +46,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual void                            CheckFile       ( const std::string& file ) const = 0;
-    virtual void                            LoadFile        ( const std::string& fileName, T_Loader loader ) const = 0;
-    virtual std::auto_ptr< xml::xistream >  LoadFile        ( const std::string& fileName ) const = 0;
+    virtual void                           CheckFile        ( const std::string& file ) const = 0;
+    virtual void                           CheckOptionalFile( const std::string& file ) const = 0;
+    virtual void                           LoadFile         ( const std::string& fileName, T_Loader loader ) const = 0;
+    virtual std::auto_ptr< xml::xistream > LoadFile         ( const std::string& fileName ) const = 0;
 
-    virtual std::string LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const = 0; // Return the file path/name loaded
+    virtual std::string                    LoadPhysicalFile        ( const std::string& rootTag, T_Loader loader ) const = 0; // Return the file path/name loaded
+    virtual std::string                    LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const = 0; // Return the file path/name loaded
     //@}
 };
 

@@ -45,6 +45,7 @@ public:
 
     virtual std::string GetPhysicalFile() const;
     virtual std::string BuildPhysicalChildFile( const std::string& file ) const;
+    virtual std::string GetOptionalPhysicalChildFile( const std::string rootTag ) const;
 
     virtual std::string GetDecisionalFile() const;
     virtual std::string BuildDecisionalChildFile( const std::string& file ) const;

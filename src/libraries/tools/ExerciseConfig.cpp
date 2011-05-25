@@ -156,6 +156,22 @@ std::string ExerciseConfig::GetPhysicalFile() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetOptionalPhysicalChildFile
+// Created: ABR 2011-05-24
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetOptionalPhysicalChildFile( const std::string rootTag ) const
+{
+    std::auto_ptr< xml::xistream > physicalFileXis = fileLoader_->LoadFile( GetPhysicalFile() );
+    std::string childFileName;
+    *physicalFileXis >> xml::start( "physical" )
+                         >> xml::optional >> xml::start( rootTag )
+                             >> xml::attribute( "file", childFileName )
+                         >> xml::end
+                     >> xml::end;
+    return !childFileName.empty() ? BuildPhysicalChildFile( childFileName ) : "";
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::BuildPhysicalChildFile
 // Created: AGE 2008-03-13
 // -----------------------------------------------------------------------------

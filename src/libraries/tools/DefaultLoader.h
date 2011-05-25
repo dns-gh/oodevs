@@ -35,16 +35,22 @@ public:
 
     //! @name Operations
     //@{
-    virtual void                            CheckFile       ( const std::string& file ) const;
-    virtual void                            LoadFile        ( const std::string& fileName, T_Loader loader ) const;
-    virtual std::auto_ptr< xml::xistream >  LoadFile        ( const std::string& fileName ) const;
-    virtual std::string                     LoadPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Invalid for this class
+    virtual void                           CheckFile        ( const std::string& file ) const;
+    virtual void                           CheckOptionalFile( const std::string& file ) const;
+    virtual void                           LoadFile         ( const std::string& fileName, T_Loader loader ) const;
+    virtual std::auto_ptr< xml::xistream > LoadFile         ( const std::string& fileName ) const;
+    
+    virtual std::string                    LoadPhysicalFile        ( const std::string& rootTag, T_Loader loader ) const; // Invalid for this class
+    virtual std::string                    LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const; // Invalid for this class
     //@}
 
-private:
+protected:
+    //! @name Member data
+    //@{
     RealFileLoaderObserver_ABC& observer_;
     std::auto_ptr< SchemaVersionExtractor_ABC > schemaVersionExtractor_;
     std::auto_ptr< RealFileLoader_ABC > fileLoader_;
+    //@}
 };
 
 }

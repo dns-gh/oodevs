@@ -21,13 +21,10 @@ using namespace tools;
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
 Loader::Loader( const ExerciseConfig& config, RealFileLoaderObserver_ABC& observer )
-    : config_                ( config )
-    , observer_              ( observer )
-    , schemaVersionExtractor_( new SchemaVersionExtractor() )
-    , fileLoader_            ()
+    : DefaultLoader( observer )
+    , config_      ( config )
 {
-    xml::xifstream migrationsXis( config_.BuildResourceChildFile( "migrations.xml" ) );
-    fileLoader_.reset( new RealFileLoader( migrationsXis, *schemaVersionExtractor_ ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -36,26 +33,8 @@ Loader::Loader( const ExerciseConfig& config, RealFileLoaderObserver_ABC& observ
 // -----------------------------------------------------------------------------
 Loader::~Loader()
 {
+    // NOTHING
 }
-
-// -----------------------------------------------------------------------------
-// Name: Loader::LoadPhysicalFile
-// Created: NLD 2010-02-23
-// -----------------------------------------------------------------------------
-void Loader::LoadFile( const std::string& fileName, T_Loader loader ) const
-{
-    std::auto_ptr< xml::xistream > xis = fileLoader_->LoadFile( fileName, observer_ );
-    loader( *xis );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Loader::LoadFile
-// Created: NLD 2010-02-23
-// -----------------------------------------------------------------------------
-std::auto_ptr< xml::xistream > Loader::LoadFile( const std::string& fileName ) const
-{
-    return fileLoader_->LoadFile( fileName, observer_ );
-};
 
 // -----------------------------------------------------------------------------
 // Name: Loader::LoadPhysicalFile
@@ -69,17 +48,28 @@ std::string Loader::LoadPhysicalFile( const std::string& rootTag, T_Loader loade
                          >> xml::start( rootTag )
                              >> xml::attribute( "file", childFileName )
                          >> xml::end
-                      >>  xml::end;
+                     >> xml::end;
     childFileName = config_.BuildPhysicalChildFile( childFileName );
     LoadFile( childFileName, loader );
     return childFileName;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Loader::CheckFile
-// Created: NLD 2010-02-23
+// Name: Loader::LoadOptionalPhysicalFile
+// Created: ABR 2011-05-24
 // -----------------------------------------------------------------------------
-void Loader::CheckFile( const std::string& fileName ) const
+std::string Loader::LoadOptionalPhysicalFile( const std::string& rootTag, T_Loader loader ) const
 {
-    std::auto_ptr< xml::xistream > xis = fileLoader_->LoadFile( fileName, observer_ );
+    std::auto_ptr< xml::xistream > physicalFileXis = fileLoader_->LoadFile( config_.GetPhysicalFile(), observer_ );
+    std::string childFileName;
+    *physicalFileXis >> xml::start( "physical" )
+                         >> xml::optional >> xml::start( rootTag )
+                             >> xml::attribute( "file", childFileName )
+                         >> xml::end
+                     >> xml::end;
+    if( childFileName.empty() )
+        return "";
+    childFileName = config_.BuildPhysicalChildFile( childFileName );
+    LoadFile( childFileName, loader );
+    return childFileName;
 }
