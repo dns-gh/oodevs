@@ -35,6 +35,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Random.h"
 #include <urban/Architecture.h>
+#include <urban/GeometryAttribute.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
 #include <directia/brain/Brain.h>
@@ -1097,8 +1098,8 @@ bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
     geometry::Point2f geoPoint( point.rX_, point.rY_ );
     for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
     {
-        const geometry::Polygon2f* footprint = (*it)->GetFootprint();
-        if( footprint->IsInside( geoPoint ) )
+        const urban::GeometryAttribute* geom = ( *it )->Retrieve< urban::GeometryAttribute >();
+        if( geom && geom->Geometry().IsInside( geoPoint ) )
             return true;
     }
     return false;

@@ -18,8 +18,9 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Tools/MIL_Geometry.h"
 #include "MT_Tools/MT_Ellipse.h"
-#include <urban/TerrainObject_ABC.h>
 #include <urban/Architecture.h>
+#include <urban/GeometryAttribute.h>
+#include <urban/TerrainObject_ABC.h>
 #pragma warning( push, 0 )
 #include <boost/geometry/geometry.hpp>
 #pragma warning( pop )
@@ -125,6 +126,7 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
 // -----------------------------------------------------------------------------
 float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float modicator ) const
 {
+    // $$$$ _RC_ JSR 2011-05-25: TODO cleaner cette méthode (warnings) et passer un TER_Polygon (ou un truc comme ça) à la place du polygon2f, pour ne pas utiliser le IntersectionArea avec les TER_Location
     float urbanObjectArea = urbanObject_.GetLocalisation().GetArea();
     if( modicator > result.urbanDeployment_ ) // SLG : permet d'éviter des incohérence dans la percpetion d'unité quand la cible passe en état posté.
     {
@@ -135,7 +137,7 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
     }
     else if( urbanObjectArea )
     {
-        float intersectArea = MIL_Geometry::IntersectionArea( polygon, *urbanObject_.GetObject().GetFootprint() );
+        float intersectArea = MIL_Geometry::IntersectionArea( polygon, urbanObject_.GetObject().Get< urban::GeometryAttribute >().Geometry() );
         return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
     }
     return 0.;

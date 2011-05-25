@@ -36,6 +36,7 @@
 #include "Tools/MIL_Tools.h"
 #include "tools/Resolver.h"
 #include <geometry/Types.h>
+#include <urban/GeometryAttribute.h>
 #include <urban/PhysicalAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/Model.h>
@@ -517,41 +518,39 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
             const urban::TerrainObject_ABC& object = **it;
 
             const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
+            const urban::GeometryAttribute* pGeom = object.Retrieve< urban::GeometryAttribute >();
 
-            if( pPhysical == 0 || !pPhysical->GetArchitecture() )
+            if( !pGeom || !pPhysical || !pPhysical->GetArchitecture() )
                 continue;
 
-            const geometry::Polygon2f* footPrint = object.GetFootprint();
-            std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
-            if( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
+            const geometry::Polygon2f& footPrint = pGeom->Geometry();
+            std::vector< geometry::Point2f > intersectPoints = footPrint.Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
+            if( !intersectPoints.empty() || footPrint.IsInside( vSourcePoint ) || footPrint.IsInside( vTargetPoint ) )
             {
                 bIsAroundBU = true;
-                if( pPhysical && pPhysical->GetArchitecture() )
+                float intersectionDistance = 0;
+                std::sort( intersectPoints.begin(), intersectPoints.end() );
+                if( intersectPoints.size() == 1 )
                 {
-                    float intersectionDistance = 0;
-                    std::sort( intersectPoints.begin(), intersectPoints.end() );
-                    if( intersectPoints.size() == 1 )
-                    {
-                        if( footPrint->IsInside( vSourcePoint ) )
-                            intersectionDistance = vSourcePoint.Distance( *intersectPoints.begin() );
-                        else if( footPrint->IsInside( vTargetPoint ) )
-                            intersectionDistance = vTargetPoint.Distance( *intersectPoints.begin() );
-                    }
-                    else if( intersectPoints.empty() )
-                        intersectionDistance = vSourcePoint.Distance( vTargetPoint );
-                    else
-                        intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
+                    if( footPrint.IsInside( vSourcePoint ) )
+                        intersectionDistance = vSourcePoint.Distance( *intersectPoints.begin() );
+                    else if( footPrint.IsInside( vTargetPoint ) )
+                        intersectionDistance = vTargetPoint.Distance( *intersectPoints.begin() );
+                }
+                else if( intersectPoints.empty() )
+                    intersectionDistance = vSourcePoint.Distance( vTargetPoint );
+                else
+                    intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
 
-                    double rDistanceModificator = urbanBlockFactors_[ PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() )->GetId() ];
-                    double occupationFactor = std::sqrt( pPhysical->GetArchitecture()->GetOccupation() );
-                    if( occupationFactor == 1. && rDistanceModificator <= epsilon )
-                        rVisionNRJ = -1 ;
-                    else
-                    {
-                        double referenceDistance = 200; // $$$$ LDC Hard coded 200m. reference distance
-                        double distanceFactor = std::min( ( intersectionDistance / referenceDistance ) * occupationFactor * ( 1 - rDistanceModificator ), 1. );
-                        rVisionNRJ -= rVisionNRJ * distanceFactor + intersectionDistance;
-                    }
+                double rDistanceModificator = urbanBlockFactors_[ PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() )->GetId() ];
+                double occupationFactor = std::sqrt( pPhysical->GetArchitecture()->GetOccupation() );
+                if( occupationFactor == 1. && rDistanceModificator <= epsilon )
+                    rVisionNRJ = -1 ;
+                else
+                {
+                    double referenceDistance = 200; // $$$$ LDC Hard coded 200m. reference distance
+                    double distanceFactor = std::min( ( intersectionDistance / referenceDistance ) * occupationFactor * ( 1 - rDistanceModificator ), 1. );
+                    rVisionNRJ -= rVisionNRJ * distanceFactor + intersectionDistance;
                 }
             }
         }
@@ -753,25 +752,6 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Age
     if( !target.Intersect2DWithCircle( vSourcePos, rDetectionDist_ * rDistanceMaxModificator, shape ) )
         return PHY_PerceptionLevel::notSeen_;
     return PHY_PerceptionLevel::identified_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_SensorTypeAgent::ComputePerception
-// Created: MGD 2009-11-25
-// -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_SensorTypeAgent::ComputePerception( const MIL_Agent_ABC& perceiver, const urban::TerrainObject_ABC& target, double rSensorHeight ) const
-{
-    geometry::Point2f barycenter = target.GetFootprint()->Barycenter();
-    const MT_Vector2D vTargetPos( barycenter.X(), barycenter.Y() );
-
-    double rDistanceMaxModificator  = GetFactor( *PHY_Volume::FindVolume( 0 ) );//@TODO MGD find a rule
-    rDistanceMaxModificator *= GetSourceFactor( perceiver );
-
-    const MT_Vector2D& vSourcePos      = perceiver.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const double     rSourceAltitude = perceiver.GetRole< PHY_RoleInterface_Location >().GetAltitude() + rSensorHeight;
-    const double     rTargetAltitude = MIL_Tools::GetAltitude( vTargetPos );//@TODO MGD Add height notion
-
-    return RayTrace( vSourcePos, rSourceAltitude, vTargetPos, rTargetAltitude, rDistanceMaxModificator );
 }
 
 // -----------------------------------------------------------------------------

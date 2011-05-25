@@ -11,6 +11,7 @@
 #include "UrbanPositions.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include <urban/GeometryAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #include <urban/PhysicalAttribute.h>
 
@@ -44,7 +45,7 @@ UrbanPositions::~UrbanPositions()
 // -----------------------------------------------------------------------------
 geometry::Point2f UrbanPositions::Barycenter() const
 {
-    return object_.GetFootprint()->Barycenter();
+    return object_.Get< urban::GeometryAttribute >().Geometry().Barycenter();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +54,7 @@ geometry::Point2f UrbanPositions::Barycenter() const
 // -----------------------------------------------------------------------------
 geometry::Rectangle2f UrbanPositions::BoundingBox() const
 {
-    return object_.GetFootprint()->BoundingBox();
+    return object_.Get< urban::GeometryAttribute >().Geometry().BoundingBox();
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +72,7 @@ bool UrbanPositions::IsInside( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 {
-    return object_.GetFootprint()->Vertices();
+    return object_.Get< urban::GeometryAttribute >().Geometry().Vertices();
 }
 
 // -----------------------------------------------------------------------------
@@ -80,7 +81,7 @@ const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawDecoratedPolygon( *object_.GetFootprint(), color_, object_.GetName(), height_, selected_ );
+    tools.DrawDecoratedPolygon( object_.Get< urban::GeometryAttribute >().Geometry(), color_, object_.GetName(), height_, selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +99,6 @@ void UrbanPositions::ToggleSelection()
 // -----------------------------------------------------------------------------
 float UrbanPositions::ComputeArea() const
 {
-    return object_.GetFootprint()->ComputeArea();
+    return object_.Get< urban::GeometryAttribute >().Geometry().ComputeArea();
 
 }

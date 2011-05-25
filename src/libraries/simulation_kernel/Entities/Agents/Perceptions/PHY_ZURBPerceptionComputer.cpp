@@ -26,6 +26,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Tools/MIL_Geometry.h"
+#include <urban/GeometryAttribute.h>
 #include <urban/PhysicalAttribute.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
@@ -112,7 +113,8 @@ void PHY_ZURBPerceptionComputer::ComputePerceptionPolygon( const MIL_Agent_ABC& 
 // -----------------------------------------------------------------------------
 void PHY_ZURBPerceptionComputer::MakePolygon( geometry::Polygon2f& polygon, const urban::TerrainObject_ABC& block, double distance ) const
 {
-    MIL_Geometry::Scale( polygon, *block.GetFootprint(), static_cast< float >( distance ) );
+    if( const urban::GeometryAttribute* geom = block.Retrieve< urban::GeometryAttribute >() )
+        MIL_Geometry::Scale( polygon, geom->Geometry(), static_cast< float >( distance ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -199,11 +201,12 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
             if( perceiverUrbanBlock == 0 || !( &perceiverUrbanBlock->GetObject() == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
             {
                 const urban::TerrainObject_ABC& object = **it;
-                const geometry::Polygon2f* footPrint = object.GetFootprint();
-                if( footPrint )
+                const urban::GeometryAttribute* pGeom = object.Retrieve< urban::GeometryAttribute >();
+                if( pGeom )
                 {
-                    std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( segment );
-                    if( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
+                    const geometry::Polygon2f& footPrint = pGeom->Geometry();
+                    std::vector< geometry::Point2f > intersectPoints = footPrint.Intersect( segment );
+                    if( !intersectPoints.empty() || footPrint.IsInside( vSourcePoint ) || footPrint.IsInside( vTargetPoint ) )
                     {
                         float perceiverUrbanBlockHeight = 2; //2 = SensorHeight
                         float objectHeight = 2; //2 = SensorHeight
