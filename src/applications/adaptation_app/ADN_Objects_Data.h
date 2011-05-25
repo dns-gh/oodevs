@@ -484,14 +484,11 @@ public:
         static const std::string DISPLAY_NAME;
         ADN_CapacityInfos_Spawn();
 
-        void Load();
-
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC< ADN_Objects_Data::ObjectInfos > object_;
-        std::string objectName_;
+        ADN_Type_String strObjectType_;
         ADN_Type_Double rActionRange_;
     };
 

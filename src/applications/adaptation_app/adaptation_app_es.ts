@@ -3008,6 +3008,10 @@ tirador</translation>
         <translation>Rango de acción</translation>
     </message>
     <message>
+        <source>Object type</source>
+        <translation>Tipo de objeto</translation>
+    </message>
+    <message>
         <source>Extinguishable</source>
         <translation>Extinguible</translation>
     </message>
