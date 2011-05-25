@@ -148,11 +148,24 @@ void MIL_PopulationElement_ABC::ApplyFire( unsigned int nNbrAmmoFired, PHY_FireR
 void MIL_PopulationElement_ABC::ApplyLethalDamage( unsigned int nHit, PHY_FireResults_ABC& fireResult )
 {
     bHumansUpdated_ = true;
-    humans_.ApplyNumberOfDead( nHit );
-    unsigned int nWounds = static_cast< unsigned >( nHit * MIL_Random::rand_ii( 0.6, 1.25, MIL_Random::eWounds ) );
-    humans_.ApplyWounds( nWounds );
-    fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
-    fireResult.GetDamages( *pPopulation_ ).NotifyHumansWounded( nWounds );
+    unsigned int pK = 15;
+
+    unsigned int hitRoll = ( unsigned int )MIL_Random::rand_ii( 0, 100, MIL_Random::eWounds );
+    if( hitRoll < pK )
+    {
+        humans_.ApplyNumberOfDead( nHit );
+        fireResult.GetDamages( *pPopulation_ ).NotifyHumansKilled( nHit );
+    }
+    else if( hitRoll < 2*pK )
+    {
+        humans_.ApplyWounds( nHit );
+        fireResult.GetDamages( *pPopulation_ ).NotifyHumansWounded( nHit );
+    }
+    else if( hitRoll < 3*pK )
+    {
+        PullHumans( nHit );  
+        fireResult.GetDamages( *pPopulation_ ).NotifyHumansScattered( nHit ); 
+    }
 }
 
 // -----------------------------------------------------------------------------
