@@ -54,12 +54,19 @@ public:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    struct FederationDestructor;
+    //@}
+
+private:
     //! @name Member data
     //@{
     std::auto_ptr< ::hla::TimeFactory_ABC > timeFactory_;
     std::auto_ptr< ::hla::TimeIntervalFactory_ABC > intervalFactory_;
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
     std::auto_ptr< ::hla::Federate > federate_;
+    std::auto_ptr< FederationDestructor > destructor_;
     std::auto_ptr< AggregateEntityClass > agentClass_;
     //@}
 };
