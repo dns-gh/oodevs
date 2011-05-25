@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<objects model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Objects.xsd">
+<objects model-version="4.5.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/physical/Objects.xsd">
   <object geometry="point" name="Mine Cluster" symbol="G*MPOMC---****X" type="mines">
     <activable/>
     <attrition category="Standard Landmine"/>
@@ -13,13 +13,13 @@
       </buildable>
     </constructor>
     <heuristic>
-      <terrain type="highway" value="1"/>
-      <terrain type="secondary road" value="3"/>
-      <terrain type="crossroad" value="10"/>
-      <terrain type="main road" value="2"/>
-      <terrain type="railroad" value="5"/>
-      <terrain type="bridge" value="8"/>
-      <terrain type="suburb" value="7"/>
+      <terrain type="autoroute" value="1"/>
+      <terrain type="departementale" value="3"/>
+      <terrain type="carrefour" value="10"/>
+      <terrain type="nationale" value="2"/>
+      <terrain type="voie ferree" value="5"/>
+      <terrain type="pont" value="8"/>
+      <terrain type="banlieue" value="7"/>
     </heuristic>
     <interact-with-enemy/>
     <interaction-height height="1"/>
@@ -72,6 +72,8 @@
   </object>
   <object geometry="point" name="Arson/Fire" symbol="O*VPA-----*****" type="fire">
     <burn/>
+    <extinguishable/>
+    <universal/>
   </object>
   <object geometry="polygon" name="Surface/Fire" symbol="O*VPA-----*****" type="surface fire">
     <burn/>
@@ -195,10 +197,10 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="secondary road" value="3"/>
-      <terrain type="crossroad" value="10"/>
-      <terrain type="highway" value="2"/>
-      <terrain type="main road" value="5"/>
+      <terrain type="departementale" value="3"/>
+      <terrain type="carrefour" value="10"/>
+      <terrain type="autoroute" value="2"/>
+      <terrain type="nationale" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -220,10 +222,10 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="secondary road" value="3"/>
-      <terrain type="crossroad" value="10"/>
-      <terrain type="highway" value="1"/>
-      <terrain type="main road" value="5"/>
+      <terrain type="departementale" value="3"/>
+      <terrain type="carrefour" value="10"/>
+      <terrain type="autoroute" value="1"/>
+      <terrain type="nationale" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -244,7 +246,7 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="bridge" value="10"/>
+      <terrain type="pont" value="10"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
@@ -283,7 +285,6 @@
     <logistic/>
   </object>
   <object geometry="polygon" name="Refugee Holding Area" symbol="G*SPAH----****X" type="refugees camp">
-    <lodging/>
     <logistic/>
   </object>
   <object geometry="point" name="Checkpoint" symbol="G*GPGPPK--****X" type="checkpoint">
@@ -298,12 +299,12 @@
       <acquisition-times/>
     </detection>
     <heuristic>
-      <terrain type="highway" value="1"/>
-      <terrain type="secondary road" value="3"/>
-      <terrain type="crossroad" value="10"/>
-      <terrain type="main road" value="2"/>
-      <terrain type="railroad" value="5"/>
-      <terrain type="bridge" value="8"/>
+      <terrain type="autoroute" value="1"/>
+      <terrain type="departementale" value="3"/>
+      <terrain type="carrefour" value="10"/>
+      <terrain type="nationale" value="2"/>
+      <terrain type="voie ferree" value="5"/>
+      <terrain type="pont" value="8"/>
     </heuristic>
     <population-filter density="0.5"/>
     <workable max-animator="1"/>
@@ -315,9 +316,17 @@
   <object geometry="polygon" name="General obstacle zone" symbol="G*MPOGZ---****X" type="movement forbidden area">
     <avoidable distance="500"/>
     <bypassable bypass-speed="5"/>
-    <interaction-height height="6000"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <resource count="25" name="Standard Barbed Wire"/>
+        </resources>
+      </buildable>
+    </constructor>
+    <interaction-height height="1"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
-    <population-filter density="0.5"/>
+    <population-filter density="0"/>
+    <structural value="100"/>
   </object>
   <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
@@ -411,4 +420,4 @@
     <altitude-modifier/>
   </object>
 </objects>
-<!-- signature="0169085257" -->
+<!-- signature="1855586413" -->

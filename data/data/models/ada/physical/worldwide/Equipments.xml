@@ -1099,7 +1099,7 @@
         <resource capacity="50" logistic-threshold="10" name="Standard Landmine" normalized-consumption="50"/>
       </category>
       <category name="barbele">
-        <resource capacity="10" logistic-threshold="10" name="Standard Barbed Wire" normalized-consumption="10"/>
+        <resource capacity="50" logistic-threshold="10" name="Standard Barbed Wire" normalized-consumption="10"/>
       </category>
       <category name="ration">
         <resource capacity="24" logistic-threshold="30" name="Food" normalized-consumption="8"/>
@@ -1154,6 +1154,7 @@
       <object construction-time-factor="240s" destruction-time-factor="180s" devalorization-time="800s" initial-construction-time="3600s" initial-destruction-time="0s" type="mined area (scattered)" valorization-time="0s"/>
       <object construction-time-factor="20m" initial-construction-time="2h" initial-destruction-time="02h" type="anti tank obstacle"/>
       <object construction-time-factor="1s" destruction-time-factor="1s" devalorization-time="1s" initial-construction-time="1s" initial-destruction-time="0s" type="sensors"/>
+      <object initial-construction-time="45m" initial-destruction-time="10m" type="movement forbidden area"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
@@ -9987,11 +9988,11 @@
       <speed terrain="orchard" value="0"/>
       <speed terrain="swamp" value="0"/>
       <speed terrain="dune" value="0"/>
-      <speed terrain="urban area" value="1"/>
+      <speed terrain="urban area" value="10"/>
       <speed terrain="lake" value="0"/>
       <speed terrain="glacier" value="0"/>
       <speed terrain="forest edge" value="5"/>
-      <speed terrain="suburb" value="1"/>
+      <speed terrain="suburb" value="10"/>
       <speed terrain="waterfront" value="0"/>
       <speed terrain="orchard edge" value="0"/>
       <speed terrain="swamp edge" value="0"/>
@@ -10153,16 +10154,16 @@
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Police Car" id="103" name="Police Car" protection="UnarmouredVehicle" size="Small" weight="1">
     <speeds max="90">
-      <speed terrain="unknown" value="1"/>
-      <speed terrain="forest" value="2"/>
+      <speed terrain="unknown" value="10"/>
+      <speed terrain="forest" value="5"/>
       <speed terrain="orchard" value="0"/>
       <speed terrain="swamp" value="0"/>
       <speed terrain="dune" value="0"/>
-      <speed terrain="urban area" value="1"/>
+      <speed terrain="urban area" value="30"/>
       <speed terrain="lake" value="0"/>
       <speed terrain="glacier" value="0"/>
       <speed terrain="forest edge" value="0"/>
-      <speed terrain="suburb" value="1"/>
+      <speed terrain="suburb" value="30"/>
       <speed terrain="waterfront" value="0"/>
       <speed terrain="orchard edge" value="0"/>
       <speed terrain="swamp edge" value="0"/>
@@ -13326,7 +13327,146 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="aircraft carrier" id="138" name="Aircraft Carrier" protection="ArmouredCarrier" size="Heavy" weight="100000">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="138" name="Destroyer" protection="HeavyTank" size="Heavy" weight="44">
+    <speeds max="80">
+      <speed terrain="unknown" value="0"/>
+      <speed terrain="forest" value="0"/>
+      <speed terrain="orchard" value="0"/>
+      <speed terrain="swamp" value="0"/>
+      <speed terrain="dune" value="0"/>
+      <speed terrain="urban area" value="0"/>
+      <speed terrain="lake" value="80"/>
+      <speed terrain="glacier" value="5"/>
+      <speed terrain="forest edge" value="0"/>
+      <speed terrain="suburb" value="0"/>
+      <speed terrain="waterfront" value="40"/>
+      <speed terrain="orchard edge" value="0"/>
+      <speed terrain="swamp edge" value="0"/>
+      <speed terrain="dune edge" value="0"/>
+      <speed terrain="glacier edge" value="0"/>
+      <speed terrain="country road" value="0"/>
+      <speed terrain="highway" value="0"/>
+      <speed terrain="main road" value="0"/>
+      <speed terrain="secondary road" value="0"/>
+      <speed terrain="stream" value="40"/>
+      <speed terrain="river" value="40"/>
+      <speed terrain="main river" value="80"/>
+      <speed terrain="bridge" value="0"/>
+      <speed terrain="cliff" value="0"/>
+      <speed terrain="railroad" value="0"/>
+      <speed terrain="crossroad" value="0"/>
+      <speed terrain="mountain" value="0"/>
+      <speed terrain="mountain edge" value="0"/>
+    </speeds>
+    <composition>
+      <category name="munition">
+        <resource capacity="800" logistic-threshold="30" name="12,7-mm Bullet" normalized-consumption="110"/>
+        <resource capacity="15" logistic-threshold="30" name="155-mm High Explosive Shell Rear Skirt" normalized-consumption="1"/>
+        <resource capacity="2" logistic-threshold="30" name="155-mm Sub-Munition Shell" normalized-consumption="1"/>
+        <resource capacity="2" logistic-threshold="30" name="155-mm Antitank High Explosive Shell" normalized-consumption="1"/>
+        <resource capacity="4" logistic-threshold="30" name="155-mm Illumination Round" normalized-consumption="7"/>
+        <resource capacity="4" logistic-threshold="30" name="155-mm Smoke Shell" normalized-consumption="8"/>
+        <resource capacity="960" logistic-threshold="30" name="5.56-mm Bullet" normalized-consumption="120"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="970" logistic-threshold="30" name="Diesel" normalized-consumption="250"/>
+      </category>
+      <category name="ration">
+        <resource capacity="12" logistic-threshold="30" name="Food" normalized-consumption="4"/>
+        <resource capacity="72" logistic-threshold="30" name="Water" normalized-consumption="24"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="2" type="Eye"/>
+      <sensor height="2" type="Light Intensifier Device"/>
+    </sensors>
+    <radars>
+      <radar type="AAC Standoff Radar Detector"/>
+    </radars>
+    <transports/>
+    <consumptions>
+      <consumption status="ArretMoteurEteint">
+        <resource category="ration" name="Water" value="1"/>
+        <resource category="ration" name="Food" value="0.16"/>
+      </consumption>
+      <consumption status="ArretMoteurAllume">
+        <resource category="carburant" name="Diesel" value="15"/>
+      </consumption>
+      <consumption status="Deplacement">
+        <resource category="carburant" name="Diesel" value="60"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems>
+      <weapon-system launcher="155-mm Gun" munition="155-mm High Explosive Shell Rear Skirt"/>
+      <weapon-system launcher="155-mm Gun" munition="155-mm Sub-Munition Shell"/>
+      <weapon-system launcher="155-mm Gun" munition="155-mm Antitank High Explosive Shell"/>
+      <weapon-system launcher="155-mm Gun" munition="155-mm Illumination Round"/>
+      <weapon-system launcher="155-mm Gun" munition="155-mm Smoke Shell"/>
+      <weapon-system launcher="12.7-mm Cupola Machine Gun" munition="12,7-mm Bullet"/>
+      <weapon-system launcher="5.56-mm Assault Rifle" munition="5.56-mm Bullet"/>
+    </weapon-systems>
+    <human-protections/>
+    <objects/>
+    <breakdowns>
+      <breakdown origin="random" percentage="9" type="MOB Breakdown 1 EB"/>
+      <breakdown origin="random" percentage="9" type="MOB Breakdown 2 EB"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 2 EB Evac"/>
+      <breakdown origin="random" percentage="10" type="MOB Breakdown 3 EB"/>
+      <breakdown origin="random" percentage="4" type="MOB Breakdown 3 EB Evac"/>
+      <breakdown origin="random" percentage="7" type="MOB Breakdown 4 EB"/>
+      <breakdown origin="random" percentage="6" type="MOB Breakdown 4 EB Evac"/>
+      <breakdown origin="random" percentage="4" type="MOB Breakdown 5 EB"/>
+      <breakdown origin="random" percentage="4" type="MOB Breakdown 5 EB Evac"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 6 EB"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 6 EB Evac"/>
+      <breakdown origin="random" percentage="1" type="MOB Breakdown 7 EB"/>
+      <breakdown origin="random" percentage="5" type="MOB Breakdown 7 EB Evac"/>
+      <breakdown origin="random" percentage="4" type="MOB Breakdown 8 EB Evac"/>
+      <breakdown origin="random" percentage="3" type="MOB Breakdown 10 EB Evac"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 12 EB Evac"/>
+      <breakdown origin="random" percentage="2" type="MOB Breakdown 16 EB Evac"/>
+      <breakdown origin="random" percentage="4" type="MOB Breakdown NTI3 EB Evac"/>
+      <breakdown origin="random" percentage="2" type="TCT Breakdown 1"/>
+      <breakdown origin="random" percentage="2" type="TCT Breakdown 2"/>
+      <breakdown origin="random" percentage="3" type="TCT Breakdown 3"/>
+      <breakdown origin="random" percentage="2" type="TCT Breakdown 4"/>
+      <breakdown origin="random" percentage="2" type="TCT Breakdown 5"/>
+      <breakdown origin="random" percentage="1" type="TCT Breakdown 6"/>
+      <breakdown origin="random" percentage="1" type="TCT Breakdown 7"/>
+      <breakdown origin="random" percentage="1" type="TCT Breakdown 8"/>
+      <breakdown origin="random" percentage="1" type="TCT Breakdown 10"/>
+      <breakdown origin="random" percentage="1" type="TCT Breakdown 12"/>
+      <breakdown origin="random" percentage="1" type="TCT Breakdown NTI3"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 1 EB"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 2 EB"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 2 EB Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 3 EB"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 3 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 4 EB"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 4 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 5 EB"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 5 EB Evac"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 6 EB"/>
+      <breakdown origin="attrition" percentage="1" type="MOB Breakdown 6 EB Evac"/>
+      <breakdown origin="attrition" percentage="4" type="MOB Breakdown 7 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 8 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 10 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 12 EB Evac"/>
+      <breakdown origin="attrition" percentage="3" type="MOB Breakdown 16 EB Evac"/>
+      <breakdown origin="attrition" percentage="42" type="MOB Breakdown NTI3 EB Evac"/>
+      <breakdown origin="attrition" percentage="1" type="TCT Breakdown 2"/>
+      <breakdown origin="attrition" percentage="1" type="TCT Breakdown 3"/>
+      <breakdown origin="attrition" percentage="1" type="TCT Breakdown 4"/>
+      <breakdown origin="attrition" percentage="1" type="TCT Breakdown 5"/>
+      <breakdown origin="attrition" percentage="1" type="TCT Breakdown 6"/>
+      <breakdown origin="attrition" percentage="1" type="TCT Breakdown 7"/>
+      <breakdown origin="attrition" percentage="1" type="TCT Breakdown 8"/>
+      <breakdown origin="attrition" percentage="1" type="TCT Breakdown 10"/>
+      <breakdown origin="attrition" percentage="8" type="TCT Breakdown NTI3"/>
+    </breakdowns>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="aircraft carrier" id="139" name="Aircraft Carrier" protection="ArmouredCarrier" size="Heavy" weight="100000">
     <speeds max="60">
       <speed terrain="unknown" value="0"/>
       <speed terrain="forest" value="0"/>
@@ -13395,7 +13535,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="139" name="Theater High Altitude Radar Vehicle" protection="UnarmouredVehicle" size="Medium" weight="10">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="140" name="Theater High Altitude Radar Vehicle" protection="UnarmouredVehicle" size="Medium" weight="10">
     <speeds max="90">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="45"/>
@@ -13515,4 +13655,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0647706148" -->
+<!-- signature="0975088300" -->

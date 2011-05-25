@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<sensors model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Sensors.xsd">
+<sensors model-version="4.5.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/physical/Sensors.xsd">
   <alat-monitoring-times>
     <alat-monitoring-time terrain="Vide" time="1s"/>
     <alat-monitoring-time terrain="Foret" time="5s"/>
@@ -426,6 +426,18 @@
         </object>
         <object detection-distance="100" type="mortar deployment area">
           <population-modifier density="2" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="50000" type="fire">
+          <population-modifier density="0" modifier="0"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
@@ -4066,4 +4078,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="1335388403" -->
+<!-- signature="3824084564" -->
