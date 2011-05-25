@@ -11,16 +11,14 @@
 #define __ScoresModel_h_
 
 #include "dispatcher/Registrable_ABC.h"
+#pragma warning( push, 0 )
+#include <qdatetime.h>
+#pragma warning( pop )
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <vector>
 #include <map>
-
-#pragma warning( push )
-#pragma warning( disable : 4996 ) // $$$$ ABR 2011-02-08: vc80 deprecation
-#include <qdatetime.h>
-#pragma warning( pop )
 
 namespace sword
 {

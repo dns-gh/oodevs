@@ -228,9 +228,6 @@ std::string ADN_Project_Data::WorkDirInfos::GetRelativePath( const std::string& 
         return full.substr( dir.size(), full.size() - dir.size() );
 }
 
-#pragma warning( push )
-#pragma warning( disable : 4996 )
-
 //-----------------------------------------------------------------------------
 // Name: WorkDirInfos::SetWorkingDirectory
 // Created: JDY 03-09-09
@@ -246,8 +243,6 @@ void ADN_Project_Data::WorkDirInfos::SetWorkingDirectory( const std::string& fil
     _makepath( szPath, szDrive, szDir, 0, 0 );
     szWorkingDir_ = std::string( szPath );
 }
-
-#pragma warning( pop )
 
 //-----------------------------------------------------------------------------
 // Name: WorkDirInfos::UseTempDirectory

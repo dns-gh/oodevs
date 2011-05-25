@@ -10,8 +10,7 @@
 #ifndef __Time_ABC_h_
 #define __Time_ABC_h_
 
-#pragma warning( push )
-#pragma warning( disable : 4996 ) // $$$$ SBO 2008-05-13: vc80 deprecation
+#pragma warning( push, 0 )
 #include <qdatetime.h>
 #pragma warning( pop )
 

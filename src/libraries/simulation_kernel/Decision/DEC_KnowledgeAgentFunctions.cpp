@@ -77,7 +77,7 @@ bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& caller
 // Name: DEC_KnowledgeAgentFunctions::IsInCrowd
 // Created: DDA 2011-05-13
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsInCrowd( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsInCrowd( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
@@ -237,11 +237,9 @@ bool DEC_KnowledgeAgentFunctions::IsDead( boost::shared_ptr< DEC_Knowledge_Agent
 // Name: DEC_KnowledgeAgentFunctions::HasSurrenderedTo
 // Created: NLD 2011-05-03
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::HasSurrenderedTo( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* pTarget )
+bool DEC_KnowledgeAgentFunctions::HasSurrenderedTo( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const DEC_Decision_ABC* /*pTarget*/ )
 {
     return pKnowledge && pKnowledge->IsValid() && pKnowledge->IsSurrendered();
-//
-//    pTarget->
 }
 
 // -----------------------------------------------------------------------------

@@ -13,8 +13,7 @@
 #include "ADN_Urban_Data.h"
 #include "ADN_People_Data.h"
 #include <qdatetimeedit.h>
-#pragma warning( push )
-#pragma warning( disable : 4996 )
+#pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 #include <boost/lexical_cast.hpp>
