@@ -26,7 +26,6 @@
 #include "ADN_GroupBox.h"
 #include "ADN_RadioButton.h"
 #include "ADN_ComboBox_Enum.h"
-#include "ADN_ComboBox_Vector.h"
 #include "ADN_EquipementSelector.h"
 #include "ADN_Tr.h"
 #include "ADN_GuiBuilder.h"
@@ -271,7 +270,7 @@ void ADN_Objects_GUI::Build()
     {
         vInfosConnectors[ eSpawnCapacityPresent ] = & spawn->GetConnector();
         builder.AddField<ADN_EditLine_Double>( spawn, tr( "Action range" ), vInfosConnectors[eActionRange], tr( "m" ) );
-        builder.AddField<ADN_EditLine_String>( spawn, tr( "Object type" ), vInfosConnectors[eObjectType] );
+        builder.AddField< ADN_ComboBox_Vector< ADN_Objects_Data::ObjectInfos > >( spawn, tr( "Object" ), vInfosConnectors[ eObjectType ] );
     }
 
     ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Medical" ), hBox );

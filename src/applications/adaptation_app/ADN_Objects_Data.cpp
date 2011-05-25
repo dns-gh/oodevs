@@ -882,10 +882,13 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::WriteArchive( xml::xostream&
 // Created: SLG 2010-02-18
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Spawn::ADN_CapacityInfos_Spawn()
-    : strObjectType_( "" )
-    , rActionRange_ ( 0 )
+    : object_      ( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0 )
+    , rActionRange_( 0 )
+    , objectName_  ( "" )
+    , load_        ( false )
 {
     rActionRange_.SetParentNode( *this );
+    BindExistenceTo( &object_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -895,8 +898,19 @@ ADN_Objects_Data::ADN_CapacityInfos_Spawn::ADN_CapacityInfos_Spawn()
 void ADN_Objects_Data::ADN_CapacityInfos_Spawn::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    input >> xml::attribute( "object", strObjectType_ )
+    input >> xml::attribute( "object", objectName_ )
           >> xml::attribute( "action-range", rActionRange_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::Load
+// Created: LGY 2011-05-24
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Spawn::Load()
+{
+    load_ = true;
+    if( !objectName_.empty() )
+        object_ = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( objectName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -905,7 +919,8 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::ReadArchive( xml::xistream& inpu
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& output )
 {
-    output << xml::attribute( "object", strObjectType_ )
+    std::string type = load_ ? object_.GetData()->strType_.GetData() : objectName_;
+    output << xml::attribute( "object", type )
            << xml::attribute( "action-range", rActionRange_ );
 }
 

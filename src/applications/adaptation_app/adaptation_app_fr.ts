@@ -3030,10 +3030,6 @@ du tireur</translation>
         <translation>Rayon d&apos;action</translation>
     </message>
     <message>
-        <source>Object type</source>
-        <translation>Type d&apos;objet</translation>
-    </message>
-    <message>
         <source>Detection duration</source>
         <translation>Durée de détection</translation>
     </message>
