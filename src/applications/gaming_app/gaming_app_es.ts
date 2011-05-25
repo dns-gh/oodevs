@@ -2549,10 +2549,6 @@ Motivo: %3
 <context>
     <name>ReportListView</name>
     <message>
-        <source>Received</source>
-        <translation>Recibido</translation>
-    </message>
-    <message>
         <source>Report</source>
         <translation>Reporte</translation>
     </message>
@@ -2563,6 +2559,14 @@ Motivo: %3
     <message>
         <source>Clear traces</source>
         <translation>Limpiar trazos</translation>
+    </message>
+    <message>
+        <source>ISO Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2723,17 +2727,6 @@ Motivo: %3
     <message>
         <source>Dotations requested/granted/convoyed</source>
         <translation>Dotación requerida/concedida/embaracada</translation>
-    </message>
-</context>
-<context>
-    <name>SupplyQuotasListView</name>
-    <message>
-        <source>Type</source>
-        <translation>Tipo</translation>
-    </message>
-    <message>
-        <source>Quota</source>
-        <translation>Cuota</translation>
     </message>
 </context>
 <context>

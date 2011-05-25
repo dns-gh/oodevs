@@ -57,6 +57,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     QTabWidget* parent_;
+    std::auto_ptr< gui::ItemFactory_ABC > factory_;
     //@}
 };
 

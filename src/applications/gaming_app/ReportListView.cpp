@@ -37,13 +37,15 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
 {
     setFrameStyle( QFrame::Plain );
     setMargin( 2 );
+    AddColumn( tr( "ISO Date" ) );
     AddColumn( tr( "Received" ) );
     AddColumn( tr( "Report" ) );
-    setResizeMode( QListView::NoColumn );
+    setColumnWidthMode( 0, QListView::Manual );
+    setColumnWidth( 0, -1 );
+    setColumnWidth( 1, 130 );
 
     // Set a descending sorting order, then disable user sorting.
     setSorting( 0, false );
-    setSorting( -1, false );
 
     connect( this,       SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint&, int ) ) );
     connect( this,       SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ),        this, SLOT( OnRequestCenter() ) );
@@ -126,6 +128,9 @@ void ReportListView::NotifyUpdated( const Reports& reports )
     ValuedListItem* item = DisplayList( reports.CreateIterator() );
                     item = DisplayList( reports.traces_.rbegin(), reports.traces_.rend(), this, item );
     DeleteTail( item );
+    sort();
+    for( QListViewItem* item = firstChild(); item != 0; item = item->nextSibling() )
+        static_cast< gui::ValuedListItem* >( item )->SetBackgroundColor( Qt::white, QColor( 240, 240, 240 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,7 +170,6 @@ void ReportListView::NotifyCreated( const Report& report )
         return;
     if( ! filter_.ShouldDisplay( report ) )
         return;
-
     ValuedListItem* item = factory_.CreateItem( this );
     item->SetValue( &report );
     report.Display( GetItemDisplayer( item ) );

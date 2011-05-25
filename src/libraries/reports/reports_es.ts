@@ -36,12 +36,16 @@
 <context>
     <name>ReportListView</name>
     <message>
-        <source>Received</source>
-        <translation>Recibido</translation>
-    </message>
-    <message>
         <source>Report</source>
         <translation>Reporte</translation>
+    </message>
+    <message>
+        <source>ISO Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Received</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

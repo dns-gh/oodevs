@@ -88,10 +88,10 @@ void Report::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 QColor Report::GetColor( E_Type type )
 {
-    static QColor colors[] = { QColor( 0, 0, 0 ),       // eRC      = 1000,
-                               QColor( 150, 150, 150 ), // eTrace   = 1001,
-                               QColor( 32, 200, 64 ),   // eEvent   = 1002,
-                               QColor( 0, 0, 200 ),     // eMessage = 1003,
+    static QColor colors[] = { QColor( 0, 0, 0 ),      // eRC      = 1000,
+                               QColor( 118,  83, 38 ), // eTrace   = 1001,
+                               QColor(  32, 200, 64 ),  // eEvent   = 1002,
+                               QColor(  64, 128, 200 ), // eMessage = 1003,
                                QColor( 255, 128, 64 )}; // eWarning = 1004
     return colors[ type - eRC ];
 }
@@ -103,7 +103,8 @@ QColor Report::GetColor( E_Type type )
 void Report::Display( Displayer_ABC& displayer ) const
 {
     displayer.Display( 0, GetColor( type_ ) );
+    displayer.Display( tools::translate( "ReportListView", "ISO Date" ), time_.toString( Qt::ISODate ) );
+    displayer.Display( tools::translate( "ReportListView", "Received" ), time_.toString( Qt::LocalDate ) );
     displayer.Display( 0, isNew_ ? Styles::bold : Styles::weak );
-    displayer.Display( tools::translate( "ReportListView", "Received" ), time_.toString() );
-    displayer.Display( tools::translate( "ReportListView", "Report" ), message_ );
+    displayer.Display( tools::translate( "ReportListView", "Report" ), message_  );
 }

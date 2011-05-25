@@ -2282,7 +2282,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Generate flood</source>
-        <translation>Générer l'inondation</translation>
+        <translation>Générer l&apos;inondation</translation>
     </message>
 </context>
 <context>
@@ -2549,10 +2549,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>ReportListView</name>
     <message>
-        <source>Received</source>
-        <translation>Reçu</translation>
-    </message>
-    <message>
         <source>Report</source>
         <translation>Compte-rendu</translation>
     </message>
@@ -2563,6 +2559,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Clear traces</source>
         <translation>Effacer les traces</translation>
+    </message>
+    <message>
+        <source>ISO Date</source>
+        <translation>Date ISO</translation>
+    </message>
+    <message>
+        <source>Received</source>
+        <translation>Reçu</translation>
     </message>
 </context>
 <context>
@@ -2723,17 +2727,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Dotations requested/granted/convoyed</source>
         <translation>Dotations demandées/accordées/convoyées</translation>
-    </message>
-</context>
-<context>
-    <name>SupplyQuotasListView</name>
-    <message>
-        <source>Type</source>
-        <translation>Type</translation>
-    </message>
-    <message>
-        <source>Quota</source>
-        <translation>Quota</translation>
     </message>
 </context>
 <context>

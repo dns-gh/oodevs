@@ -163,7 +163,9 @@ bool RichListItem::InitializeColor()
     if( ! backgroundColor_.isValid() )
         backgroundColor_ = listView()->colorGroup().base();
     const RichListItem* pItem = (RichListItem*)( itemAbove() );
-    return backgroundColor2_.isValid()&& pItem && ! pItem->even_;
+    if( !pItem )
+        pItem = (RichListItem*)( itemBelow() );
+    return backgroundColor2_.isValid() && pItem && ! pItem->even_;
 }
 
 // -----------------------------------------------------------------------------
