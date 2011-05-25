@@ -17,4 +17,10 @@
             <xsl:apply-templates select="node()|@*"/>
 		</xsl:element>
     </xsl:template>
+    
+    <xsl:template match="attributes/tc2">
+        <xsl:element name="logistic-base">
+            <xsl:apply-templates select="node()|@*"/>
+		</xsl:element>
+    </xsl:template>
 </xsl:stylesheet>
