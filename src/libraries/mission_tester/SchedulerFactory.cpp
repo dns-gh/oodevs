@@ -46,7 +46,7 @@ std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAgentScheduler() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAutomatScheduler
+// Name: SchedulerFactory::CreateAutomatScheduler
 // Created: PHC 2011-05-12
 // -----------------------------------------------------------------------------
 std::auto_ptr< Scheduler_ABC > SchedulerFactory::CreateAutomatScheduler() const

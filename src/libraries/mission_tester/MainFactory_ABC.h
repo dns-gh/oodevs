@@ -61,6 +61,7 @@ public:
     virtual std::auto_ptr< Scheduler_ABC > CreateScheduler( SchedulerFactory& factory ) const = 0;
     //@}
 };
+
 }
 
 #endif // __MainFactory_ABC_h_

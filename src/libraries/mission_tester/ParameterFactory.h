@@ -34,9 +34,9 @@ namespace xml
 
 namespace mission_tester
 {
-    typedef struct Coordinates
+    struct Coordinates
     {
-        Coordinates( const std::string coord )
+        Coordinates( const std::string& coord )
             : x     ( ( int( coord [ 5 ] ) - 48 ) * 10000 + ( int ( coord [ 6 ] ) - 48 ) * 1000 + ( int ( coord [ 7 ] ) - 48 ) * 100 + ( int ( coord [ 8 ] ) - 48 ) * 10 + ( int ( coord [ 9 ] ) - 48 ) )
             , y     ( ( int( coord [ 10 ] ) - 48 ) * 10000 + ( int ( coord [ 11 ] ) - 48 ) * 1000 + ( int ( coord [ 12 ] ) - 48 ) * 100 + ( int ( coord [ 13 ] ) - 48 ) * 10 + ( int ( coord [ 14 ] ) - 48 ) )
             , alphaX( coord[ 3 ] )
@@ -51,7 +51,7 @@ namespace mission_tester
         char alphaX;
         char alphaY;
         std::string prefix;
-    } T_Coordinates;
+    };
 
 // =============================================================================
 /** @class  ParameterFactory
@@ -61,7 +61,6 @@ namespace mission_tester
 // =============================================================================
 class ParameterFactory : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -96,6 +95,7 @@ private:
     std::auto_ptr< actions::Parameter_ABC > CreatePolygonParameter( const kernel::OrderParameter& parameter ) const;
     //@}
 
+private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
@@ -105,6 +105,7 @@ private:
     Coordinates lowerRight_;
     //@}
 };
+
 }
 
 #endif // __ParameterFactory_h_

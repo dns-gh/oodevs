@@ -11,8 +11,7 @@
 #define __Scheduler_h_
 
 #include "Scheduler_ABC.h"
-#pragma warning( push )
-#pragma warning( disable : 4244 )
+#pragma warning( push, 0 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 #include <vector>
@@ -59,6 +58,7 @@ private:
     bool withFragOrders_;
     //@}
 };
+
 }
 
 #endif // __Scheduler_h_

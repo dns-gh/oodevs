@@ -47,6 +47,7 @@ private:
     bool withFragOrders_;
     //@}
 };
+
 }
 
 #endif // __SchedulerFactory_h_

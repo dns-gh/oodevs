@@ -34,12 +34,11 @@ namespace mission_tester
 // =============================================================================
 class Listener_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             Listener_ABC() {};
-    virtual ~Listener_ABC() {};
+             Listener_ABC() {}
+    virtual ~Listener_ABC() {}
     //@}
 
     //! @name Operations
@@ -55,6 +54,7 @@ public:
     virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) = 0;
     //@}
 };
+
 }
 
 #endif // __Listener_ABC_h_

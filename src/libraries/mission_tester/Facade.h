@@ -40,7 +40,6 @@ namespace mission_tester
 // =============================================================================
 class Facade : public Listener_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -74,16 +73,16 @@ private:
     //@}
 
 private:
-    //! @name Member Data
+    //! @name Member data
     //@{
     const MainFactory_ABC& mainFactory_;
     std::auto_ptr< kernel::StaticModel > staticModel_;
     std::auto_ptr< SchedulerFactory > factory_;
     T_Listeners listeners_;
     boost::shared_ptr< Scheduler_ABC > scheduler_;
-
     //@}
 };
+
 }
 
 #endif // __Facade_h_

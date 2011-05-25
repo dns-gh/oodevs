@@ -39,6 +39,7 @@ public:
     virtual void Step( Exercise& exercise ) = 0;
     //@}
 };
+
 }
 
 #endif // __Scheduler_ABC_h_

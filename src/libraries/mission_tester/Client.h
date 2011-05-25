@@ -22,6 +22,7 @@ namespace mission_tester
 {
     class Model;
     class Listener_ABC;
+
 // =============================================================================
 /** @class  Client
     @brief  Client
@@ -39,7 +40,7 @@ public:
     virtual ~Client();
     //@}
 
-    //! @name Publisher_ABC
+    //! @name Operations
     //@{
     virtual void Send( const sword::ClientToSim& message );
     virtual void Send( const sword::ClientToAuthentication& message );
@@ -64,7 +65,7 @@ private:
     //@}
 
 private:
-    //! @name mermbers data
+    //! @name Mermber data
     //@{
     std::vector< Listener_ABC* > listeners_;
     bool connected_;

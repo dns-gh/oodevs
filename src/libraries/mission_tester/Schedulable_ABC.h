@@ -16,6 +16,7 @@ namespace mission_tester
 {
     class Exercise;
     class Filter_ABC;
+
 // =============================================================================
 /** @class  Schedulable_ABC
     @brief  Schedulable_ABC
@@ -24,12 +25,11 @@ namespace mission_tester
 // =============================================================================
 class Schedulable_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             Schedulable_ABC() {};
-    virtual ~Schedulable_ABC() {};
+             Schedulable_ABC() {}
+    virtual ~Schedulable_ABC() {}
     //@}
 
     //! @name Operations
@@ -38,6 +38,7 @@ public:
     virtual bool Start( Exercise& exercise, bool withFragOrders ) = 0;
     //@}
 };
+
 }
 
 #endif // __Schedulable_ABC_h_

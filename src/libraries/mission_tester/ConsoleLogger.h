@@ -29,6 +29,7 @@ public:
     virtual ~ConsoleLogger();
     //@}
 };
+
 }
 
 #endif // __ConsoleLogger_h_

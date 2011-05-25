@@ -34,6 +34,7 @@ public:
     virtual std::auto_ptr< Filter_ABC > Create( const std::string& criteria ) const;
     //@}
 };
+
 }
 
 #endif // __FilterFactory_h_

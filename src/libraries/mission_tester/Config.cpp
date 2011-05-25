@@ -69,7 +69,6 @@ Config::Config( int argc, char** argv )
             >> xml::attribute( "fragorders", withFragOrders_ )
           >> xml::end;
     entityType_ = StringToEntityType( entityType );
-
     xibs_.reset( new xml::xibufferstream( xis >> xml::start( "points" ) ) );
 }
 

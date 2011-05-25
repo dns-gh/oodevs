@@ -45,6 +45,7 @@ private:
     boost::posix_time::ptime start_;
    //@}
 };
+
 }
 
 #endif // __Timeout_h_

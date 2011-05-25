@@ -9,10 +9,21 @@
 
 #include "mission_tester_pch.h"
 #include "FileLogger.h"
-#include <fstream>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <fstream>
 
 using namespace mission_tester;
+
+// -----------------------------------------------------------------------------
+// Name: FileLogger constructor
+// Created: MCO 2011-05-25
+// -----------------------------------------------------------------------------
+FileLogger::FileLogger()
+    : lines_( 0 )
+    , files_( 0 )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: FileLogger constructor
@@ -23,8 +34,6 @@ FileLogger::FileLogger( const boost::filesystem::path& path, const std::string& 
     , files_    ( 0 )
     , path_     ( path )
     , extension_( extension )
-    , os_       ( 0 )
-    , logger_   ( 0 )
 {
     // NOTHING
 }

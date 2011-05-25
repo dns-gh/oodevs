@@ -64,7 +64,6 @@ bool Agent::IsCommandPost() const
     return isPc_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Agent::Matches
 // Created: PHC 2011-03-31
@@ -99,31 +98,4 @@ QString Agent::GetName() const
 unsigned long Agent::GetId() const
 {
     return Entity::GetId();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::Select
-// Created: PHC 2011-05-18
-// -----------------------------------------------------------------------------
-void Agent::Select( kernel::ActionController& controller ) const
-{
-    Entity::Select( controller );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::ContextMenu
-// Created: PHC 2011-05-18
-// -----------------------------------------------------------------------------
-void Agent::ContextMenu( kernel::ActionController& controller, const QPoint& where ) const
-{
-    Entity::ContextMenu( controller, where );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::Activate
-// Created: PHC 2011-05-18
-// -----------------------------------------------------------------------------
-void Agent::Activate( kernel::ActionController& controller ) const
-{
-    Entity::Activate( controller );
 }

@@ -50,6 +50,7 @@ namespace mission_tester
     class Client;
     class Listener_ABC;
     class ParameterFactory;
+
 // =============================================================================
 /** @class  Exercise
     @brief  Exercise
@@ -95,6 +96,7 @@ private:
     std::auto_ptr< ParameterFactory > factory_;
     //@}
 };
+
 }
 
 #endif // mission_tester_exercise_h

@@ -32,6 +32,7 @@ namespace kernel
 namespace mission_tester
 {
     class Exercise;
+
 // =============================================================================
 /** @class  Agent
     @brief  Agent
@@ -75,6 +76,7 @@ private:
     std::auto_ptr< tools::Iterator_ABC< const kernel::FragOrder& > > currentFragOrder_;
     //@}
 };
+
 }
 
 #endif // __Entity_h_

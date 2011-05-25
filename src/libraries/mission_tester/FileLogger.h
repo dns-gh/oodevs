@@ -27,19 +27,16 @@ class FileLogger : public Logger_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FileLogger(){};
+             FileLogger();
              FileLogger( const boost::filesystem::path& path, const std::string& extension = ".log" );
     virtual ~FileLogger();
     //@}
 
 public:
-    //! @name Logger_ABC
+    //! @name Operations
     //@{
     virtual void Write( const std::string& input );
-    //@}
 
-    //! @name Listener_ABC
-    //@{
     virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     virtual void FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     virtual void MissionAcknowledged( const sword::Tasker& tasker );
@@ -52,7 +49,7 @@ public:
     //@}
 
 protected:
-//! @name helpers
+    //! @name helpers
     //@{
     void UpdateLogger();
     virtual void WriteHeader();
@@ -68,6 +65,7 @@ protected:
     std::auto_ptr< Logger > logger_;
     //@}
 };
+
 }
 
 #endif // __FileLogger_h_

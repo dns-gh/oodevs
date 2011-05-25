@@ -65,12 +65,13 @@ public:
     //@}
 
 private:
-    //! @name Accessors
+    //! @name Member data
     //@{
     const kernel::AutomatType& type_;
     const kernel::LogisticLevel& logisticLevel_;
     //@}
 };
+
 }
 
 #endif // __Automat_h_

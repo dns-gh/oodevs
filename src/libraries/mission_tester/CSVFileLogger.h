@@ -30,7 +30,7 @@ public:
     virtual ~CSVFileLogger();
     //@}
 
-    //! @name Listener_ABC
+    //! @name Operations
     //@{
     virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     virtual void FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
@@ -44,7 +44,7 @@ public:
     //@}
 
 protected:
-    //! @name Types
+    //! @name Helpers
     //@{
     virtual void WriteHeader();
     //@}
@@ -56,12 +56,14 @@ private:
     typedef T_Missions::iterator                                            IT_Missions;
     //@}
 
+private:
     //! @name Member data
     //@{
     T_Missions missions_;
     FileLogger fileLogger_;
     //@}
 };
+
 }
 
-#endif // __Logger_h_
+#endif // __CSVFileLogger_h_

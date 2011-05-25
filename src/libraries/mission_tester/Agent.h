@@ -39,7 +39,6 @@ namespace mission_tester
 class Agent : public Entity
             , public kernel::Agent_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -56,22 +55,20 @@ public:
     virtual QString GetTypeName() const;
     //@}
 
-    //! @name Entity_ABC
+    //! @name Accessors
     //@{
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
-    virtual void Select( kernel::ActionController& controller ) const;
-    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
-    virtual void Activate( kernel::ActionController& controller ) const;
     //@}
 
 private:
-    //! @name member data
+    //! @name Member data
     //@{
     const kernel::AgentType& type_;
     const bool isPc_;
     //@}
 };
+
 }
 
 #endif // __Agent_h_

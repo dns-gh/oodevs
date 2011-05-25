@@ -22,7 +22,6 @@ namespace mission_tester
 // =============================================================================
 class Filter : public Filter_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -41,6 +40,7 @@ private:
     const std::string criterion_;
     //@}
 };
+
 }
 
 #endif // __Filter_h_

@@ -87,6 +87,7 @@ private:
     E_EntityType entityType_;
     //@}
 };
+
 }
 
 #endif // __Config_h_

@@ -46,8 +46,7 @@ namespace
     {
         if ( upLeft >= downRight )
             return upLeft;
-        else
-            return ( char( rand() % ( downRight + 1 - upLeft ) + upLeft ) );
+        return char( rand() % ( downRight + 1 - upLeft ) + upLeft );
     }
 
     std::string RandomInt( unsigned int min, unsigned int max )
@@ -80,7 +79,7 @@ namespace
         if ( alphaY == lowerRight.alphaY )
             max = lowerRight.y;
         std::string y = RandomInt( min, max );
-        return ( prefix + alphaX + alphaY + x + y );
+        return prefix + alphaX + alphaY + x + y;
     }
 }
 
@@ -95,7 +94,7 @@ ParameterFactory::ParameterFactory( const kernel::CoordinateConverter_ABC& conve
     , upperLeft_     ( xis.attribute< std::string >( "upper-left-point", "ppp" ) )
     , lowerRight_    ( xis.attribute< std::string >( "lower-right-point", "ppp" ) )
 {
-    srand( time( NULL ) );	
+    srand( time( 0 ) );
 }
 
 // -----------------------------------------------------------------------------

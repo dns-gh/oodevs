@@ -43,7 +43,6 @@ class Model : private boost::noncopyable
             , public SwordMessageHandler_ABC
             , public kernel::EntityResolver_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -103,6 +102,7 @@ private:
     Scheduler_ABC& scheduler_;
     //@}
 };
+
 }
 
 #endif // __Model_h_

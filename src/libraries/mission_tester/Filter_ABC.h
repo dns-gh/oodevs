@@ -22,7 +22,6 @@ namespace mission_tester
 // =============================================================================
 class Filter_ABC : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -35,6 +34,7 @@ public:
     virtual bool Accepts( const std::string& criterion ) const = 0;
     //@}
 };
+
 }
 
 #endif // __Filter_ABC_h_

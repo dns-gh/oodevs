@@ -12,10 +12,12 @@
 
 #include <boost/noncopyable.hpp>
 #include <memory>
+#include <string>
 
 namespace mission_tester
 {
     class Filter_ABC;
+
 // =============================================================================
 /** @class  FilterFactory_ABC
     @brief  Filter factory definition

@@ -18,11 +18,15 @@ int main( int argc, char* argv[] )
         mission_tester::Config config( argc, argv );
         mission_tester::Facade facade( config, config );
         facade.Run();
+        return EXIT_SUCCESS;
     }
     catch( std::exception& e )
     {
         std::cerr << e.what() << std::endl;
-        return EXIT_FAILURE;
     }
-    return EXIT_SUCCESS;
+    catch( ... )
+    {
+        std::cerr << "unknown exception" << std::endl;
+    }
+    return EXIT_FAILURE;
 }

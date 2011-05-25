@@ -32,8 +32,10 @@ public:
     virtual ~Logger();
     //@}
 
-    //! @name Listener_ABC
+    //! @name Operations
     //@{
+    virtual void Write( const std::string& input );
+
     virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     virtual void FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     virtual void MissionAcknowledged( const sword::Tasker& tasker );
@@ -45,29 +47,27 @@ public:
     virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter );
     //@}
 
-    //! @name Listener_ABC
-    //@{
-    virtual void Write( const std::string& input );
-    //@}
-
 protected:
     //! @name Helpers
     //@{
     void Created( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const std::string& orderType );
     //@}
 
+protected:
     //! @name Types
     //@{
     typedef std::map< unsigned int, std::pair< unsigned int, std::string > > T_Missions;
     typedef T_Missions::iterator                                            IT_Missions;
     //@}
 
+protected:
     //! @name Member data
     //@{
     std::ostream& os_;
     T_Missions missions_;
     //@}
 };
+
 }
 
 #endif // __Logger_h_
