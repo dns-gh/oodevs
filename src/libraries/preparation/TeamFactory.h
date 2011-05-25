@@ -11,7 +11,6 @@
 #define __TeamFactory_h_
 
 #include "TeamFactory_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -31,7 +30,6 @@ class ObjectAttributeFactory_ABC;
 // Created: AGE 2006-02-15
 // =============================================================================
 class TeamFactory : public TeamFactory_ABC
-                  , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

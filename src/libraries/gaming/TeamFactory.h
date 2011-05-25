@@ -39,14 +39,6 @@ public:
     //@{
     virtual kernel::Team_ABC* CreateTeam( const sword::PartyCreation& message );
     virtual kernel::Formation_ABC* CreateFormation( const sword::FormationCreation& message );
-
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    TeamFactory( const TeamFactory& );            //!< Copy constructor
-    TeamFactory& operator=( const TeamFactory& ); //!< Assignment operator
     //@}
 
 private:

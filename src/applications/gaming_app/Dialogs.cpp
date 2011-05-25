@@ -53,7 +53,7 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new MedicalCapacityUpdateDialog( parent, controllers, actionsModel, staticModel, simulation, publisher, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );
-    new CreateFormationDialog( parent, controllers, model.formations_, profile, actionsModel, simulation );
+    new CreateFormationDialog( parent, controllers, staticModel.levels_, profile, actionsModel, simulation );
     new AgentChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new PopulationChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new InhabitantChangeAffinitiesDialog( parent, controllers, staticModel, actionsModel, simulation, profile );

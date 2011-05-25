@@ -63,14 +63,12 @@ public:
     void UpdateSuperior( kernel::Entity_ABC& superior );
     //@}
 
-
 private:
     //! @name Copy/Assignment
     //@{
     AgentHierarchies( const AgentHierarchies& );            //!< Copy constructor
     AgentHierarchies& operator=( const AgentHierarchies& ); //!< Assignment operator
     //@}
-
 
     //! @name Member data
     //@{

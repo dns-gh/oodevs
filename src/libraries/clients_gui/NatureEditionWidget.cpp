@@ -30,7 +30,7 @@ NatureEditionWidget::NatureEditionWidget( QWidget* parent, const std::string& sy
     xis >> xml::start( "app6" )
         >> xml::start( "symbols" )
         >> xml::start( "choice" );
-    root_    = new SymbolRule( xis );
+    root_ = new SymbolRule( xis );
     rootWidget_ = new NatureEditionCategory( this, root_ );
 
     connect( rootWidget_, SIGNAL( NatureChanged( const QString& ) ), this, SIGNAL( textChanged( const QString& ) ) );

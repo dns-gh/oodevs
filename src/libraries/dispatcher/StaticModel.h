@@ -33,13 +33,6 @@ public:
     explicit StaticModel( const tools::ExerciseConfig& config );
     virtual ~StaticModel();
     //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    StaticModel( const StaticModel& );            //!< Copy constructor
-    StaticModel& operator=( const StaticModel& ); //!< Assignment operator
-    //@}
 };
 
 }

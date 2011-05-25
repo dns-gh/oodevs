@@ -10,6 +10,8 @@
 #ifndef __TeamFactory_ABC_h_
 #define __TeamFactory_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Team_ABC;
@@ -26,7 +28,7 @@ namespace xml
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class TeamFactory_ABC
+class TeamFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

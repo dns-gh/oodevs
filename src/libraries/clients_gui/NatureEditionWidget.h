@@ -10,6 +10,8 @@
 #ifndef __NatureEditionWidget_h_
 #define __NatureEditionWidget_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel {
     class SymbolRule;
 }
@@ -25,6 +27,7 @@ namespace gui
 // Created: AGE 2006-10-24
 // =============================================================================
 class NatureEditionWidget : public QVBox
+                          , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -50,13 +53,6 @@ signals:
     //! @name Signals
     //@{
     void textChanged( const QString& );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    NatureEditionWidget( const NatureEditionWidget& );            //!< Copy constructor
-    NatureEditionWidget& operator=( const NatureEditionWidget& ); //!< Assignment operator
     //@}
 
 private:
