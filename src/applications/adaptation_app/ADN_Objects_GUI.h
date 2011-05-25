@@ -138,11 +138,11 @@ public:
     //@}
 
     private slots:
-        //! @name slots
-        //@{
-        void OnSpeedImpactComboChanged();
-        void OnGeometryChanged( const QString& );
-        //@}
+    //! @name slots
+    //@{
+    void OnSpeedImpactComboChanged();
+    void OnGeometryChanged( const QString& );
+    //@}
 
 private:
     //! @name Member data

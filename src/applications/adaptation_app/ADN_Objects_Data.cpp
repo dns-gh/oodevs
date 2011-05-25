@@ -882,10 +882,12 @@ void ADN_Objects_Data::ADN_CapacityInfos_Detection::WriteArchive( xml::xostream&
 // Created: SLG 2010-02-18
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Spawn::ADN_CapacityInfos_Spawn()
-    : strObjectType_( "" )
+    : object_       ( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0 )
     , rActionRange_ ( 0 )
+    , objectName_   ( "" )
 {
     rActionRange_.SetParentNode( *this );
+    BindExistenceTo( &object_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -895,8 +897,18 @@ ADN_Objects_Data::ADN_CapacityInfos_Spawn::ADN_CapacityInfos_Spawn()
 void ADN_Objects_Data::ADN_CapacityInfos_Spawn::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    input >> xml::attribute( "object", strObjectType_ )
+    input >> xml::attribute( "object", objectName_ )
           >> xml::attribute( "action-range", rActionRange_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::Load
+// Created: LGY 2011-05-24
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Spawn::Load()
+{
+    if( !objectName_.empty() )
+        object_ = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( objectName_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -905,8 +917,9 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::ReadArchive( xml::xistream& inpu
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& output )
 {
-    output << xml::attribute( "object", strObjectType_ )
-           << xml::attribute( "action-range", rActionRange_ );
+    if( object_.GetData() )
+        output << xml::attribute( "object", object_.GetData()->strType_ )
+               << xml::attribute( "action-range", rActionRange_ );
 }
 
 // -----------------------------------------------------------------------------
