@@ -34,7 +34,45 @@
                         <description name="Port" lang="fr"><![CDATA[Port de l'hôte.]]></description>
                     </descriptions>
                 </setting>
+                <setting attribute="@creation" type="boolean" default="false">
+                    <descriptions>
+                        <description name="Creation" lang="en"><![CDATA[Attempt to create the federation when joining.]]></description>
+                        <description name="Création" lang="fr"><![CDATA[Tente de créer la fédération en rejoignant.]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@fom" type="string" default="ASI_FOM_v2.0.8_2010.xml">
+                    <descriptions>
+                        <description lang="en" name="FOM"><![CDATA[Federation Object Model.]]></description>
+                        <description lang="fr" name="FOM"><![CDATA[Federation Object Model.]]></description>
+                    </descriptions>
+                </setting>
             </settings>
-    	</group>
-	</settings>
+        </group>
+        <group>
+            <descriptions>
+                <description lang="en" name="Time settings"><![CDATA[]]></description>
+                <description lang="fr" name="Paramètres de temps"><![CDATA[]]></description>
+            </descriptions>
+            <settings>
+                <setting attribute="@time-constrained" type="boolean" default="true">
+                    <descriptions>
+                        <description lang="en" name="Time constrained"><![CDATA[]]></description>
+                        <description lang="fr" name="Temps contraint"><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@time-regulating" type="boolean" default="true">
+                    <descriptions>
+                        <description name="Time regulating" lang="en"><![CDATA[]]></description>
+                        <description name="Regulateur de temps" lang="fr"><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+                <setting attribute="@lookahead" type="integer" default="10" min="0" max="60">
+                    <descriptions>
+                        <description name="Lookahead" lang="en"><![CDATA[]]></description>
+                        <description name="Anticipation" lang="fr"><![CDATA[]]></description>
+                    </descriptions>
+                </setting>
+            </settings>
+        </group>
+    </settings>
 </plugin>
