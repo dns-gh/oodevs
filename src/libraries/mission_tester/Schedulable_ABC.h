@@ -16,7 +16,6 @@ namespace mission_tester
 {
     class Exercise;
     class Filter_ABC;
-    class State_ABC;
 // =============================================================================
 /** @class  Schedulable_ABC
     @brief  Schedulable_ABC
@@ -35,7 +34,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Trigger( State_ABC& state ) = 0;
     virtual bool Matches( const Filter_ABC& filter ) const = 0;
     virtual bool Start( Exercise& exercise, bool withFragOrders ) = 0;
     //@}

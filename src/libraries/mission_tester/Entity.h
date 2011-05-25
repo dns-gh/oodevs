@@ -58,7 +58,6 @@ public:
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
 
-    virtual bool Trigger( State_ABC& state );
     virtual bool Matches( const Filter_ABC& filter ) const;
     virtual bool Start( Exercise& exercise, bool withFragOrders );
     bool StartMission( Exercise& exercise );

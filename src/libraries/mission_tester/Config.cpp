@@ -79,7 +79,7 @@ Config::Config( int argc, char** argv )
 // -----------------------------------------------------------------------------
 Config::~Config()
 {
-    xibs_.release();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -91,15 +91,8 @@ void Config::ConfigureLogging( Facade& facade ) const
     facade.AddListener( boost::shared_ptr< Listener_ABC >( new ConsoleLogger() ) );
     if( !logFile_.empty() )
     {
-        try
-        {
-            facade.AddListener( boost::shared_ptr< Listener_ABC >( new FileLogger( logFile_ ) ) );
-            facade.AddListener( boost::shared_ptr< Listener_ABC >( new CSVFileLogger( logFile_ ) ) );
-        }
-        catch( ... )
-        {
-            throw std::runtime_error( __FUNCTION__ " unable to create log file '" + logFile_ + "'" );
-        }
+        facade.AddListener( boost::shared_ptr< Listener_ABC >( new FileLogger( logFile_ ) ) );
+        facade.AddListener( boost::shared_ptr< Listener_ABC >( new CSVFileLogger( logFile_ ) ) );
     }
 }
 

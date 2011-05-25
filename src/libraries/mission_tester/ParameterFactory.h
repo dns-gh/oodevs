@@ -42,15 +42,15 @@ namespace mission_tester
             , alphaX( coord[ 3 ] )
             , alphaY( coord[ 4 ] )
         {
-            prefixe = coord[0];
-            prefixe += coord[1];
-            prefixe += coord[2];
+            prefix = coord[0];
+            prefix += coord[1];
+            prefix += coord[2];
         }
         unsigned int x;
         unsigned int y;
         char alphaX;
         char alphaY;
-        std::string prefixe;
+        std::string prefix;
     } T_Coordinates;
 
 // =============================================================================

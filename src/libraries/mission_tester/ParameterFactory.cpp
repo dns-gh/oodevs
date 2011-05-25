@@ -65,7 +65,7 @@ namespace
 
     std::string ComputeCoord( Coordinates upperLeft, Coordinates lowerRight )
     {
-        std::string prefixe = upperLeft.prefixe;
+        std::string prefix = upperLeft.prefix;
         char alphaX = RandomChar( upperLeft.alphaX, lowerRight.alphaX );
         char alphaY = RandomChar( upperLeft.alphaY, lowerRight.alphaY );
         unsigned int max = 99999;
@@ -80,7 +80,7 @@ namespace
         if ( alphaY == lowerRight.alphaY )
             max = lowerRight.y;
         std::string y = RandomInt( min, max );
-        return ( prefixe + alphaX + alphaY + x + y );
+        return ( prefix + alphaX + alphaY + x + y );
     }
 }
 

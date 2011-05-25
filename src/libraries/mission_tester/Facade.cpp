@@ -22,7 +22,6 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/foreach.hpp>
 #include <iostream>
-#include <conio.h>
 
 using namespace mission_tester;
 
@@ -63,29 +62,12 @@ void Facade::Run()
     model.Register( *this );
     client->Connect();
     std::auto_ptr< Timeout > timeout =  mainFactory_.CreateTimeout();
-    try
-    {
-        while( !timeout->Expired() )
-        {
-            client->Update();
-            if( client->IsAuthentified() )
-                break;
-        }
-        if( timeout->Expired() )
-            throw std::runtime_error( "Timeout exceeded." );
-    }
-    catch( std::exception& e )
-    {
-        std::cerr << __FUNCTION__ << ": Error Connecting or Authentifying to simulation, '" << e.what() << "'." << std::endl;
-    }
+    while( !timeout->Expired() && !client->IsAuthentified() )
+        client->Update();
+    if( timeout->Expired() )
+        throw std::runtime_error( "Timeout exceeded." );
     while( client->IsConnected() )
     {
-        if( _kbhit() )
-        {
-            const int key = _getch();
-            if( key == 'q' )
-                break;
-        }
         client->Update();
         scheduler->Step( *exercise );
     }
