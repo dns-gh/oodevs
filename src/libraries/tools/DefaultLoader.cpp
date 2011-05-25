@@ -92,5 +92,5 @@ void DefaultLoader::CheckFile( const std::string& fileName ) const
 void DefaultLoader::CheckOptionalFile( const std::string& fileName ) const
 {
     if( bfs::exists( fileName ) && !bfs::is_directory( fileName ) )
-        std::auto_ptr< xml::xistream > xis = fileLoader_->LoadFile( fileName, observer_ );
+        fileLoader_->LoadFile( fileName, observer_ );
 }
