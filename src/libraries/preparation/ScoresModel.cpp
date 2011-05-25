@@ -122,9 +122,9 @@ void ScoresModel::Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& 
 // Name: ScoresModel::GenerateScoresFromTemplate
 // Created: JSR 2011-02-08
 // -----------------------------------------------------------------------------
-void ScoresModel::GenerateScoresFromTemplate( const tools::Loader_ABC& fileLoader, const std::string& templateFile )
+void ScoresModel::GenerateScoresFromTemplate( const tools::Loader_ABC& fileLoader )
 {
-    fileLoader.LoadFile( templateFile, boost::bind( &ScoresModel::ReadTemplate, this, _1 ) );
+    fileLoader.LoadOptionalPhysicalFile( "scores", boost::bind( &ScoresModel::ReadTemplate, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

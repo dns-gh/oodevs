@@ -42,7 +42,7 @@ ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::It
         connect( editButton, SIGNAL( clicked() ), SLOT( OnEdit() ) );
         connect( deleteButton, SIGNAL( clicked() ), SLOT( OnDelete() ) );
     }
-    if( bfs::exists( tools::GeneralConfig::BuildResourceChildFile( "Scores.xml" ) ) )
+    if( bfs::exists( config_.GetOptionalPhysicalChildFile( "scores" ) ) )
     {
         QHBox* box = new QHBox( this );
         QButton* defaultIndicators = new QPushButton( tr( "Generate default indicators" ), box );
@@ -90,9 +90,8 @@ void ScoreList::OnDelete()
 // -----------------------------------------------------------------------------
 void ScoreList::OnGenerate()
 {
-    std::string templateFile = tools::GeneralConfig::BuildResourceChildFile( "Scores.xml" );
-    if( bfs::exists( templateFile ) )
-        model_.GenerateScoresFromTemplate( config_.GetLoader(), templateFile );
+    if( bfs::exists( config_.GetOptionalPhysicalChildFile( "scores" ) ) )
+        model_.GenerateScoresFromTemplate( config_.GetLoader() );
 }
 
 // -----------------------------------------------------------------------------

@@ -58,7 +58,7 @@ public:
     void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
     bool CheckValidity( ModelChecker_ABC& checker, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
-    void GenerateScoresFromTemplate( const tools::Loader_ABC& fileLoader, const std::string &templateFile );
+    void GenerateScoresFromTemplate( const tools::Loader_ABC& fileLoader );
     //@}
 
 private:
