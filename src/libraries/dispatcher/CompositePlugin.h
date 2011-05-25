@@ -16,6 +16,8 @@
 
 namespace dispatcher
 {
+    class Logger_ABC;
+
 // =============================================================================
 /** @class  CompositePlugin
     @brief  Composite plugin
@@ -33,10 +35,16 @@ public:
 
     //! @name Operations
     //@{
-    void Add( const boost::shared_ptr< Plugin_ABC >& plugin )
+    void Add( boost::shared_ptr< Plugin_ABC > plugin )
     {
         plugins_.push_back( plugin );
         handlers_.push_back( plugin );
+    }
+
+    void Add( boost::shared_ptr< Plugin_ABC > plugin, boost::shared_ptr< Logger_ABC > logger )
+    {
+        Add( plugin );
+        loggers_.push_back( logger );
     }
 
     void Add( Plugin_ABC* plugin )
@@ -44,7 +52,7 @@ public:
         Add( boost::shared_ptr< Plugin_ABC >( plugin ) );
     }
 
-    void AddHandler( const boost::shared_ptr< MessageHandler_ABC >& handler )
+    void AddHandler( boost::shared_ptr< MessageHandler_ABC > handler )
     {
         handlers_.push_back( handler );
     }
@@ -98,13 +106,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    CompositePlugin( const CompositePlugin& );            //!< Copy constructor
-    CompositePlugin& operator=( const CompositePlugin& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Types
     //@{
     typedef std::vector< boost::shared_ptr< Plugin_ABC > > T_Plugins;
@@ -112,11 +113,14 @@ private:
 
     typedef std::vector< boost::shared_ptr< MessageHandler_ABC > > T_Handlers;
     typedef T_Handlers::const_iterator                           CIT_Handlers;
+
+    typedef std::vector< boost::shared_ptr< Logger_ABC > > T_Loggers;
     //@}
 
 private:
     //! @name Member data
     //@{
+    T_Loggers loggers_;
     T_Plugins plugins_;
     T_Handlers handlers_;
     //@}

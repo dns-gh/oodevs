@@ -11,6 +11,7 @@
 #define __PluginFactory_h_
 
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -48,7 +49,7 @@ namespace dispatcher
 */
 // Created: SBO 2007-07-24
 // =============================================================================
-class PluginFactory
+class PluginFactory : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -65,12 +66,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PluginFactory( const PluginFactory& );            //!< Copy constructor
-    PluginFactory& operator=( const PluginFactory& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadPlugin( const std::string& name, xml::xistream& xis );
@@ -80,7 +75,6 @@ private:
     //! @name Types
     //@{
     typedef std::vector< PluginFactory_ABC* > T_Factories;
-    typedef std::vector< boost::shared_ptr< Logger_ABC > > T_Loggers;
     //@}
 
 private:
@@ -91,7 +85,6 @@ private:
     const kernel::StaticModel& staticModel_;
     SimulationPublisher_ABC& simulation_;
     ClientsNetworker& clients_;
-    T_Loggers loggers_;
     CompositePlugin& handler_;
     CompositeRegistrable& registrables_;
     T_Factories factories_;

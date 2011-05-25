@@ -154,8 +154,7 @@ void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
         boost::shared_ptr< Plugin_ABC > plugin( createFunction( model_, simulation_, config_, *logger, xis ), boost::bind( destroyFunction, _1, boost::ref( *logger ) ) );
         if( !plugin.get() )
             throw std::runtime_error( "CreateFunctor returned an error (see details in plugin log file)" );
-        loggers_.push_back( logger );
-        handler_.Add( plugin );
+        handler_.Add( plugin, logger );
         MT_LOG_INFO_MSG( "Plugin '" << name << "' loaded (file: " << library << ")" );
     }
     catch( std::exception& e )
