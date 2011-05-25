@@ -115,7 +115,7 @@ bool Client::IsAuthentified() const
 void Client::OnConnectionSucceeded( const std::string& endpoint )
 {
     connected_ = true;
-    BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+    BOOST_FOREACH( Listener_ABC* listener, listeners_ )
         listener->ConnectionSucceeded( endpoint );
 }
 
@@ -148,7 +148,7 @@ void Client::OnConnectionError( const std::string& /*endpoint*/, const std::stri
 void Client::OnAuthenticationSucceeded( const std::string& profile )
 {
     authentified_ = true;
-    BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+    BOOST_FOREACH( Listener_ABC* listener, listeners_ )
         listener->AuthenticationSucceeded( profile );
 }
 
@@ -166,7 +166,7 @@ void Client::OnAuthenticationFailed( const std::string& profile, const std::stri
 // Name: Client::Register
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-void Client::Register( const Listener_ABC& listener )
+void Client::Register( Listener_ABC& listener )
 {
     listeners_.push_back( &listener );
 }

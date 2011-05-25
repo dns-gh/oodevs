@@ -17,19 +17,20 @@
 #pragma warning( push, 0 )
 #include <qstring.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/lexical_cast.hpp>
 #pragma warning( pop )
 
 using namespace mission_tester;
+namespace bpt = boost::posix_time;
 
 // -----------------------------------------------------------------------------
 // Name: Logger constructor
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
 Logger::Logger( std::ostream& os )
-    : os_   ( os )
-    , facet_( new boost::posix_time::time_facet( "%d-%H:%M:%S" ) )
+    : os_( os )
 {
-    std::cout.imbue( std::locale( std::cout.getloc(), facet_.get() ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -48,9 +49,10 @@ Logger::~Logger()
 void Logger::Created( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const std::string& orderType )
 {
     missions_[target.GetId()] = std::pair< unsigned int, std::string >( mission.GetId(), mission.GetName() );
-    os_ << "[" << boost::posix_time::second_clock::local_time() << "] >>>"
-        << " [U" << target.GetId() << "]"
-        << "[M" << mission.GetId()<< "] " << orderType << " '" << mission.GetName() << "' sent." << std::endl;
+    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() ) + "] >>> [U" 
+         + boost::lexical_cast< std::string >( target.GetId() ) + "][M"
+         + boost::lexical_cast< std::string >( mission.GetId() ) + "] " + orderType
+         + " '" + mission.GetName() + "' sent." );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,9 +93,10 @@ namespace
 // -----------------------------------------------------------------------------
 void Logger::MissionAcknowledged( const sword::Tasker& tasker )
 {
-    os_ << "[" << boost::posix_time::second_clock::local_time() << "] <<<"
-        << " [U" << TaskerToId( tasker ) << "]"
-        << "[M" << missions_[ TaskerToId( tasker ) ].first << "] Mission '" << missions_[ TaskerToId( tasker ) ].second << "' received." << std::endl;
+    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() ) + "] <<< [U" 
+         + boost::lexical_cast< std::string >( TaskerToId( tasker ) ) + "][M"
+         + boost::lexical_cast< std::string >( missions_[ TaskerToId( tasker ) ].first ) + "] Mission '"
+         + missions_[ TaskerToId( tasker ) ].second + "' received." );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,22 +105,24 @@ void Logger::MissionAcknowledged( const sword::Tasker& tasker )
 // -----------------------------------------------------------------------------
 void Logger::FragOrderAcknowledged( const sword::Tasker& tasker )
 {
-    os_ << "[" << boost::posix_time::second_clock::local_time() << "] <<<"
-        << " [U" << TaskerToId( tasker ) <<     "]"
-        << "[M" << missions_[ TaskerToId( tasker ) ].first << "] FragOrder '" << missions_[ TaskerToId( tasker ) ].second << "' received." << std::endl;
+    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() ) + "] <<< [U" 
+         + boost::lexical_cast< std::string >( TaskerToId( tasker ) ) + "][M" 
+         + boost::lexical_cast< std::string >( missions_[ TaskerToId( tasker ) ].first )
+         + "] FragOrder '" + missions_[ TaskerToId( tasker ) ].second + "' received." );
 }
 
 namespace
 {
-    void ErrorAck( const sword::Tasker& tasker, std::ostream& os, const std::string& orderType )
+    std::string ErrorAck( const sword::Tasker& tasker, const std::string& orderType )
     {
-        os << "[" << boost::posix_time::second_clock::local_time() << "] ";
+        std::string result( "[" + bpt::to_simple_string( bpt::second_clock::local_time() ) + "] " );
         if( tasker.has_unit() )
-            os << "<<< " << orderType << " ERROR ack for unit " << tasker.unit().id() << std::endl;
+            return result + "<<< " + orderType + " ERROR ack for unit " + boost::lexical_cast< std::string >( tasker.unit().id() );
         else if( tasker.has_automat() )
-            os << "<<< " << orderType << " ERROR ack for automat " << tasker.automat().id() << std::endl;
+            return result + "<<< " + orderType + " ERROR ack for automat " + boost::lexical_cast< std::string >( tasker.automat().id() );
         else if( tasker.has_crowd() )
-            os << "<<< " << orderType << " ERROR ack for crowd " << tasker.crowd().id() << std::endl;
+            return result + "<<< " + orderType + " ERROR ack for crowd " + boost::lexical_cast< std::string >( tasker.crowd().id() );
+        throw std::runtime_error( __FUNCTION__ " unknown unit type" );
     }
 }
 
@@ -125,46 +130,56 @@ namespace
 // Name: Logger::MissionErrorAck
 // Created: PHC 2011-04-08
 // -----------------------------------------------------------------------------
-void Logger::MissionErrorAck( const sword::Tasker& tasker ) const
+void Logger::MissionErrorAck( const sword::Tasker& tasker )
 {
-    ErrorAck( tasker, os_, "Mission" );
+    Write( ErrorAck( tasker, "Mission" ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Logger::FragOrderErrorAck
 // Created: PHC 2011-05-19
 // -----------------------------------------------------------------------------
-void Logger::FragOrderErrorAck( const sword::Tasker& tasker ) const
+void Logger::FragOrderErrorAck( const sword::Tasker& tasker )
 {
-    ErrorAck( tasker, os_, "FragOrder" );
+    Write( ErrorAck( tasker, "FragOrder" ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Logger::ConnectionSucceeded
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-void Logger::ConnectionSucceeded( const std::string& endpoint ) const
+void Logger::ConnectionSucceeded( const std::string& endpoint )
 {
-    os_ << "[" << boost::posix_time::second_clock::local_time()
-        << "] <<< Connection succeeded at " << endpoint << std::endl;
+    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() )
+         + "] <<< Connection succeeded at " + endpoint );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Logger::AuthenticationSucceeded
 // Created: PHC 2011-04-06
 // -----------------------------------------------------------------------------
-void Logger::AuthenticationSucceeded( const std::string& profile ) const
+void Logger::AuthenticationSucceeded( const std::string& profile )
 {
-    os_ << "[" << boost::posix_time::second_clock::local_time()
-        << "] <<< Authentication succeeded with profile '" << profile << "'" << std::endl;
+    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() )
+         + "] <<< Authentication succeeded with profile '" + profile + "'" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Logger::ParameterCreationFailed
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-void Logger::ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const
+void Logger::ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter )
 {
-    os_ << "[" << boost::posix_time::second_clock::local_time()
-        << "] war [U" << target.GetId() << "][M" << mission.GetId() << "] paramType unknown '" << parameter.GetType() << "'" << std::endl;
+    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() )
+         + "] war [U" + boost::lexical_cast< std::string >( target.GetId() ) + "][M" + boost::lexical_cast< std::string >( mission.GetId() )
+         + "] paramType unknown '" + parameter.GetType() + "'" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Logger::Write
+// Created: PHC 2011-05-23
+// -----------------------------------------------------------------------------
+void Logger::Write( const std::string& input )
+{
+    os_ << input << std::endl;
 }

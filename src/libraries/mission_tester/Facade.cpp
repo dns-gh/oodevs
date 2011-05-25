@@ -126,7 +126,7 @@ void Facade::FragOrderAcknowledged( const sword::Tasker& tasker )
 // Name: Facade::MissionErrorAck
 // Created: PHC 2011-04-08
 // -----------------------------------------------------------------------------
-void Facade::MissionErrorAck( const sword::Tasker& tasker ) const
+void Facade::MissionErrorAck( const sword::Tasker& tasker )
 {
     BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
         listener->MissionErrorAck( tasker );
@@ -136,7 +136,7 @@ void Facade::MissionErrorAck( const sword::Tasker& tasker ) const
 // Name: Facade::FragOrderErrorAck
 // Created: PHC 2011-05-19
 // -----------------------------------------------------------------------------
-void Facade::FragOrderErrorAck( const sword::Tasker& tasker ) const
+void Facade::FragOrderErrorAck( const sword::Tasker& tasker )
 {
     BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
         listener->FragOrderErrorAck( tasker );
@@ -146,7 +146,7 @@ void Facade::FragOrderErrorAck( const sword::Tasker& tasker ) const
 // Name: Facade::ConnectionSucceeded
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-void Facade::ConnectionSucceeded( const std::string& endpoint ) const
+void Facade::ConnectionSucceeded( const std::string& endpoint )
 {
     BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
         listener->ConnectionSucceeded( endpoint );
@@ -156,7 +156,7 @@ void Facade::ConnectionSucceeded( const std::string& endpoint ) const
 // Name: Facade::AuthenticationSucceeded
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-void Facade::AuthenticationSucceeded( const std::string& profile ) const
+void Facade::AuthenticationSucceeded( const std::string& profile )
 {
     BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
         listener->AuthenticationSucceeded( profile );
@@ -166,7 +166,7 @@ void Facade::AuthenticationSucceeded( const std::string& profile ) const
 // Name: Facade::ParameterCreationFailed
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
-void Facade::ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const
+void Facade::ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter )
 {
     BOOST_FOREACH( const T_Listeners::value_type& listener, listeners_ )
         listener->ParameterCreationFailed( target, mission, parameter );

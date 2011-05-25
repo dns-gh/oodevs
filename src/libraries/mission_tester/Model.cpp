@@ -55,7 +55,7 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
     if( message.message().has_frag_order_ack() )
     {
         if( message.message().frag_order_ack().error_code() )
-            BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+            BOOST_FOREACH( Listener_ABC* listener, listeners_ )
                 listener->FragOrderErrorAck( message.message().frag_order_ack().tasker() );
         else
             BOOST_FOREACH( Listener_ABC* listener, listeners_ )
@@ -64,7 +64,7 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
     if( message.message().has_order_ack() )
     {
         if( message.message().order_ack().error_code() )
-            BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+            BOOST_FOREACH( Listener_ABC* listener, listeners_ )
                 listener->MissionErrorAck( message.message().order_ack().tasker() );
         else 
             BOOST_FOREACH( Listener_ABC* listener, listeners_ )

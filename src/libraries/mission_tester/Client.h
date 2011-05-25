@@ -49,7 +49,7 @@ public:
 
     bool IsConnected() const;
     bool IsAuthentified() const;
-    void Register( const Listener_ABC& listener );
+    void Register( Listener_ABC& listener );
     void Connect();
     //@}
 
@@ -66,7 +66,7 @@ private:
 private:
     //! @name mermbers data
     //@{
-    std::vector< const Listener_ABC* > listeners_;
+    std::vector< Listener_ABC* > listeners_;
     bool connected_;
     bool authentified_;
     //@}

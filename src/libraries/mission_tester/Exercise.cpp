@@ -181,7 +181,7 @@ void Exercise::Register( Listener_ABC& listener )
 // -----------------------------------------------------------------------------
 void Exercise::NotifyInvalidParameter( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const
 {
-    BOOST_FOREACH( const Listener_ABC* listener, listeners_ )
+    BOOST_FOREACH( Listener_ABC* listener, listeners_ )
         listener->ParameterCreationFailed( target, mission, parameter );
 }
 

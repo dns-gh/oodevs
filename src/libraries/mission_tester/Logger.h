@@ -10,6 +10,7 @@
 #ifndef __Logger_h_
 #define __Logger_h_
 
+#include "Logger_ABC.h"
 #include "Listener_ABC.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 
@@ -21,7 +22,8 @@ namespace mission_tester
 */
 // Created: PHC 2011-04-06
 // =============================================================================
-class Logger : public Listener_ABC
+class Logger : public Logger_ABC
+             , public Listener_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -30,17 +32,22 @@ public:
     virtual ~Logger();
     //@}
 
-    //! @name Operations
+    //! @name Listener_ABC
     //@{
     virtual void MissionCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     virtual void FragOrderCreated( const kernel::Entity_ABC& target, const kernel::OrderType& mission );
     virtual void MissionAcknowledged( const sword::Tasker& tasker );
     virtual void FragOrderAcknowledged( const sword::Tasker& tasker );
-    virtual void MissionErrorAck( const sword::Tasker& tasker ) const;
-    virtual void FragOrderErrorAck( const sword::Tasker& tasker ) const;
-    virtual void ConnectionSucceeded( const std::string& endpoint ) const;
-    virtual void AuthenticationSucceeded( const std::string& profile ) const;
-    virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter ) const;
+    virtual void MissionErrorAck( const sword::Tasker& tasker );
+    virtual void FragOrderErrorAck( const sword::Tasker& tasker );
+    virtual void ConnectionSucceeded( const std::string& endpoint );
+    virtual void AuthenticationSucceeded( const std::string& profile );
+    virtual void ParameterCreationFailed( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const kernel::OrderParameter& parameter );
+    //@}
+
+    //! @name Listener_ABC
+    //@{
+    virtual void Write( const std::string& input );
     //@}
 
 protected:
@@ -58,7 +65,6 @@ protected:
     //! @name Member data
     //@{
     std::ostream& os_;
-    std::auto_ptr< boost::posix_time::time_facet > facet_;
     T_Missions missions_;
     //@}
 };

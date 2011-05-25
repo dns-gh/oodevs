@@ -17,7 +17,6 @@ using namespace mission_tester;
 
 MOCK_BASE_CLASS( MockSchedulable, Schedulable_ABC )
 {
-    MOCK_METHOD( Trigger, 1 )
     MOCK_METHOD( Matches, 1 )
     MOCK_METHOD( Start, 2 )
 };
@@ -39,7 +38,6 @@ namespace
         Schedulable( const std::string& type )
             : type_( type )
         {}
-        virtual bool Trigger( State_ABC& /*state*/ ){ return true; }
         virtual bool Matches( const Filter_ABC& filter ) const
         {
             if( !filter.Accepts( type_ ) )
