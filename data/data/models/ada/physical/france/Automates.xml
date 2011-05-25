@@ -1084,5 +1084,9 @@
     <unit type="Terroriste Sniper"/>
     <unit command-post="true" min-occurs="1" type="Terroriste Sniper et IED"/>
   </automat>
+  <automat decisional-model="Masalife.Automate.GEN" id="687" name="GEN" type="Automate GEN">
+    <unit command-post="true" max-occurs="4" min-occurs="4" type="Groupe GEN . EBG"/>
+    <unit max-occurs="2" min-occurs="2" type="Groupe GEN . MPG"/>
+  </automat>
 </automats>
-<!-- signature="4121604005" -->
+<!-- signature="2297522469" -->

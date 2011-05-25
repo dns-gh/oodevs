@@ -534,7 +534,6 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="GENIE Detruire point du reseau"/>
         <mission name="GENIE Realiser Camps"/>
       </missions>
       <fragorders>
@@ -7786,12 +7785,40 @@
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="GENIE Detruire point du reseau"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="LOGISTIQUE Se Deployer">
           <fragorder name="Modifier Priorites Blesses"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
         </mission>
+      </missions>
+      <fragorders>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Embarquer"/>
+      </fragorders>
+    </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.GEN">
+      <missions>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES FaireMouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre en compte Prisonniers"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Se Recompleter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="GENIE Detruire point du reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -11712,4 +11739,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1989309435" -->
+<!-- signature="2199237888" -->
