@@ -33,5 +33,9 @@
   <object-names file="ObjectNames.xml"/>
   <urban file="Urban.xml"/>
   <resource-networks file="ResourceNetworks.xml"/>
+  <extensions file="Extensions.xml"/>
+  <drawing-templates file="DrawingTemplates.xml"/>
+  <scores file="scores.xml"/>
+  <symbols file="symbols.xml"/>
 </physical>
-<!-- signature="3330966563" -->
+<!-- signature="3346480890" -->
