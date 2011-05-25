@@ -10,8 +10,7 @@
 #ifndef __Timeout_h_
 #define __Timeout_h_
 
-#pragma warning( push )
-#pragma warning( disable : 4244 )
+#pragma warning( push, 0 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 #include <boost/noncopyable.hpp>
