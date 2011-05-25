@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<objects model-version="4.5.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.0/physical/Objects.xsd">
+<objects model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Objects.xsd">
   <object geometry="point" name="Mine Cluster" symbol="G*MPOMC---****X" type="mines">
     <activable/>
     <attrition category="Standard Landmine"/>
@@ -13,13 +13,13 @@
       </buildable>
     </constructor>
     <heuristic>
-      <terrain type="autoroute" value="1"/>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="nationale" value="2"/>
-      <terrain type="voie ferree" value="5"/>
-      <terrain type="pont" value="8"/>
-      <terrain type="banlieue" value="7"/>
+      <terrain type="highway" value="1"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="main road" value="2"/>
+      <terrain type="railroad" value="5"/>
+      <terrain type="bridge" value="8"/>
+      <terrain type="suburb" value="7"/>
     </heuristic>
     <interact-with-enemy/>
     <interaction-height height="1"/>
@@ -197,10 +197,10 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="autoroute" value="2"/>
-      <terrain type="nationale" value="5"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="highway" value="2"/>
+      <terrain type="main road" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -222,10 +222,10 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="autoroute" value="1"/>
-      <terrain type="nationale" value="5"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="highway" value="1"/>
+      <terrain type="main road" value="5"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
@@ -246,7 +246,7 @@
       </improvable>
     </constructor>
     <heuristic>
-      <terrain type="pont" value="10"/>
+      <terrain type="bridge" value="10"/>
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
@@ -299,12 +299,12 @@
       <acquisition-times/>
     </detection>
     <heuristic>
-      <terrain type="autoroute" value="1"/>
-      <terrain type="departementale" value="3"/>
-      <terrain type="carrefour" value="10"/>
-      <terrain type="nationale" value="2"/>
-      <terrain type="voie ferree" value="5"/>
-      <terrain type="pont" value="8"/>
+      <terrain type="highway" value="1"/>
+      <terrain type="secondary road" value="3"/>
+      <terrain type="crossroad" value="10"/>
+      <terrain type="main road" value="2"/>
+      <terrain type="railroad" value="5"/>
+      <terrain type="bridge" value="8"/>
     </heuristic>
     <population-filter density="0.5"/>
     <workable max-animator="1"/>
@@ -420,4 +420,4 @@
     <altitude-modifier/>
   </object>
 </objects>
-<!-- signature="1855586413" -->
+<!-- signature="3655398959" -->
