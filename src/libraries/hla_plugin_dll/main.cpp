@@ -27,7 +27,9 @@ HLA_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC
     try
     {
         logger.LogInfo( "Initialization..." );
-        return new plugins::hla::HlaPlugin( model, config, xis, logger );
+        dispatcher::Plugin_ABC* result = new plugins::hla::HlaPlugin( model, config, xis, logger );
+        logger.LogInfo( "Initialized!" );
+        return result;
     }
     catch( hla::HLAException& e )
     {
@@ -54,6 +56,7 @@ HLA_PLUGIN_DLL_API void DestroyInstance( dispatcher::Plugin_ABC* plugin, dispatc
     {
         logger.LogInfo( "Destruction..." );
         delete plugin;
+        logger.LogInfo( "Destructed!" );
     }
     catch( hla::HLAException& e )
     {
