@@ -333,9 +333,8 @@ void ADN_Symbols_Data::FilesNeeded( T_StringList& /*files*/ ) const
 // -----------------------------------------------------------------------------
 void ADN_Symbols_Data::Load( const tools::Loader_ABC& fileLoader )
 {
-    const std::string filename = ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szSymbols_.GetData();
-    const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + filename;
-    fileLoader.LoadFile( strFile, boost::bind( &ADN_Symbols_Data::ReadArchive, this, _1 ) );
+    const std::string filename = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szDrawingTemplates_.GetData();
+    fileLoader.LoadFile( filename, boost::bind( &ADN_Symbols_Data::ReadArchive, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

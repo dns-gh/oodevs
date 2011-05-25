@@ -47,8 +47,17 @@ namespace
               >> xml::end;
     }
 
+    void ReadOptionalFile( xml::xistream& input, const std::string& file, ADN_Type_String& outfile )
+    {
+        input >> xml::optional >> xml::start( file )
+                >> xml::attribute( "file", outfile )
+              >> xml::end;
+    }
+
     void WriteFile( xml::xostream& output, const std::string& file, ADN_Type_String& outfile )
     {
+        if( outfile.GetData().empty() )
+            return;
         output << xml::start( file )
                  << xml::attribute( "file", outfile )
                << xml::end;
@@ -95,10 +104,12 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "missions", szMissions_);
     ReadFile( input, "urban", szUrban_ );
     ReadFile( input, "resource-networks", szResourceNetworks_ );
+    ReadOptionalFile( input, "extensions", szExtensions_ );
+    ReadOptionalFile( input, "drawing-templates", szDrawingTemplates_ );
+    ReadOptionalFile( input, "scores", szScores_ );
+    ReadOptionalFile( input, "symbols", szSymbols_ );
     input >> xml::end;
-    szSymbols_ = "DrawingTemplates.xml"; // $$$$ SBO 2011-04-18: hard coded, should use physical
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DataInfos::WriteArchive
@@ -141,6 +152,10 @@ void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
     WriteFile( output, "object-names", szObjectNames_ );
     WriteFile( output, "urban", szUrban_ );
     WriteFile( output, "resource-networks", szResourceNetworks_ );
+    WriteFile( output, "extensions", szExtensions_ );
+    WriteFile( output, "drawing-templates", szDrawingTemplates_ );
+    WriteFile( output, "scores", szScores_ );
+    WriteFile( output, "symbols", szSymbols_ );
     output << xml::end;
 }
 
@@ -308,7 +323,6 @@ void ADN_Project_Data::FilesNeeded( T_StringList& /*vFiles*/ ) const
 void ADN_Project_Data::Reset()
 {
     assert( ! szFile_.GetFileName().GetData().empty() );
-
     // load default parameters (included has resource)
     xml::xistringstream defaultFile( physicalXml );
     dataInfos_.ReadArchive( defaultFile );
@@ -329,11 +343,16 @@ void ADN_Project_Data::Load( const tools::Loader_ABC& fileLoader )
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData() );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData() );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData() );
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "DrawingTemplates.xml" );
+
+    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szExtensions_.GetData() );
+    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szDrawingTemplates_.GetData() );
+    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szScores_.GetData() );
+    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szSymbols_.GetData() );
+    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
+    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "FOM.xml" );
+    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "mapping.xml" );
+
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "templates.xml" );
-    //fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
-    //fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "FOM.xml" );
-    //fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "mapping.xml" );
 }
 
 namespace
@@ -390,7 +409,7 @@ namespace
 
     void ChangeSchemaAndSignature( const std::string& inputFile, const std::string& schemaName )
     {
-        if( !bfs::exists( bfs::path( inputFile ) ) )
+        if( !bfs::exists( inputFile ) || bfs::is_directory( inputFile ) )
             return;
 
         std::string rootNode;
@@ -443,9 +462,12 @@ void ADN_Project_Data::Save()
     ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szObjectNames_.GetData(), "ObjectNames" );
     ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData(), "HumanProtections" );
     ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData(), "MedicalTreatment" );
-    // ?? Same thing to do ??1
+    ChangeSchemaAndSignature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szExtensions_.GetData(), "Extensions" );
+
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szDrawingTemplates_.GetData() );
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szScores_.GetData() );
+    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szSymbols_.GetData() );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
-    tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "DrawingTemplates.xml" );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "FOM.xml" );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "mapping.xml" );
     tools::WriteXmlCrc32Signature( workDir_.GetWorkingDirectory().GetData() + "templates.xml" );

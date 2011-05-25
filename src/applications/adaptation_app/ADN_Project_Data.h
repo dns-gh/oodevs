@@ -75,7 +75,9 @@ public:
         ADN_Type_String szObjectNames_;
         ADN_Type_String szHumanProtections_;
         ADN_Type_String szMedicalTreatment_;
-        // $$$$ SBO 2011-04-18: files not visible/editable
+        ADN_Type_String szExtensions_;
+        ADN_Type_String szDrawingTemplates_;
+        ADN_Type_String szScores_;
         ADN_Type_String szSymbols_;
     };
 

@@ -18,8 +18,10 @@
         <xs:element name="communications" type="FileReference"/>
         <xs:element name="components" type="FileReference"/>
         <xs:element name="decisional" type="FileReference"/>
+        <xs:element name="drawing-templates" type="FileReference" minOccurs="0"/>
         <xs:element name="resource-natures" type="FileReference"/>
         <xs:element name="resources" type="FileReference"/>
+        <xs:element name="extensions" type="FileReference" minOccurs="0"/>
         <xs:element name="fires" type="FileReference"/>
         <xs:element name="health" type="FileReference"/>
         <xs:element name="human-factors" type="FileReference"/>
@@ -39,8 +41,10 @@
         <xs:element name="protections" type="FileReference"/>
         <xs:element name="reports" type="FileReference"/>
         <xs:element name="resource-networks" type="FileReference"/>
+        <xs:element name="scores" type="FileReference" minOccurs="0"/>
         <xs:element name="sensors" type="FileReference"/>
         <xs:element name="supply" type="FileReference"/>
+        <xs:element name="symbols" type="FileReference" minOccurs="0"/>
         <xs:element name="units" type="FileReference"/>
         <xs:element name="urban" type="FileReference"/>
         <xs:element name="volumes" type="FileReference"/>
