@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::ExerciseConfig& config, const std::string& file );
+    void Load( const tools::ExerciseConfig& config );
     void Purge();
     const std::string GetNameByType( AttributeType::EType typeName ) const;
     //@}

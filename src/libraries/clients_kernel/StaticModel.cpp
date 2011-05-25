@@ -64,7 +64,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     types_.Load( config );
     accommodationTypes_.Load( config );
     objectTypes_.Load( config );
-    extensionTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "Extensions.xml" ) );
+    extensionTypes_.Load( config );
     static_cast< kernel::CoordinateConverter& >( coordinateConverter_ ).Load( config );
 }
 

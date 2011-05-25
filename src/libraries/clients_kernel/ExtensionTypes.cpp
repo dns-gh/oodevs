@@ -47,11 +47,9 @@ ExtensionTypes::~ExtensionTypes()
 // Name: ExtensionTypes::Load
 // Created: JSR 2010-10-01
 // -----------------------------------------------------------------------------
-void ExtensionTypes::Load( const tools::ExerciseConfig& config, const std::string& file )
+void ExtensionTypes::Load( const tools::ExerciseConfig& config )
 {
-    if( ! bfs::exists( bfs::path( file, bfs::native ) ) )
-        return;
-    config.GetLoader().LoadFile( file, boost::bind( &ExtensionTypes::ReadExtensions, this, _1 ) );
+    config.GetLoader().LoadOptionalPhysicalFile( "extensions", boost::bind( &ExtensionTypes::ReadExtensions, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------
