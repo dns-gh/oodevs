@@ -37,15 +37,12 @@ CheckpointMessageHandler::~CheckpointMessageHandler()
 // -----------------------------------------------------------------------------
 bool CheckpointMessageHandler::OnReceiveMessage( const sword::SimToClient& message )
 {
-    if( message.message().has_control_checkpoint_save_end() )
+    if( message.message().has_control_checkpoint_save_end() && message.message().control_checkpoint_save_end().has_name() )
     {
-        if( message.message().control_checkpoint_save_end().has_name() )
-        {
-            SessionCommandExecutionResponse response;
-            response().set_error_code( sword::SessionCommandExecutionResponse::success );
-            response().set_saved_checkpoint( message.message().control_checkpoint_save_end().name() );
-            Send( response );
-        }
+        SessionCommandExecutionResponse response;
+        response().set_error_code( sword::SessionCommandExecutionResponse::success );
+        response().set_saved_checkpoint( message.message().control_checkpoint_save_end().name() );
+        Send( response );
     }
     return false;
 }

@@ -47,5 +47,3 @@ bool ControlInformationMessageHandler::OnReceiveMessage( const sword::SimToClien
     }
     return false;
 }
-
-

@@ -237,7 +237,7 @@ namespace launcher_test
         void VerifySendRequest( const std::string& expected )
         {
             sword::ClientToSim message;
-            MOCK_EXPECT( dispatcher, ReceiveSim ).once().with( mock::any , mock::retrieve( message ) );
+            MOCK_EXPECT( dispatcher, ReceiveSim ).once().with( mock::any, mock::retrieve( message ) );
             timeout.Start();
             while( !message.IsInitialized()&& !timeout.Expired() )
                 Update();
@@ -247,7 +247,7 @@ namespace launcher_test
         void VerifySendAuthRequest( const std::string& expected )
         {
             sword::ClientToAuthentication message;
-            MOCK_EXPECT( dispatcher, ReceiveAuth ).once().with( mock::any , mock::retrieve( message ) );
+            MOCK_EXPECT( dispatcher, ReceiveAuth ).once().with( mock::any, mock::retrieve( message ) );
             timeout.Start();
             while( !message.IsInitialized()&& !timeout.Expired() )
                 Update();

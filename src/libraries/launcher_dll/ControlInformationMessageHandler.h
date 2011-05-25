@@ -26,8 +26,8 @@ class ControlInformationMessageHandler : public ClientMessageHandlerBase
 public:
     //! @name Constructors/Destructor
     //@{
-    ControlInformationMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
-    ~ ControlInformationMessageHandler();
+             ControlInformationMessageHandler( LauncherPublisher& publisher, const std::string& exercise, const std::string& session );
+    virtual ~ControlInformationMessageHandler();
     //@}
 
     //! @name Operations

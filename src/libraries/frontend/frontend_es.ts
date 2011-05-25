@@ -194,6 +194,14 @@
         <source>Failed to start session: %1.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>session already paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to execute command on exercise: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PluginConfig</name>

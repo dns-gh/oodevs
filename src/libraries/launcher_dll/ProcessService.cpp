@@ -160,9 +160,9 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
     boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( message.type() == sword::SessionStartRequest::dispatch ) );
     {
         boost::recursive_mutex::scoped_lock locker( mutex_ );
-        processes_[ std::make_pair(exercise, session) ] = wrapper;
+        processes_[ std::make_pair( exercise, session ) ] = wrapper;
     }
-    wrapper->Start(*this, command, profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_.GetTestMode() );
+    wrapper->Start( *this, command, profileCollector.supervisorProfile_, profileCollector.supervisorPassword_, config_.GetTestMode() );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new CheckpointMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new StatusMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
     wrapper->AddPermanentMessageHandler( std::auto_ptr< MessageHandler_ABC >( new NotificationMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
@@ -290,6 +290,19 @@ void ProcessService::RemoveCheckpoint( sword::CheckpointDeleteResponse& message,
     }
 }
 
+namespace
+{
+    template< typename T, typename U >
+    void SendErrorMessage( LauncherPublisher& publisher, const std::string& exercise, const std::string& session, U error )
+    {
+        T message;
+        message().set_exercise( exercise );
+        message().set_session( session );
+        message().set_error_code( error );
+        message.Send( publisher );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ProcessService::ExecuteCommand
 // Created: AHC 2011-05-16
@@ -298,25 +311,10 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
 {
     ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
     static int context = 1;
-
     if( processes_.end() == it )
-    {
-        SessionCommandExecutionResponse response;
-        response().set_exercise( message.exercise() );
-        response().set_session( message.session() );
-        response().set_error_code( sword::SessionCommandExecutionResponse::invalid_session_name );
-        response.Send( server_.ResolveClient( endpoint ) );
-        return;
-    }
+        return SendErrorMessage< SessionCommandExecutionResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionCommandExecutionResponse::invalid_session_name );
     if( !it->second->IsConnected() )
-    {
-        SessionCommandExecutionResponse response;
-        response().set_exercise( message.exercise() );
-        response().set_session( message.session() );
-        response().set_error_code( sword::SessionCommandExecutionResponse::session_not_running );
-        response.Send( server_.ResolveClient( endpoint ) );
-        return;
-    }
+        return SendErrorMessage< SessionCommandExecutionResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionCommandExecutionResponse::session_not_running );
     boost::shared_ptr< SwordFacade > client( it->second );
     if( message.has_set_running() )
         ExecutePauseResume( endpoint, message.exercise(), message.session(), message.set_running(), context, *client );
@@ -363,10 +361,8 @@ void ProcessService::SaveCheckpoint( const std::string& name, SwordFacade& facad
 // -----------------------------------------------------------------------------
 void ProcessService::Update()
 {
-    for(ProcessContainer::iterator it = processes_.begin(); processes_.end() != it; ++it)
-    {
+    for( ProcessContainer::iterator it = processes_.begin(); processes_.end() != it; ++it )
         it->second->Update();
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -377,25 +373,11 @@ void ProcessService::ChangeParameter( const std::string& endpoint, const sword::
 {
     ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
     static int context = 1;
-
     if( processes_.end() == it )
-    {
-        SessionParameterChangeResponse response;
-        response().set_exercise( message.exercise() );
-        response().set_session( message.session() );
-        response().set_error_code( sword::SessionParameterChangeResponse::invalid_session_name );
-        response.Send( server_.ResolveClient( endpoint ) );
-        return;
-    }
+        return SendErrorMessage< SessionParameterChangeResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionParameterChangeResponse::invalid_session_name );
     if( !it->second->IsConnected() )
-    {
-        SessionParameterChangeResponse response;
-        response().set_exercise( message.exercise() );
-        response().set_session( message.session() );
-        response().set_error_code( sword::SessionParameterChangeResponse::session_not_running );
-        response.Send( server_.ResolveClient( endpoint ) );
-        return;
-    }
+        return SendErrorMessage< SessionParameterChangeResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionParameterChangeResponse::session_not_running );
+
     boost::shared_ptr< SwordFacade > client( it->second );
     if( message.has_acceleration_factor() )
     {
@@ -417,31 +399,14 @@ void ProcessService::ChangeParameter( const std::string& endpoint, const sword::
 // -----------------------------------------------------------------------------
 void ProcessService::SendConnectedProfiles( const std::string& endpoint, const sword::ConnectedProfileListRequest& message )
 {
-
     ProcessContainer::const_iterator it = processes_.find( std::make_pair( message.exercise(), message.session() ) );
     static int context = 1;
-
     if( processes_.end() == it )
-    {
-        ConnectedProfileListResponse response;
-        response().set_exercise( message.exercise() );
-        response().set_session( message.session() );
-        response().set_error_code( sword::ConnectedProfileListResponse::invalid_session_name );
-        response.Send( server_.ResolveClient( endpoint ) );
-        return;
-    }
+        return SendErrorMessage< ConnectedProfileListResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::ConnectedProfileListResponse::invalid_session_name );
     if( !it->second->IsConnected() )
-    {
-        ConnectedProfileListResponse response;
-        response().set_exercise( message.exercise() );
-        response().set_session( message.session() );
-        response().set_error_code( sword::ConnectedProfileListResponse::session_not_running );
-        response.Send( server_.ResolveClient( endpoint ) );
-        return;
-    }
+        return SendErrorMessage< ConnectedProfileListResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::ConnectedProfileListResponse::session_not_running );
     boost::shared_ptr< SwordFacade > client( it->second );
-
-    client->RegisterMessageHandler( context, std::auto_ptr<MessageHandler_ABC>( new ConnectedProfilesMessageHandler( server_.ResolveClient( endpoint ), message.exercise(), message.session() ) ) );
+    client->RegisterMessageHandler( context, std::auto_ptr< MessageHandler_ABC >( new ConnectedProfilesMessageHandler( server_.ResolveClient( endpoint ), message.exercise(), message.session() ) ) );
     authentication::ConnectedProfilesRequest request;
     request.Send( *client, context );
     ++context;
