@@ -128,11 +128,11 @@ Model::~Model()
 void Model::Purge()
 {
     UpdateName( "orbat" );
+    profiles_.Purge();
     urban_.Purge();
     intelligences_.Purge();
     successFactors_.Purge();
     scores_.Purge();
-    profiles_.Purge();
     weather_.Purge();
     limits_.Purge();
     agents_.Purge();
