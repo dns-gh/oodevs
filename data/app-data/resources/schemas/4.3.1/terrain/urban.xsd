@@ -73,6 +73,7 @@
 					<xs:attribute name="occupation" type="T_ZeroToOneDouble"/>
 					<xs:attribute name="trafficability" type="T_NonNegativeDouble"/>
 					<xs:attribute name="parking-availability" type="xs:boolean"/>
+					<xs:attribute name="parking-floors" type="T_NonNegativeInteger"/>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="usages" minOccurs="0">

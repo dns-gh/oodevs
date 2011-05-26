@@ -21,8 +21,11 @@ Architecture::Architecture( const urban::TerrainObject_ABC& object, std::auto_pt
 {
     const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();;
     if( pPhysical && pPhysical->GetArchitecture() )
-        Initialize( pPhysical->GetArchitecture()->GetHeight(), pPhysical->GetArchitecture()->GetFloorNumber(), pPhysical->GetArchitecture()->GetRoofShape(),
-                    pPhysical->GetArchitecture()->GetMaterial(), pPhysical->GetArchitecture()->GetOccupation(), pPhysical->GetArchitecture()->GetTrafficability() );
+    {
+        const urban::Architecture& architecture = *pPhysical->GetArchitecture();
+        Initialize( architecture.GetHeight(), architecture.GetFloorNumber(), architecture.GetParkingFloors(), architecture.GetRoofShape(),
+                    architecture.GetMaterial(), architecture.GetOccupation(), architecture.GetTrafficability() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -38,10 +41,10 @@ Architecture::~Architecture()
 // Name: Architecture::Initialize
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-void Architecture::Initialize( float height, unsigned int floorNumber, const std::string& roofShape,
+void Architecture::Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
                                const std::string& material, float occupation, float trafficability )
 {
-    pArchitecture_->Initialize( height, floorNumber, roofShape, material, occupation, trafficability );
+    pArchitecture_->Initialize( height, floorNumber, parkingFloors, roofShape, material, occupation, trafficability );
 }
 
 // -----------------------------------------------------------------------------

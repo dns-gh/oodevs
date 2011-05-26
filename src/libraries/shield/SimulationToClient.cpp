@@ -2005,7 +2005,8 @@ namespace
         CONVERT( material );
         CONVERT( occupation );
         CONVERT( trafficability );
-        CONVERT( parking_available );
+        if( from.has_parking_floors() )
+            to->set_parking_available( from.parking_floors() > 0 );
     }
     template< typename From, typename To >
     void ConvertRgbaColor( const From& from, To* to )

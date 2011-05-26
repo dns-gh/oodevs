@@ -66,6 +66,21 @@
     </message>
 </context>
 <context>
+    <name>Application</name>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By disabling the logistic function on this automat, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By disabling the logistic function on this formation, all the logistic subordinates superiors will be reset. Do you want to proceed ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Automat</name>
     <message>
         <source>Info/Identifier</source>
@@ -306,8 +321,8 @@
 <context>
     <name>LogisticAttribute</name>
     <message>
-        <source>Info/Camp attributes/Superior</source>
-        <translation>Info/Atributos de campamento/Superior</translation>
+        <source>Info/Camp attributes/Logistic base</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -397,10 +412,6 @@
     <message>
         <source>Camp</source>
         <translation>Campamento</translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation>TC2:</translation>
     </message>
     <message>
         <source>Crossing site</source>
@@ -586,6 +597,10 @@
         <source>Altitude modifier:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logistic base:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Population</name>
@@ -736,13 +751,6 @@ Detallado: %1.</translation>
     <message>
         <source>Info/Name</source>
         <translation>Info/Nombre</translation>
-    </message>
-</context>
-<context>
-    <name>Tc2States</name>
-    <message>
-        <source>Logistic/TC2/Superior</source>
-        <translation>Logistique/TC2/Superior</translation>
     </message>
 </context>
 <context>

@@ -19,7 +19,12 @@ using namespace gui;
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
 Architecture::Architecture( kernel::PropertiesDictionary& dictionary )
-    : dictionary_( dictionary )
+    : dictionary_    ( dictionary )
+    , height_        ( 0 )
+    , floorNumber_   ( 0 )
+    , parkingFloors_ ( 0 )
+    , occupation_    ( 0 )
+    , trafficability_( 0 )
 {
     // NOTHING
 }
@@ -37,18 +42,20 @@ Architecture::~Architecture()
 // Name: Architecture::Initialize
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-void Architecture::Initialize( float height, unsigned int floorNumber, const std::string& roofShape,
+void Architecture::Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
                                const std::string& material, float occupation, float trafficability )
 {
     roofShape_ = roofShape;
     material_ = material;
     height_ = height;
     floorNumber_ = floorNumber;
+    parkingFloors_ = parkingFloors;
     occupation_ = static_cast< unsigned int >( occupation * 100u );
     trafficability_ = trafficability;
     const Architecture& architecture = *this;
     dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/Height" ), architecture.height_ );
     dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/floorNumber" ), architecture.floorNumber_ );
+    dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/parkingFloors" ), architecture.parkingFloors_ );
     dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/roofShape" ), architecture.roofShape_ );
     dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/material" ), architecture.material_ );
     dictionary_.Register( *this, tools::translate( "Block", "PhysicalFeatures/Architecture/occupation" ), architecture.occupation_ );

@@ -84,6 +84,10 @@
         <source>Angriness</source>
         <translation>Colère</translation>
     </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/parkingFloors</source>
+        <translation>Eléments physiques/Architecture/Etages de parking</translation>
+    </message>
 </context>
 <context>
     <name>FormationLayer</name>

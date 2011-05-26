@@ -1576,7 +1576,7 @@ namespace
         a->mutable_architecture()->set_material( "material" );
         a->mutable_architecture()->set_occupation( 10.f );
         a->mutable_architecture()->set_trafficability( 11.f );
-        a->mutable_architecture()->set_parking_available( true );
+        a->mutable_architecture()->set_parking_floors( 14 );
         a->mutable_structure()->set_state( 12u );
         FillRgbaColor( a->mutable_color() );
         FillResourceNetwork( a->mutable_infrastructures()->add_resource_network() );

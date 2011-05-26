@@ -225,23 +225,24 @@ void UrbanObjectWrapper::SendCreation() const
     NET_ASN_Tools::WriteLocation( GetLocalisation(), *message().mutable_location() );
     if( const urban::ColorAttribute* color = object_->Retrieve< urban::ColorAttribute >() )
     {
-        message().mutable_attributes()->mutable_color()->set_red( color->Red() );
-        message().mutable_attributes()->mutable_color()->set_green( color->Green() );
-        message().mutable_attributes()->mutable_color()->set_blue( color->Blue() );
-        message().mutable_attributes()->mutable_color()->set_alpha( color->Alpha() );
+        sword::RgbaColor* msg = message().mutable_attributes()->mutable_color();
+        msg->set_red( color->Red() );
+        msg->set_green( color->Green() );
+        msg->set_blue( color->Blue() );
+        msg->set_alpha( color->Alpha() );
     }
     if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
     {
-        if( pPhysical->GetArchitecture() )
+        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
         {
-            message().mutable_attributes()->mutable_architecture()->set_height( pPhysical->GetArchitecture()->GetHeight() );
-            message().mutable_attributes()->mutable_architecture()->set_floor_number( pPhysical->GetArchitecture()->GetFloorNumber() );
-            message().mutable_attributes()->mutable_architecture()->set_roof_shape( pPhysical->GetArchitecture()->GetRoofShape().c_str() );
-            message().mutable_attributes()->mutable_architecture()->set_material( pPhysical->GetArchitecture()->GetMaterial().c_str() );
-            message().mutable_attributes()->mutable_architecture()->set_occupation( pPhysical->GetArchitecture()->GetOccupation() );
-            message().mutable_attributes()->mutable_architecture()->set_trafficability( pPhysical->GetArchitecture()->GetTrafficability() );
-            // TODO parking
-            message().mutable_attributes()->mutable_architecture()->set_parking_available( false );
+            sword::UrbanAttributes_Architecture* msg = message().mutable_attributes()->mutable_architecture();
+            msg->set_height( architecture->GetHeight() );
+            msg->set_floor_number( architecture->GetFloorNumber() );
+            msg->set_roof_shape( architecture->GetRoofShape().c_str() );
+            msg->set_material( architecture->GetMaterial().c_str() );
+            msg->set_occupation( architecture->GetOccupation() );
+            msg->set_trafficability( architecture->GetTrafficability() );
+            msg->set_parking_floors( architecture->GetParkingFloors() );
         }
         if( pPhysical->GetMotivations() )
         {

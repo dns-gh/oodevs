@@ -18,13 +18,11 @@ using namespace dispatcher;
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
 ArchitectureAttribute::ArchitectureAttribute( const sword::UrbanAttributes& message )
-    : height_ ( 0. )
-    , floorNumber_     ( 0 )
-    , basementLevelNumber_ ( 0 )
-    , roofShape_ ( "" )
-    , material_ ( "" )
-    , occupation_ ( 0. )
-    , trafficability_ ( 0. )
+    : height_        ( 0 )
+    , floorNumber_   ( 0 )
+    , parkingFloors_ ( 0 )
+    , occupation_    ( 0 )
+    , trafficability_( 0 )
 {
     Update( message );
 }
@@ -58,6 +56,8 @@ void ArchitectureAttribute::Update( const sword::UrbanAttributes& message )
             occupation_ = message.architecture().occupation();
         if( message.architecture().has_trafficability() )
             trafficability_ = message.architecture().trafficability();
+        if( message.architecture().has_parking_floors() )
+            parkingFloors_ = message.architecture().parking_floors();
     }
 }
 
@@ -73,6 +73,5 @@ void ArchitectureAttribute::Send( sword::UrbanAttributes& message ) const
     message.mutable_architecture()->set_material( material_.c_str() );
     message.mutable_architecture()->set_occupation( occupation_ );
     message.mutable_architecture()->set_trafficability( trafficability_ );
-    // TODO parking
-    message.mutable_architecture()->set_parking_available( false );
+    message.mutable_architecture()->set_parking_floors( parkingFloors_ );
 }

@@ -2035,13 +2035,13 @@ message UrbanAttributes {
         @brief Defines the architecture of a urban object
     */
     message Architecture {
-        required float  height            = 1;                   //!< The height in meters
-        required int32  floor_number      = 2;                   //!< The floor number starting at 0 for the ground floor
-        required string roof_shape        = 3;                   //!< The roof shape
-        required string material          = 4;                   //!< The material
-        required float  occupation        = 5;                   //!< The occupation in percent
-        required float  trafficability    = 6;                   //!< The trafficability in tons used in path-finding
-        required bool   parking_available = 7 [default = false]; //!< Whether parking is available or not
+        required float  height            = 1; //!< The height in meters
+        required int32  floor_number      = 2; //!< The floor number starting at 0 for the ground floor
+        required string roof_shape        = 3; //!< The roof shape
+        required string material          = 4; //!< The material
+        required float  occupation        = 5; //!< The occupation in percent
+        required float  trafficability    = 6; //!< The trafficability in tons used in path-finding
+        required int32  parking_floors    = 7; //!< The number of parking floors
     }
     /** @struct Structure
         @brief Defines the structure of a urban object

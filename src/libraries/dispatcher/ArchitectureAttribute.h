@@ -14,7 +14,6 @@
 
 namespace dispatcher
 {
-    class Model;
 
 // =============================================================================
 /** @class  ArchitectureAttribute
@@ -34,19 +33,19 @@ public:
     //! @name Operations
     //@{
     virtual void Update( const sword::UrbanAttributes& message );
-    virtual void Send  (       sword::UrbanAttributes& message ) const;
+    virtual void Send( sword::UrbanAttributes& message ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    float           height_;
-    unsigned int    floorNumber_;
-    unsigned int    basementLevelNumber_;
-    std::string     roofShape_;
-    std::string     material_;
-    float           occupation_;
-    float           trafficability_;
+    float height_;
+    unsigned int floorNumber_;
+    unsigned int parkingFloors_;
+    std::string roofShape_;
+    std::string material_;
+    float occupation_;
+    float trafficability_;
     //@}
 };
 

@@ -84,6 +84,10 @@
         <source>Angriness</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>PhysicalFeatures/Architecture/parkingFloors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FormationLayer</name>

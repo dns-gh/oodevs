@@ -19,7 +19,7 @@ Architecture::Architecture( const sword::UrbanAttributes& message, std::auto_ptr
     : pArchitecture_( pArchitecture )
 {
     const sword::UrbanAttributes::Architecture& architecture = message.architecture();
-    Initialize( architecture.height(), architecture.floor_number(), architecture.roof_shape(),
+    Initialize( architecture.height(), architecture.floor_number(), architecture.parking_floors(), architecture.roof_shape(),
                 architecture.material(), architecture.occupation(), architecture.trafficability() );
 }
 
@@ -36,10 +36,10 @@ Architecture::~Architecture()
 // Name: Architecture::Initialize
 // Created: LGY 2011-04-15
 // -----------------------------------------------------------------------------
-void Architecture::Initialize( float height, unsigned int floorNumber, const std::string& roofShape,
+void Architecture::Initialize( float height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
                                const std::string& material, float occupation, float trafficability )
 {
-    pArchitecture_->Initialize( height, floorNumber, roofShape, material, occupation, trafficability );
+    pArchitecture_->Initialize( height, floorNumber, parkingFloors, roofShape, material, occupation, trafficability );
 }
 
 // -----------------------------------------------------------------------------
