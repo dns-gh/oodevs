@@ -9,7 +9,6 @@
 
 #include "clients_gui_pch.h"
 #include "RichListItem.h"
-#include "SimplerRichText.h"
 #include <qpainter.h>
 
 using namespace gui;
@@ -198,10 +197,7 @@ void RichListItem::SetFont( const QFont& font )
 {
     font_ = font;
     for( IT_RichTexts it = columns_.begin(); it != columns_.end(); ++it )
-    {
-        SimplerRichText& rich = *it->rich;
-        rich.setDefaultFont( font_ );
-    }
+        it->rich->setDefaultFont( font_ );
     widthChanged();
 }
 
@@ -267,7 +263,10 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
         brush.setColor( GetBackgroundColor() );
     }
 
-    SimplerRichText* pRichText = columns_[ nColumn ].rich;
+    QSimpleRichText* pRichText = columns_[ nColumn ].rich;
+    pRichText->setWidth( nWidth );
+    setHeight( Height() );
+
     const QPixmap& pm = columns_[ nColumn ].pixMap;
     QRect rect( 0, 0, nWidth, height() );
 
@@ -278,7 +277,6 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
     pRichText->draw( pPainter, hoffset + hindent, voffset, rect, colorGroup, &brush );
     pPainter->drawPixmap( QPoint( hindent + margin_ / 2, ( height() - pm.height() ) / 2 ), pm );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RichListItem::width
@@ -304,6 +302,21 @@ int RichListItem::Width( int nColumn ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: RichListItem::Height
+// Created: SBO 2011-05-26
+// -----------------------------------------------------------------------------
+int RichListItem::Height() const
+{
+    int bestHeight = 0;
+    for( T_RichTexts::const_iterator it = columns_.begin(); it != columns_.end(); ++it )
+        if( it->pixMap.isNull() )
+            bestHeight = std::max( bestHeight, it->rich->height() );
+        else
+            bestHeight = std::max( bestHeight, it->pixMap.height() );
+    return bestHeight;
+}
+
+// -----------------------------------------------------------------------------
 // Name: RichListItem::setText
 // Created: AGE 2006-03-06
 // -----------------------------------------------------------------------------
@@ -317,7 +330,8 @@ void RichListItem::setText( int column, const QString& text )
     if( richText.base != text )
     {
         richText.base = text;
-        richText.rich->setText( text );
+        delete richText.rich;
+        richText.rich = CreateRichText( text );
         widthChanged();
         listView()->triggerUpdate();
     }
@@ -344,9 +358,9 @@ void RichListItem::setPixmap( int column, const QPixmap & pm )
 // Name: RichListItem::CreateRichText
 // Created: AGE 2006-03-06
 // -----------------------------------------------------------------------------
-SimplerRichText* RichListItem::CreateRichText( const QString& label )
+QSimpleRichText* RichListItem::CreateRichText( const QString& label )
 {
-    SimplerRichText* text = new SimplerRichText( label, font_ );
+    QSimpleRichText* text = new QSimpleRichText( label, font_ );
     if( text->height() > height() )
         setHeight( text->height() );
     return text;
