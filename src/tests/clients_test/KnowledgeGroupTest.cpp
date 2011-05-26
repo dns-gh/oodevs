@@ -67,9 +67,9 @@ namespace
     MOCK_BASE_CLASS( MockKnowledgeGroupFactory, kernel::KnowledgeGroupFactory_ABC)
     {
         MOCK_METHOD_EXT( Create, 1, kernel::KnowledgeGroup_ABC*( kernel::Team_ABC& ), Create1 );
-        MOCK_METHOD_EXT( Create, 2, kernel::KnowledgeGroup_ABC*( xml::xistream& , kernel::Team_ABC& ), Create2 );
+        MOCK_METHOD_EXT( Create, 3, kernel::KnowledgeGroup_ABC*( xml::xistream& , kernel::Team_ABC&, std::string& ), Create2 );
         MOCK_METHOD_EXT( Create, 1, kernel::KnowledgeGroup_ABC*( kernel::KnowledgeGroup_ABC& ), Create3 );
-        MOCK_METHOD_EXT( Create, 2, kernel::KnowledgeGroup_ABC*( xml::xistream&, kernel::KnowledgeGroup_ABC&  ), Create4 );
+        MOCK_METHOD_EXT( Create, 3, kernel::KnowledgeGroup_ABC*( xml::xistream&, kernel::KnowledgeGroup_ABC&, std::string& ), Create4 );
     };
 
     typedef tools::Resolver< kernel::KnowledgeGroupType, std::string > T_KnowledgeGroupTypeResolver;
@@ -150,9 +150,10 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupTest )
     Model model( controllers, staticModel);
     MockTeam team;
     MockKnowledgeGroup group;
-    MOCK_EXPECT( factory, Create2 ).with( mock::same( xis ), mock::same( team ) ).returns( &group );
+    std::string errors;
+    MOCK_EXPECT( factory, Create2 ).with( mock::same( xis ), mock::same( team ), errors ).returns( &group );
     MOCK_EXPECT( group, GetId ).returns( 42 );
-    kgModel.Create( xis, team, model );
+    kgModel.Create( xis, team, model, errors );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,13 +178,14 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupCompositeTest )
     Model model( controllers, staticModel);
     MockTeam team;
     MockKnowledgeGroup group;
-    MOCK_EXPECT( factory, Create2 ).with( mock::same( xis ), mock::same( team ) ).returns( &group );
+    std::string errors;
+    MOCK_EXPECT( factory, Create2 ).with( mock::same( xis ), mock::same( team ), errors ).returns( &group );
     MOCK_EXPECT( group, GetId ).returns( 42 );
     MockKnowledgeGroup subGroup;
-    MOCK_EXPECT( factory, Create4 ).with( mock::any, mock::same( group ) ).returns( &subGroup );
+    MOCK_EXPECT( factory, Create4 ).with( mock::any, mock::same( group ), errors ).returns( &subGroup );
     MOCK_EXPECT( subGroup, GetId ).returns( 2 );
 
-    kgModel.Create( xis, team, model );
+    kgModel.Create( xis, team, model, errors );
 }
 
 // -----------------------------------------------------------------------------
@@ -208,16 +210,17 @@ BOOST_AUTO_TEST_CASE( ReadKnowledgeGroupMultiTest )
     Model model( controllers, staticModel);
     MockTeam team;
     MockKnowledgeGroup group;
-    MOCK_EXPECT( factory, Create2 ).with( mock::same( xis ), mock::same( team ) ).returns( &group );
+    std::string errors;
+    MOCK_EXPECT( factory, Create2 ).with( mock::same( xis ), mock::same( team ), errors ).returns( &group );
     MOCK_EXPECT( group, GetId ).returns( 42 );
     MockKnowledgeGroup subGroup;
-    MOCK_EXPECT( factory, Create4 ).with( mock::any, mock::same( group ) ).returns( &subGroup );
+    MOCK_EXPECT( factory, Create4 ).with( mock::any, mock::same( group ), errors ).returns( &subGroup );
     MOCK_EXPECT( subGroup, GetId ).returns( 2 );
     MockKnowledgeGroup subSubGroup;
-    MOCK_EXPECT( factory, Create4 ).with( mock::any, mock::same( subGroup ) ).returns( &subSubGroup );
+    MOCK_EXPECT( factory, Create4 ).with( mock::any, mock::same( subGroup ), errors ).returns( &subSubGroup );
     MOCK_EXPECT( subSubGroup, GetId ).returns( 71 );
 
-    kgModel.Create( xis, team, model );
+    kgModel.Create( xis, team, model, errors );
 }
 
 namespace
@@ -238,7 +241,7 @@ BOOST_AUTO_TEST_CASE( WriteKnowledgeGroupTest )
     IdManager idManager;
     MockKnowledgeGroupTypeResolver types;
     std::auto_ptr< kernel::KnowledgeGroupType > standardType( MakeKnowledgeGroupType() );
-    MOCK_EXPECT( types, Get ).with( mock::any ).returns( boost::ref( *standardType ) );
+    MOCK_EXPECT( types, Find ).with( mock::any ).returns( standardType.get() );
     kernel::Controller controller;
     MockTeam team;
     {

@@ -28,7 +28,7 @@ class IdManager;
 */
 // Created: FHD 2009-11-19
 // =============================================================================
-class KnowledgeGroupFactory
+class KnowledgeGroupFactory : public kernel::KnowledgeGroupFactory_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -40,9 +40,11 @@ public:
     //! @name Operations
     //@{
     virtual kernel::KnowledgeGroup_ABC* Create( kernel::Team_ABC& team );
+    virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::Team_ABC& team );
     virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::Team_ABC& team, std::string& loadingErrors );
 
     virtual kernel::KnowledgeGroup_ABC* Create( kernel::KnowledgeGroup_ABC& knowledgeGroup );
+    virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& knowledgeGroup, std::string& loadingErrors );
     //@}
 

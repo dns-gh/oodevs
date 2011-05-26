@@ -41,10 +41,10 @@ public:
     //! @name Operations
     //@{
     virtual kernel::KnowledgeGroup_ABC* Create( kernel::Team_ABC& team ) = 0;
-    virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::Team_ABC& team ) = 0;
+    virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::Team_ABC& team, std::string& loadingErrors ) = 0;
 
     virtual kernel::KnowledgeGroup_ABC* Create( kernel::KnowledgeGroup_ABC& knowledgeGroup ) = 0;
-    virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& knowledgeGroup ) = 0;
+    virtual kernel::KnowledgeGroup_ABC* Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& knowledgeGroup, std::string& loadingErrors ) = 0;
 
     //@}
 };

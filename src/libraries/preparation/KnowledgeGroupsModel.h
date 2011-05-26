@@ -18,6 +18,7 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class KnowledgeGroup_ABC;
+    class KnowledgeGroupFactory_ABC;
     class Team_ABC;
 }
 
@@ -28,8 +29,6 @@ namespace xml
 }
 
 class Model;
-
-class KnowledgeGroupFactory;
 
 // =============================================================================
 /** @class  KnowledgeGroupsModel
@@ -42,7 +41,7 @@ class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit KnowledgeGroupsModel( kernel::Controllers& controllers, KnowledgeGroupFactory& knowledgeGroupFactory );
+    explicit KnowledgeGroupsModel( kernel::Controllers& controllers, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
     virtual ~KnowledgeGroupsModel();
     //@}
 
@@ -67,7 +66,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_; // LTO
-    KnowledgeGroupFactory& knowledgeGroupFactory_;
+    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
     //@}
 };
 

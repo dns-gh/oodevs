@@ -107,3 +107,23 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, k
         return 0;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupFactory::Create
+// Created: LDC 2011-05-26
+// -----------------------------------------------------------------------------
+kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::Team_ABC& team )
+{
+    std::string errors;
+    return Create( xis, team, errors );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupFactory::Create
+// Created: LDC 2011-05-26
+// -----------------------------------------------------------------------------
+kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& knowledgeGroup )
+{
+    std::string errors;
+    return Create( xis, knowledgeGroup, errors );
+}
