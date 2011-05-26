@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<plugin name="hla" version="1.0" library="hla_plugin-vc80-mt.dll" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\resources\schemas\4.3.1\plugins\plugin.xsd">
+<plugin name="hla" version="1.0" library="hla_plugin-vc80-mt.dll" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="..\..\resources\schemas\4.3.1\plugins\plugin.xsd">
     <descriptions>
         <description lang="en" name="HLA"><![CDATA[HLA communication plugin.]]></description>
     </descriptions>

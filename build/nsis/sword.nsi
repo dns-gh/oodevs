@@ -82,9 +82,9 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\geos.dll"
     File "${RUNDIR}\proj.dll"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
-    File "${RUNDIR}\plugins\crossbow.xml"
-    File "${RUNDIR}\plugins\dis.xml"
-    File "${RUNDIR}\plugins\positions.xml"
+    File "${RUNDIR}\plugins\crossbow\plugin.xml"
+    File "${RUNDIR}\plugins\dis\plugin.xml"
+    File "${RUNDIR}\plugins\positions\plugin.xml"
     File "resources\*.ico"
 
     ; evaluation licence

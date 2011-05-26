@@ -18,10 +18,9 @@
 !endif
 
 !macro Plugin.AddApplications
-    ${SetOutPath} "$INSTDIR\applications"
-    ${File} "${RUNDIR}\" "hla_plugin-${PLATFORM}-mt.dll"
-    ${File} "${RUNDIR}\" "libFedTime1516e.dll"    
-    
     ${SetOutPath} "$INSTDIR\applications\plugins"
-    ${File} "${RUNDIR}\plugins\" "hla.xml"
+    ${SetOutPath} "$INSTDIR\applications\plugins\hla"
+    ${File} "${RUNDIR}\plugins\hla\" "hla_plugin-${PLATFORM}-mt.dll"
+    ${File} "${RUNDIR}\plugins\hla\" "libFedTime1516e.dll"    
+    ${File} "${RUNDIR}\plugins\hla\" "plugin.xml"
 !macroend

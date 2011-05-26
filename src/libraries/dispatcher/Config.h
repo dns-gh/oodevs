@@ -30,7 +30,7 @@ class Config : public virtual tools::SessionConfig
 public:
     //! @name Constructors/Destructor
     //@{
-             Config( tools::RealFileLoaderObserver_ABC& observer );
+    explicit Config( tools::RealFileLoaderObserver_ABC& observer );
     virtual ~Config();
     //@}
 

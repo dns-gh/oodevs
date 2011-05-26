@@ -134,6 +134,27 @@ namespace
             throw std::runtime_error( "unable to find function '" + name + "'" );
         return function;
     }
+
+    const unsigned int environment_buffer_size = 32767;
+
+    struct EnvironmentGuard
+    {
+        explicit EnvironmentGuard( const std::string& directory )
+        {
+            memset( path_, 0, environment_buffer_size );
+            if( GetEnvironmentVariable( "Path", path_, environment_buffer_size ) == 0 )
+                throw std::runtime_error( "Failed to retrieve 'PATH' environment variable." );
+            const std::string newPath( std::string( path_ ) + ";" + directory );
+            if( !SetEnvironmentVariable( "Path", newPath.c_str() ) )
+                throw std::runtime_error( "Failed to set 'PATH' environment variable." );
+        }
+        ~EnvironmentGuard()
+        {
+            if( !std::string( path_ ).empty() )
+                SetEnvironmentVariable( "Path", path_ );
+        }
+        char path_[ environment_buffer_size ];
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -144,6 +165,7 @@ void PluginFactory::LoadPlugin( const std::string& name, xml::xistream& xis )
 {
     try
     {
+        const EnvironmentGuard environment( config_.BuildPluginDirectory( name ) );
         const std::string library = SetLibraryConfiguration( xis.attribute< std::string >( "library" ) );
         HMODULE module = LoadLibrary( library.c_str() );
         if( !module )

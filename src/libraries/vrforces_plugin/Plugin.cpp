@@ -27,6 +27,17 @@
 
 using namespace plugins::vrforces;
 
+namespace
+{
+    DtVrlApplicationInitializer ConfigureInitializer( const dispatcher::Config& config, xml::xistream& xis )
+    {
+        DtVrlApplicationInitializer initializer( 0, 0, "VR-Forces Plugin" );
+        const std::string rootDirectory = config.BuildPluginDirectory( "vrforces" );
+        initializer.setFedFileName( ( rootDirectory + "/" + xis.attribute< std::string >( "fed" ) ).c_str() );
+        return initializer;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Plugin constructor
 // Created: SBO 2011-01-19
@@ -37,7 +48,7 @@ Plugin::Plugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_AB
     , forceResolver_( new ForceResolver( model_ ) )
     , typeResolver_ ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
     , logger_       ( new Logger( logger ) )
-    , connection_   ( new DtExerciseConn( DtVrlApplicationInitializer( 0, 0, "VR-Forces Plugin" ) ) )
+    , connection_   ( new DtExerciseConn( ConfigureInitializer( config, xis ) ) )
     , vrForces_     ( new Facade( *connection_, xis ) )
     , disaggregator_( new DisaggregationStrategy( *vrForces_ ) )
 {

@@ -13,6 +13,7 @@
 #include "PluginSetting.h"
 #include "PluginSettingVisitor_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "tools/GeneralConfig.h"
 #include <algorithm>
 #include <boost/bind.hpp>
 #include <boost/filesystem/convenience.hpp>
@@ -119,7 +120,8 @@ QString PluginConfig::GetName() const
 // -----------------------------------------------------------------------------
 bool PluginConfig::IsAvailable() const
 {
-    return library_.empty() || boost::filesystem::exists( library_ );
+    using namespace boost::filesystem;
+    return library_.empty() || exists( path( config_.BuildPluginDirectory( name_ ) ) / library_ );
 }
 
 namespace

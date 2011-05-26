@@ -35,7 +35,8 @@ GeneralConfig::GeneralConfig( const std::string& defaultRoot /*= "../"*/ )
         ( "terrains-dir"  , po::value< std::string >( &terrainsDir_   )->default_value( "data/terrains/"   ), "specify terrains root directory"   )
         ( "models-dir"    , po::value< std::string >( &modelsDir_     )->default_value( "data/models/"     ), "specify models root directory"     )
         ( "population-dir", po::value< std::string >( &populationDir_ )->default_value( "data/population/" ), "specify population root directory" )
-        ( "exercises-dir" , po::value< std::string >( &exercisesDir_  )->default_value( "exercises/"       ), "specify exercises root directory"  );
+        ( "exercises-dir" , po::value< std::string >( &exercisesDir_  )->default_value( "exercises/"       ), "specify exercises root directory"  )
+        ( "plugins-dir"   , po::value< std::string >( &pluginsDir_    )->default_value( "plugins/"         ), "specify plugins root directory"    );
     AddOptions( desc );
 }
 
@@ -239,7 +240,6 @@ std::string GeneralConfig::GetModelsDir() const
     return modelsDir_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: GeneralConfig::BuildPopulationChildFile
 // Created: AGE 2007-09-04
@@ -266,4 +266,16 @@ void GeneralConfig::LoadExercise( const std::string& file )
 {
     bfs::path p( file, bfs::native );
     exercisesDir_ = p.branch_path().branch_path().native_directory_string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: GeneralConfig::BuildPluginDirectory
+// Created: SBO 2011-05-26
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::BuildPluginDirectory( const std::string& plugin ) const
+{
+    const bfs::path pluginsRoot( pluginsDir_ );
+    if( pluginsRoot.has_root_directory() )
+        return ( pluginsRoot / plugin ).string();
+    return ( boost::filesystem::current_path() / pluginsRoot / plugin ).string();
 }

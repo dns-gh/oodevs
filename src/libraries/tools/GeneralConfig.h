@@ -38,6 +38,7 @@ public:
     static std::string BuildResourceChildFile( const std::string& file );
 
     std::string GetRootDir() const;
+    std::string BuildPluginDirectory( const std::string& plugin ) const;
 
     std::string GetExercisesDir() const;
     std::string GetExerciseDir( const std::string& exercice ) const;
@@ -79,6 +80,7 @@ private:
     std::string modelsDir_;
     std::string exercisesDir_;
     std::string populationDir_;
+    std::string pluginsDir_;
 
     const std::string terrainConfigFile_;
     const std::string exerciseConfigFile_;

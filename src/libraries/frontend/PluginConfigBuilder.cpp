@@ -12,6 +12,7 @@
 #include "CompositePluginConfig.h"
 #include "PluginConfig.h"
 #include "tools/DefaultLoader.h"
+#include "tools/GeneralConfig.h"
 #include "tools/NullFileLoaderObserver.h"
 #include <boost/filesystem.hpp>
 #include <xeumeuleu/xml.hpp>
@@ -46,24 +47,27 @@ PluginConfigBuilder::~PluginConfigBuilder()
 // -----------------------------------------------------------------------------
 PluginConfigBuilder& PluginConfigBuilder::BuildFromXml()
 {
-    const bfs::path root = bfs::path( "./plugins", bfs::native );
+    const bfs::path root( config_.BuildPluginDirectory( "" ) );
     if( composite_.get() && bfs::exists( root ) )
     {
         tools::NullFileLoaderObserver observer;
         tools::DefaultLoader loader( observer );
-        bfs::directory_iterator end;
-        for( bfs::directory_iterator it( root ); it != end; ++it )
-        {
-            try
+        bfs::recursive_directory_iterator end;
+        for( bfs::recursive_directory_iterator it( root ); it != end; ++it )
+            if( it->path().leaf() == "plugin.xml" )
             {
-                std::auto_ptr< xml::xistream > xis = loader.LoadFile( it->path().string() );
-                *xis >> xml::start( "plugin" );
-                composite_->Add( config_, *xis );
+                try
+                {
+                    std::auto_ptr< xml::xistream > xis = loader.LoadFile( it->path().string() );
+                    *xis >> xml::start( "plugin" );
+                    composite_->Add( config_, *xis );
+                }
+                catch( ... )
+                {
+                    // NOTHING
+                }
+                it.no_push();
             }
-            catch( ... )
-            {
-            }
-        }
     }
     return *this;
 }

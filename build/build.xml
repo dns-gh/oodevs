@@ -136,6 +136,7 @@
             <defineset define="HLA_PLUGIN_DLL_EXPORTS"/>
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
+        <move todir="${run.dir}/plugins/hla" file="${run.dir}/hla_plugin-${platform}-mt.dll"/>
     </target>
 
     <target name="library.vrforces_plugin" depends="library.protocol,library.rpr" description="build vrforces_plugin static library">
@@ -152,21 +153,23 @@
         </build-lib>
     </target>
 
-    <target name="library.vrforces_plugin_dll" depends="library.clients_kernel,library.vrforces_plugin" description="build vrforces_plugin dynamic library" if="is-vc80">
+    <target name="library.vrforces_plugin_dll" depends="library.dispatcher,library.vrforces_plugin" description="build vrforces_plugin dynamic library" if="is-vc80">
         <build-lib name="vrforces_plugin_dll" outtype="shared" depends="boost,qt,terrain,xalan,xerces,protobuf" pattern="vrforces_plugin-${platform}-mt@{suffix}" suffix="-gd"
             libs="libFedtime1516,
                   matrixRT,mtlRT,vlHLA1516RT,vlRT,vlutilRT,vrfcontrolHLA1516,
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_rpr-${platform}-mt@{suffix},
-                  lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix}
+                  lib${ant.project.name}_vrforces_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}">
             <syslibset libs="shell32,user32"/>
             <defineset define="VRFORCES_PLUGIN_DLL_EXPORTS"/>
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
+        <move todir="${run.dir}/plugins/vrforces" file="${run.dir}/vrforces_plugin-${platform}-mt.dll"/>
     </target>
 
     <target name="library.dis_plugin" depends="library.dispatcher,library.rpr" description="build dis_plugin static library">
@@ -187,6 +190,7 @@
             <defineset define="DIS_PLUGIN_DLL_EXPORTS"/>
             <linkerarg value="/FIXED:NO"/>
         </build-lib>
+        <move todir="${run.dir}/plugins/dis" file="${run.dir}/dis_plugin-${platform}-mt.dll"/>
     </target>
 
     <target name="library.tic" depends="library.dispatcher" description="build tic static library">
@@ -1339,7 +1343,9 @@
         <update name="masalife/brain" version="${masalife.version}"/>
         <update name="masalife/brain" version="${masalife.version}" package="bmc" todir="${bin.dir}"/>
         <update name="masalife/brain" version="${masalife.version}" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
-        <update name="hla"/>
+        <update name="hla" package="include" todir="${include.dir}"/>
+        <update name="hla" package="lib" todir="${lib.dir}"/>
+        <update name="hla" package="dll" todir="${run.dir}/plugins/hla"/>
         <update name="hla" package="federation_app" todir="${bin.dir}"/>
         <update name="tools"/>
         <update name="flexlm"/>
@@ -1354,7 +1360,9 @@
         <update name="protobuf"/>
         <update name="vcredist" package="vcredist"/>
         <update name="openssl"/>
-        <update name="mak"/>
+        <update name="mak" package="include" todir="${include.dir}"/>
+        <update name="mak" package="lib" todir="${lib.dir}"/>
+        <update name="mak" package="dll" todir="${run.dir}/plugins/vrforces"/>
         <update name="wise"/>
         <antcall target="deploy-application-data"/>
         <update-database database="directia.core.bml" dir="${models.dir}/directia.core"/>
