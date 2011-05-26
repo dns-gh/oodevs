@@ -102,6 +102,8 @@ namespace frontend
             CheckListItem* sessionItem = new CheckListItem( exerciseItem, base + "/sessions/" + *it, false );
             sessionItem->setOpen( true );
 
+            CheckListItem* recordItem = new CheckListItem( sessionItem, base + "/sessions/" + *it + "/record", true );
+
             std::string category( QString( "sessions/" + *it + "/checkpoints" ).ascii() );
             const QStringList checkpoints = frontend::commands::ListCheckpoints( config, exercise, ( *it ).ascii() );
             BuildCategory( sessionItem, checkpoints, base, category );
