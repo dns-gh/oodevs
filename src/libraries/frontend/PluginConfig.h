@@ -15,6 +15,7 @@
 #include <vector>
 
 class QGroupBox;
+class QScrollView;
 
 namespace xml
 {
@@ -32,13 +33,12 @@ namespace frontend
 
 // =============================================================================
 /** @class  PluginConfig
-    @brief  PluginConfig
+    @brief  Plugin config
 */
 // Created: SBO 2011-05-09
 // =============================================================================
 class PluginConfig : public PluginConfig_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -69,6 +69,7 @@ private:
     const std::string version_;
     QString label_;
     QGroupBox* box_;
+    QScrollView* view_;
     std::vector< boost::shared_ptr< PluginSetting > > settings_;
     //@}
 };

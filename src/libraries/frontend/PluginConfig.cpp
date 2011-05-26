@@ -18,6 +18,7 @@
 #include <boost/filesystem/convenience.hpp>
 #include <qapplication.h>
 #include <qgroupbox.h>
+#include <qscrollview.h>
 #include <qsettings.h>
 #include <qtextcodec.h>
 #include <qtooltip.h>
@@ -76,9 +77,15 @@ PluginConfig::PluginConfig( QWidget* parent, const tools::GeneralConfig& config,
     DescriptionReader reader( xis, ReadLang() );
     setMargin( 5 );
     setBackgroundOrigin( QWidget::WindowOrigin );
+    view_ = Style( new QScrollView( this ) );
+    view_->setHScrollBarMode( QScrollView::AlwaysOff );
+    view_->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred );
+    view_->setResizePolicy( QScrollView::AutoOneFit );
+    view_->setFrameStyle( QFrame::Box | QFrame::Sunken );
     box_ = Style( new QGroupBox( 2, Horizontal, tools::translate( "PluginConfig", "Enable %1 plugin (v%2)" )
                                                                     .arg( reader.name_.c_str() )
-                                                                    .arg( version_.c_str() ), this ) );
+                                                                    .arg( version_.c_str() ), view_->viewport() ) );
+    view_->addChild( box_ );
     label_ = reader.name_.c_str();
     QToolTip::add( box_, reader.description_.c_str() );
     box_->setCheckable( true );
