@@ -256,10 +256,10 @@
     </heuristic>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
-  <object geometry="point" name="Pont flottant continu" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
+  <object geometry="line,point" name="Pont flottant continu" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
     <bridging/>
   </object>
-  <object geometry="point" name="Pont flottant discontinu" symbol="S*GPEVEB--*****" type="discontinuous pontoon bridge">
+  <object geometry="line,point" name="Pont flottant discontinu" symbol="S*GPEVEB--*****" type="discontinuous pontoon bridge">
     <bridging/>
     <workable max-animator="0"/>
   </object>
@@ -377,4 +377,4 @@
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
 </objects>
-<!-- signature="2073918812" -->
+<!-- signature="1588129353" -->
