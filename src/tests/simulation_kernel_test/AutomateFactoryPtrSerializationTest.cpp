@@ -1,8 +1,5 @@
 #include "simulation_kernel_test_pch.h"
-
 #include "AutomateFactory.h"
-#include "Fixture.h"
-#include "StubMIL_Automate.h"
 #include "simulation_kernel/Tools/MIL_IDManager.h"
 
 // -----------------------------------------------------------------------------
@@ -11,17 +8,19 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyAutomateFactoryPtr_Serialization )
 {
-    std::stringstream stringstream;
+    std::stringstream s;
     {
-        MIL_IDManager idManager;
-        MIL_CheckPointOutArchive outStream( stringstream );
-        AutomateFactory_ABC* automateFactory = new AutomateFactory( idManager, 100, 100 );
-        outStream << automateFactory;
-        delete automateFactory;
+        MIL_IDManager manager;
+        MIL_CheckPointOutArchive out( s );
+        AutomateFactory_ABC* factory = new AutomateFactory( manager, 100, 100 );
+        out << factory;
+        delete factory;
     }
     {
-        MIL_CheckPointInArchive inStream( stringstream );
-        AutomateFactory_ABC* automateFactory;
-        inStream >> automateFactory;
+        MIL_CheckPointInArchive in( s );
+        AutomateFactory_ABC* factory = 0;
+        in >> factory;
+        BOOST_CHECK( factory );
+        delete factory;
     }
 }

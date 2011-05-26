@@ -83,7 +83,7 @@ BOOST_FIXTURE_TEST_CASE( HumanNormalWound, Fixture )
     //try to set a lesser wound
     BOOST_CHECK( !human.ApplyWound( PHY_HumanWound::woundedU3_ ) );
     BOOST_CHECK_EQUAL( &human.GetWound(), &PHY_HumanWound::woundedU2_ );
-    //try to wound a man in logistic @TODO MGD
+    //try to wound a man in logistic  $$$$ TODO MGD
     //MIL_AutomateLOG tc2;
     //human.Evacuate( tc2 );
     //BOOST_CHECK( !human.ApplyWound( PHY_HumanWound::woundedU2_ ) );
@@ -130,7 +130,7 @@ BOOST_FIXTURE_TEST_CASE( HumanApplyPoisonous, Fixture )
     //MIL_NbcAgentType::Initialize( xis );
     //nbcTypes.push_back( MIL_NbcAgentType::Find( 1 ) );
     //MIL_ToxicEffectManipulator nbcAgent( nbcTypes, 1 );
-    //human.ApplyPoisonous( nbcAgent ); //@TODO MGD Remove singleton
+    //human.ApplyPoisonous( nbcAgent ); // $$$$ TODO MGD Remove singleton
     //BOOST_CHECK( human.IsWounded() );
 }
 
@@ -151,7 +151,7 @@ BOOST_FIXTURE_TEST_CASE( HumanMentalDiseaseManagement, Fixture )
 {
     BOOST_CHECK( !human.IsMentalDiseased() );
     human.ApplyMentalDisease();
-    //BOOST_CHECK( human.IsMentalDiseased() ); //@TODO MGd see why random, update interface corresponding to
+    //BOOST_CHECK( human.IsMentalDiseased() ); // $$$$ TODO MGd see why random, update interface corresponding to
     human.HealMentalDisease();
     BOOST_CHECK( !human.IsMentalDiseased() );
 }
@@ -167,7 +167,7 @@ BOOST_FIXTURE_TEST_CASE( HumanSetRank, Fixture )
 
 BOOST_AUTO_TEST_CASE( HumanCancelLogisticRequest )
 {
-  /*@TODO MGD
+  /* $$$$ TODO MGD
   StubMIL_Time_ABC time;
   PHY_HumansComposante composante;
   PHY_Human human = PHY_Human( time, composante);
@@ -193,7 +193,7 @@ BOOST_FIXTURE_TEST_CASE( HumanIsUsable, Fixture )
     BOOST_CHECK( !human.IsWounded() );
     MOCK_EXPECT( composante, NotifyHumanChanged ).once();
     human.ApplyWound( PHY_HumanWound::woundedU1_ );
-    BOOST_CHECK( human.IsUsable() );// @TODO MGD Why? we can use a wounded man
+    BOOST_CHECK( human.IsUsable() );//  $$$$ TODO MGD Why? we can use a wounded man
     BOOST_CHECK( !human.IsDead() );
     BOOST_CHECK( human.IsWounded() );
     MOCK_EXPECT( composante, NotifyHumanChanged ).once();
@@ -259,7 +259,7 @@ BOOST_FIXTURE_TEST_CASE( HumanNotifyHandledByMedical, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( HumanNotifyBackToWar, Fixture )
 {
-    //human.NotifyBackToWar(); //@TODO MGD need PHY_MedicalHumanState to be set
+    //human.NotifyBackToWar(); // $$$$ TODO MGD need PHY_MedicalHumanState to be set
     //Check notification to component and event
 }
 
@@ -273,30 +273,30 @@ BOOST_FIXTURE_TEST_CASE( HumanMaintenanceManagement, Fixture )
     BOOST_CHECK_EQUAL( human.GetLocation(), PHY_Human::eBattleField );
 }
 
-/*@TODO MGD find a  way to serialize MockHumansComposante
-BOOST_AUTO_TEST_CASE( HumanSerialization )
-{
-    StubMIL_Time_ABC time;
-    MockHumansComposante composante;
-    MOCK_EXPECT( composante, NotifyHumanAdded );
-    MOCK_EXPECT( composante, NotifyHumanRemoved );
-    PHY_Human humanInitial = PHY_Human( time, composante);
-    MOCK_EXPECT( composante, NotifyHumanChanged );
-    humanInitial.SetWound( PHY_HumanWound::killed_ );
-
-    MockHumansComposante composante2;
-    MOCK_EXPECT( composante2, NotifyHumanAdded );
-    MOCK_EXPECT( composante2, NotifyHumanRemoved );
-    PHY_Human humanRestored = PHY_Human( time, composante2);
-
-    std::stringstream stringstream;
-    {
-        MIL_CheckPointOutArchive outStream( stringstream );
-        outStream << humanInitial;
-    }
-    {
-        MIL_CheckPointInArchive inStream( stringstream );
-        inStream >> humanRestored;
-    }
-    BOOST_CHECK( humanRestored.IsDead() );
-}*/
+// $$$$ TODO MGD find a  way to serialize MockHumansComposante
+//BOOST_AUTO_TEST_CASE( HumanSerialization )
+//{
+//    StubMIL_Time_ABC time;
+//    MockHumansComposante composante;
+//    MOCK_EXPECT( composante, NotifyHumanAdded );
+//    MOCK_EXPECT( composante, NotifyHumanRemoved );
+//    PHY_Human humanInitial = PHY_Human( time, composante);
+//    MOCK_EXPECT( composante, NotifyHumanChanged );
+//    humanInitial.SetWound( PHY_HumanWound::killed_ );
+//
+//    MockHumansComposante composante2;
+//    MOCK_EXPECT( composante2, NotifyHumanAdded );
+//    MOCK_EXPECT( composante2, NotifyHumanRemoved );
+//    PHY_Human humanRestored = PHY_Human( time, composante2);
+//
+//    std::stringstream stringstream;
+//    {
+//        MIL_CheckPointOutArchive outStream( stringstream );
+//        outStream << humanInitial;
+//    }
+//    {
+//        MIL_CheckPointInArchive inStream( stringstream );
+//        inStream >> humanRestored;
+//    }
+//    BOOST_CHECK( humanRestored.IsDead() );
+//}

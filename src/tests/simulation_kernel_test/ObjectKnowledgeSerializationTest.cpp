@@ -12,11 +12,11 @@
 #include "MockBuilder.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockNET_Publisher_ABC.h"
+#include "StubTER_World.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
-#include "StubTER_World.h"
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -33,7 +33,7 @@ namespace
         void load( MIL_CheckPointInArchive& archive, const unsigned int )
         {
             archive >> boost::serialization::base_object< MockArmy >( *this );
-            MOCK_EXPECT( this, RegisterObject ).once();
+            MOCK_EXPECT( this, GetID ).returns( 42u );
         }
         void save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
         {
@@ -47,12 +47,15 @@ namespace
         {
             WorldInitialize( "Paris" );
             PHY_ConsumptionType::Initialize();
+            MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
         }
         ~ObjectKnowledgeSerializationFixture()
         {
             PHY_ConsumptionType::Terminate();
             TER_World::DestroyWorld();
+            mock::verify();
         }
+        MockMIL_Time_ABC time;
     };
 }
 
@@ -74,7 +77,7 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
                                  "        </constructor>"
                                  "    </object>"
                                  "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
+        loader.Initialize( xis );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
 
@@ -85,32 +88,27 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
         MOCK_EXPECT( builder, GetType ).once().returns( boost::cref( type ) );
         MOCK_EXPECT( builder, Build ).once();
         MOCK_EXPECT( army, RegisterObject ).once();
-        BOOST_CHECK_NO_THROW( pObject.reset( loader.CreateObject( builder, army ) ) );
+        pObject.reset( loader.CreateObject( builder, army ) );
         builder.verify();
         army.verify();
     }
+    MOCK_EXPECT( army, UnregisterObject ).with( mock::same( *pObject ) ).once();
 
     MockNET_Publisher_ABC publisher;
     MOCK_EXPECT( publisher, Send ).once(); // object knowledge creation
     MOCK_EXPECT( army, GetID ).returns( 42u );
-    MockMIL_Time_ABC time;
-    MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     DEC_Knowledge_Object knowledge( army, *pObject );
     knowledge.Update( PHY_PerceptionLevel::identified_ );
-    std::stringstream stringstream;
+    std::stringstream s;
     {
-        MIL_CheckPointOutArchive outStream( stringstream );
-        outStream << knowledge;
+        MIL_CheckPointOutArchive out( s );
+        out << knowledge;
     }
     {
-        MOCK_EXPECT( army, GetID ).returns( 42u );
-        MIL_CheckPointInArchive inStream( stringstream );
+        MIL_CheckPointInArchive in( s );
         DEC_Knowledge_Object reloaded;
-        inStream >> reloaded;
-        const MockArmy& mockArmy = static_cast< const MockArmy& >( reloaded.GetArmy() );
+        in >> reloaded;
         MOCK_EXPECT( publisher, Send ).once(); // object knowledge destruction
-        MOCK_EXPECT( mockArmy, GetID ).returns( 42u );
     }
     MOCK_EXPECT( publisher, Send ).once(); // object knowledge destruction
-    MOCK_EXPECT( army, UnregisterObject ).with( mock::same( *pObject ) ).once();
 }
