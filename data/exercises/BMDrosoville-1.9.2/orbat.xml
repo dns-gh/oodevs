@@ -196,7 +196,7 @@
         </population>
       </populations>
       <inhabitants>
-        <inhabitant id="208" name="46546546" type="popType4">
+        <inhabitant id="208" name="46546546" type="popStandard">
           <composition dead="0" healthy="50" wounded="0"/>
           <health-need quantity="0.05"/>
           <information></information>
@@ -279,4 +279,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="4161417427" -->
+<!-- signature="1001033247" -->
