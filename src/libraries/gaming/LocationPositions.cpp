@@ -175,7 +175,7 @@ void LocationPositions::Update( const sword::Location& message )
 {
     points_.clear();
     points_.reserve( message.coordinates().elem_size());
-    boundingBox_.Set( 0, 0, 0, 0 );
+    boundingBox_ = geometry::Rectangle2f();
     AddLocation( message );
     location_ = BuildLocation( converter_, message );
 }
@@ -187,7 +187,7 @@ void LocationPositions::Update( const sword::Location& message )
 void LocationPositions::Update( const sword::Location& message, const geometry::Point2f& startPoint )
 {
     points_.clear(); points_.reserve( message.coordinates().elem_size()+ 1 );
-    boundingBox_.Set( 0, 0, 0, 0 );
+    boundingBox_ = geometry::Rectangle2f();
     AddPoint( startPoint );
     AddLocation( message );
 }

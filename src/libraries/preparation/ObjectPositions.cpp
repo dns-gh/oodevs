@@ -183,7 +183,7 @@ void ObjectPositions::Serialize( xml::xostream& xos ) const
 void ObjectPositions::Update()
 {
     location_->Accept( *this );
-    boundingBox_.Set( 0, 0, 0, 0 );
+    boundingBox_ = geometry::Rectangle2f();
     for( unsigned int i = 0; i < points_.size(); ++i )
         boundingBox_.Incorporate( points_[i] );
 }
