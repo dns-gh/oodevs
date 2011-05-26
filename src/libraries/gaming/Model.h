@@ -13,12 +13,18 @@
 #include "EntityResolverFacade.h"
 #include <boost/noncopyable.hpp>
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace kernel
 {
     class AgentKnowledgeConverter_ABC;
     class Controllers;
     class FormationLevels;
     class ObjectKnowledgeConverter_ABC;
+    class SymbolFactory;
     class Workers;
 }
 
@@ -81,7 +87,7 @@ class Model : public EntityResolverFacade
 public:
     //! @name Constructors/Destructor
     //@{
-             Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver );
+             Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver, const tools::ExerciseConfig& config );
     virtual ~Model();
     //@}
 
@@ -134,6 +140,7 @@ public:
     ResourceNetworkModel& resourceNetwork_;
     UrbanModel& urbanObjects_;
     SurfaceFactory& surfaceFactory_;
+    kernel::SymbolFactory& symbolsFactory_;
     NotesModel& notes_;
     MeteoModel& meteo_;
     Publisher_ABC& publisher_;

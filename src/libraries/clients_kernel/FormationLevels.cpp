@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "FormationLevels.h"
 #include "Level.h"
-#include "SymbolFactory.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -22,9 +21,21 @@ using namespace kernel;
 FormationLevels::FormationLevels()
     : root_( 0 )
 {
-    SymbolFactory factory;
-    Initialize( factory );
-}
+    root_ = new Level( "b", 0 );
+    Register( root_->GetId(), root_->GetName(), *root_ );
+
+    root_ = AddLevel( *root_, "o" );
+    root_ = AddLevel( *root_, "c" );
+    root_ = AddLevel( *root_, "oo" );
+    root_ = AddLevel( *root_, "ooo" );
+    root_ = AddLevel( *root_, "i" );
+    root_ = AddLevel( *root_, "ii" );
+    root_ = AddLevel( *root_, "iii" );
+    root_ = AddLevel( *root_, "x" );
+    root_ = AddLevel( *root_, "xx" );
+    root_ = AddLevel( *root_, "xxx" );
+    root_ = AddLevel( *root_, "xxxx" );
+    root_ = AddLevel( *root_, "xxxxx" );}
 
 // -----------------------------------------------------------------------------
 // Name: FormationLevels destructor
@@ -39,35 +50,12 @@ FormationLevels::~FormationLevels()
 // Name: FormationLevels::AddLevel
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-Level* FormationLevels::AddLevel( SymbolFactory& factory, Level& root, const QString& name )
+Level* FormationLevels::AddLevel( Level& root, const QString& name )
 {
-    Level* newLevel = new Level( factory, name, &root );
+    Level* newLevel = new Level( name, &root );
     root.SetPrevious( *newLevel );
     Register( newLevel->GetId(), newLevel->GetName(), *newLevel );
     return newLevel;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FormationLevels::Initialize
-// Created: SBO 2006-09-21
-// -----------------------------------------------------------------------------
-void FormationLevels::Initialize( SymbolFactory& factory )
-{
-    root_ = new Level( factory, "b", 0 );
-    Register( root_->GetId(), root_->GetName(), *root_ );
-
-    root_ = AddLevel( factory, *root_, "o" );
-    root_ = AddLevel( factory, *root_, "c" );
-    root_ = AddLevel( factory, *root_, "oo" );
-    root_ = AddLevel( factory, *root_, "ooo" );
-    root_ = AddLevel( factory, *root_, "i" );
-    root_ = AddLevel( factory, *root_, "ii" );
-    root_ = AddLevel( factory, *root_, "iii" );
-    root_ = AddLevel( factory, *root_, "x" );
-    root_ = AddLevel( factory, *root_, "xx" );
-    root_ = AddLevel( factory, *root_, "xxx" );
-    root_ = AddLevel( factory, *root_, "xxxx" );
-    root_ = AddLevel( factory, *root_, "xxxxx" );
 }
 
 // -----------------------------------------------------------------------------

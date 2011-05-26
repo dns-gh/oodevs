@@ -15,6 +15,7 @@
 
 namespace kernel {
     class Formation_ABC;
+    class SymbolFactory;
 }
 
 // =============================================================================
@@ -29,7 +30,7 @@ class FormationHierarchies : public kernel::MergingTacticalHierarchies
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationHierarchies( kernel::Controller& controller, kernel::Formation_ABC& holder, kernel::Entity_ABC* superior );
+             FormationHierarchies( kernel::Controller& controller, kernel::Formation_ABC& holder, kernel::Entity_ABC* superior, kernel::SymbolFactory& factory );
     virtual ~FormationHierarchies();
     //@}
 

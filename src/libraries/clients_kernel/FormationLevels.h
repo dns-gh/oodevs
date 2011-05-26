@@ -11,10 +11,10 @@
 #define __FormationLevels_h_
 
 #include "Resolver2.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
-    class SymbolFactory;
     class Level;
     class HierarchyLevel_ABC;
 
@@ -25,6 +25,7 @@ namespace kernel
 // Created: SBO 2006-09-21
 // =============================================================================
 class FormationLevels : public Resolver2< HierarchyLevel_ABC, unsigned long, QString >
+                      , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -41,16 +42,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FormationLevels( const FormationLevels& );            //!< Copy constructor
-    FormationLevels& operator=( const FormationLevels& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
-    void Initialize( SymbolFactory& factory );
-    Level* AddLevel( SymbolFactory& factory, Level& root, const QString& name );
+    Level* AddLevel( Level& root, const QString& name );
     //@}
 
 private:

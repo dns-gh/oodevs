@@ -13,6 +13,7 @@
 #include "ADN_Data_ABC.h"
 #include "ADN_DataTreeNode_ABC.h"
 #include "ADN_Ref_ABC.h"
+#include "ADN_Tools.h"
 #include "ADN_Types.h"
 #include "clients_kernel/Types.h"
 #include "svgl/TextRenderer.h"
@@ -27,18 +28,11 @@ namespace xml
 {
     class xistream;
 }
-namespace gui
-{
-    class DrawingTemplate;
-}
 namespace kernel
 {
-    class GlTools_ABC;
-}
-namespace
-{
-    class GlToolsSymbols;
-}
+    class SymbolFactory;
+    class SymbolRule;
+};
 
 // =============================================================================
 /** @class  ADN_Symbols_Data
@@ -48,52 +42,29 @@ namespace
 // =============================================================================
 class ADN_Symbols_Data : public ADN_Data_ABC
 {
+
+//*****************************************************************************
 public:
-    class SymbolInfo : public ADN_Ref_ABC
-                     , public ADN_DataTreeNode_ABC
+    class SymbolsInfra : public ADN_Ref_ABC
+                       , public ADN_DataTreeNode_ABC
     {
     public:
-        //! @name Constructors/Destructor
-        //@{
-                 SymbolInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools );
-        virtual ~SymbolInfo();
-        //@}
+        explicit SymbolsInfra( xml::xistream& input );
+        virtual ~SymbolsInfra();
 
-        //! @name Accessors
-        //@{
         virtual std::string GetNodeName();
         std::string GetItemName();
-        const QPixmap& GetPixmap() const;
-        const std::string GetCode() const;
-        const std::string GetGeometry() const;
-        //@}
-
-    private:
-        //! @name Helpers
-        //@{
-        void Initialize();
-        void Draw();
-        void DrawOnPoint();
-        void DrawOnLine();
-        void DrawOnPolygon();
-        void DrawItem( const T_PointVector& points );
-        //@}
-
-    private:
-        //! @name Private member data
-        //@{
-        gui::DrawingTemplate* template_;
-        kernel::GlTools_ABC& tools_;
-        QPixmap* pixmap_;
-        //@}
+        bool operator==( const std::string& str );
 
     public:
-        //! @name Public member data
+        //! @name Member Data
         //@{
         ADN_Type_String strName_;
         //@}
     };
+    TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC< SymbolsInfra >, SymbolsInfra_Vector )
 
+//*****************************************************************************
 public:
     //! @name Constructors/Destructor
     //@{
@@ -101,13 +72,11 @@ public:
     virtual ~ADN_Symbols_Data();
     //@}
 
-    //! @name Types
+    //! @name Accessors
     //@{
-    typedef ADN_Type_Vector_ABC< SymbolInfo >            T_SymbolInfoVector;
-    typedef T_SymbolInfoVector::iterator                IT_SymbolInfoVector;
-    typedef T_SymbolInfoVector::const_iterator         CIT_SymbolInfoVector;
-    typedef std::map< std::string, T_SymbolInfoVector >  T_SymbolsMap;
-    typedef T_SymbolsMap::iterator                      IT_SymbolsMap;
+    kernel::SymbolFactory& GetSymbolFactory();
+    T_SymbolsInfra_Vector& GetSymbolsInfras();
+    SymbolsInfra* FindSymbolInfra( const std::string& strName ) const;
     //@}
 
     //! @name Operations
@@ -115,26 +84,32 @@ public:
     virtual void FilesNeeded( T_StringList& files ) const;
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Reset();
-    SymbolInfo* const GetSymbol( const std::string& code ) const;
-    T_SymbolInfoVector& GetSymbols( const std::string geometries );
     //@}
 
 private:
     //! @name Helpers
     //@{
     void ReadArchive( xml::xistream& xis );
-    void ReadCategory( xml::xistream& xis );
-    void ReadTemplate( xml::xistream& xis );
+    void ReadInfra( xml::xistream& xis );
+    void ReadRule( xml::xistream& xis );
     //@}
 
 private:
     //! @name Member data
     //@{
-    T_SymbolsMap symbolsMap_;
-    T_SymbolInfoVector symbols_;
-    svg::TextRenderer  renderer_;
-    ::GlToolsSymbols*  tools_;
+    T_SymbolsInfra_Vector                  infras_;
+    std::auto_ptr< kernel::SymbolFactory > factory_;
     //@}
 };
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Symbols_Data::SymbolsInfra::operator==
+// Created: SLG 2010-12-20
+// -----------------------------------------------------------------------------
+inline
+bool ADN_Symbols_Data::SymbolsInfra::operator==( const std::string& str )
+{
+    return ADN_Tools::CaselessCompare( strName_.GetData(), str );
+}
 
 #endif // __ADN_Symbols_Data_h_

@@ -53,9 +53,9 @@ IntelligenceFactory::~IntelligenceFactory()
 // -----------------------------------------------------------------------------
 Intelligence_ABC* IntelligenceFactory::Create( const sword::IntelligenceCreation& message ) const
 {
-    std::auto_ptr< Intelligence > element( new Intelligence( message, controllers_.controller_, model_.teams_, levels_, publisher_ ) );
+    std::auto_ptr< Intelligence > element( new Intelligence( message, controllers_.controller_, model_.teams_, levels_, publisher_, model_.symbolsFactory_ ) );
     element->Attach< kernel::Positions >( *new IntelligencePositions( converter_, *element, publisher_ ) );
-    element->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *element, model_.teams_ ) );
+    element->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *element, model_.teams_, model_.symbolsFactory_ ) );
     element->Update( message );
     element->Polish();
     return element.release();

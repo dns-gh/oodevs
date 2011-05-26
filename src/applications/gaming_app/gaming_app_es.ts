@@ -1555,10 +1555,6 @@ Motivo: %3
         <translation>Performances</translation>
     </message>
     <message>
-        <source>Load exercise definition file (exercise.xml)</source>
-        <translation>Cargar archivo de definición de ejercicio (exercise.xml)</translation>
-    </message>
-    <message>
         <source>Logo</source>
         <translation>Logo</translation>
     </message>

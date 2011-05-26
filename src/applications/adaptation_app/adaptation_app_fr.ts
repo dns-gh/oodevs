@@ -5799,6 +5799,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Symbols</source>
         <translation>Symboles</translation>
     </message>
+    <message>
+        <source>Drawings</source>
+        <translation>Dessins</translation>
+    </message>
 </context>
 <context>
     <name>ActiveProtections_Data</name>

@@ -9,36 +9,36 @@
 
 
 // -----------------------------------------------------------------------------
-// ADN_ComboBox_Symbols
+// ADN_ComboBox_Drawings
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ComboBox_Symbols constructor
+// Name: ADN_ComboBox_Drawings constructor
 // Created: ABR 2011-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-inline ADN_ComboBox_Symbols< T >::ADN_ComboBox_Symbols( QWidget* pParent /*= 0*/, const char* szName /*= 0*/ )
+inline ADN_ComboBox_Drawings< T >::ADN_ComboBox_Drawings( QWidget* pParent /*= 0*/, const char* szName /*= 0*/ )
     : ADN_ComboBox( pParent, szName )
 {
-    pConnector_ = new ADN_ComboBox_Symbols_Connector< T >( *this );
+    pConnector_ = new ADN_ComboBox_Drawings_Connector< T >( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ComboBox_Symbols destructor
+// Name: ADN_ComboBox_Drawings destructor
 // Created: ABR 2011-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-inline ADN_ComboBox_Symbols< T >::~ADN_ComboBox_Symbols()
+inline ADN_ComboBox_Drawings< T >::~ADN_ComboBox_Drawings()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ComboBox_Symbols::insertItem
+// Name: ADN_ComboBox_Drawings::insertItem
 // Created: ABR 2011-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-inline void ADN_ComboBox_Symbols< T >::insertItem( ADN_ComboBoxItem* item, int index /*= -1*/ )
+inline void ADN_ComboBox_Drawings< T >::insertItem( ADN_ComboBoxItem* item, int index /*= -1*/ )
 {
     if( !item )
         return;
@@ -54,74 +54,74 @@ inline void ADN_ComboBox_Symbols< T >::insertItem( ADN_ComboBoxItem* item, int i
 
 
 // -----------------------------------------------------------------------------
-// ADN_ComboBox_Symbols_Connector
+// ADN_ComboBox_Drawings_Connector
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ComboBox_Symbols_Connector constructor
+// Name: ADN_ComboBox_Drawings_Connector constructor
 // Created: ABR 2011-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-inline ADN_ComboBox_Symbols_Connector< T >::ADN_ComboBox_Symbols_Connector( ADN_ComboBox_Symbols< T >& combo )
+inline ADN_ComboBox_Drawings_Connector< T >::ADN_ComboBox_Drawings_Connector( ADN_ComboBox_Drawings< T >& combo )
     : ADN_Connector_ComboBox( &combo )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ComboBox_Symbols_Connector destructor
+// Name: ADN_ComboBox_Drawings_Connector destructor
 // Created: ABR 2011-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-inline ADN_ComboBox_Symbols_Connector< T >::~ADN_ComboBox_Symbols_Connector()
+inline ADN_ComboBox_Drawings_Connector< T >::~ADN_ComboBox_Drawings_Connector()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ComboBox_Symbols_Connector::CreateItem
+// Name: ADN_ComboBox_Drawings_Connector::CreateItem
 // Created: ABR 2011-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-inline ADN_ComboBoxItem* ADN_ComboBox_Symbols_Connector< T >::CreateItem( void * obj )
+inline ADN_ComboBoxItem* ADN_ComboBox_Drawings_Connector< T >::CreateItem( void * obj )
 {
-    ADN_ComboBoxItem* pItem = new ADN_ComboBoxSymbolItem< T >( *pCombo_, obj);
+    ADN_ComboBoxItem* pItem = new ADN_ComboBoxDrawingItem< T >( *pCombo_, obj);
     pItem->GetConnector().Connect( &( static_cast< T* > (obj) )->strName_ );
     return pItem;
 };
 
 
 // -----------------------------------------------------------------------------
-// ADN_ComboBoxSymbolItem
+// ADN_ComboBoxDrawingItem
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ComboBoxSymbolItem::ADN_ComboBoxSymbolItem
+// Name: ADN_ComboBoxDrawingItem::ADN_ComboBoxDrawingItem
 // Created: ABR 2011-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-inline ADN_ComboBoxSymbolItem< T >::ADN_ComboBoxSymbolItem( ADN_ComboBox& combo, void *data )
+inline ADN_ComboBoxDrawingItem< T >::ADN_ComboBoxDrawingItem( ADN_ComboBox& combo, void *data )
     : ADN_ComboBoxItem( combo, data )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ComboBoxSymbolItem::~ADN_ComboBoxSymbolItem
+// Name: ADN_ComboBoxDrawingItem::~ADN_ComboBoxDrawingItem
 // Created: ABR 2011-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-inline ADN_ComboBoxSymbolItem< T >::~ADN_ComboBoxSymbolItem()
+inline ADN_ComboBoxDrawingItem< T >::~ADN_ComboBoxDrawingItem()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ComboBoxSymbolItem::setText
+// Name: ADN_ComboBoxDrawingItem::setText
 // Created: ABR 2011-04-19
 // -----------------------------------------------------------------------------
 template< typename T >
-inline void ADN_ComboBoxSymbolItem< T >::setText(const QString& txt)
+inline void ADN_ComboBoxDrawingItem< T >::setText(const QString& txt)
 {
     int ndx = combo_.FindNdx( this );
     if( ndx != -1 )

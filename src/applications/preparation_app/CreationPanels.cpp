@@ -26,7 +26,8 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
 {
     AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
-    AddPanel( new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
+    intelligencesPanel_ = new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons );
+    AddPanel( intelligencesPanel_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,4 +37,13 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
 CreationPanels::~CreationPanels()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreationPanels::Load
+// Created: ABR 2011-05-25
+// -----------------------------------------------------------------------------
+void CreationPanels::Load( const tools::ExerciseConfig& config )
+{
+    intelligencesPanel_->Load( config );
 }

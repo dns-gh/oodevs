@@ -124,7 +124,7 @@ void ScoresModel::Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& 
 // -----------------------------------------------------------------------------
 void ScoresModel::GenerateScoresFromTemplate( const tools::Loader_ABC& fileLoader )
 {
-    fileLoader.LoadOptionalPhysicalFile( "scores", boost::bind( &ScoresModel::ReadTemplate, this, _1 ) );
+    fileLoader.LoadPhysicalFile( "scores", boost::bind( &ScoresModel::ReadTemplate, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

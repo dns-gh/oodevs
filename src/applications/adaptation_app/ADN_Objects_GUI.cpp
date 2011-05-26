@@ -14,7 +14,7 @@
 #include "moc_ADN_Objects_GUI.cpp"
 #include "ADN_App.h"
 #include "ADN_Workspace.h"
-#include "ADN_ComboBox_Symbols.h"
+#include "ADN_ComboBox_Drawings.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_HtmlBuilder.h"
@@ -30,7 +30,6 @@
 #include "ADN_Tr.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Composantes_Dotations_GUI.h"
-#include "ADN_Symbols_Data.h"
 #include "ENT/ENT_Tr.h"
 #include <qframe.h>
 #include <qlabel.h>
@@ -128,7 +127,7 @@ void ADN_Objects_GUI::Build()
     pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Point effect distance"), vInfosConnectors[ ePointSize ] );
     connect( geometry, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnGeometryChanged ( const QString& ) ) );
     pPointDistance_->SetAutoEnabled( false );
-    QComboBox* combo = builder.AddField< ADN_ComboBox_Symbols< ADN_Symbols_Data::SymbolInfo > >( pHolder, tr( "Symbol"), vInfosConnectors[ eSymbol ] );
+    QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pHolder, tr( "Symbol"), vInfosConnectors[ eSymbol ] );
     combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
 
     QGroupBox* hBox = new QGroupBox( 2, Qt::Horizontal, tr( "Capacities" ), pGroup_ );

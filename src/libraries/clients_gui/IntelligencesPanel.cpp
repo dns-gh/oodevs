@@ -26,7 +26,7 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/Tools.h"
-#include "tools/GeneralConfig.h"
+#include "tools/ExerciseConfig.h"
 
 using namespace gui;
 using namespace kernel;
@@ -35,13 +35,15 @@ using namespace kernel;
 // Name: IntelligencesPanel constructor
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const FormationLevels& levels, SymbolIcons& icons )
+IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const FormationLevels& levels, SymbolIcons& icons, const tools::ExerciseConfig* config /*= 0*/ )
     : InfoPanel_ABC( parent, panel, tr( "Intelligence" ), "IntelligencesPanel" )
     , controllers_   ( controllers )
     , icons_         ( icons )
     , symbolFactory_ ( new SymbolFactory() )
     , selectedEntity_( controllers )
 {
+    if( config )
+        symbolFactory_->Load( *config );
     layout()->setAlignment( Qt::AlignTop );
     QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tr( "Intelligence description" ), this );
     {
@@ -72,8 +74,9 @@ IntelligencesPanel::IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, 
         new QLabel( tr( "Mounted combat: " ), group );
         mounted_ = new QCheckBox( group );
     }
+    if( config )
     {
-        NatureSelectionWidget* nature = new NatureSelectionWidget( this, tools::GeneralConfig::BuildResourceChildFile( "symbols.xml" ) );
+        NatureSelectionWidget* nature = new NatureSelectionWidget( this, config->GetOptionalPhysicalChildFile( "symbols" ) );
         connect( nature, SIGNAL( NatureSelected( const QString& ) ), SLOT( OnNatureChanged( const QString& ) ) );
         connect( nature, SIGNAL( StartDrag() ), SLOT( OnNatureDragged() ) );
     }
@@ -160,7 +163,7 @@ void IntelligencesPanel::UpdateSymbol()
         symbol_ = symbolFactory_->CreateSymbol( nature_.ascii() );
         const Karma& karma = Karma::ResolveName( karmaCombo_->currentText() );
         App6Symbol::SetKarma( symbol_, karma );
-        SymbolIcon icon( symbol_, levelCombo_->GetValue()->GetSymbol() );
+        SymbolIcon icon( symbol_, symbolFactory_->CreateLevelSymbol( *levelCombo_->GetValue() ) );
         icon.SetColor( GetColor( karma ) );
         icon.SetSize( 128 );
         QPixmap pixmap = icons_.GetSymbol( icon );
@@ -217,4 +220,17 @@ void IntelligencesPanel::DoDrag()
     intelligence_.reset( new IntelligencePrototype( *selectedEntity_.ConstCast(), symbol_, *levelCombo_->GetValue(), mounted_->isChecked(), Karma::ResolveName( karmaCombo_->currentText() ) ) );
     QDragObject* drag = new ValuedDragObject( intelligence_.get(), this );
     drag->drag();
+}
+
+// -----------------------------------------------------------------------------
+// Name: IntelligencesPanel::Load
+// Created: ABR 2011-05-25
+// -----------------------------------------------------------------------------
+void IntelligencesPanel::Load( const tools::ExerciseConfig& config )
+{
+    symbolFactory_->Load( config );
+
+    NatureSelectionWidget* nature = new NatureSelectionWidget( this, config.GetOptionalPhysicalChildFile( "symbols" ) );
+    connect( nature, SIGNAL( NatureSelected( const QString& ) ), SLOT( OnNatureChanged( const QString& ) ) );
+    connect( nature, SIGNAL( StartDrag() ), SLOT( OnNatureDragged() ) );
 }

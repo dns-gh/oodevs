@@ -203,8 +203,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     // Creation panel
     QDockWindow* pCreationDockWnd = new QDockWindow( this, "creation" );
     moveDockWindow( pCreationDockWnd, Qt::DockRight );
-    CreationPanels* pCreationPanel = new CreationPanels( pCreationDockWnd, controllers, staticModel_, *factory, *symbols, *strategy_ );
-    pCreationDockWnd->setWidget( pCreationPanel );
+    pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel_, *factory, *symbols, *strategy_ );
+    pCreationDockWnd->setWidget( pCreationPanel_ );
     pCreationDockWnd->setResizeEnabled( true );
     pCreationDockWnd->setCloseMode( QDockWindow::Always );
     pCreationDockWnd->setCaption( tr( "Creation" ) );
@@ -243,21 +243,21 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile(), *simpleFilter_ );
 
     // object creation window
-    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.objects_, model.urban_, *paramLayer, *glProxy_, config_ );
-    pCreationPanel->AddPanel( objectCreationPanel );
+    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel_, controllers, staticModel_, model.objects_, model.urban_, *paramLayer, *glProxy_, config_ );
+    pCreationPanel_->AddPanel( objectCreationPanel );
 
-    InhabitantCreationPanel* inhabitantCreationPanel = new InhabitantCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, /*( tools::Resolver< InhabitantType >&)(*/ staticModel.types_ /*)*/, model.agents_, *paramLayer, *glProxy_ );
-    pCreationPanel->AddPanel( inhabitantCreationPanel );
+    InhabitantCreationPanel* inhabitantCreationPanel = new InhabitantCreationPanel( pCreationDockWnd, *pCreationPanel_, controllers, /*( tools::Resolver< InhabitantType >&)(*/ staticModel.types_ /*)*/, model.agents_, *paramLayer, *glProxy_ );
+    pCreationPanel_->AddPanel( inhabitantCreationPanel );
 
     ::WeatherLayer* weatherLayer = new ::WeatherLayer( *glProxy_, *eventStrategy_ );
-    WeatherPanel* weatherPanel = new WeatherPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_.coordinateConverter_, *weatherLayer );
-    pCreationPanel->AddPanel( weatherPanel );
+    WeatherPanel* weatherPanel = new WeatherPanel( pCreationDockWnd, *pCreationPanel_, controllers, staticModel_.coordinateConverter_, *weatherLayer );
+    pCreationPanel_->AddPanel( weatherPanel );
 
-    TemplatesPanel* templates = new TemplatesPanel( pCreationDockWnd, *pCreationPanel, controllers, model.agents_, model.formations_, staticModel.types_ );
-    pCreationPanel->AddPanel( templates );
+    TemplatesPanel* templates = new TemplatesPanel( pCreationDockWnd, *pCreationPanel_, controllers, model.agents_, model.formations_, staticModel.types_ );
+    pCreationPanel_->AddPanel( templates );
 
-    gui::DrawerPanel* drawerPanel = new DrawerPanel( pCreationDockWnd, *pCreationPanel, *paramLayer, controllers, model.drawings_ );
-    pCreationPanel->AddPanel( drawerPanel );
+    gui::DrawerPanel* drawerPanel = new DrawerPanel( pCreationDockWnd, *pCreationPanel_, *paramLayer, controllers, model.drawings_ );
+    pCreationPanel_->AddPanel( drawerPanel );
 
     QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_, model.teams_.InfiniteDotations() );
     QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
@@ -401,6 +401,7 @@ void MainWindow::DoLoad( QString filename )
         filename.replace( "/", "\\" );
 
     config_.LoadExercise( filename.ascii() );
+    pCreationPanel_->Load( config_ );
     if( Load() )
     {
         SetWindowTitle( true );

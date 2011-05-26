@@ -16,6 +16,11 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -52,8 +57,13 @@ class IntelligencesPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::FormationLevels& levels, SymbolIcons& icons );
+             IntelligencesPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::FormationLevels& levels, SymbolIcons& icons, const tools::ExerciseConfig* config = 0 );
     virtual ~IntelligencesPanel();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Load( const tools::ExerciseConfig& config );
     //@}
 
 private slots:

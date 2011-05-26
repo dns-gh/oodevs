@@ -10,7 +10,15 @@
 #ifndef __SymbolFactory_h_
 #define __SymbolFactory_h_
 
-namespace xml {
+#include <boost/noncopyable.hpp>
+
+namespace tools
+{
+    class ExerciseConfig;
+}
+
+namespace xml 
+{
     class xistream;
     class xostream;
 }
@@ -19,6 +27,7 @@ namespace kernel
 {
     class AgentNature;
     class SymbolRule;
+    class HierarchyLevel_ABC;
 
 // =============================================================================
 /** @class  SymbolFactory
@@ -26,12 +35,13 @@ namespace kernel
 */
 // Created: SBO 2006-03-20
 // =============================================================================
-class SymbolFactory
+class SymbolFactory : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
              SymbolFactory();
+    explicit SymbolFactory( xml::xistream& xis );
     virtual ~SymbolFactory();
     //@}
 
@@ -39,21 +49,20 @@ public:
     //@{
     std::string CreateSymbol       ( const std::string& hierarchy ) const;
     std::string CreateLevelSymbol  ( const std::string& level ) const;
+    std::string CreateLevelSymbol  ( const kernel::HierarchyLevel_ABC& level ) const;
     std::string CreateAutomatSymbol() const;
+    SymbolRule& GetSymbolRule() const;
+    SymbolRule& GetLevelRule() const;
     bool IsThisChainAvailable( const std::string& chain ) const;
+    void Load( const tools::ExerciseConfig& config );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SymbolFactory( const SymbolFactory& );            //!< Copy constructor
-    SymbolFactory& operator=( const SymbolFactory& ); //!< Assignment operator
-    void ListSymbols();
-    void TraverseTree( xml::xostream& xos, const SymbolRule& rule );
-    //@}
-
     //! @name Helpers
     //@{
+    void ReadSymbols( xml::xistream& xis );
+    void ListSymbols();
+    void TraverseTree( xml::xostream& xos, const SymbolRule& rule );
     SymbolRule* ReadRule( xml::xistream& xis, const std::string& ruleName, std::string& base ) const;
     void        ReadRule( xml::xistream& xis, SymbolRule*& rule ) const;
     //@}
@@ -61,6 +70,7 @@ private:
 private:
     //! @name Member data
     //@{
+    bool initialized_;
     std::string symbolBase_;
     std::auto_ptr< SymbolRule > symbolRule_;
     std::string levelBase_;

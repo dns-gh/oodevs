@@ -1551,10 +1551,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Performances</translation>
     </message>
     <message>
-        <source>Load exercise definition file (exercise.xml)</source>
-        <translation>Charger une définition d&apos;exercice (exercise.xml)</translation>
-    </message>
-    <message>
         <source>Logo</source>
         <translation>Logo</translation>
     </message>

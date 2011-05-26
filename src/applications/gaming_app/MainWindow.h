@@ -95,7 +95,6 @@ public:
 public slots:
     //! @name Slots
     //@{
-    void Open();
     void Close();
     void OnPlanifStateChange();
     void OnNameChanged();

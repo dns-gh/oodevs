@@ -7,26 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_ComboBox_Symbols_h_
-#define __ADN_ComboBox_Symbols_h_
+#ifndef __ADN_ComboBox_Drawings_h_
+#define __ADN_ComboBox_Drawings_h_
 
 #include "ADN_ComboBox.h"
 #include "ADN_ComboBoxItem.h"
 
 // =============================================================================
-/** @class  ADN_ComboBox_Symbols
-    @brief  ADN_ComboBox_Symbols
+/** @class  ADN_ComboBox_Drawings
+    @brief  ADN_ComboBox_Drawings
 */
 // Created: ABR 2011-04-19
 // =============================================================================
 template< typename T >
-class ADN_ComboBox_Symbols : public ADN_ComboBox
+class ADN_ComboBox_Drawings : public ADN_ComboBox
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ComboBox_Symbols( QWidget* pParent = 0, const char* szName = 0 );
-    virtual ~ADN_ComboBox_Symbols();
+             ADN_ComboBox_Drawings( QWidget* pParent = 0, const char* szName = 0 );
+    virtual ~ADN_ComboBox_Drawings();
     //@}
 
     //! @name Operations
@@ -36,19 +36,19 @@ public:
 };
 
 // =============================================================================
-/** @class  ADN_ComboBox_Symbols_Connector
-    @brief  ADN_ComboBox_Symbols_Connector
+/** @class  ADN_ComboBox_Drawings_Connector
+    @brief  ADN_ComboBox_Drawings_Connector
 */
 // Created: ABR 2011-04-19
 // =============================================================================
 template< typename T >
-class ADN_ComboBox_Symbols_Connector : public ADN_Connector_ComboBox
+class ADN_ComboBox_Drawings_Connector : public ADN_Connector_ComboBox
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_ComboBox_Symbols_Connector( ADN_ComboBox_Symbols< T >& combo );
-    virtual ~ADN_ComboBox_Symbols_Connector();
+    explicit ADN_ComboBox_Drawings_Connector( ADN_ComboBox_Drawings< T >& combo );
+    virtual ~ADN_ComboBox_Drawings_Connector();
     //@}
 
     //! @name Operations
@@ -58,19 +58,19 @@ public:
 };
 
 // =============================================================================
-/** @class  ADN_ComboBoxSymbolItem
-    @brief  ADN_ComboBoxSymbolItem
+/** @class  ADN_ComboBoxDrawingItem
+    @brief  ADN_ComboBoxDrawingItem
 */
 // Created: ABR 2011-04-19
 // =============================================================================
 template< typename T >
-class ADN_ComboBoxSymbolItem : public ADN_ComboBoxItem
+class ADN_ComboBoxDrawingItem : public ADN_ComboBoxItem
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ComboBoxSymbolItem( ADN_ComboBox& combo, void *data );
-    virtual ~ADN_ComboBoxSymbolItem();
+             ADN_ComboBoxDrawingItem( ADN_ComboBox& combo, void *data );
+    virtual ~ADN_ComboBoxDrawingItem();
     //@}
 
     //! @name Operations
@@ -79,6 +79,6 @@ public:
     //@}
 };
 
-#include "ADN_ComboBox_Symbols.inl"
+#include "ADN_ComboBox_Drawings.inl"
 
-#endif // __ADN_ComboBox_Symbols_h_
+#endif // __ADN_ComboBox_Drawings_h_

@@ -20,9 +20,9 @@ using namespace kernel;
 // Name: NatureEditionCategory constructor
 // Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
-NatureEditionCategory::NatureEditionCategory( QWidget* parent, const kernel::SymbolRule* rule )
+NatureEditionCategory::NatureEditionCategory( QWidget* parent )
     : QHBox( parent )
-    , rule_( rule )
+    , rule_( 0 )
     , current_( QString::null )
     , next_( 0 )
 {
@@ -33,7 +33,6 @@ NatureEditionCategory::NatureEditionCategory( QWidget* parent, const kernel::Sym
     setStretchFactor( label_, 1 );
     setStretchFactor( box_, 1 );
     setStretchFactor( new QWidget( this ), 1 );
-    rule_->Accept( *this );
 
     connect( box_, SIGNAL( activated( int ) ), this, SLOT( OnComboChange() ) );
 }
@@ -91,7 +90,8 @@ void NatureEditionCategory::AddChoice( SymbolRule* rule, const std::string& name
     }
     else if( rule && name == current_.ascii() )
     {
-        next_ = new NatureEditionCategory( parentWidget(), rule );
+        next_ = new NatureEditionCategory( parentWidget() );
+        next_->SetRootSymbolRule( *rule );
         next_->show();
         connect( next_, SIGNAL( NatureChanged( const QString& ) ), this, SLOT( OnNatureChanged( const QString& ) ) );
     }
@@ -177,4 +177,14 @@ void NatureEditionCategory::Select( const QString& value )
         }
     }
     // throw ?
+}
+
+// -----------------------------------------------------------------------------
+// Name: NatureEditionCategory::SetRootSymbolRule
+// Created: ABR 2011-05-26
+// -----------------------------------------------------------------------------
+void NatureEditionCategory::SetRootSymbolRule( kernel::SymbolRule& root )
+{
+    rule_ = &root;
+    rule_->Accept( *this );
 }

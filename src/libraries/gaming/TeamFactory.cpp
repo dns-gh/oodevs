@@ -45,10 +45,10 @@
 // Name: TeamFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-TeamFactory::TeamFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticM  )
+TeamFactory::TeamFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticM )
     : controllers_( controllers )
-    , model_( model )
-    , static_( staticM )
+    , model_      ( model )
+    , static_     ( staticM )
 {
     // NOTHING
 }
@@ -98,7 +98,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     Formation* result = new Formation( message, controllers_.controller_, model_.static_.levels_ );
     result->Attach< Lives_ABC >( *new FormationLives( *result ) );
     kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
-    result->Attach< kernel::TacticalHierarchies >    ( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
+    result->Attach< kernel::TacticalHierarchies >    ( *new FormationHierarchy( controllers_.controller_, *result, superior, model_.symbolsFactory_ ) );
     result->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );
     if( result->GetLogisticLevel() != kernel::LogisticLevel::none_ )
         result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dico ) );

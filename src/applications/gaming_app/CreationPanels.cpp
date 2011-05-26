@@ -30,13 +30,13 @@ using namespace actions;
 // Name: CreationPanels constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, ItemFactory_ABC& factory, ActionsModel& actionsModel, const Time_ABC& simulation, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings )
+CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, ItemFactory_ABC& factory, ActionsModel& actionsModel, const Time_ABC& simulation, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings, const tools::ExerciseConfig& config )
     : Panels      ( parent )
     , controllers_( controllers )
 {
     AddPanel( units_ = new UnitsPanel( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );
-    AddPanel( intel_ = new IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
+    AddPanel( intel_ = new IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons, &config ) );
     AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, drawings ) );
     AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, actionsModel, simulation, staticModel, paramLayer, tools ) );
     AddPanel( weather_ = new WeatherCreationPanel( this, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );

@@ -15,16 +15,17 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
+#include "clients_kernel/SymbolFactory.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: FormationHierarchies constructor
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-FormationHierarchies::FormationHierarchies( kernel::Controller& controller, kernel::Formation_ABC& holder, kernel::Entity_ABC* superior )
+FormationHierarchies::FormationHierarchies( kernel::Controller& controller, kernel::Formation_ABC& holder, kernel::Entity_ABC* superior, kernel::SymbolFactory& factory )
     : kernel::MergingTacticalHierarchies( controller, holder, 0 )
     , superior_( superior )
-    , level_( holder.GetLevel().GetSymbol() )
+    , level_   ( factory.CreateLevelSymbol( holder.GetLevel() ) )
 {
     // NOTHING
 }

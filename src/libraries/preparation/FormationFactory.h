@@ -15,6 +15,7 @@
 namespace kernel
 {
     class Controllers;
+    class SymbolFactory;
 }
 
 class IdManager;
@@ -31,7 +32,7 @@ class FormationFactory : public FormationFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FormationFactory( kernel::Controllers& controllers, const StaticModel& staticModel, IdManager& idManager );
+             FormationFactory( kernel::Controllers& controllers, const StaticModel& staticModel, IdManager& idManager, kernel::SymbolFactory& symbolsFactory );
     virtual ~FormationFactory();
     //@}
 
@@ -42,18 +43,12 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FormationFactory( const FormationFactory& );            //!< Copy constructor
-    FormationFactory& operator=( const FormationFactory& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
     const StaticModel& staticModel_;
     IdManager& idManager_;
+    kernel::SymbolFactory& symbolsFactory_;
     //@}
 };
 

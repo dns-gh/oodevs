@@ -28,7 +28,7 @@ class NatureEditionCategory : public QHBox, public kernel::SymbolVisitor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NatureEditionCategory( QWidget* parent, const kernel::SymbolRule* rule );
+             NatureEditionCategory( QWidget* parent );
     virtual ~NatureEditionCategory();
     //@}
 
@@ -36,6 +36,7 @@ public:
     //@{
     QString GetNature() const;
     void SetNature( const QString& nature );
+    void SetRootSymbolRule( kernel::SymbolRule& root );
     //@}
 
 signals:

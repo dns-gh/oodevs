@@ -10,6 +10,8 @@
 #ifndef __SymbolRule_h_
 #define __SymbolRule_h_
 
+#include <map>
+
 namespace xml { class xistream; }
 
 namespace kernel

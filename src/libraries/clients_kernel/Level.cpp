@@ -9,7 +9,6 @@
 
 #include "clients_kernel_pch.h"
 #include "Level.h"
-#include "SymbolFactory.h"
 
 using namespace kernel;
 
@@ -17,13 +16,12 @@ using namespace kernel;
 // Name: Level constructor
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
-Level::Level( SymbolFactory& factory, const QString& name, const HierarchyLevel_ABC* next )
+Level::Level( const QString& name, const HierarchyLevel_ABC* next )
     : name_( name )
     , id_( 1 )
     , previous_( 0 )
     , next_( next )
 {
-    symbol_ = factory.CreateLevelSymbol( name_.ascii() );
     if( next_ )
         id_ = next_->GetId() + 1;
 }
@@ -62,15 +60,6 @@ unsigned int Level::GetId() const
 QString Level::GetName() const
 {
     return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Level::GetSymbol
-// Created: AGE 2006-11-23
-// -----------------------------------------------------------------------------
-std::string Level::GetSymbol() const
-{
-    return symbol_;
 }
 
 // -----------------------------------------------------------------------------

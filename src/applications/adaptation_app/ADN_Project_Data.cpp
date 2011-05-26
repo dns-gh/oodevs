@@ -104,10 +104,11 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "missions", szMissions_);
     ReadFile( input, "urban", szUrban_ );
     ReadFile( input, "resource-networks", szResourceNetworks_ );
+    // $$$$ ABR 2011-05-25: FIXME Update
+    ReadFile( input, "drawing-templates", szDrawingTemplates_ );
+    ReadFile( input, "symbols", szSymbols_ );
+    ReadFile( input, "scores", szScores_ );
     ReadOptionalFile( input, "extensions", szExtensions_ );
-    ReadOptionalFile( input, "drawing-templates", szDrawingTemplates_ );
-    ReadOptionalFile( input, "scores", szScores_ );
-    ReadOptionalFile( input, "symbols", szSymbols_ );
     input >> xml::end;
 }
 
@@ -339,15 +340,14 @@ void ADN_Project_Data::Load( const tools::Loader_ABC& fileLoader )
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szHumanProtections_.GetData() );
     fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szMedicalTreatment_.GetData() );
 
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "templates.xml" );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szDrawingTemplates_.GetData() );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szScores_.GetData() );
+    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szSymbols_.GetData() );
     fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szExtensions_.GetData() );
-    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szDrawingTemplates_.GetData() );
-    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szScores_.GetData() );
-    fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + dataInfos_.szSymbols_.GetData() );
     fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "dis.xml" );
     fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "FOM.xml" );
     fileLoader.CheckOptionalFile( workDir_.GetWorkingDirectory().GetData() + "mapping.xml" );
-
-    fileLoader.CheckFile( workDir_.GetWorkingDirectory().GetData() + "templates.xml" );
 }
 
 namespace

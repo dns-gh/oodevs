@@ -18,6 +18,7 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -27,12 +28,13 @@ using namespace kernel;
 // Name: Intelligence constructor
 // Created: SBO 2007-10-12
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( Controller& controller, IdManager& idManager, const std::string& symbol, const HierarchyLevel_ABC& level, bool mounted, const Karma& karma )
+Intelligence::Intelligence( Controller& controller, IdManager& idManager, const std::string& symbol, const HierarchyLevel_ABC& level, bool mounted, const Karma& karma, kernel::SymbolFactory& factory )
     : EntityImplementation< Intelligence_ABC >( controller, idManager.GetNextId(), "" )
     , symbol_    ( symbol )
     , level_     ( &level )
     , mounted_   ( mounted )
     , karma_     ( &karma )
+    , levelSymbol_( factory.CreateLevelSymbol( *level_ ) )
 {
     RegisterSelf( *this );
     name_ = tools::translate( "Intelligence", "Intelligence [%1]" ).arg( id_ );
@@ -43,12 +45,13 @@ Intelligence::Intelligence( Controller& controller, IdManager& idManager, const 
 // Name: Intelligence constructor
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const tools::Resolver_ABC< HierarchyLevel_ABC, QString >& levels )
+Intelligence::Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const tools::Resolver_ABC< HierarchyLevel_ABC, QString >& levels, kernel::SymbolFactory& factory )
     : EntityImplementation< Intelligence_ABC >( controller, idManager.GetNextId(), xis.attribute< std::string >( "name" ).c_str() )
     , symbol_    ( xis.attribute< std::string >( "nature" ) )
     , level_     ( &levels.Get( xis.attribute< std::string >( "level" ).c_str() ) )
     , mounted_   ( xis.attribute< bool >( "embarked" ) ) // $$$$ AGE 2008-01-16: odb : embarked => mounted
     , karma_     ( &Karma::ResolveId( xis.attribute< std::string >( "karma" ) ) )
+    , levelSymbol_( factory.CreateLevelSymbol( *level_ ) )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -73,7 +76,7 @@ void Intelligence::Draw( const geometry::Point2f& where, const Viewport_ABC& vie
     {
         const std::string style( "stroke:black;fill:currentColor;stroke-width:4;stroke-dasharray:10,10px" );
         tools.DrawApp6Symbol( GetSymbol(), style, where );
-        tools.DrawApp6Symbol( level_->GetSymbol(), style, where );
+        tools.DrawApp6Symbol( levelSymbol_, style, where );
     }
 }
 

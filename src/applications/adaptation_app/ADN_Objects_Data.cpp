@@ -1315,9 +1315,9 @@ void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& xis )
         >> xml::optional >> xml::attribute( "point-size", pointSize_ )
         >> xml::list( *this, &ADN_Objects_Data::ObjectInfos::ReadCapacityArchive );
 
-    ADN_Symbols_Data& symbolsData = ADN_Workspace::GetWorkspace().GetSymbols().GetData();
-    symbol_.SetVector( symbolsData.GetSymbols( geometries_.GetData() ) );
-    symbol_.SetData( symbolsData.GetSymbol( code ), false );
+    ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
+    symbol_.SetVector( drawingsData.GetDrawings( geometries_.GetData() ) );
+    symbol_.SetData( drawingsData.GetDrawing( code ), false );
 }
 
 // -----------------------------------------------------------------------------

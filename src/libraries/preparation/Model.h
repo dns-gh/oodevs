@@ -18,6 +18,7 @@ namespace kernel
     class Controllers;
     class KnowledgeGroupFactory_ABC; // LTO
     class ResourceNetworkSelectionObserver;
+    class SymbolFactory;
 }
 
 namespace tools
@@ -95,6 +96,7 @@ private:
     kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;
     kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
+    kernel::SymbolFactory& symbolsFactory_;
     FormationFactory_ABC& formationFactory_;
     AgentFactory_ABC& agentFactory_;
     ObjectFactory_ABC& objectFactory_;

@@ -22,6 +22,7 @@
 #include "ADN_MultiPercentage.h"
 #include "ADN_Nature_GUI.h"
 #include "ADN_Point_GUI.h"
+#include "ADN_Project_Data.h"
 #include "ADN_SymbolWidget.h"
 #include "ADN_TimeField.h"
 #include "ADN_Tr.h"
@@ -30,6 +31,7 @@
 #include "ADN_Units_Postures_GUI.h"
 #include "ADN_Units_LogThreshold_GUI.h"
 #include "ADN_Workspace.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "ENT/ENT_Tr.h"
 #include <qcombo.h>
 #include <qframe.h>
@@ -132,8 +134,8 @@ void ADN_Units_GUI::Build()
     // nature atlas type
     builder.AddEnumField<E_NatureAtlasType>( subLayout, tr( "Atlas" ), vInfosConnectors[eNatureAtlas], ADN_Tr::ConvertFromNatureAtlasType );
 
-    ADN_Nature_GUI* natureGui = new ADN_Nature_GUI( pNatureInternalGroup );
-    vInfosConnectors[eNatureNature] = &natureGui->GetConnector();
+    pNatureGui_ = new ADN_Nature_GUI( pNatureInternalGroup );
+    vInfosConnectors[eNatureNature] = &pNatureGui_->GetConnector();
 
     // Symbol
     QVBox* pSymbolLayout = new QVBox( pNatureGroup );
@@ -142,7 +144,7 @@ void ADN_Units_GUI::Build()
     pSymbolWidget_->setSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed );
     pSymbolWidget_->setMinimumSize( 130, 140 );
     pSymbolWidget_->setMaximumSize( 130, 140 );
-    connect( natureGui, SIGNAL( textChanged( const QString& ) ), pSymbolWidget_, SLOT( OnNatureChanged( const QString& ) ) );
+    connect( pNatureGui_, SIGNAL( textChanged( const QString& ) ), pSymbolWidget_, SLOT( OnNatureChanged( const QString& ) ) );
     connect( pSymbolWidget_, SIGNAL( SymbolChanged( const QString& ) ), pSymbolLabel, SLOT( setText( const QString& ) ) );
 
     // Commandement
@@ -381,4 +383,16 @@ void ADN_Units_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString
 ADN_SymbolWidget* ADN_Units_GUI::GetSymbolWidget() const
 {
     return pSymbolWidget_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Units_GUI::SetSymbolFactory
+// Created: ABR 2011-05-26
+// -----------------------------------------------------------------------------
+void ADN_Units_GUI::SetSymbolFactory( kernel::SymbolFactory& factory )
+{
+    assert( pSymbolWidget_ );
+    pSymbolWidget_->SetSymbolFactory( factory );
+    assert( pNatureGui_ );
+    pNatureGui_->SetRootSymbolRule( factory.GetSymbolRule() );
 }

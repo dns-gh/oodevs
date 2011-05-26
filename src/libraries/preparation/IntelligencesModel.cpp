@@ -23,11 +23,12 @@ using namespace kernel;
 // Name: IntelligencesModel constructor
 // Created: SBO 2007-10-15
 // -----------------------------------------------------------------------------
-IntelligencesModel::IntelligencesModel( Controller& controller, const CoordinateConverter_ABC& converter, IdManager& idManager, const FormationLevels& levels )
-    : controller_( controller )
-    , converter_ ( converter )
-    , idManager_ ( idManager )
-    , levels_    ( levels )
+IntelligencesModel::IntelligencesModel( Controller& controller, const CoordinateConverter_ABC& converter, IdManager& idManager, const FormationLevels& levels, SymbolFactory& symbolsFactory )
+    : controller_    ( controller )
+    , converter_     ( converter )
+    , idManager_     ( idManager )
+    , levels_        ( levels )
+    , symbolsFactory_( symbolsFactory )
 {
     // NOTHING
 }
@@ -56,9 +57,9 @@ void IntelligencesModel::Purge()
 // -----------------------------------------------------------------------------
 Intelligence_ABC* IntelligencesModel::Create( kernel::Entity_ABC& superior, const std::string& symbol, const HierarchyLevel_ABC& level, bool mounted, const Karma& karma, const geometry::Point2f& position )
 {
-    std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, symbol, level, mounted, karma ) );
+    std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, symbol, level, mounted, karma, symbolsFactory_ ) );
     intelligence->Attach< kernel::Positions >( *new IntelligencePositions( converter_, position ) );
-    intelligence->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controller_, *intelligence, &superior ) );
+    intelligence->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controller_, *intelligence, &superior, symbolsFactory_ ) );
     intelligence->Polish();
     Register( intelligence->GetId(), *intelligence );
     return intelligence.release();
@@ -70,9 +71,9 @@ Intelligence_ABC* IntelligencesModel::Create( kernel::Entity_ABC& superior, cons
 // -----------------------------------------------------------------------------
 void IntelligencesModel::Create( xml::xistream& xis, kernel::Entity_ABC& superior )
 {
-    std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, xis, levels_ ) );
+    std::auto_ptr< Intelligence > intelligence( new Intelligence( controller_, idManager_, xis, levels_, symbolsFactory_ ) );
     intelligence->Attach< kernel::Positions >( *new IntelligencePositions( converter_, xis ) );
-    intelligence->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controller_, *intelligence, &superior ) );
+    intelligence->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controller_, *intelligence, &superior, symbolsFactory_ ) );
     intelligence->Polish();
     Register( intelligence->GetId(), *intelligence );
     intelligence.release();

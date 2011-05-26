@@ -34,13 +34,14 @@ class NatureEditionWidget : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             NatureEditionWidget( QWidget* parent, const std::string& symbolFile );
+             NatureEditionWidget( QWidget* parent );
     virtual ~NatureEditionWidget();
     //@}
 
     //! @name Operations
     //@{
     QString text();
+    void SetRootSymbolRule( kernel::SymbolRule& root );
     //@}
 
 public slots:
@@ -58,7 +59,6 @@ signals:
 private:
     //! @name Member data
     //@{
-    kernel::SymbolRule* root_;
     NatureEditionCategory* rootWidget_;
     //@}
 };

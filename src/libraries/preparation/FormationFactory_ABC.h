@@ -10,6 +10,8 @@
 #ifndef __FormationFactory_ABC_h_
 #define __FormationFactory_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Entity_ABC;
@@ -29,7 +31,7 @@ namespace xml
 */
 // Created: SBO 2006-09-19
 // =============================================================================
-class FormationFactory_ABC
+class FormationFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor

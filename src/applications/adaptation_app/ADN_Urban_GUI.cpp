@@ -159,7 +159,7 @@ void ADN_Urban_GUI::Build()
     pHolder = builder.AddFieldHolder( pGroupInfrastructures );
 
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Type" ),  vInfrastructureInfosConnectors[ eUrbanInfrastructureName ] );
-    builder.AddField< ADN_ComboBox_Vector< ADN_Urban_Data::SymbolsInfraInfos > >( pHolder, tr( "Symbol" ), vInfrastructureInfosConnectors[ eUrbanInfrastructureSymbol ] );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Symbols_Data::SymbolsInfra > >( pHolder, tr( "Symbol" ), vInfrastructureInfosConnectors[ eUrbanInfrastructureSymbol ] );
 
     ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Medical" ), pGroupInfrastructures );
     {

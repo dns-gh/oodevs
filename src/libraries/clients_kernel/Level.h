@@ -14,7 +14,6 @@
 
 namespace kernel
 {
-    class SymbolFactory;
 
 // =============================================================================
 /** @class  Level
@@ -27,7 +26,7 @@ class Level : public HierarchyLevel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Level( SymbolFactory& factory, const QString& name, const HierarchyLevel_ABC* next );
+             Level( const QString& name, const HierarchyLevel_ABC* next );
     virtual ~Level();
     //@}
 
@@ -35,7 +34,6 @@ public:
     //@{
     virtual unsigned int GetId() const;
     virtual QString GetName() const;
-    virtual std::string GetSymbol() const;
 
     virtual const HierarchyLevel_ABC* GetPrevious() const;
     virtual const HierarchyLevel_ABC* GetNext() const;
@@ -57,11 +55,9 @@ private:
 private:
     //! @name Member data
     //@{
-
     unsigned int id_;
     QString name_;
     std::string symbol_;
-
     const HierarchyLevel_ABC* previous_;
     const HierarchyLevel_ABC* next_;
     //@}

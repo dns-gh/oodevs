@@ -15,63 +15,65 @@
 #include "ADN_WorkspaceElement.h"
 #include <boost/noncopyable.hpp>
 
-class ADN_MainWindow;
-class ADN_ProgressIndicator_ABC;
-class QtUndoStack;
-class QtCommand;
-class ADN_NBC_GUI;
-class ADN_NBC_Datas;
-class ADN_Launchers_GUI;
-class ADN_Launchers_Data;
-class ADN_Project_Data;
-class ADN_Categories_GUI;
-class ADN_Categories_Data;
-class ADN_Urban_GUI;
-class ADN_Urban_Data;
-class ADN_Equipement_GUI;
-class ADN_Equipement_Data;
-class ADN_Objects_GUI;
-class ADN_Objects_Data;
-class ADN_Weapons_GUI;
-class ADN_Weapons_Data;
-class ADN_ActiveProtections_GUI;
 class ADN_ActiveProtections_Data;
-class ADN_Sensors_GUI;
-class ADN_Sensors_Data;
-class ADN_Composantes_GUI;
-class ADN_Composantes_Data;
-class ADN_Units_GUI;
-class ADN_Units_Data;
-class ADN_Models_GUI;
-class ADN_Models_Data;
-class ADN_Missions_Data;
-class ADN_Missions_GUI;
-class ADN_Automata_GUI;
-class ADN_Automata_Data;
-class ADN_AiEngine_GUI;
+class ADN_ActiveProtections_GUI;
 class ADN_AiEngine_Data;
+class ADN_AiEngine_GUI;
+class ADN_Automata_Data;
+class ADN_Automata_GUI;
 class ADN_Breakdowns_Data;
 class ADN_Breakdowns_GUI;
-class ADN_Population_Data;
-class ADN_Population_GUI;
-class ADN_People_Data;
-class ADN_People_GUI;
-class ADN_Reports_Data;
-class ADN_Reports_GUI;
-class ADN_HumanFactors_Data;
-class ADN_HumanFactors_GUI;
+class ADN_Categories_Data;
+class ADN_Categories_GUI;
+class ADN_Composantes_Data;
+class ADN_Composantes_GUI;
+class ADN_Drawings_Data;
+class ADN_Drawings_GUI;
+class ADN_Equipement_Data;
+class ADN_Equipement_GUI;
+class ADN_FireClass_Data;
+class ADN_FireClass_GUI;
 class ADN_Health_Data;
 class ADN_Health_GUI;
+class ADN_HumanFactors_Data;
+class ADN_HumanFactors_GUI;
+class ADN_KnowledgeGroups_Data;
+class ADN_KnowledgeGroups_GUI;
+class ADN_Launchers_Data;
+class ADN_Launchers_GUI;
+class ADN_MainWindow;
+class ADN_Missions_Data;
+class ADN_Missions_GUI;
+class ADN_Models_Data;
+class ADN_Models_GUI;
+class ADN_NBC_Datas;
+class ADN_NBC_GUI;
+class ADN_Objects_Data;
+class ADN_Objects_GUI;
+class ADN_People_Data;
+class ADN_People_GUI;
+class ADN_Population_Data;
+class ADN_Population_GUI;
+class ADN_ProgressIndicator_ABC;
+class ADN_Project_Data;
+class ADN_Reports_Data;
+class ADN_Reports_GUI;
+class ADN_ResourceNetworks_Data;
+class ADN_ResourceNetworks_GUI;
+class ADN_Sensors_Data;
+class ADN_Sensors_GUI;
 class ADN_Supply_Data;
 class ADN_Supply_GUI;
 class ADN_Symbols_Data;
 class ADN_Symbols_GUI;
-class ADN_KnowledgeGroups_Data;
-class ADN_KnowledgeGroups_GUI;
-class ADN_ResourceNetworks_Data;
-class ADN_ResourceNetworks_GUI;
-class ADN_FireClass_Data;
-class ADN_FireClass_GUI;
+class ADN_Units_Data;
+class ADN_Units_GUI;
+class ADN_Urban_Data;
+class ADN_Urban_GUI;
+class ADN_Weapons_Data;
+class ADN_Weapons_GUI;
+class QtCommand;
+class QtUndoStack;
 enum E_OpenMode;
 
 namespace tools
@@ -129,6 +131,7 @@ public:
     ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& GetKnowledgeGroups();
     ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& GetResourceNetworks();
     ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& GetFireClasses();
+    ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI >& GetDrawings() const;
     ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& GetSymbols() const;
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
@@ -149,12 +152,13 @@ private:
     enum E_WorkspaceElements
     {
         eCategories,
+        eSymbols, // Must be before eUnits && before eUrban
         eUrban,
         eNBC,
         eLaunchers,
         eEquipement,
         eFireClasses,
-        eSymbols, // Must be befor eObjects
+        eDrawings, // Must be before eObjects
         eObjects,
         eWeapons,
         eActiveProtections,
@@ -462,6 +466,16 @@ inline
 ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& ADN_Workspace::GetFireClasses()
 {
     return static_cast< ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& >( *elements_[ eFireClasses ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI >& ADN_Workspace::GetDrawings
+// Created: ABR 2011-04-18
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI >& ADN_Workspace::GetDrawings() const
+{
+    return static_cast< ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI >& >( *elements_[ eDrawings ] );
 }
 
 // -----------------------------------------------------------------------------

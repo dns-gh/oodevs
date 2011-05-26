@@ -11,6 +11,7 @@
 #include "FormationHierarchy.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
+#include "clients_kernel/SymbolFactory.h"
 
 using namespace kernel;
 
@@ -18,10 +19,10 @@ using namespace kernel;
 // Name: FormationHierarchy constructor
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-FormationHierarchy::FormationHierarchy( Controller& controller, Formation_ABC& entity, Entity_ABC* superior )
+FormationHierarchy::FormationHierarchy( Controller& controller, Formation_ABC& entity, Entity_ABC* superior, kernel::SymbolFactory& factory )
     : MergingTacticalHierarchies( controller, entity, 0 )
     , superior_( superior )
-    , level_( entity.GetLevel().GetSymbol() )
+    , level_   ( factory.CreateLevelSymbol( entity.GetLevel() ) )
 {
     // NOTHING
 }

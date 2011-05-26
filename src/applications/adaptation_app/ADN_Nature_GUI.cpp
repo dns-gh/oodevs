@@ -21,7 +21,7 @@ using namespace gui;
 // Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
 ADN_Nature_GUI::ADN_Nature_GUI( QWidget* parent )
-    : NatureEditionWidget( parent, "resources/symbols.xml" ) // $$$$ AGE 2008-08-14:
+    : NatureEditionWidget( parent )
     , ADN_Gfx_ABC()
 {
     pConnector_ = new ADN_Connector_String< ADN_Nature_GUI >( this );

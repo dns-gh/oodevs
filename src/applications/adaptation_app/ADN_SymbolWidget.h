@@ -52,6 +52,7 @@ public:
     virtual void initializeGL();
     virtual void resizeGL( int w, int h );
     virtual void paintGL();
+    void SetSymbolFactory( kernel::SymbolFactory& factory );
     //@}
 
     //! @name Accessors
@@ -75,7 +76,7 @@ private:
 
     std::auto_ptr< gui::SvglRenderer > renderer_;
     std::auto_ptr< gui::GLSymbols > symbols_;
-    std::auto_ptr< kernel::SymbolFactory > symbolFactory_;
+    kernel::SymbolFactory* symbolFactory_;
 
     std::string currentSymbol_;
 

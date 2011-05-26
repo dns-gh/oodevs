@@ -15,8 +15,15 @@
 #include "ADN_GUI_ABC.h"
 #include "ADN_EditLine.h"
 
+namespace kernel
+{
+    class SymbolFactory;
+    class SymbolRule;
+}
+
 class ADN_GroupBox;
 class ADN_ListView_Units;
+class ADN_Nature_GUI;
 class ADN_SymbolWidget;
 class ADN_Units_Data;
 class ADN_Units_LogThreshold_GUI;
@@ -96,6 +103,7 @@ public:
     void Build();
     void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath );
     ADN_SymbolWidget* GetSymbolWidget() const;
+    void SetSymbolFactory( kernel::SymbolFactory& factory );
     //@}
 
 private slots:
@@ -125,6 +133,7 @@ private:
     ADN_Units_LogThreshold_GUI* pStockLogThreshold_;
     ADN_GroupBox* pInstallationGroup_;
     ADN_SymbolWidget* pSymbolWidget_;
+    ADN_Nature_GUI* pNatureGui_;
     //@}
 };
 

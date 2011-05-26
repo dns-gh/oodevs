@@ -948,6 +948,8 @@ void ADN_Units_Data::ReadUnit( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Units_Data::ReadArchive( xml::xistream& input )
 {
+    ADN_Workspace::GetWorkspace().GetUnits().GetGui().SetSymbolFactory( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolFactory() );
+
     input >> xml::start( "units" )
             >> xml::list( "unit", *this, &ADN_Units_Data::ReadUnit )
           >> xml::end;

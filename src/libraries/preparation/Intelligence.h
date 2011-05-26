@@ -25,6 +25,7 @@ namespace xml
 namespace kernel
 {
     class HierarchyLevel_ABC;
+    class SymbolFactory;
 }
 
 class IdManager;
@@ -43,8 +44,8 @@ class Intelligence : public kernel::EntityImplementation< kernel::Intelligence_A
 public:
     //! @name Constructors/Destructor
     //@{
-             Intelligence( kernel::Controller& controller, IdManager& idManager, const std::string& symbol, const kernel::HierarchyLevel_ABC& level, bool mounted, const kernel::Karma& karma );
-             Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC, QString >& levels );
+             Intelligence( kernel::Controller& controller, IdManager& idManager, const std::string& symbol, const kernel::HierarchyLevel_ABC& level, bool mounted, const kernel::Karma& karma, kernel::SymbolFactory& factory );
+             Intelligence( kernel::Controller& controller, IdManager& idManager, xml::xistream& xis, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC, QString >& levels, kernel::SymbolFactory& factory );
     virtual ~Intelligence();
     //@}
 
@@ -82,6 +83,7 @@ private:
     const kernel::HierarchyLevel_ABC* level_;
     IntelligenceKarma karma_;
     bool mounted_;
+    const std::string levelSymbol_;
     //@}
 };
 

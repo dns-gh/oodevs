@@ -28,6 +28,7 @@ namespace kernel
 {
     class Formation_ABC;
     class HierarchyLevel_ABC;
+    class SymbolFactory;
 }
 
 class Publisher_ABC;
@@ -50,7 +51,7 @@ public:
              Intelligence( const sword::IntelligenceCreation& message, kernel::Controller& controller
                          , const tools::Resolver_ABC< kernel::Formation_ABC >& formations
                          , const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels
-                         , Publisher_ABC& publisher);
+                         , Publisher_ABC& publisher, kernel::SymbolFactory& factory );
     virtual ~Intelligence();
     //@}
 
@@ -90,6 +91,7 @@ private:
     const kernel::Karma* karma_;
     bool mounted_;
     Publisher_ABC& publisher_;
+    const std::string levelSymbol_;
     //@}
 };
 

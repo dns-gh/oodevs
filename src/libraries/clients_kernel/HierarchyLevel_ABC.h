@@ -10,11 +10,9 @@
 #ifndef __HierarchyLevel_ABC_h_
 #define __HierarchyLevel_ABC_h_
 
-#pragma warning( push, 0 )
-#pragma warning( push, 0 )
-#include <qstring.h>
-#pragma warning( pop )
-#pragma warning( pop )
+#include <boost/noncopyable.hpp>
+
+class QString;
 
 namespace kernel
 {
@@ -24,7 +22,7 @@ namespace kernel
 */
 // Created: SBO 2006-09-28
 // =============================================================================
-class HierarchyLevel_ABC
+class HierarchyLevel_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -37,7 +35,6 @@ public:
     //@{
     virtual unsigned int GetId() const = 0;
     virtual QString GetName() const = 0;
-    virtual std::string GetSymbol() const = 0;
 
     virtual const HierarchyLevel_ABC* GetPrevious() const = 0;
     virtual const HierarchyLevel_ABC* GetNext() const = 0;

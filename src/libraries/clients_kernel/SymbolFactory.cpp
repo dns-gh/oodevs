@@ -9,26 +9,35 @@
 
 #include "clients_kernel_pch.h"
 #include "SymbolFactory.h"
+
+#include "HierarchyLevel_ABC.h"
 #include "SymbolRule.h"
 #include "SymbolCase.h"
-#include "tools/GeneralConfig.h"
+#include "tools/ExerciseConfig.h"
+#include "tools/Loader_ABC.h"
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: SymbolFactory constructor
-// Created: SBO 2006-03-20
+// Created: ABR 2011-05-25
 // -----------------------------------------------------------------------------
 SymbolFactory::SymbolFactory()
+    : initialized_( false )
 {
-    xml::xifstream xis( tools::GeneralConfig::BuildResourceChildFile( "symbols.xml" ) );
+    // NOTHING
+}
 
-    xis >> xml::start( "app6" );
-        symbolRule_.reset( ReadRule( xis, "symbols", symbolBase_ ) );
-        levelRule_ .reset( ReadRule( xis, "levels", levelBase_ ) );
-                           ReadRule( xis, "automats", automatSymbol_ );
-    xis >> xml::end;
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory constructor
+// Created: ABR 2011-05-25
+// -----------------------------------------------------------------------------
+SymbolFactory::SymbolFactory( xml::xistream& xis )
+    : initialized_( true )
+{
+    ReadSymbols( xis );
     ListSymbols();
 }
 
@@ -39,6 +48,31 @@ SymbolFactory::SymbolFactory()
 SymbolFactory::~SymbolFactory()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::ReadSymbols
+// Created: ABR 2011-05-25
+// -----------------------------------------------------------------------------
+void SymbolFactory::ReadSymbols( xml::xistream& xis )
+{
+    xis >> xml::start( "app6" );
+        symbolRule_.reset( ReadRule( xis, "symbols", symbolBase_ ) );
+        levelRule_ .reset( ReadRule( xis, "levels", levelBase_ ) );
+        ReadRule( xis, "automats", automatSymbol_ );
+    xis >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::Load
+// Created: ABR 2011-05-25
+// -----------------------------------------------------------------------------
+void SymbolFactory::Load( const tools::ExerciseConfig& config )
+{
+    assert( !initialized_ );
+    config.GetLoader().LoadPhysicalFile( "symbols", boost::bind( &SymbolFactory::ReadSymbols, this, _1 ) );
+    ListSymbols();
+    initialized_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -130,6 +164,8 @@ void SymbolFactory::ReadRule( xml::xistream& xis, SymbolRule*& rule ) const
 // -----------------------------------------------------------------------------
 std::string SymbolFactory::CreateSymbol( const std::string& hierarchy ) const
 {
+    if( !initialized_ )
+        return "";
     std::string result( symbolBase_ );
     symbolRule_->Evaluate( hierarchy, result );
     return result;
@@ -139,11 +175,24 @@ std::string SymbolFactory::CreateSymbol( const std::string& hierarchy ) const
 // Name: SymbolFactory::CreateLevelSymbol
 // Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-std::string SymbolFactory::CreateLevelSymbol( const std::string& level ) const
+std::string SymbolFactory::CreateLevelSymbol( const std::string& level ) const // $$$$ ABR 2011-05-24: to remove
 {
+    if( !initialized_ )
+        return "";
     std::string result;
     levelRule_->Evaluate( level, result );
     return ( ! result.empty() ) ? levelBase_ + result : result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::CreateLevelSymbol
+// Created: ABR 2011-05-24
+// -----------------------------------------------------------------------------
+std::string SymbolFactory::CreateLevelSymbol( const HierarchyLevel_ABC& level ) const
+{
+    if( !initialized_ )
+        return "";
+    return CreateLevelSymbol( level.GetName().ascii() );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,6 +201,8 @@ std::string SymbolFactory::CreateLevelSymbol( const std::string& level ) const
 // -----------------------------------------------------------------------------
 std::string SymbolFactory::CreateAutomatSymbol() const
 {
+    if( !initialized_ )
+        return "";
     return automatSymbol_;
 }
 
@@ -161,9 +212,29 @@ std::string SymbolFactory::CreateAutomatSymbol() const
 // -----------------------------------------------------------------------------
 bool SymbolFactory::IsThisChainAvailable( const std::string& chain ) const
 {
+    if( !initialized_ )
+        return false;
     std::vector< std::string >::const_iterator  it;
     for ( it = availableSymbols_.begin() ; it != availableSymbols_.end() ; ++it )
         if ( *it == chain )
             break;
     return it != availableSymbols_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::GetSymbolRule
+// Created: ABR 2011-05-26
+// -----------------------------------------------------------------------------
+SymbolRule& SymbolFactory::GetSymbolRule() const
+{
+    return *symbolRule_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::GetLevelRule
+// Created: ABR 2011-05-26
+// -----------------------------------------------------------------------------
+SymbolRule& SymbolFactory::GetLevelRule() const
+{
+    return *levelRule_;
 }

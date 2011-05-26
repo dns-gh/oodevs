@@ -47,14 +47,15 @@ namespace gui
 }
 
 class AgentsLayer;
-class Model;
-class ModelBuilder;
-class StaticModel;
+class CreationPanels;
+class FileToolbar;
 class InhabitantCreationPanel;
-class ObjectCreationPanel;
 class MapLayer_ABC;
 class Menu;
-class FileToolbar;
+class Model;
+class ModelBuilder;
+class ObjectCreationPanel;
+class StaticModel;
 
 // =============================================================================
 /** @class  MainWindow
@@ -151,6 +152,7 @@ private:
     bool loading_;
     bool needsSaving_;
     QString savedState_;
+    CreationPanels* pCreationPanel_;
     //@}
 };
 

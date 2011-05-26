@@ -19,7 +19,7 @@
 #include "ADN_DataTreeNode_ABC.h"
 #include "ADN_Type_Choice.h"
 #include "ADN_FireClass_Data.h"
-#include "ADN_Symbols_Data.h"
+#include "ADN_Drawings_Data.h"
 #include <string>
 #include <map>
 #include <memory>
@@ -642,7 +642,7 @@ public:
         ADN_Type_String strType_;
         ADN_Type_String geometries_;
         ADN_Type_Double pointSize_;
-        ADN_TypePtr_InVector_ABC< ADN_Symbols_Data::SymbolInfo > symbol_;
+        ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
 
         typedef std::map< std::string, boost::shared_ptr< helpers::ADN_TypeCapacity_Infos > > T_CapacityMap;
         typedef T_CapacityMap::iterator                                                      IT_CapacityMap;

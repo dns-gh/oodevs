@@ -22,17 +22,10 @@ using namespace kernel;
 // Name: NatureEditionWidget constructor
 // Created: AGE 2006-10-24
 // -----------------------------------------------------------------------------
-NatureEditionWidget::NatureEditionWidget( QWidget* parent, const std::string& symbolFile )
+NatureEditionWidget::NatureEditionWidget( QWidget* parent )
     : QVBox( parent )
-    , root_( 0 )
 {
-    xml::xifstream xis( symbolFile );
-    xis >> xml::start( "app6" )
-        >> xml::start( "symbols" )
-        >> xml::start( "choice" );
-    root_ = new SymbolRule( xis );
-    rootWidget_ = new NatureEditionCategory( this, root_ );
-
+    rootWidget_ = new NatureEditionCategory( this );
     connect( rootWidget_, SIGNAL( NatureChanged( const QString& ) ), this, SIGNAL( textChanged( const QString& ) ) );
 }
 
@@ -43,7 +36,6 @@ NatureEditionWidget::NatureEditionWidget( QWidget* parent, const std::string& sy
 NatureEditionWidget::~NatureEditionWidget()
 {
     delete rootWidget_;
-    delete root_;
 }
 
 // -----------------------------------------------------------------------------
@@ -62,4 +54,13 @@ QString NatureEditionWidget::text()
 void NatureEditionWidget::setText( const QString& nature )
 {
     rootWidget_->SetNature( nature );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NatureEditionWidget::SetRootSymbolRule
+// Created: ABR 2011-05-26
+// -----------------------------------------------------------------------------
+void NatureEditionWidget::SetRootSymbolRule( kernel::SymbolRule& root )
+{
+    rootWidget_->SetRootSymbolRule( root );
 }

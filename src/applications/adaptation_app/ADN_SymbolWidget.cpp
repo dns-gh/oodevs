@@ -11,6 +11,7 @@
 #include "ADN_SymbolWidget.h"
 #include "moc_ADN_SymbolWidget.cpp"
 
+#include "ADN_Project_Data.h"
 #include "svgl/svgl.h"
 #include "geometry/types.h"
 #include "clients_gui/SvglRenderer.h"
@@ -28,10 +29,11 @@ ADN_SymbolWidget::ADN_SymbolWidget( QWidget* parent )
     , ADN_Gfx_ABC()
     , renderer_( new SvglRenderer() )
     , symbols_ ( new GLSymbols( *renderer_ ) )
-    , symbolFactory_( new kernel::SymbolFactory() )
+    , symbolFactory_( 0 )
     , currentSymbol_()
     , viewPort_( 0, 0, 0, 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,6 +42,7 @@ ADN_SymbolWidget::ADN_SymbolWidget( QWidget* parent )
 // -----------------------------------------------------------------------------
 ADN_SymbolWidget::~ADN_SymbolWidget()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -145,4 +148,13 @@ void ADN_SymbolWidget::OnNatureChanged( const QString& nature )
 bool ADN_SymbolWidget::IsAvailable( const std::string& symbol ) const
 {
     return symbolFactory_->IsThisChainAvailable( symbol );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_SymbolWidget::SetSymbolFactory
+// Created: ABR 2011-05-26
+// -----------------------------------------------------------------------------
+void ADN_SymbolWidget::SetSymbolFactory( kernel::SymbolFactory& factory )
+{
+    symbolFactory_ = &factory;
 }

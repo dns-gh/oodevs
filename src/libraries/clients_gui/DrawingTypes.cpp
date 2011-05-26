@@ -44,7 +44,7 @@ DrawingTypes::~DrawingTypes()
 // -----------------------------------------------------------------------------
 void DrawingTypes::Load( const tools::ExerciseConfig& config )
 {
-    config.GetLoader().LoadOptionalPhysicalFile( "drawing-templates", boost::bind( &DrawingTypes::Read, this, _1 ) );
+    config.GetLoader().LoadPhysicalFile( "drawing-templates", boost::bind( &DrawingTypes::Read, this, _1 ) );
 }
 
 // -----------------------------------------------------------------------------

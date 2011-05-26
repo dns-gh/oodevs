@@ -314,7 +314,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     QDockWindow* pCreationWnd = new QDockWindow( this, "creation" );
     moveDockWindow( pCreationWnd, Qt::DockRight );
     pCreationWnd->hide();
-    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, model_.actions_, simulation, *paramLayer, *glProxy_, *symbols, *strategy_, model_.drawings_ );
+    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, model_.actions_, simulation, *paramLayer, *glProxy_, *symbols, *strategy_, model_.drawings_, config_ );
     pCreationWnd->setWidget( creationPanels );
     pCreationWnd->setResizeEnabled( true );
     pCreationWnd->setCloseMode( QDockWindow::Always );
@@ -492,21 +492,6 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
 void MainWindow::OnPlanifStateChange()
 {
     pMissionPanel_->ActivatePlanification();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MainWindow::Open
-// Created: AGE 2006-05-03
-// -----------------------------------------------------------------------------
-void MainWindow::Open()
-{
-    QString filename = QFileDialog::getOpenFileName( config_.GetExerciseFile().c_str(), "Exercise (*.xml)", this, 0, tr( "Load exercise definition file (exercise.xml)" ) );
-    if( filename.isEmpty() )
-        return;
-    if( filename.startsWith( "//" ) )
-        filename.replace( "/", "\\" );
-    config_.LoadExercise( filename.ascii() );
-    Load();
 }
 
 // -----------------------------------------------------------------------------

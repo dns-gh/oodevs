@@ -36,6 +36,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/ResourceNetworkSelectionObserver.h"
 #include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerModel.h"
@@ -65,7 +66,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , idManager_            ( *new IdManager() )
     , teamFactory_          ( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
     , knowledgeGroupFactory_( *new KnowledgeGroupFactory( controllers, staticModel, idManager_ ) )
-    , formationFactory_     ( *new FormationFactory( controllers, staticModel, idManager_ ) )
+    , formationFactory_     ( *new FormationFactory( controllers, staticModel, idManager_, symbolsFactory_ ) )
     , agentFactory_         ( *new AgentFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_ ) )
     , objectFactory_        ( *new ObjectFactory( controllers, *this, staticModel, idManager_ ) )
     , profileFactory_       ( *new ProfileFactory( controllers.controller_, *this ) )
@@ -78,16 +79,17 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , teams_                ( *new TeamsModel( controllers, teamFactory_ ) )
     , objects_              ( *new ObjectsModel( controllers, objectFactory_ ) )
     , knowledgeGroups_      ( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO
-    , agents_               ( *new AgentsModel( controllers, agentFactory_ ) ) // needs to be there : used in FormationModel
+    , agents_               ( *new AgentsModel( controllers, agentFactory_ ) )
     , formations_           ( *new FormationModel( controllers, formationFactory_, agents_, staticModel ) )
     , limits_               ( *new LimitsModel( controllers, staticModel.coordinateConverter_, idManager_ ) )
     , weather_              ( *new WeatherModel( controllers.controller_, staticModel.coordinateConverter_ ) )
     , profiles_             ( *new ProfilesModel( profileFactory_ ) )
     , scores_               ( *new ScoresModel( scoreFactory_, teams_, staticModel.objectTypes_, staticModel.objectTypes_ ) )
     , successFactors_       ( *new SuccessFactorsModel( successFactorFactory_ ) )
-    , intelligences_        ( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
+    , intelligences_        ( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_, symbolsFactory_ ) )
     , urban_                ( *new UrbanModel( controllers, staticModel, objects_ ) )
     , drawings_             ( *new gui::DrawerModel( controllers, drawingFactory_ ) )
+    , symbolsFactory_       ( *new SymbolFactory() )
 {
     // NOTHING
 }
@@ -114,6 +116,7 @@ Model::~Model()
     delete &agentFactory_;
     delete &formations_;
     delete &formationFactory_;
+    delete &symbolsFactory_;
     delete &knowledgeGroups_;
     delete &teams_;
     delete &teamFactory_;
@@ -168,6 +171,7 @@ namespace
 void Model::Load( const tools::ExerciseConfig& config, std::string& loadingErrors )
 {
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
+    symbolsFactory_.Load( config );
 
     //$$ LOADING DE FICHIERS A UNIFIER
     const std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();

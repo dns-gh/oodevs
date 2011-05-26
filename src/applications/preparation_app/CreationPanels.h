@@ -12,6 +12,11 @@
 
 #include "clients_gui/Panels.h"
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -19,9 +24,10 @@ namespace kernel
 
 namespace gui
 {
+    class ColorStrategy_ABC;
+    class IntelligencesPanel;
     class ItemFactory_ABC;
     class SymbolIcons;
-    class ColorStrategy_ABC;
 }
 
 class StaticModel;
@@ -39,6 +45,17 @@ public:
     //@{
              CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy );
     virtual ~CreationPanels();
+    //@}
+
+    //! @name Operations
+    //@{
+    void Load( const tools::ExerciseConfig& config );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    gui::IntelligencesPanel* intelligencesPanel_;
     //@}
 };
 

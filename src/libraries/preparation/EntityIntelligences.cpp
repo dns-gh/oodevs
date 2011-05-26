@@ -13,6 +13,7 @@
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
+#include "clients_kernel/SymbolFactory.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -23,8 +24,9 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 EntityIntelligences::EntityIntelligences( Controller& controller, Entity_ABC& holder, Entity_ABC* superior )
     : EntityHierarchies< IntelligenceHierarchies >( controller, holder, superior )
-    , controller_( controller )
-    , holder_( 0 )
+    , controller_       ( controller )
+    , holder_           ( 0 )
+    , holderLevelSymbol_()
 {
     // NOTHING
 }
@@ -33,10 +35,11 @@ EntityIntelligences::EntityIntelligences( Controller& controller, Entity_ABC& ho
 // Name: EntityIntelligences constructor
 // Created: SBO 2007-10-18
 // -----------------------------------------------------------------------------
-EntityIntelligences::EntityIntelligences( Controller& controller, Intelligence_ABC& holder, Entity_ABC* superior )
+EntityIntelligences::EntityIntelligences( Controller& controller, Intelligence_ABC& holder, Entity_ABC* superior, kernel::SymbolFactory& factory )
     : EntityHierarchies< IntelligenceHierarchies >( controller, holder, superior )
-    , controller_( controller )
-    , holder_( &holder )
+    , controller_       ( controller )
+    , holder_           ( &holder )
+    , holderLevelSymbol_( factory.CreateLevelSymbol( holder.GetLevel() ) )
 {
     // NOTHING
 }
@@ -93,7 +96,7 @@ std::string EntityIntelligences::GetSymbol() const
 std::string EntityIntelligences::GetLevel() const
 {
     if( holder_ )
-        return holder_->GetLevel().GetSymbol();
+        return holderLevelSymbol_;
     return GetEntity().Get< kernel::TacticalHierarchies >().GetLevel();
 }
 

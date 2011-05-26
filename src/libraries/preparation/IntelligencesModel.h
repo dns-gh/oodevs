@@ -24,6 +24,7 @@ namespace kernel
     class Controller;
     class CoordinateConverter_ABC;
     class FormationLevels;
+    class SymbolFactory;
 }
 
 class IdManager;
@@ -41,7 +42,7 @@ class IntelligencesModel : public tools::Resolver< kernel::Intelligence_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             IntelligencesModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, IdManager& idManager, const kernel::FormationLevels& levels );
+             IntelligencesModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, IdManager& idManager, const kernel::FormationLevels& levels, kernel::SymbolFactory& symbolsFactory );
     virtual ~IntelligencesModel();
     //@}
 
@@ -71,6 +72,7 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
     IdManager& idManager_;
     const kernel::FormationLevels& levels_;
+    kernel::SymbolFactory& symbolsFactory_;
     //@}
 };
 

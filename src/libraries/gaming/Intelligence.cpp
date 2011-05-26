@@ -20,6 +20,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/Styles.h"
 #include "protocol/MessengerSenders.h"
 
@@ -47,15 +48,16 @@ namespace
 // Name: Intelligence constructor
 // Created: SBO 2007-10-17
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( const sword::IntelligenceCreation& message, Controller& controller, const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< HierarchyLevel_ABC >& levels, Publisher_ABC& publisher )
+Intelligence::Intelligence( const sword::IntelligenceCreation& message, Controller& controller, const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< HierarchyLevel_ABC >& levels, Publisher_ABC& publisher, kernel::SymbolFactory& factory )
     : EntityImplementation< Intelligence_ABC >( controller, message.id().id(), QString( message.intelligence().name().c_str() ) )
-    , levels_   ( levels )
-    , formation_( formations.Get( message.intelligence().formation().id() ) )
-    , symbol_   ( message.intelligence().nature() )
-    , level_    ( &levels_.Get( message.intelligence().level() ) )
-    , karma_    ( &ConvertToKarma( message.intelligence().diplomacy() ) )
-    , mounted_  ( message.intelligence().embarked() != 0 )
-    , publisher_( publisher )
+    , levels_     ( levels )
+    , formation_  ( formations.Get( message.intelligence().formation().id() ) )
+    , symbol_     ( message.intelligence().nature() )
+    , level_      ( &levels_.Get( message.intelligence().level() ) )
+    , karma_      ( &ConvertToKarma( message.intelligence().diplomacy() ) )
+    , mounted_    ( message.intelligence().embarked() != 0 )
+    , publisher_  ( publisher )
+    , levelSymbol_( factory.CreateLevelSymbol( *level_ ) )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -80,7 +82,7 @@ void Intelligence::Draw( const geometry::Point2f& where, const Viewport_ABC& vie
     {
         const std::string style( "stroke:black;fill:currentColor;stroke-width:4;stroke-dasharray:10,10px" );
         tools.DrawApp6Symbol( symbol_, style, where, -1 );
-        tools.DrawApp6Symbol( level_->GetSymbol(), style, where, -1 );
+        tools.DrawApp6Symbol( levelSymbol_, style, where, -1 );
     }
 }
 

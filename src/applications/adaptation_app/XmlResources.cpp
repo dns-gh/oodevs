@@ -48,4 +48,7 @@ static const char* physicalXml =
 "  <object-names file=\"ObjectNames.xml\"/>\n"
 "  <urban file=\"Urban.xml\"/>\n"
 "  <resource-networks file=\"ResourceNetworks.xml\"/>\n"
+"  <drawing-templates file=\"DrawingTemplates.xml\"/>\n"
+"  <symbols file=\"symbols.xml\"/>\n"
+"  <scores file=\"scores.xml\"/>\n"
 "</physical>";

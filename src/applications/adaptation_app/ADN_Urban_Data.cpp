@@ -10,14 +10,15 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Urban_Data.h"
-#include "ADN_Workspace.h"
-#include "ADN_Project_Data.h"
+
+#include "ADN_DataException.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_OpenFile_Exception.h"
-#include "ADN_DataException.h"
-#include "ADN_Tools.h"
+#include "ADN_Project_Data.h"
 #include "ADN_SaveFile_Exception.h"
+#include "ADN_Tools.h"
 #include "ADN_Tr.h"
+#include "ADN_Workspace.h"
 
 using namespace helpers;
 
@@ -35,8 +36,6 @@ ADN_Urban_Data::ADN_Urban_Data()
     , defaultNominalCapacity_( 0.1 )
     , defaultMaxCapacity_    ( 1 )
 {
-
-    ReadInfrastructureSymbols();
     vMaterials_.SetNodeName( "la liste des types de matériau" );
     vMaterials_.SetItemTypeName( "le type matériau" );
     vFacades_.SetNodeName( "la liste des types de facade" );
@@ -563,7 +562,7 @@ void ADN_Urban_Data::InfrastructureInfos::ReadCapacityArchive( const std::string
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
     : strName_ ( "" )
-    , pSymbol_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetInfraSymbolsInfos(), 0, 0 )
+    , pSymbol_( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsInfras(), 0, 0 )
 {
     std::string symbol;
     capacities_[ "medical" ].reset( new ADN_Objects_Data::ADN_CapacityInfos_Medical() );
@@ -572,7 +571,7 @@ ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
         >> xml::start( "capacities" )
         >> xml::list( *this, &ADN_Urban_Data::InfrastructureInfos::ReadCapacityArchive )
         >> xml::end;
-    ADN_Urban_Data::SymbolsInfraInfos* pSymbol = ADN_Workspace::GetWorkspace().GetUrban().GetData().FindInfraSymbol( symbol );
+    ADN_Symbols_Data::SymbolsInfra* pSymbol = ADN_Workspace::GetWorkspace().GetSymbols().GetData().FindSymbolInfra( symbol );
     if( !pSymbol )
         throw ADN_DataException( "Invalid data", tools::translate( "Urban_Data", "Urban types - Invalid infrastructure symbol type '%1'" ).arg( symbol.c_str() ).ascii() );
     pSymbol_ = pSymbol;
@@ -584,7 +583,7 @@ ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
 // -----------------------------------------------------------------------------
 ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos()
     : strName_( "" )
-    , pSymbol_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetInfraSymbolsInfos(), 0, 0 )
+    , pSymbol_( ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetSymbolsInfras(), 0, 0 )
 {
     BindExistenceTo( &pSymbol_ );
     strName_.SetDataName( "le nom de l'infrastructure" );
@@ -615,77 +614,6 @@ std::string ADN_Urban_Data::InfrastructureInfos::GetNodeName()
 // Created: SLG 2010-12-20
 // -----------------------------------------------------------------------------
 std::string ADN_Urban_Data::InfrastructureInfos::GetItemName()
-{
-    return strName_.GetData();
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::ReadInfrastructureSymbols
-// Created: SLG 2011-02-17
-// -----------------------------------------------------------------------------
-void ADN_Urban_Data::ReadInfrastructureSymbols()
-{
-    xml::xifstream xis( "resources/symbols.xml" );
-    xis >> xml::start( "app6" )
-        >> xml::start( "infrastructures" )
-        >> xml::list( "choice", *this, &ADN_Urban_Data::ReadInfrastructureSymbol )
-        >>xml::end;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::ReadInfrastructureSymbols
-// Created: SLG 2011-02-17
-// -----------------------------------------------------------------------------
-void ADN_Urban_Data::ReadInfrastructureSymbol( xml::xistream& input )
-{
-    vInfrasSymbols_.AddItem( new SymbolsInfraInfos( input ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::SymbolsInfraInfos constructor
-// Created: SLG 2011-02-17
-// -----------------------------------------------------------------------------
-ADN_Urban_Data::SymbolsInfraInfos::SymbolsInfraInfos( xml::xistream& input )
-: strName_ ( "" )
-{
-    input >> xml::attribute( "name", strName_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::SymbolsInfraInfos
-// Created: SLG 2011-02-17
-// -----------------------------------------------------------------------------
-ADN_Urban_Data::SymbolsInfraInfos::SymbolsInfraInfos()
-: strName_ ( "" )
-{
-    strName_.SetDataName( "le nom du material" );
-    strName_.SetParentNode( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::SymbolsInfraInfos destructor
-// Created: SLG 2011-02-17
-// -----------------------------------------------------------------------------
-ADN_Urban_Data::SymbolsInfraInfos::~SymbolsInfraInfos()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::SymbolsInfraInfos::GetNodeName
-// Created: SLG 2011-02-17
-// -----------------------------------------------------------------------------
-std::string ADN_Urban_Data::SymbolsInfraInfos::GetNodeName()
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Urban_Data::SymbolsInfraInfos::GetItemName
-// Created: SLG 2011-02-17
-// -----------------------------------------------------------------------------
-std::string ADN_Urban_Data::SymbolsInfraInfos::GetItemName()
 {
     return strName_.GetData();
 }

@@ -8,32 +8,32 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Symbols_GUI.h"
+#include "ADN_Drawings_GUI.h"
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Symbols_GUI constructor
+// Name: ADN_Drawings_GUI constructor
 // Created: ABR 2011-04-18
 // -----------------------------------------------------------------------------
-ADN_Symbols_GUI::ADN_Symbols_GUI( ADN_Symbols_Data& /*data*/ )
-    : ADN_GUI_ABC( "ADN_Symbols_GUI" )
+ADN_Drawings_GUI::ADN_Drawings_GUI( ADN_Drawings_Data& /*data*/ )
+    : ADN_GUI_ABC( "ADN_Drawings_GUI" )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Symbols_GUI destructor
+// Name: ADN_Drawings_GUI destructor
 // Created: ABR 2011-04-18
 // -----------------------------------------------------------------------------
-ADN_Symbols_GUI::~ADN_Symbols_GUI()
+ADN_Drawings_GUI::~ADN_Drawings_GUI()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Symbols_GUI::Build
+// Name: ADN_Drawings_GUI::Build
 // Created: ABR 2011-04-18
 // -----------------------------------------------------------------------------
-void ADN_Symbols_GUI::Build()
+void ADN_Drawings_GUI::Build()
 {
     // NOTHING
 }

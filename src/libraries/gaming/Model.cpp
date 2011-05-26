@@ -54,6 +54,7 @@
 #include "actions/ActionsModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/FormationLevels.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "indicators/GaugeTypes.h"
 
 #pragma warning( disable : 4355 )
@@ -62,7 +63,7 @@
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver )
+Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver, const tools::ExerciseConfig& config )
     : EntityResolverFacade( *this )
     , controllers_( controllers )
     , static_( staticModel )
@@ -104,11 +105,12 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , resourceNetwork_( *new ResourceNetworkModel( controllers, *this, static_ ) )
     , urbanObjects_( *new UrbanModel( controllers, resourceNetwork_, static_ ) )
     , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanBlockDetectionMap_ ) )
+    , symbolsFactory_( *new kernel::SymbolFactory() )
     , notes_( *new NotesModel( controllers.controller_ ))
     , meteo_( *new MeteoModel( static_.coordinateConverter_, simulation, controllers.controller_ ) )
     , publisher_( publisher )
 {
-    // NOTHING
+    symbolsFactory_.Load( config );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,6 +121,7 @@ Model::~Model()
 {
     delete &meteo_;
     delete &notes_;
+    delete &symbolsFactory_;
     delete &surfaceFactory_;
     delete &resourceNetwork_;
     delete &urbanBlockDetectionMap_;

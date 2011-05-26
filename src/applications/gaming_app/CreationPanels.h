@@ -13,6 +13,11 @@
 #include "clients_gui/Panels.h"
 #include "tools/ElementObserver_ABC.h"
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -60,7 +65,7 @@ class CreationPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& paramLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings );
+             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& paramLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings, const tools::ExerciseConfig& config );
     virtual ~CreationPanels();
     //@}
 

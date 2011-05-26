@@ -27,10 +27,11 @@ using namespace kernel;
 // Name: FormationFactory constructor
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-FormationFactory::FormationFactory( Controllers& controllers, const StaticModel& staticModel, IdManager& idManager )
-    : controllers_( controllers )
-    , staticModel_( staticModel )
-    , idManager_  ( idManager )
+FormationFactory::FormationFactory( Controllers& controllers, const StaticModel& staticModel, IdManager& idManager, kernel::SymbolFactory& symbolsFactory )
+    : controllers_   ( controllers )
+    , staticModel_   ( staticModel )
+    , idManager_     ( idManager )
+    , symbolsFactory_( symbolsFactory )
 {
     // NOTHING
 }
@@ -54,7 +55,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
     PropertiesDictionary& dico = formation->Get< PropertiesDictionary >();
     if( !name.isEmpty() )
         formation->Rename( name );
-    formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
+    formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
     formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
     formation->Attach< kernel::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
@@ -72,7 +73,7 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
 {
     Formation* formation = new Formation( xis, controllers_.controller_, levels, idManager_ );
     PropertiesDictionary& dico = formation->Get< PropertiesDictionary >();
-    formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent ) );
+    formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
     formation->Attach< kernel::IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *formation, &parent ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
     formation->Attach< kernel::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );

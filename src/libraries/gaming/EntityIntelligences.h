@@ -22,6 +22,7 @@ namespace kernel
     class Entity_ABC;
     class Intelligence_ABC;
     class Formation_ABC;
+    class SymbolFactory;
 }
 
 // =============================================================================
@@ -37,7 +38,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              EntityIntelligences( kernel::Controller& controller, kernel::Entity_ABC& holder, kernel::Entity_ABC* superior, const tools::Resolver_ABC< kernel::Formation_ABC >& resolver );
-             EntityIntelligences( kernel::Controller& controller, kernel::Intelligence_ABC& holder, const tools::Resolver_ABC< kernel::Formation_ABC >& resolver );
+             EntityIntelligences( kernel::Controller& controller, kernel::Intelligence_ABC& holder, const tools::Resolver_ABC< kernel::Formation_ABC >& resolver, kernel::SymbolFactory& factory );
     virtual ~EntityIntelligences();
     //@}
 
@@ -67,6 +68,7 @@ private:
     kernel::Controller& controller_;
     const kernel::Intelligence_ABC* holder_;
     const tools::Resolver_ABC< kernel::Formation_ABC >& resolver_;
+    const std::string holderLevelSymbol_;
     //@}
 };
 

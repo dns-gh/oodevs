@@ -67,8 +67,12 @@
   <added-files>
     <added-file filename="ResourceNetworks.xml" assign-file="schemas/4.2.0/added-files/ResourceNetworks.xml"/>
     <added-file filename="Inhabitants.xml" assign-file="schemas/4.2.2/added-files/Inhabitants.xml"/>
+    <!-- Following files are directly copied from resource repository, to keep local modifications -->
+    <added-file filename="Extensions.xml" assign-file="Extensions.xml"/>
+    <added-file filename="scores.xml" assign-file="scores.xml"/>
+    <added-file filename="symbols.xml" assign-file="symbols.xml"/>
   </added-files>
- 
+
   <migration from="3.0" to="4.2.0">
     <upgrade schema="schemas/3.0/exercise/orbat.xsd" apply="schemas/4.2.0/xsl/orbat0-4.2.xsl"/>
     <upgrade schema="schemas/3.0/exercise/orders.xsd" apply="schemas/4.2.0/xsl/ordCompatibility.xsl"/>
@@ -103,6 +107,7 @@
     <upgrade schema="schemas/4.2.2/physical/Models.xsd" apply="schemas/4.3.0/xsl/models_4.2.2-4.3.0.xsl"/>
     <upgrade schema="schemas/4.2.2/physical/Decisional.xsd" apply="schemas/4.3.0/xsl/decisional_4.2.2-4.3.0.xsl"/>
     <upgrade schema="schemas/4.2.2/physical/Units.xsd" apply="schemas/4.3.0/xsl/units_4.2.2-4.3.0.xsl"/>
+    <upgrade schema="schemas/4.2.2/physical/Physical.xsd" apply="schemas/4.3.0/xsl/physical_4.2.2-4.3.0.xsl"/>
     <upgrade schema="schemas/4.2.2/exercise/orbat.xsd" apply="schemas/4.3.0/xsl/orbat_4.2.2-4.3.0.xsl"/>
   </migration>
   <migration from="4.3.0" to="4.3.1">
@@ -112,7 +117,6 @@
     <upgrade schema="schemas/4.3.0/physical/Crowds.xsd" apply="schemas/4.3.1/xsl/crowd_4.3.0-4.3.1.xsl"/>
     <upgrade schema="schemas/4.3.0/physical/Fires.xsd" apply="schemas/4.3.1/xsl/fires_4.3.0-4.3.1.xsl"/>
     <upgrade schema="schemas/4.3.0/physical/Pathfind.xsd" apply="schemas/4.3.1/xsl/pathfinder_4.3.0-4.3.1.xsl"/>
-    <upgrade schema="schemas/4.3.0/physical/Physical.xsd" apply="schemas/4.3.1/xsl/physical_4.3.0-4.3.1.xsl"/>
-    <upgrade schema="schemas/4.3.0/exercise/orbat.xsd" apply="schemas/4.3.1/xsl/orbat_4.3.0-4.3.1.xsl"/>
+    <upgrade schema="schemas/4.3.0/exercise/orbat.xsd" apply="schemas/4.3.1/xsl/orbat_4.3.0-4.3.1.xsl"/>  
   </migration>
 </migrations>
