@@ -208,11 +208,12 @@ namespace launcher_test
             , exerciceListener( controllers )
             , SESSION         ( "default" )
             , exercise        ( 0 )
+            , handler         ( new MockResponseHandler() )
         {
             BOOST_REQUIRE( client.Connected() );
-            
             client.QueryExerciseList();
             timeout.Start();
+
             while( !exerciceListener.Check() && !timeout.Expired() )
                 Update();
             BOOST_REQUIRE( exerciceListener.Check() );
@@ -227,6 +228,7 @@ namespace launcher_test
             while( (!exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && !timeout.Expired() )
                 Update();
             BOOST_REQUIRE( exercise->IsRunning() );
+            client.Register( handler );
         }
 
         void VerifySendRequest( const std::string& expected )
@@ -259,5 +261,6 @@ namespace launcher_test
         ExerciseListener exerciceListener;
         const frontend::Exercise_ABC* exercise;
         const std::string SESSION;
+        boost::shared_ptr< MockResponseHandler > handler;
     };
 }
