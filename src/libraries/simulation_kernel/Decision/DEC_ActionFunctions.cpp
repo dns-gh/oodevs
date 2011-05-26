@@ -152,6 +152,7 @@ void DEC_ActionFunctions::Knowledge_Load( DEC_Decision_ABC& callerAgent, boost::
     {
         bool transportOnlyLoadable = false;
         callerAgent.GetPion().Apply( &transport::TransportNotificationHandler_ABC::MagicLoadPion, pKnowledge->GetAgentKnown(), transportOnlyLoadable );
+        pKnowledge->GetAgentKnown().GetOrderManager().CancelMission();
     }
 }
 

@@ -34,7 +34,7 @@ ChildObjectAttribute::ChildObjectAttribute( MIL_Object_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DetectorAttribute destructor
+// Name: ChildObjectAttribute destructor
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
 ChildObjectAttribute::~ChildObjectAttribute()

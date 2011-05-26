@@ -13,8 +13,8 @@
 #include "ObjectAttribute_ABC.h"
 
 // =============================================================================
-/** @class  DetectorAttribute
-@brief  DetectorAttribute
+/** @class  ChildObjectAttribute
+    @brief  ChildObjectAttribute
 */
 // Created: SLG 2010-02-16
 // =============================================================================
