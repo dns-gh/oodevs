@@ -26,7 +26,6 @@ RichListItem::RichListItem( QListView * parent )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RichListItem constructor
 // Created: APE 2004-09-08
@@ -39,7 +38,6 @@ RichListItem::RichListItem( QListView * parent, QListViewItem * after )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RichListItem constructor
