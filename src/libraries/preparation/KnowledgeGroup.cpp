@@ -43,7 +43,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, to
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, tools::Resolver_ABC< KnowledgeGroupType, std::string >& types )
     : EntityImplementation< KnowledgeGroup_ABC >( controller, xis.attribute< unsigned int >( "id" ), "" )
-    , type_( &types.Get( xis.attribute< std::string >( "type" ) ) )
+    , type_( types.Find( xis.attribute< std::string >( "type" ) ) )
 {
     std::string name;
     xis >> xml::optional >> xml::attribute( "name", name );
@@ -121,7 +121,7 @@ void KnowledgeGroup::SetType( kernel::KnowledgeGroupType* const& type )
 void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", id_ )
-        << xml::attribute( "type", type_->GetName() )
+        << xml::attribute( "type", type_ ? type_->GetName() : "Standard" ) // $$$$ LDC: Same Hard coded default as in constructor
         << xml::attribute( "name", name_ );
 }
 
@@ -133,4 +133,18 @@ void KnowledgeGroup::SerializeAttributes( xml::xostream& xos ) const
 bool KnowledgeGroup::IsActivated() const
 {
     return isActivated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::CheckType
+// Created: LDC 2011-05-25
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::CheckType( std::string& loadingErrors ) const
+{
+    if( !type_ )
+    {
+        std::stringstream error;
+        error << "Knowledge group " << id_ << ": type unknown reset to 'Standard'\n";
+        loadingErrors += error.str();
+    }
 }

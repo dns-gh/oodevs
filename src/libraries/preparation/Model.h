@@ -16,7 +16,6 @@
 namespace kernel
 {
     class Controllers;
-    class KnowledgeGroupFactory_ABC; // LTO
     class ResourceNetworkSelectionObserver;
 }
 
@@ -35,6 +34,7 @@ class StaticModel;
 class TeamsModel;
 class TeamFactory_ABC;
 class KnowledgeGroupsModel;
+class KnowledgeGroupFactory;
 class AgentsModel;
 class AgentFactory_ABC;
 class Exercise;
@@ -94,7 +94,7 @@ private:
     IdManager& idManager_;
     kernel::Controllers& controllers_;
     TeamFactory_ABC& teamFactory_;
-    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
+    KnowledgeGroupFactory& knowledgeGroupFactory_; // LTO
     FormationFactory_ABC& formationFactory_;
     AgentFactory_ABC& agentFactory_;
     ObjectFactory_ABC& objectFactory_;

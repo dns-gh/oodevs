@@ -59,12 +59,21 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::Team_ABC& tea
 // Name: KnowledgeGroupFactory::CreateKnowledgeGroup
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::Team_ABC& team )
+kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::Team_ABC& team, std::string& loadingErrors )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_.controller_, idManager_, staticModel_.types_ );
-    result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &team ) );
-    result->Polish();
-    return result;
+    try
+    {
+        KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_.controller_, idManager_, staticModel_.types_ );
+        result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &team ) );
+        result->Polish();
+        result->CheckType( loadingErrors );
+        return result;
+    }
+    catch( std::runtime_error& e )
+    {
+        loadingErrors += std::string( e.what() ) + "\n";
+        return 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -83,10 +92,18 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( kernel::KnowledgeGrou
 // Name: KnowledgeGroupFactory::CreateKnowledgeGroup
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& kgparent )
+kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, kernel::KnowledgeGroup_ABC& kgparent, std::string& loadingErrors )
 {
-    KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_.controller_, idManager_, staticModel_.types_ );
-    result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &kgparent ) );
-    result->Polish();
-    return result;
+    try
+    {
+        KnowledgeGroup* result = new KnowledgeGroup( xis, controllers_.controller_, idManager_, staticModel_.types_ );
+        result->Attach< kernel::CommunicationHierarchies >( *new KnowledgeGroupCommunications( controllers_.controller_, *result, &kgparent ) );
+        result->Polish();
+        return result;
+    }
+    catch( std::runtime_error& e )
+    {
+        loadingErrors += std::string( e.what() ) + "\n";
+        return 0;
+    }
 }

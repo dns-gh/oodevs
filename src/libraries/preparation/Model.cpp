@@ -64,7 +64,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     : controllers_( controllers )
     , idManager_            ( *new IdManager() )
     , teamFactory_          ( *new TeamFactory( controllers, *this, staticModel, idManager_ ) )
-    , knowledgeGroupFactory_( *new KnowledgeGroupFactory( controllers, staticModel, idManager_ ) ) // LTO
+    , knowledgeGroupFactory_( *new KnowledgeGroupFactory( controllers, staticModel, idManager_ ) )
     , formationFactory_     ( *new FormationFactory( controllers, staticModel, idManager_ ) )
     , agentFactory_         ( *new AgentFactory( controllers, *this, staticModel, idManager_, knowledgeGroupFactory_ ) )
     , objectFactory_        ( *new ObjectFactory( controllers, *this, staticModel, idManager_ ) )

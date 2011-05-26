@@ -157,7 +157,7 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model, std::string& loadin
 
     // $$$$ SBO 2006-10-05: forward to communications extension?
     xis >> xml::start( "communication" )
-            >> xml::list( "knowledge-group", model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model )
+            >> xml::list( "knowledge-group", model.knowledgeGroups_, &KnowledgeGroupsModel::Create, *team, model, loadingErrors )
         >> xml::end;
     xis >> xml::start( "tactical" )
             >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model, loadingErrors )

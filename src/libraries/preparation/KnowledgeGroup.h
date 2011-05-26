@@ -51,6 +51,7 @@ public:
     void SetType( kernel::KnowledgeGroupType* const& );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual bool IsActivated() const;
+    void CheckType( std::string& loadingErrors ) const;
     //@}
 
 private:

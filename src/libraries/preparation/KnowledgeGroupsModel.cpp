@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "KnowledgeGroupsModel.h"
 #include "KnowledgeGroup.h"
+#include "KnowledgeGroupFactory.h"
 #include "clients_kernel/Controllers.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -19,9 +20,9 @@ using namespace kernel;
 // Name: KnowledgeGroupsModel constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroupsModel::KnowledgeGroupsModel( kernel::Controllers& controllers, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory ) // LTO
+KnowledgeGroupsModel::KnowledgeGroupsModel( kernel::Controllers& controllers, KnowledgeGroupFactory& knowledgeGroupFactory )
     : controllers_( controllers )
-    , knowledgeGroupFactory_( knowledgeGroupFactory ) // LTO
+    , knowledgeGroupFactory_( knowledgeGroupFactory )
 {
     // NOTHING
 }
@@ -68,11 +69,14 @@ void KnowledgeGroupsModel::Create( kernel::Team_ABC& parent )
 // Name: void KnowledgeGroupsModel::Create
 // Created:  FHD 2009-11-19:
 // -----------------------------------------------------------------------------
-void KnowledgeGroupsModel::Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model )
+void KnowledgeGroupsModel::Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model, std::string& loadingErrors )
 {
-    KnowledgeGroup_ABC* knowledgegroup = knowledgeGroupFactory_.Create( xis, parent );
-    Register( knowledgegroup->GetId(), *knowledgegroup );
-    xis >> xml::list( "knowledge-group", *this, &KnowledgeGroupsModel::CreateSubKnowledgeGroup, *knowledgegroup, model );
+    KnowledgeGroup_ABC* knowledgegroup = knowledgeGroupFactory_.Create( xis, parent, loadingErrors );
+    if( knowledgegroup )
+    {
+        Register( knowledgegroup->GetId(), *knowledgegroup );
+        xis >> xml::list( "knowledge-group", *this, &KnowledgeGroupsModel::CreateSubKnowledgeGroup, *knowledgegroup, model, loadingErrors );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -89,10 +93,13 @@ void KnowledgeGroupsModel::CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& 
 // Name: void KnowledgeGroupsModel::CreateSubKnowledgeGroup
 // Created:  FHD 2009-11-19:
 // -----------------------------------------------------------------------------
-void KnowledgeGroupsModel::CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model )
+void KnowledgeGroupsModel::CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model, std::string& loadingErrors )
 {
-    KnowledgeGroup_ABC* knowledgegroup = knowledgeGroupFactory_.Create( xis, parent );
-    xis >> xml::list( "knowledge-group", *this, &KnowledgeGroupsModel::CreateSubKnowledgeGroup, *knowledgegroup, model );
-    Register( knowledgegroup->GetId(), *knowledgegroup );
+    KnowledgeGroup_ABC* knowledgegroup = knowledgeGroupFactory_.Create( xis, parent, loadingErrors );
+    if( knowledgegroup )
+    {
+        Register( knowledgegroup->GetId(), *knowledgegroup );
+        xis >> xml::list( "knowledge-group", *this, &KnowledgeGroupsModel::CreateSubKnowledgeGroup, *knowledgegroup, model, loadingErrors );
+    }
 }
 // LTO end

@@ -22,6 +22,7 @@
 #include "AutomatPositions.h"
 #include "CommandPostAttributes.h"
 #include "InitialState.h"
+#include "KnowledgeGroupFactory.h"
 #include "KnowledgeGroupsModel.h"
 #include "LogisticBaseStates.h"
 #include "Model.h"
@@ -57,7 +58,7 @@ using namespace kernel;
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager, KnowledgeGroupFactory& knowledgeGroupFactory )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )

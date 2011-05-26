@@ -16,12 +16,12 @@ namespace kernel
 {
     class Controllers;
     class Entity_ABC;
-    class KnowledgeGroupFactory_ABC; // LTO
 }
 
+class IdManager;
+class KnowledgeGroupFactory;
 class Model;
 class StaticModel;
-class IdManager;
 
 // =============================================================================
 /** @class  AgentFactory
@@ -34,7 +34,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
+             AgentFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager, KnowledgeGroupFactory& knowledgeGroupFactory );
     virtual ~AgentFactory();
     //@}
 
@@ -70,7 +70,7 @@ private:
     Model& model_;
     const StaticModel& static_;
     IdManager& idManager_;
-    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
+    KnowledgeGroupFactory& knowledgeGroupFactory_;
     //@}
 };
 

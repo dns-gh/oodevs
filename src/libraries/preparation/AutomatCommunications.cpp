@@ -51,7 +51,7 @@ kernel::KnowledgeGroup_ABC* AutomatCommunications::ReadKnowledgeGroup( xml::xist
 {
     int group;
     xis >> xml::attribute( "knowledge-group", group );
-    return &groups.Get( group );
+    return groups.Find( group );
 }
 
 // -----------------------------------------------------------------------------

@@ -81,6 +81,8 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , jammedPion_         ( 0 )
     , createdByJamming_   ( false )
 {
+    if( ! type_ )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Knowledge group '%d' cannot be created because its type does not exist: %s ", id_, xis.attribute< std::string >( "type" ).c_str() ) );
     idManager_.Lock( id_ );
     if( parent_ )
     {

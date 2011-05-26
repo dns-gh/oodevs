@@ -18,7 +18,6 @@ namespace kernel
     class Controllers;
     class Entity_ABC;
     class KnowledgeGroup_ABC;
-    class KnowledgeGroupFactory_ABC;
     class Team_ABC;
 }
 
@@ -29,6 +28,8 @@ namespace xml
 }
 
 class Model;
+
+class KnowledgeGroupFactory;
 
 // =============================================================================
 /** @class  KnowledgeGroupsModel
@@ -41,7 +42,7 @@ class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit KnowledgeGroupsModel( kernel::Controllers& controllers, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
+    explicit KnowledgeGroupsModel( kernel::Controllers& controllers, KnowledgeGroupFactory& knowledgeGroupFactory );
     virtual ~KnowledgeGroupsModel();
     //@}
 
@@ -49,12 +50,10 @@ public:
     //@{
     void Purge();
     virtual tools::Iterator< const kernel::KnowledgeGroup_ABC& > CreateIterator() const;
-    // LTO begin
-    void Create( kernel::Team_ABC& parent );
-    void Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model );
-    void CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& parent );
-    void CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model );
-    // LTO end
+    void Create( kernel::Team_ABC& parent ); // LTO
+    void Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model, std::string& loadingErrors );
+    void CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& parent ); // LTO
+    void CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model, std::string& loadingErrors );
     //@}
 
 private:
@@ -68,7 +67,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_; // LTO
-    kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory_; // LTO
+    KnowledgeGroupFactory& knowledgeGroupFactory_;
     //@}
 };
 
