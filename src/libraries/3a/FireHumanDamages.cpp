@@ -21,6 +21,15 @@ FireHumanDamages::FireHumanDamages()
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: FireHumanDamages destructor
+// Created: FPO 2011-04-29
+// -----------------------------------------------------------------------------
+FireHumanDamages::~FireHumanDamages()
+{
+    // NOTHING
+}
+
 namespace
 {
     const unsigned nHumanDamageStates = 6;
@@ -45,7 +54,7 @@ namespace
     };
     int ReadMask( xml::xistream& xis, const char* attribute, const char** names, unsigned int count )
     {
-        if( xis.attribute< std::string >( attribute ).empty() )
+        if( !xis.has_attribute( attribute ) )
             return 0xFFFF;
         FilterHelper< std::string > states( xis, attribute );
         int result = 0;
@@ -69,15 +78,27 @@ namespace
     {
         return ReadMask( xis, "ranks", ranks, 3 );
     }
-}
 
-// -----------------------------------------------------------------------------
-// Name: FireHumanDamages destructor
-// Created: FPO 2011-04-29
-// -----------------------------------------------------------------------------
-FireHumanDamages::~FireHumanDamages()
-{
-    // NOTHING
+    bool ReadFireTypeMask( xml::xistream& xis, std::string firetype )
+    {
+        if( !xis.has_attribute( "fire-types" ) )
+            return true;
+        FilterHelper< std::string > equipments( xis, "fire-types" );
+        bool result = false;
+        if( equipments.IsAllowed( firetype ) )
+            result = true;
+        return result;
+    }
+    bool ReadFratricideMask( xml::xistream& xis )
+    {
+        if( !xis.has_attribute( "fratricide" ) )
+            return false;
+        FilterHelper< std::string > equipments( xis, "fratricide" );
+        bool result = false;
+        if( equipments.IsAllowed( "true" ) )
+            result = true;
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -87,6 +108,9 @@ FireHumanDamages::~FireHumanDamages()
 FireHumanDamages::FireHumanDamages( xml::xistream& xis )
     : rankMask_ ( ReadRanks( xis ) )
     , stateMask_( ReadStates( xis ) )
+    , directFireMask_( ReadFireTypeMask( xis , "direct" ) )
+    , indirectFireMask_( ReadFireTypeMask( xis , "indirect" ) )
+    , fratricideMask_( ReadFratricideMask( xis ) )
 {
     // NOTHING
 }
@@ -98,6 +122,11 @@ FireHumanDamages::FireHumanDamages( xml::xistream& xis )
 float FireHumanDamages::Extract( const sword::SimToClient& wrapper ) const
 {
     const UnitDamagedByUnitFire& damages = wrapper.message().unit_damaged_by_unit_fire();
+    if( fratricideMask_ && !damages.fratricide() )
+        return 0;
+    if( ( directFireMask_ && !damages.direct_fire() ) ||
+         !directFireMask_ && damages.direct_fire() )
+        return 0;
     float result = 0;
     for( int e = 0; e < damages.humans().elem_size(); ++e )
     {
@@ -105,8 +134,7 @@ float FireHumanDamages::Extract( const sword::SimToClient& wrapper ) const
         if( ( rankMask_ & ( 1 << damage.rank() ) ) != 0 )
             for( unsigned int i = 0; i < nHumanDamageStates; ++i )
                 if( ( stateMask_ & ( 1 << i ) ) != 0 )
-                    result += ( damage.*humanDamageData[i] )();
+                    result += ( damage.*humanDamageData[ i ] )();
     }
     return result;
 }
- 

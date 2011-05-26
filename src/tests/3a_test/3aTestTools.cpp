@@ -75,7 +75,7 @@ SimToClient TestTools::MakeUnitCreation( unsigned long id, unsigned long type_id
 bool TestTools::CheckValue( const AarToClient& expected, const AarToClient& actual )
 {
     BOOST_CHECK_EQUAL( expected.DebugString(), actual.DebugString() );
-    return expected.DebugString() == actual.DebugString();
+    return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -307,12 +307,13 @@ sword::SimToClient TestTools::UpdateCrowdDeadState( unsigned long crowdId, int d
 // Name: 3aTestTools::CreateDirectFire
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
-sword::SimToClient TestTools::CreateDirectFire( unsigned fire_id, unsigned long firer )
+sword::SimToClient TestTools::CreateDirectFire( unsigned fire_id, unsigned long firer, unsigned long target /*=42*/ )
 {
     SimToClient result;
     StartUnitFire& fire = *result.mutable_message()->mutable_start_unit_fire();
     fire.mutable_fire()->set_id( fire_id );
     fire.mutable_firing_unit()->set_id( firer );
+    fire.mutable_target()->mutable_unit()->set_id( target );
     fire.set_type( StartUnitFire_UnitFireType_direct );
     return result;
 }
@@ -321,12 +322,16 @@ sword::SimToClient TestTools::CreateDirectFire( unsigned fire_id, unsigned long 
 // Name: 3aTestTools::CreateIndirectFire
 // Created: FPO 2011-05-06
 // -----------------------------------------------------------------------------
-sword::SimToClient TestTools::CreateIndirectFire( unsigned fire_id, unsigned long firer )
+sword::SimToClient TestTools::CreateIndirectFire( unsigned fire_id, unsigned long firer, const char* position /*=""*/ )
 {
     SimToClient result;
     StartUnitFire& fire = *result.mutable_message()->mutable_start_unit_fire();
     fire.mutable_fire()->set_id( fire_id );
     fire.mutable_firing_unit()->set_id( firer );
+    geocoord::MGRS mgrs( position );
+    geocoord::Geodetic geodetic( mgrs );
+    fire.mutable_target()->mutable_position()->set_latitude( geodetic.GetLatitude() * 180 / std::acos( -1. ) );
+    fire.mutable_target()->mutable_position()->set_longitude( geodetic.GetLongitude() * 180 / std::acos( -1. ) );
     fire.set_type( StartUnitFire_UnitFireType_indirect );
     return result;
 }
@@ -351,11 +356,13 @@ sword::SimToClient TestTools::StopFire( unsigned fire_id, unsigned int target_id
 // Name: 3aTestTools::MakeUnitDamages
 // Created: FPO 2011-05-18
 // -----------------------------------------------------------------------------
-sword::SimToClient TestTools::MakeUnitDamages( unsigned int firer_id, unsigned int target_id, unsigned long damage_count /*= 0*/, unsigned long deadhumans_count /*= 0*/ )
+sword::SimToClient TestTools::MakeUnitDamages( unsigned int firer_id, unsigned int target_id, unsigned long damage_count /*= 0*/, unsigned long deadhumans_count /*= 0*/, bool isDirectFire /*= true*/, bool isFratricide /*= false*/ )
 {
     SimToClient result;
     UnitDamagedByUnitFire& damage = *result.mutable_message()->mutable_unit_damaged_by_unit_fire();
     damage.mutable_firer()->set_id( firer_id );
+    damage.set_direct_fire( isDirectFire );
+    damage.set_fratricide( isFratricide );
     damage.mutable_equipments()->add_elem()->set_unavailable( damage_count );
     damage.mutable_humans()->add_elem()->set_dead( deadhumans_count );
     damage.mutable_unit()->set_id( target_id );
@@ -444,4 +451,3 @@ sword::SimToClient TestTools::UpdateFunctionalState( unsigned long objectId, int
     attributes.mutable_structure()->set_state( stateValue );
     return result;
 }
-

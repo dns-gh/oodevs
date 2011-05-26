@@ -16,30 +16,13 @@
 #include "Connectors.h"
 #include "Task.h"
 #include <xeumeuleu/xml.hpp>
-
-// -----------------------------------------------------------------------------
-// Name: ExtractorsFactory constructor
-// Created: AGE 2008-08-04
-// -----------------------------------------------------------------------------
-ExtractorsFactory::ExtractorsFactory( const aar::StaticModel_ABC& model )
-    : model_( model )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtractorsFactory destructor
-// Created: AGE 2008-08-04
-// -----------------------------------------------------------------------------
-ExtractorsFactory::~ExtractorsFactory()
-{
-    // NOTHING
-}
+#include <map>
+#include <boost/assign.hpp>
 
 namespace
 {
     template< typename Value, typename Identifier >
-    void Extract( const std::string& name, Task& result, const DispatcherFactory< Identifier, Value >& factory )
+    void ExtractFactory( const std::string& name, Task& result, const DispatcherFactory< Identifier, Value >& factory )
     {
         typedef FunctionConnector< Identifier::Type, typename Value::Type > Connector;
         boost::shared_ptr< Connector > connector( new Connector() );
@@ -53,14 +36,83 @@ namespace
     void Extract( const std::string& name, xml::xistream& xis, Task& result )
     {
         DispatcherFactory< Identifier, Value > factory( xis );
-        Extract< Value, Identifier >( name, result, factory );
+        ExtractFactory< Value, Identifier >( name, result, factory );
     }
     template< typename Value, typename Identifier >
     void Extract( const std::string& name, xml::xistream& xis, Task& result, const aar::StaticModel_ABC& model )
     {
         DispatcherFactory< Identifier, Value > factory( xis, model );
-        Extract< Value, Identifier >( name, result, factory );
+        ExtractFactory< Value, Identifier >( name, result, factory );
     }
+    template< typename return_type, typename extractor_type, typename identifier_type >
+    return_type BuildExtractor()
+    {
+        return boost::bind( &Extract< extractor_type, identifier_type >, _1, _2, _3 );
+    }
+    template< typename return_type, typename extractor_type >
+    return_type BuildExtractor()
+    {
+        return BuildExtractor< return_type, extractor_type, IdentifierValue >();
+    }
+    template< typename return_type, typename extractor_type >
+    return_type BuildExtractor( const aar::StaticModel_ABC& model )
+    {
+        return boost::bind( &Extract< extractor_type, IdentifierValue >, _1, _2, _3, boost::cref( model ) );
+    }
+    template< typename Key, typename Value >
+    std::map< Key, Value > BuildExtractors( const aar::StaticModel_ABC& model )
+    {
+        std::map< Key, Value > extractors = boost::assign::list_of< std::pair< Key, Value > >
+            ( "operational-states"                 , BuildExtractor< Value, attributes::OperationalState >() )
+            ( "positions"                          , BuildExtractor< Value, attributes::Positions >() )
+            ( "resources"                          , BuildExtractor< Value, attributes::Resources >() )
+            ( "equipments"                         , BuildExtractor< Value, attributes::Equipments >() )
+            ( "humans"                             , BuildExtractor< Value, attributes::Humans >() )
+            ( "population-states"                  , BuildExtractor< Value, attributes::PopulationStates >() )
+            ( "crowd-states"                       , BuildExtractor< Value, attributes::CrowdStates >() )
+            ( "satisfactions"                      , BuildExtractor< Value, attributes::PopulationSatisfaction >() )
+            ( "population-in-selected-blocks"      , BuildExtractor< Value, attributes::PopulationUrbanOccupation >() )
+            ( "infrastructures-functional-states"  , BuildExtractor< Value, attributes::StructuralStates >() )
+            ( "stocks"                             , BuildExtractor< Value, attributes::LogSupplyStocks >() )
+            ( "maintenance-handling-units"         , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() )
+            ( "direct-fire-units"                  , BuildExtractor< Value, existences::DirectFireUnitsId >() )
+            ( "indirect-fire-units"                , BuildExtractor< Value, existences::IndirectFireUnitsId >() )
+            ( "direct-fire-targets"                , BuildExtractor< Value, existences::DirectFireTargetsId >() )
+            ( "indirect-fire-positions"            , BuildExtractor< Value, existences::IndirectFireTargetsPositions >() )
+            ( "fire-component-damages"             , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() )
+            ( "fire-component-loss"                , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueTarget >() )
+            ( "fire-human-damages"                 , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueFirer >() )
+            ( "fire-human-loss"                    , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueTarget >() )
+            ( "ambulances"                         , BuildExtractor< Value, attributes::LogMedicalEquipments >() )
+            ( "maintenances"                       , BuildExtractor< Value, attributes::LogMaintenanceEquipments >() )
+            ( "waiting-for-medical"                , BuildExtractor< Value, attributes::LogMedicalWaitingAttention >() )
+            ( "detecting-unit"                     , BuildExtractor< Value, attributes::Detections >() )
+            ( "mounted"                            , BuildExtractor< Value, attributes::Mounted >() )
+            ( "direct-fire-power"                  , BuildExtractor< Value, attributes::DirectFirePower >( model ) )
+            ( "indirect-fire-power"                , BuildExtractor< Value, attributes::IndirectFirePower >( model ) )
+            ( "close-combat-power"                 , BuildExtractor< Value, attributes::CloseCombatPower >( model ) )
+            ( "engineering-power"                  , BuildExtractor< Value, attributes::EngineeringPower >( model ) );
+        return extractors;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtractorsFactory constructor
+// Created: AGE 2008-08-04
+// -----------------------------------------------------------------------------
+ExtractorsFactory::ExtractorsFactory( const aar::StaticModel_ABC& model )
+    : extractors_( BuildExtractors< std::string, T_Extractor >( model ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtractorsFactory destructor
+// Created: AGE 2008-08-04
+// -----------------------------------------------------------------------------
+ExtractorsFactory::~ExtractorsFactory()
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -75,60 +127,8 @@ void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& x
     std::string value, name;
     xis >> xml::attribute( "function", value )
         >> xml::attribute( "id", name );
-    if( value == "operational-state" )
-        Extract< attributes::OperationalState, IdentifierValue >( name, xis, result );
-    else if( value == "position" )
-        Extract< attributes::Position, IdentifierValue >( name, xis, result );
-    else if( value == "resources" )
-        Extract< attributes::Resources, IdentifierValue >( name, xis, result );
-    else if( value == "equipments" )
-        Extract< attributes::Equipments, IdentifierValue >( name, xis, result );
-    else if( value == "humans" )
-        Extract< attributes::Humans, IdentifierValue >( name, xis, result );
-    else if( value == "population-states" )
-        Extract< attributes::PopulationStates, IdentifierValue >( name, xis, result );
-    else if( value == "crowd-states" )
-        Extract< attributes::CrowdStates, IdentifierValue >( name, xis, result );
-    else if( value == "satisfactions" )
-        Extract< attributes::PopulationSatisfaction, IdentifierValue >( name, xis, result );
-    else if( value == "population-in-selected-blocks" )
-        Extract< attributes::PopulationUrbanOccupation, IdentifierValue >( name, xis, result );
-    else if( value == "infrastructures-functional-states" )
-        Extract< attributes::StructuralStates, IdentifierValue >( name, xis, result );
-    else if( value == "stocks" )
-        Extract< attributes::LogSupplyStocks, IdentifierValue >( name, xis, result );
-    else if( value == "maintenance-handling-unit" )
-        Extract< existences::MaintenanceHandlingUnitId, IdentifierValue >( name, xis, result );
-    else if( value == "direct-fire-unit" )
-        Extract< existences::DirectFireUnitId, IdentifierValue >( name, xis, result );
-    else if( value == "indirect-fire-unit" )
-        Extract< existences::IndirectFireUnitId, IdentifierValue >( name, xis, result );
-    else if( value == "fire-component-damage" )
-        Extract< events::FireComponentDamages, IdentifierValue >( name, xis, result );
-    else if( value == "fire-human-damages" )
-        Extract< events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueFirer >( name, xis, result );
-    else if( value == "fire-human-loss" )
-        Extract< events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueTarget >( name, xis, result );
-    else if( value == "woundhumans" )
-        Extract< events::WoundHumans, extractors::WoundHumans::IdentifierValue >( name, xis, result );
-    else if( value == "ambulances" )
-        Extract< attributes::LogMedicalEquipments, IdentifierValue >( name, xis, result );
-    else if( value == "maintenance" )
-        Extract< attributes::LogMaintenanceEquipments, IdentifierValue >( name, xis, result );
-    else if( value == "waiting-for-medical" )
-        Extract< attributes::LogMedicalWaitingAttention, IdentifierValue >( name, xis, result );
-    else if( value == "detecting-unit" )
-        Extract< attributes::Detections, IdentifierValue >( name, xis, result );
-    else if( value == "mounted" )
-        Extract< attributes::Mounted, IdentifierValue >( name, xis, result );
-    else if( value == "direct-fire-power" )
-        Extract< attributes::DirectFirePower, IdentifierValue >( name, xis, result, model_ );
-    else if( value == "indirect-fire-power" )
-        Extract< attributes::IndirectFirePower, IdentifierValue >( name, xis, result, model_ );
-    else if( value == "close-combat-power" )
-        Extract< attributes::CloseCombatPower, IdentifierValue >( name, xis, result, model_ );
-    else if( value == "engineering-power" )
-        Extract< attributes::EngineeringPower, IdentifierValue >( name, xis, result, model_ );
-    else
+    T_Extractors::const_iterator extractor = extractors_.find( value );
+    if( extractor == extractors_.end() )
         throw std::runtime_error( "Unknown value to extract '" + value + "'" );
+    extractor->second( name, xis, result );
 }

@@ -35,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
                  LogSupplyStocks();
-    /*implicit*/ LogSupplyStocks( xml::xistream& xis );
+    explicit LogSupplyStocks( xml::xistream& xis );
     virtual     ~LogSupplyStocks();
     //@}
 

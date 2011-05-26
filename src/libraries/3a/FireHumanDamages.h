@@ -27,6 +27,8 @@ namespace extractors
 class FireHumanDamages : public Extractor< NumericValue >
 {
 public:
+    //! @name Types
+    //@{
     struct IdentifierValueFirer : public IdentifierValue_ABC
     {
         enum { has_parameter = false };
@@ -51,10 +53,6 @@ public:
         }
         //@}
     };
-
-public:
-    //! @name Types
-    //@{
     enum { has_parameter = true };
     //@}
 
@@ -62,20 +60,12 @@ public:
     //! @name Constructors/Destructor
     //@{
              FireHumanDamages();
-    /*explicit*/ FireHumanDamages( xml::xistream& xis );
+    /*implicit*/ FireHumanDamages( xml::xistream& xis );
     virtual ~FireHumanDamages();
     //@}
 
     //! @name Operations
     //@{
-    bool IsCreation( const sword::SimToClient& wrapper ) const
-    {
-        return wrapper.message().has_control_begin_tick();
-    }
-    bool IsDestruction( const sword::SimToClient& wrapper ) const
-    {
-        return wrapper.message().has_control_end_tick();
-    }
     bool HasValue( const sword::SimToClient& wrapper ) const
     {
         return wrapper.message().has_unit_damaged_by_unit_fire();
@@ -88,7 +78,9 @@ private:
     //@{
     int rankMask_;
     int stateMask_;
-    FilterHelper< int > filter_;
+    bool fratricideMask_;
+    bool directFireMask_;
+    bool indirectFireMask_;
     //@}
 };
 

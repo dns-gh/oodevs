@@ -55,19 +55,16 @@ public:
     static sword::SimToClient UpdatePopulationSatisfaction ( float lodging, float health, float safety, unsigned long id );
     static sword::SimToClient UpdatePopulationInBlocks( unsigned long populationId, std::map < unsigned long, int > );
     static sword::SimToClient UpdateCrowdDeadState( unsigned long crowdId, int dead );
-    static sword::SimToClient CreateDirectFire( unsigned fire_id, unsigned long firer );
-    static sword::SimToClient CreateIndirectFire( unsigned fire_id, unsigned long firer );
+    static sword::SimToClient CreateDirectFire( unsigned fire_id, unsigned long firer, unsigned long target = 42 );
+    static sword::SimToClient CreateIndirectFire( unsigned fire_id, unsigned long firer, const char* position = "31TBN7728449218" );
     static sword::SimToClient StopFire( unsigned fire_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0 );
-    static sword::SimToClient MakeUnitDamages( unsigned int firer_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0 );
+    static sword::SimToClient MakeUnitDamages( unsigned int firer_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0, bool isDirectFire = true, bool isFratricide = false );
     static sword::SimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0, unsigned long equip_id = 0, unsigned long breakdown_id = 0 );
     static sword::SimToClient DestroyConsign( unsigned long id );
     static bool IsCloseCombatPower( const extractors::PowerExtractor_ABC& extractor );
     static sword::SimToClient CreateMedicalConsign( unsigned long unitId, unsigned long requestId, bool isWaiting );
     static sword::SimToClient CreateFunctionalState( unsigned long objectId, int stateValue );
     static sword::SimToClient UpdateFunctionalState( unsigned long objectId, int stateValue );
-
-    template< std::size_t N >
-    static void MakeExpectation( MockClientPublisher& mocker, double (&data)[N] );
     //@}
 
 private:
@@ -76,19 +73,5 @@ private:
     static unsigned int currentTick_;
     //@}
 };
-
-template< std::size_t N >
-inline
-void TestTools::MakeExpectation( MockClientPublisher& mocker, double (&data)[N] )
-{
-    AarToClient result;
-    result.set_context( 0 );
-    PlotResult& plot = *result.mutable_message()->mutable_plot_result();
-    plot.set_identifier( 42 );
-    plot.set_error( "" );
-    for( unsigned i = 0; i < N; ++i )
-        plot.add_values( static_cast< float >( data[i] ) );
-    MOCK_EXPECT( mocker, Send4 ).once().with( boost::bind( &TestTools::CheckValue, result, _1 ) );
-}
 
 #endif // __3aTestTools_h_

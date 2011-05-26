@@ -87,7 +87,7 @@ Extractor extractor_;
 };
 
 typedef UnitAttribute< extractors::OperationalState >       OperationalState;
-typedef UnitAttribute< extractors::Position >               Position;
+typedef UnitAttribute< extractors::Positions >              Positions;
 typedef UnitAttribute< extractors::Resources >              Resources;
 typedef UnitAttribute< extractors::Equipments >             Equipments;
 typedef UnitAttribute< extractors::Humans >                 Humans;

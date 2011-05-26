@@ -44,7 +44,7 @@ namespace extractors
         }
     };
 
-    struct Position : public Extractor< ::Position >
+    struct Positions : public Extractor< ::Position >
     {
         bool HasFlag( const sword::UnitAttributes& attributes ) const
         {
@@ -85,7 +85,43 @@ namespace extractors
         }
     };
 
-    struct DirectFireUnitId : public Extractor< NumericValue >
+    struct DirectFireTargetsId : public Extractor< NumericValue >
+    {
+        bool IsCreation( const sword::SimToClient& wrapper ) const
+        {
+            return wrapper.message().has_start_unit_fire() &&
+                wrapper.message().start_unit_fire().type() == sword::StartUnitFire::direct &&
+                wrapper.message().start_unit_fire().target().has_unit();
+        }
+        NumericValue Extract( const sword::SimToClient& wrapper ) const
+        {
+            return NumericValue( wrapper.message().start_unit_fire().target().unit().id() );
+        }
+        bool IsDestruction( const sword::SimToClient& wrapper ) const
+        {
+            return wrapper.message().has_stop_unit_fire();
+        }
+    };
+
+    struct IndirectFireTargetsPositions : public Extractor< ::Position >
+    {
+        bool IsCreation( const sword::SimToClient& wrapper ) const
+        {
+            return wrapper.message().has_start_unit_fire() &&
+                   wrapper.message().start_unit_fire().type() == sword::StartUnitFire::indirect &&
+                   wrapper.message().start_unit_fire().target().has_position();
+        }
+        ::Position Extract( const sword::SimToClient& wrapper ) const
+        {
+            return ::Position( wrapper.message().start_unit_fire().target().position() );
+        }
+        bool IsDestruction( const sword::SimToClient& wrapper ) const
+        {
+            return wrapper.message().has_stop_unit_fire();
+        }
+    };
+
+    struct DirectFireUnitsId : public Extractor< NumericValue >
     {
         bool IsCreation( const sword::SimToClient& wrapper ) const
         {
@@ -102,12 +138,12 @@ namespace extractors
         }
     };
 
-    struct IndirectFireUnitId : public Extractor< NumericValue >
+    struct IndirectFireUnitsId : public Extractor< NumericValue >
     {
         bool IsCreation( const sword::SimToClient& wrapper ) const
         {
             return wrapper.message().has_start_unit_fire() &&
-                   wrapper.message().start_unit_fire().type() == sword::StartUnitFire::indirect;
+                wrapper.message().start_unit_fire().type() == sword::StartUnitFire::indirect;
         }
         NumericValue Extract( const sword::SimToClient& wrapper ) const
         {

@@ -13,7 +13,6 @@
 #include "Values.h"
 #include "FireComponentDamages.h"
 #include "FireHumanDamages.h"
-#include "WoundHumans.h"
 #include "LogMedicalEquipments.h"
 
 // =============================================================================
@@ -54,10 +53,8 @@ namespace events
         Extractor extractor_;
     };
 
-typedef Event< extractors::FireComponentDamages > FireComponentDamages;
+typedef Period< extractors::FireComponentDamages > FireComponentDamages;
 typedef Period< extractors::FireHumanDamages > FireHumanDamages;
-typedef Event< extractors::WoundHumans > WoundHumans;
-
 }
 
 #endif // __Events_h_

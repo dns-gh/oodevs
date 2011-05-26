@@ -22,12 +22,6 @@ LogMedicalEquipments::LogMedicalEquipments()
 
 namespace
 {
-    const char* logEquipements[ 2 ] =
-    {
-        "releve",
-        "ramassage",
-    };
-
     bool ReadMask( xml::xistream& xis, std::string equipment )
     {
         if( !xis.has_attribute( "types" ) )

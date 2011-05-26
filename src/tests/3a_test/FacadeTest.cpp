@@ -20,23 +20,32 @@
 #include <xeumeuleu/xml.hpp>
 #include <geocoord/geodetic.h>
 #include <geocoord/mgrs.h>
+#include <vector>
+#include <boost/foreach.hpp>
+#include <boost/assign.hpp>
 
 using namespace sword;
 
 namespace
 {
-    static unsigned int currentTick_ = 1;
-
     class Fixture
     {
     public:
+        typedef std::vector< float > T_Result;
+
         Fixture()
             : facade( publisher, 42, model )
+        {}
+        void MakeExpectation( const T_Result& data )
         {
-            currentTick_ = 1;
-        }
-        ~Fixture()
-        {
+            AarToClient result;
+            result.set_context( 0 );
+            PlotResult& plot = *result.mutable_message()->mutable_plot_result();
+            plot.set_identifier( 42 );
+            plot.set_error( "" );
+            BOOST_FOREACH( const float& value, data )
+                plot.add_values( value );
+            MOCK_EXPECT( publisher, Send4 ).once().with( boost::bind( &TestTools::CheckValue, result, _1 ) );
         }
         MockClientPublisher publisher;
         MockStaticModel model;
@@ -51,7 +60,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalState, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='operational-state' id='opstate'/>"
+                             "    <extract function='operational-states' id='opstate'/>"
                              "    <reduce type='float' function='select' input='opstate' key='2' id='myopstate'/>"
                              "    <result function='plot' input='myopstate' type='float'/>"
                              " </indicator>" );
@@ -74,8 +83,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalState, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 0.25, 0.25, 0.75, 0.75 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 0.25 )( 0.25 )( 0.75 )( 0.75 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -86,7 +95,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalState, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalStateNormalized, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='operational-state' id='opstate'/>"
+                             "    <extract function='operational-states' id='opstate'/>"
                              "    <reduce type='float' function='select' input='opstate' key='2' id='myopstate'/>"
                              "    <reduce type='float' function='threshold' input='myopstate' thresholds='0.5' values='0,1' id='mynormalizedopstate'/>"
                              "    <result function='plot' input='mynormalizedopstate' type='float'/>"
@@ -106,8 +115,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalStateNormalized, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 0, 0, 1, 1 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 0 )( 0 )( 1 )( 1 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -126,7 +135,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalStateNormalized, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestDistanceBetweenTwoUnits, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='position' id='position'/>"
+                             "    <extract function='positions' id='position'/>"
                              "    <reduce type='position' function='select' input='position' key='1' id='position1'/>"
                              "    <reduce type='position' function='select' input='position' key='2' id='position2'/>"
                              "    <transform function='distance' input='position1,position2' id='distance'/>"
@@ -145,8 +154,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDistanceBetweenTwoUnits, Fixture )
     task->Receive( TestTools::MakePosition( "31TBN7728449216", 1 ) );
     task->Receive( TestTools::MakePosition( "31TBN7728449220", 2 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 0., 2.00212, 4.00424 }; // $$$$ _RC_ LGY 2010-08-10: margin?
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 0.f )( 2.00212f )( 4.00424f ); // $$$$ _RC_ LGY 2010-08-10: margin?
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -173,8 +182,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestMountedUnit, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 0., 1., 0., 0. };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 0. )( 1. )( 0. )( 0. );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -185,7 +194,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestMountedUnit, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestTypeInstanciationIsVerifiedAtRuntime, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='position' id='position'/>"
+                             "    <extract function='positions' id='position'/>"
                              "    <reduce type='position' function='sum' input='position' id='position2'/>" // summing positions
                              "</indicator>" );
     BOOST_CHECK_THROW( facade.CreateTask( xis >> xml::start( "indicator" ) ), std::invalid_argument );
@@ -208,7 +217,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTypeInstanciationIsVerifiedAtRuntime, Fixtur
 BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdowns, Fixture )
 {
      xml::xistringstream xis( "<indicator>"
-                              "    <extract function='maintenance-handling-unit' id='consigns'/>"
+                              "    <extract function='maintenance-handling-units' id='consigns'/>"
                               "    <reduce type='unsigned long' function='count' input='consigns' id='count'/>"
                               "    <result function='plot' input='count' type='unsigned'/>"
                               "</indicator>" );
@@ -226,8 +235,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdowns, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 1., 2., 2., 2., 1. };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 2. )( 2. )( 2. )( 1. );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -238,7 +247,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdowns, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='maintenance-handling-unit' id='consigns'/>"
+                             "    <extract function='maintenance-handling-units' id='consigns'/>"
                              "    <transform function='is-one-of' type='unsigned long' select='12,42' input='consigns' id='selected-consigns'/>"
                              "    <transform function='filter' type='unsigned long' input='selected-consigns,consigns' id='the-consigns'/>"
                              "    <reduce type='unsigned long' function='count' input='the-consigns' id='count'/>"
@@ -262,8 +271,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 2., 3., 3., 3., 2. };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2. )( 3. )( 3. )( 3. )( 2. );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -282,7 +291,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='direct-fire-unit' id='fires'/>"
+                             "    <extract function='direct-fire-units' id='fires'/>"
                              "    <transform function='is-one-of' type='unsigned int' select='12,42' input='fires' id='selected-fires'/>"
                              "    <transform function='filter' type='unsigned int' input='selected-fires,fires' id='the-fires'/>"
                              "    <reduce type='unsigned int' function='count' input='the-fires' id='count'/>"
@@ -313,8 +322,77 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter, Fixture )
     task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
     task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 1., 1., 0., 1., 1. };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 1. )( 0. )( 1. )( 1. );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestDirectFireInZone
+// Created: FPO 2011-05-24
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestDirectFireInZone, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='direct-fire-targets' id='fires'/>"
+                             "    <extract function='positions' id='positions'/>"
+                             "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
+                             "    <transform function='compose' type='position' input='positions,fires' id='fire-positions'/>"
+                             "    <transform function='contains' input='circle,fire-positions' id='selected-fires'/>"
+                             "    <transform function='filter' type='float' input='selected-fires,fires' id='the-fires'/>"
+                             "    <reduce type='unsigned int' function='count' input='the-fires' id='count'/>"
+                             "    <result function='plot' input='count' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 12 ) ); // in zone
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 16 ) ); // out of zone
+    task->Receive( TestTools::CreateDirectFire( 43, 12, 12 ) );
+    task->Receive( TestTools::CreateDirectFire( 13, 13, 55 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 43, 12 ) );
+    task->Receive( TestTools::StopFire( 13, 55 ) );
+    task->Receive( TestTools::CreateDirectFire( 14, 14, 55) );
+    task->Receive( TestTools::CreateDirectFire( 1000, 24, 16 ) );
+    task->Receive( TestTools::StopFire( 14, 55 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 1000, 16 ) );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 1. )( 0. );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestIndirectFireInZone
+// Created: FPO 2011-05-24
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestIndirectFireInZone, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='indirect-fire-positions' id='fires'/>"
+                             "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='zone'/>"
+                             "    <transform function='contains' input='zone,fires' id='selected-fires'/>"
+                             "    <transform function='filter' type='position' input='selected-fires,fires' id='the-fires'/>"
+                             "    <reduce type='position' function='count' input='the-fires' id='count'/>"
+                             "    <result function='plot' input='count' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 12 ) ); // in zone
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 16 ) ); // out of zone
+    task->Receive( TestTools::CreateIndirectFire( 43, 12, "31TBN7728449218" ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::StopFire( 43, 12 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 1. )( 0. );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -325,7 +403,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFiresWithUnitFilter, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfIndirectFiresWithUnitFilter, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='indirect-fire-unit' id='fires'/>"
+                             "    <extract function='indirect-fire-units' id='fires'/>"
                              "    <transform function='is-one-of' type='unsigned long' select='12,42' input='fires' id='selected-fires'/>"
                              "    <transform function='filter' type='unsigned long' input='selected-fires,fires' id='the-fires'/>"
                              "    <reduce type='unsigned long' function='count' input='the-fires' id='count'/>"
@@ -356,8 +434,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfIndirectFiresWithUnitFilter, Fixture
     task->Receive( TestTools::CreateIndirectFire( 18, 13 ) );
     task->Receive( TestTools::CreateIndirectFire( 19, 14 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 1., 1., 0., 1., 1. };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1. )( 1. )( 0. )( 1. )( 1. );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -370,111 +448,11 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfIndirectFiresWithUnitFilter, Fixture
 //)
 
 // -----------------------------------------------------------------------------
-// Name: Facade_TestInflictedComponentDamagesFromDirectFire
-// Created: AGE 2004-12-15
-// -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFire, Fixture )
-{
-    xml::xistringstream xis( "<indicator>"
-                             "    <extract function='fire-component-damage' id='damages'/>"
-                             "    <extract function='direct-fire-unit' id='units'/>"
-                             "    <transform function='is-one-of' type='unsigned long' select='12,42' input='units' id='selected-fires'/>"
-                             "    <transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
-                             "    <reduce type='float' function='sum' input='the-damages' id='sum'/>"
-                             "    <result function='plot' input='sum' type='float'/>"
-                             "</indicator>" );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::CreateDirectFire( 12, 12 ) );
-    task->Receive( TestTools::CreateDirectFire( 13, 13 ) );
-    task->Receive( TestTools::EndTick() );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 12, 16, 5 ) );
-    task->Receive( TestTools::StopFire( 13, 16 ) );
-    task->Receive( TestTools::CreateDirectFire( 14, 14 ) );
-    task->Receive( TestTools::CreateDirectFire( 15, 15 ) );
-    task->Receive( TestTools::EndTick() );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 13, 16 ) );
-    task->Receive( TestTools::StopFire( 14, 18 ) );
-    task->Receive( TestTools::StopFire( 15, 19 ) );
-    task->Receive( TestTools::EndTick() );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::CreateDirectFire( 16, 15 ) );
-    task->Receive( TestTools::CreateDirectFire( 17, 42 ) );
-    task->Receive( TestTools::EndTick() );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 16, 18 ) );
-    task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
-    task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
-    task->Receive( TestTools::StopFire( 17, 16, 3 ) );
-    task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 0., 5., 0., 0., 3. };
-    TestTools::MakeExpectation( publisher, expectedResult );
-    task->Commit();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilterOfHell
-// Created: AGE 2004-12-15
-// -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComposedFilterOfHell, Fixture )
-{
-
-    xml::xistringstream xis( "<indicator>"
-                             "    <extract function='fire-component-damage' id='damages'/>"
-                             "    <extract function='direct-fire-unit' id='units'/>"
-                             "    <extract function='position' id='positions'/>"
-                             "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
-                             "    <transform function='compose' type='position' input='positions,units' id='fire-positions'/>"
-                             "    <transform function='contains' input='circle,fire-positions' id='selected-fires'/>"
-                             "    <transform function='filter' type='float' input='selected-fires,damages' id='the-damages'/>"
-                             "    <reduce type='float' function='sum' input='the-damages' id='sum'/>"
-                             "    <result function='plot' input='sum' type='float'/>"
-                             "</indicator>" );
-    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::MakePosition( "31TBN7728449218", 12 ) );
-    task->Receive( TestTools::MakePosition( "31TBN7728449242", 13 ) );
-    task->Receive( TestTools::MakePosition( "31TBN7728449212", 14 ) );
-    task->Receive( TestTools::MakePosition( "31TBN7728449242", 15 ) );
-    task->Receive( TestTools::MakePosition( "31TBN7728449220", 42 ) );
-    task->Receive( TestTools::CreateDirectFire( 12, 12 ) );
-    task->Receive( TestTools::CreateDirectFire( 13, 13 ) );
-    task->Receive( TestTools::EndTick() );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 12, 18, 5 ) );
-    task->Receive( TestTools::StopFire( 13, 19 ) );
-    task->Receive( TestTools::CreateDirectFire( 14, 14 ) );
-    task->Receive( TestTools::CreateDirectFire( 15, 15 ) );
-    task->Receive( TestTools::EndTick() );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 13, 14 ) );
-    task->Receive( TestTools::StopFire( 14, 13 ) );
-    task->Receive( TestTools::StopFire( 15, 18 ) );
-    task->Receive( TestTools::EndTick() );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::CreateDirectFire( 16, 15 ) );
-    task->Receive( TestTools::CreateDirectFire( 17, 42 ) );
-    task->Receive( TestTools::EndTick() );
-    task->Receive( TestTools::BeginTick() );
-    task->Receive( TestTools::StopFire( 16, 13 ) );
-    task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
-    task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
-    task->Receive( TestTools::StopFire( 17, 17, 3 ) );
-    task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 0., 5., 0., 0., 3. };
-    TestTools::MakeExpectation( publisher, expectedResult );
-    task->Commit();
-}
-
-// -----------------------------------------------------------------------------
 // Name: Facade_TestAllResources
 // Created: AGE 2004-12-15
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( Facade_TestAllResources, Fixture )
 {
-
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='resources' id='resources'/>"
                              "    <reduce type='int' function='sum' input='resources' id='sum'/>"
@@ -497,8 +475,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAllResources, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeResourceVariation( 4100, 12 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 5454, 5400, 5400, 6400, 6300 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 5454 )( 5400 )( 5400 )( 6400 )( 6300 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -540,8 +518,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestInstantaneousResourceConsumptionsWithResourc
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeResourceVariation( 5100, 12, 42 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 0, -54, 0, 0, -100 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 0 )( -54 )( 0 )( 0 )( -100 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -582,8 +560,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter, Fixt
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeResourceVariation( 5100, 12, 42 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 0, -54, -54, -54, -154 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 0 )( -54 )( -54 )( -54 )( -154 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -622,8 +600,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestEquipments, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeEquipementVariation( prison, 12, 42 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 15, 10, 10, 15, 16 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 15 )( 10 )( 10 )( 15 )( 16 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -647,10 +625,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestHumans, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeHumanVariation( state, 42 ) );
     task->Receive( TestTools::EndTick() );
-    {
-        double expectedResult[] = { 2, 2 };
-        TestTools::MakeExpectation( publisher, expectedResult );
-    }
+    const T_Result expectedResult = boost::assign::list_of< float >( 2 )( 2 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -661,7 +637,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestHumans, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestTypeAdaptation, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='operational-state' id='opstate'/>"
+                             "    <extract function='operational-states' id='opstate'/>"
                              "    <reduce type='int' function='select' input='opstate' key='2' id='myopstate'/>"
                              "    <result function='plot' input='myopstate' type='int'/>"
                              "</indicator>" );
@@ -677,9 +653,9 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTypeAdaptation, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestBadLexicalCast, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='maintenance-handling-unit' id='1'/>"
+                             "    <extract function='maintenance-handling-units' id='1'/>"
                              "    <transform function='is-one-of' id='2' input='1' select='13,67,68,69,71,74,75,76,78,79,80,55,81,82,197,198,199,90,91,92,93,147,56,148,149,150,151,173,174,175,176,177,178,58,59,60,61,63,66' type='bool'/>"
-                             "    <extract function='maintenance-handling-unit' id='3'/>"
+                             "    <extract function='maintenance-handling-units' id='3'/>"
                              "    <transform function='filter' id='4' input='2,3' type='unsigned long'/>"
                              "    <reduce function='count' id='5' input='4' type='unsigned'/>"
                              "</indicator>" );
@@ -693,9 +669,9 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestBadLexicalCast, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestConflicts, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='direct-fire-unit' id='1'/>"
+                             "    <extract function='direct-fire-units' id='1'/>"
                              "    <transform function='is-one-of' id='2' input='1' select='55,56' type='unsigned long'/>"
-                             "    <extract function='direct-fire-unit' id='3'/>"
+                             "    <extract function='direct-fire-units' id='3'/>"
                              "    <transform function='filter' id='4' input='2,3' type='unsigned long'/>"
                              "    <reduce function='count' id='5' input='4' type='unsigned long'/>"
                              "    <transform function='integrate' id='6' input='5' type='unsigned long'/>"
@@ -718,8 +694,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestConflicts, Fixture )
     task->Receive( TestTools::StopFire( 14, 16 ) );
     task->Receive( TestTools::StopFire( 15, 13 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 2, 4, 8, 10 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2 )( 4 )( 8 )( 10 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -749,8 +725,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnitDetection, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::CreateUnitDetection( 42, 69, sword::UnitVisibility::recognized ) ); // ok
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 1, 1, 0, 1 };//, 1, 1, 1, 1 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1 )( 1 )( 0 )( 1 );//, 1, 1, 1, 1 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -787,8 +763,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnitDetectionWithThreshold, Fixture )
     task->Receive( TestTools::CreateUnitDetection( 42, 69, sword::UnitVisibility::recognized ) );
     task->Receive( TestTools::CreateUnitDetection( 51, 69, sword::UnitVisibility::recognized ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 0, 1, 1, 0, 1 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 0 )( 1 )( 1 )( 0 )( 1 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -799,7 +775,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnitDetectionWithThreshold, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestProduct, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='operational-state' id='opstate'/>"
+                             "    <extract function='operational-states' id='opstate'/>"
                              "    <reduce type='float' function='select' input='opstate' key='42' id='myopstate'/>"
                              "    <constant type='float' value='10' id='ten'/>"
                              "    <reduce type='float' function='product' input='myopstate,ten' id='prod'/>"
@@ -815,8 +791,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestProduct, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::OperationalState( 0, 42 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 10, 5, 0 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 10 )( 5 )( 0 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -829,7 +805,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, F
     xml::xistringstream xis( "<indicator>"
                              "    <extract function='detecting-unit' id='detection' detected='69' visibility='detected,recognized,identified'/>"
                              "    <reduce type='int' function='select' input='detection' key='42' id='mydetection'/>"
-                             "    <extract function='operational-state' id='opstate'/>"
+                             "    <extract function='operational-states' id='opstate'/>"
                              "    <reduce type='float' function='select' input='opstate' key='69' id='myopstate'/>"
                              "    <reduce type='float' function='threshold' input='myopstate' thresholds='0' values='0,1' id='threshopstate'/>"
                              "    <reduce type='float' function='product' input='mydetection,threshopstate' id='prod'/>"
@@ -850,8 +826,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestTimeElapsedBetweenDetectionAndDestruction, F
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 1, 2, 3, 3, 3 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1 )( 2 )( 3 )( 3 )( 3 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -877,8 +853,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestCloseCombatPower, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( message );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 10, 11 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 10 )( 11 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -889,7 +865,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestCloseCombatPower, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestProductOnTwoExtractors, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "   <extract function='operational-state' id='opstate'/>"
+                             "   <extract function='operational-states' id='opstate'/>"
                              "   <extract function='close-combat-power' id='closecombat'/>"
                              "   <reduce  function='product' id='myproduct' input='opstate,closecombat' type='float'/>"
                              "   <reduce  function='select' id='myselect' input='myproduct' key='42' type='float'/>"
@@ -919,8 +895,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestProductOnTwoExtractors, Fixture )
     task->Receive( TestTools::EndTick() ); // expect 30 * 1
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() ); // expect same as previous
-    double expectedResult[] = { 5, 5, 30, 30 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 5 )( 5 )( 30 )( 30 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -953,8 +929,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableEquipmentsForUnitList, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeEquipementVariation( variation2, 17, 42 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 5, 3, 3 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 5 )( 3 )( 3 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -987,8 +963,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnavailableEquipmentsForUnitList, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeEquipementVariation( variation2, 17, 42 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 4, 3, 3 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 4 )( 3 )( 3 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1000,7 +976,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableEquipmentsInSpecifiedZone, Fixture 
 {
     xml::xistringstream xis( "<indicator>"
                              "<extract function='equipments' states='available' id='equipments' equipments='12,42'/>"
-                             "<extract function='position' id='positions'/>"
+                             "<extract function='positions' id='positions'/>"
                              "<constant type='zone' value='circle(31TCM1508386208,31TCM1410587214)' id='circle'/>"
                              "<transform function='contains' input='circle,positions' id='selected-units'/>"
                              "<transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>"
@@ -1025,8 +1001,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableEquipmentsInSpecifiedZone, Fixture 
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeEquipementVariation( variation, 17, 12 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 10, 11, 15 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 10 )( 11 )( 15 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1038,7 +1014,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnavailableEquipmentsInSpecifiedZone, Fixtur
 {
     xml::xistringstream xis( "<indicator>"
                              "<extract function='equipments' states='unavailable,repairable,repairing,captured' id='equipments' equipments='12,42'/>"
-                             "<extract function='position' id='positions'/>"
+                             "<extract function='positions' id='positions'/>"
                              "<constant type='zone' value='circle(31TCM1508386208,31TCM1410587214)' id='circle'/>"
                              "<transform function='contains' input='circle,positions' id='selected-units'/>"
                              "<transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>"
@@ -1063,8 +1039,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestUnavailableEquipmentsInSpecifiedZone, Fixtur
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeEquipementVariation( variation, 17, 12 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 10, 11, 15 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 10 )( 11 )( 15 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1076,7 +1052,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDestroyedEquipmentsInSpecifiedZone, Fixture 
 {
     xml::xistringstream xis( "<indicator>"
                              "<extract function='equipments' states='unavailable' id='equipments' equipments='12,42'/>"
-                             "<extract function='position' id='positions'/>"
+                             "<extract function='positions' id='positions'/>"
                              "<constant type='zone' value='circle(31TCM1508386208,31TCM1410587214)' id='circle'/>"
                              "<transform function='contains' input='circle,positions' id='selected-units'/>"
                              "<transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>"
@@ -1100,8 +1076,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDestroyedEquipmentsInSpecifiedZone, Fixture 
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeEquipementVariation( variation, 17, 12 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 10, 11, 15 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 10 )( 11 )( 15 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1113,7 +1089,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDestroyedEquipmentsInSpecifiedZoneWithPolygo
 {
     xml::xistringstream xis( "<indicator>"
                              "<extract function='equipments' states='unavailable' id='equipments' equipments='12,42'/>"
-                             "<extract function='position' id='positions'/>"
+                             "<extract function='positions' id='positions'/>"
                              "<constant type='zone' value='polygon(31TBN9260307999,31TBN9768407716,31TBN9516711524)' id='defined-polygon'/>"
                              "<transform function='contains' input='defined-polygon,positions' id='selected-units'/>"
                              "<transform function='filter' id='filtered-positions' input='selected-units,equipments' type='int'/>"
@@ -1130,8 +1106,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDestroyedEquipmentsInSpecifiedZoneWithPolygo
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeEquipementVariation( variation, 15, 42 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 5, 5 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 5 )( 5 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1157,8 +1133,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansForUnitList, Fixture )
     task->Receive( TestTools::MakeHumanVariation( state, 18 ) );
     task->Receive( TestTools::EndTick() );
     {
-        double expectedResult[] = { 1, 2 };
-        TestTools::MakeExpectation( publisher, expectedResult );
+        const T_Result expectedResult = boost::assign::list_of< float >( 1 )( 2 );
+        MakeExpectation( expectedResult );
     }
     task->Commit();
 }
@@ -1185,8 +1161,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalHumansForUnitList, Fixture )
     task->Receive( TestTools::MakeHumanVariation( state, 18 ) );
     task->Receive( TestTools::EndTick() );
     {
-        double expectedResult[] = { 1, 2 };
-        TestTools::MakeExpectation( publisher, expectedResult );
+        const T_Result expectedResult = boost::assign::list_of< float >( 1 )( 2 );
+        MakeExpectation( expectedResult );
     }
     task->Commit();
 }
@@ -1199,7 +1175,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalHumansForSpecifiedZone, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
                              "<extract function='humans' states='operational' ranks='officer,sub-officer,troopers' id='humans'/>"
-                             "<extract function='position' id='positions'/>"
+                             "<extract function='positions' id='positions'/>"
                              "<constant type='zone' value='circle(31TCM1508386208,31TCM1410587214)' id='circle'/>"
                              "<transform function='contains' input='circle,positions' id='selected-units'/>"
                              "<transform function='filter' id='filtered-positions' input='selected-units,humans' type='int'/>"
@@ -1218,10 +1194,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestOperationalHumansForSpecifiedZone, Fixture )
     task->Receive( TestTools::MakeHumanVariation( state, 17 ) );
     task->Receive( TestTools::MakeHumanVariation( state, 18 ) );
     task->Receive( TestTools::EndTick() );
-    {
-        double expectedResult[] = { 1, 2 };
-        TestTools::MakeExpectation( publisher, expectedResult );
-    }
+    const T_Result expectedResult = boost::assign::list_of< float >( 1 )( 2 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1247,8 +1221,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestWoundedHumansForUnitList, Fixture )
     task->Receive( TestTools::MakeHumanVariation( state, 18 ) );
     task->Receive( TestTools::EndTick() );
     {
-        double expectedResult[] = { 3, 6 };
-        TestTools::MakeExpectation( publisher, expectedResult );
+        const T_Result expectedResult = boost::assign::list_of< float >( 3 )( 6 );
+        MakeExpectation( expectedResult );
     }
     task->Commit();
 }
@@ -1277,8 +1251,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableResourcesForUnitList, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
     {
-        double expectedResult[] = { 4212, 9612, 9612 };
-        TestTools::MakeExpectation( publisher, expectedResult );
+        const T_Result expectedResult = boost::assign::list_of< float >( 4212 )( 9612 )( 9612 );
+        MakeExpectation( expectedResult );
     }
     task->Commit();
 }
@@ -1290,7 +1264,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestAvailableResourcesForUnitList, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFires, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='direct-fire-unit' id='fires'/>"
+                             "    <extract function='direct-fire-units' id='fires'/>"
                              "    <reduce type='unsigned long' function='count' input='fires' id='count'/>"
                              "    <result function='plot' input='count' type='unsigned'/>"
                              "</indicator>" );
@@ -1319,19 +1293,19 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestNumberOfDirectFires, Fixture )
     task->Receive( TestTools::CreateDirectFire( 18, 13 ) );
     task->Receive( TestTools::CreateDirectFire( 19, 14 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 2., 4., 2., 2., 3. };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2. )( 4. )( 2. )( 2. )( 3. );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade_TestDeadHumansFromDirectFire
+// Name: Facade_TestHumansKilledFromDirectFire
 // Created: FPO 2011-04-29
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFire, Fixture )
+BOOST_FIXTURE_TEST_CASE( Facade_TestHumansKilledFromDirectFire, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='fire-human-damages' id='damages' ranks='officer,sub-officer,troopers' states='dead'/>"
+                             "    <extract function='fire-human-damages' id='damages' fire-types='direct' states='dead'/>"
                              "    <transform function='domain' type='int' select='12,17' input='damages' id='domained-damages'/>"
                              "    <reduce type='float' function='sum' input='domained-damages' id='sum'/>"
                              "    <result function='plot' input='sum' type='float'/>"
@@ -1348,8 +1322,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFire, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 8, 0, 1, 0 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 8 )( 0 )( 1 )( 0 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1360,7 +1334,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFire, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestHumansLossFromDirectFire, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='fire-human-loss' id='damages' ranks='officer,sub-officer,troopers' states='dead'/>"
+                             "    <extract function='fire-human-loss' id='damages' fire-types='direct' states='dead'/>"
                              "    <transform function='domain' type='int' select='13,23' input='damages' id='domained-damages'/>"
                              "    <reduce type='float' function='sum' input='domained-damages' id='sum'/>"
                              "    <result function='plot' input='sum' type='float'/>"
@@ -1378,20 +1352,20 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestHumansLossFromDirectFire, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 8, 0, 6, 0 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 8 )( 0 )( 6 )( 0 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Facade_TestDeadHumansFromDirectFireInZone
+// Name: Facade_TestHumansKilledFromDirectFireInZone
 // Created: FPO 2011-05-03
 // -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFireInZone, Fixture )
+BOOST_FIXTURE_TEST_CASE( Facade_TestHumansKilledFromDirectFireInZone, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='fire-human-damages' id='damages' ranks='officer,sub-officer,troopers' states='dead'/>"
-                             "    <extract function='position' id='positions'/>"
+                             "    <extract function='fire-human-damages' id='damages' fire-types='direct' states='dead'/>"
+                             "    <extract function='positions' id='positions'/>"
                              "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
                              "    <transform function='contains' input='circle,positions' id='selected-units'/>"
                              "    <transform function='filter' type='float' input='selected-units,damages' id='the-damages'/>"
@@ -1414,8 +1388,64 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDeadHumansFromDirectFireInZone, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakeUnitDamages( 12, 13, 0, 11 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 1, 0, 11 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1 )( 0 )( 11 );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestComponentsDestroyedFromDirectFire
+// Created: FPO 2011-05-23
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestComponentsDestroyedFromDirectFire, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='fire-component-damages' id='damages' fire-types='direct' states='unavailable'/>"
+                             "    <transform function='domain' type='int' select='13,23' input='damages' id='domained-damages'/>"
+                             "    <reduce type='float' function='sum' input='domained-damages' id='sum'/>"
+                             "    <result function='plot' input='sum' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeUnitDamages( 13, 12, 1, 3 ) );
+    task->Receive( TestTools::MakeUnitDamages( 23, 12, 6, 5 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeUnitDamages( 25, 17, 4, 5 ) );
+    task->Receive( TestTools::MakeUnitDamages( 13, 19, 2, 0 ) );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 7 )( 0 )( 2 );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestNombretiredirect
+// Created: FPO 2011-05-23
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestNombretiredirect, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='fire-component-damages' id='damages' fire-types='direct' states='unavailable'/>"
+                             "    <transform function='domain' type='int' select='13,23' input='damages' id='domained-damages'/>"
+                             "    <reduce type='float' function='sum' input='domained-damages' id='sum'/>"
+                             "    <result function='plot' input='sum' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeUnitDamages( 13, 12, 1, 3 ) );
+    task->Receive( TestTools::MakeUnitDamages( 23, 12, 6, 5 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeUnitDamages( 25, 17, 4, 5 ) );
+    task->Receive( TestTools::MakeUnitDamages( 13, 19, 2, 0 ) );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 7 )( 0 )( 2 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1437,8 +1467,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogEvacuation, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 4, 4 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 4 )( 4 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1460,8 +1490,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogCollection, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 2, 2 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2 )( 2 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1472,7 +1502,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogCollection, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestLogHaulers, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='maintenance' types='haulers' id='maintenance'/>"
+                             "    <extract function='maintenances' types='haulers' id='maintenance'/>"
                              "    <transform function='domain' type='int' select='10' input='maintenance' id='domained-maintenance'/>"
                              "    <reduce type='int' function='sum' input='domained-maintenance' id='sum'/>"
                              "    <result function='plot' input='sum' type='int'/>"
@@ -1488,8 +1518,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogHaulers, Fixture )
     task->Receive( TestTools::MakeMaintenance( 12, 15, 11 ) );
     task->Receive( TestTools::MakeMaintenance( 4, 5, 10 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 2, 2, 5 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2 )( 2 )( 5 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1500,7 +1530,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogHaulers, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestLogRepairers, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='maintenance' types='repairers' id='maintenance'/>"
+                             "    <extract function='maintenances' types='repairers' id='maintenance'/>"
                              "    <transform function='domain' type='int' select='10,13' input='maintenance' id='domained-maintenance'/>"
                              "    <reduce type='int' function='sum' input='domained-maintenance' id='sum'/>"
                              "    <result function='plot' input='sum' type='int'/>"
@@ -1517,8 +1547,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogRepairers, Fixture )
     task->Receive( TestTools::EndTick() );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 4, 16, 16 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 4 )( 16 )( 16 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1529,7 +1559,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogRepairers, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestLogRepairersAndHaulers, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='maintenance' id='maintenance'/>"
+                             "    <extract function='maintenances' id='maintenance'/>"
                              "    <transform function='domain' type='int' select='10,13' input='maintenance' id='domained-maintenance'/>"
                              "    <reduce type='int' function='sum' input='domained-maintenance' id='sum'/>"
                              "    <result function='plot' input='sum' type='int'/>"
@@ -1546,8 +1576,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestLogRepairersAndHaulers, Fixture )
     task->Receive( TestTools::MakeMaintenance( 5, 10, 13 ) );
     task->Receive( TestTools::MakeMaintenance( 5, 17, 17 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 23, 16, 21 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 23 )( 16 )( 21 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1574,8 +1604,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestStocks, Fixture )
     task->Receive( TestTools::MakeStockVariation( 7, 10, 13 ) );
     task->Receive( TestTools::MakeStockVariation( 7, 10, 11 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 3, 5, 12 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 3 )( 5 )( 12 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1602,8 +1632,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestPopulationStates, Fixture )
     task->Receive( TestTools::UpdatePopulationStates( 10, 22, 55, 41 ) );
     task->Receive( TestTools::UpdatePopulationStates( 0, 2, 5, 40 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 3, 3, 5 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 3 )( 3 )( 5 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1630,8 +1660,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestPopulationSatisfaction, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::UpdatePopulationSatisfaction( 3.5f, 2.3f, 13.4f, 99 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 2.3, 2.3, 3.9, 2.3 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2.3f )( 2.3f )( 3.9f )( 2.3f );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1662,8 +1692,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestPopulationInBlocks, Fixture )
     task->Receive( TestTools::UpdatePopulationInBlocks( 10, blocks2 ) );
     task->Receive( TestTools::UpdatePopulationInBlocks( 11, blocks ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 20, 20, 33 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 20 )( 20 )( 33 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1688,8 +1718,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestCrowdStates, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::UpdateCrowdDeadState( 10, 15 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 11, 11, 15 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 11 )( 11 )( 15 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1721,8 +1751,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestWaitingForMedicalAttention, Fixture )
     task->Receive( TestTools::CreateMedicalConsign( 15, 31, false ) );
 
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 2, 2, 2, 1 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2 )( 2 )( 2 )( 1 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1754,8 +1784,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestWaitingForMedicalAttentionInZone, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::CreateMedicalConsign( 15, 31, false ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 2, 2, 2, 1 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 2 )( 2 )( 2 )( 1 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 
@@ -1785,8 +1815,8 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestStructuralStates, Fixture )
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::CreateFunctionalState( 15,100 ) );
     task->Receive( TestTools::EndTick() );
-    double expectedResult[] = { 75, 75, 50, 75 };
-    TestTools::MakeExpectation( publisher, expectedResult );
+    const T_Result expectedResult = boost::assign::list_of< float >( 75 )( 75 )( 50 )( 75 );
+    MakeExpectation( expectedResult );
     task->Commit();
 }
 

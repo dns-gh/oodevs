@@ -11,6 +11,9 @@
 #define __ExtractorsFactory_h_
 
 #include "ElementFactory_ABC.h"
+#include <map>
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 namespace aar
 {
@@ -38,9 +41,16 @@ public:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef boost::function< void( const std::string&, xml::xistream&, Task& ) > T_Extractor;
+    typedef std::map< std::string, T_Extractor > T_Extractors;
+    //@}
+
+private:
     //! @name Member data
     //@{
-    const aar::StaticModel_ABC& model_;
+    const T_Extractors extractors_;
     //@}
 };
 
