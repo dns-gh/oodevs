@@ -185,9 +185,7 @@ namespace launcher_test
             MOCK_EXPECT( handler, OnConnectionSucceeded ).once();
             client.Connect( defaultHost, PORT, handler );
             while( !client.Connected() && !timeout.Expired() )
-            {
                 Update();
-            }
         }
         void Update()
         {
@@ -195,7 +193,6 @@ namespace launcher_test
             launcher.Update();
             dispatcher.Update();
         }
-
         LauncherFacade launcher;
         kernel::Controllers controllers;
         frontend::LauncherClient client;
@@ -217,20 +214,18 @@ namespace launcher_test
             client.QueryExerciseList();
             timeout.Start();
             while( !exerciceListener.Check() && !timeout.Expired() )
-            {
                 Update();
-            }
-
             BOOST_REQUIRE( exerciceListener.Check() );
+
             exercise = exerciceListener.exercises_.front();
             BOOST_REQUIRE( exercise );
+
             MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
             exercise->StartDispatcher( SESSION );
+
             timeout.Start();
             while( (!exercise->IsRunning() || !dispatcher.AuthenticationPerformed() ) && !timeout.Expired() )
-            {
                 Update();
-            }
             BOOST_REQUIRE( exercise->IsRunning() );
         }
 
@@ -254,10 +249,15 @@ namespace launcher_test
             LAUNCHER_CHECK_MESSAGE( message, expected.c_str() );
             mock::verify();
         }
-
+        template< typename T >
+        void Wait( const T& message )
+        {
+            timeout.Start();
+            while( !message.IsInitialized() && !timeout.Expired() )
+                Update();
+        }
         ExerciseListener exerciceListener;
         const frontend::Exercise_ABC* exercise;
         const std::string SESSION;
     };
 }
-

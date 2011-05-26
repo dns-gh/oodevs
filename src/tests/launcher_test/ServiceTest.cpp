@@ -47,9 +47,7 @@ BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, ExerciseFixture )
     MOCK_EXPECT( handler, HandleProfileListResponse ).once().with( mock::retrieve( launcherResponse ) );
     client.Register( handler );
     exercise->QueryProfileList();
-    timeout.Start();
-    while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-        Update();
+    Wait( launcherResponse );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,21 +59,19 @@ BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
     // send pause request
     exercise->Pause( SESSION );
     VerifySendRequest( "context: 1 message { control_pause { } }" );
-    // retrieve pause response
-    {
-        sword::SessionCommandExecutionResponse launcherResponse;
-        boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
-        MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
-        client.Register( handler );
 
-        client::ControlPauseAck dispatcherResponse;
-        dispatcherResponse().set_error_code( sword::ControlAck::no_error );
-        dispatcherResponse.Send( dispatcher, 1 );
-        timeout.Start();
-        while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-            Update();
-        LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" running: false" );
-    }
+    // retrieve pause response
+    sword::SessionCommandExecutionResponse launcherResponse;
+    boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+    MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
+    client.Register( handler );
+
+    client::ControlPauseAck dispatcherResponse;
+    dispatcherResponse().set_error_code( sword::ControlAck::no_error );
+    dispatcherResponse.Send( dispatcher, 1 );
+
+    Wait( launcherResponse );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" running: false" );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,21 +83,19 @@ BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
     // send resume request
     exercise->Resume( SESSION );
     VerifySendRequest( "context: 2 message { control_resume { } }" );
-    // retrieve resume response
-    {
-        sword::SessionCommandExecutionResponse launcherResponse;
-        boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
-        MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
-        client.Register( handler );
 
-        client::ControlResumeAck dispatcherResponse;
-        dispatcherResponse().set_error_code( sword::ControlAck::error_not_paused );
-        dispatcherResponse.Send( dispatcher, 2 );
-        timeout.Start();
-        while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-            Update();
-        LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: session_already_running exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" running: true" );
-    }
+    // retrieve resume response
+    sword::SessionCommandExecutionResponse launcherResponse;
+    boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+    MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
+    client.Register( handler );
+
+    client::ControlResumeAck dispatcherResponse;
+    dispatcherResponse().set_error_code( sword::ControlAck::error_not_paused );
+    dispatcherResponse.Send( dispatcher, 2 );
+
+    Wait( launcherResponse );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: session_already_running exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" running: true" );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,21 +107,19 @@ BOOST_FIXTURE_TEST_CASE( ClientCanSaveCheckPoint, ExerciseFixture )
     // send checkpoint request
     exercise->SaveCheckpoint( SESSION, "checkpoint" );
     VerifySendRequest( "context: 0 message { control_checkpoint_save_now { name: \"checkpoint\" } }" );
-    // retrieve checkpoint response
-    {
-        sword::SessionCommandExecutionResponse launcherResponse;
-        boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
-        MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
-        client.Register( handler );
 
-        client::ControlCheckPointSaveEnd dispatcherResponse;
-        dispatcherResponse().set_name( "checkpoint" );
-        dispatcherResponse.Send( dispatcher, 0 );
-        timeout.Start();
-        while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-            Update();
-        LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" saved_checkpoint: \"checkpoint\"" );
-    }
+    // retrieve checkpoint response
+    sword::SessionCommandExecutionResponse launcherResponse;
+    boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+    MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
+    client.Register( handler );
+
+    client::ControlCheckPointSaveEnd dispatcherResponse;
+    dispatcherResponse().set_name( "checkpoint" );
+    dispatcherResponse.Send( dispatcher, 0 );
+
+    Wait( launcherResponse );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" saved_checkpoint: \"checkpoint\"" );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,9 +139,8 @@ BOOST_FIXTURE_TEST_CASE( NotifyUnitExtension, ExerciseFixture )
     entry->set_name( "name" );
     entry->set_value( "value" );
     attributes.Send( dispatcher, 12 );
-    timeout.Start();
-    while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-        Update();
+
+    Wait( launcherResponse );
     LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" notification { unit_update { unit { id: 42 } extensions { entries { name: \"name\" value: \"value\" } } } }" );
 }
 
@@ -170,9 +161,8 @@ BOOST_FIXTURE_TEST_CASE( NotifyFormationExtension, ExerciseFixture )
     entry->set_name( "name" );
     entry->set_value( "value" );
     attributes.Send( dispatcher, 12 );
-    timeout.Start();
-    while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-        Update();
+
+    Wait( launcherResponse );
     LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" notification { formation_update { formation { id: 42 } extensions { entries { name: \"name\" value: \"value\" } } } }" );
 }
 
@@ -192,9 +182,8 @@ BOOST_FIXTURE_TEST_CASE( NotifyProfileCreation, ExerciseFixture )
     creation().mutable_profile()->set_password( "password" );
     creation().mutable_profile()->set_supervisor( true );
     creation.Send( dispatcher, 12 );
-    timeout.Start();
-    while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-        Update();
+
+    Wait( launcherResponse );
     LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" notification { profile_creation { profile { login: \"login\" password: \"password\" supervisor: true } } }" );
 }
 
@@ -215,9 +204,8 @@ BOOST_FIXTURE_TEST_CASE( NotifyProfileUpdate, ExerciseFixture )
     update().mutable_profile()->set_password( "password" );
     update().mutable_profile()->set_supervisor( true );
     update.Send( dispatcher, 12 );
-    timeout.Start();
-    while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-        Update();
+
+    Wait( launcherResponse );
     LAUNCHER_CHECK_MESSAGE( launcherResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" notification { profile_update { profile { login: \"login\" password: \"password\" supervisor: true } } }" );
 }
 
@@ -245,9 +233,11 @@ BOOST_FIXTURE_TEST_CASE( NotifyControlInformation, ExerciseFixture )
     information().set_send_vision_cones( true );
     information().set_profiling_enabled( false );
     information.Send( dispatcher, 12 );
+
     timeout.Start();
     while( !( parameterResponse.IsInitialized() && statusResponse.IsInitialized() ) && !timeout.Expired() )
         Update();
+
     LAUNCHER_CHECK_MESSAGE( parameterResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" checkpoint_frequency: 39 acceleration_factor: 40" );
     LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\" status: paused" );
 }
@@ -262,20 +252,17 @@ BOOST_FIXTURE_TEST_CASE( ClientCanListConnectedProfiles, ExerciseFixture )
     exercise->QueryConnectedProfileList( SESSION );
     VerifySendAuthRequest( "context: 1 message { connected_profiles_request { } }" );
     // retrieve checkpoint response
-    {
-        sword::ConnectedProfileListResponse launcherResponse;
-        boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
-        MOCK_EXPECT( handler, HandleConnectedProfileList ).once().with( mock::retrieve( launcherResponse ) );
-        client.Register( handler );
 
-        authentication::ConnectedProfileList dispatcherResponse;
-        FillProfile( dispatcherResponse().add_elem() );
+    sword::ConnectedProfileListResponse launcherResponse;
+    boost::shared_ptr< MockResponseHandler > handler( new MockResponseHandler() );
+    MOCK_EXPECT( handler, HandleConnectedProfileList ).once().with( mock::retrieve( launcherResponse ) );
+    client.Register( handler );
 
-        dispatcherResponse.Send( dispatcher, 1 );
-        timeout.Start();
-        while( !launcherResponse.IsInitialized() && !timeout.Expired() )
-            Update();
-        LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + 
-            "\" session: \"" + SESSION + "\" profile { login: \"login\" password: \"password\" read_only_formations { elem { id: 3 } elem { id: 5 } } read_write_formations { elem { id: 6 } elem { id: 7 } } read_only_automates { elem { id: 8 } elem { id: 9 } } read_write_automates { elem { id: 10 } elem { id: 11 } } read_only_parties { elem { id: 12 } elem { id: 13 } } read_write_parties { elem { id: 14 } elem { id: 15 } } read_only_crowds { elem { id: 16 } elem { id: 17 } } read_write_crowds { elem { id: 18 } elem { id: 19 } } supervisor: true role { id: 77 } }" );
-    }
+    authentication::ConnectedProfileList dispatcherResponse;
+    FillProfile( dispatcherResponse().add_elem() );
+    dispatcherResponse.Send( dispatcher, 1 );
+
+    Wait( launcherResponse );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + 
+        "\" session: \"" + SESSION + "\" profile { login: \"login\" password: \"password\" read_only_formations { elem { id: 3 } elem { id: 5 } } read_write_formations { elem { id: 6 } elem { id: 7 } } read_only_automates { elem { id: 8 } elem { id: 9 } } read_write_automates { elem { id: 10 } elem { id: 11 } } read_only_parties { elem { id: 12 } elem { id: 13 } } read_write_parties { elem { id: 14 } elem { id: 15 } } read_only_crowds { elem { id: 16 } elem { id: 17 } } read_write_crowds { elem { id: 18 } elem { id: 19 } } supervisor: true role { id: 77 } }" );
 }
