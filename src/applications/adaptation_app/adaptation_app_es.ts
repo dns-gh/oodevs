@@ -2335,10 +2335,6 @@ tirador</translation>
         <translation>&amp;Proyecto</translation>
     </message>
     <message>
-        <source>&amp;Close</source>
-        <translation>&amp;Cerrar</translation>
-    </message>
-    <message>
         <source>Save &amp;As</source>
         <translation>G&amp;uardar como</translation>
     </message>

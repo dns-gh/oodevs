@@ -107,7 +107,6 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
     , workspace_         ( ADN_Workspace::GetWorkspace() )
     , config_            ( config )
     , rIdSaveAs_         ( 0 )
-    , rIdClose_          ( 0 )
     , nIdChangeOpenMode_ ( 0 )
     , pProjectMenu_      ( 0 )
     , pCoheranceTablesMenu_( 0 )
@@ -151,8 +150,8 @@ void ADN_MainWindow::Build()
     QAction* pProjectNewAction = new QAction( MAKE_PIXMAP(filenew), tr("&New"), CTRL+Key_N, this, "new" );
     connect( pProjectNewAction, SIGNAL( activated() ) , this, SLOT( NewProject() ) );
 
-    QAction* pProjectLoadAction = new QAction( MAKE_PIXMAP(fileopen), tr("&Open"), CTRL+Key_O, this, "open" );
-    connect( pProjectLoadAction, SIGNAL( activated() ) , this, SLOT( OpenProject() ) );
+    pProjectLoadAction_ = new QAction( MAKE_PIXMAP(fileopen), tr("&Open"), CTRL+Key_O, this, "open" );
+    connect( pProjectLoadAction_, SIGNAL( activated() ) , this, SLOT( OpenProject() ) );
 
     QAction* pProjectSaveAction = new QAction( MAKE_PIXMAP(filesave), tr("&Save"), CTRL+Key_S, this, "save" );
     connect( pProjectSaveAction, SIGNAL( activated() ) , this, SLOT( SaveProject() ) );
@@ -169,9 +168,9 @@ void ADN_MainWindow::Build()
 
     // Project toolbar
     QToolBar * pToolBar = new QToolBar( this );
-    pProjectNewAction     ->addTo( pToolBar );
-    pProjectLoadAction    ->addTo( pToolBar );
-    pProjectSaveAction    ->addTo( pToolBar );
+    pProjectNewAction  ->addTo( pToolBar );
+    pProjectLoadAction_->addTo( pToolBar );
+    pProjectSaveAction ->addTo( pToolBar );
 //    pProjectTestDataAction->addTo( pToolBar );
 
 // $$$ UNDO DISABLED
@@ -182,8 +181,8 @@ void ADN_MainWindow::Build()
     pProjectMenu_ = new QPopupMenu( this );
     menuBar()->insertItem( tr("&Project"), pProjectMenu_ );
     pProjectNewAction->addTo( pProjectMenu_ );
-    pProjectLoadAction->addTo( pProjectMenu_ );
-    rIdClose_ = pProjectMenu_->insertItem( tr("&Close"),  this, SLOT(CloseProject()) );
+    pProjectLoadAction_->addTo( pProjectMenu_ );
+
     pProjectMenu_->insertSeparator();
     pProjectSaveAction->addTo( pProjectMenu_ );
     rIdSaveAs_ = pProjectMenu_->insertItem( tr("Save &As"),  this, SLOT(SaveAsProject()) );
@@ -261,7 +260,6 @@ void ADN_MainWindow::AddListView( const QString& strTableName, ADN_Callback_ABC<
 void ADN_MainWindow::SetMenuEnabled( bool bEnabled )
 {
     pActionSave_->setEnabled( bEnabled );
-    pProjectMenu_->setItemEnabled( rIdClose_, bEnabled );
     pProjectMenu_->setItemEnabled( rIdSaveAs_, bEnabled );
 }
 
@@ -433,6 +431,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
             QMessageBox::warning( this, qApp->translate( "Application", "SWORD" )
                     , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + fileLoaderObserver_->GetInvalidSignedFiles().c_str() );
     }
+    pProjectLoadAction_->setVisible( false );
 }
 
 // -----------------------------------------------------------------------------

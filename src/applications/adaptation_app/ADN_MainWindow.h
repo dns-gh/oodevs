@@ -104,13 +104,13 @@ private:
     ADN_Workspace& workspace_;
     ADN_Config& config_;
     QTabWidget* pTab_;
+    QAction* pProjectLoadAction_;
     QPopupMenu* pProjectMenu_;
     QPopupMenu* pCoheranceTablesMenu_;
     QPopupMenu* pConfigurationMenu_;
     QPopupMenu* pHelpMenu_;
     QAction* pActionSave_;
     int rIdSaveAs_;
-    int rIdClose_;
     int nIdSaveTable_;
     int nIdPrint_;
     int nIdChangeOpenMode_;

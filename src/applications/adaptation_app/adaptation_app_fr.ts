@@ -2333,10 +2333,6 @@ du tireur</translation>
         <translation>&amp;Projet</translation>
     </message>
     <message>
-        <source>&amp;Close</source>
-        <translation>&amp;Fermer</translation>
-    </message>
-    <message>
         <source>Save &amp;As</source>
         <translation>Enregistrer &amp;sous</translation>
     </message>
