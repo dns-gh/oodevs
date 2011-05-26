@@ -86,7 +86,6 @@ ObjectMagicOrdersInterface.cpp \
 ObjectPanel.cpp \
 ObjectPrototype.cpp \
 ObjectsLayer.cpp \
-OrbatAttributesDialog.cpp \
 OrbatToolbar.cpp \
 PopulationChangeAffinitiesDialog.cpp \
 PopulationChangeHealthStateDialog.cpp \
@@ -104,7 +103,6 @@ ScorePanel.cpp \
 StatisticsWidget.cpp \
 StatusBar.cpp \
 SupplyConsignsWidget.cpp \
-SupplyQuotasListView.cpp \
 SupplyStocksListView.cpp \
 SupplyTransportersListView.cpp \
 TacticalListView.cpp \

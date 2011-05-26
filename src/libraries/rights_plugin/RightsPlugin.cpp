@@ -192,14 +192,13 @@ void RightsPlugin::OnReceiveProfileDestructionRequest( ClientPublisher_ABC& clie
 // Name: RightsPlugin::OnReceiveConnecedProfilesRequest
 // Created: AHC 2011-05-20
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveConnectedProfilesRequest( ClientPublisher_ABC& client, int context, const sword::ConnectedProfilesRequest& message )
+void RightsPlugin::OnReceiveConnectedProfilesRequest( ClientPublisher_ABC& client, int context, const sword::ConnectedProfilesRequest& /*message*/ )
 {
     authentication::ConnectedProfileList response;
     for( T_Profiles::const_iterator it = authenticated_.begin(); it != authenticated_.end(); ++it )
         it->second->Send( *response().add_elem() );
     response.Send( client, context );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RightsPlugin::IsAuthenticated
