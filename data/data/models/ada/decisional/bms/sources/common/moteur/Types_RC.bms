@@ -385,7 +385,8 @@ eRC_AgressionImpossible = 366
 eRC_NoLogisticSuperior = 367
 eRC_CrossingSiteNotRecon = 368
 eRC_InvalidObject = 369
-eNbr = 370
+eRC_TerroristNeutralized = 370
+eNbr = 371
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : float
 ]]--[[// Parametre : T_Pion

@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeAgentFunctions.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
@@ -77,7 +78,7 @@ bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& caller
 // Name: DEC_KnowledgeAgentFunctions::IsInCrowd
 // Created: DDA 2011-05-13
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeAgentFunctions::IsInCrowd( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+bool DEC_KnowledgeAgentFunctions::IsInCrowd( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return false;
@@ -421,4 +422,15 @@ std::string DEC_KnowledgeAgentFunctions::GetMilPionType( boost::shared_ptr< DEC_
 boost::shared_ptr< MIL_Mission_ABC > DEC_KnowledgeAgentFunctions::GetMission( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
 {
     return pKnowledge->GetAgentKnown().GetDecision().GetMission();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::NeutralizeAgent
+// Created: LMT 2011-05-24
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeAgentFunctions::NeutralizeAgent( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    PHY_RolePion_Composantes* role = pKnowledge->GetAgentKnown().RetrieveRole< PHY_RolePion_Composantes >();
+    if( role )
+        role->DestroyAllComposantes();
 }

@@ -469,8 +469,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::CanBeIlluminate, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceAgent_PeutIlluminer" ] =
         boost::function< bool() >( boost::bind( &DEC_KnowledgeAgentFunctions::CanIlluminate, boost::cref( GetPion() ) ) );
-    brain[ "DEC_ConnaissanceAgent_EstDansFoule" ] =
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsInCrowd, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_ConnaissanceAgent_EstDansFoule" ] = &DEC_KnowledgeAgentFunctions::IsInCrowd;
+    brain[ "DEC_ConnaissanceAgent_Neutraliser" ]= DEC_KnowledgeAgentFunctions::NeutralizeAgent;
   
     // Object knowledges accessors
     brain[ "DEC_ConnaissanceObjet_EstUnEnnemi" ] =

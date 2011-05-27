@@ -36,7 +36,7 @@ public:
     static bool  IsMoving          ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsPerceivingAgent ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  IsInDetectionCone ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, const MT_Vector2D* direction, double angle );
-    static bool  IsInCrowd         ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static bool  IsInCrowd         ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool  KillOfficers      ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
     static int   GetMaxPerceptionLevelForKnowledgeGroup ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
@@ -68,6 +68,7 @@ public:
     static bool IsRefugee                               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static std::string GetMilPionType                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static boost::shared_ptr< MIL_Mission_ABC > GetMission( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void NeutralizeAgent( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     //@}
 };
 

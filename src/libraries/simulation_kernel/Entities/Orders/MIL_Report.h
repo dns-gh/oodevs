@@ -482,6 +482,7 @@ public:
         eRC_ZoneConfined,
         eRC_ArrivedOnConfinedZone,
         eRC_PasDeDroneDisponible,
+        eRC_TerroristNeutralized,
         eLast
     };
     //@}
