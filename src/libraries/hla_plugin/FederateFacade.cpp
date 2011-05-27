@@ -11,20 +11,19 @@
 #include "FederateFacade.h"
 #include "AggregateEntityClass.h"
 #include "RtiAmbassadorFactory_ABC.h"
+#include "FederateAmbassadorFactory_ABC.h"
 #include <hla/hla_lib.h>
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
-#include <hla/SimpleTime.h>
-#include <hla/SimpleTimeInterval.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
 
 namespace
 {
-    std::auto_ptr< hla::Federate > CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador, unsigned int lookAhead )
+    std::auto_ptr< hla::Federate > CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador, const FederateAmbassadorFactory_ABC& factory )
     {
-        std::auto_ptr< hla::Federate >federate( new ::hla::Federate( ambassador, xis.attribute< std::string >( "name", "SWORD" ), ::hla::SimpleTime(), ::hla::SimpleTimeInterval( xis.attribute< unsigned int >( "lookahead", lookAhead ) ) ) );
+        std::auto_ptr< hla::Federate > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
         if( !federate->Connect() )
             throw std::runtime_error( "Could not connect to '" + xis.attribute< std::string >( "host", "localhost" ) + ":" + xis.attribute< std::string >( "port", "8989" ) + "'" );
         const std::string name = xis.attribute< std::string >( "federation", "Federation" );
@@ -75,11 +74,11 @@ private:
 // Name: FederateFacade constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-FederateFacade::FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& factory, unsigned int lookAhead )
+FederateFacade::FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory )
     : timeFactory_    ( new ::hla::SimpleTimeFactory() )
     , intervalFactory_( new ::hla::SimpleTimeIntervalFactory() )
-    , ambassador_     ( factory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
-    , federate_       ( CreateFederate( xis, *ambassador_, lookAhead ) )
+    , ambassador_     ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
+    , federate_       ( CreateFederate( xis, *ambassador_, federateFactory ) )
     , destructor_     ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
     , agentClass_     ( new AggregateEntityClass( *federate_, subject ) )
 {

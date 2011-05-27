@@ -32,6 +32,7 @@ namespace hla
     class AggregateEntityClass;
     class AgentSubject_ABC;
     class RtiAmbassadorFactory_ABC;
+    class FederateAmbassadorFactory_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -44,7 +45,7 @@ class FederateFacade : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& factory, unsigned int lookAhead );
+             FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory );
     virtual ~FederateFacade();
     //@}
 

@@ -36,6 +36,7 @@ namespace hla
 {
     class FederateFacade;
     class RtiAmbassadorFactory_ABC;
+    class FederateAmbassadorFactory_ABC;
     class AgentSubject_ABC;
 
 // =============================================================================
@@ -65,8 +66,10 @@ private:
     //! @name Member data
     //@{
     dispatcher::Logger_ABC& logger_;
-    std::auto_ptr< RtiAmbassadorFactory_ABC > pFactory_;
-    std::auto_ptr< RtiAmbassadorFactory_ABC > pDebugFactory_;
+    std::auto_ptr< RtiAmbassadorFactory_ABC > pRtiFactory_;
+    std::auto_ptr< RtiAmbassadorFactory_ABC > pDebugRtiFactory_;
+    std::auto_ptr< FederateAmbassadorFactory_ABC > pFederateFactory_;
+    std::auto_ptr< FederateAmbassadorFactory_ABC > pDebugFederateFactory_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pResolver_;
     std::auto_ptr< AgentSubject_ABC > pSubject_;
     std::auto_ptr< FederateFacade > federate_;

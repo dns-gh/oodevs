@@ -13,6 +13,8 @@
 #include "FederateFacade.h"
 #include "RtiAmbassadorFactory.h"
 #include "DebugRtiAmbassadorFactory.h"
+#include "FederateAmbassadorFactory.h"
+#include "DebugFederateAmbassadorFactory.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
 #include "rpr/EntityTypeResolver.h"
@@ -40,12 +42,14 @@ namespace
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger )
-    : logger_       ( logger )
-    , pFactory_     ( new RtiAmbassadorFactory() )
-    , pDebugFactory_( new DebugRtiAmbassadorFactory( *pFactory_, logger ) )
-    , pResolver_    ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "dis", "dis.xml" ) ) ) )
-    , pSubject_     ( new AgentController( model, *pResolver_ ) )
-    , federate_     ( new FederateFacade( xis, *pSubject_, xis.attribute< bool >( "debug", false ) ? *pDebugFactory_ : *pFactory_, ReadTimeStep( config.GetSessionFile() ) ) )
+    : logger_               ( logger )
+    , pRtiFactory_          ( new RtiAmbassadorFactory() )
+    , pDebugRtiFactory_     ( new DebugRtiAmbassadorFactory( *pRtiFactory_, logger ) )
+    , pFederateFactory_     ( new FederateAmbassadorFactory( ReadTimeStep( config.GetSessionFile() ) ) )
+    , pDebugFederateFactory_( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger ) )
+    , pResolver_            ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "dis", "dis.xml" ) ) ) )
+    , pSubject_             ( new AgentController( model, *pResolver_ ) )
+    , federate_             ( new FederateFacade( xis, *pSubject_, xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_, xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_ ) )
 {
     // NOTHING
 }

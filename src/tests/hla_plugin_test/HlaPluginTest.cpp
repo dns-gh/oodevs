@@ -13,10 +13,12 @@
 #include "rpr/EntityType.h"
 #include "MockAgentSubject.h"
 #include "MockRtiAmbassadorFactory.h"
+#include "MockFederateAmbassadorFactory.h"
 #include "MockAgent.h"
 #include "MockRtiAmbassador.h" // $$$$ _RC_ SLI 2011-01-11: Don't mock type you don't own
 #include <hla/HLA_lib.h>
 #include <hla/SimpleTime.h>
+#include <hla/SimpleTimeInterval.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -35,12 +37,14 @@ BOOST_AUTO_TEST_CASE( hla_plugin_initialization_declares_publications )
     xml::xistringstream xis( "<root name='name' federation='federation'/>" );
     xis >> xml::start( "root" );
     MockAgentSubject subject;
-    MockRtiAmbassadorFactory factory;
+    MockRtiAmbassadorFactory rtiFactory;
+    MockFederateAmbassadorFactory federateFactory;
     hla::MockRtiAmbassador* rtiAmbassador( new hla::MockRtiAmbassador() );
     hla::FederateAmbassador_ABC* federateAmbassador = 0;
     hla::SimpleTime target;
     mock::sequence s;
-    MOCK_EXPECT( factory, CreateAmbassador ).once().in( s ).with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "localhost", "8989" ).returns( std::auto_ptr< hla::RtiAmbassador_ABC >( rtiAmbassador ) );
+    MOCK_EXPECT( rtiFactory, CreateAmbassador ).once().in( s ).with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "localhost", "8989" ).returns( std::auto_ptr< hla::RtiAmbassador_ABC >( rtiAmbassador ) );
+    MOCK_EXPECT( federateFactory, Create ).once().in( s ).with( mock::any, "name", -1 ).returns( std::auto_ptr< hla::Federate >( new hla::Federate( *rtiAmbassador, "name", ::hla::SimpleTime(), ::hla::SimpleTimeInterval() ) ) );
     MOCK_EXPECT( rtiAmbassador, Connect ).once().in( s ).with( mock::retrieve( federateAmbassador ) ).returns( true );
     MOCK_EXPECT( rtiAmbassador, Join ).once().in( s ).with( "name", "federation", mock::retrieve( federateAmbassador ) ).returns( true );
     MOCK_EXPECT( rtiAmbassador, Tick ).calls( boost::bind( &hla::FederateAmbassador_ABC::TimeAdvanceGranted, boost::ref( federateAmbassador ), boost::ref( target ) ) );;
@@ -48,11 +52,14 @@ BOOST_AUTO_TEST_CASE( hla_plugin_initialization_declares_publications )
     MOCK_EXPECT( rtiAmbassador, EnableTimeRegulation ).once().in( s ).calls( boost::bind( &hla::FederateAmbassador_ABC::TimeRegulationEnabled, boost::ref( federateAmbassador ), boost::ref( target ) ) );
     MOCK_EXPECT( rtiAmbassador, PublishClass ).once().in( s ).with( "BaseEntity.AggregateEntity", mock::any );
     MOCK_EXPECT( subject, Register ).once().in( s );
-    FederateFacade facade( xis, subject, factory, 0u );
+    FederateFacade facade( xis, subject, rtiFactory, federateFactory );
     MOCK_EXPECT( subject, Unregister ).once().in( s );
     MOCK_EXPECT( rtiAmbassador, Resign ).once().in( s );
     MOCK_EXPECT( rtiAmbassador, Disconnect ).once().in( s );
 }
+
+// test create or join
+// test options (time management)
 
 namespace
 {
@@ -65,7 +72,8 @@ namespace
             , federateAmbassador( 0 )
             , listener          ( 0 )
         {
-            MOCK_EXPECT( factory, CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "localhost", "8989" ).returns( std::auto_ptr< hla::RtiAmbassador_ABC >( rtiAmbassador ) );
+            MOCK_EXPECT( rtiFactory, CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "localhost", "8989" ).returns( std::auto_ptr< hla::RtiAmbassador_ABC >( rtiAmbassador ) );
+            MOCK_EXPECT( federateFactory, Create ).once().returns( std::auto_ptr< hla::Federate >( new hla::Federate( *rtiAmbassador, "name", ::hla::SimpleTime(), ::hla::SimpleTimeInterval() ) ) );
             MOCK_EXPECT( rtiAmbassador, Connect ).once().with( mock::retrieve( federateAmbassador ) ).returns( true );
             MOCK_EXPECT( rtiAmbassador, Join ).once().with( "name", "federation", mock::retrieve( federateAmbassador ) ).returns( true );
             MOCK_EXPECT( rtiAmbassador, Tick ).calls( boost::bind( &hla::FederateAmbassador_ABC::TimeAdvanceGranted, boost::ref( federateAmbassador ), boost::ref( target ) ) );;
@@ -79,7 +87,8 @@ namespace
         }
         xml::xistringstream xis;
         MockAgentSubject subject;
-        MockRtiAmbassadorFactory factory;
+        MockRtiAmbassadorFactory rtiFactory;
+        MockFederateAmbassadorFactory federateFactory;
         hla::MockRtiAmbassador* rtiAmbassador;
         hla::FederateAmbassador_ABC* federateAmbassador;
         hla::SimpleTime target;
@@ -90,7 +99,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( hla_plugin_publishes_agent_instance, Fixture )
 {
     MockAgent agent;
-    FederateFacade facade( xis >> xml::start( "root" ), subject, factory, 0u );
+    FederateFacade facade( xis >> xml::start( "root" ), subject, rtiFactory, federateFactory );
     BOOST_REQUIRE( listener );
     mock::sequence s;
     MOCK_EXPECT( agent, Register ).once().in( s );
