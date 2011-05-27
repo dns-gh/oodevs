@@ -85,10 +85,6 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
     pLevel_ = PHY_NatureLevel::Find( level );
     if( !pLevel_ )
         throw std::runtime_error( "Unknown level" );
-    if( pParent_ )
-        pParent_->RegisterFormation( *this );
-    else
-        pArmy_->RegisterFormation( *this );
     if( logLevelStr.empty() )
         logLevelStr = PHY_LogisticLevel::none_.GetName();
     const PHY_LogisticLevel* logLevel = PHY_LogisticLevel::Find( logLevelStr );
@@ -100,6 +96,10 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>(*pBrainLogistic_.get() ) );
         RegisterAction( pLogisticAction_ );
     }
+    if( pParent_ )
+        pParent_->RegisterFormation( *this );
+    else
+        pArmy_->RegisterFormation( *this );
 }
 
 // -----------------------------------------------------------------------------
