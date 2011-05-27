@@ -486,7 +486,6 @@
         <mission name="GENIE Appui Mobilite"/>
         <mission name="GENIE Contourner obstacle"/>
         <mission name="GENIE Degager Obstacles"/>
-        <mission name="GENIE Detruire point du reseau"/>
         <mission name="GENIE Depolluer zone"/>
         <mission name="GENIE OuvrirItineraire"/>
         <mission name="GENIE Realiser Camps"/>
@@ -496,6 +495,8 @@
         <mission name="GENIE Reprendre Travaux"/>
         <mission name="GENIE Retablir Itineraire"/>
         <mission name="Animer"/>
+        <mission name="Detruire point du reseau"/>
+        <mission name="Reparer point du reseau"/>
         <mission name="MELEE S'Infiltrer"/>
       </missions>
       <fragorders>
@@ -537,6 +538,8 @@
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
         <mission name="GENIE Realiser Camps"/>
+        <mission name="Detruire point du reseau"/>
+        <mission name="Reparer point du reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -609,7 +612,8 @@
         <mission name="ASY Commettre un Attentat Suicide"/>
         <mission name="ASY Se Dissimuler"/>
         <mission name="ASY Prendre un Otage"/>
-        <mission name="GENIE Detruire point du reseau"/>
+        <mission name="Detruire point du reseau"/>
+        <mission name="Reparer point du reseau"/>
         <mission name="ASY S'Infiltrer"/>
       </missions>
       <fragorders>
@@ -724,7 +728,8 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="GENIE Detruire point du reseau"/>
+        <mission name="Detruire point du reseau"/>
+        <mission name="Reparer point du reseau"/>
         <mission name="ASY Prendre un Otage"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Harceler"/>
@@ -7792,7 +7797,8 @@
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="GENIE Detruire point du reseau"/>
+        <mission name="Detruire point du reseau"/>
+        <mission name="Reparer point du reseau"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -7821,6 +7827,8 @@
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="Detruire point du reseau"/>
+        <mission name="Reparer point du reseau"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
         <mission name="LOGISTIQUE Se Deployer">
           <fragorder name="Modifier Priorites Blesses"/>
@@ -11677,7 +11685,8 @@
         <mission name="COMMUNES Orienter Refugies"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
-        <mission name="GENIE Detruire point du reseau"/>
+        <mission name="Detruire point du reseau"/>
+        <mission name="Reparer point du reseau"/>
         <mission name="MELEE Detruire"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Surveiller"/>
@@ -11750,4 +11759,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3300812474" -->
+<!-- signature="1767082491" -->
