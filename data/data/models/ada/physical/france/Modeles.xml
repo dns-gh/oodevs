@@ -492,6 +492,7 @@
         <mission name="GENIE Realiser Camps"/>
         <mission name="GENIE Realiser Travaux"/>
         <mission name="GENIE Reconnaitre Site de franchissement"/>
+        <mission name="GENIE Reparer bloc urbain"/>
         <mission name="GENIE Reprendre Travaux"/>
         <mission name="GENIE Retablir Itineraire"/>
         <mission name="Animer"/>
@@ -11749,4 +11750,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2107561065" -->
+<!-- signature="3300812474" -->
