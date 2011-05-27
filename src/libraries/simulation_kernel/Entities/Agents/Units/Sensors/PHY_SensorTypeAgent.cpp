@@ -522,6 +522,9 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
 
             if( !pGeom || !pPhysical || !pPhysical->GetArchitecture() )
                 continue;
+            const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() );
+            if( !materialCompositionType )
+                continue;
 
             const geometry::Polygon2f& footPrint = pGeom->Geometry();
             std::vector< geometry::Point2f > intersectPoints = footPrint.Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
@@ -542,7 +545,7 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
                 else
                     intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
 
-                double rDistanceModificator = urbanBlockFactors_[ PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() )->GetId() ];
+                double rDistanceModificator = urbanBlockFactors_[ materialCompositionType->GetId() ];
                 double occupationFactor = std::sqrt( pPhysical->GetArchitecture()->GetOccupation() );
                 if( occupationFactor == 1. && rDistanceModificator <= epsilon )
                     rVisionNRJ = -1 ;
@@ -849,7 +852,8 @@ double PHY_SensorTypeAgent::GetUrbanBlockFactor( const urban::TerrainObject_ABC&
 {
     const urban::PhysicalAttribute* pPhysical = block.Retrieve< urban::PhysicalAttribute >();
     if( pPhysical && pPhysical->GetArchitecture() )
-        return urbanBlockFactors_[ PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() )->GetId() ];
+        if( const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() ) )
+            return urbanBlockFactors_[ materialCompositionType->GetId() ];
     return 1.f;
 }
 

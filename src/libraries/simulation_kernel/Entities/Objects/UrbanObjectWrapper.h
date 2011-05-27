@@ -81,7 +81,8 @@ public:
     const std::string& GetName() const;
     bool HasChild() const;
     float ComputeComplexity() const;
-    const urban::Architecture* GetArchitecture() const;
+    float GetOccupation() const;
+    float GetTrafficability() const;
     const urban::TerrainObject_ABC& GetObject();  // $$$$ _RC_ LGY 2011-02-18: à supprimer
     const urban::TerrainObject_ABC& GetObject() const;  // $$$$ _RC_ LGY 2011-02-18: à supprimer
     void Accept( urban::MotivationsVisitor_ABC& visitor ) const;

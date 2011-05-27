@@ -101,9 +101,10 @@ void UrbanObjectWrapper::InitializeAttributes()
                 capacity->Register( *this );
             }
         }
-    if( const urban::Architecture* architecture = GetArchitecture() )
-        if( const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find( architecture->GetMaterial() ) )
-            GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
+    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
+        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
+            if( const PHY_MaterialCompositionType* material = PHY_MaterialCompositionType::Find( architecture->GetMaterial() ) )
+                GetAttribute< MaterialAttribute >() = MaterialAttribute( *material );
 }
 
 // -----------------------------------------------------------------------------
@@ -359,14 +360,27 @@ float UrbanObjectWrapper::ComputeComplexity() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::GetArchitecture
-// Created: JSR 2011-02-18
+// Name: UrbanObjectWrapper::GetOccupation
+// Created: JSR 2011-05-26
 // -----------------------------------------------------------------------------
-const urban::Architecture* UrbanObjectWrapper::GetArchitecture() const
+float UrbanObjectWrapper::GetOccupation() const
 {
     if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
-        return pPhysical->GetArchitecture();
+        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
+            return architecture->GetOccupation();
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetTrafficability
+// Created: JSR 2011-05-26
+// -----------------------------------------------------------------------------
+float UrbanObjectWrapper::GetTrafficability() const
+{
+    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
+        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
+            return architecture->GetTrafficability();
+    return std::numeric_limits< float >::max();
 }
 
 // -----------------------------------------------------------------------------

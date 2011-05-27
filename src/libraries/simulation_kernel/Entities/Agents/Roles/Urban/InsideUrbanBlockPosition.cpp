@@ -11,6 +11,7 @@
 #include "InsideUrbanBlockPosition.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Entities/Objects/MaterialAttribute.h"
 #include "AlgorithmsFactories.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "UrbanLocationComputerFactory_ABC.h"
@@ -18,7 +19,6 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Tools/MIL_Geometry.h"
 #include "MT_Tools/MT_Ellipse.h"
-#include <urban/Architecture.h>
 #include <urban/GeometryAttribute.h>
 #include <urban/TerrainObject_ABC.h>
 #pragma warning( push, 0 )
@@ -149,10 +149,7 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
 // -----------------------------------------------------------------------------
 double InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
 {
-    if( const urban::Architecture* architecture = urbanObject_.GetArchitecture() )
-    {
-        unsigned int materialID = PHY_MaterialCompositionType::Find( architecture->GetMaterial() )->GetId();
-        return ( 1 - dotationCategory.GetUrbanAttritionModifer( materialID ) ) * architecture->GetOccupation();
-    }
+    if( const MaterialAttribute* materialAttribute = urbanObject_.RetrieveAttribute< MaterialAttribute >() )
+        return ( 1 - dotationCategory.GetUrbanAttritionModifer( materialAttribute->GetMaterial().GetId() ) ) * urbanObject_.GetOccupation();
     return 0.;
 }

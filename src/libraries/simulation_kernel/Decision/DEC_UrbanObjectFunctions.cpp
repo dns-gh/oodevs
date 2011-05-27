@@ -27,7 +27,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include <urban/Architecture.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_UrbanObjectFunctions::GetCurrentPerceptionLevel
@@ -94,8 +93,11 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_UrbanObjectFunctions::GetBou
 float DEC_UrbanObjectFunctions::GetPathfindCost( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject )
 {
     if( pUrbanObject )
-        if( const urban::Architecture* architecture = pUrbanObject->GetArchitecture() )
-            return architecture->GetPathfindCost( static_cast< float >( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() ) );
+    {
+        if( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() > pUrbanObject->GetTrafficability() )
+            return -1.f;
+        return pUrbanObject->GetOccupation();
+    }
     return 0.f;
 }
 

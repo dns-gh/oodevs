@@ -24,6 +24,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Effects/MIL_Effect_KillOfficers.h"
 #include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Objects/MaterialAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_Army.h"
@@ -34,7 +35,6 @@
 #include "MT_Tools/MT_ScipioException.h"
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_IDManager.h"
-#include <urban/Architecture.h>
 #include <boost/serialization/split_free.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Agent )
@@ -662,15 +662,12 @@ const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() c
 double DEC_Knowledge_Agent::GetMaterialComposantesAttritionLevel( UrbanObjectWrapper* pUrbanBlock ) const
 {
     if( pUrbanBlock )
-        if( const urban::Architecture* architecture = pUrbanBlock->GetArchitecture() )
+        if( const MaterialAttribute* attribute = pUrbanBlock->RetrieveAttribute< MaterialAttribute >() )
         {
-            const PHY_RolePion_Composantes& role = GetAgentKnown().GetRole< PHY_RolePion_Composantes >();
-            unsigned materialID = PHY_MaterialCompositionType::Find( architecture->GetMaterial() )->GetId();
-
             if( GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_ )
-                return role.GetAttritionIndexComposante( materialID );
+                return GetAgentKnown().GetRole< PHY_RolePion_Composantes >().GetAttritionIndexComposante( attribute->GetMaterial().GetId() );
             else if( ( GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_ ) || ( GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_ ) )
-                return PHY_DotationCategory::FindUrbanProtection( materialID );
+                return PHY_DotationCategory::FindUrbanProtection( attribute->GetMaterial().GetId() );
             else
                 return -1;
         }

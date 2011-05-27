@@ -14,7 +14,6 @@
 #include "PHY_RoleInterface_UrbanLocation.h"
 #include "ObjectCollisionNotificationHandler_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "MIL_Random.h"
 
 namespace posture
 {
@@ -73,21 +72,14 @@ public:
     //@{
     virtual void NotifyMovingInsideObject( MIL_Object_ABC& urbanObject );
     virtual void NotifyMovingOutsideObject( MIL_Object_ABC& urbanObject );
-    virtual void NotifyPutInsideObject( MIL_Object_ABC& /*object*/ ) {};
-    virtual void NotifyPutOutsideObject( MIL_Object_ABC& /*object*/ ) {};
+    virtual void NotifyPutInsideObject( MIL_Object_ABC& /*object*/ ) {}
+    virtual void NotifyPutOutsideObject( MIL_Object_ABC& /*object*/ ) {}
     //@}
 
     //! @name Accessors
     //@{
     virtual const UrbanObjectWrapper* GetCurrentUrbanBlock() const;
     virtual bool IsInCity() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PHY_RolePion_UrbanLocation( const PHY_RolePion_UrbanLocation& );            //!< Copy constructor
-    PHY_RolePion_UrbanLocation& operator=( const PHY_RolePion_UrbanLocation& ); //!< Assignment operator
     //@}
 
 private:

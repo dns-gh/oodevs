@@ -344,7 +344,6 @@ namespace
             if( pPhysical && pPhysical->GetArchitecture() && ( !PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() ) || !PHY_RoofShapeType::Find( pPhysical->GetArchitecture()->GetRoofShape() ) ) )
             {
                 MT_LOG_INFO_MSG( MT_FormatString( "The architecture of the urban bloc '%d' ('%s') is not consistent with the architecture described in the urban file", object.GetId(), object.GetName().c_str() ) );
-                return;
             }
             manager_.CreateUrbanObject( object );
         }

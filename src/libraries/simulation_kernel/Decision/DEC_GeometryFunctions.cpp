@@ -34,7 +34,6 @@
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Random.h"
-#include <urban/Architecture.h>
 #include <urban/GeometryAttribute.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
@@ -1009,9 +1008,8 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
         if( object )
         {
             const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
-            const urban::Architecture* architecture = terrainObject.GetArchitecture();
             const double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
-            if( architecture && architecture->GetTrafficability() <= myWeight )
+            if( terrainObject.GetTrafficability() <= myWeight )
             {
                 const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
                 const T_PointVector& points = terrainObject.GetLocalisation().GetPoints();
@@ -1058,8 +1056,7 @@ bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, d
     if( const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
     {
         const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
-        if( const urban::Architecture* architecture = terrainObject.GetArchitecture() )
-            return architecture->GetTrafficability() > weight;
+            return terrainObject.GetTrafficability() > weight;
     }
     return true;
 }
@@ -1082,8 +1079,7 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion,
     if( const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
     {
         const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
-        if( const urban::Architecture* architecture = terrainObject.GetArchitecture() )
-            return architecture->GetTrafficability() >= pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( loadedWeight );
+            return terrainObject.GetTrafficability() >= pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( loadedWeight );
     }
     return true;
 }
@@ -1095,7 +1091,7 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion,
 bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
 {
     std::vector< const urban::TerrainObject_ABC* > cities = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetCities();
-    geometry::Point2f geoPoint( point.rX_, point.rY_ );
+    geometry::Point2f geoPoint( static_cast< float >( point.rX_ ), static_cast< float >( point.rY_ ) );
     for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
     {
         const urban::GeometryAttribute* geom = ( *it )->Retrieve< urban::GeometryAttribute >();
@@ -1753,7 +1749,7 @@ std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > > DEC_GeometryFunct
             const MIL_LimaOrder::T_LimaFunctions& functions = it->GetFunctions();
             for( MIL_LimaOrder::CIT_LimaFunctions fit = functions.begin(); fit != functions.end(); ++fit )
             {
-                if( (*fit)->GetID() == limaType )
+                if( static_cast< int >( ( *fit )->GetID() ) == limaType )
                 {
                     std::vector< MT_Vector2D > nextPoints;
                     // Divide lima inside fuseau in divider sections and pick one point per section.
