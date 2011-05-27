@@ -261,7 +261,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_, model.teams_.InfiniteDotations() );
     QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
     QDialog* exportDialog = new ExportDialog( this, config_ );
-    ScoreDialog* scoreDialog = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_, config_ );
+    pScoreDialog_ = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_, config_ );
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     fileToolBar_ = new FileToolbar( this, controllers );
     new DisplayToolbar( this, controllers );
@@ -269,7 +269,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
-    menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *exportDialog, *scoreDialog, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
+    menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *exportDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
@@ -401,6 +401,7 @@ void MainWindow::DoLoad( QString filename )
 
     config_.LoadExercise( filename.ascii() );
     pCreationPanel_->Load( config_ );
+    pScoreDialog_->Load();
     if( Load() )
     {
         SetWindowTitle( true );

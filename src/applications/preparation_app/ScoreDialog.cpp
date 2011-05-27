@@ -46,11 +46,11 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui
     grid->setRowStretch( 0, 4 );
     {
         QGroupBox* box = new QHGroupBox( tr( "Scores" ), this );
-        ScoreList* scores = new ScoreList( box, controllers, factory, layer, model, staticModel, config );
+        scores_ = new ScoreList( box, controllers, factory, layer, model, staticModel, config );
         grid->addMultiCellWidget( box, 0, 0, 0, 2 );
-        connect( scores, SIGNAL( ScoreDeleted( const Score_ABC& ) ), SLOT( OnDeleteScore( const Score_ABC& ) ) );
-        connect( scores, SIGNAL( Show() ), SLOT( show() ) );
-        connect( scores, SIGNAL( Hide() ), SLOT( hide() ) );
+        connect( scores_, SIGNAL( ScoreDeleted( const Score_ABC& ) ), SLOT( OnDeleteScore( const Score_ABC& ) ) );
+        connect( scores_, SIGNAL( Show() ), SLOT( show() ) );
+        connect( scores_, SIGNAL( Hide() ), SLOT( hide() ) );
     }
     {
         QGroupBox* box = new QHGroupBox( tr( "Create new score" ), this );
@@ -114,4 +114,13 @@ void ScoreDialog::OnDeleteScore( const Score_ABC& score )
 QSize ScoreDialog::sizeHint() const
 {
     return QSize( 400, 400 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreDialog::Load
+// Created: ABR 2011-05-27
+// -----------------------------------------------------------------------------
+void ScoreDialog::Load()
+{
+    scores_->Load();
 }

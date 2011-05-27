@@ -55,6 +55,7 @@ class Menu;
 class Model;
 class ModelBuilder;
 class ObjectCreationPanel;
+class ScoreDialog;
 class StaticModel;
 
 // =============================================================================
@@ -153,6 +154,7 @@ private:
     bool needsSaving_;
     QString savedState_;
     CreationPanels* pCreationPanel_;
+    ScoreDialog* pScoreDialog_;
     //@}
 };
 

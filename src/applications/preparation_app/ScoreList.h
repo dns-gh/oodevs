@@ -58,6 +58,11 @@ public:
     virtual ~ScoreList();
     //@}
 
+    //! @name Operations
+    //@{
+    void Load();
+    //@}
+
 signals:
     //! @name Signals
     //@{
@@ -99,6 +104,7 @@ private:
     gui::ListDisplayer< ScoreList >* scores_;
     ScoreEditor* editor_;
     const tools::ExerciseConfig& config_;
+    QHBox* generatorBox_;
     //@}
 };
 

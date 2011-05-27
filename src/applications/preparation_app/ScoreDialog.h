@@ -35,6 +35,7 @@ namespace tools
 }
 
 class Score_ABC;
+class ScoreList;
 class ScoresModel;
 class StaticModel;
 
@@ -56,6 +57,11 @@ public:
     virtual ~ScoreDialog();
     //@}
 
+    //! @name Operations
+    //@{
+    void Load();
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -74,6 +80,7 @@ private:
     //! @name Member data
     //@{
     ScoresModel& model_;
+    ScoreList* scores_;
     QLineEdit* editor_;
     QButton* createButton_;
     //@}

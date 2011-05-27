@@ -42,11 +42,11 @@ ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::It
         connect( editButton, SIGNAL( clicked() ), SLOT( OnEdit() ) );
         connect( deleteButton, SIGNAL( clicked() ), SLOT( OnDelete() ) );
     }
-    if( bfs::exists( config_.GetOptionalPhysicalChildFile( "scores" ) ) )
     {
-        QHBox* box = new QHBox( this );
-        QButton* defaultIndicators = new QPushButton( tr( "Generate default indicators" ), box );
+        generatorBox_ = new QHBox( this );
+        QButton* defaultIndicators = new QPushButton( tr( "Generate default indicators" ), generatorBox_ );
         connect( defaultIndicators, SIGNAL( clicked() ), SLOT( OnGenerate() ) );
+        generatorBox_->hide();
     }
     connect( scores_, SIGNAL( doubleClicked( QListViewItem*, const QPoint&, int ) ), SLOT( OnEdit() ) );
     connect( editor_, SIGNAL( Show() ), SIGNAL( Hide() ) );
@@ -142,4 +142,14 @@ Score_ABC* ScoreList::FindSelected() const
     if( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( scores_->selectedItem() ) )
         return item->GetValue< Score_ABC >();
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreList::Load
+// Created: ABR 2011-05-27
+// -----------------------------------------------------------------------------
+void ScoreList::Load()
+{
+    if( bfs::exists( config_.GetOptionalPhysicalChildFile( "scores" ) ) )
+        generatorBox_->show();
 }
