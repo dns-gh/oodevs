@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<app6>
+    <symbols base="symbols/s*gpu"/>
+    <levels base="levels/"/>
+    <automats base="headquarter"/>
+    <infrastructures base="infrastructures/"/>
+</app6>
+<!-- signature="3050362776" -->
