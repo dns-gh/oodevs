@@ -2,7 +2,7 @@
 <populations model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.1/physical/Crowds.xsd">
   <reloading-time-effect modifier="1" population-density="0.05"/>
   <time-between-nbc-applications delay="1h"/>
-  <population armed-individuals="0" concentration-density="0.002" decisional-model="Masalife.Foule" id="0" moving-base-density="0.3" moving-speed="6" name="Population standard BM">
+  <population armed-individuals="0" concentration-density="0.1" decisional-model="Masalife.Foule" id="0" moving-base-density="0.5" moving-speed="6" name="Population standard BM">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
         <unit max-speed="5" population-density="0.3" unit-size="Gros"/>
@@ -163,7 +163,7 @@
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
   </population>
-  <population armed-individuals="0.02" concentration-density="0.05" decisional-model="Population" id="1" moving-base-density="0.5" moving-speed="6" name="Population standard">
+  <population armed-individuals="0.02" concentration-density="0.1" decisional-model="Population" id="1" moving-base-density="0.5" moving-speed="6" name="Population standard">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
         <unit max-speed="30" population-density="0.5" unit-size="Gros"/>
@@ -325,4 +325,4 @@
     <repartition children="0" female="0.5" male="0.5"/>
   </population>
 </populations>
-<!-- signature="2071326345" -->
+<!-- signature="2861803534" -->
