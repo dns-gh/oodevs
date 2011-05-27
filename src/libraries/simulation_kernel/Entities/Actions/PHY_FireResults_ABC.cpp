@@ -68,6 +68,7 @@ void PHY_FireResults_ABC::SendDamagesPion( const MIL_Agent_ABC& firer, unsigned 
     {
         client::UnitDamagedByUnitFire msg;
         msg().mutable_unit()->set_id( it->first->GetID() );
+        msg().mutable_party()->set_id( it->first->GetArmy().GetID() );
         msg().mutable_firer()->set_id( firer.GetID() );
         msg().mutable_fire()->set_id( fireId );
         msg().set_direct_fire( direct );
@@ -79,6 +80,7 @@ void PHY_FireResults_ABC::SendDamagesPion( const MIL_Agent_ABC& firer, unsigned 
     {
         client::CrowdDamagedByUnitFire msg;
         msg().mutable_crowd()->set_id( it->first->GetID() );
+        msg().mutable_party()->set_id( it->first->GetArmy().GetID() );
         msg().mutable_firer()->set_id( firer.GetID() );
         msg().mutable_fire()->set_id( fireId );
         msg().set_direct_fire( direct );
@@ -98,6 +100,7 @@ void PHY_FireResults_ABC::SendDamagesCrowd( const MIL_Population& firer, unsigne
     {
         client::UnitDamagedByCrowdFire msg;
         msg().mutable_unit()->set_id( it->first->GetID() );
+        msg().mutable_party()->set_id( it->first->GetArmy().GetID() );
         msg().mutable_firer()->set_id( firer.GetID() );
         msg().mutable_fire()->set_id( fireId );
         msg().set_fratricide( firer.GetArmy().IsAFriend( it->first->GetArmy() ) == eTristate_True );

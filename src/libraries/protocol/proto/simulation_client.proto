@@ -1086,34 +1086,37 @@ message Explosion {
 message UnitDamagedByUnitFire
 {
     required UnitId                       unit        = 1; //!< The target unit identifier
-    required UnitId                       firer       = 2; //!< The firer unit identifier
-    required FireId                       fire        = 3; //!< The fire identifier
-    required bool                         direct_fire = 4; //!< Whether the fire is direct or not
-    required bool                         fratricide  = 5; //!< Whether the fire is fratricide or not
-    required SeqOfUnitHumanFireDamage     humans      = 6; //!< The damages to the humans
-    required SeqOfUnitEquipmentFireDamage equipments  = 7; //!< The damages to the equipments
+    required PartyId                      party       = 2; //!< The target party identifier
+    required UnitId                       firer       = 3; //!< The firer unit identifier
+    required FireId                       fire        = 4; //!< The fire identifier
+    required bool                         direct_fire = 5; //!< Whether the fire is direct or not
+    required bool                         fratricide  = 6; //!< Whether the fire is fratricide or not
+    required SeqOfUnitHumanFireDamage     humans      = 7; //!< The damages to the humans
+    required SeqOfUnitEquipmentFireDamage equipments  = 8; //!< The damages to the equipments
 }
 
 message CrowdDamagedByUnitFire
 {
     required CrowdId crowd       = 1; //!< The target crowd identifier
-    required UnitId  firer       = 2; //!< The firer unit identifier
-    required FireId  fire        = 3; //!< The fire identifier
-    required bool    direct_fire = 4; //!< Whether the fire is direct or not
-    required bool    fratricide  = 5; //!< Whether the fire is fratricide or not
-    required int32   dead        = 6; //!< The number of dead persons
-    required int32   wounded     = 7; //!< The number of wounded persons
-    required int32   scattered   = 8; //!< The number of scattered persons
+    required PartyId party       = 2; //!< The target party identifier
+    required UnitId  firer       = 3; //!< The firer unit identifier
+    required FireId  fire        = 4; //!< The fire identifier
+    required bool    direct_fire = 5; //!< Whether the fire is direct or not
+    required bool    fratricide  = 6; //!< Whether the fire is fratricide or not
+    required int32   dead        = 7; //!< The number of dead persons
+    required int32   wounded     = 8; //!< The number of wounded persons
+    required int32   scattered   = 9; //!< The number of scattered persons
 }
 
 message UnitDamagedByCrowdFire
 {
     required UnitId                       unit       = 1; //!< The target unit identifier
-    required CrowdId                      firer      = 2; //!< The firer crowd identifier
-    required FireId                       fire       = 3; //!< The fire identifier
-    required bool                         fratricide = 4; //!< Whether the fire is fratricide or not
-    required SeqOfUnitHumanFireDamage     humans     = 5; //!< The damages to the humans
-    required SeqOfUnitEquipmentFireDamage equipments = 6; //!< The damages to the equipments
+    required PartyId                      party      = 2; //!< The target party identifier
+    required CrowdId                      firer      = 3; //!< The firer crowd identifier
+    required FireId                       fire       = 4; //!< The fire identifier
+    required bool                         fratricide = 5; //!< Whether the fire is fratricide or not
+    required SeqOfUnitHumanFireDamage     humans     = 6; //!< The damages to the humans
+    required SeqOfUnitEquipmentFireDamage equipments = 7; //!< The damages to the equipments
 }
 
 /** @struct StartFireEffect
