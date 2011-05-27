@@ -43,7 +43,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& co
     : logger_       ( logger )
     , pFactory_     ( new RtiAmbassadorFactory() )
     , pDebugFactory_( new DebugRtiAmbassadorFactory( *pFactory_, logger ) )
-    , pResolver_    ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
+    , pResolver_    ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "dis", "dis.xml" ) ) ) )
     , pSubject_     ( new AgentController( model, *pResolver_ ) )
     , federate_     ( new FederateFacade( xis, *pSubject_, xis.attribute< bool >( "debug", false ) ? *pDebugFactory_ : *pFactory_, ReadTimeStep( config.GetSessionFile() ) ) )
 {

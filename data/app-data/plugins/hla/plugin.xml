@@ -86,6 +86,12 @@
                 <description lang="fr" name="Paramètres avancés"><![CDATA[]]></description>
             </descriptions>
             <settings>
+                <setting attribute="@dis" type="string" default="dis.xml">
+                    <descriptions>
+                        <description lang="en" name="DIS"><![CDATA[]]>Entity types mapping.</description>
+                        <description lang="fr" name="DIS"><![CDATA[]]>Matching des types d'entités.</description>
+                    </descriptions>
+                </setting>
                 <setting attribute="@debug" type="boolean" default="false">
                     <descriptions>
                         <description lang="en" name="Debug"><![CDATA[]]>Enable debug informations.</description>

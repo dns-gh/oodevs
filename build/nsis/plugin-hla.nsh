@@ -21,6 +21,7 @@
     ${SetOutPath} "$INSTDIR\applications\plugins"
     ${SetOutPath} "$INSTDIR\applications\plugins\hla"
     ${File} "${RUNDIR}\plugins\hla\" "hla_plugin-${PLATFORM}-mt.dll"
-    ${File} "${RUNDIR}\plugins\hla\" "libFedTime1516e.dll"    
+    ${File} "${RUNDIR}\plugins\hla\" "libFedTime1516e.dll"
+    ${File} "${RUNDIR}\plugins\hla\" "dis.xml"
     ${File} "${RUNDIR}\plugins\hla\" "plugin.xml"
 !macroend
