@@ -548,6 +548,16 @@
             <includepath path="${out.dir}/release/libraries/protocol"/>
         </build-app>
     </target>
+    
+    <target name="application.launcher_test_app" depends="library.protocol,library.frontend" description="build application">
+        <build-app name="launcher_test_app" subsystem="console" depends="qt,boost,xerces,protobuf"
+            libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix},
+                  lib${ant.project.name}_frontend-${platform}-mt,
+                  lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
+                  lib${ant.project.name}_ENT-${platform}-mt@{suffix},
+                  lib${ant.project.name}_MT_Tools-${platform}-mt,
+                  lib${ant.project.name}_tools-${platform}-mt@{suffix}"/>
+    </target>
 
     <!--
     ============================================================================

@@ -44,6 +44,7 @@ public:
     //@{
     bool IsSame( const std::string& endpoint ) const;
     void SetHost( const std::string& endpoint );
+    const std::string& Endpoint() const;
     //@}
 
     //! @name Operations

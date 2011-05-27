@@ -255,3 +255,12 @@ void LauncherClient::Register( boost::shared_ptr< ResponseHandler_ABC > handler 
 {
     responseHandler_->Register( handler );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LauncherClient::Endpoint
+// Created: AHC 2011-05-27
+// -----------------------------------------------------------------------------
+const std::string& LauncherClient::Endpoint() const
+{
+    return publisher_->Endpoint();
+}

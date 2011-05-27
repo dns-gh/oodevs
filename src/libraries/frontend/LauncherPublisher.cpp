@@ -68,3 +68,12 @@ void LauncherPublisher::Send( const sword::LauncherToAdmin& message )
 {
     sender_.Send( endpoint_, message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LauncherPublisher::Endpoint
+// Created: AHC 2011-05-27
+// -----------------------------------------------------------------------------
+const std::string& LauncherPublisher::Endpoint() const
+{
+    return endpoint_;
+}

@@ -51,6 +51,11 @@ public:
 
     //! @name Operations
     //@{
+    const std::string& Endpoint() const;
+    //@}
+
+    //! @name Operations
+    //@{
     void Connect( const std::string& host, unsigned int port, frontend::ConnectionHandler_ABC& handler );
     bool Connected() const;
     void Register( boost::shared_ptr< ResponseHandler_ABC > handler );
