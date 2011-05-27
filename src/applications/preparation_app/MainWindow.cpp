@@ -619,7 +619,7 @@ void MainWindow::WriteSettings()
         stream << *this;
     }
     settings.writeEntry( "/Panels", savedState_ );
-    settings.WriteEntry( "/MainWindow", *this );
+    settings.WriteMainWindowEntries( "/MainWindow", *this );
     settings.endGroup();
 }
 

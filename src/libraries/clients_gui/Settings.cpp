@@ -11,9 +11,9 @@
 #include "Settings.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/FourStateOption.h"
-
-#include <qmainwindow.h>
+#include <qapplication.h>
 #include <qdockwindow.h>
+#include <qmainwindow.h>
 
 using namespace kernel;
 using namespace gui;
@@ -70,14 +70,29 @@ QStringList Settings::SubEntriesList( const char* path )
 // Name: Settings::WriteEntry
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
-void Settings::WriteEntry( const QString& field, QWidget& widget )
+void Settings::WriteMainWindowEntries( const QString& field, QWidget& widget )
 {
     beginGroup( field );
-    writeEntry( "/width",  widget.width() );
+    writeEntry( "/width", widget.width() );
     writeEntry( "/height", widget.height() );
     writeEntry( "/x", widget.x() );
     writeEntry( "/y", widget.y() );
     writeEntry( "/visible", widget.isVisible() );
+    endGroup();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Settings::RemoveEntry
+// Created: ABR 2011-05-27
+// -----------------------------------------------------------------------------
+void Settings::RemoveMainWindowEntries( const QString& field )
+{
+    beginGroup( field );
+    removeEntry( "/width" );
+    removeEntry( "/height" );
+    removeEntry( "/x" );
+    removeEntry( "/y" );
+    removeEntry( "/visible" );
     endGroup();
 }
 
@@ -89,7 +104,9 @@ void Settings::ReadEntry( const QString& field, QWidget& widget, int nW, int nH,
 {
     beginGroup( field );
     widget.resize( readNumEntry( "/width", nW ), readNumEntry( "/height", nH ) );
-    widget.move( readNumEntry( "/x", nX ), readNumEntry( "/y", nY ) );
+    QPoint pos( readNumEntry( "/x", nX ), readNumEntry( "/y", nY ) );
+    if( QApplication::desktop()->screenNumber( pos ) != -1 )
+        widget.move( pos );
     if( readBoolEntry( "/visible", bVisible ) )
         widget.show();
     else

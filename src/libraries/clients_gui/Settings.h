@@ -67,7 +67,8 @@ public:
 
     //! @name Operations
     //@{
-    void WriteEntry( const QString& field, QWidget& widget );
+    void WriteMainWindowEntries( const QString& field, QWidget& widget );
+    void RemoveMainWindowEntries( const QString& field );
     void ReadEntry( const QString& field, QWidget& widget, int nW, int nH, int nX, int nY, bool bVisible );
     //@}
 
