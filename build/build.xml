@@ -1084,7 +1084,7 @@
     <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.plugins" description="package the installers and packs"/>
 
     <!-- Package plugins -->
-    <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla" description="package plugin individual installers"/>
+    <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.dis" description="package plugin individual installers"/>
 
     <target name="package.plugin.vrforces" description="create vrforces plugin installer" if="is-vc80">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
@@ -1100,6 +1100,15 @@
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DPLUGIN=plugin-hla"/>
+            <arg value="/DPLUGIN_VERSION=1.0"/>
+        </nsis>
+    </target>
+    
+    <target name="package.plugin.dis" description="create dis plugin installer">
+        <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DPLUGIN=plugin-dis"/>
             <arg value="/DPLUGIN_VERSION=1.0"/>
         </nsis>
     </target>
