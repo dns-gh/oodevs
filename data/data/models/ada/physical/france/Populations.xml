@@ -143,11 +143,11 @@
         </protection>
         <protection name="VehiculeNonProtege">
           <unarmed destruction="0" repairable-with-evacuation="0.002" repairable-without-evacuation="0.005"/>
-          <armed destruction="0" repairable-with-evacuation="0.002" repairable-without-evacuation="0.005"/>
+          <armed destruction="0" repairable-with-evacuation="0.004" repairable-without-evacuation="0.01"/>
         </protection>
         <protection name="Combattant">
-          <unarmed destruction="0.01" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0.01" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.3" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <armed destruction="0.5" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
         </protection>
       </attrition-effect>
     </attrition-effects>
@@ -325,4 +325,4 @@
     <repartition children="0" female="0.5" male="0.5"/>
   </population>
 </populations>
-<!-- signature="2861803534" -->
+<!-- signature="2348795536" -->
