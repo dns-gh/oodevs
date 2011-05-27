@@ -71,7 +71,6 @@
 #include "clients_gui/MissionLayer.h"
 #include "clients_gui/OptionsPanel.h"
 #include "clients_gui/ParametersLayer.h"
-#include "clients_gui/ParametersLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RasterLayer.h"
 #include "clients_gui/RichItemFactory.h"

@@ -62,7 +62,7 @@ geometry::Rectangle2f MiniView::GetViewport() const
     if( isVisible() )
     {
         geometry::Rectangle2f boundingBox = position_.GetBoundingBox();
-        const float maxDimension = std::max( boundingBox.Height(), boundingBox.Width() ) * 1.1f;
+        float maxDimension = std::max( 500.f, std::max( boundingBox.Height(), boundingBox.Width() ) * 1.1f );
         const geometry::Vector2f scale( maxDimension, maxDimension );
         const geometry::Point2f center( boundingBox.Center() );
         boundingBox.Incorporate( center + scale );
