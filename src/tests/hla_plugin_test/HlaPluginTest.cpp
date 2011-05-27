@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE( hla_plugin_initialization_declares_publications )
     MOCK_EXPECT( rtiAmbassador, EnableTimeRegulation ).once().in( s ).calls( boost::bind( &hla::FederateAmbassador_ABC::TimeRegulationEnabled, boost::ref( federateAmbassador ), boost::ref( target ) ) );
     MOCK_EXPECT( rtiAmbassador, PublishClass ).once().in( s ).with( "BaseEntity.AggregateEntity", mock::any );
     MOCK_EXPECT( subject, Register ).once().in( s );
-    FederateFacade facade( xis, subject, rtiFactory, federateFactory );
+    FederateFacade facade( xis, subject, rtiFactory, federateFactory, "root/" );
     MOCK_EXPECT( subject, Unregister ).once().in( s );
     MOCK_EXPECT( rtiAmbassador, Resign ).once().in( s );
     MOCK_EXPECT( rtiAmbassador, Disconnect ).once().in( s );
@@ -99,7 +99,7 @@ namespace
 BOOST_FIXTURE_TEST_CASE( hla_plugin_publishes_agent_instance, Fixture )
 {
     MockAgent agent;
-    FederateFacade facade( xis >> xml::start( "root" ), subject, rtiFactory, federateFactory );
+    FederateFacade facade( xis >> xml::start( "root" ), subject, rtiFactory, federateFactory, "root/" );
     BOOST_REQUIRE( listener );
     mock::sequence s;
     MOCK_EXPECT( agent, Register ).once().in( s );

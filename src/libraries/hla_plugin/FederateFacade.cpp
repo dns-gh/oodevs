@@ -21,7 +21,7 @@ using namespace plugins::hla;
 
 namespace
 {
-    std::auto_ptr< hla::Federate > CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador, const FederateAmbassadorFactory_ABC& factory )
+    std::auto_ptr< hla::Federate > CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador, const FederateAmbassadorFactory_ABC& factory, const std::string& pluginDirectory )
     {
         std::auto_ptr< hla::Federate > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
         if( !federate->Connect() )
@@ -32,7 +32,8 @@ namespace
         {
             if( xis.attribute< bool >( "creation", false ) )
             {
-                if( !federate->Create( name, xis.attribute< std::string >( "fom", "ASI_FOM_v2.0.8_2010.xml" ) ) )
+                const std::string fom = xis.attribute< std::string >( "fom", "ASI_FOM_v2.0.8_2010.xml" );
+                if( !federate->Create( name, pluginDirectory + "/" + fom ) )
                     throw std::runtime_error( "Could not create the federation '" + name + "'" );
                 if( !federate->Join( name, xis.attribute< bool >( "time-constrained", true ), xis.attribute< bool >( "time-regulating", true ) ) )
                     throw std::runtime_error( "Could not join the federation '" + name + "'" );
@@ -74,11 +75,11 @@ private:
 // Name: FederateFacade constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-FederateFacade::FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory )
+FederateFacade::FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory )
     : timeFactory_    ( new ::hla::SimpleTimeFactory() )
     , intervalFactory_( new ::hla::SimpleTimeIntervalFactory() )
     , ambassador_     ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
-    , federate_       ( CreateFederate( xis, *ambassador_, federateFactory ) )
+    , federate_       ( CreateFederate( xis, *ambassador_, federateFactory, pluginDirectory ) )
     , destructor_     ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
     , agentClass_     ( new AggregateEntityClass( *federate_, subject ) )
 {

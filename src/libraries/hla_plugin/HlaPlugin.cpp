@@ -49,7 +49,10 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& co
     , pDebugFederateFactory_( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger ) )
     , pResolver_            ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "dis", "dis.xml" ) ) ) )
     , pSubject_             ( new AgentController( model, *pResolver_ ) )
-    , federate_             ( new FederateFacade( xis, *pSubject_, xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_, xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_ ) )
+    , federate_             ( new FederateFacade( xis, *pSubject_,
+                                                  xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
+                                                  xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
+                                                  config.BuildPluginDirectory( "hla" ) ) )
 {
     // NOTHING
 }
