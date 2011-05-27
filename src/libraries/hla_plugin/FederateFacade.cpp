@@ -22,9 +22,9 @@ using namespace plugins::hla;
 
 namespace
 {
-    hla::Federate* CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador, unsigned int lookAhead )
+    std::auto_ptr< hla::Federate > CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador, unsigned int lookAhead )
     {
-        hla::Federate* federate = new ::hla::Federate( ambassador, xis.attribute< std::string >( "name", "SWORD" ), ::hla::SimpleTime(), ::hla::SimpleTimeInterval( xis.attribute< unsigned int >( "lookahead", lookAhead ) ) );
+        std::auto_ptr< hla::Federate >federate( new ::hla::Federate( ambassador, xis.attribute< std::string >( "name", "SWORD" ), ::hla::SimpleTime(), ::hla::SimpleTimeInterval( xis.attribute< unsigned int >( "lookahead", lookAhead ) ) ) );
         if( !federate->Connect() )
             throw std::runtime_error( "Could not connect to '" + xis.attribute< std::string >( "host", "localhost" ) + ":" + xis.attribute< std::string >( "port", "8989" ) + "'" );
         const std::string name = xis.attribute< std::string >( "federation", "Federation" );
