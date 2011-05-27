@@ -503,6 +503,29 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>CriticalIntelligenceDialog</name>
+    <message>
+        <source>Change critical intelligence</source>
+        <translation>Modifier le renseignement critique</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
+    </message>
+    <message>
+        <source>Critical intelligence:</source>
+        <translation>Renseignement critique</translation>
+    </message>
+</context>
+<context>
     <name>DisconnectDialog</name>
     <message>
         <source>Disconnect</source>
@@ -1050,7 +1073,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>InhabitantChangeAlertedStateDialog</name>
     <message>
         <source>Change alert state</source>
-        <translation>Changer l'état d'alerte</translation>
+        <translation>Changer l&apos;état d&apos;alerte</translation>
     </message>
     <message>
         <source>Alerted</source>
@@ -1073,7 +1096,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>InhabitantChangeConfinedStateDialog</name>
     <message>
         <source>Change confine state</source>
-        <translation>Changer l'état de confinement</translation>
+        <translation>Changer l&apos;état de confinement</translation>
     </message>
     <message>
         <source>Confined</source>

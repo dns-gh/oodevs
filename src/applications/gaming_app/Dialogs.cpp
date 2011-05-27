@@ -9,7 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "Dialogs.h"
-
 #include "AgentChangeAffinitiesDialog.h"
 #include "BriefingDialog.h"
 #include "ChangeDiplomacyDialog.h"
@@ -29,6 +28,7 @@
 #include "MedicalCapacityUpdateDialog.h"
 #include "PopulationChangeAffinitiesDialog.h"
 #include "PopulationChangeHealthStateDialog.h"
+#include "CriticalIntelligenceDialog.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
@@ -63,6 +63,7 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new InhabitantChangeConfinedStateDialog( parent, controllers, actionsModel, simulation, profile );
     new InhabitantExtractCrowdDialog( parent, controllers, actionsModel, simulation, profile );
     new PopulationChangeHealthStateDialog( parent, controllers, actionsModel, simulation, profile );
+    new CriticalIntelligenceDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
 }
 
 // -----------------------------------------------------------------------------

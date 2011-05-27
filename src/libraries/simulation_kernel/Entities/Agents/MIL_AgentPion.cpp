@@ -931,6 +931,9 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
     case sword::UnitMagicAction::change_extension:
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
+    case sword::UnitMagicAction::change_critical_intelligence:
+        OnReceiveCriticalIntelligence( msg );
+        break;
     default:
         assert( false );
         break;
@@ -1203,4 +1206,19 @@ const std::string& MIL_AgentPion::GetCriticalIntelligence() const
 float MIL_AgentPion::GetAffinity( unsigned long teamID ) const
 {
     return pAffinities_->GetAffinity( teamID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveCriticalIntelligence
+// Created: LGY 2011-05-27
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg )
+{
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
+        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    criticalIntelligence_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();
+    client::UnitAttributes message;
+    message().mutable_unit()->set_id( GetID() );
+    message().set_critical_intelligence( criticalIntelligence_ );
+    message.Send( NET_Publisher_ABC::Publisher() );
 }

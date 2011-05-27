@@ -503,6 +503,29 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>CriticalIntelligenceDialog</name>
+    <message>
+        <source>Change critical intelligence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Critical intelligence:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DisconnectDialog</name>
     <message>
         <source>Disconnect</source>

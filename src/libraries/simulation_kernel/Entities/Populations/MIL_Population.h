@@ -165,6 +165,7 @@ public:
     void UpdateNetwork();
     void OnReceiveUnitMagicAction( const sword::UnitMagicAction& asnMsg );
     void OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicAction& asn );
+    void OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg );
     //@}
 
     //! @name CheckPoints

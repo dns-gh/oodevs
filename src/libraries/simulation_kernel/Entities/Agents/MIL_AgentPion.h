@@ -171,6 +171,7 @@ private:
     void OnReceiveDestroyComponent();
     void OnReceiveRecoverHumansTransporters();
     void OnReceiveCreateWound( const sword::MissionParameters& asn );
+    void OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg );
     //@}
 
     //! @name Serialization

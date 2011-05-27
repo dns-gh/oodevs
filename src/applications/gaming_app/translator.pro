@@ -28,6 +28,7 @@ ClockWidget.cpp \
 ConnectDialog.cpp \
 ConnectionMenu.cpp \
 CreateFormationDialog.cpp \
+CriticalIntelligenceDialog.cpp \
 DisconnectDialog.cpp \
 DotationsListView.cpp \
 EfficientRangeDialog.cpp \

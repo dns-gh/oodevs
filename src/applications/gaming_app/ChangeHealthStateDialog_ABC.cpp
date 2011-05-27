@@ -58,8 +58,8 @@ ChangeHealthStateDialog_ABC::ChangeHealthStateDialog_ABC( QWidget* pParent, kern
     grid_->addMultiCellWidget( buttonLayout, numberOfLines + 3, numberOfLines + 3, 0, 1 );
     okButton->setDefault( TRUE );
     // Signals
-    connect( okButton        , SIGNAL( clicked() ), SLOT( Validate() ) );
-    connect( cancelButton    , SIGNAL( clicked() ), SLOT( Reject() ) );
+    connect( okButton    , SIGNAL( clicked() ), SLOT( Validate() ) );
+    connect( cancelButton, SIGNAL( clicked() ), SLOT( Reject() ) );
 
     selected_ = 0;
     controllers_.Register( *this );
@@ -155,7 +155,6 @@ void ChangeHealthStateDialog_ABC::Validate()
     if( ! selected_ )
         return;
     accept();
-    //actions::Action_ABC* action = actionsModel_.CreateInhabitantChangeHealthStateAction( healthySpinBox_->value(), woundedSpinBox_->value(), deadSpinBox_->value(), *selected_ );
     actions::Action_ABC* action = CreateMagicAction( actionsModel_ );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new actions::ActionTasker( selected_, false ) );

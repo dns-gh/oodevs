@@ -1024,6 +1024,9 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
     case sword::UnitMagicAction::change_extension:
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
+    case sword::UnitMagicAction::change_critical_intelligence:
+        OnReceiveCriticalIntelligence( msg );
+        break;
     default:
         assert( false );
     }
@@ -1569,4 +1572,16 @@ MT_Vector2D MIL_Population::GetFlowHeadPosition()
     assert( HasFlow() );
     MIL_PopulationFlow* firstFlow = *flows_.begin();
     return firstFlow->GetPosition();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::OnReceiveCriticalIntelligence
+// Created: LGY 2011-05-27
+// -----------------------------------------------------------------------------
+void MIL_Population::OnReceiveCriticalIntelligence( const sword::UnitMagicAction& msg )
+{
+    if( !msg.has_parameters() || msg.parameters().elem_size() != 1 )
+        throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    criticalIntelligence_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();
+    criticalIntelligenceChanged_ = true;
 }

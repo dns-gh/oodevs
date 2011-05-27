@@ -271,4 +271,6 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Affinities", "list" );
     else if( name == "change_extension" )
         CreateOrderParameter( "Extensions", "extensionlist" );
+    else if( name == "change_critical_intelligence" )
+        CreateOrderParameter( "Name", "string" );
 }
