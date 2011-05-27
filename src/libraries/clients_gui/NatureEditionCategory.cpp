@@ -52,6 +52,7 @@ NatureEditionCategory::~NatureEditionCategory()
 // -----------------------------------------------------------------------------
 void NatureEditionCategory::OnComboChange()
 {
+    assert( rule_ );
     const QString current = box_->currentText();
     if( tools::findTranslation( "models::app6", current_ ) != current )
     {

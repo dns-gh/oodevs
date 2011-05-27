@@ -394,5 +394,6 @@ void ADN_Units_GUI::SetSymbolFactory( kernel::SymbolFactory& factory )
     assert( pSymbolWidget_ );
     pSymbolWidget_->SetSymbolFactory( factory );
     assert( pNatureGui_ );
-    pNatureGui_->SetRootSymbolRule( factory.GetSymbolRule() );
+    if( factory.GetSymbolRule() )
+        pNatureGui_->SetRootSymbolRule( *factory.GetSymbolRule() );
 }

@@ -51,8 +51,8 @@ public:
     std::string CreateLevelSymbol  ( const std::string& level ) const;
     std::string CreateLevelSymbol  ( const kernel::HierarchyLevel_ABC& level ) const;
     std::string CreateAutomatSymbol() const;
-    SymbolRule& GetSymbolRule() const;
-    SymbolRule& GetLevelRule() const;
+    SymbolRule* GetSymbolRule() const;
+    SymbolRule* GetLevelRule() const;
     bool IsThisChainAvailable( const std::string& chain ) const;
     void Load( const tools::ExerciseConfig& config );
     //@}

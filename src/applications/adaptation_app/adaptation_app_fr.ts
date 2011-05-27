@@ -6285,10 +6285,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>RoofShape - Invalid roofShape type name</source>
         <translation>Type de toit - Nom de type de toit invalide</translation>
     </message>
-    <message>
-        <source>Urban types - Invalid infrastructure symbol type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Weapons_Data</name>

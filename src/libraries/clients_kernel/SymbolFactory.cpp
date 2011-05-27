@@ -81,6 +81,8 @@ void SymbolFactory::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void SymbolFactory::ListSymbols()
 {
+    if( !symbolRule_.get() )
+        return;
     //xml::xstream out( "UnitSymbols.xml" );
     xml::xobufferstream out;
     out << xml::start( "unit-symbols" );
@@ -164,7 +166,7 @@ void SymbolFactory::ReadRule( xml::xistream& xis, SymbolRule*& rule ) const
 // -----------------------------------------------------------------------------
 std::string SymbolFactory::CreateSymbol( const std::string& hierarchy ) const
 {
-    if( !initialized_ )
+    if( !initialized_ || !symbolRule_.get() )
         return "";
     std::string result( symbolBase_ );
     symbolRule_->Evaluate( hierarchy, result );
@@ -177,7 +179,7 @@ std::string SymbolFactory::CreateSymbol( const std::string& hierarchy ) const
 // -----------------------------------------------------------------------------
 std::string SymbolFactory::CreateLevelSymbol( const std::string& level ) const // $$$$ ABR 2011-05-24: to remove
 {
-    if( !initialized_ )
+    if( !initialized_ || !levelRule_.get() )
         return "";
     std::string result;
     levelRule_->Evaluate( level, result );
@@ -225,16 +227,16 @@ bool SymbolFactory::IsThisChainAvailable( const std::string& chain ) const
 // Name: SymbolFactory::GetSymbolRule
 // Created: ABR 2011-05-26
 // -----------------------------------------------------------------------------
-SymbolRule& SymbolFactory::GetSymbolRule() const
+SymbolRule* SymbolFactory::GetSymbolRule() const
 {
-    return *symbolRule_;
+    return symbolRule_.get();
 }
 
 // -----------------------------------------------------------------------------
 // Name: SymbolFactory::GetLevelRule
 // Created: ABR 2011-05-26
 // -----------------------------------------------------------------------------
-SymbolRule& SymbolFactory::GetLevelRule() const
+SymbolRule* SymbolFactory::GetLevelRule() const
 {
-    return *levelRule_;
+    return levelRule_.get();
 }

@@ -526,8 +526,11 @@ void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& ou
 {
     std::string strData = strName_.GetData();
     output << xml::start( "infrastructure" )
-        << xml::attribute( "name",  trim( strData ) )
-        << xml::attribute( "symbol", pSymbol_.GetData()->strName_ );
+        << xml::attribute( "name",  trim( strData ) );
+    if( pSymbol_.GetData() )
+        output << xml::attribute( "symbol", pSymbol_.GetData()->strName_ );
+    else
+        output << xml::attribute( "symbol", "" );
     if( !capacities_.empty() )
     {
         output << xml::start( "capacities" );
@@ -573,7 +576,8 @@ ADN_Urban_Data::InfrastructureInfos::InfrastructureInfos( xml::xistream& input )
         >> xml::end;
     ADN_Symbols_Data::SymbolsInfra* pSymbol = ADN_Workspace::GetWorkspace().GetSymbols().GetData().FindSymbolInfra( symbol );
     if( !pSymbol )
-        throw ADN_DataException( "Invalid data", tools::translate( "Urban_Data", "Urban types - Invalid infrastructure symbol type '%1'" ).arg( symbol.c_str() ).ascii() );
+        return;
+        //throw ADN_DataException( "Invalid data", tools::translate( "Urban_Data", "Urban types - Invalid infrastructure symbol type '%1'" ).arg( symbol.c_str() ).ascii() );
     pSymbol_ = pSymbol;
 }
 

@@ -6274,10 +6274,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>RoofShape - Invalid roofShape type name</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Urban types - Invalid infrastructure symbol type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Weapons_Data</name>

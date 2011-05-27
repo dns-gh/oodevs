@@ -104,7 +104,6 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
     ReadFile( input, "missions", szMissions_);
     ReadFile( input, "urban", szUrban_ );
     ReadFile( input, "resource-networks", szResourceNetworks_ );
-    // $$$$ ABR 2011-05-25: FIXME Update
     ReadFile( input, "drawing-templates", szDrawingTemplates_ );
     ReadFile( input, "symbols", szSymbols_ );
     ReadFile( input, "scores", szScores_ );
