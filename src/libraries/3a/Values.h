@@ -138,6 +138,7 @@ struct TickValue : public Value< T >
         : value_(), set_( false ) {}
     void Prepare()
     {
+        set_ = false;
         value_ = 0;
     }
     void Push( ValueHandler_ABC< Type >& handler )

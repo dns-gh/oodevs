@@ -13,7 +13,7 @@
 #include "Values.h"
 #include "FireComponentDamages.h"
 #include "FireHumanDamages.h"
-#include "LogMedicalEquipments.h"
+#include "CrowdHumanDamages.h"
 
 // =============================================================================
 /** @namespace  Existences
@@ -39,11 +39,11 @@ namespace events
     };
 
     template< typename Extractor >
-    struct Period : public TickValue< typename Extractor::Type >
+    struct TickPeriod : public TickValue< typename Extractor::Type >
     {
         enum { has_parameter = Extractor::has_parameter };
 
-        explicit Period( const Extractor& extractor = Extractor() )
+        explicit TickPeriod( const Extractor& extractor = Extractor() )
             : extractor_( extractor ) {}
         void Receive( const sword::SimToClient& message )
         {
@@ -53,8 +53,10 @@ namespace events
         Extractor extractor_;
     };
 
-typedef Period< extractors::FireComponentDamages > FireComponentDamages;
-typedef Period< extractors::FireHumanDamages > FireHumanDamages;
+typedef TickPeriod< extractors::FireComponentDamages > FireComponentDamages;
+typedef TickPeriod< extractors::FireHumanDamages > FireHumanDamages;
+typedef TickPeriod< extractors::CrowdHumanDamages > CrowdHumanDamages;
+typedef TickPeriod< extractors::DamageIndirectFire > DamageIndirectFire;
 }
 
 #endif // __Events_h_

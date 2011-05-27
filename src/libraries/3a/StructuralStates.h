@@ -50,8 +50,8 @@ public:
                 hasInfrastructure_ = true;
 
             return ( hasInfrastructure_ && wrapper.message().has_urban_update()
-                && wrapper.message().urban_update().has_attributes()
-                && wrapper.message().urban_update().attributes().has_structure() );
+                  && wrapper.message().urban_update().has_attributes()
+                  && wrapper.message().urban_update().attributes().has_structure() );
         }
         return false;
     }

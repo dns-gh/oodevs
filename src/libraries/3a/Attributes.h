@@ -24,6 +24,7 @@
 #include "PopulationSatisfaction.h"
 #include "PopulationUrbanOccupation.h"
 #include "StructuralStates.h"
+#include "ResourcesNetworksFunctionalStates.h"
 #include "CrowdStates.h"
 
 // =============================================================================
@@ -86,26 +87,27 @@ struct Attribute : public ContinuousValue< typename Extractor::Type >
 Extractor extractor_;
 };
 
-typedef UnitAttribute< extractors::OperationalState >       OperationalState;
-typedef UnitAttribute< extractors::Positions >              Positions;
-typedef UnitAttribute< extractors::Resources >              Resources;
-typedef UnitAttribute< extractors::Equipments >             Equipments;
-typedef UnitAttribute< extractors::Humans >                 Humans;
-typedef UnitAttribute< extractors::Mounted >                Mounted;
-typedef UnitAttribute< extractors::DirectFirePower >        DirectFirePower;
-typedef UnitAttribute< extractors::IndirectFirePower >      IndirectFirePower;
-typedef UnitAttribute< extractors::CloseCombatPower >       CloseCombatPower;
-typedef UnitAttribute< extractors::EngineeringPower >       EngineeringPower;
+typedef UnitAttribute< extractors::OperationalState >              OperationalState;
+typedef UnitAttribute< extractors::Positions >                     Positions;
+typedef UnitAttribute< extractors::Resources >                     Resources;
+typedef UnitAttribute< extractors::Equipments >                    Equipments;
+typedef UnitAttribute< extractors::Humans >                        Humans;
+typedef UnitAttribute< extractors::Mounted >                       Mounted;
+typedef UnitAttribute< extractors::DirectFirePower >               DirectFirePower;
+typedef UnitAttribute< extractors::IndirectFirePower >             IndirectFirePower;
+typedef UnitAttribute< extractors::CloseCombatPower >              CloseCombatPower;
+typedef UnitAttribute< extractors::EngineeringPower >              EngineeringPower;
 
-typedef Attribute< extractors::LogMedicalEquipments >       LogMedicalEquipments;
-typedef Attribute< extractors::LogMedicalWaitingAttention > LogMedicalWaitingAttention;
-typedef Attribute< extractors::LogMaintenanceEquipments >   LogMaintenanceEquipments;
-typedef Attribute< extractors::LogSupplyStocks >            LogSupplyStocks;
-typedef Attribute< extractors::PopulationStates >           PopulationStates;
-typedef Attribute< extractors::PopulationSatisfaction >     PopulationSatisfaction;
-typedef Attribute< extractors::PopulationUrbanOccupation >  PopulationUrbanOccupation;
-typedef Attribute< extractors::CrowdStates >                CrowdStates;
-typedef Attribute< extractors::StructuralStates >           StructuralStates;
+typedef Attribute< extractors::LogMedicalEquipments >              LogMedicalEquipments;
+typedef Attribute< extractors::LogMedicalWaitingAttention >        LogMedicalWaitingAttention;
+typedef Attribute< extractors::LogMaintenanceEquipments >          LogMaintenanceEquipments;
+typedef Attribute< extractors::LogSupplyStocks >                   LogSupplyStocks;
+typedef Attribute< extractors::PopulationStates >                  PopulationStates;
+typedef Attribute< extractors::PopulationSatisfaction >            PopulationSatisfaction;
+typedef Attribute< extractors::PopulationUrbanOccupation >         PopulationUrbanOccupation;
+typedef Attribute< extractors::CrowdStates >                       CrowdStates;
+typedef Attribute< extractors::StructuralStates >                  StructuralStates;
+typedef Attribute< extractors::ResourcesNetworksFunctionalStates > ResourcesNetworksFunctionalStates;
 
 struct Detections : public ContinuousValue< extractors::UnitDetection::Type >
 {

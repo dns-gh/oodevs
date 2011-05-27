@@ -356,16 +356,32 @@ sword::SimToClient TestTools::StopFire( unsigned fire_id, unsigned int target_id
 // Name: 3aTestTools::MakeUnitDamages
 // Created: FPO 2011-05-18
 // -----------------------------------------------------------------------------
-sword::SimToClient TestTools::MakeUnitDamages( unsigned int firer_id, unsigned int target_id, unsigned long damage_count /*= 0*/, unsigned long deadhumans_count /*= 0*/, bool isDirectFire /*= true*/, bool isFratricide /*= false*/ )
+sword::SimToClient TestTools::MakeUnitDamages( unsigned int firer_id, unsigned int target_id, unsigned long damage_count /*= 0*/, unsigned long deadhumans_count /*= 0*/, unsigned int fire_id /*=0*/, bool isDirectFire /*= true*/, bool isFratricide /*= false*/ )
 {
     SimToClient result;
     UnitDamagedByUnitFire& damage = *result.mutable_message()->mutable_unit_damaged_by_unit_fire();
     damage.mutable_firer()->set_id( firer_id );
+    damage.mutable_fire()->set_id( fire_id );
     damage.set_direct_fire( isDirectFire );
     damage.set_fratricide( isFratricide );
     damage.mutable_equipments()->add_elem()->set_unavailable( damage_count );
     damage.mutable_humans()->add_elem()->set_dead( deadhumans_count );
     damage.mutable_unit()->set_id( target_id );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::MakeUnitDamagesByCrowd
+// Created: FPO 2011-05-26
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::MakeUnitDamagesByCrowd( unsigned int crowd_id, unsigned int target_id, unsigned long damage_count /*= 0*/, unsigned long deadhumans_count /*= 0*/ )
+{
+    SimToClient result;
+    UnitDamagedByCrowdFire& damage = *result.mutable_message()->mutable_unit_damaged_by_crowd_fire();
+    damage.mutable_firer()->set_id( crowd_id );
+    damage.mutable_unit()->set_id( target_id );
+    damage.mutable_equipments()->add_elem()->set_unavailable( damage_count );
+    damage.mutable_humans()->add_elem()->set_dead( deadhumans_count );
     return result;
 }
 
@@ -424,7 +440,7 @@ sword::SimToClient TestTools::CreateMedicalConsign( unsigned long unitId, unsign
 // Name: 3aTestTools::CreateFunctionalState
 // Created: FPO 2011-05-16
 // -----------------------------------------------------------------------------
-sword::SimToClient TestTools::CreateFunctionalState( unsigned long objectId, int stateValue )
+sword::SimToClient TestTools::CreateStructuralState( unsigned long objectId, int stateValue )
 {
     SimToClient result;
     UrbanUpdate& update = *result.mutable_message()->mutable_urban_update();
@@ -442,12 +458,26 @@ sword::SimToClient TestTools::CreateFunctionalState( unsigned long objectId, int
 // Name: 3aTestTools::UpdateFunctionalState
 // Created: FPO 2011-05-16
 // -----------------------------------------------------------------------------
-sword::SimToClient TestTools::UpdateFunctionalState( unsigned long objectId, int stateValue )
+sword::SimToClient TestTools::UpdateStructuralState( unsigned long objectId, int stateValue )
 {
     SimToClient result;
     UrbanUpdate& update = *result.mutable_message()->mutable_urban_update();
     update.mutable_object()->set_id( objectId );
     UrbanAttributes& attributes = *update.mutable_attributes();
     attributes.mutable_structure()->set_state( stateValue );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: 3aTestTools::UpdateResourceState
+// Created: FPO 2011-05-26
+// -----------------------------------------------------------------------------
+sword::SimToClient TestTools::UpdateResourceState( unsigned long objectId, float stateValue )
+{
+    SimToClient result;
+    UrbanUpdate& update = *result.mutable_message()->mutable_urban_update();
+    update.mutable_object()->set_id( objectId );
+    UrbanAttributes& attributes = *update.mutable_attributes();
+    attributes.mutable_infrastructures()->add_resource_network()->set_functional_state( stateValue );
     return result;
 }

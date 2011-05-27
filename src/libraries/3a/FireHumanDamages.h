@@ -59,9 +59,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             FireHumanDamages();
+                 FireHumanDamages();
     /*implicit*/ FireHumanDamages( xml::xistream& xis );
-    virtual ~FireHumanDamages();
+    virtual     ~FireHumanDamages();
     //@}
 
     //! @name Operations
@@ -70,7 +70,7 @@ public:
     {
         return wrapper.message().has_unit_damaged_by_unit_fire();
     }
-    float Extract( const sword::SimToClient& wrapper ) const;
+    int Extract( const sword::SimToClient& wrapper ) const;
     //@}
 
 private:
@@ -78,6 +78,7 @@ private:
     //@{
     int rankMask_;
     int stateMask_;
+    FilterHelper< int > partyFilter_;
     bool fratricideMask_;
     bool directFireMask_;
     bool indirectFireMask_;

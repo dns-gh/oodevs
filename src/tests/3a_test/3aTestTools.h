@@ -58,13 +58,15 @@ public:
     static sword::SimToClient CreateDirectFire( unsigned fire_id, unsigned long firer, unsigned long target = 42 );
     static sword::SimToClient CreateIndirectFire( unsigned fire_id, unsigned long firer, const char* position = "31TBN7728449218" );
     static sword::SimToClient StopFire( unsigned fire_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0 );
-    static sword::SimToClient MakeUnitDamages( unsigned int firer_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0, bool isDirectFire = true, bool isFratricide = false );
+    static sword::SimToClient MakeUnitDamages( unsigned int firer_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0, unsigned int fire_id = 0 , bool isDirectFire = true, bool isFratricide = false );
+    static sword::SimToClient MakeUnitDamagesByCrowd( unsigned int crowd_id, unsigned int target_id, unsigned long damage_count = 0, unsigned long deadhumans_count = 0 );
     static sword::SimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0, unsigned long equip_id = 0, unsigned long breakdown_id = 0 );
     static sword::SimToClient DestroyConsign( unsigned long id );
     static bool IsCloseCombatPower( const extractors::PowerExtractor_ABC& extractor );
     static sword::SimToClient CreateMedicalConsign( unsigned long unitId, unsigned long requestId, bool isWaiting );
-    static sword::SimToClient CreateFunctionalState( unsigned long objectId, int stateValue );
-    static sword::SimToClient UpdateFunctionalState( unsigned long objectId, int stateValue );
+    static sword::SimToClient CreateStructuralState( unsigned long objectId, int stateValue );
+    static sword::SimToClient UpdateStructuralState( unsigned long objectId, int stateValue );
+    static sword::SimToClient UpdateResourceState( unsigned long objectId, float stateValue );
     //@}
 
 private:

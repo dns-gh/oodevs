@@ -121,6 +121,19 @@ namespace extractors
         }
     };
 
+    struct DamageIndirectFire : public Extractor< NumericValue >
+    {
+        bool HasValue( const sword::SimToClient& wrapper ) const
+        {
+            return ( wrapper.message().has_unit_damaged_by_unit_fire()
+                 && !wrapper.message().unit_damaged_by_unit_fire().direct_fire() );
+        }
+        NumericValue Extract( const sword::SimToClient& wrapper ) const
+        {
+            return wrapper.message().unit_damaged_by_unit_fire().firer().id();
+        }
+    };
+
     struct DirectFireUnitsId : public Extractor< NumericValue >
     {
         bool IsCreation( const sword::SimToClient& wrapper ) const

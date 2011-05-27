@@ -105,7 +105,7 @@ int Humans::Extract( const UnitAttributes& attributes )
         if( ( rankMask_ & ( 1 << humans.rank() ) ) != 0 )
             for( unsigned int i = 0; i < nHumanStates; ++i )
                 if( ( stateMask_ & ( 1 << i ) ) != 0 )
-                    result += ( humans.*humanData[i] )();
+                    result += ( humans.*humanData[ i ] )();
     }
     return result;
 }

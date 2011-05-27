@@ -60,6 +60,7 @@ struct IdentifierValue : public IdentifierValue_ABC
         SET_OID( unit_creation, unit().id );
         SET_OID( unit_detection, observer().id );
         SET_OID( unit_damaged_by_unit_fire, fire().id );
+        SET_OID( unit_damaged_by_crowd_fire, unit().id );
         SET_OID( unit_environment_type, unit().id );
         SET_OID( unit_pathfind, unit().id );
         SET_OID( unit_vision_cones, unit().id );

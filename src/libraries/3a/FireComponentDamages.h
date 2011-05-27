@@ -71,13 +71,14 @@ public:
     {
         return wrapper.message().has_unit_damaged_by_unit_fire();
     }
-    float Extract( const sword::SimToClient& wrapper ) const;
+    int Extract( const sword::SimToClient& wrapper ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    FilterHelper< int > filter_;
+    FilterHelper< int > componentFilter_;
+    FilterHelper< int > partyFilter_;
     int stateMask_;
     bool fratricideMask_;
     bool directFireMask_;

@@ -87,11 +87,12 @@ namespace
 // Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
 FireComponentDamages::FireComponentDamages( xml::xistream& xis )
-    : filter_( xis, "components" )
+    : componentFilter_( xis, "components" )
     , stateMask_( ReadMask( xis ) )
     , directFireMask_( ReadFireTypeMask( xis , "direct" ) )
     , indirectFireMask_( ReadFireTypeMask( xis , "indirect" ) )
     , fratricideMask_( ReadFratricideMask( xis ) )
+    , partyFilter_( xis, "party" )
 {
     // NOTHING
 }
@@ -100,7 +101,7 @@ FireComponentDamages::FireComponentDamages( xml::xistream& xis )
 // Name: FireComponentDamages::Extract
 // Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
-float FireComponentDamages::Extract( const sword::SimToClient& wrapper ) const
+int FireComponentDamages::Extract( const sword::SimToClient& wrapper ) const
 {
     const UnitDamagedByUnitFire& damages = wrapper.message().unit_damaged_by_unit_fire();
     if( fratricideMask_ && !damages.fratricide() )
@@ -108,11 +109,13 @@ float FireComponentDamages::Extract( const sword::SimToClient& wrapper ) const
     if( ( directFireMask_ && !damages.direct_fire() ) ||
         !directFireMask_ && damages.direct_fire() )
         return 0;
-    float result = 0;
+    if( !partyFilter_.IsAllowed( damages.party().id() ) )
+        return 0;
+    int result = 0;
     for( int e = 0; e < damages.equipments().elem_size(); ++e )
     {
         const sword::UnitEquipmentFireDamage& damage = damages.equipments().elem( e );
-        if( filter_.IsAllowed( damage.equipement().id() ) )
+        if( componentFilter_.IsAllowed( damage.equipement().id() ) )
             for( unsigned int i = 0; i < nEquipmentStates; ++i )
                 if( ( stateMask_ & ( 1 << i ) ) != 0 )
                     result += ( damage.*equipmentData[ i ] )();

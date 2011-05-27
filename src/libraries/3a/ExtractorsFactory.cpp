@@ -62,36 +62,48 @@ namespace
     template< typename Key, typename Value >
     std::map< Key, Value > BuildExtractors( const aar::StaticModel_ABC& model )
     {
+        // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ FIX ME : 
+        // Certains extracteurs sont définis avec deux noms différents pour la rétrcompatibilité des exercices au niveau des scores.
+        // A l'avenir, il faudra utiliser les noms des extracteurs dans la documentation technique de la 3a, pour écrire un indicateur.
+        // A terme les noms incohérents avec le reste devront être supprimés, pourquoi pas dans la prochaine version de SWORD.
+        // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ FIX ME
         std::map< Key, Value > extractors = boost::assign::list_of< std::pair< Key, Value > >
-            ( "operational-states"                 , BuildExtractor< Value, attributes::OperationalState >() )
-            ( "positions"                          , BuildExtractor< Value, attributes::Positions >() )
-            ( "resources"                          , BuildExtractor< Value, attributes::Resources >() )
-            ( "equipments"                         , BuildExtractor< Value, attributes::Equipments >() )
-            ( "humans"                             , BuildExtractor< Value, attributes::Humans >() )
-            ( "population-states"                  , BuildExtractor< Value, attributes::PopulationStates >() )
-            ( "crowd-states"                       , BuildExtractor< Value, attributes::CrowdStates >() )
-            ( "satisfactions"                      , BuildExtractor< Value, attributes::PopulationSatisfaction >() )
-            ( "population-in-selected-blocks"      , BuildExtractor< Value, attributes::PopulationUrbanOccupation >() )
-            ( "infrastructures-functional-states"  , BuildExtractor< Value, attributes::StructuralStates >() )
-            ( "stocks"                             , BuildExtractor< Value, attributes::LogSupplyStocks >() )
-            ( "maintenance-handling-units"         , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() )
-            ( "direct-fire-units"                  , BuildExtractor< Value, existences::DirectFireUnitsId >() )
-            ( "indirect-fire-units"                , BuildExtractor< Value, existences::IndirectFireUnitsId >() )
-            ( "direct-fire-targets"                , BuildExtractor< Value, existences::DirectFireTargetsId >() )
-            ( "indirect-fire-positions"            , BuildExtractor< Value, existences::IndirectFireTargetsPositions >() )
-            ( "fire-component-damages"             , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() )
-            ( "fire-component-loss"                , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueTarget >() )
-            ( "fire-human-damages"                 , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueFirer >() )
-            ( "fire-human-loss"                    , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueTarget >() )
-            ( "ambulances"                         , BuildExtractor< Value, attributes::LogMedicalEquipments >() )
-            ( "maintenances"                       , BuildExtractor< Value, attributes::LogMaintenanceEquipments >() )
-            ( "waiting-for-medical"                , BuildExtractor< Value, attributes::LogMedicalWaitingAttention >() )
-            ( "detecting-unit"                     , BuildExtractor< Value, attributes::Detections >() )
-            ( "mounted"                            , BuildExtractor< Value, attributes::Mounted >() )
-            ( "direct-fire-power"                  , BuildExtractor< Value, attributes::DirectFirePower >( model ) )
-            ( "indirect-fire-power"                , BuildExtractor< Value, attributes::IndirectFirePower >( model ) )
-            ( "close-combat-power"                 , BuildExtractor< Value, attributes::CloseCombatPower >( model ) )
-            ( "engineering-power"                  , BuildExtractor< Value, attributes::EngineeringPower >( model ) );
+            ( "operational-state"                     , BuildExtractor< Value, attributes::OperationalState >() ) // A VIRER
+            ( "operational-states"                    , BuildExtractor< Value, attributes::OperationalState >() )
+            ( "position"                              , BuildExtractor< Value, attributes::Positions >() )        // A VIRER
+            ( "positions"                             , BuildExtractor< Value, attributes::Positions >() )
+            ( "resources"                             , BuildExtractor< Value, attributes::Resources >() )
+            ( "equipments"                            , BuildExtractor< Value, attributes::Equipments >() )
+            ( "humans"                                , BuildExtractor< Value, attributes::Humans >() )
+            ( "population-states"                     , BuildExtractor< Value, attributes::PopulationStates >() )
+            ( "crowd-states"                          , BuildExtractor< Value, attributes::CrowdStates >() )
+            ( "satisfactions"                         , BuildExtractor< Value, attributes::PopulationSatisfaction >() )
+            ( "population-in-selected-blocks"         , BuildExtractor< Value, attributes::PopulationUrbanOccupation >() )
+            ( "infrastructures-functional-states"     , BuildExtractor< Value, attributes::StructuralStates >() )
+            ( "resource-networks-functional-states"   , BuildExtractor< Value, attributes::ResourcesNetworksFunctionalStates >() )
+            ( "stocks"                                , BuildExtractor< Value, attributes::LogSupplyStocks >() )
+            ( "maintenance-handling-units"            , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() )
+            ( "direct-fire-unit"                      , BuildExtractor< Value, existences::DirectFireUnitsId >() )   // A VIRER
+            ( "direct-fire-units"                     , BuildExtractor< Value, existences::DirectFireUnitsId >() )
+            ( "direct-fire-targets"                   , BuildExtractor< Value, existences::DirectFireTargetsId >() )
+            ( "indirect-fire-unit"                    , BuildExtractor< Value, existences::IndirectFireUnitsId >() ) // A VIRER
+            ( "indirect-fire-units"                   , BuildExtractor< Value, existences::IndirectFireUnitsId >() )
+            ( "indirect-fire-positions"               , BuildExtractor< Value, existences::IndirectFireTargetsPositions >() )
+            ( "damage-indirect-fires"                 , BuildExtractor< Value, events::DamageIndirectFire >() )
+            ( "fire-component-damages"                , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() )
+            ( "fire-component-loss"                   , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueTarget >() )
+            ( "fire-human-damages"                    , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueFirer >() )
+            ( "fire-human-loss"                       , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueTarget >() )
+            ( "fire-human-loss-by-crowd-fire"         , BuildExtractor< Value, events::CrowdHumanDamages >() )
+            ( "ambulances"                            , BuildExtractor< Value, attributes::LogMedicalEquipments >() )
+            ( "maintenances"                          , BuildExtractor< Value, attributes::LogMaintenanceEquipments >() )
+            ( "waiting-for-medical"                   , BuildExtractor< Value, attributes::LogMedicalWaitingAttention >() )
+            ( "detecting-unit"                        , BuildExtractor< Value, attributes::Detections >() )
+            ( "mounted"                               , BuildExtractor< Value, attributes::Mounted >() )
+            ( "direct-fire-power"                     , BuildExtractor< Value, attributes::DirectFirePower >( model ) )
+            ( "indirect-fire-power"                   , BuildExtractor< Value, attributes::IndirectFirePower >( model ) )
+            ( "close-combat-power"                    , BuildExtractor< Value, attributes::CloseCombatPower >( model ) )
+            ( "engineering-power"                     , BuildExtractor< Value, attributes::EngineeringPower >( model ) );
         return extractors;
     }
 }
@@ -118,7 +130,6 @@ ExtractorsFactory::~ExtractorsFactory()
 // -----------------------------------------------------------------------------
 // Name: ExtractorsFactory::CreateElement
 // Created: AGE 2008-08-04
-// FIX ME : Renommer les chaines de façon cohérente
 // -----------------------------------------------------------------------------
 void ExtractorsFactory::CreateElement( const std::string& type, xml::xistream& xis, Task& result ) const
 {
