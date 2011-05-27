@@ -905,7 +905,7 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="SectionLOG" file="Appui\Log\Pions\Model.bms" masalife="false" name="Logistic unit">
+    <unit dia-type="SectionLOGTC2" file="Appui\Log\Pions\Model.bms" masalife="false" name="Logistic unit">
       <missions>
         <mission name="Logistics - deploy"/>
         <mission name="Common - follow"/>
@@ -4220,4 +4220,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1695061462" -->
+<!-- signature="3173912899" -->
