@@ -1308,13 +1308,6 @@
         </pack>
     </target>
 
-    <target name="package.otpack.cetac" description="package du CETAC otpack">
-        <pack name="CETAC" description="CETAC exercise package">
-            <include name="exercises/CETAC_worldwide/**"/>
-            <include name="data/terrains/CETAC_dted1/**"/>
-        </pack>
-    </target>
-
     <target name="package.otpack.tutosw" description="package du Tuto_sw otpack">
         <pack name="tutosw" description="tuto_sw exercises package">
             <include name="exercises/Tuto_sw/**"/>
