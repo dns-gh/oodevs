@@ -76,12 +76,12 @@ private:
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 FederateFacade::FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& factory, unsigned int lookAhead )
-    : timeFactory_      ( new ::hla::SimpleTimeFactory() )
-    , intervalFactory_  ( new ::hla::SimpleTimeIntervalFactory() )
-    , ambassador_       ( factory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
-    , federate_         ( CreateFederate( xis, *ambassador_, lookAhead ) )
-    , destructor_       ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
-    , agentClass_       ( new AggregateEntityClass( *federate_, subject ) )
+    : timeFactory_    ( new ::hla::SimpleTimeFactory() )
+    , intervalFactory_( new ::hla::SimpleTimeIntervalFactory() )
+    , ambassador_     ( factory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
+    , federate_       ( CreateFederate( xis, *ambassador_, lookAhead ) )
+    , destructor_     ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
+    , agentClass_     ( new AggregateEntityClass( *federate_, subject ) )
 {
     // NOTHING
 }
