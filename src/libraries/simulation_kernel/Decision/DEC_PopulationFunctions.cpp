@@ -348,3 +348,12 @@ bool DEC_PopulationFunctions::HasReachedDestinationCompletely( const MIL_Populat
     assert( destination );
     return callerPopulation.HasReachedDestinationCompletely( *destination );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationFunctions::GetActualNumber
+// Created: LMT 2011-05-27
+// -----------------------------------------------------------------------------
+int DEC_PopulationFunctions::GetActualNumber( const MIL_Population& callerPopulation )
+{
+    return callerPopulation.GetHealthyHumans();
+}

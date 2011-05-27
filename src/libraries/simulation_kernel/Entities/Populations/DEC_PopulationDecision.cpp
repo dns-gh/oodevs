@@ -153,6 +153,8 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     // Self
     brain[ "DEC_GetPosition" ] =
         boost::function< boost::shared_ptr< MT_Vector2D >() >( boost::bind( &DEC_PopulationFunctions::GetBarycenter, boost::cref( GetPopulation() ) ) );
+    brain[ "DEC_GetNombrePersonne" ] =
+        boost::function< int () >( boost::bind( &DEC_PopulationFunctions::GetActualNumber, boost::cref( GetPopulation() ) ) );
 
     // Agents
     brain[ "DEC_Agent_EstDansFoule" ] =

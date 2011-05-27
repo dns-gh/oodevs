@@ -35,6 +35,7 @@ public:
 
     // State
     static boost::shared_ptr< MT_Vector2D > GetBarycenter( const MIL_Population& callerPopulation );
+    static int GetActualNumber( const MIL_Population& callerPopulation );
 
     // Effects
     static void SetAttitude( MIL_Population& callerPopulation, unsigned int attitudeId );
