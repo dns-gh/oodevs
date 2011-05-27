@@ -1050,7 +1050,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>InhabitantChangeAlertedStateDialog</name>
     <message>
         <source>Change alert state</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer l'état d'alerte</translation>
     </message>
     <message>
         <source>Alerted</source>
@@ -1073,7 +1073,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>InhabitantChangeConfinedStateDialog</name>
     <message>
         <source>Change confine state</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer l'état de confinement</translation>
     </message>
     <message>
         <source>Confined</source>
