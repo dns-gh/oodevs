@@ -12,6 +12,7 @@
 #include "AgentController.h"
 #include "FederateFacade.h"
 #include "RtiAmbassadorFactory.h"
+#include "DebugRtiAmbassadorFactory.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
 #include "rpr/EntityTypeResolver.h"
@@ -39,11 +40,12 @@ namespace
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger )
-    : logger_   ( logger )
-    , pFactory_ ( new RtiAmbassadorFactory() )
-    , pResolver_( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) ) // $$$$ _RC_ SLI 2011-05-02: hard coded filename
-    , pSubject_ ( new AgentController( model, *pResolver_ ) )
-    , federate_ ( new FederateFacade( xis, *pSubject_, *pFactory_, ReadTimeStep( config.GetSessionFile() ) ) )
+    : logger_       ( logger )
+    , pFactory_     ( new RtiAmbassadorFactory() )
+    , pDebugFactory_( new DebugRtiAmbassadorFactory( *pFactory_, logger ) )
+    , pResolver_    ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPhysicalChildFile( "dis.xml" ) ) ) )
+    , pSubject_     ( new AgentController( model, *pResolver_ ) )
+    , federate_     ( new FederateFacade( xis, *pSubject_, xis.attribute< bool >( "debug", false ) ? *pDebugFactory_ : *pFactory_, ReadTimeStep( config.GetSessionFile() ) ) )
 {
     // NOTHING
 }

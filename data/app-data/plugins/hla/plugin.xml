@@ -80,5 +80,19 @@
                 </setting>
             </settings>
         </group>
+        <group>
+            <descriptions>
+                <description lang="en" name="Advanced settings"><![CDATA[]]></description>
+                <description lang="fr" name="Paramètres avancés"><![CDATA[]]></description>
+            </descriptions>
+            <settings>
+                <setting attribute="@debug" type="boolean" default="false">
+                    <descriptions>
+                        <description lang="en" name="Debug"><![CDATA[]]>Enable debug informations.</description>
+                        <description lang="fr" name="Debug"><![CDATA[]]>Active les informations de debug.</description>
+                    </descriptions>
+                </setting>
+            </settings>
+        </group>
     </settings>
 </plugin>

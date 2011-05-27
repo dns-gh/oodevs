@@ -66,6 +66,7 @@ private:
     //@{
     dispatcher::Logger_ABC& logger_;
     std::auto_ptr< RtiAmbassadorFactory_ABC > pFactory_;
+    std::auto_ptr< RtiAmbassadorFactory_ABC > pDebugFactory_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pResolver_;
     std::auto_ptr< AgentSubject_ABC > pSubject_;
     std::auto_ptr< FederateFacade > federate_;
