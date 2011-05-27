@@ -144,7 +144,7 @@ namespace
             memset( path_, 0, environment_buffer_size );
             if( GetEnvironmentVariable( "Path", path_, environment_buffer_size ) == 0 )
                 throw std::runtime_error( "Failed to retrieve 'PATH' environment variable." );
-            const std::string newPath( std::string( path_ ) + ";" + directory );
+            const std::string newPath( directory + ";" + std::string( path_ ) );
             if( !SetEnvironmentVariable( "Path", newPath.c_str() ) )
                 throw std::runtime_error( "Failed to set 'PATH' environment variable." );
         }
