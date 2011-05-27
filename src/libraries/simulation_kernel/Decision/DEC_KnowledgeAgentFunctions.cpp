@@ -412,3 +412,13 @@ std::string DEC_KnowledgeAgentFunctions::GetMilPionType( boost::shared_ptr< DEC_
 {
     return pKnowledge->GetAgentKnown().GetType().GetMilPionType();
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MIL_Mission_ABC > DEC_KnowledgeAgentFunctions::GetMission
+// Created: EVH 2011-05-24
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MIL_Mission_ABC > DEC_KnowledgeAgentFunctions::GetMission( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    return pKnowledge->GetAgentKnown().GetDecision().GetMission();
+}

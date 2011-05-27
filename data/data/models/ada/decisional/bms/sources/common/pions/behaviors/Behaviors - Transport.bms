@@ -64,7 +64,7 @@ include "Common/Pions/Actions/Actions - Transport.bms"
         --[[//on commence le transport quand toutes les unites sont pretes
 ]]self.listeUnitesMissionTransporter = {}
         self.listeUnitesMissionTransporter = S_Cherche_Filtre_TypeMission( self.sUnitesATransporter, "T_Mission_Pion_SeFaireTransporter" )
-        local listeUnitesMissionTransporterBM = S_Cherche_Filtre_TypeMission( self.sUnitesATransporter, "net.masagroup.sword.france.military.platoon.tasks.SeFaireTransporter" )
+        local listeUnitesMissionTransporterBM = S_Cherche_Filtre_TypeMission( self.sUnitesATransporter, "T_Task_Pion_SeFaireTransporter" )
         for _,x in pairs( listeUnitesMissionTransporterBM or emptyTable ) do
         local _continue = true
             DIA_PushBack( self.listeUnitesMissionTransporter, x )

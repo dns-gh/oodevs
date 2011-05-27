@@ -17,6 +17,7 @@ class DEC_Knowledge_Agent;
 class MIL_AgentPion;
 class MT_Vector2D;
 class UrbanObjectWrapper;
+class MIL_Mission_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -66,6 +67,7 @@ public:
     static unsigned int GetAgentIdFromKnowledge         ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool IsRefugee                               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static std::string GetMilPionType                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static boost::shared_ptr< MIL_Mission_ABC > GetMission( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     //@}
 };
 

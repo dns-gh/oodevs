@@ -672,6 +672,87 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ONG LOG">
+      <missions>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Renforcer"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="LOGISTIQUE Se Deployer">
+          <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+        </mission>
+        <mission name="LOGISTIQUE Transporter"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Arreter Silence Radar"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Milice">
+      <missions>
+        <mission name="COMMUNES AllerA"/>
+        <mission name="COMMUNES Decrocher"/>
+        <mission name="COMMUNES Faire Mouvement"/>
+        <mission name="COMMUNES Franchir"/>
+        <mission name="COMMUNES Interroger"/>
+        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
+        <mission name="COMMUNES Renforcer"/>
+        <mission name="COMMUNES Se Faire Decontaminer"/>
+        <mission name="COMMUNES Se Faire Transporter"/>
+        <mission name="COMMUNES Stationner"/>
+        <mission name="COMMUNES Suivre"/>
+        <mission name="GENIE Detruire point du reseau"/>
+        <mission name="ASY Prendre un Otage"/>
+        <mission name="MELEE Controler"/>
+        <mission name="MELEE Harceler"/>
+        <mission name="MELEE Surveiller"/>
+        <mission name="MELEE Detruire"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Illuminer"/>
+        <fragorder name="Utiliser ALR"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" masalife="false" name="Patrouille AIR Assaut">
       <missions>
         <mission name="JOINT AIR Effectuer Raid"/>
@@ -7637,86 +7718,6 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ONG LOG">
-      <missions>
-        <mission name="COMMUNES AllerA"/>
-        <mission name="COMMUNES Decrocher"/>
-        <mission name="COMMUNES Faire Mouvement"/>
-        <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
-        <mission name="COMMUNES Renforcer"/>
-        <mission name="COMMUNES Se Faire Decontaminer"/>
-        <mission name="COMMUNES Se Faire Transporter"/>
-        <mission name="COMMUNES Stationner"/>
-        <mission name="COMMUNES Suivre"/>
-        <mission name="LOGISTIQUE Se Deployer">
-          <fragorder name="Modifier Priorites Blesses"/>
-          <fragorder name="Modifier Priorites Tactiques Blesses"/>
-        </mission>
-      </missions>
-      <fragorders>
-        <fragorder name="Rejoindre"/>
-        <fragorder name="Embarquer"/>
-        <fragorder name="Debarquer"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Arreter Silence Radar"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Milice">
-      <missions>
-        <mission name="COMMUNES AllerA"/>
-        <mission name="COMMUNES Decrocher"/>
-        <mission name="COMMUNES Faire Mouvement"/>
-        <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Interroger"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Prendre En Compte Prisonniers"/>
-        <mission name="COMMUNES Renforcer"/>
-        <mission name="COMMUNES Se Faire Decontaminer"/>
-        <mission name="COMMUNES Se Faire Transporter"/>
-        <mission name="COMMUNES Stationner"/>
-        <mission name="COMMUNES Suivre"/>
-        <mission name="GENIE Detruire point du reseau"/>
-        <mission name="ASY Prendre un Otage"/>
-        <mission name="MELEE Controler"/>
-        <mission name="MELEE Harceler"/>
-        <mission name="MELEE Surveiller"/>
-        <mission name="MELEE Detruire"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Rejoindre"/>
-        <fragorder name="Embarquer"/>
-        <fragorder name="Debarquer"/>
-        <fragorder name="Illuminer"/>
-        <fragorder name="Utiliser ALR"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-      </fragorders>
-    </unit>
   </units>
   <automats>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.SGTIA">
@@ -11748,4 +11749,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2179386721" -->
+<!-- signature="2107561065" -->

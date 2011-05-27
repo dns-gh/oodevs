@@ -179,6 +179,16 @@ void DEC_ActionFunctions::Transport_AddPions( MIL_AgentPion& callerAgent, const 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::TransportKnowledge_AddPion
+// Created: EVH 2011-05-23
+// -----------------------------------------------------------------------------
+void DEC_ActionFunctions::TransportKnowledge_AddPion( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool bTransportOnlyLoadable )
+{
+    MIL_Agent_ABC& pion = pKnowledge->GetAgentKnown();
+    callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().AddPion( pion, bTransportOnlyLoadable );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Transport_MagicLoadPion
 // Created: NLD 2005-04-19
 // -----------------------------------------------------------------------------

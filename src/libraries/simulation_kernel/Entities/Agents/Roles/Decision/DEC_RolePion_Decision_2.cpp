@@ -130,6 +130,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
 
     //limas / Missions
     brain[ "DEC_GetRawMission" ] = &DEC_AgentFunctions::GetMission;
+    brain[ "DEC_Connaissance_GetRawMission" ] = &DEC_KnowledgeAgentFunctions::GetMission;
     brain[ "DEC_HasMission" ] = &DEC_AgentFunctions::HasMission;
     brain[ "DEC_GetDirectionDanger" ] = &DEC_AgentFunctions::GetDirectionDanger;
 
@@ -794,6 +795,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     
     // Transport connaissance
     brain[ "DEC_Connaissance_Transporter" ] = &DEC_ActionFunctions::Knowledge_Load;
+    brain[ "DEC_TransportConnaissance_AjouterPion" ] = &DEC_ActionFunctions::TransportKnowledge_AddPion;
 
     // Prisonniers
     brain[ "DEC_Prisonniers_CapturerEtEmbarquer"  ] =
