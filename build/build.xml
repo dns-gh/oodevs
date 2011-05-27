@@ -1187,7 +1187,6 @@
             <include name="data/propagations/test/**"/>
             <include name="exercises/Egypt/**"/>
             <include name="exercises/Paris/**"/>
-            <include name="exercises/Scripting demo/**"/>
             <include name="exercises/9_cases/**"/>
             <include name="exercises/Musoria Border Defense/**"/>
             <include name="exercises/tutorials/01 - Generalities/**"/>
@@ -1205,7 +1204,6 @@
             <include name="exercises/tutorials/13 - Advanced features/**"/>
             <include name="data/terrains/Nord egypt/**"/>
             <include name="data/terrains/Paris_Est/**"/>
-            <include name="data/terrains/test/**"/>
             <include name="data/terrains/Angers_x9/**"/>
         </pack>
     </target>
