@@ -140,7 +140,7 @@ bool Formation::HasAggregatedSubordinate() const
 // Name: Formation::DoUpdate
 // Created: ABR 2011-05-11
 // -----------------------------------------------------------------------------
-void Formation::DoUpdate( const sword::FormationUpdate& message )
+void Formation::DoUpdate( const sword::FormationUpdate& /*message*/ )
 {
     controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }

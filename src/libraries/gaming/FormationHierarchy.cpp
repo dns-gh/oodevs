@@ -64,3 +64,13 @@ const kernel::Entity_ABC* FormationHierarchy::GetSuperior() const
     const kernel::Entity_ABC* superior = MergingTacticalHierarchies::GetSuperior();
     return superior ? superior : superior_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: FormationHierarchy::UnregisterParent
+// Created: MMC 2011-05-30
+// -----------------------------------------------------------------------------
+void FormationHierarchy::UnregisterParent()
+{
+    superior_ = 0;
+    kernel::MergingTacticalHierarchies::UnregisterParent();
+}

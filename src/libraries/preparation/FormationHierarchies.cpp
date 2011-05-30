@@ -58,6 +58,16 @@ void FormationHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
 }
 
 // -----------------------------------------------------------------------------
+// Name: FormationHierarchies::UnregisterParent
+// Created: MMC 2011-05-30
+// -----------------------------------------------------------------------------
+void FormationHierarchies::UnregisterParent()
+{
+    superior_ = 0;
+    MergingTacticalHierarchies::UnregisterParent();
+}
+
+// -----------------------------------------------------------------------------
 // Name: FormationHierarchies::SerializeAttributes
 // Created: SBO 2006-09-21
 // -----------------------------------------------------------------------------
