@@ -9,7 +9,6 @@
 
 #include "clients_kernel_pch.h"
 #include "SymbolFactory.h"
-
 #include "HierarchyLevel_ABC.h"
 #include "SymbolRule.h"
 #include "SymbolCase.h"
@@ -86,7 +85,6 @@ void SymbolFactory::ListSymbols()
 {
     if( !symbolRule_.get() )
         return;
-    //xml::xstream out( "UnitSymbols.xml" );
     xml::xobufferstream out;
     out << xml::start( "unit-symbols" );
     TraverseTree( out, *symbolRule_.get() );
@@ -180,7 +178,7 @@ std::string SymbolFactory::CreateSymbol( const std::string& hierarchy ) const
 // Name: SymbolFactory::CreateLevelSymbol
 // Created: AGE 2006-10-23
 // -----------------------------------------------------------------------------
-std::string SymbolFactory::CreateLevelSymbol( const std::string& level ) const // $$$$ ABR 2011-05-24: to remove
+std::string SymbolFactory::CreateLevelSymbol( const std::string& level ) const
 {
     if( !initialized_ || !levelRule_.get() )
         return "";
