@@ -11,8 +11,6 @@
 #include "MeteoModel.h"
 #include "Simulation.h"
 #include "meteo/PHY_Meteo.h"
-#include "meteo/PHY_Lighting.h"
-#include "meteo/PHY_Precipitation.h"
 #include "meteo/MeteoData.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
@@ -22,12 +20,11 @@
 // Created: HBD 2010-03-10
 // -----------------------------------------------------------------------------
 MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter, const Simulation& simulation, kernel::Controller& controller )
-    : converter_ ( converter )
+    : weather::MeteoModel_ABC( converter )
     , simulation_( simulation )
     , controller_( controller )
 {
-    weather::PHY_Precipitation::Initialize();
-    weather::PHY_Lighting::Initialize();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -36,26 +33,7 @@ MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter, const Simula
 // -----------------------------------------------------------------------------
 MeteoModel::~MeteoModel()
 {
-    weather::PHY_Lighting::Terminate();
-    weather::PHY_Precipitation::Terminate();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MeteoModel::UnregisterMeteo
-// Created: HBD 2010-03-10
-// -----------------------------------------------------------------------------
-void MeteoModel::UnregisterMeteo( weather::PHY_Meteo& meteo )
-{
-   meteos_.remove( &meteo );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MeteoModel::GetLighting
-// Created: HBD 2010-03-10
-// -----------------------------------------------------------------------------
-const weather::PHY_Lighting& MeteoModel::GetLighting() const
-{
-    return pGlobalMeteo_->GetLighting();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -64,9 +42,21 @@ const weather::PHY_Lighting& MeteoModel::GetLighting() const
 // -----------------------------------------------------------------------------
 const weather::PHY_Meteo* MeteoModel::GetGlobalMeteo() const
 {
-    if( pGlobalMeteo_.get() )
-        return pGlobalMeteo_.get();
+    if( globalMeteo_.get() )
+        return globalMeteo_.get();
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MeteoModel::GetMeteo
+// Created: HBD 2010-03-30
+// -----------------------------------------------------------------------------
+const weather::PHY_Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point ) const
+{
+    for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
+        if( (*it)->IsInside( point ) )
+            return ( *it ).get();
+    return globalMeteo_.get();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,10 +66,10 @@ const weather::PHY_Meteo* MeteoModel::GetGlobalMeteo() const
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg )
 {
-    if( pGlobalMeteo_.get() )
-        pGlobalMeteo_->Update( msg.attributes() );
+    if( globalMeteo_.get() )
+        globalMeteo_->Update( msg.attributes() );
     else
-        pGlobalMeteo_.reset( new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, simulation_.GetTickDuration() ) );
+        globalMeteo_.reset( new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, simulation_.GetTickDuration() ) );
     controller_.Update( *this );
 }
 
@@ -94,35 +84,14 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
     {
         const geometry::Point2f topLeft = converter_.ConvertFromGeo(
             geometry::Point2d(
-                msg.top_left().longitude(),
-                msg.top_left().latitude() ) );
+            msg.top_left().longitude(),
+            msg.top_left().latitude() ) );
         const geometry::Point2f bottomRight = converter_.ConvertFromGeo(
             geometry::Point2d(
-                msg.bottom_right().longitude(),
-                msg.bottom_right().latitude() ) );
-        RegisterMeteo( *new weather::MeteoData( msg.weather().id(), topLeft, bottomRight, msg.attributes(), *this, converter_, simulation_.GetTickDuration() ) );
+            msg.bottom_right().longitude(),
+            msg.bottom_right().latitude() ) );
+        RegisterMeteo( boost::shared_ptr< weather::MeteoData >( new weather::MeteoData( msg.weather().id(), topLeft, bottomRight, msg.attributes(), *this, converter_, simulation_.GetTickDuration() ) ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MeteoModel::RegisterMeteo
-// Created: HBD 2010-03-23
-// -----------------------------------------------------------------------------
-void MeteoModel::RegisterMeteo( weather::PHY_Meteo& meteo )
-{
-    meteos_.push_front( &meteo );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MeteoModel::GetMeteo
-// Created: HBD 2010-03-30
-// -----------------------------------------------------------------------------
-const weather::PHY_Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point ) const
-{
-    for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
-        if( (*it)->IsInside( point ) )
-            return *it;
-    return pGlobalMeteo_.get();
 }
 
 // -----------------------------------------------------------------------------
@@ -131,30 +100,10 @@ const weather::PHY_Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWeatherDestruction& message )
 {
-    for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( IT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->GetId() == message.weather().id() )
         {
-            weather::PHY_Meteo* meteo = *it;
-            meteos_.remove( meteo );
-            delete meteo; // $$$$ MCO : use boost::shared_ptr
+            meteos_.remove( *it );
             return;
         }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MeteoModel::Purge
-// Created: HBD 2010-04-02
-// -----------------------------------------------------------------------------
-void MeteoModel::Purge()
-{
-    if( !meteos_.empty() ) // $$$$ MCO : useless
-    {
-        for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); )
-        {
-            weather::PHY_Meteo* meteo = *it;
-            it = meteos_.erase( it );
-            delete meteo; // $$$$ MCO : use boost::shared_ptr
-        }
-    }
-    pGlobalMeteo_.reset();
 }

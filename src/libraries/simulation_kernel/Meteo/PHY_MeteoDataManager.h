@@ -71,8 +71,8 @@ public:
 private:
     //! @name Registration
     //@{
-    virtual void RegisterMeteo( weather::PHY_Meteo& meteo );
-    virtual void UnregisterMeteo( weather::PHY_Meteo& meteo );
+    virtual void RegisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element );
+    virtual void UnregisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element );
     //@}
 
     //! @name Helpers
@@ -85,9 +85,9 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< weather::PHY_Meteo* > T_MeteoSet;
-    typedef T_MeteoSet::iterator           IT_MeteoSet;
-    typedef T_MeteoSet::const_iterator    CIT_MeteoSet;
+    typedef std::set< boost::shared_ptr< weather::PHY_Meteo > > T_MeteoSet;
+    typedef T_MeteoSet::iterator                               IT_MeteoSet;
+    typedef T_MeteoSet::const_iterator                        CIT_MeteoSet;
     //@}
 
 private:

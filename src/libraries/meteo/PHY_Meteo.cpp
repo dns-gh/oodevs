@@ -129,7 +129,7 @@ PHY_Meteo::PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitatio
 PHY_Meteo::~PHY_Meteo()
 {
     if( listener_ )
-        listener_->UnregisterMeteo( *this );
+        listener_->UnregisterMeteo( boost::shared_ptr< PHY_Meteo >( this ) );
     assert( nRefCount_ == 0 );
 }
 

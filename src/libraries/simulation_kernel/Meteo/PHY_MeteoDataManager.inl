@@ -39,24 +39,25 @@ const weather::PHY_Lighting& PHY_MeteoDataManager::GetLighting() const
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::RegisterMeteo
-// Created: NLD 2006-03-13
+// Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
 inline
-void PHY_MeteoDataManager::RegisterMeteo( weather::PHY_Meteo& meteo )
+void PHY_MeteoDataManager::RegisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element )
 {
-    meteo.SetListener( this );
-    meteo.Update( pEphemeride_->GetLightingBase() );
-    if( ! meteos_.insert( &meteo ).second )
+    element->SetListener( this );
+    element->Update( pEphemeride_->GetLightingBase() );
+    if( ! meteos_.insert( element ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::UnregisterMeteo
-// Created: NLD 2006-03-13
+// Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
 inline
-void PHY_MeteoDataManager::UnregisterMeteo( weather::PHY_Meteo& meteo )
+void PHY_MeteoDataManager::UnregisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element )
 {
-    if( meteos_.erase( &meteo ) != 1 )
+    if( meteos_.erase( element ) != 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+
 }

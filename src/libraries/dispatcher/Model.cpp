@@ -59,7 +59,7 @@ Model::Model( const Config& config, const kernel::StaticModel& staticModel )
     , simulation_      ( new SimulationModel( config ) )
     , compositeFactory_( new CompositeFactory() )
     , folk_            ( new FolkModel() )
-    , meteoModel_      ( new MeteoModel( config, *this ) )
+    , meteoModel_      ( new MeteoModel( staticModel.coordinateConverter_, config, *this ) )
 {
     // NOTHING
 }

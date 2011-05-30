@@ -15,9 +15,8 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "meteo/MeteoData.h"
-#include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Meteo.h"
-#include "meteo/PHY_Precipitation.h"
+#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 
@@ -25,14 +24,12 @@ using namespace dispatcher;
 // Name: MeteoModel constructor
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
-MeteoModel::MeteoModel( const Config& config, Model& model )
-    : model_       ( model )
+MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter, const Config& config, Model& model )
+    : weather::MeteoModel_ABC( converter )
+    , model_       ( model )
     , config_      ( config )
-    , converter_   ( new kernel::CoordinateConverter( config ) )
-    , pGlobalMeteo_( 0 )
 {
-    weather::PHY_Precipitation::Initialize();
-    weather::PHY_Lighting::Initialize();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -41,17 +38,19 @@ MeteoModel::MeteoModel( const Config& config, Model& model )
 // -----------------------------------------------------------------------------
 MeteoModel::~MeteoModel()
 {
-    weather::PHY_Lighting::Terminate();
-    weather::PHY_Precipitation::Terminate();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: MeteoModel::GetLighting
-// Created: HBD 2010-03-23
+// Name: MeteoModel::Accept
+// Created: HBD 2010-03-31
 // -----------------------------------------------------------------------------
-const weather::PHY_Lighting& MeteoModel::GetLighting() const
+void MeteoModel::Accept( kernel::ModelVisitor_ABC& visitor )
 {
-   return pGlobalMeteo_->GetLighting();
+    if( globalMeteo_.get() )
+        visitor.Visit( *globalMeteo_ );
+    for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
+        visitor.Visit( **it );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,12 +59,12 @@ const weather::PHY_Lighting& MeteoModel::GetLighting() const
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg )
 {
-    if( pGlobalMeteo_ )
-        pGlobalMeteo_->Update( msg.attributes() );
+    if( globalMeteo_.get() )
+        globalMeteo_->Update( msg.attributes() );
     else
     {
-        pGlobalMeteo_ = new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, config_.GetTickDuration() );
-        model_.AddExtensions( *pGlobalMeteo_ );
+        globalMeteo_.reset( new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, config_.GetTickDuration() ) );
+        model_.AddExtensions( *globalMeteo_ );
     }
  }
 
@@ -76,61 +75,28 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
 void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeatherCreation& msg )
 {
     const geometry::Point2d topLeft( msg.top_left().longitude(), msg.top_left().latitude() );
-    const geometry::Point2f vUpLeft = converter_->ConvertFromGeo( topLeft );
+    const geometry::Point2f vUpLeft = converter_.ConvertFromGeo( topLeft );
     const geometry::Point2d bottomRight( msg.bottom_right().longitude(), msg.bottom_right().latitude() );
-    const geometry::Point2f vDownRight = converter_->ConvertFromGeo( bottomRight );
+    const geometry::Point2f vDownRight = converter_.ConvertFromGeo( bottomRight );
     if( msg.has_attributes() )
     {
-        weather::MeteoData* weather = new weather::MeteoData( msg.weather().id(), vUpLeft, vDownRight, msg.attributes(), *this, *converter_, config_.GetTickDuration() );
+        boost::shared_ptr< weather::MeteoData > weather = boost::shared_ptr< weather::MeteoData >( new weather::MeteoData( msg.weather().id(), vUpLeft, vDownRight, msg.attributes(), *this, converter_, config_.GetTickDuration() ) );
         model_.AddExtensions( *weather );
-        RegisterMeteo( *weather );
+        RegisterMeteo( weather );
         weather->Update( msg.attributes() );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: MeteoModel::OnReceiveMsgLocalMeteoDestruction
+// Name: MeteoModel::OnReceiveMsgGlobalMeteoDestruction
 // Created: HBD 2010-04-02
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWeatherDestruction& message )
 {
-    for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( IT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->GetId() == message.weather().id() )
         {
-            weather::PHY_Meteo* meteo = *it;
-            ++it;
-            meteos_.remove( meteo );
-            delete meteo;
+            meteos_.remove( *it );
             return;
         }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MeteoModel::RegisterMeteo
-// Created: HBD 2010-03-23
-// -----------------------------------------------------------------------------
-void MeteoModel::RegisterMeteo( weather::PHY_Meteo& meteo )
-{
-    meteos_.push_front( &meteo );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MeteoModel::UnregisterMeteo
-// Created: HBD 2010-03-23
-// -----------------------------------------------------------------------------
-void MeteoModel::UnregisterMeteo( weather::PHY_Meteo& meteo )
-{
-    meteos_.remove( &meteo );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MeteoModel::Accept
-// Created: HBD 2010-03-31
-// -----------------------------------------------------------------------------
-void MeteoModel::Accept( kernel::ModelVisitor_ABC& visitor )
-{
-    if( pGlobalMeteo_)
-        visitor.Visit( *pGlobalMeteo_ );
-    for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
-        visitor.Visit( **it );
 }

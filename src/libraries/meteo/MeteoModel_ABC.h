@@ -11,12 +11,19 @@
 #define __MeteoModel_ABC_h_
 
 #include "MeteoManager_ABC.h"
+#include <boost/noncopyable.hpp>
+#include <list>
 
 namespace sword
 {
     class ControlGlobalWeather;
     class ControlLocalWeatherCreation;
     class ControlLocalWeatherDestruction;
+}
+
+namespace kernel
+{
+    class CoordinateConverter_ABC;
 }
 
 namespace weather
@@ -28,34 +35,49 @@ namespace weather
 // Created: HBD 2010-03-23
 // =============================================================================
 class MeteoModel_ABC : public MeteoManager_ABC
+                     , boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MeteoModel_ABC() {}
-    virtual ~MeteoModel_ABC() {}
+             MeteoModel_ABC( kernel::CoordinateConverter_ABC& converter );
+    virtual ~MeteoModel_ABC();
     //@}
 
-    //! @name Operations
+    //! @name Protocol buffer operations
     //@{
-    virtual const PHY_Lighting& GetLighting() const = 0;
     virtual void OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& message ) = 0;
     virtual void OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeatherCreation& message ) = 0;
     virtual void OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWeatherDestruction& message ) = 0;
     //@}
 
+    //! @name Operations
+    //@{
+    virtual const PHY_Lighting& GetLighting() const;
+    void Purge();
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    typedef std::list< boost::shared_ptr< weather::PHY_Meteo > > T_MeteoList;
+    typedef T_MeteoList::iterator                               IT_MeteoList;
+    typedef T_MeteoList::const_iterator                        CIT_MeteoList;
+    //@}
+
 protected:
     //! @name Operations
     //@{
-    virtual void RegisterMeteo  ( PHY_Meteo& weather ) = 0;
-    virtual void UnregisterMeteo( PHY_Meteo& weather ) = 0;
+    virtual void RegisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element );
+    virtual void UnregisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element );
     //@}
 
-private:
-    //! @name Copy/Assignment
+protected:
+    //! @name Member data
     //@{
-    MeteoModel_ABC( const MeteoModel_ABC& );            //!< Copy constructor
-    MeteoModel_ABC& operator=( const MeteoModel_ABC& ); //!< Assignment operator
+    kernel::CoordinateConverter_ABC&    converter_;
+    std::auto_ptr< weather::PHY_Meteo > globalMeteo_;
+    T_MeteoList                         meteos_;    // Including global meteo
     //@}
 };
 
