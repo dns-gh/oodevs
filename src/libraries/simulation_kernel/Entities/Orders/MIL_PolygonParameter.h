@@ -36,6 +36,7 @@ public:
     //@{
     virtual bool ToPolygon( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
+    virtual bool IsValid() const;
     //@}
 
 private:
@@ -49,6 +50,7 @@ private:
     //! @name Member data
     //@{
     boost::shared_ptr< TER_Localisation > pPolygon_;
+    bool valid_;
     //@}
 };
 

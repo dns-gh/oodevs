@@ -8,10 +8,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-#include "MIL_MissionParameterFactory.h"
-#include "MIL_AgentServer.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "Entities/MIL_EntityManager.h"
+#include "Entities/Orders/MIL_OrderTypeParameter.h"
+#include "MIL_MissionParameterFactory.h"
+#include "MIL_AgentServer.h"  
 #include "MIL_Mission_ABC.h"
 #include "MIL_AgentKnowledgeParameter.h"
 #include "MIL_AgentParameter.h"
@@ -42,8 +43,9 @@
 #include "MIL_StringParameter.h"
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
-#include "Entities/Orders/MIL_OrderTypeParameter.h"
+#include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
+
 
 // -----------------------------------------------------------------------------
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
@@ -97,7 +99,11 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
     else if( message.has_point() )
         ptr = new MIL_PointParameter( message.point() );
     else if( message.has_area() )
+    {
         ptr = new MIL_PolygonParameter( message.area() );
+        if ( !static_cast< MIL_PolygonParameter* > ( ptr )->IsValid() )
+            throw NET_AsnException< sword::OrderAck::ErrorCode >( sword::OrderAck::error_invalid_parameter );
+    }
     else if( message.has_location() )
         ptr = new MIL_LocationParameter( message.location() );
     else if( message.has_heading() )

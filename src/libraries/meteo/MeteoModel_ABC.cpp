@@ -34,7 +34,6 @@ MeteoModel_ABC::~MeteoModel_ABC()
 {
     weather::PHY_Lighting::Terminate();
     weather::PHY_Precipitation::Terminate();
-    Purge();
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +42,7 @@ MeteoModel_ABC::~MeteoModel_ABC()
 // -----------------------------------------------------------------------------
 const PHY_Lighting& MeteoModel_ABC::GetLighting() const
 {
-    assert( globalMeteo_.get() );
+    assert( globalMeteo_ );
     return globalMeteo_->GetLighting();
 }
 
@@ -53,8 +52,8 @@ const PHY_Lighting& MeteoModel_ABC::GetLighting() const
 // -----------------------------------------------------------------------------
 void MeteoModel_ABC::Purge()
 {
+    globalMeteo_ = 0;
     meteos_.clear();
-    globalMeteo_.reset();
 }
 
 // -----------------------------------------------------------------------------

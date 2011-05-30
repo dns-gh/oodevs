@@ -19,8 +19,9 @@
 // -----------------------------------------------------------------------------
 MIL_PolygonParameter::MIL_PolygonParameter( const sword::Polygon& asn )
     : pPolygon_( new TER_Localisation() )
+    , valid_( false )
 {
-    NET_ASN_Tools::ReadPolygon( asn, *pPolygon_ );
+    valid_ = NET_ASN_Tools::ReadPolygon( asn, *pPolygon_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,4 +61,13 @@ bool MIL_PolygonParameter::ToElement( sword::MissionParameter_Value& elem ) cons
 {
     NET_ASN_Tools::WritePolygon( *pPolygon_, *elem.mutable_area() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PolygonParameter::IsValid
+// Created: MMC 2011-05-30
+// -----------------------------------------------------------------------------
+bool MIL_PolygonParameter::IsValid() const
+{
+    return valid_;
 }

@@ -42,8 +42,8 @@ MeteoModel::~MeteoModel()
 // -----------------------------------------------------------------------------
 const weather::PHY_Meteo* MeteoModel::GetGlobalMeteo() const
 {
-    if( globalMeteo_.get() )
-        return globalMeteo_.get();
+    if( globalMeteo_ )
+        return globalMeteo_;
     return 0;
 }
 
@@ -56,7 +56,7 @@ const weather::PHY_Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point )
     for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->IsInside( point ) )
             return ( *it ).get();
-    return globalMeteo_.get();
+    return globalMeteo_;
 }
 
 // -----------------------------------------------------------------------------
@@ -66,10 +66,10 @@ const weather::PHY_Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg )
 {
-    if( globalMeteo_.get() )
+    if( globalMeteo_ )
         globalMeteo_->Update( msg.attributes() );
     else
-        globalMeteo_.reset( new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, simulation_.GetTickDuration() ) );
+        globalMeteo_ = new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, simulation_.GetTickDuration() );
     controller_.Update( *this );
 }
 
