@@ -397,15 +397,6 @@ float UrbanObjectWrapper::GetTrafficability() const
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::GetObject
-// Created: SLG 2010-06-21
-// -----------------------------------------------------------------------------
-const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject()
-{
-    return *object_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::GetObject
 // Created: SLG 2010-06-24
 // -----------------------------------------------------------------------------
 const urban::TerrainObject_ABC& UrbanObjectWrapper::GetObject() const

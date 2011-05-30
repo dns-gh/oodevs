@@ -84,7 +84,6 @@ public:
     float GetHeight() const;
     float GetOccupation() const;
     float GetTrafficability() const;
-    const urban::TerrainObject_ABC& GetObject();  // $$$$ _RC_ LGY 2011-02-18: à supprimer
     const urban::TerrainObject_ABC& GetObject() const;  // $$$$ _RC_ LGY 2011-02-18: à supprimer
     void Accept( urban::MotivationsVisitor_ABC& visitor ) const;
     float GetLivingSpace() const;
