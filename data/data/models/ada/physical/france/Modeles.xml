@@ -611,7 +611,7 @@
         <mission name="ASY Commettre un Attentat"/>
         <mission name="ASY Commettre un Attentat Suicide"/>
         <mission name="ASY Se Dissimuler"/>
-        <mission name="ASY Prendre un Otage"/>
+        <mission name="ASY Prendre en Otage"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
         <mission name="ASY S'Infiltrer"/>
@@ -730,7 +730,7 @@
         <mission name="COMMUNES Suivre"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
-        <mission name="ASY Prendre un Otage"/>
+        <mission name="ASY Prendre en Otage"/>
         <mission name="MELEE Controler"/>
         <mission name="MELEE Harceler"/>
         <mission name="MELEE Surveiller"/>
@@ -11675,7 +11675,7 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Milice">
       <missions>
-        <mission name="ASY Prendre un Otage"/>
+        <mission name="ASY Prendre en Otage"/>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Decrocher"/>
@@ -11760,4 +11760,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3092856093" -->
+<!-- signature="0893076963" -->

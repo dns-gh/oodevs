@@ -2647,7 +2647,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.terrorism.tasks.PrendreOtage" dia-type="france.military.platoon.terrorism.tasks.PrendreOtage" id="2138" name="ASY Prendre un Otage">
+    <mission dia-behavior="france.military.platoon.terrorism.tasks.PrendreOtage" dia-type="france.military.platoon.terrorism.tasks.PrendreOtage" id="2138" name="ASY Prendre en Otage">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -4414,7 +4414,7 @@
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetwork"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.tasks.PrendreOtage" dia-type="france.military.company.tasks.PrendreOtage" id="1049" mrt-dia-behavior="france.military.company.tasks.PrendreOtage" name="ASY Prendre un Otage">
+    <mission cdt-dia-behavior="france.military.company.tasks.PrendreOtage" dia-type="france.military.company.tasks.PrendreOtage" id="1049" mrt-dia-behavior="france.military.company.tasks.PrendreOtage" name="ASY Prendre en Otage">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4685,4 +4685,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="1295763005" -->
+<!-- signature="3122816003" -->
