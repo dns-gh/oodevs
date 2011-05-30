@@ -69,7 +69,10 @@ void SymbolFactory::ReadSymbols( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void SymbolFactory::Load( const tools::ExerciseConfig& config )
 {
-    assert( !initialized_ );
+    currentChain_.clear();
+    currentSymbol_.clear();
+    availableSymbols_.clear();
+
     config.GetLoader().LoadPhysicalFile( "symbols", boost::bind( &SymbolFactory::ReadSymbols, this, _1 ) );
     ListSymbols();
     initialized_ = true;
