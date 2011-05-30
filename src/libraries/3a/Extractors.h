@@ -15,6 +15,7 @@
 #include "PowerIndicators.h"
 #include "StaticModel.h"
 #include "Types.h"
+#include "protocol/Protocol.h"
 
 // =============================================================================
 /** @namespace Extractors
