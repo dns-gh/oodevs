@@ -392,6 +392,7 @@
 			<xs:element name="altitude-modifier" minOccurs="0"/>
 			<xs:element name="universal" minOccurs="0"/>
 			<xs:element name="stock" minOccurs="0"/>
+			<xs:element name="underground-network-exit" minOccurs="0"/>
 		</xs:all>
 	</xs:complexType>
 	<xs:element name="object" type="T_Object"/>

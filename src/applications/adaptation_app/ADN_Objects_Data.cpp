@@ -15,10 +15,7 @@
 #include "ADN_Tools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
-#include "ADN_OpenFile_Exception.h"
 #include "ADN_DataException.h"
-#include "ADN_SaveFile_Exception.h"
-#include "ADN_Composantes_Data.h"
 #include "ADN_Tr.h"
 #include "ENT/ENT_Tr.h"
 #include <xeumeuleu/xml.hpp>
@@ -82,10 +79,10 @@ void ADN_Objects_Data::ScoreLocationInfos::WriteArchive( xml::xostream& output )
 
 namespace
 {
-    std::vector< std::string > VectorBuilder( const char* choice[], uint size )
+    std::vector< std::string > VectorBuilder( const char* choice[], std::size_t size )
     {
         std::vector< std::string > stack( size );
-        for ( uint i = 0; i < size; ++i )
+        for( std::size_t i = 0; i < size; ++i )
             stack[ i ] = std::string( choice[ i ] );
         return stack;
     }
@@ -237,9 +234,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Constructor::ADN_CapacityInfos_Constructor()
 void ADN_Objects_Data::ADN_CapacityInfos_Constructor::ReadArchive( xml::xistream& xis )
 {
     ADN_TypeCapacity_Infos::ReadArchive( xis );
-    std::string strConsumption;
-    xis >> xml::attribute( "default-consumption-mode", strConsumption );
-    nDefaultConsumption_ = ADN_Tr::ConvertToConsumptionType( strConsumption );
+    nDefaultConsumption_ = ADN_Tr::ConvertToConsumptionType( xis.attribute< std::string >( "default-consumption-mode" ) );
     unitType_ = xis.attribute< std::string >( "unit-type" );
     xis >> xml::optional >> xml::list( ADN_CapacityInfos_Buildable::TAG, *ptrBuildable_, &ADN_CapacityInfos_Buildable::ReadArchive );
     xis >> xml::optional >> xml::list( ADN_CapacityInfos_Improvable::TAG, *ptrImprovable_, &ADN_CapacityInfos_Improvable::ReadArchive );
@@ -272,8 +267,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Constructor::WriteArchive( xml::xostrea
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Avoidable::ADN_CapacityInfos_Avoidable()
-    : fields_   ( "Distance" )
-    , rDistance_( 0. )
+    : rDistance_( 0. )
 {
     rDistance_.SetParentNode( *this );
 }
@@ -302,8 +296,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_Avoidable::WriteArchive( xml::xostream&
 // Created: JCR 2008-07-15
 // -----------------------------------------------------------------------------
 ADN_Objects_Data::ADN_CapacityInfos_Bypassable::ADN_CapacityInfos_Bypassable()
-    : fields_( "Speed" )
-    , rSpeed_( 0. )
+    : rSpeed_( 0. )
 {
     rSpeed_.SetParentNode( *this );
 }
@@ -315,7 +308,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Bypassable::ADN_CapacityInfos_Bypassable()
 void ADN_Objects_Data::ADN_CapacityInfos_Bypassable::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    xis >> xml::attribute( "bypass-speed", rSpeed_ );
+    rSpeed_ = xis.attribute< double >( "bypass-speed" );
 }
 
 // -----------------------------------------------------------------------------
@@ -348,13 +341,10 @@ ADN_Objects_Data::ADN_CapacityInfos_Mobility::ADN_CapacityInfos_Mobility()
 void ADN_Objects_Data::ADN_CapacityInfos_Mobility::ReadArchive( xml::xistream& xis )
 {
     ADN_TypeCapacity_Infos::ReadArchive( xis );
-    std::string impact;
-    xis >> xml::attribute( "default-speed", rDefaultSpeed_ )
-        >> xml::attribute( "unit-speed-impact-mode", impact );
-    nSpeedModifier_ = ADN_Tr::ConvertToSpeedImpact( impact );
+    rDefaultSpeed_ = xis.attribute< double >( "default-speed" );
+    nSpeedModifier_ = ADN_Tr::ConvertToSpeedImpact( xis.attribute< std::string >( "unit-speed-impact-mode" ) );
     if( nSpeedModifier_ == eSpeedImpact_VitesseMaxAgent )
-        xis >> xml::attribute( "max-unit-percentage-speed", rMaxAgentSpeed_ );
-
+        rMaxAgentSpeed_ = xis.attribute< double >( "max-unit-percentage-speed" );
 }
 
 // -----------------------------------------------------------------------------
@@ -416,7 +406,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Contamination::ADN_CapacityInfos_Contaminati
 void ADN_Objects_Data::ADN_CapacityInfos_Contamination::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    xis >> xml::attribute( "max-toxic", max_toxic_ );
+    max_toxic_ = xis.attribute< int >( "max-toxic" );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Contamination::WriteArchive( xml::xostream& xos )
@@ -525,7 +515,7 @@ ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::ADN_CapacityInfos_Interac
 void ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    xis >> xml::attribute( "height", height_ );
+    height_ = xis.attribute< double >( "height" );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_InteractionHeight::WriteArchive( xml::xostream& xos )
@@ -545,7 +535,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Intoxication::ADN_CapacityInfos_Intoxication
 void ADN_Objects_Data::ADN_CapacityInfos_Intoxication::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    xis >> xml::attribute( "max-toxic", max_toxic_ );
+    max_toxic_ = xis.attribute< int >( "max-toxic" );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Intoxication::WriteArchive( xml::xostream& xos )
@@ -583,7 +573,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Population::ADN_CapacityInfos_Population()
 void ADN_Objects_Data::ADN_CapacityInfos_Population::ReadArchive( xml::xistream& xis )
 {
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
-    xis >> xml::attribute( "density", density_ );
+    density_ = xis.attribute< double >( "density" );
 }
 
 void ADN_Objects_Data::ADN_CapacityInfos_Population::WriteArchive( xml::xostream& xos )
@@ -749,7 +739,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::ReadTerrain( xml::xis
 void ADN_Objects_Data::ADN_CapacityInfos_TerrainHeuristic::WriteArchive( xml::xostream& xos )
 {
     for( T_ScoreLocationInfosVector::iterator itScore = scores_.begin(); itScore != scores_.end(); ++itScore )
-            ( *itScore )->WriteArchive( xos );
+        ( *itScore )->WriteArchive( xos );
 }
 //@}
 
@@ -941,7 +931,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Structural::ADN_CapacityInfos_Structural()
 void ADN_Objects_Data::ADN_CapacityInfos_Structural::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    input >> xml::attribute( "value", rStructuralState_ );
+    rStructuralState_ = input.attribute< int >( "value" );
 }
 
 // -----------------------------------------------------------------------------
@@ -970,8 +960,7 @@ ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ADN_CapacityInfos_Attitude
 void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    std::string strAttitude;
-    input >> xml::attribute( "attitude", strAttitude );
+    std::string strAttitude = input.attribute< std::string >( "attitude" );
     attitude_ = ENT_Tr::ConvertToPopulationAttitude( strAttitude );
     if( attitude_ == static_cast< E_PopulationAttitude >( -1 ) )
         throw ADN_DataException( "Invalid data", tools::translate( "Object_Data", "Crowd types - Invalid crowd attitude '%1'" ).arg( strAttitude.c_str() ).ascii() );
@@ -1003,7 +992,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Perception::ADN_CapacityInfos_Perception()
 void ADN_Objects_Data::ADN_CapacityInfos_Perception::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    input >> xml::attribute( "blinded", blinded_ );
+    blinded_ = input.attribute< bool >( "blinded" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1033,7 +1022,7 @@ ADN_Objects_Data::ADN_CapacityInfos_Scattering::ADN_CapacityInfos_Scattering()
 void ADN_Objects_Data::ADN_CapacityInfos_Scattering::ReadArchive( xml::xistream& input )
 {
     bPresent_ = true;
-    input >> xml::attribute( "human-by-time-step", humanByTimeStep_ );
+    humanByTimeStep_ = input.attribute< int >( "human-by-time-step" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1182,6 +1171,7 @@ INIT_DATA( ADN_CapacityInfos_Stock,                   "Stock",                  
 INIT_DATA( ADN_CapacityInfos_ResourceNetwork,         "ResourceNetwork",         "resources" );
 INIT_DATA( ADN_CapacityInfos_Lodging,                 "Lodging",                 "lodging" );
 INIT_DATA( ADN_CapacityInfos_AltitudeModifier,        "AltitudeModifier",        "altitude-modifier" );
+INIT_DATA( ADN_CapacityInfos_UndergroundNetworkExit,  "UndergroundNetworkExit",  "underground-network-exit" );
 
 #pragma warning( pop )
 
@@ -1270,6 +1260,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_ResourceNetwork::TAG ].reset( new ADN_CapacityInfos_ResourceNetwork() );
     capacities_[ ADN_CapacityInfos_Lodging::TAG ].reset( new ADN_CapacityInfos_Lodging() );
     capacities_[ ADN_CapacityInfos_AltitudeModifier::TAG ].reset( new ADN_CapacityInfos_AltitudeModifier() );
+    capacities_[ ADN_CapacityInfos_UndergroundNetworkExit::TAG ].reset( new ADN_CapacityInfos_UndergroundNetworkExit() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1307,7 +1298,7 @@ void ADN_Objects_Data::ObjectInfos::ReadCapacityArchive( const std::string& type
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ObjectInfos::ReadArchive( xml::xistream& xis )
 {
-    std::string code = "";
+    std::string code;
     xis >> xml::attribute( "name", strName_ )
         >> xml::attribute( "type", strType_ )
         >> xml::attribute( "geometry", geometries_ )
@@ -1391,8 +1382,7 @@ void ADN_Objects_Data::Reset()
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data::ReadObject( xml::xistream& xis )
 {
-    std::string type = xis.attribute< std::string >( "type" );
-    ObjectInfos* pObjInfo = new ObjectInfos( type );
+    ObjectInfos* pObjInfo = new ObjectInfos( xis.attribute< std::string >( "type" ) );
     if( pObjInfo )
     {
         pObjInfo->ReadArchive( xis );

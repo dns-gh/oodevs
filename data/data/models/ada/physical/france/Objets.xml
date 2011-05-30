@@ -376,5 +376,8 @@
     </fire-propagation-modifier>
   </object>
   <object geometry="polygon" name="Mouvement Population" symbol="" type="populationMoving"/>
+  <object geometry="point" name="Issue souterraine" symbol="G*EXIT*********" type="underground exit">
+    <underground-network-exit/>
+  </object>
 </objects>
-<!-- signature="1858586640" -->
+<!-- signature="3978199957" -->

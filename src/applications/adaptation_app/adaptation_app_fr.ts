@@ -3185,6 +3185,10 @@ du tireur</translation>
         <source>Point effect distance</source>
         <translation>Distance d&apos;effet pour un point</translation>
     </message>
+    <message>
+        <source>Underground network exit</source>
+        <translation>Issue de réseau souterrain</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

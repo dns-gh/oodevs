@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "CapacityFactory.h"
 #include "ObjectPrototype.h"
+#include "MIL_Object_ABC.h"
 
 #include "ActivableCapacity.h"
 #include "AltitudeModifierCapacity.h"
@@ -17,6 +18,8 @@
 #include "AttritionCapacity.h"
 #include "AvoidanceCapacity.h"
 #include "BridgingCapacity.h"
+#include "BurnCapacity.h"
+#include "BurnSurfaceCapacity.h"
 #include "BypassableCapacity.h"
 #include "ConstructionCapacity.h"
 #include "ContaminationCapacity.h"
@@ -24,32 +27,30 @@
 #include "DelayCapacity.h"
 #include "DetectionCapacity.h"
 #include "ExtinguishableCapacity.h"
+#include "FirePropagationModifierCapacity.h"
 #include "FloodCapacity.h"
-#include "MedicalCapacity.h"
 #include "InfrastructureCapacity.h"
+#include "InputPropagationCapacity.h"
 #include "InteractIfEquippedCapacity.h"
+#include "InteractIfHeightCapacity.h"
 #include "InteractWithEnemyCapacity.h"
 #include "InterferenceCapacity.h"
 #include "IntoxicationCapacity.h"
-#include "InputPropagationCapacity.h"
+#include "MedicalCapacity.h"
 #include "MobilityCapacity.h"
 #include "PerceptionCapacity.h"
+#include "PopulationFilterCapacity.h"
 #include "ProtectionCapacity.h"
 #include "ResourceNetworkCapacity.h"
 #include "ScatteringCapacity.h"
 #include "SpawnCapacity.h"
 #include "StructuralCapacity.h"
+#include "SupplyCapacity.h"
 #include "TerrainHeuristicCapacity.h"
 #include "TimeLimitedCapacity.h"
+#include "UndergroundNetworkExitCapacity.h"
 #include "UniversalCapacity.h"
 #include "WorkableCapacity.h"
-#include "SupplyCapacity.h"
-#include "InteractIfHeightCapacity.h"
-#include "PopulationFilterCapacity.h"
-#include "BurnCapacity.h"
-#include "BurnSurfaceCapacity.h"
-#include "FirePropagationModifierCapacity.h"
-#include "MIL_Object_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 
@@ -133,6 +134,8 @@ namespace
 CapacityFactory::CapacityFactory()
 {
     DoRegister( "activable", boost::bind( &AddBuilder< ActivableCapacity >::Add, _1, _2 ) );
+    DoRegister( "altitude-modifier", boost::bind( &AddBuilder< AltitudeModifierCapacity >::Add, _1, _2 ) );
+    DoRegister( "attitude-modifier", boost::bind( &AddBuilder< AttitudeModifierCapacity >::Add, _1, _2 ) );
     DoRegister( "attrition", boost::bind( &AddBuilder< AttritionCapacity >::Add, _1, _2 ) );
     DoRegister( "avoidable", boost::bind( &AddBuilder< AvoidanceCapacity >::Add, _1, _2 ) );
     DoRegister( "bridging", boost::bind( &AddBuilder< BridgingCapacity >::Add, _1, _2 ) );
@@ -141,43 +144,42 @@ CapacityFactory::CapacityFactory()
     DoRegister( "contamination", boost::bind( &AddBuilder< ContaminationCapacity >::Add, _1, _2 ) );
     DoRegister( "decontamination", boost::bind( &AddBuilder< DecontaminationCapacity >::Add, _1, _2 ) );
     DoRegister( "delay", boost::bind( &AddBuilder< DelayCapacity >::Add, _1, _2 ) );
+    DoRegister( "detection", boost::bind( &AddBuilder< DetectionCapacity >::Add, _1, _2 ) );
     DoRegister( "extinguishable", boost::bind( &AddBuilder< ExtinguishableCapacity >::Add, _1, _2 ) );
-    DoRegister( "medical", boost::bind( &AddBuilder< MedicalCapacity >::Add, _1, _2 ) );
+    DoRegister( "fire-propagation-modifier", boost::bind( &AddBuilder< FirePropagationModifierCapacity >::Add, _1, _2 ) );
+    DoRegister( "flood", boost::bind( &AddBuilder< FloodCapacity >::Add, _1, _2 ) );
     DoRegister( "heuristic", boost::bind( &AddBuilder< TerrainHeuristicCapacity >::Add, _1, _2 ) );
+    DoRegister( "infrastructure", boost::bind( &AddBuilder< InfrastructureCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< InfrastructureCapacity >::Update, _1, _2 ) );
     DoRegister( "interact-with-enemy", boost::bind( &AddBuilder< InteractWithEnemyCapacity >::Add, _1, _2 ) );
+    DoRegister( "interaction-height", boost::bind( &AddBuilder< InteractIfHeightCapacity >::Add, _1, _2 ) );
     DoRegister( "interference", boost::bind( &AddBuilder< InterferenceCapacity >::Add, _1, _2 ) );
     DoRegister( "intoxication", boost::bind( &AddBuilder< IntoxicationCapacity >::Add, _1, _2 ) );
     // logistic is not needed except during prepa
-    DoRegister( "supply-route", boost::bind( &AddBuilder< InteractIfEquippedCapacity >::Add, _1, _2 ) );
+    DoRegister( "medical", boost::bind( &AddBuilder< MedicalCapacity >::Add, _1, _2 ) );
+    DoRegister( "medical-treatment", boost::bind( &AddBuilder< MedicalCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< MedicalCapacity >::Update, _1, _2 ) );
     DoRegister( "mobility", boost::bind( &AddBuilder< MobilityCapacity >::Add, _1, _2 ) );
-    DoRegister( "protection", boost::bind( &AddBuilder< ProtectionCapacity >::Add, _1, _2 ) );
-    DoRegister( "time-limited", boost::bind( &AddBuilder< TimeLimitedCapacity >::Add, _1, _2 ) );
-    DoRegister( "workable", boost::bind( &AddBuilder< WorkableCapacity >::Add, _1, _2 ) );
-    DoRegister( "supply", boost::bind( &AddBuilder< SupplyCapacity >::Add, _1, _2 ) );
-    DoRegister( "detection", boost::bind( &AddBuilder< DetectionCapacity >::Add, _1, _2 ) );
-    DoRegister( "spawn", boost::bind( &AddBuilder< SpawnCapacity >::Add, _1, _2 ) );
     DoRegister( "perception", boost::bind( &AddBuilder< PerceptionCapacity >::Add, _1, _2 ) );
-    DoRegister( "attitude-modifier", boost::bind( &AddBuilder< AttitudeModifierCapacity >::Add, _1, _2 ) );
+    DoRegister( "population-filter", boost::bind( &AddBuilder< PopulationFilterCapacity >::Add, _1, _2 ) );
+    DoRegister( "protection", boost::bind( &AddBuilder< ProtectionCapacity >::Add, _1, _2 ) );
+    DoRegister( "resources", boost::bind( &AddBuilder< ResourceNetworkCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< ResourceNetworkCapacity >::Update, _1, _2 ) );
     DoRegister( "scattering", boost::bind( &AddBuilder< ScatteringCapacity >::Add, _1, _2 ) );
+    DoRegister( "spawn", boost::bind( &AddBuilder< SpawnCapacity >::Add, _1, _2 ) );
     DoRegister( "structural-state", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
     // $$$$ JSR 2010-09-08: on garde l'attribut "structural" en double emploi de "structural-state" : il est utilisé par les objets et on ne peut pas changer les xsd pour l'instant.
     // Ca sera à supprimer quand les xml des objets seront à jour (voire avec RPD).
     DoRegister( "structural", boost::bind( &AddBuilder< StructuralCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< StructuralCapacity >::Update, _1, _2 ) );
-    DoRegister( "resources", boost::bind( &AddBuilder< ResourceNetworkCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< ResourceNetworkCapacity >::Update, _1, _2 ) );
-    DoRegister( "medical-treatment", boost::bind( &AddBuilder< MedicalCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< MedicalCapacity >::Update, _1, _2 ) );
-    DoRegister( "infrastructure", boost::bind( &AddBuilder< InfrastructureCapacity >::Add, _1, _2 ), boost::bind( &UpdateBuilder< InfrastructureCapacity >::Update, _1, _2 ) );
-    DoRegister( "interaction-height", boost::bind( &AddBuilder< InteractIfHeightCapacity >::Add, _1, _2 ) );
-    DoRegister( "population-filter", boost::bind( &AddBuilder< PopulationFilterCapacity >::Add, _1, _2 ) );
+    DoRegister( "supply", boost::bind( &AddBuilder< SupplyCapacity >::Add, _1, _2 ) );
+    DoRegister( "supply-route", boost::bind( &AddBuilder< InteractIfEquippedCapacity >::Add, _1, _2 ) );
+    DoRegister( "time-limited", boost::bind( &AddBuilder< TimeLimitedCapacity >::Add, _1, _2 ) );
+    DoRegister( "underground-network-exit", boost::bind( &AddBuilder< UndergroundNetworkExitCapacity >::Add, _1, _2 ) );
+    DoRegister( "universal", boost::bind( &AddBuilder< UniversalCapacity >::Add, _1, _2 ) );
+    DoRegister( "workable", boost::bind( &AddBuilder< WorkableCapacity >::Add, _1, _2 ) );
 
     // $$$$ BCI 2011-01-05: comment faire plus simple?
     boost::shared_ptr< FinalizableBuilders > pFinalizableBuilders( new FinalizableBuilders() );
     DoRegister( "burn", boost::bind( &FinalizableBuilders::AddBurn, pFinalizableBuilders ) );
     DoRegister( "propagation", boost::bind( &FinalizableBuilders::AddPropagation, pFinalizableBuilders, _1, _2 ) );
     RegisterFinalizeCreate( boost::bind( &FinalizableBuilders::Finalize, pFinalizableBuilders, _1 ) );
-    DoRegister( "flood", boost::bind( &AddBuilder< FloodCapacity >::Add, _1, _2 ) );
-    DoRegister( "altitude-modifier", boost::bind( &AddBuilder< AltitudeModifierCapacity >::Add, _1, _2 ) );
-    DoRegister( "universal", boost::bind( &AddBuilder< UniversalCapacity >::Add, _1, _2 ) );
-    DoRegister( "fire-propagation-modifier", boost::bind( &AddBuilder< FirePropagationModifierCapacity >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +248,7 @@ void CapacityFactory::Create( ObjectPrototype& prototype, const std::string& cap
 void CapacityFactory::FinalizeCreate( ObjectPrototype& prototype )
 {
     for( FinalizePrototype_CallBacks::iterator it = finalizePrototypeCallbacks_.begin(); it != finalizePrototypeCallbacks_.end(); ++it )
-        (*it)( prototype );
+        ( *it )( prototype );
 }
 
 // -----------------------------------------------------------------------------

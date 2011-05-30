@@ -51,5 +51,6 @@
   <object id="48" type="sensorsDetectionZone"/>
   <object id="49" type="flood"/>
   <object id="50" type="dyke"/>
+  <object id="51" type="underground exit"/>
 </objects>
-<!-- signature="3699751553" -->
+<!-- signature="2533963435" -->

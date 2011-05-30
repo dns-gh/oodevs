@@ -76,17 +76,14 @@ enum E_Capacities
     eResourceNetworkCapacity,
     eLodgingCapacity,
     eAltitudeModifierCapacity,
-    eStockCapacity
+    eStockCapacity,
+    eUndergroundNetworkExitCapacity
 };
 
 template< E_Capacities T, typename DefaultFieldsHolderType = NullType >
 class ADN_CapacityInfos_Default
     : public ADN_TypeCapacity_Infos
 {
-public:
-    typedef typename DefaultFieldsHolderType FieldsHolderType;
-    enum { type = T };
-
 public:
     static const std::string DISPLAY_NAME;
     static const std::string TAG;

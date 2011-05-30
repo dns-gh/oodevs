@@ -140,6 +140,9 @@ void ObjectPrototype_ABC::FillObjectTypes()
     while( it.HasMoreElements() )
     {
         const ObjectType& element = it.NextElement();
+        const std::string& type = element.GetType();
+        if( type == "urban block" || type == "populationMoving" )
+            continue;
         objectTypes_->AddItem( element.GetName(), &element );
     }
 }

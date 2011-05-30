@@ -11,6 +11,7 @@
 #define __ObjectComponentRegistry_ABC_h_
 
 #include <boost/function.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -24,7 +25,7 @@ namespace xml
 // Created: JCR 2008-05-30
 // =============================================================================
 template< typename Component >
-class ObjectComponentRegistry_ABC
+class ObjectComponentRegistry_ABC : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -49,13 +50,6 @@ protected:
     //@{
     typedef std::map< std::string, T_CallBack >     T_CallBacks;
     typedef typename T_CallBacks::const_iterator    CIT_Callbacks;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectComponentRegistry_ABC( const ObjectComponentRegistry_ABC& );            //!< Copy constructor
-    ObjectComponentRegistry_ABC& operator=( const ObjectComponentRegistry_ABC& ); //!< Assignment operator
     //@}
 };
 

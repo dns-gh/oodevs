@@ -12,33 +12,18 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Objects_GUI.h"
 #include "moc_ADN_Objects_GUI.cpp"
-#include "ADN_App.h"
-#include "ADN_Workspace.h"
 #include "ADN_ComboBox_Drawings.h"
 #include "ADN_ComboBox_Vector.h"
-#include "ADN_CommonGfx.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_ListView_Objects.h"
 #include "ADN_Table_Objects_LocationScore.h"
 #include "ADN_Table_Objects_FirePropagationModifier.h"
-#include "ADN_Equipement_AttritionTable.h"
 #include "ADN_GroupBox.h"
-#include "ADN_RadioButton.h"
-#include "ADN_ComboBox_Enum.h"
-#include "ADN_EquipementSelector.h"
 #include "ADN_Tr.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_Composantes_Dotations_GUI.h"
 #include "ENT/ENT_Tr.h"
-#include <qframe.h>
-#include <qlabel.h>
-#include <qlayout.h>
-#include <qvgroupbox.h>
-#include <qhgroupbox.h>
-#include <qhbox.h>
-#include <qbuttongroup.h>
-#include <qgrid.h>
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_GUI constructor
@@ -99,6 +84,7 @@ namespace
         }
     };
 }
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_GUI::Build
 // Created: JDY 03-06-26
@@ -110,18 +96,18 @@ void ADN_Objects_GUI::Build()
     ADN_GuiBuilder builder;
 
     // Create the main widget.
-    pMainWidget_ = new QWidget( 0 );
+    pMainWidget_ = new QWidget;
 
     // Create the object listview.
     ADN_ListView_Objects* pList = new ADN_ListView_Objects( pMainWidget_ );
     pList->GetConnector().Connect( &data_.GetObjectInfos() );
-    T_ConnectorVector vInfosConnectors ( eNbrGuiElements, (ADN_Connector_ABC*)0 );
+    T_ConnectorVector vInfosConnectors ( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Create the object panel.
     pGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Object" ), pMainWidget_ );
     QWidget* pHolder = builder.AddFieldHolder( pGroup_ );
 
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name"),  vInfosConnectors[ eName ] );
+    builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name"), vInfosConnectors[ eName ] );
     ADN_EditLine_String* geometry = builder.AddField< ADN_EditLine_String >( pHolder, tr( "Geometry"), vInfosConnectors[ eGeometry ] );
     builder.SetEnabled( false );
     pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Point effect distance"), vInfosConnectors[ ePointSize ] );
@@ -161,7 +147,7 @@ void ADN_Objects_GUI::Build()
     {
         vInfosConnectors[ eTerrainHeuristicCapacityPresent ] = & heuristic->GetConnector();
         ADN_Table_Objects_LocationScore* pScoreLocation = new ADN_Table_Objects_LocationScore( heuristic );
-        vInfosConnectors[eTerrainHeuristicCapacity_LocationScore] = &pScoreLocation->GetConnector();
+        vInfosConnectors[ eTerrainHeuristicCapacity_LocationScore ] = &pScoreLocation->GetConnector();
     }
 
     // Avoidable
@@ -205,8 +191,8 @@ void ADN_Objects_GUI::Build()
 
         // Default speed
         builder.AddField< ADN_EditLine_Double >( mobility, tr( "Default speed"), vInfosConnectors[ eMobilityCapacity_DefaultSpeed ], tr( "km/h" ) );
-        pSpeedImpactCombo_ = builder.AddEnumField< E_SpeedImpact >( mobility, tr( "Speed impact"), vInfosConnectors[ eMobilityCapacity_SpeedModifier ], ADN_Tr::ConvertFromSpeedImpact );
-        pMaxAgentSpeed_ = builder.AddField< ADN_EditLine_Double >( mobility, tr( "Max agent speed"), vInfosConnectors[ eMobilityCapacity_MaxAgentSpeed ], tr( "%" ), ePercentage );
+        pSpeedImpactCombo_ = builder.AddEnumField< E_SpeedImpact >( mobility, tr( "Speed impact" ), vInfosConnectors[ eMobilityCapacity_SpeedModifier ], ADN_Tr::ConvertFromSpeedImpact );
+        pMaxAgentSpeed_ = builder.AddField< ADN_EditLine_Double >( mobility, tr( "Max agent speed" ), vInfosConnectors[ eMobilityCapacity_MaxAgentSpeed ], tr( "%" ), ePercentage );
         connect( pSpeedImpactCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSpeedImpactComboChanged() ) );
     }
 
@@ -344,13 +330,13 @@ void ADN_Objects_GUI::Build()
     ADN_GroupBox* perception = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Perception" ), hBox );
     {
         vInfosConnectors[ ePerceptionCapacityPresent ] = & perception->GetConnector();
-        builder.AddField<ADN_CheckBox>( perception, tr( "Aveuglant" ), vInfosConnectors[eBlinded] );
+        builder.AddField< ADN_CheckBox >( perception, tr( "Aveuglant" ), vInfosConnectors[eBlinded] );
     }
 
     ADN_GroupBox* scattering = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Scattering" ), hBox );
     {
         vInfosConnectors[ eScatteringCapacityPresent ] = & scattering->GetConnector();
-        builder.AddField<ADN_EditLine_Int>( scattering, tr( "Nombre d'humain par pas de simulation" ), vInfosConnectors[eHumanByTimeStep] );
+        builder.AddField< ADN_EditLine_Int >( scattering, tr( "Nombre d'humain par pas de simulation" ), vInfosConnectors[eHumanByTimeStep] );
         builder.SetValidator( new QIntValidator( 1, INT_MAX, this ) );
     }
 
@@ -374,10 +360,10 @@ void ADN_Objects_GUI::Build()
     {
         vInfosConnectors[ eFloodCapacityPresent ] = & flood->GetConnector();
         QWidget* pInjuriesHolder = builder.AddFieldHolder( flood );
-        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 1" ), vInfosConnectors[ eFloodCapacity_HurtHumans1 ], tr( "%" ), ePercentage  );
-        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 2" ), vInfosConnectors[ eFloodCapacity_HurtHumans2 ], tr( "%" ), ePercentage  );
-        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 3" ), vInfosConnectors[ eFloodCapacity_HurtHumans3 ], tr( "%" ), ePercentage  );
-        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded extreme seriousness" ), vInfosConnectors[ eFloodCapacity_HurtHumansE ], tr( "%" ), ePercentage  );
+        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 1" ), vInfosConnectors[ eFloodCapacity_HurtHumans1 ], tr( "%" ), ePercentage );
+        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 2" ), vInfosConnectors[ eFloodCapacity_HurtHumans2 ], tr( "%" ), ePercentage );
+        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 3" ), vInfosConnectors[ eFloodCapacity_HurtHumans3 ], tr( "%" ), ePercentage );
+        builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded extreme seriousness" ), vInfosConnectors[ eFloodCapacity_HurtHumansE ], tr( "%" ), ePercentage );
         builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eFloodCapacity_DeadHumans ], tr( "%" ), ePercentage  );
     }
 
@@ -385,7 +371,7 @@ void ADN_Objects_GUI::Build()
     {
         vInfosConnectors[ eFirePropagationModifierPresent ] = & firePropagationModifier->GetConnector();
         ADN_Table_Objects_FirePropagationModifier* pFirePropagationModifierTable = new ADN_Table_Objects_FirePropagationModifier( firePropagationModifier );
-        vInfosConnectors[eFirePropagationModifier_Modifiers] = &pFirePropagationModifierTable->GetConnector();
+        vInfosConnectors[ eFirePropagationModifier_Modifiers ] = &pFirePropagationModifierTable->GetConnector();
     }
 
     ADN_GroupBox* burn = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Burn" ), hBox );
@@ -411,6 +397,11 @@ void ADN_Objects_GUI::Build()
     ADN_GroupBox* lodging = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Lodging" ), hBox );
     {
         vInfosConnectors[ eLodgingCapacityPresent ] = & lodging->GetConnector();
+    }
+
+    ADN_GroupBox* undergroundNetworkExit = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Underground network exit" ), hBox );
+    {
+        vInfosConnectors[ eUndergroundNetworkExitCapacityPresent ] = & undergroundNetworkExit->GetConnector();
     }
 
     // Connect the list to the interface.

@@ -419,5 +419,8 @@
   <object geometry="polygon" name="Dyke" symbol="G*DYKE*********" type="dyke">
     <altitude-modifier/>
   </object>
+  <object geometry="point" name="Underground Exit" symbol="G*EXIT*********" type="underground exit">
+    <underground-network-exit/>
+  </object>
 </objects>
-<!-- signature="1943680429" -->
+<!-- signature="0657906738" -->

@@ -3183,6 +3183,10 @@ tirador</translation>
         <source>Point effect distance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Underground network exit</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Objects_Wizard</name>

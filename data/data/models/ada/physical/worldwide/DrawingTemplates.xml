@@ -723,6 +723,20 @@
                 </g>
             </marker>
         </template>
+        <template code="G*EXIT*********" name="Underground exit" type="point">
+            <segment/>
+            <marker-start>
+                <g stroke='currentColor' stroke-width='3px'>
+                    <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
+                    <line x1='-250' y1='300' x2='250' y2='300'/>
+                    <g font-family="Arial" font-size="180" fill="currentColor">
+                        <g transform="matrix( 1 0 0 -1 0 0 )">
+                            <text x="-180" y="-800">EXIT</text>
+                        </g>
+                    </g>
+                </g>
+            </marker-start>
+        </template>
     </category>
 </templates>
-<!-- signature="2410255574" -->
+<!-- signature="2080313142" -->
