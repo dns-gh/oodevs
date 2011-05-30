@@ -792,7 +792,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
 
     brain[ "DEC_Agent_PeutTransporterPion" ] =
         boost::function< bool( const DEC_Decision_ABC*, bool ) >( boost::bind( &DEC_ActionFunctions::CanTransportPion, boost::ref( GetPion() ), _1, _2 ) );
-    
+    brain[ "DEC_Connaissance_PeutTransporterPion" ] = &DEC_ActionFunctions::CanTransportKnowledge;
+
     // Transport connaissance
     brain[ "DEC_Connaissance_Transporter" ] = &DEC_ActionFunctions::Knowledge_Load;
     brain[ "DEC_TransportConnaissance_AjouterPion" ] = &DEC_ActionFunctions::TransportKnowledge_AddPion;

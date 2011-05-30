@@ -296,6 +296,16 @@ bool DEC_ActionFunctions::CanTransportPion( const MIL_AgentPion& callerAgent, co
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::CanTransportKnowledge
+// Created: EVH 2011-05-30
+// -----------------------------------------------------------------------------
+bool DEC_ActionFunctions::CanTransportKnowledge( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool bTransportOnlyLoadable )
+{
+    MIL_Agent_ABC& pion = pKnowledge->GetAgentKnown();
+    return callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().CanTransportPion( pion, bTransportOnlyLoadable ) ;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Transport_IsTransporting
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
