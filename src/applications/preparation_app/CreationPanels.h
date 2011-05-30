@@ -27,10 +27,16 @@ namespace gui
     class ColorStrategy_ABC;
     class IntelligencesPanel;
     class ItemFactory_ABC;
+    class GlProxy;
+    class ParametersLayer;
     class SymbolIcons;
 }
 
 class StaticModel;
+class Model;
+class ObjectCreationPanel;
+class InhabitantCreationPanel;
+class WeatherLayer;
 
 // =============================================================================
 /** @class  CreationPanels
@@ -43,19 +49,23 @@ class CreationPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy );
+             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const Model& model, const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, WeatherLayer& weatherLayer, gui::GlProxy& glProxy );
     virtual ~CreationPanels();
     //@}
 
     //! @name Operations
     //@{
     void Load( const tools::ExerciseConfig& config );
+    ObjectCreationPanel& GetObjectCreationPanel() const;
+    InhabitantCreationPanel& GetInhabitantCreationPanel() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     gui::IntelligencesPanel* intelligencesPanel_;
+    ObjectCreationPanel* objectCreationPanel_;
+    InhabitantCreationPanel* inhabitantCreationPanel_;
     //@}
 };
 

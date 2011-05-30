@@ -111,7 +111,7 @@ private:
     //! @name Helpers
     //@{
     void LoadExercise();
-    void CreateLayers( ObjectCreationPanel& objects, InhabitantCreationPanel& inhabitants, gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker );
+    void CreateLayers( const CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();

@@ -9,11 +9,20 @@
 
 #include "preparation_app_pch.h"
 #include "CreationPanels.h"
-#include "preparation/StaticModel.h"
+
 #include "clients_kernel/AgentTypes.h"
+#include "clients_gui/DrawerPanel.h"
+#include "clients_gui/GlProxy.h"
 #include "clients_gui/IntelligencesPanel.h"
 #include "clients_gui/PopulationsPanel.h"
 #include "clients_gui/UnitsPanel.h"
+#include "preparation/Model.h"
+#include "preparation/StaticModel.h"
+#include "TemplatesPanel.h"
+#include "InhabitantCreationPanel.h"
+#include "ObjectCreationPanel.h"
+#include "WeatherPanel.h"
+#include "tools/ExerciseConfig.h"
 
 using namespace kernel;
 
@@ -21,13 +30,21 @@ using namespace kernel;
 // Name: CreationPanels constructor
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy )
+CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const Model& model, const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, WeatherLayer& weatherLayer, gui::GlProxy& glProxy )
     : Panels( parent )
 {
     AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
+    AddPanel( new TemplatesPanel( this, *this, controllers, model.agents_, model.formations_, staticModel.types_ ) );
+    AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, model.drawings_ ) );
+    AddPanel( new WeatherPanel( this, *this, controllers, staticModel.coordinateConverter_, weatherLayer ) );
+
     intelligencesPanel_ = new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons );
     AddPanel( intelligencesPanel_ );
+    objectCreationPanel_ = new ObjectCreationPanel( this, *this, controllers, staticModel, model.objects_, model.urban_, paramLayer, glProxy, config );
+    AddPanel( objectCreationPanel_ );
+    inhabitantCreationPanel_ = new InhabitantCreationPanel( this, *this, controllers, staticModel.types_, model.agents_, paramLayer, glProxy );
+    AddPanel( inhabitantCreationPanel_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,4 +63,22 @@ CreationPanels::~CreationPanels()
 void CreationPanels::Load( const tools::ExerciseConfig& config )
 {
     intelligencesPanel_->Load( config );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreationPanels::GetObjectCreationPanel
+// Created: ABR 2011-05-30
+// -----------------------------------------------------------------------------
+ObjectCreationPanel& CreationPanels::GetObjectCreationPanel() const
+{
+    return *objectCreationPanel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CreationPanels::GetInhabitantCreationPanel
+// Created: ABR 2011-05-30
+// -----------------------------------------------------------------------------
+InhabitantCreationPanel& CreationPanels::GetInhabitantCreationPanel() const
+{
+    return *inhabitantCreationPanel_;
 }

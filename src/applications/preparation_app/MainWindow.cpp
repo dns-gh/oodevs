@@ -38,9 +38,7 @@
 #include "ScoreDialog.h"
 #include "SuccessFactorDialog.h"
 #include "TacticalListView.h"
-#include "TemplatesPanel.h"
 #include "WeatherLayer.h"
-#include "WeatherPanel.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ColorStrategy.h"
@@ -48,7 +46,6 @@
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerLayer.h"
-#include "clients_gui/DrawerPanel.h"
 #include "clients_gui/Elevation2dLayer.h"
 #include "clients_gui/Elevation3dLayer.h"
 #include "clients_gui/EntitySearchBox.h"
@@ -199,16 +196,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pListDockWnd_->setCaption( tr( "Units" ) );
     setDockEnabled( pListDockWnd_, Qt::DockTop, false );
 
-    // Creation panel
-    QDockWindow* pCreationDockWnd = new QDockWindow( this, "creation" );
-    moveDockWindow( pCreationDockWnd, Qt::DockRight );
-    pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel_, *factory, *symbols, *strategy_ );
-    pCreationDockWnd->setWidget( pCreationPanel_ );
-    pCreationDockWnd->setResizeEnabled( true );
-    pCreationDockWnd->setCloseMode( QDockWindow::Always );
-    pCreationDockWnd->setCaption( tr( "Creation" ) );
-    setDockEnabled( pCreationDockWnd, Qt::DockTop, false );
-
     // Properties panel
     {
         QDockWindow* pPropertiesDockWnd = new QDockWindow( this, "properties" );
@@ -240,23 +227,24 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile(), *simpleFilter_ );
+    ::WeatherLayer* weatherLayer = new ::WeatherLayer( *glProxy_, *eventStrategy_ );
+
+    // Creation panel
+    QDockWindow* pCreationDockWnd = new QDockWindow( this, "creation" );
+    moveDockWindow( pCreationDockWnd, Qt::DockRight );
+    pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel_, model_, config_, *factory, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_ );
+    pCreationDockWnd->setWidget( pCreationPanel_ );
+    pCreationDockWnd->setResizeEnabled( true );
+    pCreationDockWnd->setCloseMode( QDockWindow::Always );
+    pCreationDockWnd->setCaption( tr( "Creation" ) );
+    setDockEnabled( pCreationDockWnd, Qt::DockTop, false );
 
     // object creation window
-    ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel_, controllers, staticModel_, model.objects_, model.urban_, *paramLayer, *glProxy_, config_ );
-    pCreationPanel_->AddPanel( objectCreationPanel );
+    //ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel_, controllers, staticModel_, model.objects_, model.urban_, *paramLayer, *glProxy_, config_ );
+    //pCreationPanel_->AddPanel( objectCreationPanel );
 
-    InhabitantCreationPanel* inhabitantCreationPanel = new InhabitantCreationPanel( pCreationDockWnd, *pCreationPanel_, controllers, /*( tools::Resolver< InhabitantType >&)(*/ staticModel.types_ /*)*/, model.agents_, *paramLayer, *glProxy_ );
-    pCreationPanel_->AddPanel( inhabitantCreationPanel );
-
-    ::WeatherLayer* weatherLayer = new ::WeatherLayer( *glProxy_, *eventStrategy_ );
-    WeatherPanel* weatherPanel = new WeatherPanel( pCreationDockWnd, *pCreationPanel_, controllers, staticModel_.coordinateConverter_, *weatherLayer );
-    pCreationPanel_->AddPanel( weatherPanel );
-
-    TemplatesPanel* templates = new TemplatesPanel( pCreationDockWnd, *pCreationPanel_, controllers, model.agents_, model.formations_, staticModel.types_ );
-    pCreationPanel_->AddPanel( templates );
-
-    gui::DrawerPanel* drawerPanel = new DrawerPanel( pCreationDockWnd, *pCreationPanel_, *paramLayer, controllers, model.drawings_ );
-    pCreationPanel_->AddPanel( drawerPanel );
+    //InhabitantCreationPanel* inhabitantCreationPanel = new InhabitantCreationPanel( pCreationDockWnd, *pCreationPanel_, controllers, staticModel.types_, model.agents_, *paramLayer, *glProxy_ );
+    //pCreationPanel_->AddPanel( inhabitantCreationPanel );
 
     QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_, model.teams_.InfiniteDotations() );
     QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
@@ -275,7 +263,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
 
-    CreateLayers( *objectCreationPanel, *inhabitantCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer, *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker );
+    CreateLayers( *pCreationPanel_, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer, *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker );
 
     StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -306,13 +294,13 @@ MainWindow::~MainWindow()
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ObjectCreationPanel& objects, InhabitantCreationPanel& inhabitants,  ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker )
+void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker )
 {
     TooltipsLayer_ABC& tooltipLayer     = *new TooltipsLayer( *glProxy_ );
     AutomatsLayer& automats             = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
     Layer_ABC& formation                = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
-    Layer_ABC& objectCreationLayer      = *new MiscLayer< ObjectCreationPanel >( objects );
-    Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( inhabitants );
+    Layer_ABC& objectCreationLayer      = *new MiscLayer< ObjectCreationPanel >( creationPanels.GetObjectCreationPanel() );
+    Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( creationPanels.GetInhabitantCreationPanel() );
     Elevation2dLayer& elevation2d       = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& raster                   = *new RasterLayer( controllers_.controller_ );
     Layer_ABC& watershed                = *new WatershedLayer( controllers_, staticModel_.detection_ );
