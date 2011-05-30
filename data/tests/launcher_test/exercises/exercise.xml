@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<exercise model-version="4.2.6">
+  <meta>
+    <briefing/>
+    <resources/>
+  </meta>
+  <profiles file="profiles.xml"/>
+  <orbat file="orbat.xml"/>
+  <model dataset="ada" physical="france"/>
+</exercise>
+<!-- signature="0851529055" -->

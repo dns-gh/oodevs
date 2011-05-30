@@ -36,7 +36,6 @@ BOOST_FIXTURE_TEST_CASE( ClientCanListAvailableExercises, Fixture )
     BOOST_CHECK( listener.Check() );
 }
 
-/* // $$$$ _RC_ LGY 2011-05-27: Tests modifiant la base physique
 // -----------------------------------------------------------------------------
 // Name: ClientCanStartExercise
 // Created: SBO 2010-11-22
@@ -243,7 +242,6 @@ BOOST_FIXTURE_TEST_CASE( ClientCanListConnectedProfiles, ExerciseFixture )
     MOCK_EXPECT( handler, HandleConnectedProfileList ).once().with( mock::retrieve( launcherResponse ) );
 
     Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + 
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() +
         "\" session: \"" + SESSION + "\" profile { login: \"login\" password: \"password\" read_only_formations { elem { id: 3 } elem { id: 5 } } read_write_formations { elem { id: 6 } elem { id: 7 } } read_only_automates { elem { id: 8 } elem { id: 9 } } read_write_automates { elem { id: 10 } elem { id: 11 } } read_only_parties { elem { id: 12 } elem { id: 13 } } read_write_parties { elem { id: 14 } elem { id: 15 } } read_only_crowds { elem { id: 16 } elem { id: 17 } } read_write_crowds { elem { id: 18 } elem { id: 19 } } supervisor: true role { id: 77 } }" );
 }
-*/

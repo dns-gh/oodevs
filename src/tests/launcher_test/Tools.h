@@ -129,7 +129,7 @@ namespace launcher_test
     {
         ApplicationFixture()
             : varg( MakeArg() )
-            , args( boost::assign::list_of< char* >( "" )( "--root-dir=../../data" )( "--test" )( &varg[0] ) )
+            , args( boost::assign::list_of< char* >( "" )( "--root-dir=../../data" )( "--exercises-dir=tests/launcher_test" )( "--test" )( &varg[0] ) )
             , argc( args.size() )
             , app ( argc, &args[0] )
         {}
