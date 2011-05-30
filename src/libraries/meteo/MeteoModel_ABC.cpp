@@ -72,5 +72,6 @@ void MeteoModel_ABC::RegisterMeteo( boost::shared_ptr< weather::PHY_Meteo > elem
 // -----------------------------------------------------------------------------
 void MeteoModel_ABC::UnregisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element )
 {
+    element->SetListener( 0 );
     meteos_.remove( element );
 }
