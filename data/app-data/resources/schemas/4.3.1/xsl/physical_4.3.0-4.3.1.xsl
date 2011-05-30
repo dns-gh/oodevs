@@ -5,9 +5,14 @@
   <xsl:template match="/physical">
       <xsl:copy>
           <xsl:apply-templates select="node()|@*"/>
-          <xsl:if test="count( ./drawing-templates ) = 0">
-              <xsl:element name="drawing-templates">
-                  <xsl:attribute name="file">DrawingTemplates.xml</xsl:attribute>
+          <xsl:if test="count( ./scores ) = 0">
+              <xsl:element name="scores">
+                  <xsl:attribute name="file">scores.xml</xsl:attribute>
+              </xsl:element>
+          </xsl:if>
+          <xsl:if test="count( ./symbols ) = 0">
+              <xsl:element name="symbols">
+                  <xsl:attribute name="file">symbols.xml</xsl:attribute>
               </xsl:element>
           </xsl:if>
       </xsl:copy>

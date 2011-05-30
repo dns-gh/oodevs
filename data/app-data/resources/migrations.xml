@@ -67,7 +67,7 @@
   <added-files>
     <added-file filename="ResourceNetworks.xml" assign-file="schemas/4.2.0/added-files/ResourceNetworks.xml"/>
     <added-file filename="Inhabitants.xml" assign-file="schemas/4.2.2/added-files/Inhabitants.xml"/>
-    <added-file filename="Extensions.xml" assign-file="schemas/4.3.1/added-files/Extensions.xml"/>
+    <added-file filename="Extensions.xml" assign-file="schemas/4.3.0/added-files/Extensions.xml"/>
     <added-file filename="scores.xml" assign-file="schemas/4.3.1/added-files/scores.xml"/>
     <added-file filename="symbols.xml" assign-file="schemas/4.3.1/added-files/symbols.xml"/>
   </added-files>
@@ -116,6 +116,7 @@
     <upgrade schema="schemas/4.3.0/physical/Crowds.xsd" apply="schemas/4.3.1/xsl/crowd_4.3.0-4.3.1.xsl"/>
     <upgrade schema="schemas/4.3.0/physical/Fires.xsd" apply="schemas/4.3.1/xsl/fires_4.3.0-4.3.1.xsl"/>
     <upgrade schema="schemas/4.3.0/physical/Pathfind.xsd" apply="schemas/4.3.1/xsl/pathfinder_4.3.0-4.3.1.xsl"/>
+    <upgrade schema="schemas/4.3.0/physical/Physical.xsd" apply="schemas/4.3.1/xsl/physical_4.3.0-4.3.1.xsl"/>
     <upgrade schema="schemas/4.3.0/exercise/orbat.xsd" apply="schemas/4.3.1/xsl/orbat_4.3.0-4.3.1.xsl"/>  
   </migration>
 </migrations>
