@@ -11,7 +11,6 @@
 #define __OutsideUrbanBlockPosition_h_
 
 #include "UrbanBlockPosition_ABC.h"
-#include <geometry/Types.h>
 
 // =============================================================================
 /** @class  OutsideUrbanBlockPosition
@@ -32,8 +31,8 @@ public:
     //@{
     virtual MT_Vector2D GetFirerPosition( MIL_Agent_ABC& target, urbanLocation::UrbanLocationComputer_ABC::Results& firerResult ) const;
     virtual MT_Vector2D GetTargetPosition( MIL_Agent_ABC& firer, urbanLocation::UrbanLocationComputer_ABC::Results& targetResult ) const;
-    virtual float ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const;
-    virtual float ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float /*modificator*/ ) const;
+    virtual double ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const;
+    virtual double ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const TER_Polygon& polygon, double /*modificator*/ ) const;
     virtual double ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
     //@}
 };

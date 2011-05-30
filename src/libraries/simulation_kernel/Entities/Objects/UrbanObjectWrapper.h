@@ -77,10 +77,11 @@ public:
 
     //! @name Accessors
     //@{
-    unsigned int GetUrbanId() const;
+    bool Is( const urban::TerrainObject_ABC& object ) const;
     const std::string& GetName() const;
     bool HasChild() const;
     float ComputeComplexity() const;
+    float GetHeight() const;
     float GetOccupation() const;
     float GetTrafficability() const;
     const urban::TerrainObject_ABC& GetObject();  // $$$$ _RC_ LGY 2011-02-18: à supprimer

@@ -136,7 +136,6 @@ std::vector< unsigned int > DEC_KnowledgeFunctions::GetPopulations( const T& cal
 template< typename T, typename B >
 float DEC_KnowledgeFunctions::ComputeEnemiesRatio( const T& caller, const B& boundaries, bool unloaded )
 {
-    // $$$$ _RC_ JSR 2011-01-28: Semble non utilisé. à vérifier et supprimer? surchargé par T = MIL_Automate dans le cpp
     unsigned int nNbrTotalLivingEnemies = 0;
     unsigned int nNbrSelectedLivingEnemies = 0;
     const T_KnowledgeAgentVector& enemies = caller.GetKnowledgeGroup().GetKnowledge().GetEnemies();

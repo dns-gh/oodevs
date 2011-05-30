@@ -87,7 +87,7 @@ MT_Vector2D InsideUrbanBlockPosition::GetTargetPosition(MIL_Agent_ABC& firer, Ur
 // Name: InsideUrbanBlockPosition::ComputeRatioPionInside
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const
+double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const
 {
     std::vector< bg::point_xy< double > > ellipseKeyPoints;
     bg::polygon< bg::point_xy< double > > attritionPolygon;
@@ -113,34 +113,31 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
     bg::correct( blockGeometry );
 
     std::vector< bg::polygon< bg::point_xy< double > > > polygonResult;
-    bg::intersection_inserter< bg::polygon< bg::point_xy< double > > >(attritionPolygon, blockGeometry, std::back_inserter( polygonResult ) );
+    bg::intersection_inserter< bg::polygon< bg::point_xy< double > > >( attritionPolygon, blockGeometry, std::back_inserter( polygonResult ) );
     double intersectArea = 0;
     for( std::vector< bg::polygon< bg::point_xy< double > > >::const_iterator it = polygonResult.begin(); it != polygonResult.end(); ++it  )
         intersectArea += area( *it );
-    return static_cast< float >( ( intersectArea / ( urbanObject_.GetLocalisation().GetArea() ) ) * result.urbanDeployment_ );
+    return ( intersectArea / ( urbanObject_.GetLocalisation().GetArea() ) ) * result.urbanDeployment_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: InsideUrbanBlockPosition::ComputeRatioPionInside
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float modicator ) const
+double InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const TER_Polygon& polygon, double modicator ) const
 {
-    // $$$$ _RC_ JSR 2011-05-25: TODO cleaner cette méthode (warnings) et passer un TER_Polygon (ou un truc comme ça) à la place du polygon2f, pour ne pas utiliser le IntersectionArea avec les TER_Location
-    float urbanObjectArea = urbanObject_.GetLocalisation().GetArea();
     if( modicator > result.urbanDeployment_ ) // SLG : permet d'éviter des incohérence dans la percpetion d'unité quand la cible passe en état posté.
+        return polygon.IsInside( result.position_, 0 ) ? 1.0 : 0.0;
+    else
     {
-        if( polygon.IsInside( geometry::Point2f( result.position_.rX_, result.position_.rY_ ) ) )
-            return 1.0;
-        else
-            return 0.0;
+        double urbanObjectArea = urbanObject_.GetLocalisation().GetArea();
+        if( urbanObjectArea )
+        {
+            double intersectArea = MIL_Geometry::IntersectionArea( TER_Localisation( polygon ), urbanObject_.GetLocalisation() );
+            return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
+        }
+        return 0.;
     }
-    else if( urbanObjectArea )
-    {
-        float intersectArea = MIL_Geometry::IntersectionArea( polygon, urbanObject_.GetObject().Get< urban::GeometryAttribute >().Geometry() );
-        return ( intersectArea / urbanObjectArea ) * result.urbanDeployment_;
-    }
-    return 0.;
 }
 
 // -----------------------------------------------------------------------------

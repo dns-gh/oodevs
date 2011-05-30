@@ -324,12 +324,12 @@ float UrbanObjectWrapper::GetLivingSpace() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UrbanObjectWrapper::GetID
-// Created: SLG 2010-06-18
+// Name: UrbanObjectWrapper::Is
+// Created: JSR 2011-05-30
 // -----------------------------------------------------------------------------
-unsigned int UrbanObjectWrapper::GetUrbanId() const
+bool UrbanObjectWrapper::Is( const urban::TerrainObject_ABC& object ) const
 {
-    return object_->GetId();
+    return object_ == &object;
 }
 
 // -----------------------------------------------------------------------------
@@ -357,6 +357,18 @@ bool UrbanObjectWrapper::HasChild() const
 float UrbanObjectWrapper::ComputeComplexity() const
 {
     return object_->ComputeComplexity();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetHeight
+// Created: JSR 2011-05-30
+// -----------------------------------------------------------------------------
+float UrbanObjectWrapper::GetHeight() const
+{
+    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
+        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
+            return architecture->GetHeight();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

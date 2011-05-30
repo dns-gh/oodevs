@@ -11,6 +11,7 @@
 #define __PHY_ZOPerceptionComputer_h_
 
 #include "PHY_PerceptionComputer_ABC.h"
+
 // =============================================================================
 /** @class  PHY_ZOPerceptionComputer
     @brief  PHY_ZOPerceptionComputer
@@ -29,13 +30,6 @@ public:
     //! @name Operations
     //@{
     virtual const PHY_PerceptionLevel& ComputePerception( const MIL_Agent_ABC& target ) const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PHY_ZOPerceptionComputer( const PHY_ZOPerceptionComputer& );            //!< Copy constructor
-    PHY_ZOPerceptionComputer& operator=( const PHY_ZOPerceptionComputer& ); //!< Assignment operator
     //@}
 };
 

@@ -31,8 +31,8 @@ class PHY_PerceptionSurfaceAgent
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_PerceptionSurfaceAgent();
-     PHY_PerceptionSurfaceAgent( const PHY_SensorTypeAgent& sensorType, const MT_Vector2D& vOrigin, double rHeight );
+             PHY_PerceptionSurfaceAgent();
+             PHY_PerceptionSurfaceAgent( const PHY_SensorTypeAgent& sensorType, const MT_Vector2D& vOrigin, double rHeight );
     virtual ~PHY_PerceptionSurfaceAgent();
     //@}
 
@@ -46,22 +46,21 @@ public:
 
     //! @name Operations
     //@{
-    const PHY_PerceptionLevel& ComputePerception        ( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D&                 target ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const PHY_RoleInterface_Perceiver& perceiver, const MIL_Agent_ABC&               target ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const PHY_RoleInterface_Perceiver& perceiver, const DEC_Knowledge_Agent&         target ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationConcentration& target ) const;
-    const PHY_PerceptionLevel& ComputePerception        ( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow&          target, T_PointVector& shape ) const;
-          double             ComputePerceptionAccuracy( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow& target ) const;
-
-          void                 AddDirection     ( const MT_Vector2D& vDir );
-          void TransfertPerception( std::map< const void*, std::pair< unsigned int, float > > urbanPerceptionMap ) const;
+    const PHY_PerceptionLevel& ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MT_Vector2D& target ) const;
+    const PHY_PerceptionLevel& ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_Agent_ABC& target ) const;
+    const PHY_PerceptionLevel& ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const DEC_Knowledge_Agent& target ) const;
+    const PHY_PerceptionLevel& ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationConcentration& target ) const;
+    const PHY_PerceptionLevel& ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow& target, T_PointVector& shape ) const;
+    double ComputePerceptionAccuracy( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow& target ) const;
+    void AddDirection( const MT_Vector2D& vDir );
+    void TransfertPerception( std::map< const void*, std::pair< unsigned int, double > > urbanPerceptionMap ) const;
 
     virtual void FinalizePerception();
     //@}
 
     //! @name Accessors
     //@{
-    bool               IsInitialized();
+    bool IsInitialized();
     const std::string& GetSensorTypeName() const; // LTO
     std::map< const void*, unsigned int > GetTargetsPerception() const;
     //@}
@@ -79,11 +78,11 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< MT_Sector >       T_SectorVector;
+    typedef std::vector< MT_Sector >         T_SectorVector;
     typedef T_SectorVector::const_iterator CIT_SectorVector;
 
     typedef std::map< const void*, unsigned int > T_PerceptionTickMap;
-    typedef T_PerceptionTickMap::const_iterator    CIT_PerceptionTickMap;
+    typedef T_PerceptionTickMap::const_iterator CIT_PerceptionTickMap;
     //@}
 
     //! @name Tools
@@ -96,10 +95,10 @@ private:
     //! @name Member data
     //@{
     const PHY_SensorTypeAgent* pSensorType_;
-          MT_Vector2D          vOrigin_;
-          double             rHeight_;
-          T_SectorVector       sectors_;
-            T_PerceptionTickMap perceptionsUnderway_;
+    MT_Vector2D vOrigin_;
+    double rHeight_;
+    T_SectorVector sectors_;
+    T_PerceptionTickMap perceptionsUnderway_;
     mutable T_PerceptionTickMap perceptionsBuffer_;
     //@}
 };

@@ -17,40 +17,15 @@
 
 namespace bg = boost::geometry;
 
-using namespace geometry;
-
 namespace
 {
-    // $$$$ _RC_ JSR 2011-03-29: Essayer de passer FindOuterPoint en template?
-
-    bool FindOuterPoint( const Polygon2f::T_Vertices& vertices, const Point2f& from, const Vector2f& direction, Point2f& worst )
-    {
-        bool bFound = false;
-        float rMaxProjection = 0;
-        for( Polygon2f::CIT_Vertices it = vertices.begin(); it != vertices.end(); ++it )
-        {
-            const float rProjection = direction.CrossProduct( Vector2f( from, *it ) );
-            if( rProjection < -1 ) // epsilon
-            {
-                bFound = true;
-                if( rMaxProjection > rProjection )
-                {
-                    rMaxProjection = rProjection;
-                    worst = *it;
-                }
-            }
-        }
-        return bFound;
-    }
-
     bool FindOuterPoint( const T_PointVector& vertices, const MT_Vector2D& from, const MT_Vector2D& direction, MT_Vector2D& worst )
     {
         bool bFound = false;
-        float rMaxProjection = 0;
+        double rMaxProjection = 0;
         for( CIT_PointVector it = vertices.begin(); it != vertices.end(); ++it )
         {
-#pragma warning( push, 0 )
-            const float rProjection = CrossProduct( direction, MT_Vector2D( *it - from ) );
+            const double rProjection = CrossProduct( direction, MT_Vector2D( *it - from ) );
             if( rProjection < -1 ) // epsilon
             {
                 bFound = true;
@@ -69,58 +44,18 @@ namespace
 // Name: MIL_Geometry::Scale
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-void MIL_Geometry::Scale( Polygon2f& result, const Polygon2f& polygon, float distance )
+void MIL_Geometry::Scale( TER_Polygon& result, const T_PointVector& polygon, double distance )
 {
-    Polygon2f hull;
+    T_PointVector ret;
+    T_PointVector hull;
     ComputeHull( hull, polygon );
-    Point2f barycenter = hull.Barycenter();
-    const std::vector< Point2f >& vertices = hull.Vertices();
-    for( std::vector< Point2f >::const_iterator it = vertices.begin(); it != vertices.end(); ++it )
+    MT_Vector2D barycenter = MT_ComputeBarycenter( hull );
+    for( CIT_PointVector it = hull.begin(); it != hull.end(); ++it )
     {
-        Vector2f scaleVector( *it, barycenter );
-        result.Add( barycenter + scaleVector + scaleVector.Normalized() * distance );
+        MT_Vector2D scaleVector( barycenter - *it );
+        ret.push_back( barycenter + scaleVector + scaleVector.Normalized() * distance );
     }
-}
-
-// $$$$ _RC_ JSR 2011-03-29: Essayer de passer ComputeHull en template?
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Geometry::ComputeHull
-// Created: SLG 2010-04-30
-// -----------------------------------------------------------------------------
-void MIL_Geometry::ComputeHull( Polygon2f& result, const Polygon2f& polygon )
-{
-    const Polygon2f::T_Vertices& vertices = polygon.Vertices();
-    if( vertices.empty() )
-        return;
-    Polygon2f::CIT_Vertices maxLeft = vertices.begin();
-    Polygon2f::CIT_Vertices maxRight = vertices.begin();
-    for( Polygon2f::CIT_Vertices it = vertices.begin(); it != vertices.end() ; ++it )
-    {
-        if( it->X() < maxLeft->X() )
-            maxLeft = it;
-        if( it->X() > maxRight->X() )
-            maxRight = it;
-    }
-    Polygon2f::T_Vertices hull;
-    hull.push_back( *maxLeft );
-    hull.push_back( *maxRight );
-    unsigned int nPoint = 0;
-    Point2f worst;
-    while( nPoint != hull.size() )
-    {
-        unsigned int nFollowingPoint = ( nPoint + 1 ) % hull.size();
-        Vector2f direction( hull[ nPoint ], hull[ nFollowingPoint ] );
-        direction.Normalize();
-        if( FindOuterPoint( vertices, hull[ nPoint ], direction, worst ) )
-        {
-            hull.insert( hull.begin() + nFollowingPoint, worst );
-            nPoint = 0;
-        }
-        else
-            ++nPoint;
-    }
-    result = Polygon2f( hull );
+    result.Reset( ret );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,33 +129,6 @@ double MIL_Geometry::IntersectionArea( const TER_Localisation& localisation1, co
         std::vector< bg::point_xy< double > > vectorTemp;
         for( CIT_PointVector it = vertices2.begin(); it != vertices2.end(); ++it )
             vectorTemp.push_back( bg::point_xy< double >( it->rX_, it->rY_ ) );
-        bg::assign( poly2, vectorTemp );
-        bg::correct( poly2 );
-    }
-    return PrivateIntersectionArea( poly1, poly2 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Geometry::IntersectionArea
-// Created: SLG 2010-06-18
-// -----------------------------------------------------------------------------
-float MIL_Geometry::IntersectionArea( const Polygon2f& polygon1, const Polygon2f& polygon2 )
-{
-    bg::polygon< bg::point_xy< float > > poly1;
-    bg::polygon< bg::point_xy< float > > poly2;
-    {
-        const Polygon2f::T_Vertices& vertices1 = polygon1.Vertices();
-        std::vector< bg::point_xy< float > > vectorTemp;
-        for( Polygon2f::CIT_Vertices it = vertices1.begin(); it != vertices1.end(); ++it )
-            vectorTemp.push_back( bg::point_xy< float >( it->X(), it->Y() ) );
-        bg::assign( poly1, vectorTemp );
-        bg::correct( poly1 );
-    }
-    {
-        const Polygon2f::T_Vertices& vertices2 = polygon2.Vertices();
-        std::vector< bg::point_xy< float > > vectorTemp;
-        for( Polygon2f::CIT_Vertices it = vertices2.begin(); it != vertices2.end(); ++it )
-            vectorTemp.push_back( bg::point_xy< float >( it->X(), it->Y() ) );
         bg::assign( poly2, vectorTemp );
         bg::correct( poly2 );
     }

@@ -54,7 +54,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::pair< unsigned int, float > T_PerceptionParameterPair;
+    typedef std::pair< unsigned int, double > T_PerceptionParameterPair;
 
     typedef std::map< const void*, T_PerceptionParameterPair > T_PerceptionTickMap;
     typedef T_PerceptionTickMap::const_iterator               CIT_PerceptionTickMap;

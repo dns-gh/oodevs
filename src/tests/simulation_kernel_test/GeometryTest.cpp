@@ -9,7 +9,7 @@
 
 #include "simulation_kernel_test_pch.h"
 #include "simulation_kernel/Tools/MIL_Geometry.h"
-#include <geometry/Types.h>
+#include "simulation_terrain/TER_Polygon.h"
 
 // -----------------------------------------------------------------------------
 // Name: TestComputePolygonHull
@@ -17,32 +17,32 @@
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestComputePolygonHull )
 {
-    geometry::Point2f Point1( 0, 0 );
-    geometry::Point2f Point2( 0, 10 );
-    geometry::Point2f Point3( 10, 10 );
-    geometry::Point2f Point4( 10, 0 );
-    geometry::Point2f Point5( 10, -10 );
-    geometry::Point2f Point6( 0, -10 );
-    geometry::Point2f Point7( -10, -10 );
-    geometry::Point2f Point8( -10, 0 );
-    geometry::Polygon2f input;
-    input.Add( Point1 );
-    input.Add( Point2 );
-    input.Add( Point3 );
-    input.Add( Point4 );
-    input.Add( Point5 );
-    input.Add( Point6 );
-    input.Add( Point7 );
-    input.Add( Point8 );
-    geometry::Polygon2f output;
+    MT_Vector2D Point1( 0, 0 );
+    MT_Vector2D Point2( 0, 10 );
+    MT_Vector2D Point3( 10, 10 );
+    MT_Vector2D Point4( 10, 0 );
+    MT_Vector2D Point5( 10, -10 );
+    MT_Vector2D Point6( 0, -10 );
+    MT_Vector2D Point7( -10, -10 );
+    MT_Vector2D Point8( -10, 0 );
+    T_PointVector input;
+    input.push_back( Point1 );
+    input.push_back( Point2 );
+    input.push_back( Point3 );
+    input.push_back( Point4 );
+    input.push_back( Point5 );
+    input.push_back( Point6 );
+    input.push_back( Point7 );
+    input.push_back( Point8 );
+    T_PointVector output;
     MIL_Geometry::ComputeHull( output, input );
 
-    geometry::Polygon2f result;
-    result.Add( Point2 );
-    result.Add( Point8 );
-    result.Add( Point7 );
-    result.Add( Point5 );
-    result.Add( Point3 );
+    T_PointVector result;
+    result.push_back( Point2 );
+    result.push_back( Point8 );
+    result.push_back( Point7 );
+    result.push_back( Point5 );
+    result.push_back( Point3 );
     BOOST_CHECK_EQUAL( true, output == result );
 }
 
@@ -52,27 +52,27 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonHull )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestComputePolygonScale )
 {
-    geometry::Point2f Point1( -10, 0 );
-    geometry::Point2f Point2( 0, 10 );
-    geometry::Point2f Point3( 10, 0 );
-    geometry::Point2f Point4( 0, 0 );
-    geometry::Point2f Point5( 0, -10 );
-    geometry::Polygon2f input;
-    input.Add( Point1 );
-    input.Add( Point2 );
-    input.Add( Point3 );
-    input.Add( Point4 );
-    input.Add( Point5 );
-    geometry::Polygon2f output;
+    MT_Vector2D Point1( -10, 0 );
+    MT_Vector2D Point2( 0, 10 );
+    MT_Vector2D Point3( 10, 0 );
+    MT_Vector2D Point4( 0, 0 );
+    MT_Vector2D Point5( 0, -10 );
+    T_PointVector input;
+    input.push_back( Point1 );
+    input.push_back( Point2 );
+    input.push_back( Point3 );
+    input.push_back( Point4 );
+    input.push_back( Point5 );
+    TER_Polygon output;
     MIL_Geometry::Scale( output, input, 10.f );
-    geometry::Polygon2f result;
-    geometry::Point2f Point6( -20, 0 );
-    geometry::Point2f Point7( 0, 20 );
-    geometry::Point2f Point8( 20, 0 );
-    geometry::Point2f Point9( 0, -20 );
-    result.Add( Point9 );
-    result.Add( Point8 );
-    result.Add( Point7 );
-    result.Add( Point6 );
-    BOOST_CHECK_EQUAL( true, output == result );
+    T_PointVector result;
+    MT_Vector2D Point6( -20, 0 );
+    MT_Vector2D Point7( 0, 20 );
+    MT_Vector2D Point8( 20, 0 );
+    MT_Vector2D Point9( 0, -20 );
+    result.push_back( Point9 );
+    result.push_back( Point8 );
+    result.push_back( Point7 );
+    result.push_back( Point6 );
+    BOOST_CHECK_EQUAL( true, output.GetBorderPoints() == result );
 }

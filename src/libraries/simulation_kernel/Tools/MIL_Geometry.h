@@ -11,9 +11,9 @@
 #define __MIL_Geometry_h_
 
 #include "MT_Tools/Mt_Vector2DTypes.h"
-#include <geometry/Types.h>
 
 class TER_Localisation;
+class TER_Polygon;
 
 // =============================================================================
 /** @class  MIL_Geometry
@@ -26,10 +26,8 @@ class MIL_Geometry
 public:
     //! @name Operations
     //@{
-    static void Scale( geometry::Polygon2f& result, const geometry::Polygon2f& polygon, float distance ); // $$$$ MCO : where are the unit tests ?!
-    static void ComputeHull( geometry::Polygon2f& result, const geometry::Polygon2f& polygon );
+    static void Scale( TER_Polygon& result, const T_PointVector& polygon, double distance ); // $$$$ MCO : where are the unit tests ?!
     static void ComputeHull( T_PointVector& result, const T_PointVector& polygon );
-    static float IntersectionArea( const geometry::Polygon2f& polygon1, const geometry::Polygon2f& polygon2 );
     static double IntersectionArea( const TER_Localisation& localisation1, const TER_Localisation& localisation2 );
     //@}
 };

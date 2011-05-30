@@ -11,6 +11,7 @@
 #include "OutsideUrbanBlockPosition.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "MT_Tools/MT_Ellipse.h"
+#include "simulation_terrain/TER_Polygon.h"
 
 using namespace urbanLocation;
 
@@ -54,23 +55,18 @@ MT_Vector2D OutsideUrbanBlockPosition::GetTargetPosition( MIL_Agent_ABC& /*firer
 // Name: OutsideUrbanBlockPosition::ComputeRatioPionInside
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-float OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const
+double OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const
 {
-    if( attritionSurface.IsInside( result.position_ ) )
-        return 1.0;
-    else
-        return 0.0;
+    return attritionSurface.IsInside( result.position_ ) ? 1. : 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: OutsideUrbanBlockPosition::ComputeRatioPionInside
 // Created: SLG 2010-04-27
 // -----------------------------------------------------------------------------
-float OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float /*modificator*/ ) const
+double OutsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_ABC::Results& result, const TER_Polygon& polygon, double /*modificator*/ ) const
 {
-    if( polygon.IsInside( geometry::Point2f( result.position_.rX_, result.position_.rY_ ) ) )
-        return 1.f;
-    return 0;
+    return polygon.IsInside( result.position_, 0 ) ? 1. : 0;
 }
 
 // -----------------------------------------------------------------------------

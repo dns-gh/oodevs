@@ -61,8 +61,8 @@ public:
     virtual MT_Vector2D GetFirerPosition( MIL_Agent_ABC& target ) const;
     virtual MT_Vector2D GetTargetPosition( MIL_Agent_ABC& target ) const;
     virtual double ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
-    virtual float ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const;
-    virtual float ComputeRatioPionInside( const geometry::Polygon2f& polygon, float modificator ) const;
+    virtual double ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const;
+    virtual double ComputeRatioPionInside( const TER_Polygon& polygon, double modificator ) const;
     void Execute( posture::PostureComputer_ABC& algorithm ) const;
     void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     virtual bool CanMount() const;

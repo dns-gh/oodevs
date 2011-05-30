@@ -113,15 +113,15 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_Agent_ABC& tar
     {
         CIT_PerceptionTickMap it = perceptionsUnderway_.find( &target );
         unsigned int tick = 0;
-        float roll = 0.f;
+        double roll = 0.f;
         if( it != perceptionsUnderway_.end() )
         {
             tick = it->second.first;
             roll = it->second.second;
         }
         else
-            roll = static_cast< float >( MIL_Random::rand_ii( MIL_Random::ePerception ) );
-        perceptionsBuffer_[ &target ] = std::pair< unsigned int, float >( tick + 1, roll );
+            roll = static_cast< double >( MIL_Random::rand_ii( MIL_Random::ePerception ) );
+        perceptionsBuffer_[ &target ] = std::pair< unsigned int, double >( tick + 1, roll );
         PHY_ZURBPerceptionComputer computer( perceiver_.GetPion(), roll, tick );
         return computer.ComputePerception( target );
     }
@@ -369,9 +369,9 @@ void PHY_PerceptionView::TransfertPerception()
             {
                 T_PerceptionTickMap::iterator it2 = perceptionsBuffer_.find( it->first );
                 if( it2 != perceptionsBuffer_.end() )
-                    perceptionsBuffer_[ it2->first ] = std::pair< unsigned int, float >( std::max( it2->second.first, it->second ), static_cast< float >( MIL_Random::rand_ii( MIL_Random::ePerception ) )  );
+                    perceptionsBuffer_[ it2->first ] = std::pair< unsigned int, double >( std::max( it2->second.first, it->second ), MIL_Random::rand_ii( MIL_Random::ePerception )  );
                 else
-                    perceptionsBuffer_[ it->first ] = std::pair< unsigned int, float >( it->second, static_cast< float >( MIL_Random::rand_ii( MIL_Random::ePerception ) )  );
+                    perceptionsBuffer_[ it->first ] = std::pair< unsigned int, double >( it->second, MIL_Random::rand_ii( MIL_Random::ePerception ) );
             }
         }
 

@@ -11,12 +11,9 @@
 #define __PHY_ZURBPerceptionComputer_h_
 
 #include "PHY_PerceptionComputer_ABC.h"
-#include <geometry/Types.h>
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
+class MT_Vector2D;
+class TER_Polygon;
 
 // =============================================================================
 /** @class  PHY_ZURBComputer
@@ -27,34 +24,9 @@ namespace urban
 class PHY_ZURBPerceptionComputer : public PHY_PerceptionComputer_ABC
 {
 public:
-    //! @name Types
-    //@{
-    struct Distances
-    {
-        Distances() : identificationDist_( 0 ), recognitionDist_( 0 ), detectionDist_( 0 ) {}
-        double identificationDist_;
-        double recognitionDist_;
-        double detectionDist_;
-
-    };
-    struct Polygons
-    {
-        geometry::Polygon2f identificationPolygon_;
-        geometry::Polygon2f recognitionPolygon_;
-        geometry::Polygon2f detectionPolygon_;
-    };
-    struct BestSensorsParameters
-    {
-        BestSensorsParameters() : delay_( 0 ) {}
-        Distances distances_;
-        unsigned int delay_;
-    };
-//@}
-
-public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ZURBPerceptionComputer( const MIL_Agent_ABC& perceiver, float roll, unsigned int tick );
+             PHY_ZURBPerceptionComputer( const MIL_Agent_ABC& perceiver, double roll, unsigned int tick );
     virtual ~PHY_ZURBPerceptionComputer();
     //@}
 
@@ -64,25 +36,36 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Types
     //@{
-    PHY_ZURBPerceptionComputer( const PHY_ZURBPerceptionComputer& );            //!< Copy constructor
-    PHY_ZURBPerceptionComputer& operator=( const PHY_ZURBPerceptionComputer& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void ComputePerceptionPolygon( const MIL_Agent_ABC& target, BestSensorsParameters& parameters, Polygons& polygons ) const;
-    void ComputeParametersPerception( const MIL_Agent_ABC& target, BestSensorsParameters& parameters ) const;
-    const PHY_PerceptionLevel& GetLevelWithDelay( unsigned int delay, const PHY_PerceptionLevel& level ) const;
-    void MakePolygon( geometry::Polygon2f& polygon, const urban::TerrainObject_ABC& block, double distance ) const;
-    void MakePolygon( geometry::Polygon2f& polygon, const geometry::Point2f& targetPosition, double distance ) const;
+    struct BestSensorsParameters
+    {
+        BestSensorsParameters()
+            : identificationDist_( 0 )
+            , recognitionDist_( 0 )
+            , detectionDist_( 0 )
+            , delay_( 0 )
+        {
+            // NOTHING
+        }
+        double identificationDist_;
+        double recognitionDist_;
+        double detectionDist_;
+        unsigned int delay_;
+    };
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ComputePerceptionPolygon( double distance, TER_Polygon& polygon ) const;
+    void ComputeParametersPerception( const MIL_Agent_ABC& target, BestSensorsParameters& parameters ) const;
+    const PHY_PerceptionLevel& GetLevelWithDelay( unsigned int delay, const PHY_PerceptionLevel& level ) const;
+    //@}
+private:
     //! @name Member data
     //@{
-    float roll_;
+    double roll_;
     unsigned int tick_;
     //@}
 };

@@ -166,7 +166,7 @@ bool PHY_RolePion_UrbanLocation::IsInCity() const
 // Name: PHY_RolePion_UrbanLocation::ComputeRatioPionInside
 // Created: SLG 2010-04-26
 // -----------------------------------------------------------------------------
-float PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const
+double PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const
 {
     std::auto_ptr< UrbanLocationComputer_ABC > computer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
     const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *computer );
@@ -178,7 +178,7 @@ float PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const MT_Ellipse& attr
 // Name: PHY_RolePion_UrbanLocation::ComputeRatioPionInside
 // Created: SLG 2010-04-26
 // -----------------------------------------------------------------------------
-float PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const geometry::Polygon2f& polygon, float modificator ) const
+double PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const TER_Polygon& polygon, double modificator ) const
 {
     std::auto_ptr< UrbanLocationComputer_ABC > computer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
     const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *computer );

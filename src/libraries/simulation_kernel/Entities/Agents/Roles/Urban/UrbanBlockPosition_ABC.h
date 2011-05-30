@@ -12,11 +12,11 @@
 
 #include "UrbanLocationComputer_ABC.h"
 #include <boost/noncopyable.hpp>
-#include "geometry/types.h"
 
 class MIL_Agent_ABC;
 class PHY_DotationCategory;
 class MT_Ellipse;
+class TER_Polygon;
 
 // =============================================================================
 /** @class  UrbanBlockPosition_ABC
@@ -37,8 +37,8 @@ public:
     //@{
     virtual MT_Vector2D GetFirerPosition( MIL_Agent_ABC& target, urbanLocation::UrbanLocationComputer_ABC::Results& firerResult ) const = 0;
     virtual MT_Vector2D GetTargetPosition( MIL_Agent_ABC& firer, urbanLocation::UrbanLocationComputer_ABC::Results& targetResult ) const = 0;
-    virtual float ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const = 0;
-    virtual float ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const geometry::Polygon2f& polygon, float /*modificator*/ ) const = 0;
+    virtual double ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const MT_Ellipse& attritionSurface ) const = 0;
+    virtual double ComputeRatioPionInside( urbanLocation::UrbanLocationComputer_ABC::Results& result, const TER_Polygon& polygon, double modificator ) const = 0;
     virtual double ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const = 0;
     //@}
 };

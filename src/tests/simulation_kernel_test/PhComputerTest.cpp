@@ -11,6 +11,7 @@
 #include "MT_Tools/MT_Droite.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/MT_Vector3D.h"
+#include "MT_Tools/MT_Ellipse.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"

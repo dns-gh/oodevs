@@ -24,8 +24,8 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_UrbanLocation, PHY_RoleInterface_UrbanLoc
     MOCK_METHOD( GetFirerPosition, 1 );
     MOCK_METHOD( GetTargetPosition, 1 );
     MOCK_METHOD( ComputeDistanceInsideSameUrbanBlock, 1 );
-    MOCK_METHOD_EXT( ComputeRatioPionInside, 1, float( const MT_Ellipse& ) , ComputeRatioPionInsideEllipse );
-    MOCK_METHOD_EXT( ComputeRatioPionInside, 2, float( const geometry::Polygon2f&, float ), ComputeRatioPionInsidePolygon );
+    MOCK_METHOD_EXT( ComputeRatioPionInside, 1, double( const MT_Ellipse& ) , ComputeRatioPionInsideEllipse );
+    MOCK_METHOD_EXT( ComputeRatioPionInside, 2, double( const TER_Polygon&, double ), ComputeRatioPionInsidePolygon );
     MOCK_METHOD( GetCurrentUrbanBlock, 0 );
     MOCK_METHOD( IsInCity, 0 );
     MOCK_METHOD( CanMount, 0 );
