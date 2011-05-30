@@ -7834,6 +7834,7 @@
           <fragorder name="Modifier Priorites Blesses"/>
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
         </mission>
+        <mission name="LOGISTIQUE Transporter"/>
       </missions>
       <fragorders>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -11759,4 +11760,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1767082491" -->
+<!-- signature="3092856093" -->
