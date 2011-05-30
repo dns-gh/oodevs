@@ -40,7 +40,6 @@ class PBTools
 {
 public:
     static void ToXML(std::ostream& os, const google::protobuf::Message& msg);
-    static google::protobuf::Message* FromXML(xml::xistream& xis);
     static void FromXML(xml::xistream& xis, google::protobuf::Message& msg);
 
 private:

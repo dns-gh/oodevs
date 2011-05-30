@@ -51,6 +51,9 @@ public:
     virtual void Handle( const sword::SessionParameterChangeResponse& message );
     virtual void Handle( const sword::SessionStatus& message );
     virtual void Handle( const sword::ConnectedProfileListResponse& message );
+    virtual void Handle( const sword::SessionListResponse& message );
+    virtual void Handle( const sword::CheckpointListResponse& message );
+    virtual void Handle( const sword::CheckpointDeleteResponse& message );
     //@}
 
 private:

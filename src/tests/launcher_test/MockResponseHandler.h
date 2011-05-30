@@ -25,12 +25,15 @@ MOCK_BASE_CLASS( MockResponseHandler, frontend::ResponseHandler_ABC )
     MOCK_METHOD_EXT( Handle, 1, void( const sword::ExerciseListResponse& ), HandleExerciseListResponse );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionStartResponse& ), HandleSessionStartResponse );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionStopResponse& ), HandleSessionStopResponse );
+    MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionListResponse& ), HandleSessionListResponse );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::ProfileListResponse& ), HandleProfileListResponse );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionCommandExecutionResponse& ), HandleSessionCommandExecutionResponse );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionNotification& ), HandleSessionNotification );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionParameterChangeResponse& ), HandleSessionParameterChangeResponse );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::SessionStatus& ), HandleSessionStatus );
     MOCK_METHOD_EXT( Handle, 1, void( const sword::ConnectedProfileListResponse& ), HandleConnectedProfileList );
+    MOCK_METHOD_EXT( Handle, 1, void( const sword::CheckpointListResponse& ), HandleCheckpointListResponse );
+    MOCK_METHOD_EXT( Handle, 1, void( const sword::CheckpointDeleteResponse& ), HandleCheckpointDeleteResponse );
 };
 
 }

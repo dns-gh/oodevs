@@ -190,6 +190,14 @@ void RemoteHost::Handle( const sword::SessionStatus& /*message*/ )
 
 // -----------------------------------------------------------------------------
 // Name: RemoteHost::Handle
+// Created: AHC 2011-05-30
+// -----------------------------------------------------------------------------
+void RemoteHost::Handle( const sword::SessionListResponse& /*message*/ )
+{
+    // NOTHING
+}
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::Handle
 // Created: SBO 2010-10-28
 // -----------------------------------------------------------------------------
 void RemoteHost::Handle( const sword::SessionStopResponse& message )
@@ -204,6 +212,24 @@ void RemoteHost::Handle( const sword::SessionStopResponse& message )
 // Created: AHC 2011-05-24
 // -----------------------------------------------------------------------------
 void RemoteHost::Handle( const sword::ConnectedProfileListResponse& /*message*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::Handle
+// Created: AHC 2011-05-30
+// -----------------------------------------------------------------------------
+void RemoteHost::Handle( const sword::CheckpointListResponse& /*message*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: RemoteHost::Handle
+// Created: AHC 2011-05-30
+// -----------------------------------------------------------------------------
+void RemoteHost::Handle( const sword::CheckpointDeleteResponse& /*message*/ )
 {
     // NOTHING
 }

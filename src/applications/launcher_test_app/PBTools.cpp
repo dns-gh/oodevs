@@ -176,8 +176,11 @@ namespace
             if( !enumDesc )
                 return; // throw ?
             const google::protobuf::EnumValueDescriptor* enumValue = enumDesc->FindValueByName( value );
-            if( enumValue )
+            if( !enumValue )
+            {
                 std::cerr << "Invalid enum value " << value << " for field " << msg.GetTypeName() << "::" << field.name() << std::endl;
+                return;
+            }
             pReflection->SetEnum( &msg, &field, enumValue );
         }
         virtual void operator()(xml::xistream& xis, google::protobuf::Message& msg, const google::protobuf::FieldDescriptor& field, int index)
@@ -252,12 +255,6 @@ namespace
             FieldSetterPtr( new StringFieldSetter() ), // CPPTYPE_STRING
             FieldSetterPtr( new MessageFieldSetter() ) // CPPTYPE_MESSAGE
         };
-    google::protobuf::Message* MessageFactory(const std::string& type)
-    {
-        if( type == "AdminToLauncher" )
-            return new sword::AdminToLauncher();
-        return 0;
-    }
 }
 namespace launcher_test_app
 {
@@ -295,20 +292,6 @@ void PBTools::ToXML(std::ostream& os, const google::protobuf::Message& msg)
         ToXML(os, msg, *validFields[i], *pReflection );
     }
     os  << "</message>" << std::endl;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PBTools::FromXML
-// Created: AHC 2011-05-27
-// -----------------------------------------------------------------------------
-google::protobuf::Message* PBTools::FromXML(xml::xistream& xis)
-{
-    std::string messageType;
-    xis >> xml::attribute("type", messageType);
-    google::protobuf::Message* retval = MessageFactory(messageType);
-    if(retval != 0)
-        FromXML( xis, *retval);
-    return retval;
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 
 #include <string>
 #include <list>
+#include <fstream>
 #include <boost/thread.hpp>
 #include <qapplication.h>
 
@@ -80,6 +81,7 @@ private:
     boost::mutex mutex_;
     boost::condition_variable cond_;
     QApplication app;
+    std::ofstream outputFile_;
     ConnectionHandler connectionHandler_;
     boost::shared_ptr<ResponseHandler> responseHandler_;
     kernel::Controllers controllers_;

@@ -17,12 +17,15 @@ namespace sword
     class ExerciseListResponse;
     class SessionStartResponse;
     class SessionStopResponse;
+    class SessionListResponse;
     class ProfileListResponse;
     class SessionCommandExecutionResponse;
     class SessionNotification;
     class SessionParameterChangeResponse;
     class SessionStatus;
     class ConnectedProfileListResponse;
+    class CheckpointListResponse;
+    class CheckpointDeleteResponse;
 }
 
 namespace frontend
@@ -47,12 +50,15 @@ public:
     virtual void Handle( const sword::ExerciseListResponse& message ) = 0;
     virtual void Handle( const sword::SessionStartResponse& message ) = 0;
     virtual void Handle( const sword::SessionStopResponse& message ) = 0;
+    virtual void Handle( const sword::SessionListResponse& message ) = 0;
     virtual void Handle( const sword::ProfileListResponse& message ) = 0;
     virtual void Handle( const sword::SessionCommandExecutionResponse& message ) = 0;
     virtual void Handle( const sword::SessionNotification& message ) = 0;
     virtual void Handle( const sword::SessionParameterChangeResponse& message ) = 0;
     virtual void Handle( const sword::SessionStatus& message ) = 0;
     virtual void Handle( const sword::ConnectedProfileListResponse& message ) = 0;
+    virtual void Handle( const sword::CheckpointListResponse& message ) = 0;
+    virtual void Handle( const sword::CheckpointDeleteResponse& message ) = 0;
     //@}
 };
 

@@ -13,11 +13,13 @@
 #include "PBTools.h"
 
 #include "protocol/LauncherSenders.h"
+#include "shield/proto/AdminToLauncher.pb.h"
+
+#include <iostream>
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 )
 #include <boost/program_options.hpp>
 #pragma warning( pop )
-#include <iostream>
 #include <xeumeuleu/xml.h>
 
 namespace po = boost::program_options;
@@ -76,25 +78,33 @@ App::App( int argc, char* argv[] )
     , port_( 33000 )
     , app( argc, argv )
     , connectionHandler_( mutex_, cond_ )
-    , responseHandler_( new ResponseHandler(mutex_, cond_ ) )
     , client_( controllers_.controller_ )
 {
     po::options_description options;
     po::variables_map values;
     std::string commandFile;
-    options.add_options()( "host", po::value< std::string >( &host_ ), "launcher host" );
-    options.add_options()( "port", po::value< unsigned int >( &port_ ), "launcher port" );
-    options.add_options()( "file", po::value< std::string >( &commandFile ), "command file" );
+    std::string outputFile;
+    options.add_options()
+            ( "host", po::value< std::string >( &host_ ), "launcher host" )
+            ( "port", po::value< unsigned int >( &port_ ), "launcher port" )
+            ( "file", po::value< std::string >( &commandFile ), "command file" )
+            ( "output", po::value< std::string >( &outputFile ), "output file" );
     po::store( po::command_line_parser( argc, argv ).options( options ).run(), values );
-    if( values.find( "file" ) != values.end() )
+    po::notify( values );
+    if( outputFile.length() != 0)
     {
-        commandFile = values["file"].as<std::string>();
+        outputFile_.open( outputFile.c_str() );
+        responseHandler_.reset( new ResponseHandler( outputFile_, mutex_, cond_ ) );
     }
-    if( commandFile.size() == 0 )
+    else
+        responseHandler_.reset( new ResponseHandler( std::cout, mutex_, cond_ ) );
+    if( commandFile.length() == 0 )
     {
+        std::cout << options << std::endl;
+
         xml::xistringstream xis(DEFAULT_MESSAGE);
         xis >> xml::start( "message" );
-        messages_.push_back( boost::shared_ptr< google::protobuf::Message > (PBTools::FromXML(xis) ) );
+        ReadMessage( xis );
         xis >> xml::end;
     }
     else
@@ -104,7 +114,6 @@ App::App( int argc, char* argv[] )
                 >> xml::list("message", *this, &App::ReadMessage)
             >> xml::end;
     }
-    po::notify( values );
 }
 // -----------------------------------------------------------------------------
 // Name: App destructor
@@ -159,15 +168,37 @@ void App::Send(google::protobuf::Message* msg)
 {
     if( dynamic_cast<sword::AdminToLauncher*>(msg) )
         Send<sword::AdminToLauncher>(*dynamic_cast<sword::AdminToLauncher*>(msg));
+    else if( dynamic_cast<MsgsAdminToLauncher::MsgAdminToLauncher*>(msg) )
+        Send<MsgsAdminToLauncher::MsgAdminToLauncher>(*dynamic_cast<MsgsAdminToLauncher::MsgAdminToLauncher*>(msg));
 }
 
+namespace
+{
+    google::protobuf::Message* MessageFactory(const std::string& type)
+    {
+        if( type == "AdminToLauncher" )
+            return new sword::AdminToLauncher();
+        if( type == "MsgAdminToLauncher" )
+            return new MsgsAdminToLauncher::MsgAdminToLauncher();
+        return 0;
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: App::ReadMessage
 // Created: AHC 2011-05-27
 // -----------------------------------------------------------------------------
 void App::ReadMessage(xml::xistream& xis)
 {
-    messages_.push_back( boost::shared_ptr< google::protobuf::Message > (PBTools::FromXML(xis) ) );
+    std::string messageType;
+    xis >> xml::attribute("type", messageType);
+    google::protobuf::Message* retval = MessageFactory(messageType);
+    if(retval != 0)
+    {
+        PBTools::FromXML(xis, *retval);
+        messages_.push_back( boost::shared_ptr< google::protobuf::Message > ( retval ) );
+    }
+    else
+        std::cerr << "No factory for message type " << messageType << std::endl;
 }
 
 // -----------------------------------------------------------------------------

@@ -62,12 +62,15 @@ public:
     virtual void Handle( const sword::ExerciseListResponse& message );
     virtual void Handle( const sword::SessionStartResponse& message );
     virtual void Handle( const sword::SessionStopResponse& message );
+    virtual void Handle( const sword::SessionListResponse& message );
     virtual void Handle( const sword::ProfileListResponse& message );
     virtual void Handle( const sword::SessionCommandExecutionResponse& message );
     virtual void Handle( const sword::SessionNotification& message );
     virtual void Handle( const sword::SessionParameterChangeResponse& message );
     virtual void Handle( const sword::SessionStatus& message );
     virtual void Handle( const sword::ConnectedProfileListResponse& message );
+    virtual void Handle( const sword::CheckpointListResponse& message );
+    virtual void Handle( const sword::CheckpointDeleteResponse& message );
     //@}
 
 private:

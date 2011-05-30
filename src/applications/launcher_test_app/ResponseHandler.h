@@ -12,6 +12,7 @@
 #define __LAUNCHER_TEST_APP_RESPONSEHANDLER_H__
 
 #include "frontend/ResponseHandler_ABC.h"
+#include <iosfwd>
 
 namespace boost
 {
@@ -44,7 +45,7 @@ class ResponseHandler : public frontend::ResponseHandler_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ResponseHandler( boost::mutex& mutex, boost::condition_variable& cond );
+    ResponseHandler( std::ostream& os, boost::mutex& mutex, boost::condition_variable& cond );
     virtual ~ResponseHandler();
     //@}
 
@@ -63,12 +64,16 @@ public:
     void Handle( const sword::SessionParameterChangeResponse& message );
     void Handle( const sword::SessionStatus& message );
     void Handle( const sword::ConnectedProfileListResponse& message );
+    void Handle( const sword::SessionListResponse& message );
+    void Handle( const sword::CheckpointListResponse& message );
+    void Handle( const sword::CheckpointDeleteResponse& message );
     //@}
 
 private:
    void Notify();
 
 private:
+   std::ostream& os_;
    boost::mutex& mutex_;
    boost::condition_variable& cond_;
    int messagesReceived_;

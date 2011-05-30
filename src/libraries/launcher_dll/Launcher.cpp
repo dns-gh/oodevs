@@ -172,6 +172,7 @@ void Launcher::HandleRequest( const std::string& endpoint, const sword::SessionL
     SessionListResponse response;
     response().set_exercise( message.exercise() );
     processes_->SendSessionList( response() );
+    response().set_error_code( sword::SessionListResponse::success );
     response.Send( server_->ResolveClient( endpoint ) );
 }
 

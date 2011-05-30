@@ -11,18 +11,30 @@
 #include "ResponseHandler.h"
 #include <boost/thread.hpp>
 #include "protocol/LauncherSenders.h"
-
+//#include <google/protobuf/text_format.h>
 #include <iostream>
+
 #include "PBTools.h"
 
+namespace
+{
+    void PrintMessage(std::ostream& os, const google::protobuf::Message& msg)
+    {
+//        std::string str;
+//        google::protobuf::TextFormat::PrintToString( msg, &str );
+//        os << str << std::endl;
+        launcher_test_app::PBTools::ToXML( os, msg );
+    }
+}
 namespace launcher_test_app
 {
 // -----------------------------------------------------------------------------
 // Name: ResponseHandler constructor
 // Created: AHC 2011-05-27
 // -----------------------------------------------------------------------------
-ResponseHandler::ResponseHandler( boost::mutex& mutex, boost::condition_variable& cond )
-    : mutex_( mutex )
+ResponseHandler::ResponseHandler( std::ostream& os, boost::mutex& mutex, boost::condition_variable& cond )
+    : os_( os )
+    , mutex_( mutex )
     , cond_( cond )
     , messagesReceived_( 0 )
 {
@@ -44,7 +56,7 @@ ResponseHandler::~ResponseHandler()
 // -----------------------------------------------------------------------------
 void ResponseHandler::Handle( const sword::ExerciseListResponse& message )
 {
-    PBTools::ToXML(std::cout, message);
+    PrintMessage( os_, message );
     Notify();
 }
 
@@ -54,7 +66,7 @@ void ResponseHandler::Handle( const sword::ExerciseListResponse& message )
 // -----------------------------------------------------------------------------
 void ResponseHandler::Handle( const sword::SessionStartResponse& message )
 {
-    PBTools::ToXML(std::cout, message);
+    PrintMessage( os_, message );
     Notify();
 }
 
@@ -64,7 +76,7 @@ void ResponseHandler::Handle( const sword::SessionStartResponse& message )
 // -----------------------------------------------------------------------------
 void ResponseHandler::Handle( const sword::SessionStopResponse& message )
 {
-    PBTools::ToXML(std::cout, message);
+    PrintMessage( os_, message );
     Notify();
 }
 
@@ -74,7 +86,7 @@ void ResponseHandler::Handle( const sword::SessionStopResponse& message )
 // -----------------------------------------------------------------------------
 void ResponseHandler::Handle( const sword::ProfileListResponse& message )
 {
-    PBTools::ToXML(std::cout, message);
+    PrintMessage( os_, message );
     Notify();
 }
 
@@ -84,7 +96,7 @@ void ResponseHandler::Handle( const sword::ProfileListResponse& message )
 // -----------------------------------------------------------------------------
 void ResponseHandler::Handle( const sword::SessionCommandExecutionResponse& message )
 {
-    PBTools::ToXML(std::cout, message);
+    PrintMessage( os_, message );
     Notify();
 }
 
@@ -94,7 +106,7 @@ void ResponseHandler::Handle( const sword::SessionCommandExecutionResponse& mess
 // -----------------------------------------------------------------------------
 void ResponseHandler::Handle( const sword::SessionNotification& message )
 {
-    PBTools::ToXML(std::cout, message);
+    PrintMessage( os_, message );
     Notify();
 }
 
@@ -104,17 +116,26 @@ void ResponseHandler::Handle( const sword::SessionNotification& message )
 // -----------------------------------------------------------------------------
 void ResponseHandler::Handle( const sword::SessionParameterChangeResponse& message )
 {
-    PBTools::ToXML(std::cout, message);
+    PrintMessage( os_, message );
     Notify();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ResponseHandler::Handle
+// Created: AHC 2011-05-30
+// -----------------------------------------------------------------------------
+void ResponseHandler::Handle( const sword::SessionListResponse& message )
+{
+    PrintMessage( os_, message );
+    Notify();
+}
 // -----------------------------------------------------------------------------
 // Name: ResponseHandler::Handle
 // Created: AHC 2011-05-27
 // -----------------------------------------------------------------------------
 void ResponseHandler::Handle( const sword::SessionStatus& message )
 {
-    PBTools::ToXML(std::cout, message);
+    PrintMessage( os_, message );
     Notify();
 }
 
@@ -124,10 +145,29 @@ void ResponseHandler::Handle( const sword::SessionStatus& message )
 // -----------------------------------------------------------------------------
 void ResponseHandler::Handle( const sword::ConnectedProfileListResponse& message )
 {
-    PBTools::ToXML(std::cout, message);
+    PrintMessage( os_, message );
     Notify();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ResponseHandler::Handle
+// Created: AHC 2011-05-30
+// -----------------------------------------------------------------------------
+void ResponseHandler::Handle( const sword::CheckpointListResponse& message )
+{
+    PrintMessage( os_, message );
+    Notify();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResponseHandler::Handle
+// Created: AHC 2011-05-30
+// -----------------------------------------------------------------------------
+void ResponseHandler::Handle( const sword::CheckpointDeleteResponse& message )
+{
+    PrintMessage( os_, message );
+    Notify();
+}
 // -----------------------------------------------------------------------------
 // Name: ResponseHandler::Notify
 // Created: AHC 2011-05-27
