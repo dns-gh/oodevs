@@ -228,6 +228,9 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile(), *simpleFilter_ );
     ::WeatherLayer* weatherLayer = new ::WeatherLayer( *glProxy_, *eventStrategy_ );
+    gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
+    gui::TerrainPicker* picker = new gui::TerrainPicker( this );
+    gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
 
     // Creation panel
     QDockWindow* pCreationDockWnd = new QDockWindow( this, "creation" );
@@ -239,13 +242,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     pCreationDockWnd->setCaption( tr( "Creation" ) );
     setDockEnabled( pCreationDockWnd, Qt::DockTop, false );
 
-    // object creation window
-    //ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel_, controllers, staticModel_, model.objects_, model.urban_, *paramLayer, *glProxy_, config_ );
-    //pCreationPanel_->AddPanel( objectCreationPanel );
-
-    //InhabitantCreationPanel* inhabitantCreationPanel = new InhabitantCreationPanel( pCreationDockWnd, *pCreationPanel_, controllers, staticModel.types_, model.agents_, *paramLayer, *glProxy_ );
-    //pCreationPanel_->AddPanel( inhabitantCreationPanel );
-
+    // Dialogs
     QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_, model.teams_.InfiniteDotations() );
     QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
     QDialog* exportDialog = new ExportDialog( this, config_ );
@@ -253,18 +250,16 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     fileToolBar_ = new FileToolbar( this, controllers );
     new DisplayToolbar( this, controllers );
-    gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
     new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
 
+    // Menu
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *exportDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
 
-    // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    gui::TerrainPicker* picker = new gui::TerrainPicker( this );
-    gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
-
+    // Layers
     CreateLayers( *pCreationPanel_, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer, *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker );
 
+    // Status bar
     StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
