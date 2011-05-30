@@ -292,7 +292,8 @@
     <target name="applications.clients" description="build Sword Client executables"
             depends="application.gaming_app,application.preparation_app,application.adaptation_app,
                      application.loadtester_app,application.import_app,application.wise_driver_dll,library.vrforces_plugin_dll,
-                     application.mission_tester_app,application.orbat_generator_app,application.edxlhave_app"/>
+                     application.mission_tester_app,application.orbat_generator_app,application.edxlhave_app,
+                     application.launcher_test_app"/>
 
     <target name="applications.frontends" description="build Sword Frontend executables"
             depends="application.selftraining_app,application.launcher_app,application.frontend_app,application.package_app"/>
@@ -549,13 +550,14 @@
         </build-app>
     </target>
     
-    <target name="application.launcher_test_app" depends="library.protocol,library.frontend" description="build application">
+    <target name="application.launcher_test_app" depends="library.protocol,library.frontend,library.shield" description="build application">
         <build-app name="launcher_test_app" subsystem="console" depends="qt,boost,xerces,protobuf"
             libs="lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_frontend-${platform}-mt,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
+                  lib${ant.project.name}_shield-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix}"/>
     </target>
 
