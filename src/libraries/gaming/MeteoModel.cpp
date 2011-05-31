@@ -42,8 +42,8 @@ MeteoModel::~MeteoModel()
 // -----------------------------------------------------------------------------
 const weather::PHY_Meteo* MeteoModel::GetGlobalMeteo() const
 {
-    if( globalMeteo_ )
-        return globalMeteo_;
+    if( globalMeteo_.get() )
+        return globalMeteo_.get();
     return 0;
 }
 
@@ -55,8 +55,8 @@ const weather::PHY_Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point )
 {
     for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->IsInside( point ) )
-            return ( *it ).get();
-    return globalMeteo_;
+            return *it;
+    return globalMeteo_.get();
 }
 
 // -----------------------------------------------------------------------------
@@ -66,10 +66,10 @@ const weather::PHY_Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg )
 {
-    if( globalMeteo_ )
+    if( globalMeteo_.get() )
         globalMeteo_->Update( msg.attributes() );
     else
-        globalMeteo_ = new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, simulation_.GetTickDuration() );
+        globalMeteo_.reset( new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, simulation_.GetTickDuration() ) );
     controller_.Update( *this );
 }
 
@@ -90,7 +90,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
             geometry::Point2d(
             msg.bottom_right().longitude(),
             msg.bottom_right().latitude() ) );
-        RegisterMeteo( boost::shared_ptr< weather::MeteoData >( new weather::MeteoData( msg.weather().id(), topLeft, bottomRight, msg.attributes(), *this, converter_, simulation_.GetTickDuration() ) ) );
+        RegisterMeteo( *new weather::MeteoData( msg.weather().id(), topLeft, bottomRight, msg.attributes(), *this, converter_, simulation_.GetTickDuration() ) );
     }
 }
 

@@ -82,7 +82,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
     {
         boost::shared_ptr< weather::MeteoData > weather = boost::shared_ptr< weather::MeteoData >( new weather::MeteoData( msg.weather().id(), vUpLeft, vDownRight, msg.attributes(), *this, converter_, config_.GetTickDuration() ) );
         model_.AddExtensions( *weather );
-        RegisterMeteo( weather );
+        RegisterMeteo( *weather );
         weather->Update( msg.attributes() );
     }
 }

@@ -60,24 +60,24 @@ public:
 protected:
     //! @name Helpers
     //@{
-    typedef std::list< boost::shared_ptr< weather::PHY_Meteo > > T_MeteoList;
-    typedef T_MeteoList::iterator                               IT_MeteoList;
-    typedef T_MeteoList::const_iterator                        CIT_MeteoList;
+    typedef std::list< PHY_Meteo* >       T_MeteoList;
+    typedef T_MeteoList::iterator        IT_MeteoList;
+    typedef T_MeteoList::const_iterator CIT_MeteoList;
     //@}
 
 protected:
     //! @name Operations
     //@{
-    virtual void RegisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element );
-    virtual void UnregisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element );
+    virtual void RegisterMeteo( weather::PHY_Meteo& element );
+    virtual void UnregisterMeteo( weather::PHY_Meteo& element );
     //@}
 
 protected:
     //! @name Member data
     //@{
-    kernel::CoordinateConverter_ABC&    converter_;
-    weather::PHY_Meteo*                 globalMeteo_;
-    T_MeteoList                         meteos_;    // Including global meteo
+    kernel::CoordinateConverter_ABC& converter_;
+    std::auto_ptr< weather::PHY_Meteo > globalMeteo_;
+    T_MeteoList meteos_;
     //@}
 };
 

@@ -76,7 +76,7 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
     pGlobalMeteo_ = new PHY_GlobalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase() );
     pGlobalMeteo_->IncRef();
     pGlobalMeteo_->SetListener( this );
-    RegisterMeteo( boost::shared_ptr< weather::PHY_Meteo >( pGlobalMeteo_ ) );
+    RegisterMeteo( *pGlobalMeteo_ );
     xis >> xml::end;
 }
 
@@ -98,7 +98,7 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 {
-    RegisterMeteo( boost::shared_ptr< weather::PHY_Meteo >( new PHY_LocalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase() ) ) );
+    RegisterMeteo( *new PHY_LocalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg )
     }
     else if( msg.type() == sword::MagicAction::local_weather )
     {
-        RegisterMeteo( boost::shared_ptr< weather::PHY_Meteo >( new PHY_LocalMeteo( idManager_.GetFreeId(), msg.parameters(), this ) ) );
+        RegisterMeteo( *new PHY_LocalMeteo( idManager_.GetFreeId(), msg.parameters(), this ) );
         client::ControlLocalWeatherAck replyMsg;
         replyMsg.Send( NET_Publisher_ABC::Publisher() );
     }

@@ -52,7 +52,7 @@ const PHY_Lighting& MeteoModel_ABC::GetLighting() const
 // -----------------------------------------------------------------------------
 void MeteoModel_ABC::Purge()
 {
-    globalMeteo_ = 0;
+    globalMeteo_.reset();
     meteos_.clear();
 }
 
@@ -60,17 +60,17 @@ void MeteoModel_ABC::Purge()
 // Name: MeteoModel_ABC::RegisterMeteo
 // Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
-void MeteoModel_ABC::RegisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element )
+void MeteoModel_ABC::RegisterMeteo( weather::PHY_Meteo& element )
 {
-    meteos_.push_front( element );
+    meteos_.push_front( &element );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel_ABC::UnregisterMeteo
 // Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
-void MeteoModel_ABC::UnregisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element )
+void MeteoModel_ABC::UnregisterMeteo( weather::PHY_Meteo& element )
 {
-    element->SetListener( 0 );
-    meteos_.remove( element );
+    element.SetListener( 0 );
+    meteos_.remove( &element );
 }

@@ -10,8 +10,6 @@
 #ifndef __MeteoManager_h_
 #define __MeteoManager_h_
 
-#include <boost/shared_ptr.hpp>
-
 namespace weather
 {
     class PHY_Lighting;
@@ -34,8 +32,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element ) = 0;
-    virtual void UnregisterMeteo( boost::shared_ptr< weather::PHY_Meteo > element ) = 0;
+    virtual void RegisterMeteo( weather::PHY_Meteo& element ) = 0;
+    virtual void UnregisterMeteo( weather::PHY_Meteo& element ) = 0;
     virtual const PHY_Lighting& GetLighting() const = 0;
     //@}
 };
