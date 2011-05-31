@@ -381,13 +381,13 @@ void Encode( std::ostream& output, const sword::ClientToSim& message )
   @section Parties
   
   Parties are organizational units used to gather entities. Alliances matrix are specified at party level and allows the definition of friendly, enemy and neutral relationships.
-  A party can contain "@ref Formations", "@ref Obstacles" and "@ref Knowledge Groups".
+  A party can contain @ref formations, @ref obstacles and @ref knowledge_groups.
 
   @note Parties cannot be created during the game, they must be defined during the preparation phase.
   
   @subsection Initialization
   
-  The following sequence diagram describes the party initialization process. Parties creation messages are sent to a new user followed by theirs current diplomacies relationships.
+  The following sequence diagram describes the party initialization process. Party creation messages are sent to a new user followed by their current diplomacies relationships and subordinate units.
   
   @msc
     hscale = "1.5", arcgradient="5";
@@ -402,8 +402,8 @@ void Encode( std::ostream& output, const sword::ClientToSim& message )
   
   @subsection diplomacy Diplomacies modifications
   
-  Party diplomacies can be changed by a client using a sword::MagicAction message.
-  The client's profile requires supervision rights to be allowed to change the diplomacies of a party.
+  Party diplomacies can be changed by a client using a sword::MagicAction message of type sword::MagicAction::change_diplomacy (see @ref magic "Magic actions").
+  The client requires supervision rights to be allowed to change the diplomacies of a party.
   The client requesting the diplomacy change receives an acknowledge indicating the success or failure of the operation.
   In case of success, the updated diplomacy is sent to all connected clients.
   
@@ -415,27 +415,224 @@ void Encode( std::ostream& output, const sword::ClientToSim& message )
     A  <- S [label="Party diplomacy update", URL="\ref sword::ChangeDiplomacy"];
   @endmsc
   
-  @section Formations
-  @section Automats
-  @section Agents
+  @section formations Formations
+  
+  Formations are organizational units used to gather @ref formations and @ref automats.
+  
+  @subsection formation_init Initialization
+  
+  The following sequence diagram describes the formation initialization process. Formation creation messages are sent to a new user followed by their subordinate units.
+  Once created, some formation attributes can be updated, when this occurs, the simulation sends an update message to all clients connected.
+  When the exercise is stopped, the formation is destroyed and a message is sent to all clients connected after its subordinates.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    C [label="Client"],S [label="Dispatcher"];
+    --- [label="Situation initialization",textcolor="#ff0000"];
+    C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
+    C  <- S [label="Formation creation", URL="\ref sword::FormationCreation"];
+    ... [label="Initialization continues..."];
+    C  <- S [label="End current state", URL="\ref sword::ControlSendCurrentStateEnd"];
+    --- [label="Running exercise",textcolor="#ff0000"];
+    C  <- S [label="Formation update", URL="\ref sword::FormationUpdate"];
+    --- [label="Finishing exercise",textcolor="#ff0000"];
+    C  <- S [label="Formation destruction", URL="\ref sword::FormationDestruction"];
+  @endmsc
+  
+  @subsection formation_creation Dynamic creation
+  
+  Formations can be created during the game using a sword::UnitMagicAction of type sword::UnitMagicAction::formation_creation (see @ref magic "Magic actions").
+  The client requires supervision rights to be allowed to create a formation.
+  The client requesting the formation creation receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the formation creation is sent to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    C  -> S [label="Request formation creation", URL="\ref sword::MagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::MagicActionAck"];
+    A  <- S [label="Formation creation", URL="\ref sword::FormationCreation"];
+  @endmsc
+  
+  @section automats Automats
+  
+  Automats represent company level units containing @ref agents. They are driven by a decisional model allowing the automated control of their subordinate units.
+  
+  @subsection automat_init Initialization
+  
+  The following sequence diagram describes the automat initialization process. Automat creation messages are sent to a new user followed by their subordinate units.
+  Once created, some automat attributes can be updated, when this occurs, the simulation sends an update message to all clients connected.
+  When the exercise is stopped, the automat is destroyed and a destruction notification message is sent to all clients connected after its subordinates destructions have been notified.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    C [label="Client"],S [label="Dispatcher"];
+    --- [label="Situation initialization",textcolor="#ff0000"];
+    C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
+    C  <- S [label="Automat creation", URL="\ref sword::AutomatCreation"];
+    ... [label="Initialization continues..."];
+    C  <- S [label="End current state", URL="\ref sword::ControlSendCurrentStateEnd"];
+    --- [label="Running exercise",textcolor="#ff0000"];
+    C  <- S [label="Automat update", URL="\ref sword::AutomatAttributes"];
+    --- [label="Finishing exercise",textcolor="#ff0000"];
+    C  <- S [label="Automat destruction", URL="\ref sword::AutomatDestruction"];
+  @endmsc
+  
+  @subsection automat_creation Dynamic creation
+  
+  Automats can be created during the game using a sword::UnitMagicAction of type sword::UnitMagicAction::automat_creation (see @ref magic "Magic actions").
+  The client requires supervision rights to be allowed to create a automat.
+  The client requesting the automat creation receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the automat creation is sent to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    C  -> S [label="Request automat creation", URL="\ref sword::MagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::MagicActionAck"];
+    A  <- S [label="Automat creation", URL="\ref sword::AutomatCreation"];
+  @endmsc
+  
+  @subsection automat_change_superior Changing parent unit
 
-  @page environment Modifying the environment
+  The parent unit (@ref automats "automat" or @ref formations "formation") of an automat can be changed using a message sword::UnitMagicAction of type sword::UnitMagicAction::change_automat_superior 
+  or type sword::UnitMagicAction::change_formation_superior (see @ref magic "Magic actions"), depending on the kind of parent entity.
+  The client requesting the automat parent change receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the new automat superior is sent to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    C  -> S [label="Request automat parent change", URL="\ref sword::MagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::AutomatChangeSuperiorAck"];
+    A  <- S [label="Automat parent change notification", URL="\ref sword::AutomatChangeSuperior"];
+  @endmsc
+  
+  @subsection automat_change_knowledge_group Changing parent knowledge group
+  
+  The parent @ref knowledge_groups "knowledge group" of an automat can be changed using a message sword::UnitMagicAction of type sword::UnitMagicAction::change_knowledge_group (see @ref magic "Magic actions").
+  The client requesting the automat parent change receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the new automat superior is sent to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    C  -> S [label="Request automat parent change creation", URL="\ref sword::MagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::AutomatChangeSuperiorAck"];
+    A  <- S [label="Automat parent change notification", URL="\ref sword::AutomatChangeSuperior"];
+  @endmsc
+  
+  @section agents Agents
 
-  @section Obstacles
-  @section Populations
-  @section Weather
+  Agents represent platoon level units. They are driven by a decisional model allowing the automated execution of mission following military doctrine.
+    
+  @subsection agent_init Initialization
+  
+  The following sequence diagram describes the agent initialization process. Agent creation messages are sent to a new user followed by update messages containing additional agent states.
+  Once created, some agent attributes can be updated, when this occurs, the simulation sends an update message to all clients connected.
+  When an agent is destroyed (upon magic action or exercise shutdown), a destruction notification message is sent to all clients connected.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    C [label="Client"],S [label="Dispatcher"];
+    --- [label="Situation initialization",textcolor="#ff0000"];
+    C  <- S [label="Begin current state", URL="\ref sword::ControlSendCurrentStateBegin"];
+    C  <- S [label="Agent creation", URL="\ref sword::UnitCreation"];
+    ... [label="Initialization continues..."];
+    C  <- S [label="End current state", URL="\ref sword::ControlSendCurrentStateEnd"];
+    --- [label="Running exercise",textcolor="#ff0000"];
+    C  <- S [label="Agent update", URL="\ref sword::UnitAttributes"];
+    --- [label="Finishing exercise",textcolor="#ff0000"];
+    C  <- S [label="Agent destruction", URL="\ref sword::UnitDestruction"];
+  @endmsc
+  
+  @subsection agent_creation Dynamic creation
+  
+  Agents can be created during the game using a sword::MagicAction.
+  The client requires supervision rights to be allowed to create an agent.
+  The client requesting the agent creation receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the agent creation is sent to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    C  -> S [label="Request agent creation", URL="\ref sword::MagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::MagicActionAck"];
+    A  <- S [label="Agent creation", URL="\ref sword::UnitCreation"];
+  @endmsc
+  
+  @page environment Environment
 
+  @section obstacles Obstacles
+  @section populations Populations
+  @section weather Weather
+  
+  @page communication Communication model
+  
+  @section perceptions Perceptions
+  @section knowledge_groups Knowledge groups
+  @section agent_knowledge Agent knowledge
+  @section obstacle_knowledge Obstacle knowledge
+  @section crowd_knowledge Crowd knowledge
+    
   @page controlling Controlling the simulation
 
   @section pause Pause/Resume
+  
+  The simulation can be paused and resumed by any user with supervision rights using the messages sword::ControlPause and sword::ControlResume.
+  The client requesting the simulation to pause or resume receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the new simulation state is notified to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Pausing...",textcolor="#ff0000"];
+    C  -> S [label="Request pause", URL="\ref sword::ControlPause"];
+    C <<= S [label="Acknowledge", URL="\ref sword::ControlPauseAck"];
+    A  <- S [label="New simulation state notification", URL="\ref sword::ControlPause"];
+    --- [label="Resuming...",textcolor="#ff0000"];
+    C  -> S [label="Request resume", URL="\ref sword::ControlResume"];
+    C <<= S [label="Acknowledge", URL="\ref sword::ControlResumeAck"];
+    A  <- S [label="New simulation state notification", URL="\ref sword::ControlResume"];
+  @endmsc
+  
   @section acceleration Acceleration factor
+  
+  The simulation acceleration factor can be changed by any user with supervision rights using the message sword::ControlChangeTimeFactor.
+  The client requesting the acceleration factor of the simulation to be changed receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the new simulation acceleration factor is notified to all connected clients.
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Changing acceleration factor...",textcolor="#ff0000"];
+    C  -> S [label="Request acceleration factor change", URL="\ref sword::ControlChangeTimeFactor"];
+    C <<= S [label="Acknowledge", URL="\ref sword::ControlChangeTimeFactorAck"];
+    A  <- S [label="New acceleration factor notification", URL="\ref sword::ControlChangeTimeFactor"];
+  @endmsc
+  
   @section Checkpoints
 
-  To trigger the saving of a checkpoint, a message sword::ControlCheckPointSaveNow must be sent. @n
-  This message contains an optional name field used to specify the name of the checkpoint. If not specified, the created checkpoint is named using the current date and time.
+  The simulation state can be saved into binary archives called checkpoints.
+  Checkpoint saving can be configured to automatically occur at a certain frequency, specified when starting the exercise.
+  A checkpoint saving can also be triggered by any user with supervision rights using the message sword::ControlCheckPointSaveNow.
+  
+  The client requesting the simulation to save the checkpoint receives an acknowledge indicating the success or failure of the operation.
+  In case of success, the start and end of the checkpoint saving is notified to all connected clients.
+    
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Saving checkpoint...",textcolor="#ff0000"];
+    C  -> S [label="Request checkpoint saving", URL="\ref sword::ControlCheckPointSaveNow"];
+    C <<= S [label="Acknowledge", URL="\ref sword::ControlCheckPointSaveNowAck"];
+    A  <- S [label="Checkpoint saving start notification", URL="\ref sword::ControlCheckPointSaveBegin"];
+    ...;
+    A  <- S [label="Checkpoint saving end notification", URL="\ref sword::ControlCheckPointSaveEnd"];
+  @endmsc
 
-  In response to the sword::ControlCheckPointSaveNow message, a sword::ControlCheckPointSaveNowAck acknowledge message is sent by the simulation server.
-
+  @note The sword::ControlCheckPointSaveNow message contains an optional name field used to specify the name of the checkpoint. If not specified, the created checkpoint is named using the current date and time.
+  
   @page orders Issuing orders
 
   @section automat Automat missions
