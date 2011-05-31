@@ -38,6 +38,5 @@ DotationComputerFactory::~DotationComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< DotationComputer_ABC > DotationComputerFactory::Create() const
 {
-    std::auto_ptr< DotationComputer_ABC > pDotationComputer( new DefaultDotationComputer() );
-    return pDotationComputer;
+    return std::auto_ptr< DotationComputer_ABC >( new DefaultDotationComputer() );
 }

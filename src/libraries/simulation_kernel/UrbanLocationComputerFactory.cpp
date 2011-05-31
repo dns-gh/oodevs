@@ -38,6 +38,5 @@ UrbanLocationComputerFactory::~UrbanLocationComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< UrbanLocationComputer_ABC > UrbanLocationComputerFactory::Create() const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > pUrbanLocationComputer( new DefaultUrbanLocationComputer() );
-    return pUrbanLocationComputer;
+    return std::auto_ptr< UrbanLocationComputer_ABC >( new DefaultUrbanLocationComputer() );
 }

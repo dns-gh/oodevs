@@ -8,12 +8,10 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/HealComputerFactory.h"
 #include "simulation_kernel/DefaultHealComputer.h"
 
-namespace human
-{
+using namespace human;
 
 // -----------------------------------------------------------------------------
 // Name: HealableComputerFactory constructor
@@ -39,8 +37,5 @@ HealComputerFactory::~HealComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< HealComputer_ABC > HealComputerFactory::Create() const
 {
-    std::auto_ptr< HealComputer_ABC > pHealableComputer( new DefaultHealComputer() );
-    return pHealableComputer;
+    return std::auto_ptr< HealComputer_ABC >( new DefaultHealComputer() );
 }
-
-} // namespace human

@@ -37,6 +37,5 @@ LocationComputerFactory::~LocationComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< LocationComputer_ABC > LocationComputerFactory::Create() const
 {
-    std::auto_ptr< LocationComputer_ABC > pLocationComputer( new DefaultLocationComputer() );
-    return pLocationComputer;
+    return std::auto_ptr< LocationComputer_ABC >( new DefaultLocationComputer() );
 }

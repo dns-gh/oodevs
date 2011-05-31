@@ -79,7 +79,7 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MoveComputerFactory::CreateSpeedComputer
+// Name: PHY_Speeds constructor
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded )

@@ -8,11 +8,11 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/WeaponAvailabilityComputerFactory.h"
 #include "simulation_kernel/DefaultWeaponAvailabilityComputer.h"
 
 using namespace firing;
+
 // -----------------------------------------------------------------------------
 // Name: WeaponAvailabilityComputerFactory constructor
 // Created: MGD 2009-08-13
@@ -37,6 +37,5 @@ WeaponAvailabilityComputerFactory::~WeaponAvailabilityComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< WeaponAvailabilityComputer_ABC > WeaponAvailabilityComputerFactory::Create( FireData_ABC& firerWeapons ) const
 {
-    std::auto_ptr< WeaponAvailabilityComputer_ABC > pWeaponAvailabilityComputer( new DefaultWeaponAvailabilityComputer( firerWeapons ) );
-    return pWeaponAvailabilityComputer;
+    return std::auto_ptr< WeaponAvailabilityComputer_ABC >( new DefaultWeaponAvailabilityComputer( firerWeapons ) );
 }

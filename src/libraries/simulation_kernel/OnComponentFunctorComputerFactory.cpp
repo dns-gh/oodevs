@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/OnComponentFunctorComputerFactory.h"
 #include "simulation_kernel/DefaultComponentFunctorComputer.h"
 
@@ -36,8 +35,7 @@ OnComponentFunctorComputerFactory::~OnComponentFunctorComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< OnComponentComputer_ABC > OnComponentFunctorComputerFactory::Create( OnComponentFunctor_ABC& componentOperator ) const
 {//@TODO $$$$ MGD NEED This factory?
-    std::auto_ptr< OnComponentComputer_ABC > pDotationComputer( new DefaultComponentFunctorComputer( componentOperator ) );
-    return pDotationComputer;
+    return std::auto_ptr< OnComponentComputer_ABC >( new DefaultComponentFunctorComputer( componentOperator ) );
 }
 
 //@TODO $$$$ MGD Replace create by an Apply( Container& container ) to correctly execute

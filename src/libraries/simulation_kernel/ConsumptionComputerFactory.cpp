@@ -38,8 +38,7 @@ ConsumptionComputerFactory::~ConsumptionComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< ConsumptionComputer_ABC > ConsumptionComputerFactory::CreateConsumptionComputer() const
 {
-    std::auto_ptr< ConsumptionComputer_ABC > pConsumptionComputer( new DefaultConsumptionComputer() );
-    return pConsumptionComputer;
+    return std::auto_ptr< ConsumptionComputer_ABC >( new DefaultConsumptionComputer() );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,6 +47,5 @@ std::auto_ptr< ConsumptionComputer_ABC > ConsumptionComputerFactory::CreateConsu
 // -----------------------------------------------------------------------------
 std::auto_ptr< ConsumptionModeChangeRequest_ABC > ConsumptionComputerFactory::CreateConsumptionModeChangeRequest( const PHY_ConsumptionType& newMode ) const
 {
-    std::auto_ptr< ConsumptionModeChangeRequest_ABC > pConsumptionModeChangeRequest( new DefaultConsumptionModeChangeRequest( newMode ) );
-    return pConsumptionModeChangeRequest;
+    return std::auto_ptr< ConsumptionModeChangeRequest_ABC >( new DefaultConsumptionModeChangeRequest( newMode ) );
 }

@@ -12,8 +12,7 @@
 #include "DefaultHumanLoadingTimeComputer.h"
 #include "DefaultLoadedStateConsistencyComputer.h"
 
-namespace transport
-{
+using namespace transport;
 
 // -----------------------------------------------------------------------------
 // Name: LoadingComputerFactory constructor
@@ -39,8 +38,7 @@ LoadingComputerFactory::~LoadingComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< HumanLoadingTimeComputer_ABC > LoadingComputerFactory::CreateHumanLoadingTimeComputer()
 {
-    std::auto_ptr< HumanLoadingTimeComputer_ABC > humanLoadingTimeComputer( new DefaultHumanLoadingTimeComputer() );
-    return humanLoadingTimeComputer;
+    return std::auto_ptr< HumanLoadingTimeComputer_ABC >( new DefaultHumanLoadingTimeComputer() );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,8 +47,5 @@ std::auto_ptr< HumanLoadingTimeComputer_ABC > LoadingComputerFactory::CreateHuma
 // -----------------------------------------------------------------------------
 std::auto_ptr< LoadedStateConsistencyComputer_ABC > LoadingComputerFactory::CreateLoadedStateConsistencyComputer()
 {
-    std::auto_ptr< LoadedStateConsistencyComputer_ABC > loadedStateConsistencyComputer( new DefaultLoadedStateConsistencyComputer() );
-    return loadedStateConsistencyComputer;
-}
-
+    return std::auto_ptr< LoadedStateConsistencyComputer_ABC >( new DefaultLoadedStateConsistencyComputer() );
 }

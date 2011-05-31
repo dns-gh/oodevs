@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
 #include "simulation_kernel/DefaultComponentLendedFunctorComputer.h"
 
@@ -36,8 +35,7 @@ OnComponentLendedFunctorComputerFactory::~OnComponentLendedFunctorComputerFactor
 // -----------------------------------------------------------------------------
 std::auto_ptr< OnComponentLendedFunctorComputer_ABC > OnComponentLendedFunctorComputerFactory::Create( OnComponentFunctor_ABC& componentOperator ) const
 {
-    std::auto_ptr< OnComponentLendedFunctorComputer_ABC > pDotationComputer( new DefaultComponentLendedFunctorComputer( componentOperator ) );
-    return pDotationComputer;
+    return std::auto_ptr< OnComponentLendedFunctorComputer_ABC >( new DefaultComponentLendedFunctorComputer( componentOperator ) );
 }
 
 //@TODO $$$$ MGD Replace create by an Apply( Container& container ) to correctly execute

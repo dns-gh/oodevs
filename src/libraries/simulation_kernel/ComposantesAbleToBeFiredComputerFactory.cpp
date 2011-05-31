@@ -37,6 +37,5 @@ ComposantesAbleToBeFiredComputerFactory::~ComposantesAbleToBeFiredComputerFactor
 // -----------------------------------------------------------------------------
 std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > ComposantesAbleToBeFiredComputerFactory::Create( bool bFireOnlyOnMajorComposantes /*=false*/ ) const
 {
-    std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC > pComputer( new DefaultComposantesAbleToBeFiredComputer( bFireOnlyOnMajorComposantes ) );
-    return pComputer;
+    return std::auto_ptr< ComposantesAbleToBeFiredComputer_ABC >( new DefaultComposantesAbleToBeFiredComputer( bFireOnlyOnMajorComposantes ) );
 }

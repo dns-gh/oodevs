@@ -38,8 +38,7 @@ DetectionComputerFactory::~DetectionComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< DetectionComputer_ABC > DetectionComputerFactory::Create( MIL_Agent_ABC& target ) const
 {
-    std::auto_ptr< DetectionComputer_ABC > pDetectionComputer( new DefaultDetectionComputer( target ) );
-    return pDetectionComputer;
+    return std::auto_ptr< DetectionComputer_ABC >( new DefaultDetectionComputer( target ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,6 +47,5 @@ std::auto_ptr< DetectionComputer_ABC > DetectionComputerFactory::Create( MIL_Age
 // -----------------------------------------------------------------------------
 std::auto_ptr< PerceptionDistanceComputer_ABC > DetectionComputerFactory::CreateDistanceComputer() const
 {
-    std::auto_ptr< PerceptionDistanceComputer_ABC > pDistanceComputer( new DefaultPerceptionDistanceComputer() );
-    return pDistanceComputer;
+    return std::auto_ptr< PerceptionDistanceComputer_ABC >( new DefaultPerceptionDistanceComputer() );
 }

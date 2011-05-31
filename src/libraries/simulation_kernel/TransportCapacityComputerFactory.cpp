@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "TransportCapacityComputerFactory.h"
 #include "DefaultTransportCapacityComputer.h"
 #include "DefaultTransportWeightComputer.h"
@@ -40,8 +39,7 @@ TransportComputerFactory::~TransportComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< TransportCapacityComputer_ABC > TransportComputerFactory::CreateCapacityComputer( ) const
 {
-    std::auto_ptr< TransportCapacityComputer_ABC > capacityComputer( new DefaultTransportCapacityComputer() );
-    return capacityComputer;
+    return std::auto_ptr< TransportCapacityComputer_ABC >( new DefaultTransportCapacityComputer() );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,8 +48,7 @@ std::auto_ptr< TransportCapacityComputer_ABC > TransportComputerFactory::CreateC
 // -----------------------------------------------------------------------------
 std::auto_ptr< TransportWeightComputer_ABC > TransportComputerFactory::CreateWeightComputer( const TransportStrategy_ABC* strategy ) const
 {
-    std::auto_ptr< TransportWeightComputer_ABC > weightComputer( new DefaultTransportWeightComputer( strategy ) );
-    return weightComputer;
+    return std::auto_ptr< TransportWeightComputer_ABC >( new DefaultTransportWeightComputer( strategy ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,6 +57,5 @@ std::auto_ptr< TransportWeightComputer_ABC > TransportComputerFactory::CreateWei
 // -----------------------------------------------------------------------------
 std::auto_ptr< TransportPermissionComputer_ABC > TransportComputerFactory::CreatePermissionComputer() const
 {
-    std::auto_ptr< TransportPermissionComputer_ABC > permissionComputer( new DefaultTransportPermissionComputer() );
-    return permissionComputer;
+    return std::auto_ptr< TransportPermissionComputer_ABC >( new DefaultTransportPermissionComputer() );
 }

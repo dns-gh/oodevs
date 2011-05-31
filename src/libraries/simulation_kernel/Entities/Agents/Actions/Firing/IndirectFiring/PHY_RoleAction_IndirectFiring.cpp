@@ -143,8 +143,6 @@ void PHY_RoleAction_IndirectFiring::FireSuspended()
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo )
 {
-
-
     PHY_SmokeData smokeData( pion_, PHY_IndirectFireDotationClass::fumigene_, nNbrAmmo );
     std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( smokeData ) );
     pion_.Execute( *weaponAvailabilityComputer );

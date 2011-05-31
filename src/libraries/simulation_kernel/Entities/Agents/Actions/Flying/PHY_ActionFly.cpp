@@ -59,5 +59,5 @@ void PHY_ActionFly::ExecuteSuspended()
 // -----------------------------------------------------------------------------
 void PHY_ActionFly::Stop()
 {
-
+    // NOTHING
 }

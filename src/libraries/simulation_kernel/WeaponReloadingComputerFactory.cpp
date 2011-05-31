@@ -37,7 +37,5 @@ WeaponReloadingComputerFactory::~WeaponReloadingComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< WeaponReloadingComputer_ABC > WeaponReloadingComputerFactory::Create( double duration ) const
 {
-    std::auto_ptr< WeaponReloadingComputer_ABC > pComputer( new DefaultWeaponReloadingComputer( duration ) );
-    return pComputer;
+    return std::auto_ptr< WeaponReloadingComputer_ABC >( new DefaultWeaponReloadingComputer( duration ) );
 }
-

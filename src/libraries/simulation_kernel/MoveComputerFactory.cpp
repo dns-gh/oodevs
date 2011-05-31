@@ -40,8 +40,7 @@ MoveComputerFactory::~MoveComputerFactory()
 // -----------------------------------------------------------------------------
 std::auto_ptr< MoveComputer_ABC > MoveComputerFactory::CreateMoveComputer() const
 {
-    std::auto_ptr< MoveComputer_ABC > pMoveComputer( new DefaultMoveComputer() );
-    return pMoveComputer;
+    return std::auto_ptr< MoveComputer_ABC >( new DefaultMoveComputer() );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,8 +49,7 @@ std::auto_ptr< MoveComputer_ABC > MoveComputerFactory::CreateMoveComputer() cons
 // -----------------------------------------------------------------------------
 std::auto_ptr< MoveComputer_ABC > MoveComputerFactory::CreateMagicMoveComputer() const
 {
-    std::auto_ptr< MoveComputer_ABC > pMoveComputer( new DefaultMagicMoveComputer() );
-    return pMoveComputer;
+    return std::auto_ptr< MoveComputer_ABC >( new DefaultMagicMoveComputer() );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,8 +58,7 @@ std::auto_ptr< MoveComputer_ABC > MoveComputerFactory::CreateMagicMoveComputer()
 // -----------------------------------------------------------------------------
 std::auto_ptr< SpeedComputer_ABC > MoveComputerFactory::CreateSpeedComputer( const SpeedStrategy_ABC& strategy ) const
 {
-    std::auto_ptr< SpeedComputer_ABC > pSpeedComputer( new DefaultSpeedComputer( strategy ) );
-    return pSpeedComputer;
+    return std::auto_ptr< SpeedComputer_ABC >( new DefaultSpeedComputer( strategy ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,12 +67,9 @@ std::auto_ptr< SpeedComputer_ABC > MoveComputerFactory::CreateSpeedComputer( con
 // -----------------------------------------------------------------------------
 std::auto_ptr< SpeedComputer_ABC > MoveComputerFactory::CreateSpeedComputer( const SpeedStrategy_ABC& strategy, bool loaded ) const
 {
-    std::auto_ptr< SpeedComputer_ABC > pSpeedComputer ;
     if( loaded )
-        pSpeedComputer.reset( new LoadedSpeedComputer( strategy ) );
-    else
-        pSpeedComputer.reset( new UnloadedSpeedComputer( strategy ) );
-    return pSpeedComputer;
+        return std::auto_ptr< SpeedComputer_ABC >( new LoadedSpeedComputer( strategy ) );
+    return std::auto_ptr< SpeedComputer_ABC >( new UnloadedSpeedComputer( strategy ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,6 +78,5 @@ std::auto_ptr< SpeedComputer_ABC > MoveComputerFactory::CreateSpeedComputer( con
 // -----------------------------------------------------------------------------
 std::auto_ptr< MaxSlopeComputer_ABC > MoveComputerFactory::CreateMaxSlopeComputer() const
 {
-    std::auto_ptr< MaxSlopeComputer_ABC > pSlopeComputer( new DefaultMaxSlopeComputer() );
-    return pSlopeComputer;
+    return std::auto_ptr< MaxSlopeComputer_ABC >( new DefaultMaxSlopeComputer() );
 }
