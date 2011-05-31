@@ -186,7 +186,7 @@ const kernel::LogisticLevel& Formation::GetLogisticLevel() const
 // Created: NLD 2011-01-29
 // -----------------------------------------------------------------------------
 void Formation::SetLogisticLevel( const EntityLogisticLevel& logisticLevel )
-{    
+{
     //$$$ FACTORISER AVEC Automat
     if( (*logisticLevel) == kernel::LogisticLevel::none_ )
     {

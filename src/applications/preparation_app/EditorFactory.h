@@ -76,7 +76,7 @@ public:
     virtual void Call( Enum_DemolitionTargetType* const& value );
     virtual void Call( DotationsItem** const& value );
     virtual void Call( kernel::LogisticLevel** const& value );
-    virtual void Call( EntityLogisticLevel* const& value );    
+    virtual void Call( EntityLogisticLevel* const& value );
     virtual void Call( kernel::Moveable_ABC** const& value );
     virtual void Call( EntityAffinity* const& value );
     virtual void Call( PopulationRepartition** const& value );

@@ -421,7 +421,7 @@ void SimulationToClient::Convert( const sword::FormationCreation& from, MsgsSimT
     ConvertNatureLevel( from, to );
     CONVERT( name );
     CONVERT( app6symbol );
-        
+
     CONVERT_ENUM( logistic_level, ( sword::none, Common::none )
                                   ( sword::logistic_base, Common::logistic_base ) );
     CONVERT_CB( color, ConvertRgbColor );
@@ -734,7 +734,7 @@ void SimulationToClient::Convert( const sword::UnitChangeSuperior& from, Common:
 void SimulationToClient::Convert( const sword::ChangeLogisticLinks& from, Common::MsgChangeLogisticLinks* to )
 {
     CONVERT_CB( requester, ConvertParentEntity );
-    
+
     // Temporary dumb conversion: keep the last superior and transform it to tc2 or logistic_base
     if( from.superior_size() > 0 )
     {

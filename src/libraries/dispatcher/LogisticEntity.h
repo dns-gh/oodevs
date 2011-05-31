@@ -68,7 +68,7 @@ public:
 
 private:
     //! @name Member data
-    //@{  
+    //@{
     const LogisticEntityOwner_ABC& owner_;
     const kernel::LogisticLevel& logisticLevel_;
     LogisticHierarchy logisticHierarchy_;

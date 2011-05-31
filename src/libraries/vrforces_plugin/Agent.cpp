@@ -275,7 +275,7 @@ void Agent::CreatePseudoAggregate( DtVrfRemoteController& controller, const DtSi
                 AddSubordinateEntity( controller, address, list.entityType(), id );
             }
     }
-    logger_.LogInfo( std::string( "Request pseudo aggregate with id: " ) 
+    logger_.LogInfo( std::string( "Request pseudo aggregate with id: " )
                    + boost::lexical_cast< std::string >( aggregatePublisher_->asr()->entityId() )
                    + std::string( "type: " ) + type.string() );
 }

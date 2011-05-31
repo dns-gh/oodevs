@@ -364,7 +364,6 @@ QString ObjectPrototype_ABC::GetCurrentName() const
 const kernel::Location_ABC& ObjectPrototype_ABC::GetCurrentLocation() const
 {
     if( loader_.get() )
-        return loader_->GetCurrentLocation();    
-    else
-        return *location_;        
+        return loader_->GetCurrentLocation();
+    return *location_;
 }

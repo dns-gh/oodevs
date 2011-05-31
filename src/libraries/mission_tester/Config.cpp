@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "mission_tester_pch.h"
-#include "Client.h" 
+#include "Client.h"
 #include "Config.h"
 #include "ConsoleLogger.h"
 #include "Exercise.h"

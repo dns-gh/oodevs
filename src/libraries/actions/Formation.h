@@ -45,7 +45,7 @@ public:
     virtual void CommitTo( sword::MissionParameter_Value& message ) const;
     //@}
 
-private:    
+private:
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;

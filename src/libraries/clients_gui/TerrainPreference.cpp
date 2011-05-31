@@ -58,7 +58,7 @@ void TerrainPreference::Display( QWidget* parent )
     showCheckbox_ = new QCheckBox( ENT_Tr::ConvertFromLocation( ENT_Tr::ConvertToLocation( name_ ), ENT_Tr::eToTr ).c_str(), pBox );
     showCheckbox_->setChecked( shown_ );
     pBox->setStretchFactor( showCheckbox_, 2 );
-	sizeButton_  = new SizeButton ( pBox, tools::translate( "gui::TerrainPreference", " " ), lineWidth_ );
+    sizeButton_  = new SizeButton ( pBox, tools::translate( "gui::TerrainPreference", " " ), lineWidth_ );
     sizeButton_->EnableValueLabel( tools::translate( "gui::TerrainPreference", " px" ) );
     colorButton_ = new ColorButton( pBox, "", color_ );
 }

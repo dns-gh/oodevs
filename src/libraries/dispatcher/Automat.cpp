@@ -65,7 +65,7 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
     }
     else
         RegisterSelf( logisticHierarchy_ );
-    RegisterSelf( *this );   
+    RegisterSelf( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -266,7 +266,7 @@ void Automat::DoUpdate( const sword::AutomatOrder& message )
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
 void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
-{        
+{
     client::AutomatCreation asn;
     asn().mutable_automat()->set_id( GetId() );
     asn().mutable_type()->set_id( type_ );
@@ -283,7 +283,7 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
     else
         asn().set_logistic_level( sword::none );
 
-    asn.Send( publisher ); 
+    asn.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

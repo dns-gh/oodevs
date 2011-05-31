@@ -46,7 +46,7 @@ private:
     //@}
 
     //! @name Helpers
-    //@{    
+    //@{
     virtual std::string SerializeType() const;
     virtual void Serialize( xml::xostream& xos ) const;
     //@}

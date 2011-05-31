@@ -62,7 +62,7 @@ LogisticLinks::~LogisticLinks()
 // Name: LogisticLinks::CreateDictionary
 // Created: SBO 2006-10-19
 // -----------------------------------------------------------------------------
-void LogisticLinks::CreateDictionary( kernel::PropertiesDictionary& dico ) const
+void LogisticLinks::CreateDictionary( kernel::PropertiesDictionary& /*dico*/ ) const
 {
     dictionary_.Register( *this, tools::translate( "Logistic", "Logistic links/Superiors" ), superiors_ );
 }

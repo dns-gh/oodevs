@@ -49,7 +49,7 @@ Logger::~Logger()
 void Logger::Created( const kernel::Entity_ABC& target, const kernel::OrderType& mission, const std::string& orderType )
 {
     missions_[target.GetId()] = std::pair< unsigned int, std::string >( mission.GetId(), mission.GetName() );
-    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() ) + "] >>> [U" 
+    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() ) + "] >>> [U"
          + boost::lexical_cast< std::string >( target.GetId() ) + "][M"
          + boost::lexical_cast< std::string >( mission.GetId() ) + "] " + orderType
          + " '" + mission.GetName() + "' sent." );
@@ -93,7 +93,7 @@ namespace
 // -----------------------------------------------------------------------------
 void Logger::MissionAcknowledged( const sword::Tasker& tasker )
 {
-    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() ) + "] <<< [U" 
+    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() ) + "] <<< [U"
          + boost::lexical_cast< std::string >( TaskerToId( tasker ) ) + "][M"
          + boost::lexical_cast< std::string >( missions_[ TaskerToId( tasker ) ].first ) + "] Mission '"
          + missions_[ TaskerToId( tasker ) ].second + "' received." );
@@ -105,8 +105,8 @@ void Logger::MissionAcknowledged( const sword::Tasker& tasker )
 // -----------------------------------------------------------------------------
 void Logger::FragOrderAcknowledged( const sword::Tasker& tasker )
 {
-    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() ) + "] <<< [U" 
-         + boost::lexical_cast< std::string >( TaskerToId( tasker ) ) + "][M" 
+    Write( "[" + bpt::to_simple_string( bpt::second_clock::local_time() ) + "] <<< [U"
+         + boost::lexical_cast< std::string >( TaskerToId( tasker ) ) + "][M"
          + boost::lexical_cast< std::string >( missions_[ TaskerToId( tasker ) ].first )
          + "] FragOrder '" + missions_[ TaskerToId( tasker ) ].second + "' received." );
 }

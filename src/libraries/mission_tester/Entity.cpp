@@ -135,7 +135,7 @@ void Entity::Activate( kernel::ActionController& /*controller*/ ) const
 // -----------------------------------------------------------------------------
 bool Entity::Start( Exercise& exercise, bool withFragOrders )
 {
-    if( withFragOrders && ( rand() % 10 ) > 5 ) 
+    if( withFragOrders && ( rand() % 10 ) > 5 )
         return StartFragOrder( exercise );
     return StartMission( exercise );
 }

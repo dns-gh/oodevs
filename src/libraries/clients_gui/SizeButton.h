@@ -62,10 +62,10 @@ private:
     //@{
     float   size_;
     QString prefix_;
-	QLabel	label_;
+    QLabel  label_;
     bool    changed_;
     float   previous_;
-	bool	valueLabel_;
+    bool    valueLabel_;
     //@}
 };
 

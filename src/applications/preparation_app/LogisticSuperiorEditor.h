@@ -18,7 +18,7 @@
 //#include <boost/type_traits.hpp>
 #include <boost/noncopyable.hpp>
 
-namespace kernel 
+namespace kernel
 {
     class Formation_ABC;
     class Entity_ABC;

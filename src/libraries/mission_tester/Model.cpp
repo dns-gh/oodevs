@@ -65,7 +65,7 @@ void Model::OnReceiveMessage( const sword::SimToClient& message )
         if( message.message().order_ack().error_code() )
             BOOST_FOREACH( Listener_ABC* listener, listeners_ )
                 listener->MissionErrorAck( message.message().order_ack().tasker() );
-        else 
+        else
             BOOST_FOREACH( Listener_ABC* listener, listeners_ )
                 listener->MissionAcknowledged( message.message().order_ack().tasker() );
     }

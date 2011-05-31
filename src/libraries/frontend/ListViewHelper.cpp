@@ -73,7 +73,7 @@ namespace frontend
         exerciseItem->setOpen( true );
         exerciseItem->setOn( true );
         exerciseItem->setEnabled( false );
-        
+
         const QStringList sessions( frontend::commands::ListSessions( config, exercise ) );
         for ( QStringList::const_iterator it = sessions.constBegin(); it != sessions.constEnd(); ++it )
         {

@@ -52,12 +52,12 @@ LogisticBaseStates::~LogisticBaseStates()
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC& entity )
-{    
+{
     dico.Register( *(const kernel::LogisticHierarchiesBase*)this, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetSuperior );
     if( canHaveQuotas_ )
     {
         item_ = new DotationsItem( controller_, entity, dico, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), *(Resolver< Dotation >*)this );
-        dico.Register( entity, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), item_ );    
+        dico.Register( entity, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), item_ );
     }
 }
 
@@ -162,7 +162,7 @@ void LogisticBaseStates::SerializeQuotas( xml::xostream& xos ) const
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::SerializeLogistics( xml::xostream& xos ) const
-{    
+{
     tools::Iterator< const kernel::Entity_ABC& > children = CreateSubordinateIterator();
     if( !children.HasMoreElements() )
         return;

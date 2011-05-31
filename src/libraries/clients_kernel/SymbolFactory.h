@@ -17,7 +17,7 @@ namespace tools
     class ExerciseConfig;
 }
 
-namespace xml 
+namespace xml
 {
     class xistream;
     class xostream;

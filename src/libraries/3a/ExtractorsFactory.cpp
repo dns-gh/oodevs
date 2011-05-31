@@ -62,7 +62,7 @@ namespace
     template< typename Key, typename Value >
     std::map< Key, Value > BuildExtractors( const aar::StaticModel_ABC& model )
     {
-        // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ FIX ME : 
+        // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ FIX ME :
         // Certains extracteurs sont définis avec deux noms différents pour la rétrcompatibilité des exercices au niveau des scores.
         // A l'avenir, il faudra utiliser les noms des extracteurs dans la documentation technique de la 3a, pour écrire un indicateur.
         // A terme les noms incohérents avec le reste devront être supprimés, pourquoi pas dans la prochaine version de SWORD.

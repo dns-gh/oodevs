@@ -12,12 +12,12 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace sword 
+namespace sword
 {
     class ParentEntity;
 }
 
-namespace dispatcher 
+namespace dispatcher
 {
 // =============================================================================
 /** @class  LogisticHierarchyOwner_ABC
@@ -40,6 +40,6 @@ public:
     //@}
 };
 
-} 
+}
 
 #endif // __LogisticHierarchyOwner_ABC_h_

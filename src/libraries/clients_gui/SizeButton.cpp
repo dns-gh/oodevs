@@ -18,21 +18,21 @@ using namespace gui;
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
 SizeButton::SizeButton( QWidget* parent /* = 0*/, const char* name /* = 0*/, float value /* = 1*/ )
-	: QSlider( parent, name )
-	, label_( parent )
+    : QSlider( parent, name )
+    , label_( parent )
     , size_( value )
     , prefix_()
     , changed_( false )
     , previous_( value )
 {
-	setTickmarks( QSlider::Below );
-	setRange( 0, 20 ); 
-	setTickInterval( 2 );
-	setPageStep( 1 );
-	setOrientation( Qt::Horizontal );
-	label_.setText( QString( name ).append( QString::number( 1 ) ).append( prefix_ ) );
-	
-	connect( this, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
+    setTickmarks( QSlider::Below );
+    setRange( 0, 20 );
+    setTickInterval( 2 );
+    setPageStep( 1 );
+    setOrientation( Qt::Horizontal );
+    label_.setText( QString( name ).append( QString::number( 1 ) ).append( prefix_ ) );
+
+    connect( this, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
     setValue( int( 2 * value ) );
 }
 
@@ -57,14 +57,14 @@ void SizeButton::OnValueChanged( int value )
     size_ = value * 0.5f;
     changed_ = true;
     if( valueLabel_ )
-	{
-		if ( size_ == 10 )
-			label_.setText( QString( name() ).append( " " ).append( QString::number( size_ ) ).append( prefix_ ) );
-		else if ( size_ == floor( size_ ) )
-			label_.setText( QString( name() ).append( "   " ).append( QString::number( size_ ) ).append( prefix_ ) );
-		else
-			label_.setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_ ) );
-	}
+    {
+        if ( size_ == 10 )
+            label_.setText( QString( name() ).append( " " ).append( QString::number( size_ ) ).append( prefix_ ) );
+        else if ( size_ == floor( size_ ) )
+            label_.setText( QString( name() ).append( "   " ).append( QString::number( size_ ) ).append( prefix_ ) );
+        else
+            label_.setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_ ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -106,14 +106,14 @@ void SizeButton::Revert()
     changed_ = false;
     size_ = previous_;
     if( valueLabel_ )
-	{
-		if ( size_ == 10 )
-			label_.setText( QString( name() ).append( " " ).append( QString::number( size_ ) ).append( prefix_ ) );
-		else if ( size_ == floor( size_ ) )
-			label_.setText( QString( name() ).append( "   " ).append( QString::number( size_ ) ).append( prefix_ ) );
-		else
-			label_.setText( QString( name() ).append( "" ).append( QString::number( size_ ) ).append( prefix_ ) );
-	}
+    {
+        if ( size_ == 10 )
+            label_.setText( QString( name() ).append( " " ).append( QString::number( size_ ) ).append( prefix_ ) );
+        else if ( size_ == floor( size_ ) )
+            label_.setText( QString( name() ).append( "   " ).append( QString::number( size_ ) ).append( prefix_ ) );
+        else
+            label_.setText( QString( name() ).append( "" ).append( QString::number( size_ ) ).append( prefix_ ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

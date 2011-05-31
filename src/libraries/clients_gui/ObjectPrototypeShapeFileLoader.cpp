@@ -44,7 +44,7 @@ ObjectPrototypeShapeFileLoader::ObjectPrototypeShapeFileLoader(  const kernel::C
         OGRLayer* layer = dataSource_->GetLayer( i );
         QString unloadableExplanation;
         if( !CanLoadLayer( *layer, objectType, unloadableExplanation ) )
-            unloadableLayerExplanations += tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot load layer %1 : %2" ).arg( layer->GetName() ).arg( unloadableExplanation ); 
+            unloadableLayerExplanations += tools::translate( "gui::ObjectPrototypeShapeFileLoader", "Cannot load layer %1 : %2" ).arg( layer->GetName() ).arg( unloadableExplanation );
         else
             loadableLayerNames.push_back( layer->GetName() );
     }

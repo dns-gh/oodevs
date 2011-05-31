@@ -46,7 +46,7 @@ public:
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 
-private:    
+private:
     //! @name Helpers
     //@{
     virtual std::string SerializeType() const;

@@ -36,7 +36,7 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
     , type_( type )
     , logisticLevel_( type.IsTC2() ? &LogisticLevel::logistic_base_ : &LogisticLevel::none_ ) // Logistic brain is enabled by default for type "tc2"
-{    
+{
     name_ = type.GetName().c_str() + QString( " [%1]" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );

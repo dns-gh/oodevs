@@ -75,7 +75,7 @@ namespace {
         std::vector< T* > wantedOutput;
         testIteratorContent( inputIterator, wantedOutput );
     }
-    
+
     template< typename T >
     void testIteratorContent( tools::Iterator< T& > inputIterator, T& elt1 )
     {
@@ -83,7 +83,7 @@ namespace {
         wantedOutput.push_back( &elt1 );
         testIteratorContent( inputIterator, wantedOutput );
     }
-    
+
     template< typename T >
     void testIteratorContent( tools::Iterator< T& > inputIterator, T& elt1, T& elt2 )
     {
@@ -108,7 +108,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchy )
 
         BOOST_CHECK_EQUAL( false, logHierarchy.HasSuperior() );
         BOOST_CHECK_EQUAL( (MIL_AutomateLOG*)0, logHierarchy.GetPrimarySuperior() );
-             
+
         testIteratorContent( logHierarchy.CreateSuperiorsIterator() );
         testIteratorContent( logHierarchy.CreateSuperiorLinksIterator() );
     }
@@ -176,7 +176,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyXml )
         "<quotas>"
         "   <resource name=\"Bidule\" quantity=\"6666\"/>"
         "</quotas>" );
-   
+
     LogisticHierarchy logHierarchy( owner, brainLog, xis );
     boost::shared_ptr< LogisticLink_ABC > linkBrainLog = logHierarchy.FindSuperiorLink( brainLog );
     BOOST_CHECK_EQUAL( linkBrainLog->GetQuota( *PHY_DotationType::FindDotationCategory( 43 ) ), 6666 );
@@ -189,7 +189,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyXml )
 BOOST_AUTO_TEST_CASE( TestLogisticHierarchyQuota )
 {
     MockLogisticHierarchyOwner_ABC owner;
-    
+
     MockMIL_AutomateLOG brainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG brainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
 
@@ -221,7 +221,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyQuota )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestLogisticHierarchySwitchHierarchy )
 {
-    MockLogisticHierarchyOwner_ABC mainOwner;    
+    MockLogisticHierarchyOwner_ABC mainOwner;
     MockMIL_AutomateLOG mainBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG mainBrainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     LogisticHierarchy mainLogHierarchy( mainOwner, mainBrainLog1);
@@ -267,7 +267,7 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchySwitchHierarchy )
 
     testIteratorContent< MIL_AutomateLOG >( newLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
     testIteratorContent< MIL_AutomateLOG >( mainLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
-    
+
     mainLogHierarchy.DisconnectFromHierarchy();
 
     testIteratorContent< MIL_AutomateLOG >( newLogHierarchy.CreateSuperiorsIterator(), newBrainLog2, newBrainLog1 );
@@ -289,7 +289,7 @@ BOOST_AUTO_TEST_CASE( TestObjectLogisticHierarchy )
     ObjectLogisticHierarchy objectLogHierarchy( objectBrainLog1 );
     testIteratorContent< MIL_AutomateLOG >( objectLogHierarchy.CreateSuperiorsIterator(), objectBrainLog1 );
 
-    MockLogisticHierarchyOwner_ABC mainOwner;    
+    MockLogisticHierarchyOwner_ABC mainOwner;
     MockMIL_AutomateLOG mainBrainLog1( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     MockMIL_AutomateLOG mainBrainLog2( *(MIL_Automate*)0, PHY_LogisticLevel::logistic_base_ );
     LogisticHierarchy mainLogHierarchy( mainOwner, mainBrainLog1);

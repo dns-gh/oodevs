@@ -218,7 +218,7 @@ void ObjectFactory::Initialize()
     factory->Register( "stock"              , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( StockAttribute, DotationType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "resources"          ,
                        boost::bind( &AttributeBuilder< ResourceNetwork_ABC >::Attach< ResourceNetworkAttribute >, _1, boost::cref( model_.urban_), boost::cref( model_.objects_ ), boost::cref( staticModel_.objectTypes_ ), _3, boost::ref( controllers_ ) ) );
-  
+
     factory_.reset( factory );
 }
 

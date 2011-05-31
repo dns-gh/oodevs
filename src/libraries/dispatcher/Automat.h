@@ -49,7 +49,7 @@ class Automat : public Automat_ABC
               , public kernel::Extension_ABC
               , public kernel::Updatable_ABC< sword::AutomatCreation >
               , public kernel::Updatable_ABC< sword::DecisionalState >
-              , public kernel::Updatable_ABC< sword::AutomatAttributes >              
+              , public kernel::Updatable_ABC< sword::AutomatAttributes >
               , public kernel::Updatable_ABC< sword::AutomatChangeSuperior >
               , public kernel::Updatable_ABC< sword::AutomatChangeKnowledgeGroup >
               , public kernel::Updatable_ABC< sword::AutomatOrder >

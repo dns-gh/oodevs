@@ -30,7 +30,7 @@ namespace xml
 */
 // Created: MARTIN 2011-05-02
 // =============================================================================
-class LodgingAttribute : public kernel::ObjectExtension 
+class LodgingAttribute : public kernel::ObjectExtension
                        , public kernel::Serializable_ABC
 {
 

@@ -116,10 +116,10 @@ unsigned int OrderParameter::MaxOccurs() const
 // -----------------------------------------------------------------------------
 const OrderParameterValue& OrderParameter::GetValue( unsigned int id ) const
 {
-	CIT_OrderParameterValues it = values_.find( id );
-	if( it == values_.end() )
-		throw std::runtime_error( "Undefined enumeration value." ); // $$$$ SBO 2007-05-25:
-	return it->second;
+    CIT_OrderParameterValues it = values_.find( id );
+    if( it == values_.end() )
+        throw std::runtime_error( "Undefined enumeration value." ); // $$$$ SBO 2007-05-25:
+    return it->second;
 }
 
 // -----------------------------------------------------------------------------

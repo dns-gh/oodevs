@@ -140,10 +140,10 @@ void CSVFileLogger::FragOrderErrorAck( const sword::Tasker& tasker )
 // Created: PHC 2011-04-07
 // -----------------------------------------------------------------------------
 void CSVFileLogger::ParameterCreationFailed( const kernel::Entity_ABC& target,
-                                             const kernel::OrderType& mission, 
+                                             const kernel::OrderType& mission,
                                              const kernel::OrderParameter& parameter )
 {
-    Write( bpt::to_simple_string( bpt::second_clock::local_time() ) + ";warning;" 
+    Write( bpt::to_simple_string( bpt::second_clock::local_time() ) + ";warning;"
          + boost::lexical_cast< std::string >( target.GetId() ) + ";"
          + boost::lexical_cast< std::string >( mission.GetId() ) + ";paramType unknown '"
          + parameter.GetType() + "'" );
@@ -155,7 +155,7 @@ void CSVFileLogger::ParameterCreationFailed( const kernel::Entity_ABC& target,
 // -----------------------------------------------------------------------------
 void CSVFileLogger::ConnectionSucceeded( const std::string& endpoint )
 {
-    Write( bpt::to_simple_string( bpt::second_clock::local_time() ) + ";warning;;;" 
+    Write( bpt::to_simple_string( bpt::second_clock::local_time() ) + ";warning;;;"
          + "Connection succeeded at '" + endpoint + "'" );
 }
 
@@ -165,7 +165,7 @@ void CSVFileLogger::ConnectionSucceeded( const std::string& endpoint )
 // -----------------------------------------------------------------------------
 void CSVFileLogger::AuthenticationSucceeded( const std::string& profile )
 {
-    Write( bpt::to_simple_string( bpt::second_clock::local_time() ) + ";warning;;;" 
+    Write( bpt::to_simple_string( bpt::second_clock::local_time() ) + ";warning;;;"
          + "Authentication succeeded with profile '" + profile + "'" );
 }
 

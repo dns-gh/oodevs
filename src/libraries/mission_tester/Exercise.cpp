@@ -119,7 +119,7 @@ bool Exercise::CreateMission( const kernel::Entity_ABC& target, const kernel::Mi
 {
     std::auto_ptr< actions::Action_ABC > action( actionFactory_->CreateAction( target, mission ) );
     if( CreateOrder( target, mission, action.get() ) )
-    { 
+    {
         NotifyMissionCreated( target, mission );
         return true;
     }
@@ -134,7 +134,7 @@ bool Exercise::CreateFragOrder( const kernel::Entity_ABC& target, const kernel::
 {
     std::auto_ptr< actions::Action_ABC > action( actionFactory_->CreateAction( target, mission ) );
     if( CreateOrder( target, mission, action.get() ) )
-    { 
+    {
         NotifyFragOrderCreated( target, mission );
         return true;
     }

@@ -76,7 +76,7 @@ private:
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     void CreateDictionary( kernel::Controller& controller );
-    void InitializeSymbol() const;    
+    void InitializeSymbol() const;
     void SetLogisticLevel( const EntityLogisticLevel& logisticLevel );
     //@}
 
@@ -85,7 +85,7 @@ private:
     //@{
     const kernel::AutomatType& type_;
     mutable std::string symbol_;
-	mutable std::string level_;
+    mutable std::string level_;
     EntityLogisticLevel logisticLevel_;
     std::string color_;
     std::string nature_;

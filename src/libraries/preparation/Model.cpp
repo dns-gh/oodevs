@@ -232,7 +232,7 @@ namespace
 bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker )
 {
     if( !loaded_ )
-        return false;    
+        return false;
     const tools::SchemaWriter schemaWriter;
 
     const bool valid = teams_.CheckValidity( checker )

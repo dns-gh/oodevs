@@ -154,7 +154,7 @@ void Formation::SendFullUpdate( ClientPublisher_ABC& publisher) const
         asn.Send( publisher );
     }
     if( logisticEntity_.get() )
-        logisticEntity_->SendFullUpdate( publisher );    
+        logisticEntity_->SendFullUpdate( publisher );
 }
 
 // -----------------------------------------------------------------------------

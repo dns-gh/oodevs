@@ -16,7 +16,7 @@
 #include "clients_kernel/LogisticLevel.h"
 #include <boost/bind.hpp>
 
-using namespace dispatcher;   
+using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: LogisticEntity constructor
@@ -27,7 +27,7 @@ LogisticEntity::LogisticEntity( const LogisticEntityOwner_ABC& owner, const tool
     , logisticHierarchy_( *this, formations, automats )
     , logisticLevel_    ( level )
 {
-    // NOTHING 
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +62,7 @@ LogisticHierarchy& LogisticEntity::GetLogisticHierarchy()
 // -----------------------------------------------------------------------------
 void LogisticEntity::Send( sword::ParentEntity& msg ) const
 {
-    owner_.Send( msg );    
+    owner_.Send( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ void LogisticEntity::Send( sword::AutomatCreation& msg ) const
 void LogisticEntity::Send( sword::FormationCreation& msg ) const
 {
     msg.set_logistic_level( sword::EnumLogisticLevel( logisticLevel_.GetId() ) );
-}      
+}
 
 // -----------------------------------------------------------------------------
 // Name: LogisticEntity::SendFullUpdate

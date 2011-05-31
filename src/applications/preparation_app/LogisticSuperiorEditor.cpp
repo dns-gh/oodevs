@@ -29,7 +29,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
     , selected_( selected )
 {
     AddItem( tools::translate( "LogisticSuperiorEditor", "None" ), 0 );
-    
+
     {
         tools::Iterator< const Automat_ABC& > it = automatResolver.CreateIterator();
         while( it.HasMoreElements() )
@@ -52,7 +52,7 @@ LogisticSuperiorEditor::LogisticSuperiorEditor( QWidget* parent, Controllers& co
 
     controllers_.Register( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSuperiorEditor destructor
 // Created: SBO 2006-10-25
@@ -61,7 +61,7 @@ LogisticSuperiorEditor::~LogisticSuperiorEditor()
 {
     controllers_.Unregister( *this );
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSuperiorEditor::NotifyCreated
 // Created: SBO 2006-10-25
