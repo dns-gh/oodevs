@@ -96,7 +96,7 @@ void MIL_StockSupplyManager::Update()
     MIL_AutomateLOG* pLogisticManager = pAutomate_->FindLogisticManager();
     if( !pLogisticManager || !pLogisticManager->GetLogisticHierarchy().HasSuperior() )
         return;
-    
+
     PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_ );
     bStockSupplyNeeded_ = !supplyRequests.Execute( pLogisticManager->GetLogisticHierarchy(), pExplicitStockSupplyState_ );
 }

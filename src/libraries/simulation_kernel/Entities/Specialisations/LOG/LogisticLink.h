@@ -63,7 +63,7 @@ public:
     //@{
     virtual void SendFullState   () const;
     virtual void SendChangedState() const;
-    
+
     virtual void OnReceiveChangeQuotas( const sword::MissionParameter& message );
     //@}
 

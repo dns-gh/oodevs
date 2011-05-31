@@ -159,7 +159,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     // Agents
     brain[ "DEC_Agent_EstDansFoule" ] =
         boost::function< bool(  DEC_Decision_ABC* ) >( boost::bind( &DEC_PopulationFunctions::IsAgentInside, boost::ref( GetPopulation() ), _1 ) );
-  
+
     // Knowledge agents
     brain[ "DEC_ConnaissanceAgent_RoePopulation" ] =
         boost::function< int ( int ) > ( boost::bind(&DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation, _1 ) );

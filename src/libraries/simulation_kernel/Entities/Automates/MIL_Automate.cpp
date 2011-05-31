@@ -303,7 +303,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
     {
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_.get() ) );
         RegisterAction( pLogisticAction_ );
-    }         
+    }
     pExtensions_.reset( pExtensions );
 }
 
@@ -559,7 +559,7 @@ void MIL_Automate::UpdateNetwork() const
         GetRole< DEC_AutomateDecision >().SendChangedState( msg );
         pExtensions_->UpdateNetwork( msg );
         msg.Send( NET_Publisher_ABC::Publisher() );
-    }   
+    }
     if( pBrainLogistic_.get() )
         pBrainLogistic_->SendChangedState();
     else
@@ -746,7 +746,7 @@ void MIL_Automate::NotifyRefugeeReleased( const MIL_Object_ABC& camp )
 {
     if( !pType_->IsRefugee() )
         return;
-    pLogisticHierarchy_->SwitchToHierarchy( camp.GetAttribute< LogisticAttribute >().GetLogisticHierarchy() ); 
+    pLogisticHierarchy_->SwitchToHierarchy( camp.GetAttribute< LogisticAttribute >().GetLogisticHierarchy() );
 }
 
 // -----------------------------------------------------------------------------
@@ -804,7 +804,7 @@ bool MIL_Automate::NotifyImprisoned( const MIL_Object_ABC& camp )
 {
     if( !IsSurrendered() )
         return false;
-    pLogisticHierarchy_->SwitchToHierarchy( camp.GetAttribute< LogisticAttribute >().GetLogisticHierarchy() ); 
+    pLogisticHierarchy_->SwitchToHierarchy( camp.GetAttribute< LogisticAttribute >().GetLogisticHierarchy() );
     return true;
 }
 
@@ -886,7 +886,7 @@ void MIL_Automate::SendFullState() const
     GetRole< DEC_AutomateDecision >().SendFullState( message );
     pExtensions_->SendFullState( message );
     message.Send( NET_Publisher_ABC::Publisher() );
-    
+
     pLogisticHierarchy_->SendFullState();
     if( pBrainLogistic_.get() )
         pBrainLogistic_->SendFullState();

@@ -19,7 +19,7 @@ namespace sword
     class MissionParameter;
 }
 
-namespace logistic 
+namespace logistic
 {
     class LogisticHierarchy_ABC;
 }
@@ -59,7 +59,7 @@ public:
     //! @name Operations
     //@{
     bool Execute ( MIL_AutomateLOG& supplier, PHY_SupplyStockState*& pStockSupplyState );
-    bool Execute ( const logistic::LogisticHierarchy_ABC& logisticHierarchy, PHY_SupplyStockState*& pStockSupplyState );   
+    bool Execute ( const logistic::LogisticHierarchy_ABC& logisticHierarchy, PHY_SupplyStockState*& pStockSupplyState );
     void AddStock( PHY_DotationStock& stock );
     //@}
 

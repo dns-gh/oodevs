@@ -16,7 +16,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_DotationSupplyManager.h"
 
-namespace logistic 
+namespace logistic
 {
     class LogisticHierarchy_ABC;
 }

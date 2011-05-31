@@ -186,7 +186,7 @@ void LodgingAttribute::ManageRefugee( MIL_AgentPion& pion )
     unsigned nbrFreeLodging = capacity_ - nbrRefugees;
     PHY_RolePion_Composantes& composantes = pion.GetRole< PHY_RolePion_Composantes >();
     PHY_RolePion_Refugee& refugeeRole = pion.GetRole< PHY_RolePion_Refugee >();
-    unsigned int nbrHumans = composantes.GetNbrUsableHumans();    
+    unsigned int nbrHumans = composantes.GetNbrUsableHumans();
 
     if( nbrHumans <= nbrFreeLodging  )
         refugeeRole.UpdateLodgingSatisfaction( nbrHumans );
@@ -203,7 +203,7 @@ void LodgingAttribute::UnmanageRefugee( MIL_AgentPion& pion )
     IT_RefugeesVector it = std::find( refugees_.begin(), refugees_.end(), &pion );
     if( it == refugees_.end() )
         return;
-    
+
     PHY_RolePion_Refugee& refugeeRole = pion.GetRole< PHY_RolePion_Refugee >();
     unsigned nbrFreeLodging = refugeeRole.GetNbrHumansCampManaged();
     refugeeRole.UpdateLodgingSatisfaction( 0 );

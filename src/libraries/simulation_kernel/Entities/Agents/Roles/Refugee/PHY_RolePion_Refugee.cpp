@@ -99,7 +99,7 @@ void PHY_RolePion_Refugee::Update( bool /*bIsDead*/ )
 {
     if( pCamp_ && pCamp_->IsMarkedForDestruction() )
         UnmanageLodgingCamp();
-    
+
     UpdateSecuritySatisfaction();
 
     if( HasChanged() )
@@ -175,7 +175,7 @@ void PHY_RolePion_Refugee::SendFullState( client::UnitAttributes& msg ) const
     msg().set_refugees_managed( bManaged_ );
     msg().set_refugees_lodging_satisf( lodgingSatisfaction_ );
     msg().set_refugees_security_satisf( securitySatisfaction_ );
-    msg().set_refugees_health_satisf( healthSatisfaction_ );  
+    msg().set_refugees_health_satisf( healthSatisfaction_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -389,7 +389,7 @@ class PCVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 //$$$$$ TODO pour remplacer le bExternalTransfert
 
 template< typename T >
-class LogisticVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion > 
+class LogisticVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 {
 public:
     LogisticVisitor()
@@ -401,7 +401,7 @@ public:
     void Visit( const MIL_AgentPion& tmp )
     {
         //$$ TEST pas de sous hierarchie log dans log( = TC2 de la BL)
-        
+
         const T* candidate = tmp.RetrieveRole< T >();
         if( !candidate )
             return;

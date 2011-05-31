@@ -19,7 +19,7 @@ class MIL_AutomateLOG;
 namespace logistic {
     class LogisticLink;
     class LogisticHierarchyOwner_ABC;
-   
+
 // =============================================================================
 /** @class  LogisticHierarchy
     @brief  LogisticHierarchy
@@ -90,7 +90,7 @@ private:
 
     T_SuperiorLinks superiorLinks_;
     T_SuperiorLinks backupSuperiorLinks_; //$$$ TMP, remplacer par un proxy à terme
-    
+
     // Network
     mutable bool linksUpdated_;
     //@}

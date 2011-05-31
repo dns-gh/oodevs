@@ -163,8 +163,8 @@ void MIL_PopulationElement_ABC::ApplyLethalDamage( unsigned int nHit, PHY_FireRe
     }
     else if( hitRoll < 3*pK )
     {
-        PullHumans( nHit );  
-        fireResult.GetDamages( *pPopulation_ ).NotifyHumansScattered( nHit ); 
+        PullHumans( nHit );
+        fireResult.GetDamages( *pPopulation_ ).NotifyHumansScattered( nHit );
     }
 }
 

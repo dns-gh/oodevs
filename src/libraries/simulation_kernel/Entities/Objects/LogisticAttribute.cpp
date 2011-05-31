@@ -84,7 +84,7 @@ void LogisticAttribute::WriteODB( xml::xostream& xos ) const
     MIL_AutomateLOG* pSuperior = pLogisticHierarchy_->GetPrimarySuperior();
     if( !pSuperior )
         return; // It sucks ...
-    
+
     xos << xml::start( "logistic-base" )
             << xml::attribute( "id", pSuperior->GetID() )
         << xml::end;
@@ -126,7 +126,7 @@ void LogisticAttribute::SendFullState( sword::ObjectAttributes& msg ) const
 {
     MIL_AutomateLOG* pSuperior = pLogisticHierarchy_->GetPrimarySuperior();
     if( pSuperior )
-        pSuperior->Serialize( *msg.mutable_logistic()->mutable_logistic_superior() );    
+        pSuperior->Serialize( *msg.mutable_logistic()->mutable_logistic_superior() );
 }
 
 // -----------------------------------------------------------------------------

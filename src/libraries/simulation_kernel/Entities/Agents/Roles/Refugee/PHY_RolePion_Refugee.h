@@ -81,7 +81,7 @@ private:
     void UnmanageLodgingCamp();
     void UpdateSecuritySatisfaction();
     void UpdateHealthSatisfaction();
-    void AddAffinityNearUnit( DEC_Knowledge_Agent& knowledge );    
+    void AddAffinityNearUnit( DEC_Knowledge_Agent& knowledge );
     //@}
 
     MIL_AgentPion&        pion_;
@@ -92,7 +92,7 @@ private:
     float                 lodgingSatisfaction_;
     float                 securitySatisfaction_;
     float                 healthSatisfaction_;
-    
+
     struct NearbyUnitsAffinity
     {
         NearbyUnitsAffinity() : maxSqrDistance( 0.0f ), affinitySum_( 0.0f ), absAffinitySum_ ( 0.0f )

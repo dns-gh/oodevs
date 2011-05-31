@@ -156,7 +156,7 @@ void MIL_AutomateLOG::ReadLogisticLink( MIL_AutomateLOG& superior, xml::xistream
 // Created: NLD 2006-05-29
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::WriteLogisticLinksODB( xml::xostream& xos ) const
-{   
+{
     pLogisticHierarchy_->WriteODB( xos );
 }
 

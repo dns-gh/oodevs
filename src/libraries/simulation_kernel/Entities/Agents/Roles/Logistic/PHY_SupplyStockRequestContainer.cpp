@@ -166,7 +166,7 @@ bool PHY_SupplyStockRequestContainer::Execute( const logistic::LogisticHierarchy
 {
     if( requests_.empty() )
         return true;
-  
+
     //$$ A REFACTORER / unifier avec PHY_DotationStockRequestContainer
     bool quotaPassed = ApplyQuotas( logisticHierarchy );
 

@@ -14,7 +14,7 @@
 
 class MIL_AutomateLOG;
 
-namespace tools 
+namespace tools
 {
     template< typename T > class Iterator;
 }

@@ -170,7 +170,7 @@ bool PHY_MedicalSortingConsign::DoWaitingForCollection()
     MIL_AutomateLOG* pLogisticManager = GetPionMedical().FindLogisticManager();
     if( !pLogisticManager )
         return false;
-    
+
     MIL_AutomateLOG* pLogisticSuperior = pLogisticManager->GetLogisticHierarchy().GetPrimarySuperior();
     if( pLogisticSuperior && pLogisticSuperior->MedicalHandleHumanForCollection( *pHumanState_ ) )
     {

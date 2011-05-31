@@ -54,7 +54,7 @@ template< typename Container >
 class LogisticSuperiorIterator : public tools::Iterator_ABC< MIL_AutomateLOG& >
 {
 public:
-    LogisticSuperiorIterator( const Container& container ) 
+    LogisticSuperiorIterator( const Container& container )
         : begin_  ( container.rbegin() )
         , current_( container.rbegin() )
         , end_    ( container.rend() )
@@ -70,7 +70,7 @@ public:
         ++current_;
         return result;
     }
-    
+
     virtual void Rewind()
     {
         current_ = begin_;
@@ -95,7 +95,7 @@ template< typename Item, typename Container >
 class SimpleReverseIterator : public tools::Iterator_ABC< Item >
 {
 public:
-    SimpleReverseIterator( const Container& container ) 
+    SimpleReverseIterator( const Container& container )
         : current_( container.rbegin() )
         , end_( container.rend() )
     {}
@@ -119,7 +119,7 @@ private:
 }
 
 // =============================================================================
-// 
+//
 // =============================================================================
 
 // -----------------------------------------------------------------------------
@@ -130,7 +130,7 @@ LogisticHierarchy::LogisticHierarchy( const LogisticHierarchyOwner_ABC& owner )
     : owner_       ( &owner )
     , linksUpdated_( true )
 {
-    // NOTHING    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -251,7 +251,7 @@ void LogisticHierarchy::DisconnectFromHierarchy()
     // Keep the oldest backup links
     if( backupSuperiorLinks_.empty() )
         backupSuperiorLinks_ = superiorLinks_;
-    superiorLinks_.clear();        
+    superiorLinks_.clear();
     linksUpdated_ = true;
 }
 
@@ -305,7 +305,7 @@ void LogisticHierarchy::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void LogisticHierarchy::SendFullState() const
 {
-    // Links creation 
+    // Links creation
     SendLinks();
 
     // Links attributes

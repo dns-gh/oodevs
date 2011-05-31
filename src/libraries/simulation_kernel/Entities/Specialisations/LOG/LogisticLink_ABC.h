@@ -16,7 +16,7 @@
 class MIL_AutomateLOG;
 class PHY_DotationCategory;
 
-namespace sword 
+namespace sword
 {
     class MissionParameter;
 }

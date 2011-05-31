@@ -460,7 +460,7 @@ void MIL_Formation::Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) con
 void MIL_Formation::UpdateState()
 {
    if( pBrainLogistic_.get() )
-        pBrainLogistic_->UpdateState();    
+        pBrainLogistic_->UpdateState();
 }
 
 // -----------------------------------------------------------------------------

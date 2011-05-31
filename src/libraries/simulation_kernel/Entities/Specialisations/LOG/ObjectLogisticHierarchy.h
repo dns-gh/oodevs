@@ -17,7 +17,7 @@ class MIL_AutomateLOG;
 
 namespace logistic {
     class LogisticLink;
-   
+
 // =============================================================================
 /** @class  ObjectLogisticHierarchy
     @brief  ObjectLogisticHierarchy

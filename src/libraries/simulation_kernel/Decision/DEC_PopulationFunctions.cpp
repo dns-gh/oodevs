@@ -119,7 +119,7 @@ int DEC_PopulationFunctions::GetKnowledgeAgentRoePopulation( unsigned int agentI
 bool DEC_PopulationFunctions::IsAgentInside( const MIL_Population& caller, DEC_Decision_ABC* pAgent )
 {
     MIL_AgentPion& pion = pAgent->GetPion() ;
-    return pion.Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( caller ); 
+    return pion.Get< PHY_RoleInterface_Population >().HasCollisionWithCrowd( caller );
 }
 
 // -----------------------------------------------------------------------------

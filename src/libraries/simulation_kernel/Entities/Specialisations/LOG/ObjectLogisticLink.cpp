@@ -37,7 +37,7 @@ void logistic::load_construct_data( Archive& archive, logistic::ObjectLogisticLi
 // -----------------------------------------------------------------------------
 ObjectLogisticLink::ObjectLogisticLink( MIL_AutomateLOG& superior )
     : superior_( &superior )
-{    
+{
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ ObjectLogisticLink::~ObjectLogisticLink()
 // -----------------------------------------------------------------------------
 void ObjectLogisticLink::ConsumeQuota( const PHY_DotationCategory&, double )
 {
-    // NOTHING    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ void ObjectLogisticLink::SendFullState() const
 {
     // NOTHING
 }
-    
+
 // -----------------------------------------------------------------------------
 // Name: ObjectLogisticLink::SendChangedState
 // Created: NLD 2011-01-10

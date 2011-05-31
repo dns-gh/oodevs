@@ -46,7 +46,7 @@ LogisticLink::LogisticLink( const LogisticHierarchyOwner_ABC& owner, MIL_Automat
     : owner_        ( &owner )
     , superior_     ( &superior )
     , quotasUpdated_( true )
-{    
+{
     xis >> xml::optional >> xml::start( "quotas" )
             >> xml::list( "resource", *this, &LogisticLink::ReadQuota )
         >> xml::end;
@@ -190,7 +190,7 @@ void LogisticLink::SendQuotas() const
 {
     if( quotas_.empty() )
         return;
-    
+
     client::LogSupplyQuotas message;
     owner_->Serialize( *message().mutable_supplied() );
     superior_->Serialize( *message().mutable_supplier() );
