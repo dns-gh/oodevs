@@ -76,7 +76,7 @@ void LogisticBaseStates::Draw( const geometry::Point2f& where, const kernel::Vie
 
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 3.f );
-    glColor4f( COLOR_MAROON );
+    glColor4f( COLOR_YELLOW );
     DrawLink( where, tools, 0.5f, displayLinks, displayMissing && formation.GetLogisticLevel()!=kernel::LogisticLevel::none_);
     glPopAttrib();
 }
