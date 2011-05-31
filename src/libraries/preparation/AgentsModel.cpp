@@ -309,44 +309,6 @@ void AgentsModel::NotifyDeleted( const kernel::Inhabitant_ABC& agent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentsModel::ReadLogistic
-// Created: SBO 2006-10-26
-// -----------------------------------------------------------------------------
-void AgentsModel::ReadLogistic( xml::xistream& xis )
-{
-    int id;
-    xis >> xml::attribute( "id", id );
-    if( Automat_ABC* entity = tools::Resolver< Automat_ABC >::Find( id ) )
-        xis >> xml::list( "subordinate", *this, &AgentsModel::ReadLogisticLink, *entity );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsModel::ReadLogisticLink
-// Created: SBO 2006-10-26
-// -----------------------------------------------------------------------------
-void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& automat )
-{
-    int id;
-    xis >> xml::attribute( "id", id );
-    if( Entity_ABC* entity = tools::Resolver< Automat_ABC >::Find( id ) )
-    {
-        ReadLogisticLink< LogisticHierarchiesBase >( xis, automat, *entity );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsModel::ReadLogisticLink
-// Created: SBO 2007-03-29
-// -----------------------------------------------------------------------------
-template< typename H >
-void AgentsModel::ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& superior, kernel::Entity_ABC& entity )
-{
-    H* hierarchies = entity.Retrieve< H >();
-    if( hierarchies )
-        hierarchies->Load( xis, &superior );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AgentsModel::CheckValidity
 // Created: SBO 2007-01-18
 // -----------------------------------------------------------------------------

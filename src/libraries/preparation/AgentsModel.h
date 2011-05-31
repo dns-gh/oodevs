@@ -94,13 +94,6 @@ public:
     bool CheckValidity( ModelChecker_ABC& checker ) const;
     //@}
 
-    //! @name Delayed initialization
-    //@{
-    void ReadLogistic( xml::xistream& xis );
-    template< typename H >
-    void ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& source, kernel::Entity_ABC& destination );
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -115,8 +108,6 @@ private:
     virtual void NotifyDeleted( const kernel::Population_ABC& agent );
     virtual void NotifyDeleted( const kernel::Inhabitant_ABC& agent );
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
-
-    void ReadLogisticLink( xml::xistream& xis, kernel::Automat_ABC& automat );
     //@}
 
 private:

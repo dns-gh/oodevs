@@ -67,6 +67,8 @@ private:
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     void ReadTeam( xml::xistream& xis, Model& model, std::string& loadingErrors );
     void ReadDiplomacy( xml::xistream& xis );
+    void ReadLogistic( xml::xistream& xis, Model& model );
+    void ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Entity_ABC& superior );
     //@}
 
 private:

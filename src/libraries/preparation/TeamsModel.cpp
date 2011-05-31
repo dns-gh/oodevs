@@ -21,8 +21,11 @@
 #include "ModelChecker_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/LogisticHierarchies.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -163,7 +166,7 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model, std::string& loadin
             >> xml::list( "formation", model.formations_, &FormationModel::Create, *team, model, loadingErrors )
         >> xml::end;
     xis >> xml::start( "logistics" )
-            >> xml::list( "logistic-base", model.formations_, &FormationModel::ReadLogistic )
+            >> xml::list( "logistic-base", *this, &TeamsModel::ReadLogistic, model )
         >> xml::end;
     xis >> xml::start( "objects" )
             >> xml::list( "object", model.objects_, &ObjectsModel::CreateObject, *team, loadingErrors  )
@@ -183,6 +186,40 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model, std::string& loadin
 void TeamsModel::ReadDiplomacy( xml::xistream& xis )
 {
     static_cast< Diplomacies& >( Get( xis.attribute< int >( "id" ) ).Get< Diplomacies_ABC >() ).Load( xis ); // $$$$ SBO 2008-12-09: !
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::ReadLogistic
+// Created: VGS 2011-05-31
+// -----------------------------------------------------------------------------
+void TeamsModel::ReadLogistic( xml::xistream& xis, Model& model )
+{
+    int id;
+    xis >> xml::attribute( "id", id );
+    Entity_ABC* entity = model.formations_.Find( id );
+    if( !entity )
+        entity = model.agents_.FindAutomat( id );
+    if( entity )
+        xis >> xml::list( "subordinate", *this, &TeamsModel::ReadLogisticLink, model, *entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::ReadLogisticLink
+// Created: VGS 2011-05-31
+// -----------------------------------------------------------------------------
+void TeamsModel::ReadLogisticLink( xml::xistream& xis, Model& model, kernel::Entity_ABC& superior )
+{
+    int id;
+    xis >> xml::attribute( "id", id );
+    Entity_ABC* entity = model.formations_.Find( id );
+    if( !entity )
+        entity = model.agents_.FindAutomat( id );
+    if( entity )
+    {
+        LogisticHierarchiesBase* hierarchies = entity->Retrieve< LogisticHierarchiesBase >();
+        if( hierarchies )
+            hierarchies->Load( xis, &superior );
+    }
 }
 
 // -----------------------------------------------------------------------------

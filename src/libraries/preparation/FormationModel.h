@@ -58,13 +58,6 @@ public:
     void Purge();
     //@}
 
-    //! @name Delayed initialization
-    //@{
-    void ReadLogistic( xml::xistream& xis );
-    template< typename H >
-    void ReadLogisticLink( xml::xistream& xis, kernel::Formation_ABC& source, kernel::Entity_ABC& destination );
-    //@}
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -75,7 +68,6 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
-    void ReadLogisticLink( xml::xistream& xis, kernel::Formation_ABC& automat );
     //@}
 
 private:
