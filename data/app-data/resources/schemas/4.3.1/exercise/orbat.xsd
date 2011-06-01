@@ -259,25 +259,35 @@
 			<xs:selector xpath=".//formation"/>
 			<xs:field xpath="@id"/>
 		</xs:key>
+		
+	    <xs:key name="logisticElementKey">
+			<xs:annotation>
+				<xs:documentation xml:lang="en">Defines key for formations</xs:documentation>
+				<xs:documentation xml:lang="fr">Définit une clé pour les formations</xs:documentation>
+			</xs:annotation>
+			<xs:selector xpath=".//formation|.//automat"/> <!-- Should add test on logistic-level -->
+			<xs:field xpath="@id"/>
+		</xs:key>	
+		
 		<!-- objects constraints -->
-		<xs:keyref name="objectTc2KeyRef" refer="automatKey">
+		<xs:keyref name="objectTc2KeyRef" refer="logisticElementKey">
 			<xs:annotation>
 				<xs:documentation xml:lang="en">Checks that referenced automat exists in same party.</xs:documentation>
 				<xs:documentation xml:lang="fr">Vérifie que l'automate existe dans le même camp.</xs:documentation>
 			</xs:annotation>
-			<xs:selector xpath="objects/object/attributes/tc2"/>
+			<xs:selector xpath="objects/object/attributes/logistic-base"/>
 			<xs:field xpath="@id"/>
 		</xs:keyref>
 		<!-- logistics constraints -->
-		<xs:keyref name="logisticSubordinateKeyRef" refer="automatKey">
+		<xs:keyref name="logisticSubordinateKeyRef" refer="logisticElementKey">
 			<xs:annotation>
 				<xs:documentation xml:lang="en">Checks existence of source and target logistic automats referenced in links.</xs:documentation>
 				<xs:documentation xml:lang="fr">Vérifie l'existence de l'automate source et cible du lien logistique.</xs:documentation>
 			</xs:annotation>
-			<xs:selector xpath="logistics/tc2|logistics/tc2/subordinate|logistics/logistic-base/subordinate"/>
+			<xs:selector xpath="logistics/logistic-base|logistics/logistic-base/subordinate"/>
 			<xs:field xpath="@id"/>
 		</xs:keyref>
-		<xs:keyref name="logisticBaseKeyRef" refer="formationKey">
+		<xs:keyref name="logisticBaseKeyRef" refer="logisticElementKey">
 			<xs:annotation>
 				<xs:documentation xml:lang="en">Checks existence of source and target logistic automats referenced in links.</xs:documentation>
 				<xs:documentation xml:lang="fr">Vérifie l'existence de l'automate source et cible du lien logistique.</xs:documentation>
