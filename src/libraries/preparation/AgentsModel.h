@@ -81,12 +81,12 @@ public:
     kernel::Entity_ABC* FindAllAgent( unsigned long id ) const;
 
     void CreatePopulation( kernel::Entity_ABC& parent, const kernel::PopulationType& type, int number, const geometry::Point2f& position );
-    void CreatePopulation( xml::xistream& xis, kernel::Team_ABC& parent );
+    void CreatePopulation( xml::xistream& xis, kernel::Team_ABC& parent, std::string& loadingErrors );
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
 
     void CreateInhabitant( kernel::Entity_ABC& parent, const kernel::InhabitantType& type, int number, const QString& name, const kernel::Location_ABC& location );
-    void CreateInhabitant( xml::xistream& xis, kernel::Team_ABC& parent );
+    void CreateInhabitant( xml::xistream& xis, kernel::Team_ABC& parent, std::string& loadingErrors );
     kernel::Inhabitant_ABC& GetInhabitant( unsigned long id );
     kernel::Inhabitant_ABC* FindInhabitant( unsigned long id );
 

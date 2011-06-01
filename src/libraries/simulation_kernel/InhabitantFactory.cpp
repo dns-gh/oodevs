@@ -11,6 +11,7 @@
 #include "InhabitantFactory.h"
 #include "Entities/Inhabitants/MIL_Inhabitant.h"
 #include "Entities/Inhabitants/MIL_InhabitantType.h"
+#include "MT_Tools/MT_ScipioException.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InhabitantFactory )
@@ -41,7 +42,7 @@ MIL_Inhabitant& InhabitantFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
 {
     const MIL_InhabitantType* pType = MIL_InhabitantType::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
-        xis.error( "Unknown population type" );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population type" );
     MIL_Inhabitant& inhabitant = *new MIL_Inhabitant( xis, *pType, army );
     Register( inhabitant.GetID(), inhabitant );
     return inhabitant;

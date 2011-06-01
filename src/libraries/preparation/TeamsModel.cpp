@@ -172,10 +172,10 @@ void TeamsModel::ReadTeam( xml::xistream& xis, Model& model, std::string& loadin
             >> xml::list( "object", model.objects_, &ObjectsModel::CreateObject, *team, loadingErrors  )
         >> xml::end;
     xis >> xml::start( "populations" )
-            >> xml::list( "population", model.agents_, &AgentsModel::CreatePopulation, *team )
+            >> xml::list( "population", model.agents_, &AgentsModel::CreatePopulation, *team, loadingErrors )
         >> xml::end;
     xis >> xml::optional >> xml::start( "inhabitants" )
-        >> xml::list( "inhabitant", model.agents_, &AgentsModel::CreateInhabitant, *team )
+        >> xml::list( "inhabitant", model.agents_, &AgentsModel::CreateInhabitant, *team, loadingErrors )
         >> xml::end;
 }
 

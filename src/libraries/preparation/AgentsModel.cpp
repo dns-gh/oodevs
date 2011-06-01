@@ -209,10 +209,17 @@ void AgentsModel::CreatePopulation( Entity_ABC& parent, const PopulationType& ty
 // Name: AgentsModel::CreatePopulation
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-void AgentsModel::CreatePopulation( xml::xistream& xis, kernel::Team_ABC& parent )
+void AgentsModel::CreatePopulation( xml::xistream& xis, kernel::Team_ABC& parent, std::string& loadingErrors )
 {
-    Population_ABC* popu = agentFactory_.CreatePop( xis, parent );
-    tools::Resolver< Population_ABC >::Register( popu->GetId(), *popu );
+    try
+    {
+        Population_ABC* popu = agentFactory_.CreatePop( xis, parent );
+        tools::Resolver< Population_ABC >::Register( popu->GetId(), *popu );
+    }
+    catch( std::exception& e )
+    {
+        loadingErrors += std::string( e.what() ) + "\n";
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -248,10 +255,17 @@ void AgentsModel::CreateInhabitant( Entity_ABC& parent, const InhabitantType& ty
 // Name: AgentsModel::CreateInhabitant
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateInhabitant( xml::xistream& xis, kernel::Team_ABC& parent )
+void AgentsModel::CreateInhabitant( xml::xistream& xis, kernel::Team_ABC& parent, std::string& loadingErrors )
 {
-    Inhabitant_ABC* inhab = agentFactory_.CreateInhab( xis, parent );
-    tools::Resolver< Inhabitant_ABC >::Register( inhab->GetId(), *inhab );
+    try
+    {
+        Inhabitant_ABC* inhab = agentFactory_.CreateInhab( xis, parent );
+        tools::Resolver< Inhabitant_ABC >::Register( inhab->GetId(), *inhab );
+    }
+    catch( std::exception& e )
+    {
+        loadingErrors += std::string( e.what() ) + "\n";
+    }
 }
 
 // -----------------------------------------------------------------------------
