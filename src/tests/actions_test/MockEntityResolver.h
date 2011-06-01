@@ -30,6 +30,8 @@ MOCK_BASE_CLASS( MockEntityResolver, kernel::EntityResolver_ABC )
     MOCK_METHOD( GetObject, 1 );
     MOCK_METHOD( FindUrbanObject, 1 );
     MOCK_METHOD( GetUrbanObject, 1 );
+    MOCK_METHOD( FindInhabitant, 1 );
+    MOCK_METHOD( GetInhabitant, 1 );
     MOCK_METHOD( FindPopulation, 1 );
     MOCK_METHOD( GetPopulation, 1 );
     MOCK_METHOD( FindFormation, 1 );
