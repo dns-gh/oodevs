@@ -799,10 +799,111 @@ void Encode( std::ostream& output, const sword::ClientToSim& message )
   @note The sword::ControlCheckPointSaveNow message contains an optional name field used to specify the name of the checkpoint. If not specified, the created checkpoint is named using the current date and time.
   
   @page orders Issuing orders
+  
+  Orders are requests sent to either units or commanding units (automats) to influence their behavior in the simulation.
+  @note The information used to implement order messages must strictly follow the parameter definition (@ref missions_xsd).
+  
+  For instance, given the following order definition:
+  @code
+  <mission id="133" name="move">
+      <parameter name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter name="Limit 1" optional="true" type="Limit"/>
+      <parameter name="Limit 2" optional="true" type="Limit"/>
+      <parameter name="Route" optional="false" type="Path"/>
+  </mission>
+  @endcode
+  instanciated as:
+  @code
+  <action id="133" name="Move Near Population" target="150" time="2008-08-04T12:56:50" type="mission">
+    <parameter name="Danger direction" type="Direction" value="360"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Route" type="Path">
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="16SEK6450906050"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  @endcode
+  can be implemented as the following:
+  @code
+  sword::UnitOrder order;
+  
+  order.mutable_tasker()->set_id( 150 );
+  order.mutable_type()->set_id( 133 );
+  
+  // Heading
+  order.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_heading()->set_heading( 360 );
+  
+  // PhaseLine
+  sword::PhaseLinesOrder& phaseline = *order.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_phaseline();
+  phaseline.add_elem()->add_fonctions( sword::PhaseLineOrder::line_of_departure ); // optional 
+  
+  // Limits
+  order.mutable_parameters()->add_elem(); // no boundary (Limit 1)
+  order.mutable_parameters()->add_elem(); // no boundary (Limit 2)
+  
+  // Path
+  sword::Location& location = *order.mutable_parameters()->add_elem()->mutable_value()->Add()->mutable_path()->mutable_location();
+  location.set_type( sword::Location::line );
+  
+  sword::CoordLatLong& destination = *location.mutable_coordinates()->add_elem();
+  destination->set_latitude( 39.80 ); // From MGRS coordinate 16SEK6450906050
+  destination->set_longitude( -86.24 ); // From MGRS coordinate 16SEK6450906050
+  @endcode
 
   @section automat Automat missions
-  @section company Company automation
+  When a commanding unit (automat) is requested to perform a mission, it first analyses the received mission order and then issues mission order to subordinates automatically. 
+  
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Mission order creation",textcolor="#ff0000"];
+    C  -> S [label="Automat Mission Request", URL="\ref sword::AutomatOrder"];
+    C <<= S [label="Acknowledge", URL="\ref sword::TaskCreationRequestAck"];
+    --- [label="Broadcast order information",textcolor="#ff0000"];
+    A  <- S [label="Automat received a mission order", URL="\ref sword::AutomatOrder"];
+    ...;
+    --- [label="Company automation",textcolor="#ff0000"];
+    A  <- S [label="Unit received a mission order", URL="\ref sword::UnitOrder"];
+  @endmsc
+  
   @section agent Agent missions
-  @section population Population missions
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Mission order creation",textcolor="#ff0000"];
+    C  -> S [label="Unit Mission Request", URL="\ref sword::UnitOrder"];
+    C <<= S [label="Acknowledge", URL="\ref sword::TaskCreationRequestAck"];
+    --- [label="Broadcast order information",textcolor="#ff0000"];
+    A  <- S [label="Unit received a mission order", URL="\ref sword::UnitOrder"];
+  @endmsc
+  
+  @section crowd Crowd missions
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Mission order creation",textcolor="#ff0000"];
+    C  -> S [label="Crowd Mission Request", URL="\ref sword::CrowdOrder"];
+    C <<= S [label="Acknowledge", URL="\ref sword::OrderAck"];
+    --- [label="Broadcast order information",textcolor="#ff0000"];
+    A  <- S [label="Crowd received a mission order", URL="\ref sword::CrowdOrder"];
+  @endmsc
+  
+  
   @section magic Magic orders
+  @msc
+    hscale = "1.5", arcgradient="5";
+    A [label="All clients"],C [label="Requesting client"],S [label="Dispatcher"];
+    --- [label="Magic action creation",textcolor="#ff0000"];
+    C  -> S [label="Magic Request", URL="\ref sword::UnitMagicAction"];
+    C <<= S [label="Acknowledge", URL="\ref sword::UnitMagicActionAck"];
+    --- [label="Broadcast magic request results",textcolor="#ff0000"];
+    A  <- S [label="Unit status changed", URL="\ref sword::UnitMagicAction"];
+    A  <- S [label="Unit status changed", URL="\ref sword::UnitAttributes"];
+  @endmsc
 */
