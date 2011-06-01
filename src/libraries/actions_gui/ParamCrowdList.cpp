@@ -52,7 +52,7 @@ void ParamCrowdList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< kernel::Population_ABC >* ParamCrowdList::CreateElement( const kernel::Population_ABC& potential )
 {
-    return new ParamCrowd( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).arg( potential.GetName() ).ascii(), "agent", false ), potential, controller_ );
+    return new ParamCrowd( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "agent", false ), potential, controller_ );
 }
 
 // -----------------------------------------------------------------------------

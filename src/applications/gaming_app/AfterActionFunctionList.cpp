@@ -193,27 +193,37 @@ void AfterActionFunctionList::Request()
 boost::shared_ptr< actions::gui::Param_ABC > AfterActionFunctionList::CreateParameter( const std::string& type, const QString& name )
 {
     const OrderParameter parameter( name.ascii(), type.c_str(), false );
+    const OrderParameter parameterList( name.ascii(), type.c_str(), false, 1, std::numeric_limits< int >::max() );
+
     boost::shared_ptr< actions::gui::Param_ABC > result;
 
-    if( type == "unit" )
-        result.reset( new actions::gui::ParamAgent( this, parameter, controllers_.controller_ ) );
-    else if( type == "unit list" )
-        result.reset( new actions::gui::ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
-    else if( type == "crowd list" )
-        result.reset( new actions::gui::ParamCrowdList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
-    else if( type == "population list" )
-        result.reset( new actions::gui::ParamInhabitantList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
-    else if( type == "dotation list" )
-        result.reset( new actions::gui::ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
-    else if( type == "equipment list" )
-        result.reset( new actions::gui::ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
-    else if( type == "urbanblock list" )
-        result.reset( new actions::gui::ParamUrbanBlockList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
-    else if( type == "zone" )
+    if( type == "unit" || type == "zone" )
     {
-        std::auto_ptr< actions::gui::ParamLocation > location( new actions::gui::ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
-        location->SetShapeFilter( false, false, true, true, false );
-        result.reset( location.release() );
+        const OrderParameter parameter( name.ascii(), type.c_str(), false );
+        if( type == "unit" )
+            result.reset( new actions::gui::ParamAgent( this, parameter, controllers_.controller_ ) );
+        else if( type == "zone" )
+        {
+            std::auto_ptr< actions::gui::ParamLocation > location( new actions::gui::ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
+            location->SetShapeFilter( false, false, true, true, false );
+            result.reset( location.release() );
+        }
+    }
+    else
+    {
+        const OrderParameter parameter( name.ascii(), type.c_str(), false, 1, std::numeric_limits< int >::max() );
+        if( type == "unit list" )
+            result.reset( new actions::gui::ParamAgentList( this, OrderParameter( name.ascii(), type.c_str(), false, 1, std::numeric_limits< int >::max() ), controllers_.actions_, controllers_.controller_ ) );
+        else if( type == "crowd list" )
+            result.reset( new actions::gui::ParamCrowdList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
+        else if( type == "population list" )
+            result.reset( new actions::gui::ParamInhabitantList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
+        else if( type == "dotation list" )
+            result.reset( new actions::gui::ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
+        else if( type == "equipment list" )
+            result.reset( new actions::gui::ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
+        else if( type == "urbanblock list" )
+            result.reset( new actions::gui::ParamUrbanBlockList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
     }
     return result;
 }

@@ -52,7 +52,7 @@ void ParamInhabitantList::AddToMenu( kernel::ContextMenu& menu )
 // -----------------------------------------------------------------------------
 EntityParameter< kernel::Inhabitant_ABC >* ParamInhabitantList::CreateElement( const kernel::Inhabitant_ABC& potential )
 {
-    return new ParamInhabitant( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).arg( potential.GetName() ).ascii(), "agent", false ), potential, controller_ );
+    return new ParamInhabitant( this, kernel::OrderParameter( tools::translate( "ListParameter", "%1 (item %2)" ).arg( GetName() ).arg( ++count_ ).ascii(), "agent", false ), potential, controller_ );
 }
 
 // -----------------------------------------------------------------------------
