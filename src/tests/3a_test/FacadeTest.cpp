@@ -1364,7 +1364,7 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestHumansLossFromDirectFire, Fixture )
 BOOST_FIXTURE_TEST_CASE( Facade_TestHumansLossFromCrowdFire, Fixture )
 {
     xml::xistringstream xis( "<indicator>"
-                             "    <extract function='fire-human-loss-by-crowd-fire' id='damages' states='dead'/>"
+                             "    <extract function='fire-human-loss-by-crowd-fires' id='damages' states='dead'/>"
                              "    <transform function='domain' type='int' select='13,23' input='damages' id='domained-damages'/>"
                              "    <reduce type='float' function='sum' input='domained-damages' id='sum'/>"
                              "    <result function='plot' input='sum' type='float'/>"
