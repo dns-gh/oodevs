@@ -52,6 +52,7 @@
     Moreover messages are grouped according to their role :
     @li @ref orbat
     @li @ref environment
+    @li @ref communications
     @li @ref controlling
     @li @ref orders
 
@@ -180,7 +181,7 @@
 
     Any language supported by Protobuf (C++, Java, Python...). @n
     Any operating system with TCP/IP network support.
-
+    
     @section Contents
     @subsection Documentation
 
@@ -188,16 +189,180 @@
 
     @subsection data Data model schemas
 
-    *.xsd
+    A file named "physical.xml" (see "physical.xsd" for detailed format) acts as the entry point to loading a physical database. It references every other files associated 
+    with different model features such as "automats", "agents", "weapon-systems"...
 
+    The physical model is described using the following XSD schemas:
+    @li @ref physical_xsd
+    
+    @li @ref active_protections_xsd
+    @li @ref armors_xsd
+    @li @ref automats_xsd
+    @li @ref breakdowns_xsd
+    @li @ref communications_xsd
+    @li @ref crowds_xsd
+    @li @ref decisional_xsd
+    @li @ref equipments_xsd
+    @li @ref extensions_xsd
+    @li @ref fire_xsd
+    @li @ref fires_xsd
+    @li @ref human_factors_xsd
+    @li @ref human_protections_xsd
+    @li @ref inhabitants_xsd
+    @li @ref knowledge_groups_xsd
+    @li @ref launchers_xsd
+    @li @ref maintenance_xsd
+    @li @ref medical_xsd
+    @li @ref medical_treatment_xsd
+    @li @ref missions_xsd
+    @li @ref models_xsd
+    @li @ref nbc_xsd
+    @li @ref object_names_xsd
+    @li @ref objects_xsd
+    @li @ref pathfind_xsd
+    @li @ref reports_xsd
+    @li @ref resource_natures_xsd
+    @li @ref resource_networks_xsd
+    @li @ref resources_xsd
+    @li @ref sensors_xsd
+    @li @ref supply_xsd
+    @li @ref units_xsd
+    @li @ref urban_types_xsd
+    @li @ref volumes_xsd
+    @li @ref weapon_systems_xsd
+    @li @ref tools_xsd
+    
     @subsection protobuf Protobuf definition files
 
-    *.proto
-
+    @li @ref aar_client.proto Messages from the after action review module to clients
+    @li @ref authentication_client.proto Messages from the authentication module to clients
+    @li @ref client_aar.proto Messages from clients to the after action review module
+    @li @ref client_authentication.proto Messages from clients to the authentication module
+    @li @ref client_messenger.proto Messages from clients to the messenger module
+    @li @ref client_replay.proto Messages from clients to the replay module
+    @li @ref client_simulation.proto Messages from clients to the simulation
+    @li @ref common.proto Messages common to various modules
+    @li @ref dispatcher_client.proto Messages from the dispatcher to clients
+    @li @ref messenger_client.proto Messages from the messenger module to clients
+    @li @ref replay_client.proto Messages from the replay module to clients
+    @li @ref simulation_client.proto Messages from the simulation to clients
+    @li @ref version.proto Message containing the current protocol version
+    
     @subsection Samples
 
-    C++ sample applications
+    C++ sample applications:
+      
+    @page physical_xsd Physical model entry point (physical.xsd)
+    @include physical/physical.xsd
+    
+    @page active_protections_xsd Active protections definitions (ActiveProtections.xsd)
+    @include physical/ActiveProtections.xsd
+    
+    @page armors_xsd Armor definitions (Armors.xsd)
+    @include physical/Armors.xsd
 
+    @page automats_xsd Automat definitions (Automats.xsd)
+    @include physical/Automats.xsd
+    
+    @page breakdowns_xsd Breakdowns definitions (Breakdowns.xsd)
+    @include physical/Breakdowns.xsd
+
+    @page communications_xsd Communication model configuration (Communications.xsd)
+    @include physical/Communications.xsd
+    
+    @page crowds_xsd Crowd types definition (Crowds.xsd)
+    @include physical/Crowds.xsd
+
+    @page decisional_xsd Decisional model global configuration (Decisional.xsd)
+    @include physical/Decisional.xsd
+
+    @page equipments_xsd Equipments definitions (Equipments.xsd)
+    @include physical/Equipments.xsd
+
+    @page extensions_xsd Custom model extensions declarations (Extensions.xsd)
+    @include physical/Extensions.xsd
+    
+    @page fire_xsd Fire types definition (Fire.xsd)
+    @include physical/Fire.xsd
+    
+    @page fires_xsd Fire propagation models definition (Fires.xsd)
+    @include physical/Fires.xsd
+    
+    @page human_factors_xsd Human factors model configuration (HumanFactors.xsd)
+    @include physical/HumanFactors.xsd
+    
+    @page human_protections_xsd Personel protection types definition (HumanProtections.xsd)
+    @include physical/HumanProtections.xsd
+    
+    @page inhabitants_xsd Inhabitant types definition (Inhabitants.xsd)
+    @include physical/Inhabitants.xsd
+
+    @page knowledge_groups_xsd Knowledge group types definition (KnowledgeGroups.xsd)
+    @include physical/KnowledgeGroups.xsd
+    
+    @page launchers_xsd Weapon system launchers definitions (Launchers.xsd)
+    @include physical/Launchers.xsd
+    
+    @page maintenance_xsd Maintenance logistic systems configuration (Maintenance.xsd)
+    @include physical/Maintenance.xsd
+    
+    @page medical_xsd Medical logistic systems configuration (Medical.xsd)
+    @include physical/Medical.xsd
+
+    @page medical_treatment_xsd Medical treatments model configuration (MedicalTreatment.xsd)
+    @include physical/MedicalTreatment.xsd
+    
+    @page missions_xsd Unit missions and fragmentary orders descriptions (Missions.xsd)
+    @include physical/Missions.xsd
+    
+    @page models_xsd Decisional models capabilities description (Models.xsd)
+    @include physical/Models.xsd
+    
+    @page nbc_xsd Nuclear Bacteriological and Chemical model configuration (NBC.xsd)
+    @include physical/NBC.xsd
+    
+    @page object_names_xsd Object name localization file (ObjectNames.xsd)
+    @include physical/ObjectNames.xsd
+    
+    @page objects_xsd Object types definition (Objects.xsd)
+    @include physical/Objects.xsd
+    
+    @page pathfind_xsd Pathfind rules configuration (Pathfind.xsd)
+    @include physical/Pathfind.xsd
+    
+    @page reports_xsd Simulation report definitions (Reports.xsd)
+    @include physical/Reports.xsd
+    
+    @page resource_natures_xsd Resource natures definitions (ResourceNatures.xsd)
+    @include physical/ResourceNatures.xsd
+    
+    @page resource_networks_xsd Resource network type definitions (ResourceNetworks.xsd)
+    @include physical/ResourceNetworks.xsd
+    
+    @page resources_xsd Resource definitions (Resources.xsd)
+    @include physical/Resources.xsd
+
+    @page sensors_xsd Sensor types definitions (ArmorSensors.xsd)
+    @include physical/Sensors.xsd
+    
+    @page supply_xsd Supply logistic system configuration (Supply.xsd)
+    @include physical/Supply.xsd
+
+    @page units_xsd Agent definitions (Units.xsd)
+    @include physical/Units.xsd
+    
+    @page urban_types_xsd Urban block type definitions (UrbanTypes.xsd)
+    @include physical/UrbanTypes.xsd
+    
+    @page volumes_xsd Component size definitions (Volumes.xsd)
+    @include physical/Volumes.xsd
+    
+    @page weapon_systems_xsd Weapon system definitions (WeaponSystems.xsd)
+    @include physical/WeaponSystems.xsd
+    
+    @page tools_xsd Common type definitions (tools.xsd)
+    @include physical/tools.xsd
+    
     @page creating Creating a client application
 
     @section Concepts
@@ -567,7 +732,7 @@ void Encode( std::ostream& output, const sword::ClientToSim& message )
   @section populations Populations
   @section weather Weather
   
-  @page communication Communication model
+  @page communications Communication model
   
   @section perceptions Perceptions
   @section knowledge_groups Knowledge groups

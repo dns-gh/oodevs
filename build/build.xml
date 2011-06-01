@@ -1079,6 +1079,9 @@
             <property name="WARN_LOGFILE" value="${reports.dir}/doxygen.log"/>
             <property name="GENERATE_HTMLHELP" value="YES"/>
             <property name="CHM_FILE" value="${dist.dir}/SWORD-API_Reference_${version.major}.chm"/>
+            <property name="EXAMPLE_PATH" value="${data.dir}\app-data\resources\schemas\${version.major}"/>
+            <property name="EXAMPLE_RECURSIVE" value="YES"/>
+            <property name="EXAMPLE_PATTERN" value="*.h *.cpp *.xsd"/>
         </doxygen-report>
         <fail message="documentation contains errors, see ${reports.dir}/doxygen.log">
             <condition>
