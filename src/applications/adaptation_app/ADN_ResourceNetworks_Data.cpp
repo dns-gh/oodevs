@@ -88,13 +88,17 @@ void ADN_ResourceNetworks_Data::ResourceNetworkInfos::ReadArchive( xml::xistream
           >> xml::start( "defaults" )
               >> xml::attribute( "production", nProduction_ )
           >> xml::end;
-    ADN_Equipement_Data::T_CategoryInfos_Vector& categories = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Energy ).GetCategories();
-    for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = categories.begin(); it != categories.end(); ++it )
-        if( ( *it )->nMosId_ == id )
-        {
-            ptrCategory_ = *it;
-            break;
-        }
+    ADN_Equipement_Data::T_ResourceInfos_Vector& dotations = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotations();
+    for( ADN_Equipement_Data::IT_ResourceInfos_Vector itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
+    {
+        ADN_Equipement_Data::T_CategoryInfos_Vector& categories = ( *itDotation )->GetCategories();
+        for( ADN_Equipement_Data::IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
+            if( ( *itCat )->nMosId_ == id )
+            {
+                ptrCategory_ = *itCat;
+                break;
+            }
+    }
 }
 
 // -----------------------------------------------------------------------------

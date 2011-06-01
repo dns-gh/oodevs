@@ -613,7 +613,7 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( xml::xistream& input )
           >> xml::attribute( "moving-base-density", rMoveDensity_ )
           >> xml::attribute( "moving-speed", rMoveSpeed_ )
           >> xml::attribute( "decisional-model", strModel )
-          >> xml::attribute( "armed-individuals", rArmedIndividuals );
+          >> xml::optional >> xml::attribute( "armed-individuals", rArmedIndividuals );
     ADN_Models_Data::ModelInfos* pModel = ADN_Workspace::GetWorkspace().GetModels().GetData().FindPopulationModel( strModel );
     if( !pModel )
         throw ADN_DataException( "Invalid data", tools::translate( "Population_Data", "Crowd types - Invalid behavior model '%1'" ).arg( strModel.c_str() ).ascii() );
