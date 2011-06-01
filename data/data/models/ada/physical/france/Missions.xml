@@ -2719,12 +2719,18 @@
       <parameter dia-name="destination" name="Destination" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Reparer" dia-type="france.military.platoon.tasks.Reparer" id="2143" name="GENIE Reparer bloc urbain">
+    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ReprendreTravaux" dia-type="Reparer" id="2143" name="GENIE Reparer">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Bloc urbain" optional="false" type="UrbanKnowledge"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
   </units>
   <automats>
@@ -4685,4 +4691,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3122816003" -->
+<!-- signature="0559155525" -->
