@@ -92,6 +92,19 @@ void AutomatsLayer::NotifySelected( const kernel::Automat_ABC* automat )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AutomatsLayer::HandleMousePress
+// Created: JSR 2011-06-01
+// -----------------------------------------------------------------------------
+bool AutomatsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
+{
+    bool ret = gui::AutomatsLayer::HandleMousePress( event, point );
+    if( !ret && selected_ 
+        && event && event->button() == Qt::LeftButton && ( event->state() & Qt::ShiftButton ) )
+        return true;
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
 // Name: AutomatsLayer::HandleEnterDragEvent
 // Created: SBO 2007-06-20
 // -----------------------------------------------------------------------------
