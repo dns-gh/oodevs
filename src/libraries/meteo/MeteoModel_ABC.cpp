@@ -42,7 +42,7 @@ MeteoModel_ABC::~MeteoModel_ABC()
 // -----------------------------------------------------------------------------
 const PHY_Lighting& MeteoModel_ABC::GetLighting() const
 {
-    assert( globalMeteo_ );
+    assert( globalMeteo_.get() );
     return globalMeteo_->GetLighting();
 }
 
