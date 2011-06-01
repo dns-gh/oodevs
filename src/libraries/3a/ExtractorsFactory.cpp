@@ -94,7 +94,7 @@ namespace
             ( "fire-component-loss"                   , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueTarget >() )
             ( "fire-human-damages"                    , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueFirer >() )
             ( "fire-human-loss"                       , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueTarget >() )
-            ( "fire-human-loss-by-crowd-fire"         , BuildExtractor< Value, events::CrowdHumanDamages >() )
+            ( "fire-human-loss-by-crowd-fires"        , BuildExtractor< Value, events::CrowdHumanDamages >() )
             ( "ambulances"                            , BuildExtractor< Value, attributes::LogMedicalEquipments >() )
             ( "maintenances"                          , BuildExtractor< Value, attributes::LogMaintenanceEquipments >() )
             ( "waiting-for-medical"                   , BuildExtractor< Value, attributes::LogMedicalWaitingAttention >() )

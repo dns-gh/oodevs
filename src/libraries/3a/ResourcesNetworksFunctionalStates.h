@@ -44,14 +44,10 @@ public:
     {
         return( wrapper.message().has_urban_update()
              && wrapper.message().urban_update().has_attributes()
-             && wrapper.message().urban_update().attributes().has_infrastructures() );
+             && wrapper.message().urban_update().attributes().has_infrastructures()
+             && wrapper.message().urban_update().attributes().infrastructures().resource_network_size() != 0 );
     }
     float Extract( const sword::SimToClient& wrapper );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
     //@}
 };
 
