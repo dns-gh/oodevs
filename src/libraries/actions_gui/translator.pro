@@ -19,5 +19,8 @@ ParamObstacle.cpp \
 ParamObstacleList.cpp \
 ParamPathList.cpp \
 ParamResourceNetwork.cpp \
+ParamCrowdList.cpp \
+ParamInhabitantList.cpp \
+ParamUrbanBlockList.cpp \
 
 TRANSLATIONS = actions_gui_fr.ts actions_gui_es.ts
