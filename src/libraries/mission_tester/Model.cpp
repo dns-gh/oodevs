@@ -241,6 +241,24 @@ kernel::Population_ABC& Model::GetPopulation( unsigned int /*id*/ ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::FindInhabitant
+// Created: FPO 2011-05-30
+// -----------------------------------------------------------------------------
+kernel::Inhabitant_ABC* Model::FindInhabitant( unsigned int /*id*/ ) const
+{
+    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetInhabitant
+// Created: FPO 2011-05-30
+// -----------------------------------------------------------------------------
+kernel::Inhabitant_ABC& Model::GetInhabitant( unsigned int /*id*/ ) const
+{
+    throw std::runtime_error( __FUNCTION__ ": not implemented" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::FindFormation
 // Created: PHC 2011-03-28
 // -----------------------------------------------------------------------------

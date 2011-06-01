@@ -16,6 +16,7 @@
 #include "KnowledgeGroup.h"
 #include "Object.h"
 #include "Population.h"
+#include "Inhabitant.h"
 #include "Side.h"
 
 using namespace dispatcher;
@@ -181,4 +182,22 @@ kernel::Team_ABC* ModelAdapter::FindTeam( unsigned int id ) const
 kernel::Team_ABC& ModelAdapter::GetTeam( unsigned int id ) const
 {
     return model_.Sides().Get( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelAdapter::FindInhabitant
+// Created: FPO 2011-06-01
+// -----------------------------------------------------------------------------
+kernel::Inhabitant_ABC* ModelAdapter::FindInhabitant( unsigned int id ) const
+{
+    return model_.Inhabitants().Find( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelAdapter::GetInhabitant
+// Created: FPO 2011-06-01
+// -----------------------------------------------------------------------------
+kernel::Inhabitant_ABC& ModelAdapter::GetInhabitant( unsigned int id ) const
+{
+    return model_.Inhabitants().Get( id );
 }

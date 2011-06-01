@@ -35,6 +35,8 @@ public:
     virtual kernel::Agent_ABC& GetAgent( unsigned int id ) const;
     virtual kernel::Automat_ABC* FindAutomat( unsigned int id ) const;
     virtual kernel::Automat_ABC& GetAutomat( unsigned int id ) const;
+    virtual kernel::Inhabitant_ABC* FindInhabitant( unsigned int id ) const;
+    virtual kernel::Inhabitant_ABC& GetInhabitant( unsigned int id ) const;
     virtual kernel::KnowledgeGroup_ABC* FindKnowledgeGroup( unsigned int id ) const;
     virtual kernel::KnowledgeGroup_ABC& GetKnowledgeGroup( unsigned int id ) const;
     virtual kernel::Object_ABC* FindObject( unsigned int id ) const;

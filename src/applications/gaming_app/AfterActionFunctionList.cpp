@@ -13,8 +13,11 @@
 #include "actions/ParameterContainer_ABC.h"
 #include "actions_gui/ParamAgent.h"
 #include "actions_gui/ParamAgentList.h"
+#include "actions_gui/ParamCrowdList.h"
+#include "actions_gui/ParamInhabitantList.h"
 #include "actions_gui/ParamDotationTypeList.h"
 #include "actions_gui/ParamEquipmentList.h"
+#include "actions_gui/ParamUrbanBlockList.h"
 #include "actions_gui/ParamLocation.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -196,10 +199,16 @@ boost::shared_ptr< actions::gui::Param_ABC > AfterActionFunctionList::CreatePara
         result.reset( new actions::gui::ParamAgent( this, parameter, controllers_.controller_ ) );
     else if( type == "unit list" )
         result.reset( new actions::gui::ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
+    else if( type == "crowd list" )
+        result.reset( new actions::gui::ParamCrowdList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
+    else if( type == "population list" )
+        result.reset( new actions::gui::ParamInhabitantList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
     else if( type == "dotation list" )
         result.reset( new actions::gui::ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
     else if( type == "equipment list" )
         result.reset( new actions::gui::ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
+    else if( type == "urbanblock list" )
+        result.reset( new actions::gui::ParamUrbanBlockList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
     else if( type == "zone" )
     {
         std::auto_ptr< actions::gui::ParamLocation > location( new actions::gui::ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );

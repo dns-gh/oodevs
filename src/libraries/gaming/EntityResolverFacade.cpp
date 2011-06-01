@@ -146,6 +146,24 @@ kernel::Population_ABC& EntityResolverFacade::GetPopulation( unsigned int id ) c
 }
 
 // -----------------------------------------------------------------------------
+// Name: EntityResolverFacade::FindInhabitant
+// Created: FPO 2011-05-30
+// -----------------------------------------------------------------------------
+kernel::Inhabitant_ABC* EntityResolverFacade::FindInhabitant( unsigned int id ) const
+{
+    return model_.agents_.FindInhabitant( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityResolverFacade::GetInhabitant
+// Created: FPO 2011-05-30
+// -----------------------------------------------------------------------------
+kernel::Inhabitant_ABC& EntityResolverFacade::GetInhabitant( unsigned int id ) const
+{
+    return model_.agents_.GetInhabitant( id );
+}
+
+// -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindFormation
 // Created: SBO 2010-05-10
 // -----------------------------------------------------------------------------
