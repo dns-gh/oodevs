@@ -338,7 +338,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsPointInsideLocalisation( MT_Vector2D* pPoint, TER_Localisation* pLocalisation )
 {
-    return pLocalisation->IsInside( *pPoint );
+    return pLocalisation ? pLocalisation->IsInside( *pPoint ) : false;
 }
 
 // -----------------------------------------------------------------------------

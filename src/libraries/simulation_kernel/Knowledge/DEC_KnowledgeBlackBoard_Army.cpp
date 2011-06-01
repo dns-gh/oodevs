@@ -161,7 +161,10 @@ namespace
 
         void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( filter_.Test( knowledge->GetType() ) && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) && knowledge->GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
+            if( filter_.Test( knowledge->GetType() ) 
+            && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() )
+            && knowledge->GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ 
+            && knowledge->IsValid() )
                 pContainer_->push_back( knowledge );
         }
 
@@ -201,7 +204,10 @@ namespace
 
         void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( filter_.Test( knowledge->GetType() ) && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) && pZone_->IsInside( knowledge->GetLocalisation().ComputeBarycenter() ) )
+            if( filter_.Test( knowledge->GetType() ) 
+            && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) 
+            && pZone_->IsInside( knowledge->GetLocalisation().ComputeBarycenter() ) 
+            && knowledge->IsValid() )
                 pContainer_->push_back( knowledge );
         }
 
@@ -247,7 +253,9 @@ namespace
 
         void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( filter_.Test( knowledge->GetType() ) && rHeight_ <= knowledge->GetMaxInteractionHeight() ) ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
+            if( filter_.Test( knowledge->GetType() ) 
+            && rHeight_ <= knowledge->GetMaxInteractionHeight() ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
+            && knowledge->IsValid() )
                 pContainer_->push_back( knowledge );
         }
 
@@ -283,7 +291,7 @@ namespace
 
         void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) ) //$$ ??
+            if( ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() ) && knowledge->IsValid() )
                 pContainer_->push_back( knowledge );
         }
 
@@ -319,7 +327,7 @@ namespace
 
         void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( !filter_.Test( knowledge->GetType() ) )
+            if( !filter_.Test( knowledge->GetType() ) || !knowledge->IsValid() )
                 return;
 
             const double rDist = knowledge->GetLocalisation().ComputeBarycenter().Distance( pPos_ );
@@ -368,6 +376,9 @@ namespace
 
         void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
+            if( !knowledge->IsValid() )
+                return;
+
             if( !filter_.Test( knowledge->GetType() ) )
                 return;
 
