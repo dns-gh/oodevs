@@ -74,6 +74,7 @@
 #include "Inhabitants/MIL_Inhabitant.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/KnowledgeGroupFactory.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"

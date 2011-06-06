@@ -22,6 +22,7 @@
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "Knowledge/QueryValidity.h"

@@ -214,7 +214,7 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
         EnsureParameters( parameters_, index );
     if( dynamic_cast< MIL_NullParameter* >( parameters_[index].get() ) != 0 )
     {
-        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( GetPion().GetKnowledge(), std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >() ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >() ) );
         parameters_[index] = param;
     }
     parameters_[index]->Append( MIL_MissionParameterFactory::Create( pLocation ) );
@@ -231,7 +231,7 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
         EnsureParameters( parameters_, index );
     if( dynamic_cast< MIL_NullParameter* >( parameters_[index].get() ) != 0 )
     {
-        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( GetPion().GetKnowledge(), std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >() ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >() ) );
         parameters_[index] = param;
     }
     parameters_[index]->Append( MIL_MissionParameterFactory::Create( pKnowledgeObject ) );
@@ -248,10 +248,9 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
         EnsureParameters( parameters_, index );
     if( dynamic_cast< MIL_NullParameter* >( parameters_[index].get() ) != 0 )
     {
-        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( GetPion().GetKnowledge(), std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >() ) );
+        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >() ) );
         parameters_[index] = param;
     }
-
     parameters_[index]->Append(  MIL_MissionParameterFactory::Create( pGenObject ) );
 }
 

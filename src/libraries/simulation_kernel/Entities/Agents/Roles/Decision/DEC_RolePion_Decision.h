@@ -14,7 +14,6 @@
 
 #include "Decision/DEC_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
 
 namespace client

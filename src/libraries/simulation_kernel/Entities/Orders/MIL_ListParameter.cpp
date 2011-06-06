@@ -18,21 +18,19 @@
 // Created: LDC 2010-09-21
 // -----------------------------------------------------------------------------
 MIL_ListParameter::MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list )
-    : resolver_ (resolver )
 {
     for( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >::const_iterator it = list.begin(); it != list.end(); ++it )
-        list_.push_back( MIL_MissionParameterFactory::Create( *it, resolver_ ) );
+        list_.push_back( MIL_MissionParameterFactory::Create( *it, resolver ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ListParameter constructor
 // Created: MGD 2010-10-19
 // -----------------------------------------------------------------------------
-MIL_ListParameter::MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& paramList )
-    : resolver_ (resolver )
+MIL_ListParameter::MIL_ListParameter( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& paramList )
 {
-    for( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >::const_iterator it = paramList.begin(); it != paramList.end(); it++ )
-        list_.push_back( *it);
+    for( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >::const_iterator it = paramList.begin(); it != paramList.end(); it++ )
+        list_.push_back( *it );
 }
 
 // -----------------------------------------------------------------------------
