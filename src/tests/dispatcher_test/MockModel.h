@@ -11,6 +11,7 @@
 #define __MockModel_h_
 
 #include "dispatcher/Model_ABC.h"
+#include "protocol/Protocol.h"
 
 // =============================================================================
 /** @class  MockModel
