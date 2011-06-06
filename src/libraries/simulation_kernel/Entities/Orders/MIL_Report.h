@@ -19,7 +19,6 @@ namespace xml
 }
 
 class MIL_ParameterType_ABC;
-class DEC_KnowledgeResolver_ABC;
 class PHY_ComposanteTypePion;
 class PHY_DotationCategory;
 class MIL_Effect_IndirectFire;

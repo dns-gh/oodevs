@@ -20,7 +20,6 @@ namespace xml
     class xistream;
 }
 
-class DEC_KnowledgeResolver_ABC;
 class MIL_MissionParameter_ABC;
 class MIL_OrderContext;
 class MIL_OrderTypeParameter;

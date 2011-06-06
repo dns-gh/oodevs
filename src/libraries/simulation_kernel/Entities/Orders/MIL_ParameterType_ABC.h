@@ -19,7 +19,6 @@ namespace sword
 }
 
 class MIL_OrderType_ABC;
-class DEC_KnowledgeResolver_ABC;
 class MIL_MissionParameter_ABC;
 
 // =============================================================================
