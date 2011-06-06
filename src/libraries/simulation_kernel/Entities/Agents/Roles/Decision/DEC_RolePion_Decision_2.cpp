@@ -434,6 +434,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Agent_PasserEnSilenceRadio" ] = boost::bind( &DEC_AgentFunctions::ActivateBlackout, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_PasserEnSilenceRadioPartiel" ] = boost::bind( &DEC_AgentFunctions::ActivatePartialBlackout, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_ArreterSilenceRadio" ] = boost::bind( &DEC_AgentFunctions::DeactivateBlackout, boost::ref( GetPion() ) );
+    brain[ "DEC_Agent_ForcerSilenceRadio" ] = &DEC_KnowledgeAgentFunctions::ForceRadioSilence;
 
     // Misc
     brain[ "DEC_ModulationVitesseCourante" ] =

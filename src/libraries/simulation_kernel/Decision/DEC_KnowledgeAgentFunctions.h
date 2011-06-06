@@ -69,6 +69,7 @@ public:
     static std::string GetMilPionType                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static boost::shared_ptr< MIL_Mission_ABC > GetMission( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void NeutralizeAgent( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static void ForceRadioSilence( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool silence );
     //@}
 };
 

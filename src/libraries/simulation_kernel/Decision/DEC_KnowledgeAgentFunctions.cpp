@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeAgentFunctions.h"
+#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
@@ -433,4 +434,17 @@ void DEC_KnowledgeAgentFunctions::NeutralizeAgent( boost::shared_ptr< DEC_Knowle
     PHY_RolePion_Composantes* role = pKnowledge->GetAgentKnown().RetrieveRole< PHY_RolePion_Composantes >();
     if( role )
         role->DestroyAllComposantes();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::ForceRadioSilence
+// Created: EVH 2011-06-01
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeAgentFunctions::ForceRadioSilence( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool silence )
+{
+    PHY_RoleInterface_Communications& role = pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Communications >();
+    if( silence )
+        role.ActivateBlackout  ();
+    else
+        role.DeactivateBlackout();
 }
