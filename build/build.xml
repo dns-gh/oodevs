@@ -1141,7 +1141,7 @@
         <copy todir="${out.dir}/pdb" flatten="true">
             <fileset dir="${out.dir}/release" includes="**/*.pdb"/>
         </copy>
-        <zip destfile="${dist.dir}/SWORD_debug_${version.major}.zip">
+        <zip destfile="${dist.dir}/SWORD_debug_${platform}_${version.major}.zip">
             <fileset dir="${out.dir}/pdb" includes="*.pdb"/>
         </zip>
     </target>
