@@ -21,7 +21,10 @@
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/convenience.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <direct.h>
+
+namespace bpt = boost::posix_time;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager constructor
@@ -155,9 +158,11 @@ void MIL_CheckPointManager::CreateMetaData( const std::string& strFileName, cons
 {
     try
     {
+        const bpt::ptime realTime( bpt::from_time_t( MIL_AgentServer::GetWorkspace().GetRealTime() ) );
         xml::xofstream xos( strFileName );
         xos << xml::start( "checkpoint" )
                 << xml::content( "name", name )
+                << xml::content( "date", bpt::to_iso_string( realTime ) )
                 << xml::start( "crc" )
                     << xml::start( "configuration" )
                         << xml::attribute( "crc", nCRCCRC )
