@@ -22,8 +22,6 @@
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "DEC_KS_KnowledgeSynthetizer.h"
-//#include "DEC_KS_AgentKnowledgeSynthetizer.h"
-//#include "DEC_KS_PopulationKnowledgeSynthetizer.h"
 #include "DEC_KS_Sharing.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Entities/MIL_Army.h"
@@ -37,14 +35,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_KnowledgeGroup )
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
-    : pKnowledgeGroup_                  ( &knowledgeGroup )
-    , pKnowledgeAgentContainer_         ( new DEC_BlackBoard_CanContainKnowledgeAgent     ( knowledgeGroup ) )
-    , pKnowledgePopulationContainer_    ( new DEC_BlackBoard_CanContainKnowledgePopulation() )
-    , pKnowledgeObjectContainer_        ( 0 )
-    , pKsKnowledgeSynthetizer_          ( new DEC_KS_KnowledgeSynthetizer            ( *this ) )
-//    , pKsAgentKnowledgeSynthetizer_     ( new DEC_KS_AgentKnowledgeSynthetizer            ( *this ) )
-//    , pKsPopulationKnowledgeSynthetizer_( new DEC_KS_PopulationKnowledgeSynthetizer       ( *this ) )
-    , pKsSharing_                       ( new DEC_KS_Sharing                              ( *this ) )
+    : pKnowledgeGroup_              ( &knowledgeGroup )
+    , pKnowledgeAgentContainer_     ( new DEC_BlackBoard_CanContainKnowledgeAgent( knowledgeGroup ) )
+    , pKnowledgePopulationContainer_( new DEC_BlackBoard_CanContainKnowledgePopulation() )
+    , pKnowledgeObjectContainer_    ( 0 )
+    , pKsKnowledgeSynthetizer_      ( new DEC_KS_KnowledgeSynthetizer( *this ) )
+    , pKsSharing_                   ( new DEC_KS_Sharing( *this ) )
 {
     // NOTHING
 }
@@ -59,8 +55,6 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup()
     , pKnowledgePopulationContainer_    ( 0 )
     , pKnowledgeObjectContainer_        ( 0 )
     , pKsKnowledgeSynthetizer_          ( 0 )
-//    , pKsAgentKnowledgeSynthetizer_     ( 0 )
-//    , pKsPopulationKnowledgeSynthetizer_( 0 )
     , pKsSharing_                       ( 0 )
 {
     // NOTHING
@@ -76,8 +70,6 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::~DEC_KnowledgeBlackBoard_KnowledgeGroup(
     delete pKnowledgePopulationContainer_;
     delete pKnowledgeObjectContainer_;
     delete pKsKnowledgeSynthetizer_;
-//    delete pKsAgentKnowledgeSynthetizer_;
-//    delete pKsPopulationKnowledgeSynthetizer_;
     delete pKsSharing_;
 }
 
@@ -94,8 +86,6 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const 
             & pKnowledgePopulationContainer_
             & pKnowledgeObjectContainer_
             & pKsKnowledgeSynthetizer_
-//            & pKsAgentKnowledgeSynthetizer_
-//            & pKsPopulationKnowledgeSynthetizer_
             & pKsSharing_;
 }
 
@@ -500,24 +490,6 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowled
 DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgePopulation( unsigned int nID ) const
 {
     return GetKnowledgePopulationFromID( nID );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeUrban
-// Created: SLG 2010-02-01
-// -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeUrban( const sword::UrbanObjectKnowledgeId& asn ) const
-{
-    return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeUrbanFromID( asn.id() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeUrban
-// Created: SLG 2010-02-01
-// -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeUrban( unsigned int nID ) const
-{
-    return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeUrbanFromID( nID );
 }
 
 // -----------------------------------------------------------------------------

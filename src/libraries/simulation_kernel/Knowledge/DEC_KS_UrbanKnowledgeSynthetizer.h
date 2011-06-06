@@ -15,7 +15,6 @@
 class DEC_KnowledgeBlackBoard_Army;
 class DEC_Knowledge_UrbanPerception;
 class DEC_Knowledge_Urban;
-class MIL_Army;
 class UrbanObjectWrapper;
 
 // =============================================================================

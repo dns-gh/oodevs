@@ -11,13 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
-#include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Population.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "MT_Tools/MT_ScipioException.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgePopulation )
-BOOST_CLASS_TRACKING   ( DEC_BlackBoard_CanContainKnowledgePopulation, boost::serialization::track_never )
+BOOST_CLASS_TRACKING( DEC_BlackBoard_CanContainKnowledgePopulation, boost::serialization::track_never )
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation constructor

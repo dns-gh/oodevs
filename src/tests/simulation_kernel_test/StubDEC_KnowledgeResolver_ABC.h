@@ -24,9 +24,6 @@ public:
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& /*asn*/ ) const{ throw; }
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int /*nID*/ ) const{ throw; }
-
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const sword::UrbanObjectKnowledgeId& /*asn*/ ) const{ throw; }
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( unsigned int /*nID*/ ) const{ throw; }
 };
 
 #endif // __StubDEC_KnowledgeResolver_ABC_h_

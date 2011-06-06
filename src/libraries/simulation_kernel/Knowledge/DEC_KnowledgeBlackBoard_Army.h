@@ -77,15 +77,12 @@ public:
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int nID ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const sword::UrbanObjectKnowledgeId& asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( unsigned int nID ) const;
     //@}
 
     //! @name Queries
     //@{
     bool IsKnown( const MIL_Object_ABC& oject ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( unsigned int nID ) const;
-    boost::shared_ptr< DEC_Knowledge_Urban >  GetKnowledgeUrbanFromID( unsigned int nID ) const;
     void GetKnowledgesObject( T_KnowledgeObjectVector& container ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( MIL_Object_ABC& object ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject( const DEC_Knowledge_ObjectCollision& collision ) const;

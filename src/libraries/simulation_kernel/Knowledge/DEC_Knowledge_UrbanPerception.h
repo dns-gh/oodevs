@@ -12,11 +12,9 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
-#include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Tools/MIL_IDManager.h"
 
-class UrbanObjectWrapper;
 class PHY_PerceptionLevel;
 
 // =============================================================================

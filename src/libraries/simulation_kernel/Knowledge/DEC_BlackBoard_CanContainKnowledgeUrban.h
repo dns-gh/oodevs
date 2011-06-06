@@ -10,7 +10,6 @@
 #define __DEC_BlackBoard_CanContainKnowledgeUrban_h_
 
 #include "MIL.h"
-#include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_Urban;
 class MIL_Army_ABC;
@@ -53,7 +52,6 @@ public:
 
     //! @name Queries
     //@{
-    boost::shared_ptr< DEC_Knowledge_Urban > GetKnowledgeUrbanFromID( unsigned int nID ) const;
     boost::shared_ptr< DEC_Knowledge_Urban > GetKnowledgeUrban( const UrbanObjectWrapper& object ) const;
 
     template < class UnaryFunction >
@@ -102,7 +100,6 @@ private:
     //@{
     const MIL_Army_ABC& army_;
     T_KnowledgeUrbanMap urbanMapFromConcrete_;
-    std::map< unsigned, boost::shared_ptr< DEC_Knowledge_Urban > > urbanKnowledgeMapFromKnowledgeId_;
     std::vector< UrbanObjectWrapper* > urbanBlocks_;
     //@}
 };

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_Urban.h"
+#include "MIL_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"

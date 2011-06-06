@@ -16,6 +16,7 @@
 #include "DEC_Knowledge_Urban.h"
 #include "DEC_Knowledge_UrbanPerception.h"
 #include "MIL_KnowledgeGroup.h"
+#include "MIL_AgentServer.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -30,7 +31,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_UrbanKnowledgeSynthetizer )
 // -----------------------------------------------------------------------------
 DEC_KS_UrbanKnowledgeSynthetizer::DEC_KS_UrbanKnowledgeSynthetizer( DEC_KnowledgeBlackBoard_Army& blackBoard )
     : DEC_KnowledgeSource_ABC( blackBoard, 1 )
-    , pBlackBoard_           ( &blackBoard )
+    , pBlackBoard_( &blackBoard )
 {
     // NOTHING
 }
@@ -40,8 +41,8 @@ DEC_KS_UrbanKnowledgeSynthetizer::DEC_KS_UrbanKnowledgeSynthetizer( DEC_Knowledg
 // Created: MGD 2009-12-05
 // -----------------------------------------------------------------------------
 DEC_KS_UrbanKnowledgeSynthetizer::DEC_KS_UrbanKnowledgeSynthetizer()
-    : DEC_KnowledgeSource_ABC(  )
-    , pBlackBoard_           ( 0 )
+    : DEC_KnowledgeSource_ABC()
+    , pBlackBoard_( 0 )
 {
     // NOTHING
 }
@@ -107,7 +108,7 @@ void DEC_KS_UrbanKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
         const MIL_KnowledgeGroup::T_AutomateVector& automates = itKnowledgeGroup->second->GetAutomates();
         for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
         {
-            const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
+            const MIL_Automate::T_PionVector& pions = ( **itAutomate ).GetPions();
             for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
             {
                 MIL_AgentPion& pion = **itPion;

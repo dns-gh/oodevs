@@ -9,10 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionRecoUrbanBlock.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -25,13 +24,12 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_AgentManager.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoUrbanBlockReco constructor
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
 PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const UrbanObjectWrapper* pUrbanBlock, const boost::shared_ptr< DEC_Knowledge_Urban > pKnowledgeUrbanBlock )
-    : pUrbanBlock_( pUrbanBlock )
+    : pUrbanBlock_         ( pUrbanBlock )
     , pKnowledgeUrbanBlock_( pKnowledgeUrbanBlock )
 {
     if( pUrbanBlock == 0 )
@@ -97,9 +95,7 @@ PHY_PerceptionRecoUrbanBlock::~PHY_PerceptionRecoUrbanBlock()
 int PHY_PerceptionRecoUrbanBlock::AddUrbanBlock( const UrbanObjectWrapper* pUrbanBlock )
 {
     boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge = perceiver_.GetPion().GetArmy().GetKnowledge().GetKnowledgeUrbanContainer().GetKnowledgeUrban( *pUrbanBlock );
-    PHY_PerceptionRecoUrbanBlockReco* pNewReco = new PHY_PerceptionRecoUrbanBlockReco( pUrbanBlock, pKnowledge );
-    assert( pNewReco );
-    return Add( pNewReco );
+    return Add( new PHY_PerceptionRecoUrbanBlockReco( pUrbanBlock, pKnowledge ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,12 +114,9 @@ void PHY_PerceptionRecoUrbanBlock::RemoveUrbanBlock( int id )
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const MT_Vector2D& vPoint ) const
 {
-    for ( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
-    {
-        if( (*it)->IsInside( perceiver_, vPoint ) )
+    for( CIT_RecoVector it = recos_.begin(); it != recos_.end(); ++it )
+        if( ( *it )->IsInside( perceiver_, vPoint ) )
             return PHY_PerceptionLevel::recognized_;
-    }
-
     return PHY_PerceptionLevel::notSeen_;
 }
 
@@ -134,24 +127,17 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const MT_Vecto
 void PHY_PerceptionRecoUrbanBlock::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& detectionComputerFactory )
 {
     TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
-
-    for ( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
+    for( CIT_RecoVector itReco = recos_.begin(); itReco != recos_.end(); ++itReco )
     {
-        (*itReco)->GetAgentsInside( perceiver_, perceivableAgents );
-
-        for ( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
+        ( *itReco )->GetAgentsInside( perceiver_, perceivableAgents );
+        for( TER_Agent_ABC::CIT_AgentPtrVector it = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
         {
-            MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >(**it).GetAgent();
-
+            MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
             std::auto_ptr< detection::DetectionComputer_ABC > detectionComputer( detectionComputerFactory.Create( target ) );
             perceiver_.GetPion().Execute( *detectionComputer );
             target.Execute( *detectionComputer );
-
-            if( detectionComputer->CanBeSeen() )
-            {
-                if( (*itReco)->CanSeeIt() )
-                    perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
-            }
+            if( detectionComputer->CanBeSeen() && ( *itReco )->CanSeeIt() )
+                perceiver_.NotifyPerception( target, PHY_PerceptionLevel::recognized_ );
         }
     }
 }
@@ -176,7 +162,7 @@ const PHY_PerceptionLevel& PHY_PerceptionRecoUrbanBlock::Compute( const DEC_Know
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoUrbanBlock::HasLocalisationToHandle
-// Created: JMGD 2010-02-11
+// Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
 bool PHY_PerceptionRecoUrbanBlock::HasLocalisationToHandle() const
 {

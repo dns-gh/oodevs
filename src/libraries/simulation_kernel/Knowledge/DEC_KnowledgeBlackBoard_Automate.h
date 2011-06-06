@@ -61,9 +61,6 @@ public:
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       unsigned int                    nID ) const;
-
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const sword::UrbanObjectKnowledgeId& asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban(       unsigned int            nID ) const;
     //@}
 
 private:

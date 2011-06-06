@@ -13,29 +13,25 @@
 #define __DEC_KnowledgeBlackBoard_KnowledgeGroup_h_
 
 #include "DEC_KnowledgeBlackBoard_ABC.h"
-#include "DEC_Knowledge_RapForLocal.h"
-#include "DEC_Knowledge_Def.h"
 
 namespace sword
 {
     class ObjectKnowledgeId;
     class CrowdKnowledgeId;
     class UnitKnowledgeId;
-    class UrbanObjectKnowledgeId;
 }
 
 class MIL_KnowledgeGroup;
 class DEC_BlackBoard_CanContainKnowledgeAgent;
 class DEC_BlackBoard_CanContainKnowledgeObject;
 class DEC_BlackBoard_CanContainKnowledgePopulation;
-//class DEC_KS_AgentKnowledgeSynthetizer;
-//class DEC_KS_PopulationKnowledgeSynthetizer;
 class DEC_KS_KnowledgeSynthetizer;
 class DEC_KS_Sharing;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_PopulationPerception;
 class DEC_Knowledge_AgentPerception;
+class MIL_Agent_ABC;
 class MIL_Army_ABC;
 class MIL_Object_ABC;
 class MIL_Population;
@@ -86,7 +82,7 @@ public:
 
     //! @name tools::Resolver
     //@{
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const sword::UnitKnowledgeId&  asn ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( const sword::UnitKnowledgeId& asn ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent( unsigned int nID ) const;
 
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const;
@@ -95,9 +91,6 @@ public:
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const sword::CrowdKnowledgeId& asn ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( unsigned int nID ) const;
-
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( const sword::UrbanObjectKnowledgeId& asn ) const;
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban( unsigned int nID ) const;
     //@}
 
     //! @name Queries

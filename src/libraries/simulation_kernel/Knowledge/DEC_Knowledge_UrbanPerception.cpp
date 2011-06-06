@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_UrbanPerception.h"
-#include "Network/NET_ASN_Tools.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"

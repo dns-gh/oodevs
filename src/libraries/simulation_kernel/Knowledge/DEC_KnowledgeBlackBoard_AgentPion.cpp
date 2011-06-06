@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
@@ -34,12 +33,9 @@
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_UrbanPerception.h"
 #include "MIL_KnowledgeGroup.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/MIL_Army.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
-#include "Decision/DEC_Tools.h"
 #include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_AgentPion )
@@ -62,6 +58,7 @@ DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion( MIL_Agent_
     , pKsFire_                                ( new DEC_KS_Fire                 ( *this ) )
     , pKsPerception_                          ( new DEC_KS_Perception           ( *this ) )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -82,6 +79,7 @@ DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion()
     , pKsFire_                                ( 0 )
     , pKsPerception_                          ( 0 )
 {
+    // NOTHING
 }
 
 
@@ -130,9 +128,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::serialize( Archive& archive, const unsig
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_AgentPion::SendFullState() const
 {
-//    pKnowledgeObjectCollisionContainer_;
-//    knowledgeRapForLocal_
-
     std::const_mem_fun_ref_t< void, DEC_Knowledge_AgentPerception > functorAgent = std::mem_fun_ref( &DEC_Knowledge_AgentPerception::SendStateToNewClient );
     pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functorAgent );
     std::const_mem_fun_ref_t< void, DEC_Knowledge_ObjectPerception > functorObject = std::mem_fun_ref( &DEC_Knowledge_ObjectPerception::SendStateToNewClient );
@@ -149,9 +144,6 @@ void DEC_KnowledgeBlackBoard_AgentPion::SendFullState() const
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_AgentPion::SendChangedState() const
 {
-//    pKnowledgeObjectCollisionContainer_;
-//    knowledgeRapForLocal_
-
     std::const_mem_fun_ref_t< void, DEC_Knowledge_AgentPerception > functorAgent = std::mem_fun_ref( & DEC_Knowledge_AgentPerception::UpdateOnNetwork );
     pKnowledgeAgentPerceptionContainer_->ApplyOnKnowledgesAgentPerception( functorAgent );
     std::const_mem_fun_ref_t< void, DEC_Knowledge_ObjectPerception > functorObject = std::mem_fun_ref( &DEC_Knowledge_ObjectPerception::UpdateOnNetwork );
@@ -237,10 +229,10 @@ namespace {
         }
 
     private:
-              T_ConstKnowledgeAgentVector* pContainer_;
-        const MIL_Agent_ABC*               pPion_;
-        const MIL_Army_ABC*                pArmy_;
-        const T*                           pZone_;
+        T_ConstKnowledgeAgentVector* pContainer_;
+        const MIL_Agent_ABC* pPion_;
+        const MIL_Army_ABC* pArmy_;
+        const T* pZone_;
     };
 }
 
@@ -293,8 +285,8 @@ namespace {
         }
 
     private:
-              T_ConstKnowledgeAgentVector* pContainer_;
-        const MIL_Agent_ABC*               pPion_;
+        T_ConstKnowledgeAgentVector* pContainer_;
+        const MIL_Agent_ABC* pPion_;
     };
 }
 
@@ -322,7 +314,7 @@ double DEC_KnowledgeBlackBoard_AgentPion::GetRapForLocalValue() const
     double rapForLocal = pKnowledgeRapForLocal_->GetValue();
     const PHY_Morale& morale =  pPion_->GetRole< PHY_RoleInterface_HumanFactors >().GetMorale();
     if( &morale == &PHY_Morale::fanatique_ )
-             return 5.0; // $$$$ _RC_ SLG 2010-05-28: Facteur moral max
+        return 5.0; // $$$$ _RC_ SLG 2010-05-28: Facteur moral max
     return rapForLocal;
 }
 
@@ -598,23 +590,6 @@ DEC_Knowledge_Population* DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgePop
     return pPion_->GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nID );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban
-// Created: SLG 2010-02-01
-// -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban( const sword::UrbanObjectKnowledgeId& asn ) const
-{
-    return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeUrbanFromID( asn.id() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban
-// Created: SLG 2010-02-01
-// -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeUrban( unsigned int nID ) const
-{
-    return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeUrbanFromID( nID );
-}
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetPion
 // Created: NLD 2006-04-12

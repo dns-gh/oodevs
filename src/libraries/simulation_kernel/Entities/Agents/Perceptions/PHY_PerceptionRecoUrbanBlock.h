@@ -48,9 +48,9 @@ public:
     //! @name Add/Remove Points
     //@{
     int AddUrbanBlock( const UrbanObjectWrapper* urbanBlock );
-    void  RemoveUrbanBlock( int );
+    void RemoveUrbanBlock( int );
 
-    bool  HasLocalisationToHandle() const;
+    bool HasLocalisationToHandle() const;
     //@}
 
     //! @name Execution
