@@ -247,7 +247,7 @@ Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& tea
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( xis, staticModel_.coordinateConverter_, result->GetType() ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
-    xis >> xml::start( "attributes" )
+    xis >> xml::optional >> xml::start( "attributes" )
             >> xml::list( *this, &ObjectFactory::ReadAttributes, *result, dico )
         >> xml::end;
     const_cast< Team_ABC* >( &team )->Get< Objects >().AddObject( *result );
