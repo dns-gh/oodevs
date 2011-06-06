@@ -13,54 +13,34 @@
 #include "crossbow_plugin/Database_ABC.h"
 #include "crossbow_plugin/Table_ABC.h"
 
-#include <iostream>
-
 using namespace plugins;
 
 namespace
 {
-    std::string GetHost()
-    {
-        static std::string host = "sword-test.dmz.masagroup.net";
-        return host;
-    }
+    const std::string host = "sword-test.dmz.masagroup.net";
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_db_connection )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "sword", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "sword", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         BOOST_CHECK_NO_THROW( workspace.GetDatabase( "sword" ) );
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_db_connection_multiple_name_reference )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "ref1", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-        workspace.InitializeConnectionReference( "ref2", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-
+        workspace.InitializeConnectionReference( "ref1", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "ref2", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         crossbow::Database_ABC& rhs = workspace.GetDatabase( "ref1" );
         crossbow::Database_ABC& lhs = workspace.GetDatabase( "ref2" );
         BOOST_CHECK_EQUAL( &lhs, &rhs );
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_db_unitialized_connection_throw )
 {
     crossbow::OGR_Workspace workspace;
@@ -74,8 +54,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_db_multiple_connection )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "sword", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-
+        workspace.InitializeConnectionReference( "sword", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         crossbow::Database_ABC& db = workspace.GetDatabase( "sword" );
         crossbow::Database_ABC& db1 = workspace.GetDatabase( "sword" );
         crossbow::Database_ABC& db2 = workspace.GetDatabase( "sword" );
@@ -86,22 +65,14 @@ BOOST_AUTO_TEST_CASE( crossbow_test_db_multiple_connection )
     }
 }
 
-
 #define CHECK_TABLE( N ) \
-{ \
-    std::auto_ptr< crossbow::Table_ABC > table( db.OpenTable( N ) ); \
-    BOOST_CHECK( table.get() != 0 ); \
-}
+    BOOST_CHECK( std::auto_ptr< crossbow::Table_ABC >( db.OpenTable( N ) ).get() );
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_db_connection_check_tables )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "sword", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "sword", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         {
             crossbow::Database_ABC& db = workspace.GetDatabase( "sword" );
             CHECK_TABLE( "create_order" );

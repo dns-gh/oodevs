@@ -8,6 +8,8 @@
 // *****************************************************************************
 
 #include "plugins_test_pch.h"
+#include "../dispatcher_test/MockModel.h"
+#include "../dispatcher_test/MockAgent.h"
 #include "crossbow_plugin/OGR_Workspace.h"
 #include "crossbow_plugin/DatabaseFactory.h"
 #include "crossbow_plugin/Database_ABC.h"
@@ -19,27 +21,17 @@
 #include "crossbow_plugin/WorkingSession.h"
 #include "crossbow_plugin/DatabaseUpdater.h"
 #include "dispatcher/Model.h"
+#include "dispatcher/EntitySymbols_ABC.h"
 #include "tools/SessionConfig.h"
 #include "protocol/protocol.h"
-
 #include <gdal/ogr_geometry.h>
-#include <iostream>
 #include <boost/lexical_cast.hpp>
-
-#pragma warning( push, 0 )
-#pragma warning( disable: 4505 )
-#include <turtle/mock.hpp>
-#pragma warning( pop )
 
 using namespace plugins;
 
 namespace
 {
-    std::string GetHost()
-    {
-        static std::string host = "sword-test.dmz.masagroup.net";
-        return host;
-    }
+    const std::string host = "sword-test.dmz.masagroup.net";
 }
 
 // -----------------------------------------------------------------------------
@@ -50,8 +42,8 @@ BOOST_AUTO_TEST_CASE( crossbow_test_clear_table )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-        workspace.InitializeConnectionReference( "row", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "row", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         BOOST_CHECK_NO_THROW( workspace.GetDatabase( "feature" ).ClearTable( "UnitForces", "session_id=2000" ) );
         BOOST_CHECK_NO_THROW( workspace.GetDatabase( "row" ).ClearTable( "Formations", "session_id=2000" ) );
     }
@@ -118,91 +110,61 @@ namespace
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_insert_row_geometry )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-
+        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         BOOST_CHECK_NO_THROW( CreateFeature( workspace, 10045, 34, crossbow::Point( OGRPoint( 49.592909, 0.131836 ) ) ) );
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_insert_multiple_row_geometry )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-
+        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         BOOST_CHECK_NO_THROW( CreateFeature( workspace, 10045, 34, crossbow::Point( OGRPoint( 49.592909, 0.131836 ) ) ) );
         BOOST_CHECK_NO_THROW( CreateFeature( workspace, 10046, 34, crossbow::Point( OGRPoint( 49.59290, 0.13183 ) ) ) );
         BOOST_CHECK_NO_THROW( CreateFeature( workspace, 10047, 34, crossbow::Point( OGRPoint( 49.5929, 0.1318 ) ) ) );
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_insert_geometry )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         BOOST_CHECK_NO_THROW( CreateFeature( workspace, 10047, 34, crossbow::Point() ) );
     }
 }
 
-
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_insert_data_formation )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "row", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-
+        workspace.InitializeConnectionReference( "row", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         BOOST_CHECK_NO_THROW( CreateRow( workspace, 10060, 0 ) );
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_insert_multiple_data_formation )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "row", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-
+        workspace.InitializeConnectionReference( "row", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         BOOST_CHECK_NO_THROW( CreateRow( workspace, 10067, 0 ) );
         BOOST_CHECK_NO_THROW( CreateRow( workspace, 10068, 0 ) );
         BOOST_CHECK_NO_THROW( CreateRow( workspace, 10069, 0 ) );
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_insert_multiple_data_type )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-        workspace.InitializeConnectionReference( "row", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-
+        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "row", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         BOOST_CHECK_NO_THROW( CreateRow( workspace, 10067, 0 ) );
         BOOST_CHECK_NO_THROW( CreateRow( workspace, 10068, 0 ) );
         BOOST_CHECK_NO_THROW( CreateFeature( workspace, 10069, 34, crossbow::Point( OGRPoint( 49.59290, 0.13183 ) ) ) );
@@ -213,28 +175,16 @@ BOOST_AUTO_TEST_CASE( crossbow_test_insert_multiple_data_type )
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_insert_and_update_geometry )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-
+        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
         BOOST_CHECK_NO_THROW( workspace.GetDatabase( "feature" ).ClearTable( "UnitForces", "session_id=2000" ) );
-
         BOOST_CHECK_NO_THROW( CreateFeature( workspace, 10070, 34, crossbow::Point() ) );
         BOOST_CHECK_NO_THROW( UpdateFeature( workspace, 10070, crossbow::Point( OGRPoint( 49.59290, 0.13183 ) ) ) );
     }
 }
-
-// #ifdef CROSSBOW_PLUGIN_TEST
-
-#include "../dispatcher_test/MockModel.h"
-#include "../dispatcher_test/MockAgent.h"
-#include "dispatcher/EntitySymbols_ABC.h"
 
 namespace
 {
@@ -245,21 +195,17 @@ namespace
 
     MOCK_BASE_CLASS( MockSymbol, dispatcher::EntitySymbols_ABC )
     {
-        MOCK_METHOD( BuildSymbol, 1 );
+        MOCK_METHOD( BuildSymbol, 1 )
     };
 }
 
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_insert_and_update_geometry_thru_updater )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "flat", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
-        workspace.InitializeConnectionReference( "geometry", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "flat", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "geometry", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
 
         MockSession session;
         MOCK_EXPECT( session, GetId ).returns( 2000 );
@@ -269,7 +215,7 @@ BOOST_AUTO_TEST_CASE( crossbow_test_insert_and_update_geometry_thru_updater )
         MOCK_EXPECT( agent, GetId ).returns( 10071 );
         MockSymbol* symbol = new MockSymbol();
         agent.Attach( *static_cast< dispatcher::EntitySymbols_ABC* >( symbol ) );
-        MOCK_EXPECT( *symbol, BuildSymbol ).returns( std::string( "**************" ) );
+        MOCK_EXPECT( *symbol, BuildSymbol ).returns( "**************" );
         BOOST_CHECK_EQUAL( symbol, &agent.Get< dispatcher::EntitySymbols_ABC >() );
         agents.Register( agent.GetId(), agent );
 
@@ -305,15 +251,11 @@ namespace
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_insert_line_geometry )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
 
         MockSession session;
         MOCK_EXPECT( session, GetId ).returns( 2000 );
@@ -327,15 +269,11 @@ BOOST_AUTO_TEST_CASE( crossbow_test_insert_line_geometry )
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: JCR 2009-02-10
-// -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( crossbow_test_insert_area_geometry )
 {
     crossbow::OGR_Workspace workspace;
     {
-        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + GetHost() + ":5432/sword_crossbow_db.sword" );
+        workspace.InitializeConnectionReference( "feature", "postgres://sword:sword@" + host + ":5432/sword_crossbow_db.sword" );
 
         MockSession session;
         MOCK_EXPECT( session, GetId ).returns( 2000 );
@@ -349,5 +287,3 @@ BOOST_AUTO_TEST_CASE( crossbow_test_insert_area_geometry )
         }
     }
 }
-
-// #endif

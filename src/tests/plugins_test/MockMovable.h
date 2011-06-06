@@ -20,8 +20,8 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockMovable, tic::Movable_ABC )
 {
-    MOCK_METHOD( Move, 1 );
-    MOCK_METHOD( Stop, 0 );
+    MOCK_METHOD( Move, 1 )
+    MOCK_METHOD( Stop, 0 )
 };
 
 #endif // __MockMovable_h_
