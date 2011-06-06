@@ -420,7 +420,9 @@
     <altitude-modifier/>
   </object>
   <object geometry="point" name="Underground Exit" symbol="G*EXIT*********" type="underground exit">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <underground-network-exit/>
   </object>
 </objects>
-<!-- signature="0657906738" -->
+<!-- signature="2653673036" -->
