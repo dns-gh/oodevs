@@ -25,9 +25,9 @@ class DEC_MedicalTreatmentFunctions
 public:
     //! @name Functions
     //@{
-    static void                                         TakeCareOfThePatient    ( const MIL_Agent_ABC&, const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > object );
-    static boost::shared_ptr< DEC_Knowledge_Object >    DetermineHospital       ( const MIL_Agent_ABC& caller, const DEC_Decision_ABC* agent, std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledges  );
-    static bool                                         CanHospitalTreatWound   ( const MIL_Agent_ABC&, const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > object );
+    static void                                      TakeCareOfThePatient ( const MIL_Agent_ABC&, const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > object );
+    static boost::shared_ptr< DEC_Knowledge_Object > DetermineHospital    ( const MIL_Agent_ABC& caller, const DEC_Decision_ABC* agent, std::vector< boost::shared_ptr< DEC_Knowledge_Object > > knowledges  );
+    static bool                                      CanHospitalTreatWound( const MIL_Agent_ABC&, const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > object );
     //@}
 };
 

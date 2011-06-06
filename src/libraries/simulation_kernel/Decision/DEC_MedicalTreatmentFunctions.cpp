@@ -11,17 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_MedicalTreatmentFunctions.h"
-#include "Entities/Agents/MIL_AgentPion.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MedicalCapacity.h"
-#include "simulation_terrain/TER_Localisation.h"
 
 namespace
 {
