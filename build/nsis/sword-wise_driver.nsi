@@ -44,7 +44,7 @@
 !endif
 
 Name "${PRODUCT_NAME}"
-OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}.exe"
+OutFile "${DISTDIR}\${PRODUCT_NAME}_${PLATFORM}_${APP_VERSION_MAJOR}.exe"
 
 InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
