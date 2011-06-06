@@ -10,9 +10,8 @@
 #ifndef __DEC_DynamicFireFunctions_h_
 #define __DEC_DynamicFireFunctions_h_
 
-#include "Knowledge/DEC_Knowledge_Object.h"
-
 class MIL_AgentPion;
+class DEC_Knowledge_Object;
 
 // =============================================================================
 // Created: RFT 2004-03-31
@@ -23,7 +22,6 @@ public:
     //! @name Functions
     //@{
     static float GetRangeToExtinguish( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
-    //static unsigned int AnalyzeFireClass( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > knowledge );
     //@}
 };
 
