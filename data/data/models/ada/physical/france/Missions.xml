@@ -1987,12 +1987,12 @@
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="meetingPoint" name="Destination" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.Soutenir" dia-type="france.military.platoon.tasks.Soutenir" id="2062" name="MELEE Soutenir" package="support">
+    <mission dia-behavior="france.military.platoon.tasks.Appuyer" dia-type="france.military.platoon.tasks.Appuyer" id="2062" name="MELEE Appuyer" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unites a soutenir" optional="false" type="LocationComposite">
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Unites a appuyer" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Automat"/>
           <parameter type="Agent"/>
@@ -4223,7 +4223,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.Soutenir" dia-type="france.military.company.combat.tasks.Soutenir" id="1031" mrt-dia-behavior="france.military.company.combat.tasks.Soutenir" name="MELEE Soutenir" package="support">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Appuyer" dia-type="france.military.company.combat.tasks.Appuyer" id="1031" mrt-dia-behavior="france.military.company.combat.tasks.Soutenir" name="MELEE Appuyer" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4691,4 +4691,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="2532319693" -->
+<!-- signature="2424560934" -->
