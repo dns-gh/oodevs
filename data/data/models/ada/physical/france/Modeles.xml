@@ -18,7 +18,7 @@
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
-        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Appuyer Sur Position"/>
         <mission name="MELEE Barrer"/>
         <mission name="MELEE Boucler"/>
         <mission name="MELEE Controler"/>
@@ -94,7 +94,7 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Appuyer Sur Position"/>
         <mission name="MELEE Fouiller"/>
         <mission name="MELEE Soutenir"/>
       </missions>
@@ -137,7 +137,7 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Appuyer Sur Position"/>
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -259,7 +259,7 @@
         <mission name="COMMUNES Se Faire Transporter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="MELEE Appuyer"/>
+        <mission name="MELEE Appuyer Sur Position"/>
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
         </mission>
@@ -11761,4 +11761,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0282344560" -->
+<!-- signature="1039087550" -->
