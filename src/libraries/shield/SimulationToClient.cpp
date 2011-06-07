@@ -32,12 +32,12 @@ using namespace shield;
                                      ( sword::sub_officer, Common::sous_officer ) \
                                      ( sword::trooper, Common::mdr ) )
 
-#define CONVERT_UNIT_ACTION_ACK( field ) \
-    CONVERT_ENUM( field, ( sword::UnitActionAck::no_error, MsgsSimToClient::UnitActionAck::no_error ) \
-                         ( sword::UnitActionAck::error_invalid_unit, MsgsSimToClient::UnitActionAck::error_invalid_unit ) \
-                         ( sword::UnitActionAck::error_automat_engaged, MsgsSimToClient::UnitActionAck::error_automate_embraye ) \
-                         ( sword::UnitActionAck::error_invalid_parameter, MsgsSimToClient::UnitActionAck::error_invalid_attribute ) \
-                         ( sword::UnitActionAck::error_unit_surrendered, MsgsSimToClient::UnitActionAck::error_unit_surrendered ) )
+#define CONVERT_UNIT_ACTION_ACK( from_field, to_field ) \
+    CONVERT_ENUM_TO( from_field, to_field, ( sword::UnitActionAck::no_error, MsgsSimToClient::UnitActionAck::no_error ) \
+                                        ( sword::UnitActionAck::error_invalid_unit, MsgsSimToClient::UnitActionAck::error_invalid_unit ) \
+                                        ( sword::UnitActionAck::error_automat_engaged, MsgsSimToClient::UnitActionAck::error_automate_embraye ) \
+                                    ( sword::UnitActionAck::error_invalid_parameter, MsgsSimToClient::UnitActionAck::error_invalid_attribute ) \
+                                        ( sword::UnitActionAck::error_unit_surrendered, MsgsSimToClient::UnitActionAck::error_unit_surrendered ) )
 
 #define CONVERT_UNIT_VISIBILITY( field ) \
     CONVERT_ENUM( field, ( sword::UnitVisibility::invisible, Common::invisible ) \
@@ -116,7 +116,7 @@ void SimulationToClient::Convert( const sword::SetAutomatModeAck& from, MsgsSimT
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::UnitCreationRequestAck& from, MsgsSimToClient::MsgUnitCreationRequestAck* to )
 {
-    CONVERT_UNIT_ACTION_ACK( error );
+    CONVERT_UNIT_ACTION_ACK( error_code, error );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +136,7 @@ void SimulationToClient::Convert( const sword::MagicActionAck& from, MsgsSimToCl
 void SimulationToClient::Convert( const sword::UnitMagicActionAck& from, MsgsSimToClient::MsgUnitMagicActionAck* to )
 {
     CONVERT_ID( unit );
-    CONVERT_UNIT_ACTION_ACK( error_code );
+    CONVERT_UNIT_ACTION_ACK( error_code, error_code );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,9 +200,9 @@ namespace
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::LogSupplyPushFlowAck& from, MsgsSimToClient::MsgLogSupplyPushFlowAck* to )
 {
-    CONVERT_ENUM( ack, ( sword::LogSupplyPushFlowAck::no_error_pushflow, MsgsSimToClient::MsgLogSupplyPushFlowAck::no_error_pushflow )
-                       ( sword::LogSupplyPushFlowAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyPushFlowAck::error_invalid_donneur_pushflow )
-                       ( sword::LogSupplyPushFlowAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyPushFlowAck::error_invalid_receveur_pushflow ) );
+    CONVERT_ENUM_TO( error_code, ack, ( sword::LogSupplyPushFlowAck::no_error_pushflow, MsgsSimToClient::MsgLogSupplyPushFlowAck::no_error_pushflow )
+                                      ( sword::LogSupplyPushFlowAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyPushFlowAck::error_invalid_donneur_pushflow )
+                                      ( sword::LogSupplyPushFlowAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyPushFlowAck::error_invalid_receveur_pushflow ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,9 +211,9 @@ void SimulationToClient::Convert( const sword::LogSupplyPushFlowAck& from, MsgsS
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::LogSupplyPullFlowAck& from, MsgsSimToClient::MsgLogSupplyPullFlowAck* to )
 {
-    CONVERT_ENUM( ack, ( sword::LogSupplyPullFlowAck::no_error_pullflow, MsgsSimToClient::MsgLogSupplyPullFlowAck::no_error_pullflow )
-                       ( sword::LogSupplyPullFlowAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyPullFlowAck::error_invalid_provider_pullflow )
-                       ( sword::LogSupplyPullFlowAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyPullFlowAck::error_invalid_receiver_pullflow ) );
+    CONVERT_ENUM_TO( error_code, ack, ( sword::LogSupplyPullFlowAck::no_error_pullflow, MsgsSimToClient::MsgLogSupplyPullFlowAck::no_error_pullflow )
+                                      ( sword::LogSupplyPullFlowAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyPullFlowAck::error_invalid_provider_pullflow )
+                                      ( sword::LogSupplyPullFlowAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyPullFlowAck::error_invalid_receiver_pullflow ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,10 +222,10 @@ void SimulationToClient::Convert( const sword::LogSupplyPullFlowAck& from, MsgsS
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::LogSupplyChangeQuotasAck& from, MsgsSimToClient::MsgLogSupplyChangeQuotasAck* to )
 {
-    CONVERT_NON_INJECTIVE_ENUM( ack, ack, ( sword::LogSupplyChangeQuotasAck::no_error_quotas, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::no_error_quotas )
-                                          ( sword::LogSupplyChangeQuotasAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_donneur_quotas )
-                                          ( sword::LogSupplyChangeQuotasAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receveur_quotas )
-                                          ( sword::LogSupplyChangeQuotasAck::error_invalid_dotation, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receveur_quotas ));
+    CONVERT_NON_INJECTIVE_ENUM( error_code , ack, ( sword::LogSupplyChangeQuotasAck::no_error_quotas, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::no_error_quotas )
+                                                  ( sword::LogSupplyChangeQuotasAck::error_invalid_supplier, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_donneur_quotas )
+                                                  ( sword::LogSupplyChangeQuotasAck::error_invalid_receiver, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receveur_quotas )
+                                                  ( sword::LogSupplyChangeQuotasAck::error_invalid_dotation, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_receveur_quotas ));
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,7 @@
 namespace kernel
 {
     class Logger_ABC;
+    class Entity_ABC;
 }
 
 // =============================================================================
@@ -23,19 +24,40 @@ namespace kernel
 // =============================================================================
 namespace log_tools
 {
-    bool CheckAcknowledge( kernel::Logger_ABC& logger, int errorCode, const char* logMessage );
+    template< typename T >
+    const std::string& GetErrorName( const T& error )
+    {
+        const google::protobuf::EnumDescriptor* enumDesc = google::protobuf::GetEnumDescriptor< T >();
+        return google::protobuf::internal::NameOfEnum( enumDesc, error );
+    }
 
-    inline
-    bool CheckAcknowledge( kernel::Logger_ABC& logger, const char* logMessage ) {
-        return CheckAcknowledge( logger, 0, logMessage );
+
+    void LogAcknowledge( kernel::Logger_ABC& logger, const std::string& messageName );
+    void LogAcknowledge( kernel::Logger_ABC& logger, const char* messageName );
+    bool CheckAcknowledge( kernel::Logger_ABC& logger, int errorCode, const std::string& errorMessage, const std::string& messageName );
+    bool CheckAcknowledge( kernel::Logger_ABC& logger, const kernel::Entity_ABC& entity, int errorCode, const std::string& errorMessage, const std::string& messageName );
+
+    template< typename T >
+    bool LogAcknowledge( kernel::Logger_ABC& logger, const T& logMessage ) 
+    {
+        return LogAcknowledge( logger, 0, logMessage );
     }
 
     template< typename T >
-    bool CheckAcknowledge( kernel::Logger_ABC& logger, const T& message, const char* logMessage, void(T::*)(void) = 0 )
+    bool CheckAcknowledge( kernel::Logger_ABC& logger, const T& message )
     {
-        return CheckAcknowledge( logger, message.error_code(), logMessage );
+        const std::string& errorMessage = GetErrorName( message.error_code() );
+        const std::string& messageName = message.descriptor()->name();
+        return CheckAcknowledge( logger, message.error_code(), errorMessage, messageName );
     }
 
+    template< typename T >
+    bool CheckAcknowledge( kernel::Logger_ABC& logger, const kernel::Entity_ABC& entity, const T& message )
+    {
+        const std::string& errorMessage = GetErrorName( message.error_code() );
+        const std::string& messageName = message.descriptor()->name();
+        return CheckAcknowledge( logger, entity, message.error_code(), errorMessage, messageName );
+    }
 } // namespace
 
 #endif // __LogTools_h_

@@ -475,7 +475,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
 {
-    /*// sides
+    // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
     MOCK_EXPECT( side, GetId ).returns( 2 );
@@ -560,8 +560,6 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
         MOCK_EXPECT( automat2, RemoveAutomat ).once();
         MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
     }
-    */
-    // $$$ TMP
 }
 
 // -----------------------------------------------------------------------------

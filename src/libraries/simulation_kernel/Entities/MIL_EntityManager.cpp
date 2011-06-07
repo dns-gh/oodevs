@@ -1138,7 +1138,7 @@ void MIL_EntityManager::OnReceiveSetAutomateMode( const SetAutomatMode& message,
 void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest& message, unsigned int nCtx )
 {
     client::UnitCreationRequestAck ack;
-    ack().set_error( UnitActionAck::no_error );
+    ack().set_error_code( UnitActionAck::no_error );
     try
     {
         MIL_Automate* pAutomate = FindAutomate( message.superior().id() );
@@ -1148,7 +1148,7 @@ void MIL_EntityManager::OnReceiveUnitCreationRequest( const UnitCreationRequest&
     }
     catch( NET_AsnException< UnitActionAck_ErrorCode >& e )
     {
-        ack().set_error( e.GetErrorID() );
+        ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
@@ -1337,7 +1337,7 @@ void MIL_EntityManager::ProcessUnitChangeSuperior( const UnitMagicAction& messag
 void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::LogSupplyChangeQuotasAck ack;
-    ack().set_ack( LogSupplyChangeQuotasAck::no_error_quotas );
+    ack().set_error_code( LogSupplyChangeQuotasAck::no_error_quotas );
     try
     {
         if( message.parameters().elem_size() != 2 )
@@ -1362,7 +1362,7 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
     }
     catch( NET_AsnException< LogSupplyChangeQuotasAck::ErrorCode >& e )
     {
-        ack().set_ack( e.GetErrorID() );
+        ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
@@ -1374,7 +1374,7 @@ void MIL_EntityManager::ProcessLogSupplyChangeQuotas( const UnitMagicAction& mes
 void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::LogSupplyPushFlowAck ack;
-    ack().set_ack( LogSupplyPushFlowAck::no_error_pushflow );
+    ack().set_error_code( LogSupplyPushFlowAck::no_error_pushflow );
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
@@ -1385,7 +1385,7 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     }
     catch( NET_AsnException< LogSupplyPushFlowAck::ErrorCode >& e )
     {
-        ack().set_ack( e.GetErrorID() );
+        ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
@@ -1397,7 +1397,7 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
 void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message, unsigned int nCtx )
 {
     client::LogSupplyPullFlowAck ack;
-    ack().set_ack( LogSupplyPullFlowAck::no_error_pullflow );
+    ack().set_error_code( LogSupplyPullFlowAck::no_error_pullflow );
     try
     {
         MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
@@ -1408,7 +1408,7 @@ void MIL_EntityManager::ProcessLogSupplyPullFlow( const UnitMagicAction& message
     }
     catch( NET_AsnException< LogSupplyPullFlowAck::ErrorCode >& e )
     {
-        ack().set_ack( e.GetErrorID() );
+        ack().set_error_code( e.GetErrorID() );
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }

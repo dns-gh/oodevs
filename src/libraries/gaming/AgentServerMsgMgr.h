@@ -16,6 +16,7 @@
 
 namespace sword
 {
+    class Tasker;
     class AarInformation;
     class AarToClient;
     class ActionCreateFireOrderAck;
@@ -203,6 +204,7 @@ namespace kernel
 {
     class Agent_ABC;
     class Logger_ABC;
+    class Entity_ABC;
 }
 
 class Model;
@@ -498,6 +500,7 @@ private:
     //@{
     Model& GetModel() const;
     Profile& GetProfile() const;
+    kernel::Entity_ABC& GetTasker( const sword::Tasker& tasker ) const;
     //@}
 
     //! @name Copy / Assignment

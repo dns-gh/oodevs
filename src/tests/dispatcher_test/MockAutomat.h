@@ -57,7 +57,6 @@ MOCK_BASE_CLASS( MockAutomat, dispatcher::Automat_ABC )
     MOCK_METHOD( Accept, 1 );
 
     // dispatcher::LogisticHierarchyOwner_ABC
-    //MOCK_METHOD( LogisticHierarchyOwner_ABC::Send, 1 );
     MOCK_METHOD_EXT( Send, 1, void ( sword::ParentEntity& ), LogisticHierarchyOwnerSend );
 };
 

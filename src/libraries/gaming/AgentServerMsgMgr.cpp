@@ -244,14 +244,8 @@ void AgentServerMsgMgr::OnReceiveCrowdFlowInterVisibility( const sword::CrowdFlo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( const sword::DebugPoints& message )
 {
-    if( message.source().has_automat() )
-        GetModel().agents_.FindAllAgent( message.source().automat().id() )->Update( message );
-    if( message.source().has_unit() )
-        GetModel().agents_.FindAllAgent( message.source().unit().id() )->Update( message );
-    if( message.source().has_formation() )
-        GetModel().agents_.FindAllAgent( message.source().formation().id() )->Update( message );
-    if( message.source().has_crowd() )
-        GetModel().agents_.FindAllAgent( message.source().crowd().id() )->Update( message );
+    kernel::Entity_ABC& entity = GetTasker( message.source() );
+    entity.Update( message );
 }
 
 //-----------------------------------------------------------------------------
@@ -260,7 +254,7 @@ void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( const sword::DebugPoints& m
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveControlPauseAck( const sword::ControlPauseAck& message )
 {
-    if( CheckAcknowledge( logger_, message, "ControlPauseAck" ) )
+    if( CheckAcknowledge( logger_, message ) )
         simulation_.Pause( true );
 }
 
@@ -270,7 +264,7 @@ void AgentServerMsgMgr::OnReceiveControlPauseAck( const sword::ControlPauseAck& 
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveControlResumeAck( const sword::ControlResumeAck& message )
 {
-    if( CheckAcknowledge( logger_, message, "ControlResumeAck" ) )
+    if( CheckAcknowledge( logger_, message ) )
         simulation_.Pause( false );
 }
 
@@ -280,7 +274,7 @@ void AgentServerMsgMgr::OnReceiveControlResumeAck( const sword::ControlResumeAck
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveControlChangeTimeFactorAck( const sword::ControlChangeTimeFactorAck& message )
 {
-    if( CheckAcknowledge( logger_, message, "ControlTimeFactorAck" ) )
+    if( CheckAcknowledge( logger_, message ) )
         simulation_.ChangeSpeed( (int)message.time_factor() );
 }
 
@@ -290,7 +284,7 @@ void AgentServerMsgMgr::OnReceiveControlChangeTimeFactorAck( const sword::Contro
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveControlDateTimeChangeAck( const sword::ControlDateTimeChangeAck& message )
 {
-    CheckAcknowledge( logger_, message, "ControlDateTimeChangeAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -299,7 +293,7 @@ void AgentServerMsgMgr::OnReceiveControlDateTimeChangeAck( const sword::ControlD
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveControlSkipToTickAck( const sword::ControlSkipToTickAck& message )
 {
-    CheckAcknowledge( logger_, message, "ControlSkipToTickAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 //-----------------------------------------------------------------------------
@@ -362,7 +356,7 @@ void AgentServerMsgMgr::OnReceiveProfileCreation( const sword::ProfileCreation& 
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveProfileCreationRequestAck( const sword::ProfileCreationRequestAck& message )
 {
-    CheckAcknowledge( logger_, message, "ProfileCreationRequestAck" );
+    CheckAcknowledge( logger_, message );
     // $$$$ SBO 2007-01-19: display profile name + error
 }
 
@@ -382,7 +376,7 @@ void AgentServerMsgMgr::OnReceiveProfileDestruction( const sword::ProfileDestruc
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveProfileDestructionRequestAck( const sword::ProfileDestructionRequestAck& message )
 {
-    CheckAcknowledge( logger_, message, "ProfileDestructionRequestAck" );
+    CheckAcknowledge( logger_, message );
     // $$$$ SBO 2007-01-19: display profile name + error
 }
 
@@ -403,7 +397,7 @@ void AgentServerMsgMgr::OnReceiveProfileUpdate( const sword::ProfileUpdate& mess
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveProfileUpdateRequestAck( const sword::ProfileUpdateRequestAck& message )
 {
-    CheckAcknowledge( logger_, message, "ProfileUpdateRequestAck" );
+    CheckAcknowledge( logger_, message );
     // $$$$ SBO 2007-01-19: display profile name + error
 }
 
@@ -551,7 +545,7 @@ void AgentServerMsgMgr::OnReceiveLogSupplyQuotas( const sword::LogSupplyQuotas& 
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const sword::LogSupplyChangeQuotasAck& message, unsigned long )
 {
-    CheckAcknowledge( logger_, message.ack(), "LogSupplyChangeQuotasAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -560,7 +554,7 @@ void AgentServerMsgMgr::OnReceiveMsgLogRavitaillementChangeQuotaAck( const sword
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLogSupplyPushFlowAck( const sword::LogSupplyPushFlowAck& message, unsigned long )
 {
-    CheckAcknowledge( logger_, message.ack(), "LogSupplyPushFlowAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -569,7 +563,7 @@ void AgentServerMsgMgr::OnReceiveLogSupplyPushFlowAck( const sword::LogSupplyPus
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLogSupplyPullFlowAck( const sword::LogSupplyPullFlowAck& message, unsigned long )
 {
-    CheckAcknowledge( logger_, message.ack(), "LogSupplyPullFlowAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 //-----------------------------------------------------------------------------
@@ -586,8 +580,8 @@ void AgentServerMsgMgr::OnReceiveUnitPathFind( const sword::UnitPathFind& messag
 // Created: NLD 2003-03-05
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveUnitMagicActionAck( const sword::UnitMagicActionAck& message, unsigned long /*nCtx*/ )
-{
-    CheckAcknowledge( logger_, message, "UnitMagicActionAck" );
+{ 
+    CheckAcknowledge( logger_, message );
 }
 
 //-----------------------------------------------------------------------------
@@ -596,7 +590,7 @@ void AgentServerMsgMgr::OnReceiveUnitMagicActionAck( const sword::UnitMagicActio
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveObjectMagicActionAck( const sword::ObjectMagicActionAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message, "ObjectMagicActionAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -605,7 +599,7 @@ void AgentServerMsgMgr::OnReceiveObjectMagicActionAck( const sword::ObjectMagicA
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMagicActionAck( const sword::MagicActionAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message, "MagicActionAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -614,7 +608,7 @@ void AgentServerMsgMgr::OnReceiveMagicActionAck( const sword::MagicActionAck& me
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveControlMeteoGlobalAck()
 {
-    CheckAcknowledge( logger_, "ControlGlobalMeteoAck" );
+    LogAcknowledge( logger_, "ControlGlobalMeteoAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -623,7 +617,7 @@ void AgentServerMsgMgr::OnReceiveControlMeteoGlobalAck()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveControlMeteoLocalAck()
 {
-    CheckAcknowledge( logger_, "ControlLocalMeteoAck" );
+    LogAcknowledge( logger_, "ControlLocalMeteoAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -695,7 +689,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveEnd( const sword::ControlCheck
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSetFrequencyAck()
 {
-    CheckAcknowledge( logger_, "ControlCheckPointSetFrequencyAck" );
+    LogAcknowledge( logger_, "ControlCheckPointSetFrequencyAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -704,7 +698,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSetFrequencyAck()
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 {
-    CheckAcknowledge( logger_, "ControlCheckPointSetSaveNowAck" );
+    LogAcknowledge( logger_, "ControlCheckPointSetSaveNowAck" );
 }
 
 //=============================================================================
@@ -717,7 +711,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLimitCreationRequestAck( const sword::LimitCreationRequestAck& message)
 {
-    CheckAcknowledge( logger_, message, "LimitCreationAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 //-----------------------------------------------------------------------------
@@ -726,7 +720,7 @@ void AgentServerMsgMgr::OnReceiveLimitCreationRequestAck( const sword::LimitCrea
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLimitUpdateRequestAck( const sword::LimitUpdateRequestAck& message)
 {
-    CheckAcknowledge( logger_, message, "LimitUpdateAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 //-----------------------------------------------------------------------------
@@ -735,7 +729,7 @@ void AgentServerMsgMgr::OnReceiveLimitUpdateRequestAck( const sword::LimitUpdate
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLimitDestructionRequestAck( const sword::LimitDestructionRequestAck& message)
 {
-    CheckAcknowledge( logger_, message, "LimitDestructionAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 //-----------------------------------------------------------------------------
@@ -744,7 +738,7 @@ void AgentServerMsgMgr::OnReceiveLimitDestructionRequestAck( const sword::LimitD
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLimaCreationRequestAck( const sword::PhaseLineCreationAck& message)
 {
-    CheckAcknowledge( logger_, message, "LimaCreationAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 //-----------------------------------------------------------------------------
@@ -753,7 +747,7 @@ void AgentServerMsgMgr::OnReceiveLimaCreationRequestAck( const sword::PhaseLineC
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLimaUpdateRequestAck( const sword::PhaseLineUpdateRequestAck& message)
 {
-    CheckAcknowledge( logger_, message, "LimaUpdateAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 //-----------------------------------------------------------------------------
@@ -762,7 +756,7 @@ void AgentServerMsgMgr::OnReceiveLimaUpdateRequestAck( const sword::PhaseLineUpd
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveLimaDestructionRequestAck( const sword::PhaseLineDestructionRequestAck& message)
 {
-    CheckAcknowledge( logger_, message, "LimaDestructionAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 //-----------------------------------------------------------------------------
@@ -836,17 +830,19 @@ void AgentServerMsgMgr::OnReceiveOrderAck( const sword::TaskCreationRequestAck& 
 {
     if( message.tasker().has_automat() )
     {
-        if( CheckAcknowledge( logger_, message, "AutomatOrderAck" ) )
-            GetModel().agents_.GetAutomat( message.tasker().automat().id() ).Update( message );
+        Automat_ABC& automat = GetModel().agents_.GetAutomat( message.tasker().automat().id() );
+        if( CheckAcknowledge( logger_, automat, message ) )
+            automat.Update( message );
     }
     else if( message.tasker().has_unit() )
     {
-        if( CheckAcknowledge( logger_, message, "UnitOrderAck" ) )
-            GetModel().agents_.GetAgent( message.tasker().unit().id() ).Update( message );
+        Agent_ABC& agent = GetModel().agents_.GetAgent( message.tasker().unit().id() );
+        if( CheckAcknowledge( logger_, agent, message ) )
+            agent.Update( message );
     }
     else if ( message.tasker().has_crowd() )
     {
-        CheckAcknowledge( logger_, message, "PopulationOrderAck" );
+        CheckAcknowledge( logger_, GetModel().agents_.GetPopulation( message.tasker().crowd().id() ), message );
     }
 }
 
@@ -865,7 +861,7 @@ void AgentServerMsgMgr::OnReceiveUnitOrder( const sword::UnitOrder& message )
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveFragOrderAck( const sword::FragOrderAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message, "FragOrderAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -888,7 +884,7 @@ void AgentServerMsgMgr::OnReceiveFragOrder( const sword::FragOrder& message )
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveUnitCreationRequestAck( const sword::UnitCreationRequestAck& message )
 {
-    CheckAcknowledge( logger_, message.error(), "UnitCreationRequestAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 namespace
@@ -949,7 +945,7 @@ void AgentServerMsgMgr::OnReceiveMsgDecisionalState( const sword::DecisionalStat
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveSetAutomatModeAck( const sword::SetAutomatModeAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message, "SetAutomatModeAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -958,7 +954,7 @@ void AgentServerMsgMgr::OnReceiveSetAutomatModeAck( const sword::SetAutomatModeA
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveUnitChangeSuperiorAck( const sword::UnitChangeSuperiorAck& message, unsigned long )
 {
-    CheckAcknowledge( logger_, message, "UnitChangeSuperiorAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -976,7 +972,7 @@ void AgentServerMsgMgr::OnReceiveUnitChangeSuperior( const sword::UnitChangeSupe
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveChangeDiplomacyAck( const sword::ChangeDiplomacyAck& message, unsigned long )
 {
-    if( CheckAcknowledge( logger_, message, "ChangeDiplomacyAck" ) )
+    if( CheckAcknowledge( logger_, message ) )
         GetModel().teams_.GetTeam( message.party1().id() ).Update( message );
 }
 
@@ -995,7 +991,7 @@ void AgentServerMsgMgr::OnReceiveAutomatChangeSuperior( const sword::AutomatChan
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveAutomatChangeSuperiorAck( const sword::AutomatChangeSuperiorAck& message, unsigned long )
 {
-    CheckAcknowledge( logger_, message, "AutomatChangeSuperiorAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1013,7 +1009,7 @@ void AgentServerMsgMgr::OnReceiveAutomatChangeKnowledgeGroup( const sword::Autom
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveAutomatChangeKnowledgeGroupAck( const sword::AutomatChangeKnowledgeGroupAck& message, unsigned long )
 {
-    CheckAcknowledge( logger_, message, "AutomatChangeKnowledgeGroupAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1034,7 +1030,7 @@ void AgentServerMsgMgr::OnReceiveAutomatChangeLogisticLinks( const sword::Change
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveAutomatChangeLogisticLinksAck( const sword::ChangeLogisticLinksAck& message, unsigned long )
 {
-    CheckAcknowledge( logger_, message, "AutomatChangeLogisticLinksAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1403,7 +1399,7 @@ void AgentServerMsgMgr::OnCrowdFlowUpdate( const sword::CrowdFlowUpdate& message
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveCrowdMagicActionAck( const sword::CrowdMagicActionAck& message, unsigned long )
 {
-    CheckAcknowledge( logger_, message, "PopulationMagicActionAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1475,7 +1471,7 @@ void AgentServerMsgMgr::OnReceiveIntelligenceDestruction( const sword::Intellige
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveIntelligenceCreationRequestAck( const sword::IntelligenceCreationRequestAck& message )
 {
-    CheckAcknowledge( logger_, message, "IntelligenceCreationRequestAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1484,7 +1480,7 @@ void AgentServerMsgMgr::OnReceiveIntelligenceCreationRequestAck( const sword::In
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveIntelligenceUpdateRequestAck( const sword::IntelligenceUpdateRequestAck& message )
 {
-    CheckAcknowledge( logger_, message, "IntelligenceUpdateRequestAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1493,7 +1489,7 @@ void AgentServerMsgMgr::OnReceiveIntelligenceUpdateRequestAck( const sword::Inte
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveIntelligenceDestructionRequestAck( const sword::IntelligenceDestructionRequestAck& message )
 {
-    CheckAcknowledge( logger_, message, "IntelligenceDestructionRequestAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1529,7 +1525,7 @@ void AgentServerMsgMgr::OnReceiveShapeDestruction( const sword::ShapeDestruction
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveShapeCreationRequestAck( const sword::ShapeCreationRequestAck& message )
 {
-    CheckAcknowledge( logger_, message, "ShapeCreationRequestAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1538,7 +1534,7 @@ void AgentServerMsgMgr::OnReceiveShapeCreationRequestAck( const sword::ShapeCrea
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveShapeUpdateRequestAck( const sword::ShapeUpdateRequestAck& message )
 {
-    CheckAcknowledge( logger_, message, "ShapeUpdateRequestAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1547,7 +1543,7 @@ void AgentServerMsgMgr::OnReceiveShapeUpdateRequestAck( const sword::ShapeUpdate
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveShapeDestructionRequestAck( const sword::ShapeDestructionRequestAck& message )
 {
-    CheckAcknowledge( logger_, message, "ShapeDestructionRequestAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1583,7 +1579,7 @@ void AgentServerMsgMgr::OnReceiveNoteDestruction( const sword::MarkerDestruction
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveActionCreateFireOrderAck( const sword::ActionCreateFireOrderAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message.error_code(), "CreateFireOrderAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1659,7 +1655,7 @@ void AgentServerMsgMgr::OnReceiveUrbanDetection( const sword::UrbanDetection& me
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveKnowledgeGroupMagicActionAck( const sword::KnowledgeGroupMagicActionAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message, "KnowledgeGroupMagicActionAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1668,7 +1664,7 @@ void AgentServerMsgMgr::OnReceiveKnowledgeGroupMagicActionAck( const sword::Know
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveKnowledgeGroupUpdateAck( const sword::KnowledgeGroupUpdateAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message, "KnowledgeGroupUpdateAck" );
+    CheckAcknowledge( logger_, message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1686,7 +1682,7 @@ void AgentServerMsgMgr::OnReceiveKnowledgeGroupUpdate( const sword::KnowledgeGro
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveKnowledgeGroupCreationAck( const sword::KnowledgeGroupCreationAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message, "KnowledgeGroupCreationAck" );
+    CheckAcknowledge( logger_, message );
 }
 // LTO end
 
@@ -2189,6 +2185,23 @@ void AgentServerMsgMgr::SetElements( Model& model, Profile& profile )
 {
     model_ = &model;
     profile_ = &profile;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::GetModel
+// Created: SBO 2006-07-06
+// -----------------------------------------------------------------------------
+kernel::Entity_ABC& AgentServerMsgMgr::GetTasker( const sword::Tasker& tasker ) const
+{
+    if( tasker.has_automat() )
+        return GetModel().agents_.GetAutomat( tasker.automat().id() );
+    else if( tasker.has_unit() )
+        return GetModel().agents_.GetAgent( tasker.unit().id() );
+    else if( tasker.has_crowd() )
+        return GetModel().agents_.GetPopulation( tasker.crowd().id() );
+    else if( tasker.has_formation() )
+        return GetModel().teams_.GetFormation( tasker.formation().id() );
+    throw std::runtime_error( "Invalid tasker type" );
 }
 
 // -----------------------------------------------------------------------------

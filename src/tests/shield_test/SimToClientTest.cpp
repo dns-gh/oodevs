@@ -54,7 +54,7 @@ BOOST_FIXTURE_TEST_CASE( set_automat_mode_ack_to_client_is_converted, ContextFix
 
 BOOST_FIXTURE_TEST_CASE( unit_creation_request_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_unit_creation_request_ack()->set_error( sword::UnitActionAck::error_invalid_unit );
+    content.mutable_unit_creation_request_ack()->set_error_code( sword::UnitActionAck::error_invalid_unit );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { unit_creation_request_ack { error: error_invalid_unit } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
@@ -129,21 +129,21 @@ BOOST_FIXTURE_TEST_CASE( unit_change_superior_ack_to_client_is_converted, Contex
 
 BOOST_FIXTURE_TEST_CASE( log_supply_push_flow_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_log_supply_push_flow_ack()->set_ack( sword::LogSupplyPushFlowAck::error_invalid_supplier );
+    content.mutable_log_supply_push_flow_ack()->set_error_code( sword::LogSupplyPushFlowAck::error_invalid_supplier );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_push_flow_ack { ack: error_invalid_donneur_pushflow } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( log_supply_pull_flow_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_log_supply_pull_flow_ack()->set_ack( sword::LogSupplyPullFlowAck::error_invalid_supplier );
+    content.mutable_log_supply_pull_flow_ack()->set_error_code( sword::LogSupplyPullFlowAck::error_invalid_supplier );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_pull_flow_ack { ack: error_invalid_provider_pullflow } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 
 BOOST_FIXTURE_TEST_CASE( log_supply_change_quotas_ack_to_client_is_converted, ContextFixture< sword::SimToClient > )
 {
-    content.mutable_log_supply_change_quotas_ack()->set_ack( sword::LogSupplyChangeQuotasAck::error_invalid_supplier );
+    content.mutable_log_supply_change_quotas_ack()->set_error_code( sword::LogSupplyChangeQuotasAck::error_invalid_supplier );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_change_quotas_ack { ack: error_invalid_donneur_quotas } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }

@@ -157,7 +157,7 @@ BOOST_FIXTURE_TEST_CASE( message_sent_from_simulation_is_received_on_client, Fix
     {
         sword::SimToClient msg;
         msg.set_context( 77 );
-        msg.mutable_message()->mutable_unit_creation_request_ack()->set_error( sword::UnitActionAck::error_invalid_unit );
+        msg.mutable_message()->mutable_unit_creation_request_ack()->set_error_code( sword::UnitActionAck::error_invalid_unit );
         server.Send( server.host, msg );
     }
     bool received = false;

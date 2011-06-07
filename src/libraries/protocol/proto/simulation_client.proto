@@ -101,7 +101,7 @@ message UnitActionAck {
     @todo rename to AgentCreationRequestAck
 */
 message UnitCreationRequestAck {
-    required UnitActionAck.ErrorCode error = 1; //!< Reason for the failure of the agent creation operation @see UnitActionAck.ErrorCode
+    required UnitActionAck.ErrorCode error_code = 1; //!< Reason for the failure of the agent creation operation @see UnitActionAck.ErrorCode
 }
 
 /** @struct UnitMagicActionAck
@@ -282,7 +282,7 @@ message LogSupplyPushFlowAck {
         error_invalid_supplier = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found
         error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
     }
-    optional ErrorCode ack = 1; //!< Reason for the failure of the request @see ErrorCode @todo rename to error_code
+    optional ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
 }
 
 /** @struct LogSupplyPullFlowAck
@@ -299,7 +299,7 @@ message LogSupplyPullFlowAck {
         error_invalid_supplier = 1; //!< Operation failed because no existing supplying automat with the provided identifier could be found
         error_invalid_receiver = 2; //!< Operation failed because no existing receiving automat with the provided identifier could be found
     }
-    optional ErrorCode ack = 1; //!< Reason for the failure of the request @see ErrorCode @todo rename to error_code
+    optional ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
 }
 
 /** @struct LogSupplyChangeQuotasAck
@@ -321,7 +321,7 @@ message LogSupplyChangeQuotasAck {
         */
         error_invalid_dotation = 3;
     }
-    optional ErrorCode ack = 1; //!< Reason for the failure of the request @see ErrorCode @todo rename to error_code
+    optional ErrorCode error_code = 1; //!< Reason for the failure of the request @see ErrorCode
 }
 
 /** @struct ActionCreateFireOrderAck
