@@ -315,6 +315,12 @@ void NotesModel::UpdateTime( const std::string& message )
     currentTime_ = boost::posix_time::to_simple_string( boost::posix_time::from_iso_string( message ) );
 }
 
+namespace directia
+{
+    void UsedByDIA( NotesModel* ) {}
+    void ReleasedByDIA( NotesModel* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: NotesModel::RegisterIn
 // Created: SBO 2011-05-02
