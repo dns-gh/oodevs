@@ -29,7 +29,6 @@ TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& c
     : controllers_( controllers )
     , options_    ( controllers_.options_ )
     , type_       ( xis.attribute< std::string >( "type" ) )
-    , name_       ( xis.attribute< std::string >( "name" ) )
     , shown_      ( true )
 {
     std::string color;
@@ -55,7 +54,7 @@ TerrainPreference::~TerrainPreference()
 void TerrainPreference::Display( QWidget* parent )
 {
     QHBox* pBox = new QHBox( parent );
-    showCheckbox_ = new QCheckBox( ENT_Tr::ConvertFromLocation( ENT_Tr::ConvertToLocation( name_ ), ENT_Tr::eToTr ).c_str(), pBox );
+    showCheckbox_ = new QCheckBox( ENT_Tr::ConvertFromLocation( ENT_Tr::ConvertToLocation( type_ ), ENT_Tr::eToTr ).c_str(), pBox );
     showCheckbox_->setChecked( shown_ );
     pBox->setStretchFactor( showCheckbox_, 2 );
     sizeButton_  = new SizeButton ( pBox, tools::translate( "gui::TerrainPreference", " " ), lineWidth_ );
