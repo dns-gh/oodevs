@@ -235,3 +235,47 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_serializes_all_aggregated_agent_attributes_a
     MOCK_EXPECT( rtiAmbassador, UpdateAttributeValues ).once().with( 42u, boost::bind( &CheckAttributes, _1, attributes ), mock::any );
     facade.Step();
 }
+
+namespace
+{
+    class SteppedFixture : public AgentFixture
+    {
+    public:
+        SteppedFixture()
+        {
+            BOOST_REQUIRE( eventListener );
+            MOCK_EXPECT( rtiAmbassador, NextEventRequestAvailable ).once();
+            MOCK_EXPECT( rtiAmbassador, UpdateAttributeValues ).once();
+            facade.Step();
+        }
+    };
+}
+
+BOOST_FIXTURE_TEST_CASE( hla_plugin_spatial_changed_event_is_serialized, SteppedFixture )
+{
+    eventListener->SpatialChanged( 1., 2., 3., 4., 5. );
+    const std::vector< std::string > attributes = boost::assign::list_of( "Spatial" );
+    MOCK_EXPECT( rtiAmbassador, NextEventRequestAvailable ).once();
+    MOCK_EXPECT( rtiAmbassador, UpdateAttributeValues ).once().with( 42u, boost::bind( &CheckAttributes, _1, attributes ), mock::any );
+    facade.Step();
+}
+
+BOOST_FIXTURE_TEST_CASE( hla_plugin_formation_changed_event_is_serialized, SteppedFixture )
+{
+    eventListener->FormationChanged( true );
+    const std::vector< std::string > attributes = boost::assign::list_of( "Dimensions" )
+                                                                        ( "Formation" );
+    MOCK_EXPECT( rtiAmbassador, NextEventRequestAvailable ).once();
+    MOCK_EXPECT( rtiAmbassador, UpdateAttributeValues ).once().with( 42u, boost::bind( &CheckAttributes, _1, attributes ), mock::any );
+    facade.Step();
+}
+
+BOOST_FIXTURE_TEST_CASE( hla_plugin_equipment_changed_event_is_serialized, SteppedFixture )
+{
+    eventListener->EquipmentChanged( 1u, 2u );
+    const std::vector< std::string > attributes = boost::assign::list_of( "NumberOfSilentEntities" )
+                                                                        ( "SilentEntities" );
+    MOCK_EXPECT( rtiAmbassador, NextEventRequestAvailable ).once();
+    MOCK_EXPECT( rtiAmbassador, UpdateAttributeValues ).once().with( 42u, boost::bind( &CheckAttributes, _1, attributes ), mock::any );
+    facade.Step();
+}

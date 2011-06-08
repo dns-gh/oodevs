@@ -36,7 +36,7 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier&
     , force_             ( force )
     , type_              ( type )
     , formationChanged_  ( false )
-    , dimensionsChanged_  ( false )
+    , dimensionsChanged_ ( false )
     , isOnRoad_          ( false )
     , spatialChanged_    ( true )
     , pSpatial_          ( 0 )
