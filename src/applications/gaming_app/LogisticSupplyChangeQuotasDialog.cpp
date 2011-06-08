@@ -382,7 +382,7 @@ void LogisticSupplyChangeQuotasDialog::AddDotation( const SupplyStates& states )
 // Name: LogisticSupplyChangeQuotasDialog::OnValueChanged
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int col )
+void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int /*col*/ )
 {
     const Entity_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !agent )

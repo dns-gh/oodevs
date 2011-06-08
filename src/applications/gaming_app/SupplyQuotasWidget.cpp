@@ -18,14 +18,14 @@ using namespace kernel;
 // Name: SupplyQuotasWidget constructor
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
-SupplyQuotasWidget::SupplyQuotasWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
+SupplyQuotasWidget::SupplyQuotasWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& /*factory*/ )
     : QVBox       ( parent )
     , controllers_( controllers )
 {
     controllers_.Register( *this );
 
     QHBox* test = new QHBox( (QVBox*)this );
-    QLabel* label = new QLabel( tr( "Logistic superior" ), test );
+    /*QLabel* label =*/ new QLabel( tr( "Logistic superior" ), test );
     //label->setMaximumWidth( 150 );
     superior_ = new ValuedComboBox< const Entity_ABC* >( test );
     superior_->setMinimumWidth( 200 );
