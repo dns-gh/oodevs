@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MeteoDataManager.h"
-#include "meteo/PHY_GlobalMeteo.h"
 #include "meteo/PHY_LocalMeteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -19,8 +18,6 @@
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
-
-MIL_IDManager PHY_MeteoDataManager::idManager_;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
@@ -60,8 +57,6 @@ void PHY_MeteoDataManager::Initialize( xml::xistream& xis, MIL_Config& config )
 PHY_MeteoDataManager::~PHY_MeteoDataManager()
 {
     delete pRawData_;
-    pGlobalMeteo_->DecRef();
-    assert( meteos_.size() == 1 );
     weather::PHY_Lighting::Terminate();
     weather::PHY_Precipitation::Terminate();
 }
@@ -73,10 +68,8 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_ = new PHY_GlobalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase() );
-    pGlobalMeteo_->IncRef();
-    pGlobalMeteo_->SetListener( this );
-    RegisterMeteo( *pGlobalMeteo_ );
+    pGlobalMeteo_ = new PHY_GlobalMeteo( 0, xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() );
+    AddMeteo( *pGlobalMeteo_ );
     xis >> xml::end;
 }
 
@@ -98,7 +91,8 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 {
-    RegisterMeteo( *new PHY_LocalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase() ) );
+    static unsigned int localCounter = 1;
+    AddMeteo( *new PHY_LocalMeteo( localCounter++, xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +111,20 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg )
     }
     else if( msg.type() == sword::MagicAction::local_weather )
     {
-        RegisterMeteo( *new PHY_LocalMeteo( idManager_.GetFreeId(), msg.parameters(), this ) );
+        const sword::MissionParameter& idParameter = msg.parameters().elem( 7 );
+        if( idParameter.value_size() != 1 || !idParameter.value().Get( 0 ).has_identifier() )
+            throw std::exception( "Local Meteo : bad ID parameter" );
+        unsigned int id = idParameter.value().Get( 0 ).identifier();
+        bool founded = false;
+        for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+            if( ( *it )->GetId() == id )
+            {
+                static_cast< PHY_LocalMeteo* >( ( *it ).get() )->Update( msg.parameters() );
+                founded = true;
+                break;
+            }
+        if( !founded )
+            AddMeteo( *new PHY_LocalMeteo( id, msg.parameters(), pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() ) );
         client::ControlLocalWeatherAck replyMsg;
         replyMsg.Send( NET_Publisher_ABC::Publisher() );
     }
@@ -155,10 +162,10 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "Ephemeris is now: %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
         for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
-            (*it)->Update( pEphemeride_->GetLightingBase() );
+            static_cast< weather::Meteo* >( ( *it ).get() )->Update( pEphemeride_->GetLightingBase() );
     }
     for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
-        (*it)->UpdateMeteoPatch( date, *pRawData_ );
+        static_cast< weather::Meteo* >( ( *it ).get() )->UpdateMeteoPatch( date, *pRawData_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,5 +175,5 @@ void PHY_MeteoDataManager::Update( unsigned int date )
 void PHY_MeteoDataManager::SendStateToNewClient()
 {
     for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
-      (*it)->SendCreation();
+      static_cast< weather::Meteo* >( ( *it ).get() )->SendCreation();
 }

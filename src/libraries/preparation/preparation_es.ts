@@ -305,13 +305,6 @@
     </message>
 </context>
 <context>
-    <name>LocalWeather</name>
-    <message>
-        <source>Local weather %1</source>
-        <translation>Clima local %1</translation>
-    </message>
-</context>
-<context>
     <name>LodgingAttribute</name>
     <message>
         <source>Info/Lodging attributes/Capacity</source>

@@ -3080,35 +3080,18 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>WeatherCreationPanel</name>
+    <name>WeatherListView</name>
     <message>
-        <source>Weathers</source>
-        <translation>Météos</translation>
+        <source>Add</source>
+        <translation>Ajouter</translation>
     </message>
     <message>
-        <source>Weather</source>
-        <translation>Météo</translation>
+        <source>Local weather </source>
+        <translation>Météo locale </translation>
     </message>
-    <message>
-        <source>Time and Position Parameters</source>
-        <translation>Paramètres de temps et de position</translation>
-    </message>
-    <message>
-        <source>Start time:</source>
-        <translation>Heure de début:</translation>
-    </message>
-    <message>
-        <source>End time:</source>
-        <translation>Heure de fin:</translation>
-    </message>
-    <message>
-        <source>Set as global weather</source>
-        <translation>Définir en météo globale</translation>
-    </message>
-    <message>
-        <source>Set location</source>
-        <translation>Définir la localisation</translation>
-    </message>
+</context>
+<context>
+    <name>WeatherPanel</name>
     <message>
         <source>Change Global Weather</source>
         <translation>Changement de météo globale</translation>
@@ -3117,20 +3100,13 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Change Local Weather</source>
         <translation>Changement de météo locale</translation>
     </message>
-</context>
-<context>
-    <name>WeatherWidget</name>
     <message>
-        <source>Clouds floor/ceiling/density:</source>
-        <translation>Plancher/plafond/densité nuages:</translation>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
     </message>
     <message>
-        <source>Weather type:</source>
-        <translation>Type de temps:</translation>
-    </message>
-    <message>
-        <source>Wind speed/direction:</source>
-        <translation>Vitesse/direction du vent:</translation>
+        <source>Invalid local weather %1, please correct time or position settings</source>
+        <translation>Météo locale invalide %1, merci de corriger les paramètres de temps ou de position</translation>
     </message>
 </context>
 <context>

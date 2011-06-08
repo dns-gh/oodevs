@@ -117,8 +117,8 @@ UserProfileDialog.cpp \
 UserProfileList.cpp \
 UserProfileRights_ABC.cpp \
 UserProfileWidget.cpp \
-WeatherCreationPanel.cpp \
-WeatherWidget.cpp \
+WeatherListView.cpp \
+WeatherPanel.cpp \
 main.cpp \
 
 TRANSLATIONS = gaming_app_fr.ts gaming_app_es.ts

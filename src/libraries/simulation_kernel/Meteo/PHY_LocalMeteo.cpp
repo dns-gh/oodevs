@@ -26,9 +26,11 @@ namespace bpt = boost::posix_time;
 // Name: PHY_LocalMeteo constructor
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light )
-    : PHY_Meteo( id, xis, light, MIL_AgentServer::GetWorkspace().GetTimeStepDuration() )
+PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, unsigned int timeStep )
+    : Meteo( id, xis, &light, timeStep )
     , bIsPatched_( false )
+    , startTime_ ( 0 )
+    , endTime_   ( 0 )
 {
     std::string strStartTime, strEndTime, strTopLeftPos, strTopRightPos;
     xis >> xml::attribute( "start-time", strStartTime )
@@ -45,26 +47,14 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weath
 // Name: PHY_LocalMeteo constructor
 // Created: JSR 2010-04-12
 // -----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& msg, weather::MeteoManager_ABC* list )
-    : PHY_Meteo( id, msg, list, MIL_AgentServer::GetWorkspace().GetTimeStepDuration() )
+PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& msg, const weather::PHY_Lighting& light, unsigned int timeStep )
+    : Meteo( id, msg, light, timeStep )
     , bIsPatched_( false )
+    , startTime_ ( 0 )
+    , endTime_   ( 0 )
 {
-    const sword::MissionParameter& startTime = msg.elem( 7 );
-    if( startTime.value_size() != 1 || !startTime.value().Get(0).has_datetime() )
-        throw std::exception( "Meteo : bad attribute for StartTime" );
-    startTime_ = ( bpt::from_iso_string( startTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
-    const sword::MissionParameter& endTime = msg.elem( 8 );
-    if( endTime.value_size() != 1 || !endTime.value().Get(0).has_datetime() )
-        throw std::exception( "Meteo : bad attribute for EndTime" );
-    endTime_ = ( bpt::from_iso_string( endTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
-    const sword::MissionParameter& location = msg.elem( 9 );
-    if( location.value_size() != 1 || !location.value().Get(0).has_location() )
-        throw std::exception( "Meteo : bad attribute for Location" );
-    NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 0 ), upLeft_    );
-    NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 1 ), downRight_ );
-    isChanged_ = false;
+    LocalUpdate( msg );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_LocalMeteo destructor
@@ -73,6 +63,41 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const sword::MissionParameters&
 PHY_LocalMeteo::~PHY_LocalMeteo()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LocalMeteo::Update
+// Created: ABR 2011-06-08
+// -----------------------------------------------------------------------------
+void PHY_LocalMeteo::Update( const sword::MissionParameters& msg )
+{
+    Meteo::Update( msg );
+    LocalUpdate( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LocalMeteo::LocalUpdate
+// Created: ABR 2011-06-08
+// -----------------------------------------------------------------------------
+void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg )
+{
+    const sword::MissionParameter& startTime = msg.elem( 8 );
+    if( startTime.value_size() != 1 || !startTime.value().Get(0).has_datetime() )
+        throw std::exception( "Meteo : bad attribute for StartTime" );
+    int startTimeTmp = ( bpt::from_iso_string( startTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
+    if( startTimeTmp > startTime_ )
+        startTime_ = startTimeTmp;
+    const sword::MissionParameter& endTime = msg.elem( 9 );
+    if( endTime.value_size() != 1 || !endTime.value().Get(0).has_datetime() )
+        throw std::exception( "Meteo : bad attribute for EndTime" );
+    int endTimeTmp = ( bpt::from_iso_string( endTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
+    if( endTimeTmp > endTime_ )
+        endTime_ = endTimeTmp;
+    const sword::MissionParameter& location = msg.elem( 10 );
+    if( location.value_size() != 1 || !location.value().Get(0).has_location() )
+        throw std::exception( "Meteo : bad attribute for Location" );
+    NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 0 ), upLeft_    );
+    NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 1 ), downRight_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,16 +111,16 @@ void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC&
     {
         dataVision.RegisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_), this );
         bIsPatched_ = true;
-        isChanged_ = true;
+        modified_ = true;
     }
     else if( bIsPatched_ && !bNeedToBePatched )
     {
-        dataVision.UnregisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_), this );
+        dataVision.UnregisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_) );
         bIsPatched_ = false;
-        isChanged_ = false;
+        modified_ = false;
         SendDestruction();
     }
-    PHY_Meteo::UpdateMeteoPatch( date, dataVision );
+    Meteo::UpdateMeteoPatch( date, dataVision );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,11 +132,11 @@ void PHY_LocalMeteo::SendCreation() const
     client::ControlLocalWeatherCreation msg;
     sword::WeatherAttributes* att = msg().mutable_attributes();
     msg().mutable_weather()->set_id( id_ );
-    att->set_wind_speed( static_cast< int >( wind_.rWindSpeed_ / conversionFactor_ ) );
-    NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
-    att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
-    att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( static_cast< int >( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
+    att->set_wind_speed( static_cast< int >( wind_.rSpeed_ / conversionFactor_ ) );
+    NET_ASN_Tools::WriteDirection(wind_.vDirection_, *(att->mutable_wind_direction()) );
+    att->set_cloud_floor ( cloud_.nFloor_ );
+    att->set_cloud_ceiling( cloud_.nCeiling_ );
+    att->set_cloud_density( cloud_.nDensityPercentage_ );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     att->set_lighting( pLighting_->GetAsnID() );

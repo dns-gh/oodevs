@@ -16,7 +16,7 @@
 #include "FirePropagationModifierCapacity.h"
 #include "simulation_terrain/TER_PathFindManager.h"
 #include "simulation_terrain/TER_World.h"
-#include "meteo/PHY_Meteo.h"
+#include "meteo/Meteo.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/Protocol.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
@@ -344,11 +344,11 @@ void MIL_BurningCells::PropagateIgnition( const MIL_BurningCellOrigin& fromOrigi
     if( const MIL_BurningCell* pCellFrom = FindCell( fromOrigin ) )
     {
         geometry::Vector2d direction( pCellFrom->center_, cellTo.center_ );
-        const weather::PHY_Meteo::sWindData& wind = MIL_Tools::GetWind( MT_Vector2D( pCellFrom->center_.X(), pCellFrom->center_.Y() ) );
-        if( wind.rWindSpeed_ > 0.0 )
+        const weather::Meteo::sWindData& wind = MIL_Tools::GetWind( MT_Vector2D( pCellFrom->center_.X(), pCellFrom->center_.Y() ) );
+        if( wind.rSpeed_ > 0.0 )
         {
-            double windDirectionScalarProduct = direction.CrossProduct( geometry::Vector2d( wind.vWindDirection_.rX_, wind.vWindDirection_.rY_ ) );
-            int ignitionTransfered = int( pCellFrom->currentHeat_ * timeElapsed * std::max( windDirectionScalarProduct, 0.0 ) / ( std::abs( windDirectionScalarProduct )+ wind.rWindSpeed_ ) );
+            double windDirectionScalarProduct = direction.CrossProduct( geometry::Vector2d( wind.vDirection_.rX_, wind.vDirection_.rY_ ) );
+            int ignitionTransfered = int( pCellFrom->currentHeat_ * timeElapsed * std::max( windDirectionScalarProduct, 0.0 ) / ( std::abs( windDirectionScalarProduct )+ wind.rSpeed_ ) );
             cellTo.ignitionEnergy_ += ignitionTransfered;
         }
     }

@@ -49,7 +49,8 @@ class DrawingsModel;
 class FireCreationPanel;
 class ObjectCreationPanel;
 class StaticModel;
-class WeatherCreationPanel;
+class WeatherLayer;
+class WeatherPanel;
 
 // =============================================================================
 /** @class  CreationPanels
@@ -65,7 +66,9 @@ class CreationPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& paramLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings, const tools::ExerciseConfig& config );
+    CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel,
+                    const kernel::Time_ABC& simulation, gui::ParametersLayer& paramLayer, ::WeatherLayer& weatherLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons,
+                    gui::ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings, const tools::ExerciseConfig& config );
     virtual ~CreationPanels();
     //@}
 
@@ -84,14 +87,14 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    gui::UnitsPanel* units_;
-    ObjectCreationPanel* objects_;
+    kernel::Controllers&     controllers_;
+    gui::UnitsPanel*         units_;
+    ObjectCreationPanel*     objects_;
     gui::IntelligencesPanel* intel_;
-    WeatherCreationPanel* weather_;
-    gui::PopulationsPanel* crowds_;
-    gui::DrawerPanel* drawings_;
-    FireCreationPanel* fires_;
+    WeatherPanel*            weather_;
+    gui::PopulationsPanel*   crowds_;
+    gui::DrawerPanel*        drawings_;
+    FireCreationPanel*       fires_;
     //@}
 };
 

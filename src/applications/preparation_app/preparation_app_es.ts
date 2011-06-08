@@ -531,25 +531,6 @@ Por favor seleccione un archivo de orden de batalla para importar.</translation>
     </message>
 </context>
 <context>
-    <name>LocalWeathersList</name>
-    <message>
-        <source>Local patch</source>
-        <translation>Zona local</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Agregar</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Borrar</translation>
-    </message>
-    <message>
-        <source>Time parameters or location are incorrect</source>
-        <translation>Parámetros de tiempo o de posición incorrectos</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>Tactical</source>
@@ -1620,85 +1601,45 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
     </message>
 </context>
 <context>
-    <name>WeatherPanel</name>
+    <name>WeatherListView</name>
     <message>
-        <source>Weather</source>
-        <translation>Clima</translation>
+        <source>Time parameters or location are incorrect</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exercise date:</source>
-        <translation>Fecha de ejercicio:</translation>
-    </message>
-    <message>
-        <source>Ephemerides</source>
-        <translation>Efemérides</translation>
-    </message>
-    <message>
-        <source>Sunrise:</source>
-        <translation>Salida de sol:</translation>
-    </message>
-    <message>
-        <source>Sunset:</source>
-        <translation>Puesta de sol:</translation>
-    </message>
-    <message>
-        <source>Global weather</source>
-        <translation>Clima global</translation>
-    </message>
-    <message>
-        <source>Local weather</source>
-        <translation>Clima local</translation>
-    </message>
-    <message>
-        <source>Weather parameters</source>
-        <translation>Parámetros de clima</translation>
-    </message>
-    <message>
-        <source>Set location</source>
-        <translation>Definir ubicación</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Grabar</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Time and Position Parameters</source>
-        <translation>Parámetros de tiempo y posición</translation>
-    </message>
-    <message>
-        <source>Start time:</source>
-        <translation>Tiempo de inicio:</translation>
-    </message>
-    <message>
-        <source>End time:</source>
-        <translation>Tiempo de finalización:</translation>
-    </message>
-    <message>
-        <source>Day lighting:</source>
-        <translation>Iluminación de día:</translation>
-    </message>
-    <message>
-        <source>Night lighting:</source>
-        <translation>Iluminación nocturna:</translation>
+        <source>Local weather </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>WeatherWidget</name>
+    <name>gui</name>
     <message>
-        <source>Clouds floor/ceiling/density:</source>
-        <translation>Capa de nubes/techo/densidad:</translation>
+        <source>Exercise date:</source>
+        <translation type="unfinished">Fecha de ejercicio:</translation>
     </message>
     <message>
-        <source>Weather type:</source>
-        <translation>Tipo de clima:</translation>
+        <source>Ephemerides</source>
+        <translation type="unfinished">Efemérides</translation>
     </message>
     <message>
-        <source>Wind direction/speed:</source>
-        <translation type="unfinished"></translation>
+        <source>Sunrise:</source>
+        <translation type="unfinished">Salida de sol:</translation>
+    </message>
+    <message>
+        <source>Sunset:</source>
+        <translation type="unfinished">Puesta de sol:</translation>
+    </message>
+    <message>
+        <source>Day lighting:</source>
+        <translation type="unfinished">Iluminación de día:</translation>
+    </message>
+    <message>
+        <source>Night lighting:</source>
+        <translation type="unfinished">Iluminación nocturna:</translation>
+    </message>
+    <message>
+        <source>Weather parameters</source>
+        <translation type="unfinished">Parámetros de clima</translation>
     </message>
 </context>
 <context>

@@ -17,17 +17,14 @@
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: WeatherLayer constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-WeatherLayer::WeatherLayer( Controllers& controllers, const GlTools_ABC& tools, gui::TerrainPicker& picker, const MeteoModel& meteoModel )
-    : picker_ ( picker )
+WeatherLayer::WeatherLayer( kernel::GlTools_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy, kernel::Controllers& controllers, const MeteoModel& meteoModel, gui::TerrainPicker& picker )
+    : gui::WeatherLayer( tools, eventStrategy )
     , controllers_( controllers )
-    , tools_( tools )
-    , meteoModel_( meteoModel )
+    , meteoModel_ ( meteoModel )
 {
     controllers_.Register( *this );
     picker.RegisterLayer( *this );
@@ -46,10 +43,11 @@ WeatherLayer::~WeatherLayer()
 // Name: WeatherLayer::Paint
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void WeatherLayer::Paint( const geometry::Rectangle2f& )
+void WeatherLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( !ShouldDrawPass() )
+    if( !ShouldDrawPass() || !displaying_ )
         return;
+    gui::WeatherLayer::Paint( viewport );
     glPushAttrib( GL_CURRENT_BIT );
         for( IT_Effects it = effects_.begin(); it != effects_.end(); ++it )
             (*it)->Draw( tools_ );
@@ -60,7 +58,7 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& )
 // Name: WeatherLayer::Pick
 // Created: HBD 2010-03-30
 // -----------------------------------------------------------------------------
-const weather::PHY_Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
+const weather::Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
 {
     for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it )
         if( (*it)->IsInside( terrainCoordinates ) )

@@ -10,7 +10,7 @@
 #ifndef __PHY_RawVisionData_h_
 #define __PHY_RawVisionData_h_
 
-#include "meteo/PHY_Meteo.h"
+#include "meteo/Meteo.h"
 #include "meteo/PHY_RawVisionData_ABC.h"
 
 namespace tools
@@ -51,7 +51,6 @@ public:
             : h       ( 0 )
             , dh      ( 0 )
             , e       ( 0 )
-            , pMeteo  ( 0 )
             , pEffects( 0 )
         {
             // NOTHING
@@ -61,7 +60,7 @@ public:
         envBits GetEnv() const             { return e; }
         const weather::PHY_Precipitation&    GetPrecipitation() const;
         const weather::PHY_Lighting&         GetLighting     () const;
-        const weather::PHY_Meteo::sWindData& GetWind         () const;
+        const weather::Meteo::sWindData& GetWind         () const;
 
         bool operator == ( const sCell& rhs ) const
         {
@@ -71,20 +70,20 @@ public:
         // $$$$ _RC_ JSR 2011-05-19: TODO à cleaner (virer le friend, rajouter des underscores...)
         friend class PHY_RawVisionData;
 
-        unsigned short h  : 16;     // hauteur du sol
-        unsigned char  dh : 8;      // hauteur de la planimétrie
-        envBits        e  : 8;      // champ de bit représentant l'environnement visuel statique
-        weather::PHY_Meteo* pMeteo; // météo locale
-        PHY_AmmoEffect* pEffects;   // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
+        unsigned short h  : 16;                         // hauteur du sol
+        unsigned char  dh : 8;                          // hauteur de la planimétrie
+        envBits        e  : 8;                          // champ de bit représentant l'environnement visuel statique
+        boost::shared_ptr< weather::Meteo > pMeteo; // météo locale
+        PHY_AmmoEffect* pEffects;                       // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
 
-        static const weather::PHY_Meteo* pGlobalMeteo_;
+        static const weather::Meteo* pGlobalMeteo_;
 
     };
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RawVisionData( weather::PHY_Meteo& globalMeteo, tools::WorldParameters& config );
+             PHY_RawVisionData( weather::Meteo& globalMeteo, tools::WorldParameters& config );
     virtual ~PHY_RawVisionData();
     //@}
 
@@ -105,7 +104,7 @@ public:
     envBits GetVisionObject( const MT_Vector2D& pos ) const;
     envBits GetVisionObject( double rX_, double rY_ ) const;
 
-    const weather::PHY_Meteo::sWindData& GetWind( const MT_Vector2D& vPos ) const;
+    const weather::Meteo::sWindData& GetWind( const MT_Vector2D& vPos ) const;
 
     void ModifyAltitude( const TER_Localisation& localisation, short heightOffset );
     double GetMinAltitude() const;
@@ -118,8 +117,8 @@ public:
     template< typename T >
     void GetVisionObjectsInSurface( const T& localisation, unsigned int& rEmptySurface, unsigned int& rForestSurface, unsigned int& rUrbanSurface ) const;
 
-    void RegisterMeteoPatch  ( const geometry::Point2d&, const geometry::Point2d&, weather::PHY_Meteo* );
-    void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d&, weather::PHY_Meteo* );
+    void RegisterMeteoPatch  ( const geometry::Point2d&, const geometry::Point2d&, weather::Meteo* );
+    void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d& );
 
     void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
     void UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );

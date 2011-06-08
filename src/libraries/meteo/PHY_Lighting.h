@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __PHY_Lighting_h_
-#define __PHY_Lighting_h_
+#ifndef __weather_PHY_Lighting_h_
+#define __weather_PHY_Lighting_h_
 
 #include "ENT/ENT_Enums_Gen.h"
 #include "MT_Tools/MT_String.h"
@@ -30,7 +30,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_Lighting* > T_LightingMap;
-    typedef T_LightingMap::const_iterator                                    CIT_LightingMap;
+    typedef T_LightingMap::const_iterator              CIT_LightingMap;
     //@}
 
 public:
@@ -87,4 +87,4 @@ private:
 
 }
 
-#endif // __PHY_Lighting_h_
+#endif // __weather_PHY_Lighting_h_

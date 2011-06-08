@@ -15,7 +15,7 @@
 MOCK_BASE_CLASS( MockPHY_RawVisionData_ABC, PHY_RawVisionData_ABC )
 {
     MOCK_METHOD( RegisterMeteoPatch, 3 );
-    MOCK_METHOD( UnregisterMeteoPatch, 3 );
+    MOCK_METHOD( UnregisterMeteoPatch, 2 );
 };
 
 #endif // __MockPHY_RawVisionData_ABC_h_

@@ -9,8 +9,8 @@
 //
 // *****************************************************************************
 
-#ifndef __PHY_Precipitation_h_
-#define __PHY_Precipitation_h_
+#ifndef __weather_PHY_Precipitation_h_
+#define __weather_PHY_Precipitation_h_
 
 #include "ENT/ENT_Enums_Gen.h"
 #include "protocol/ClientSenders.h"
@@ -86,4 +86,4 @@ private:
 
 }
 
-#endif // __PHY_Precipitation_h_
+#endif // __weather_PHY_Precipitation_h_

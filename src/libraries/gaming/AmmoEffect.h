@@ -13,7 +13,7 @@
 #include <boost/noncopyable.hpp>
 #include "MSEllipse.h"
 #include "protocol/Protocol.h"
-#include "meteo/PHY_Meteo.h"
+#include "meteo/Meteo.h"
 
 namespace kernel
 {
@@ -41,7 +41,7 @@ public:
     //@{
     virtual void Draw( const kernel::GlTools_ABC& tools ) const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
-    virtual const weather::PHY_Meteo& GetMeteo() const;
+    virtual const weather::Meteo& GetMeteo() const;
     //@}
 
 private:
@@ -51,7 +51,7 @@ private:
     unsigned long id_;
     sword::StartFireEffect::EnumFireEffectType type_;
     MSEllipse ellipse_;
-    weather::PHY_Meteo meteo_;
+    weather::Meteo meteo_;
     //@}
 };
 

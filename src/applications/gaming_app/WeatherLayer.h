@@ -10,7 +10,7 @@
 #ifndef __WeatherLayer_h_
 #define __WeatherLayer_h_
 
-#include "clients_gui/WeatherLayer_ABC.h"
+#include "clients_gui/WeatherLayer.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace kernel
@@ -22,6 +22,7 @@ namespace kernel
 namespace gui
 {
     class TerrainPicker;
+    class ExclusiveEventStrategy;
 }
 
 class AmmoEffect;
@@ -33,30 +34,24 @@ class MeteoModel;
 */
 // Created: AGE 2006-04-04
 // =============================================================================
-class WeatherLayer : public gui::WeatherLayer_ABC
+class WeatherLayer : public gui::WeatherLayer
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< AmmoEffect >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::TerrainPicker& picker, const MeteoModel& meteoModel );
+             WeatherLayer( kernel::GlTools_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy, kernel::Controllers& controllers, const MeteoModel& meteoModel, gui::TerrainPicker& picker );
     virtual ~WeatherLayer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void                      Paint( const geometry::Rectangle2f& );
-    virtual const weather::PHY_Meteo* Pick ( const geometry::Point2f& terrainCoordinates ) const;
+    virtual void                  Paint( const geometry::Rectangle2f& );
+    virtual const weather::Meteo* Pick ( const geometry::Point2f& terrainCoordinates ) const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    WeatherLayer( const WeatherLayer& );            //!< Copy constructor
-    WeatherLayer& operator=( const WeatherLayer& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const AmmoEffect& effect );
@@ -73,9 +68,7 @@ private:
 private:
     //! @name Member data
     //@{
-    gui::TerrainPicker&       picker_;
     kernel::Controllers& controllers_;
-    const kernel::GlTools_ABC& tools_;
     T_Effects effects_;
     const MeteoModel& meteoModel_;
     //@}

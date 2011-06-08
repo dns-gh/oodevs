@@ -3080,35 +3080,18 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
     </message>
 </context>
 <context>
-    <name>WeatherCreationPanel</name>
+    <name>WeatherListView</name>
     <message>
-        <source>Weathers</source>
-        <translation>Climas</translation>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Weather</source>
-        <translation>Clima</translation>
+        <source>Local weather </source>
+        <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Time and Position Parameters</source>
-        <translation>Parámetros de tiempo y posición</translation>
-    </message>
-    <message>
-        <source>Start time:</source>
-        <translation>Tiempo de inicio:</translation>
-    </message>
-    <message>
-        <source>End time:</source>
-        <translation>Tiempo de culminación:</translation>
-    </message>
-    <message>
-        <source>Set as global weather</source>
-        <translation>Definir como clima global</translation>
-    </message>
-    <message>
-        <source>Set location</source>
-        <translation>Definir ubicación</translation>
-    </message>
+</context>
+<context>
+    <name>WeatherPanel</name>
     <message>
         <source>Change Global Weather</source>
         <translation type="unfinished"></translation>
@@ -3117,19 +3100,12 @@ Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation
         <source>Change Local Weather</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>WeatherWidget</name>
     <message>
-        <source>Clouds floor/ceiling/density:</source>
-        <translation>Capa de nubes/techo/densidad:</translation>
+        <source>SWORD</source>
+        <translation type="unfinished">SWORD</translation>
     </message>
     <message>
-        <source>Weather type:</source>
-        <translation>Tipo de clima:</translation>
-    </message>
-    <message>
-        <source>Wind speed/direction:</source>
+        <source>Invalid local weather %1, please correct time or position settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

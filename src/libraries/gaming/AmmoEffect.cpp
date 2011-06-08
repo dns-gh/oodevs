@@ -25,7 +25,7 @@ AmmoEffect::AmmoEffect( const sword::StartFireEffect& message, Controller& contr
     , id_        ( message.fire_effect().id() )
     , type_      ( message.type() )
     , ellipse_   ( message.location(), converter )
-    , meteo_     ( weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_, tickDuration )
+    , meteo_     ( 0, weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_, tickDuration )
 {
     if( type_ == sword::WeatherAttributes::artificial_light )
         meteo_.Update( weather::PHY_Lighting::eclairant_ );
@@ -74,7 +74,7 @@ bool AmmoEffect::IsInside( const geometry::Point2f& point ) const
 // Name: AmmoEffect::GetMeteo
 // Created: HBD 2010-04-06
 // -----------------------------------------------------------------------------
-const weather::PHY_Meteo& AmmoEffect::GetMeteo() const
+const weather::Meteo& AmmoEffect::GetMeteo() const
 {
     return meteo_;
 }

@@ -3,24 +3,27 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
+#include "clients_gui_pch.h"
 #include "WeatherLayer.h"
-#include "preparation/LocalWeather.h"
+
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
-#include "meteo/PHY_Meteo.h"
+#include "meteo/MeteoLocal.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: WeatherLayer constructor
 // Created: SBO 2006-12-21
 // -----------------------------------------------------------------------------
-WeatherLayer::WeatherLayer( kernel::GlTools_ABC& tools, gui::ExclusiveEventStrategy& eventStrategy )
+WeatherLayer::WeatherLayer( kernel::GlTools_ABC& tools, ExclusiveEventStrategy& eventStrategy )
     : tools_( tools )
     , eventStrategy_( eventStrategy )
+    , displaying_( false )
     , firstPointSet_( false )
     , isEditing_( false )
     , currentWeather_( 0 )
@@ -43,19 +46,19 @@ WeatherLayer::~WeatherLayer()
 // -----------------------------------------------------------------------------
 void WeatherLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
 {
-    if( !ShouldDrawPass() )
+    if( !ShouldDrawPass() || !displaying_ )
         return;
     const geometry::Point2f topRight( bottomRight_.X(), topLeft_.Y() );
     const geometry::Point2f bottomLeft( topLeft_.X(), bottomRight_.Y() );
 
     // $$$$ SBO 2006-12-21: viewport
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glColor4f( 1, 0, 0, 0.5f );
-        glLineWidth( 5.f );
-        tools_.DrawLine( topLeft_, topRight );
-        tools_.DrawLine( topRight, bottomRight_ );
-        tools_.DrawLine( bottomRight_, bottomLeft );
-        tools_.DrawLine( bottomLeft, topLeft_ );
+    glColor4f( 1, 0, 0, 0.5f );
+    glLineWidth( 5.f );
+    tools_.DrawLine( topLeft_, topRight );
+    tools_.DrawLine( topRight, bottomRight_ );
+    tools_.DrawLine( bottomRight_, bottomLeft );
+    tools_.DrawLine( bottomLeft, topLeft_ );
     glPopAttrib();
 }
 
@@ -99,8 +102,9 @@ bool WeatherLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f&
 // Name: WeatherLayer::SetPosition
 // Created: SBO 2006-12-21
 // -----------------------------------------------------------------------------
-void WeatherLayer::SetPosition( const LocalWeather& weather )
+void WeatherLayer::SetPosition( const weather::MeteoLocal& weather )
 {
+    displaying_ = true;
     topLeft_ = weather.GetTopLeft();
     bottomRight_ = weather.GetBottomRight();
 }
@@ -109,7 +113,7 @@ void WeatherLayer::SetPosition( const LocalWeather& weather )
 // Name: WeatherLayer::EditPosition
 // Created: SBO 2006-12-21
 // -----------------------------------------------------------------------------
-void WeatherLayer::StartEdition( LocalWeather& weather )
+void WeatherLayer::StartEdition( weather::MeteoLocal& weather )
 {
     currentWeather_ = &weather;
     SetPosition( weather );
@@ -122,7 +126,16 @@ void WeatherLayer::StartEdition( LocalWeather& weather )
 // Name: WeatherLayer::Pick
 // Created: HBD 2010-04-06
 // -----------------------------------------------------------------------------
-const weather::PHY_Meteo* WeatherLayer::Pick( const geometry::Point2f& /*terrainCoordinates*/ ) const
+const weather::Meteo* WeatherLayer::Pick( const geometry::Point2f& /*terrainCoordinates*/ ) const
 {
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherLayer::Clear
+// Created: ABR 2011-06-07
+// -----------------------------------------------------------------------------
+void WeatherLayer::Clear()
+{
+    displaying_ = false;
 }

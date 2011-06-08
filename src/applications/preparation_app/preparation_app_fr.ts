@@ -531,25 +531,6 @@ Merci de sélectionner un autre fichier à importer.</translation>
     </message>
 </context>
 <context>
-    <name>LocalWeathersList</name>
-    <message>
-        <source>Local patch</source>
-        <translation>Zones locales</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Ajouter</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Supprimer</translation>
-    </message>
-    <message>
-        <source>Time parameters or location are incorrect</source>
-        <translation>Les paramètres de temps ou de localisation sont incorrects</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>Tactical</source>
@@ -1620,11 +1601,18 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
-    <name>WeatherPanel</name>
+    <name>WeatherListView</name>
     <message>
-        <source>Weather</source>
-        <translation>Météo</translation>
+        <source>Time parameters or location are incorrect</source>
+        <translation>Les paramètres de temps ou de position sont incorrects.</translation>
     </message>
+    <message>
+        <source>Local weather </source>
+        <translation>Météo locale </translation>
+    </message>
+</context>
+<context>
+    <name>gui</name>
     <message>
         <source>Exercise date:</source>
         <translation>Date de l&apos;exercice:</translation>
@@ -1642,42 +1630,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Coucher du soleil:</translation>
     </message>
     <message>
-        <source>Global weather</source>
-        <translation>Météo du théatre</translation>
-    </message>
-    <message>
-        <source>Local weather</source>
-        <translation>Zones météo locales</translation>
-    </message>
-    <message>
-        <source>Weather parameters</source>
-        <translation>Paramètres météo</translation>
-    </message>
-    <message>
-        <source>Set location</source>
-        <translation>Définir la position</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Enregistrer</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Time and Position Parameters</source>
-        <translation>Paramètres temporel et de localisation</translation>
-    </message>
-    <message>
-        <source>Start time:</source>
-        <translation>Date de début:</translation>
-    </message>
-    <message>
-        <source>End time:</source>
-        <translation>Date de fin:</translation>
-    </message>
-    <message>
         <source>Day lighting:</source>
         <translation>Eclairage de jour:</translation>
     </message>
@@ -1685,20 +1637,9 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Night lighting:</source>
         <translation>Eclairage de nuit:</translation>
     </message>
-</context>
-<context>
-    <name>WeatherWidget</name>
     <message>
-        <source>Clouds floor/ceiling/density:</source>
-        <translation>Plancher/plafond/densité nuages:</translation>
-    </message>
-    <message>
-        <source>Weather type:</source>
-        <translation>Type de temps:</translation>
-    </message>
-    <message>
-        <source>Wind direction/speed:</source>
-        <translation>Vitesse/direction du vent:</translation>
+        <source>Weather parameters</source>
+        <translation>Paramètres météo</translation>
     </message>
 </context>
 <context>

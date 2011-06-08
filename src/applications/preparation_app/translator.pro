@@ -17,7 +17,6 @@ InitialStateDialog.cpp \
 InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \
 InitialStateTableResources.cpp \
-LocalWeathersList.cpp \
 LogisticSuperiorEditor.inl \
 MainWindow.cpp \
 Menu.cpp \
@@ -49,8 +48,8 @@ TemplatesPanel.cpp \
 UserProfileList.cpp \
 UserProfileRights_ABC.cpp \
 UserProfileWidget.cpp \
+WeatherListView.cpp \
 WeatherPanel.cpp \
-WeatherWidget.cpp \
 main.cpp \
 
 TRANSLATIONS = preparation_app_fr.ts preparation_app_es.ts

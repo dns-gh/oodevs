@@ -1619,4 +1619,81 @@ Voulez-vous le supprimer?</translation>
         <translation>Par défaut</translation>
     </message>
 </context>
+<context>
+    <name>gui::WeatherListView</name>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local weathers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::WeatherPanel</name>
+    <message>
+        <source>Weathers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Global weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Validate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>Start time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time and position parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::WeatherWidget</name>
+    <message>
+        <source>Wind speed/direction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clouds floor/ceiling/density:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

@@ -11,10 +11,10 @@
 #include "TerrainPicker.h"
 #include "moc_TerrainPicker.cpp"
 #include "TerrainLayer.h"
-#include "WeatherLayer_ABC.h"
+#include "WeatherLayer.h"
 #include "ObjectsLayer.h"
 #include "clients_kernel/tools.h"
-#include "meteo/PHY_Meteo.h"
+#include "meteo/Meteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
 #include <pathfind/TerrainData.h>
@@ -86,10 +86,10 @@ void TerrainPicker::OnTimeOut()
         emit TerrainPicked( data.ToString().c_str() );
     }
     if( weather_ )
-        if( const weather::PHY_Meteo* weather = weather_->Pick( terrainCoordinates_ ) )
+        if( const weather::Meteo* weather = weather_->Pick( terrainCoordinates_ ) )
             emit WeatherPicked( tools::ToDisplayedString( weather->GetLighting().GetID() ),
                                 tools::ToDisplayedString( weather->GetPrecipitation().GetID() ),
-                                tools::translate( "gui::TerrainPicker", "Wind speed: %1km/h, direction: %2°" ).arg( weather->GetWind().rWindSpeed_ / weather->GetConversionFactor(), 0, 'f', 0 ).arg( weather->GetWind().eWindAngle_ ).ascii() );
+                                tools::translate( "gui::TerrainPicker", "Wind speed: %1km/h, direction: %2°" ).arg( weather->GetWind().rSpeed_ / weather->GetConversionFactor(), 0, 'f', 0 ).arg( weather->GetWind().eAngle_ ).ascii() );
 
     if( objects_ )
     {
@@ -103,7 +103,7 @@ void TerrainPicker::OnTimeOut()
 // Name: TerrainPicker::RegisterLayer
 // Created: HBD 2010-04-01
 // -----------------------------------------------------------------------------
-void TerrainPicker::RegisterLayer( WeatherLayer_ABC& weather )
+void TerrainPicker::RegisterLayer( WeatherLayer& weather )
 {
     weather_ = &weather;
 }

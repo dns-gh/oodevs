@@ -1619,4 +1619,81 @@ Voulez-vous le supprimer?</translation>
         <translation>Par défaut</translation>
     </message>
 </context>
+<context>
+    <name>gui::WeatherListView</name>
+    <message>
+        <source>Local weathers</source>
+        <translation>Météos locales</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Ajouter</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+</context>
+<context>
+    <name>gui::WeatherPanel</name>
+    <message>
+        <source>Weathers</source>
+        <translation>Météos</translation>
+    </message>
+    <message>
+        <source>Weather</source>
+        <translation>Météo</translation>
+    </message>
+    <message>
+        <source>Weather type:</source>
+        <translation>Type de météo:</translation>
+    </message>
+    <message>
+        <source>Global weather</source>
+        <translation>Météo globale</translation>
+    </message>
+    <message>
+        <source>Local weather</source>
+        <translation>Météo locale</translation>
+    </message>
+    <message>
+        <source>Validate</source>
+        <translation>Valider</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Time and position parameters</source>
+        <translation>Paramètre de temps et de position</translation>
+    </message>
+    <message>
+        <source>Start time:</source>
+        <translation>Heure de début:</translation>
+    </message>
+    <message>
+        <source>End time:</source>
+        <translation>Heure de fin:</translation>
+    </message>
+    <message>
+        <source>Set location</source>
+        <translation>Définir la localisation</translation>
+    </message>
+</context>
+<context>
+    <name>gui::WeatherWidget</name>
+    <message>
+        <source>Wind speed/direction:</source>
+        <translation>Vitesse/direction du vent:</translation>
+    </message>
+    <message>
+        <source>Clouds floor/ceiling/density:</source>
+        <translation>Plancher/plafond/densité nuages:</translation>
+    </message>
+    <message>
+        <source>Weather type:</source>
+        <translation>Type de temps:</translation>
+    </message>
+</context>
 </TS>

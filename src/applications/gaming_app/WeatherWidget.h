@@ -10,14 +10,7 @@
 #ifndef __WeatherWidget_h_
 #define __WeatherWidget_h_
 
-#include "clients_gui/ValuedComboBox.h"
-#include "clients_kernel/Types.h"
-
-namespace sword
-{
-    class WeatherAttributes;
-    class MissionParameters;
-}
+#include "clients_gui/WeatherWidget.h"
 
 namespace actions
 {
@@ -27,11 +20,6 @@ namespace actions
 namespace kernel
 {
     class OrderParameter;
-}
-
-namespace weather
-{
-    class PHY_Meteo;
 }
 
 namespace tools
@@ -45,10 +33,8 @@ namespace tools
 */
 // Created: SBO 2006-12-20
 // =============================================================================
-class WeatherWidget : public QGroupBox
+class WeatherWidget : public gui::WeatherWidget
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -58,30 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const weather::PHY_Meteo& globalMeteo );
-    void Commit( sword::WeatherAttributes& att ) const;
-    void Commit( sword::MissionParameters& att ) const;
     void CreateParameters( actions::MagicAction& action, tools::Iterator< const kernel::OrderParameter& >& it );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    WeatherWidget( const WeatherWidget& );            //!< Copy constructor
-    WeatherWidget& operator=( const WeatherWidget& ); //!< Assignment operator
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    QSpinBox* windDirection_;
-    QSpinBox* windSpeed_;
-    QSpinBox* cloudFloor_;
-    QSpinBox* cloudCeiling_;
-    QSpinBox* cloudDensity_;
-    gui::ValuedComboBox< E_WeatherType >* type_;
-    QLabel* startTimeLabel_;
-    QLabel* endTimeLabel_;
     //@}
 };
 

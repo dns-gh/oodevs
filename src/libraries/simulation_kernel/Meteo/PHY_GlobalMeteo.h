@@ -10,7 +10,7 @@
 #ifndef __PHY_GlobalMeteo_h_
 #define __PHY_GlobalMeteo_h_
 
-#include "meteo/PHY_Meteo.h"
+#include "meteo/Meteo.h"
 
 namespace xml
 {
@@ -19,38 +19,27 @@ namespace xml
 
 namespace weather
 {
-    class MeteoManager_ABC;
-    class PHY_Meteo;
     class PHY_Lighting;
-    class PHY_RawVisionData_ABC;
 }
 
 // =============================================================================
 /** @class  PHY_GlobalMeteo
-    @brief  PHY Global meteo
+    @brief  PHY_GlobalMeteo
 */
 // Created: HBD 2010-03-25
 // =============================================================================
-class PHY_GlobalMeteo : public weather::PHY_Meteo
+class PHY_GlobalMeteo : public weather::Meteo
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light );
-             PHY_GlobalMeteo( unsigned int id, const sword::WeatherAttributes&, weather::MeteoManager_ABC* list );
+             PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, unsigned int timeStep );
     virtual ~PHY_GlobalMeteo();
     //@}
 
     //! @name Operations
     //@{
     virtual void SendCreation() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PHY_GlobalMeteo( const PHY_GlobalMeteo& );            //!< Copy constructor
-    PHY_GlobalMeteo& operator=( const PHY_GlobalMeteo& ); //!< Assignment operator
     //@}
 };
 

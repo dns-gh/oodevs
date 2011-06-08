@@ -53,12 +53,19 @@ DateTime::DateTime( const OrderParameter& parameter, const sword::DateTime& date
 DateTime::DateTime( const kernel::OrderParameter& parameter, const QDateTime& date )
     : Parameter< QString >( parameter )
 {
-    std::string dateStr  = date.date().toString( Qt::ISODate ).ascii();
-    std::string timeStr  = date.time().toString( Qt::ISODate ).ascii();
-    bpt::ptime time( bpt::time_from_string( dateStr + " " + timeStr )  );
-
-    time_ = bpt::to_iso_string( time );
-    SetValue( bpt::to_simple_string( time ).c_str() );
+    if( date.isNull() )
+    {
+        time_ = "19700101T000000";
+        SetValue( "1970-Jan-01 00:00:00" );
+    }
+    else
+    {
+        std::string dateStr  = date.date().toString( Qt::ISODate ).ascii();
+        std::string timeStr  = date.time().toString( Qt::ISODate ).ascii();
+        bpt::ptime time( bpt::time_from_string( dateStr + " " + timeStr )  );
+        time_ = bpt::to_iso_string( time );
+        SetValue( bpt::to_simple_string( time ).c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------

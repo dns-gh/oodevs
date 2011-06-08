@@ -9,11 +9,13 @@
 
 #include "preparation_pch.h"
 #include "WeatherModel.h"
-#include "Weather.h"
-#include "LocalWeather.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "meteo/Meteo.h"
+#include "meteo/MeteoLocal.h"
+#include "meteo/PHY_Precipitation.h"
+#include "meteo/PHY_Lighting.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
 #include <xeumeuleu/xml.hpp>
@@ -34,8 +36,10 @@ WeatherModel::WeatherModel( Controller& controller, const CoordinateConverter_AB
     , sunset_       ( 21, 30 )
     , dayLighting_  ( eDayLightingJourSansNuage )
     , nightLighting_( eNightLightingNuitPleineLune )
-    , globalWeather_( new Weather() )
+    , globalWeather_( new weather::Meteo( 0, 0 ) )
 {
+    weather::PHY_Precipitation::Initialize();
+    weather::PHY_Lighting::Initialize();
     controller_.Create( *this );
 }
 
@@ -45,6 +49,8 @@ WeatherModel::WeatherModel( Controller& controller, const CoordinateConverter_AB
 // -----------------------------------------------------------------------------
 WeatherModel::~WeatherModel()
 {
+    weather::PHY_Lighting::Terminate();
+    weather::PHY_Precipitation::Terminate();
     Purge();
     controller_.Delete( *this );
 }
@@ -56,7 +62,7 @@ WeatherModel::~WeatherModel()
 void WeatherModel::Purge()
 {
     DeleteAll();
-    globalWeather_.reset( new Weather() );
+    globalWeather_.reset( new weather::Meteo( 0, 0 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +119,7 @@ void WeatherModel::Serialize( const std::string& filename, const tools::SchemaWr
     globalWeather_->Serialize( xos );
     xos     << xml::end
             << xml::start( "local-weather" );
-    tools::Iterator< const LocalWeather& > it( CreateIterator() );
+    tools::Iterator< const weather::MeteoLocal& > it( CreateIterator() );
     while( it.HasMoreElements() )
     {
         xos << xml::start( "local" );
@@ -198,7 +204,7 @@ void WeatherModel::ReadEphemerides( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void WeatherModel::ReadGlobalWeather( xml::xistream& xis )
 {
-    globalWeather_.reset( new Weather( xis ) );
+    globalWeather_.reset( new weather::Meteo( 0, xis, 0, 0 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -207,6 +213,6 @@ void WeatherModel::ReadGlobalWeather( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void WeatherModel::ReadLocalWeather( xml::xistream& xis )
 {
-    LocalWeather* local = new LocalWeather( xis, converter_ );
+    weather::MeteoLocal* local = new weather::MeteoLocal( xis, converter_, tools::translate( "WeatherModel", "Local weather " ).ascii() );
     Register( local->GetId(), *local );
 }

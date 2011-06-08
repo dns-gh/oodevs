@@ -20,7 +20,7 @@
 #include "protocol/SimulationSenders.h"
 #include "FireCreationPanel.h"
 #include "ObjectCreationPanel.h"
-#include "WeatherCreationPanel.h"
+#include "WeatherPanel.h"
 
 using namespace kernel;
 using namespace gui;
@@ -30,7 +30,9 @@ using namespace actions;
 // Name: CreationPanels constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, ItemFactory_ABC& factory, ActionsModel& actionsModel, const Time_ABC& simulation, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings, const tools::ExerciseConfig& config )
+CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const ::StaticModel& staticModel, ItemFactory_ABC& factory, ActionsModel& actionsModel,
+                                const Time_ABC& simulation, ParametersLayer& paramLayer, ::WeatherLayer& weatherLayer, GlTools_ABC& tools, SymbolIcons& icons,
+                                ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings, const tools::ExerciseConfig& config )
     : Panels      ( parent )
     , controllers_( controllers )
 {
@@ -39,7 +41,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     AddPanel( intel_ = new IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons, &config ) );
     AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, drawings ) );
     AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, actionsModel, simulation, staticModel, paramLayer, tools ) );
-    AddPanel( weather_ = new WeatherCreationPanel( this, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );
+    AddPanel( weather_ = new ::WeatherPanel( this, *this, controllers, actionsModel, staticModel, simulation, weatherLayer ) );
     AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
     controllers_.Register( *this );
 }
@@ -61,7 +63,6 @@ void CreationPanels::Draw( Viewport_ABC& viewport ) const
 {
     objects_->Draw( viewport );
     fires_->Draw( viewport );
-    weather_->Draw( viewport );
 }
 
 // -----------------------------------------------------------------------------

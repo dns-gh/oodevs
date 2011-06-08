@@ -10,15 +10,13 @@
 #include "preparation_app_pch.h"
 #include "WeatherPanel.h"
 #include "moc_WeatherPanel.cpp"
-#include "WeatherWidget.h"
-#include "LocalWeathersList.h"
-#include "WeatherLayer.h"
-#include "preparation/WeatherModel.h"
-#include "preparation/LocalWeather.h"
+#include "clients_gui/WeatherWidget.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Tools.h"
-
+#include "meteo/MeteoLocal.h"
+#include "preparation/WeatherModel.h"
+#include "WeatherListView.h"
 #include <qhgroupbox.h>
 #include <qgrid.h>
 
@@ -28,19 +26,19 @@ using namespace kernel;
 // Name: WeatherPanel constructor
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
-WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controllers& controllers, const CoordinateConverter_ABC& converter, WeatherLayer& layer )
-    : InfoPanel_ABC( parent, panel, tr( "Weather" ), "WeatherPanel" )
-    , controllers_( controllers )
-    , layer_( layer )
+WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Controllers& controllers, const CoordinateConverter_ABC& converter, gui::WeatherLayer& layer )
+    : gui::WeatherPanel( parent, panel, layer )
+    , controllers_ ( controllers )
     , currentModel_( 0 )
-    , selectedLocal_( 0 )
 {
-    QHBox* timeBox = new QHBox( this );
+    // Current date & Time
+    QHBox* timeBox = new QHBox( headerLayout_ );
     new QLabel( tr( "Exercise date:" ), timeBox );
     time_ = new QDateTimeEdit( timeBox );
     time_->setDateTime( QDateTime::currentDateTime() );
 
-    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tr( "Ephemerides" ), this );
+    // Ephemerides
+    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, tr( "Ephemerides" ), headerLayout_ );
     new QLabel( tr( "Sunrise:" ), group );
     sunrise_ = new QTimeEdit( group );
     new QLabel( tr( "Sunset:" ), group );
@@ -54,32 +52,14 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
     for( int i = 0; i < static_cast< int >( eNbrNightLightingType ); ++i )
         nightLighting_->AddItem( tools::ToDisplayedString( static_cast< E_NightLightingType>( i ) ), static_cast< E_NightLightingType>( i ) );
 
-    globalWeather_ = new WeatherWidget( this, tr( "Global weather" ) );
-    QGroupBox* localGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Local weather" ), this );
-    localWeathers_ = new LocalWeathersList( localGroup, converter );
-    localWeatherBox_ = new QVBox( localGroup );
-    localWeather_ = new WeatherWidget( localWeatherBox_, tr( "Weather parameters" ) );
-
-    QGroupBox* localParametersGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Time and Position Parameters" ), localWeatherBox_ );
-    startTimeLabel_ = new QLabel( tr( "Start time:" ), localParametersGroup );
-    startTime_ = new QDateTimeEdit( localParametersGroup );
-    startTime_->setDateTime( QDateTime::currentDateTime() );
-    endTimeLabel_ = new QLabel( tr( "End time:" ), localParametersGroup );
-    endTime_ = new QDateTimeEdit( localParametersGroup );
-    endTime_->setDateTime( QDateTime::currentDateTime() );
-
-    QButton* btn = new QPushButton( tr( "Set location" ), localParametersGroup );
-    connect( btn, SIGNAL( clicked() ), this, SLOT( SetPatchPosition() ) );
-    localWeatherBox_->hide();
-
-    QHBox* box = new QHBox( this );
-    box->setMaximumHeight( 30 );
-    QButton* okBtn     = new QPushButton( tr( "Save" )  , box );
-    QButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
-
-    connect( okBtn,     SIGNAL( clicked() ), this, SLOT( Commit() ) );
-    connect( cancelBtn, SIGNAL( clicked() ), this, SLOT( Reset() ) );
+    // Global Weather
+    globalWidget_ = new gui::WeatherWidget( globalLayout_, tr( "Weather parameters" ) );
+    // Local Weather
+    localWidget_ = new gui::WeatherWidget( localLayout_, tr( "Weather parameters" ) );
+    CreateLocalParameters();
+    localWeathers_ = new WeatherListView( localLayout_, converter );
     connect( localWeathers_, SIGNAL( selectionChanged() ), this, SLOT( LocalSelectionChanged() ) );
+
     controllers_.Register( *this );
 }
 
@@ -104,8 +84,8 @@ void WeatherPanel::NotifyUpdated( const WeatherModel& model )
     sunset_ ->setTime( currentModel_->sunset_  );
     dayLighting_->SetCurrentItem( currentModel_->dayLighting_ );
     nightLighting_->SetCurrentItem( currentModel_->nightLighting_ );
-    globalWeather_->Update( *currentModel_->globalWeather_ );
-    localWeathers_->Update( *currentModel_ );
+    globalWidget_->Update( *currentModel_->globalWeather_ );
+    static_cast< WeatherListView* >( localWeathers_ )->Update( *currentModel_ );
     Show();
 }
 
@@ -133,22 +113,9 @@ void WeatherPanel::Commit()
     currentModel_->sunset_   = sunset_ ->time();
     currentModel_->dayLighting_ = dayLighting_->GetValue();
     currentModel_->nightLighting_ = nightLighting_->GetValue();
-    globalWeather_->CommitTo( *currentModel_->globalWeather_ );
-    localWeathers_->CommitTo( *currentModel_ );
+    globalWidget_->CommitTo( *currentModel_->globalWeather_ );
+    static_cast< WeatherListView* >( localWeathers_ )->CommitTo( *currentModel_ );
     controllers_.controller_.Create( this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeatherPanel::CommitLocalWeather
-// Created: SBO 2010-05-17
-// -----------------------------------------------------------------------------
-void WeatherPanel::CommitLocalWeather()
-{
-    if( selectedLocal_ )
-    {
-        localWeather_->CommitTo( *selectedLocal_ );
-        selectedLocal_->SetPeriod( startTime_->dateTime(), endTime_->dateTime() );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -157,34 +124,7 @@ void WeatherPanel::CommitLocalWeather()
 // -----------------------------------------------------------------------------
 void WeatherPanel::Reset()
 {
+    selectedLocal_ = 0;
     if( currentModel_ )
         NotifyUpdated( *currentModel_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeatherPanel::LocalSelectionChanged
-// Created: SBO 2006-12-20
-// -----------------------------------------------------------------------------
-void WeatherPanel::LocalSelectionChanged()
-{
-    LocalWeather* selected = localWeathers_->SelectedItem();
-    if( selected )
-    {
-        CommitLocalWeather();
-        localWeather_->Update( *selected );
-        startTime_->setDateTime( selected->GetStartTime() );
-        endTime_->setDateTime( selected->GetEndTime() );
-        layer_.SetPosition( *selected );
-        selectedLocal_ = selected;
-    }
-    localWeatherBox_->setShown( selected != 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeatherPanel::SetPatchPosition
-// Created: SBO 2006-12-21
-// -----------------------------------------------------------------------------
-void WeatherPanel::SetPatchPosition()
-{
-    layer_.StartEdition( *localWeathers_->SelectedItem() );
 }

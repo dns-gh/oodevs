@@ -13,7 +13,7 @@
 namespace gui
 {
     class TerrainLayer;
-    class WeatherLayer_ABC;
+    class WeatherLayer;
     class ObjectsLayer;
 
 // =============================================================================
@@ -36,7 +36,7 @@ public:
     //! @name Operations
     //@{
     void RegisterLayer( TerrainLayer& terrain );
-    void RegisterLayer( WeatherLayer_ABC& terrain );
+    void RegisterLayer( WeatherLayer& terrain );
     void RegisterLayer( ObjectsLayer& objects );
     void Pick( int x, int y, const geometry::Point2f& terrainCoordinates );
     //@}
@@ -66,7 +66,7 @@ private:
     //! @name Member data
     //@{
     TerrainLayer* terrain_;
-    WeatherLayer_ABC* weather_;
+    WeatherLayer* weather_;
     ObjectsLayer* objects_;
     QTimer* timer_;
     int x_;

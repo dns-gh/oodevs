@@ -7,13 +7,16 @@
 //
 // *****************************************************************************
 
-#ifndef __MeteoManager_h_
-#define __MeteoManager_h_
+#ifndef __weather_MeteoManager_h_
+#define __weather_MeteoManager_h_
+
+#include <set>
+#include <boost/shared_ptr.hpp>
 
 namespace weather
 {
     class PHY_Lighting;
-    class PHY_Meteo;
+    class Meteo;
 
 // =============================================================================
 /** @class  MeteoManager_ABC
@@ -32,12 +35,24 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterMeteo( weather::PHY_Meteo& element ) = 0;
-    virtual void UnregisterMeteo( weather::PHY_Meteo& element ) = 0;
-    virtual const PHY_Lighting& GetLighting() const = 0;
+    virtual void AddMeteo( weather::Meteo& element ) = 0;
+    //@}
+
+public:
+    //! @name Helpers
+    //@{
+    typedef std::set< boost::shared_ptr< Meteo > > T_MeteoSet;
+    typedef T_MeteoSet::iterator                  IT_MeteoSet;
+    typedef T_MeteoSet::const_iterator           CIT_MeteoSet;
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    T_MeteoSet meteos_;
     //@}
 };
 
 }
 
-#endif // __MeteoManager_ABC_h_
+#endif // __weather_MeteoManager_ABC_h_

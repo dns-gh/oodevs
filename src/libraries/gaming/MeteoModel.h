@@ -40,8 +40,9 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const weather::PHY_Meteo* GetGlobalMeteo() const;
-    const weather::PHY_Meteo* GetMeteo( const geometry::Point2f& point ) const;
+    virtual const weather::Meteo* GetGlobalMeteo() const;
+    const weather::Meteo* GetMeteo( const geometry::Point2f& point ) const;
+    const T_MeteoSet& GetLocalMeteos() const;
     //@}
 
     //! @name Protocol buffer operations

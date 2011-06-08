@@ -38,7 +38,6 @@
 #include "ScoreDialog.h"
 #include "SuccessFactorDialog.h"
 #include "TacticalListView.h"
-#include "WeatherLayer.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ColorStrategy.h"
@@ -85,6 +84,7 @@
 #include "clients_gui/FormationLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/WatershedLayer.h"
+#include "clients_gui/WeatherLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/ElevationPainter.h"
 #include "clients_kernel/ActionController.h"
@@ -227,7 +227,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, *modelBuilder_, PreparationProfile::GetProfile(), *simpleFilter_ );
-    ::WeatherLayer* weatherLayer = new ::WeatherLayer( *glProxy_, *eventStrategy_ );
+    gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );

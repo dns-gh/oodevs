@@ -3,28 +3,35 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __WeatherWidget_h_
-#define __WeatherWidget_h_
+#ifndef __gui_WeatherWidget_h_
+#define __gui_WeatherWidget_h_
 
+#include <boost/noncopyable.hpp>
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/Types.h"
 
-class Weather;
+namespace weather
+{
+    class Meteo;
+}
+
+namespace gui
+{
+    template< typename T > class ValuedComboBox;
 
 // =============================================================================
 /** @class  WeatherWidget
     @brief  WeatherWidget
 */
-// Created: SBO 2006-12-20
+// Created: ABR 2011-05-30
 // =============================================================================
 class WeatherWidget : public QGroupBox
+                    , private boost::noncopyable
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -34,18 +41,12 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const Weather& weather );
-    void CommitTo( Weather& weather ) const;
+    void Update( const weather::Meteo& meteo );
+    void CommitTo( weather::Meteo& meteo ) const;
+    void Clear();
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    WeatherWidget( const WeatherWidget& );            //!< Copy constructor
-    WeatherWidget& operator=( const WeatherWidget& ); //!< Assignment operator
-    //@}
-
-private:
+protected:
     //! @name Member data
     //@{
     QSpinBox* windDirection_;
@@ -54,9 +55,9 @@ private:
     QSpinBox* cloudCeiling_;
     QSpinBox* cloudDensity_;
     gui::ValuedComboBox< E_WeatherType >* type_;
-    QLabel* startTimeLabel_;
-    QLabel* endTimeLabel_;
     //@}
 };
 
-#endif // __WeatherWidget_h_
+}
+
+#endif // __gui_WeatherWidget_h_

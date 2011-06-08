@@ -30,13 +30,13 @@ namespace gui
     class GlProxy;
     class ParametersLayer;
     class SymbolIcons;
+    class WeatherLayer;
 }
 
 class StaticModel;
 class Model;
 class ObjectCreationPanel;
 class InhabitantCreationPanel;
-class WeatherLayer;
 
 // =============================================================================
 /** @class  CreationPanels
@@ -49,7 +49,9 @@ class CreationPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const Model& model, const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, WeatherLayer& weatherLayer, gui::GlProxy& glProxy );
+             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const Model& model,
+                             const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy,
+                             gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer, gui::GlProxy& glProxy );
     virtual ~CreationPanels();
     //@}
 

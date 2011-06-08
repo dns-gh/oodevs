@@ -79,5 +79,8 @@ UnitPreviewIcon.cpp \
 UnitsPanel.cpp \
 Usages.cpp \
 VisualisationScalesPanel.cpp \
+WeatherListView.cpp \
+WeatherPanel.cpp \
+WeatherWidget.cpp \
 
 TRANSLATIONS = clients_gui_fr.ts clients_gui_es.ts

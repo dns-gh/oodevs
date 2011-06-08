@@ -3,7 +3,7 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
@@ -12,45 +12,58 @@
 
 #include "clients_gui/WeatherPanel.h"
 #include "tools/ElementObserver_ABC.h"
-#include "clients_kernel/Types.h"
 
 namespace kernel
 {
     class Controllers;
-    class CoordinateConverter_ABC;
+    class GlTools_ABC;
+    class Location_ABC;
+    class ModelLoaded;
+    class Time_ABC;
+    class Viewport_ABC;
 }
 
 namespace gui
 {
+    class ParametersLayer;
     class PanelStack_ABC;
-    template< typename T > class ValuedComboBox;
-    class WeatherLayer;
-}
-namespace weather
-{
-    class MeteoLocal;
+    class ShapeHandler_ABC;
 }
 
-class WeatherModel;
+namespace actions
+{
+    class ActionsModel;
+}
+
+class Simulation;
+class StaticModel;
 class WeatherWidget;
+class MeteoModel;
+class WeatherLayer;
 
 // =============================================================================
 /** @class  WeatherPanel
     @brief  WeatherPanel
 */
-// Created: SBO 2006-12-19
+// Created: ABR 2011-06-06
 // =============================================================================
 class WeatherPanel : public gui::WeatherPanel
                    , public tools::Observer_ABC
-                   , public tools::ElementObserver_ABC< WeatherModel >
+                   , public tools::ElementObserver_ABC< MeteoModel >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, gui::WeatherLayer& layer );
+             WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel,
+                           const StaticModel& model, const kernel::Time_ABC& simulation, WeatherLayer& layer );
     virtual ~WeatherPanel();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void NotifyUpdated( const MeteoModel& model );
     //@}
 
 private slots:
@@ -61,23 +74,13 @@ private slots:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    virtual void NotifyUpdated( const WeatherModel& model );
-    virtual void NotifyDeleted( const WeatherModel& model );
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    WeatherModel* currentModel_;
-
-    QDateTimeEdit* time_;
-    QTimeEdit* sunrise_;
-    QTimeEdit* sunset_;
-    gui::ValuedComboBox< kernel::E_DayLightingType >* dayLighting_;
-    gui::ValuedComboBox< kernel::E_NightLightingType >* nightLighting_;
+    actions::ActionsModel& actionsModel_;
+    const StaticModel& model_;
+    const kernel::Time_ABC& simulation_;
+    MeteoModel* currentModel_;
     //@}
 };
 

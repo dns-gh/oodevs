@@ -20,7 +20,7 @@
 #include "tools/WorldParameters.h"
 
 PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
-const weather::PHY_Meteo* PHY_RawVisionData::sCell::pGlobalMeteo_ = 0;
+const weather::Meteo* PHY_RawVisionData::sCell::pGlobalMeteo_ = 0;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::sCell::GetPrecipitation
@@ -47,7 +47,7 @@ const weather::PHY_Lighting& PHY_RawVisionData::sCell::GetLighting() const
 // Created: JVT 02-11-05
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::PHY_RawVisionData( weather::PHY_Meteo& globalMeteo, tools::WorldParameters& config )
+PHY_RawVisionData::PHY_RawVisionData( weather::Meteo& globalMeteo, tools::WorldParameters& config )
     : ppCells_( 0 )
     , nNbrCol_( 0 )
     , nNbrRow_( 0 )
@@ -75,7 +75,7 @@ PHY_RawVisionData::~PHY_RawVisionData()
 // Created: JVT 03-08-06
 // Last modified: JVT 03-08-18
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, weather::PHY_Meteo* pMeteo )
+void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, weather::Meteo* pMeteo )
 {
     assert( ppCells_ );
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
@@ -89,18 +89,12 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
     if( nYEnd < nYBeg )
         std::swap( nYEnd, nYBeg );
 
-    // enregistrement du nombre de référence pour cette météo
-    if( pMeteo )
-        pMeteo->IncRef( ( nXEnd - nXBeg + 1 ) * ( nYEnd - nYBeg + 1 ) );
-
     while( nXBeg <= nXEnd )
     {
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             sCell& cell = ppCells_[ nXBeg ][ y ];
-            if( cell.pMeteo )
-                cell.pMeteo->DecRef();
-            cell.pMeteo = pMeteo;
+            cell.pMeteo = boost::shared_ptr< weather::Meteo >( pMeteo );
         }
         ++nXBeg;
     }
@@ -110,13 +104,14 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
 // Name: PHY_RawVisionData::UnregisterLocalMeteoPatch
 // Created: SLG 2010-03-19
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, weather::PHY_Meteo* pMeteo )
+void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight )
 {
     assert( ppCells_ );
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
     unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
     unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
     unsigned int nYBeg = std::min( GetRow( downRight.Y() ), nNbrRow_ - 1 );
+
     // On remet éventuellement dans le bon sens
     if( nXEnd < nXBeg )
         std::swap( nXEnd, nXBeg );
@@ -128,9 +123,7 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             sCell& cell = ppCells_[ nXBeg ][ y ];
-            if( cell.pMeteo == pMeteo )
-                cell.pMeteo->DecRef();
-            cell.pMeteo = 0;
+            cell.pMeteo.reset();
         }
         ++nXBeg;
     }
@@ -227,7 +220,7 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
 
         for( unsigned int i = 0; i < nNbrRow_; ++i )
         {
-            pTmp->pMeteo   = 0;
+            pTmp->pMeteo.reset();
             pTmp->pEffects = 0;
             archive.Read( reinterpret_cast< char* >( pTmp++ ), 4 );
             if( !archive )

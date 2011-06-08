@@ -117,14 +117,14 @@ void NBCPropagationCapacity::Update( MIL_Object_ABC& object, float time )
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
 
     //We retrieve the wind data
-    const weather::PHY_Meteo::sWindData& wind = MIL_Tools::GetWind( vOrigin );
+    const weather::Meteo::sWindData& wind = MIL_Tools::GetWind( vOrigin );
     MT_Vector2D vNormalizedWind , vPerpendicularToWind;
 
     //The normalized vector which indicates the wind direction
-    const double sqrRx = pow( wind.vWindDirection_.rX_ , 2 );
-    const double sqrRy = pow( wind.vWindDirection_.rY_ , 2 );
-    vNormalizedWind.rX_ = attr.GetLength() * wind.vWindDirection_.rX_ / pow( sqrRy + sqrRx, 0.5);
-    vNormalizedWind.rY_ = attr.GetWidth() * wind.vWindDirection_.rY_ / pow( sqrRy + sqrRx, 0.5);
+    const double sqrRx = pow( wind.vDirection_.rX_ , 2 );
+    const double sqrRy = pow( wind.vDirection_.rY_ , 2 );
+    vNormalizedWind.rX_ = attr.GetLength() * wind.vDirection_.rX_ / pow( sqrRy + sqrRx, 0.5);
+    vNormalizedWind.rY_ = attr.GetWidth() * wind.vDirection_.rY_ / pow( sqrRy + sqrRx, 0.5);
 
     vNormalizedWind.rX_ = vNormalizedWind.rX_ - (int)vNormalizedWind.rX_ % attr.GetLength();
     vNormalizedWind.rY_ = vNormalizedWind.rY_ - (int)vNormalizedWind.rY_ % attr.GetWidth();
@@ -134,12 +134,12 @@ void NBCPropagationCapacity::Update( MIL_Object_ABC& object, float time )
     vPerpendicularToWind.rY_ = vNormalizedWind.rX_;
 
     //Propagate the nbc agents in accordance with wind data
-    UpdateShape( object , vNormalizedWind , vPerpendicularToWind , wind.rWindSpeed_ );
+    UpdateShape( object , vNormalizedWind , vPerpendicularToWind , wind.rSpeed_ );
 
     //Compute the nbc agents concentration in accordance with wind data
     if( ! attr.IsSource() )
     {
-        bool bHasASource = UpdateState( object , vNormalizedWind , vPerpendicularToWind , wind.rWindSpeed_ );
+        bool bHasASource = UpdateState( object , vNormalizedWind , vPerpendicularToWind , wind.rSpeed_ );
         attr.ComputeAgentConcentrationEvolution( bHasASource );
     }
     else

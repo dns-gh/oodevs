@@ -310,11 +310,16 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     setAppropriate( pProfilerDockWnd_, false );
     pProfilerDockWnd_->hide();
 
+    // Layers
+    gui::TerrainPicker* picker = new gui::TerrainPicker( this );
+    gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
+    WeatherLayer* meteoLayer = new WeatherLayer( *glProxy_, *eventStrategy_, controllers_, model_.meteo_, *picker );
+
     // object/unit creation window
     QDockWindow* pCreationWnd = new QDockWindow( this, "creation" );
     moveDockWindow( pCreationWnd, Qt::DockRight );
     pCreationWnd->hide();
-    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, model_.actions_, simulation, *paramLayer, *glProxy_, *symbols, *strategy_, model_.drawings_, config_ );
+    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, model_.actions_, simulation, *paramLayer, *meteoLayer, *glProxy_, *symbols, *strategy_, model_.drawings_, config_ );
     pCreationWnd->setWidget( creationPanels );
     pCreationWnd->setResizeEnabled( true );
     pCreationWnd->setCloseMode( QDockWindow::Always );
@@ -376,12 +381,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
     new Menu( this, controllers, staticModel_, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger );
 
-    // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    gui::TerrainPicker* picker = new gui::TerrainPicker( this );
-    gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
-    gui::Layer_ABC* meteoLayer = new ::WeatherLayer( controllers_, *glProxy_, *picker, model_.meteo_ );
-
-    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *formationLayer, *terrainLayer, * meteoLayer,   *profilerLayer, *prefDialog, profile, simulation, *picker );
+    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *formationLayer, *terrainLayer, *meteoLayer, *profilerLayer, *prefDialog, profile, simulation, *picker );
     ::StatusBar* pStatus_ = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
@@ -633,19 +633,14 @@ namespace
     {
         if( !bfs::exists( filename ) )
             return "";
-        try
-        {
-            std::string name;
-            xml::xifstream xis( filename );
-            xis >> xml::start( "exercise" )
-                    >> xml::start( "meta" )
-                        >> xml::content( "name", name );
-            return name.c_str();
-        }
-        catch( ... )
-        {
-            return bfs::path( filename, bfs::native ).parent_path().leaf().c_str();
-        }
+
+        std::string name;
+        xml::xifstream xis( filename );
+        xis >> xml::start( "exercise" )
+                >> xml::optional >> xml::start( "meta" );
+        if( xis.has_child( "name" ) )
+            xis >> xml::content( "name", name );
+        return ( name.empty() ) ? name.c_str() : bfs::path( filename, bfs::native ).parent_path().leaf().c_str();
     }
 }
 

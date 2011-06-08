@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __MeteoModel_ABC_h_
-#define __MeteoModel_ABC_h_
+#ifndef __weather_MeteoModel_ABC_h_
+#define __weather_MeteoModel_ABC_h_
 
 #include "MeteoManager_ABC.h"
 #include <boost/noncopyable.hpp>
-#include <list>
+#include <set>
 
 namespace sword
 {
@@ -28,6 +28,7 @@ namespace kernel
 
 namespace weather
 {
+
 // =============================================================================
 /** @class  MeteoModel_ABC
     @brief  Meteo model declaration
@@ -53,34 +54,23 @@ public:
 
     //! @name Operations
     //@{
-    virtual const PHY_Lighting& GetLighting() const;
     void Purge();
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    typedef std::list< PHY_Meteo* >       T_MeteoList;
-    typedef T_MeteoList::iterator        IT_MeteoList;
-    typedef T_MeteoList::const_iterator CIT_MeteoList;
     //@}
 
 protected:
     //! @name Operations
     //@{
-    virtual void RegisterMeteo( weather::PHY_Meteo& element );
-    virtual void UnregisterMeteo( weather::PHY_Meteo& element );
+    virtual void AddMeteo( weather::Meteo& element );
     //@}
 
 protected:
     //! @name Member data
     //@{
     kernel::CoordinateConverter_ABC& converter_;
-    std::auto_ptr< weather::PHY_Meteo > globalMeteo_;
-    T_MeteoList meteos_;
+    std::auto_ptr< weather::Meteo > globalMeteo_;
     //@}
 };
 
 }
 
-#endif // __MeteoModel_ABC_h_
+#endif // __weather_MeteoModel_ABC_h_

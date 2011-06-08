@@ -10,10 +10,11 @@
 #include "gaming_pch.h"
 #include "MeteoModel.h"
 #include "Simulation.h"
-#include "meteo/PHY_Meteo.h"
-#include "meteo/MeteoData.h"
+#include "meteo/Meteo.h"
+#include "meteo/MeteoLocal.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel constructor
@@ -40,7 +41,7 @@ MeteoModel::~MeteoModel()
 // Name: MeteoModel::GetGlobalMeteo
 // Created: ABR 2011-04-28
 // -----------------------------------------------------------------------------
-const weather::PHY_Meteo* MeteoModel::GetGlobalMeteo() const
+const weather::Meteo* MeteoModel::GetGlobalMeteo() const
 {
     if( globalMeteo_.get() )
         return globalMeteo_.get();
@@ -51,16 +52,25 @@ const weather::PHY_Meteo* MeteoModel::GetGlobalMeteo() const
 // Name: MeteoModel::GetMeteo
 // Created: HBD 2010-03-30
 // -----------------------------------------------------------------------------
-const weather::PHY_Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point ) const
+const weather::Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point ) const
 {
-    for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->IsInside( point ) )
-            return *it;
+            return ( *it ).get();
     return globalMeteo_.get();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo
+// Name: std::set< weather::Meteo* >& MeteoModel::GetLocalMeteos
+// Created: ABR 2011-06-06
+// -----------------------------------------------------------------------------
+const weather::MeteoManager_ABC::T_MeteoSet& MeteoModel::GetLocalMeteos() const
+{
+    return meteos_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MeteoModel::OnReceiveMsgGlobalMeteo
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
@@ -69,12 +79,12 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
     if( globalMeteo_.get() )
         globalMeteo_->Update( msg.attributes() );
     else
-        globalMeteo_.reset( new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, simulation_.GetTickDuration() ) );
+        globalMeteo_.reset( new weather::Meteo( msg.weather().id(), msg.attributes(), simulation_.GetTickDuration() ) );
     controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::OnReceiveMsgLocalMeteo
+// Name: MeteoModel::OnReceiveMsgLocalMeteo
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
@@ -82,15 +92,17 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
 {
     if( msg.has_attributes() )
     {
-        const geometry::Point2f topLeft = converter_.ConvertFromGeo(
-            geometry::Point2d(
-            msg.top_left().longitude(),
-            msg.top_left().latitude() ) );
-        const geometry::Point2f bottomRight = converter_.ConvertFromGeo(
-            geometry::Point2d(
-            msg.bottom_right().longitude(),
-            msg.bottom_right().latitude() ) );
-        RegisterMeteo( *new weather::MeteoData( msg.weather().id(), topLeft, bottomRight, msg.attributes(), *this, converter_, simulation_.GetTickDuration() ) );
+        bool founded = false;
+        for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+            if( ( *it )->GetId() == msg.weather().id() )
+            {
+                static_cast< weather::MeteoLocal* >( ( *it ).get() )->Update( msg );
+                founded = true;
+                break;
+            }
+        if( !founded )
+            AddMeteo( *new weather::MeteoLocal( msg, converter_, simulation_.GetTickDuration(), tools::translate( "MeteoModel", "Local weather " ).ascii() ) );
+        controller_.Update( *this );
     }
 }
 
@@ -100,10 +112,10 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWeatherDestruction& message )
 {
-    for( IT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->GetId() == message.weather().id() )
         {
-            meteos_.remove( *it );
+            meteos_.erase( *it );
             return;
         }
 }

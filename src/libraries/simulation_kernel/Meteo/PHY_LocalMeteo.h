@@ -10,7 +10,7 @@
 #ifndef __PHY_LocalMeteo_h_
 #define __PHY_LocalMeteo_h_
 
-#include "meteo/PHY_Meteo.h"
+#include "meteo/Meteo.h"
 
 namespace sword
 {
@@ -28,32 +28,28 @@ namespace xml
 */
 // Created: SLG 2010-03-18
 // =============================================================================
-class PHY_LocalMeteo : public weather::PHY_Meteo
+class PHY_LocalMeteo : public weather::Meteo
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light );
-             PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& message, weather::MeteoManager_ABC* list );
+             PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, unsigned int timeStep );
+             PHY_LocalMeteo( unsigned int id, const sword::MissionParameters& message, const weather::PHY_Lighting& light, unsigned int timeStep );
     virtual ~PHY_LocalMeteo();
     //@}
 
     //! @name Operations
     //@{
     virtual void UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision );
+    virtual void Update( const sword::MissionParameters& msg );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PHY_LocalMeteo( const PHY_LocalMeteo& );            //!< Copy constructor
-    PHY_LocalMeteo& operator=( const PHY_LocalMeteo& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void SendCreation() const;
     virtual void SendDestruction();
+    void LocalUpdate( const sword::MissionParameters& msg );
     //@}
 
 private:

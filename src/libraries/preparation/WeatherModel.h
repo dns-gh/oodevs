@@ -31,8 +31,11 @@ namespace tools
     class SchemaWriter_ABC;
 }
 
-class Weather;
-class LocalWeather;
+namespace weather
+{
+    class Meteo;
+    class MeteoLocal;
+}
 
 // =============================================================================
 /** @class  WeatherModel
@@ -40,7 +43,7 @@ class LocalWeather;
 */
 // Created: SBO 2006-12-19
 // =============================================================================
-class WeatherModel : public tools::Resolver< LocalWeather >
+class WeatherModel : public tools::Resolver< weather::MeteoLocal >
 {
 public:
     //! @name Constructors/Destructor
@@ -81,12 +84,12 @@ private:
 
 public:
     //! @name Member data
-    QDateTime                   time_;
-    QTime                       sunrise_;
-    QTime                       sunset_;
-    kernel::E_DayLightingType   dayLighting_;
-    kernel::E_NightLightingType nightLighting_;
-    std::auto_ptr< Weather >    globalWeather_;
+    QDateTime                       time_;
+    QTime                           sunrise_;
+    QTime                           sunset_;
+    kernel::E_DayLightingType       dayLighting_;
+    kernel::E_NightLightingType     nightLighting_;
+    std::auto_ptr< weather::Meteo > globalWeather_;
     //@}
 };
 

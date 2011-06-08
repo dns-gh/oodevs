@@ -205,9 +205,9 @@ void MagicActionType::Initialize()
         precipitation->AddValue( 4, "Pluie"              );
         precipitation->AddValue( 5, "Neige"              );
         precipitation->AddValue( 6, "Fumigene"           );
-
         if( name == "local_weather" )
         {
+            CreateOrderParameter( "ID", "identifier" );
             CreateOrderParameter( "StartTime", "datetime" );
             CreateOrderParameter( "EndTime", "datetime" );
             CreateOrderParameter( "Location", "location" );

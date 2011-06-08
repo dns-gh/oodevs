@@ -14,8 +14,8 @@
 #include "EntityPublisher.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "meteo/MeteoData.h"
-#include "meteo/PHY_Meteo.h"
+#include "meteo/Meteo.h"
+#include "meteo/MeteoLocal.h"
 #include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
@@ -49,7 +49,7 @@ void MeteoModel::Accept( kernel::ModelVisitor_ABC& visitor )
 {
     if( globalMeteo_.get() )
         visitor.Visit( *globalMeteo_ );
-    for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
         visitor.Visit( **it );
 }
 
@@ -63,8 +63,8 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
         globalMeteo_->Update( msg.attributes() );
     else
     {
-        globalMeteo_.reset( new weather::PHY_Meteo( msg.weather().id(), msg.attributes(), this, config_.GetTickDuration() ) );
-        model_.AddExtensions( *globalMeteo_ );
+        globalMeteo_.reset( new weather::Meteo( msg.weather().id(), msg.attributes(), config_.GetTickDuration() ) );
+        model_.AddExtensions( *static_cast< weather::Meteo* >( globalMeteo_.get() ) );
     }
  }
 
@@ -74,16 +74,12 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeatherCreation& msg )
 {
-    const geometry::Point2d topLeft( msg.top_left().longitude(), msg.top_left().latitude() );
-    const geometry::Point2f vUpLeft = converter_.ConvertFromGeo( topLeft );
-    const geometry::Point2d bottomRight( msg.bottom_right().longitude(), msg.bottom_right().latitude() );
-    const geometry::Point2f vDownRight = converter_.ConvertFromGeo( bottomRight );
     if( msg.has_attributes() )
     {
-        boost::shared_ptr< weather::MeteoData > weather = boost::shared_ptr< weather::MeteoData >( new weather::MeteoData( msg.weather().id(), vUpLeft, vDownRight, msg.attributes(), *this, converter_, config_.GetTickDuration() ) );
+        weather::MeteoLocal* weather = new weather::MeteoLocal( msg, config_.GetTickDuration(), "" );
         model_.AddExtensions( *weather );
-        RegisterMeteo( *weather );
-        weather->Update( msg.attributes() );
+        AddMeteo( *weather );
+        weather->weather::Meteo::Update( msg.attributes() );
     }
 }
 
@@ -93,10 +89,10 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWeatherDestruction& message )
 {
-    for( IT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->GetId() == message.weather().id() )
         {
-            meteos_.remove( *it );
+            meteos_.erase( *it );
             return;
         }
 }

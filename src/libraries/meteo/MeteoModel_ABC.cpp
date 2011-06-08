@@ -8,8 +8,9 @@
 // *****************************************************************************
 
 #include "MeteoModel_ABC.h"
+#include "meteo/Meteo.h"
+#include "meteo/Meteo.h"
 #include "meteo/PHY_Lighting.h"
-#include "meteo/PHY_Meteo.h"
 #include "meteo/PHY_Precipitation.h"
 
 using namespace weather;
@@ -37,16 +38,6 @@ MeteoModel_ABC::~MeteoModel_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MeteoModel_ABC::GetLighting
-// Created: ABR 2011-05-30
-// -----------------------------------------------------------------------------
-const PHY_Lighting& MeteoModel_ABC::GetLighting() const
-{
-    assert( globalMeteo_.get() );
-    return globalMeteo_->GetLighting();
-}
-
-// -----------------------------------------------------------------------------
 // Name: MeteoModel_ABC::Purge
 // Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
@@ -57,20 +48,11 @@ void MeteoModel_ABC::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MeteoModel_ABC::RegisterMeteo
+// Name: MeteoModel_ABC::AddMeteo
 // Created: ABR 2011-05-30
 // -----------------------------------------------------------------------------
-void MeteoModel_ABC::RegisterMeteo( weather::PHY_Meteo& element )
+void MeteoModel_ABC::AddMeteo( weather::Meteo& element )
 {
-    meteos_.push_front( &element );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MeteoModel_ABC::UnregisterMeteo
-// Created: ABR 2011-05-30
-// -----------------------------------------------------------------------------
-void MeteoModel_ABC::UnregisterMeteo( weather::PHY_Meteo& element )
-{
-    element.SetListener( 0 );
-    meteos_.remove( &element );
+    if( ! meteos_.insert( boost::shared_ptr< weather::Meteo >( &element ) ).second )
+        throw std::runtime_error( __FUNCTION__ "Insert failed" );
 }
