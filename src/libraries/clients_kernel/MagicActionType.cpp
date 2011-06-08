@@ -131,13 +131,13 @@ void MagicActionType::Initialize()
     else if( name == "fire_order" )
     {
         CreateOrderParameter( "UnitTarget", "identifier" );
-        CreateOrderParameter( "Ammo", "dotationtype" );
+        CreateOrderParameter( "Ammo", "resourcetype" );
         CreateOrderParameter( "Iterations", "numeric" );
     }
     else if( name == "fire_order_on_location" )
     {
         CreateOrderParameter( "LocationTarget", "location" );
-        CreateOrderParameter( "Ammo", "dotationtype" );
+        CreateOrderParameter( "Ammo", "resourcetype" );
         CreateOrderParameter( "Iterations", "numeric" );
     }
     else if( name == "change_knowledge_group" )

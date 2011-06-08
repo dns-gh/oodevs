@@ -228,6 +228,8 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
         return "intelligence";
     if( type == "location" && type_ == "polygon" )
         return "polygon";
+    if( type == "integer" && type_ == "numeric" )
+        return "numeric";
     if( type == "list" )
         return type_;
     return "";
