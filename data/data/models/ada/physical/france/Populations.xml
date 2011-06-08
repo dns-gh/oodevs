@@ -157,9 +157,9 @@
     </unit-fire-effects>
     <urban-destruction-effects>
       <urban-destruction-effect attitude="calme" density="0" time="0s"/>
-      <urban-destruction-effect attitude="agitee" density="0.3" time="180m"/>
-      <urban-destruction-effect attitude="excitee" density="0.3" time="90m"/>
-      <urban-destruction-effect attitude="agressive" density="0.3" time="45m"/>
+      <urban-destruction-effect attitude="agitee" density="0.001" time="950m"/>
+      <urban-destruction-effect attitude="excitee" density="0.001" time="550m"/>
+      <urban-destruction-effect attitude="agressive" density="0.001" time="150m"/>
     </urban-destruction-effects>
     <repartition children="0" female="0" male="1"/>
   </population>
@@ -325,4 +325,4 @@
     <repartition children="0" female="0.5" male="0.5"/>
   </population>
 </populations>
-<!-- signature="1277066358" -->
+<!-- signature="0617168888" -->
