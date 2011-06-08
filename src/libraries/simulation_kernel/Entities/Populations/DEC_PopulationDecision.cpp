@@ -146,7 +146,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     brain[ "DEC_StartTirSurPion" ] =
         boost::function< unsigned int( float, DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, DEC_Decision_ABC* >, boost::ref( GetPopulation() ), _1, _2 ) );
     brain[ "DEC_DetruireBlocUrbain" ] =
-        boost::function< void( UrbanObjectWrapper* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionUrbanDestruction, UrbanObjectWrapper* >, boost::ref( GetPopulation() ), _1 ) );
+        boost::function< unsigned int( UrbanObjectWrapper* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionUrbanDestruction, UrbanObjectWrapper* >, boost::ref( GetPopulation() ), _1 ) );
    brain[ "DEC_EtatBlocUrbain" ] =
         boost::function< float( UrbanObjectWrapper* )>( boost::bind( &DEC_UrbanObjectFunctions::GetStateUrbanBlock, _1 ) );
 
