@@ -473,7 +473,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
 // Name: Automat_LogSupplyQuotasCanBeChanged
 // Created: SBO 2010-02-25
 // -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
+/*BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
 {
     // sides
     tools::Resolver< dispatcher::Team_ABC > sides;
@@ -560,7 +560,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
         MOCK_EXPECT( automat2, RemoveAutomat ).once();
         MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
     }
-}
+}*/
 
 // -----------------------------------------------------------------------------
 // Name: Automat_LogisticLinksCanBeChanged
