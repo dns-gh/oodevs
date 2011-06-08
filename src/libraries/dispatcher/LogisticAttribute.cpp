@@ -12,7 +12,7 @@
 #include "Model_ABC.h"
 #include "Automat_ABC.h"
 #include "Formation_ABC.h"
-#include "LogisticEntity.h"
+#include "LogisticEntity_ABC.h"
 #include "protocol/Protocol.h"
 
 using namespace dispatcher;

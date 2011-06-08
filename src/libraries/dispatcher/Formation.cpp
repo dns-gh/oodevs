@@ -269,7 +269,7 @@ const tools::Resolver< dispatcher::Automat_ABC >& Formation::GetAutomates() cons
 // Name: Formation::GetLogisticEntity
 // Created: NLD 2011-01-17
 // -----------------------------------------------------------------------------
-LogisticEntity* Formation::GetLogisticEntity() const
+LogisticEntity_ABC* Formation::GetLogisticEntity() const
 {
     return logisticEntity_.get();
 }

@@ -19,7 +19,7 @@ namespace dispatcher
 {
     class Automat_ABC;
     class Team_ABC;
-    class LogisticEntity;
+    class LogisticEntity_ABC;
 
 // =============================================================================
 /** @class  Formation_ABC
@@ -44,7 +44,7 @@ public:
     virtual dispatcher::Team_ABC& GetTeam() const = 0;
     virtual const tools::Resolver< dispatcher::Formation_ABC >& GetFormations() const = 0;
     virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomates() const = 0;
-    virtual LogisticEntity* GetLogisticEntity() const = 0;
+    virtual LogisticEntity_ABC* GetLogisticEntity() const = 0;
     //@}
 
     //! @name Operations

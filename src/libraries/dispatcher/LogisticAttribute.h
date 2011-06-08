@@ -16,7 +16,7 @@
 
 namespace dispatcher
 {
-    class LogisticEntity;
+    class LogisticEntity_ABC;
     class Automat_ABC;
     class Formation_ABC;
     class Model_ABC;
@@ -48,7 +48,7 @@ private:
     //@{
     const tools::Resolver_ABC< dispatcher::Automat_ABC >& automats_;
     const tools::Resolver_ABC< dispatcher::Formation_ABC >& formations_;
-    const LogisticEntity* pLogisticBase_;
+    const LogisticEntity_ABC* pLogisticBase_;
     //@}
 };
 

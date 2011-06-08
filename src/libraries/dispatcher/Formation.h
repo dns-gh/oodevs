@@ -50,7 +50,7 @@ public:
     virtual dispatcher::Team_ABC& GetTeam() const;
     virtual const tools::Resolver< dispatcher::Formation_ABC >& GetFormations() const;
     virtual const tools::Resolver< dispatcher::Automat_ABC >& GetAutomates() const;
-    virtual LogisticEntity* GetLogisticEntity() const;
+    virtual LogisticEntity_ABC* GetLogisticEntity() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
