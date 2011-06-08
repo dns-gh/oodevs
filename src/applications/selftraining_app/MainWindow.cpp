@@ -60,7 +60,7 @@ MainWindow::~MainWindow()
 // -----------------------------------------------------------------------------
 void MainWindow::SetStyle()
 {
-    QFont font( "Georgia", 12, QFont::Bold );
+    QFont font( "Calibri", 12, QFont::Bold );
     setFont( font );
     QImage background( "resources/images/selftraining/background.jpg" );
 
