@@ -16,10 +16,10 @@ using namespace plugins::hla;
 // Name: Dimension constructor
 // Created: AGE 2008-02-21
 // -----------------------------------------------------------------------------
-Dimension::Dimension( float x, float y, float z )
-    : xAxisLength_( x )
-    , yAxisLength_( y )
-    , zAxisLength_( z )
+Dimension::Dimension( bool isOnRoad )
+    : xAxisLength_( isOnRoad ? 200.f : 100.f )
+    , yAxisLength_( isOnRoad ?  50.f : 100.f )
+    , zAxisLength_( 3.f )
 {
     // NOTHING
 }

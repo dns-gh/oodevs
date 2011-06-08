@@ -32,28 +32,23 @@ class Formation : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation();
+    explicit Formation( bool isOnRoad );
     virtual ~Formation();
     //@}
 
     //! @name Operations
     //@{
-    void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const;
-    void Update( bool isOnRoad );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void SerializeFormation( ::hla::UpdateFunctor_ABC& functor ) const;
-    void SerializeDimension( ::hla::UpdateFunctor_ABC& functor ) const;
+    template< typename Archive >
+    void Serialize( Archive& archive )
+    {
+        archive << formation_;
+    }
     //@}
 
 private:
     //! @name Member data
     //@{
-    bool onRoad_;
-    mutable bool changed_;
+    long formation_;
     //@}
 };
 

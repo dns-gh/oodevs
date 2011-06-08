@@ -13,6 +13,8 @@
 #include "Spatial.h"
 #include "AggregateMarking.h"
 #include "SilentEntity.h"
+#include "Formation.h"
+#include "Dimension.h"
 #include "SerializationTools.h"
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
@@ -33,6 +35,9 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier&
     , name_              ( name )
     , force_             ( force )
     , type_              ( type )
+    , formationChanged_  ( false )
+    , dimensionsChanged_  ( false )
+    , isOnRoad_          ( false )
     , spatialChanged_    ( true )
     , pSpatial_          ( 0 )
     , compositionChanged_( true )
@@ -65,9 +70,12 @@ void AggregateEntity::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateA
         UpdateAggregateMarking( functor );
     if( updateAll )
         UpdateAggregateState( functor );
+    if( updateAll || dimensionsChanged_ )
+        UpdateDimensions( functor );
     if( updateAll )
         UpdateForceIdentifier( functor );
-    formation_.Serialize( functor, updateAll );
+    if( updateAll || formationChanged_ )
+        UpdateFormation( functor );
     if( updateAll || compositionChanged_ )
         UpdateComposition( functor );
 }
@@ -119,7 +127,35 @@ void AggregateEntity::SpatialChanged( double latitude, double longitude, float a
 // -----------------------------------------------------------------------------
 void AggregateEntity::FormationChanged( bool isOnRoad )
 {
-    formation_.Update( isOnRoad );
+    isOnRoad_ = isOnRoad;
+    formationChanged_ = true;
+    dimensionsChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::UpdateFormation
+// Created: SLI 2011-06-08
+// -----------------------------------------------------------------------------
+void AggregateEntity::UpdateFormation( ::hla::UpdateFunctor_ABC& functor ) const
+{
+    ::hla::Serializer serializer;
+    Formation formation( isOnRoad_ );
+    formation.Serialize( serializer );
+    functor.Visit( ::hla::AttributeIdentifier( "Formation" ), serializer );
+    formationChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::UpdateDimensions
+// Created: SLI 2011-06-08
+// -----------------------------------------------------------------------------
+void AggregateEntity::UpdateDimensions( ::hla::UpdateFunctor_ABC& functor ) const
+{
+    ::hla::Serializer serializer;
+    Dimension dimensions( isOnRoad_ );
+    dimensions.Serialize( serializer );
+    functor.Visit( ::hla::AttributeIdentifier( "Dimensions" ), serializer );
+    dimensionsChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -150,6 +186,8 @@ void AggregateEntity::UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor 
 // -----------------------------------------------------------------------------
 void AggregateEntity::UpdateSpatial( ::hla::UpdateFunctor_ABC& functor ) const
 {
+    if( !pSpatial_.get() )
+        return;
     ::hla::Serializer archive;
     pSpatial_->Serialize( archive );
     functor.Visit( ::hla::AttributeIdentifier( "Spatial" ), archive );

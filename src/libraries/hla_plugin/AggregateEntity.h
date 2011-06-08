@@ -11,7 +11,6 @@
 #define __AgentExtension_h_
 
 #include "EventListener_ABC.h"
-#include "Formation.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/EntityType.h"
 #include "rpr/ForceIdentifier.h"
@@ -70,6 +69,8 @@ private:
     void UpdateAggregateState( ::hla::UpdateFunctor_ABC& functor ) const;
     void UpdateForceIdentifier( ::hla::UpdateFunctor_ABC& functor ) const;
     void UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateFormation( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateDimensions( ::hla::UpdateFunctor_ABC& functor ) const;
     //@}
 
 private:
@@ -88,7 +89,9 @@ private:
     const std::string name_;
     const rpr::ForceIdentifier force_;
     const rpr::EntityType type_;
-    Formation formation_;
+    mutable bool formationChanged_;
+    mutable bool dimensionsChanged_;
+    bool isOnRoad_;
     mutable bool spatialChanged_;
     std::auto_ptr< Spatial > pSpatial_;
     mutable bool compositionChanged_;

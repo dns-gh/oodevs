@@ -27,7 +27,7 @@ class Dimension : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             Dimension( float x, float y, float z );
+    explicit Dimension( bool isOnRoad );
     virtual ~Dimension();
     //@}
 

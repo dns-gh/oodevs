@@ -10,6 +10,7 @@
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/FederateFacade.h"
 #include "hla_plugin/AgentListener_ABC.h"
+#include "hla_plugin/EventListener_ABC.h"
 #include "rpr/EntityType.h"
 #include "MockAgentSubject.h"
 #include "MockRtiAmbassadorFactory.h"
@@ -21,6 +22,8 @@
 #include <hla/SimpleTimeInterval.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
+#include <boost/assign.hpp>
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -163,6 +166,13 @@ namespace
     };
 }
 
+BOOST_FIXTURE_TEST_CASE( hla_plugin_steps, ConnectedFixture )
+{
+    FederateFacade facade( xis >> xml::start( "root" ), subject, rtiFactory, federateFactory, "directory" );
+    MOCK_EXPECT( rtiAmbassador, NextEventRequestAvailable ).once();
+    facade.Step();
+}
+
 BOOST_FIXTURE_TEST_CASE( hla_plugin_publishes_agent_instance, ConnectedFixture )
 {
     MockAgent agent;
@@ -177,9 +187,51 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_publishes_agent_instance, ConnectedFixture )
     MOCK_EXPECT( rtiAmbassador, DeleteObjectInstance ).once().in( s ).with( hla::ObjectIdentifier( 42u ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( hla_plugin_steps, ConnectedFixture )
+namespace
 {
-    FederateFacade facade( xis >> xml::start( "root" ), subject, rtiFactory, federateFactory, "directory" );
+    class AgentFixture : public ConnectedFixture
+    {
+    public:
+        AgentFixture()
+            : eventListener( 0 )
+            , facade       ( xis >> xml::start( "root" ), subject, rtiFactory, federateFactory, "directory" )
+        {
+            BOOST_REQUIRE( listener );
+            MOCK_EXPECT( agent, Register ).once().with( mock::retrieve( eventListener ) );
+            MOCK_EXPECT( rtiAmbassador, ReserveObjectInstance ).once().with( "id", mock::any ).calls( boost::bind( &hla::FederateAmbassador_ABC::ReservationSucceded, boost::ref( federateAmbassador ) ) );;
+            MOCK_EXPECT( rtiAmbassador, RegisterObjectInstance ).once().with( "BaseEntity.AggregateEntity", "id" ).returns( hla::ObjectIdentifier( 42u ) );
+            listener->Created( agent, "id", "name", rpr::Friendly, rpr::EntityType() );
+            MOCK_EXPECT( agent, Unregister ).once();
+            MOCK_EXPECT( rtiAmbassador, DeleteObjectInstance ).once().with( hla::ObjectIdentifier( 42u ) );
+        }
+        MockAgent agent;
+        EventListener_ABC* eventListener;
+        FederateFacade facade;
+    };
+    bool CheckAttributes( const hla::RtiAmbassador_ABC::T_Attributes& attributes, const std::vector< std::string >& expected )
+    {
+        unsigned int i = 0u;
+        BOOST_FOREACH( const hla::RtiAmbassador_ABC::T_Attribute& attribute, attributes )
+            BOOST_CHECK_EQUAL( attribute.first, expected.at( i++ ) );
+        return true;
+    }
+}
+
+BOOST_FIXTURE_TEST_CASE( hla_plugin_serializes_all_aggregated_agent_attributes_at_creation_step, AgentFixture )
+{
+    BOOST_REQUIRE( eventListener );
+    eventListener->SpatialChanged( 1., 2., 3., 4., 5. );
+    const std::vector< std::string > attributes = boost::assign::list_of( "EntityType" )
+                                                                        ( "EntityIdentifier" )
+                                                                        ( "Spatial" )
+                                                                        ( "AggregateMarking" )
+                                                                        ( "AggregateState" )
+                                                                        ( "Dimensions" )
+                                                                        ( "ForceIdentifier" )
+                                                                        ( "Formation" )
+                                                                        ( "NumberOfSilentEntities" )
+                                                                        ( "SilentEntities" );
     MOCK_EXPECT( rtiAmbassador, NextEventRequestAvailable ).once();
+    MOCK_EXPECT( rtiAmbassador, UpdateAttributeValues ).once().with( 42u, boost::bind( &CheckAttributes, _1, attributes ), mock::any );
     facade.Step();
 }
