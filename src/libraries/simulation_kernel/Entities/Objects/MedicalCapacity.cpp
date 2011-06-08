@@ -71,7 +71,7 @@ MedicalCapacity::~MedicalCapacity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MobilityCapacity::InitializeSpeed
+// Name: MedicalCapacity::InitializeData
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
 void MedicalCapacity::InitializeData( xml::xistream& xis )

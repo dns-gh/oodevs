@@ -17,7 +17,6 @@ class DEC_Knowledge_Agent;
 class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
 class MIL_Mission_ABC;
-class MIL_Object_ABC;
 class PHY_DotationCategory;
 class TER_Localisation;
 class MT_Vector2D;
@@ -136,9 +135,11 @@ public:
     // Test / debug
     static void DecisionalState( const MIL_Agent_ABC& callerAgent, const std::string& key, const std::string& value );
 
+    // Relève
     static bool RelievePion( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* agentToRelieve );
     static bool CanRelievePion( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* agentToRelieve );
 
+    // Populations couvrantes
     static void AlertInhabitants( const TER_Localisation* location ); // $$$$ BCI 2011-02-01: je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
     static bool IsInhabitantsAlerted( const TER_Localisation* location ); // $$$$ BCI 2011-02-01: je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
     static void ConfineInhabitants( const TER_Localisation* location ); // $$$$ BCI 2011-02-01: je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...

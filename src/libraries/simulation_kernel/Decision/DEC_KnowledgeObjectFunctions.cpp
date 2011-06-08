@@ -9,7 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeObjectFunctions.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Objects/Object.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/AnimatorAttribute.h"
@@ -24,6 +26,7 @@
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Objects/SupplyRouteAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
+#include "Entities/Objects/UndergroundNetworkExitCapacity.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/Objects/CrossingSiteAttribute.h"
 #include "Entities/MIL_Army.h"
@@ -472,4 +475,48 @@ bool DEC_KnowledgeObjectFunctions::CanBeValorized( boost::shared_ptr< DEC_Knowle
             if( object->Retrieve< ImprovableCapacity >() )
                 return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsUndergroundNetworkExit
+// Created: JSR 2011-06-06
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::IsUndergroundNetworkExit( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    return IsValidObjectCapacity< UndergroundNetworkExitCapacity >( pKnowledge ) != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime
+// Created: JSR 2011-06-06
+// -----------------------------------------------------------------------------
+double DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pEnter, boost::shared_ptr< DEC_Knowledge_Object > pExit )
+{
+    if( IsValidObjectCapacity< UndergroundNetworkExitCapacity >( pEnter ) != 0 && IsValidObjectCapacity< UndergroundNetworkExitCapacity >( pExit ) != 0 )
+        return callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().EstimatedUndergroundTime( *pEnter->GetObjectKnown(), *pExit->GetObjectKnown() );
+    return -1.0f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork
+// Created: JSR 2011-06-06
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pExit )
+{
+    if( IsValidObjectCapacity< UndergroundNetworkExitCapacity >( pExit ) != 0 )
+    {
+        callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().HideInUndergroundNetwork( *pExit->GetObjectKnown() );
+        return int( eQueryValid );
+    }
+    return int( eQueryInvalid );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::GetOutFromUndergroundNetwork
+// Created: JSR 2011-06-06
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::GetOutFromUndergroundNetwork( DEC_Decision_ABC& callerAgent )
+{
+    callerAgent.GetPion().Get< PHY_RoleAction_MovingUnderground >().GetOutFromUndergroundNetwork();
+    return int( eQueryValid );
 }

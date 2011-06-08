@@ -13,8 +13,9 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
-class MIL_Agent_ABC;
+class DEC_Decision_ABC;
 class DEC_Knowledge_Object;
+class MIL_Agent_ABC;
 class PHY_DotationCategory;
 
 // =============================================================================
@@ -62,6 +63,11 @@ public:
     static int GetCurrentPerceptionLevel( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static float EstimatedWorkTime( MIL_Agent_ABC& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool CanBeValorized( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+
+    static bool IsUndergroundNetworkExit( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static double EstimatedUndergroundTime( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pEnter, boost::shared_ptr< DEC_Knowledge_Object > pExit );
+    static int HideInUndergroundNetwork( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pExit );
+    static int GetOutFromUndergroundNetwork( DEC_Decision_ABC& callerAgent );
     //@}
 };
 

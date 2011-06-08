@@ -65,6 +65,7 @@
 #include "Entities/Agents/Actions/Firing/DirectFiring/PHY_RoleAction_DirectFiring.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
+#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Actions/Emergency/PHY_RoleAction_FolkInfluence.h"
 
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
@@ -380,6 +381,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, unsigned int gcPause
     pion.RegisterRole( *new PHY_RoleAction_FolkInfluence() );
     pion.RegisterRole( *new DEC_Representations() );
     pion.RegisterRole( *new PHY_RolePion_TerrainAnalysis( pion ) );
+    pion.RegisterRole( *new PHY_RoleAction_MovingUnderground( pion ) );
     if( pion.GetType().GetUnitType().CanFly() )
         pion.RegisterRole( *new PHY_RoleAction_Flying( pion ) );
     else

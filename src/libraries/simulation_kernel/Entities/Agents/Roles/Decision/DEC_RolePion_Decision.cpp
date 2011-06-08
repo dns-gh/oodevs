@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_RolePion_Decision.h"
 #include "ENT/ENT_Enums_Gen.h"
-#include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"

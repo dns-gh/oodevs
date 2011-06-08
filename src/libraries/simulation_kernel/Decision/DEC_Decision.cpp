@@ -371,6 +371,7 @@ void RegisterObjectsFunctions( directia::brain::Brain& brain )
     brain[ "S_TypeObject_ToString" ] = &DEC_ObjectFunctions::ConvertTypeObjectToString;
     brain[ "DEC_ConnaissanceObjet_PeutEtreValorise" ] =
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::CanBeValorized, _1 ) );
+    brain[ "DEC_ConnaissanceObjet_EstUneIssueDeReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::IsUndergroundNetworkExit;
 }
 
 // -----------------------------------------------------------------------------

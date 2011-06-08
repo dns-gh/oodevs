@@ -11,18 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_RolePion_Decision.h"
-#include "ENT/ENT_Enums_Gen.h"
-#include "Entities/Agents/MIL_AgentTypePion.h"
-#include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
-#include "Entities/Automates/DEC_AutomateDecision.h"
-#include "Entities/Orders/MIL_FragOrder.h"
-#include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
-#include "Decision/DEC_Model_ABC.h"
-#include "Decision/DEC_Tools.h"
 #include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_KnowledgeAgentFunctions.h"
 #include "Decision/DEC_KnowledgeObjectFunctions.h"
@@ -41,7 +30,6 @@
 #include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_ObjectFunctions.h"
 #include "Decision/DEC_MedicalTreatmentFunctions.h"
-#include "Decision/DEC_PopulationFunctions.h"
 #include "Entities/Actions/PHY_ActionInterrogate.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendCollectionComposantes.h"
 #include "Entities/Agents/Actions/ComposanteLending/PHY_ActionLendHaulerComposantes.h"
@@ -77,10 +65,7 @@
 #include "Entities/Agents/Actions/Emergency/PHY_ActionTriggerActivity.h"
 #include "Entities/Agents/Actions/Emergency/PHY_ActionTriggerActivityInArea.h"
 #include "Entities/Agents/Actions/Emergency/PHY_ActionUnloadActivity.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "MT_Tools/MT_ScipioException.h"
-#include <boost/serialization/vector.hpp>
-#include <directia/tools/binders/ScriptRef.h>
+#include "Entities/Agents/Actions/Underground/PHY_ActionMoveUnderground.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::RegisterUserArchetypeFunctions
@@ -154,6 +139,10 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
 
     // Mount/dismount
     brain[ "DEC_CanMount" ] = &DEC_AgentFunctions::CanMount;
+
+    // Réseaux souterrains
+    brain[ "DEC_Agent_TempsPourTraverserReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::EstimatedUndergroundTime;
+    brain[ "DEC_Agent_SeDissimulerDansReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::HideInUndergroundNetwork;
 }
 
 // -----------------------------------------------------------------------------
@@ -245,6 +234,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< unsigned int( int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionInterrogate, int >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartInterrogateUnit" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionInterrogate, boost::shared_ptr< DEC_Knowledge_Agent > >, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_StartTraverserReseauSouterrain" ] =
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object >, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionMoveUnderground, boost::shared_ptr< DEC_Knowledge_Object >, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1, _2 ) );
 
     // Embarquement / debarquement
     brain[ "DEC_Agent_EstEmbarquable" ] =
