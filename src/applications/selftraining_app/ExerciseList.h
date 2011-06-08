@@ -100,6 +100,7 @@ private:
     void AddExerciseEntry( const frontend::Exercise_ABC& exercise );
     void UpdateExerciseEntry( const frontend::Exercise_ABC& exercise );
     void DeleteExerciseEntry( const frontend::Exercise_ABC& exercise );
+    QListViewItem* FindExerciseItem( const QString& path ) const;
     //@}
 
 private:

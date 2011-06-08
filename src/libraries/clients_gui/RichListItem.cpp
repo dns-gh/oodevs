@@ -258,12 +258,15 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
     else
     {
         colorGroup.setColor( QColorGroup::Text, fontColor_ );
-        brush.setColor( GetBackgroundColor() );
+        if( listView()->backgroundOrigin() == QWidget::WindowOrigin )
+            brush = listView()->backgroundBrush();
+        else
+            brush.setColor( GetBackgroundColor() );
     }
 
     QSimpleRichText* pRichText = columns_[ nColumn ].rich;
     pRichText->setWidth( nWidth );
-    setHeight( Height() );
+    setHeight( Height() + 2 * margin_ );
 
     const QPixmap& pm = columns_[ nColumn ].pixMap;
     QRect rect( 0, 0, nWidth, height() );

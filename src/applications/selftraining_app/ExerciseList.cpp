@@ -30,26 +30,22 @@ namespace
 {
     static int clearEvent = 4242;
 
-    bool IsDirectory( const QListViewItem* item )
-    {
-        return item->text( 1 ).startsWith( "/" );
-    }
-
     class MyListViewItem : public gui::ValuedListItem
     {
     public:
-        explicit MyListViewItem( QListView* parent ) : gui::ValuedListItem( parent ) {}
-        explicit MyListViewItem( QListViewItem* parent ) : gui::ValuedListItem( parent ) {}
+        MyListViewItem( QListView* parent, const std::string& fullpath )
+            : gui::ValuedListItem( parent )
+            , fullpath_( fullpath.c_str() ) {}
+        MyListViewItem( QListViewItem* parent, const std::string& fullpath )
+            : gui::ValuedListItem( parent )
+            , fullpath_( fullpath.c_str() ) {}
         virtual QString key( int column, bool /*ascending*/ ) const
         {
-            if( column == 1 )
-                return text( IsDirectory( this ) ? 1 : 0 );
+            if( column == 0 )
+                return fullpath_.startsWith( "/" ) ? fullpath_ : text( 0 );
             return text( column );
         }
-        virtual void paintCell( QPainter* painter, const QColorGroup& cg, int column, int width, int align )
-        {
-            QListViewItem::paintCell( painter, cg, column, width, align );
-        }
+        const QString fullpath_;
     };
 }
 
@@ -76,12 +72,11 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         QLabel* label = new QLabel( tools::translate( "ExerciseList", "Exercise:" ), leftBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
         exercises_ = new QListView( leftBox );
-        exercises_->setBackgroundOrigin( QWidget::WindowOrigin );
         exercises_->addColumn( "exercise" );
-        exercises_->addColumn( "fullpath", 0 );
         exercises_->header()->hide();
         exercises_->setAllColumnsShowFocus( true );
-        exercises_->setSortColumn( 1 );
+        exercises_->setSortColumn( 0 );
+        exercises_->setResizeMode( QListView::LastColumn );
 
         label = new QLabel( tools::translate( "ExerciseList", "Profile:" ), leftBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -152,7 +147,7 @@ void ExerciseList::SetFilter( const frontend::ExerciseFilter_ABC& filter )
 // -----------------------------------------------------------------------------
 void ExerciseList::SelectExercise( QListViewItem* item )
 {
-    const QString exercise( item ? item->text( 1 ) : "" );
+    const QString exercise( item ? static_cast< MyListViewItem* >( item )->fullpath_ : "" );
     profiles_->Update( exercise.ascii() );
     if( const frontend::Exercise_ABC* selected = GetSelectedExercise() )
     {
@@ -254,15 +249,15 @@ void ExerciseList::AddExerciseEntry( const frontend::Exercise_ABC& exercise )
     {
         complete.append( *it );
         const QString current( complete.join( "/" ) );
-        QListViewItem* item = exercises_->findItem( "/" + current, 1 );
+        QListViewItem* item = FindExerciseItem( "/" + current );
         if( !item )
         {
+            const std::string fullpath( complete.size() < path.size() ? "/" + current : current );
             if( parent )
-                item = new MyListViewItem( parent );
+                item = new MyListViewItem( parent, fullpath );
             else
-                item = new MyListViewItem( exercises_ );
+                item = new MyListViewItem( exercises_, fullpath );
             item->setText( 0, GetExerciseDisplayName( *it ) );
-            item->setText( 1, complete.size() < path.size() ? "/" + current : current );
             item->setPixmap( 0, directory );
         }
         parent = item;
@@ -273,6 +268,18 @@ void ExerciseList::AddExerciseEntry( const frontend::Exercise_ABC& exercise )
         static_cast< gui::ValuedListItem* >( parent )->SetValue( &exercise );
     }
     qApp->restoreOverrideCursor();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseList::FindExerciseItem
+// Created: SBO 2011-05-27
+// -----------------------------------------------------------------------------
+QListViewItem* ExerciseList::FindExerciseItem( const QString& path ) const
+{
+    for( QListViewItemIterator it = exercises_->firstChild(); it.current(); ++it )
+        if( static_cast< MyListViewItem* >( it.current() )->fullpath_ == path )
+            return it.current();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
