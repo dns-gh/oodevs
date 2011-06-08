@@ -1193,12 +1193,16 @@ double MIL_Population::ComputeUrbanBlocDestruction( UrbanObjectWrapper* pUrbanOb
         coveredArea += currentArea;
         areaDensitySum += currentArea * (*it)->GetDensity();
     }
+    /* FIXME : Either remove completely flows or replace IntersectionArea with proper computation
+     * The geometry is a line: a polygon should be constructed out of it if we want to intersect
+     * or just counting the number of people inside the block (but most often that will be 0).
     for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
     {
         currentArea = MIL_Geometry::IntersectionArea( pUrbanObjet->GetLocalisation(), (*it)->GetLocation() );
         coveredArea += currentArea;
         areaDensitySum += currentArea * (*it)->GetDensity();
     }
+    */
     if ( coveredArea < 0.00001 /*epsilon*/ )
         return 0.0;
 
