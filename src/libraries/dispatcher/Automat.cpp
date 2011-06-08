@@ -38,7 +38,6 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
     , parentFormation_  ( msg.parent().has_formation() ? &model.Formations().Get( msg.parent().formation().id() ) : 0 )
     , parentAutomat_    ( msg.parent().has_automat() ? &model.Automats().Get( msg.parent().automat().id() ) : 0 )
     , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.knowledge_group().id() ) )
-    , pTC2_             ( 0 )
     , logisticEntity_   ( 0 )
     , logisticHierarchy_( *this, model.Formations(), model.Automats() )
     , nAutomatState_    ( sword::disengaged )
@@ -485,7 +484,7 @@ kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
 // Name: Automat::GetLogisticEntity
 // Created: NLD 2011-01-17
 // -----------------------------------------------------------------------------
-LogisticEntity* Automat::GetLogisticEntity() const
+LogisticEntity_ABC* Automat::GetLogisticEntity() const
 {
     return logisticEntity_.get();
 }

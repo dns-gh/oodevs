@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "LogisticLink.h"
 #include "DotationQuota.h"
-#include "LogisticEntity.h"
+#include "LogisticEntity_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include <boost/bind.hpp>
@@ -21,7 +21,7 @@ using namespace dispatcher;
 // Name: LogisticLink constructor
 // Created: NLD 2011-03-11
 // -----------------------------------------------------------------------------
-LogisticLink::LogisticLink( const LogisticHierarchyOwner_ABC& owner, const LogisticEntity& superior )
+LogisticLink::LogisticLink( const LogisticHierarchyOwner_ABC& owner, const LogisticEntity_ABC& superior )
     : owner_    ( owner )
     , superior_ ( superior )
 {

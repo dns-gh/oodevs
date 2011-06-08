@@ -15,6 +15,7 @@
 #include "MockKnowledgeGroup.h"
 #include "MockModel.h"
 #include "MockSide.h"
+#include "MockLogisticEntity.h"
 #include "dispatcher/Automat.h"
 #include "protocol/ClientSenders.h"
 
@@ -469,106 +470,27 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
     }
 }
 
+namespace {
+
+    struct ParentEntitySender
+    {
+        ParentEntitySender( int id ) : id_( id ) {}
+        void operator()( sword::ParentEntity& msg ) const
+        {
+            msg.mutable_automat()->set_id( id_ );
+        }
+        int id_;
+    };
+
+}
+
 // -----------------------------------------------------------------------------
 // Name: Automat_LogSupplyQuotasCanBeChanged
 // Created: SBO 2010-02-25
 // -----------------------------------------------------------------------------
-/*BOOST_AUTO_TEST_CASE( Automat_LogSupplyQuotasCanBeChanged )
+BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
 {
     // sides
-    tools::Resolver< dispatcher::Team_ABC > sides;
-    MockSide side( 2 );
-    MOCK_EXPECT( side, GetId ).returns( 2 );
-    sides.Register( side.GetId(), side );
-
-    // automats
-    tools::Resolver< dispatcher::Automat_ABC > automats;
-    MockAutomat automat( 51 );
-    MOCK_EXPECT( automat, GetId ).returns( 51 );
-    automats.Register( automat.GetId(), automat );
-    MockAutomat automat2( 41 );
-    MOCK_EXPECT( automat2, GetId ).returns( 11 );
-    automats.Register( automat2.GetId(), automat2 );
-
-    // formations
-    tools::Resolver< dispatcher::Formation_ABC > formations;
-    MockFormation formation( 52 );
-    MOCK_EXPECT( formation, GetId ).returns( 52 );
-    formations.Register( formation.GetId(), formation );
-
-    // knowledge groups
-    tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups;
-    MockKnowledgeGroup knowledgeGroup( 3 );
-    MOCK_EXPECT( knowledgeGroup, GetId ).returns( 3 );
-    knowledgeGroups.Register( knowledgeGroup.GetId(), knowledgeGroup );
-
-    MockModel model;
-    MOCK_EXPECT( model, Sides ).returns( boost::ref( sides ) );
-    MOCK_EXPECT( model, Automats ).returns( boost::ref( automats ) );
-    MOCK_EXPECT( model, Formations ).returns( boost::ref( formations ) );
-    MOCK_EXPECT( model, KnowledgeGroups ).returns( boost::ref( knowledgeGroups ) );
-    {
-        std::auto_ptr< dispatcher::Automat > result;
-        {
-            // creation
-            sword::AutomatCreation message;
-            message.mutable_automat()->set_id( 1 );
-            message.mutable_type()->set_id( 42 );
-            message.set_name( "test" );
-            message.mutable_parent()->mutable_automat()->set_id( automat.GetId() );
-            message.mutable_party()->set_id( side.GetId() );
-            message.mutable_knowledge_group()->set_id( knowledgeGroup.GetId() );
-            message.set_logistic_level( sword::logistic_base );
-            message.set_app6symbol( "sfgpu----------" );
-            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
-
-            MOCK_EXPECT( automat, RegisterAutomat ).once();
-            MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
-            result.reset( new dispatcher::Automat( model, message ) );
-            automats.Register( result->GetId(), *result );
-        }
-        {
-            // change log supply quotas
-            sword::SimToClient expected;
-            expected.set_context( 0 );
-            sword::LogSupplyQuotas& message = *expected.mutable_message()->mutable_log_supply_quotas();
-            message.mutable_supplied()->mutable_automat()->set_id( 41 );
-            message.mutable_supplier()->mutable_automat()->set_id( 51 );
-            message.mutable_quotas()->add_elem();
-            message.mutable_quotas()->mutable_elem( 0 )->mutable_resource()->set_id( 42 );
-            message.mutable_quotas()->mutable_elem( 0 )->set_quantity( 5112 );
-            message.mutable_quotas()->add_elem();
-            message.mutable_quotas()->mutable_elem( 1 )->mutable_resource()->set_id( 69 );
-            message.mutable_quotas()->mutable_elem( 1 )->set_quantity( 6945 );
-
-            MOCK_EXPECT( automat, GetLogisticEntity ).once().returns( 0 );
-            MOCK_EXPECT( automat2, GetLogisticEntity ).once().returns( 0 );
-            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
-
-            automats.Get( 1 ).Update( message );
-
-            // network serialization
-            MockClientPublisher publisher;
-            MOCK_EXPECT( publisher, SendSimToClient ).once(); // TODO! AutomatCreation
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
-            result->SendCreation( publisher );
-            publisher.verify();
-        }
-
-        // cleaning
-        MOCK_EXPECT( automat, RemoveAutomat ).once();
-        MOCK_EXPECT( automat2, RemoveAutomat ).once();
-        MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
-    }
-}*/
-
-// -----------------------------------------------------------------------------
-// Name: Automat_LogisticLinksCanBeChanged
-// Created: SBO 2010-02-25
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
-{
-    /*// sides
     tools::Resolver< dispatcher::Team_ABC > sides;
     MockSide side( 2 );
     MOCK_EXPECT( side, GetId ).returns( 2 );
@@ -618,27 +540,49 @@ BOOST_AUTO_TEST_CASE( Automat_LogisticLinksCanBeChanged )
             automats.Register( result->GetId(), *result );
         }
         {
-            // change logistic links
-            sword::SimToClient expected;
-            expected.set_context( 0 );
-            sword::ChangeLogisticLinks& message = *expected.mutable_message()->mutable_automat_change_logistic_links();
+            // Link
+            sword::SimToClient expectedLink;
+            expectedLink.set_context( 0 );
+            sword::ChangeLogisticLinks& message = *expectedLink.mutable_message()->mutable_automat_change_logistic_links();
             message.mutable_requester()->mutable_automat()->set_id( 1 );
-            message.add_superior()->mutable_automat()->set_id( 1 );
+            message.add_superior()->mutable_automat()->set_id( 51 );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
-            automats.Get( 1 ).Update( message );
 
+            MockLogisticEntity logisticEntity;
+            MOCK_EXPECT( automat, GetLogisticEntity ).once().returns( &logisticEntity );
+            automats.Get( 1 ).Update( message );
+        
+            // change log supply quotas
+            sword::SimToClient expectedQuotas;
+            expectedQuotas.set_context( 0 );
+            sword::LogSupplyQuotas& message2 = *expectedQuotas.mutable_message()->mutable_log_supply_quotas();
+            message2.mutable_supplied()->mutable_automat()->set_id( 1 );
+            message2.mutable_supplier()->mutable_automat()->set_id( 51 );
+            message2.mutable_quotas()->add_elem();
+            message2.mutable_quotas()->mutable_elem( 0 )->mutable_resource()->set_id( 42 );
+            message2.mutable_quotas()->mutable_elem( 0 )->set_quantity( 5112 );
+            message2.mutable_quotas()->add_elem();
+            message2.mutable_quotas()->mutable_elem( 1 )->mutable_resource()->set_id( 69 );
+            message2.mutable_quotas()->mutable_elem( 1 )->set_quantity( 6945 );
+
+            MOCK_EXPECT( automat, GetLogisticEntity ).once().returns( &logisticEntity );
+            BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
+
+            automats.Get( 1 ).Update( message2 );
+        
             // network serialization
             MockClientPublisher publisher;
-            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 3 ); // TODO! AutomatAttributes, AutomatChangeKnowledgeGroup, AutomatChangeSuperior
-            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expected );
-            MOCK_EXPECT( publisher, SendSimToClient ).once(); // TODO! AutomatOrder (no DecisionalStates if none is set)
-            result->SendFullUpdate( publisher );
+            MOCK_EXPECT( publisher, SendSimToClient ).exactly( 4 ); // TODO! AutomatChangeKnowledgeGroup, AutomatChangeSuperior, AutomatChangeLogisticLinks, AutomatOrder
+            MOCK_EXPECT( logisticEntity, Send ).exactly( 2 ).calls( ParentEntitySender( 51 ) ); // 1 for logistic links, 1 for quotas
+            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expectedLink );
+            MOCK_EXPECT( publisher, SendSimToClient ).once().with( expectedQuotas );
+            automats.Get( 1 ).SendFullUpdate( publisher );
             publisher.verify();
         }
 
         // cleaning
         MOCK_EXPECT( automat, RemoveAutomat ).once();
         MOCK_EXPECT( knowledgeGroup, RemoveAutomat ).once();
-    }*/
-    //$$ TMP
+    }
 }
+

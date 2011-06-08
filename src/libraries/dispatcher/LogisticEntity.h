@@ -10,6 +10,7 @@
 #ifndef __DISPATCHER_LOGISTIC_ENTITY_H__
 #define __DISPATCHER_LOGISTIC_ENTITY_H__
 
+#include "LogisticEntity_ABC.h"
 #include "LogisticHierarchyOwner_ABC.h"
 #include "LogisticHierarchy.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -17,14 +18,8 @@
 #include "tools/Resolver_ABC.h"
 #include "tools/Resolver.h"
 
-namespace kernel
-{
-    class LogisticLevel;
-}
-
 namespace sword
 {
-    class ParentEntity;
     class AutomatCreation;
     class FormationCreation;
 }
@@ -41,7 +36,8 @@ namespace dispatcher
 */
 // Created: AHC 2010-10
 // =============================================================================
-class LogisticEntity : public kernel::Extension_ABC
+class LogisticEntity : public LogisticEntity_ABC
+                     , public kernel::Extension_ABC
                      , public LogisticHierarchyOwner_ABC
 {
 public:

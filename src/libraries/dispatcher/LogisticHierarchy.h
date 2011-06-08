@@ -32,7 +32,7 @@ namespace dispatcher
     class Formation_ABC;
     class DotationQuota;
     class LogisticHierarchyOwner_ABC;
-    class LogisticEntity;
+    class LogisticEntity_ABC;
     class ClientPublisher_ABC;
 
 // =============================================================================
@@ -64,10 +64,10 @@ public:
 private:
     //! @name Tools
     //@{
-    LogisticEntity* FindLogisticEntity( const sword::ParentEntity& msg ) const;
-    LogisticLink*   FindLogisticLink  ( const LogisticEntity& superior ) const;
-    void            UpdateQuotas      ( tools::Resolver< DotationQuota >& quotas, const sword::SeqOfDotationQuota& msg );
-    void            SendQuotas        ( ClientPublisher_ABC& publisher, const tools::Resolver< DotationQuota >& quotas, const LogisticEntity& supplier ) const;
+    LogisticEntity_ABC* FindLogisticEntity( const sword::ParentEntity& msg ) const;
+    LogisticLink*       FindLogisticLink  ( const LogisticEntity_ABC& superior ) const;
+    void                UpdateQuotas      ( tools::Resolver< DotationQuota >& quotas, const sword::SeqOfDotationQuota& msg );
+    void                SendQuotas        ( ClientPublisher_ABC& publisher, const tools::Resolver< DotationQuota >& quotas, const LogisticEntity_ABC& supplier ) const;
     //@}
 
 private:

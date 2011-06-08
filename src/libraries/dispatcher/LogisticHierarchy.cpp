@@ -52,7 +52,7 @@ void LogisticHierarchy::DoUpdate( const sword::ChangeLogisticLinks& msg )
     superiorLinks_.clear();
     BOOST_FOREACH( const sword::ParentEntity& parentEntity, msg.superior() )
     {
-        const LogisticEntity* superior = FindLogisticEntity( parentEntity );
+        const LogisticEntity_ABC* superior = FindLogisticEntity( parentEntity );
         assert( superior );
         superiorLinks_.push_back( boost::shared_ptr< LogisticLink >( new LogisticLink( owner_, *superior ) ) );
     }
@@ -64,7 +64,7 @@ void LogisticHierarchy::DoUpdate( const sword::ChangeLogisticLinks& msg )
 // -----------------------------------------------------------------------------
 void LogisticHierarchy::DoUpdate( const sword::LogSupplyQuotas& msg )
 {
-    LogisticEntity* pSupplier = FindLogisticEntity( msg.supplier() );
+    LogisticEntity_ABC* pSupplier = FindLogisticEntity( msg.supplier() );
     assert( pSupplier );
     LogisticLink* link = FindLogisticLink( *pSupplier );
     if( link )
@@ -96,7 +96,7 @@ void LogisticHierarchy::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // Name: LogisticHierarchy::FindLogisticEntity
 // Created: NLD 2011-01-17
 // -----------------------------------------------------------------------------
-LogisticEntity* LogisticHierarchy::FindLogisticEntity( const sword::ParentEntity& msg ) const
+LogisticEntity_ABC* LogisticHierarchy::FindLogisticEntity( const sword::ParentEntity& msg ) const
 {
     if( msg.has_automat() )
         return automats_.Find( msg.automat().id() )->GetLogisticEntity();
@@ -111,7 +111,7 @@ LogisticEntity* LogisticHierarchy::FindLogisticEntity( const sword::ParentEntity
 // Name: LogisticHierarchy::FindLogisticLink
 // Created: NLD 2011-01-17
 // -----------------------------------------------------------------------------
-LogisticLink* LogisticHierarchy::FindLogisticLink( const LogisticEntity& superior ) const
+LogisticLink* LogisticHierarchy::FindLogisticLink( const LogisticEntity_ABC& superior ) const
 {
     BOOST_FOREACH( boost::shared_ptr< LogisticLink > link, superiorLinks_ )
     {

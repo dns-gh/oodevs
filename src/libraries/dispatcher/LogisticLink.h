@@ -22,7 +22,7 @@ namespace sword
 namespace dispatcher
 {
     class LogisticHierarchyOwner_ABC;
-    class LogisticEntity;
+    class LogisticEntity_ABC;
     class ClientPublisher_ABC;
     class DotationQuota;
 
@@ -37,7 +37,7 @@ class LogisticLink : private boost::noncopyable
 public:
     //! @name Constructor/destructor
     //@{
-     LogisticLink( const LogisticHierarchyOwner_ABC& owner, const LogisticEntity& superior );
+     LogisticLink( const LogisticHierarchyOwner_ABC& owner, const LogisticEntity_ABC& superior );
     ~LogisticLink();
     //@}
 
@@ -49,14 +49,14 @@ public:
 
     //! @name Accessors
     //@{
-    const LogisticEntity& GetSuperior() const { return superior_; }
+    const LogisticEntity_ABC& GetSuperior() const { return superior_; }
     //@}
 
 private:
     //! @name Member data
     //@{
     const LogisticHierarchyOwner_ABC& owner_;
-    const LogisticEntity& superior_;
+    const LogisticEntity_ABC& superior_;
     tools::Resolver< DotationQuota > quotas_;
     //@}
 };

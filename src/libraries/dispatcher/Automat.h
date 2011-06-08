@@ -66,7 +66,7 @@ public:
     virtual const kernel::AutomatType& GetType() const;
     virtual bool IsEngaged() const;
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    virtual LogisticEntity* GetLogisticEntity() const;
+    virtual LogisticEntity_ABC* GetLogisticEntity() const;
     virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
@@ -131,7 +131,6 @@ private:
     sword::EnumMeetingEngagementStatus nCloseCombatState_;
     sword::EnumOperationalStatus nOperationalState_;
     sword::RulesOfEngagement_Value nRoe_;
-    kernel::Automat_ABC* pTC2_;
     std::auto_ptr< LogisticEntity > logisticEntity_;
     LogisticHierarchy logisticHierarchy_;
     std::auto_ptr< AutomatOrder > order_;
