@@ -367,6 +367,7 @@
                   dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
+                  lib${ant.project.name}_ENT-${platform}-mt,
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
                   lib${ant.project.name}_resource_network-${platform}-mt@{suffix},
