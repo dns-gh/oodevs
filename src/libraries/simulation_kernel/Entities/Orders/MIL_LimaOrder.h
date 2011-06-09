@@ -11,6 +11,7 @@
 #define __MIL_LimaOrder_h_
 
 #include "MT_Tools/MT_Vector2DTypes.h"
+#include <boost/serialization/export.hpp>
 
 namespace sword
 {
@@ -21,6 +22,8 @@ class MT_Line;
 class MIL_LimaFunction;
 class TER_Localisation;
 struct ASN1T_LimaOrder;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 /** @class  MIL_LimaOrder
@@ -34,12 +37,13 @@ public:
     //! @name Types
     //@{
     typedef std::set< const MIL_LimaFunction* > T_LimaFunctions;
-    typedef T_LimaFunctions::const_iterator     CIT_LimaFunctions;
+    typedef T_LimaFunctions::const_iterator   CIT_LimaFunctions;
     //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_LimaOrder();
     explicit MIL_LimaOrder( const sword::PhaseLineOrder& asn );
     virtual ~MIL_LimaOrder();
     //@}
@@ -73,17 +77,26 @@ public:
     void Serialize( sword::PhaseLineOrder& asn ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& file, const unsigned int );
+    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
+    //@}
+
 private:
-    unsigned int            nID_;
+    unsigned int nID_;
     boost::shared_ptr< TER_Localisation > localisation_;
     T_LimaFunctions functions_;
-    bool            bFlag_;
-    bool            bScheduleFlag_;
-    unsigned int            nSchedule_;
+    bool bFlag_;
+    bool bScheduleFlag_;
+    unsigned int nSchedule_;
 
 private:
     static unsigned int nNextID_;
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_LimaOrder )
 
 typedef std::vector< MIL_LimaOrder  > T_LimaVector;
 typedef T_LimaVector::iterator        IT_LimaVector;

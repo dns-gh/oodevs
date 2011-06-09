@@ -38,12 +38,10 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_TirIndirectParameter( const MIL_TirIndirectParameter& );            //!< Copy constructor
-    MIL_TirIndirectParameter& operator=( const MIL_TirIndirectParameter& ); //!< Assignment operator
-    //@}
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@
 
 private:
     //! @name Member data
@@ -51,5 +49,7 @@ private:
     int data_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_TirIndirectParameter )
 
 #endif // __MIL_TirIndirectParameter_h_

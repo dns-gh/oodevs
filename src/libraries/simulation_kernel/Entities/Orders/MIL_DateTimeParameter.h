@@ -25,6 +25,7 @@ class MIL_DateTimeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_DateTimeParameter();
     explicit MIL_DateTimeParameter( const sword::DateTime& asn );
     virtual ~MIL_DateTimeParameter();
     //@}
@@ -40,11 +41,9 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_DateTimeParameter( const MIL_DateTimeParameter& );            //!< Copy constructor
-    MIL_DateTimeParameter& operator=( const MIL_DateTimeParameter& ); //!< Assignment operator
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -53,5 +52,7 @@ private:
     unsigned int dateTime_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_DateTimeParameter )
 
 #endif // __MIL_DateTimeParameter_h_

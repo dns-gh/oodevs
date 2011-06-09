@@ -23,6 +23,7 @@ class MIL_BoolParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_BoolParameter();
     explicit MIL_BoolParameter( bool );
     virtual ~MIL_BoolParameter();
     //@}
@@ -38,11 +39,9 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_BoolParameter( const MIL_BoolParameter& );            //!< Copy constructor
-    MIL_BoolParameter& operator=( const MIL_BoolParameter& ); //!< Assignment operator
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -51,5 +50,7 @@ private:
     bool value_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_BoolParameter )
 
 #endif // __MIL_BoolParameter_h_

@@ -13,13 +13,24 @@
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PolygonParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PolygonParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_PolygonParameter::MIL_PolygonParameter()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PolygonParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
 MIL_PolygonParameter::MIL_PolygonParameter( const sword::Polygon& asn )
     : pPolygon_( new TER_Localisation() )
-    , valid_( false )
+    , valid_   ( false )
 {
     valid_ = NET_ASN_Tools::ReadPolygon( asn, *pPolygon_ );
 }
@@ -70,4 +81,16 @@ bool MIL_PolygonParameter::ToElement( sword::MissionParameter_Value& elem ) cons
 bool MIL_PolygonParameter::IsValid() const
 {
     return valid_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PolygonParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_PolygonParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & pPolygon_
+         & valid_;
 }

@@ -11,6 +11,7 @@
 #define __MIL_BaseParameter_h_
 
 #include "MIL_MissionParameter_ABC.h"
+#include <boost/serialization/export.hpp>
 
 // =============================================================================
 /** @class  MIL_BaseParameter
@@ -30,7 +31,6 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToList( ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& ) const;
-
     virtual bool ToBool( bool& ) const;
     virtual bool ToId( int& ) const;
     virtual bool ToString( std::string& ) const;
@@ -74,12 +74,15 @@ public:
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param );
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_BaseParameter( const MIL_BaseParameter& );            //!< Copy constructor
-    MIL_BaseParameter& operator=( const MIL_BaseParameter& ); //!< Assignment operator
+    template< typename Archive > void serialize( Archive& file, const unsigned int )
+    {
+        file & boost::serialization::base_object< MIL_MissionParameter_ABC >( *this );
+    }
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_BaseParameter )
 
 #endif // __MIL_BaseParameter_h_

@@ -28,6 +28,7 @@ class MIL_ResourceNetworkParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_ResourceNetworkParameter();
     explicit MIL_ResourceNetworkParameter( const sword::ResourceNetworkElement& message );
     explicit MIL_ResourceNetworkParameter( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
     virtual ~MIL_ResourceNetworkParameter();
@@ -44,13 +45,10 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_ResourceNetworkParameter( const MIL_ResourceNetworkParameter& );            //!< Copy constructor
-    MIL_ResourceNetworkParameter& operator=( const MIL_ResourceNetworkParameter& ); //!< Assignment operator
-    //@}
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@
 
 private:
     //! @name Member data
@@ -58,5 +56,7 @@ private:
     boost::shared_ptr< DEC_ResourceNetwork > pResourceNetwork_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_ResourceNetworkParameter )
 
 #endif // __MIL_ResourceNetworkParameter_h_

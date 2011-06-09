@@ -23,6 +23,7 @@ class MIL_PolygonParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_PolygonParameter();
     explicit MIL_PolygonParameter( const sword::Polygon& );
     virtual ~MIL_PolygonParameter();
     //@}
@@ -39,12 +40,10 @@ public:
     virtual bool IsValid() const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_PolygonParameter( const MIL_PolygonParameter& );            //!< Copy constructor
-    MIL_PolygonParameter& operator=( const MIL_PolygonParameter& ); //!< Assignment operator
-    //@}
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@
 
 private:
     //! @name Member data
@@ -53,5 +52,7 @@ private:
     bool valid_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_PolygonParameter )
 
 #endif // __MIL_PolygonParameter_h_

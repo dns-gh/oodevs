@@ -11,6 +11,17 @@
 #include "MIL_AtlasNatureParameter.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AtlasNatureParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AtlasNatureParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_AtlasNatureParameter::MIL_AtlasNatureParameter()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AtlasNatureParameter constructor
 // Created: LDC 2009-05-26
@@ -66,4 +77,15 @@ bool MIL_AtlasNatureParameter::ToElement( sword::MissionParameter_Value& elem ) 
 {
     elem.mutable_nature()->set_flags( nature_ );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AtlasNatureParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_AtlasNatureParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & nature_;
 }

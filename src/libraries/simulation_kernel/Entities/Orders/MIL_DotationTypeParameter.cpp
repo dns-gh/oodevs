@@ -13,6 +13,18 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DotationTypeParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationTypeParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_DotationTypeParameter::MIL_DotationTypeParameter()
+    : pCategory_( 0 )
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationTypeParameter constructor
 // Created: LDC 2009-06-05
@@ -71,4 +83,15 @@ bool MIL_DotationTypeParameter::ToElement( sword::MissionParameter_Value& elem )
         return false;
     elem.mutable_resourcetype()->set_id( pCategory_->GetMosID() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationTypeParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_DotationTypeParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & pCategory_;
 }

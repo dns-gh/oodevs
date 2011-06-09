@@ -31,6 +31,7 @@ class MIL_UrbanBlockParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_UrbanBlockParameter();
              MIL_UrbanBlockParameter( const sword::UrbanObjectKnowledgeId& asn, MIL_EntityManager_ABC& entityManager );
     explicit MIL_UrbanBlockParameter( UrbanObjectWrapper* pUrbanBlock );
     virtual ~MIL_UrbanBlockParameter();
@@ -47,12 +48,10 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_UrbanBlockParameter( const MIL_UrbanBlockParameter& );            //!< Copy constructor
-    MIL_UrbanBlockParameter& operator=( const MIL_UrbanBlockParameter& ); //!< Assignment operator
-    //@}
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@
 
 private:
     //! @name Member data
@@ -60,5 +59,7 @@ private:
     UrbanObjectWrapper* pUrbanBlock_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_UrbanBlockParameter )
 
 #endif // __MIL_UrbanBlockParameter_h_

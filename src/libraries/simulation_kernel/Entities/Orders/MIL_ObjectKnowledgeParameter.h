@@ -26,6 +26,7 @@ class MIL_ObjectKnowledgeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_ObjectKnowledgeParameter();
     explicit MIL_ObjectKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Object > pObjectKnowledge );
              MIL_ObjectKnowledgeParameter( const sword::ObjectKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_ObjectKnowledgeParameter();
@@ -42,6 +43,11 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -55,5 +61,8 @@ private:
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_ObjectKnowledgeParameter )
+
 
 #endif // __MIL_ObjectKnowledgeParameter_h_

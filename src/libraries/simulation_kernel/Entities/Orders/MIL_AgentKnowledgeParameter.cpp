@@ -11,8 +11,20 @@
 #include "MIL_AgentKnowledgeParameter.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Network/NET_ASN_Tools.h"
-#include "protocol/Protocol.h"
 #include "Network/NET_AsnException.h"
+#include "protocol/Protocol.h"
+#include "Checkpoints/SerializationTools.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentKnowledgeParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentKnowledgeParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentKnowledgeParameter constructor
@@ -72,4 +84,15 @@ bool MIL_AgentKnowledgeParameter::ToElement( sword::MissionParameter_Value& elem
 {
     elem.mutable_agentknowledge()->set_id( pKnowledgeAgent_->GetID() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentKnowledgeParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_AgentKnowledgeParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & pKnowledgeAgent_;
 }

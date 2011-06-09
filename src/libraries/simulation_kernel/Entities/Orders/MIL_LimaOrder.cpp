@@ -14,9 +14,22 @@
 #include "Network/NET_AsnException.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "MT_Tools/MT_Line.h"
+#include "MIL.h"
+#include "Checkpoints/SerializationTools.h"
 #include "protocol/Protocol.h"
 
 unsigned int MIL_LimaOrder::nNextID_ = 0;
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LimaOrder )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder constructor
+// Created: LGY 2011-06-07
+// -----------------------------------------------------------------------------
+MIL_LimaOrder::MIL_LimaOrder()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LimaOrder constructor
@@ -196,4 +209,78 @@ unsigned int MIL_LimaOrder::GetID() const
 const MIL_LimaOrder::T_LimaFunctions& MIL_LimaOrder::GetFunctions() const
 {
     return functions_;
+}
+
+namespace boost
+{
+    namespace serialization
+    {
+        typedef std::set< const MIL_LimaFunction* > T_LimaFunctions;
+        typedef T_LimaFunctions::const_iterator   CIT_LimaFunctions;
+
+        // =============================================================================
+        // T_LimaFunctions
+        // =============================================================================
+        template< typename Archive >
+        inline
+            void serialize( Archive& file, T_LimaFunctions& functions, const unsigned int nVersion )
+        {
+            split_free( file, functions, nVersion );
+        }
+
+        template< typename Archive >
+        void save( Archive& file, const T_LimaFunctions& functions, const unsigned int )
+        {
+            std::size_t size = functions.size();
+            file << size;
+            for ( CIT_LimaFunctions it = functions.begin(); it != functions.end(); ++it )
+            {
+                unsigned id = (*it)->GetID();
+                file << id;
+            }
+        }
+
+        template< typename Archive >
+        void load( Archive& file, T_LimaFunctions& functions, const unsigned int )
+        {
+            std::size_t nNbr;
+            file >> nNbr;
+            while ( nNbr-- )
+            {
+                unsigned int nID;
+                file >> nID;
+                functions.insert( MIL_LimaFunction::Find( nID ) );
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::load
+// Created: LGY 2011-06-07
+// -----------------------------------------------------------------------------
+void MIL_LimaOrder::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    file >> nID_
+         >> localisation_
+         >> functions_
+         >> bFlag_
+         >> bScheduleFlag_
+         >> nSchedule_
+         >> nNextID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LimaOrder::save
+// Created: LGY 2011-06-07
+// -----------------------------------------------------------------------------
+void MIL_LimaOrder::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << nID_
+         << localisation_
+         << functions_
+         << bFlag_
+         << bScheduleFlag_
+         << nSchedule_
+         << nNextID_;
 }

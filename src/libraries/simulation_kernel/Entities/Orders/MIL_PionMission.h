@@ -45,11 +45,19 @@ public:
 
     //! @name Operations
     //@{
-    virtual void             Start               ( boost::shared_ptr< MIL_Mission_ABC > self );
-    virtual void             Stop                ( boost::shared_ptr< MIL_Mission_ABC > self );
-    virtual bool             IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
+    virtual void Start( boost::shared_ptr< MIL_Mission_ABC > self );
+    virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > self );
+    virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
+    virtual void AffectDirection( const MT_Vector2D& direction );
+
     boost::shared_ptr< MIL_Mission_ABC > CreateCopy( MIL_AgentPion& target ) const;
-    virtual void             AffectDirection     ( const MT_Vector2D& direction );
+    //@}
+
+    //! @name Serialization
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& file, const unsigned int );
+    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
     //@}
 
 private:
@@ -58,15 +66,28 @@ private:
     MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rhs );
     //@}
 
+private:
+    //! @name Serialization
+    //@{
+    template< typename Archive > friend void save_construct_data( Archive& archive, const MIL_PionMission* mission, const unsigned int version );
+    template< typename Archive > friend void load_construct_data( Archive& archive, MIL_PionMission* mission, const unsigned int version );
+    //@}
+
+private:
     //! @name Network
     //@{
-           void Send         () const;
+    void Send() const;
     static void SendNoMission( const MIL_AgentPion& pion );
     //@}
 
 private:
+    //! @name Member Data
+    //@{
     MIL_AgentPion& pion_;
-    bool           bDIABehaviorActivated_;
+    bool bDIABehaviorActivated_;
+    //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_PionMission )
 
 #endif // __MIL_PionMission_h_

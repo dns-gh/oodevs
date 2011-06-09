@@ -12,11 +12,14 @@
 #define __MIL_Fuseau_h_
 
 #include "simulation_terrain/TER_Polygon.h"
+#include "MIL.h"
 
 class TER_Localisation;
 class TER_LimitData;
 class MIL_LimaOrder;
 class DEC_Objective;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 //=============================================================================
 // Created: NLD 2003-01-14
@@ -31,8 +34,8 @@ public:
     //@}
 
 public:
-              MIL_Fuseau();
-     explicit MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima = 0, const MIL_LimaOrder* pEndMissionLima = 0 );
+             MIL_Fuseau();
+             MIL_Fuseau( const MT_Vector2D& vOrientationRefPos, const T_PointVector& leftLimit, const T_PointVector& rightLimit, const MIL_LimaOrder* pBeginMissionLima = 0, const MIL_LimaOrder* pEndMissionLima = 0 );
     virtual ~MIL_Fuseau();
 
     //! @name Init
@@ -93,6 +96,13 @@ public:
     bool        operator!=( const MIL_Fuseau& rhs ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& file, const unsigned int );
+    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
+    //@}
+
 private:
     //! @name Types
     //@{
@@ -127,10 +137,12 @@ private:
     MT_Vector2D vOrientationRefPos_;
     MT_Vector2D vStartGlobalDirection_;
     MT_Vector2D vEndGlobalDirection_;
-    MT_Line     globalDirectionLine_;
+    MT_Line globalDirectionLine_;
 
 private:
     static unsigned int nNbrMeterPerSample_;
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_Fuseau )
 
 #endif // __MIL_Fuseau_h_

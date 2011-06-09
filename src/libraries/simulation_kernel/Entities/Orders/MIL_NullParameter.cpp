@@ -11,6 +11,9 @@
 #include "MIL_NullParameter.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
+#include "MIL.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_NullParameter )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_NullParameter constructor
@@ -55,4 +58,22 @@ bool MIL_NullParameter::ToElement( sword::MissionParameter_Value& ) const
 bool MIL_NullParameter::ToList( std::vector< sword::MissionParameter_Value >& ) const
 {
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NullParameter::load
+// Created: LGY 2011-06-07
+// -----------------------------------------------------------------------------
+void MIL_NullParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_NullParameter::save
+// Created: LGY 2011-06-07
+// -----------------------------------------------------------------------------
+void MIL_NullParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this );
 }

@@ -23,6 +23,7 @@ class MIL_DirectionParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_DirectionParameter();
     explicit MIL_DirectionParameter( const sword::Heading& heading );
     explicit MIL_DirectionParameter( boost::shared_ptr< MT_Vector2D >& dir );
     virtual ~MIL_DirectionParameter();
@@ -39,11 +40,9 @@ public:
     virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_DirectionParameter( const MIL_DirectionParameter& );            //!< Copy constructor
-    MIL_DirectionParameter& operator=( const MIL_DirectionParameter& ); //!< Assignment operator
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -52,5 +51,7 @@ private:
     int heading_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_DirectionParameter )
 
 #endif // __MIL_DirectionParameter_h_

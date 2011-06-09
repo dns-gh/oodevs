@@ -26,6 +26,7 @@ class MIL_PopulationKnowledgeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_PopulationKnowledgeParameter();
     explicit MIL_PopulationKnowledgeParameter( DEC_Knowledge_Population* pKnowledge );
              MIL_PopulationKnowledgeParameter( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_PopulationKnowledgeParameter();
@@ -42,12 +43,10 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_PopulationKnowledgeParameter( const MIL_PopulationKnowledgeParameter& );            //!< Copy constructor
-    MIL_PopulationKnowledgeParameter& operator=( const MIL_PopulationKnowledgeParameter& ); //!< Assignment operator
-    //@}
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@
 
 private:
     //! @name Member data
@@ -55,5 +54,7 @@ private:
     DEC_Knowledge_Population* pKnowledgePopulation_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_PopulationKnowledgeParameter )
 
 #endif // __MIL_PopulationKnowledgeParameter_h_

@@ -13,6 +13,8 @@
 #include "MIL_BaseParameter.h"
 
 class PHY_ComposanteTypePion;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 /** @class  MIL_EquipmentTypeParameter
@@ -25,7 +27,8 @@ class MIL_EquipmentTypeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_EquipmentTypeParameter( const sword::EquipmentType & asn );
+             MIL_EquipmentTypeParameter();
+    explicit MIL_EquipmentTypeParameter( const sword::EquipmentType& asn );
     explicit MIL_EquipmentTypeParameter( const PHY_ComposanteTypePion* pEquipmentType );
     virtual ~MIL_EquipmentTypeParameter();
     //@}
@@ -41,11 +44,11 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_EquipmentTypeParameter( const MIL_EquipmentTypeParameter& );            //!< Copy constructor
-    MIL_EquipmentTypeParameter& operator=( const MIL_EquipmentTypeParameter& ); //!< Assignment operator
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
 private:
@@ -54,5 +57,7 @@ private:
     const PHY_ComposanteTypePion* pType_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_EquipmentTypeParameter )
 
 #endif // __MIL_EquipmentTypeParameter_h_

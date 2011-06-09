@@ -12,6 +12,18 @@
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
+#include "Checkpoints/SerializationTools.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectKnowledgeParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectKnowledgeParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectKnowledgeParameter constructor
@@ -71,4 +83,15 @@ bool MIL_ObjectKnowledgeParameter::ToElement( sword::MissionParameter_Value& ele
 {
     elem.mutable_objectknowledge()->set_id( pKnowledgeObject_->GetID() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectKnowledgeParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_ObjectKnowledgeParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & pKnowledgeObject_;
 }

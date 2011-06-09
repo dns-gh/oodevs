@@ -12,6 +12,17 @@
 #include "MT_Tools/MT_Vector2D.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DirectionParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DirectionParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_DirectionParameter::MIL_DirectionParameter()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_DirectionParameter constructor
 // Created: LDC 2009-05-26
@@ -72,4 +83,15 @@ bool MIL_DirectionParameter::ToElement( sword::MissionParameter_Value& elem ) co
 {
     elem.mutable_heading()->set_heading( heading_ );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DirectionParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_DirectionParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & heading_;
 }

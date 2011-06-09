@@ -11,6 +11,17 @@
 #include "MIL_RealParameter.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_RealParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_RealParameter::MIL_RealParameter()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_RealParameter constructor
 // Created: LDC 2009-05-22
@@ -57,4 +68,15 @@ bool MIL_RealParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     elem.set_areal( value_ );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_RealParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_RealParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & value_;
 }

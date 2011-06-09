@@ -36,7 +36,7 @@ public:
     //@{
     explicit MIL_OrderContext( bool present = false );
              MIL_OrderContext( const sword::MissionParameters& asn, const MT_Vector2D& orientationReference );
-             MIL_OrderContext( const MIL_OrderContext& rhs );
+    explicit MIL_OrderContext( const MIL_OrderContext& rhs );
     virtual ~MIL_OrderContext();
     //@}
 
@@ -58,6 +58,11 @@ public:
     void Serialize( sword::MissionParameters& asn ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
@@ -76,10 +81,15 @@ private:
     //@}
 
 private:
-    bool                 hasContext_;
-    T_LimaVector         limas_;
-    MIL_Fuseau           fuseau_;
-    MT_Vector2D          dirDanger_;
+    //! @name Member Data
+    //@{
+    bool hasContext_;
+    T_LimaVector limas_;
+    MIL_Fuseau fuseau_;
+    MT_Vector2D dirDanger_;
+    //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_OrderContext )
 
 #endif // __MIL_OrderContext_h_

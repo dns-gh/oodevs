@@ -14,6 +14,17 @@
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_UrbanBlockParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanBlockParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2009-11-02
@@ -75,4 +86,15 @@ bool MIL_UrbanBlockParameter::ToElement( sword::MissionParameter_Value& elem ) c
 {
     elem.mutable_urbanknowledge()->set_id( pUrbanBlock_->GetID() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanBlockParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_UrbanBlockParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & pUrbanBlock_;
 }

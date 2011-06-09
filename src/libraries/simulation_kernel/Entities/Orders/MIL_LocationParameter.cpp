@@ -12,6 +12,17 @@
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LocationParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LocationParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_LocationParameter::MIL_LocationParameter()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_LocationParameter constructor
 // Created: LDC 2009-05-25
@@ -95,4 +106,15 @@ bool MIL_LocationParameter::ToElement( sword::MissionParameter_Value& elem ) con
 {
     NET_ASN_Tools::WriteLocation( *pLocalisation_, *elem.mutable_location() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LocationParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_LocationParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & pLocalisation_;
 }

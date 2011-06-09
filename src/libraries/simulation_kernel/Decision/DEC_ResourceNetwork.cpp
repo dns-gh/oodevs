@@ -11,6 +11,17 @@
 #include "DEC_ResourceNetwork.h"
 #include "protocol/protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_ResourceNetwork )
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetwork constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+DEC_ResourceNetwork::DEC_ResourceNetwork()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_ResourceNetwork constructor
 // Created: JSR 2011-05-03
@@ -67,4 +78,15 @@ const std::string& DEC_ResourceNetwork::GetTypeName() const
 {
     static const std::string result( "boost::shared_ptr<class DEC_ResourceNetwork>" );
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetwork::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void DEC_ResourceNetwork::serialize( Archive& file, const unsigned int )
+{
+    file & objectId_
+         & resource_;
 }

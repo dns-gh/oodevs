@@ -11,6 +11,8 @@
 #include "MIL_TirIndirectParameter.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_TirIndirectParameter )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_TirIndirectParameter constructor
 // Created: LDC 2009-06-05
@@ -57,4 +59,15 @@ bool MIL_TirIndirectParameter::ToElement( sword::MissionParameter_Value& elem ) 
 {
     elem.mutable_indirectfire()->set_id( data_ );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_TirIndirectParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_TirIndirectParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & data_;
 }

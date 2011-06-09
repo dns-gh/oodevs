@@ -12,6 +12,17 @@
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DateTimeParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DateTimeParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_DateTimeParameter::MIL_DateTimeParameter()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_DateTimeParameter constructor
 // Created: LDC 2009-06-05
@@ -57,4 +68,15 @@ bool MIL_DateTimeParameter::ToElement( sword::MissionParameter_Value& elem ) con
 {
     NET_ASN_Tools::WriteGDH( dateTime_, *elem.mutable_datetime() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DateTimeParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_DateTimeParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & dateTime_;
 }

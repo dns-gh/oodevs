@@ -11,7 +11,20 @@
 #include "MIL_ListParameter.h"
 #include "MIL_MissionParameterFactory.h"
 #include "knowledge/DEC_KnowledgeResolver_ABC.h"
+#include "Checkpoints/SerializationTools.h"
 #include "protocol/Protocol.h"
+#include "MIL.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ListParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ListParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_ListParameter::MIL_ListParameter()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ListParameter constructor
@@ -287,4 +300,24 @@ bool MIL_ListParameter::ToResourceNetworkList( std::vector< boost::shared_ptr< D
 void MIL_ListParameter::Append( boost::shared_ptr< MIL_MissionParameter_ABC > param )
 {
     list_.push_back( param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ListParameter::load
+// Created: LGY 2011-06-07
+// -----------------------------------------------------------------------------
+void MIL_ListParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> list_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ListParameter::save
+// Created: LGY 2011-06-07
+// -----------------------------------------------------------------------------
+void MIL_ListParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << list_;
 }

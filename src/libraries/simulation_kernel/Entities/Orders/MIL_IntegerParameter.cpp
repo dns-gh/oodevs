@@ -11,6 +11,8 @@
 #include "MIL_IntegerParameter.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_IntegerParameter )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_IntegerParameter constructor
 // Created: LDC 2011-05-09
@@ -57,4 +59,15 @@ bool MIL_IntegerParameter::ToElement( sword::MissionParameter_Value& elem ) cons
 {
     elem.set_intvalue( value_ );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntegerParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_IntegerParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & value_;
 }

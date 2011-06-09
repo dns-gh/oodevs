@@ -11,6 +11,18 @@
 #include "MIL_PlannedWorkParameter.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "protocol/Protocol.h"
+#include "Checkpoints/SerializationTools.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PlannedWorkParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PlannedWorkParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_PlannedWorkParameter::MIL_PlannedWorkParameter()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PlannedWorkParameter constructor
@@ -29,7 +41,7 @@ MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const sword::PlannedWork& as
 MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( boost::shared_ptr< DEC_Gen_Object > param )
     : pGenObject_( param )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -68,4 +80,15 @@ bool MIL_PlannedWorkParameter::ToElement( sword::MissionParameter_Value& elem ) 
 {
     pGenObject_->Serialize( *elem.mutable_plannedwork() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PlannedWorkParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_PlannedWorkParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & pGenObject_;
 }

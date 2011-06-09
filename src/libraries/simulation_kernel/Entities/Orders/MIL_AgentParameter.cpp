@@ -15,6 +15,18 @@
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_AgentParameter::MIL_AgentParameter()
+    : pDecision_( 0 )
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentParameter constructor
 // Created: LDC 2009-06-16
@@ -78,4 +90,15 @@ bool MIL_AgentParameter::ToElement( sword::MissionParameter_Value& elem ) const
         return false;
     NET_ASN_Tools::WriteAgent( *pDecision_, *elem.mutable_agent() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_AgentParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & pDecision_;
 }

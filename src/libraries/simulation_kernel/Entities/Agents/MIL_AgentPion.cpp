@@ -87,7 +87,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , bIsPC_               ( xis.attribute< bool >( "command-post", false ) )
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , orderManager_        ( *new MIL_PionOrderManager( *this ) )
+    , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( new MIL_AffinitiesMap( xis ) )
     , pExtensions_         ( new MIL_DictionaryExtensions( xis ) )
@@ -109,7 +109,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , bIsPC_               ( false )
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , orderManager_        ( *new MIL_PionOrderManager( *this ) )
+    , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( new MIL_AffinitiesMap() )
     , pExtensions_         ( new MIL_DictionaryExtensions() )
@@ -127,7 +127,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFac
     , bIsPC_               ( false )
     , pAutomate_           ( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , orderManager_        ( *new MIL_PionOrderManager( *this ) )
+    , pOrderManager_       ( 0 )
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( 0 )
     , pExtensions_         ( 0 )
@@ -185,13 +185,15 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_AffinitiesMap* pAffinities;
     MIL_DictionaryExtensions* pExtensions;
+    MIL_PionOrderManager* pOrderManager;
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file >> const_cast< bool& >( bIsPC_ )
          >> pAutomate_
       // >> actions_ // actions non sauvegardées
          >> pKnowledgeBlackBoard_
          >> pAffinities
-         >> pExtensions;
+         >> pExtensions
+         >> pOrderManager;
     LoadRole< network::NET_RolePion_Dotations >( file, *this );
     LoadRole< PHY_RolePion_Reinforcement >( file, *this );
     LoadRole< PHY_RolePion_Posture >( file, *this );
@@ -227,6 +229,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     RegisterRole( *new PHY_RolePion_TerrainAnalysis( *this ) );
     pAffinities_.reset( pAffinities );
     pExtensions_.reset( pExtensions );
+    pOrderManager_.reset( pOrderManager );
 }
 
 // -----------------------------------------------------------------------------
@@ -238,13 +241,15 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     assert( pType_ );
     const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
+    const MIL_PionOrderManager* const pOrderManager = pOrderManager_.get();
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file << bIsPC_
         << pAutomate_
         // << actions_ // actions non sauvegardées
         << pKnowledgeBlackBoard_
         << pAffinities
-        << pExtensions;
+        << pExtensions
+        << pOrderManager;
     SaveRole< network::NET_RolePion_Dotations >( *this, file );
     SaveRole< PHY_RolePion_Reinforcement >( *this, file );
     SaveRole< PHY_RolePion_Posture >( *this, file );
@@ -330,7 +335,6 @@ MIL_AgentPion::~MIL_AgentPion()
 {
     if( pAutomate_ )
         pAutomate_->UnregisterPion( *this );
-    delete &orderManager_;
     delete pKnowledgeBlackBoard_;
 }
 
@@ -359,7 +363,7 @@ bool MIL_AgentPion::IsNeutralized() const
 void MIL_AgentPion::UpdateKnowledges( int currentTimeStep )
 {
     assert( pKnowledgeBlackBoard_ );
-    pKnowledgeBlackBoard_->Update(currentTimeStep);
+    pKnowledgeBlackBoard_->Update( currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -388,10 +392,10 @@ void MIL_AgentPion::SetPionAsPostCommand()
 void MIL_AgentPion::UpdateDecision( float duration )
 {
     if( IsDead() )
-        orderManager_.CancelMission();
+        pOrderManager_->CancelMission();
     try
     {
-        orderManager_.Update();
+        pOrderManager_->Update();
         GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
     catch( std::runtime_error& e )
@@ -642,7 +646,7 @@ void MIL_AgentPion::SendKnowledge() const
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveOrder( const sword::UnitOrder& msg )
 {
-    orderManager_.OnReceiveMission( msg );
+    pOrderManager_->OnReceiveMission( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -651,7 +655,7 @@ void MIL_AgentPion::OnReceiveOrder( const sword::UnitOrder& msg )
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveFragOrder( const sword::FragOrder& msg )
 {
-    orderManager_.OnReceiveFragOrder( msg );
+    pOrderManager_->OnReceiveFragOrder( msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -673,7 +677,7 @@ void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
     GetRole< PHY_RolePion_UrbanLocation >().MagicMove( vNewPos );
     CancelAllActions();
     GetRole< DEC_RolePion_Decision >().Reset( GetAutomate().GetName() );
-    orderManager_.CancelMission();
+    pOrderManager_->CancelMission();
 }
 
 // -----------------------------------------------------------------------------
@@ -953,7 +957,7 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
 void MIL_AgentPion::OnReceiveMagicSurrender()
 {
     GetRole< surrender::PHY_RoleInterface_Surrender >().NotifySurrendered();
-    orderManager_.CancelMission();
+    pOrderManager_->CancelMission();
     UpdatePhysicalState();
 }
 
@@ -1129,7 +1133,7 @@ bool MIL_AgentPion::IsPC() const
 // -----------------------------------------------------------------------------
 MIL_PionOrderManager& MIL_AgentPion::GetOrderManager()
 {
-    return orderManager_;
+    return *pOrderManager_;
 }
 
 // -----------------------------------------------------------------------------
@@ -1138,7 +1142,7 @@ MIL_PionOrderManager& MIL_AgentPion::GetOrderManager()
 // -----------------------------------------------------------------------------
 const MIL_PionOrderManager& MIL_AgentPion::GetOrderManager() const
 {
-    return orderManager_;
+    return *pOrderManager_;
 }
 
 // -----------------------------------------------------------------------------

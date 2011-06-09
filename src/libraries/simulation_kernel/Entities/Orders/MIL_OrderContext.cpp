@@ -21,6 +21,8 @@
 #include "protocol/Protocol.h"
 #include "meteo/ReadDirections.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_OrderContext )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext constructor
 // Created: SBO 2008-03-03
@@ -65,6 +67,7 @@ MIL_OrderContext::MIL_OrderContext( const MIL_OrderContext& rhs )
 //-----------------------------------------------------------------------------
 MIL_OrderContext::~MIL_OrderContext()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -273,4 +276,17 @@ MIL_LimaOrder* MIL_OrderContext::FindNextScheduledLima()
             pNextLima = &lima;
     }
     return pNextLima;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderContext::serialize
+// Created: LGY 2011-06-07
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_OrderContext::serialize( Archive& file, const unsigned int )
+{
+    file & hasContext_
+         & limas_
+         & fuseau_
+         & dirDanger_;
 }

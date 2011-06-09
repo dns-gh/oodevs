@@ -12,6 +12,9 @@
 
 #include "MIL_BaseParameter.h"
 
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
+
 // =============================================================================
 /** @class  MIL_NullParameter
     @brief  MIL_NullParameter
@@ -38,12 +41,14 @@ public:
     virtual bool ToList( std::vector< sword::MissionParameter_Value >& ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_NullParameter( const MIL_NullParameter& );            //!< Copy constructor
-    MIL_NullParameter& operator=( const MIL_NullParameter& ); //!< Assignment operator
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& file, const unsigned int );
+    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_NullParameter )
 
 #endif // __MIL_NullParameter_h_

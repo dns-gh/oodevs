@@ -12,6 +12,9 @@
 
 #include "MIL_BaseParameter.h"
 
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
+
 // =============================================================================
 /** @class  MIL_LogMedicalPrioritiesParameter
     @brief  MIL_LogMedicalPrioritiesParameter
@@ -23,6 +26,7 @@ class MIL_LogMedicalPrioritiesParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_LogMedicalPrioritiesParameter();
     explicit MIL_LogMedicalPrioritiesParameter( const sword::LogMedicalPriorities& asn );
     virtual ~MIL_LogMedicalPrioritiesParameter();
     //@}
@@ -38,11 +42,11 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_LogMedicalPrioritiesParameter( const MIL_LogMedicalPrioritiesParameter& );            //!< Copy constructor
-    MIL_LogMedicalPrioritiesParameter& operator=( const MIL_LogMedicalPrioritiesParameter& ); //!< Assignment operator
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
 private:
@@ -51,5 +55,7 @@ private:
     T_MedicalPriorityVector priorities_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_LogMedicalPrioritiesParameter )
 
 #endif // __MIL_LogMedicalPrioritiesParameter_h_

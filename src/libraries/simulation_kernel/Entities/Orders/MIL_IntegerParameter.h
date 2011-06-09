@@ -20,7 +20,6 @@
 // =============================================================================
 class MIL_IntegerParameter : public MIL_BaseParameter
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -39,11 +38,9 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_IntegerParameter( const MIL_IntegerParameter& );            //!< Copy constructor
-    MIL_IntegerParameter& operator=( const MIL_IntegerParameter& ); //!< Assignment operator
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -52,5 +49,7 @@ private:
     int value_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_IntegerParameter )
 
 #endif // __MIL_IntegerParameter_h_

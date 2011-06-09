@@ -23,6 +23,7 @@ class MIL_EnumerationParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_EnumerationParameter();
     explicit MIL_EnumerationParameter( int );
     virtual ~MIL_EnumerationParameter();
     //@}
@@ -38,11 +39,9 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_EnumerationParameter( const MIL_EnumerationParameter& );            //!< Copy constructor
-    MIL_EnumerationParameter& operator=( const MIL_EnumerationParameter& ); //!< Assignment operator
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -51,5 +50,7 @@ private:
     int value_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_EnumerationParameter )
 
 #endif // __MIL_EnumerationParameter_h_

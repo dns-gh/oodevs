@@ -12,6 +12,18 @@
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 #include "Tools/MIL_Tools.h"
+#include "Checkpoints/SerializationTools.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PointParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PointParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_PointParameter::MIL_PointParameter()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PointParameter constructor
@@ -76,4 +88,15 @@ bool MIL_PointParameter::ToElement( sword::MissionParameter_Value& elem ) const
 {
     NET_ASN_Tools::WritePoint( *pPoint_, *elem.mutable_point() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PointParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_PointParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & pPoint_;
 }

@@ -10,6 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_BaseParameter.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_BaseParameter )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter constructor
 // Created: LDC 2009-05-20

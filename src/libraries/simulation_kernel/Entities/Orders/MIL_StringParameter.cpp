@@ -11,6 +11,17 @@
 #include "MIL_StringParameter.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_StringParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_StringParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_StringParameter::MIL_StringParameter()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_StringParameter constructor
 // Created: LDC 2009-06-16
@@ -59,3 +70,13 @@ bool MIL_StringParameter::ToElement( sword::MissionParameter_Value& elem ) const
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_StringParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_StringParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & value_;
+}

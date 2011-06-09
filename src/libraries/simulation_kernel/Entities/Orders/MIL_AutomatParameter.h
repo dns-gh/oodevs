@@ -26,6 +26,7 @@ class MIL_AutomatParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_AutomatParameter();
     explicit MIL_AutomatParameter( DEC_AutomateDecision* pDecision );
              MIL_AutomatParameter( const sword::AutomatId&, MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_AutomatParameter();
@@ -42,11 +43,9 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_AutomatParameter( const MIL_AutomatParameter& );            //!< Copy constructor
-    MIL_AutomatParameter& operator=( const MIL_AutomatParameter& ); //!< Assignment operator
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -55,5 +54,7 @@ private:
     DEC_AutomateDecision* pDecision_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_AutomatParameter )
 
 #endif // __MIL_AutomatParameter_h_

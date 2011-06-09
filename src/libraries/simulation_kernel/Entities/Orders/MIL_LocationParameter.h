@@ -24,6 +24,7 @@ class MIL_LocationParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_LocationParameter();
     explicit MIL_LocationParameter( const sword::Location& );
     explicit MIL_LocationParameter( boost::shared_ptr< TER_Localisation > pLocalisation );
     virtual ~MIL_LocationParameter();
@@ -42,11 +43,9 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_LocationParameter( const MIL_LocationParameter& );            //!< Copy constructor
-    MIL_LocationParameter& operator=( const MIL_LocationParameter& ); //!< Assignment operator
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -55,5 +54,7 @@ private:
     boost::shared_ptr< TER_Localisation > pLocalisation_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_LocationParameter )
 
 #endif // __MIL_LocationParameter_h_

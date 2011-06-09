@@ -23,6 +23,7 @@ class MIL_StringParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_StringParameter();
     explicit MIL_StringParameter( const std::string& message );
     virtual ~MIL_StringParameter();
     //@}
@@ -38,12 +39,10 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_StringParameter( const MIL_StringParameter& );            //!< Copy constructor
-    MIL_StringParameter& operator=( const MIL_StringParameter& ); //!< Assignment operator
-    //@}
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@
 
 private:
     //! @name Member data
@@ -51,5 +50,7 @@ private:
     std::string value_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_StringParameter )
 
 #endif // __MIL_StringParameter_h_

@@ -9,13 +9,22 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Gen_Object.h"
-#include "MIL_AgentServer.h"
-#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Gen_Object )
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+DEC_Gen_Object::DEC_Gen_Object()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Gen_Object constructor
@@ -107,4 +116,19 @@ void DEC_Gen_Object::Serialize( sword::PlannedWork& msg ) const
     msg.set_density( static_cast< float >( rDensity_ ) );
     msg.set_activity_time( nMinesActivityTime_ );
     NET_ASN_Tools::WriteLocation( localisation_, *msg.mutable_position() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void DEC_Gen_Object::serialize( Archive& file, const unsigned int )
+{
+    file & type_
+         & localisation_
+         & pObstacleType_
+         & rDensity_
+         & nMinesActivityTime_;
+         & const_cast< MIL_Automate*& >( pTC2_ );
 }

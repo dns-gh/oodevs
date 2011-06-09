@@ -20,6 +20,9 @@
 #include "protocol/Protocol.h"
 #include "simulation_kernel/Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Checkpoints/SerializationTools.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Mission_ABC )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC constructor
@@ -362,3 +365,42 @@ MIL_Automate& MIL_Mission_ABC::GetAutomate() const
     throw std::runtime_error( "Invalid call of this Mission class" );
 }
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_Mission_ABC* mission, const unsigned int /*version*/ )
+{
+    const DEC_KnowledgeResolver_ABC* const resolver = &mission->knowledgeResolver_;
+    archive << resolver
+            << mission->type_.GetId();
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_Mission_ABC* mission, const unsigned int /*version*/ )
+{
+    DEC_KnowledgeResolver_ABC* resolver = 0;
+    int id = -1;
+    archive >> resolver
+            >> id;
+    MIL_MissionType_ABC* type = MIL_PionMissionType::Find( id );
+    assert( type );
+    ::new( mission )MIL_Mission_ABC( *type, *resolver );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::load
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+void MIL_Mission_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    file >> context_
+         >> parameters_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::save
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+void MIL_Mission_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << context_
+         << parameters_;
+}

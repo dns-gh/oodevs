@@ -16,17 +16,20 @@
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Orders/MIL_MissionType_ABC.h"
+#include "Entities/Orders/MIL_PionMissionType.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PionMission )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PionMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const sword::UnitOrder& asn )
-    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parameters(), pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
+    : MIL_Mission_ABC( type, pion.GetKnowledge(), asn.parameters(), pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -38,7 +41,7 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const boost::shared_ptr< MIL_Mission_ABC > parent )
-    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), parent )
+    : MIL_Mission_ABC( type, pion.GetKnowledge(), parent )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -50,7 +53,7 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
 // Created: NLD 2006-11-24
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion )
-    : MIL_Mission_ABC       ( type, pion.GetKnowledge() )
+    : MIL_Mission_ABC( type, pion.GetKnowledge() )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -62,7 +65,7 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_PionMission::MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rhs )
-    : MIL_Mission_ABC       ( pion.GetKnowledge(), rhs )
+    : MIL_Mission_ABC( pion.GetKnowledge(), rhs )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -167,4 +170,43 @@ void MIL_PionMission::AffectDirection( const MT_Vector2D& direction )
 MIL_AgentPion& MIL_PionMission::GetPion() const
 {
     return pion_;
+}
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_PionMission* mission, const unsigned int /*version*/ )
+{
+    const MIL_AgentPion* const pion = &mission->pion_;
+    unsigned int id = mission->type_.GetID();
+    archive << pion
+            << id;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_PionMission* mission, const unsigned int /*version*/ )
+{
+    MIL_AgentPion* pion = 0;
+    unsigned int id = 0;
+    archive >> pion
+            >> id;
+    const MIL_MissionType_ABC* type = MIL_PionMissionType::Find( id );
+    assert( type );
+    ::new( mission )MIL_PionMission( *type, *pion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PionMission::load
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+void MIL_PionMission::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    file >> boost::serialization::base_object< MIL_Mission_ABC >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PionMission::save
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+void MIL_PionMission::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_Mission_ABC >( *this );
 }

@@ -13,6 +13,8 @@
 #include "MIL_BaseParameter.h"
 
 class DEC_KnowledgeResolver_ABC;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 /** @class  MIL_ListParameter
@@ -26,6 +28,7 @@ class MIL_ListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_ListParameter();
              MIL_ListParameter( const DEC_KnowledgeResolver_ABC& resolver, const ::google::protobuf::RepeatedPtrField< ::sword::MissionParameter_Value >& list );
     explicit MIL_ListParameter( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& paramList );
     virtual ~MIL_ListParameter();
@@ -52,11 +55,11 @@ public:
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param );
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_ListParameter( const MIL_ListParameter& );            //!< Copy constructor
-    MIL_ListParameter& operator=( const MIL_ListParameter& ); //!< Assignment operator
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& file, const unsigned int );
+    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
     //@}
 
 private:
@@ -72,5 +75,8 @@ private:
     T_ParameterList list_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_ListParameter )
+
 
 #endif // __MIL_ListParameter_h_

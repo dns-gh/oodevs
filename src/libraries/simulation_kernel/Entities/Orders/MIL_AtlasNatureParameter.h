@@ -28,6 +28,7 @@ class MIL_AtlasNatureParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_AtlasNatureParameter();
     explicit MIL_AtlasNatureParameter( const sword::Nature& );
     explicit MIL_AtlasNatureParameter( int nature );
     virtual ~MIL_AtlasNatureParameter();
@@ -44,11 +45,9 @@ public:
     virtual bool ToNatureAtlas( int& atlas ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_AtlasNatureParameter( const MIL_AtlasNatureParameter& );            //!< Copy constructor
-    MIL_AtlasNatureParameter& operator=( const MIL_AtlasNatureParameter& ); //!< Assignment operator
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -57,5 +56,7 @@ private:
     int nature_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_AtlasNatureParameter )
 
 #endif // __MIL_AtlasNatureParameter_h_

@@ -12,6 +12,9 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_OrderManager_ABC.h"
 #include "MIL_Mission_ABC.h"
+#include "Checkpoints/SerializationTools.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_OrderManager_ABC )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderManager_ABC constructor
@@ -197,4 +200,27 @@ bool MIL_OrderManager_ABC::IsNewMissionStarted() const
 boost::shared_ptr< MIL_Mission_ABC > MIL_OrderManager_ABC::GetCurrentMission() const
 {
     return pMission_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderManager_ABC::load
+// Created: LGY 2011-05-30
+// ----------------------------------------------------------------------------- 
+void MIL_OrderManager_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    MIL_Mission_ABC* pMission = 0;
+    file >> pMission
+         >> bNewMissionStarted_;
+    pNextMission_.reset( pMission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderManager_ABC::save
+// Created: LGY 2011-05-30
+// -----------------------------------------------------------------------------
+void MIL_OrderManager_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    MIL_Mission_ABC* pMission = pMission_.get();
+    file << pMission
+         << bNewMissionStarted_;
 }

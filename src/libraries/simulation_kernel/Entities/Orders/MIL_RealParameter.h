@@ -23,6 +23,7 @@ class MIL_RealParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_RealParameter();
     explicit MIL_RealParameter( float value );
     virtual ~MIL_RealParameter();
     //@}
@@ -38,12 +39,10 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_RealParameter( const MIL_RealParameter& );            //!< Copy constructor
-    MIL_RealParameter& operator=( const MIL_RealParameter& ); //!< Assignment operator
-    //@}
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@
 
 private:
     //! @name Member data
@@ -51,5 +50,7 @@ private:
     float value_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_RealParameter )
 
 #endif // __MIL_RealParameter_h_

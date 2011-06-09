@@ -28,6 +28,8 @@ unsigned int MIL_Fuseau::nNbrMeterPerSample_ = 400; //$$$ A GICLER
 
 #define PRECISION 0.1 //$$ CRADE
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Fuseau )
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Fuseau constructor
 // Created: NLD 2004-05-21
@@ -1249,4 +1251,48 @@ bool MIL_Fuseau::operator==( const MIL_Fuseau& rhs ) const
 bool MIL_Fuseau::operator!=( const MIL_Fuseau& rhs ) const
 {
     return !this->operator==( rhs );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::load
+// Created: LGY 2011-06-07
+// -----------------------------------------------------------------------------
+void MIL_Fuseau::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    T_PointVector pLeftLimit;
+    T_PointVector pRightLimit;
+    file >> pLeftLimit
+         >> pRightLimit
+         >> vOrientationRefPos_
+         >> vStartGlobalDirection_
+         >> vEndGlobalDirection_;
+    globalDirectionLine_ = MT_Line( vStartGlobalDirection_, vEndGlobalDirection_ );
+    if( !pLeftLimit.empty() && !pRightLimit.empty() )
+    {
+        pLeftLimit_  = &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( pLeftLimit  );
+        pRightLimit_ = &MIL_AgentServer::GetWorkspace().GetTacticalLineManager().CreateLimitData( pRightLimit );
+        pLeftLimit_ ->AddRef( *this );
+        pRightLimit_->AddRef( *this );
+        InitializeMiddleLimit();
+        InitializePolygon();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Fuseau::save
+// Created: LGY 2011-06-07
+// -----------------------------------------------------------------------------
+void MIL_Fuseau::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    T_PointVector pLeftLimit;
+    T_PointVector pRightLimit;
+    if( pRightLimit_ )
+        pLeftLimit = pLeftLimit_->GetPoints();
+    if( pRightLimit_ )
+        pRightLimit = pRightLimit_->GetPoints();
+    file << pLeftLimit
+         << pRightLimit
+         << vOrientationRefPos_
+         << vStartGlobalDirection_
+         << vEndGlobalDirection_;
 }

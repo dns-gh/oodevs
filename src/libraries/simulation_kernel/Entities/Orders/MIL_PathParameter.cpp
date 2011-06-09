@@ -11,7 +11,19 @@
 #include "MIL_PathParameter.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
+#include "Checkpoints/SerializationTools.h"
 #include "protocol/Protocol.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PathParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PathParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_PathParameter::MIL_PathParameter()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PathParameter constructor
@@ -87,4 +99,15 @@ bool MIL_PathParameter::ToElement( sword::MissionParameter_Value& elem ) const
     for( std::size_t i = 0; i < path_.size(); ++i )
         MIL_Tools::ConvertCoordSimToMos( *path_[i], *elem.mutable_path()->mutable_location()->mutable_coordinates()->add_elem() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PathParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_PathParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & path_;
 }

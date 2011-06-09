@@ -12,6 +12,7 @@
 
 #include "MIL_ParameterType_ABC.h"
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 #include <vector>
 
 namespace google
@@ -68,7 +69,6 @@ class MIL_ParameterType_ABC;
 class MT_Vector2D;
 class PHY_DotationCategory;
 class PHY_ComposanteTypePion;
-class PHY_ComposanteTypePion;
 class PHY_HumanWound;
 class TER_Localisation;
 
@@ -78,7 +78,7 @@ class TER_Localisation;
 */
 // Created: LDC 2009-04-29
 // =============================================================================
-class MIL_MissionParameter_ABC
+class MIL_MissionParameter_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -145,6 +145,14 @@ public:
     virtual bool ToResourceNetwork( boost::shared_ptr< DEC_ResourceNetwork >& ) const = 0;
     virtual bool ToResourceNetworkList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const = 0;
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param ) = 0;
+    //@}
+
+    //! @name Serialization
+    //@{
+    template< typename Archive > void serialize( Archive&, const unsigned int )
+    {
+        // NOTHING
+    }
     //@}
 };
 

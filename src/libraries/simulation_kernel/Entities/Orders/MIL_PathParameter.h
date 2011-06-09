@@ -23,6 +23,7 @@ class MIL_PathParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_PathParameter();
     explicit MIL_PathParameter( boost::shared_ptr< MT_Vector2D > point );
     explicit MIL_PathParameter( const sword::Path& );
     explicit MIL_PathParameter( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList );
@@ -40,12 +41,10 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_PathParameter( const MIL_PathParameter& );            //!< Copy constructor
-    MIL_PathParameter& operator=( const MIL_PathParameter& ); //!< Assignment operator
-    //@}
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@
 
 private:
     //! @name Member data
@@ -53,5 +52,7 @@ private:
     std::vector< boost::shared_ptr< MT_Vector2D > > path_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_PathParameter )
 
 #endif // __MIL_PathParameter_h_

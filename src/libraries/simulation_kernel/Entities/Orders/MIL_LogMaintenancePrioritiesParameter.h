@@ -12,6 +12,9 @@
 
 #include "MIL_BaseParameter.h"
 
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
+
 // =============================================================================
 /** @class  MIL_LogMaintenancePrioritiesParameter
     @brief  MIL_LogMaintenancePrioritiesParameter
@@ -23,6 +26,7 @@ class MIL_LogMaintenancePrioritiesParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_LogMaintenancePrioritiesParameter();
     explicit MIL_LogMaintenancePrioritiesParameter( const sword::LogMaintenancePriorities & asn );
     virtual ~MIL_LogMaintenancePrioritiesParameter();
     //@}
@@ -38,11 +42,11 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_LogMaintenancePrioritiesParameter( const MIL_LogMaintenancePrioritiesParameter& );            //!< Copy constructor
-    MIL_LogMaintenancePrioritiesParameter& operator=( const MIL_LogMaintenancePrioritiesParameter& ); //!< Assignment operator
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
 private:
@@ -51,5 +55,7 @@ private:
     T_MaintenancePriorityVector priorities_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_LogMaintenancePrioritiesParameter )
 
 #endif // __MIL_LogMaintenancePrioritiesParameter_h_

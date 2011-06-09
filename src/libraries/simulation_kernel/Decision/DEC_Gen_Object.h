@@ -13,7 +13,6 @@
 #define __DEC_Gen_Object_h_
 
 #include "MIL.h"
-#include "Entities/Objects/ObstacleAttribute.h"
 #include "simulation_terrain/TER_Localisation.h"
 
 namespace sword
@@ -22,8 +21,6 @@ namespace sword
     enum ObstacleType_DemolitionTargetType;
 }
 
-class DEC_AutomateDecision;
-class MIL_ObjectType_ABC;
 class MIL_EntityManager_ABC;
 class MIL_Automate;
 
@@ -45,6 +42,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
+             DEC_Gen_Object();
              DEC_Gen_Object( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
              DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary );
              DEC_Gen_Object( const DEC_Gen_Object& rhs );
@@ -67,6 +65,11 @@ public:
     void Serialize( sword::PlannedWork& asn ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@
+
 private:
     //! @name Member data
     //@{
@@ -78,6 +81,8 @@ private:
     const MIL_Automate* pTC2_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( DEC_Gen_Object )
 
 #include "DEC_Gen_Object.inl"
 

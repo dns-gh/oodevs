@@ -1,11 +1,11 @@
 //*****************************************************************************
 //
 // $Created: NLD 2003-01-14 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Orders/MIL_Fuseau.cpp $
+// $Archive: /MVW_v10/Build/SDK/MIL/src/Entities/Orders/MIL_TacticalLineManager.cpp $
 // $Author: Jvt $
 // $Modtime: 16/05/05 14:55 $
 // $Revision: 17 $
-// $Workfile: MIL_Fuseau.cpp $
+// $Workfile: MIL_TacticalLineManager.cpp $
 //
 //*****************************************************************************
 

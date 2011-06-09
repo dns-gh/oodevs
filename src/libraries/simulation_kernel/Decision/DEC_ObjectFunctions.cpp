@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_ObjectFunctions.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Objects/ObstacleAttribute.h"
 #include "Decision/DEC_Gen_Object.h"
 #include <xeumeuleu/xml.hpp>
 

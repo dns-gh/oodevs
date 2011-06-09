@@ -11,6 +11,7 @@
 #define __MIL_Mission_ABC_h_
 
 #include "MIL_OrderContext.h"
+#include "MIL.h"
 #include <boost/shared_ptr.hpp>
 
 class DEC_Gen_Object;
@@ -77,6 +78,13 @@ public:
     virtual void Visit( MIL_MissionParameterVisitor_ABC& parameterVisitor ) const;
     //@}
 
+    //! @name Serialization
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& file, const unsigned int );
+    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
+    //@}
+
 protected:
     //! @name Constructors/Destructor
     //@{
@@ -93,15 +101,27 @@ protected:
     void Serialize( sword::MissionParameters& asn ) const;
     //@}
 
+    //! @name Member Data
+    //@{
+    const MIL_MissionType_ABC& type_;
+    //@}
+
+private:
+    //! @name Serialization
+    //@{
+    template< typename Archive > friend void save_construct_data( Archive& archive, const MIL_Mission_ABC* mission, const unsigned int version );
+    template< typename Archive > friend void load_construct_data( Archive& archive, MIL_Mission_ABC* mission, const unsigned int version );
+    //@}
+
 private:
     //! @name Member data
     //@{
     const DEC_KnowledgeResolver_ABC& knowledgeResolver_;
-    const MIL_MissionType_ABC&       type_;
-          MIL_OrderContext           context_;
-
-          std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
+    MIL_OrderContext context_;
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_Mission_ABC )
 
 #endif // __MIL_Mission_ABC_h_

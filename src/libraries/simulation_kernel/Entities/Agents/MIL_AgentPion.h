@@ -64,7 +64,6 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     void load( MIL_CheckPointInArchive&, const unsigned int );
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
 
@@ -189,7 +188,7 @@ private:
     MIL_Automate*                               pAutomate_;
     const AlgorithmsFactories&                  algorithmFactories_;
     DEC_KnowledgeBlackBoard_AgentPion*          pKnowledgeBlackBoard_;
-    MIL_PionOrderManager&                       orderManager_;
+    std::auto_ptr< MIL_PionOrderManager >       pOrderManager_;
     std::auto_ptr< MIL_AffinitiesMap >          pAffinities_;
     std::auto_ptr< MIL_DictionaryExtensions >   pExtensions_;
     //@}

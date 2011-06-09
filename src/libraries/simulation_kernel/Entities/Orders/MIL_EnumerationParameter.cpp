@@ -11,12 +11,23 @@
 #include "MIL_EnumerationParameter.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EnumerationParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EnumerationParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_EnumerationParameter::MIL_EnumerationParameter()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EnumerationParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
 MIL_EnumerationParameter::MIL_EnumerationParameter( int value )
-: value_( value )
+    : value_( value )
 {
     // NOTHING
 }
@@ -59,3 +70,13 @@ bool MIL_EnumerationParameter::ToElement( sword::MissionParameter_Value& elem ) 
     return true;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_EnumerationParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_EnumerationParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & value_;
+}

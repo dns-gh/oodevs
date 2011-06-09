@@ -13,12 +13,23 @@
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "protocol/Protocol.h"
 
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationKnowledgeParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationKnowledgeParameter constructor
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter()
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationKnowledgeParameter constructor
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( DEC_Knowledge_Population* pKnowledge )
-: pKnowledgePopulation_( pKnowledge )
+    : pKnowledgePopulation_( pKnowledge )
 {
     // NOTHING
 }
@@ -28,7 +39,7 @@ MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( DEC_Knowledg
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
 MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( const sword::CrowdKnowledgeId& asn, const DEC_KnowledgeResolver_ABC& resolver )
-: pKnowledgePopulation_( resolver.ResolveKnowledgePopulation( asn ) )
+    : pKnowledgePopulation_( resolver.ResolveKnowledgePopulation( asn ) )
 {
     // NOTHING
 }
@@ -70,4 +81,15 @@ bool MIL_PopulationKnowledgeParameter::ToElement( sword::MissionParameter_Value&
 {
     elem.mutable_crowdknowledge()->set_id( pKnowledgePopulation_->GetID() );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationKnowledgeParameter::serialize
+// Created: LGY 2011-06-06
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void MIL_PopulationKnowledgeParameter::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
+         & pKnowledgePopulation_;
 }

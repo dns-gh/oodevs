@@ -25,6 +25,7 @@ class MIL_DotationTypeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_DotationTypeParameter();
     explicit MIL_DotationTypeParameter( const sword::ResourceType & asn );
     explicit MIL_DotationTypeParameter( const PHY_DotationCategory* pCategory );
     virtual ~MIL_DotationTypeParameter();
@@ -41,11 +42,9 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_DotationTypeParameter( const MIL_DotationTypeParameter& );            //!< Copy constructor
-    MIL_DotationTypeParameter& operator=( const MIL_DotationTypeParameter& ); //!< Assignment operator
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -54,5 +53,7 @@ private:
     const PHY_DotationCategory* pCategory_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_DotationTypeParameter )
 
 #endif // __MIL_DotationTypeParameter_h_

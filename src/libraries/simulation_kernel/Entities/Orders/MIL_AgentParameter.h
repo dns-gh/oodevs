@@ -26,6 +26,7 @@ class MIL_AgentParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_AgentParameter();
     explicit MIL_AgentParameter( DEC_RolePion_Decision* pAgent );
              MIL_AgentParameter( const sword::UnitId&, MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_AgentParameter();
@@ -42,11 +43,9 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_AgentParameter( const MIL_AgentParameter& );            //!< Copy constructor
-    MIL_AgentParameter& operator=( const MIL_AgentParameter& ); //!< Assignment operator
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -55,5 +54,7 @@ private:
     DEC_RolePion_Decision* pDecision_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_AgentParameter )
 
 #endif // __MIL_AgentParameter_h_

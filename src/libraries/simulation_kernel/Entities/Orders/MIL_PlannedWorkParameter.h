@@ -26,6 +26,7 @@ class MIL_PlannedWorkParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_PlannedWorkParameter();
              MIL_PlannedWorkParameter( const sword::PlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
     explicit MIL_PlannedWorkParameter( boost::shared_ptr< DEC_Gen_Object > param );
     virtual ~MIL_PlannedWorkParameter();
@@ -42,12 +43,10 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_PlannedWorkParameter( const MIL_PlannedWorkParameter& );            //!< Copy constructor
-    MIL_PlannedWorkParameter& operator=( const MIL_PlannedWorkParameter& ); //!< Assignment operator
-    //@}
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@
 
 private:
     //! @name Member data
@@ -55,5 +54,7 @@ private:
     boost::shared_ptr< DEC_Gen_Object > pGenObject_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_PlannedWorkParameter )
 
 #endif // __MIL_PlannedWorkParameter_h_

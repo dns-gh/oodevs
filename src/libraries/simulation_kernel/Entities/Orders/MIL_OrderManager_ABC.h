@@ -12,6 +12,7 @@
 #ifndef __MIL_OrderManager_ABC_h_
 #define __MIL_OrderManager_ABC_h_
 
+#include "MIL.h"
 #include "MIL_LimaOrder.h"
 #include <boost/shared_ptr.hpp>
 
@@ -28,10 +29,14 @@ class MIL_IntelligenceOrdersVisitor_ABC;
 class MIL_OrderManager_ABC : private boost::noncopyable
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
              MIL_OrderManager_ABC();
     virtual ~MIL_OrderManager_ABC();
+    //@}
 
-   // @name Main
+     // @name Main
+    //@{
     virtual void Update();
     //@}
 
@@ -58,6 +63,12 @@ public:
     const MIL_MissionType_ABC* GetCurrentMissionType() const;
     //@}
 
+    //! @name Serialization
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    //@}
 
 protected:
     //! @name Accessors
@@ -66,9 +77,14 @@ protected:
     //@}
 
 private:
+    //! @name Member Data
+    //@{
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
     boost::shared_ptr< MIL_Mission_ABC > pNextMission_;
     bool bNewMissionStarted_;
+    //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_OrderManager_ABC )
 
 #endif // __MIL_OrderManager_ABC_h_

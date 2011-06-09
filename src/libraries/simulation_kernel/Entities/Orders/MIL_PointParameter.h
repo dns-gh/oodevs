@@ -23,6 +23,7 @@ class MIL_PointParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_PointParameter();
     explicit MIL_PointParameter( const sword::Point& );
     explicit MIL_PointParameter( const MT_Vector2D& point );
     virtual ~MIL_PointParameter();
@@ -39,12 +40,10 @@ public:
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
-private:
-    //! @name Copy/Assignment
+    //! @name Serialization
     //@{
-    MIL_PointParameter( const MIL_PointParameter& );            //!< Copy constructor
-    MIL_PointParameter& operator=( const MIL_PointParameter& ); //!< Assignment operator
-    //@}
+    template< typename Archive > void serialize( Archive&, const unsigned int );
+    //@
 
 private:
     //! @name Member data
@@ -52,5 +51,7 @@ private:
     boost::shared_ptr< MT_Vector2D > pPoint_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_PointParameter )
 
 #endif // __MIL_PointParameter_h_
