@@ -13,6 +13,11 @@
 
 using namespace gui;
 
+namespace
+{
+    const unsigned margin = 2;
+}
+
 // -----------------------------------------------------------------------------
 // Name: RichListItem constructor
 // Created: APE 2004-09-08
@@ -266,17 +271,21 @@ void RichListItem::paintCell( QPainter* pPainter, const QColorGroup& cg, int nCo
 
     QSimpleRichText* pRichText = columns_[ nColumn ].rich;
     pRichText->setWidth( nWidth );
-    setHeight( Height() + 2 * margin_ );
+    setHeight( Height() + 2 * ::margin );
 
     const QPixmap& pm = columns_[ nColumn ].pixMap;
     QRect rect( 0, 0, nWidth, height() );
 
-    const int voffset = ( height() - pRichText->height() ) / 2;
-    int hoffset = pm.isNull() ? 0 : ( pm.width() + margin_ );
+    int voffset = ( height() - pRichText->height() ) / 2;
+    if( ( nAlign & Qt::AlignTop ) == Qt::AlignTop )
+        voffset = ::margin;
+    else if( (nAlign & Qt::AlignBottom ) == Qt::AlignBottom )
+        voffset = std::max< int >( height() - pRichText->height() - ::margin, 0 );
+    int hoffset = pm.isNull() ? ::margin : ( pm.width() + 2 * ::margin );
     int hindent = ( nAlign & Qt::AlignHCenter ) == 0 ? 0 : ( nWidth - pRichText->widthUsed() - hoffset ) / 2;
 
     pRichText->draw( pPainter, hoffset + hindent, voffset, rect, colorGroup, &brush );
-    pPainter->drawPixmap( QPoint( hindent + margin_ / 2, ( height() - pm.height() ) / 2 ), pm );
+    pPainter->drawPixmap( QPoint( hindent + ::margin, ( height() - pm.height() ) / 2 ), pm );
 }
 
 // -----------------------------------------------------------------------------
@@ -298,7 +307,7 @@ int RichListItem::Width( int nColumn ) const
         return 0;
     const QPixmap& pm = columns_[ nColumn ].pixMap;
     const int textWidth = columns_[ nColumn ].rich->widthUsed();
-    const int pixWidth  = pm.isNull() ? 0 : ( pm.width() + margin_ );
+    const int pixWidth  = pm.isNull() ? 0 : ( pm.width() + ::margin );
     return textWidth + pixWidth;
 }
 

@@ -43,6 +43,8 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     setColumnWidthMode( 0, QListView::Manual );
     setColumnWidth( 0, -1 );
     setColumnWidth( 1, 130 );
+    setColumnAlignment( 1, Qt::AlignTop );
+    setColumnAlignment( 2, Qt::AlignTop );
 
     // Set a descending sorting order, then disable user sorting.
     setSorting( 0, false );
