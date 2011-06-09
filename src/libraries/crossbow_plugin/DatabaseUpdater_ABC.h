@@ -36,6 +36,7 @@ namespace sword
     class UrbanCreation;
     class UrbanUpdate;
     class PopulationCreation;
+    class PopulationUpdate;
 }
 
 namespace plugins
@@ -98,6 +99,7 @@ public:
     virtual void Update( const sword::ControlBeginTick& msg ) = 0;
     virtual void Update( const sword::PartyCreation& msg ) = 0;
     virtual void Update( const sword::PopulationCreation& msg ) = 0;
+    virtual void Update( const sword::PopulationUpdate& msg ) = 0;
     //@}
 };
 

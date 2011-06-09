@@ -18,6 +18,7 @@ namespace sword
     class UrbanAttributes_Infrastructures;
     class UrbanAttributes;
     class ResourceNetwork;
+    class PopulationUpdate_BlockOccupation;
 
     enum ObjectMagicActionAck_ErrorCode;
 }
@@ -94,6 +95,8 @@ public:
     void Update( const sword::UrbanUpdate& msg );
 
     void Update( const sword::PopulationCreation& msg );
+    void Update( const sword::PopulationUpdate& msg );
+
     void Log( const sword::ObjectMagicActionAck& msg );
     //@}
 
@@ -111,6 +114,7 @@ private:
     void UpdateUrbanBlockAttributes( Row_ABC& row, const sword::UrbanAttributes& msg );
     void UpdateResourceNetworks( const sword::UrbanAttributes_Infrastructures& infra, long oid, bool creation );
     void UpdateResourceNetwork( const sword::ResourceNetwork& net, long oid, int session_id, bool creation );
+    void UpdateBlockOccupation( Row_ABC& row, const sword::PopulationUpdate_BlockOccupation& msg );
     //@}
 
     //! @name Error

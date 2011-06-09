@@ -156,6 +156,8 @@ void DatabaseUpdater::Clean()
         database_->GetGeometry().ClearTable( "Teams", clause );
         database_->GetGeometry().ClearTable( "urban_blocks", clause );
         database_->GetGeometry().ClearTable( "resource_network", clause );
+        database_->GetGeometry().ClearTable( "inhabitants", clause );
+        database_->GetGeometry().ClearTable( "inhabitants_urban_blocks_occupation", clause );
     }
     catch ( std::exception& e )
     {
@@ -778,6 +780,53 @@ void DatabaseUpdater::Update( const sword::PopulationCreation& msg )
     row.SetField( "team_id", FieldVariant( (long)msg.party().id() ) );
     table->InsertRow( row );
     table.reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::Update
+// Created: BCI 2011-06-09
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::Update( const sword::PopulationUpdate& msg )
+{
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "inhabitants_urban_blocks_occupation" ) );
+
+    std::string whereClause = "inhabitant_id=" + boost::lexical_cast< std::string >( msg.id().id() )
+                            + " AND session_id=" + boost::lexical_cast< std::string >( session_.GetId() )
+                            + " AND urban_block_id=";
+
+    for( int i = 0, count = msg.occupations_size(); i<count; ++i )
+    {
+        const sword::PopulationUpdate_BlockOccupation& occupation = msg.occupations( i );
+        Row_ABC* row = table->Find( whereClause + boost::lexical_cast< std::string >( occupation.object().id() ) );
+        if( row )
+        {
+            UpdateBlockOccupation( *row, occupation );
+            table->UpdateRow( *row );
+        }
+        else
+        {
+            Row_ABC& newRow = table->CreateRow();
+            newRow.SetField( "inhabitant_id", FieldVariant( static_cast< long >( msg.id().id() ) ) );
+            newRow.SetField( "urban_block_id", FieldVariant( static_cast< long >( occupation.object().id() ) ) );
+            newRow.SetField( "session_id", FieldVariant( session_.GetId() ) );
+
+            UpdateBlockOccupation( newRow, occupation );
+            table->InsertRow( newRow );
+
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::UpdateBlockOccupation
+// Created: BCI 2011-06-09
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::UpdateBlockOccupation( Row_ABC& row, const sword::PopulationUpdate_BlockOccupation& occupation )
+{
+    row.SetField( "alerted",  FieldVariant( std::string( occupation.alerted() ? "true" : "false" ) ) );
+    row.SetField( "confined",  FieldVariant( std::string( occupation.confined() ? "true" : "false" ) ) );
+    row.SetField( "evacuated",  FieldVariant( std::string( occupation.evacuated() ? "true" : "false" ) ) );
+    row.SetField( "angriness",  FieldVariant( std::string( occupation.angriness() ? "true" : "false" ) ) );
 }
 
 // -----------------------------------------------------------------------------

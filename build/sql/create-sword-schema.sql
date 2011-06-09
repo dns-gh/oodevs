@@ -402,3 +402,26 @@ CREATE OR REPLACE VIEW sword.inhabitants_by_team AS
 
 ALTER TABLE sword.inhabitants_by_team OWNER TO sword;
 GRANT ALL ON TABLE sword.inhabitants_by_team TO sword;
+
+CREATE TABLE sword.inhabitants_urban_blocks_occupation
+(
+  inhabitant_id           INTEGER NOT NULL,
+  urban_block_id          INTEGER NOT NULL,
+  session_id              INTEGER NOT NULL,
+  alerted                 INTEGER NOT NULL,
+  confined                INTEGER NOT NULL,
+  evacuated               INTEGER NOT NULL,
+  angriness               REAL NOT NULL
+);
+ALTER TABLE sword.inhabitants_urban_blocks_occupation OWNER TO sword;
+GRANT ALL ON TABLE sword.inhabitants_urban_blocks_occupation TO sword;
+
+CREATE OR REPLACE VIEW sword.urbanblocks_inhabitants AS 
+ SELECT inhabitants_urban_blocks_occupation.urban_block_id AS urban_block_id, inhabitants_urban_blocks_occupation.session_id AS session_id, inhabitants.name AS name, inhabitants_urban_blocks_occupation.alerted AS alerted, inhabitants_urban_blocks_occupation.confined AS confined, inhabitants_urban_blocks_occupation.evacuated AS evacuated, inhabitants_urban_blocks_occupation.angriness AS angriness
+   FROM sword.inhabitants_urban_blocks_occupation
+   JOIN sword.inhabitants ON inhabitants_urban_blocks_occupation.inhabitant_id = inhabitants.public_oid AND inhabitants_urban_blocks_occupation.session_id = inhabitants.session_id
+  ORDER BY inhabitants.name;
+
+ALTER TABLE sword.urbanblocks_inhabitants OWNER TO sword;
+GRANT ALL ON TABLE sword.urbanblocks_inhabitants TO sword;
+

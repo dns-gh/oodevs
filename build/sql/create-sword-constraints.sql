@@ -37,3 +37,8 @@ ALTER TABLE sword.objects                     ADD CONSTRAINT objects_session_id_
 ALTER TABLE sword.objectparameters            ADD CONSTRAINT objectparameters_object_id_ctrt FOREIGN KEY(object_id) REFERENCES sword.objects(id) ON DELETE CASCADE;
 
 ALTER TABLE sword.knowledgeobjects            ADD CONSTRAINT knowledgeobjects_session_id_ctrt FOREIGN KEY (session_id) REFERENCES sword.sessions (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE;
+
+ALTER TABLE sword.inhabitants ADD CONSTRAINT inhabitants_session_id_ctrt FOREIGN KEY (session_id) REFERENCES sword.sessions (id) ON UPDATE NO ACTION ON DELETE CASCADE;
+
+ALTER TABLE sword.inhabitants_urban_blocks_occupation ADD CONSTRAINT inhabitants_urban_blocks_occupation_session_id_ctrt FOREIGN KEY (session_id) REFERENCES sword.sessions (id) ON UPDATE NO ACTION ON DELETE CASCADE;
+
