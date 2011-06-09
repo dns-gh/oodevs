@@ -79,7 +79,8 @@ void WorldParameters::ReadPopulation( const tools::ExerciseConfig& config, xml::
 // -----------------------------------------------------------------------------
 void WorldParameters::ReadTerrain( const tools::ExerciseConfig& config, xml::xistream& xis )
 {
-    std::string world, pathfind, graphics, detection, urban;
+    std::string world, pathfind, graphics, detection;
+    std::string urban( "urban/urban.xml" );
     if( xis.has_child( "terrain" ) )
     {
         xis >> xml::start( "terrain" )
@@ -109,7 +110,7 @@ void WorldParameters::ReadTerrain( const tools::ExerciseConfig& config, xml::xis
                 >> xml::start( "graphics" )
                     >> xml::attribute( "directory", graphics )
                 >> xml::end
-                >> xml::start( "urban" )
+                >> xml::optional >> xml::start( "urban" )
                     >> xml::attribute( "file", urban )
                 >> xml::end
             >> xml::end
@@ -125,7 +126,6 @@ void WorldParameters::ReadTerrain( const tools::ExerciseConfig& config, xml::xis
             >> xml::end;
         ReadWorld( config.BuildTerrainChildFile( world ) );
         ReadExtent( config.BuildTerrainChildFile( "extent.xml" ) );
-        urban = "urban/urban.xml";
     }
 
     InitExtent();
