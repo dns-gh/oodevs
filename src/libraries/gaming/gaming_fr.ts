@@ -328,6 +328,14 @@
         <source>Health:</source>
         <translation>Santé:</translation>
     </message>
+    <message>
+        <source>Info/Underground</source>
+        <translation>Info/Sous terre</translation>
+    </message>
+    <message>
+        <source>Underground:</source>
+        <translation>Sous terre:</translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>

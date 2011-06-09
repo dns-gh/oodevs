@@ -188,6 +188,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     selector_->AddIcon( xpm_gas            , -280, 160 );
     selector_->AddIcon( xpm_ammo           , -200, 100 );
     selector_->AddIcon( xpm_nbc            , -200, 25 );
+    selector_->AddIcon( xpm_underground    , -200, 50 );
     selector_->AddIcon( xpm_construction   ,  200, 150 );
     selector_->AddIcon( xpm_observe        ,  200, 150 );
 

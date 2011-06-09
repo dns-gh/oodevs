@@ -625,6 +625,7 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     CONVERT_TO( dead, mort );
     CONVERT_TO( neutralized, neutralise );
     CONVERT_TO( stealth, mode_furtif_actif );
+    CONVERT( underground );
     CONVERT_TO( embarked, embarque );
     CONVERT_TO( transporters_available, transporteurs_disponibles );
     CONVERT_POSTURE( old_posture, posture_old );

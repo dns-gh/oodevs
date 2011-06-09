@@ -169,6 +169,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_dead( true );
                 message.set_neutralized( true );
                 message.set_stealth( true );
+                message.set_underground( false );
                 message.set_embarked( true );
                 message.set_transporters_available( true );
                 message.set_old_posture( sword::UnitAttributes::moving );

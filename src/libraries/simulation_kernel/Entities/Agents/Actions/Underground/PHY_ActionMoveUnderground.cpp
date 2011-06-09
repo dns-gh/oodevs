@@ -12,17 +12,27 @@
 #include "PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/UndergroundNetworkExitCapacity.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
 namespace
 {
-    bool IsObjectValid( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
+    MIL_Object_ABC* IsObjectValid( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
     {
-        if( !pKnowledge || !pKnowledge->IsValid() )
-            return false;
-        if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
-            return pObject->Retrieve< UndergroundNetworkExitCapacity >() != 0;
+        if( pKnowledge && pKnowledge->IsValid() )
+            if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
+                if( pObject->Retrieve< UndergroundNetworkExitCapacity >() != 0 )
+                    return pObject;
+        return 0;
+    }
+
+    bool AreObjectsOfSameType( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge1, boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge2 )
+    {
+        MIL_Object_ABC* object1 = IsObjectValid( pKnowledge1 );
+        MIL_Object_ABC* object2 = IsObjectValid( pKnowledge2 );
+        if( object1 && object2 )
+            return object1->GetType().GetID() == object2->GetType().GetID();
         return false;
     }
 }
@@ -35,11 +45,13 @@ PHY_ActionMoveUnderground::PHY_ActionMoveUnderground( MIL_AgentPion& pion, boost
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_( pion.GetRole< PHY_RoleAction_MovingUnderground >() )
 {
-    if( IsObjectValid( pFirstObject ) && IsObjectValid( pSecondObject ) )
+    if( AreObjectsOfSameType( pFirstObject, pSecondObject ) )
+    {
         Callback( static_cast< unsigned int >( eRunning) );
+        role_.InitializeUndergroundMoving( *pFirstObject->GetObjectKnown(), *pSecondObject->GetObjectKnown() );
+    }
     else
         Callback( static_cast< unsigned int >( eNotAllowed ) );
-    role_.InitializeUndergroundMoving( *pFirstObject->GetObjectKnown(), *pSecondObject->GetObjectKnown() );
 }
 
 // -----------------------------------------------------------------------------

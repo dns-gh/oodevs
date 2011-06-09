@@ -673,6 +673,7 @@ void MIL_AgentPion::OnReceiveDestroyComponent()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
 {
+    GetRole< PHY_RoleAction_MovingUnderground >().GetOutFromUndergroundNetwork();
     GetRole< PHY_RolePion_Location >().MagicMove( vNewPos );
     GetRole< PHY_RolePion_UrbanLocation >().MagicMove( vNewPos );
     CancelAllActions();

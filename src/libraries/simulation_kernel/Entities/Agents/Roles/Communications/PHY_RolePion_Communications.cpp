@@ -12,23 +12,20 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Communications.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
-#include "protocol/ClientSenders.h"
-#include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
-#include "simulation_kernel/Knowledge/DEC_Knowledge_ObjectCollision.h"
-#include "simulation_kernel/Knowledge/DEC_Knowledge_ObjectPerception.h"
-#include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
-#include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "simulation_kernel/SpeedComputer_ABC.h"
-#include "simulation_kernel/WeaponReloadingComputer_ABC.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_Knowledge_ObjectCollision.h"
+#include "Knowledge/DEC_Knowledge_ObjectPerception.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "NetworkNotificationHandler_ABC.h"
+#include "SpeedComputer_ABC.h"
+#include "WeaponReloadingComputer_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
+#include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.hpp>
 
 double PHY_RolePion_Communications::rCoefSpeedModificator_         = 0.;
@@ -79,12 +76,12 @@ void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Agent_ABC& entity, const bool bIsAutonomous )
-    : entity_                         ( entity )
-    , bHasChanged_                    ( true )
-    , bBlackoutReceivedActivated_     ( false )
-    , bBlackoutEmmittedActivated_     ( false )
-    , bIsAutonomous_                  ( bIsAutonomous )
-    , pJammingKnowledgeGroup_         ( 0 )
+    : entity_                    ( entity )
+    , bHasChanged_               ( true )
+    , bBlackoutReceivedActivated_( false )
+    , bBlackoutEmmittedActivated_( false )
+    , bIsAutonomous_             ( bIsAutonomous )
+    , pJammingKnowledgeGroup_    ( 0 )
 {
     // NOTHING
 }
@@ -194,7 +191,6 @@ void PHY_RolePion_Communications::CopyKnowledgeGroupPartial()
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::Unjam
 // Created: NLD 2004-11-04
@@ -247,7 +243,7 @@ void PHY_RolePion_Communications::Update( bool /*bIsDead*/ )
 {
     if( pJammingKnowledgeGroup_ )
         pJammingKnowledgeGroup_->UpdateKnowledges( MIL_Singletons::GetTime().GetCurrentTick() );
-    if( HasChanged() )
+    if( bHasChanged_ )
         entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
 }
 
@@ -261,15 +257,6 @@ void PHY_RolePion_Communications::Clean()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Communications::HasChanged
-// Created: NLD 2004-09-22
-// -----------------------------------------------------------------------------
-bool PHY_RolePion_Communications::HasChanged() const
-{
-    return bHasChanged_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::ActivateBlackout
 // Created: NLD 2004-11-08
 // -----------------------------------------------------------------------------
@@ -280,7 +267,7 @@ void PHY_RolePion_Communications::ActivateBlackout()
     CopyKnowledgeGroup();
     bBlackoutEmmittedActivated_ = true;
     bBlackoutReceivedActivated_ = true;
-    bHasChanged_        = true;
+    bHasChanged_ = true;
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::ActivatePartialBlackout
@@ -288,12 +275,12 @@ void PHY_RolePion_Communications::ActivateBlackout()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::ActivatePartialBlackout()
 {
-   if( bBlackoutEmmittedActivated_  && !bBlackoutReceivedActivated_ )
+   if( bBlackoutEmmittedActivated_ && !bBlackoutReceivedActivated_ )
        return;
     CopyKnowledgeGroupPartial();
     bBlackoutEmmittedActivated_ = true;
     bBlackoutReceivedActivated_ = false;
-    bHasChanged_        = true;
+    bHasChanged_ = true;
 }
 
 
@@ -303,7 +290,7 @@ void PHY_RolePion_Communications::ActivatePartialBlackout()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::DeactivateBlackout()
 {
-    if( !bBlackoutEmmittedActivated_  && !bBlackoutReceivedActivated_ )
+    if( !bBlackoutEmmittedActivated_ && !bBlackoutReceivedActivated_ )
         return;
     bBlackoutEmmittedActivated_ = false;
     bBlackoutReceivedActivated_ = false;
@@ -325,8 +312,8 @@ void PHY_RolePion_Communications::DeactivateBlackout()
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup& PHY_RolePion_Communications::GetKnowledgeGroup() const
 {
-    if (pJammingKnowledgeGroup_ == 0)
-            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Jamming knowledge group undefined for agent %d ", entity_.GetID() ) );
+    if( pJammingKnowledgeGroup_ == 0 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Jamming knowledge group undefined for agent %d ", entity_.GetID() ) );
     return *pJammingKnowledgeGroup_;
 }
 

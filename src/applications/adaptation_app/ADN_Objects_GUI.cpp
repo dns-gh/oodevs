@@ -399,9 +399,9 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eLodgingCapacityPresent ] = & lodging->GetConnector();
     }
 
-    ADN_GroupBox* undergroundNetworkExit = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Underground network exit" ), hBox );
+    ADN_GroupBox* undergroundNetwork = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Underground network exit" ), hBox );
     {
-        vInfosConnectors[ eUndergroundNetworkExitCapacityPresent ] = & undergroundNetworkExit->GetConnector();
+        vInfosConnectors[ eUndergroundNetworkCapacityPresent ] = & undergroundNetwork->GetConnector();
     }
 
     // Connect the list to the interface.

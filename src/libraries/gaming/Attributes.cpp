@@ -26,7 +26,7 @@ using namespace kernel;
 // Name: Attributes constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter, PropertiesDictionary& dictionary, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver )
+Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& converter, PropertiesDictionary& dictionary, const tools::Resolver_ABC< Team_ABC >& teamResolver )
     : controller_( controller )
     , converter_ ( converter )
     , teamResolver_( teamResolver )
@@ -56,6 +56,7 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     , knowledgeGroupJammed_( 0 )
     , bRadarEnabled_( false )
     , bPrisoner_( false )
+    , bUnderground_( false )
     , surrenderedTo_( 0 )
     , bRefugeesManaged_( false )
     , aggregated_( false )
@@ -86,6 +87,7 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Speed" ),                           nSpeed_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Heading" ),                         nDirection_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Info/Critical intelligence" ),           criticalIntelligence_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Info/Underground" ),                     bUnderground_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Stances/Current stance" ),               nCurrentPosture_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Stances/Setup state" ),                  nInstallationState_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Communications/Jammed" ),                bCommJammed_ );
@@ -169,6 +171,9 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_direction() )
         nDirection_ = message.direction().heading();
 
+    if( message.has_underground() )
+        bUnderground_ = message.underground();
+
     if( message.has_communications() && message.communications().has_jammed() )
         bCommJammed_ = message.communications().jammed() != 0;
 
@@ -221,6 +226,7 @@ void Attributes::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "Attributes", "Neutralized:" ),           bNeutralized_ )
                 .Display( tools::translate( "Attributes", "Speed:" ),                 nSpeed_ * Units::kilometersPerHour )
                 .Display( tools::translate( "Attributes", "Heading:" ),               nDirection_ * Units::degrees )
+                .Display( tools::translate( "Attributes", "Underground:" ),           bUnderground_ )
                 .Display( tools::translate( "Attributes", "Critical intelligence:" ), criticalIntelligence_ )
                 .Display( tools::translate( "Attributes", "Height:" ),                nAltitude_  * Units::meters )
                 .Display( tools::translate( "Attributes", "Troops:" ),                bLoadingState_ ? tools::translate( "Attributes", "on-board" ) : tools::translate( "Attributes", "off-board" ) )
@@ -278,7 +284,7 @@ void Attributes::DisplayInTooltip( Displayer_ABC& displayer ) const
 // Name: Attributes::DisplayInSummary
 // Created: SBO 2007-03-01
 // -----------------------------------------------------------------------------
-void Attributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+void Attributes::DisplayInSummary( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Attributes", "Speed:" ) , nSpeed_ * Units::kilometersPerHour )
              .Display( tools::translate( "Attributes", "Height:" ), nAltitude_ * Units::meters )
@@ -289,10 +295,10 @@ void Attributes::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
 // Name: Attributes::Draw
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-void Attributes::Draw( const Point2f& where, const kernel::Viewport_ABC& viewport, const GlTools_ABC& tools ) const
+void Attributes::Draw( const Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
     if( aggregated_
-    || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ )
+    || ! ( bDead_ || bRadioReceiverSilence_ || bRadioEmitterSilence_ || bRadarEnabled_ || bCommJammed_ || bUnderground_ )
     || ! viewport.IsHotpointVisible() )
         return;
 
@@ -306,6 +312,8 @@ void Attributes::Draw( const Point2f& where, const kernel::Viewport_ABC& viewpor
         tools.DrawIcon( xpm_radars_on, where, 150.f );
     if( bCommJammed_ )
         tools.DrawIcon( xpm_brouillage, where, 150.f );
+    if( bUnderground_ )
+        tools.DrawIcon( xpm_underground, where, 150.f );
     glPopAttrib();
 }
 

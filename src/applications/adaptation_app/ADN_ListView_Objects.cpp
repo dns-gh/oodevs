@@ -224,7 +224,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
 
     builder.Link< ADN_Objects_Data::ADN_CapacityInfos_ResourceNetwork >( ADN_Objects_GUI::eResourceNetworkCapacityPresent );
 
-    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_UndergroundNetworkExit >( ADN_Objects_GUI::eUndergroundNetworkExitCapacityPresent );
+    builder.Link< ADN_Objects_Data::ADN_CapacityInfos_UndergroundNetwork >( ADN_Objects_GUI::eUndergroundNetworkCapacityPresent );
 
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }

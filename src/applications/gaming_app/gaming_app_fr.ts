@@ -932,6 +932,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Communication: radio receiver silence</source>
         <translation>Communication: silence radio réception</translation>
     </message>
+    <message>
+        <source>Underground</source>
+        <translation>Sous terre</translation>
+    </message>
 </context>
 <context>
     <name>InfoLendingsDialog</name>

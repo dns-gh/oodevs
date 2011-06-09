@@ -328,6 +328,14 @@
         <source>Health:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Info/Underground</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Underground:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Automat</name>

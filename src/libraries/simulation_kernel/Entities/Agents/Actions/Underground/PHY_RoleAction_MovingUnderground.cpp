@@ -17,6 +17,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_MovingUnderground )
 
@@ -42,6 +43,7 @@ void load_construct_data( Archive& archive, PHY_RoleAction_MovingUnderground* ro
 PHY_RoleAction_MovingUnderground::PHY_RoleAction_MovingUnderground( MIL_Agent_ABC& pion )
     : pion_        ( pion )
     , transferTime_( 0 )
+    , bHasChanged_ ( false )
 {
     // NOTHING
 }
@@ -65,7 +67,8 @@ void PHY_RoleAction_MovingUnderground::serialize( Archive& ar, const unsigned in
     ar & boost::serialization::base_object< tools::Role_ABC >( *this )
        & transferTime_
        & firstPosition_
-       & secondPosition_;
+       & secondPosition_
+       & bHasChanged_;
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +86,7 @@ void PHY_RoleAction_MovingUnderground::Update( bool /*bIsDead*/ )
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_MovingUnderground::Clean()
 {
-    // NOTHING
+    bHasChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -102,9 +105,11 @@ void PHY_RoleAction_MovingUnderground::Execute( detection::DetectionComputer_ABC
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_MovingUnderground::InitializeUndergroundMoving( const MIL_Object_ABC& firstObject, const MIL_Object_ABC& secondObject )
 {
+    bool isUnderground = IsUnderground();
     transferTime_ = EstimatedUndergroundTime( firstObject, secondObject );
     firstPosition_ = firstObject.GetLocalisation().ComputeBarycenter();
     secondPosition_ = secondObject.GetLocalisation().ComputeBarycenter();
+    bHasChanged_ = ( isUnderground != IsUnderground() );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,6 +123,7 @@ bool PHY_RoleAction_MovingUnderground::Run()
     transferTime_ -= MIL_Singletons::GetTime().GetTickDuration();
     if( transferTime_ <= 0 )
     {
+        bHasChanged_ = true;
         if( !secondPosition_.IsZero() )
         {
             pion_.GetRole< PHY_RolePion_Location >().MagicMove( secondPosition_ );
@@ -157,6 +163,8 @@ double PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime( const MIL_Obj
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( const MIL_Object_ABC& exit )
 {
+    if( !IsUnderground() )
+        bHasChanged_ = true;
     transferTime_ = std::numeric_limits< double >::max();
     firstPosition_ = exit.GetLocalisation().ComputeBarycenter();
     secondPosition_.Reset();
@@ -168,12 +176,35 @@ void PHY_RoleAction_MovingUnderground::HideInUndergroundNetwork( const MIL_Objec
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_MovingUnderground::GetOutFromUndergroundNetwork()
 {
-    if( !firstPosition_.IsZero() )
+    if( IsUnderground() )
     {
-        pion_.GetRole< PHY_RolePion_Location >().MagicMove( firstPosition_ );
-        pion_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( firstPosition_ );
+        if( !firstPosition_.IsZero() )
+        {
+            pion_.GetRole< PHY_RolePion_Location >().MagicMove( firstPosition_ );
+            pion_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( firstPosition_ );
+        }
+        bHasChanged_ = true;
+        Reset();
     }
-    Reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_MovingUnderground::SendChangedState
+// Created: JSR 2011-06-09
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_MovingUnderground::SendChangedState( client::UnitAttributes& msg ) const
+{
+    if( bHasChanged_ )
+        SendFullState( msg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_MovingUnderground::SendFullState
+// Created: JSR 2011-06-09
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_MovingUnderground::SendFullState( client::UnitAttributes& msg ) const
+{
+    msg().set_underground( IsUnderground() );
 }
 
 // -----------------------------------------------------------------------------

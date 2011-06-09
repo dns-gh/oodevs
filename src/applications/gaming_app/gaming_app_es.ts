@@ -932,6 +932,10 @@ Motivo: %3
         <source>Communication: radio receiver silence</source>
         <translation>Comunicación: silencio de radio receptor</translation>
     </message>
+    <message>
+        <source>Underground</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InfoLendingsDialog</name>

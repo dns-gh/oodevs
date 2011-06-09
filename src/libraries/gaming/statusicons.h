@@ -22,6 +22,7 @@ DECLARE_ICON( brouillage );
 DECLARE_ICON( gas );
 DECLARE_ICON( cadenas );
 DECLARE_ICON( nbc );
+DECLARE_ICON( underground );
 DECLARE_ICON( reinforced );
 DECLARE_ICON( reinforcing );
 DECLARE_ICON( parent );

@@ -171,7 +171,7 @@ CapacityFactory::CapacityFactory()
     DoRegister( "supply", boost::bind( &AddBuilder< SupplyCapacity >::Add, _1, _2 ) );
     DoRegister( "supply-route", boost::bind( &AddBuilder< InteractIfEquippedCapacity >::Add, _1, _2 ) );
     DoRegister( "time-limited", boost::bind( &AddBuilder< TimeLimitedCapacity >::Add, _1, _2 ) );
-    DoRegister( "underground-network-exit", boost::bind( &AddBuilder< UndergroundNetworkExitCapacity >::Add, _1, _2 ) );
+    DoRegister( "underground-network", boost::bind( &AddBuilder< UndergroundNetworkExitCapacity >::Add, _1, _2 ) );
     DoRegister( "universal", boost::bind( &AddBuilder< UniversalCapacity >::Add, _1, _2 ) );
     DoRegister( "workable", boost::bind( &AddBuilder< WorkableCapacity >::Add, _1, _2 ) );
 

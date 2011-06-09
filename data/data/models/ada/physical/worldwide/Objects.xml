@@ -422,7 +422,8 @@
   <object geometry="point" name="Underground Exit" symbol="G*EXIT*********" type="underground exit">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
-    <underground-network-exit/>
+    <underground-network/>
+    <universal/>
   </object>
 </objects>
-<!-- signature="2653673036" -->
+<!-- signature="1886756209" -->

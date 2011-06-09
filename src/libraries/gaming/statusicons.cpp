@@ -20,6 +20,7 @@
 #include "res/gas.xpm"
 #include "res/cadenas.xpm"
 #include "res/nbc.xpm"
+#include "res/underground.xpm"
 #include "res/reinforced.xpm"
 #include "res/reinforcing.xpm"
 #include "res/parent.xpm"

@@ -13,7 +13,7 @@
 #define __PHY_RolePion_Communications_h_
 
 #include "PHY_RoleInterface_Communications.h"
-#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
+#include "NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
 namespace xml
@@ -58,8 +58,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update    ( bool bIsDead );
-    void Clean     ();
+    void Update( bool bIsDead );
+    void Clean();
     //@}
 
     //! @name Main
@@ -73,11 +73,11 @@ public:
 
     //! @name Notifications
     //@{
-    virtual void Jam           ( const MIL_Object_ABC& jammer );
-    virtual void Unjam         ( const MIL_Object_ABC& jammer );
+    virtual void Jam( const MIL_Object_ABC& jammer );
+    virtual void Unjam( const MIL_Object_ABC& jammer );
 
-    virtual void ActivateBlackout  ();
-    virtual void ActivatePartialBlackout  ();
+    virtual void ActivateBlackout();
+    virtual void ActivatePartialBlackout();
     virtual void DeactivateBlackout();
     //@}
 
@@ -102,24 +102,23 @@ public:
     //! @name Types
     //@{
     typedef std::set< const MIL_Object_ABC* > T_JammerSet;
-    typedef T_JammerSet::const_iterator           CIT_JammerSet;
+    typedef T_JammerSet::const_iterator     CIT_JammerSet;
     //@}
 
 private:
     //! @name Tools
     //@{
-    bool HasChanged() const;
     void CopyKnowledgeGroup();
     void CopyKnowledgeGroupPartial();
     //@}
 
-    MIL_Agent_ABC&  entity_;
-    T_JammerSet     jammers_;
-    bool            bBlackoutEmmittedActivated_;
-    bool            bBlackoutReceivedActivated_;
-    bool            bHasChanged_;
+    MIL_Agent_ABC& entity_;
+    T_JammerSet jammers_;
+    bool bBlackoutEmmittedActivated_;
+    bool bBlackoutReceivedActivated_;
+    bool bHasChanged_;
 
-    const bool      bIsAutonomous_;
+    const bool bIsAutonomous_;
 
     MIL_KnowledgeGroup* pJammingKnowledgeGroup_;
 private:

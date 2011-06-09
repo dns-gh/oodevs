@@ -51,6 +51,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , bDead_                      ( false )
     , bNeutralized_               ( false )
     , bStealthModeEnabled_        ( false )
+    , bUnderground_               ( false )
     , isMounted_                  ( false )
     , bHumanTransportersAvailable_( false )
     , nLastPosture_               ( sword::UnitAttributes::stopping )
@@ -163,6 +164,7 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
     UPDATE_ASN_ATTRIBUTE( dead                  , bDead_ );
     UPDATE_ASN_ATTRIBUTE( neutralized           , bNeutralized_ );
     UPDATE_ASN_ATTRIBUTE( stealth               , bStealthModeEnabled_ );
+    UPDATE_ASN_ATTRIBUTE( underground           , bUnderground_ );
     UPDATE_ASN_ATTRIBUTE( embarked              , isMounted_ );
     UPDATE_ASN_ATTRIBUTE( transporters_available, bHumanTransportersAvailable_ );
     UPDATE_ASN_ATTRIBUTE( old_posture           , nLastPosture_ );
@@ -423,6 +425,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         asn().set_dead( bDead_ );
         asn().set_neutralized( bNeutralized_ );
         asn().set_stealth( bStealthModeEnabled_ );
+        asn().set_underground( bUnderground_ );
         asn().set_embarked( isMounted_ );
         asn().set_transporters_available( bHumanTransportersAvailable_ );
         asn().set_old_posture( nLastPosture_ );

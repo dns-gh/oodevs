@@ -379,7 +379,8 @@
   <object geometry="point" name="Issue souterraine" symbol="G*EXIT*********" type="underground exit">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
-    <underground-network-exit/>
+    <underground-network/>
+    <universal/>
   </object>
 </objects>
-<!-- signature="1440015948" -->
+<!-- signature="2211093740" -->

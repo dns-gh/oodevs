@@ -120,7 +120,7 @@ public:
         eResourceNetworkCapacityPresent,
         eLodgingCapacityPresent,
         eAltitudeModifierCapacityPresent,
-        eUndergroundNetworkExitCapacityPresent,
+        eUndergroundNetworkCapacityPresent,
         eNbrGuiElements
     };
 

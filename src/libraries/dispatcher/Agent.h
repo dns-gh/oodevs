@@ -132,6 +132,7 @@ private:
     bool                                       bDead_;
     bool                                       bNeutralized_;
     bool                                       bStealthModeEnabled_;
+    bool                                       bUnderground_;
     bool                                       isMounted_;
     bool                                       bHumanTransportersAvailable_;
     sword::UnitAttributes::Posture             nLastPosture_;

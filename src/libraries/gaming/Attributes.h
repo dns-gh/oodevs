@@ -107,6 +107,7 @@ public:
     unsigned int knowledgeGroupJammed_;
     bool bRadarEnabled_;
     bool bPrisoner_;
+    bool bUnderground_;
     const kernel::Team_ABC* surrenderedTo_;
     bool bRefugeesManaged_;
     bool aggregated_;

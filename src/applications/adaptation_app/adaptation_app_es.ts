@@ -1,4 +1,4 @@
-﻿<!DOCTYPE TS><TS>
+<!DOCTYPE TS><TS>
 <context>
     <name>@default</name>
     <message>
@@ -1303,11 +1303,11 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Add resource</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Agregar dotación</translation>
     </message>
     <message>
         <source>Remove resource</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover dotación</translation>
     </message>
 </context>
 <context>

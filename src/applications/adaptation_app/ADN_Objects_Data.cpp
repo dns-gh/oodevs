@@ -1171,7 +1171,7 @@ INIT_DATA( ADN_CapacityInfos_Stock,                   "Stock",                  
 INIT_DATA( ADN_CapacityInfos_ResourceNetwork,         "ResourceNetwork",         "resources" );
 INIT_DATA( ADN_CapacityInfos_Lodging,                 "Lodging",                 "lodging" );
 INIT_DATA( ADN_CapacityInfos_AltitudeModifier,        "AltitudeModifier",        "altitude-modifier" );
-INIT_DATA( ADN_CapacityInfos_UndergroundNetworkExit,  "UndergroundNetworkExit",  "underground-network-exit" );
+INIT_DATA( ADN_CapacityInfos_UndergroundNetwork,      "UndergroundNetwork",      "underground-network" );
 
 #pragma warning( pop )
 
@@ -1260,7 +1260,7 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_ResourceNetwork::TAG ].reset( new ADN_CapacityInfos_ResourceNetwork() );
     capacities_[ ADN_CapacityInfos_Lodging::TAG ].reset( new ADN_CapacityInfos_Lodging() );
     capacities_[ ADN_CapacityInfos_AltitudeModifier::TAG ].reset( new ADN_CapacityInfos_AltitudeModifier() );
-    capacities_[ ADN_CapacityInfos_UndergroundNetworkExit::TAG ].reset( new ADN_CapacityInfos_UndergroundNetworkExit() );
+    capacities_[ ADN_CapacityInfos_UndergroundNetwork::TAG ].reset( new ADN_CapacityInfos_UndergroundNetwork() );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,6 +10,7 @@
 #ifndef __PHY_RoleAction_MovingUnderground_h_
 #define __PHY_RoleAction_MovingUnderground_h_
 
+#include "NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/Role_ABC.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
@@ -31,6 +32,7 @@ class MIL_Object_ABC;
 class PHY_RoleAction_MovingUnderground : public tools::Role_ABC
                                        , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
                                        , private boost::noncopyable
+                                       , public network::NetworkUnitAttributesMessageSender_ABC
 {
 public:
     //! @name Types
@@ -65,6 +67,12 @@ public:
     void GetOutFromUndergroundNetwork();
     //@}
 
+    //! @name Network
+    //@{
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
+    //@}
+
 private:
     //! @name Helpers
     //@{
@@ -82,6 +90,7 @@ private:
     double transferTime_;
     MT_Vector2D firstPosition_;
     MT_Vector2D secondPosition_;
+    bool bHasChanged_;
     //@}
 };
 

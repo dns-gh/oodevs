@@ -112,6 +112,7 @@ void InfoEventsWidget::InitializeEvents( QWidget* parent )
     events_["radar"]          = CreateEvent( parent, MAKE_PIXMAP( radars_on )      , tools::translate( "InfoEventsWidget", "Communication: radar enabled" ) );
     events_["stealth"]        = CreateEvent( parent, defaultIcon                   , tools::translate( "InfoEventsWidget", "Communication: stealth mode" ) );
     events_["nbc suit"]       = CreateEvent( parent, MAKE_PIXMAP( nbc )            , tools::translate( "InfoEventsWidget", "NBC: suit on" ) );
+    events_["underground"]    = CreateEvent( parent, MAKE_PIXMAP( underground )    , tools::translate( "InfoEventsWidget", "Underground" ) );
     events_["contamination"]  = CreateEvent( parent, MAKE_PIXMAP( nbc )            , "" );
     events_["refugees"]       = CreateEvent( parent, defaultIcon                   , tools::translate( "InfoEventsWidget", "Refugees handled" ) );
 }
@@ -146,6 +147,7 @@ void InfoEventsWidget::SetAttributes( const Attributes& attributes )
     ToggleEvent( "radar"   , attributes.bRadarEnabled_ );
     ToggleEvent( "stealth" , attributes.bStealthModeEnabled_ );
     ToggleEvent( "refugees", attributes.bRefugeesManaged_ );
+    ToggleEvent( "underground", attributes.bUnderground_ );
     SetShown();
 }
 
