@@ -348,8 +348,8 @@ CREATE TABLE sword.urban_blocks
   color                   CHARACTER VARYING(25) -- ( r, g, b, a )
 );
 SELECT AddGeometryColumn('sword', 'urban_blocks', 'shape', 4326, 'GEOMETRY', 2); 
-ALTER TABLE sword.users OWNER TO sword;
-GRANT ALL ON TABLE sword.users TO sword;
+ALTER TABLE sword.urban_blocks OWNER TO sword;
+GRANT ALL ON TABLE sword.urban_blocks TO sword;
 
 CREATE TYPE link_type AS ENUM ( 'urban', 'object' );
 
@@ -361,8 +361,8 @@ CREATE TABLE sword.resource_network_link
     capacity      INTEGER,
     flow          INTEGER
 );
-ALTER TABLE sword.users OWNER TO sword;
-GRANT ALL ON TABLE sword.users TO sword;
+ALTER TABLE sword.resource_network_link OWNER TO sword;
+GRANT ALL ON TABLE sword.resource_network_link TO sword;
 
 CREATE TABLE sword.resource_network
 (
@@ -380,5 +380,25 @@ CREATE TABLE sword.resource_network
   max_consumption   INTEGER,
   critical          INTEGER
 );
-ALTER TABLE sword.users OWNER TO sword;
-GRANT ALL ON TABLE sword.users TO sword;
+ALTER TABLE sword.resource_network OWNER TO sword;
+GRANT ALL ON TABLE sword.resource_network TO sword;
+
+CREATE TABLE sword.inhabitants
+(
+  id                      SERIAL NOT NULL PRIMARY KEY,
+  public_oid              INTEGER NOT NULL,
+  session_id              INTEGER NOT NULL,
+  "name"                  CHARACTER VARYING(50),
+  team_id                 INTEGER NOT NULL
+);
+ALTER TABLE sword.inhabitants OWNER TO sword;
+GRANT ALL ON TABLE sword.inhabitants TO sword;
+
+CREATE OR REPLACE VIEW sword.inhabitants_by_team AS 
+ SELECT teams.session_id AS session_id, teams.id AS team_id, teams.name AS team_name, inhabitants.name AS name
+   FROM sword.inhabitants
+   RIGHT JOIN sword.teams ON inhabitants.team_id = teams.public_oid AND inhabitants.session_id = teams.session_id
+  ORDER BY teams.name, inhabitants.name;
+
+ALTER TABLE sword.inhabitants_by_team OWNER TO sword;
+GRANT ALL ON TABLE sword.inhabitants_by_team TO sword;

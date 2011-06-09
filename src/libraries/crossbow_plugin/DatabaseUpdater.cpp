@@ -764,6 +764,23 @@ void DatabaseUpdater::Update( const sword::UrbanUpdate& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DatabaseUpdater::Update
+// Created: BCI 2011-06-08
+// -----------------------------------------------------------------------------
+void DatabaseUpdater::Update( const sword::PopulationCreation& msg )
+{
+    std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "inhabitants" ) );
+
+    Row_ABC& row = table->CreateRow();
+    row.SetField( "public_oid", FieldVariant( static_cast< long >( msg.id().id() ) ) );
+    row.SetField( "session_id", FieldVariant( session_.GetId() ) );
+    row.SetField( "name", FieldVariant( msg.name() ) );
+    row.SetField( "team_id", FieldVariant( (long)msg.party().id() ) );
+    table->InsertRow( row );
+    table.reset();
+}
+
+// -----------------------------------------------------------------------------
 // Name: QueryDatabaseUpdater::Log
 // Created: MPT 2009-12-22
 // -----------------------------------------------------------------------------

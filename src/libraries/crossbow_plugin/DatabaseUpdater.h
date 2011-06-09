@@ -93,6 +93,7 @@ public:
     void Update( const sword::UrbanCreation& msg );
     void Update( const sword::UrbanUpdate& msg );
 
+    void Update( const sword::PopulationCreation& msg );
     void Log( const sword::ObjectMagicActionAck& msg );
     //@}
 

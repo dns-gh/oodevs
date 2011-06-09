@@ -96,7 +96,8 @@ bool CrossbowPublisher::IsRelevant( const sword::SimToClient& wrapper ) const
         wrapper.message().has_unit_creation() ||
         wrapper.message().has_folk_creation() ||
         wrapper.message().has_urban_creation() ||
-        wrapper.message().has_party_creation() )
+        wrapper.message().has_party_creation() ||
+        wrapper.message().has_population_creation() )
         return true;
 
     if( wrapper.message().has_automat_attributes() )
@@ -294,6 +295,9 @@ void CrossbowPublisher::UpdateDatabase( const sword::SimToClient& wrapper )
 
     else if( wrapper.message().has_report() )
         reportUpdater_->Update( wrapper.message().report() );
+
+    else if( wrapper.message().has_population_creation() )
+        databaseUpdater_->Update( wrapper.message().population_creation() );
 }
 
 // -----------------------------------------------------------------------------
