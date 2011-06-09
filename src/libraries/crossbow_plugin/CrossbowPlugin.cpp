@@ -112,7 +112,8 @@ CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream&
 // -----------------------------------------------------------------------------
 CrossbowPlugin::~CrossbowPlugin()
 {
-    // NOTHING
+    listeners_->interrupt();
+    listeners_->join();
 }
 
 // -----------------------------------------------------------------------------
