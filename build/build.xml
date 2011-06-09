@@ -692,6 +692,7 @@
                   lib${ant.project.name}_MT_Tools-${platform}-mt,
                   lib${ant.project.name}_preparation-${platform}-mt,
                   lib${ant.project.name}_flood-${platform}-mt,
+                  lib${ant.project.name}_meteo-${platform}-mt,
                   lib${ant.project.name}_protocol-${platform}-mt">
             <syslibset libs="gdi32"/>
         </build-test>
