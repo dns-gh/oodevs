@@ -52,11 +52,11 @@ public:
 
     //! @name Operations
     //@{
-    int  Fire         ( MIL_Effect_IndirectFire* pEffect );
+    int  Fire( MIL_Effect_IndirectFire* pEffect );
     void FireSuspended();
 
     const PHY_DotationCategory* GetMunitionForIndirectFire( const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition );
-          int                   ThrowSmoke                ( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo );
+    int ThrowSmoke( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo );
     //@}
 
     //! @name Return codes

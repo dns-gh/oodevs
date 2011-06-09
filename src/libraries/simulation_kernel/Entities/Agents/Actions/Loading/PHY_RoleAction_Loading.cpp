@@ -11,20 +11,18 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Loading.h"
+#include "AlgorithmsFactories.h"
+#include "PostureComputer_ABC.h"
+#include "HumanLoadingTimeComputer_ABC.h"
+#include "LoadedStateConsistencyComputer_ABC.h"
+#include "LoadingComputerFactory_ABC.h"
+#include "NetworkNotificationHandler_ABC.h"
+#include "VisionConeNotificationHandler_ABC.h"
+#include "LoadingChangeNotificationHandler_ABC.h"
 #include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "protocol/ClientSenders.h"
-
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/PostureComputer_ABC.h"
-#include "HumanLoadingTimeComputer_ABC.h"
-#include "LoadedStateConsistencyComputer_ABC.h"
-#include "LoadingComputerFactory_ABC.h"
-
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
-#include "simulation_kernel/LoadingChangeNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Loading )
 
@@ -51,12 +49,12 @@ void load_construct_data( Archive& archive, PHY_RoleAction_Loading* role, const 
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Loading::PHY_RoleAction_Loading( MIL_Agent_ABC& pion )
-    : pion_                  ( pion )
-    , bIsLoaded_              ( false )
-    , nState_                 ( eNothing )
-    , nEndTimeStep_           ( 0 )
-    , bHasChanged_            ( true )
-    , bHasBeenUpdated_        ( false )
+    : pion_           ( pion )
+    , bIsLoaded_      ( false )
+    , nState_         ( eNothing )
+    , nEndTimeStep_   ( 0 )
+    , bHasChanged_    ( true )
+    , bHasBeenUpdated_( false )
 {
     SetLoadedState();
 }
@@ -395,7 +393,7 @@ void PHY_RoleAction_Loading::Execute( posture::PostureComputer_ABC& algorithm ) 
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::LoadForTransport   ( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/,  bool& /*bTransportedByAnother*/  )
 {
-    ForceUnloadedState ();
+    ForceUnloadedState();
 }
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::UnloadFromTransport
@@ -403,7 +401,7 @@ void PHY_RoleAction_Loading::LoadForTransport   ( const MIL_Agent_ABC& /*transpo
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Loading::UnloadFromTransport( const MIL_Agent_ABC& /*transporter*/, bool /*bTransportOnlyLoadable*/ )
 {
-    ForceUnloadedState ();
+    ForceUnloadedState();
 }
 
 } // namespace transport

@@ -11,17 +11,16 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Flying.h"
+#include "AlgorithmsFactories.h"
+#include "LocationComputer_ABC.h"
+#include "PostureComputer_ABC.h"
+#include "MoveComputer_ABC.h"
+#include "ConsumptionComputerFactory_ABC.h"
+#include "ConsumptionModeChangeRequest_ABC.h"
+#include "ConsumptionChangeRequestHandler_ABC.h"
 #include "PHY_ActionFly.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/LocationComputer_ABC.h"
-#include "simulation_kernel/PostureComputer_ABC.h"
-#include "simulation_kernel/MoveComputer_ABC.h"
-#include "simulation_kernel/ConsumptionComputerFactory_ABC.h"
-#include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
-#include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_Flying )
@@ -46,9 +45,9 @@ void load_construct_data( Archive& archive, PHY_RoleAction_Flying* role, const u
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Flying::PHY_RoleAction_Flying( MIL_Agent_ABC& entity )
-    : entity_                        ( entity )
-    , effectFly_                    ( *this )
-    , rHeight_                      ( 0. )
+    : entity_   ( entity )
+    , effectFly_( *this )
+    , rHeight_  ( 0. )
 {
     // NOTHING
 }

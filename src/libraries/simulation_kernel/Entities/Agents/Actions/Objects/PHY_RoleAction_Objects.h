@@ -14,11 +14,6 @@
 
 #include "MT_Tools/Role_ABC.h"
 
-namespace client
-{
-    class UnitAttributes;
-}
-
 class DEC_Knowledge_Object;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
@@ -126,7 +121,8 @@ private:
     //! @name Member data
     //@{
     MIL_AgentPion& pion_;
-    double  rWeightCapacity_, rVolumeCapacity_;
+    double rWeightCapacity_;
+    double rVolumeCapacity_;
     //@}
 };
 

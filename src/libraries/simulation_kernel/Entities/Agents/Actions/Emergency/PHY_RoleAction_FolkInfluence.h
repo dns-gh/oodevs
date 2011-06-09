@@ -12,8 +12,6 @@
 
 #include "MT_Tools/Role_ABC.h"
 
-class TER_Localisation;
-
 // =============================================================================
 /** @class  PHY_RoleAction_FolkInfluence
     @brief  PHY_RoleAction_FolkInfluence
@@ -46,8 +44,8 @@ public:
 
     //! @name
     //@{
-    void Update ( bool bIsDead );
-    void Clean  ();
+    void Update( bool bIsDead );
+    void Clean();
     //@}
 
 public:
@@ -58,7 +56,7 @@ public:
         eRunning        , // -> l'action est en cours d'exécution
         eActivated      , // -> l'action est terminée
         eDeactivated    , // -> l'action est terminée
-        eImpossible     , // -> l'action est impossible (cas arrivant, par exemple, quand on essaye de construire une zone d'influence dans une zone vide)
+        eImpossible       // -> l'action est impossible (cas arrivant, par exemple, quand on essaye de construire une zone d'influence dans une zone vide)
     };
 };
 

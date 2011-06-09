@@ -9,8 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_FolkInfluence.h"
-#include "MIL_AgentServer.h"
-#include "simulation_terrain/TER_Localisation.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_FolkInfluence )
 

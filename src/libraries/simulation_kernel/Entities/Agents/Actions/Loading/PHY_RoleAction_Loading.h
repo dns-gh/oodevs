@@ -13,7 +13,7 @@
 #define __PHY_RoleAction_Loading_h_
 
 #include "TransportNotificationHandler_ABC.h"
-#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
+#include "NetworkUnitAttributesMessageSender_ABC.h"
 #include "MT_Tools/Role_ABC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 
@@ -28,6 +28,7 @@ namespace posture
 {
     class PostureComputer_ABC;
 }
+
 namespace transport
 {
 
@@ -58,16 +59,16 @@ public:
 
     //! @name Operations
     //@{
-    void Update    ( bool bIsDead );
-    void Clean     ();
+    void Update( bool bIsDead );
+    void Clean();
     bool HasChanged() const;
     virtual void Execute( posture::PostureComputer_ABC& algorithm ) const;
     //@}
 
     //! @name Operations
     //@{
-    int  GetInitialReturnCode() const;
-    int  GetFinalReturnCode  () const;
+    int GetInitialReturnCode() const;
+    int GetFinalReturnCode  () const;
 
     int  Load          ();
     void LoadSuspended ();
@@ -136,10 +137,10 @@ private:
     //@{
     MIL_Agent_ABC& pion_;
     E_State nState_;
-    bool    bIsLoaded_;
-    unsigned int    nEndTimeStep_; // Load or unload
-    bool    bHasChanged_;
-    bool    bHasBeenUpdated_; // Le trigger Load / Unload ou RecoverCarriers a été appelé durant le pas de temps
+    bool bIsLoaded_;
+    unsigned int nEndTimeStep_; // Load or unload
+    bool bHasChanged_;
+    bool bHasBeenUpdated_; // Le trigger Load / Unload ou RecoverCarriers a été appelé durant le pas de temps
     //@}
 };
 

@@ -11,19 +11,17 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_IndirectFiring.h"
+#include "AlgorithmsFactories.h"
+#include "WeaponAvailabilityComputer_ABC.h"
+#include "WeaponAvailabilityComputerFactory_ABC.h"
 #include "PHY_IndirectFireData.h"
 #include "PHY_MunitionForIndirectFireData.h"
 #include "PHY_SmokeData.h"
 #include "Entities/Actions/PHY_FireResults_Default.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
-
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
-#include "simulation_kernel/WeaponAvailabilityComputerFactory_ABC.h"
 
 using namespace firing;
 
@@ -51,7 +49,7 @@ void firing::load_construct_data( Archive& archive, PHY_RoleAction_IndirectFirin
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 PHY_RoleAction_IndirectFiring::PHY_RoleAction_IndirectFiring( MIL_Agent_ABC& pion )
-    : pion_     ( pion )
+    : pion_( pion )
 {
     // NOTHING
 }
@@ -107,8 +105,8 @@ int PHY_RoleAction_IndirectFiring::Fire( MIL_Effect_IndirectFire* pEffect )
     }
 
     //
-    const PHY_ComposantePion* pFirer         = 0;
-    PHY_Weapon*         pFirerWeapon         = 0;
+    const PHY_ComposantePion* pFirer = 0;
+    PHY_Weapon* pFirerWeapon = 0;
     while( firerWeapons.GetUnusedFirerWeapon( pFirer, pFirerWeapon ) && !pEffect->IsInterventionTypeFired() ) // ready weapons
     {
         if( !pFirerWeapon->IndirectFire( pion_, *pEffect ) )

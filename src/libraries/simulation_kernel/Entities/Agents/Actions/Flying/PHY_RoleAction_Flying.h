@@ -15,7 +15,6 @@
 #include "PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Effects/MIL_Effect_Fly.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include <boost/shared_ptr.hpp>
 
 class PHY_ActionFly;
 class MIL_Agent_ABC;
@@ -24,14 +23,17 @@ namespace location
 {
     class LocationComputer_ABC;
 }
+
 namespace posture
 {
     class PostureComputer_ABC;
 }
+
 namespace moving
 {
     class MoveComputer_ABC;
 }
+
 // =============================================================================
 // @class  PHY_RoleAction_Flying
 // Created: JVT 2004-08-03
@@ -73,7 +75,7 @@ private:
     //! @name Tools
     //@{
     bool TakeOff();
-    bool Land   ();
+    bool Land();
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Flying* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Flying* role, const unsigned int /*version*/ );
     virtual void Execute( location::LocationComputer_ABC& algorithm ) const;

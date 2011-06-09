@@ -9,6 +9,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_DirectFiring.h"
+#include "AlgorithmsFactories.h"
+#include "ConsumeDotationNotificationHandler_ABC.h"
+#include "ComposantesAbleToBeFiredComputer_ABC.h"
+#include "ComposantesAbleToBeFiredComputerFactory_ABC.h"
+#include "WeaponAvailabilityComputer_ABC.h"
+#include "WeaponAvailabilityComputerFactory_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
@@ -25,12 +31,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/MIL_Knowledgegroup.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/ConsumeDotationNotificationHandler_ABC.h"
-#include "simulation_kernel/ComposantesAbleToBeFiredComputer_ABC.h"
-#include "simulation_kernel/ComposantesAbleToBeFiredComputerFactory_ABC.h"
-#include "simulation_kernel/WeaponAvailabilityComputer_ABC.h"
-#include "simulation_kernel/WeaponAvailabilityComputerFactory_ABC.h"
 
 using namespace firing;
 
