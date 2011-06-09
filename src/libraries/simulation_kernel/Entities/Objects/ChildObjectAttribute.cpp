@@ -43,13 +43,14 @@ ChildObjectAttribute::~ChildObjectAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void ChildObjectAttribute::serialize
+// Name: ChildObjectAttribute::serialize
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void ChildObjectAttribute::serialize( Archive& /*file*/, const unsigned int )
+void ChildObjectAttribute::serialize( Archive& file, const unsigned int )
 {
-    //TODO
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
+         & childObject_;
 }
 
 // -----------------------------------------------------------------------------

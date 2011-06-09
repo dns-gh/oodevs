@@ -23,7 +23,7 @@ class ChildObjectAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ChildObjectAttribute();
+             ChildObjectAttribute();
     explicit ChildObjectAttribute( MIL_Object_ABC& object );
     virtual ~ChildObjectAttribute();
     //@}
@@ -47,7 +47,7 @@ public:
 private:
     //! @name Member data
     //@{
-    MIL_Object_ABC*    childObject_;
+    MIL_Object_ABC* childObject_;
     //@}
 };
 
