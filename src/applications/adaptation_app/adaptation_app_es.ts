@@ -1,4 +1,4 @@
-<!DOCTYPE TS><TS>
+﻿<!DOCTYPE TS><TS>
 <context>
     <name>@default</name>
     <message>
@@ -53,7 +53,7 @@
         <translation>Dificil de Matar</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation>Dotación</translation>
     </message>
     <message>
@@ -366,7 +366,7 @@ estacionado con motor encendido</translation>
         <translation>Logística por autómata</translation>
     </message>
     <message>
-        <source>Logistic per dotation</source>
+        <source>Logistic per resource</source>
         <translation>Logística por dotación</translation>
     </message>
     <message>
@@ -753,11 +753,11 @@ estacionado con motor encendido</translation>
         <translation>Consumo normalizado</translation>
     </message>
     <message>
-        <source>Add dotation</source>
+        <source>Add resource</source>
         <translation>Agregar dotación</translation>
     </message>
     <message>
-        <source>Remove dotation</source>
+        <source>Remove resource</source>
         <translation>Remover dotación</translation>
     </message>
 </context>
@@ -2956,7 +2956,7 @@ tirador</translation>
         <translation>Usa munición</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation>Dotación</translation>
     </message>
     <message>

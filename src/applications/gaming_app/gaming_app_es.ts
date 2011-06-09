@@ -894,7 +894,7 @@ Motivo: %3
 <context>
     <name>InfoDotationsDialog</name>
     <message>
-        <source>Dotations</source>
+        <source>Resources</source>
         <translation>Dotaciones</translation>
     </message>
 </context>
@@ -1323,7 +1323,7 @@ Motivo: %3
         <translation>Blanco:</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation>Dotación</translation>
     </message>
     <message>
@@ -1358,7 +1358,7 @@ Motivo: %3
         <translation type="unfinished">Blanco:</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation type="unfinished">Dotación</translation>
     </message>
     <message>
@@ -1393,7 +1393,7 @@ Motivo: %3
         <translation>Blanco:</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation>Dotación</translation>
     </message>
     <message>
@@ -1444,11 +1444,11 @@ Motivo: %3
         <translation>Tripulación</translation>
     </message>
     <message>
-        <source>Dotations</source>
+        <source>Resources</source>
         <translation>Dotaciones</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation>Dotación</translation>
     </message>
     <message>
@@ -2744,7 +2744,7 @@ Motivo: %3
         <translation>Estado:</translation>
     </message>
     <message>
-        <source>Dotations requested/granted/convoyed</source>
+        <source>Resources requested/granted/convoyed</source>
         <translation>Dotación requerida/concedida/embaracada</translation>
     </message>
 </context>

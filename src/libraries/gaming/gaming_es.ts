@@ -523,11 +523,11 @@
 <context>
     <name>Dotations</name>
     <message>
-        <source>Dotations</source>
+        <source>Resources</source>
         <translation>Dotaciones</translation>
     </message>
     <message>
-        <source>Dotations/Out of gas</source>
+        <source>Resources/Out of gas</source>
         <translation>Dotaciones/Falta de gas</translation>
     </message>
 </context>
@@ -1080,7 +1080,7 @@
         <translation>Bypass:</translation>
     </message>
     <message>
-        <source>Development dotation:</source>
+        <source>Development resource:</source>
         <translation>Dotación de desarrollo:</translation>
     </message>
     <message>
@@ -1108,7 +1108,7 @@
         <translation>Campamento</translation>
     </message>
     <message>
-        <source>Construction dotation:</source>
+        <source>Construction resource:</source>
         <translation>Dotación de construcción:</translation>
     </message>
     <message>

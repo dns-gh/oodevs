@@ -17,9 +17,9 @@
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 InfoDotationsDialog::InfoDotationsDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : InfoDialog< kernel::Dotations_ABC >( parent, controllers, tools::translate( "InfoDotationsDialog", "Dotations" ) )
+    : InfoDialog< kernel::Dotations_ABC >( parent, controllers, tools::translate( "InfoDotationsDialog", "Resources" ) )
 {
-    new DotationsListView( new QHGroupBox( tools::translate( "InfoDotationsDialog", "Dotations" ), RootWidget() ), controllers, factory );
+    new DotationsListView( new QHGroupBox( tools::translate( "InfoDotationsDialog", "Resources" ), RootWidget() ), controllers, factory );
 }
 
 // -----------------------------------------------------------------------------

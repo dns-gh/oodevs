@@ -79,7 +79,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
     }
     {
         QGroupBox* box = new QVGroupBox( tr( "Parameters" ), this );
-        infiniteDotationsCB_ = new QCheckBox( tr( "Infinite dotations" ), box );
+        infiniteDotationsCB_ = new QCheckBox( tr( "Infinite resources" ), box );
         grid->addMultiCellWidget( box, 3, 3, 0, 2 );
     }
     {

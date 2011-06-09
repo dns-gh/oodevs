@@ -50,7 +50,7 @@ void SupplyConsignsWidget::Display( const LogSupplyConsign* consign, kernel::Dis
     // $$$$ AGE 2006-02-28: crado
     QListViewItem* last  = item->firstChild();
     QListViewItem* child = last;
-    while( child && child->text( 0 ) != tools::translate( "SupplyConsignsWidget", "Dotations requested/granted/convoyed" ) )
+    while( child && child->text( 0 ) != tools::translate( "SupplyConsignsWidget", "Resources requested/granted/convoyed" ) )
     {
         last = child;
         child = child->nextSibling();
@@ -58,7 +58,7 @@ void SupplyConsignsWidget::Display( const LogSupplyConsign* consign, kernel::Dis
     if( ! child )
     {
         child = factory_.CreateItem( item, last );
-        child->setText( 0, tools::translate( "SupplyConsignsWidget", "Dotations requested/granted/convoyed" ) );
+        child->setText( 0, tools::translate( "SupplyConsignsWidget", "Resources requested/granted/convoyed" ) );
         child->setText( 1, "" );
     }
 

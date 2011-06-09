@@ -55,7 +55,7 @@ Voulez vous sauvegarder malgré tout ?</translation>
         <translation>&quot;Hard kill&quot;</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation>Dotation</translation>
     </message>
     <message>
@@ -368,7 +368,7 @@ Arrêt moteur allumé</translation>
         <translation>Logistique par automate</translation>
     </message>
     <message>
-        <source>Logistic per dotation</source>
+        <source>Logistic per resource</source>
         <translation>Logistique par dotation</translation>
     </message>
     <message>
@@ -755,11 +755,11 @@ Arrêt moteur allumé</translation>
         <translation>Consommation normalisée</translation>
     </message>
     <message>
-        <source>Add dotation</source>
+        <source>Add resource</source>
         <translation>Ajouter une dotation</translation>
     </message>
     <message>
-        <source>Remove dotation</source>
+        <source>Remove resource</source>
         <translation>Enlever cette dotation</translation>
     </message>
 </context>
@@ -3050,7 +3050,7 @@ du tireur</translation>
         <translation>Nombre d&apos;humains par pas de simulation</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation>Dotation</translation>
     </message>
     <message>

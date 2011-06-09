@@ -52,7 +52,7 @@ void ConstructionAttribute::Display( kernel::Displayer_ABC& displayer ) const
     if( !construction_ )
         return;
     displayer.Group( tools::translate( "Object", "Information" ) )
-             .Item( tools::translate( "Object", "Construction dotation:" ) )
+             .Item( tools::translate( "Object", "Construction resource:" ) )
                 .Start( nDotationConstruction_ )
                 .Add( " " ).Add( construction_ ).End();
 }

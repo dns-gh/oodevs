@@ -67,7 +67,7 @@
 <context>
     <name>DotationsEditor</name>
     <message>
-        <source>Dotations editor</source>
+        <source>Resources editor</source>
         <translation>Edition des dotations</translation>
     </message>
     <message>
@@ -185,7 +185,7 @@
         <translation>Paramètres</translation>
     </message>
     <message>
-        <source>Infinite dotations</source>
+        <source>Infinite resources</source>
         <translation>Dotations infinies</translation>
     </message>
     <message>
@@ -1286,7 +1286,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Liste d&apos;unités</translation>
     </message>
     <message>
-        <source>Dotation list</source>
+        <source>Resource list</source>
         <translation>Liste de dotations</translation>
     </message>
     <message>

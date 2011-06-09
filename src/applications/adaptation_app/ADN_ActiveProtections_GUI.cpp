@@ -66,9 +66,9 @@ void ADN_ActiveProtections_GUI::Build()
     builder.AddField<ADN_CheckBox>( pPropertiesGroup, tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );
 
     // dotations
-    QGroupBox* pDotationGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Dotation" ), pGroup );
+    QGroupBox* pDotationGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Resource" ), pGroup );
 
-    builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pDotationGroup, tr( "Dotation" ), vConnectors[eActiveProtectionDotation] );
+    builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pDotationGroup, tr( "Resource" ), vConnectors[eActiveProtectionDotation] );
     builder.SetEnabled( true );
     builder.AddField<ADN_EditLine_Double>( pDotationGroup, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterEqualZero );
 

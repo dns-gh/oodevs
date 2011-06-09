@@ -165,7 +165,7 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
 
     table_ = new QTable( 0, 2, this );
     table_->setMargin( 5 );
-    table_->horizontalHeader()->setLabel( 0, tr( "Dotation" ) );
+    table_->horizontalHeader()->setLabel( 0, tr( "Resource" ) );
     table_->horizontalHeader()->setLabel( 1, tr( "Quota" ) );
     table_->setLeftMargin( 0 );
     table_->setMinimumSize( 220, 200 );

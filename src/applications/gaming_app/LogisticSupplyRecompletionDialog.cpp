@@ -88,12 +88,12 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     mainLayout->addWidget( equiPersoGroupBox );
 
     // Dotations && !munition
-    QGroupBox* dotationsGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Dotations" ), this );
+    QGroupBox* dotationsGroupBox = new QGroupBox( 1, Qt::Horizontal, tr( "Resources" ), this );
     dotationsGroupBox->setFlat( true );
 
     dotationsTable_ = new QTable( 0, 3, dotationsGroupBox );
     dotationsTable_->horizontalHeader()->setLabel( 0, "" );
-    dotationsTable_->horizontalHeader()->setLabel( 1, tr( "Dotation" ) );
+    dotationsTable_->horizontalHeader()->setLabel( 1, tr( "Resource" ) );
     dotationsTable_->horizontalHeader()->setLabel( 2, tr( "Quantity %" ) );
     dotationsTable_->setColumnWidth( 0, 20 );
     dotationsTable_->setColumnWidth( 2, 60 );
@@ -120,7 +120,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
 
     stockTable_ = new QTable( 0, 3, stockGroupBox );
     stockTable_->horizontalHeader()->setLabel( 0, "" );
-    stockTable_->horizontalHeader()->setLabel( 1, tr( "Dotation" ) );
+    stockTable_->horizontalHeader()->setLabel( 1, tr( "Resource" ) );
     stockTable_->horizontalHeader()->setLabel( 2, tr( "Quantity %" ) );
     stockTable_->setColumnWidth( 0, 20 );
     stockTable_->setColumnWidth( 2, 60 );

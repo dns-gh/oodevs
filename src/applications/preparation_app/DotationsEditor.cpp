@@ -29,7 +29,7 @@ DotationsEditor::DotationsEditor( QDialog*& self, QWidget* parent, const tools::
     , value_ ( 0 )
     , self_( self )
 {
-    setCaption( tr( "Dotations editor" ) );
+    setCaption( tr( "Resources editor" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
 
     QVBox* vBox = new QVBox( this );

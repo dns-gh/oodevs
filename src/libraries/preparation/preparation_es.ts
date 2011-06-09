@@ -491,7 +491,7 @@
         <translation>Paso :</translation>
     </message>
     <message>
-        <source>Development dotation:</source>
+        <source>Development resource:</source>
         <translation>Dotación de desarrollo :</translation>
     </message>
     <message>
@@ -527,11 +527,11 @@
         <translation>Ruta de abastecimiento</translation>
     </message>
     <message>
-        <source>Info/Construction/Dotation/Type</source>
+        <source>Info/Construction/Resource/Type</source>
         <translation>Info/Construcción/Dotacion/Tipo</translation>
     </message>
     <message>
-        <source>Info/Construction/Dotation/Count</source>
+        <source>Info/Construction/Resource/Count</source>
         <translation>Info/Construcción/Dotación/Cantidad</translation>
     </message>
     <message>

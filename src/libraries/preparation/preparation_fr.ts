@@ -491,7 +491,7 @@
         <translation>Contournement :</translation>
     </message>
     <message>
-        <source>Development dotation:</source>
+        <source>Development resource:</source>
         <translation>Dotation de valorisation :</translation>
     </message>
     <message>
@@ -527,11 +527,11 @@
         <translation>Itinéraire logistique</translation>
     </message>
     <message>
-        <source>Info/Construction/Dotation/Type</source>
+        <source>Info/Construction/Resource/Type</source>
         <translation>Info/Construction/Dotation/Type</translation>
     </message>
     <message>
-        <source>Info/Construction/Dotation/Count</source>
+        <source>Info/Construction/Resource/Count</source>
         <translation>Info/Construction/Dotation/Nombre</translation>
     </message>
     <message>

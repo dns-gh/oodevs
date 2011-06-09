@@ -144,9 +144,9 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( int /*row*/, int /*col*/, con
         targetMenu.insertItem( (*it)->strName_.GetData().c_str(), pSubMenu );
     }
 
-    menu.insertItem( tr( "Add dotation"), &targetMenu ,0 );
+    menu.insertItem( tr( "Add resource"), &targetMenu ,0 );
     if( GetCurrentData() != 0 )
-        menu.insertItem( tr( "Remove dotation" ), 1 );
+        menu.insertItem( tr( "Remove resource" ), 1 );
 
     int nMenuResult = menu.exec(pt);
     if( nMenuResult == 1 )

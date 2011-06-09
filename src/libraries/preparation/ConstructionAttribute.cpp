@@ -58,7 +58,7 @@ void ConstructionAttribute::Display( kernel::Displayer_ABC& displayer ) const
              .Display( tools::translate( "Object", "Construction:" ), completion_ );
 
 //    displayer.Group( tools::translate( "Object", "Information" ) )
-//             .Item( tools::translate( "Object", "Construction dotation:" ) )
+//             .Item( tools::translate( "Object", "Construction resource:" ) )
 //                .Start( nDotationConstruction_ )
 //                .Add( " " ).Add( construction_ ).End(); // $$$$ AGE 2006-02-22: End devrait renvoyer le parent
 }
@@ -97,8 +97,8 @@ void ConstructionAttribute::SerializeAttributes( xml::xostream& xos ) const
 void ConstructionAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
     dico.Register( *this, tools::translate( "Object", "Info/Construction/Completion" ), completion_ );
-    dico.Register( *this, tools::translate( "Object", "Info/Construction/Dotation/Type" ), dotationType_ );
-    dico.Register( *this, tools::translate( "Object", "Info/Construction/Dotation/Count" ), dotationCount_ );
+    dico.Register( *this, tools::translate( "Object", "Info/Construction/Resource/Type" ), dotationType_ );
+    dico.Register( *this, tools::translate( "Object", "Info/Construction/Resource/Count" ), dotationCount_ );
 }
 
 // -----------------------------------------------------------------------------

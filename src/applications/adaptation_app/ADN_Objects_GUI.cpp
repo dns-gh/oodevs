@@ -207,7 +207,7 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eAttritionCapacityPresent ] = & attrition->GetConnector();
         ADN_GroupBox* dotation = new ADN_GroupBox( 2, Qt::Horizontal, tr( "Use ammunition" ), attrition );
         vInfosConnectors[ eAttritionCapacityUseDotation ] = & dotation->GetConnector();
-        builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( dotation, tr( "Dotation" ), vInfosConnectors[ eAttritionDotation ] );
+        builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( dotation, tr( "Resource" ), vInfosConnectors[ eAttritionDotation ] );
     }
 
     // NBC

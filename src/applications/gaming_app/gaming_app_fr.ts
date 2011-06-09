@@ -894,7 +894,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
 <context>
     <name>InfoDotationsDialog</name>
     <message>
-        <source>Dotations</source>
+        <source>Resources</source>
         <translation>Dotations</translation>
     </message>
 </context>
@@ -1323,7 +1323,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Cible:</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation>Dotation</translation>
     </message>
     <message>
@@ -1358,7 +1358,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Cible:</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation>Dotation</translation>
     </message>
     <message>
@@ -1393,7 +1393,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Cible:</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation>Dotation</translation>
     </message>
     <message>
@@ -1444,11 +1444,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Personnel</translation>
     </message>
     <message>
-        <source>Dotations</source>
+        <source>Resources</source>
         <translation>Dotations</translation>
     </message>
     <message>
-        <source>Dotation</source>
+        <source>Resource</source>
         <translation>Dotation</translation>
     </message>
     <message>
@@ -2744,7 +2744,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Etat:</translation>
     </message>
     <message>
-        <source>Dotations requested/granted/convoyed</source>
+        <source>Resources requested/granted/convoyed</source>
         <translation>Dotations demandées/accordées/convoyées</translation>
     </message>
 </context>

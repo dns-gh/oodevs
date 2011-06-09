@@ -50,7 +50,7 @@ void MineAttribute::Display( kernel::Displayer_ABC& displayer ) const
     if( ! valorization_ )
         return;
     displayer.Group( tools::translate( "Object", "Information" ) )
-             .Item( tools::translate( "Object", "Development dotation:" ) )
+             .Item( tools::translate( "Object", "Development resource:" ) )
                 .Start( nDotationValorization_ )
                 .Add( " " ).Add( valorization_ ).End();
     if( density_.IsSet() )

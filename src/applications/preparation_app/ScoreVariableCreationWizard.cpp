@@ -50,7 +50,7 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, kerne
         type_ = new gui::ValuedComboBox< std::string >( box );
         type_->AddItem( tr( "Unit" ), "unit" );
         type_->AddItem( tr( "Unit list" ), "unit list" );
-        type_->AddItem( tr( "Dotation list" ), "dotation list" );
+        type_->AddItem( tr( "Resource list" ), "dotation list" );
         type_->AddItem( tr( "Equipment list" ), "equipment list" );
         type_->AddItem( tr( "Zone" ), "zone" );
         type_->AddItem( tr( "Human states" ), "human states" );

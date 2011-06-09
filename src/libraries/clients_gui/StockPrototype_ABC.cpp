@@ -105,7 +105,7 @@ void StockPrototype_ABC::dotationCountChanged( int count )
     {
         DotationWidget* dotationWidget = new DotationWidget( this );
 
-        dotationWidget->dotationLabel_ = new RichLabel( tools::translate( "gui::StockPrototype_ABC", "Dotation type:" ), dotationWidget );
+        dotationWidget->dotationLabel_ = new RichLabel( tools::translate( "gui::StockPrototype_ABC", "Resource type:" ), dotationWidget );
         dotationWidget->dotationType_ = new ValuedComboBox< const kernel::DotationType* >( dotationWidget );
 
         new QLabel( tools::translate( "gui::StockPrototype_ABC", "Stock:" ), dotationWidget );

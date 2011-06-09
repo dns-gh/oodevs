@@ -1393,7 +1393,7 @@ Voulez-vous le supprimer?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Dotation type:</source>
+        <source>Resource type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

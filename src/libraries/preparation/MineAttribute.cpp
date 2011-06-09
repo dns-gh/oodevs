@@ -64,7 +64,7 @@ void MineAttribute::Display( kernel::Displayer_ABC& displayer ) const
              .Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
 
     displayer.Group( tools::translate( "Object", "Information" ) )
-             .Item( tools::translate( "Object", "Development dotation:" ) )
+             .Item( tools::translate( "Object", "Development resource:" ) )
                 .Start( nDotationValorization_ )
                 .Add( " " ).Add( valorization_ ).End();
 
