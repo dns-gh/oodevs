@@ -12,9 +12,8 @@
 
 #include "MIL.h"
 #include "PHY_RoleInterface_Posture.h"
-#include "MIL_Random.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
-#include "simulation_kernel/NetworkUnitAttributesMessageSender_ABC.h"
+#include "NetworkUnitAttributesMessageSender_ABC.h"
 
 class MIL_Agent_ABC;
 
@@ -66,8 +65,8 @@ public:
     void Clean();
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
-    void Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const;
-    void Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const;
+    virtual void Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const;
+    virtual void Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const;
 
     // Override automatic postures
     virtual void SetPosturePostePrepareGenie();

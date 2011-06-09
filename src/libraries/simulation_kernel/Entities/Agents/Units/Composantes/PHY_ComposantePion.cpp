@@ -30,6 +30,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
+#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Objects/StructuralCapacity.h"
@@ -664,6 +665,8 @@ bool PHY_ComposantePion::CanBeUsedForMove() const
     const transport::PHY_RoleInterface_Transported& roleTransported = pRole_->GetPion().GetRole< transport::PHY_RoleInterface_Transported >();
     if( roleTransported.IsTransported() )
         return false;
+    if( pRole_->GetPion().GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() )
+        return false;
     if( bLoadable_ )
         return !pRole_->GetPion().GetRole< transport::PHY_RoleAction_Loading >().IsLoaded();
     return !roleTransported.HasHumanTransportersToRecover();
@@ -677,6 +680,8 @@ bool PHY_ComposantePion::CanFire() const
 {
     assert( pState_ );
     assert( pRole_ );
+    if( pRole_->GetPion().GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() )
+        return false;
     return !pRole_->IsNeutralized() && pState_->IsUsable() && !pState_->IsDamaged() && CanBeUsed();
 }
 
@@ -1126,6 +1131,8 @@ bool PHY_ComposantePion::IsLoadable() const
 bool PHY_ComposantePion::CanBeFired() const
 {
     assert( pState_ );
+    if( pRole_->GetPion().GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() )
+        return false;
     return pState_->IsUsable() && CanBeUsed();
 }
 

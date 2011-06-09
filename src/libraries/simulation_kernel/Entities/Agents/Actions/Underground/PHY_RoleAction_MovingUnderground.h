@@ -12,8 +12,14 @@
 
 #include "MT_Tools/Role_ABC.h"
 #include "MT_Tools/MT_Vector2D.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 
-class MIL_Entity_ABC;
+namespace detection
+{
+    class DetectionComputer_ABC;
+}
+
+class MIL_Agent_ABC;
 class MIL_Object_ABC;
 
 // =============================================================================
@@ -23,6 +29,7 @@ class MIL_Object_ABC;
 // Created: JSR 2011-06-08
 // =============================================================================
 class PHY_RoleAction_MovingUnderground : public tools::Role_ABC
+                                       , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
                                        , private boost::noncopyable
 {
 public:
@@ -34,7 +41,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_RoleAction_MovingUnderground( MIL_Entity_ABC& entity );
+    explicit PHY_RoleAction_MovingUnderground( MIL_Agent_ABC& pion );
     virtual ~PHY_RoleAction_MovingUnderground();
     //@}
 
@@ -48,6 +55,7 @@ public:
     //@{
     virtual void Update( bool bIsDead );
     virtual void Clean();
+    virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
 
     void InitializeUndergroundMoving( const MIL_Object_ABC& firstObject, const MIL_Object_ABC& secondObject );
     bool Run();
@@ -70,7 +78,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_Entity_ABC& entity_;
+    MIL_Agent_ABC& pion_;
     double transferTime_;
     MT_Vector2D firstPosition_;
     MT_Vector2D secondPosition_;

@@ -9,9 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_MovingUnderground.h"
+#include "DetectionComputer_ABC.h"
 #include "MIL_Singletons.h"
 #include "MIL_Time_ABC.h"
-#include "Entities/MIL_Entity_ABC.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
@@ -22,24 +23,24 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleAction_MovingUnderground )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PHY_RoleAction_MovingUnderground* role, const unsigned int /*version*/ )
 {
-    MIL_Entity_ABC* const entity = &role->entity_;
-    archive << entity;
+    MIL_Agent_ABC* const pion = &role->pion_;
+    archive << pion;
 }
 
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RoleAction_MovingUnderground* role, const unsigned int /*version*/ )
 {
-    MIL_Entity_ABC* entity;
-    archive >> entity;
-    ::new( role )PHY_RoleAction_MovingUnderground( *entity );
+    MIL_Agent_ABC* pion;
+    archive >> pion;
+    ::new( role )PHY_RoleAction_MovingUnderground( *pion );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_MovingUnderground constructor
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
-PHY_RoleAction_MovingUnderground::PHY_RoleAction_MovingUnderground( MIL_Entity_ABC& entity )
-    : entity_      ( entity )
+PHY_RoleAction_MovingUnderground::PHY_RoleAction_MovingUnderground( MIL_Agent_ABC& pion )
+    : pion_        ( pion )
     , transferTime_( 0 )
 {
     // NOTHING
@@ -68,6 +69,34 @@ void PHY_RoleAction_MovingUnderground::serialize( Archive& ar, const unsigned in
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_MovingUnderground::Update
+// Created: JSR 2011-06-08
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_MovingUnderground::Update( bool /*bIsDead*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_MovingUnderground::Clean
+// Created: JSR 2011-06-08
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_MovingUnderground::Clean()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_MovingUnderground::Execute
+// Created: JSR 2011-06-08
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_MovingUnderground::Execute( detection::DetectionComputer_ABC& algorithm ) const
+{
+    if( algorithm.GetTarget() == pion_ )
+        algorithm.SetUnderground( IsUnderground() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_MovingUnderground::InitializeUndergroundMoving
 // Created: JSR 2011-06-08
 // -----------------------------------------------------------------------------
@@ -91,31 +120,13 @@ bool PHY_RoleAction_MovingUnderground::Run()
     {
         if( !secondPosition_.IsZero() )
         {
-            entity_.GetRole< PHY_RolePion_Location >().MagicMove( secondPosition_ );
-            entity_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( secondPosition_ );
+            pion_.GetRole< PHY_RolePion_Location >().MagicMove( secondPosition_ );
+            pion_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( secondPosition_ );
         }
         Reset();
         return false;
     }
     return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_MovingUnderground::Update
-// Created: JSR 2011-06-08
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_MovingUnderground::Update( bool /*bIsDead*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_MovingUnderground::Clean
-// Created: JSR 2011-06-08
-// -----------------------------------------------------------------------------
-void PHY_RoleAction_MovingUnderground::Clean()
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +144,7 @@ bool PHY_RoleAction_MovingUnderground::IsUnderground() const
 // -----------------------------------------------------------------------------
 double PHY_RoleAction_MovingUnderground::EstimatedUndergroundTime( const MIL_Object_ABC& firstObject, const MIL_Object_ABC& secondObject ) const
 {
-    double speed = entity_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( TerrainData(), firstObject );
+    double speed = pion_.GetRole< moving::PHY_RoleAction_Moving >().GetSpeedWithReinforcement( TerrainData(), firstObject );
     if( speed == 0 )
         return -1.f;
     double dist = firstObject.GetLocalisation().ComputeBarycenter().Distance( secondObject.GetLocalisation().ComputeBarycenter() );
@@ -159,8 +170,8 @@ void PHY_RoleAction_MovingUnderground::GetOutFromUndergroundNetwork()
 {
     if( !firstPosition_.IsZero() )
     {
-        entity_.GetRole< PHY_RolePion_Location >().MagicMove( firstPosition_ );
-        entity_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( firstPosition_ );
+        pion_.GetRole< PHY_RolePion_Location >().MagicMove( firstPosition_ );
+        pion_.GetRole< PHY_RolePion_UrbanLocation >().MagicMove( firstPosition_ );
     }
     Reset();
 }

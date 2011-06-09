@@ -24,6 +24,7 @@
 #include "AlgorithmsFactories.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_ActionIndirectFire_Position.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
+#include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
@@ -77,6 +78,8 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         pion.RegisterRole( *decision );
         firing::PHY_RoleAction_IndirectFiring* roleIndirectFiring = new firing::PHY_RoleAction_IndirectFiring( pion );
         pion.RegisterRole( *roleIndirectFiring );
+        PHY_RoleAction_MovingUnderground* roleMovingUnderground = new PHY_RoleAction_MovingUnderground( pion );
+        pion.RegisterRole( *roleMovingUnderground );
 
         MockMIL_Time_ABC time;
         MOCK_EXPECT( time, GetTickDuration ).returns( 10u );

@@ -36,6 +36,7 @@ public:
 
     virtual void AlreadyPerceived();
     virtual void NotifyStealth();
+    virtual void SetUnderground( bool underground );
 
     virtual bool CanBeSeen();
     //@}
@@ -47,6 +48,7 @@ private:
 
     bool bAlreadySeen_;
     bool bIsStealth_;
+    bool bIsUnderground_;
     //@}
 
 };

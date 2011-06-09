@@ -19,9 +19,10 @@ using namespace detection;
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------
 DefaultDetectionComputer::DefaultDetectionComputer( MIL_Agent_ABC& target )
-    : pTarget_     ( &target )
-    , bAlreadySeen_( false )
-    , bIsStealth_  ( false )
+    : pTarget_       ( &target )
+    , bAlreadySeen_  ( false )
+    , bIsStealth_    ( false )
+    , bIsUnderground_( false )
 {
     // NOTHING
 }
@@ -63,10 +64,19 @@ void DefaultDetectionComputer::NotifyStealth()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DefaultDetectionComputer::SetUnderground
+// Created: JSR 2011-06-08
+// -----------------------------------------------------------------------------
+void DefaultDetectionComputer::SetUnderground( bool underground )
+{
+    bIsUnderground_ = underground;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DefaultDetectionComputer::CanBeSeen
 // Created: MGD 2009-09-23
 // -----------------------------------------------------------------------------
 bool DefaultDetectionComputer::CanBeSeen()
 {
-    return ( !bIsStealth_ || bAlreadySeen_ );
+    return ( bAlreadySeen_ || ( !bIsUnderground_ && !bIsStealth_ ) );
 }

@@ -35,6 +35,7 @@ public:
 
     virtual void AlreadyPerceived() = 0;
     virtual void NotifyStealth() = 0;
+    virtual void SetUnderground( bool underground ) = 0;
 
     virtual bool CanBeSeen() = 0;
     //@}
