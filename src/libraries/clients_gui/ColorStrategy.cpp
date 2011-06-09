@@ -80,8 +80,13 @@ void ColorStrategy::SetAlpha( float alpha )
 // -----------------------------------------------------------------------------
 QColor ColorStrategy::ApplyModifiers( const kernel::Entity_ABC& entity, const QColor& color )
 {
-    return std::accumulate( modifiers_.begin(), modifiers_.end(), color,
-                            boost::bind( &ColorModifier_ABC::Apply, _2, boost::ref( entity ), _1 ) );
+    size_t size = modifiers_.size();
+    QColor result = color;
+    for( size_t i = 0; i < size; ++i )
+    {
+        result = modifiers_[i].Apply( entity, result );
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
