@@ -98,6 +98,19 @@ void CheckpointList::Update( const QString& exercise, const QString& session )
 }
 
 // -----------------------------------------------------------------------------
+// Name: CheckpointList::ClearSelection
+// Created: LGY 2011-06-10
+// -----------------------------------------------------------------------------
+void CheckpointList::ClearSelection()
+{
+    list_->clear();
+    list_->insertItem( tools::translate( "CheckpointList", "No checkpoint" ) );
+    list_->setDisabled( true );
+    emit Select( "" );
+    list_->setSelected( 0, true );
+}
+
+// -----------------------------------------------------------------------------
 // Name: CheckpointList::SelectCheckpoint
 // Created: SBO 2010-04-21
 // -----------------------------------------------------------------------------

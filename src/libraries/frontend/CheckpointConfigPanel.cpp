@@ -115,6 +115,8 @@ void CheckpointConfigPanel::Select( const frontend::Exercise_ABC& exercise )
 void CheckpointConfigPanel::ClearSelection()
 {
     exercise_ = 0;
+    checkpointsGroup_->setChecked( false );
+    checkpoints_->ClearSelection();
     sessions_->clear();
     sessions_->setSelected( 0, true );
     sessions_->insertItem( tools::translate( "CheckpointConfigPanel", "No session" ) );

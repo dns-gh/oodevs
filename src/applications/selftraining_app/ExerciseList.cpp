@@ -215,6 +215,7 @@ void ExerciseList::SelectProfile( const frontend::Profile& profile )
 // -----------------------------------------------------------------------------
 void ExerciseList::Clear()
 {
+    emit ClearSelection();
     QApplication::postEvent( this, new QCustomEvent( ::clearEvent ) );
 }
 

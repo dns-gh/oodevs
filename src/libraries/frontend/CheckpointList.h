@@ -41,6 +41,7 @@ public:
     //! @name Operations
     //@{
     void Update( const QString& exercice, const QString& session );
+    void ClearSelection();
     //@}
 
 signals:
