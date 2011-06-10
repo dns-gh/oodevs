@@ -19,6 +19,7 @@
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Composantes_Data.h"
 #include "ADN_Workspace.h"
+#include "ENT/ENT_Tr.h"
 
 typedef ADN_Composantes_Data::CategoryInfos CategoryInfos;
 
@@ -141,7 +142,7 @@ void ADN_Composantes_Dotations_GUI::OnContextMenu( int /*row*/, int /*col*/, con
         }
         ADN_Tools::SortMenu( *pSubMenu );
 
-        targetMenu.insertItem( (*it)->strName_.GetData().c_str(), pSubMenu );
+        targetMenu.insertItem( ENT_Tr::ConvertFromDotationFamily( (*it)->nType_, ENT_Tr_ABC::eToTr ).c_str(), pSubMenu );
     }
 
     menu.insertItem( tr( "Add resource"), &targetMenu ,0 );
