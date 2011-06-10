@@ -192,8 +192,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
       // >> actions_ // actions non sauvegardées
          >> pKnowledgeBlackBoard_
          >> pAffinities
-         >> pExtensions
-         >> pOrderManager;
+         >> pExtensions;
     LoadRole< network::NET_RolePion_Dotations >( file, *this );
     LoadRole< PHY_RolePion_Reinforcement >( file, *this );
     LoadRole< PHY_RolePion_Posture >( file, *this );
@@ -229,6 +228,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     RegisterRole( *new PHY_RolePion_TerrainAnalysis( *this ) );
     pAffinities_.reset( pAffinities );
     pExtensions_.reset( pExtensions );
+    file >> pOrderManager;
     pOrderManager_.reset( pOrderManager );
 }
 
@@ -248,8 +248,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
         // << actions_ // actions non sauvegardées
         << pKnowledgeBlackBoard_
         << pAffinities
-        << pExtensions
-        << pOrderManager;
+        << pExtensions;
     SaveRole< network::NET_RolePion_Dotations >( *this, file );
     SaveRole< PHY_RolePion_Reinforcement >( *this, file );
     SaveRole< PHY_RolePion_Posture >( *this, file );
@@ -281,6 +280,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     SaveRole< PHY_RoleAction_FolkInfluence >( *this, file );
     SaveRole< PHY_RolePion_Illumination >( *this, file ); // LTO
     SaveRole< PHY_RoleAction_MovingUnderground >( *this, file );
+    file << pOrderManager;
 }
 
 // -----------------------------------------------------------------------------
