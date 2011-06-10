@@ -189,10 +189,10 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_publishes_agent_instance, ConnectedFixture )
 
 namespace
 {
-    class AgentFixture : public ConnectedFixture
+    class SteppedFixture : public ConnectedFixture
     {
     public:
-        AgentFixture()
+        SteppedFixture()
             : eventListener( 0 )
             , facade       ( xis >> xml::start( "root" ), subject, rtiFactory, federateFactory, "directory" )
         {
@@ -203,6 +203,10 @@ namespace
             listener->Created( agent, "id", "name", rpr::Friendly, rpr::EntityType() );
             MOCK_EXPECT( agent, Unregister ).once();
             MOCK_EXPECT( rtiAmbassador, DeleteObjectInstance ).once().with( hla::ObjectIdentifier( 42u ) );
+            BOOST_REQUIRE( eventListener );
+            MOCK_EXPECT( rtiAmbassador, NextEventRequestAvailable ).once();
+            MOCK_EXPECT( rtiAmbassador, UpdateAttributeValues ).once();
+            facade.Step();
         }
         MockAgent agent;
         EventListener_ABC* eventListener;
@@ -215,40 +219,6 @@ namespace
             BOOST_CHECK_EQUAL( attribute.first, expected.at( i++ ) );
         return true;
     }
-}
-
-BOOST_FIXTURE_TEST_CASE( hla_plugin_serializes_all_aggregated_agent_attributes_at_creation_step, AgentFixture )
-{
-    BOOST_REQUIRE( eventListener );
-    eventListener->SpatialChanged( 1., 2., 3., 4., 5. );
-    const std::vector< std::string > attributes = boost::assign::list_of( "EntityType" )
-                                                                        ( "EntityIdentifier" )
-                                                                        ( "Spatial" )
-                                                                        ( "AggregateMarking" )
-                                                                        ( "AggregateState" )
-                                                                        ( "Dimensions" )
-                                                                        ( "ForceIdentifier" )
-                                                                        ( "Formation" )
-                                                                        ( "NumberOfSilentEntities" )
-                                                                        ( "SilentEntities" );
-    MOCK_EXPECT( rtiAmbassador, NextEventRequestAvailable ).once();
-    MOCK_EXPECT( rtiAmbassador, UpdateAttributeValues ).once().with( 42u, boost::bind( &CheckAttributes, _1, attributes ), mock::any );
-    facade.Step();
-}
-
-namespace
-{
-    class SteppedFixture : public AgentFixture
-    {
-    public:
-        SteppedFixture()
-        {
-            BOOST_REQUIRE( eventListener );
-            MOCK_EXPECT( rtiAmbassador, NextEventRequestAvailable ).once();
-            MOCK_EXPECT( rtiAmbassador, UpdateAttributeValues ).once();
-            facade.Step();
-        }
-    };
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_plugin_spatial_changed_event_is_serialized, SteppedFixture )
