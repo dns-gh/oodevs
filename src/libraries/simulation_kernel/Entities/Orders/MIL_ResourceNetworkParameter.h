@@ -17,6 +17,9 @@ namespace sword
     class ResourceNetworkElement;
 }
 
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
+
 // =============================================================================
 /** @class  MIL_ResourceNetworkParameter
     @brief  MIL_ResourceNetworkParameter
@@ -47,7 +50,9 @@ public:
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& file, const unsigned int );
+    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
     //@
 
 private:

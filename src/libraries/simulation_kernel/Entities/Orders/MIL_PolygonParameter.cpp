@@ -12,6 +12,8 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
+#include "Checkpoints/SerializationTools.h"
+#include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PolygonParameter )
 
@@ -84,13 +86,23 @@ bool MIL_PolygonParameter::IsValid() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PolygonParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_PolygonParameter::load
+// Created: LGY 2011-06-10
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_PolygonParameter::serialize( Archive& file, const unsigned int )
+void MIL_PolygonParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & pPolygon_
-         & valid_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> pPolygon_
+         >> valid_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PolygonParameter::save
+// Created: LGY 2011-06-10
+// -----------------------------------------------------------------------------
+void MIL_PolygonParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << pPolygon_
+         << valid_;
 }

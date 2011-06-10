@@ -12,6 +12,7 @@
 #include "Decision/DEC_ResourceNetwork.h"
 #include "protocol/protocol.h"
 #include "Checkpoints/SerializationTools.h"
+#include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ResourceNetworkParameter )
 
@@ -83,12 +84,21 @@ bool MIL_ResourceNetworkParameter::ToElement( sword::MissionParameter_Value& ele
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ResourceNetworkParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_ResourceNetworkParameter::load
+// Created: LGY 2011-06-10
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_ResourceNetworkParameter::serialize( Archive& file, const unsigned int )
+void MIL_ResourceNetworkParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & pResourceNetwork_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> pResourceNetwork_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ResourceNetworkParameter::save
+// Created: LGY 2011-06-10
+// -----------------------------------------------------------------------------
+void MIL_ResourceNetworkParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << pResourceNetwork_;
 }
