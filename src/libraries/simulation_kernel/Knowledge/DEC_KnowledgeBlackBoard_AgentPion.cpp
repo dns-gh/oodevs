@@ -560,7 +560,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::Reso
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const sword::ObjectKnowledgeId& asn ) const
 {
-    return pPion_->GetKnowledgeGroup().GetKnowledge().ResolveKnowledgeObject( asn.id() );
+    return pPion_->GetKnowledgeGroup().ResolveKnowledgeObject( asn.id() );
 }
 
 // -----------------------------------------------------------------------------
@@ -569,7 +569,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::Res
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( unsigned int nID ) const
 {
-    return pPion_->GetKnowledgeGroup().GetKnowledge().ResolveKnowledgeObject( nID );
+    return pPion_->GetKnowledgeGroup().ResolveKnowledgeObject( nID );
 }
 
 // -----------------------------------------------------------------------------

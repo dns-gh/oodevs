@@ -123,6 +123,7 @@ public:
           MIL_Army_ABC&                           GetArmy     () const;
     const T_AutomateVector&                       GetAutomates() const;
     const DEC_KnowledgeBlackBoard_KnowledgeGroup& GetKnowledge() const;
+          boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( unsigned int ) const;
     // LTO begin
     const T_KnowledgeGroupVector&                 GetKnowledgeGroups() const;
           MIL_KnowledgeGroup*                     GetParent   () const;
@@ -191,12 +192,12 @@ private:
     DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
     T_AutomateVector        automates_;
     T_KnowledgeGroupVector  knowledgeGroups_; // LTO
-    double                timeToDiffuse_; // LTO
+    double                  timeToDiffuse_; // LTO
     bool                    isActivated_; // LTO
     bool                    hasBeenUpdated_;
     bool                    isJammed_;
+    bool                    createdByJamming_;
     const MIL_Agent_ABC*    jammedPion_;
-    bool createdByJamming_;
     static MIL_IDManager idManager_;
     //@}
 };

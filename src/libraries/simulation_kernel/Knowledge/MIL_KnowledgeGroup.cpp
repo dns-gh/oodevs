@@ -56,8 +56,8 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
     , isActivated_        ( true ) // LTO
     , hasBeenUpdated_     ( false )
     , isJammed_           ( false )
-    , jammedPion_         ( 0 )
     , createdByJamming_   ( false )
+    , jammedPion_         ( 0 )
 {
     idManager_.Lock( id_ );
     army_->RegisterKnowledgeGroup( *this );
@@ -78,8 +78,8 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , isActivated_        ( true ) // LTO
     , hasBeenUpdated_     ( true )
     , isJammed_           ( false )
-    , jammedPion_         ( 0 )
     , createdByJamming_   ( false )
+    , jammedPion_         ( 0 )
 {
     if( ! type_ )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Knowledge group '%d' cannot be created because its type does not exist: %s ", id_, xis.attribute< std::string >( "type" ).c_str() ) );
@@ -108,8 +108,8 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , isActivated_        ( true ) // LTO
     , hasBeenUpdated_     ( false )
     , isJammed_           ( false )
-    , jammedPion_         ( 0 )
     , createdByJamming_   ( false )
+    , jammedPion_         ( 0 )
 {
     // NOTHING
 }
@@ -128,8 +128,8 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const 
     , isActivated_        ( true ) // LTO
     , hasBeenUpdated_     ( true )
     , isJammed_           ( true )
-    , jammedPion_         ( &pion )
     , createdByJamming_   ( true )
+    , jammedPion_         ( &pion )
 {
     if( parent )
     {
@@ -491,6 +491,18 @@ const DEC_KnowledgeBlackBoard_KnowledgeGroup& MIL_KnowledgeGroup::GetKnowledge()
 {
     assert( knowledgeBlackBoard_ );
     return *knowledgeBlackBoard_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObject
+// Created: LDC 2011-06-10
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::ResolveKnowledgeObject( unsigned int id ) const
+{
+    boost::shared_ptr< DEC_Knowledge_Object > result = GetKnowledge().ResolveKnowledgeObject( id );
+    if( !result && parent_ )
+        result = parent_->ResolveKnowledgeObject( id );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
