@@ -146,4 +146,3 @@ bool Meteo::IsInside( const geometry::Point2f& /*point*/ ) const
 {
     return true;
 }
-

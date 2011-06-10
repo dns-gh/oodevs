@@ -74,12 +74,19 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeatherCreation& msg )
 {
-    if( msg.has_attributes() )
+    if( !msg.has_attributes() )
+        return;
+    weather::Meteo* meteo = Find( msg.weather().id() );
+    if( meteo )
+    {
+        meteo->Update( msg.attributes() );
+        static_cast< weather::MeteoLocal* >( meteo )->SetPosition( geometry::Point2f( msg.top_left().longitude(), msg.top_left().latitude() ), geometry::Point2f( msg.bottom_right().longitude(), msg.bottom_right().latitude() ) );
+    }
+    else
     {
         weather::MeteoLocal* weather = new weather::MeteoLocal( msg, config_.GetTickDuration(), "" );
         model_.AddExtensions( *weather );
         AddMeteo( *weather );
-        weather->weather::Meteo::Update( msg.attributes() );
     }
 }
 

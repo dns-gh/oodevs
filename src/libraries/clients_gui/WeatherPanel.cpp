@@ -97,7 +97,6 @@ void WeatherPanel::OnTypeChanged( int selected )
     currentType_ = static_cast< E_WeatherType >( selected );
     assert( currentType_ == eWeatherLocal || currentType_ == eWeatherGlobal );
     Reset();
-    layer_.Clear();
     if( currentType_ == eWeatherLocal )
     {
         localLayout_->show();
@@ -121,7 +120,8 @@ void WeatherPanel::CommitLocalWeather()
     if( selectedLocal_ )
     {
         localWidget_->CommitTo( *selectedLocal_ );
-        selectedLocal_->SetPeriod( startTime_->dateTime(), endTime_->dateTime() );
+        if( selectedLocal_->IsCreated() )
+            selectedLocal_->SetPeriod( startTime_->dateTime(), endTime_->dateTime() );
     }
 }
 
@@ -152,5 +152,17 @@ void WeatherPanel::LocalSelectionChanged()
 // -----------------------------------------------------------------------------
 void WeatherPanel::SetPatchPosition()
 {
-    layer_.StartEdition( *static_cast< weather::MeteoLocal* >( localWeathers_->SelectedItem() ) );
+    if( localWeathers_ && localWeathers_->SelectedItem() )
+        layer_.StartEdition( *static_cast< weather::MeteoLocal* >( localWeathers_->SelectedItem() ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: WeatherPanel::hide
+// Created: ABR 2011-06-10
+// -----------------------------------------------------------------------------
+void WeatherPanel::hide()
+{
+    QWidget::hide();
+    layer_.Clear();
+}
+

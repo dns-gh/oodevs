@@ -94,7 +94,11 @@ private:
     QDateTime startTime_;
     QDateTime endTime_;
     bool created_;
+    //@}
 
+public:
+    //! @name Static member data
+    //@{
     static unsigned int localCounter_;
     //@}
 };

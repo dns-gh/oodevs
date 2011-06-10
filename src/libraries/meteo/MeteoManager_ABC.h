@@ -12,6 +12,7 @@
 
 #include <set>
 #include <boost/shared_ptr.hpp>
+#include "Meteo.h"
 
 namespace weather
 {
@@ -27,6 +28,14 @@ namespace weather
 class MeteoManager_ABC
 {
 public:
+    //! @name Types
+    //@{
+    typedef std::set< boost::shared_ptr< Meteo > > T_MeteoSet;
+    typedef T_MeteoSet::iterator                  IT_MeteoSet;
+    typedef T_MeteoSet::const_iterator           CIT_MeteoSet;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              MeteoManager_ABC() {}
@@ -36,14 +45,13 @@ public:
     //! @name Operations
     //@{
     virtual void AddMeteo( weather::Meteo& element ) = 0;
-    //@}
-
-public:
-    //! @name Helpers
-    //@{
-    typedef std::set< boost::shared_ptr< Meteo > > T_MeteoSet;
-    typedef T_MeteoSet::iterator                  IT_MeteoSet;
-    typedef T_MeteoSet::const_iterator           CIT_MeteoSet;
+    Meteo* Find( unsigned int id ) const
+    {
+        for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+            if( ( *it )->GetId() == id )
+                return ( *it ).get();
+        return 0;
+    }
     //@}
 
 protected:

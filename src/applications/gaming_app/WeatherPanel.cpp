@@ -69,6 +69,7 @@ WeatherPanel::~WeatherPanel()
 // -----------------------------------------------------------------------------
 void WeatherPanel::Reset()
 {
+    layer_.Clear();
     selectedLocal_ = 0;
     if( currentModel_ )
         NotifyUpdated( *currentModel_ );
@@ -123,14 +124,13 @@ void WeatherPanel::Commit()
 
                     localWidget_->Update( *local );
                     static_cast< WeatherWidget* >( localWidget_ )->CreateParameters( *action, it );
-                    action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), local->GetId() ) );
-
                     action->AddParameter( *new actions::parameters::DateTime( it.NextElement(), local->GetStartTime() ) );
                     action->AddParameter( *new actions::parameters::DateTime( it.NextElement(), local->GetEndTime() ) );
                     kernel::Rectangle rectangle;
                     rectangle.AddPoint( local->GetBottomRight() );
                     rectangle.AddPoint( local->GetTopLeft() );
                     action->AddParameter( *new actions::parameters::Location( it.NextElement(), model_.coordinateConverter_, rectangle ) );
+                    action->AddParameter( *new actions::parameters::Identifier( it.NextElement(), ( local->IsCreated() ) ? 0 : local->GetId() ) );
 
                     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
                     action->RegisterAndPublish( actionsModel_ );

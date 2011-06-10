@@ -124,6 +124,7 @@ void WeatherPanel::Commit()
 // -----------------------------------------------------------------------------
 void WeatherPanel::Reset()
 {
+    layer_.Clear();
     selectedLocal_ = 0;
     if( currentModel_ )
         NotifyUpdated( *currentModel_ );

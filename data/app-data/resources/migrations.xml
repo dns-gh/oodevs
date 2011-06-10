@@ -118,5 +118,6 @@
     <upgrade schema="schemas/4.3.0/physical/Pathfind.xsd" apply="schemas/4.3.1/xsl/pathfinder_4.3.0-4.3.1.xsl"/>
     <upgrade schema="schemas/4.3.0/physical/Physical.xsd" apply="schemas/4.3.1/xsl/physical_4.3.0-4.3.1.xsl"/>
     <upgrade schema="schemas/4.3.0/exercise/orbat.xsd" apply="schemas/4.3.1/xsl/orbat_4.3.0-4.3.1.xsl"/>  
+    <upgrade schema="schemas/4.3.0/exercise/orders.xsd" apply="schemas/4.3.1/xsl/orders_4.3.0-4.3.1.xsl"/>
   </migration>
 </migrations>

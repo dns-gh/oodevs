@@ -63,6 +63,7 @@ protected:
 private slots:
     //! @name Slots
     //@{
+    virtual void hide();
     virtual void Commit() = 0;
     virtual void Reset () = 0;
     void SetPatchPosition();

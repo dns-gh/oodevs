@@ -81,19 +81,19 @@ void PHY_LocalMeteo::Update( const sword::MissionParameters& msg )
 // -----------------------------------------------------------------------------
 void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg )
 {
-    const sword::MissionParameter& startTime = msg.elem( 8 );
+    const sword::MissionParameter& startTime = msg.elem( 7 );
     if( startTime.value_size() != 1 || !startTime.value().Get(0).has_datetime() )
         throw std::exception( "Meteo : bad attribute for StartTime" );
     int startTimeTmp = ( bpt::from_iso_string( startTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
     if( startTimeTmp > startTime_ )
         startTime_ = startTimeTmp;
-    const sword::MissionParameter& endTime = msg.elem( 9 );
+    const sword::MissionParameter& endTime = msg.elem( 8 );
     if( endTime.value_size() != 1 || !endTime.value().Get(0).has_datetime() )
         throw std::exception( "Meteo : bad attribute for EndTime" );
     int endTimeTmp = ( bpt::from_iso_string( endTime.value().Get(0).datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
     if( endTimeTmp > endTime_ )
         endTime_ = endTimeTmp;
-    const sword::MissionParameter& location = msg.elem( 10 );
+    const sword::MissionParameter& location = msg.elem( 9 );
     if( location.value_size() != 1 || !location.value().Get(0).has_location() )
         throw std::exception( "Meteo : bad attribute for Location" );
     NET_ASN_Tools::ReadPoint( location.value().Get(0).location().coordinates().elem( 0 ), upLeft_    );
@@ -104,23 +104,23 @@ void PHY_LocalMeteo::LocalUpdate( const sword::MissionParameters& msg )
 // Name: PHY_LocalMeteo::UpdateMeteoPatch
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision )
+void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision, boost::shared_ptr< weather::Meteo > meteo )
 {
-    bool bNeedToBePatched = ( date > startTime_ &&  date < endTime_ );
+    bool bNeedToBePatched = ( date > startTime_ && date < endTime_ );
     if( !bIsPatched_ && bNeedToBePatched )
     {
-        dataVision.RegisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_), this );
+        dataVision.RegisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_), geometry::Point2d( downRight_.rX_, downRight_.rY_ ), meteo );
         bIsPatched_ = true;
         modified_ = true;
     }
     else if( bIsPatched_ && !bNeedToBePatched )
     {
-        dataVision.UnregisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_) );
+        dataVision.UnregisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_ ) );
         bIsPatched_ = false;
         modified_ = false;
         SendDestruction();
     }
-    Meteo::UpdateMeteoPatch( date, dataVision );
+    Meteo::UpdateMeteoPatch( date, dataVision, meteo );
 }
 
 // -----------------------------------------------------------------------------
@@ -129,6 +129,8 @@ void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC&
 // -----------------------------------------------------------------------------
 void PHY_LocalMeteo::SendCreation() const
 {
+    if( !bIsPatched_ )
+        return;
     client::ControlLocalWeatherCreation msg;
     sword::WeatherAttributes* att = msg().mutable_attributes();
     msg().mutable_weather()->set_id( id_ );

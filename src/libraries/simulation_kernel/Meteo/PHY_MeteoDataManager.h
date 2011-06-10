@@ -91,6 +91,7 @@ private:
     PHY_Ephemeride* pEphemeride_;
     PHY_GlobalMeteo* pGlobalMeteo_;
     PHY_RawVisionData* pRawData_;
+    static unsigned int localCounter_;
     //@}
 };
 

@@ -42,13 +42,16 @@ void WeatherListView::Update( const MeteoModel& model )
 {
     Clear();
     const weather::MeteoManager_ABC::T_MeteoSet& meteos = model.GetLocalMeteos();
+    unsigned int maxId = 0;
     for( weather::MeteoManager_ABC::CIT_MeteoSet it = meteos.begin(); it != meteos.end(); ++it )
     {
         boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( *static_cast< weather::MeteoLocal* >( ( *it ).get() ) ) );
         weathers_.push_back( weather );
+        maxId = ( maxId > weather->GetId() ) ? maxId : weather->GetId();
         QListViewItem* item = new QListViewItem( this );
         item->setText( 0, weather->GetName() );
     }
+    weather::MeteoLocal::localCounter_ = maxId + 1;
 }
 
 // -----------------------------------------------------------------------------

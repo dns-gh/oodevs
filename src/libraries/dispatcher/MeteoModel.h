@@ -11,7 +11,6 @@
 #define __MeteoModel_h_
 
 #include "meteo/MeteoModel_ABC.h"
-#include <list>
 
 namespace kernel
 {

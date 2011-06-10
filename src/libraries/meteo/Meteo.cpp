@@ -264,7 +264,7 @@ void Meteo::Update( const PHY_Precipitation& precipitation)
 // Name: Meteo::UpdateMeteoPatch
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-void Meteo::UpdateMeteoPatch( int /*date*/, PHY_RawVisionData_ABC& /*dataVision_*/ )
+void Meteo::UpdateMeteoPatch( int /*date*/, PHY_RawVisionData_ABC& /*dataVision_*/, boost::shared_ptr< Meteo > /*meteo*/ )
 {
     if( modified_ )
     {

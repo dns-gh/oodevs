@@ -90,20 +90,14 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const sword::ControlGlobalWeather& msg
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeatherCreation& msg )
 {
-    if( msg.has_attributes() )
-    {
-        bool founded = false;
-        for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
-            if( ( *it )->GetId() == msg.weather().id() )
-            {
-                static_cast< weather::MeteoLocal* >( ( *it ).get() )->Update( msg );
-                founded = true;
-                break;
-            }
-        if( !founded )
-            AddMeteo( *new weather::MeteoLocal( msg, converter_, simulation_.GetTickDuration(), tools::translate( "MeteoModel", "Local weather " ).ascii() ) );
-        controller_.Update( *this );
-    }
+    if( !msg.has_attributes() )
+        return;
+    weather::Meteo* meteo = Find( msg.weather().id() );
+    if( meteo )
+        static_cast< weather::MeteoLocal* >( meteo )->Update( msg );
+    else
+        AddMeteo( *new weather::MeteoLocal( msg, converter_, simulation_.GetTickDuration(), tools::translate( "MeteoModel", "Local weather " ).ascii() ) );
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -116,6 +110,7 @@ void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWea
         if( (*it)->GetId() == message.weather().id() )
         {
             meteos_.erase( *it );
+            controller_.Update( *this );
             return;
         }
 }

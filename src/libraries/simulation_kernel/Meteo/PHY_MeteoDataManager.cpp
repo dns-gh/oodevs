@@ -19,6 +19,8 @@
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
+unsigned int PHY_MeteoDataManager::localCounter_ = 1;
+
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
 // Created: JVT 02-10-21
@@ -91,8 +93,7 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 {
-    static unsigned int localCounter = 1;
-    AddMeteo( *new PHY_LocalMeteo( localCounter++, xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() ) );
+    AddMeteo( *new PHY_LocalMeteo( localCounter_++, xis, pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,20 +112,23 @@ void PHY_MeteoDataManager::OnReceiveMsgMeteo( const sword::MagicAction& msg )
     }
     else if( msg.type() == sword::MagicAction::local_weather )
     {
-        const sword::MissionParameter& idParameter = msg.parameters().elem( 7 );
-        if( idParameter.value_size() != 1 || !idParameter.value().Get( 0 ).has_identifier() )
-            throw std::exception( "Local Meteo : bad ID parameter" );
-        unsigned int id = idParameter.value().Get( 0 ).identifier();
-        bool founded = false;
-        for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
-            if( ( *it )->GetId() == id )
-            {
-                static_cast< PHY_LocalMeteo* >( ( *it ).get() )->Update( msg.parameters() );
-                founded = true;
-                break;
-            }
-        if( !founded )
-            AddMeteo( *new PHY_LocalMeteo( id, msg.parameters(), pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() ) );
+        unsigned int id = 0;
+        if( msg.parameters().elem_size() == 11 )
+        {
+            const sword::MissionParameter& idParameter = msg.parameters().elem( 10 );
+            if( idParameter.value_size() != 1 || !idParameter.value().Get( 0 ).has_identifier() )
+                throw std::exception( "Local Meteo : bad ID parameter." );
+            id = idParameter.value().Get( 0 ).identifier();
+        }
+        if( id == 0 )
+            AddMeteo( *new PHY_LocalMeteo( localCounter_++, msg.parameters(), pEphemeride_->GetLightingBase(), MIL_AgentServer::GetWorkspace().GetTimeStepDuration() ) );
+        else
+        {
+            weather::Meteo* meteo = Find( id );
+            if( !meteo )
+                throw std::exception( "Local Meteo : unknown id." );
+            static_cast< PHY_LocalMeteo* >( meteo )->Update( msg.parameters() );
+        }
         client::ControlLocalWeatherAck replyMsg;
         replyMsg.Send( NET_Publisher_ABC::Publisher() );
     }
@@ -162,10 +166,10 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "Ephemeris is now: %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
         for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
-            static_cast< weather::Meteo* >( ( *it ).get() )->Update( pEphemeride_->GetLightingBase() );
+            ( *it )->Update( pEphemeride_->GetLightingBase() );
     }
     for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
-        static_cast< weather::Meteo* >( ( *it ).get() )->UpdateMeteoPatch( date, *pRawData_ );
+        ( *it )->UpdateMeteoPatch( date, *pRawData_, *it );
 }
 
 // -----------------------------------------------------------------------------
@@ -175,5 +179,5 @@ void PHY_MeteoDataManager::Update( unsigned int date )
 void PHY_MeteoDataManager::SendStateToNewClient()
 {
     for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
-      static_cast< weather::Meteo* >( ( *it ).get() )->SendCreation();
+      ( *it )->SendCreation();
 }

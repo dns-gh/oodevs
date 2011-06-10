@@ -1666,7 +1666,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Time and position parameters</source>
-        <translation>Paramètre de temps et de position</translation>
+        <translation>Paramètres de temps et de position</translation>
     </message>
     <message>
         <source>Start time:</source>

@@ -73,7 +73,7 @@ public:
         unsigned short h  : 16;                         // hauteur du sol
         unsigned char  dh : 8;                          // hauteur de la planimétrie
         envBits        e  : 8;                          // champ de bit représentant l'environnement visuel statique
-        boost::shared_ptr< weather::Meteo > pMeteo; // météo locale
+        boost::shared_ptr< weather::Meteo > pMeteo;     // météo locale
         PHY_AmmoEffect* pEffects;                       // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
 
         static const weather::Meteo* pGlobalMeteo_;
@@ -117,7 +117,7 @@ public:
     template< typename T >
     void GetVisionObjectsInSurface( const T& localisation, unsigned int& rEmptySurface, unsigned int& rForestSurface, unsigned int& rUrbanSurface ) const;
 
-    void RegisterMeteoPatch  ( const geometry::Point2d&, const geometry::Point2d&, weather::Meteo* );
+    void RegisterMeteoPatch  ( const geometry::Point2d&, const geometry::Point2d&, boost::shared_ptr< weather::Meteo > pMeteo );
     void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d& );
 
     void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );

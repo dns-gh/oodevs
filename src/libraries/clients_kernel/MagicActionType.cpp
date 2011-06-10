@@ -207,10 +207,10 @@ void MagicActionType::Initialize()
         precipitation->AddValue( 6, "Fumigene"           );
         if( name == "local_weather" )
         {
-            CreateOrderParameter( "ID", "identifier" );
             CreateOrderParameter( "StartTime", "datetime" );
             CreateOrderParameter( "EndTime", "datetime" );
             CreateOrderParameter( "Location", "location" );
+            CreateOrderParameter( "ID", "identifier" );
         }
     }
     else if( name == "change_diplomacy" )

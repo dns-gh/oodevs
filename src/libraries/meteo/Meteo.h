@@ -16,6 +16,7 @@
 #include "MT_Tools/MT_Vector2D.h"
 #include <geometry/Types.h>
 #include <cassert>
+#include <boost/shared_ptr.hpp>
 
 class QString;
 
@@ -113,7 +114,7 @@ public:
     virtual void Update( const sword::MissionParameters& asn );
     virtual void Update( const PHY_Lighting& lighting );
     virtual void Update( const PHY_Precipitation& precipitation);
-    virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision );
+    virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision, boost::shared_ptr< Meteo > meteo );
     virtual void SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate( dispatcher::ClientPublisher_ABC& publisher ) const;

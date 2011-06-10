@@ -75,7 +75,7 @@ PHY_RawVisionData::~PHY_RawVisionData()
 // Created: JVT 03-08-06
 // Last modified: JVT 03-08-18
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, weather::Meteo* pMeteo )
+void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, boost::shared_ptr< weather::Meteo > pMeteo )
 {
     assert( ppCells_ );
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
@@ -94,13 +94,13 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             sCell& cell = ppCells_[ nXBeg ][ y ];
-            cell.pMeteo = boost::shared_ptr< weather::Meteo >( pMeteo );
+            cell.pMeteo = pMeteo;
         }
         ++nXBeg;
     }
 }
 
-//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::UnregisterLocalMeteoPatch
 // Created: SLG 2010-03-19
 //-----------------------------------------------------------------------------
