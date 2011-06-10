@@ -11,6 +11,8 @@
 #include "MIL_LocationParameter.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
+#include "Checkpoints/SerializationTools.h"
+#include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_LocationParameter )
 
@@ -109,12 +111,21 @@ bool MIL_LocationParameter::ToElement( sword::MissionParameter_Value& elem ) con
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_LocationParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_LocationParameter::load
+// Created: LGY 2011-06-10
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_LocationParameter::serialize( Archive& file, const unsigned int )
+void MIL_LocationParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & pLocalisation_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> pLocalisation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LocationParameter::save
+// Created: LGY 2011-06-10
+// -----------------------------------------------------------------------------
+void MIL_LocationParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << pLocalisation_;
 }

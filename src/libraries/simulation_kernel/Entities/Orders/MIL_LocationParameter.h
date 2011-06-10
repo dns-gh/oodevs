@@ -12,6 +12,8 @@
 
 #include "MIL_BaseParameter.h"
 #include "simulation_terrain/TER_Localisation.h"
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 /** @class  MIL_LocationParameter
@@ -45,7 +47,9 @@ public:
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
 private:
