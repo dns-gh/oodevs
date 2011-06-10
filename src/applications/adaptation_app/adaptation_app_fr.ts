@@ -5228,6 +5228,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Children</source>
         <translation>Enfants</translation>
     </message>
+    <message>
+        <source>The type of unit in the simulation. This type must match the associated decisional model.</source>
+        <translation>Le type de l&apos;unité dans la simulation. Ce type doit correspondre au type du modèle comportemental associé.</translation>
+    </message>
+    <message>
+        <source>The decisional model associated to the unit.</source>
+        <translation>Le modèle comportemental associé à l&apos;unité.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

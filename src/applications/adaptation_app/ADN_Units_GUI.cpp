@@ -95,11 +95,11 @@ void ADN_Units_GUI::Build()
     builder.AddField<ADN_EditLine_String>( pParamGroup, tr( "Name" ), vInfosConnectors[eName] );
     // Unit type
     pTypeCombo_ = builder.AddEnumField<E_AgentTypePion>( pParamGroup, tr( "Type" ), vInfosConnectors[eTypeId], &ADN_Tr::ConvertFromAgentTypePion );
-    builder.SetToolTip( "Le type de l'unité dans la simulation. Ce type doit correspondre au type du modèle comportemental associé." );
+    builder.SetToolTip( tr( "The type of unit in the simulation. This type must match the associated decisional model." ) );
     connect( pTypeCombo_, SIGNAL( activated( const QString& ) ), this, SLOT( OnTypeChanged() ) );
     // Model
     builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pParamGroup, tr( "Doctrine model" ), vInfosConnectors[eModel] );
-    builder.SetToolTip( "Le modèle comportemental associé à l'unité." );
+    builder.SetToolTip( tr( "The decisional model associated to the unit." ) );
     // Decontamination delay
     ADN_TimeField* pTimeField = builder.AddField<ADN_TimeField>( pParamGroup, tr( "Decontamination delay" ), vInfosConnectors[eDecontaminationDelay], 0, eGreaterZero );
     pTimeField->SetMinimumValueInSecond( 1 );

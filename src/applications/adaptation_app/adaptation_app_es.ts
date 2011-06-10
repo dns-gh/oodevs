@@ -5217,6 +5217,14 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Units</source>
         <translation>Unidades</translation>
     </message>
+    <message>
+        <source>The type of unit in the simulation. This type must match the associated decisional model.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The decisional model associated to the unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>
