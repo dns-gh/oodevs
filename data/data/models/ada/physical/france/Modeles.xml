@@ -41,6 +41,7 @@
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Recueillir"/>
         <mission name="MELEE Relever"/>
+        <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Surveiller"/>
@@ -163,6 +164,7 @@
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Reduire"/>
         <mission name="MELEE Relever"/>
+        <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Surveiller"/>
         <mission name="MELEE S'emparer De"/>
@@ -217,6 +219,7 @@
           <fragorder name="Decrocher"/>
         </mission>
         <mission name="MELEE Organiser Accueil Colonne Refugies"/>
+        <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE Surveiller"/>
         <mission name="STABILISATION Controler foule"/>
         <mission name="STABILISATION Canaliser foules"/>
@@ -284,6 +287,7 @@
         <mission name="MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Relever"/>
+        <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE S'emparer De"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Surveiller"/>
@@ -7747,21 +7751,28 @@
         <mission name="MELEE Controler"/>
         <mission name="MELEE Defendre"/>
         <mission name="MELEE Detruire"/>
+        <mission name="MELEE Donner Coup Arret"/>
+        <mission name="MELEE Eclairer"/>
         <mission name="MELEE Effectuer un raid"/>
         <mission name="MELEE Escorter"/>
+        <mission name="MELEE Flanc-Garder"/>
         <mission name="MELEE Freiner">
           <fragorder name="Decrocher"/>
         </mission>
         <mission name="MELEE Harceler"/>
+        <mission name="MELEE Intercepter"/>
         <mission name="MELEE Interdire"/>
         <mission name="MELEE Neutraliser"/>
         <mission name="MELEE Organiser accueil colonne refugies"/>
+        <mission name="MELEE Proteger PC"/>
         <mission name="MELEE Ratisser"/>
         <mission name="MELEE Reconnaitre"/>
         <mission name="MELEE Relever"/>
+        <mission name="MELEE Renseigner Sur"/>
         <mission name="MELEE S'emparer"/>
         <mission name="MELEE Appuyer"/>
         <mission name="MELEE Surveiller"/>
+        <mission name="MELEE Tenir"/>
         <mission name="STABILISATION Animer Postes De Controle"/>
         <mission name="STABILISATION Interdire foules"/>
         <mission name="STABILISATION Controler foule"/>
@@ -11761,4 +11772,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2881972025" -->
+<!-- signature="4007945544" -->

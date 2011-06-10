@@ -2061,6 +2061,19 @@
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="france.military.platoon.tasks.RenseignerSur" dia-type="france.military.platoon.tasks.RenseignerSur" id="5002" name="MELEE Renseigner Sur" package="control">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Semparer" dia-type="france.military.platoon.combat.tasks.Semparer" id="2072" name="MELEE S'emparer De" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2221,7 +2234,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="true" type="AgentKnowledge"/>
-      <parameter dia-name="harassObjective" name="Objectif" optional="false" type="LocationComposite">
+      <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Polygon"/>
           <parameter type="UrbanKnowledge"/>
@@ -2241,7 +2254,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="true" type="AgentKnowledge"/>
-      <parameter dia-name="interceptionObjective" name="Objectif" optional="false" type="LocationComposite">
+      <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Polygon"/>
           <parameter type="UrbanKnowledge"/>
@@ -2285,7 +2298,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Unites" optional="false" type="Agent"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Face a" optional="false" type="LocationComposite">
+      <parameter dia-name="directionPoints" max-occurs="unbounded" min-occurs="1" name="Face a" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -4108,6 +4121,20 @@
         </choice>
       </parameter>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.tasks.Eclairer" dia-type="france.military.company.tasks.Eclairer" id="5000" mrt-dia-behavior="france.military.company.tasks.Eclairer" name="MELEE Eclairer" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.SeFaireTransporter" dia-type="france.military.company.tasks.SeFaireTransporter" id="1018" mrt-dia-behavior="france.military.company.tasks.SeFaireTransporter" name="COMMUNES Se Faire Transporter">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4216,6 +4243,22 @@
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Intercepter" dia-type="france.military.company.combat.tasks.Intercepter" id="5004" mrt-dia-behavior="france.military.company.combat.tasks.Intercepter" name="MELEE Intercepter" package="attack">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="meetingPoints" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
+    </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.Attaquer" dia-type="france.military.company.combat.tasks.Attaquer" id="1030" mrt-dia-behavior="france.military.company.combat.tasks.Attaquer" name="MELEE Attaquer" package="attack">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4223,13 +4266,21 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.tasks.Appuyer" dia-type="france.military.company.combat.tasks.Appuyer" id="1031" mrt-dia-behavior="france.military.company.combat.tasks.Soutenir" name="MELEE Appuyer" package="support">
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Appuyer" dia-type="france.military.company.combat.tasks.Appuyer" id="1031" mrt-dia-behavior="france.military.company.combat.tasks.Appuyer" name="MELEE Appuyer" package="support">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Compagnie a soutenir" optional="false" type="Automat"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.ProtegerPC" dia-type="france.military.company.combat.tasks.ProtegerPC" id="5006" mrt-dia-behavior="france.military.company.combat.tasks.ProtegerPC" name="MELEE Proteger PC" package="support">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="objective" name="Compagnie dont le PC doit etre protege" optional="false" type="Automat"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Ratisser" dia-type="france.military.company.tasks.Ratisser" id="1032" mrt-dia-behavior="france.military.company.tasks.Ratisser" name="MELEE Ratisser">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -4245,6 +4296,22 @@
       </parameter>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.Defendre" dia-type="france.military.company.combat.tasks.Defendre" id="1033" mrt-dia-behavior="france.military.company.combat.tasks.Defendre" name="MELEE Defendre" package="defence">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.Tenir" dia-type="france.military.company.combat.tasks.Tenir" id="5001" mrt-dia-behavior="france.military.company.combat.tasks.Tenir" name="MELEE Tenir" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4281,6 +4348,16 @@
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
       <parameter dia-name="directionPoints" max-occurs="unbounded" min-occurs="1" name="Face a" optional="true" type="Point"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.FlancGarder" dia-type="france.military.company.combat.tasks.FlancGarder" id="5005" mrt-dia-behavior="france.military.company.combat.tasks.FlancGarder" name="MELEE Flanc-Garder" package="support">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="entity" name="Compagnie a couvrir" optional="false" type="Automat"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
+      <parameter dia-name="directionPoints" max-occurs="unbounded" min-occurs="1" name="Face a" optional="false" type="Point"/>
+    </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.Surveiller" dia-type="france.military.company.combat.tasks.Surveiller" id="1036" mrt-dia-behavior="france.military.company.combat.tasks.Surveiller" name="MELEE Surveiller" package="control">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4302,7 +4379,39 @@
         </choice>
       </parameter>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.tasks.RenseignerSur" dia-type="france.military.company.combat.tasks.RenseignerSur" id="5003" mrt-dia-behavior="france.military.company.combat.tasks.RenseignerSur" name="MELEE Renseigner Sur" package="control">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Freiner" dia-type="france.military.company.tasks.Freiner" id="1037" mrt-dia-behavior="france.military.company.tasks.Freiner" name="MELEE Freiner" package="defence">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.tasks.Jalonner" dia-type="france.military.company.tasks.Jalonner" id="5007" mrt-dia-behavior="france.military.company.tasks.Jalonner" name="MELEE Jalonner" package="defence">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
+      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.tasks.Freiner" dia-type="france.military.company.tasks.DonnerCoupArret" id="5008" mrt-dia-behavior="france.military.company.tasks.Freiner" name="MELEE Donner Coup Arret" package="defence">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -4691,4 +4800,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3336945512" -->
+<!-- signature="1600044481" -->
