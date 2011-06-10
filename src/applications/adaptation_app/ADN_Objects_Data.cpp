@@ -1202,6 +1202,8 @@ ADN_Objects_Data::ObjectInfos::ObjectInfos()
 {
     symbol_.SetParentNode( *this );
     geometries_.SetParentNode( *this );
+    ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
+    symbol_.SetVector( drawingsData.GetDrawings( geometries_.GetData() ) );
     InitializeCapacities();
 }
 
