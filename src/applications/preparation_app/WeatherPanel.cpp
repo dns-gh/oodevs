@@ -11,6 +11,7 @@
 #include "WeatherPanel.h"
 #include "moc_WeatherPanel.cpp"
 #include "clients_gui/WeatherWidget.h"
+#include "clients_gui/WeatherLayer.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Tools.h"
