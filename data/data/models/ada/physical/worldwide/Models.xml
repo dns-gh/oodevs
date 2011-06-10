@@ -31,7 +31,7 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
-    <unit dia-type="security.roles.FireFighter" file="BMPionSecurity.bms" masalife="true" name="FireFighter">
+    <unit dia-type="security.firefighter.roles.FireFighter" file="BMPionSecurity.bms" masalife="true" name="FireFighter">
       <missions>
         <mission name="Security - Move To"/>
         <mission name="Security - Extinguish"/>
@@ -4220,4 +4220,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3173912899" -->
+<!-- signature="2724263684" -->
