@@ -61,7 +61,6 @@ void ResourceLinksDialog::DoValidate()
     MagicAction* action = new MagicAction( actionType, controllers_.controller_, tr( "Change resource links"), true );
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new Identifier( it.NextElement(), id_ ) );
-    action->AddParameter( *new Bool( it.NextElement(), urban_ ) );
     ParameterList* nodes = new ParameterList( it.NextElement() );
     action->AddParameter( *nodes );
     for( ResourceNetwork_ABC::CIT_ResourceNodes it = resourceNodes_.begin(); it != resourceNodes_.end(); ++it )
