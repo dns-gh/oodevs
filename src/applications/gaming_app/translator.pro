@@ -10,6 +10,7 @@ AfterActionRequestList.cpp \
 AgentChangeAffinitiesDialog.cpp \
 AgentKnowledgePanel.cpp \
 AgentListView.cpp \
+AgentKnowledgePanel.cpp \
 AlarmsWidget.cpp \
 Application.cpp \
 BorrowingsListView.cpp \

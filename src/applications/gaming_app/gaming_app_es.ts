@@ -154,6 +154,74 @@
         <translation type="unfinished">Detalles</translation>
     </message>
     <message>
+        <source>Identifier:</source>
+        <translation type="unfinished">Identificador:</translation>
+    </message>
+    <message>
+        <source>Associated agent:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location:</source>
+        <translation type="unfinished">Ubicación:</translation>
+    </message>
+    <message>
+        <source>Heading:</source>
+        <translation type="unfinished">Dirección:</translation>
+    </message>
+    <message>
+        <source>Speed:</source>
+        <translation type="unfinished">Velocidad:</translation>
+    </message>
+    <message>
+        <source>Operational state:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perception level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max perception level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Side:</source>
+        <translation type="unfinished">Bando:</translation>
+    </message>
+    <message>
+        <source>Level:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Surrender:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prisoner:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refugees picked up:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command post:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relevance:</source>
+        <translation type="unfinished">Relevancia:</translation>
+    </message>
+    <message>
+        <source>Critical intelligence:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Unit</source>
         <translation type="unfinished"></translation>
     </message>
