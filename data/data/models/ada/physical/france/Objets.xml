@@ -382,5 +382,9 @@
     <underground-network/>
     <universal/>
   </object>
+  <object geometry="point" name="Noeud de reseaux de ressource" symbol="G*SPPR----****X" type="resource production node">
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <resources/>
+  </object>
 </objects>
-<!-- signature="2211093740" -->
+<!-- signature="0379480084" -->

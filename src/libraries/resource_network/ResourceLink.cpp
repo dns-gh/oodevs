@@ -108,9 +108,6 @@ void ResourceLink::SetCapacity( int capacity )
 // -----------------------------------------------------------------------------
 int ResourceLink::GetEfficientCapacity() const
 {
-    if( capacity_ == -1 )
-        return -1;
-    // TODO apply structural/fonctional state
     return capacity_;
 }
 

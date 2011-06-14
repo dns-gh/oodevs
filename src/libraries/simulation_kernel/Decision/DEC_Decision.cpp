@@ -271,8 +271,9 @@ void RegisterUrbanBlockFunctions( directia::brain::Brain& brain )
 void RegisterResourceNetworkFunctions( directia::brain::Brain& brain )
 {
     brain[ "DEC_ReseauRessource_Position" ] = &DEC_ResourceNetworkFunctions::GetResourceNetworkPosition;
-    brain[ "DEC_ReseauRessource_DesactiverElement" ] = &DEC_ResourceNetworkFunctions::DeactivateRessourceNetworkElement;
-    brain[ "DEC_ReseauRessource_ActiverElement" ] = &DEC_ResourceNetworkFunctions::ActivateRessourceNetworkElement;
+    brain[ "DEC_ReseauRessource_DesactiverElement" ] = &DEC_ResourceNetworkFunctions::DeactivateResourceNetworkElement;
+    brain[ "DEC_ReseauRessource_ActiverElement" ] = &DEC_ResourceNetworkFunctions::ActivateResourceNetworkElement;
+    brain[ "DEC_CreerLienObjetVersReseau" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLink;
     brain.Register( "GetTypeName", &DEC_ResourceNetwork::GetTypeName );
 }
 

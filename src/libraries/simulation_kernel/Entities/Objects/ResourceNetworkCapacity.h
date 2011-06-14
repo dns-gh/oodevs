@@ -85,6 +85,7 @@ public:
 
     void ActivateAll();
     void SetActivation( unsigned long resourceId, bool activated );
+    void CreateLink( unsigned long targetId, unsigned long resourceId, unsigned int production );
     void AddConsumption( unsigned long resourceId, double consumption );
     float GetConsumptionState( unsigned long resourceId ) const;
     float GetFunctionalState() const;

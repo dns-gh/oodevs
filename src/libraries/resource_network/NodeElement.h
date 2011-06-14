@@ -62,6 +62,8 @@ public:
     void DistributeResource( float functionalState, const ResourceNetworkModel& model );
     void Push( int quantity );
     void SetActivation( bool activated );
+    void SetProduction( unsigned int production );
+    void CreateLink( unsigned long targetId );
     void SetModifier( float modifier );
     void RemoveLink( unsigned int nodeId );
     bool NeedUpdate() const;

@@ -502,6 +502,7 @@
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
         <mission name="MELEE S'Infiltrer"/>
+        <mission name="Produire"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -545,6 +546,7 @@
         <mission name="GENIE Reparer"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
+        <mission name="Produire"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -700,6 +702,7 @@
           <fragorder name="Modifier Priorites Tactiques Blesses"/>
         </mission>
         <mission name="LOGISTIQUE Transporter"/>
+        <mission name="Produire"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -11772,4 +11775,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4007945544" -->
+<!-- signature="2800117280" -->

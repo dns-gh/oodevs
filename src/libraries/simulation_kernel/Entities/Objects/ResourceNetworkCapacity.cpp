@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ResourceNetworkCapacity.h"
+#include "ResourceNetworkAttribute.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_AgentServer.h"
 #include "StructuralCapacity.h"
@@ -134,6 +135,7 @@ void ResourceNetworkCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     ResourceNetworkCapacity* capacity = new ResourceNetworkCapacity( *this );
     object.AddCapacity( capacity );
+    object.GetAttribute< ResourceNetworkAttribute >() = ResourceNetworkAttribute( object );
     object.Register( *static_cast< MIL_StructuralStateNotifier_ABC *>( capacity ) );
     capacity->RegisterNode( object.GetID() );
     // $$$$ JSR 2011-01-14: TODO vérifier si ça peut être fait automatiquement par MIL_StructuralStateNotifier_ABC
@@ -213,6 +215,15 @@ void ResourceNetworkCapacity::ActivateAll()
 void ResourceNetworkCapacity::SetActivation( unsigned long resourceId, bool activated )
 {
     nodeProperties_->SetActivation( resourceId, activated );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::CreateLink
+// Created: GGE 2011-06-10
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::CreateLink( unsigned long targetId, unsigned long resourceId, unsigned int production )
+{
+    nodeProperties_->CreateLink( targetId, resourceId, production );
 }
 
 // -----------------------------------------------------------------------------

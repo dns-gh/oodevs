@@ -368,6 +368,32 @@ void NodeElement::SetActivation( bool activated )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeElement::SetProduction
+// Created: GGE 2011-06-10
+// -----------------------------------------------------------------------------
+void NodeElement::SetProduction( unsigned int production )
+{
+    if( productionCapacity_ != production )
+    {
+        needUpdate_ = true;
+        productionCapacity_ = production;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeElement::SetActivation
+// Created: GGE 2011-06-10
+// -----------------------------------------------------------------------------
+void NodeElement::CreateLink( unsigned long targetId )
+{
+    for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
+        if( ( *it )->GetTarget() == targetId )
+            return;
+    links_.push_back( new ResourceLink( targetId, ResourceLink::eTargetKindObject, -1 ) );
+    needUpdate_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeElement::SetModifier
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------

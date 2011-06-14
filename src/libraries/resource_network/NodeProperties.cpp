@@ -177,6 +177,22 @@ void NodeProperties::SetActivation( unsigned long resourceId, bool activated )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::CreateLink
+// Created: GGE 2011-06-10
+// -----------------------------------------------------------------------------
+void NodeProperties::CreateLink( unsigned long targetId, unsigned long resourceId, unsigned int production )
+{
+    NodeElement* element = Find( resourceId );
+    if( !element )
+    {
+        element = new NodeElement( resourceId, tools_->GetResourceName( resourceId ) );
+        Register( resourceId, *element );
+    }
+    element->SetProduction( production );
+    element->CreateLink( targetId );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::SetModifier
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------

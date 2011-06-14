@@ -76,6 +76,7 @@
 			<xs:enumeration value="seal off area"/>
 			<xs:enumeration value="flood"/>
 			<xs:enumeration value="dyke"/>
+			<xs:enumeration value="resource production node"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="T_ConsumptionMode">
