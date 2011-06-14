@@ -47,5 +47,5 @@ bool Viewport2d::IsVisible( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 bool Viewport2d::IsVisible( const geometry::Rectangle2f& rectangle ) const
 {
-    return ! viewport_.Intersect( rectangle ).IsEmpty();
+    return (! viewport_.Intersect( rectangle ).IsEmpty() ) || viewport_.IsInside( viewport_.Intersect( rectangle ).Center() );
 }
