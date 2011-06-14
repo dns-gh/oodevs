@@ -92,6 +92,17 @@ DrawerPanel::~DrawerPanel()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DrawerPanel::setEnabled
+// Created: JSR 2011-06-14
+// -----------------------------------------------------------------------------
+void DrawerPanel::setEnabled( bool b )
+{
+    InfoPanel_ABC::setEnabled( b );
+    for( T_CategoryItems::iterator it = categories_.begin(); it != categories_.end(); ++it )
+        it->second->setEnabled( b );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DrawerPanel::NotifyCreated
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------

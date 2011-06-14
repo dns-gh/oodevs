@@ -60,6 +60,7 @@ public:
 private slots:
     //! @name Slots
     //@{
+    virtual void setEnabled( bool );
     void Open();
     void Save();
     void Clear();
