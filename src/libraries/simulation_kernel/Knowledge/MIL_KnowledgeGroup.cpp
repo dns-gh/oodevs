@@ -351,7 +351,7 @@ bool MIL_KnowledgeGroup::IsPerceived( const DEC_Knowledge_Object& knowledge ) co
 // Name: MIL_KnowledgeGroup::SendCreation
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::SendCreation() const
+void MIL_KnowledgeGroup::SendCreation( unsigned int context /*= 0*/ ) const
 {
     assert( army_ );
     client::KnowledgeGroupCreation msg;
@@ -364,11 +364,11 @@ void MIL_KnowledgeGroup::SendCreation() const
     // LTO end
     if( isJammed_ )
         msg().set_jam( true );
-    msg.Send( NET_Publisher_ABC::Publisher() );
+    msg.Send( NET_Publisher_ABC::Publisher(), context );
     //SLG : @TODO MGD Move to factory
     // LTO begin
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        (**it).SendCreation();
+        (**it).SendCreation( context );
     // LTO end
 }
 

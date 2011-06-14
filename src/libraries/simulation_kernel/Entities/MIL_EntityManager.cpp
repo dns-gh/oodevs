@@ -881,9 +881,9 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             break;
         case UnitMagicAction::formation_creation :
             if( MIL_Army_ABC*  pArmy = armyFactory_->Find( id ) )
-                ProcessFormationCreationRequest( message, pArmy, 0 );
+                ProcessFormationCreationRequest( message, pArmy, 0, nCtx );
             else if( MIL_Formation* pFormation = FindFormation( id ) )
-                ProcessFormationCreationRequest( message, 0, pFormation );
+                ProcessFormationCreationRequest( message, 0, pFormation, nCtx );
             else
                 throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
@@ -956,7 +956,7 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
 // Name: MIL_EntityManager::ProcessFormationCreationRequest
 // Created: LDC 2010-10-20
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& message, MIL_Army_ABC* army, MIL_Formation* formation )
+void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& message, MIL_Army_ABC* army, MIL_Formation* formation, unsigned int nCtx )
 {
     client::MagicActionAck ack;
     ack().set_error_code( MagicActionAck::no_error );
@@ -979,8 +979,8 @@ void MIL_EntityManager::ProcessFormationCreationRequest( const UnitMagicAction& 
     std::string name = ( parameters.elem( 1 ).value_size() == 1 && parameters.elem( 1 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 1 ).value().Get( 0 ).acharstr() : std::string();
     std::string logLevel = ( parameters.elem( 2 ).value_size() == 1 && parameters.elem( 2 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 2 ).value().Get( 0 ).acharstr() : std::string();;
     MIL_Formation& newFormation = formationFactory_->Create( level, name, logLevel, *army, formation );
-    ack.Send( NET_Publisher_ABC::Publisher() );
-    newFormation.SendCreation();
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    newFormation.SendCreation( nCtx );
 }
 
 // -----------------------------------------------------------------------------

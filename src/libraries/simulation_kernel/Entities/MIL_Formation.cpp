@@ -279,7 +279,7 @@ void MIL_Formation::WriteLogisticLinksODB( xml::xostream& xos ) const
 // Name: MIL_Formation::SendCreation
 // Created: NLD 2006-10-13
 // -----------------------------------------------------------------------------
-void MIL_Formation::SendCreation() const
+void MIL_Formation::SendCreation( unsigned int context /*= 0*/ ) const
 {
     assert( pLevel_ );
     assert( pArmy_ );
@@ -293,9 +293,9 @@ void MIL_Formation::SendCreation() const
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     if( pParent_ )
         message().mutable_parent()->set_id( pParent_->GetID() );
-    message.Send( NET_Publisher_ABC::Publisher() );
-    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );//@TODO MGD Move to factory
-    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendCreation, _1, 0 ) );
+    message.Send( NET_Publisher_ABC::Publisher(), context );
+    tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1, context ) );//@TODO MGD Move to factory
+    tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendCreation, _1, context ) );
 }
 
 // -----------------------------------------------------------------------------
