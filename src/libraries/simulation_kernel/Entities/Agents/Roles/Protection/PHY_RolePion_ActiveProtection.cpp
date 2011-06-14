@@ -85,7 +85,6 @@ bool PHY_RolePion_ActiveProtection::DestroyIndirectFire( const PHY_DotationCateg
     return pion_.DestroyIndirectFire( category );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::serialize
 // Created: SLG 2010-02-10

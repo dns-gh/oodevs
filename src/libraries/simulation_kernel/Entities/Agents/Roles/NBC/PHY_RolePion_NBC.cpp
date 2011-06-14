@@ -93,6 +93,7 @@ PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
     , bHasChanged_           ( true )
     , poisoned_              ( false )
     , lastStatePoisoning_    ( false )
+    , immune_                ( false )
 {
     // NOTHING
 }
@@ -116,7 +117,8 @@ void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
     file & ::boost::serialization::base_object< PHY_RoleInterface_NBC >( *this )
          & nbcAgentTypesContaminating_
          & bNbcProtectionSuitWorn_
-         & rContaminationState_;
+         & rContaminationState_
+         & immune_;
 }
 
 // -----------------------------------------------------------------------------
@@ -274,6 +276,33 @@ void PHY_RolePion_NBC::RemoveNbcProtectionSuit()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::IsImmune
+// Created: JSR 2011-06-14
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_NBC::IsImmune() const
+{
+    return immune_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::ImmunizeAgent
+// Created: JSR 2011-06-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_NBC::ImmunizeAgent()
+{
+    immune_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::StopImmunizeAgent
+// Created: JSR 2011-06-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_NBC::StopImmunizeAgent()
+{
+    immune_ = false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC::Update
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
@@ -321,7 +350,7 @@ void PHY_RolePion_NBC::ContaminateOtherUnits()
     for( TER_Agent_ABC::CIT_AgentPtrVector it  = perceivableAgents.begin(); it != perceivableAgents.end(); ++it )
     {
         MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **it ).GetAgent();
-        if( target.GetID() != pion_.GetID() &&
+        if( target.GetID() != pion_.GetID() && !target.Get< PHY_RoleInterface_NBC >().IsImmune() &&
             ( rContaminationQuantity_ - target.Get< PHY_RoleInterface_NBC >().GetContaminationQuantity()  >  minQuantity )  )
         {
             MIL_ToxicEffectManipulator* manipulator = new MIL_ToxicEffectManipulator( typeNbcContaminating, minQuantity );

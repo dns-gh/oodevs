@@ -65,6 +65,9 @@ public:
     virtual void Decontaminate( double rRatioAgentsWorking );
     void WearNbcProtectionSuit();
     void RemoveNbcProtectionSuit();
+    virtual bool IsImmune() const;
+    virtual void ImmunizeAgent();
+    virtual void StopImmunizeAgent();
     virtual double GetContaminationQuantity() const;
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
     void Execute( moving::SpeedComputer_ABC& algorithm ) const;
@@ -106,6 +109,7 @@ private:
     bool bHasChanged_;
     bool poisoned_;
     bool lastStatePoisoning_;
+    bool immune_;
     //@}
 
     //! @name Serialization

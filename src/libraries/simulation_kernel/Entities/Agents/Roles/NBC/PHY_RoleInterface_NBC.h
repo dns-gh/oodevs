@@ -52,6 +52,9 @@ public:
     virtual void Decontaminate() = 0;
     virtual void Decontaminate( double rRatioAgentsWorking ) = 0;
     virtual double GetContaminationQuantity() const = 0;
+    virtual bool IsImmune() const = 0;
+    virtual void ImmunizeAgent() = 0;
+    virtual void StopImmunizeAgent() = 0;
     //@}
 
     //! @name Operations

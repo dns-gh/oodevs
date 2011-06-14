@@ -78,6 +78,7 @@ includedFiles["sources/appui/nbc/pions/common/Actions.bms"] = true
 
                 DEC_Trace( "Animation du site" )
                 self.actionAnimer = DEC__StartAnimerObjet( self._namedParams.siteDecontamination )
+                DEC_Agent_ImmuniserNbc()
             end
         end
 
@@ -86,6 +87,7 @@ includedFiles["sources/appui/nbc/pions/common/Actions.bms"] = true
     deselect = function( self )
                 DEC_Trace( "Site non anime" )
         self.actionAnimer = DEC_StopAction( self.actionAnimer )
+        DEC_Agent_StopImmuniserNbc()
         if( not DEC_Agent_AutomateEstEmbraye() ) then
             DEC_RC( eRC_SiteDecontaminationDesactive )
         else
@@ -100,6 +102,7 @@ includedFiles["sources/appui/nbc/pions/common/Actions.bms"] = true
     destroy = function( self )
                 DEC_Trace( "Site non anime" )
         self.actionAnimer = DEC_StopAction( self.actionAnimer )
+        DEC_Agent_StopImmuniserNbc()
         if( not DEC_Agent_AutomateEstEmbraye() ) then
             DEC_RC( eRC_SiteDecontaminationDesactive )
         else

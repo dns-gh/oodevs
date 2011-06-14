@@ -31,6 +31,9 @@ MOCK_BASE_CLASS( MockRoleNBC, nbc::PHY_RoleInterface_NBC )
     MOCK_METHOD( WearNbcProtectionSuit, 0 );
     MOCK_METHOD( RemoveNbcProtectionSuit, 0 );
     MOCK_METHOD( GetContaminationQuantity, 0 );
+    MOCK_METHOD( IsImmune, 0 );
+    MOCK_METHOD( ImmunizeAgent, 0 );
+    MOCK_METHOD( StopImmunizeAgent, 0 );
 };
 
 #endif // __MockRoleNBC_h_

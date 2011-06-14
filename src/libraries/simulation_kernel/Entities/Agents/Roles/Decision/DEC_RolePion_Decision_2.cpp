@@ -420,6 +420,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Agent_EnleverTenueProtectionNBC" ] = boost::bind( &DEC_AgentFunctions::RemoveNbcProtectionSuit, boost::ref( GetPion() ) );
     brain[ "DEC_ConnaissanceObjet_DemandeDeDecontamination" ] =
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::QueueForDecontamination, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_Agent_ImmuniserNbc" ] = boost::bind( &DEC_AgentFunctions::ImmunizeAgent, boost::ref( GetPion() ) );
+    brain[ "DEC_Agent_StopImmuniserNbc" ] = boost::bind( &DEC_AgentFunctions::StopImmunizeAgent, boost::ref( GetPion() ) );
 
     // Blackout
     brain[ "DEC_Agent_PasserEnSilenceRadio" ] = boost::bind( &DEC_AgentFunctions::ActivateBlackout, boost::ref( GetPion() ) );
