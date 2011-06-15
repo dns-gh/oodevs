@@ -77,7 +77,7 @@ includedFiles["sources/common/pions/missions/ReconnaissanceAreaHidden.bms"] = tr
 
             self.done_BEH_Dep_ProgressionAvecEscortePossibleSur = function( self, _, v ) 
                 if not self.params.mission.repeat_ then
-                    self.eEtat = v[1] 
+                    self.ePhase = eFinMission
                 end
             end
         elseif self.ePhase == eFinMission then

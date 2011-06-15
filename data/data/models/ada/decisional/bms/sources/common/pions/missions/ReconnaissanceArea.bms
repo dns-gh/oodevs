@@ -78,9 +78,7 @@ includedFiles["sources/common/pions/missions/ReconnaissanceArea.bms"] = true
             self.done_BEH_Dep_ProgressionAvecEscortePossibleSur = function( self, _, v ) 
 DEC_Trace( "Feedback sur se deplacer" )
                 if not self.params.mission.repeat_ then
-                    self.eEtat = v[1] 
-                else
-                    DEC_Trace( "Dans repeat, ignore feedback" )
+                    self.ePhase = eFinMission
                 end
             end
         elseif self.ePhase == eFinMission then
