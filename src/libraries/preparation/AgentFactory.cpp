@@ -91,6 +91,8 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new InitialState( static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( *result, controllers_, model_, dico, tools::translate( "Affinities", "Affinities" ) ) );
+    if( result->GetType().IsLogisticSupply() )
+        result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( commandPost )
         result->Attach( *new CommandPostAttributes( *result ) );
