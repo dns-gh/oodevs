@@ -113,9 +113,9 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
 void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
     if( pRealObject_ )
-        displayer.Display( tools::translate( "Object", "Known objects" ), pRealObject_ );
+        displayer.Display( tools::findTranslation( "ObjectKnowledgePanel", "Known objects" ), pRealObject_ );
     else
-        displayer.Display( tools::translate( "Object", "Known objects" ), id_ );
+        displayer.Display( tools::findTranslation( "ObjectKnowledgePanel", "Known objects" ), id_ );
 }
 
 // -----------------------------------------------------------------------------
