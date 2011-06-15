@@ -17,6 +17,9 @@
 #include "DebugFederateAmbassadorFactory.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
+#include "dispatcher/Model_ABC.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
+#include "protocol/SimulationSenders.h"
 #include "rpr/EntityTypeResolver.h"
 #include <hla/HLAException.h>
 #include <xeumeuleu/xml.hpp>
@@ -41,8 +44,10 @@ namespace
 // Name: HlaPlugin constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger )
-    : logger_               ( logger )
+HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger )
+    : model_                ( model )
+    , logger_               ( logger )
+    , publisher_            ( publisher )
     , pRtiFactory_          ( new RtiAmbassadorFactory() )
     , pDebugRtiFactory_     ( new DebugRtiAmbassadorFactory( *pRtiFactory_, logger ) )
     , pFederateFactory_     ( new FederateAmbassadorFactory( ReadTimeStep( config.GetSessionFile() ) ) )
@@ -75,7 +80,12 @@ void HlaPlugin::Receive( const sword::SimToClient& wrapper )
     try
     {
         if( wrapper.message().has_control_end_tick() )
+        {
             federate_->Step();
+            simulation::ControlResume message;
+            message().set_tick( 1 );
+            message.Send( publisher_ );
+        }
     }
     catch( ::hla::HLAException& e )
     {

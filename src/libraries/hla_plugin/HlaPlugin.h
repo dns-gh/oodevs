@@ -23,6 +23,7 @@ namespace dispatcher
     class Config;
     class Model_ABC;
     class Logger_ABC;
+    class SimulationPublisher_ABC;
 }
 
 namespace rpr
@@ -50,7 +51,7 @@ class HlaPlugin : public dispatcher::Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             HlaPlugin( dispatcher::Model_ABC& model, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger );
+             HlaPlugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger );
     virtual ~HlaPlugin();
     //@}
 
@@ -65,7 +66,9 @@ public:
 private:
     //! @name Member data
     //@{
+    dispatcher::Model_ABC& model_;
     dispatcher::Logger_ABC& logger_;
+    dispatcher::SimulationPublisher_ABC& publisher_;
     std::auto_ptr< RtiAmbassadorFactory_ABC > pRtiFactory_;
     std::auto_ptr< RtiAmbassadorFactory_ABC > pDebugRtiFactory_;
     std::auto_ptr< FederateAmbassadorFactory_ABC > pFederateFactory_;

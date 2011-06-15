@@ -22,12 +22,12 @@ namespace dispatcher
 // Name: CreateInstance
 // Created: SBO 2011-01-28
 // -----------------------------------------------------------------------------
-HLA_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& /*simulation*/, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
+HLA_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
 {
     try
     {
         logger.LogInfo( "Initialization..." );
-        dispatcher::Plugin_ABC* result = new plugins::hla::HlaPlugin( model, config, xis, logger );
+        dispatcher::Plugin_ABC* result = new plugins::hla::HlaPlugin( model, simulation, config, xis, logger );
         logger.LogInfo( "Initialized!" );
         return result;
     }
