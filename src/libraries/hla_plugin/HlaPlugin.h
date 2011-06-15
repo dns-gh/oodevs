@@ -66,6 +66,7 @@ public:
 private:
     //! @name Member data
     //@{
+    const bool timeConstrained_;
     dispatcher::Model_ABC& model_;
     dispatcher::Logger_ABC& logger_;
     dispatcher::SimulationPublisher_ABC& publisher_;

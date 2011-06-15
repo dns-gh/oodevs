@@ -45,7 +45,8 @@ namespace
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger )
-    : model_                ( model )
+    : timeConstrained_      ( xis.attribute< bool >( "time-constrained", true ) )
+    , model_                ( model )
     , logger_               ( logger )
     , publisher_            ( publisher )
     , pRtiFactory_          ( new RtiAmbassadorFactory() )
@@ -82,9 +83,12 @@ void HlaPlugin::Receive( const sword::SimToClient& wrapper )
         if( wrapper.message().has_control_end_tick() )
         {
             federate_->Step();
-            simulation::ControlResume message;
-            message().set_tick( 1 );
-            message.Send( publisher_ );
+            if( timeConstrained_ )
+            {
+                simulation::ControlResume message;
+                message().set_tick( 1 );
+                message.Send( publisher_ );
+            }
         }
     }
     catch( ::hla::HLAException& e )
