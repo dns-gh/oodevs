@@ -159,7 +159,7 @@
     </message>
     <message>
         <source>Associated agent:</source>
-        <translation>Agent associé:</ranslation>
+        <translation>Agent associé:</translation>
     </message>
     <message>
         <source>Location:</source>
