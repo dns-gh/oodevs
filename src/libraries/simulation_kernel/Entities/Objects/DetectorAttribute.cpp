@@ -9,9 +9,25 @@
 
 #include "simulation_kernel_pch.h"
 #include "DetectorAttribute.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DetectorAttribute )
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const DetectorAttribute* attr, const unsigned int /*version*/ )
+{
+    const MIL_Agent_ABC* const pion = attr->detector_;
+    archive << pion;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, DetectorAttribute* attr, const unsigned int /*version*/ )
+{
+    MIL_Agent_ABC* pion;
+    archive >> pion;
+    ::new( attr )DetectorAttribute( pion );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DetectorAttribute constructor
@@ -27,8 +43,8 @@ DetectorAttribute::DetectorAttribute()
 // Name: DetectorAttribute constructor
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
-DetectorAttribute::DetectorAttribute( const MIL_Agent_ABC& agent )
-    : detector_ ( &agent )
+DetectorAttribute::DetectorAttribute( const MIL_Agent_ABC* agent )
+    : detector_( agent )
 {
     // NOTHING
 }
@@ -47,9 +63,9 @@ DetectorAttribute::~DetectorAttribute()
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DetectorAttribute::serialize( Archive& /*file*/, const unsigned int )
+void DetectorAttribute::serialize( Archive& file, const unsigned int )
 {
-    //TODO
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------

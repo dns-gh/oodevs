@@ -9,27 +9,52 @@
 
 #include "simulation_kernel_pch.h"
 #include "OccupantAttribute.h"
-#include "Object.h"
+#include "MIL_Object_ABC.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( OccupantAttribute )
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const OccupantAttribute* attr, const unsigned int /*version*/ )
+{
+    const MIL_Agent_ABC* const pion = attr->pOccupant_;
+    archive << pion;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, OccupantAttribute* attr, const unsigned int /*version*/ )
+{
+    MIL_Agent_ABC* pion;
+    archive >> pion;
+    ::new( attr )OccupantAttribute( pion );
+}
 
 // -----------------------------------------------------------------------------
 // Name: OccupantAttribute constructor
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 OccupantAttribute::OccupantAttribute()
-: pOccupant_( 0 )
+    : pOccupant_( 0 )
 {
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: OccupantAttribute constructor
+// Created: JSR 2011-06-15
+// -----------------------------------------------------------------------------
+OccupantAttribute::OccupantAttribute( const MIL_Agent_ABC* pOccupant )
+    : pOccupant_( pOccupant )
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: OccupantAttribute constructor
 // Created: MGD 2010-02-18
 // -----------------------------------------------------------------------------
 OccupantAttribute::OccupantAttribute( xml::xistream& /*xis*/ )
-: pOccupant_( 0 )
+    : pOccupant_( 0 )
 {
     // NOTHING @TODO MGD manage other size than 1
 }

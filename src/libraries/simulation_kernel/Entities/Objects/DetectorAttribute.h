@@ -27,7 +27,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DetectorAttribute();
-    explicit DetectorAttribute( const MIL_Agent_ABC& Agent );
+    explicit DetectorAttribute( const MIL_Agent_ABC* Agent );
     virtual ~DetectorAttribute();
     //@}
 
@@ -48,9 +48,16 @@ public:
     //@}
 
 private:
+    //! @name Serialization
+    //@{
+    template< typename Archive > friend void save_construct_data( Archive& archive, const DetectorAttribute* attr, const unsigned int /*version*/ );
+    template< typename Archive > friend void load_construct_data( Archive& archive, DetectorAttribute* attr, const unsigned int /*version*/ );
+    //@}
+
+private:
     //! @name Member data
     //@{
-    const MIL_Agent_ABC*    detector_;
+    const MIL_Agent_ABC* detector_;
     //@}
 };
 

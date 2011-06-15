@@ -32,6 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              OccupantAttribute();
+    explicit OccupantAttribute( const MIL_Agent_ABC* pOccupant );
     explicit OccupantAttribute( xml::xistream& xis );
     virtual ~OccupantAttribute();
     //@}
@@ -70,9 +71,16 @@ private:
     //@}
 
 private:
+    //! @name Serialization
+    //@{
+    template< typename Archive > friend void save_construct_data( Archive& archive, const OccupantAttribute* attr, const unsigned int /*version*/ );
+    template< typename Archive > friend void load_construct_data( Archive& archive, OccupantAttribute* attr, const unsigned int /*version*/ );
+    //@}
+
+private:
     //! @name Member data
     //@{
-    const MIL_Agent_ABC*  pOccupant_;
+    const MIL_Agent_ABC* pOccupant_;
     //@}
 };
 
