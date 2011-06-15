@@ -10,8 +10,18 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_IntegerParameter.h"
 #include "protocol/Protocol.h"
+#include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_IntegerParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntegerParameter constructor
+// Created: LGY 2011-06-15
+// -----------------------------------------------------------------------------
+MIL_IntegerParameter::MIL_IntegerParameter()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_IntegerParameter constructor
@@ -62,12 +72,21 @@ bool MIL_IntegerParameter::ToElement( sword::MissionParameter_Value& elem ) cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_IntegerParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_IntegerParameter::load
+// Created: LGY 2011-06-15
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_IntegerParameter::serialize( Archive& file, const unsigned int )
+void MIL_IntegerParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & value_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> value_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntegerParameter::save
+// Created: LGY 2011-06-15
+// -----------------------------------------------------------------------------
+void MIL_IntegerParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << value_;
 }

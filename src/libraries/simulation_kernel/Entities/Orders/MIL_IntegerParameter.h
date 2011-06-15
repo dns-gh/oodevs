@@ -12,6 +12,9 @@
 
 #include "MIL_BaseParameter.h"
 
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
+
 // =============================================================================
 /** @class  MIL_IntegerParameter
     @brief  MIL_IntegerParameter
@@ -23,6 +26,7 @@ class MIL_IntegerParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_IntegerParameter();
     explicit MIL_IntegerParameter( int );
     virtual ~MIL_IntegerParameter();
     //@}
@@ -40,7 +44,9 @@ public:
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& file, const unsigned int );
+    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
     //@}
 
 private:

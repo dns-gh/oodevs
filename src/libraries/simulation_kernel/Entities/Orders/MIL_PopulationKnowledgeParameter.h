@@ -14,6 +14,8 @@
 
 class DEC_Knowledge_Object;
 class DEC_KnowledgeResolver_ABC;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 /** @class  MIL_PopulationKnowledgeParameter
@@ -45,7 +47,9 @@ public:
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& file, const unsigned int );
+    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
     //@
 
 private:

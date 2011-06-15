@@ -10,8 +10,18 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_TirIndirectParameter.h"
 #include "protocol/Protocol.h"
+#include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_TirIndirectParameter )
+
+// -----------------------------------------------------------------------------
+// Name: MIL_TirIndirectParameter constructor
+// Created: LGY 2011-06-15
+// -----------------------------------------------------------------------------
+MIL_TirIndirectParameter::MIL_TirIndirectParameter()
+{
+    // NOTHING
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TirIndirectParameter constructor
@@ -62,12 +72,21 @@ bool MIL_TirIndirectParameter::ToElement( sword::MissionParameter_Value& elem ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_TirIndirectParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_TirIndirectParameter::load
+// Created: LGY 2011-06-15
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_TirIndirectParameter::serialize( Archive& file, const unsigned int )
+void MIL_TirIndirectParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & data_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> data_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_TirIndirectParameter::save
+// Created: LGY 2011-06-15
+// -----------------------------------------------------------------------------
+void MIL_TirIndirectParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << data_;
 }

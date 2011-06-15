@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_StringParameter.h"
 #include "protocol/Protocol.h"
+#include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_StringParameter )
 
@@ -71,12 +72,21 @@ bool MIL_StringParameter::ToElement( sword::MissionParameter_Value& elem ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_StringParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_StringParameter::load
+// Created: LGY 2011-06-15
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_StringParameter::serialize( Archive& file, const unsigned int )
+void MIL_StringParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & value_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> value_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_StringParameter::save
+// Created: LGY 2011-06-15
+// -----------------------------------------------------------------------------
+void MIL_StringParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << value_;
 }

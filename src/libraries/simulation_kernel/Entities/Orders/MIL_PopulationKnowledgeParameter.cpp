@@ -12,6 +12,7 @@
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "protocol/Protocol.h"
+#include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationKnowledgeParameter )
 
@@ -84,12 +85,21 @@ bool MIL_PopulationKnowledgeParameter::ToElement( sword::MissionParameter_Value&
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_PopulationKnowledgeParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_PopulationKnowledgeParameter::load
+// Created: LGY 2011-06-15
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_PopulationKnowledgeParameter::serialize( Archive& file, const unsigned int )
+void MIL_PopulationKnowledgeParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & pKnowledgePopulation_;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> pKnowledgePopulation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationKnowledgeParameter::save
+// Created: LGY 2011-06-15
+// -----------------------------------------------------------------------------
+void MIL_PopulationKnowledgeParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << pKnowledgePopulation_;
 }
