@@ -12,6 +12,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "protocol/Protocol.h"
+#include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_DotationTypeParameter )
 
@@ -86,12 +87,24 @@ bool MIL_DotationTypeParameter::ToElement( sword::MissionParameter_Value& elem )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_DotationTypeParameter::serialize
-// Created: LGY 2011-06-06
+// Name: MIL_DotationTypeParameter::load
+// Created: LGY 2011-06-15
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void MIL_DotationTypeParameter::serialize( Archive& file, const unsigned int )
+void MIL_DotationTypeParameter::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< MIL_BaseParameter >( *this )
-         & pCategory_;
+    unsigned int id;
+    file >> boost::serialization::base_object< MIL_BaseParameter >( *this )
+         >> id;
+    pCategory_ = PHY_DotationType::FindDotationCategory( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationTypeParameter::save
+// Created: LGY 2011-06-15
+// -----------------------------------------------------------------------------
+void MIL_DotationTypeParameter::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    unsigned int id = pCategory_->GetMosID();
+    file << boost::serialization::base_object< MIL_BaseParameter >( *this )
+         << id;
 }

@@ -57,6 +57,8 @@ void MIL_OrderManager_ABC::Update()
             try
             {
                 pMission_->Start( pMission_ );
+                if( pController_ )
+                    pController_->Start( pMission_ );
                 bNewMissionStarted_ = true;
             }
             catch( std::runtime_error& e )
@@ -78,8 +80,6 @@ void MIL_OrderManager_ABC::Update()
 // -----------------------------------------------------------------------------
 void MIL_OrderManager_ABC::ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > pNewMission )
 {
-    if( pController_ )
-        pController_->Start( pMission_ );
     pNextMission_ = pNewMission;
 }
 
@@ -89,7 +89,7 @@ void MIL_OrderManager_ABC::ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > 
 // -----------------------------------------------------------------------------
 void MIL_OrderManager_ABC::CancelMission()
 {
-    if( pController_ )
+    if( pController_ && pMission_.get() )
         pController_->Stop( pMission_ );
     pNextMission_.reset();
 }
@@ -103,11 +103,7 @@ void MIL_OrderManager_ABC::StopAllMissions()
     if( pNextMission_.get() )
         pNextMission_->Stop( pNextMission_ );
     if( pMission_.get() )
-    {
-        if( pController_ )
-            pController_->Stop( pMission_ );
         pMission_->Stop( pMission_ );
-    }
 
     pNextMission_.reset();
     pMission_.reset();
