@@ -23,6 +23,21 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+#include <hla/AttributeIdentifier.h>
+#include <hla/ClassIdentifier.h>
+
+namespace hla
+{
+    inline std::ostream& operator<<( std::ostream& os, const ::hla::AttributeIdentifier& identifier )
+    {
+        return os << identifier.ToString();
+    }
+    inline std::ostream& operator<<( std::ostream& os, const hla::ClassIdentifier& identifier )
+    {
+        return os << identifier.ToString();
+    }
+}
+
 #undef max
 
 #endif // __plugins_test_pch_h_

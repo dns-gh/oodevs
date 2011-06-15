@@ -10,7 +10,7 @@
 #include "hla_plugin_pch.h"
 #include "DebugFederateAmbassadorFactory.h"
 #include "DebugFederateAmbassador.h"
-#include <hla/Federate.h>
+#include "Federate_ABC.h"
 
 using namespace plugins::hla;
 
@@ -38,9 +38,9 @@ DebugFederateAmbassadorFactory::~DebugFederateAmbassadorFactory()
 // Name: DebugFederateAmbassadorFactory::Create
 // Created: SLI 2011-05-27
 // -----------------------------------------------------------------------------
-std::auto_ptr< ::hla::Federate > DebugFederateAmbassadorFactory::Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const
+std::auto_ptr< plugins::hla::Federate_ABC > DebugFederateAmbassadorFactory::Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const
 {
-    std::auto_ptr< ::hla::Federate > result = factory_.Create( ambassador, name, lookAhead );
+    std::auto_ptr< plugins::hla::Federate_ABC > result = factory_.Create( ambassador, name, lookAhead );
     result->Register( *ambassador_ );
     return result;
 }

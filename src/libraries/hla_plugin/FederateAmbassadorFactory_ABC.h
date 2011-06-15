@@ -17,13 +17,14 @@
 namespace hla
 {
     class RtiAmbassador_ABC;
-    class Federate;
 }
 
 namespace plugins
 {
 namespace hla
 {
+    class Federate_ABC;
+
 // =============================================================================
 /** @class  FederateAmbassadorFactory_ABC
     @brief  Federate ambassador factory defintion
@@ -41,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< ::hla::Federate > Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const = 0;
+    virtual std::auto_ptr< plugins::hla::Federate_ABC > Create( ::hla::RtiAmbassador_ABC& ambassador, const std::string& name, int lookAhead ) const = 0;
     //@}
 };
 

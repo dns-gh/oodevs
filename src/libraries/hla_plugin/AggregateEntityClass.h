@@ -17,7 +17,6 @@
 namespace hla
 {
     template< typename T > class Class;
-    class Federate;
 }
 
 namespace plugins
@@ -26,6 +25,7 @@ namespace hla
 {
     class AggregateEntity;
     class AgentSubject_ABC;
+    class Federate_ABC;
 
 // =============================================================================
 /** @class  AggregateEntityClass
@@ -38,7 +38,7 @@ class AggregateEntityClass : private AgentListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateEntityClass( ::hla::Federate& federate, AgentSubject_ABC& subject );
+             AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject );
     virtual ~AggregateEntityClass();
     //@}
 

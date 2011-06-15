@@ -12,11 +12,11 @@
 #include "AggregateEntity.h"
 #include "AgentSubject_ABC.h"
 #include "Agent_ABC.h"
+#include "Federate_ABC.h"
 #include "rpr/EntityIdentifier.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
 #include <hla/Deserializer.h>
-#include <hla/Federate.h>
 #include <hla/ObjectRegistration_ABC.h>
 
 using namespace plugins::hla;
@@ -37,7 +37,7 @@ struct AggregateEntityClass::UnitRegistration : public ::hla::ObjectRegistration
 // Name: AggregateEntityClass constructor
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
-AggregateEntityClass::AggregateEntityClass( ::hla::Federate& federate, AgentSubject_ABC& subject )
+AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject_ABC& subject )
     : id_          ( 1 )
     , subject_     ( subject )
     , registration_( new UnitRegistration() )

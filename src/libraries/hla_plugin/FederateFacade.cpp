@@ -10,9 +10,9 @@
 #include "hla_plugin_pch.h"
 #include "FederateFacade.h"
 #include "AggregateEntityClass.h"
-#include "RtiAmbassadorFactory_ABC.h"
+#include "Federate_ABC.h"
 #include "FederateAmbassadorFactory_ABC.h"
-#include <hla/hla_lib.h>
+#include "RtiAmbassadorFactory_ABC.h"
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
 #include <xeumeuleu/xml.hpp>
@@ -21,9 +21,9 @@ using namespace plugins::hla;
 
 namespace
 {
-    std::auto_ptr< hla::Federate > CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador, const FederateAmbassadorFactory_ABC& factory, const std::string& pluginDirectory )
+    std::auto_ptr< Federate_ABC > CreateFederate( xml::xisubstream xis, hla::RtiAmbassador_ABC& ambassador, const FederateAmbassadorFactory_ABC& factory, const std::string& pluginDirectory )
     {
-        std::auto_ptr< hla::Federate > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
+        std::auto_ptr< Federate_ABC > federate = factory.Create( ambassador, xis.attribute< std::string >( "name", "SWORD" ), xis.attribute< int >( "lookahead", -1 ) );
         if( !federate->Connect() )
             throw std::runtime_error( "Could not connect to '" + xis.attribute< std::string >( "host", "localhost" ) + ":" + xis.attribute< std::string >( "port", "8989" ) + "'" );
         const std::string name = xis.attribute< std::string >( "federation", "Federation" );
@@ -48,7 +48,7 @@ namespace
 struct FederateFacade::FederationDestructor : private boost::noncopyable
 {
 public:
-    FederationDestructor( ::hla::Federate& federate, const std::string& federation )
+    FederationDestructor( Federate_ABC& federate, const std::string& federation )
         : federate_  ( federate )
         , federation_( federation )
     {
@@ -67,7 +67,7 @@ public:
         }
     }
 private:
-    ::hla::Federate& federate_;
+    Federate_ABC& federate_;
     const std::string federation_;
 };
 

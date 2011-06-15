@@ -22,7 +22,6 @@ namespace hla
     class TimeFactory_ABC;
     class TimeIntervalFactory_ABC;
     class RtiAmbassador_ABC;
-    class Federate;
 }
 
 namespace plugins
@@ -31,8 +30,9 @@ namespace hla
 {
     class AggregateEntityClass;
     class AgentSubject_ABC;
-    class RtiAmbassadorFactory_ABC;
     class FederateAmbassadorFactory_ABC;
+    class Federate_ABC;
+    class RtiAmbassadorFactory_ABC;
 
 // =============================================================================
 /** @class  FederateFacade
@@ -66,7 +66,7 @@ private:
     std::auto_ptr< ::hla::TimeFactory_ABC > timeFactory_;
     std::auto_ptr< ::hla::TimeIntervalFactory_ABC > intervalFactory_;
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
-    std::auto_ptr< ::hla::Federate > federate_;
+    std::auto_ptr< Federate_ABC > federate_;
     std::auto_ptr< FederationDestructor > destructor_;
     std::auto_ptr< AggregateEntityClass > agentClass_;
     //@}

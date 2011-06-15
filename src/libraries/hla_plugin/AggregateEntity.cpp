@@ -38,9 +38,9 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier&
     , formationChanged_  ( false )
     , dimensionsChanged_ ( false )
     , isOnRoad_          ( false )
-    , spatialChanged_    ( true )
+    , spatialChanged_    ( false )
     , pSpatial_          ( 0 )
-    , compositionChanged_( true )
+    , compositionChanged_( false )
 {
     agent_.Register( *this );
 }
