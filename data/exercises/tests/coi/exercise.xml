@@ -7,7 +7,7 @@
   <profiles file="profiles.xml"/>
   <orbat file="orbat.xml"/>
   <weather file="weather.xml"/>
-  <terrain name="Angers_x9"/>
+  <terrain name="Angers_x9_FR"/>
   <model dataset="ada" physical="france"/>
 </exercise>
 <!-- signature="0577790277" -->
