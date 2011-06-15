@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "AgentFactory.h"
+#include "MissionController_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -29,8 +30,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( AgentFactory )
 // Name: AgentFactory constructor
 // Created: MGD 2009-08-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( MIL_IDManager& idManager, unsigned int gcPause, unsigned int gcMult )
+AgentFactory::AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult )
     : idManager_          ( idManager )
+    , missionController_  ( missionController )
     , algorithmsFactories_( new AlgorithmsFactories() )
     , gcPause_            ( gcPause )
     , gcMult_             ( gcMult )
@@ -63,6 +65,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( strPosition, vPosTmp );
     Initialize( *pPion, vPosTmp );
+    pPion->Register( missionController_ );
     tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
     pPion->ReadOverloading( xis );
     return pPion;
@@ -79,6 +82,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
     {
         type.RegisterRoles( *pPion, gcPause_, gcMult_ );
         Initialize( *pPion, vPosition );
+        pPion->Register( missionController_ );
         tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
         return pPion;
     }

@@ -19,9 +19,8 @@ namespace sword
 }
 
 class MIL_AgentPion;
+class MissionController_ABC;
 class MIL_MissionType_ABC;
-class MIL_CheckPointInArchive;
-class MIL_CheckPointOutArchive;
 
 //=============================================================================
 // Created: NLD 2003-01-10
@@ -31,7 +30,6 @@ class MIL_PionOrderManager : public MIL_OrderManager_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PionOrderManager();
     explicit MIL_PionOrderManager( MIL_AgentPion& pion );
     virtual ~MIL_PionOrderManager();
     //@}
@@ -41,13 +39,6 @@ public:
     virtual void OnReceiveFragOrder( const sword::FragOrder& asn );
     void OnReceiveMission( const sword::UnitOrder& asn );
     void OnReceiveMission( const MIL_MissionType_ABC& type );
-    //@}
-
-    //! @name CheckPoints
-    //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive& file, const unsigned int );
-    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
     //@}
 
     //! @name Relieve
@@ -68,10 +59,8 @@ public:
 private:
     //! @name Memner Data
     //@{
-    MIL_AgentPion* pion_;
+    MIL_AgentPion& pion_;
     //@}
 };
-
-BOOST_CLASS_EXPORT_KEY( MIL_PionOrderManager )
 
 #endif // __MIL_PionOrderManager_h_

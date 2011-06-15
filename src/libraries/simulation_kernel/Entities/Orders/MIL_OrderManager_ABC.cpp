@@ -12,9 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_OrderManager_ABC.h"
 #include "MIL_Mission_ABC.h"
-#include "Checkpoints/SerializationTools.h"
-
-BOOST_CLASS_EXPORT_IMPLEMENT( MIL_OrderManager_ABC )
+#include "MissionController_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderManager_ABC constructor
@@ -22,6 +20,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_OrderManager_ABC )
 // -----------------------------------------------------------------------------
 MIL_OrderManager_ABC::MIL_OrderManager_ABC()
     : bNewMissionStarted_( false )
+    , pController_       ( 0 )
 {
     // NOTHING
 }
@@ -62,6 +61,8 @@ void MIL_OrderManager_ABC::Update()
             }
             catch( std::runtime_error& e )
             {
+                if( pController_ && pMission_.get() )
+                    pController_->Stop( pMission_ );
                 pNextMission_.reset();
                 pMission_.reset();
                 bNewMissionStarted_ = false;
@@ -77,6 +78,8 @@ void MIL_OrderManager_ABC::Update()
 // -----------------------------------------------------------------------------
 void MIL_OrderManager_ABC::ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > pNewMission )
 {
+    if( pController_ )
+        pController_->Start( pMission_ );
     pNextMission_ = pNewMission;
 }
 
@@ -86,6 +89,8 @@ void MIL_OrderManager_ABC::ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > 
 // -----------------------------------------------------------------------------
 void MIL_OrderManager_ABC::CancelMission()
 {
+    if( pController_ )
+        pController_->Stop( pMission_ );
     pNextMission_.reset();
 }
 
@@ -98,7 +103,11 @@ void MIL_OrderManager_ABC::StopAllMissions()
     if( pNextMission_.get() )
         pNextMission_->Stop( pNextMission_ );
     if( pMission_.get() )
+    {
+        if( pController_ )
+            pController_->Stop( pMission_ );
         pMission_->Stop( pMission_ );
+    }
 
     pNextMission_.reset();
     pMission_.reset();
@@ -203,24 +212,10 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_OrderManager_ABC::GetCurrentMission() c
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderManager_ABC::load
-// Created: LGY 2011-05-30
-// ----------------------------------------------------------------------------- 
-void MIL_OrderManager_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
-{
-    MIL_Mission_ABC* pMission = 0;
-    file >> pMission
-         >> bNewMissionStarted_;
-    pNextMission_.reset( pMission );
-}
-
+// Name: MIL_OrderManager_ABC::Register
+// Created: LGY 2011-06-15
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderManager_ABC::save
-// Created: LGY 2011-05-30
-// -----------------------------------------------------------------------------
-void MIL_OrderManager_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+void MIL_OrderManager_ABC::Register( MissionController_ABC& pController )
 {
-    MIL_Mission_ABC* pMission = pMission_.get();
-    file << pMission
-         << bNewMissionStarted_;
+    pController_ = &pController;
 }

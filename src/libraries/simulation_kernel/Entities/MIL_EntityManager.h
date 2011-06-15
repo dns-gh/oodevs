@@ -74,6 +74,7 @@ class MIL_Population;
 class MIL_Inhabitant;
 class MIL_ProfilerMgr;
 class MIL_Time_ABC;
+class MissionController_ABC;
 class InhabitantFactory_ABC;
 class PopulationFactory_ABC;
 class TER_Localisation;
@@ -274,12 +275,12 @@ private:
     // Factories
     std::auto_ptr< PopulationFactory_ABC >     populationFactory_;
     std::auto_ptr< InhabitantFactory_ABC >     inhabitantFactory_;
+    std::auto_ptr< MissionController_ABC >     missionController_;
     std::auto_ptr< AgentFactory_ABC >          agentFactory_;
     std::auto_ptr< AutomateFactory_ABC >       automateFactory_;
     std::auto_ptr< FormationFactory_ABC >      formationFactory_;
     std::auto_ptr< KnowledgeGroupFactory_ABC > knowledgeGroupFactory_;
     std::auto_ptr< ArmyFactory_ABC >           armyFactory_;
-
     unsigned int  gcPause_;
     unsigned int  gcMult_;
     bool          infiniteDotations_;

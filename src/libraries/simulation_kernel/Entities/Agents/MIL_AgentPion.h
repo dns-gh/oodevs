@@ -113,6 +113,7 @@ public:
     void UpdateState();
     void UpdateNetwork();
     void Clean();
+    void Register( MissionController_ABC& pController );
     //@}
 
     //! @name Knowledge

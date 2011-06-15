@@ -119,16 +119,29 @@ void DEC_Gen_Object::Serialize( sword::PlannedWork& msg ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Gen_Object::serialize
-// Created: LGY 2011-06-06
+// Name: DEC_Gen_Object::load
+// Created: LGY 2011-06-14
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void DEC_Gen_Object::serialize( Archive& file, const unsigned int )
+void DEC_Gen_Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & type_
-         & localisation_
-         & pObstacleType_
-         & rDensity_
-         & nMinesActivityTime_;
-         & const_cast< MIL_Automate*& >( pTC2_ );
+    file >> type_
+         >> localisation_
+         >> pObstacleType_
+         >> rDensity_
+         >> nMinesActivityTime_
+         >> const_cast< MIL_Automate*& >( pTC2_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::save
+// Created: LGY 2011-06-14
+// -----------------------------------------------------------------------------
+void DEC_Gen_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << type_
+         << localisation_
+         << pObstacleType_
+         << rDensity_
+         << nMinesActivityTime_
+         << const_cast< MIL_Automate*& >( pTC2_ );
 }

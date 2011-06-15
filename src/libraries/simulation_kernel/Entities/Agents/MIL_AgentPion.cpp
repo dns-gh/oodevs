@@ -127,7 +127,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFac
     , bIsPC_               ( false )
     , pAutomate_           ( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , pOrderManager_       ( 0 )
+    , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( 0 )
     , pExtensions_         ( 0 )
@@ -185,7 +185,6 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_AffinitiesMap* pAffinities;
     MIL_DictionaryExtensions* pExtensions;
-    MIL_PionOrderManager* pOrderManager;
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file >> const_cast< bool& >( bIsPC_ )
          >> pAutomate_
@@ -228,8 +227,6 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     RegisterRole( *new PHY_RolePion_TerrainAnalysis( *this ) );
     pAffinities_.reset( pAffinities );
     pExtensions_.reset( pExtensions );
-    file >> pOrderManager;
-    pOrderManager_.reset( pOrderManager );
 }
 
 // -----------------------------------------------------------------------------
@@ -241,7 +238,6 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     assert( pType_ );
     const MIL_AffinitiesMap* const pAffinities = pAffinities_.get();
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
-    const MIL_PionOrderManager* const pOrderManager = pOrderManager_.get();
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file << bIsPC_
         << pAutomate_
@@ -280,7 +276,6 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     SaveRole< PHY_RoleAction_FolkInfluence >( *this, file );
     SaveRole< PHY_RolePion_Illumination >( *this, file ); // LTO
     SaveRole< PHY_RoleAction_MovingUnderground >( *this, file );
-    file << pOrderManager;
 }
 
 // -----------------------------------------------------------------------------
@@ -1231,4 +1226,13 @@ void MIL_AgentPion::OnReceiveCriticalIntelligence( const sword::UnitMagicAction&
     message().mutable_unit()->set_id( GetID() );
     message().set_critical_intelligence( criticalIntelligence_ );
     message.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::Register
+// Created: LGY 2011-06-14
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::Register( MissionController_ABC& pController )
+{
+    pOrderManager_->Register( pController );
 }

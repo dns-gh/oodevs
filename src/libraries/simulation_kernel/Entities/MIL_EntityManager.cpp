@@ -18,6 +18,7 @@
 #include "MIL_Army.h"
 #include "MIL_Formation.h"
 #include "MIL_Singletons.h"
+#include "MissionController.h"
 #include "PopulationFactory.h"
 #include "InhabitantFactory.h"
 #include "PHY_InfrastructureType.h"
@@ -212,7 +213,8 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , pObjectManager_               ( new MIL_ObjectManager() )
     , populationFactory_            ( new PopulationFactory( gcPause, gcMult ) )
     , inhabitantFactory_            ( new InhabitantFactory() )
-    , agentFactory_                 ( new AgentFactory( *idManager_, gcPause, gcMult ) )
+    , missionController_            ( new MissionController() )
+    , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_, gcPause, gcMult ) )
     , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
     , knowledgeGroupFactory_        ( new KnowledgeGroupFactory() )
@@ -1677,6 +1679,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     InhabitantFactory_ABC * inhabitantFactory;
     KnowledgeGroupFactory_ABC * knowledgeGroupFactory; // LTO
     MIL_ObjectManager* objectManager;
+    MissionController_ABC* missionController;
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          >> knowledgeGroupFactory; // LTO
     knowledgeGroupFactory_.reset( knowledgeGroupFactory );
@@ -1687,6 +1690,7 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
          >> populationFactory
          >> inhabitantFactory
          >> objectManager
+         >> missionController
          >> rKnowledgesTime_
          >> rAutomatesDecisionTime_
          >> rPionsDecisionTime_
@@ -1703,7 +1707,8 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     populationFactory_.reset( populationFactory );
     inhabitantFactory_.reset( inhabitantFactory );
     pObjectManager_.reset( objectManager );
-
+    missionController_.reset( missionController );
+    missionController_->Initialize( *agentFactory );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );
@@ -1724,6 +1729,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
     const InhabitantFactory_ABC * const inhabitantFactory = inhabitantFactory_.get();
     const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = knowledgeGroupFactory_.get();
     const MIL_ObjectManager* const objectManager = pObjectManager_.get();
+    const MissionController_ABC* const missionController = missionController_.get();
 
     file //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
          << knowledgeGroupFactory; // LTO
@@ -1734,6 +1740,7 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
          << populationFactory
          << inhabitantFactory
          << objectManager
+         << missionController
          << rKnowledgesTime_
          << rAutomatesDecisionTime_
          << rPionsDecisionTime_

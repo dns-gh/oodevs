@@ -209,23 +209,24 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
     unsigned current = pCurrentPerceptionLevel_->GetID(),
              previous = pPreviousPerceptionLevel_->GetID(),
              max = pMaxPerceptionLevel_->GetID();
-    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
-    file << pObjectType_->GetName();
-    file << pArmyKnowing_;
-    file << pObjectKnown_;
-    file << nID_;
-    file << name_;
-    file << nAttributesUpdated_;
-    file << pOwnerArmy_;
-    file << localisation_;
-    file << avoidanceLocalisation_;
-    file << current;
-    file << previous;
-    file << max;
-    file << perceptionPerAutomateSet_;
-    file << previousPerceptionPerAutomateSet_;
-    file << nTimeLastUpdate_;
-    file << rRelevance_;
+    std::string name = pObjectType_->GetName();
+    file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
+         << name
+         << pArmyKnowing_
+         << pObjectKnown_
+         << nID_
+         << name_
+         << nAttributesUpdated_
+         << pOwnerArmy_
+         << localisation_
+         << avoidanceLocalisation_
+         << current
+         << previous
+         << max
+         << perceptionPerAutomateSet_
+         << previousPerceptionPerAutomateSet_
+         << nTimeLastUpdate_
+         << rRelevance_;
     // On stocke les types selon leur nom
     std::size_t size = reconByAgentTypes_.size();
     file << size;

@@ -22,6 +22,7 @@ class MIL_Fuseau;
 class MIL_LimaFunction;
 class MIL_MissionType_ABC;
 class MIL_IntelligenceOrdersVisitor_ABC;
+class MissionController_ABC;
 
 //=============================================================================
 // Created: NLD 2003-01-10
@@ -47,6 +48,11 @@ public:
     virtual void StopAllMissions(); // synchronous
     //@}
 
+    //! @name Register
+    //@{
+    void Register( MissionController_ABC& pController );
+    //@}
+
     // @name Accessors
     //@{
     virtual MIL_LimaOrder* FindLima( const MIL_LimaFunction& function ) const;
@@ -63,13 +69,6 @@ public:
     const MIL_MissionType_ABC* GetCurrentMissionType() const;
     //@}
 
-    //! @name Serialization
-    //@{
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive&, const unsigned int );
-    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
-    //@}
-
 protected:
     //! @name Accessors
     //@{
@@ -81,10 +80,9 @@ private:
     //@{
     boost::shared_ptr< MIL_Mission_ABC > pMission_;
     boost::shared_ptr< MIL_Mission_ABC > pNextMission_;
+    MissionController_ABC* pController_;
     bool bNewMissionStarted_;
     //@}
 };
-
-BOOST_CLASS_EXPORT_KEY( MIL_OrderManager_ABC )
 
 #endif // __MIL_OrderManager_ABC_h_

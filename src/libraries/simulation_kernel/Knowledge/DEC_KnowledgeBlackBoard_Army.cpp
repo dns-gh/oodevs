@@ -67,7 +67,7 @@ DEC_KnowledgeBlackBoard_Army::~DEC_KnowledgeBlackBoard_Army()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void DEC_KnowledgeBlackBoard_Army::serialize
+// Name: DEC_KnowledgeBlackBoard_Army::serialize
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 template< typename Archive >

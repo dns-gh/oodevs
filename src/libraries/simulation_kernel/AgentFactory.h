@@ -15,6 +15,7 @@
 
 class MIL_IDManager;
 class AlgorithmsFactories;
+class MissionController_ABC;
 
 // =============================================================================
 /** @class  AgentFactory
@@ -27,7 +28,7 @@ class AgentFactory : public AgentFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFactory( MIL_IDManager& idManager, unsigned int gcPause, unsigned int gcMult );
+             AgentFactory( MIL_IDManager& idManager, MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult );
     virtual ~AgentFactory();
     //@}
 
@@ -68,6 +69,7 @@ private:
     //! @name Member data
     //@{
     MIL_IDManager& idManager_;
+    MissionController_ABC& missionController_;
     std::auto_ptr< AlgorithmsFactories > algorithmsFactories_;
     unsigned int gcPause_;
     unsigned int gcMult_;
@@ -80,20 +82,24 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const AgentFactory* factory, const unsigned int /*version*/ )
 {
     const MIL_IDManager* const idManager = &factory->idManager_;
+    const MissionController_ABC* const missionController = &factory->missionController_;
     archive << idManager
-        << factory->gcPause_
-        << factory->gcMult_;
+            << missionController
+            << factory->gcPause_
+            << factory->gcMult_;
 }
 template< typename Archive >
 void load_construct_data( Archive& archive, AgentFactory* factory, const unsigned int /*version*/ )
 {
     MIL_IDManager* idManager;
+    MissionController_ABC* missionController;
     unsigned int gcPause;
     unsigned int gcMult;
     archive >> idManager
-        >> gcPause
-        >> gcMult;
-    ::new( factory )AgentFactory( *idManager, gcPause, gcMult );
+            >> missionController
+            >> gcPause
+            >> gcMult;
+    ::new( factory )AgentFactory( *idManager, *missionController, gcPause, gcMult );
 }
 
 #endif // __AgentFactory_h_
