@@ -45,7 +45,7 @@ WeatherLayer::~WeatherLayer()
 // -----------------------------------------------------------------------------
 void WeatherLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( !ShouldDrawPass() || !displaying_ )
+    if( !ShouldDrawPass() )
         return;
     gui::WeatherLayer::Paint( viewport );
     glPushAttrib( GL_CURRENT_BIT );
