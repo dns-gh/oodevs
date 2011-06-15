@@ -634,7 +634,7 @@
     -->
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,application.simulation_kernel_test,
-                                 application.integration_decisionnal_test,protocol_test,import_test,positions_plugin_test,
+                                 application.integration_decisionnal_test,protocol_test,checkpoint_test,import_test,positions_plugin_test,
                                  actions_test,launcher_test,reports_test,flood_test,mission_tester_test,orbat_generator_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">

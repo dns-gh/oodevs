@@ -82,3 +82,14 @@ void ResourceNetworkAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
     if( capacity_ )
         capacity_->SendState( asn );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkAttribute::serialize
+// Created: JSR 2011-06-15
+// -----------------------------------------------------------------------------
+template< typename Archive >
+void ResourceNetworkAttribute::serialize( Archive& file, const unsigned int )
+{
+    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )
+         & capacity_;
+}
