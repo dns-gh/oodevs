@@ -16,16 +16,11 @@
 // Name: Architecture constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
-Architecture::Architecture( const urban::TerrainObject_ABC& object, std::auto_ptr< kernel::Architecture_ABC > pArchitecture )
+Architecture::Architecture( const urban::Architecture& architecture, std::auto_ptr< kernel::Architecture_ABC > pArchitecture )
     : pArchitecture_( pArchitecture )
 {
-    const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();;
-    if( pPhysical && pPhysical->GetArchitecture() )
-    {
-        const urban::Architecture& architecture = *pPhysical->GetArchitecture();
-        Initialize( architecture.GetHeight(), architecture.GetFloorNumber(), architecture.GetParkingFloors(), architecture.GetRoofShape(),
-                    architecture.GetMaterial(), architecture.GetOccupation(), architecture.GetTrafficability() );
-    }
+    Initialize( architecture.GetHeight(), architecture.GetFloorNumber(), architecture.GetParkingFloors(), architecture.GetRoofShape(),
+                architecture.GetMaterial(), architecture.GetOccupation(), architecture.GetTrafficability() );
 }
 
 // -----------------------------------------------------------------------------

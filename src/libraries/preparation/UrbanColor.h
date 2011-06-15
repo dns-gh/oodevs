@@ -14,7 +14,7 @@
 
 namespace urban
 {
-    class TerrainObject_ABC;
+    class ColorAttribute;
 }
 
 // =============================================================================
@@ -28,7 +28,7 @@ class UrbanColor : public kernel::UrbanColor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanColor( const urban::TerrainObject_ABC& object );
+    explicit UrbanColor( const urban::ColorAttribute& colorAttribute );
     virtual ~UrbanColor();
     //@}
 

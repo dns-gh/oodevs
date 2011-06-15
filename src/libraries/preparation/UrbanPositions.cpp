@@ -19,9 +19,9 @@
 // Name: UrbanPositions constructor
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const kernel::UrbanColor_ABC& color )
+UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const kernel::UrbanColor_ABC* pColor )
     : object_  ( object )
-    , color_   ( color )
+    , pColor_  ( pColor )
     , selected_( false )
     , height_  ( 0u )
 {
@@ -81,7 +81,8 @@ const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
 {
-    tools.DrawDecoratedPolygon( object_.Get< urban::GeometryAttribute >().Geometry(), color_, object_.GetName(), height_, selected_ );
+    if( pColor_ )
+        tools.DrawDecoratedPolygon( object_.Get< urban::GeometryAttribute >().Geometry(), *pColor_, object_.GetName(), height_, selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,5 +101,4 @@ void UrbanPositions::ToggleSelection()
 float UrbanPositions::ComputeArea() const
 {
     return object_.Get< urban::GeometryAttribute >().Geometry().ComputeArea();
-
 }

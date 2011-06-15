@@ -136,7 +136,9 @@ bool UrbanLayer::ShouldDisplay( const kernel::Entity_ABC& )
 // -----------------------------------------------------------------------------
 bool UrbanLayer::IsInSelection( const kernel::Entity_ABC& entity, const geometry::Point2f& point ) const
 {
-    return entity.Get< kernel::UrbanPositions_ABC >().IsInside( point );
+    if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
+        return positions->IsInside( point );
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -148,10 +150,12 @@ void UrbanLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& v
     if( ShouldDisplay( entity ) ) // && positions.IsIn( viewport ) )
     {
         SelectColor( entity );
-        const kernel::UrbanPositions_ABC& positions = entity.Get< kernel::UrbanPositions_ABC >();
-        const geometry::Point2f position = positions.Barycenter();
-        viewport.SetHotpoint( position );
-        entity.Draw( position, viewport, tools_ );
+        if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
+        {
+            const geometry::Point2f position = positions->Barycenter();
+            viewport.SetHotpoint( position );
+            entity.Draw( position, viewport, tools_ );
+        }
     }
 }
 
@@ -161,5 +165,6 @@ void UrbanLayer::Draw( const kernel::Entity_ABC& entity, kernel::Viewport_ABC& v
 // -----------------------------------------------------------------------------
 void UrbanLayer::ActivateEntity( const kernel::Entity_ABC& entity )
 {
-    view_.CenterOn( entity.Get< kernel::UrbanPositions_ABC >().Barycenter() );
+    if( const kernel::UrbanPositions_ABC* positions = entity.Retrieve< kernel::UrbanPositions_ABC >() )
+        view_.CenterOn( positions->Barycenter() );
 }

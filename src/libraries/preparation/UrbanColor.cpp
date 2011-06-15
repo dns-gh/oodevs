@@ -16,18 +16,14 @@
 // Name: UrbanColor constructor
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-UrbanColor::UrbanColor( const urban::TerrainObject_ABC& object )
+UrbanColor::UrbanColor( const urban::ColorAttribute& colorAttribute )
     : initial_( 200u, 200u, 200u )
     , current_( 200u, 200u, 200u )
     , alpha_  ( 0.7f )
 {
-    const urban::ColorAttribute* pColorAttribute = object.Retrieve< urban::ColorAttribute >();
-    if( pColorAttribute )
-    {
-        initial_ = Color( pColorAttribute->Red(), pColorAttribute->Green(), pColorAttribute->Blue() );
-        alpha_ = pColorAttribute->Alpha();
-        current_ = initial_;
-    }
+    initial_ = Color( colorAttribute.Red(), colorAttribute.Green(), colorAttribute.Blue() );
+    alpha_ = colorAttribute.Alpha();
+    current_ = initial_;
 }
 
 // -----------------------------------------------------------------------------

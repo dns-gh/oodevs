@@ -15,7 +15,7 @@
 
 namespace urban
 {
-    class TerrainObject_ABC;
+    class Architecture;
 }
 
 // =============================================================================
@@ -29,7 +29,7 @@ class Architecture : public kernel::Architecture_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Architecture( const urban::TerrainObject_ABC& object, std::auto_ptr< kernel::Architecture_ABC > pArchitecture );
+             Architecture( const urban::Architecture& architecture, std::auto_ptr< kernel::Architecture_ABC > pArchitecture );
     virtual ~Architecture();
     //@}
 

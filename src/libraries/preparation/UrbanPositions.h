@@ -33,7 +33,7 @@ class UrbanPositions : public kernel::UrbanPositions_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( const urban::TerrainObject_ABC& object, const kernel::UrbanColor_ABC& color );
+             UrbanPositions( const urban::TerrainObject_ABC& object, const kernel::UrbanColor_ABC* pColor );
     virtual ~UrbanPositions();
     //@}
 
@@ -52,7 +52,7 @@ private:
     //! @name Member data
     //@{
     const urban::TerrainObject_ABC& object_;
-    const kernel::UrbanColor_ABC& color_;
+    const kernel::UrbanColor_ABC* pColor_;
     bool selected_;
     unsigned int height_;
     //@}
