@@ -32,6 +32,7 @@ namespace actions
 }
 
 class StaticModel;
+class KnowledgeAddInGroupDialog;
 
 // =============================================================================
 /** @class  KnowledgeGroupMagicOrdersInterface
@@ -62,6 +63,7 @@ private slots:
     //@{
     void OnCreateSubKnowledgeGroup();
     void OnToggleKnowledgeGroupActivation();
+    void OnAddKnowledgeInGroup();
     void OnSetType( int );
     //@}
 
@@ -94,6 +96,7 @@ private:
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedEntity_;
     T_Items items_;
+    KnowledgeAddInGroupDialog* pAddKnowledgeDialog_;
     //@}
 };
 

@@ -238,7 +238,8 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgKnowledgeMagicAction
     CONVERT_ENUM( type, ( MsgsClientToSim::MsgKnowledgeMagicAction::enable, sword::KnowledgeMagicAction::enable )
                         ( MsgsClientToSim::MsgKnowledgeMagicAction::update_party, sword::KnowledgeMagicAction::update_party )
                         ( MsgsClientToSim::MsgKnowledgeMagicAction::update_party_parent, sword::KnowledgeMagicAction::update_party_parent )
-                        ( MsgsClientToSim::MsgKnowledgeMagicAction::update_type, sword::KnowledgeMagicAction::update_type ) );
+                        ( MsgsClientToSim::MsgKnowledgeMagicAction::update_type, sword::KnowledgeMagicAction::update_type )
+                        ( MsgsClientToSim::MsgKnowledgeMagicAction::add_knowledge, sword::KnowledgeMagicAction::add_knowledge ) );
     CONVERT_LIST( parameters, elem, ConvertMissionParameter );
 }
 

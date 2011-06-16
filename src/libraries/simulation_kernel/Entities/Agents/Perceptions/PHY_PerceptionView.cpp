@@ -19,6 +19,7 @@
 #include "DetectionComputer_ABC.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "MIL_Random.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionView constructor
@@ -146,7 +147,9 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
             perceiver_.GetPion().Execute( *detectionComputer );
             agent.Execute( *detectionComputer );
 
-            if( detectionComputer->CanBeSeen() )
+            if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( agent ) )
+                perceiver_.NotifyPerception( agent, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( agent ) );
+            else if( detectionComputer->CanBeSeen() )
                 perceiver_.NotifyPerception( agent, Compute( agent ) );
         }
     }
@@ -219,7 +222,11 @@ void PHY_PerceptionView::Execute( const TER_Object_ABC::T_ObjectVector& perceiva
         for( TER_Object_ABC::CIT_ObjectVector itObject = perceivableObjects.begin(); itObject != perceivableObjects.end(); ++itObject )
         {
             MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **itObject );
-            perceiver_.NotifyPerception( object, Compute( object ) );
+
+            if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( object ) )
+                perceiver_.NotifyPerception( object, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( object ) );
+            else
+                perceiver_.NotifyPerception( object, Compute( object ) );
         }
     }
 }
@@ -266,7 +273,11 @@ void PHY_PerceptionView::Execute( const TER_PopulationFlow_ABC::T_PopulationFlow
 
             T_PointVector shape;
             const PHY_PerceptionLevel& level = Compute( flow, shape );
-            perceiver_.NotifyPerception( flow, level, shape );
+
+            if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( flow.GetPopulation() ) )
+                perceiver_.NotifyPerception( flow, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( flow.GetPopulation()), shape );
+            else
+                perceiver_.NotifyPerception( flow, level, shape );
         }
     }
 }
@@ -308,7 +319,11 @@ void PHY_PerceptionView::Execute( const TER_PopulationConcentration_ABC::T_Popul
         for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector it = perceivableConcentrations.begin(); it != perceivableConcentrations.end(); ++it )
         {
             MIL_PopulationConcentration& concentration = static_cast< MIL_PopulationConcentration& >( **it );
-            perceiver_.NotifyPerception( concentration, Compute( concentration ) );
+
+            if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( concentration.GetPopulation() ) )
+                perceiver_.NotifyPerception( concentration, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( concentration.GetPopulation() ) );
+            else
+                perceiver_.NotifyPerception( concentration, Compute( concentration ) );
         }
 }
 

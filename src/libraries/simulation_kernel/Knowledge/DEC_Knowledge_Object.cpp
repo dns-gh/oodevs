@@ -14,6 +14,7 @@
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_Knowledge_ObjectMagicPerception.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -61,6 +62,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , nTimeLastUpdate_         ( 0 )
     , rRelevance_              ( 1. )
     , bValid_                  ( true )
+    , bPerceptionDistanceHacked_ ( false )
 {
     SendMsgCreation();
 }
@@ -85,6 +87,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowi
     , nTimeLastUpdate_         ( 0 )
     , rRelevance_              ( 1. )
     , bValid_                  ( true )
+    , bPerceptionDistanceHacked_ ( false )
 {
     SendMsgCreation();
 }
@@ -109,6 +112,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , nTimeLastUpdate_         ( 0 )
     , rRelevance_              ( 0. )
     , bValid_                  ( true )
+    , bPerceptionDistanceHacked_ ( false )
 {
     // NOTHING
 }
@@ -137,6 +141,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, co
     , nTimeLastUpdate_                 ( copy.nTimeLastUpdate_ )
     , rRelevance_                      ( copy.rRelevance_ )
     , bValid_                          ( copy.bValid_ )
+    , bPerceptionDistanceHacked_       ( copy.bPerceptionDistanceHacked_ )
 {
     SendMsgCreation();
 }
@@ -881,4 +886,37 @@ const PHY_PerceptionLevel& DEC_Knowledge_Object::GetCurrentPerceptionLevel( cons
     if( itPerceptionLevel != perceptionLevelPerAgentMap_.end() )
         return *( itPerceptionLevel->second );
     return PHY_PerceptionLevel::notSeen_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::GetCurrentPerceptionLevel
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& DEC_Knowledge_Object::GetCurrentPerceptionLevel() const
+{
+    return *pCurrentPerceptionLevel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::HackPerceptionLevel
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel )
+{
+    if( *pPerceptionLevel > *pCurrentPerceptionLevel_ )
+    {
+        rRelevance_ = 1.0;
+        bPerceptionDistanceHacked_ = true;
+        pCurrentPerceptionLevel_ = pPerceptionLevel;
+        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsPerceptionDistanceHacked
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::IsPerceptionDistanceHacked() const
+{
+    return bPerceptionDistanceHacked_;
 }

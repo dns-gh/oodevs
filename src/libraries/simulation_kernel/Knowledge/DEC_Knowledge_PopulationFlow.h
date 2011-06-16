@@ -53,6 +53,7 @@ public:
     void Update( const DEC_Knowledge_PopulationCollision& collision  );
     void UpdateRelevance();
     bool Clean();
+    void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );
     //@}
 
     //! @name Network operations

@@ -1104,10 +1104,6 @@
         <translation>Pertinence:</translation>
     </message>
     <message>
-        <source>Known objects</source>
-        <translation>Objets connus</translation>
-    </message>
-    <message>
         <source>Unknown object</source>
         <translation>Objet inconnu</translation>
     </message>

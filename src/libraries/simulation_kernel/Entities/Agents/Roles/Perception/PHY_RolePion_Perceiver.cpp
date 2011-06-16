@@ -27,6 +27,7 @@
 #include "Entities/Agents/Perceptions/PHY_PerceptionRadar.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionAlat.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionFlyingShell.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -48,13 +49,19 @@
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputerFactory_ABC.h"
+#include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
+#include "simulation_kernel/Entities/Populations/MIL_PopulationConcentration.h"
+#include "simulation_kernel/Entities/Populations/MIL_PopulationFlow.h"
 #include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
+#include "simulation_terrain/TER_AgentVisitor_ABC.h"
 #include "simulation_terrain/TER_ObjectVisitor_ABC.h"
+#include "simulation_terrain/TER_PopulationConcentrationVisitor_ABC.h"
+#include "simulation_terrain/TER_PopulationFlowVisitor_ABC.h"
 #include <urban/model.h>
 #include <urban/TerrainObject_ABC.h>
 #include <boost/serialization/map.hpp>
@@ -898,13 +905,14 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
 
         TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableAgents );
-
+        AppendHackedAgents( perceivableAgents );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableAgents, *pion_.GetAlgorithms().detectionComputerFactory_ );
 
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( *perceiverPosition_, GetMaxObjectPerceptionDistance(), perceivableObjects );
         AppendUniversalObjects( perceivableObjects );
+        AppendHackedObjects( perceivableObjects );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableObjects );
 
@@ -918,11 +926,13 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
 
         TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations;
         TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableConcentrations );
+        AppendHackedPopulationConcentrations( perceivableConcentrations );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableConcentrations );
 
         TER_PopulationFlow_ABC::T_PopulationFlowVector perceivableFlows;
         TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableFlows );
+        AppendHackedPopulationFlows( perceivableFlows );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableFlows );
 
@@ -1448,7 +1458,7 @@ void PHY_RolePion_Perceiver::NotifyIsUnLoadedInVab()
 
 namespace
 {
-
+// -----------------------------------------------------------------------------
 class UniversalObjectsVisitor : public TER_ObjectVisitor_ABC
 {
 public:
@@ -1469,8 +1479,108 @@ public:
 private:
     TER_Object_ABC::T_ObjectVector& perceivableObjects_;
 };
-
+// -----------------------------------------------------------------------------
+class HackedAgentVisitor : public TER_AgentVisitor_ABC
+{
+public:
+    HackedAgentVisitor( TER_Agent_ABC::T_AgentPtrVector& perceivableAgents, const MIL_KnowledgeGroup& knowledgeGroup )
+        : perceivableAgents_( perceivableAgents )
+        , knowledgeGroup_( knowledgeGroup )
+    {
+        // NOTHING
+    }
+    virtual ~HackedAgentVisitor()
+    {
+        // NOTHING
+    }
+    virtual void Visit( TER_Agent_ABC& agent )
+    {
+        MIL_Agent_ABC& agentKnown = static_cast< PHY_RoleInterface_Location& >( agent ).GetAgent();
+        if( knowledgeGroup_.IsPerceptionDistanceHacked( agentKnown ) && std::find( perceivableAgents_.begin(), perceivableAgents_.end(), &agent ) == perceivableAgents_.end() )
+            perceivableAgents_.push_back( &agent );
+    }
+private:
+    const MIL_KnowledgeGroup& knowledgeGroup_;
+    TER_Agent_ABC::T_AgentPtrVector& perceivableAgents_;
+};
+// -----------------------------------------------------------------------------
+class HackedObjectVisitor : public TER_ObjectVisitor_ABC
+{
+public:
+    HackedObjectVisitor( TER_Object_ABC::T_ObjectVector& perceivableObjects, const MIL_KnowledgeGroup& knowledgeGroup )
+        : perceivableObjects_( perceivableObjects )
+        , knowledgeGroup_( knowledgeGroup )
+    {
+        // NOTHING
+    }
+    virtual ~HackedObjectVisitor()
+    {
+        // NOTHING
+    }
+    virtual void Visit( TER_Object_ABC& object )
+    {
+        MIL_Object_ABC* pObjectKnown = dynamic_cast< MIL_Object_ABC* >( &object );
+        if ( pObjectKnown )
+            if( knowledgeGroup_.IsPerceptionDistanceHacked( *pObjectKnown ) && std::find( perceivableObjects_.begin(), perceivableObjects_.end(), &object ) == perceivableObjects_.end() )
+                perceivableObjects_.push_back( pObjectKnown );
+    }
+private:
+    const MIL_KnowledgeGroup& knowledgeGroup_;
+    TER_Object_ABC::T_ObjectVector& perceivableObjects_;
+};
+// -----------------------------------------------------------------------------
+class HackedPopulationConcentrationVisitor : public TER_PopulationConcentrationVisitor_ABC
+{
+public:
+    HackedPopulationConcentrationVisitor( TER_PopulationConcentration_ABC::T_PopulationConcentrationVector& perceivablePopulationConcentrations, const MIL_KnowledgeGroup& knowledgeGroup )
+        : perceivablePopulationConcentrations_( perceivablePopulationConcentrations )
+        , knowledgeGroup_( knowledgeGroup )
+    {
+        // NOTHING
+    }
+    virtual ~HackedPopulationConcentrationVisitor()
+    {
+        // NOTHING
+    }
+    virtual void Visit( TER_PopulationConcentration_ABC& populationConcentration )
+    {
+        MIL_PopulationConcentration* pConcentrationKnown = dynamic_cast< MIL_PopulationConcentration* >( &populationConcentration );
+        if ( pConcentrationKnown )
+            if( knowledgeGroup_.IsPerceptionDistanceHacked( pConcentrationKnown->GetPopulation() ) && std::find( perceivablePopulationConcentrations_.begin(), perceivablePopulationConcentrations_.end(), pConcentrationKnown ) == perceivablePopulationConcentrations_.end() )
+                perceivablePopulationConcentrations_.push_back( pConcentrationKnown);
+    }
+private:
+    const MIL_KnowledgeGroup& knowledgeGroup_;
+    TER_PopulationConcentration_ABC::T_PopulationConcentrationVector& perceivablePopulationConcentrations_;
+};
+// -----------------------------------------------------------------------------
+class HackedPopulationFlowVisitor : public TER_PopulationFlowVisitor_ABC
+{
+public:
+    HackedPopulationFlowVisitor( TER_PopulationFlow_ABC::T_PopulationFlowVector& perceivablePopulationFlows, const MIL_KnowledgeGroup& knowledgeGroup )
+        : perceivablePopulationFlows_( perceivablePopulationFlows )
+        , knowledgeGroup_( knowledgeGroup )
+    {
+        // NOTHING
+    }
+    virtual ~HackedPopulationFlowVisitor()
+    {
+        // NOTHING
+    }
+    virtual void Visit( TER_PopulationFlow_ABC& populationFlow )
+    {
+        MIL_PopulationFlow* pFlowKnown = dynamic_cast< MIL_PopulationFlow* >( &populationFlow );
+        if ( pFlowKnown )
+            if( knowledgeGroup_.IsPerceptionDistanceHacked( pFlowKnown->GetPopulation() ) && std::find( perceivablePopulationFlows_.begin(), perceivablePopulationFlows_.end(), pFlowKnown ) == perceivablePopulationFlows_.end() )
+                perceivablePopulationFlows_.push_back( pFlowKnown );
+    }
+private:
+    const MIL_KnowledgeGroup& knowledgeGroup_;
+    TER_PopulationFlow_ABC::T_PopulationFlowVector& perceivablePopulationFlows_;
+};
 }
+// -----------------------------------------------------------------------------
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::AppendUniversalObjects
@@ -1480,4 +1590,44 @@ void PHY_RolePion_Perceiver::AppendUniversalObjects( TER_Object_ABC::T_ObjectVec
 {
     UniversalObjectsVisitor visitor( perceivableObjects );
     TER_World::GetWorld().GetObjectManager().Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::AppendHackedAgents
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::AppendHackedAgents( TER_Agent_ABC::T_AgentPtrVector& perceivableAgents ) const
+{
+    HackedAgentVisitor visitor( perceivableAgents, GetKnowledgeGroup() );
+    TER_World::GetWorld().GetAgentManager().Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::AppendHackedObject
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::AppendHackedObjects( TER_Object_ABC::T_ObjectVector& perceivableObjects ) const
+{
+    HackedObjectVisitor visitor( perceivableObjects, GetKnowledgeGroup() );
+    TER_World::GetWorld().GetObjectManager().Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::AppendHackedPopulationConcentration
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::AppendHackedPopulationConcentrations( TER_PopulationConcentration_ABC::T_PopulationConcentrationVector& perceivablePopulationDensity ) const
+{
+    HackedPopulationConcentrationVisitor visitor( perceivablePopulationDensity, GetKnowledgeGroup() );
+    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::AppendHackedPopulationFlow
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Perceiver::AppendHackedPopulationFlows( TER_PopulationFlow_ABC::T_PopulationFlowVector& perceivablePopulationFlow ) const
+{
+    HackedPopulationFlowVisitor visitor( perceivablePopulationFlow, GetKnowledgeGroup() );
+    TER_World::GetWorld().GetPopulationManager().GetFlowManager().Accept( visitor );
 }

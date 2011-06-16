@@ -116,6 +116,7 @@ public:
     virtual MIL_Inhabitant*     FindInhabitant    ( unsigned int nID ) const;
     virtual MIL_Formation*      FindFormation     ( unsigned int nID ) const;
     virtual MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const; // LTO
+    virtual MIL_KnowledgeGroup* FindKnowledgeGroupFromParents( unsigned int nID ); // LTO
     virtual MIL_AgentPion*      FindAgentPion     ( unsigned int nID ) const;
     virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;

@@ -10,6 +10,7 @@
 #include "simulation_terrain_pch.h"
 #include "TER_PopulationFlowManager.h"
 #include "TER_PopulationFlow_ABC.h"
+#include "TER_PopulationFlowVisitor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_PopulationFlowManager constructor
@@ -98,5 +99,20 @@ void TER_PopulationFlowManager::GetListWithinLocalisation( const TER_Localisatio
         TER_PopulationFlow_ABC* pFlow = view.NextElement();
         if( pFlow && pFlow->IsIntersecting( localisation ) )
             flows.push_back( pFlow );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationFlowManager::Accept
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+void TER_PopulationFlowManager::Accept( TER_PopulationFlowVisitor_ABC& visitor ) const
+{
+    T_PopulationFlows::View view = flows_.CreateView();
+    while( view.HasMoreElements() )
+    {
+        TER_PopulationFlow_ABC* pObject = view.NextElement();
+        if( pObject )
+            visitor.Visit( *pObject );
     }
 }

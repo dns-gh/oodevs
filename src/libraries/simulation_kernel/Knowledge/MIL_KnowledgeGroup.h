@@ -32,8 +32,10 @@ class KnowledgeGroupFactory_ABC;
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
 class MIL_Automate;
+class MIL_Object;
 class MIL_Object_ABC;
 class MIL_Population;
+class PHY_PerceptionLevel;
 
 // LTO begin
 class KnowledgeGroupFactory_ABC;
@@ -104,6 +106,12 @@ public:
     void CleanKnowledges ();
     bool IsPerceived     ( const DEC_Knowledge_Object& knowledge ) const;
     bool IsPerceived     ( const DEC_Knowledge_Agent&  knowledge ) const;
+    bool IsPerceptionDistanceHacked( MIL_Agent_ABC& agentKnown ) const;
+    bool IsPerceptionDistanceHacked( MIL_Object_ABC& objectKnown ) const;
+    bool IsPerceptionDistanceHacked( MIL_Population& populationKnown ) const;
+    const PHY_PerceptionLevel& GetPerceptionLevel( MIL_Agent_ABC& agentKnown ) const;
+    const PHY_PerceptionLevel& GetPerceptionLevel( MIL_Object_ABC& ObjectKnown ) const;
+    const PHY_PerceptionLevel& GetPerceptionLevel( MIL_Population& populationKnown ) const;
 
     bool operator==( const MIL_KnowledgeGroup& rhs ) const;
     bool operator!=( const MIL_KnowledgeGroup& rhs ) const;
@@ -168,6 +176,7 @@ private:
     bool OnReceiveKnowledgeGroupEnable        ( const sword::MissionParameters& message );
     bool OnReceiveKnowledgeGroupChangeSuperior( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent );
     bool OnReceiveKnowledgeGroupSetType       ( const sword::MissionParameters& message );
+    bool OnReceiveKnowledgeGroupAddKnowledge  ( const sword::MissionParameters& message );
 
     void CreateKnowledgeFromAgentPerception( const DEC_Knowledge_Agent& agent );
     void CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population );
@@ -180,6 +189,10 @@ private:
     DEC_Knowledge_Agent& GetAgentKnowledgeToUpdate( MIL_Agent_ABC& agentKnown );
     void UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
     void UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
+    void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Agent_ABC& agent, unsigned int perception );
+    void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object_ABC& agent, unsigned int perception );
+    void HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception );
+    boost::shared_ptr< DEC_Knowledge_Object > GetObjectKnowledgeToUpdate( MIL_Object_ABC& objectKnown );
     //@}
 
 private:

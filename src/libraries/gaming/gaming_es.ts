@@ -1104,10 +1104,6 @@
         <translation>Relevancia:</translation>
     </message>
     <message>
-        <source>Known objects</source>
-        <translation>Objetos conocidos</translation>
-    </message>
-    <message>
         <source>Unknown object</source>
         <translation>Objetos desconocidos</translation>
     </message>

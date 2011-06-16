@@ -77,6 +77,7 @@ public:
     void Invalidate();
     bool IsValid() const;
     void CopyFrom( const DEC_Knowledge_Agent& agent );
+    void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );
     //@}
 
     //! @name Relevance management
@@ -120,6 +121,7 @@ public:
     E_Tristate IsAFriend( const MIL_Army_ABC& army ) const;
     bool IsInUrbanBlock( const MIL_Object_ABC& urban ) const;
     const std::string& GetCriticalIntelligence() const;
+    bool IsPerceptionDistanceHacked() const;
     //@}
 
     //! @name Perception
@@ -208,6 +210,7 @@ private:
     bool bCriticalIntelligenceUpdated_;
     double rLastRelevanceSent_;
     static MIL_IDManager idManager_;
+    bool bPerceptionDistanceHacked_;
     //@}
 };
 

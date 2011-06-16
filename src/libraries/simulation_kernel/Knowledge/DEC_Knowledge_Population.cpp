@@ -46,6 +46,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population( const MIL_KnowledgeGroup& kn
     , bCriticalIntelligenceUpdated_( false )
     , rDominationState_            ( 0. )
     , criticalIntelligence_        ( "" )
+    , pHackedPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
 {
     SendMsgCreation();
 }
@@ -65,6 +66,7 @@ DEC_Knowledge_Population::DEC_Knowledge_Population()
     , bCriticalIntelligenceUpdated_( false )
     , rDominationState_            ( 0. )
     , criticalIntelligence_        ( "" )
+    , pHackedPerceptionLevel_      ( &PHY_PerceptionLevel::notSeen_ )
 {
     // NOTHING
 }
@@ -527,4 +529,39 @@ void DEC_Knowledge_Population::CopyFrom( const DEC_Knowledge_Population& knowled
     criticalIntelligence_ = knowledge.criticalIntelligence_;
     bDecStateUpdated_ = true;
     bCriticalIntelligenceUpdated_ = true;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::HackPerceptionLevel
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel )
+{
+    if( *pPerceptionLevel > *pHackedPerceptionLevel_ )
+    {
+        pHackedPerceptionLevel_ = pPerceptionLevel;
+        for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
+            it->second->HackPerceptionLevel( pPerceptionLevel );
+        for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+            it->second->HackPerceptionLevel( pPerceptionLevel );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::IsPerceptionDistanceHacked
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Population::IsPerceptionDistanceHacked() const
+{
+    return ( pHackedPerceptionLevel_!= &PHY_PerceptionLevel::notSeen_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::GetHackedPerceptionLevel
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel* DEC_Knowledge_Population::GetHackedPerceptionLevel() const
+{
+    return pHackedPerceptionLevel_;
 }

@@ -12,6 +12,7 @@
 #include "gaming_app_pch.h"
 #include "KnowledgeGroupMagicOrdersInterface.h"
 #include "moc_KnowledgeGroupMagicOrdersInterface.cpp"
+#include "KnowledgeAddInGroupDialog.h"
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "actions/Bool.h"
@@ -29,6 +30,7 @@
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
 
+
 using namespace actions;
 using namespace kernel;
 
@@ -45,8 +47,12 @@ KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget*
     , profile_( profile )
     , selectedEntity_( controllers )
     , knowledgeGroupTypes_( types )
+    , pAddKnowledgeDialog_ ( 0 )
 {
     controllers_.Register( *this );
+
+    pAddKnowledgeDialog_ = new KnowledgeAddInGroupDialog( parent , profile, controllers, simulation, actionsModel, staticModel );
+    pAddKnowledgeDialog_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +83,8 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
         AddMagic( tr( "Activate" ), SLOT( OnToggleKnowledgeGroupActivation() ), magicMenu );
     //AddMagic( tr( "Create child KnowledgeGroup" ), SLOT( OnCreateSubKnowledgeGroup() ), magicMenu );  // $$$$ _RC_ SBO 2010-03-05: Not implemented
 
+    AddMagic( tr( "Add knowledge" ), SLOT( OnAddKnowledgeInGroup() ), magicMenu  );
+
     QPopupMenu* typeMenu = menu.SubMenu( "Type", tr( "Change Type" ) );
     tools::Iterator< const kernel::KnowledgeGroupType& > it = knowledgeGroupTypes_.CreateIterator();
     for( int id = 0; it.HasMoreElements(); ++id )
@@ -104,6 +112,19 @@ void KnowledgeGroupMagicOrdersInterface::OnToggleKnowledgeGroupActivation()
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupMagicOrdersInterface::OnAddKnowledgeInGroup
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeGroupMagicOrdersInterface::OnAddKnowledgeInGroup()
+{
+    if( selectedEntity_ )
+    {
+        if ( pAddKnowledgeDialog_ )
+            pAddKnowledgeDialog_->Show( selectedEntity_ );
     }
 }
 

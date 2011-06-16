@@ -456,3 +456,13 @@ void DEC_Knowledge_PopulationFlow::SendStateToNewClient() const
     SendMsgCreation();
     SendFullState();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentration::HackPerceptionLevel
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationFlow::HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel )
+{
+    if( *pPerceptionLevel > *pCurrentPerceptionLevel_ )
+        pCurrentPerceptionLevel_ = pPerceptionLevel;
+}

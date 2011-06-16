@@ -21,6 +21,7 @@
 #include "TER_Agent_ABC.h"
 #include "TER_Localisation.h"
 #include "TER_Polygon.h"
+#include "TER_AgentVisitor_ABC.h"
 #include "MT_Tools/MT_Ellipse.h"
 
 // -----------------------------------------------------------------------------
@@ -191,4 +192,19 @@ TER_Agent_ABC::T_Hint TER_AgentManager::UpdatePosition( TER_Agent_ABC& agent, co
 bool TER_AgentManager::Remove( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& hint )
 {
     return agents_.Erase( &agent, hint );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_AgentManager::Accept
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+void TER_AgentManager::Accept( TER_AgentVisitor_ABC& visitor ) const
+{
+    T_Agents::View view = agents_.CreateView();
+    while( view.HasMoreElements() )
+    {
+        TER_Agent_ABC* pAgent = view.NextElement();
+        if( pAgent )
+            visitor.Visit( *pAgent );
+    }
 }

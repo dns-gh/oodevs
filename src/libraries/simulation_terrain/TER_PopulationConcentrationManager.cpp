@@ -11,6 +11,7 @@
 
 #include "TER_PopulationConcentrationManager.h"
 #include "TER_PopulationConcentration_ABC.h"
+#include "TER_PopulationConcentrationVisitor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: TER_PopulationConcentrationManager constructor
@@ -100,4 +101,19 @@ TER_PopulationConcentration_ABC::T_Hint TER_PopulationConcentrationManager::Upda
 bool TER_PopulationConcentrationManager::Remove( TER_PopulationConcentration_ABC& concentration, const TER_PopulationConcentration_ABC::T_Hint& hint )
 {
     return concentrations_.Erase( &concentration, hint );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_PopulationConcentrationManager::Accept
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+void TER_PopulationConcentrationManager::Accept( TER_PopulationConcentrationVisitor_ABC& visitor ) const
+{
+    T_PopulationConcentrations::View view = concentrations_.CreateView();
+    while( view.HasMoreElements() )
+    {
+        TER_PopulationConcentration_ABC* pObject = view.NextElement();
+        if( pObject )
+            visitor.Visit( *pObject );
+    }
 }

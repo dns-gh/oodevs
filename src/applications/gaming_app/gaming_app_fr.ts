@@ -143,7 +143,7 @@
     <name>AgentKnowledge</name>
     <message>
         <source>Unit knowledge</source>
-        <translation>Connaissance d'unité</translation>
+        <translation>Connaissance d&apos;unité</translation>
     </message>
     <message>
         <source>Known units</source>
@@ -152,74 +152,6 @@
     <message>
         <source>Details</source>
         <translation>Détails</translation>
-    </message>
-    <message>
-        <source>Identifier:</source>
-        <translation>Identifiant:</translation>
-    </message>
-    <message>
-        <source>Associated agent:</source>
-        <translation>Agent associé:</translation>
-    </message>
-    <message>
-        <source>Location:</source>
-        <translation>Position:</translation>
-    </message>
-    <message>
-        <source>Heading:</source>
-        <translation>Direction:</translation>
-    </message>
-    <message>
-        <source>Speed:</source>
-        <translation>Vitesse:</translation>
-    </message>
-    <message>
-        <source>Operational state:</source>
-        <translation>Etat opérationnel:</translation>
-    </message>
-    <message>
-        <source>Perception level:</source>
-        <translation>Niveau de perception:</translation>
-    </message>
-    <message>
-        <source>Max perception level:</source>
-        <translation>Niveau de perception max:</translation>
-    </message>
-    <message>
-        <source>Side:</source>
-        <translation>Camp:</translation>
-    </message>
-    <message>
-        <source>Level:</source>
-        <translation>Niveau:</translation>
-    </message>
-    <message>
-        <source>Nature:</source>
-        <translation>Nature:</translation>
-    </message>
-    <message>
-        <source>Surrender:</source>
-        <translation>Rendu:</translation>
-    </message>
-    <message>
-        <source>Prisoner:</source>
-        <translation>Prisonnier:</translation>
-    </message>
-    <message>
-        <source>Refugees picked up:</source>
-        <translation>Réfugiés pris en compte:</translation>
-    </message>
-    <message>
-        <source>Command post:</source>
-        <translation>Quartier général:</translation>
-    </message>
-    <message>
-        <source>Relevance:</source>
-        <translation>Pertinence:</translation>
-    </message>
-    <message>
-        <source>Critical intelligence:</source>
-        <translation>Renseignement critique:</translation>
     </message>
     <message>
         <source>Unit</source>
@@ -1270,6 +1202,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Activate</source>
         <translation>Activer</translation>
+    </message>
+    <message>
+        <source>Add knowledge</source>
+        <translation>Ajouter connaissance</translation>
     </message>
     <message>
         <source>Create Knowledge Group</source>

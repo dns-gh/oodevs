@@ -380,3 +380,17 @@ void DEC_Knowledge_PopulationConcentration::ChangeRelevance( double rNewRelevanc
         bRelevanceUpdated_ = true;
     rRelevance_ = rNewRelevance;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentration::HackPerceptionLevel
+// Created: MMC 2011-06-14
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_PopulationConcentration::HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel )
+{
+    if( *pPerceptionLevel > *pCurrentPerceptionLevel_ )
+    {
+        rRelevance_ = 1.0;
+        pCurrentPerceptionLevel_ = pPerceptionLevel;
+        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    }
+}

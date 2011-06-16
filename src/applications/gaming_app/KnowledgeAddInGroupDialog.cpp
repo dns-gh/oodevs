@@ -1,0 +1,222 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
+#include "gaming_app_pch.h"
+#include "KnowledgeAddInGroupDialog.h"
+#include "moc_KnowledgeAddInGroupDialog.cpp"
+#include "actions/ActionTasker.h"
+#include "actions/ActionTiming.h"
+#include "actions/Agent.h"
+#include "actions/Identifier.h"
+#include "actions/KnowledgeGroupMagicAction.h"
+#include "actions/Quantity.h"
+#include "gaming/Profile.h"
+#include "gaming/Tools.h"
+#include "gaming/StaticModel.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Types.h"
+
+using namespace actions;
+using namespace kernel;
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog constructor
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+KnowledgeAddInGroupDialog::KnowledgeAddInGroupDialog( QWidget* pParent, const kernel::Profile_ABC& profile, kernel::Controllers& controllers, const kernel::Time_ABC& simulation, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel )
+    : QDialog( pParent, 0, 0, WStyle_Customize | WStyle_NormalBorder | WStyle_Title | WStyle_SysMenu )
+    , controllers_( controllers )
+    , profile_( profile )
+    , simulation_( simulation )
+    , actionsModel_( actionsModel )
+    , static_( staticModel )
+    , selectedKnowledgeGroup_ ( controllers )
+    , pTempTarget_ ( 0 )
+    , pSelectedTarget_( 0 )
+    , pTargetName_( 0 )
+{
+    setCaption( tools::translate( "KnowledgeAddInGroupDialog", "Add to knowledge group" ) );
+
+    QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
+    grid->setMargin( 5 );
+    grid->setRowStretch( 0, 10 );
+    grid->setColStretch( 0, 3 );
+
+    {
+        pTargetNameTitle_ = new QLabel( this );
+        pTargetNameTitle_->setText(  tr( "Target: " ) );
+        grid->addWidget( pTargetNameTitle_, 0, 0 );
+
+        pTargetName_ = new QLabel( this );
+        pTargetName_->setText( "---" );
+        grid->addWidget( pTargetName_, 0, 1 );
+    }
+    {
+        grid->addWidget( new QLabel( tr( "Perception: " ), this ), 1, 0 );
+        pPerceptionCombo_ = new QComboBox( this );
+        pPerceptionCombo_->insertItem( tools::ToString( kernel::eDetection ) );
+        pPerceptionCombo_->insertItem( tools::ToString( kernel::eRecognition ) );
+        pPerceptionCombo_->insertItem( tools::ToString( kernel::eIdentification ) );
+        grid->addWidget( pPerceptionCombo_, 1, 1 );
+    }
+    {
+        QButton* ok     = new QPushButton( tools::translate( "KnowledgeAddInGroupDialog", "Ok" ), this );
+        QButton* cancel = new QPushButton( tools::translate( "KnowledgeAddInGroupDialog", "Cancel" ), this );
+        grid->addWidget( ok, 2, 1 );
+        grid->addWidget( cancel, 2, 2 );
+        connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
+        connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
+    }
+
+    controllers_.Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog destructor
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+KnowledgeAddInGroupDialog::~KnowledgeAddInGroupDialog()
+{
+    controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog::Show
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeAddInGroupDialog::Show( kernel::SafePointer< kernel::KnowledgeGroup_ABC > knowledgeGroup )
+{
+    show();
+    selectedKnowledgeGroup_ = knowledgeGroup;
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog::OnAccept
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeAddInGroupDialog::OnAccept()
+{
+    if ( !pSelectedTarget_ )
+    {   
+        pTargetNameTitle_->setText( "<font color=\"#FF0000\">" + tr( "Target: " ) + "</font>" );
+        return;
+    }
+    
+    kernel::E_PerceptionResult selectedPerception = static_cast< kernel::E_PerceptionResult > ( pPerceptionCombo_->currentItem() + 1 );
+  
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_add_knowledge" );
+    KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( *selectedKnowledgeGroup_, actionType, controllers_.controller_, true );
+    action->Rename( tools::translate( "gaming_app::Action", "Knowledge Group Add knowledge" ) );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+    action->Attach( *new ActionTasker( selectedKnowledgeGroup_, false ) );
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), pSelectedTarget_->GetId() ) );
+    action->AddParameter( *new parameters::Quantity( it.NextElement(), selectedPerception ) );
+    action->RegisterAndPublish( actionsModel_ );
+
+    Close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog::OnReject
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeAddInGroupDialog::OnReject()
+{
+    Close();
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog::Close
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeAddInGroupDialog::Close()
+{
+    pTempTarget_ = 0;
+    pSelectedTarget_ = 0;
+
+    if ( pPerceptionCombo_ )
+        pPerceptionCombo_->setCurrentItem( 0 );
+    if ( pTargetNameTitle_ )
+        pTargetNameTitle_->setText(  tr( "Target: " ) );
+    if ( pTargetName_ )
+        pTargetName_->setText( "---" );
+
+    hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog::NotifyContextMenu
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    InsertInMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog::NotifyContextMenu
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+{
+    InsertInMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog::NotifyContextMenu
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeAddInGroupDialog::NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu )
+{
+    InsertInMenu( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog::InsertInMenu
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeAddInGroupDialog::InsertInMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+{
+    if ( !this->isHidden() )
+    {
+        pTempTarget_ = &entity;
+        menu.InsertItem( "Command", tr( "Add to knowledge group" ), this, SLOT( SetTarget() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog::SetTarget
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeAddInGroupDialog::SetTarget()
+{
+    if ( pTempTarget_ )
+    {
+        pSelectedTarget_ = pTempTarget_;
+        pTargetName_->setText( QString( pSelectedTarget_->GetName() ) );
+        if ( pTargetNameTitle_ )
+            pTargetNameTitle_->setText( tr( "Target: " ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeAddInGroupDialog::closeEvent
+// Created: MMC 2011-06-06
+// -----------------------------------------------------------------------------
+void KnowledgeAddInGroupDialog::closeEvent( QCloseEvent* /*e*/ )
+{
+    Close();
+}

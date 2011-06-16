@@ -30,7 +30,10 @@ class PHY_PerceptionRecoUrbanBlock;
 class PHY_PerceptionRadar;
 class PHY_PerceptionAlat;
 class PHY_PerceptionFlyingShell;
+class TER_Agent_ABC;
 class TER_Object_ABC;
+class TER_PopulationConcentration_ABC;
+class TER_PopulationFlow_ABC;
 
 namespace detection
 {
@@ -217,6 +220,10 @@ private:
     double GetMaxObjectPerceptionDistance() const;
     void EnsurePerceptionRecoLocalisation();
     void AppendUniversalObjects( std::vector< TER_Object_ABC* >& objects ) const;
+    void AppendHackedAgents( std::vector< TER_Agent_ABC* >& perceivableAgents ) const;
+    void AppendHackedObjects( std::vector< TER_Object_ABC* >& perceivableAgents ) const;
+    void AppendHackedPopulationConcentrations( std::vector< TER_PopulationConcentration_ABC* >& perceivableAgents ) const;
+    void AppendHackedPopulationFlows( std::vector< TER_PopulationFlow_ABC* >& perceivableAgents ) const;
     //@}
 
 private:

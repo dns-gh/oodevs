@@ -1034,6 +1034,7 @@ void MIL_EntityManager::OnReceiveKnowledgeMagicAction( const KnowledgeMagicActio
         case KnowledgeMagicAction::update_party :
         case KnowledgeMagicAction::update_party_parent :
         case KnowledgeMagicAction::update_type :
+        case KnowledgeMagicAction::add_knowledge :
             ProcessKnowledgeGroupUpdate( message, nCtx );
             break;
         default:
@@ -1464,10 +1465,12 @@ void MIL_EntityManager::ProcessKnowledgeGroupUpdate( const KnowledgeMagicAction&
     ack().set_error_code( KnowledgeGroupAck::no_error );
     try
     {
-        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.knowledge_group().id() );
-        if( !pReceiver || pReceiver->IsJammed() )
-            throw NET_AsnException< KnowledgeGroupAck::ErrorCode >( KnowledgeGroupAck::error_invalid_type );
-        pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
+        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroupFromParents( message.knowledge_group().id() );
+        if ( pReceiver && ( !pReceiver->IsJammed()
+                            || message.type() == sword::KnowledgeMagicAction::add_knowledge ) )
+            pReceiver->OnReceiveKnowledgeGroupUpdate( message, *armyFactory_ );
+        else
+            throw NET_AsnException< KnowledgeGroupAck::ErrorCode >( KnowledgeGroupAck::error_invalid_type );        
     }
     catch( NET_AsnException< KnowledgeGroupAck::ErrorCode >& e )
     {
@@ -1845,6 +1848,33 @@ MIL_Formation* MIL_EntityManager::FindFormation( unsigned int nID ) const
 MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroup( unsigned int nID ) const
 {
     return knowledgeGroupFactory_->Find( nID );
+}
+
+// -----------------------------------------------------------------------------
+namespace
+{
+    void FindKnowledgeGroupFromParent( MIL_KnowledgeGroup** ppKnowledgetGroupFound, unsigned int nID, MIL_KnowledgeGroup& curKG )
+    {   
+        if ( *ppKnowledgetGroupFound )
+            return;
+        MIL_KnowledgeGroup* pKG = curKG.FindKnowledgeGroup( nID );
+        if ( pKG )
+            *ppKnowledgetGroupFound = pKG;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::FindKnowledgeGroupFromParents
+// Created: MMC 2011-06-14
+// LTO
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup* MIL_EntityManager::FindKnowledgeGroupFromParents( unsigned int nID )
+{
+    MIL_KnowledgeGroup* pCurKG = knowledgeGroupFactory_->Find( nID );
+    if ( pCurKG )
+        return pCurKG;
+    knowledgeGroupFactory_->Apply( boost::bind( &FindKnowledgeGroupFromParent, &pCurKG, nID, _1 ) );       
+    return pCurKG;
 }
 
 // -----------------------------------------------------------------------------

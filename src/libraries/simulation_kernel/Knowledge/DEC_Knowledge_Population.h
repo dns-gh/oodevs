@@ -30,6 +30,7 @@ class DEC_Knowledge_PopulationPerception;
 class DEC_Knowledge_PopulationConcentrationPerception;
 class DEC_Knowledge_PopulationFlowPerception;
 class DEC_Knowledge_PopulationCollision;
+class PHY_PerceptionLevel;
 class TER_Localisation;
 
 // =============================================================================
@@ -69,6 +70,9 @@ public:
     void Exterminate( const MIL_AgentPion& exterminator, double rSurface );
     void CopyFrom( const DEC_Knowledge_Population& knowledge );
     void SetCriticalIntelligenceFromPopulationKnown();
+    void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );
+    const PHY_PerceptionLevel* GetHackedPerceptionLevel() const;
+    bool IsPerceptionDistanceHacked() const;
     //@}
 
     //! @name Accessors
@@ -135,6 +139,7 @@ private:
     static MIL_IDManager idManager_;
     bool bCriticalIntelligenceUpdated_;
     std::string criticalIntelligence_;
+    const PHY_PerceptionLevel* pHackedPerceptionLevel_;
     //@}
 };
 

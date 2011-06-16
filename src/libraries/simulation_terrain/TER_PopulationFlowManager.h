@@ -15,6 +15,7 @@
 #include <pathfind/SpatialContainer.h>
 
 class MT_Rect;
+class TER_PopulationFlowVisitor_ABC;
 
 // =============================================================================
 // Created: AGE 2005-01-31
@@ -41,7 +42,8 @@ public:
     void GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationFlowVector& flows ) const;
 
     TER_PopulationFlow_ABC::T_Hint UpdatePosition( TER_PopulationFlow_ABC& flow, const TER_PopulationFlow_ABC::T_Hint& hint );
-    bool                           Remove        ( TER_PopulationFlow_ABC& flow, const TER_PopulationFlow_ABC::T_Hint& hint );
+    bool                           Remove        ( TER_PopulationFlow_ABC& flow, const TER_PopulationFlow_ABC::T_Hint& hint );    
+    void Accept( TER_PopulationFlowVisitor_ABC& visitor ) const;
     //@}
 
 private:

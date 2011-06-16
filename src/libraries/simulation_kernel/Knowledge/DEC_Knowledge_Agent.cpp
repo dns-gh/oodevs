@@ -13,6 +13,7 @@
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_AgentComposante.h"
+#include "MIL_AgentServer.h"
 #include "PHY_MaterialCompositionType.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -68,6 +69,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
     , bCriticalIntelligenceUpdated_  ( false )
     , rLastRelevanceSent_            ( 0. )
     , criticalIntelligence_          ( "" )
+    , bPerceptionDistanceHacked_     ( false )
 {
     if( bCreatedOnNetwork_ )
         SendMsgCreation();
@@ -102,6 +104,7 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent()
     , bCriticalIntelligenceUpdated_  ( false )
     , rLastRelevanceSent_            ( 0. )
     , criticalIntelligence_          ( "" )
+    , bPerceptionDistanceHacked_     ( false )
 {
     // NOTHING
 }
@@ -372,7 +375,8 @@ void DEC_Knowledge_Agent::UpdateRelevance(int currentTimeStep)
     const double rTimeRelevanceDegradation = ( currentTimeStep - nTimeLastUpdate_ ) / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxLifeTime();
     // Degradation : effacement quand l'unité réelle et l'unité connnue sont distantes de X metres
     const double rDistanceBtwKnowledgeAndKnown = dataDetection_.GetPosition().Distance( pAgentKnown_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    const double rDistRelevanceDegradation     = rDistanceBtwKnowledgeAndKnown / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit();
+    const double rDistRelevanceDegradation     = bPerceptionDistanceHacked_? 0.0 : rDistanceBtwKnowledgeAndKnown / pKnowledgeGroup_->GetType().GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit();
+    
     ChangeRelevance( std::max( 0., rRelevance_ - rTimeRelevanceDegradation - rDistRelevanceDegradation ) );
     nTimeLastUpdate_ = currentTimeStep;
 }
@@ -1085,4 +1089,29 @@ void DEC_Knowledge_Agent::CopyFrom( const DEC_Knowledge_Agent& agent )
     bMaxPerceptionLevelUpdated_ = true;
     bCurrentPerceptionLevelUpdated_ = true;
     bCriticalIntelligenceUpdated_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::HackPerceptionLevel
+// Created: MMC 2011-06-10
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Agent::HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel )
+{
+    if( *pPerceptionLevel > *pCurrentPerceptionLevel_ )
+    {
+        ChangeRelevance( 1. );
+        bPerceptionDistanceHacked_ = true;
+        pCurrentPerceptionLevel_ = pPerceptionLevel;
+        bCurrentPerceptionLevelUpdated_ = ( *pCurrentPerceptionLevel_ != *pPreviousPerceptionLevel_ );
+        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsPerceptionDistanceHacked
+// Created: MMC 2011-06-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsPerceptionDistanceHacked() const
+{
+    return bPerceptionDistanceHacked_;
 }

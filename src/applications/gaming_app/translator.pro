@@ -58,6 +58,7 @@ InhabitantChangeAlertedStateDialog.cpp \
 InhabitantChangeConfinedStateDialog.cpp \
 InhabitantChangeHealthStateDialog.cpp \
 InhabitantExtractCrowdDialog.cpp \
+KnowledgeAddInGroupDialog \
 KnowledgeGroupMagicOrdersInterface.cpp \
 LendingsListView.cpp \
 LivingAreaDialog.cpp \

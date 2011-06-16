@@ -28,6 +28,7 @@ class TER_Polygon;
 class TER_AgentPositionHint;
 class MT_Rect;
 class MT_Ellipse;
+class TER_AgentVisitor_ABC;
 
 // =============================================================================
 /** @class  TER_AgentManager
@@ -59,7 +60,8 @@ public:
     void GetListWithinPolygon( const TER_Polygon& polygon, T_AgentVector& agents ) const;
 
     TER_Agent_ABC::T_Hint UpdatePosition( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& pHint );
-    bool  Remove( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& pHint );
+    bool Remove( TER_Agent_ABC& agent, const TER_Agent_ABC::T_Hint& pHint );
+    void Accept( TER_AgentVisitor_ABC& visitor ) const;
     //@}
 
 private:

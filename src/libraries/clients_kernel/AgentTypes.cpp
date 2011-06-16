@@ -426,6 +426,7 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "knowledge_group_update_side", sword::KnowledgeMagicAction::update_party ) );
     RegisterActionType( *new MagicActionType( "knowledge_group_update_side_parent", sword::KnowledgeMagicAction::update_party_parent ) );
     RegisterActionType( *new MagicActionType( "knowledge_group_update_type", sword::KnowledgeMagicAction::update_type ) );
+    RegisterActionType( *new MagicActionType( "knowledge_group_add_knowledge", sword::KnowledgeMagicAction::add_knowledge ) );
 
     // Object Magic Actions
     RegisterActionType( *new MagicActionType( "create_object", sword::ObjectMagicAction::create ) );

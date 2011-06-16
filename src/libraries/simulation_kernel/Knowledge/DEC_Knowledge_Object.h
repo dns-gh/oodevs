@@ -79,8 +79,11 @@ public:
     bool IsValid() const;
     void Invalidate();
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
+    const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     bool IsReconBy( const MIL_AgentType_ABC& agentType ) const;
     bool IsObjectInsidePathPoint( const T_PointVector& pathPoints, const MIL_Agent_ABC& agent ) const;
+    void HackPerceptionLevel( const PHY_PerceptionLevel* pPerceptionLevel );
+    bool IsPerceptionDistanceHacked() const;
     //@}
 
     //! @name Relevance management
@@ -204,6 +207,7 @@ private:
     bool bValid_;
     T_AgentTypeSet reconByAgentTypes_;
     static MIL_IDManager idManager_;
+    bool bPerceptionDistanceHacked_;
     //@}
 };
 

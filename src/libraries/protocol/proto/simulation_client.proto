@@ -2149,6 +2149,7 @@ message KnowledgeGroupAck {
        error_invalid_party          = 3; //!< The party identifier provided is invalid
        error_invalid_knowledgegroup = 4; //!< The knowledge group identifier provided is invalid @todo rename to error_invalid_knowledge_group
        error_invalid_type           = 5; //!< The type provided is invalid
+       error_invalid_perception     = 6; //!< The perception provided is invalid       
     }
 }
 

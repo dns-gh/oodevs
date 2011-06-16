@@ -1209,7 +1209,8 @@ message KnowledgeGroupAck {
        error_invalid_superior       = 2;
        error_invalid_camp           = 3;
        error_invalid_knowledgegroup = 4;
-       error_invalid_type           = 5;    
+       error_invalid_type           = 5; 
+       error_invalid_perception     = 6;        
     }
 }
 

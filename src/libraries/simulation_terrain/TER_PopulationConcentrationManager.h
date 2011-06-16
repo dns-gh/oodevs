@@ -16,6 +16,7 @@
 #include <pathfind/SpatialContainer.h>
 
 class MT_Rect;
+class TER_PopulationConcentrationVisitor_ABC;
 
 // =============================================================================
 // Created: AGE 2005-01-31
@@ -43,6 +44,7 @@ public:
 
     TER_PopulationConcentration_ABC::T_Hint UpdatePosition( TER_PopulationConcentration_ABC& concentration, const TER_PopulationConcentration_ABC::T_Hint& hint );
     bool                                    Remove        ( TER_PopulationConcentration_ABC& concentration, const TER_PopulationConcentration_ABC::T_Hint& hint );
+    void Accept( TER_PopulationConcentrationVisitor_ABC& visitor ) const;
     //@}
 
 private:

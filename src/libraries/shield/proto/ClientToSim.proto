@@ -88,6 +88,7 @@ message MsgKnowledgeMagicAction {
         update_party           = 1;
         update_party_parent    = 2;
         update_type            = 3;
+        add_knowledge          = 4;
     }
    required Common.KnowledgeGroupId     knowledge_group = 1;
    required Type                        type            = 2;
