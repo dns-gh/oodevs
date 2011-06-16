@@ -204,7 +204,7 @@ void LogisticSupplyPullFlowDialog::Validate()
         }
     }
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( target, false ) );
+    action->Attach( *new ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }
 
