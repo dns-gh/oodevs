@@ -83,7 +83,7 @@ namespace
             ( "resource-networks-functional-states"   , BuildExtractor< Value, attributes::ResourcesNetworksFunctionalStates >() )
             ( "stocks"                                , BuildExtractor< Value, attributes::LogSupplyStocks >() )
             ( "maintenance-handling-units"            , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() )
-            ( "maintenance-handling-unit"            , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() ) // A VIRER
+            ( "maintenance-handling-unit"             , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() ) // A VIRER
             ( "direct-fire-unit"                      , BuildExtractor< Value, existences::DirectFireUnitsId >() )        // A VIRER
             ( "direct-fire-units"                     , BuildExtractor< Value, existences::DirectFireUnitsId >() )
             ( "direct-fire-targets"                   , BuildExtractor< Value, existences::DirectFireTargetsId >() )
