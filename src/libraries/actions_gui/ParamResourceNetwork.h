@@ -69,6 +69,7 @@ private:
     //@{
     kernel::Controller& controller_;
     kernel::OrderParameter parameter_;
+    const kernel::Object_ABC* current_;
     const kernel::Object_ABC* selected_;
     QLabel* objectLabel_;
     QLabel* objectName_;

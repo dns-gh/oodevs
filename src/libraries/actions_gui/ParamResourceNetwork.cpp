@@ -29,6 +29,7 @@ ParamResourceNetwork::ParamResourceNetwork( QObject* parent, const kernel::Order
     , controller_   ( controller )
     , Param_ABC     ( parameter.GetName().c_str() )
     , parameter_    ( parameter )
+    , current_      ( 0 )
     , selected_     ( 0 )
     , objectLabel_  ( 0 )
     , objectName_   ( 0 )
@@ -83,6 +84,7 @@ void ParamResourceNetwork::CommitTo( actions::ParameterContainer_ABC& parameter 
 // -----------------------------------------------------------------------------
 void ParamResourceNetwork::MenuItemValidated( int index )
 {
+    selected_ = current_;
     if( selected_ )
     {
         const kernel::ResourceNetwork_ABC& resource = selected_->Get< kernel::ResourceNetwork_ABC >();
@@ -110,14 +112,14 @@ void ParamResourceNetwork::MenuItemValidated( int index )
 void ParamResourceNetwork::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
 {
     // $$$$ JSR 2011-05-02: TODO gérer Deleted
-    selected_ = 0;
+    current_ = 0;
     const kernel::ResourceNetwork_ABC* resource = entity.Retrieve< kernel::ResourceNetwork_ABC >();
     if( resource )
     {
         const kernel::ResourceNetwork_ABC::T_ResourceNodes& nodes = resource->GetResourceNodes();
         if( nodes.size() > 0 )
         {
-            selected_ = &entity;
+            current_ = &entity;
             QPopupMenu* popupMenu = new QPopupMenu( menu );
             int index = 0;
             for( kernel::ResourceNetwork_ABC::CIT_ResourceNodes it = nodes.begin(); it != nodes.end(); ++it, ++index )
