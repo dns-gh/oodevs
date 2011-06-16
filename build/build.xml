@@ -363,7 +363,7 @@
     <target name="application.simulation_app" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll" description="build Sword Simulation executable">
         <build-app name="simulation_app" depends="terrain,boost,xerces,xalan,flexlm,qt,protobuf" pattern="simulation_app"
             libs="masalloc,directia-${platform}-mt-4_6,library-${platform}-mt,
-                  gdal_i,gdal_ogr,geodata,
+                  gdal_i,gdal_ogr,geodata,spatialcontainer,
                   dispatcher-${platform}-mt@{suffix},
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},

@@ -18,7 +18,7 @@
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include <pathfind/TerrainData.h>
+#include <spatialcontainer/TerrainData.h>
 #pragma warning( push, 0 )
 #pragma warning( disable : 4180 )
 #include <boost/bind.hpp>

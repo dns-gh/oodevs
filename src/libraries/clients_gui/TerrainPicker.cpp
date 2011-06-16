@@ -17,7 +17,7 @@
 #include "meteo/Meteo.h"
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
-#include <pathfind/TerrainData.h>
+#include <spatialcontainer/TerrainData.h>
 
 using namespace gui;
 

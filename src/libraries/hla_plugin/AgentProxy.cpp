@@ -12,7 +12,7 @@
 #include "EventListener_ABC.h"
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Equipment.h"
-#include <pathfind/TerrainData.h> // $$$$ _RC_ SLI 2011-02-07: dependency on pathfind!!!
+#include <spatialcontainer/TerrainData.h> // $$$$ _RC_ SLI 2011-02-07: dependency on pathfind!!!
 #include <algorithm>
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>

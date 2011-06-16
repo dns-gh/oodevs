@@ -10,7 +10,7 @@
 #ifndef __GraphicPreferences_h_
 #define __GraphicPreferences_h_
 
-#include <pathfind/TerrainData.h>
+#include <spatialcontainer/TerrainData.h>
 #include <graphics/GraphicSetup_ABC.h>
 
 namespace xml { class xistream; class xostream; };

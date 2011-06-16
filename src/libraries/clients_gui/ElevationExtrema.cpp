@@ -65,7 +65,7 @@ void ElevationExtrema::FindExtrema( const geometry::Rectangle2f& extent, short& 
     std::pair< unsigned, unsigned > bottomLeft = map_.Unmap( extent.BottomLeft() );
     const geometry::Point2< int > tr( topRight.first,   topRight.second );
     const geometry::Point2< int > bl( bottomLeft.first, bottomLeft.second );
-    pathfind::SegmentIntersecter< int > intersecter( tr, bl );
+    spatialcontainer::SegmentIntersecter< int > intersecter( tr, bl );
 
     ExtremaFinder finder( geometry::Rectangle2< int >( bl, tr ) );
     extrema_[ FindLevel( extent.Width(), extent.Height() ) ]->Apply( intersecter, finder );
@@ -91,7 +91,7 @@ ElevationExtrema::Extrema::Extrema( int x, int y, int w, int h, short min, short
 // -----------------------------------------------------------------------------
 int ElevationExtrema::Extrema::CompareOnX( int value ) const
 {
-    return pathfind::SegmentIntersecter< int >( extent_.BottomLeft(), extent_.TopRight() ).CompareOnX( value );
+    return spatialcontainer::SegmentIntersecter< int >( extent_.BottomLeft(), extent_.TopRight() ).CompareOnX( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ int ElevationExtrema::Extrema::CompareOnX( int value ) const
 // -----------------------------------------------------------------------------
 int ElevationExtrema::Extrema::CompareOnY( int value ) const
 {
-    return pathfind::SegmentIntersecter< int >( extent_.BottomLeft(), extent_.TopRight() ).CompareOnY( value );
+    return spatialcontainer::SegmentIntersecter< int >( extent_.BottomLeft(), extent_.TopRight() ).CompareOnY( value );
 }
 
 // -----------------------------------------------------------------------------

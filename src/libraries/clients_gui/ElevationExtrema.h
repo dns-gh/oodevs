@@ -10,7 +10,7 @@
 #ifndef __ElevationExtrema_h_
 #define __ElevationExtrema_h_
 
-#include <pathfind/SpatialContainer.h>
+#include <spatialcontainer/SpatialContainer.h>
 
 class ElevationMap;
 
@@ -57,7 +57,7 @@ private:
         int CompareOnY( int value ) const;
     };
     struct ExtremaFinder;
-    typedef pathfind::SpatialContainer< Extrema, pathfind::DefaultTraits< Extrema, int >, int > T_Container;
+    typedef spatialcontainer::SpatialContainer< Extrema, spatialcontainer::DefaultTraits< Extrema, int >, int > T_Container;
     //@}
 
     //! @name Helpers
