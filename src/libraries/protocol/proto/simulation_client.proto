@@ -883,7 +883,7 @@ message UnitEnvironmentType {
     required int32  linear = 5; //!< @todo What's this ?
 }
 
-/** @struct UnitEnvironmentType
+/** @struct UnitKnowledgeCreation
     @brief Notifies of the creation of a unit knowledge
 */
 message UnitKnowledgeCreation {
