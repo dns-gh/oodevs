@@ -16,8 +16,8 @@
 #include "MT_Tools/MT_String.h"
 
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , 0 );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", 1 );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", 2 );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", 1 );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", 2 );
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , 3 );
 const PHY_AmmoDotationClass PHY_AmmoDotationClass::alr_       ( "ALR" , 4 );
 
