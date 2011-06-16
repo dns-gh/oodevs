@@ -42,7 +42,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications, Fixtur
     MOCK_EXPECT( federateFactory, Create ).once().in( s ).with( mock::any, "SWORD", -1 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate, Connect ).once().in( s ).returns( true );
     MOCK_EXPECT( federate, Join ).once().in( s ).with( "Federation", true, true ).returns( true );
-    MOCK_EXPECT( federate, RegisterClass ).once().in( s ).with( "BaseEntity.AggregateEntity", mock::any, true, false );
+    MOCK_EXPECT( federate, RegisterClass ).once().in( s );
     MOCK_EXPECT( subject, Register ).once().in( s );
     FederateFacade facade( xis, subject, rtiFactory, federateFactory, "directory" );
     MOCK_EXPECT( subject, Unregister ).once().in( s );
