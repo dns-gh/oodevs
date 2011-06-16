@@ -83,14 +83,16 @@ namespace
             ( "resource-networks-functional-states"   , BuildExtractor< Value, attributes::ResourcesNetworksFunctionalStates >() )
             ( "stocks"                                , BuildExtractor< Value, attributes::LogSupplyStocks >() )
             ( "maintenance-handling-units"            , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() )
-            ( "direct-fire-unit"                      , BuildExtractor< Value, existences::DirectFireUnitsId >() )   // A VIRER
+            ( "maintenance-handling-unit"            , BuildExtractor< Value, existences::MaintenanceHandlingUnitId >() ) // A VIRER
+            ( "direct-fire-unit"                      , BuildExtractor< Value, existences::DirectFireUnitsId >() )        // A VIRER
             ( "direct-fire-units"                     , BuildExtractor< Value, existences::DirectFireUnitsId >() )
             ( "direct-fire-targets"                   , BuildExtractor< Value, existences::DirectFireTargetsId >() )
-            ( "indirect-fire-unit"                    , BuildExtractor< Value, existences::IndirectFireUnitsId >() ) // A VIRER
+            ( "indirect-fire-unit"                    , BuildExtractor< Value, existences::IndirectFireUnitsId >() )      // A VIRER
             ( "indirect-fire-units"                   , BuildExtractor< Value, existences::IndirectFireUnitsId >() )
             ( "indirect-fire-positions"               , BuildExtractor< Value, existences::IndirectFireTargetsPositions >() )
             ( "damage-indirect-fires"                 , BuildExtractor< Value, events::DamageIndirectFire >() )
             ( "fire-component-damages"                , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() )
+            ( "fire-component-damage"                 , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueFirer >() ) // A VIRER
             ( "fire-component-loss"                   , BuildExtractor< Value, events::FireComponentDamages, extractors::FireComponentDamages::IdentifierValueTarget >() )
             ( "fire-human-damages"                    , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueFirer >() )
             ( "fire-human-loss"                       , BuildExtractor< Value, events::FireHumanDamages, extractors::FireHumanDamages::IdentifierValueTarget >() )
