@@ -56,6 +56,7 @@ void AgentConditions::RegisterIn( directia::brain::Brain& brain )
     brain.Register( "KnowledgeCreated",        &AgentConditions::KnowledgeCreated );
     brain.Register( "KnowledgeCreatedIn",      &AgentConditions::KnowledgeCreatedIn );
     brain.Register( "PerceptionChanged",       &AgentConditions::PerceptionChanged );
+    brain.Register( "MountedStateChanged",     &AgentConditions::MountedStateChanged );
 }
 
 namespace directia
@@ -150,6 +151,15 @@ boost::shared_ptr< Condition_ABC > AgentConditions::MissionStarted()
 boost::shared_ptr< Condition_ABC > AgentConditions::OperationalStateChanged()
 {
     return boost::shared_ptr< Condition_ABC >( new SimpleEntityCondition< events::OperationalStateChanged >( controller_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentConditions::MountedStateChanged
+// Created: SBO 2010-06-25
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Condition_ABC > AgentConditions::MountedStateChanged()
+{
+    return boost::shared_ptr< Condition_ABC >( new SimpleEntityCondition< events::MountedStateChanged >( controller_ ) );
 }
 
 // -----------------------------------------------------------------------------
