@@ -10,7 +10,7 @@
 #ifndef __TER_DynamicData_h_
 #define __TER_DynamicData_h_
 
-#include <pathfind/TerrainData.h>
+#include <spatialcontainer/TerrainData.h>
 #include "MT_Tools/MT_Vector2DTypes.h"
 #pragma warning( push, 1 )
 #pragma warning( disable : 4244 4275 )

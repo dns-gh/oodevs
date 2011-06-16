@@ -27,7 +27,7 @@
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
-#include <pathfind/TerrainData.h>
+#include <spatialcontainer/TerrainData.h>
 #pragma warning( push, 0 )
 #include <boost/geometry/geometry.hpp>
 #include <boost/geometry/geometries/cartesian2d.hpp>

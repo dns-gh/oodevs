@@ -11,7 +11,7 @@
 #define __MIL_FireClass_h_
 
 #include "MT_Tools/MT_String.h"
-#include <pathfind/TerrainData.h>
+#include <spatialcontainer/TerrainData.h>
 
 namespace xml
 {

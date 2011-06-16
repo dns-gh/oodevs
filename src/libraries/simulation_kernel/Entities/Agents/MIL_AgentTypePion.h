@@ -14,7 +14,7 @@
 #include "MIL_AgentType_ABC.h"
 #include "MT_Tools/MT_Stl.h"
 #include "MT_Tools/MT_String.h"
-#include <pathfind/TerrainData.h>
+#include <spatialcontainer/TerrainData.h>
 
 namespace xml
 {

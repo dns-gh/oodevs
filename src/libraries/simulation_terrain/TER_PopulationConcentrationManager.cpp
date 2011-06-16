@@ -39,7 +39,7 @@ TER_PopulationConcentrationManager::~TER_PopulationConcentrationManager()
 void TER_PopulationConcentrationManager::GetListWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_PopulationConcentrationVector& concentrations ) const
 {
     concentrations.reserve( 10 );
-    pathfind::PointIntersecter< double > intersecter( geometry::Point2< double >( vCenter.rX_, vCenter.rY_ ), rRadius );
+    spatialcontainer::PointIntersecter< double > intersecter( geometry::Point2< double >( vCenter.rX_, vCenter.rY_ ), rRadius );
     T_PopulationConcentrations::View view = concentrations_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {
@@ -56,8 +56,8 @@ void TER_PopulationConcentrationManager::GetListWithinCircle( const MT_Vector2D&
 void TER_PopulationConcentrationManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_PopulationConcentrationVector& concentrations ) const
 {
     const MT_Rect& boundingBox = localisation.GetBoundingBox();
-    pathfind::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() )
-        , geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
+    spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() ),
+                                                                geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
     T_PopulationConcentrations::View view = concentrations_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {
@@ -73,8 +73,8 @@ void TER_PopulationConcentrationManager::GetListWithinLocalisation( const TER_Lo
 // -----------------------------------------------------------------------------
 void TER_PopulationConcentrationManager::GetListIntersectingLine( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_PopulationConcentrationVector& concentrations ) const
 {
-    pathfind::SegmentIntersecter< double > intersecter( geometry::Point2< double >( vStart.rX_, vStart.rY_ ),
-                                                          geometry::Point2< double >( vEnd.rX_  , vEnd.rY_   ) );
+    spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2< double >( vStart.rX_, vStart.rY_ ),
+                                                                geometry::Point2< double >( vEnd.rX_  , vEnd.rY_   ) );
     T_PopulationConcentrations::View view = concentrations_.CreateView( intersecter );
     while( view.HasMoreElements() )
     {

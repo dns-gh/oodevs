@@ -11,7 +11,7 @@
 #include "DEC_Population_PathfinderRule.h"
 #include "DEC_Population_Path.h"
 #include "simulation_terrain/TER_World.h"
-#include <pathfind/TerrainData.h>
+#include <spatialcontainer/TerrainData.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Population_PathfinderRule constructor

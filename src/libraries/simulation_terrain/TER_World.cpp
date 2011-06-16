@@ -23,7 +23,7 @@
 #include "TER_PopulationManager.h"
 #include "TER_CoordinateManager.h"
 #include "TER_PathFindManager.h"
-#include <pathfind/TerrainData.h>
+#include <spatialcontainer/TerrainData.h>
 #include "MT_Tools/MT_Rect.h"
 #include "tools/WorldParameters.h"
 #include <geocoord/Geoid.h>

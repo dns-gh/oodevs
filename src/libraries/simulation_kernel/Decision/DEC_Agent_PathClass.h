@@ -10,7 +10,7 @@
 #ifndef __DEC_PathClass_h_
 #define __DEC_PathClass_h_
 
-#include <pathfind/TerrainData.h>
+#include <spatialcontainer/TerrainData.h>
 
 namespace xml
 {

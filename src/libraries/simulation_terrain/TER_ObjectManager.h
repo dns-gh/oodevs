@@ -12,7 +12,7 @@
 
 #include "TER_ObjectTraits.h"
 #include "TER_Object_ABC.h"
-#include <pathfind/SpatialContainer.h>
+#include <spatialcontainer/SpatialContainer.h>
 
 class MT_Ellipse;
 class TER_Localisation;
@@ -63,7 +63,7 @@ private:
 
     //! @name Types
     //@{
-    typedef pathfind::SpatialContainer< TER_Object_ABC*, TER_ObjectTraits, double > T_Objects;
+    typedef spatialcontainer::SpatialContainer< TER_Object_ABC*, TER_ObjectTraits, double > T_Objects;
     //@}
 
 private:

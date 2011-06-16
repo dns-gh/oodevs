@@ -19,13 +19,13 @@
 #include "simulation_terrain_pch.h"
 #include "TER_ObjectTraits.h"
 #include "TER_Object_ABC.h"
-#include <pathfind/SpatialContainerTraits.h>
+#include <spatialcontainer/SpatialContainerTraits.h>
 
 namespace
 {
-    pathfind::SegmentIntersecter< double > Intersector( const MT_Rect& boundingBox )
+    spatialcontainer::SegmentIntersecter< double > Intersector( const MT_Rect& boundingBox )
     {
-        return pathfind::SegmentIntersecter< double >(
+        return spatialcontainer::SegmentIntersecter< double >(
             geometry::Point2< double >( boundingBox.GetLeft(), boundingBox.GetBottom() ),
             geometry::Point2< double >( boundingBox.GetRight(), boundingBox.GetTop() ) );
     };

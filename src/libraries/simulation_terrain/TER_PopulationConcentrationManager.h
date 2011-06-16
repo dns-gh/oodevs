@@ -13,7 +13,7 @@
 #include "TER_PopulationConcentration_ABC.h"
 #include "TER_PopulationConcentrationTraits.h"
 
-#include <pathfind/SpatialContainer.h>
+#include <spatialcontainer/SpatialContainer.h>
 
 class MT_Rect;
 class TER_PopulationConcentrationVisitor_ABC;
@@ -56,7 +56,7 @@ private:
 
     //! @name Types
     //@{
-    typedef pathfind::SpatialContainer< TER_PopulationConcentration_ABC*, TER_PopulationConcentrationTraits, double > T_PopulationConcentrations;
+    typedef spatialcontainer::SpatialContainer< TER_PopulationConcentration_ABC*, TER_PopulationConcentrationTraits, double > T_PopulationConcentrations;
     //@}
 
 private:

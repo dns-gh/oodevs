@@ -13,7 +13,7 @@
 #include "MIL.h"
 #include "ToxicAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include <pathfind/SpatialContainer.h>
+#include <spatialcontainer/SpatialContainer.h>
 #include <boost/shared_ptr.hpp>
 
 namespace xml
@@ -60,7 +60,7 @@ public:
         }
     };
 
-    typedef pathfind::SpatialContainer< T_Quantity, QuantityTraits, double > T_Quantities;
+    typedef spatialcontainer::SpatialContainer< T_Quantity, QuantityTraits, double > T_Quantities;
     //@}
 public:
     //! @name Constructors/Destructor

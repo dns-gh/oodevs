@@ -12,13 +12,13 @@
 #include "TER_PopulationFlow_ABC.h"
 #include "TER_Localisation.h"
 #include "MT_Tools/MT_Rect.h"
-#include <pathfind/SpatialContainerTraits.h>
+#include <spatialcontainer/SpatialContainerTraits.h>
 
 namespace
 {
-    pathfind::SegmentIntersecter< double > Intersector( const MT_Rect& boundingBox )
+    spatialcontainer::SegmentIntersecter< double > Intersector( const MT_Rect& boundingBox )
     {
-        return pathfind::SegmentIntersecter< double >(
+        return spatialcontainer::SegmentIntersecter< double >(
             geometry::Point2< double >( boundingBox.GetLeft(), boundingBox.GetBottom() ),
             geometry::Point2< double >( boundingBox.GetRight(), boundingBox.GetTop() ) );
     };

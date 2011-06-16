@@ -13,7 +13,7 @@
 #include "TER_Localisation.h"
 #include "TER_PopulationConcentrationTraits.h"
 
-namespace pathfind
+namespace spatialcontainer
 {
     template< typename T, typename Traits, typename Coordinate > class SpatialContainerNode;
 };
@@ -31,7 +31,7 @@ public:
     typedef T_PopulationConcentrationVector::iterator        IT_PopulationConcentrationVector;
     typedef T_PopulationConcentrationVector::const_iterator  CIT_PopulationConcentrationVector;
 
-    typedef pathfind::SpatialContainerNode< TER_PopulationConcentration_ABC*, TER_PopulationConcentrationTraits, double >* T_Hint;
+    typedef spatialcontainer::SpatialContainerNode< TER_PopulationConcentration_ABC*, TER_PopulationConcentrationTraits, double >* T_Hint;
     //@}
 
 public:

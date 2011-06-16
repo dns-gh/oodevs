@@ -1352,7 +1352,7 @@
     <target name="configure" description="initialize local project structure with libraries">
         <update name="geometry"/>
         <update name="geocoord"/>
-        <update name="terrain" modules="terrain,graphics,pathfind,vmap,geodata,gdal_ogr" version="2.1"/>
+        <update name="terrain" modules="terrain,graphics,spatialcontainer,pathfind,vmap,geodata,gdal_ogr" version="2.1"/>
         <update name="terrain" modules="urban"/>
         <update name="terrain" package="terraintools_${platform}.zip"/>
         <update name="qt" version="3.3.8"/>

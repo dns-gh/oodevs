@@ -13,7 +13,7 @@
 #include "TER_Localisation.h"
 #include "TER_ObjectTraits.h"
 
-namespace pathfind
+namespace spatialcontainer
 {
     template< typename T, typename Traits, typename Coordinate > class SpatialContainerNode;
 };
@@ -31,7 +31,7 @@ public:
     typedef T_ObjectVector::iterator        IT_ObjectVector;
     typedef T_ObjectVector::const_iterator CIT_ObjectVector;
 
-    typedef pathfind::SpatialContainerNode< TER_Object_ABC*, TER_ObjectTraits, double >* T_Hint;
+    typedef spatialcontainer::SpatialContainerNode< TER_Object_ABC*, TER_ObjectTraits, double >* T_Hint;
     //@}
 
 public:

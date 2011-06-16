@@ -111,8 +111,8 @@ namespace
 void TER_AgentManager::GetListWithinEllipse( const MT_Ellipse& ellipse, T_AgentVector& agents ) const
 {
     const MT_Rect boundingBox = ellipse.GetBoundingBox();
-    pathfind::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() )
-                                                        , geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
+    spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() )
+                                                                , geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
     AgentFinder< MT_Ellipse > finder( ellipse, agents );
     agents.reserve( 10 );
     agents_.Apply( intersecter, finder );
@@ -124,8 +124,8 @@ void TER_AgentManager::GetListWithinEllipse( const MT_Ellipse& ellipse, T_AgentV
 // -----------------------------------------------------------------------------
 void TER_AgentManager::GetListWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_AgentVector& agents ) const
 {
-    pathfind::SegmentIntersecter< double > intersecter( geometry::Point2<double>( vCenter.rX_ - rRadius, vCenter.rY_ - rRadius )
-                                                        , geometry::Point2<double>( vCenter.rX_ + rRadius, vCenter.rY_ + rRadius ) );
+    spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2<double>( vCenter.rX_ - rRadius, vCenter.rY_ - rRadius )
+                                                                , geometry::Point2<double>( vCenter.rX_ + rRadius, vCenter.rY_ + rRadius ) );
     Circle circle( vCenter, rRadius );
     AgentFinder< Circle > finder( circle, agents );
     agents.reserve( 10 );
@@ -139,8 +139,8 @@ void TER_AgentManager::GetListWithinCircle( const MT_Vector2D& vCenter, double r
 void TER_AgentManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agents ) const
 {
     const MT_Rect& boundingBox = localisation.GetBoundingBox();
-    pathfind::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() )
-                                                        , geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
+    spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() )
+                                                                , geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
     AgentFinder< TER_Localisation > finder( localisation, agents );
     agents.reserve( 10 );
     agents_.Apply( intersecter, finder );
@@ -153,8 +153,8 @@ void TER_AgentManager::GetListWithinLocalisation( const TER_Localisation& locali
 void TER_AgentManager::GetListWithinLocalisation( const TER_Localisation& localisation, T_AgentVector& agents, double rPrecision ) const
 {
     const MT_Rect& boundingBox = localisation.GetBoundingBox();
-    pathfind::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() )
-                                                        , geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
+    spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() )
+                                                                , geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
     AgentFinderPrecision< TER_Localisation > finder( localisation, rPrecision, agents );
     agents.reserve( 10 );
     agents_.Apply( intersecter, finder );
@@ -167,8 +167,8 @@ void TER_AgentManager::GetListWithinLocalisation( const TER_Localisation& locali
 void TER_AgentManager::GetListWithinPolygon( const TER_Polygon& polygon, T_AgentVector& agents ) const
 {
     const MT_Rect boundingBox = polygon.GetBoundingBox();
-    pathfind::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() )
-                                                        , geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
+    spatialcontainer::SegmentIntersecter< double > intersecter( geometry::Point2<double>( boundingBox.GetLeft(), boundingBox.GetBottom() )
+                                                                , geometry::Point2<double>( boundingBox.GetRight(), boundingBox.GetTop() ) );
     AgentFinder< TER_Polygon > finder( polygon, agents );
     agents.reserve( 10 );
     agents_.Apply( intersecter, finder );

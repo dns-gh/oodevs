@@ -11,7 +11,7 @@
 #define __DEC_PathPoint_h_
 
 #include "MIL.h"
-#include <pathfind/TerrainData.h>
+#include <spatialcontainer/TerrainData.h>
 #include <boost/shared_ptr.hpp>
 
 class DEC_PathPoint;

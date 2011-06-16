@@ -21,7 +21,7 @@
 
 #include "TER_AgentTraits.h"
 #include "TER_Agent_ABC.h"
-#include <pathfind/SpatialContainer.h>
+#include <spatialcontainer/SpatialContainer.h>
 
 class TER_Localisation;
 class TER_Polygon;
@@ -74,7 +74,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef pathfind::SpatialContainer< TER_Agent_ABC*, TER_AgentTraits, double > T_Agents;
+    typedef spatialcontainer::SpatialContainer< TER_Agent_ABC*, TER_AgentTraits, double > T_Agents;
     //@}
 
 private:

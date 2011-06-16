@@ -21,10 +21,11 @@
 #include <pathfind/TerrainPathfinder.h>
 #include <pathfind/TerrainRule_ABC.h>
 #include <pathfind/TerrainHeuristic.h>
-#include <pathfind/Node.h>
-#include <pathfind/SpatialContainerTraits.h>
+#include <spatialcontainer/Node.h>
+#include <spatialcontainer/SpatialContainerTraits.h>
 #include <boost/filesystem/convenience.hpp>
 
+using namespace spatialcontainer;
 using namespace pathfind;
 
 // -----------------------------------------------------------------------------
@@ -217,9 +218,9 @@ void TER_PathFinderThread::ApplyOnNodesWithinCircle( const MT_Vector2D& vCenter,
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindCrossroadsWithinCircle( const MT_Vector2D& center, float radius )
 {
-    std::vector< pathfind::Node< TerrainData >* > result = pPathfinder_->FindCrossroadsWithinCircle( MakePoint( center ), radius );
+    std::vector< spatialcontainer::Node< TerrainData >* > result = pPathfinder_->FindCrossroadsWithinCircle( MakePoint( center ), radius );
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
-    for( std::vector< pathfind::Node< TerrainData >* >::const_iterator it = result.begin(); it != result.end(); ++it )
+    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator it = result.begin(); it != result.end(); ++it )
         points.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( static_cast< double >( (*it)->X() ), static_cast< double >( (*it)->Y() ) ) ) );
     return points;
 }
@@ -244,8 +245,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindSafety
 std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindAllPositions( const MT_Vector2D& center, float radius )
 {
     std::vector< boost::shared_ptr< MT_Vector2D > > result;
-    std::vector< pathfind::Node< TerrainData >* > nodes = pPathfinder_->FindNodesWithinCircle( MakePoint( center ), radius );
-    for( std::vector< pathfind::Node< TerrainData >* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
+    std::vector< spatialcontainer::Node< TerrainData >* > nodes = pPathfinder_->FindNodesWithinCircle( MakePoint( center ), radius );
+    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
     {
         result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( (**iterator).X(), (**iterator).Y() ) ) );
     }
@@ -259,8 +260,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > TER_PathFinderThread::FindAllPos
 TerrainData TER_PathFinderThread::FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius )
 {
     TerrainData result;
-    std::vector< pathfind::Node< TerrainData >* > nodes = pPathfinder_->FindNodesWithinCircle( MakePoint( center ), radius );
-    for( std::vector< pathfind::Node< TerrainData >* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
+    std::vector< spatialcontainer::Node< TerrainData >* > nodes = pPathfinder_->FindNodesWithinCircle( MakePoint( center ), radius );
+    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
     {
         result.Merge( TerrainHeuristic::BuildData( **iterator ) );
     }
