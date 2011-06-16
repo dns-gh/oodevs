@@ -23,10 +23,11 @@ using namespace gui;
 // Name: Logger constructor
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
-Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory, const Simulation& simulation )
+Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory, const Simulation& simulation, const std::string& filename )
     : QListView  ( pParent )
     , factory_   ( factory )
     , simulation_( simulation )
+    , log_       ( filename.c_str(), std::ios::out | std::ios::app )
 {
     setMinimumSize( 1, 1 );
     setShowSortIndicator( true );
@@ -43,13 +44,22 @@ Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory, const Simulation& si
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( QListViewItem*, const QPoint& ) ) );
 }
 
+namespace
+{
+    void MakeHeader( std::ostream& s, const Simulation& simulation )
+    {
+        s << "[" << QTime::currentTime().toString() << "] [" << simulation.GetTimeAsString() << "] ";
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Logger destructor
 // Created: APE 2004-06-02
 // -----------------------------------------------------------------------------
 Logger::~Logger()
 {
-    // NOTHING
+    MakeHeader( log_, simulation_ );
+    log_ << "----------------------------------------------------------------" << std::endl;
 }
 
 // -----------------------------------------------------------------------------
@@ -58,6 +68,7 @@ Logger::~Logger()
 // -----------------------------------------------------------------------------
 Logger::LogElement Logger::Info()
 {
+    MakeHeader( log_, simulation_ );
     return StartLog( Qt::black, false );
 }
 
@@ -67,6 +78,8 @@ Logger::LogElement Logger::Info()
 // -----------------------------------------------------------------------------
 Logger::LogElement Logger::Warning()
 {
+    MakeHeader( log_, simulation_ );
+    log_ << "Warning - ";
     return StartLog( Qt::darkRed, true );
 }
 
@@ -76,6 +89,8 @@ Logger::LogElement Logger::Warning()
 // -----------------------------------------------------------------------------
 Logger::LogElement Logger::Error()
 {
+    MakeHeader( log_, simulation_ );
+    log_ << "Error - ";
     return StartLog( Qt::red, true );
 }
 
@@ -100,6 +115,7 @@ Logger::LogElement Logger::StartLog( const QColor& color, bool popup )
 // -----------------------------------------------------------------------------
 void Logger::End( std::stringstream& output )
 {
+    log_ << output.str() << std::endl;
     T_Item& item = items_[ &output ];
     if( item.first )
         item.first->setText( 2, output.str().c_str() );

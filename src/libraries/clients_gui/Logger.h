@@ -12,6 +12,7 @@
 
 #include "Types.h"
 #include "clients_kernel/Logger_ABC.h"
+#include <fstream>
 
 class Simulation;
 
@@ -32,7 +33,7 @@ class Logger : public QListView, public kernel::Logger_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Logger( QWidget* pParent, ItemFactory_ABC& factory, const Simulation& simulation );
+             Logger( QWidget* pParent, ItemFactory_ABC& factory, const Simulation& simulation, const std::string& filename );
     virtual ~Logger();
     //@}
 
@@ -81,6 +82,7 @@ private:
     const Simulation& simulation_;
     QPopupMenu popupMenu_;
     T_Items items_;
+    std::ofstream log_;
     //@}
 };
 

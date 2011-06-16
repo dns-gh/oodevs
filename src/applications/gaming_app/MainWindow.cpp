@@ -198,7 +198,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     // Logger
     QDockWindow* pLogDockWnd_ = new QDockWindow( this, "log" );
     moveDockWindow( pLogDockWnd_, Qt::DockBottom );
-    gui::Logger* pLogPanel_ = new gui::Logger( pLogDockWnd_, *factory, simulation );
+    gui::Logger* pLogPanel_ = new gui::Logger( pLogDockWnd_, *factory, simulation, "./Debug/Gaming.log" );
     pLogDockWnd_->setWidget( pLogPanel_ );
     pLogDockWnd_->setResizeEnabled( true );
     pLogDockWnd_->setCloseMode( QDockWindow::Always );
