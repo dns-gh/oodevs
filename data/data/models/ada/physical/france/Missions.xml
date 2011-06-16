@@ -1950,7 +1950,15 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="position" name="Point d'embarquement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.OrienterRefugies" dia-type="france.military.platoon.tasks.OrienterRefugies" id="2058" name="COMMUNES Orienter Refugies">
+    <mission dia-behavior="france.military.platoon.tasks.OrienterRefugiesVersPosition" dia-type="france.military.platoon.tasks.OrienterRefugiesVersPosition" id="2146" name="COMMUNES Orienter Refugies">
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="position" name="Point de débarquement" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="france.military.platoon.tasks.OrienterRefugies" dia-type="france.military.platoon.tasks.OrienterRefugies" id="2058" name="COMMUNES Orienter Refugies dans un camp">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -4807,4 +4815,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="4214079582" -->
+<!-- signature="2986459036" -->
