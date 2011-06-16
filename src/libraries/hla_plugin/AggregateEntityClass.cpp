@@ -55,6 +55,7 @@ AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject
     hlaClass_->Register( ::hla::AttributeIdentifier( "NumberOfSilentEntities" ) ); // dynamic
     hlaClass_->Register( ::hla::AttributeIdentifier( "SilentEntities" ) );         // dynamic
     // BaseEntity.AggregateEntity.NETN_Aggregate
+    hlaClass_->Register( ::hla::AttributeIdentifier( "Mounted" ) );                // dynamic
     hlaClass_->Register( ::hla::AttributeIdentifier( "Echelon" ) );                // static
     federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity.NETN_Aggregate" ), *hlaClass_, true, false );
     subject_.Register( *this );

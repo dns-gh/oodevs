@@ -41,6 +41,8 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier&
     , spatialChanged_    ( false )
     , pSpatial_          ( 0 )
     , compositionChanged_( false )
+    , embarkmentChanged_ ( false )
+    , isMounted_         ( false )
 {
     agent_.Register( *this );
 }
@@ -78,6 +80,8 @@ void AggregateEntity::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateA
         UpdateFormation( functor );
     if( updateAll || compositionChanged_ )
         UpdateComposition( functor );
+    if( updateAll || embarkmentChanged_ )
+        UpdateEmbarkment( functor );
     if( updateAll )
         UpdateEchelon( functor );
 }
@@ -132,6 +136,16 @@ void AggregateEntity::FormationChanged( bool isOnRoad )
     isOnRoad_ = isOnRoad;
     formationChanged_ = true;
     dimensionsChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::EmbarkmentChanged
+// Created: SLI 2011-06-16
+// -----------------------------------------------------------------------------
+void AggregateEntity::EmbarkmentChanged( bool mounted )
+{
+    isMounted_ = mounted;
+    embarkmentChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -245,7 +259,7 @@ void AggregateEntity::UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) con
     ::hla::Serializer serializer;
     BOOST_FOREACH( const T_Equipment& equipment, equipments_ )
     {
-        const rpr::EntityType type( "1 1 225 1" );
+        const rpr::EntityType type( "1 1 225 1" ); // $$$$ _RC_ SLI 2011-06-16: resolve platform types
         const SilentEntity entity( type, static_cast< unsigned short >( equipment.second ) );
         entity.Serialize( serializer );
     }
@@ -263,4 +277,17 @@ void AggregateEntity::UpdateEchelon( ::hla::UpdateFunctor_ABC& functor ) const
     ::hla::Serializer archive;
     archive << state;
     functor.Visit( ::hla::AttributeIdentifier( "Echelon" ), archive );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::UpdateEmbarkment
+// Created: SLI 2011-06-16
+// -----------------------------------------------------------------------------
+void AggregateEntity::UpdateEmbarkment( ::hla::UpdateFunctor_ABC& functor ) const
+{
+    const double percent = isMounted_ ? 100. : 0.;
+    ::hla::Serializer archive;
+    archive << percent;
+    functor.Visit( ::hla::AttributeIdentifier( "Mounted" ), archive );
+    embarkmentChanged_ = false;
 }

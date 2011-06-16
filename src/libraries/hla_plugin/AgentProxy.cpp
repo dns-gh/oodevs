@@ -81,6 +81,9 @@ void AgentProxy::Notify( const sword::UnitAttributes& attributes )
     if( attributes.has_equipment_dotations() )
         BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
             agent_.Equipments().Apply( boost::bind( &NotifyEquipment, boost::ref( *listener ), _1 ) );
+    if( attributes.has_embarked() )
+        BOOST_FOREACH( EventListener_ABC* listener, listeners_ )
+            listener->EmbarkmentChanged( agent_.IsMounted() );
 }
 
 namespace

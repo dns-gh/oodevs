@@ -58,6 +58,7 @@ private:
     virtual void SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction );
     virtual void FormationChanged( bool isOnRoad );
     virtual void EquipmentChanged( unsigned int type, unsigned int available );
+    virtual void EmbarkmentChanged( bool mounted );
     //@}
 
     //! @name Helpers
@@ -72,6 +73,7 @@ private:
     void UpdateFormation( ::hla::UpdateFunctor_ABC& functor ) const;
     void UpdateDimensions( ::hla::UpdateFunctor_ABC& functor ) const;
     void UpdateEchelon( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateEmbarkment( ::hla::UpdateFunctor_ABC& functor ) const;
     //@}
 
 private:
@@ -97,6 +99,8 @@ private:
     std::auto_ptr< Spatial > pSpatial_;
     mutable bool compositionChanged_;
     T_Equipments equipments_;
+    mutable bool embarkmentChanged_;
+    bool isMounted_;
     //@}
 };
 

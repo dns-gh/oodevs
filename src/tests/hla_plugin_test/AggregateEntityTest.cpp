@@ -63,6 +63,7 @@ BOOST_FIXTURE_TEST_CASE( agent_serializes_all_but_spatial_attribute, Fixture )
                                                                         ( "Formation" )
                                                                         ( "NumberOfSilentEntities" )
                                                                         ( "SilentEntities" )
+                                                                        ( "Mounted" )
                                                                         ( "Echelon" );
     mock::sequence s;
     BOOST_FOREACH( const std::string& attribute, attributes )
@@ -100,6 +101,16 @@ BOOST_FIXTURE_TEST_CASE( equipment_changed_event_is_serialized, Fixture )
     mock::sequence s;
     MOCK_EXPECT( functor, Visit ).once().in( s ).with( "NumberOfSilentEntities", mock::any );
     MOCK_EXPECT( functor, Visit ).once().in( s ).with( "SilentEntities", mock::any );
+    entity.Serialize( functor, false );
+    entity.Serialize( functor, false );
+}
+
+BOOST_FIXTURE_TEST_CASE( embarkment_changed_event_is_serialized, Fixture )
+{
+    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
+    BOOST_REQUIRE( listener );
+    listener->EmbarkmentChanged( true );
+    MOCK_EXPECT( functor, Visit ).once().with( "Mounted", mock::any );
     entity.Serialize( functor, false );
     entity.Serialize( functor, false );
 }
