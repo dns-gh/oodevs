@@ -43,6 +43,7 @@ AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject
     , registration_( new UnitRegistration() )
     , hlaClass_    ( new ::hla::Class< AggregateEntity >( *registration_, true ) )
 {
+    // BaseEntity.AggregateEntity
     hlaClass_->Register( ::hla::AttributeIdentifier( "EntityType" ) );             // static
     hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );       // static
     hlaClass_->Register( ::hla::AttributeIdentifier( "Spatial" ) );                // dynamic
@@ -53,6 +54,8 @@ AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject
     hlaClass_->Register( ::hla::AttributeIdentifier( "Formation" ) );              // dynamic
     hlaClass_->Register( ::hla::AttributeIdentifier( "NumberOfSilentEntities" ) ); // dynamic
     hlaClass_->Register( ::hla::AttributeIdentifier( "SilentEntities" ) );         // dynamic
+    // BaseEntity.AggregateEntity.NETN_Aggregate
+    hlaClass_->Register( ::hla::AttributeIdentifier( "Echelon" ) );                // static
     federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity.NETN_Aggregate" ), *hlaClass_, true, false );
     subject_.Register( *this );
     hlaClass_->ActivateUpdates( true );

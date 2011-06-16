@@ -78,6 +78,8 @@ void AggregateEntity::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateA
         UpdateFormation( functor );
     if( updateAll || compositionChanged_ )
         UpdateComposition( functor );
+    if( updateAll )
+        UpdateEchelon( functor );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,4 +251,16 @@ void AggregateEntity::UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) con
     }
     functor.Visit( ::hla::AttributeIdentifier( "SilentEntities" ), serializer );
     compositionChanged_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AggregateEntity::UpdateEchelon
+// Created: SLI 2011-06-16
+// -----------------------------------------------------------------------------
+void AggregateEntity::UpdateEchelon( ::hla::UpdateFunctor_ABC& functor ) const
+{
+    unsigned char state = 14; // platoon
+    ::hla::Serializer archive;
+    archive << state;
+    functor.Visit( ::hla::AttributeIdentifier( "Echelon" ), archive );
 }

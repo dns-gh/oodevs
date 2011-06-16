@@ -62,7 +62,8 @@ BOOST_FIXTURE_TEST_CASE( agent_serializes_all_but_spatial_attribute, Fixture )
                                                                         ( "ForceIdentifier" )
                                                                         ( "Formation" )
                                                                         ( "NumberOfSilentEntities" )
-                                                                        ( "SilentEntities" );
+                                                                        ( "SilentEntities" )
+                                                                        ( "Echelon" );
     mock::sequence s;
     BOOST_FOREACH( const std::string& attribute, attributes )
         MOCK_EXPECT( functor, Visit ).once().in( s ).with( attribute, mock::any );

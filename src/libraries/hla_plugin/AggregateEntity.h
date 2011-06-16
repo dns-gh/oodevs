@@ -71,6 +71,7 @@ private:
     void UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) const;
     void UpdateFormation( ::hla::UpdateFunctor_ABC& functor ) const;
     void UpdateDimensions( ::hla::UpdateFunctor_ABC& functor ) const;
+    void UpdateEchelon( ::hla::UpdateFunctor_ABC& functor ) const;
     //@}
 
 private:
