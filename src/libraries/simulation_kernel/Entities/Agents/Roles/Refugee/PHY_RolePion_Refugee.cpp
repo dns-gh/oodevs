@@ -173,9 +173,9 @@ bool PHY_RolePion_Refugee::IsManaged( const MIL_Object_ABC& camp ) const
 void PHY_RolePion_Refugee::SendFullState( client::UnitAttributes& msg ) const
 {
     msg().set_refugees_managed( bManaged_ );
-    msg().set_refugees_lodging_satisf( lodgingSatisfaction_ );
-    msg().set_refugees_security_satisf( securitySatisfaction_ );
-    msg().set_refugees_health_satisf( healthSatisfaction_ );
+    msg().mutable_refugees_satisfaction()->set_lodging( lodgingSatisfaction_ );
+    msg().mutable_refugees_satisfaction()->set_safety( securitySatisfaction_ );
+    msg().mutable_refugees_satisfaction()->set_access_to_health_care( healthSatisfaction_ );
 }
 
 // -----------------------------------------------------------------------------

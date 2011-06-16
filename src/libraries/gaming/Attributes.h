@@ -113,9 +113,9 @@ public:
     bool aggregated_;
     std::map< std::string, std::string > extensions_;
     std::string criticalIntelligence_;
-    float fRefugeesLodgingSatisfPercent_;
-    float fRefugeesSecuritySatisfPercent_;
-    float fRefugeesHealthSatisfPercent_;
+    float fRefugeesLodgingSatisfactionPercent_;
+    float fRefugeesSecuritySatisfactionPercent_;
+    float fRefugeesHealthSatisfactionPercent_;
     //@}
 };
 

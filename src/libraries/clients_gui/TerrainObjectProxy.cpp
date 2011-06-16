@@ -54,7 +54,8 @@ TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, const std::str
 // -----------------------------------------------------------------------------
 TerrainObjectProxy::~TerrainObjectProxy()
 {
-    Get< kernel::UrbanColor_ABC >().Restore();
+    if( UrbanColor_ABC* pColor = Retrieve< UrbanColor_ABC >() )
+        pColor->Restore();
     controllers_.Unregister( *this );
     Destroy();
 }

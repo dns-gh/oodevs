@@ -60,9 +60,9 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     , surrenderedTo_( 0 )
     , bRefugeesManaged_( false )
     , aggregated_( false )
-    , fRefugeesLodgingSatisfPercent_( 0.0f )
-    , fRefugeesSecuritySatisfPercent_( 0.0f )
-    , fRefugeesHealthSatisfPercent_( 0.0f )
+    , fRefugeesLodgingSatisfactionPercent_( 0.0f )
+    , fRefugeesSecuritySatisfactionPercent_( 0.0f )
+    , fRefugeesHealthSatisfactionPercent_( 0.0f )
 {
     CreateDictionary( dictionary );
 }
@@ -100,9 +100,9 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
     dictionary.Register( *this, tools::translate( "Attributes", "Military state/Prisoner" ),              bPrisoner_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Military state/Surrender" ),             surrenderedTo_ );
     dictionary.Register( *this, tools::translate( "Attributes", "Military state/Refugees picked up" ),    bRefugeesManaged_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Lodging" ),                 fRefugeesLodgingSatisfPercent_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Security" ),                fRefugeesSecuritySatisfPercent_ );
-    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Health" ),                  fRefugeesHealthSatisfPercent_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Lodging" ),                 fRefugeesLodgingSatisfactionPercent_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Security" ),                fRefugeesSecuritySatisfactionPercent_ );
+    dictionary.Register( *this, tools::translate( "Attributes", "Satisfaction/Health" ),                  fRefugeesHealthSatisfactionPercent_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,14 +201,17 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
     if( message.has_critical_intelligence() )
         criticalIntelligence_ = message.critical_intelligence();
 
-    if ( message.has_refugees_lodging_satisf() )
-        fRefugeesLodgingSatisfPercent_ = 100.0f * message.refugees_lodging_satisf();
+    if ( message.has_refugees_satisfaction() )
+    {
+        if ( message.refugees_satisfaction().has_lodging() )
+            fRefugeesLodgingSatisfactionPercent_ = 100.0f * message.refugees_satisfaction().lodging();
 
-    if ( message.has_refugees_security_satisf() )
-        fRefugeesSecuritySatisfPercent_ = 100.0f * message.refugees_security_satisf();
+        if ( message.refugees_satisfaction().has_safety() )
+            fRefugeesSecuritySatisfactionPercent_ = 100.0f * message.refugees_satisfaction().safety();
 
-    if ( message.has_refugees_health_satisf() )
-        fRefugeesHealthSatisfPercent_ = 100.0f * message.refugees_health_satisf();
+        if ( message.refugees_satisfaction().has_access_to_health_care() )
+            fRefugeesHealthSatisfactionPercent_ = 100.0f * message.refugees_satisfaction().access_to_health_care();
+    }
 
     controller_.Update( *(Attributes_ABC*)this );
 }
@@ -262,9 +265,9 @@ void Attributes::Display( Displayer_ABC& displayer ) const
             .Display( tools::translate( "Attributes", "Refugees picked up:" ), bRefugeesManaged_ );
 
     displayer.Group( tools::translate( "Attributes", "Satisfaction" ) )
-        .Display( tools::translate( "Attributes", "Lodging:" ), fRefugeesLodgingSatisfPercent_ )
-        .Display( tools::translate( "Attributes", "Security:" ), fRefugeesSecuritySatisfPercent_ )
-        .Display( tools::translate( "Attributes", "Health:" ), fRefugeesHealthSatisfPercent_ );
+        .Display( tools::translate( "Attributes", "Lodging:" ), fRefugeesLodgingSatisfactionPercent_ )
+        .Display( tools::translate( "Attributes", "Security:" ), fRefugeesSecuritySatisfactionPercent_ )
+        .Display( tools::translate( "Attributes", "Health:" ), fRefugeesHealthSatisfactionPercent_ );
 }
 
 // -----------------------------------------------------------------------------

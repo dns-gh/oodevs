@@ -107,8 +107,7 @@ message UnitMagicAction {
         inhabitant_change_confined_state  = 35; //!< A change of confined state on inhabitant magic action
         unit_change_affinities            = 36; //!< A change of affinities on unit magic action
         change_extension                  = 37; //!< An extension change magic action
-        change_critical_intelligence      = 38; //!< Change critical intelligence magic action
-        knowledge_group_add_knowledge     = 39; //!< A knowledge group add knowledge magic action        
+        change_critical_intelligence      = 38; //!< Change critical intelligence magic action       
     }
     required Tasker            tasker     = 1; //!< The tasker @todo Explain what is a "tasker"
     required Type              type       = 2; //!< The magic action typ
