@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE( aggregate_marking_serializes_name_in_a_31_characters_buffe
     ::hla::Serializer serializer;
     marking.Serialize( serializer );
     const T_Buffer buffer = Convert( serializer );
-    BOOST_CHECK_EQUAL( 32u, buffer.size() );
+    BOOST_CHECK_EQUAL( 32 * sizeof( int8 ), buffer.size() );
     BOOST_CHECK_EQUAL( 'n', buffer.at( 1 ) );
     BOOST_CHECK_EQUAL( 'a', buffer.at( 2 ) );
     BOOST_CHECK_EQUAL( 'm', buffer.at( 3 ) );
@@ -44,6 +44,6 @@ BOOST_AUTO_TEST_CASE( aggregate_marking_truncates_name_over_31_characters )
     ::hla::Serializer serializer;
     marking.Serialize( serializer );
     const T_Buffer buffer = Convert( serializer );
-    BOOST_CHECK_EQUAL( 32u, buffer.size() );
+    BOOST_CHECK_EQUAL( 32 * sizeof( int8 ), buffer.size() );
     BOOST_CHECK_EQUAL( 'b', buffer.at( 31 ) );
 }
