@@ -261,13 +261,15 @@ namespace boost
 // -----------------------------------------------------------------------------
 void MIL_LimaOrder::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    TER_Localisation* localisation = 0;
     file >> nID_
-         >> localisation_
+         >> localisation
          >> functions_
          >> bFlag_
          >> bScheduleFlag_
          >> nSchedule_
          >> nNextID_;
+    localisation_.reset( new TER_Localisation( *localisation ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -276,8 +278,9 @@ void MIL_LimaOrder::load( MIL_CheckPointInArchive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void MIL_LimaOrder::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
+    TER_Localisation* localisation = localisation_.get();
     file << nID_
-         << localisation_
+         << localisation
          << functions_
          << bFlag_
          << bScheduleFlag_
