@@ -15,6 +15,7 @@
 #include "MockAgent.h"
 #include "MockUpdateFunctor.h"
 #include <hla/Deserializer.h>
+#include <hla/Serializer.h>
 #include <hla/AttributeIdentifier.h>
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
@@ -80,6 +81,33 @@ BOOST_FIXTURE_TEST_CASE( agent_serializes_all, Fixture )
             MOCK_EXPECT( functor, Visit ).once().in( s ).with( attribute, mock::any );
         entity.Serialize( functor, true );
     }
+}
+
+namespace
+{
+    template< typename T >
+    bool CheckSerialization( const ::hla::Serializer& serializer, const T& expected )
+    {
+        std::vector< int8 > buffer( serializer.GetSize() );
+        if( !buffer.empty() )
+            serializer.CopyTo( &buffer[0] );
+        ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
+        T actual;
+        deserializer >> actual;
+        BOOST_CHECK_EQUAL( expected, actual );
+        BOOST_CHECK_THROW( deserializer >> actual, std::runtime_error );
+        return true;
+    }
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_is_fully_aggregated, Fixture )
+{
+    const unsigned char fullyAggregated = 1;
+    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
+    hla::MockUpdateFunctor functor;
+    MOCK_EXPECT( functor, Visit ).once().with( "AggregateState", boost::bind( &CheckSerialization< unsigned char >, _1, fullyAggregated ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( spatial_changed_event_is_serialized, Fixture )
