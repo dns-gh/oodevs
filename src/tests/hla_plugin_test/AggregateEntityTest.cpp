@@ -152,6 +152,26 @@ BOOST_FIXTURE_TEST_CASE( agent_updates_already_known_equipment, Fixture )
     entity.Serialize( functor, true );
 }
 
+BOOST_FIXTURE_TEST_CASE( agent_not_mounted_serializes_0_percent, Fixture )
+{
+    const double percentMounted = 0.;
+    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
+    MOCK_EXPECT( functor, Visit ).once().with( "Mounted", boost::bind( &CheckSerialization< double >, _1, percentMounted ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( mounted_agent_serializes_100_percent, Fixture )
+{
+    const double percentMounted = 100.;
+    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
+    BOOST_REQUIRE( listener );
+    listener->EmbarkmentChanged( true );
+    MOCK_EXPECT( functor, Visit ).once().with( "Mounted", boost::bind( &CheckSerialization< double >, _1, percentMounted ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
+}
+
 BOOST_FIXTURE_TEST_CASE( spatial_changed_event_is_serialized, Fixture )
 {
     AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
