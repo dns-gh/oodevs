@@ -104,7 +104,6 @@ BOOST_FIXTURE_TEST_CASE( agent_is_fully_aggregated, Fixture )
 {
     const unsigned char fullyAggregated = 1;
     AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
-    hla::MockUpdateFunctor functor;
     MOCK_EXPECT( functor, Visit ).once().with( "AggregateState", boost::bind( &CheckSerialization< unsigned char >, _1, fullyAggregated ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
@@ -116,6 +115,39 @@ BOOST_FIXTURE_TEST_CASE( agent_echelon_is_platoon, Fixture )
     AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     hla::MockUpdateFunctor functor;
     MOCK_EXPECT( functor, Visit ).once().with( "Echelon", boost::bind( &CheckSerialization< double >, _1, platoonEchelon ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( empty_agent_does_not_have_any_silent_entity, Fixture )
+{
+    const unsigned short numberOfSilentEntity = 0;
+    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
+    MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_serializes_silent_entities_number, Fixture )
+{
+    const unsigned short numberOfSilentEntity = 2;
+    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
+    BOOST_REQUIRE( listener );
+    listener->EquipmentChanged( 1u, 1u );
+    listener->EquipmentChanged( 2u, 2u );
+    MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_updates_already_known_equipment, Fixture )
+{
+    const unsigned short numberOfSilentEntity = 1;
+    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
+    BOOST_REQUIRE( listener );
+    listener->EquipmentChanged( 1u, 1u );
+    listener->EquipmentChanged( 1u, 2u );
+    MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }
