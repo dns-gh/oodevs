@@ -155,6 +155,7 @@ private:
     QString savedState_;
     CreationPanels* pCreationPanel_;
     ScoreDialog* pScoreDialog_;
+    QDialog* loadingDialog_;
     //@}
 };
 

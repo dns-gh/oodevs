@@ -638,6 +638,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Preparation - [%1]</source>
         <translation>Préparation - [%1]</translation>
     </message>
+    <message>
+        <source>Loading...</source>
+        <translation>Chargement...</translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

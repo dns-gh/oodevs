@@ -638,6 +638,10 @@ Do you want to save anyway?</source>
         <source>Preparation - [%1]</source>
         <translation type="unfinished">Preparación - [%1]</translation>
     </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

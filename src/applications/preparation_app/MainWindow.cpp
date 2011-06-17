@@ -253,6 +253,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new DisplayToolbar( this, controllers );
     new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
 
+    loadingDialog_ = new QDialog( this, 0, FALSE, Qt::WStyle_Customize | WStyle_NormalBorder );
+    QLabel* label = new QLabel( loadingDialog_ );
+    label->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+    label->setText( tr( "Loading..." ) );
+    label->setAlignment( AlignVCenter | AlignHCenter );
+    loadingDialog_->show();
+
     // Menu
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *exportDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
@@ -273,6 +280,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     if( bfs::exists( bfs::path( config_.GetExerciseFile(), bfs::native ) ) && Load() )
         LoadExercise();
+
+    loadingDialog_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -378,6 +387,8 @@ void MainWindow::New()
 // -----------------------------------------------------------------------------
 void MainWindow::DoLoad( QString filename )
 {
+    loadingDialog_->show();
+
     if( filename.isEmpty() )
         return;
     if( filename.startsWith( "//" ) )
@@ -391,6 +402,8 @@ void MainWindow::DoLoad( QString filename )
         SetWindowTitle( true );
         LoadExercise();
     }
+
+    loadingDialog_->hide();
 }
 
 // -----------------------------------------------------------------------------
