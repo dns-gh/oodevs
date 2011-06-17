@@ -10,7 +10,7 @@
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/AggregateMarking.h"
 #include "hla_plugin/SerializationTools.h"
-#include "Tools.h"
+#include "SerializationFixture.h"
 
 using namespace plugins::hla;
 

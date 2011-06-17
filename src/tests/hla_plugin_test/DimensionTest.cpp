@@ -9,7 +9,7 @@
 
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/Dimension.h"
-#include "Tools.h"
+#include "SerializationFixture.h"
 
 using namespace plugins::hla;
 

@@ -11,7 +11,7 @@
 #include "rpr/EntityIdentifier.h"
 #include "rpr/EntityType.h"
 #include "rpr/Coordinates.h"
-#include "Tools.h"
+#include "SerializationFixture.h"
 
 using namespace rpr;
 
