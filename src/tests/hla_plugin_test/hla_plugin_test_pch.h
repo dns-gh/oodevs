@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __plugins_test_pch_h_
-#define __plugins_test_pch_h_
+#ifndef hla_plugin_test_pch_h
+#define hla_plugin_test_pch_h
 
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
@@ -40,4 +40,4 @@ namespace hla
 
 #undef max
 
-#endif // __plugins_test_pch_h_
+#endif // hla_plugin_test_pch_h
