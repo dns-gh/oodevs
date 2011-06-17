@@ -13,14 +13,10 @@
 
 using namespace plugins::hla;
 
-BOOST_AUTO_TEST_CASE( dimension_on_road_serialization )
+BOOST_FIXTURE_TEST_CASE( dimension_on_road_serialization, SerializationFixture )
 {
     const Dimension dimensions( true );
-    ::hla::Serializer serializer;
-    dimensions.Serialize( serializer );
-    const T_Buffer buffer = Convert( serializer );
-    BOOST_CHECK_EQUAL( 3 * sizeof( real32 ), buffer.size() );
-    ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
+    ::hla::Deserializer deserializer = Serialize( dimensions, 3 * sizeof( real32 ) );
     const float xAxisOnRoad = 200.;
     const float yAxisOnRoad = 50.;
     const float zAxisOnRoad = 3.;
@@ -29,14 +25,10 @@ BOOST_AUTO_TEST_CASE( dimension_on_road_serialization )
     BOOST_CHECK_EQUAL( zAxisOnRoad, Read< real32 >( deserializer ) );
 }
 
-BOOST_AUTO_TEST_CASE( dimension_on_ground_serialization )
+BOOST_FIXTURE_TEST_CASE( dimension_on_ground_serialization, SerializationFixture )
 {
     const Dimension dimensions( false );
-    ::hla::Serializer serializer;
-    dimensions.Serialize( serializer );
-    const T_Buffer buffer = Convert( serializer );
-    BOOST_CHECK_EQUAL( 3 * sizeof( real32 ), buffer.size() );
-    ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
+    ::hla::Deserializer deserializer = Serialize( dimensions, 3 * sizeof( real32 ) );
     const float xAxisOnRoad = 100.;
     const float yAxisOnRoad = 100.;
     const float zAxisOnRoad = 3.;
