@@ -420,6 +420,7 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "unit_change_affinities", sword::UnitMagicAction::unit_change_affinities ) );
     RegisterActionType( *new MagicActionType( "change_extension", sword::UnitMagicAction::change_extension ) );
     RegisterActionType( *new MagicActionType( "change_critical_intelligence", sword::UnitMagicAction::change_critical_intelligence ) );
+    RegisterActionType( *new MagicActionType( "transfer_equipment", sword::UnitMagicAction::transfer_equipment ) );
 
     // Knowledge Magic Actions
     RegisterActionType( *new MagicActionType( "knowledge_group_enable", sword::KnowledgeMagicAction::enable ) );

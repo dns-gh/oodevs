@@ -579,6 +579,53 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>EquipmentTransferDialog</name>
+    <message>
+        <source>Magic orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation type="unfinished">Cantidad</translation>
+    </message>
+    <message>
+        <source>Equipment</source>
+        <translation type="unfinished">Equipo</translation>
+    </message>
+    <message>
+        <source>From:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation type="unfinished">SWORD</translation>
+    </message>
+    <message>
+        <source>Invalid equipment quantity, at least one must be &gt; 0.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid destination unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EquipmentsListView</name>
     <message>
         <source>Equipment</source>

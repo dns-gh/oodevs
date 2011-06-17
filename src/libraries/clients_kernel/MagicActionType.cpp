@@ -276,4 +276,9 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Extensions", "extensionlist" );
     else if( name == "change_critical_intelligence" )
         CreateOrderParameter( "Name", "string" );
+    else if( name == "transfer_equipment" )
+    {
+        CreateOrderParameter( "Receiver", "agent" );
+        CreateOrderParameter( "Equipments", "list" );
+    }
 }

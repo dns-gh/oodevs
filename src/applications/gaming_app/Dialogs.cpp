@@ -15,6 +15,7 @@
 #include "ChangeHumanFactorsDialog.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "CreateFormationDialog.h"
+#include "EquipmentTransferDialog.h"
 #include "InhabitantChangeAffinitiesDialog.h"
 #include "InhabitantChangeAlertedStateDialog.h"
 #include "InhabitantChangeConfinedStateDialog.h"
@@ -64,6 +65,7 @@ Dialogs::Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model
     new InhabitantExtractCrowdDialog( parent, controllers, actionsModel, simulation, profile );
     new PopulationChangeHealthStateDialog( parent, controllers, actionsModel, simulation, profile );
     new CriticalIntelligenceDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
+    new EquipmentTransferDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
 }
 
 // -----------------------------------------------------------------------------

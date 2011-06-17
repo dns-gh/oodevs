@@ -187,7 +187,8 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgUnitMagicAction& fro
                         ( MsgsClientToSim::MsgUnitMagicAction::inhabitant_change_affinities, sword::UnitMagicAction::inhabitant_change_affinities )
                         ( MsgsClientToSim::MsgUnitMagicAction::change_extension, sword::UnitMagicAction::change_extension )
                         ( MsgsClientToSim::MsgUnitMagicAction::change_critical_intelligence, sword::UnitMagicAction::change_critical_intelligence )
-                        ( MsgsClientToSim::MsgUnitMagicAction::unit_creation, sword::UnitMagicAction::unit_creation ) );
+                        ( MsgsClientToSim::MsgUnitMagicAction::unit_creation, sword::UnitMagicAction::unit_creation )
+                        ( MsgsClientToSim::MsgUnitMagicAction::transfer_equipment, sword::UnitMagicAction::transfer_equipment ) );
     switch( from.type() )
     {
         case MsgsClientToSim::MsgUnitMagicAction::change_logistic_links:    ConvertUnitMagicActionChangeLogisticLinks  ( from.parameters(), *to->mutable_parameters() ); break;

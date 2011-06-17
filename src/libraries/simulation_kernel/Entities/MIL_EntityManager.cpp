@@ -56,6 +56,7 @@
 #include "Agents/Units/Composantes/PHY_ComposanteState.h"
 #include "Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
 #include "Agents/Units/Logistic/PHY_MaintenanceLevel.h"
+#include "Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
 #include "Agents/Roles/Logistic/PHY_Convoy_ABC.h"
 #include "Agents/Roles/Logistic/PHY_MaintenanceResourcesAlarms.h"
@@ -897,6 +898,12 @@ void MIL_EntityManager::OnReceiveUnitMagicAction( const UnitMagicAction& message
             else
                 throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
             break;
+        case UnitMagicAction::transfer_equipment:
+            if( MIL_AgentPion* pPion = FindAgentPion( id ) )
+                ProcessTransferEquipmentRequest( message, *pPion );
+            else
+                throw NET_AsnException< UnitActionAck::ErrorCode >( UnitActionAck::error_invalid_unit );
+            break;
         default:
             if( MIL_Formation* pFormation = FindFormation( id ) )
                 pFormation->OnReceiveUnitMagicAction( message );
@@ -1197,6 +1204,37 @@ void MIL_EntityManager::OnReceiveChangeDiplomacy( const MagicAction& message, un
 void MIL_EntityManager::OnReceiveChangeResourceLinks( const MagicAction& message, unsigned int nCtx )
 {
     pObjectManager_->OnReceiveChangeResourceLinks( message, nCtx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::ProcessTransferEquipmentRequest
+// Created: ABR 2011-06-15
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::ProcessTransferEquipmentRequest( const sword::UnitMagicAction& message, MIL_AgentPion& pion )
+{
+    // Read message
+    if( !message.has_parameters() || message.parameters().elem_size() != 2 ||
+        message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_identifier() ||
+        message.parameters().elem( 1 ).value_size() == 0 )
+        throw NET_AsnException< UnitActionAck::ErrorCode >( UnitActionAck::error_invalid_parameter );
+    const ::MissionParameters& parameters = message.parameters();
+    unsigned int otherId = parameters.elem( 0 ).value().Get( 0 ).identifier();
+    MIL_AgentPion* borrower = FindAgentPion( otherId );
+    if( !borrower )
+        throw NET_AsnException< UnitActionAck::ErrorCode >( UnitActionAck::error_invalid_parameter );
+    std::map< unsigned int, int > composantesMap;
+    for( int i = 0; i < message.parameters().elem( 1 ).value_size(); ++i )
+    {
+        const ::sword::MissionParameter_Value& value = message.parameters().elem( 1 ).value().Get( i );
+        if( !value.list( 0 ).has_identifier() || !value.list( 1 ).has_quantity() )
+            throw NET_AsnException< UnitActionAck::ErrorCode >( UnitActionAck::error_invalid_parameter );
+        composantesMap[ value.list( 0 ).identifier() ] = value.list( 1 ).quantity();
+    }
+    // Transfer composante
+    PHY_RolePion_Composantes& pSource = pion.GetRole< PHY_RolePion_Composantes >();
+    PHY_RolePion_Composantes& pTarget = borrower->GetRole< PHY_RolePion_Composantes >();
+    for( std::map< unsigned int, int >::const_iterator it = composantesMap.begin(); it != composantesMap.end(); ++it )
+        pSource.GiveComposante( it->first, it->second, pTarget );
 }
 
 // -----------------------------------------------------------------------------

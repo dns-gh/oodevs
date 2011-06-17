@@ -34,6 +34,7 @@ DisconnectDialog.cpp \
 DotationsListView.cpp \
 EfficientRangeDialog.cpp \
 EquipmentsListView.cpp \
+EquipmentTransferDialog.cpp \
 EventToolbar.cpp \
 ExtensionsPanel.cpp \
 FireCreationPanel.cpp \

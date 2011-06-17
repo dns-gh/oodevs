@@ -579,6 +579,53 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>EquipmentTransferDialog</name>
+    <message>
+        <source>Magic orders</source>
+        <translation>Actions magiques</translation>
+    </message>
+    <message>
+        <source>Equipment transfer</source>
+        <translation>Transfert de composantes</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>From:</source>
+        <translation>Source:</translation>
+    </message>
+    <message>
+        <source>To:</source>
+        <translation>Destination:</translation>
+    </message>
+    <message>
+        <source>Quantity</source>
+        <translation>Quantité</translation>
+    </message>
+    <message>
+        <source>Equipment</source>
+        <translation>Equipement</translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation>SWORD</translation>
+    </message>
+    <message>
+        <source>Invalid equipment quantity, at least one must be &gt; 0.</source>
+        <translation>Quantité d&apos;équipement invalide, au moins une doit être &gt; 0.</translation>
+    </message>
+    <message>
+        <source>Invalid destination unit.</source>
+        <translation>Unité de destination invalide.</translation>
+    </message>
+</context>
+<context>
     <name>EquipmentsListView</name>
     <message>
         <source>Equipment</source>

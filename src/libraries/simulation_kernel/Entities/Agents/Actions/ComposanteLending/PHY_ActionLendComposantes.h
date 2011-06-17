@@ -59,13 +59,16 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     PHY_RolePion_Composantes& role_;
 
     PHY_RolePion_Composantes* pTarget_;
     T_ComposantePredicate     predicate_;
-    const unsigned int                nNbrToLend_;
-          unsigned int                nTimer_;
-          bool                bLoanDone_;
+    const unsigned int        nNbrToLend_;
+    unsigned int              nTimer_;
+    bool                      bLoanDone_;
+    //@}
 };
 
 #endif // __PHY_ActionLendComposantes_h_

@@ -76,6 +76,7 @@ message MsgUnitMagicAction {
         unit_change_affinities            = 34;
         change_extension                  = 35;
         change_critical_intelligence      = 36;
+        transfer_equipment                = 37;
     }
    required Common.Tasker               tasker     = 1;
    required Type                        type       = 2;

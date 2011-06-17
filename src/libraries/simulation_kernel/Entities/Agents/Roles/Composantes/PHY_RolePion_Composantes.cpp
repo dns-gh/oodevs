@@ -1763,3 +1763,23 @@ bool PHY_RolePion_Composantes::CanStockMoreOf( PHY_RoleInterface_Supply& supplyR
 
     return rWeight < rWeightCapacity && rVolume < rVolumeCapacity;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GiveComposante
+// Created: ABR 2011-06-16
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::GiveComposante( unsigned int id, int quantity, PHY_RolePion_Composantes& borrower )
+{
+    for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && quantity; )
+    {
+        PHY_ComposantePion& composante = **it;
+        if( composante.CanBeLent() && composante.GetType().GetMosID().id() == id )
+        {
+            --quantity;
+            composante.TransferComposante( borrower );
+            it = composantes_.rbegin(); // TransfertComposante modifie composantes_
+        }
+        else
+            ++it;
+    }
+}

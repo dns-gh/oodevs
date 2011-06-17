@@ -136,6 +136,11 @@ public:
     virtual void NotifyLentComposanteReturned( PHY_RoleInterface_Composantes& lender, PHY_ComposantePion& composante );
     //@}
 
+    //! @name Transfert de composantes
+    //@{
+    void GiveComposante( unsigned int id, int quantity, PHY_RolePion_Composantes& borrower );
+    //@}
+
     //$$$ Toute la partie logistique GetXXXUse() devrait être externalisée
     void GetConvoyTransportersUse( T_ComposanteUseMap& composanteUse ) const;
     //! @name Logistic - maintenance
