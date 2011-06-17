@@ -10,6 +10,7 @@
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/AggregateMarking.h"
 #include "hla_plugin/SerializationTools.h"
+#include "rpr/EntityIdentifier.h"
 #include <hla/Serializer.h>
 #include <hla/Deserializer.h>
 
@@ -24,6 +25,13 @@ namespace
         if( !buffer.empty() )
             serializer.CopyTo( &buffer[0] );
         return buffer;
+    }
+    template< typename T >
+    T Read( ::hla::Deserializer& deserializer )
+    {
+        T result;
+        deserializer >> result;
+        return result;
     }
 }
 
@@ -59,4 +67,20 @@ BOOST_AUTO_TEST_CASE( aggregate_marking_truncates_name_over_31_characters )
     const T_Buffer buffer = Convert( serializer );
     BOOST_CHECK_EQUAL( 32u, buffer.size() );
     BOOST_CHECK_EQUAL( 'b', buffer.at( 31 ) );
+}
+
+BOOST_AUTO_TEST_CASE( entity_identifier_serialization )
+{
+    const unsigned short site = 1;
+    const unsigned short application = 2;
+    const unsigned short number = 3;
+    const rpr::EntityIdentifier identifier( site, application, number );
+    ::hla::Serializer serializer;
+    identifier.Serialize( serializer );
+    const T_Buffer buffer = Convert( serializer );
+    BOOST_CHECK_EQUAL( 3 * sizeof( int16 ), buffer.size() );
+    ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
+    BOOST_CHECK_EQUAL( site       , Read< unsigned short >( deserializer ) );
+    BOOST_CHECK_EQUAL( application, Read< unsigned short >( deserializer ) );
+    BOOST_CHECK_EQUAL( number     , Read< unsigned short >( deserializer ) );
 }
