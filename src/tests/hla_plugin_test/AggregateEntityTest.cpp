@@ -110,6 +110,16 @@ BOOST_FIXTURE_TEST_CASE( agent_is_fully_aggregated, Fixture )
     entity.Serialize( functor, true );
 }
 
+BOOST_FIXTURE_TEST_CASE( agent_echelon_is_platoon, Fixture )
+{
+    const double platoonEchelon = 14;
+    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
+    hla::MockUpdateFunctor functor;
+    MOCK_EXPECT( functor, Visit ).once().with( "Echelon", boost::bind( &CheckSerialization< double >, _1, platoonEchelon ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
+}
+
 BOOST_FIXTURE_TEST_CASE( spatial_changed_event_is_serialized, Fixture )
 {
     AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
