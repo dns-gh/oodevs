@@ -10,11 +10,6 @@
 #include "hla_plugin_pch.h"
 #include "AggregateEntity.h"
 #include "Agent_ABC.h"
-#include "Spatial.h"
-#include "AggregateMarking.h"
-#include "SilentEntity.h"
-#include "Formation.h"
-#include "Dimension.h"
 #include "SerializationTools.h"
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
@@ -30,19 +25,16 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 AggregateEntity::AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
                                   const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
-    : agent_             ( agent )
-    , identifier_        ( identifier )
-    , name_              ( name )
-    , force_             ( force )
-    , type_              ( type )
-    , formationChanged_  ( false )
-    , dimensionsChanged_ ( false )
-    , isOnRoad_          ( false )
-    , spatialChanged_    ( false )
-    , pSpatial_          ( 0 )
-    , compositionChanged_( false )
-    , embarkmentChanged_ ( false )
-    , isMounted_         ( false )
+    : agent_                 ( agent )
+    , identifier_            ( identifier )
+    , name_                  ( name )
+    , force_                 ( force )
+    , type_                  ( type )
+    , spatial_               ( Spatial( 0., 0., 0., 0., 0. ) )
+    , formation_             ( Formation( false ) )
+    , dimensions_            ( Dimension( false ) )
+    , numberOfSilentEntities_( 0 )
+    , mounted_               ( 0. )
 {
     agent_.Register( *this );
 }
@@ -56,34 +48,64 @@ AggregateEntity::~AggregateEntity()
     agent_.Unregister( *this );
 }
 
+namespace
+{
+    template< typename T >
+    ::hla::Serializer& operator<<( ::hla::Serializer& serializer, const T& value )
+    {
+        value.Serialize( serializer );
+        return serializer;
+    }
+    template< typename T >
+    void Serialize( const std::string& attribute, const T& value, ::hla::UpdateFunctor_ABC& functor, bool updateAll )
+    {
+        if( updateAll )
+        {
+            ::hla::Serializer serializer;
+            serializer << value;
+            functor.Visit( ::hla::AttributeIdentifier( attribute ), serializer );
+        }
+    }
+    template< typename T >
+    void Serialize( const std::string& attribute, const Dynamic< T >& value, ::hla::UpdateFunctor_ABC& functor, bool updateAll )
+    {
+        if( updateAll || value.HasChanged() )
+        {
+            ::hla::Serializer serializer;
+            serializer << value;
+            functor.Visit( ::hla::AttributeIdentifier( attribute ), serializer );
+        }
+    }
+    template< typename T >
+    void Serialize( const std::string& attribute, const DynamicArray< T >& value, ::hla::UpdateFunctor_ABC& functor, bool updateAll )
+    {
+        if( updateAll || value.HasChanged() )
+        {
+            ::hla::Serializer serializer;
+            serializer << value;
+            functor.Visit( ::hla::AttributeIdentifier( attribute ), serializer );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity::Serialize
 // Created: SBO 2008-02-20
 // -----------------------------------------------------------------------------
 void AggregateEntity::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const
 {
-    if( updateAll )
-        UpdateEntityType( functor );
-    if( updateAll )
-        UpdateEntityIdentifier( functor );
-    if( updateAll || spatialChanged_ )
-        UpdateSpatial( functor );
-    if( updateAll )
-        UpdateAggregateMarking( functor );
-    if( updateAll )
-        UpdateAggregateState( functor );
-    if( updateAll || dimensionsChanged_ )
-        UpdateDimensions( functor );
-    if( updateAll )
-        UpdateForceIdentifier( functor );
-    if( updateAll || formationChanged_ )
-        UpdateFormation( functor );
-    if( updateAll || compositionChanged_ )
-        UpdateComposition( functor );
-    if( updateAll || embarkmentChanged_ )
-        UpdateEmbarkment( functor );
-    if( updateAll )
-        UpdateEchelon( functor );
+    ::Serialize( "EntityType", type_, functor, updateAll );
+    ::Serialize( "EntityIdentifier", identifier_, functor, updateAll );
+    ::Serialize( "Spatial", spatial_, functor, updateAll );
+    ::Serialize( "AggregateMarking", AggregateMarking( name_ ), functor, updateAll );
+    ::Serialize( "AggregateState", static_cast< unsigned char >( 1 ), functor, updateAll ); // fully aggregated
+    ::Serialize( "Dimensions", dimensions_, functor, updateAll );
+    ::Serialize( "ForceIdentifier", static_cast< unsigned char >( force_ ), functor, updateAll );
+    ::Serialize( "Formation", formation_, functor, updateAll );
+    ::Serialize( "NumberOfSilentEntities", numberOfSilentEntities_, functor, updateAll );
+    ::Serialize( "SilentEntities", silentEntities_, functor, updateAll );
+    ::Serialize( "Mounted", mounted_, functor, updateAll );
+    ::Serialize( "Echelon", static_cast< double >( 14. ), functor, updateAll ); // platoon
 }
 
 // -----------------------------------------------------------------------------
@@ -109,12 +131,16 @@ namespace
 // -----------------------------------------------------------------------------
 void AggregateEntity::EquipmentChanged( unsigned int type, unsigned int available )
 {
-    compositionChanged_ = true;
     IT_Equipments result = std::find_if( equipments_.begin(), equipments_.end(), boost::bind( &::Find, type, _1 ) );
     if( result == equipments_.end() )
         equipments_.push_back( std::make_pair( type, available ) );
     else
         result->second = available;
+    numberOfSilentEntities_.Update( static_cast< unsigned short >( equipments_.size() ) );
+    std::vector< SilentEntity > entities;
+    BOOST_FOREACH( const T_Equipment& equipment, equipments_ )
+        entities.push_back( SilentEntity( rpr::EntityType ( "1 1 225 1" ), static_cast< unsigned short >( equipment.second ) ) ); // $$$$ _RC_ SLI 2011-06-16: resolve platform types
+    silentEntities_.Update( entities );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,8 +149,7 @@ void AggregateEntity::EquipmentChanged( unsigned int type, unsigned int availabl
 // -----------------------------------------------------------------------------
 void AggregateEntity::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
 {
-    spatialChanged_ = true;
-    pSpatial_.reset( new Spatial( latitude, longitude, altitude, speed, direction ) );
+    spatial_.Update( Spatial( latitude, longitude, altitude, speed, direction ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,9 +158,8 @@ void AggregateEntity::SpatialChanged( double latitude, double longitude, float a
 // -----------------------------------------------------------------------------
 void AggregateEntity::FormationChanged( bool isOnRoad )
 {
-    isOnRoad_ = isOnRoad;
-    formationChanged_ = true;
-    dimensionsChanged_ = true;
+    formation_.Update( Formation( isOnRoad ) );
+    dimensions_.Update( Dimension( isOnRoad ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,150 +168,5 @@ void AggregateEntity::FormationChanged( bool isOnRoad )
 // -----------------------------------------------------------------------------
 void AggregateEntity::EmbarkmentChanged( bool mounted )
 {
-    isMounted_ = mounted;
-    embarkmentChanged_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::UpdateFormation
-// Created: SLI 2011-06-08
-// -----------------------------------------------------------------------------
-void AggregateEntity::UpdateFormation( ::hla::UpdateFunctor_ABC& functor ) const
-{
-    ::hla::Serializer serializer;
-    Formation formation( isOnRoad_ );
-    formation.Serialize( serializer );
-    functor.Visit( ::hla::AttributeIdentifier( "Formation" ), serializer );
-    formationChanged_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::UpdateDimensions
-// Created: SLI 2011-06-08
-// -----------------------------------------------------------------------------
-void AggregateEntity::UpdateDimensions( ::hla::UpdateFunctor_ABC& functor ) const
-{
-    ::hla::Serializer serializer;
-    Dimension dimensions( isOnRoad_ );
-    dimensions.Serialize( serializer );
-    functor.Visit( ::hla::AttributeIdentifier( "Dimensions" ), serializer );
-    dimensionsChanged_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::UpdateEntityType
-// Created: AGE 2008-02-25
-// -----------------------------------------------------------------------------
-void AggregateEntity::UpdateEntityType( ::hla::UpdateFunctor_ABC& functor ) const
-{
-    ::hla::Serializer serializer;
-    type_.Serialize( serializer );
-    functor.Visit( ::hla::AttributeIdentifier( "EntityType" ), serializer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::UpdateEntityIdentifier
-// Created: AGE 2008-02-25
-// -----------------------------------------------------------------------------
-void AggregateEntity::UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor ) const
-{
-    ::hla::Serializer serializer;
-    identifier_.Serialize( serializer );
-    functor.Visit( ::hla::AttributeIdentifier( "EntityIdentifier" ), serializer );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::UpdateSpatial
-// Created: AGE 2008-02-25
-// -----------------------------------------------------------------------------
-void AggregateEntity::UpdateSpatial( ::hla::UpdateFunctor_ABC& functor ) const
-{
-    if( !pSpatial_.get() )
-        return;
-    ::hla::Serializer archive;
-    pSpatial_->Serialize( archive );
-    functor.Visit( ::hla::AttributeIdentifier( "Spatial" ), archive );
-    spatialChanged_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::UpdateAggregateMarking
-// Created: AGE 2008-02-25
-// -----------------------------------------------------------------------------
-void AggregateEntity::UpdateAggregateMarking( ::hla::UpdateFunctor_ABC& functor ) const
-{
-    AggregateMarking marking( name_ );
-    ::hla::Serializer archive;
-    marking.Serialize( archive );
-    functor.Visit( ::hla::AttributeIdentifier( "AggregateMarking" ), archive );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::UpdateAggregateState
-// Created: AGE 2008-02-25
-// -----------------------------------------------------------------------------
-void AggregateEntity::UpdateAggregateState( ::hla::UpdateFunctor_ABC& functor ) const
-{
-    unsigned char state = 1; // fully aggregated
-    ::hla::Serializer archive;
-    archive << state;
-    functor.Visit( ::hla::AttributeIdentifier( "AggregateState" ), archive );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::UpdateForceIdentifier
-// Created: AGE 2008-02-25
-// -----------------------------------------------------------------------------
-void AggregateEntity::UpdateForceIdentifier( ::hla::UpdateFunctor_ABC& functor ) const
-{
-    ::hla::Serializer archive;
-    archive << static_cast< unsigned char >( force_ );
-    functor.Visit( ::hla::AttributeIdentifier( "ForceIdentifier" ), archive );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::UpdateComposition
-// Created: AGE 2008-02-25
-// -----------------------------------------------------------------------------
-void AggregateEntity::UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) const
-{
-    {
-        ::hla::Serializer serializer;
-        serializer << static_cast< unsigned short >( equipments_.size() );
-        functor.Visit( ::hla::AttributeIdentifier( "NumberOfSilentEntities" ), serializer );
-    }
-    ::hla::Serializer serializer;
-    BOOST_FOREACH( const T_Equipment& equipment, equipments_ )
-    {
-        const rpr::EntityType type( "1 1 225 1" ); // $$$$ _RC_ SLI 2011-06-16: resolve platform types
-        const SilentEntity entity( type, static_cast< unsigned short >( equipment.second ) );
-        entity.Serialize( serializer );
-    }
-    functor.Visit( ::hla::AttributeIdentifier( "SilentEntities" ), serializer );
-    compositionChanged_ = false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::UpdateEchelon
-// Created: SLI 2011-06-16
-// -----------------------------------------------------------------------------
-void AggregateEntity::UpdateEchelon( ::hla::UpdateFunctor_ABC& functor ) const
-{
-    unsigned char state = 14; // platoon
-    ::hla::Serializer archive;
-    archive << state;
-    functor.Visit( ::hla::AttributeIdentifier( "Echelon" ), archive );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AggregateEntity::UpdateEmbarkment
-// Created: SLI 2011-06-16
-// -----------------------------------------------------------------------------
-void AggregateEntity::UpdateEmbarkment( ::hla::UpdateFunctor_ABC& functor ) const
-{
-    const double percent = isMounted_ ? 100. : 0.;
-    ::hla::Serializer archive;
-    archive << percent;
-    functor.Visit( ::hla::AttributeIdentifier( "Mounted" ), archive );
-    embarkmentChanged_ = false;
+    mounted_.Update( mounted ? 100. : 0. );
 }

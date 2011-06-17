@@ -7,14 +7,21 @@
 //
 // *****************************************************************************
 
-#ifndef __AgentExtension_h_
-#define __AgentExtension_h_
+#ifndef plugins_hla_AgentExtension_h
+#define plugins_hla_AgentExtension_h
 
 #include "EventListener_ABC.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/EntityType.h"
 #include "rpr/ForceIdentifier.h"
+#include "Spatial.h"
+#include "AggregateMarking.h"
+#include "SilentEntity.h"
+#include "Formation.h"
+#include "Dimension.h"
 #include <vector>
+#include "Dynamic.h"
+#include "DynamicArray.h"
 
 namespace hla
 {
@@ -28,7 +35,6 @@ namespace plugins
 namespace hla
 {
     class Agent_ABC;
-    class Spatial;
 
 // =============================================================================
 /** @class  AggregateEntity
@@ -61,21 +67,6 @@ private:
     virtual void EmbarkmentChanged( bool mounted );
     //@}
 
-    //! @name Helpers
-    //@{
-    void UpdateEntityType( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateEntityIdentifier( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateSpatial( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateAggregateMarking( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateAggregateState( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateForceIdentifier( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateComposition( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateFormation( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateDimensions( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateEchelon( ::hla::UpdateFunctor_ABC& functor ) const;
-    void UpdateEmbarkment( ::hla::UpdateFunctor_ABC& functor ) const;
-    //@}
-
 private:
     //! @name Types
     //@{
@@ -92,19 +83,17 @@ private:
     const std::string name_;
     const rpr::ForceIdentifier force_;
     const rpr::EntityType type_;
-    mutable bool formationChanged_;
-    mutable bool dimensionsChanged_;
-    bool isOnRoad_;
-    mutable bool spatialChanged_;
-    std::auto_ptr< Spatial > pSpatial_;
-    mutable bool compositionChanged_;
     T_Equipments equipments_;
-    mutable bool embarkmentChanged_;
-    bool isMounted_;
+    Dynamic< Spatial > spatial_;
+    Dynamic< Formation > formation_;
+    Dynamic< Dimension > dimensions_;
+    Dynamic< unsigned short > numberOfSilentEntities_;
+    DynamicArray< SilentEntity > silentEntities_;
+    Dynamic< double > mounted_;
     //@}
 };
 
 }
 }
 
-#endif // __AgentExtension_h_
+#endif // plugins_hla_AgentExtension_h

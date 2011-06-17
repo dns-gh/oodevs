@@ -51,11 +51,12 @@ BOOST_FIXTURE_TEST_CASE( unmodified_agent_serializes_nothing, Fixture )
     entity.Serialize( functor, false );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_serializes_all_but_spatial_attribute, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_serializes_all, Fixture )
 {
     AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     const std::vector< std::string > attributes = boost::assign::list_of( "EntityType" )
                                                                         ( "EntityIdentifier" )
+                                                                        ( "Spatial" )
                                                                         ( "AggregateMarking" )
                                                                         ( "AggregateState" )
                                                                         ( "Dimensions" )
@@ -65,10 +66,20 @@ BOOST_FIXTURE_TEST_CASE( agent_serializes_all_but_spatial_attribute, Fixture )
                                                                         ( "SilentEntities" )
                                                                         ( "Mounted" )
                                                                         ( "Echelon" );
-    mock::sequence s;
-    BOOST_FOREACH( const std::string& attribute, attributes )
-        MOCK_EXPECT( functor, Visit ).once().in( s ).with( attribute, mock::any );
-    entity.Serialize( functor, true );
+    {
+        hla::MockUpdateFunctor functor;
+        mock::sequence s;
+        BOOST_FOREACH( const std::string& attribute, attributes )
+            MOCK_EXPECT( functor, Visit ).once().in( s ).with( attribute, mock::any );
+        entity.Serialize( functor, true );
+    }
+    {
+        hla::MockUpdateFunctor functor;
+        mock::sequence s;
+        BOOST_FOREACH( const std::string& attribute, attributes )
+            MOCK_EXPECT( functor, Visit ).once().in( s ).with( attribute, mock::any );
+        entity.Serialize( functor, true );
+    }
 }
 
 BOOST_FIXTURE_TEST_CASE( spatial_changed_event_is_serialized, Fixture )
