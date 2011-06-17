@@ -1941,6 +1941,22 @@ Arrêt moteur allumé</translation>
         <source>Effect on detection ranges</source>
         <translation>Effet sur les distances de détection</translation>
     </message>
+    <message>
+        <source>Stress modifiers</source>
+        <translation>Modificateurs dus au stress</translation>
+    </message>
+    <message>
+        <source>Calm</source>
+        <translation>Calme</translation>
+    </message>
+    <message>
+        <source>Worried</source>
+        <translation>Inquiet</translation>
+    </message>
+    <message>
+        <source>Stressed</source>
+        <translation>Stressé</translation>
+    </message>
 </context>
 <context>
     <name>ADN_KnowledgeGroups_GUI</name>
@@ -5553,6 +5569,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>WeaponSystem_%1.htm</source>
         <translation>SystèmeDArme_%1.htm</translation>
+    </message>
+    <message>
+        <source>Stress</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

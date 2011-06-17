@@ -51,6 +51,7 @@ class ChangeHumanFactorsDialog : public QDialog
                                , public tools::Caller< E_UnitTiredness >
                                , public tools::Caller< E_UnitMorale >
                                , public tools::Caller< E_UnitExperience >
+                               , public tools::Caller< E_UnitStress >
 {
     Q_OBJECT
 public:
@@ -86,11 +87,12 @@ private:
     //! @name Helpers
     //@{
     void DoContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    void SendAction( const kernel::Entity_ABC& entity, E_UnitTiredness, E_UnitMorale, E_UnitExperience );
-    void SendMessage( const kernel::Entity_ABC& entity, E_UnitTiredness, E_UnitMorale, E_UnitExperience );
+    void SendAction( const kernel::Entity_ABC& entity, E_UnitTiredness, E_UnitMorale, E_UnitExperience, E_UnitStress );
+    void SendMessage( const kernel::Entity_ABC& entity, E_UnitTiredness, E_UnitMorale, E_UnitExperience, E_UnitStress );
     virtual void Call( const E_UnitTiredness& fatigue );
     virtual void Call( const E_UnitMorale& morale );
     virtual void Call( const E_UnitExperience& experience );
+    virtual void Call( const E_UnitStress& stress );
     //@}
 
 private:
@@ -105,6 +107,7 @@ private:
     gui::ValuedComboBox< E_UnitTiredness >* pTirednessCombo_;
     gui::ValuedComboBox< E_UnitMorale >* pMoralCombo_;
     gui::ValuedComboBox< E_UnitExperience >* pExperienceCombo_;
+    gui::ValuedComboBox< E_UnitStress >* pStressCombo_;
     //@}
 };
 

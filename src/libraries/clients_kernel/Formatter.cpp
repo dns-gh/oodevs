@@ -124,6 +124,11 @@ void Formatter< E_UnitExperience >::operator()( const E_UnitExperience& e, Displ
     displayer.AddToDisplay( tools::ToString( e ) );
 }
 
+void Formatter< E_UnitStress >::operator()( const E_UnitStress& e, Displayer_ABC& displayer ) const
+{
+    displayer.AddToDisplay( tools::ToString( e ) );
+}
+
 void Formatter< E_UnitMorale >::operator()( const E_UnitMorale& e, Displayer_ABC& displayer ) const
 {
     displayer.AddToDisplay( tools::ToString( e ) );

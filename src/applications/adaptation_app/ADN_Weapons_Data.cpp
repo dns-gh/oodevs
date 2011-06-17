@@ -219,6 +219,7 @@ ADN_Weapons_Data::WeaponInfos::WeaponInfos()
 , nTargetPosture_ ( eUnitPosture_PostureArret )
 , nExperience_    ( eUnitExperience_Veteran )
 , nTiredness_     ( eUnitTiredness_Normal )
+, nStress_        ( eUnitStress_Calm )
 , bIndirect_    ( false )
 , rAverageSpeed_( 0 )
 , rMinRange_    ( 0 )
@@ -275,6 +276,7 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapons_Data::WeaponInfos::CreateCopy()
     pCopy->nTargetPosture_ = nTargetPosture_.GetData();
     pCopy->nExperience_ = nExperience_.GetData();
     pCopy->nTiredness_ = nTiredness_.GetData();
+    pCopy->nStress_ = nStress_.GetData();
 
     pCopy->bIndirect_ = bIndirect_.GetData();
     pCopy->rAverageSpeed_ = rAverageSpeed_.GetData();

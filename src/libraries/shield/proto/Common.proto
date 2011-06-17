@@ -299,6 +299,12 @@ enum EnumUnitMorale {
    mauvais                                          = 3;
 }
 
+enum EnumUnitStress {
+   calm                                             = 0;
+   worried                                          = 1;
+   stressed                                         = 2;
+}
+
 enum EnumUnitExperience {
    veteran                                          = 0;
    experimente                                      = 1;

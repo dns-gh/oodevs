@@ -90,11 +90,17 @@ void ADN_HumanFactors_GUI::Build()
     this->BuildModifiers( pGroupBox2, data_.tiredModifiers_, tr( "Tired" ) );
     this->BuildModifiers( pGroupBox2, data_.exhaustedModifiers_, tr( "Exhausted" ) );
 
+    QGroupBox* pGroupBox3 = new QGroupBox( 3, Qt::Horizontal, tr( "Stress modifiers" ), pMainWidget_ );
+    this->BuildModifiers( pGroupBox3, data_.calmModifiers_, tr( "Calm" ) );
+    this->BuildModifiers( pGroupBox3, data_.worriedModifiers_, tr( "Worried" ) );
+    this->BuildModifiers( pGroupBox3, data_.stressedModifiers_, tr( "Stressed" ) );
+
     // Layout
     QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 10, 10 );
     pLayout->setAlignment( Qt::AlignTop );
     pLayout->addWidget( pGroupBox1 );
     pLayout->addWidget( pGroupBox2 );
+    pLayout->addWidget( pGroupBox3 );
 }
 
 

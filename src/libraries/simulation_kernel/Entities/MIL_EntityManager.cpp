@@ -36,6 +36,7 @@
 #include "Agents/Units/Categories/PHY_Volume.h"
 #include "Agents/Units/Categories/PHY_Protection.h"
 #include "Agents/Units/HumanFactors/PHY_Experience.h"
+#include "Agents/Units/HumanFactors/PHY_Stress.h"
 #include "Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -255,6 +256,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_AmmoDotationClass         ::Terminate();
     MIL_KnowledgeGroupType        ::Terminate();
     PHY_Experience                ::Terminate();
+    PHY_Stress                    ::Terminate();
     PHY_Tiredness                 ::Terminate();
     PHY_Morale                    ::Terminate();
     PHY_MaintenanceLevel          ::Terminate();

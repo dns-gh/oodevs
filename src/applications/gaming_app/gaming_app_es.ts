@@ -332,6 +332,10 @@
         <source>Change Human Factors</source>
         <translation>Cambiar factores humanos</translation>
     </message>
+    <message>
+        <source>Stress:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChangeLogisticLinksDialog</name>

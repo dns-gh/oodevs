@@ -56,6 +56,7 @@
 #include "Agents/Units/Humans/PHY_HumanRank.h"
 #include "Agents/Units/Humans/PHY_HumanWound.h"
 #include "Agents/Units/HumanFactors/PHY_Experience.h"
+#include "Agents/Units/HumanFactors/PHY_Stress.h"
 #include "Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
@@ -154,6 +155,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_MaintenanceWorkRate        >( config, "maintenance"        );
     InitializeType< PHY_MaintenanceResourcesAlarms >( config, "maintenance"        );
     InitializeType< PHY_Experience                 >( config, "human-factors"      );
+    InitializeType< PHY_Stress                     >( config, "human-factors"      );
     InitializeType< PHY_Tiredness                  >( config, "human-factors"      );
     InitializeType< PHY_Volume                     >( config, "volumes"            );
     InitializeType< PHY_Protection                 >( config, "protections"        );

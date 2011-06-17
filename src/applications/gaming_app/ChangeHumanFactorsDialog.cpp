@@ -58,7 +58,7 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
     , selected_    ( controllers )
 {
     setCaption( tr( "Human factors" ) );
-    QGridLayout* pLayout = new QGridLayout( this, 5, 2, 4 );
+    QGridLayout* pLayout = new QGridLayout( this, 6, 2, 4 );
     pLayout->setRowStretch( 6, 1 );
     pLayout->setRowStretch( 2, 0 );
     pLayout->addWidget( new QLabel( tr( "Tiredness:" ), this ), 1, 0 );
@@ -70,11 +70,14 @@ ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controller
     pLayout->addWidget( new QLabel( tr( "Experience:" ), this ), 3, 0 );
     pExperienceCombo_ = new ValuedComboBox< E_UnitExperience >( this );
     pLayout->addWidget( pExperienceCombo_, 3, 1 );
+    pLayout->addWidget( new QLabel( tr( "Stress:" ), this ), 4, 0 );
+    pStressCombo_ = new ValuedComboBox< E_UnitStress >( this );
+    pLayout->addWidget( pStressCombo_, 4, 1 );
     QHBox* box = new QHBox( this );
     QPushButton* okBtn = new QPushButton( tr( "Ok" ), box );
     QPushButton* cancelBtn = new QPushButton( tr( "Cancel" ), box );
     okBtn->setDefault( true );
-    pLayout->addMultiCellWidget( box, 4, 4, 0, 1, Qt::AlignCenter );
+    pLayout->addMultiCellWidget( box, 5, 5, 0, 1, Qt::AlignCenter );
     connect( okBtn, SIGNAL( clicked() ), SLOT( Validate() ) );
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( hide() ) );
     controllers_.Register( *this );
@@ -99,6 +102,7 @@ void ChangeHumanFactorsDialog::Show()
     Populate( eNbrUnitTiredness, *pTirednessCombo_ );
     Populate( eNbrUnitMorale, *pMoralCombo_ );
     Populate( eNbrUnitExperience, *pExperienceCombo_ );
+    Populate( eNbrUnitStress, *pStressCombo_ );
     if( const HumanFactors_ABC* factors = selected_->Retrieve< HumanFactors_ABC >() )
         factors->Display( *this );
     show();
@@ -132,6 +136,15 @@ void ChangeHumanFactorsDialog::Call( const E_UnitExperience& experience )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ChangeHumanFactorsDialog::Call
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+void ChangeHumanFactorsDialog::Call( const E_UnitStress& stress )
+{
+    pStressCombo_->SetCurrentItem( stress );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ChangeHumanFactorsDialog::Validate
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
@@ -142,8 +155,9 @@ void ChangeHumanFactorsDialog::Validate()
     const E_UnitTiredness tiredness = pTirednessCombo_->GetValue();
     const E_UnitMorale moral = pMoralCombo_->GetValue();
     const E_UnitExperience experience = pExperienceCombo_->GetValue();
+    const E_UnitStress stress = pStressCombo_->GetValue();
     tools::Iterator< const Entity_ABC& > it = selected_->Get< TacticalHierarchies >().CreateSubordinateIterator();
-    SendMessage( *selected_, tiredness, moral, experience );
+    SendMessage( *selected_, tiredness, moral, experience, stress );
     hide();
 }
 
@@ -151,10 +165,10 @@ void ChangeHumanFactorsDialog::Validate()
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2006-12-01
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, E_UnitTiredness tiredness, E_UnitMorale moral, E_UnitExperience experience )
+void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, E_UnitTiredness tiredness, E_UnitMorale moral, E_UnitExperience experience, E_UnitStress stress )
 {
     if( entity.Retrieve< HumanFactors_ABC >() )
-        SendAction( entity, tiredness, moral, experience );
+        SendAction( entity, tiredness, moral, experience, stress );
     const Hierarchies* h = entity.Retrieve< CommunicationHierarchies >();
     if( !h )
         h = entity.Retrieve< TacticalHierarchies >();
@@ -162,7 +176,7 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, E_
     {
         tools::Iterator< const Entity_ABC& > it = h->CreateSubordinateIterator();
         while( it.HasMoreElements() )
-            SendMessage( it.NextElement(), tiredness, moral, experience );
+            SendMessage( it.NextElement(), tiredness, moral, experience, stress );
     }
 }
 
@@ -170,7 +184,7 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, E_
 // Name: ChangeHumanFactorsDialog::SendAction
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, E_UnitTiredness tiredness, E_UnitMorale moral, E_UnitExperience experience )
+void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, E_UnitTiredness tiredness, E_UnitMorale moral, E_UnitExperience experience, E_UnitStress stress )
 {
     // $$$$ _RC_ SBO 2010-05-17: user ActionFactory
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_human_factors" );
@@ -179,6 +193,7 @@ void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, E_U
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), tiredness ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), moral ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), experience ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), stress ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &entity, false ) );
     action->RegisterAndPublish( actionsModel_ );

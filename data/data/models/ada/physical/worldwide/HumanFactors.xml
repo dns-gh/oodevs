@@ -10,5 +10,10 @@
     <modifier loading-time="2" max-speed="0.8" ph="0.8" posture-setup-time="2" sensor-distance="0.8" state="Fatigue"/>
     <modifier loading-time="4" max-speed="0.6" ph="0.6" posture-setup-time="4" sensor-distance="0.6" state="Epuise"/>
   </tiredness-factor>
+  <stress-factor>
+    <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Calm"/>
+    <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Worried"/>
+    <modifier loading-time="1" max-speed="1" ph="1" posture-setup-time="1" sensor-distance="1" state="Stressed"/>
+  </stress-factor>
 </humans-factors>
-<!-- signature="4263890026" -->
+<!-- signature="3633283059" -->

@@ -68,6 +68,9 @@ ADN_HumanFactors_Data::ADN_HumanFactors_Data()
 , normalModifiers_      ( "Normal" )
 , tiredModifiers_       ( "Fatigue" )
 , exhaustedModifiers_   ( "Epuise" )
+, calmModifiers_        ( "Calm" )
+, worriedModifiers_     ( "Worried" )
+, stressedModifiers_    ( "Stressed" )
 {
     // NOTHING
 }
@@ -112,6 +115,9 @@ void ADN_HumanFactors_Data::ReadArchive( xml::xistream& input )
             >> xml::start( "tiredness-factor" )
                 >> xml::list( "modifier", *this, &ADN_HumanFactors_Data::ReadModifier )
             >> xml::end
+            >> xml::start( "stress-factor" )
+                >> xml::list( "modifier", *this, &ADN_HumanFactors_Data::ReadModifier )
+            >> xml::end
           >> xml::end;
 }
 
@@ -134,6 +140,12 @@ void ADN_HumanFactors_Data::ReadModifier( xml::xistream& input )
         tiredModifiers_.ReadArchive( input );
     else if( state == "Epuise" )
         exhaustedModifiers_.ReadArchive( input );
+    else if( state == "Calm" )
+        calmModifiers_.ReadArchive( input );
+    else if( state == "Worried" )
+        worriedModifiers_.ReadArchive( input );
+    else if( state == "Stressed" )
+        stressedModifiers_.ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,11 +162,16 @@ void ADN_HumanFactors_Data::WriteArchive( xml::xostream& output )
     newbieModifiers_.WriteArchive( output );
     output << xml::end
 
-        << xml::start( "tiredness-factor" );
+    << xml::start( "tiredness-factor" );
     normalModifiers_.WriteArchive( output );
     tiredModifiers_.WriteArchive( output );
     exhaustedModifiers_.WriteArchive( output );
     output << xml::end
 
-        << xml::end;
+    << xml::start( "stress-factor" );
+    calmModifiers_.WriteArchive( output );
+    worriedModifiers_.WriteArchive( output );
+    stressedModifiers_.WriteArchive( output );
+    output << xml::end
+    << xml::end;
 }

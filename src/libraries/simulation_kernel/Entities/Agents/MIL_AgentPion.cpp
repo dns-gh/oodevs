@@ -51,6 +51,7 @@
 #include "Entities/Agents/Units/Humans/MIL_Injury_Wound.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
+#include "Entities/Agents/Units/HumanFactors/PHY_Stress.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_EntityManager.h"
@@ -739,6 +740,14 @@ void  MIL_AgentPion::OnReceiveChangeHumanFactors( const sword::MissionParameters
         if( !pExperience )
             throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
         GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
+    }
+    if( msg.elem( 3 ).value_size() == 1 && msg.elem( 3 ).value().Get(0).has_enumeration() )
+    {
+        sword::UnitAttributes::EnumUnitStress stress = static_cast< sword::UnitAttributes::EnumUnitStress >( msg.elem( 3 ).value().Get(0).enumeration() );
+        const PHY_Stress* pStress = PHY_Stress::Find( stress );
+        if( !pStress )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        GetRole< PHY_RolePion_HumanFactors >().SetStress( *pStress );
     }
 }
 

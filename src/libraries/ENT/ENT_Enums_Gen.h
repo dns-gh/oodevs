@@ -181,6 +181,14 @@ enum E_UnitExperience
     eNbrUnitExperience
 };
 
+enum E_UnitStress
+{
+    eUnitStress_Calm,
+    eUnitStress_Worried,
+    eUnitStress_Stressed,
+    eNbrUnitStress
+};
+
 enum E_LightingType
 {
     eLightingType_JourSansNuage,

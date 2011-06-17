@@ -43,6 +43,7 @@ public:
     static const std::string& ConvertFromUnitTiredness( E_UnitTiredness, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitMorale( E_UnitMorale, E_Conversion = eToSim );
     static const std::string& ConvertFromUnitExperience( E_UnitExperience, E_Conversion = eToSim );
+    static const std::string& ConvertFromUnitStress( E_UnitStress, E_Conversion = eToSim );
     static const std::string& ConvertFromLightingType( E_LightingType, E_Conversion = eToSim );
     static const std::string& ConvertFromWeatherType( E_WeatherType, E_Conversion = eToSim );
     static const std::string& ConvertFromLogMaintenanceHandlingStatus( E_LogMaintenanceHandlingStatus, E_Conversion = eToSim );
@@ -71,6 +72,7 @@ public:
     static E_UnitTiredness ConvertToUnitTiredness( const std::string& );
     static E_UnitMorale ConvertToUnitMorale( const std::string& );
     static E_UnitExperience ConvertToUnitExperience( const std::string& );
+    static E_UnitStress ConvertToUnitStress( const std::string& );
     static E_WeatherType ConvertToWeatherType( const std::string& );
     static E_LogMaintenanceHandlingStatus ConvertToLogMaintenanceHandlingStatus( const std::string& );
     static E_LogSupplyHandlingStatus ConvertToLogSupplyHandlingStatus( const std::string& );
@@ -99,6 +101,7 @@ private:
     typedef ENT_Tr::converter<E_UnitTiredness> T_ConverterUnitTiredness;
     typedef ENT_Tr::converter<E_UnitMorale> T_ConverterUnitMorale;
     typedef ENT_Tr::converter<E_UnitExperience> T_ConverterUnitExperience;
+    typedef ENT_Tr::converter<E_UnitStress> T_ConverterUnitStress;
     typedef ENT_Tr::converter<E_LightingType> T_ConverterLightingType;
     typedef ENT_Tr::converter<E_WeatherType> T_ConverterWeatherType;
     typedef ENT_Tr::converter<E_LogMaintenanceHandlingStatus> T_ConverterLogMaintenanceHandlingStatus;
@@ -127,6 +130,7 @@ private:
     static T_ConverterUnitTiredness UnitTirednessConverter_ [];
     static T_ConverterUnitMorale UnitMoraleConverter_ [];
     static T_ConverterUnitExperience UnitExperienceConverter_ [];
+    static T_ConverterUnitStress UnitStressConverter_ [];
     static T_ConverterLightingType LightingTypeConverter_ [];
     static T_ConverterWeatherType WeatherTypeConverter_ [];
     static T_ConverterLogMaintenanceHandlingStatus LogMaintenanceHandlingStatusConverter_ [];

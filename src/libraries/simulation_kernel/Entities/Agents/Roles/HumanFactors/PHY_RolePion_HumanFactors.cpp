@@ -14,6 +14,7 @@
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
+#include "Entities/Agents/Units/HumanFactors/PHY_Stress.h"
 
 #include "simulation_kernel/Entities/MIL_Entity_ABC.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
@@ -48,9 +49,10 @@ void load_construct_data( Archive& archive, PHY_RolePion_HumanFactors* role, con
 // -----------------------------------------------------------------------------
 PHY_RolePion_HumanFactors::PHY_RolePion_HumanFactors( MIL_Entity_ABC& entity )
     : bHasChanged_                  ( true )
-    , pMorale_                      ( &PHY_Morale    ::bon_     )
+    , pMorale_                      ( &PHY_Morale::bon_ )
     , pExperience_                  ( &PHY_Experience::veteran_ )
-    , pTiredness_                   ( &PHY_Tiredness ::normal_  )
+    , pTiredness_                   ( &PHY_Tiredness::normal_ )
+    , pStress_                      ( &PHY_Stress::calm_ )
     , entity_                       ( entity )
 {
     // NOTHING
@@ -84,6 +86,10 @@ void PHY_RolePion_HumanFactors::load( MIL_CheckPointInArchive& file, const unsig
     file >> nID;
     pTiredness_ = PHY_Tiredness::Find( nID );
     assert( pTiredness_ );
+
+    file >> nID;
+    pStress_ = PHY_Stress::Find( nID );
+    assert( pStress_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,14 +101,17 @@ void PHY_RolePion_HumanFactors::save( MIL_CheckPointOutArchive& file, const unsi
     assert( pMorale_ );
     assert( pExperience_ );
     assert( pTiredness_ );
+    assert( pStress_ );
     file << boost::serialization::base_object< PHY_RoleInterface_HumanFactors >( *this );
 
-    unsigned morale     = pMorale_->GetID(),
-             experience = pExperience_->GetID(),
-             tiredness  = pTiredness_->GetID();
+    unsigned int morale = pMorale_->GetID();
+    unsigned int experience = pExperience_->GetID();
+    unsigned int tiredness = pTiredness_->GetID();
+    unsigned int stress = pStress_->GetID();
     file << morale
          << experience
-         << tiredness;
+         << tiredness
+         << stress;
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +132,8 @@ void PHY_RolePion_HumanFactors::ReadFacteursHumains( xml::xistream& xis )
 
     xis >> xml::list( "Fatigue", *this, &PHY_RolePion_HumanFactors::ReadFatigue )
         >> xml::list( "Moral", *this, &PHY_RolePion_HumanFactors::ReadMoral )
-        >> xml::list( "Experience", *this, &PHY_RolePion_HumanFactors::ReadExperience );
+        >> xml::list( "Experience", *this, &PHY_RolePion_HumanFactors::ReadExperience )
+        >> xml::list( "Stress", *this, &PHY_RolePion_HumanFactors::ReadStress );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,6 +147,19 @@ void PHY_RolePion_HumanFactors::ReadFatigue( xml::xistream& xis )
     pTiredness_ = PHY_Tiredness::Find( strTmp );
     if( !pTiredness_ )
         xis.error( "Unknown tiredness type" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_HumanFactors::ReadStress
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+void PHY_RolePion_HumanFactors::ReadStress( xml::xistream& xis )
+{
+    std::string strTmp;
+    xis >> strTmp;
+    pStress_ = PHY_Stress::Find( strTmp );
+    if( !pStress_ )
+        xis.error( "Unknown stress type" );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,6 +197,7 @@ void PHY_RolePion_HumanFactors::SendFullState( client::UnitAttributes& msg ) con
     msg().set_tiredness( pTiredness_->GetAsnID() );
     msg().set_morale( pMorale_->GetAsnID() );
     msg().set_experience( pExperience_->GetAsnID() );
+    msg().set_stress( pStress_->GetAsnID() );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,12 +278,25 @@ void PHY_RolePion_HumanFactors::SetTiredness( const PHY_Tiredness& tiredness )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_HumanFactors::SetStress
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+void PHY_RolePion_HumanFactors::SetStress( const PHY_Stress& stress )
+{
+    if( stress == *pStress_ )
+        return;
+
+    pStress_  = &stress;
+    bHasChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::Execute
 // Created: AHC 2009-10-02
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
-    algorithm.AddModifier(pExperience_->GetCoefMaxSpeedModificator() * pTiredness_->GetCoefMaxSpeedModificator(),true);
+    algorithm.AddModifier(pExperience_->GetCoefMaxSpeedModificator() * pTiredness_->GetCoefMaxSpeedModificator() * pStress_->GetCoefMaxSpeedModificator(),true);
 }
 
 // -----------------------------------------------------------------------------
@@ -270,6 +307,7 @@ void PHY_RolePion_HumanFactors::Execute( firing::WeaponReloadingComputer_ABC& al
 {
     algorithm.AddModifier( pExperience_->GetCoefReloadingTimeModificator() );
     algorithm.AddModifier( pTiredness_->GetCoefReloadingTimeModificator() );
+    algorithm.AddModifier( pStress_->GetCoefReloadingTimeModificator() );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,7 +316,7 @@ void PHY_RolePion_HumanFactors::Execute( firing::WeaponReloadingComputer_ABC& al
 // -----------------------------------------------------------------------------
 double PHY_RolePion_HumanFactors::ModifyPH( double rPH ) const
 {
-    return rPH * pExperience_->GetCoefPhModificator() * pTiredness_->GetCoefPhModificator();
+    return rPH * pExperience_->GetCoefPhModificator() * pTiredness_->GetCoefPhModificator() * pStress_->GetCoefPhModificator();
 }
 
 // -----------------------------------------------------------------------------
@@ -309,6 +347,7 @@ void PHY_RolePion_HumanFactors::Execute( posture::PostureComputer_ABC& algorithm
 {
     algorithm.AddCoefficientModifier( pExperience_->GetCoefPostureTimeModificator() );
     algorithm.AddCoefficientModifier( pTiredness_->GetCoefPostureTimeModificator() );
+    algorithm.AddCoefficientModifier( pStress_->GetCoefPostureTimeModificator() );
 }
 
 // -----------------------------------------------------------------------------
@@ -319,4 +358,5 @@ void PHY_RolePion_HumanFactors::Execute( detection::PerceptionDistanceComputer_A
 {
     algorithm.AddModifier( pExperience_->GetCoefSensorDistanceModificator() );
     algorithm.AddModifier( pTiredness_->GetCoefSensorDistanceModificator() );
+    algorithm.AddModifier( pStress_->GetCoefSensorDistanceModificator() );
 }

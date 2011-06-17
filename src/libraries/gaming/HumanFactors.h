@@ -53,6 +53,7 @@ public:
     E_UnitExperience GetExperience() const;
     E_UnitTiredness GetTiredness() const;
     E_UnitMorale GetMorale() const;
+    E_UnitStress GetStress() const;
     //@}
 
 private:
@@ -73,8 +74,9 @@ private:
     //@{
     kernel::Controller& controller_;
     E_UnitExperience experience_;
-    E_UnitTiredness    tiredness_;
-    E_UnitMorale      morale_;
+    E_UnitTiredness tiredness_;
+    E_UnitMorale morale_;
+    E_UnitStress stress_;
     //@}
 };
 

@@ -798,6 +798,14 @@ message UnitAttributes {
         expert  = 1; //!< Expert
         novice  = 2; //!< Novice
     }
+    /** @enum EnumUnitStress
+        @brief Defines the different states of a unit' stress
+    */  
+    enum EnumUnitStress {
+       calm     = 0; //!< Calm
+       worried  = 1; //!< Worried
+       stressed = 2; //!< Stressed
+    }
     message Satisfaction {
         optional float safety                = 1;
         optional float lodging               = 2;
@@ -853,6 +861,7 @@ message UnitAttributes {
     optional PartyAdhesions              adhesions                  = 48; //!< The party adhesions
     optional Extension                   extension                  = 49; //!< The extension fields
     optional Satisfaction                refugees_satisfaction      = 50; //!< The refugees satisfaction
+    optional EnumUnitStress              stress                     = 53; //!< The stress @see EnumUnitStress
 }
 
 /** @struct UnitPathFind

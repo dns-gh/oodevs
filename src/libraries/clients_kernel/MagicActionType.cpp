@@ -93,6 +93,11 @@ void MagicActionType::Initialize()
         experience->AddValue( eUnitExperience_Veteran, tools::ToString( eUnitExperience_Veteran ).ascii() );
         experience->AddValue( eUnitExperience_Experimente, tools::ToString( eUnitExperience_Experimente ).ascii() );
         experience->AddValue( eUnitExperience_Conscrit, tools::ToString( eUnitExperience_Conscrit ).ascii() );
+
+        OrderParameter* stress = CreateOrderParameter( "Stress", "enumeration" );
+        stress->AddValue( eUnitStress_Calm, tools::ToString( eUnitStress_Calm ).ascii() );
+        stress->AddValue( eUnitStress_Worried, tools::ToString( eUnitStress_Worried ).ascii() );
+        stress->AddValue( eUnitStress_Stressed, tools::ToString( eUnitStress_Stressed ).ascii() );
     }
     else if( name == "partial_recovery" )
     {

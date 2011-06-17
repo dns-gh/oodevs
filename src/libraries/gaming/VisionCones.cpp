@@ -134,6 +134,7 @@ void VisionCones::DoUpdate( const sword::UnitAttributes& message )
 {
     if( message.has_position()
      || message.has_experience()
+     || message.has_stress()
      || message.has_tiredness()  )
         Invalidate();
 }

@@ -1939,6 +1939,22 @@ estacionado con motor encendido</translation>
         <source>Effect on detection ranges</source>
         <translation>Efecto en los rangos de detección</translation>
     </message>
+    <message>
+        <source>Stress modifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Worried</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stressed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_KnowledgeGroups_GUI</name>
@@ -5542,6 +5558,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>WeaponSystem_%1.htm</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Stress</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1,0 +1,140 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2011 MASA Group
+//
+// *****************************************************************************
+
+#include "simulation_kernel_pch.h"
+#include "PHY_Stress.h"
+#include "protocol/Protocol.h"
+#include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_Stl.h"
+#include <xeumeuleu/xml.hpp>
+
+PHY_Stress::T_StressMap PHY_Stress::stresses_;
+
+const PHY_Stress PHY_Stress::calm_ ( "Calm", 0 , sword::UnitAttributes::calm  );
+const PHY_Stress PHY_Stress::worried_( "Worried", 1, sword::UnitAttributes::worried );
+const PHY_Stress PHY_Stress::stressed_ ( "Stressed", 2 , sword::UnitAttributes::stressed );
+
+struct PHY_Stress::LoadingWrapper
+{
+    void ReadStress( xml::xistream& xis )
+    {
+        PHY_Stress::ReadStress( xis );
+    }
+};
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Stress::Initialize
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+void PHY_Stress::Initialize( xml::xistream& xis )
+{
+    MT_LOG_INFO_MSG( "Initializing stresses" );
+    stresses_[ calm_.GetName() ] = &calm_;
+    stresses_[ worried_.GetName() ] = &worried_;
+    stresses_[ stressed_.GetName() ] = &stressed_;
+    LoadingWrapper loader;
+    xis >> xml::start( "humans-factors" )
+            >> xml::start( "stress-factor" )
+                >> xml::list( "modifier", loader, &LoadingWrapper::ReadStress )
+            >> xml::end
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Stress::ReadStress
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+void PHY_Stress::ReadStress( xml::xistream& xis )
+{
+    std::string type;
+    xis >> xml::attribute( "state", type );
+    T_StressMap::iterator it = stresses_.find( type );
+    if( it == stresses_.end() )
+        xis.error( "Undefined Stress state" );
+    const_cast< PHY_Stress* >( it->second )->Read( xis );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Stress::Terminate
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+void PHY_Stress::Terminate()
+{
+    stresses_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Stress constructor
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+PHY_Stress::PHY_Stress( const std::string& strName, unsigned int nType, sword::UnitAttributes::EnumUnitStress nAsnID )
+    : PHY_HumanFactor( strName, nType )
+    , nAsnID_( nAsnID  )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Stress destructor
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+PHY_Stress::~PHY_Stress()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Stress::Find
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+const PHY_Stress* PHY_Stress::Find( sword::UnitAttributes::EnumUnitStress nAsnID )
+{
+    CIT_StressMap it = std::find_if( stresses_.begin(), stresses_.end(), std::compose1( std::bind2nd( std::equal_to< sword::UnitAttributes::EnumUnitStress >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Stress::GetAsnID ), std::select2nd< T_StressMap::value_type >() ) ) );
+
+    return it == stresses_.end() ? 0 : it->second;
+    for( CIT_StressMap it = stresses_.begin(); it != stresses_.end(); ++it )
+        if( it->second->GetAsnID() == nAsnID )
+            return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Stress::Find
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+const PHY_Stress* PHY_Stress::Find( unsigned int nID )
+{
+    for( CIT_StressMap it = stresses_.begin(); it != stresses_.end(); ++it )
+        if( it->second->GetID() == nID )
+            return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Stress::Find
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+const PHY_Stress* PHY_Stress::Find( const std::string& strName )
+{
+    CIT_StressMap it = stresses_.find( strName );
+    if( it == stresses_.end() )
+        return 0;
+    return it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Stress::GetAsnID
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+sword::UnitAttributes::EnumUnitStress PHY_Stress::GetAsnID() const
+{
+    return nAsnID_;
+}
+
+

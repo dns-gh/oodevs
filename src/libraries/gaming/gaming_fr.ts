@@ -611,6 +611,14 @@
         <source>Tiredness:</source>
         <translation>Fatigue:</translation>
     </message>
+    <message>
+        <source>Human factors/Stress</source>
+        <translation>Facteurs humains/Stress</translation>
+    </message>
+    <message>
+        <source>Stress:</source>
+        <translation>Stress:</translation>
+    </message>
 </context>
 <context>
     <name>Inhabitant</name>

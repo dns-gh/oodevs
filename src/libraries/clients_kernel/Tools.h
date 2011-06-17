@@ -47,6 +47,7 @@ namespace tools
     QString ToString( E_NatureLevel nType );
     QString ToString( E_UnitExperience nType );
     QString ToString( E_UnitMorale nType );
+    QString ToString( E_UnitStress nType );
     QString ToString( E_UnitTiredness nType );
     QString ToString( E_HumanWound nType );
     QString ToString( E_LogSupplyHandlingStatus nType );

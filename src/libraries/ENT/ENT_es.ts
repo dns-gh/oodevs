@@ -689,5 +689,17 @@
         <source>limit 2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>calm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>worried</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stressed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

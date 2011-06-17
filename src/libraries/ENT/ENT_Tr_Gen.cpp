@@ -180,6 +180,14 @@ ENT_Tr::T_ConverterUnitExperience ENT_Tr::UnitExperienceConverter_[] =
     T_ConverterUnitExperience( "", "", (E_UnitExperience)-1 )
 };
 
+ENT_Tr::T_ConverterUnitStress ENT_Tr::UnitStressConverter_[] =
+{
+    T_ConverterUnitStress( "calm", QT_TRANSLATE_NOOP( "ENT_Tr", "calm" ), eUnitStress_Calm ),
+    T_ConverterUnitStress( "worried", QT_TRANSLATE_NOOP( "ENT_Tr", "worried" ), eUnitStress_Worried ),
+    T_ConverterUnitStress( "stressed", QT_TRANSLATE_NOOP( "ENT_Tr", "stressed" ), eUnitStress_Stressed ),
+    T_ConverterUnitStress( "", "", (E_UnitStress)-1 )
+};
+
 ENT_Tr::T_ConverterLightingType ENT_Tr::LightingTypeConverter_[] =
 {
     T_ConverterLightingType( "jour sans nuage", QT_TRANSLATE_NOOP( "ENT_Tr", "Very sunny day" ), eLightingType_JourSansNuage ),
@@ -345,6 +353,7 @@ void ENT_Tr::InitTranslations()
     InitTr( UnitTirednessConverter_, "ENT_Tr" );
     InitTr( UnitMoraleConverter_, "ENT_Tr" );
     InitTr( UnitExperienceConverter_, "ENT_Tr" );
+    InitTr( UnitStressConverter_, "ENT_Tr" );
     InitTr( LightingTypeConverter_, "ENT_Tr" );
     InitTr( WeatherTypeConverter_, "ENT_Tr" );
     InitTr( LogMaintenanceHandlingStatusConverter_, "ENT_Tr" );
@@ -507,6 +516,15 @@ const std::string& ENT_Tr::ConvertFromUnitMorale( E_UnitMorale nValue, ENT_Tr_AB
 const std::string& ENT_Tr::ConvertFromUnitExperience( E_UnitExperience nValue, ENT_Tr_ABC::E_Conversion nConverterType )
 {
     return ENT_Tr::InverseFindInConverter( UnitExperienceConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertFromUnitStress
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+const std::string& ENT_Tr::ConvertFromUnitStress( E_UnitStress nValue, E_Conversion nConverterType )
+{
+    return ENT_Tr::InverseFindInConverter( UnitStressConverter_, nValue, nConverterType );
 }
 
 // -----------------------------------------------------------------------------
@@ -740,6 +758,15 @@ E_UnitMorale ENT_Tr::ConvertToUnitMorale( const std::string& strName )
 E_UnitExperience ENT_Tr::ConvertToUnitExperience( const std::string& strName )
 {
     return ENT_Tr::FindInConverter( UnitExperienceConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ENT_Tr_Gen::ConvertToUnitStress
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+E_UnitStress ENT_Tr::ConvertToUnitStress( const std::string& strName )
+{
+    return ENT_Tr::FindInConverter( UnitStressConverter_, strName );
 }
 
 //-----------------------------------------------------------------------------

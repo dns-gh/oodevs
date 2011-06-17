@@ -13,6 +13,7 @@
 #define __PHY_Tiredness_h_
 
 #include "MT_Tools/MT_String.h"
+#include "PHY_HumanFactor.h"
 
 namespace sword
 {
@@ -28,7 +29,8 @@ namespace xml
 // @class  PHY_Tiredness
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Tiredness : private boost::noncopyable
+class PHY_Tiredness : public PHY_HumanFactor
+                    , private boost::noncopyable
 {
 public:
     //! @name Types
@@ -57,54 +59,15 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&          GetName                       () const;
-          unsigned int                  GetID                 () const;
-          sword::UnitAttributes_EnumUnitTiredness GetAsnID    () const;
-          double              GetWeight                       () const;
-          double              GetCoefMaxSpeedModificator      () const;
-          double              GetCoefReloadingTimeModificator () const;
-          double              GetCoefPhModificator            () const;
-          double              GetCoefPostureTimeModificator   () const;
-          double              GetCoefSensorDistanceModificator() const;
-    //@}
-
-    //! @name Operators
-    //@{
-    bool operator==( const PHY_Tiredness& rhs ) const;
-    bool operator!=( const PHY_Tiredness& rhs ) const;
+    sword::UnitAttributes_EnumUnitTiredness GetAsnID    () const;
     //@}
 
 private:
-    //! @name Types
-    //@{
-    enum E_TirednessType
-    {
-        eNormal  = 0,
-        eFatigue = 1,
-        eEpuise  = 2
-    };
-    //@}
-
-private:
-     PHY_Tiredness( const std::string& strName, E_TirednessType nType, sword::UnitAttributes_EnumUnitTiredness nAsnID, double rWeight );
+     PHY_Tiredness( const std::string& strName, unsigned int nType, sword::UnitAttributes_EnumUnitTiredness nAsnID );
     ~PHY_Tiredness();
 
-    //! @name Init
-    //@{
-    void Read( xml::xistream& xis );
-    //@}
-
 private:
-    const std::string           strName_;
-    const E_TirednessType       nType_;
     const sword::UnitAttributes_EnumUnitTiredness nAsnID_;
-    const double              rDIAWeight_;
-
-    double rCoefMaxSpeedModificator_;
-    double rCoefReloadingTimeModificator_;
-    double rCoefPhModificator_;
-    double rCoefPostureTimeModificator_;
-    double rCoefSensorDistanceModificator_;
 
 private:
     //! @name Statics

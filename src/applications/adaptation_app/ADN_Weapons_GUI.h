@@ -48,6 +48,7 @@ public:
         eTargetPosture,
         eExperience,
         eTiredness,
+        eStress,
         eNbrGuiElements
     };
 

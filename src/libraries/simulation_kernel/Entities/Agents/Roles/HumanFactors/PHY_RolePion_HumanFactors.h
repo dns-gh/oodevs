@@ -25,6 +25,7 @@ namespace xml
 class PHY_Morale;
 class PHY_Experience;
 class PHY_Tiredness;
+class PHY_Stress;
 class MIL_Entity_ABC;
 
 namespace posture
@@ -80,15 +81,16 @@ public:
     //! @name Main
     //@{
     void ReadOverloading( xml::xistream& xis );
-    void SetMorale      ( const PHY_Morale& morale         );
-    void SetExperience  ( const PHY_Experience& experience );
-    void SetTiredness   ( const PHY_Tiredness&  tiredness  );
+    void SetMorale( const PHY_Morale& morale );
+    void SetExperience( const PHY_Experience& experience );
+    void SetTiredness( const PHY_Tiredness& tiredness );
+    void SetStress( const PHY_Stress& stress );
     //@}
 
     //! @name Accessors
     //@{
-    const PHY_Morale&     GetMorale    () const;
-    const PHY_Tiredness&  GetTiredness () const;
+    const PHY_Morale& GetMorale() const;
+    const PHY_Tiredness& GetTiredness() const;
     //@}
 
      //! @name Operations
@@ -108,6 +110,7 @@ private:
     const PHY_Morale*     pMorale_;
     const PHY_Experience* pExperience_;
     const PHY_Tiredness*  pTiredness_;
+    const PHY_Stress*     pStress_;
 
     MIL_Entity_ABC& entity_;
 
@@ -119,6 +122,7 @@ private:
     void ReadFatigue        ( xml::xistream& xis );
     void ReadMoral          ( xml::xistream& xis );
     void ReadExperience     ( xml::xistream& xis );
+    void ReadStress         ( xml::xistream& xis );
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_HumanFactors* role, const unsigned int /*version*/ );

@@ -663,6 +663,9 @@ void SimulationToClient::Convert( const sword::UnitAttributes& from, MsgsSimToCl
     CONVERT_ENUM( experience, ( sword::UnitAttributes::veteran, Common::veteran )
                               ( sword::UnitAttributes::expert, Common::experimente )
                               ( sword::UnitAttributes::novice, Common::conscrit ) );
+    CONVERT_ENUM( stress, ( sword::UnitAttributes::calm, Common::calm )
+                          ( sword::UnitAttributes::worried, Common::worried )
+                          ( sword::UnitAttributes::stressed, Common::stressed ) );
     CONVERT_ID( surrendered_unit );
     CONVERT_TO( prisoner, prisonnier );
     CONVERT_TO( refugees_managed, refugie_pris_en_compte );

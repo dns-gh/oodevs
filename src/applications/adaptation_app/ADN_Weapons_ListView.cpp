@@ -92,6 +92,7 @@ void ADN_Weapons_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Weapons_GUI::eTargetPosture]->Connect( &pInfos->nTargetPosture_, bConnect );
     vItemConnectors_[ADN_Weapons_GUI::eExperience]->Connect( &pInfos->nExperience_, bConnect );
     vItemConnectors_[ADN_Weapons_GUI::eTiredness]->Connect( &pInfos->nTiredness_, bConnect );
+    vItemConnectors_[ADN_Weapons_GUI::eStress]->Connect( &pInfos->nStress_, bConnect );
 
 }
 

@@ -71,6 +71,9 @@ public:
     ModifiersInfo normalModifiers_;
     ModifiersInfo tiredModifiers_;
     ModifiersInfo exhaustedModifiers_;
+    ModifiersInfo calmModifiers_;
+    ModifiersInfo worriedModifiers_;
+    ModifiersInfo stressedModifiers_;
 };
 
 #endif // __ADN_HumanFactors_Data_h_

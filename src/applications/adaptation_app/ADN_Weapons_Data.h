@@ -149,6 +149,7 @@ public:
         ADN_Type_Enum< E_UnitPosture, eNbrUnitPosture > nTargetPosture_;
         ADN_Type_Enum< E_UnitExperience, eNbrUnitExperience > nExperience_;
         ADN_Type_Enum< E_UnitTiredness, eNbrUnitTiredness > nTiredness_;
+        ADN_Type_Enum< E_UnitStress, eNbrUnitStress > nStress_;
 
         ADN_Type_Bool      bIndirect_;
         ADN_Type_Double    rAverageSpeed_;

@@ -393,6 +393,15 @@ QString tools::ToString( E_UnitMorale nType )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Tools::ToString
+// Created: LDC 2011-06-17
+// -----------------------------------------------------------------------------
+QString tools::ToString( E_UnitStress nType )
+{
+    return ENT_Tr::ConvertFromUnitStress( nType, ENT_Tr::eToTr ).c_str();
+}
+
+// -----------------------------------------------------------------------------
 // Name: tools::ToString
 // Created: AGE 2007-06-19
 // -----------------------------------------------------------------------------

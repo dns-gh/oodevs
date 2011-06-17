@@ -18,9 +18,9 @@
 
 PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
 
-const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , eVeteran    , sword::UnitAttributes::veteran, 1. );
-const PHY_Experience PHY_Experience::experimente_( "Experimente", eExperimente, sword::UnitAttributes::expert , 1.);
-const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , eConscrit   , sword::UnitAttributes::novice , 1.);
+const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , 0, sword::UnitAttributes::veteran );
+const PHY_Experience PHY_Experience::experimente_( "Experimente", 1, sword::UnitAttributes::expert );
+const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , 2, sword::UnitAttributes::novice );
 
 struct PHY_Experience::LoadingWrapper
 {
@@ -37,6 +37,9 @@ struct PHY_Experience::LoadingWrapper
 void PHY_Experience::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing experiences" );
+    experiences_[ veteran_    .GetName() ] = &veteran_;
+    experiences_[ experimente_.GetName() ] = &experimente_;
+    experiences_[ conscrit_   .GetName() ] = &conscrit_;
     LoadingWrapper loader;
     xis >> xml::start( "humans-factors" )
             >> xml::start( "experience-factor" )
@@ -51,9 +54,6 @@ void PHY_Experience::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_Experience::ReadExperience( xml::xistream& xis )
 {
-    experiences_[ veteran_    .GetName() ] = &veteran_;
-    experiences_[ experimente_.GetName() ] = &experimente_;
-    experiences_[ conscrit_   .GetName() ] = &conscrit_;
     std::string type;
     xis >> xml::attribute( "state", type );
     T_ExperienceMap::iterator it = experiences_.find( type );
@@ -75,16 +75,9 @@ void PHY_Experience::Terminate()
 // Name: PHY_Experience constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Experience::PHY_Experience( const std::string& strName, E_ExperienceType nType, sword::UnitAttributes::EnumUnitExperience nAsnID, double rDIAWeight )
-    : strName_                       ( strName )
-    , nType_                         ( nType   )
+PHY_Experience::PHY_Experience( const std::string& strName, unsigned int nType, sword::UnitAttributes::EnumUnitExperience nAsnID )
+    : PHY_HumanFactor( strName, nType )
     , nAsnID_                        ( nAsnID  )
-    , rDIAWeight_                    ( rDIAWeight )
-    , rCoefMaxSpeedModificator_      ( 1. )
-    , rCoefReloadingTimeModificator_ ( 1. )
-    , rCoefPhModificator_            ( 1. )
-    , rCoefPostureTimeModificator_   ( 1. )
-    , rCoefSensorDistanceModificator_( 1. )
 {
     // NOTHING
 }
@@ -96,30 +89,6 @@ PHY_Experience::PHY_Experience( const std::string& strName, E_ExperienceType nTy
 PHY_Experience::~PHY_Experience()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Experience::Read
-// Created: NLD 2004-11-29
-// -----------------------------------------------------------------------------
-void PHY_Experience::Read( xml::xistream& xis )
-{
-    xis >> xml::attribute( "max-speed", rCoefMaxSpeedModificator_ )
-        >> xml::attribute( "loading-time", rCoefReloadingTimeModificator_ )
-        >> xml::attribute( "ph", rCoefPhModificator_ )
-        >> xml::attribute( "posture-setup-time", rCoefPostureTimeModificator_ )
-        >> xml::attribute( "sensor-distance", rCoefSensorDistanceModificator_ );
-
-    if( rCoefMaxSpeedModificator_ <= 0 )
-        xis.error( "max-speed <= 0" );
-    if( rCoefReloadingTimeModificator_ <= 0 )
-        xis.error( "loading-time <= 0" );
-    if( rCoefPhModificator_ <= 0 )
-        xis.error( "ph <= 0" );
-    if( rCoefPostureTimeModificator_ <= 0 )
-        xis.error( "posture-setup-time <= 0" );
-    if( rCoefSensorDistanceModificator_ <= 0 )
-        xis.error( "sensor-distance <= 0" );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,100 +126,10 @@ const PHY_Experience* PHY_Experience::Find( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_Experience::GetName
-// Created: NLD 2004-08-05
-// -----------------------------------------------------------------------------
-const std::string& PHY_Experience::GetName() const
-{
-    return strName_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_Experience::GetAsnID
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 sword::UnitAttributes::EnumUnitExperience PHY_Experience::GetAsnID() const
 {
     return nAsnID_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Experience::GetCoefMaxSpeedModificator
-// Created: NLD 2004-11-29
-// -----------------------------------------------------------------------------
-double PHY_Experience::GetCoefMaxSpeedModificator() const
-{
-    return rCoefMaxSpeedModificator_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Experience::GetCoefReloadingTimeModificator
-// Created: NLD 2004-11-29
-// -----------------------------------------------------------------------------
-double PHY_Experience::GetCoefReloadingTimeModificator() const
-{
-    return rCoefReloadingTimeModificator_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Experience::GetCoefPhModificator
-// Created: NLD 2004-11-29
-// -----------------------------------------------------------------------------
-double PHY_Experience::GetCoefPhModificator() const
-{
-    return rCoefPhModificator_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Experience::GetCoefPostureTimeModificator
-// Created: NLD 2004-11-29
-// -----------------------------------------------------------------------------
-double PHY_Experience::GetCoefPostureTimeModificator() const
-{
-    return rCoefPostureTimeModificator_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Experience::GetCoefSensorDistanceModificator
-// Created: NLD 2004-11-29
-// -----------------------------------------------------------------------------
-double PHY_Experience::GetCoefSensorDistanceModificator() const
-{
-    return rCoefSensorDistanceModificator_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Experience::operator==
-// Created: NLD 2004-11-29
-// -----------------------------------------------------------------------------
-bool PHY_Experience::operator==( const PHY_Experience& rhs ) const
-{
-    return nType_ == rhs.nType_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Experience::operator!=
-// Created: NLD 2004-11-29
-// -----------------------------------------------------------------------------
-bool PHY_Experience::operator!=( const PHY_Experience& rhs ) const
-{
-    return nType_ != rhs.nType_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Experience::GetID
-// Created: JVT 2004-11-30
-// -----------------------------------------------------------------------------
-unsigned int PHY_Experience::GetID() const
-{
-    return (unsigned int)nType_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_Experience::GetWeight
-// Created: NLD 2004-12-01
-// -----------------------------------------------------------------------------
-double PHY_Experience::GetWeight() const
-{
-    return rDIAWeight_;
 }

@@ -273,6 +273,9 @@ void ADN_Weapons_GUI::Build()
     ADN_ComboBox* pTirednessCombo = builder.AddEnumField< E_UnitTiredness >( pModifiersHolder, tr( "Tiredness" ), vInfosConnectors[eTiredness], ENT_Tr::ConvertFromUnitTiredness );
     connect( pTirednessCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
 
+    ADN_ComboBox* pStressCombo = builder.AddEnumField< E_UnitStress >( pModifiersHolder, tr( "Stress" ), vInfosConnectors[eStress], ENT_Tr::ConvertFromUnitStress );
+    connect( pStressCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
+
     // Indirect group
     ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Indirect fire" ), pGroup );
     vInfosConnectors[eIndirect] = &pIndirectGroup->GetConnector();
@@ -578,6 +581,7 @@ void ADN_Weapons_GUI::UpdateModifiers()
 
         E_UnitExperience experience = pInfos->nExperience_.GetData();
         E_UnitTiredness tiredness = pInfos->nTiredness_.GetData();
+        E_UnitStress stress = pInfos->nStress_.GetData();
 
         ADN_HumanFactors_Data& humanFactors = ADN_Workspace::GetWorkspace().GetHumanFactors().GetData();
 
@@ -606,6 +610,21 @@ void ADN_Weapons_GUI::UpdateModifiers()
             break;
         case eUnitTiredness_Normal:
             phModifier *= humanFactors.normalModifiers_.rPHModifier_.GetData();
+            break;
+        default:
+            break;
+        }
+        
+        switch( stress )
+        {
+        case eUnitStress_Calm:
+            phModifier *= humanFactors.calmModifiers_.rPHModifier_.GetData();
+            break;
+        case eUnitStress_Worried:
+            phModifier *= humanFactors.worriedModifiers_.rPHModifier_.GetData();
+            break;
+        case eUnitStress_Stressed:
+            phModifier *= humanFactors.stressedModifiers_.rPHModifier_.GetData();
             break;
         default:
             break;

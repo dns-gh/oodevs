@@ -496,6 +496,7 @@ message MsgUnitAttributes {
     optional string                             critical_intelligence         = 47; //implemented in PIV3 
     optional Common.PartyAdhesions              adhesions                     = 48;
     optional Common.Extension                   extension                     = 49;
+    optional Common.EnumUnitStress              stress                        = 50;
 }
 
 message MsgUnitPathFind {

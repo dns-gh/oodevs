@@ -611,6 +611,14 @@
         <source>Tiredness:</source>
         <translation>Fatiga:</translation>
     </message>
+    <message>
+        <source>Human factors/Stress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stress:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Inhabitant</name>
