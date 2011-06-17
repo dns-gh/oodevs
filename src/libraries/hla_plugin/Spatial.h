@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Spatial_h_
-#define __Spatial_h_
+#ifndef plugins_hla_Spatial_h
+#define plugins_hla_Spatial_h
 
 #include "rpr/Coordinates.h"
 
@@ -34,7 +34,7 @@ public:
     //! @name Operations
     //@{
     template< typename Archive >
-    void Serialize( Archive& archive )
+    void Serialize( Archive& archive ) const
     {
         unsigned char padding[ 7 ] = { 0, 0, 0, 0, 0, 0, 0 };
         archive << deadReckoningAlgorithm_  << padding;
@@ -49,7 +49,7 @@ private:
     {
         SpatialFPW( double latitude, double longitude, float altitude, float speed, float heading );
         template< typename Archive >
-        void Serialize( Archive& archive )
+        void Serialize( Archive& archive ) const
         {
             worldLocation_.Serialize( archive );
             archive << static_cast< uint8 >( isFrozen_ )
@@ -76,4 +76,4 @@ private:
 }
 }
 
-#endif // __Spatial_h_
+#endif // plugins_hla_Spatial_h

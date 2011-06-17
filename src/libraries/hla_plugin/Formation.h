@@ -7,10 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Formation_h_
-#define __Formation_h_
-
-#include <boost/noncopyable.hpp>
+#ifndef plugins_hla_Formation_h
+#define plugins_hla_Formation_h
 
 namespace hla
 {
@@ -27,7 +25,7 @@ namespace hla
 */
 // Created: AGE 2008-02-25
 // =============================================================================
-class Formation : private boost::noncopyable
+class Formation
 {
 public:
     //! @name Constructors/Destructor
@@ -39,7 +37,7 @@ public:
     //! @name Operations
     //@{
     template< typename Archive >
-    void Serialize( Archive& archive )
+    void Serialize( Archive& archive ) const
     {
         archive << formation_;
     }
@@ -55,4 +53,4 @@ private:
 }
 }
 
-#endif // __Formation_h_
+#endif // plugins_hla_Formation_h

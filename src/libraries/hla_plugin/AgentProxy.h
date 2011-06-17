@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef hla_plugin_AgentProxy_h_
-#define hla_plugin_AgentProxy_h_
+#ifndef plugins_hla_AgentProxy_h
+#define plugins_hla_AgentProxy_h
 
 #include "Agent_ABC.h"
 #include "dispatcher/Observer.h"
@@ -71,4 +71,4 @@ private:
 }
 }
 
-#endif // hla_plugin_AgentProxy_h_
+#endif // plugins_hla_AgentProxy_h

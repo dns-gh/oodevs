@@ -7,10 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __AggregateMarking_h_
-#define __AggregateMarking_h_
-
-#include <boost/noncopyable.hpp>
+#ifndef plugins_hla_AggregateMarking_h
+#define plugins_hla_AggregateMarking_h
 
 namespace plugins
 {
@@ -22,7 +20,7 @@ namespace hla
 */
 // Created: AGE 2008-02-21
 // =============================================================================
-class AggregateMarking : private boost::noncopyable
+class AggregateMarking
 {
 public:
     //! @name Constructors/Destructor
@@ -34,7 +32,7 @@ public:
     //! @name Operations
     //@{
     template< typename Archive >
-    void Serialize( Archive& archive )
+    void Serialize( Archive& archive ) const
     {
         archive << markingType_;
         archive << markingData_;
@@ -52,4 +50,4 @@ private:
 }
 }
 
-#endif // __AggregateMarking_h_
+#endif // plugins_hla_AggregateMarking_h

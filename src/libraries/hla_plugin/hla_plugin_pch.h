@@ -7,12 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __hla_plugin_pch_h_
-#define __hla_plugin_pch_h_
+#ifndef plugins_hla_plugin_pch_h
+#define plugins_hla_plugin_pch_h
 
 #include <string>
 #include <memory>
 #include <map>
 #include <vector>
 
-#endif // __hla_plugin_pch_h_
+#endif // plugins_hla_plugin_pch_h

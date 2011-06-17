@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef hla_plugin_Agent_ABC_h
-#define hla_plugin_Agent_ABC_h
+#ifndef plugins_hla_Agent_ABC_h
+#define plugins_hla_Agent_ABC_h
 
 #include <boost/noncopyable.hpp>
 
@@ -43,4 +43,4 @@ public:
 }
 }
 
-#endif // hla_plugin_Agent_ABC_h
+#endif // plugins_hla_Agent_ABC_h

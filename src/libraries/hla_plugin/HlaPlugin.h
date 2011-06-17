@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __HlaPlugin_h_
-#define __HlaPlugin_h_
+#ifndef plugins_hla_HlaPlugin_h
+#define plugins_hla_HlaPlugin_h
 
 #include "dispatcher/Plugin_ABC.h"
 #include "protocol/Protocol.h"
@@ -83,4 +83,4 @@ private:
 }
 }
 
-#endif // __HlaPlugin_h_
+#endif // plugins_hla_HlaPlugin_h

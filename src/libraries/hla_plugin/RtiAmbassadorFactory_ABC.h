@@ -51,4 +51,4 @@ public:
 }
 }
 
-#endif // __RtiAmbassadorFactory_ABC_h_
+#endif // plugins_hla_RtiAmbassadorFactory_ABC_h

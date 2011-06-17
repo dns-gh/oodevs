@@ -7,11 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __SilentEntity_h_
-#define __SilentEntity_h_
+#ifndef plugins_hla_SilentEntity_h
+#define plugins_hla_SilentEntity_h
 
 #include "rpr/EntityType.h"
-#include <boost/noncopyable.hpp>
 
 namespace plugins
 {
@@ -23,7 +22,7 @@ namespace hla
 */
 // Created: AGE 2008-02-21
 // =============================================================================
-class SilentEntity : private boost::noncopyable
+class SilentEntity
 {
 public:
     //! @name Constructors/Destructor
@@ -56,4 +55,4 @@ private:
 }
 }
 
-#endif // __SilentEntity_h_
+#endif // plugins_hla_SilentEntity_h

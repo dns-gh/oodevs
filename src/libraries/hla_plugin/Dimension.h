@@ -7,10 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Dimension_h_
-#define __Dimension_h_
-
-#include <boost/noncopyable.hpp>
+#ifndef plugins_hla_Dimension_h
+#define plugins_hla_Dimension_h
 
 namespace plugins
 {
@@ -22,7 +20,7 @@ namespace hla
 */
 // Created: AGE 2008-02-21
 // =============================================================================
-class Dimension : private boost::noncopyable
+class Dimension
 {
 public:
     //! @name Constructors/Destructor
@@ -34,7 +32,7 @@ public:
     //! @name Operations
     //@{
     template< typename Archive >
-    void Serialize( Archive& archive )
+    void Serialize( Archive& archive ) const
     {
         archive << xAxisLength_ << yAxisLength_ << zAxisLength_;
     }
@@ -52,4 +50,4 @@ private:
 }
 }
 
-#endif // __Dimension_h_
+#endif // plugins_hla_Dimension_h
