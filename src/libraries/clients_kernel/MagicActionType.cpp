@@ -153,10 +153,8 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Formation", "formation" );
     else if( name == "change_logistic_links" )
     {
-        CreateOrderParameter( "TC2", "identifier" );
-        CreateOrderParameter( "Maintenance", "identifier" );
-        CreateOrderParameter( "Sante", "identifier" );
-        CreateOrderParameter( "Ravitaillement", "identifier" );
+        CreateOrderParameter( "Nominal", "identifier" );
+        CreateOrderParameter( "Current", "identifier" );
     }
     else if( name == "knowledge_group_enable" )
         CreateOrderParameter( "Enabled", "bool" );
