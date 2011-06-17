@@ -10,6 +10,7 @@
 #include "hla_plugin_test_pch.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/EntityType.h"
+#include "rpr/Coordinates.h"
 #include "Tools.h"
 
 using namespace rpr;
@@ -71,4 +72,46 @@ BOOST_AUTO_TEST_CASE( entity_type_can_be_truncated )
     BOOST_CHECK_EQUAL( 0, Read< unsigned char >( deserializer ) );
     BOOST_CHECK_EQUAL( 0, Read< unsigned char >( deserializer ) );
     BOOST_CHECK_EQUAL( 0, Read< unsigned char >( deserializer ) );
+}
+
+BOOST_AUTO_TEST_CASE( world_location_serialization )
+{
+    const WorldLocation location( 1., 2., 3. );
+    ::hla::Serializer serializer;
+    location.Serialize( serializer );
+    const T_Buffer buffer = Convert( serializer );
+    BOOST_CHECK_EQUAL( 3 * sizeof( real64 ), buffer.size() );
+    ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
+    BOOST_CHECK_EQUAL( location.X(), Read< real64 >( deserializer ) );
+    BOOST_CHECK_EQUAL( location.Y(), Read< real64 >( deserializer ) );
+    BOOST_CHECK_EQUAL( location.Z(), Read< real64 >( deserializer ) );
+}
+
+BOOST_AUTO_TEST_CASE( velocity_vector_serialization )
+{
+    const WorldLocation location( 1., 2., 3. );
+    const VelocityVector velocity( location, 4., 5. );
+    ::hla::Serializer serializer;
+    velocity.Serialize( serializer );
+    const T_Buffer buffer = Convert( serializer );
+    BOOST_CHECK_EQUAL( 3 * sizeof( real32 ), buffer.size() );
+    ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
+    BOOST_CHECK_EQUAL( velocity.VX(), Read< real32 >( deserializer ) );
+    BOOST_CHECK_EQUAL( velocity.VY(), Read< real32 >( deserializer ) );
+    BOOST_CHECK_EQUAL( velocity.VZ(), Read< real32 >( deserializer ) );
+}
+
+BOOST_AUTO_TEST_CASE( orientation_serialization )
+{
+    const WorldLocation location( 1., 2., 3. );
+    const VelocityVector velocity( location, 4., 5. );
+    const Orientation orientation( location, velocity );
+    ::hla::Serializer serializer;
+    orientation.Serialize( serializer );
+    const T_Buffer buffer = Convert( serializer );
+    BOOST_CHECK_EQUAL( 3 * sizeof( real32 ), buffer.size() );
+    ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
+    BOOST_CHECK_EQUAL( orientation.Psi(), Read< real32 >( deserializer ) );
+    BOOST_CHECK_EQUAL( orientation.Theta(), Read< real32 >( deserializer ) );
+    BOOST_CHECK_EQUAL( orientation.Phi(), Read< real32 >( deserializer ) );
 }
