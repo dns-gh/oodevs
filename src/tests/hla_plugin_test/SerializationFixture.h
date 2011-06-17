@@ -41,6 +41,12 @@ namespace
             deserializer >> result;
             return result;
         }
+        template< unsigned N >
+        void Read( ::hla::Deserializer& deserializer )
+        {
+            for( unsigned int i = 0; i < N; ++i )
+                Read< int8 >( deserializer );
+        }
     private:
         std::vector< boost::shared_ptr< T_Buffer > > buffers_;
     };
