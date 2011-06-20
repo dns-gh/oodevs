@@ -36,7 +36,7 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        archive << numberOfEntitiesOfThisType_  << numberOfAppearanceRecords_;
+        archive << numberOfEntitiesOfThisType_ << numberOfAppearanceRecords_;
         entityType_.Serialize( archive );
         archive << entityAppearance_;
     }
