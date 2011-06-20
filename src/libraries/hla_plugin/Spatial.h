@@ -27,7 +27,7 @@ class Spatial
 public:
     //! @name Constructors/Destructor
     //@{
-             Spatial( double latitude, double longitude, float altitude, float speed, float heading );
+             Spatial( bool isStatic, double latitude, double longitude, float altitude, float speed, float heading );
     virtual ~Spatial();
     //@}
 
@@ -38,38 +38,26 @@ public:
     {
         unsigned char padding[ 7 ] = { 0, 0, 0, 0, 0, 0, 0 };
         archive << deadReckoningAlgorithm_  << padding;
-        fpw_.Serialize( archive );
+        worldLocation_.Serialize( archive );
+        archive << static_cast< uint8 >( isFrozen_ )
+                << static_cast< uint8 >( 0 )
+                << static_cast< uint8 >( 0 )
+                << static_cast< uint8 >( 0 );
+        orientation_.Serialize( archive );
+        if( !isStatic_ )
+            velocityVector_.Serialize( archive );
     }
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    struct SpatialFPW
-    {
-        SpatialFPW( double latitude, double longitude, float altitude, float speed, float heading );
-        template< typename Archive >
-        void Serialize( Archive& archive ) const
-        {
-            worldLocation_.Serialize( archive );
-            archive << static_cast< uint8 >( isFrozen_ )
-                    << static_cast< uint8 >( 0 )
-                    << static_cast< uint8 >( 0 )
-                    << static_cast< uint8 >( 0 );
-            orientation_.Serialize( archive );
-        }
-        rpr::WorldLocation worldLocation_;
-        bool isFrozen_;
-        rpr::VelocityVector velocityVector_;
-        rpr::Orientation orientation_;
-    };
     //@}
 
 private:
     //! @name Member data
     //@{
+    bool isStatic_;
     unsigned char deadReckoningAlgorithm_;
-    SpatialFPW fpw_;
+    rpr::WorldLocation worldLocation_;
+    bool isFrozen_;
+    rpr::VelocityVector velocityVector_;
+    rpr::Orientation orientation_;
     //@}
 };
 
