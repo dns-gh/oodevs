@@ -13,7 +13,7 @@
 #include <iostream>
 #include <string>
 
-unsigned short PORT = 55000;
+unsigned short PORT = 33000;
 
 namespace
 {
