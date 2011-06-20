@@ -214,3 +214,12 @@ double PHY_ComposanteTypeObjectData::GetExtinguishingTime() const
 {
     return rTimeExtinguishing_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypeObjectData::CanRemoveFromPath
+// Created: BCI 2011-06-20
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypeObjectData::CanRemoveFromPath( bool bObjectIsMined ) const
+{
+    return CanBypass( bObjectIsMined );
+}

@@ -15,8 +15,10 @@
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
 #include "Decision/DEC_AgentFunctions.h"
+#include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "Entities/MIL_Army.h"
@@ -24,6 +26,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Rep_PathPoint_Lima.h"
 #include "Tools/MIL_Tools.h"
+#include "OnComponentComputer_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPointBM
@@ -133,6 +136,76 @@ std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >
     T_KnowledgeObjectVector knowledges;
     callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
     if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, pObjectColliding ) )
+    {
+        result.first = false;
+        return result;
+    }
+    assert( pObjectColliding && pObjectColliding->IsValid() );
+    result.first = true;
+    result.second.first = pObjectColliding;
+    result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );
+    return result;
+}
+
+struct CanRemoveFromPathException
+{
+};
+class CanRemoveFromPathComputer : public OnComponentComputer_ABC
+{
+public:
+    CanRemoveFromPathComputer( const MIL_ObjectType_ABC& type )
+        : type_( type )
+    {}
+
+    virtual void ApplyOnComponent( PHY_ComposantePion& component )
+    {
+        if( component.CanRemoveFromPath( type_, false ) ) // $$$$ BCI 2011-06-20: comment savoir si l'objet est miné ou pas?
+            throw CanRemoveFromPathException();
+    }
+private:
+    const MIL_ObjectType_ABC& type_;
+};
+
+class RemovableFromPathObjectFilter : public MIL_ObjectFilter
+{
+public:
+    RemovableFromPathObjectFilter( MIL_Agent_ABC& agent )
+        : agent_( agent )
+    {}
+
+    virtual bool Test ( const MIL_ObjectType_ABC& type ) const
+    {
+        try
+        {
+            CanRemoveFromPathComputer computer( type );
+            agent_.Execute< OnComponentComputer_ABC >( computer );
+            return false;
+        } catch( const CanRemoveFromPathException& )
+        {
+            return true;
+        }
+    }
+
+private:
+    MIL_Agent_ABC& agent_;
+};
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextRemovableObjectOnPath
+// Created: BCI 2011-06-20
+// -----------------------------------------------------------------------------
+std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextRemovableObjectOnPath( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > oId, float oDistance )
+{
+    RemovableFromPathObjectFilter filter( callerAgent.GetPion() );
+    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
+    boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
+    double rDistanceCollision = 0.;
+    const PHY_RoleInterface_Location& roleLocation = callerAgent.GetPion().GetRole< PHY_RoleInterface_Location >();
+    const double rHeight = roleLocation.GetHeight  ();
+    const MT_Vector2D&  position = roleLocation.GetPosition();
+    T_KnowledgeObjectVector knowledges;
+    callerAgent.GetPion().GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
+    if( knowledges.empty() || !callerAgent.GetPion().GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, pObjectColliding ) )
     {
         result.first = false;
         return result;

@@ -273,6 +273,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_GetNextObjectOnPath" ] =
         boost::function< std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >( boost::shared_ptr< DEC_Knowledge_Object >, float, const std::vector< std::string >& ) >(
         boost::bind( &DEC_PathFunctions::GetNextObjectOnPath, boost::ref( GetPion() ), _1, _2, _3 ) );
+    brain[ "DEC_GetNextRemovableObjectOnPath" ] = &DEC_PathFunctions::GetNextRemovableObjectOnPath;
     brain[ "DEC_Itineraire_ExtrapolerPosition"  ] =
         boost::function< boost::shared_ptr< MT_Vector2D >( const double, bool ) >( boost::bind( &DEC_PathFunctions::ExtrapolatePosition, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Itineraire_DernierPoint" ] =

@@ -1225,6 +1225,16 @@ bool PHY_ComposantePion::CanDestroy( const MIL_ObjectType_ABC& objectType ) cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::CanRemoveFromPath
+// Created: BCI 2011-06-20
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::CanRemoveFromPath( const MIL_ObjectType_ABC& objectType, bool isObjectMined ) const
+{
+    assert( pType_ );
+    return pType_->CanRemoveFromPath( objectType, isObjectMined ) && CanBeUsed() && pState_->IsUsable();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::CanMine
 // Created: NLD 2004-09-16
 // -----------------------------------------------------------------------------

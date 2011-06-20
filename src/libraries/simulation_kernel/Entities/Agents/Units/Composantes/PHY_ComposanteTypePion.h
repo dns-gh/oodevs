@@ -115,6 +115,7 @@ public:
     bool CanDemine   ( const MIL_ObjectType_ABC& objectType ) const;
     bool CanBypass   ( const MIL_ObjectType_ABC& objectType, bool bObjectIsMined ) const;
     bool CanExtinguish( const MIL_ObjectType_ABC& objectType ) const;
+    bool CanRemoveFromPath( const MIL_ObjectType_ABC& objectType, bool isObjectMined ) const;
 
     double GetConstructionTime( const MIL_ObjectType_ABC& objectType, double rSizeCoef ) const;
     double GetDestructionTime ( const MIL_ObjectType_ABC& objectType, double rSizeCoef ) const;

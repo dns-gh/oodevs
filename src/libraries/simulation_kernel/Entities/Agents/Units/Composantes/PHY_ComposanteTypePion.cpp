@@ -906,6 +906,18 @@ bool PHY_ComposanteTypePion::CanBypass( const MIL_ObjectType_ABC& object, bool b
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::CanRemoveFromPath
+// Created: BCI 2011-06-20
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::CanRemoveFromPath( const MIL_ObjectType_ABC& object, bool isObjectMined ) const
+{
+    if( objectData_.size() <= object.GetID() )
+        return false;
+    const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetID() ];
+    return pObjectData && pObjectData->CanRemoveFromPath( isObjectMined );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::GetConstructionTime
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------

@@ -39,6 +39,7 @@ public:
     bool CanDemine   () const;
     bool CanBypass   ( bool bObjectIsMined ) const;
     bool CanExtinguish() const;
+    bool CanRemoveFromPath( bool bObjectIsMined ) const;
 
     double GetConstructionTime( double rSizeCoef ) const;
     double GetDestructionTime ( double rSizeCoef ) const;
