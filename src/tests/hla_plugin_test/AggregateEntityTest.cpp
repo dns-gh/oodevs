@@ -37,24 +37,29 @@ namespace
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
     };
+    class RegisteredFixture : public Fixture
+    {
+    public:
+        RegisteredFixture()
+            : entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() )
+        {}
+        AggregateEntity entity;
+    };
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_cannot_be_deserialized, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_cannot_be_deserialized, RegisteredFixture )
 {
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     hla::Deserializer deserializer( 0 );
     BOOST_CHECK_THROW( entity.Deserialize( "identifier", deserializer ), std::runtime_error );
 }
 
-BOOST_FIXTURE_TEST_CASE( unmodified_agent_serializes_nothing, Fixture )
+BOOST_FIXTURE_TEST_CASE( unmodified_agent_serializes_nothing, RegisteredFixture )
 {
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     entity.Serialize( functor, false );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_serializes_all, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_serializes_all, RegisteredFixture )
 {
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     const std::vector< std::string > attributes = boost::assign::list_of( "EntityType" )
                                                                         ( "EntityIdentifier" )
                                                                         ( "Spatial" )
@@ -98,73 +103,75 @@ namespace
         BOOST_CHECK_THROW( deserializer >> actual, std::runtime_error );
         return true;
     }
+    bool CheckSize( const ::hla::Serializer& serializer, unsigned int size )
+    {
+        BOOST_CHECK_EQUAL( size, serializer.GetSize() );
+        return true;
+    }
+    const unsigned int SILENT_ENTITY_SIZE = 2 * sizeof( int16 ) + 6 * sizeof( int8 ) + 1 * sizeof( int16 ) + sizeof( int32 );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_is_fully_aggregated, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_is_fully_aggregated, RegisteredFixture )
 {
     const unsigned char fullyAggregated = 1;
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     MOCK_EXPECT( functor, Visit ).once().with( "AggregateState", boost::bind( &CheckSerialization< unsigned char >, _1, fullyAggregated ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_echelon_is_platoon, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_echelon_is_platoon, RegisteredFixture )
 {
-    const double platoonEchelon = 14;
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
+    const int8 platoonEchelon = 14;
     hla::MockUpdateFunctor functor;
-    MOCK_EXPECT( functor, Visit ).once().with( "Echelon", boost::bind( &CheckSerialization< double >, _1, platoonEchelon ) );
+    MOCK_EXPECT( functor, Visit ).once().with( "Echelon", boost::bind( &CheckSerialization< int8 >, _1, platoonEchelon ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }
 
-BOOST_FIXTURE_TEST_CASE( empty_agent_does_not_have_any_silent_entity, Fixture )
+BOOST_FIXTURE_TEST_CASE( empty_agent_does_not_have_any_silent_entity, RegisteredFixture )
 {
     const unsigned short numberOfSilentEntity = 0;
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
+    MOCK_EXPECT( functor, Visit ).once().with( "SilentEntities", boost::bind( &CheckSize, _1, 0 * SILENT_ENTITY_SIZE ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_serializes_silent_entities_number, Fixture )
-{
-    const unsigned short numberOfSilentEntity = 2;
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
-    BOOST_REQUIRE( listener );
-    listener->EquipmentChanged( 1u, 1u );
-    listener->EquipmentChanged( 2u, 2u );
-    MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
-    MOCK_EXPECT( functor, Visit );
-    entity.Serialize( functor, true );
-}
-
-BOOST_FIXTURE_TEST_CASE( agent_updates_already_known_equipment, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_updates_already_known_equipment, RegisteredFixture )
 {
     const unsigned short numberOfSilentEntity = 1;
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     BOOST_REQUIRE( listener );
     listener->EquipmentChanged( 1u, 1u );
     listener->EquipmentChanged( 1u, 2u );
     MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
+    MOCK_EXPECT( functor, Visit ).once().with( "SilentEntities", boost::bind( &CheckSize, _1, 1 * SILENT_ENTITY_SIZE ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_not_mounted_serializes_0_percent, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_serializes_silent_entities_number, RegisteredFixture )
+{
+    const unsigned short numberOfSilentEntity = 2;
+    BOOST_REQUIRE( listener );
+    listener->EquipmentChanged( 1u, 1u );
+    listener->EquipmentChanged( 2u, 2u );
+    MOCK_EXPECT( functor, Visit ).once().with( "NumberOfSilentEntities", boost::bind( &CheckSerialization< unsigned short >, _1, numberOfSilentEntity ) );
+    MOCK_EXPECT( functor, Visit ).once().with( "SilentEntities", boost::bind( &CheckSize, _1, 2 * SILENT_ENTITY_SIZE ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_not_mounted_serializes_0_percent, RegisteredFixture )
 {
     const double percentMounted = 0.;
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     MOCK_EXPECT( functor, Visit ).once().with( "Mounted", boost::bind( &CheckSerialization< double >, _1, percentMounted ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }
 
-BOOST_FIXTURE_TEST_CASE( mounted_agent_serializes_100_percent, Fixture )
+BOOST_FIXTURE_TEST_CASE( mounted_agent_serializes_100_percent, RegisteredFixture )
 {
     const double percentMounted = 100.;
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     BOOST_REQUIRE( listener );
     listener->EmbarkmentChanged( true );
     MOCK_EXPECT( functor, Visit ).once().with( "Mounted", boost::bind( &CheckSerialization< double >, _1, percentMounted ) );
@@ -172,9 +179,8 @@ BOOST_FIXTURE_TEST_CASE( mounted_agent_serializes_100_percent, Fixture )
     entity.Serialize( functor, true );
 }
 
-BOOST_FIXTURE_TEST_CASE( spatial_changed_event_is_serialized, Fixture )
+BOOST_FIXTURE_TEST_CASE( spatial_changed_event_is_serialized, RegisteredFixture )
 {
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     BOOST_REQUIRE( listener );
     listener->SpatialChanged( 1., 2., 3., 4., 5. );
     MOCK_EXPECT( functor, Visit ).once().with( "Spatial", mock::any );
@@ -182,9 +188,8 @@ BOOST_FIXTURE_TEST_CASE( spatial_changed_event_is_serialized, Fixture )
     entity.Serialize( functor, false );
 }
 
-BOOST_FIXTURE_TEST_CASE( formation_changed_event_is_serialized, Fixture )
+BOOST_FIXTURE_TEST_CASE( formation_changed_event_is_serialized, RegisteredFixture )
 {
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     BOOST_REQUIRE( listener );
     listener->FormationChanged( true );
     mock::sequence s;
@@ -194,9 +199,8 @@ BOOST_FIXTURE_TEST_CASE( formation_changed_event_is_serialized, Fixture )
     entity.Serialize( functor, false );
 }
 
-BOOST_FIXTURE_TEST_CASE( equipment_changed_event_is_serialized, Fixture )
+BOOST_FIXTURE_TEST_CASE( equipment_changed_event_is_serialized, RegisteredFixture )
 {
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     BOOST_REQUIRE( listener );
     listener->EquipmentChanged( 1u, 2u );
     mock::sequence s;
@@ -206,9 +210,8 @@ BOOST_FIXTURE_TEST_CASE( equipment_changed_event_is_serialized, Fixture )
     entity.Serialize( functor, false );
 }
 
-BOOST_FIXTURE_TEST_CASE( embarkment_changed_event_is_serialized, Fixture )
+BOOST_FIXTURE_TEST_CASE( embarkment_changed_event_is_serialized, RegisteredFixture )
 {
-    AggregateEntity entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() );
     BOOST_REQUIRE( listener );
     listener->EmbarkmentChanged( true );
     MOCK_EXPECT( functor, Visit ).once().with( "Mounted", mock::any );

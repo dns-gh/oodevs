@@ -11,6 +11,7 @@
 #define plugins_hla_SerializationTools_h
 
 #include <hla/Serializer.h>
+#include <vector>
 
 namespace hla
 {
@@ -19,6 +20,13 @@ namespace hla
     {
         for( unsigned i = 0; i < N; ++i )
             serializer << buffer[i];
+        return serializer;
+    }
+    template< typename T >
+    Serializer& operator<<( Serializer& serializer, const std::vector< T >& values )
+    {
+        for( std::vector< T >::const_iterator it = values.begin(); it != values.end(); ++it )
+            it->Serialize( serializer );
         return serializer;
     }
 }
