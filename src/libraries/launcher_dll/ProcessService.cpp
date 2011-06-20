@@ -261,14 +261,16 @@ void ProcessService::SendProfileList( sword::ProfileListResponse& message )
 // -----------------------------------------------------------------------------
 void ProcessService::SendCheckpointList( sword::CheckpointListResponse& message, const std::string& exercice, const std::string& session )
 {
-    const QStringList checkpoints = frontend::commands::ListCheckpoints( config_, exercice, session );
     if( ! frontend::commands::ExerciseExists( config_, exercice ) )
         message.set_error_code( sword::CheckpointListResponse::invalid_exercise_name );
     else if( ! frontend::commands::SessionExists( config_, exercice, session ) )
         message.set_error_code( sword::CheckpointListResponse::invalid_session_name );
     else
+    {
+        const QStringList checkpoints = frontend::commands::ListCheckpoints( config_, exercice, session );
         for( QStringList::const_iterator it = checkpoints.begin(); it != checkpoints.end(); ++it )
             message.add_checkpoint( ( *it ).ascii() );
+    }
 }
 
 // -----------------------------------------------------------------------------
