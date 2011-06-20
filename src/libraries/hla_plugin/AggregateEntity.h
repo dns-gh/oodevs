@@ -11,17 +11,8 @@
 #define plugins_hla_AgentExtension_h
 
 #include "EventListener_ABC.h"
-#include "rpr/EntityIdentifier.h"
-#include "rpr/EntityType.h"
 #include "rpr/ForceIdentifier.h"
-#include "Spatial.h"
-#include "AggregateMarking.h"
-#include "SilentEntity.h"
-#include "Formation.h"
-#include "Dimension.h"
 #include <vector>
-#include "Dynamic.h"
-#include "DynamicArray.h"
 
 namespace hla
 {
@@ -30,11 +21,18 @@ namespace hla
     class UpdateFunctor_ABC;
 }
 
+namespace rpr
+{
+    class EntityIdentifier;
+    class EntityType;
+}
+
 namespace plugins
 {
 namespace hla
 {
     class Agent_ABC;
+    class AttributesSerializer;
 
 // =============================================================================
 /** @class  AggregateEntity
@@ -79,17 +77,8 @@ private:
     //! @name Member data
     //@{
     Agent_ABC& agent_;
-    rpr::EntityIdentifier identifier_;
-    const std::string name_;
-    const rpr::ForceIdentifier force_;
-    const rpr::EntityType type_;
     T_Equipments equipments_;
-    Dynamic< Spatial > spatial_;
-    Dynamic< Formation > formation_;
-    Dynamic< Dimension > dimensions_;
-    Dynamic< unsigned short > numberOfSilentEntities_;
-    DynamicArray< SilentEntity > silentEntities_;
-    Dynamic< double > mounted_;
+    std::auto_ptr< AttributesSerializer > attributes_;
     //@}
 };
 

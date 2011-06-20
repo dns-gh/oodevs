@@ -11,13 +11,37 @@
 #include "AggregateEntity.h"
 #include "Agent_ABC.h"
 #include "SerializationTools.h"
-#include <hla/UpdateFunctor_ABC.h>
-#include <hla/AttributeIdentifier.h>
+#include "Spatial.h"
+#include "AggregateMarking.h"
+#include "SilentEntity.h"
+#include "Formation.h"
+#include "Dimension.h"
+#include "AttributesSerializer.h"
+#include "rpr/EntityIdentifier.h"
+#include "rpr/EntityType.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
-#include <algorithm>
 
 using namespace plugins::hla;
+
+namespace
+{
+    template< typename T >
+    struct Wrapper
+    {
+    public:
+        explicit Wrapper( const T& value )
+            : value_( value )
+        {}
+        template< typename Archive >
+        void Serialize( Archive& serializer ) const
+        {
+            serializer << value_;
+        }
+    private:
+        T value_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity constructor
@@ -25,17 +49,21 @@ using namespace plugins::hla;
 // -----------------------------------------------------------------------------
 AggregateEntity::AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
                                   const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
-    : agent_                 ( agent )
-    , identifier_            ( identifier )
-    , name_                  ( name )
-    , force_                 ( force )
-    , type_                  ( type )
-    , spatial_               ( Spatial( 0., 0., 0., 0., 0. ) )
-    , formation_             ( Formation( false ) )
-    , dimensions_            ( Dimension( false ) )
-    , numberOfSilentEntities_( 0 )
-    , mounted_               ( 0. )
+    : agent_     ( agent )
+    , attributes_( new AttributesSerializer() )
 {
+    attributes_->Register( "EntityType", type );
+    attributes_->Register( "EntityIdentifier", identifier );
+    attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
+    attributes_->Register( "AggregateMarking", AggregateMarking( name ) );
+    attributes_->Register( "AggregateState", Wrapper< unsigned char >( 1 ) ); // fully aggregated
+    attributes_->Register( "Dimensions", Dimension( false ) );
+    attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
+    attributes_->Register( "Formation", Formation( false ) );
+    attributes_->Register( "NumberOfSilentEntities", Wrapper< unsigned short >( 0 ) );
+    attributes_->Register( "SilentEntities", Wrapper< std::vector< SilentEntity > >( std::vector< SilentEntity >() ) );
+    attributes_->Register( "Mounted", Wrapper< double >( 0. ) );
+    attributes_->Register( "Echelon", Wrapper< unsigned char >( 14 ) ); // platoon
     agent_.Register( *this );
 }
 
@@ -48,64 +76,13 @@ AggregateEntity::~AggregateEntity()
     agent_.Unregister( *this );
 }
 
-namespace
-{
-    template< typename T >
-    ::hla::Serializer& operator<<( ::hla::Serializer& serializer, const T& value )
-    {
-        value.Serialize( serializer );
-        return serializer;
-    }
-    template< typename T >
-    void Serialize( const std::string& attribute, const T& value, ::hla::UpdateFunctor_ABC& functor, bool updateAll )
-    {
-        if( updateAll )
-        {
-            ::hla::Serializer serializer;
-            serializer << value;
-            functor.Visit( ::hla::AttributeIdentifier( attribute ), serializer );
-        }
-    }
-    template< typename T >
-    void Serialize( const std::string& attribute, const Dynamic< T >& value, ::hla::UpdateFunctor_ABC& functor, bool updateAll )
-    {
-        if( updateAll || value.HasChanged() )
-        {
-            ::hla::Serializer serializer;
-            serializer << value;
-            functor.Visit( ::hla::AttributeIdentifier( attribute ), serializer );
-        }
-    }
-    template< typename T >
-    void Serialize( const std::string& attribute, const DynamicArray< T >& value, ::hla::UpdateFunctor_ABC& functor, bool updateAll )
-    {
-        if( updateAll || value.HasChanged() )
-        {
-            ::hla::Serializer serializer;
-            serializer << value;
-            functor.Visit( ::hla::AttributeIdentifier( attribute ), serializer );
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: AggregateEntity::Serialize
 // Created: SBO 2008-02-20
 // -----------------------------------------------------------------------------
 void AggregateEntity::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const
 {
-    ::Serialize( "EntityType", type_, functor, updateAll );
-    ::Serialize( "EntityIdentifier", identifier_, functor, updateAll );
-    ::Serialize( "Spatial", spatial_, functor, updateAll );
-    ::Serialize( "AggregateMarking", AggregateMarking( name_ ), functor, updateAll );
-    ::Serialize( "AggregateState", static_cast< unsigned char >( 1 ), functor, updateAll ); // fully aggregated
-    ::Serialize( "Dimensions", dimensions_, functor, updateAll );
-    ::Serialize( "ForceIdentifier", static_cast< unsigned char >( force_ ), functor, updateAll );
-    ::Serialize( "Formation", formation_, functor, updateAll );
-    ::Serialize( "NumberOfSilentEntities", numberOfSilentEntities_, functor, updateAll );
-    ::Serialize( "SilentEntities", silentEntities_, functor, updateAll );
-    ::Serialize( "Mounted", mounted_, functor, updateAll );
-    ::Serialize( "Echelon", static_cast< double >( 14. ), functor, updateAll ); // platoon
+    attributes_->Serialize( functor, updateAll );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,11 +113,11 @@ void AggregateEntity::EquipmentChanged( unsigned int type, unsigned int availabl
         equipments_.push_back( std::make_pair( type, available ) );
     else
         result->second = available;
-    numberOfSilentEntities_.Update( static_cast< unsigned short >( equipments_.size() ) );
+    attributes_->Update( "NumberOfSilentEntities", Wrapper< unsigned short >( static_cast< unsigned short >( equipments_.size() ) ) );
     std::vector< SilentEntity > entities;
     BOOST_FOREACH( const T_Equipment& equipment, equipments_ )
         entities.push_back( SilentEntity( rpr::EntityType ( "1 1 225 1" ), static_cast< unsigned short >( equipment.second ) ) ); // $$$$ _RC_ SLI 2011-06-16: resolve platform types
-    silentEntities_.Update( entities );
+    attributes_->Update( "SilentEntities", Wrapper< std::vector< SilentEntity > >( entities ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,7 +126,7 @@ void AggregateEntity::EquipmentChanged( unsigned int type, unsigned int availabl
 // -----------------------------------------------------------------------------
 void AggregateEntity::SpatialChanged( double latitude, double longitude, float altitude, float speed, float direction )
 {
-    spatial_.Update( Spatial( latitude, longitude, altitude, speed, direction ) );
+    attributes_->Update( "Spatial", Spatial( true, latitude, longitude, altitude, speed, direction ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -158,8 +135,8 @@ void AggregateEntity::SpatialChanged( double latitude, double longitude, float a
 // -----------------------------------------------------------------------------
 void AggregateEntity::FormationChanged( bool isOnRoad )
 {
-    formation_.Update( Formation( isOnRoad ) );
-    dimensions_.Update( Dimension( isOnRoad ) );
+    attributes_->Update( "Formation", Formation( isOnRoad ) );
+    attributes_->Update( "Dimensions", Dimension( isOnRoad ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,5 +145,5 @@ void AggregateEntity::FormationChanged( bool isOnRoad )
 // -----------------------------------------------------------------------------
 void AggregateEntity::EmbarkmentChanged( bool mounted )
 {
-    mounted_.Update( mounted ? 100. : 0. );
+    attributes_->Update( "Mounted", Wrapper< double >( mounted ? 100. : 0. ) );
 }
