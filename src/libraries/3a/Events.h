@@ -49,14 +49,16 @@ namespace events
         {
             if( extractor_.HasValue( message ) )
                 Set( extractor_.Extract( message ) );
+            else
+                Set( 0 );
         }
         Extractor extractor_;
     };
 
 typedef TickPeriod< extractors::FireComponentDamages > FireComponentDamages;
-typedef TickPeriod< extractors::FireHumanDamages > FireHumanDamages;
-typedef TickPeriod< extractors::CrowdHumanDamages > CrowdHumanDamages;
-typedef TickPeriod< extractors::DamageIndirectFire > DamageIndirectFire;
+typedef TickPeriod< extractors::FireHumanDamages >     FireHumanDamages;
+typedef TickPeriod< extractors::CrowdHumanDamages >    CrowdHumanDamages;
+typedef TickPeriod< extractors::DamageIndirectFire >   DamageIndirectFire;
 }
 
 #endif // __Events_h_
