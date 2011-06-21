@@ -50,6 +50,7 @@ AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject
     hlaClass_->Register( ::hla::AttributeIdentifier( "AggregateMarking" ) );       // static
     hlaClass_->Register( ::hla::AttributeIdentifier( "AggregateState" ) );         // static
     hlaClass_->Register( ::hla::AttributeIdentifier( "Dimensions" ) );             // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifiers" ) );      // static
     hlaClass_->Register( ::hla::AttributeIdentifier( "ForceIdentifier" ) );        // static
     hlaClass_->Register( ::hla::AttributeIdentifier( "Formation" ) );              // dynamic
     hlaClass_->Register( ::hla::AttributeIdentifier( "NumberOfSilentEntities" ) ); // dynamic
