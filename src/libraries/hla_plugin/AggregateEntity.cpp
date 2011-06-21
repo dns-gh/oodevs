@@ -55,17 +55,17 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned short identifier,
     // BaseEntity.AggregateEntity
     attributes_->Register( "EntityType", type );
     attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( 1, 1, identifier ) );
-    attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
+    attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
     attributes_->Register( "AggregateMarking", AggregateMarking( name ) );
     attributes_->Register( "AggregateState", Wrapper< unsigned char >( 1 ) ); // fully aggregated
     attributes_->Register( "Dimensions", Dimension( false ) );
-    attributes_->Register( "EntityIdentifiers", Wrapper< uint32 >( 0 ) ); // no entity identifiers
-    attributes_->Register( "ForceIdentifier", Wrapper< unsigned char >( static_cast< unsigned char >( force ) ) );
+    attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
     attributes_->Register( "Formation", Formation( false ) );
     attributes_->Register( "NumberOfSilentEntities", Wrapper< unsigned short >( 0 ) );
     attributes_->Register( "SilentEntities", Wrapper< std::vector< SilentEntity > >( std::vector< SilentEntity >() ) );
     attributes_->Register( "SilentAggregates", Wrapper< uint32 >( 0 ) ); // no aggregates
     attributes_->Register( "SubAggregateIdentifiers", Wrapper< uint32 >( 0 ) ); // no sub aggregates identifiers
+    attributes_->Register( "EntityIdentifiers", Wrapper< uint32 >( 0 ) ); // no entity identifiers
     // BaseEntity.AggregateEntity.NETN_Aggregate
     attributes_->Register( "Mounted", Wrapper< double >( 0. ) );
     attributes_->Register( "Echelon", Wrapper< unsigned char >( 14 ) ); // platoon
