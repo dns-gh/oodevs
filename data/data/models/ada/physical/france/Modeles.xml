@@ -11776,6 +11776,9 @@
         <mission name="COMMUNES Faire Mouvement">
           <fragorder name="Population Changer Attitude"/>
         </mission>
+        <mission name="COMMUNES Suivre">
+          <fragorder name="Population Changer Attitude"/>
+        </mission>
         <mission name="FOULES Agresser">
           <fragorder name="Population Changer Attitude"/>
         </mission>
@@ -11795,4 +11798,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1521352232" -->
+<!-- signature="0884257287" -->

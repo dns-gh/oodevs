@@ -1925,6 +1925,7 @@
         <choice>
           <parameter type="Automat"/>
           <parameter type="Agent"/>
+          <parameter type="CrowdKnowledge"/>
         </choice>
       </parameter>
     </mission>
@@ -4602,7 +4603,7 @@
       <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="335" name="FOULES Deteriorer">
-      <parameter dia-name="objectif" name="objectif" optional="false" type="UrbanKnowledge"/>
+      <parameter dia-name="objectif" name="Objectif" optional="false" type="UrbanKnowledge"/>
     </mission>
     <mission dia-behavior="france.military.crowd.tasks.AllerA" dia-type="france.military.crowd.tasks.AllerA" id="3000" name="COMMUNES AllerA">
       <parameter dia-name="objectif" name="Objectif" optional="false" type="LocationComposite">
@@ -4612,6 +4613,9 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
+    </mission>
+    <mission dia-behavior="france.military.crowd.tasks.Suivre" dia-type="france.military.crowd.tasks.Suivre" id="3005" name="COMMUNES Suivre">
+      <parameter dia-name="objectif" name="Unite a suivre" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="france.military.crowd.tasks.FaireMouvement" dia-type="france.military.crowd.tasks.FaireMouvement" id="3004" name="COMMUNES Faire Mouvement">
       <parameter dia-name="objectifs" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="LocationComposite">
@@ -4832,4 +4836,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="3577529832" -->
+<!-- signature="0230555618" -->
