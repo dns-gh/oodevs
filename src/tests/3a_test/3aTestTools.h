@@ -63,6 +63,7 @@ public:
     static sword::SimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0, unsigned long equip_id = 0, unsigned long breakdown_id = 0 );
     static sword::SimToClient DestroyConsign( unsigned long id );
     static bool IsCloseCombatPower( const extractors::PowerExtractor_ABC& extractor );
+    static bool IsDirectFirePower( const extractors::PowerExtractor_ABC& extractor );
     static sword::SimToClient CreateMedicalConsign( unsigned long unitId, unsigned long requestId, bool isWaiting );
     static sword::SimToClient CreateStructuralState( unsigned long objectId, int stateValue );
     static sword::SimToClient UpdateStructuralState( unsigned long objectId, int stateValue );

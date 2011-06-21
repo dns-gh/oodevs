@@ -422,6 +422,16 @@ bool TestTools::IsCloseCombatPower( const extractors::PowerExtractor_ABC& extrac
 }
 
 // -----------------------------------------------------------------------------
+// Name: 3aTestTools::IsDirectFirePower
+// Created: FPO 2011-06-21
+// -----------------------------------------------------------------------------
+bool TestTools::IsDirectFirePower( const extractors::PowerExtractor_ABC& extractor )
+{
+    return dynamic_cast< const extractors::DirectFirePower* >( &extractor ) != 0;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: 3aTestTools::CreateMedicalConsign
 // Created: FPO 2011-05-09
 // -----------------------------------------------------------------------------

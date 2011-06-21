@@ -1880,6 +1880,87 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestResourcesNetworkStates, Fixture )
     task->Commit();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Facade_TestCombinedZoneAndUnitlistComponentsDestroyedFromDirectFire
+// Created: FPO 2011-05-23
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestCombinedZoneAndUnitlistComponentsDestroyedFromDirectFire, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='fire-component-damages' id='damages' fire-types='direct' states='unavailable'/>"
+                             "    <extract function='positions' id='positions'/>"
+                             "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
+                             "    <transform function='contains' input='circle,positions' id='selected-units'/>"
+                             "    <transform function='filter' id='filtered-damages' input='selected-units,damages' type='int'/>"
+                             "    <transform function='domain' type='int' select='13,23' input='filtered-damages' id='domained-damages'/>"
+                             "    <reduce type='float' function='sum' input='domained-damages' id='sum'/>"
+                             "    <result function='plot' input='sum' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 13 ) ); // in zone
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 14 ) ); // in zone
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 23 ) ); // out of zone
+    task->Receive( TestTools::MakeUnitDamages( 13, 12, 1, 3 ) );
+    task->Receive( TestTools::MakeUnitDamages( 23, 12, 6, 5 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakeUnitDamages( 25, 17, 4, 5 ) );
+    task->Receive( TestTools::MakeUnitDamages( 13, 19, 2, 0 ) );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 1 )( 0 )( 2 );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Facade_TestCombinedZoneAndUnitlistPowerIndicators
+// Created: FPO 2011-05-23
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestCombinedZoneAndUnitlistDirectFirePower, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+                             "    <extract function='direct-fire-power' id='power'/>"
+                             "    <extract function='positions' id='positions'/>"
+                             "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='circle'/>"
+                             "    <transform function='contains' input='circle,positions' id='selected-units'/>"
+                             "    <transform function='filter' id='filtered-power' input='selected-units,power' type='int'/>"
+                             "    <transform function='domain' type='int' select='13,23' input='filtered-power' id='domained-power'/>"
+                             "    <reduce type='float' function='sum' input='domained-power' id='sum'/>"
+                             "    <result function='plot' input='sum' type='float'/>"
+                             "</indicator>" );
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    int variation[5] = { 1, 1, 1, 1, 0 };
+    sword::SimToClient message = TestTools::MakeEquipementVariation( variation, 13u );
+    sword::SimToClient message2 = TestTools::MakeEquipementVariation( variation, 14u );
+    sword::SimToClient message3 = TestTools::MakeEquipementVariation( variation, 23u );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 13 ) ); // in zone
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 14 ) ); // in zone
+    task->Receive( TestTools::MakePosition( "31TCM1543486826", 23 ) ); // out of zone
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 10.f );
+    task->Receive( message );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 12.f );
+    task->Receive( message2 );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 17.f );
+    task->Receive( message3 );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 15.f );
+    task->Receive( message );
+    MOCK_EXPECT( model, ComputePower ).once().with( mock::any, &TestTools::IsDirectFirePower ).returns( 19.f );
+    task->Receive( message2 );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 10 )( 10 )( 15 );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+
 // $$$$ AGE 2007-09-10: ressources consommées => variation <0
 //CREATE PROCEDURE dbo.[AAAT_LOGISTIQUE_RESSOURCES_CONSOMMEES_POUR_UNE_OU_PLUSIEURS_UNITES_ENTRE_T1_ET_T2_(Quantites)]
 //(
