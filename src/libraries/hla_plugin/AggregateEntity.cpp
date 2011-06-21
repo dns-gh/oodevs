@@ -64,6 +64,7 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier&
     attributes_->Register( "Formation", Formation( false ) );
     attributes_->Register( "NumberOfSilentEntities", Wrapper< unsigned short >( 0 ) );
     attributes_->Register( "SilentEntities", Wrapper< std::vector< SilentEntity > >( std::vector< SilentEntity >() ) );
+    attributes_->Register( "SilentAggregates", Wrapper< uint32 >( 0 ) ); // no aggregates
     // BaseEntity.AggregateEntity.NETN_Aggregate
     attributes_->Register( "Mounted", Wrapper< double >( 0. ) );
     attributes_->Register( "Echelon", Wrapper< unsigned char >( 14 ) ); // platoon
