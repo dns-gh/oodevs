@@ -225,8 +225,18 @@ ObjectIdentifier DebugRtiAmbassador::RegisterObjectInstance( const ClassIdentifi
 {
     Flush();
     ObjectIdentifier objectID = ambassador_->RegisterObjectInstance( classID, name );
-    logger_.LogInfo( "-> RegisterObjectInstance class " + classID.ToString() + " object " + objectID.ToString() + " name " + name );
+    objects_[ objectID.ToString() ] = name;
+    logger_.LogInfo( "-> RegisterObjectInstance class '" + classID.ToString() + "' object '" + objectID.ToString() + "' name '" + name + "'" );
     return objectID;
+}
+
+namespace
+{
+    template< typename T >
+    std::string Resolve( T& objects, const hla::ObjectIdentifier& objectID )
+    {
+        return objects[ objectID.ToString() ];
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -236,7 +246,7 @@ ObjectIdentifier DebugRtiAmbassador::RegisterObjectInstance( const ClassIdentifi
 void DebugRtiAmbassador::DeleteObjectInstance( const ObjectIdentifier& objectID )
 {
     Flush();
-    logger_.LogInfo( "-> DeleteObjectInstance object " + objectID.ToString() );
+    logger_.LogInfo( "-> DeleteObjectInstance object " + Resolve( objects_, objectID ) + " ( " + objectID.ToString() + " )" );
     ambassador_->DeleteObjectInstance( objectID );
 }
 
@@ -247,8 +257,20 @@ void DebugRtiAmbassador::DeleteObjectInstance( const ObjectIdentifier& objectID 
 void DebugRtiAmbassador::RequestObjectAttributeValueUpdate( const ObjectIdentifier& objectID, const Class_ABC& objectClass )
 {
     Flush();
-    logger_.LogInfo( "-> RequestObjectAttributeValueUpdate object " + objectID.ToString() );
+    logger_.LogInfo( "-> RequestObjectAttributeValueUpdate object " + Resolve( objects_, objectID ) + " ( " + objectID.ToString() + " )" );
     ambassador_->RequestObjectAttributeValueUpdate( objectID, objectClass );
+}
+
+namespace
+{
+    template< typename T >
+    std::string ToString( const T& attributes )
+    {
+        std::string result;
+        BOOST_FOREACH( const T::value_type& attribute, attributes )
+            result += ( result.empty() ? "" : ", " ) + attribute.first.ToString();
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -258,7 +280,7 @@ void DebugRtiAmbassador::RequestObjectAttributeValueUpdate( const ObjectIdentifi
 void DebugRtiAmbassador::UpdateAttributeValues( const ObjectIdentifier& objectID, const T_Attributes& attributes, const Time_ABC& time )
 {
     Flush();
-    logger_.LogInfo( "-> UpdateAttributeValues object " + objectID.ToString() + " time " + time.ToString() );
+    logger_.LogInfo( "-> UpdateAttributeValues object " + Resolve( objects_, objectID ) + " ( " + objectID.ToString() + " ) attributes { " + ToString( attributes ) + " } time " + time.ToString() );
     ambassador_->UpdateAttributeValues( objectID, attributes, time );
 }
 

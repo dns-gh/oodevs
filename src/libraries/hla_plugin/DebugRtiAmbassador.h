@@ -12,6 +12,7 @@
 
 #include <hla/RtiAmbassador_ABC.h>
 #include <memory>
+#include <map>
 
 namespace dispatcher
 {
@@ -98,12 +99,19 @@ private:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, std::string > T_Objects;
+    //@}
+
+private:
     //! @name Member data
     //@{
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
     dispatcher::Logger_ABC& logger_;
     bool ticking_;
     std::string time_;
+    T_Objects objects_;
     //@}
 };
 
