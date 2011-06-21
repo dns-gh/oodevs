@@ -58,6 +58,7 @@ IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publish
     setMinimumHeight( 200 );
     controllers_.Register( *this );
     plotNames_ = new QLabel( hbox );
+    plotNames_->setBackgroundColor( Qt::white );
     plotNames_->setMinimumWidth( 200 );
     plotNames_->setIndent( 10 );
     Add( request );
