@@ -23,7 +23,6 @@ namespace hla
 
 namespace rpr
 {
-    class EntityIdentifier;
     class EntityType;
 }
 
@@ -45,7 +44,7 @@ class AggregateEntity : private EventListener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
+             AggregateEntity( Agent_ABC& agent, unsigned short identifier,
                               const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
     virtual ~AggregateEntity();
     //@}

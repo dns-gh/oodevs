@@ -41,7 +41,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( agent, rpr::EntityIdentifier(), "name", rpr::Friendly, rpr::EntityType() )
+            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType() )
         {}
         AggregateEntity entity;
     };

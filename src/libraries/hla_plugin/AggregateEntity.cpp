@@ -47,14 +47,14 @@ namespace
 // Name: AggregateEntity constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AggregateEntity::AggregateEntity( Agent_ABC& agent, const rpr::EntityIdentifier& identifier,
+AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned short identifier,
                                   const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
     : agent_     ( agent )
     , attributes_( new AttributesSerializer() )
 {
     // BaseEntity.AggregateEntity
     attributes_->Register( "EntityType", type );
-    attributes_->Register( "EntityIdentifier", identifier );
+    attributes_->Register( "EntityIdentifier", rpr::EntityIdentifier( 1, 1, identifier ) );
     attributes_->Register( "Spatial", Spatial( true, 0., 0., 0., 0., 0. ) );
     attributes_->Register( "AggregateMarking", AggregateMarking( name ) );
     attributes_->Register( "AggregateState", Wrapper< unsigned char >( 1 ) ); // fully aggregated

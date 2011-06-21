@@ -13,10 +13,8 @@
 #include "AgentSubject_ABC.h"
 #include "Agent_ABC.h"
 #include "Federate_ABC.h"
-#include "rpr/EntityIdentifier.h"
 #include <hla/Class.h>
 #include <hla/ClassIdentifier.h>
-#include <hla/Deserializer.h>
 #include <hla/ObjectRegistration_ABC.h>
 
 using namespace plugins::hla;
@@ -80,7 +78,6 @@ AggregateEntityClass::~AggregateEntityClass()
 // -----------------------------------------------------------------------------
 void AggregateEntityClass::Created( Agent_ABC& agent, const std::string& identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
 {
-    rpr::EntityIdentifier id( 1, 1, ++id_ ); // site, application, id
-    entities_.push_back( T_Entity( new AggregateEntity( agent, id, name, force, type ) ) );
+    entities_.push_back( T_Entity( new AggregateEntity( agent, ++id_, name, force, type ) ) );
     hlaClass_->Register( *entities_.back(), identifier );
 }
