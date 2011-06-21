@@ -33,6 +33,7 @@ public:
     typedef ADN_Type_String SizeInfos;
     typedef ADN_Type_Vector_ABC< SizeInfos >         T_SizeInfos_Vector;
     typedef T_SizeInfos_Vector::iterator            IT_SizeInfos_Vector;
+    typedef T_SizeInfos_Vector::const_iterator     CIT_SizeInfos_Vector;
 
 public:
              ADN_Categories_Data();

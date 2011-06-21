@@ -4079,6 +4079,10 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Crowd modifiers</source>
         <translation>Modificateurs de foule</translation>
     </message>
+    <message>
+        <source>UrbanBlock material modifiers</source>
+        <translation>Modificateurs des matériaux de bloc urbain</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>

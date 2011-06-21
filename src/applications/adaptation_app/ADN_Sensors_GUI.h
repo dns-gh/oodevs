@@ -92,8 +92,12 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
     void BuildSensorListGui( QTabWidget* pParent );
     void BuildSpecificParamsGui( QTabWidget* pParent );
+    void AddHeaders( ADN_Table* pTable, int& nCol, const char* szName, const ADN_Categories_Data::T_SizeInfos_Vector& materials );
+    //@}
 
 private:
     //! @name Member data

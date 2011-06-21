@@ -358,6 +358,23 @@ void AddHeaders( ADN_Table* pTable, int& nCol, const char* szName, const std::st
     nCol += nVectorSize;
 }
 
+// -----------------------------------------------------------------------------
+// Name: AddHeaders
+// Created: LGY 2011-06-20
+// -----------------------------------------------------------------------------
+void ADN_Sensors_GUI::AddHeaders( ADN_Table* pTable, int& nCol, const char* szName, const ADN_Categories_Data::T_SizeInfos_Vector& materials )
+{
+    ADN_GuiBuilder builder;
+    pTable->AddBoldGridCol( nCol );
+    builder.AddTableCell( pTable, 0, nCol, 1, materials.size(), szName );
+    unsigned int n = 0;
+    for( ADN_Categories_Data::CIT_SizeInfos_Vector it = materials.begin(); it != materials.end(); ++it )
+    {
+        builder.AddTableCell( pTable, 1, nCol + n, (*it)->GetData().c_str() );
+        ++n;
+    }
+    nCol += materials.size();
+}
 
 // -----------------------------------------------------------------------------
 // Name: AddCells
@@ -407,7 +424,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     pTable->setTopMargin( 0 );
 
     pTable->setNumRows( 2 );
-    pTable->setNumCols( static_cast< int >( 7 + sizes.size() + materials.size() + eNbrSensorWeatherModifiers + eNbrTimeCategory + eNbrVisionObjects + eNbrUnitPosture * 2 ) );
+    pTable->setNumCols( static_cast< int >( 6 + sizes.size() + materials.size() + eNbrSensorWeatherModifiers + eNbrTimeCategory + eNbrVisionObjects + eNbrUnitPosture * 2 ) );
     for( int n = 0; n < pTable->numCols(); ++n )
         pTable->horizontalHeader()->setLabel( n, "" );
 
@@ -422,18 +439,18 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     pTable->AddBoldGridCol( 6 );
     pTable->AddBoldGridRow( 2 );
 
-    int nCol = 7;
+    int nCol = 6;
     builder.AddTableCell( pTable, 0, nCol, 1, static_cast< int >( sizes.size() ), tr( "Target size" ) );
     for( uint n = 0; n < sizes.size(); ++n )
         builder.AddTableCell( pTable, 1, nCol + n, sizes[n]->GetData().c_str() );
     nCol += static_cast< int >( sizes.size() );
 
-    AddHeaders( pTable, nCol, tr( "Weather modifiers" ), ADN_Tr::ConvertFromSensorWeatherModifiers, eNbrSensorWeatherModifiers );
-    AddHeaders( pTable, nCol, tr( "Illumination modifiers" ), ADN_Tr::ConvertFromTimeCategory, eNbrTimeCategory );
-    AddHeaders( pTable, nCol, tr( "Environement modifiers" ), ADN_Tr::ConvertFromVisionObject, eNbrVisionObjects );
-    //AddHeaders( pTable, nCol, tr( "UrbanBlock material modifiers" ), ADN_Tr::ConvertFromVisionUrbanBlock, eNbrVisionUrbanBlocks );
-    AddHeaders( pTable, nCol, tr( "Stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
-    AddHeaders( pTable, nCol, tr( "Target stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
+    ::AddHeaders( pTable, nCol, tr( "Weather modifiers" ), ADN_Tr::ConvertFromSensorWeatherModifiers, eNbrSensorWeatherModifiers );
+    ::AddHeaders( pTable, nCol, tr( "Illumination modifiers" ), ADN_Tr::ConvertFromTimeCategory, eNbrTimeCategory );
+    ::AddHeaders( pTable, nCol, tr( "Environement modifiers" ), ADN_Tr::ConvertFromVisionObject, eNbrVisionObjects );
+    AddHeaders( pTable, nCol, tr( "UrbanBlock material modifiers" ), materials );
+    ::AddHeaders( pTable, nCol, tr( "Stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
+    ::AddHeaders( pTable, nCol, tr( "Target stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
 
     // Fill the table.
     int nRow = 2;
@@ -453,7 +470,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
         builder.AddTableCell<ADN_TableItem_Double>( pTable, &sensor, nRow, 4, sensor.rDistIdent_, eGreaterEqualZero );
         builder.AddTableCell<ADN_TableItem_Double>( pTable, &sensor, nRow, 5, sensor.rDistProximity_, eGreaterEqualZero );
 
-        int nCol = 7;
+        int nCol = 6;
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifSizes_, static_cast< int >( sizes.size() ) );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifWeather_, eNbrSensorWeatherModifiers );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifIlluminations_, eNbrTimeCategory );

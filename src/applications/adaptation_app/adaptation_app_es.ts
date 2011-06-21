@@ -4077,6 +4077,10 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <source>Crowd modifiers</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>UrbanBlock material modifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>
