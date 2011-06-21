@@ -179,6 +179,7 @@ void RegisterAgentKnowledgeFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ConnaissanceAgent_Deverrouiller" ] =
         boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Unlock, _1 ) );
     brain[ "DEC_ConnaissanceAgent_GetMilPionType" ] = &DEC_KnowledgeAgentFunctions::GetMilPionType;
+    brain[ "DEC_Agent_RapportDeForceLocal" ] = &DEC_AgentFunctions::GetRapForLocalAgent;
 }
 
 // -----------------------------------------------------------------------------

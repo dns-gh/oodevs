@@ -43,6 +43,7 @@
 #include "OnComponentComputer_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "DEC_AutomateFunctions.h"
 #include "DEC_GeometryFunctions.h"
 #include "DotationComputer_ABC.h"
@@ -949,4 +950,13 @@ void DEC_AgentFunctions::IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, co
 std::string DEC_AgentFunctions::GetMilPionType( DEC_Decision_ABC* pion )
 {
     return pion->GetPion().GetType().GetMilPionType();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetRapForLocalAgent
+// Created: DDA 2011-06-14
+// -----------------------------------------------------------------------------
+double DEC_AgentFunctions::GetRapForLocalAgent( const DEC_Decision_ABC* agent )
+{
+    return agent->GetPion().GetKnowledge().GetRapForLocalValue();
 }

@@ -94,6 +94,9 @@ public:
     static void Suicide( MIL_Agent_ABC& callerAgent );
     static bool CanIlluminate( DEC_Decision_ABC* pAgent );
     static float GetIlluminatingRange( const MIL_Agent_ABC&  callerAgent );
+    
+    // Etat d'un agent
+    static double GetRapForLocalAgent( const DEC_Decision_ABC* agent );
 
     // Hiérarchie
     static std::vector< DEC_Decision_ABC* > GetPionsWithPC( const MIL_Agent_ABC& callerAgent );
