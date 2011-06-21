@@ -229,7 +229,12 @@ namespace launcher_test
                 Update();
             BOOST_REQUIRE( exercise->IsRunning() );
             client.Register( handler );
+            mock::verify();
         }
+       ~ExerciseFixture()
+       {
+           exercise->Stop( SESSION );
+       }
 
         void VerifySendRequest( const std::string& expected )
         {
