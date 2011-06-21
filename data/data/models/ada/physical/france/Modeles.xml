@@ -7827,6 +7827,7 @@
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
+        <mission name="GENIE Realiser Travaux"/>
         <mission name="Detruire point du reseau"/>
         <mission name="Reparer point du reseau"/>
       </missions>
@@ -11794,4 +11795,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0176721517" -->
+<!-- signature="1521352232" -->
