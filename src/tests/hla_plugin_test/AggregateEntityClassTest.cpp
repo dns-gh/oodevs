@@ -73,6 +73,7 @@ BOOST_FIXTURE_TEST_CASE( aggregate_entity_class_registers_attributes, Fixture )
                                                                         ( "NumberOfSilentEntities" )
                                                                         ( "SilentEntities" )
                                                                         ( "SilentAggregates" )
+                                                                        ( "SubAggregateIdentifiers" )
                                                                         ( "Mounted" )
                                                                         ( "Echelon" );
     MOCK_EXPECT( federate, RegisterClass ).once().with( "BaseEntity.AggregateEntity.NETN_Aggregate", boost::bind( &CheckAttributes, _1, attributes ), true, false );

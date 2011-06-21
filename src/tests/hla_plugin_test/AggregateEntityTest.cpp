@@ -72,6 +72,7 @@ BOOST_FIXTURE_TEST_CASE( agent_serializes_all, RegisteredFixture )
                                                                         ( "NumberOfSilentEntities" )
                                                                         ( "SilentEntities" )
                                                                         ( "SilentAggregates" )
+                                                                        ( "SubAggregateIdentifiers" )
                                                                         ( "Mounted" )
                                                                         ( "Echelon" );
     {
@@ -117,6 +118,14 @@ BOOST_FIXTURE_TEST_CASE( agent_is_fully_aggregated, RegisteredFixture )
 {
     const unsigned char fullyAggregated = 1;
     MOCK_EXPECT( functor, Visit ).once().with( "AggregateState", boost::bind( &CheckSerialization< unsigned char >, _1, fullyAggregated ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_has_no_sub_aggregate_identifiers, RegisteredFixture )
+{
+    const uint32 numberSubAggregateIdentifiers = 0u;
+    MOCK_EXPECT( functor, Visit ).once().with( "SubAggregateIdentifiers", boost::bind( &CheckSerialization< uint32 >, _1, numberSubAggregateIdentifiers ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }

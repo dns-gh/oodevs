@@ -44,21 +44,22 @@ AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject
     , hlaClass_    ( new ::hla::Class< AggregateEntity >( *registration_, true ) )
 {
     // BaseEntity.AggregateEntity
-    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityType" ) );             // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );       // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "Spatial" ) );                // dynamic
-    hlaClass_->Register( ::hla::AttributeIdentifier( "AggregateMarking" ) );       // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "AggregateState" ) );         // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "Dimensions" ) );             // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifiers" ) );      // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "ForceIdentifier" ) );        // static
-    hlaClass_->Register( ::hla::AttributeIdentifier( "Formation" ) );              // dynamic
-    hlaClass_->Register( ::hla::AttributeIdentifier( "NumberOfSilentEntities" ) ); // dynamic
-    hlaClass_->Register( ::hla::AttributeIdentifier( "SilentEntities" ) );         // dynamic
-    hlaClass_->Register( ::hla::AttributeIdentifier( "SilentAggregates" ) );       // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityType" ) );              // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifier" ) );        // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "Spatial" ) );                 // dynamic
+    hlaClass_->Register( ::hla::AttributeIdentifier( "AggregateMarking" ) );        // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "AggregateState" ) );          // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "Dimensions" ) );              // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "EntityIdentifiers" ) );       // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "ForceIdentifier" ) );         // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "Formation" ) );               // dynamic
+    hlaClass_->Register( ::hla::AttributeIdentifier( "NumberOfSilentEntities" ) );  // dynamic
+    hlaClass_->Register( ::hla::AttributeIdentifier( "SilentEntities" ) );          // dynamic
+    hlaClass_->Register( ::hla::AttributeIdentifier( "SilentAggregates" ) );        // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "SubAggregateIdentifiers" ) ); // static
     // BaseEntity.AggregateEntity.NETN_Aggregate
-    hlaClass_->Register( ::hla::AttributeIdentifier( "Mounted" ) );                // dynamic
-    hlaClass_->Register( ::hla::AttributeIdentifier( "Echelon" ) );                // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "Mounted" ) );                 // dynamic
+    hlaClass_->Register( ::hla::AttributeIdentifier( "Echelon" ) );                 // static
     federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity.NETN_Aggregate" ), *hlaClass_, true, false );
     subject_.Register( *this );
     hlaClass_->ActivateUpdates( true );
