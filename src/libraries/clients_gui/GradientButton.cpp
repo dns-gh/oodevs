@@ -242,7 +242,10 @@ void GradientButton::LoadGradient( const Gradient& gradient )
     ClearSelection();
     for( CIT_Colors it = colors_.begin(); it != colors_.end(); ++it )
         if( *it )
+        {
+            (*it)->hide();
             delete *it;
+        }
     colors_.clear();
     GradientBuilder builder( *this );
     gradient.Accept( builder );

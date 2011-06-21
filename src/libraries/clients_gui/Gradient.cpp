@@ -16,6 +16,7 @@
 #pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
+#include <boost/bind.hpp>
 
 using namespace gui;
 
@@ -144,12 +145,21 @@ namespace
     }
 }
 
+namespace
+{
+    bool Check( std::pair< float, QColor >& color, float position )
+    {
+        return color.first == position;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Gradient::AddColor
 // Created: AGE 2007-07-03
 // -----------------------------------------------------------------------------
 void Gradient::AddColor( float position, const QColor& color )
 {
+    colors_.erase( std::remove_if( colors_.begin(), colors_.end(), boost::bind( &Check, _1, position ) ), colors_.end() );
     colors_.push_back( T_Color( position, color ) );
 }
 
