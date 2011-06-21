@@ -101,7 +101,7 @@
         <![CDATA[Total number of resources for the selected units.]]>
       </description>
       <description name="Ressources totales par unités" lang="fr">
-        <![CDATA[Nombre total de ressourrces pour une liste d'unité.]]>
+        <![CDATA[Nombre total de ressources pour une liste d'unité.]]>
       </description>
     </descriptions>
     <parameters>
@@ -227,10 +227,10 @@
   <function name="Destroyed equipments for units">
     <descriptions>
       <description name="Destroyed equipments for units" lang="en">
-        <![CDATA[Number of equipments with unavailable state for the selected units.]]>
+        <![CDATA[Number of destroyed equipments for the unit list.]]>
       </description>
       <description name="Equipements détruit par unités" lang="fr">
-        <![CDATA[Quantité d'équipements en état "unavailable" pour une liste d'unités.]]>
+        <![CDATA[Quantité d'équipements détruit pour une liste d'unités.]]>
       </description>
     </descriptions>
     <parameters>
@@ -248,7 +248,7 @@
   <function name="Number of direct fires for units">
     <descriptions>
       <description name="Number of direct fires for units" lang="en">
-        <![CDATA[Number of simultaneous direct fires for a units list.]]>
+        <![CDATA[Number of simultaneous direct fires for a unit list.]]>
       </description>
       <description name="Nombre de tirs directs pour une liste d'unités" lang="fr">
         <![CDATA[Nombre de tirs directs simultanés pour une liste d'unités.]]>
@@ -269,7 +269,7 @@
   <function name="Number of direct fires in zone">
     <descriptions>
       <description name="Number of direct fires in zone" lang="en">
-        <![CDATA[Number of direct fires by units situated within the designated zone.]]>
+        <![CDATA[Number of direct fires by units located within the designated zone.]]>
       </description>
       <description name="Nombre de tirs directs dans zone" lang="fr">
         <![CDATA[Nombre de tirs directs dans la zone désignée.]]>
@@ -314,7 +314,7 @@
   <function name="Number of indirect fires in zone">
     <descriptions>
       <description name="Number of indirect fires in zone" lang="en">
-        <![CDATA[Number of indirect fires by units situated within the designated zone.]]>
+        <![CDATA[Number of indirect fires by units located within the designated zone.]]>
       </description>
       <description name="Nombre de tirs indirects dans zone" lang="fr">
         <![CDATA[Nombre de tirs indirects dans la zone désignée.]]>
@@ -336,7 +336,7 @@
   <function name="Available equipments in zone">
     <descriptions>
       <description name="Available equipments in specified zone" lang="en">
-        <![CDATA[Total number of equipments with available state in specified zone.]]>
+        <![CDATA[Total number of equipments with available state located within the designated zone.]]>
       </description>
       <description name="Equipements disponibles dans la zone spécifiée" lang="fr">
         <![CDATA[Quantité d'équipements en état disponible dans la zone spécifiée.]]>
@@ -360,7 +360,7 @@
   <function name="Unavailable equipments in specified zone">
     <descriptions>
       <description name="Unavailable equipments in specified zone" lang="en">
-        <![CDATA[Total number of equipments with unavailable, repairable, repairing, captured states in specified zone.]]>
+        <![CDATA[Total number of equipments with unavailable, repairable, repairing or captured states located within the designated zone.]]>
       </description>
       <description name="Equipements non disponibles dans la zone spécifiée" lang="fr">
         <![CDATA[Quantité d'équipements en état unavailable, repairable, repairing ou captured dans la zone spécifiée.]]>
@@ -856,13 +856,13 @@
     </indicator>
   </function> 
   
-  <function name="Number of indirect fires which did damaged for units">
+  <function name="Number of indirect fires that caused damages for a unit list">
     <descriptions>
-      <description name="Number of indirect fires which did damaged for units" lang="en">
-        <![CDATA[Number of indirect fires which did damaged for units list.]]>
+      <description name="Number of indirect fires that caused damages for a unit list" lang="en">
+        <![CDATA[Number of indirect fires that caused damaged for a unit list.]]>
       </description>
-      <description name="Nombre de tirs indirects qui ont fait des dégâts pour une liste d'unités" lang="fr">
-        <![CDATA[Nombre de tirs indirects qui ont fait des dégâts pour une liste d'unités.]]>
+      <description name="Nombre de tirs indirects ayant causé des dégâts pour une liste d'unités" lang="fr">
+        <![CDATA[Nombre de tirs indirects ayant causé des dégâts sur une liste d'unités.]]>
       </description>
     </descriptions>
     <parameters>
@@ -877,13 +877,13 @@
     </indicator>
   </function> 
   
-  <function name="Number of indirect fires which did damages in zone">
+  <function name="Number of indirect fires that caused damages in zone">
     <descriptions>
-      <description name="Number of indirect fires which did damaged in zone" lang="en">
-        <![CDATA[Number of indirect fires which did damaged in specified zone.]]>
+      <description name="Number of indirect fires that caused damaged in zone" lang="en">
+        <![CDATA[Number of indirect fires that caused damaged in specified zone.]]>
       </description>
-      <description name="Nombre de tirs indirects qui ont fait des dégâts dans une zone" lang="fr">
-        <![CDATA[Nombre de tirs indirects qui ont fait des dégâts dans la zone spécifiée.]]>
+      <description name="Nombre de tirs indirects ayant causé des dégâts dans une zone" lang="fr">
+        <![CDATA[Nombre de tirs indirects ayant causé des dégâts dans la zone spécifiée.]]>
       </description>
     </descriptions>
     <parameters>
@@ -903,10 +903,10 @@
     <function name="Components total loss from indirect fires in zone">
     <descriptions>
       <description name="Quantity of component unavailable by indirect fire in zone (loss)" lang="en">
-        <![CDATA[Quantity of components loss by indirect fires on unit list.]]>
+        <![CDATA[Quantity of components unavailable by indirect fires on unit list.]]>
       </description>
       <description name="Nombre de composants indisponibles dans zone (pertes)" lang="fr">
-        <![CDATA[Nombre de composants détruits par tirs indirects sur une liste d'unités.]]>
+        <![CDATA[Nombre de composants indisponibles par tirs indirects sur une liste d'unités.]]>
       </description>
     </descriptions>
     <parameters>
@@ -927,10 +927,10 @@
   <function name="Components total destroyed by indirect fires in zone">
     <descriptions>
       <description name="Quantity of component unavailable by indirect fires in zone (damages)" lang="en">
-        <![CDATA[Quantity of components destroyed by indirect fires on unit list.]]>
+        <![CDATA[Quantity of components unavailable by indirect fires on unit list.]]>
       </description>
       <description name="Nombre de composants indisponibles par tirs indirects dans zone (dégâts)" lang="fr">
-        <![CDATA[Nombre de composants détruits par tirs indirects sur une liste d'unités.]]>
+        <![CDATA[Nombre de composants indisponibles par tirs indirects sur une liste d'unités.]]>
       </description>
     </descriptions>
     <parameters>
@@ -974,10 +974,10 @@
   <function name="Unavailable humans done by crowd fires in zone">
     <descriptions>
       <description name="Unavailable humans done by crowd fires in zone (loss)" lang="en">
-        <![CDATA[Dead humans from crowd fires in zone.]]>
+        <![CDATA[Unavailable humans done by crowd fires in zone.]]>
       </description>
-      <description name="Nombre d'humains invalidé par tirs de foule dans la zone spécifiée (pertes)" lang="fr">
-        <![CDATA[Pertes humaines par tirs de foule dans zone.]]>
+      <description name="Nombre d'humains invalides par tirs de foule dans la zone spécifiée (pertes)" lang="fr">
+        <![CDATA[Nombre d'humains invalides par tirs de foule dans la zone spécifiée.]]>
       </description>
     </descriptions>
     <parameters>
@@ -1011,6 +1011,31 @@
       <transform function='domain' type='float' select='${Units}' input='power' id='domained'/>
       <reduce type='float' function='mean' input='domained' id='mean'/>
       <result function='plot' input='mean' type='float'/>
+    </indicator>
+  </function>
+  
+  <function name="Direct fire power of units in zone">
+  <descriptions>
+      <description name="Direct fire power for a unit list in zone" lang="en">
+        <![CDATA[Direct fire power for a unit list in zone.]]>
+      </description>
+        <description name="Puissance de feu en tir direct pour une liste d'unités dans zone" lang="fr">
+          <![CDATA[Indicateur de puissance en tir direct pour une liste d'unités dans zone.]]>
+        </description>
+      </descriptions>
+    <parameters>
+      <parameter name='Units' type='unit list'/>
+	  <parameter name='Zone' type='zone'/>
+    </parameters>
+    <indicator>
+      <extract function='direct-fire-power' id='power'/>
+      <extract function='positions' id='positions'/>
+      <constant type='zone' value='${Zone}' id='zone'/>
+	  <transform function='contains' input='zone,positions' id='selected-units'/>
+      <transform function='filter' id='filtered-power' input='selected-units,power' type='int'/>
+      <transform function='domain' type='int' select='${Units}' input='filtered-power' id='domained-power'/>
+	  <reduce type='float' function='sum' input='domained-power' id='sum'/>
+	  <result function='plot' input='sum' type='float'/>
     </indicator>
   </function>  
   
