@@ -26,6 +26,7 @@ local emptyTable = emptyTable
     create = function( self )
         self._namedParams = {}
         self._namedParams.mission = self.params.mission
+        
     end,
 
     activate = function( self )
@@ -98,7 +99,7 @@ elseif switch_1 == eAppuyer then
                                                         do return end
 
                         end
---[[//Brouiller pendant 15 mins
+--[[//Brouiller pendant une durée de "delay" en minutes
 ]]                    end
 
                     Activate( self.activations.BEH_Rens_ActiverBrouillage, 1, { eTypeObjectZoneBrouillage, } )
@@ -114,7 +115,7 @@ elseif switch_1 == eAppuyer then
                         end
                     end
 
-                    Activate( self.activations.ACT_Misc_Delai, 1, { 1, 15, } )
+                    Activate( self.activations.ACT_Misc_Delai, 1, { 1, DEC_GetMission( myself ).delay_, } )
 self.done_ACT_Misc_Delai = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 --[[// Fin de la mission --> SUR ORDRE

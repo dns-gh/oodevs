@@ -1589,6 +1589,8 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="positionDeploiement_" name="Deployment position" optional="false" type="Point"/>
       <parameter dia-name="pointRegroupement_" name="Meeting point" optional="false" type="Point"/>
+      <parameter dia-name="delay_" name="Delay" optional="false" type="Integer"/>
+      <parameter dia-name="radius_" name="Radius" optional="false" type="Integer"/>
     </mission>
     <mission dia-behavior="MIS_Pion_RENS_ROEM_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROEM_RenseignerSur" id="161" name="ElectronicIntelligence - report information">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
@@ -3384,4 +3386,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3926985563" -->
+<!-- signature="2216039665" -->
