@@ -8,8 +8,8 @@
         <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Interroger"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -89,8 +89,8 @@
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -133,8 +133,8 @@
         <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Interroger"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -207,8 +207,8 @@
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Interroger"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -259,8 +259,8 @@
         <mission name="COMMUNES AllerA"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Interroger"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -339,8 +339,8 @@
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Interroger"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -449,8 +449,8 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
@@ -486,8 +486,8 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -543,8 +543,8 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -582,8 +582,8 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
@@ -619,8 +619,8 @@
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Interroger"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
@@ -701,8 +701,8 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -741,8 +741,8 @@
         <mission name="COMMUNES Faire Mouvement"/>
         <mission name="COMMUNES Franchir"/>
         <mission name="COMMUNES Interroger"/>
-        <mission name="COMMUNES Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Dans un Camp"/>
         <mission name="COMMUNES Prendre En Compte Prisonniers"/>
         <mission name="COMMUNES Renforcer"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
@@ -846,7 +846,6 @@
         <mission name="Suivre"/>
         <mission name="JOINT MARINE Transporter"/>
         <mission name="Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
@@ -878,7 +877,6 @@
         <mission name="Soutenir sur position en mesure de"/>
         <mission name="Suivre"/>
         <mission name="Orienter Refugies"/>
-        <mission name="COMMUNES Orienter Refugies dans un camp"/>
         <mission name="Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
@@ -7759,7 +7757,8 @@
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="MELEE Attaquer">
           <fragorder name="Deboucher"/>
@@ -7820,7 +7819,8 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
@@ -7850,7 +7850,8 @@
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES FaireMouvement"/>
         <mission name="COMMUNES Franchir"/>
-        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
@@ -7887,7 +7888,8 @@
         <mission name="ASS SeDeployer"/>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES FaireMouvement"/>
-        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
@@ -7916,7 +7918,8 @@
       <missions>
         <mission name="COMMUNES Decrocher"/>
         <mission name="COMMUNES FaireMouvement"/>
-        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="COMMUNES Se Faire Transporter"/>
@@ -11713,7 +11716,8 @@
         <mission name="COMMUNES Se Recompleter"/>
         <mission name="COMMUNES Stationner"/>
         <mission name="COMMUNES Suivre"/>
-        <mission name="COMMUNES Orienter Refugies"/>
+        <mission name="COMMUNES Orienter Refugies Vers Position"/>
+        <mission name="COMMUNES Orienter Refugies Vers Camp"/>
         <mission name="COMMUNES Prendre en compte Prisonniers"/>
         <mission name="COMMUNES Se Faire Decontaminer"/>
         <mission name="Detruire point du reseau"/>
@@ -11790,4 +11794,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0672572037" -->
+<!-- signature="0176721517" -->
