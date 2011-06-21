@@ -13,6 +13,7 @@
 #include <hla/Time_ABC.h>
 #include <hla/TimeInterval_ABC.h>
 #include <hla/HLA_Lib.h>
+#include <hla/AttributeFunctor_ABC.h>
 #include <boost/foreach.hpp>
 #include <iostream>
 
@@ -142,6 +143,25 @@ void DebugRtiAmbassador::Resign()
     ambassador_->Resign();
 }
 
+namespace
+{
+    class AttributeFunctor : private hla::AttributeFunctor_ABC
+    {
+    public:
+        explicit AttributeFunctor( const hla::Class_ABC& objectClass )
+        {
+            objectClass.Apply( *this );
+        }
+        virtual ~AttributeFunctor() {}
+        std::string attributes;
+    private:
+        virtual void Visit( const hla::AttributeIdentifier& attributeID )
+        {
+            attributes += ( attributes.empty() ? "" : ", " ) + attributeID.ToString();
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: DebugRtiAmbassador::Subscribe
 // Created: MCO 2009-01-26
@@ -149,7 +169,7 @@ void DebugRtiAmbassador::Resign()
 void DebugRtiAmbassador::Subscribe( const ClassIdentifier& classID, const Class_ABC& objectClass )
 {
     Flush();
-    logger_.LogInfo( "-> Subscribe class " + classID.ToString() );
+    logger_.LogInfo( "-> Subscribe class " + classID.ToString() + " { " + AttributeFunctor( objectClass ).attributes + " }" );
     ambassador_->Subscribe( classID, objectClass );
 }
 
@@ -160,7 +180,7 @@ void DebugRtiAmbassador::Subscribe( const ClassIdentifier& classID, const Class_
 void DebugRtiAmbassador::Publish( const ClassIdentifier& classID, const Class_ABC& objectClass )
 {
     Flush();
-    logger_.LogInfo( "-> Publish class " + classID.ToString() );
+    logger_.LogInfo( "-> Publish class " + classID.ToString() + " { " + AttributeFunctor( objectClass ).attributes + " }" );
     ambassador_->Publish( classID, objectClass );
 }
 
