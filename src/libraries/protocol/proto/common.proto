@@ -857,6 +857,7 @@ message MissionParameter {
         optional KnowledgeGroupId         knowledgeGroup           = 45; //!< A knowledge group identifier
         optional Extension                extensionList            = 46; //!< An extension list
         repeated Value                    list                     = 47; //!< A list of values
+        optional int32                    external_identifier      = 48; //!< An external identifier
     }
     optional bool  null_value = 1; //!< Whether the parameter is a null value or not
     repeated Value value      = 2; //!< The parameter

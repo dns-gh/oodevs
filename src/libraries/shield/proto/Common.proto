@@ -604,6 +604,7 @@ message MsgMissionParameter {
         optional KnowledgeGroupId            knowledgeGroup              = 45;
         optional Extension                   extensionList               = 46;
         repeated Value                       list                        = 47;
+        optional int32                       external_identifier         = 48;
     }
     optional bool  null_value       = 1;
     repeated Value value   = 2;

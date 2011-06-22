@@ -43,6 +43,7 @@
 #include "MIL_StringParameter.h"
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
+#include "MIL_ExternalIdentifierWrapper.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
 
@@ -155,6 +156,8 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
         ptr = new MIL_ListParameter( resolver, message.list() );
 
     boost::shared_ptr<MIL_MissionParameter_ABC> result( ptr );
+    if( message.has_external_identifier() )
+        return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_ExternalIdentifierWrapper( result, message.external_identifier() ) );
     return result;
 }
 
