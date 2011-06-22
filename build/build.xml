@@ -1187,7 +1187,7 @@
         </sequential>
     </macrodef>
  
-    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.france,package.otpack.defense.scipio,package.otpack.security.worldwide,package.otpack.security.masa,package.otpack.lossc,package.otpack.tutosw,package.otpack.performance" description="package the exercise otpacks"/>
+    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.france,package.otpack.defense.scipio,package.otpack.security.worldwide,package.otpack.security.masa,package.otpack.lossc,package.otpack.tutosw,package.otpack.validation" description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
         <pack name="defense-worldwide" description="defense-worldwide exercises package">
@@ -1323,15 +1323,17 @@
         </pack>
     </target>
 
-    <target name="package.otpack.performance" description="package de performance otpack">
-        <pack name="performancesw" description="performance and charge exercises package">
+    <target name="package.otpack.validation" description="package de validation otpack">
+        <pack name="validationsw" description="validation, performance and charge exercises package">
             <include name="data/models/ada/physical/scipio-1.9.2/**"/>
             <include name="data/models/ada/physical/france/**"/>
             <include name="data/propagations/test/**"/>
-            <include name="exercises/Charge/**"/>
-            <include name="exercises/Performance/**"/>
+            <include name="exercises/ValidationTests/Charge/**"/>
+            <include name="exercises/ValidationTests/Performance/**"/>
+            <include name="exercises/ValidationTests/Validation/**"/>            
             <include name="data/terrains/Performance/500x1000/**"/>
             <include name="data/terrains/Cabourg/**"/>
+            <include name="data/terrains/PortoV3Lite/**"/>
         </pack>
     </target>
 
