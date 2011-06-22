@@ -74,7 +74,8 @@ BOOST_FIXTURE_TEST_CASE( agent_serializes_all, RegisteredFixture )
                                                                         ( "SubAggregateIdentifiers" )
                                                                         ( "EntityIdentifiers" )
                                                                         ( "Mounted" )
-                                                                        ( "Echelon" );
+                                                                        ( "Echelon" )
+                                                                        ( "UniqueID" );
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
@@ -142,6 +143,13 @@ BOOST_FIXTURE_TEST_CASE( agent_has_no_silent_aggregate, RegisteredFixture )
 {
     const uint32 numberOfSilentAggregates = 0u;
     MOCK_EXPECT( functor, Visit ).once().with( "SilentAggregates", boost::bind( &CheckSerialization< uint32 >, _1, numberOfSilentAggregates ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_unique_id_is_sword_plus_identifier, RegisteredFixture )
+{
+    MOCK_EXPECT( functor, Visit ).once().with( "UniqueID", boost::bind( &CheckSize, _1, 11u ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }

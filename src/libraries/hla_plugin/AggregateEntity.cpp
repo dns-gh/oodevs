@@ -16,11 +16,13 @@
 #include "SilentEntity.h"
 #include "Formation.h"
 #include "Dimension.h"
+#include "UniqueId.h"
 #include "AttributesSerializer.h"
 #include "rpr/EntityIdentifier.h"
 #include "rpr/EntityType.h"
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
+#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 
@@ -69,6 +71,7 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned short identifier,
     // BaseEntity.AggregateEntity.NETN_Aggregate
     attributes_->Register( "Mounted", Wrapper< double >( 0. ) );
     attributes_->Register( "Echelon", Wrapper< unsigned char >( 14 ) ); // platoon
+    attributes_->Register( "UniqueID", UniqueId( "SWORD" + boost::lexical_cast< std::string >( identifier ) ) );
     agent_.Register( *this );
 }
 
