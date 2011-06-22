@@ -72,6 +72,7 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned short identifier,
     attributes_->Register( "Mounted", Wrapper< double >( 0. ) );
     attributes_->Register( "Echelon", Wrapper< unsigned char >( 14 ) ); // platoon
     attributes_->Register( "UniqueID", UniqueId( "SWORD" + boost::lexical_cast< std::string >( identifier ) ) );
+    attributes_->Register( "HigherHeadquarters", UniqueId( "SWORD" + boost::lexical_cast< std::string >( identifier ) ) );
     agent_.Register( *this );
 }
 

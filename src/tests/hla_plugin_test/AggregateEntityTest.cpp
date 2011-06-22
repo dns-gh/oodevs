@@ -75,7 +75,8 @@ BOOST_FIXTURE_TEST_CASE( agent_serializes_all, RegisteredFixture )
                                                                         ( "EntityIdentifiers" )
                                                                         ( "Mounted" )
                                                                         ( "Echelon" )
-                                                                        ( "UniqueID" );
+                                                                        ( "UniqueID" )
+                                                                        ( "HigherHeadquarters" );
     {
         hla::MockUpdateFunctor functor;
         mock::sequence s;
@@ -150,6 +151,13 @@ BOOST_FIXTURE_TEST_CASE( agent_has_no_silent_aggregate, RegisteredFixture )
 BOOST_FIXTURE_TEST_CASE( agent_unique_id_is_sword_plus_identifier, RegisteredFixture )
 {
     MOCK_EXPECT( functor, Visit ).once().with( "UniqueID", boost::bind( &CheckSize, _1, 11u ) );
+    MOCK_EXPECT( functor, Visit );
+    entity.Serialize( functor, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_higher_headquarters_uniqueid_is_its_own_identifier, RegisteredFixture )
+{
+    MOCK_EXPECT( functor, Visit ).once().with( "HigherHeadquarters", boost::bind( &CheckSize, _1, 11u ) );
     MOCK_EXPECT( functor, Visit );
     entity.Serialize( functor, true );
 }

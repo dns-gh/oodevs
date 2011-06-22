@@ -59,6 +59,7 @@ AggregateEntityClass::AggregateEntityClass( Federate_ABC& federate, AgentSubject
     hlaClass_->Register( ::hla::AttributeIdentifier( "Mounted" ) );                 // dynamic
     hlaClass_->Register( ::hla::AttributeIdentifier( "Echelon" ) );                 // static
     hlaClass_->Register( ::hla::AttributeIdentifier( "UniqueID" ) );                // static
+    hlaClass_->Register( ::hla::AttributeIdentifier( "HigherHeadquarters" ) );      // static
     federate.Register( ::hla::ClassIdentifier( "BaseEntity.AggregateEntity.NETN_Aggregate" ), *hlaClass_, true, false );
     subject_.Register( *this );
     hlaClass_->ActivateUpdates( true );
