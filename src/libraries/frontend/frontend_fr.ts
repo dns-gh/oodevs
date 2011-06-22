@@ -202,6 +202,10 @@
         <source>Failed to execute command on exercise: %1.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>invalid date time</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PluginConfig</name>

@@ -274,6 +274,19 @@ void RemoteHost::SaveCheckpoint(const std::string& exercise, const std::string& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: RemoteHost::ChangeDateTime
+// Created: LGY 2011-06-22
+// -----------------------------------------------------------------------------
+void RemoteHost::ChangeDateTime( const std::string& exercise, const std::string& session, const std::string& date ) const
+{
+    launcher::SessionCommandExecutionRequest message;
+    message().set_exercise( exercise );
+    message().set_session( session );
+    message().mutable_time_change()->set_data( date );
+    message.Send( publisher_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: RemoteHost::QueryConnectedProfileList
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------

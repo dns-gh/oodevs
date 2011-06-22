@@ -175,6 +175,15 @@ void RemoteExercise::Resume(const std::string& session) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: RemoteExercise::ChangeDateTime
+// Created: LGY 2011-06-22
+// -----------------------------------------------------------------------------
+void RemoteExercise::ChangeDateTime( const std::string& session, const std::string& date ) const
+{
+    host_.ChangeDateTime( name_, session, date );
+}
+
+// -----------------------------------------------------------------------------
 // Name: RemoteExercise::SaveCheckpoint
 // Created: AHC 2010-05-20
 // -----------------------------------------------------------------------------

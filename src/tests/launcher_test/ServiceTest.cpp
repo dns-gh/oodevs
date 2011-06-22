@@ -93,6 +93,28 @@ BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ClientCanChangeDateTime
+// Created: LGY 2011-06-22
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( ClientCanChangeDateTime, ExerciseFixture )
+{
+    // send resume request
+    exercise->ChangeDateTime( SESSION, "dateISO860" );
+    VerifySendRequest( "context: 3 message { control_date_time_change { date_time { data: \"dateISO860\" } } }" );
+
+    // retrieve resume response
+    client::ControlDateTimeChangeAck dispatcherResponse;
+    dispatcherResponse().set_error_code( sword::ControlAck::no_error );
+    dispatcherResponse.Send( dispatcher, 3 );
+
+    sword::SessionCommandExecutionResponse launcherResponse;
+    MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
+
+    Wait( launcherResponse );
+    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + SESSION + "\"" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ClientCanSaveCheckPoint
 // Created: AHC 2011-05-20
 // -----------------------------------------------------------------------------

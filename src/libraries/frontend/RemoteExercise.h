@@ -58,6 +58,7 @@ public:
     virtual void QueryProfileList() const;
     virtual void Pause(const std::string& session) const;
     virtual void Resume(const std::string& session) const;
+    virtual void ChangeDateTime( const std::string& session, const std::string& date ) const;
     virtual void SaveCheckpoint(const std::string& session, const std::string& name) const;
     virtual void QueryConnectedProfileList(const std::string& session) const;
     //@}

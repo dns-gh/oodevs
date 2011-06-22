@@ -115,6 +115,7 @@ void AdminToLauncher::Convert( const MsgsAdminToLauncher::MsgSessionCommandExecu
     CONVERT( session );
     CONVERT( save_checkpoint );
     CONVERT( set_running );
+    CONVERT_DATE( time_change );
 }
 
 // -----------------------------------------------------------------------------

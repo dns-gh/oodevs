@@ -161,6 +161,8 @@ namespace
             return tools::translate( "LauncherClient", "session already paused" );
         case sword::SessionCommandExecutionResponse::session_already_running:
             return tools::translate( "LauncherClient", "session already running" );
+        case sword::SessionCommandExecutionResponse::invalid_date_time:
+            return tools::translate( "LauncherClient", "invalid date time" );
         default:
             return tools::translate( "LauncherClient", "unknown error" );
         }

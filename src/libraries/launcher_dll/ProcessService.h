@@ -74,6 +74,8 @@ private:
     //@{
     void ExecutePauseResume( const std::string& endpoint, const std::string& exercise, const std::string& session,
                              bool running, int context, SwordFacade& facade );
+    void ExecuteChangeTime( const std::string& endpoint, const std::string& exercise, const std::string& session,
+                            const std::string& date, int context, SwordFacade& facade );
     void SaveCheckpoint( const std::string& name, SwordFacade& facade );
     //@}
 

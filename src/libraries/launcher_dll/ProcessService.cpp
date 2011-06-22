@@ -24,6 +24,7 @@
 #include "PauseResumeMessageHandler.h"
 #include "StatusMessageHandler.h"
 #include "LauncherService.h"
+#include "TimeMessageHandler.h"
 #include "NotificationMessageHandler.h"
 #include "ControlInformationMessageHandler.h"
 #include "ConnectedProfilesMessageHandler.h"
@@ -319,10 +320,17 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         return SendErrorMessage< SessionCommandExecutionResponse >( server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionCommandExecutionResponse::session_not_running );
     boost::shared_ptr< SwordFacade > client( it->second );
     if( message.has_set_running() )
+    {
         ExecutePauseResume( endpoint, message.exercise(), message.session(), message.set_running(), context, *client );
-    ++context;
+        ++context;
+    }
     if( message.has_save_checkpoint() )
         SaveCheckpoint( message.save_checkpoint(), *client );
+    if( message.has_time_change() )
+    {
+        ExecuteChangeTime( endpoint, message.exercise(), message.session(), message.time_change().data(), context, *client );
+        ++context;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -344,6 +352,20 @@ void ProcessService::ExecutePauseResume( const std::string& endpoint, const std:
         simulation::ControlPause request;
         request.Send( facade, context );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessService::ExecuteChangeTime
+// Created: LGY 2011-06-22
+// -----------------------------------------------------------------------------
+void ProcessService::ExecuteChangeTime( const std::string& endpoint, const std::string& exercise, const std::string& session,
+                                        const std::string& date, int context, SwordFacade& facade )
+{
+    facade.RegisterMessageHandler( context,
+        std::auto_ptr< MessageHandler_ABC >( new TimeMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+    simulation::ControlDateTimeChange request;
+    request().mutable_date_time()->set_data( date );
+    request.Send( facade, context );
 }
 
 // -----------------------------------------------------------------------------

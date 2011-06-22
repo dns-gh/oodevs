@@ -99,6 +99,7 @@ message SessionCommandExecutionRequest {
     required string     session         = 2 [ default = "default" ]; //!< session to send command to
     optional string     save_checkpoint = 3;                         //!< if set, save a checkpoint with specified name or default (timestamp)
     optional bool       set_running     = 4;                         //!< if set to false, send a pause command; if set to true, set a resume command
+    optional DateTime   time_change     = 5;                         //!< if set, change exercise time
 }
 
 /** @struct CheckpointListRequest

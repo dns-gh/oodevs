@@ -11,6 +11,11 @@ package MsgsAdminToLauncher;
 
 import "Version.proto";
 
+// The date-time formatted according to ISO 860
+message DateTime {
+   required string data = 1;
+}
+
 // request connection to launcher
 message MsgConnectionRequest {
    required Version.ProtocolVersion client_version = 1; //!< launcher client version, used to check compatibility
@@ -74,6 +79,7 @@ message MsgSessionCommandExecutionRequest {
     required string     session         = 2 [ default = "default" ]; //!< session to send command to
     optional string     save_checkpoint = 3;                         //!< if set, save a checkpoint with specified name or default (timestamp)
     optional bool       set_running     = 4;                         //!< if set to false, send a pause command; if set to true, set a resume command
+    optional DateTime   time_change     = 5;                         //!< if set, change exercise time
 }
 
 // retrieve list of checkpoints for a given exercise/session
