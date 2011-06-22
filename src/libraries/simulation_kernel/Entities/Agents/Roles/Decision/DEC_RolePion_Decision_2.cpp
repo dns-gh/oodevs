@@ -81,13 +81,14 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_DebugPointXY" ] = &DEC_MiscFunctions::GetPointXY;
 
     // Pion accessors
-
     brain[ "DEC_Agent_PeutActiverObjet" ] = &DEC_AgentFunctions::CanActivateObject;
     brain[ "DEC_Agent_PeutIllumine" ] = &DEC_AgentFunctions::CanIlluminate;
 
     //agent knowledge accessors
     brain[ "DEC_ConnaissanceAgent_EstIllumine" ] = &DEC_KnowledgeAgentFunctions::IsIlluminated;
     brain[ "DEC_ConnaissanceAgent_EstDefinitivementIllumine" ] = &DEC_KnowledgeAgentFunctions::IsDefinitivelyIlluminated;
+    brain[ "DEC_ConnaissanceAgent_EstDansFoule" ] = &DEC_KnowledgeAgentFunctions::IsInCrowd;
+    brain[ "DEC_ConnaissanceAgent_Neutraliser" ]= DEC_KnowledgeAgentFunctions::NeutralizeAgent;
 
     // Object knowledges accessors
     brain[ "DEC_IsValidKnowledgeObject" ] = &DEC_KnowledgeObjectFunctions::IsKnowledgeValid;
@@ -118,7 +119,6 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_Connaissance_GetRawMission" ] = &DEC_KnowledgeAgentFunctions::GetMission;
     brain[ "DEC_HasMission" ] = &DEC_AgentFunctions::HasMission;
     brain[ "DEC_GetDirectionDanger" ] = &DEC_AgentFunctions::GetDirectionDanger;
-
 
     //Calculs de positions
     brain[ "DEC_Geometrie_PionDevant" ] = &DEC_GeometryFunctions::GetFrontestPion;
@@ -464,9 +464,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::CanBeIlluminate, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceAgent_PeutIlluminer" ] =
         boost::function< bool() >( boost::bind( &DEC_KnowledgeAgentFunctions::CanIlluminate, boost::cref( GetPion() ) ) );
-    brain[ "DEC_ConnaissanceAgent_EstDansFoule" ] = &DEC_KnowledgeAgentFunctions::IsInCrowd;
-    brain[ "DEC_ConnaissanceAgent_Neutraliser" ]= DEC_KnowledgeAgentFunctions::NeutralizeAgent;
-  
+
     // Object knowledges accessors
     brain[ "DEC_ConnaissanceObjet_EstUnEnnemi" ] =
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsAnEnemy, boost::cref( GetPion() ), _1 ) );
@@ -520,6 +518,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     // Urban knowledges accessors
     brain[ "DEC_Connaissances_BlocUrbain" ] =
         boost::function< void( const directia::tools::binders::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlock, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) );
+    brain[ "DEC_Connaissances_BlocUrbainPourPosition" ] =
+        boost::function< UrbanObjectWrapper*( boost::shared_ptr< MT_Vector2D > ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockForPosition, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_BlocUrbainDansCercle" ] =
         boost::function< T_UrbanObjectVector( boost::shared_ptr< MT_Vector2D>, float )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockInCircle, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Connaissances_BlocUrbainDansZone" ] =

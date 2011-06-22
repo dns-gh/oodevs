@@ -190,6 +190,20 @@ T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInCircle( const MIL_Age
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetUrbanBlockForPosition
+// Created: DDA 2011-06-20
+// -----------------------------------------------------------------------------
+UrbanObjectWrapper* DEC_KnowledgeFunctions::GetUrbanBlockForPosition( const MIL_AgentPion& pion, boost::shared_ptr< MT_Vector2D >& point )
+{
+    T_UrbanObjectVector blocks;
+    pion.GetArmy().GetKnowledge().GetUrbanObjects( blocks );
+    for( T_UrbanObjectVector::iterator it = blocks.begin(); it != blocks.end(); it++ )
+        if( ( *it ) && ( *it )->GetLocalisation().IsInside( *point ) )
+            return ( *it );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetUrbanBlockInZone
 // Created: BCI 2011-03-01
 // -----------------------------------------------------------------------------
