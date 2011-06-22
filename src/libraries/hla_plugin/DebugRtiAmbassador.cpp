@@ -9,6 +9,7 @@
 
 #include "hla_plugin_pch.h"
 #include "DebugRtiAmbassador.h"
+#include "ObjectResolver_ABC.h"
 #include "dispatcher/Logger_ABC.h"
 #include <hla/Time_ABC.h>
 #include <hla/TimeInterval_ABC.h>
@@ -24,9 +25,10 @@ using namespace hla;
 // Name: DebugRtiAmbassador constructor
 // Created: MCO 2009-01-26
 // -----------------------------------------------------------------------------
-DebugRtiAmbassador::DebugRtiAmbassador( std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador, dispatcher::Logger_ABC& logger )
+DebugRtiAmbassador::DebugRtiAmbassador( std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador, dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver )
     : ambassador_( ambassador )
     , logger_    ( logger )
+    , resolver_  ( resolver )
     , ticking_   ( false )
 {
     // NOTHING
@@ -225,18 +227,9 @@ ObjectIdentifier DebugRtiAmbassador::RegisterObjectInstance( const ClassIdentifi
 {
     Flush();
     ObjectIdentifier objectID = ambassador_->RegisterObjectInstance( classID, name );
-    objects_[ objectID.ToString() ] = name;
+    resolver_.Register( objectID.ToString(), name );
     logger_.LogInfo( "-> RegisterObjectInstance class '" + classID.ToString() + "' object '" + objectID.ToString() + "' name '" + name + "'" );
     return objectID;
-}
-
-namespace
-{
-    template< typename T >
-    std::string Resolve( T& objects, const hla::ObjectIdentifier& objectID )
-    {
-        return objects[ objectID.ToString() ];
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -246,7 +239,8 @@ namespace
 void DebugRtiAmbassador::DeleteObjectInstance( const ObjectIdentifier& objectID )
 {
     Flush();
-    logger_.LogInfo( "-> DeleteObjectInstance object " + Resolve( objects_, objectID ) + " ( " + objectID.ToString() + " )" );
+    logger_.LogInfo( "-> DeleteObjectInstance object " + resolver_.Resolve( objectID.ToString() ) + " ( " + objectID.ToString() + " )" );
+    resolver_.Unregister( objectID.ToString() );
     ambassador_->DeleteObjectInstance( objectID );
 }
 
@@ -257,7 +251,7 @@ void DebugRtiAmbassador::DeleteObjectInstance( const ObjectIdentifier& objectID 
 void DebugRtiAmbassador::RequestObjectAttributeValueUpdate( const ObjectIdentifier& objectID, const Class_ABC& objectClass )
 {
     Flush();
-    logger_.LogInfo( "-> RequestObjectAttributeValueUpdate object " + Resolve( objects_, objectID ) + " ( " + objectID.ToString() + " )" );
+    logger_.LogInfo( "-> RequestObjectAttributeValueUpdate object " + resolver_.Resolve( objectID.ToString() ) + " ( " + objectID.ToString() + " )" );
     ambassador_->RequestObjectAttributeValueUpdate( objectID, objectClass );
 }
 
@@ -280,7 +274,7 @@ namespace
 void DebugRtiAmbassador::UpdateAttributeValues( const ObjectIdentifier& objectID, const T_Attributes& attributes, const Time_ABC& time )
 {
     Flush();
-    logger_.LogInfo( "-> UpdateAttributeValues object " + Resolve( objects_, objectID ) + " ( " + objectID.ToString() + " ) attributes { " + ToString( attributes ) + " } time " + time.ToString() );
+    logger_.LogInfo( "-> UpdateAttributeValues object " + resolver_.Resolve( objectID.ToString() ) + " ( " + objectID.ToString() + " ) attributes { " + ToString( attributes ) + " } time " + time.ToString() );
     ambassador_->UpdateAttributeValues( objectID, attributes, time );
 }
 

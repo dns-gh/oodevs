@@ -26,6 +26,8 @@ namespace plugins
 {
 namespace hla
 {
+    class ObjectResolver_ABC;
+
 // =============================================================================
 /** @class  DebugFederateAmbassadorFactory
     @brief  Debug federate ambassador factory
@@ -37,7 +39,7 @@ class DebugFederateAmbassadorFactory : public FederateAmbassadorFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DebugFederateAmbassadorFactory( const FederateAmbassadorFactory_ABC& factory, dispatcher::Logger_ABC& logger );
+             DebugFederateAmbassadorFactory( const FederateAmbassadorFactory_ABC& factory, dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver );
     virtual ~DebugFederateAmbassadorFactory();
     //@}
 

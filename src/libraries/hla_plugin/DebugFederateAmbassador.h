@@ -22,6 +22,8 @@ namespace plugins
 {
 namespace hla
 {
+    class ObjectResolver_ABC;
+
 // =============================================================================
 /** @class  DebugFederateAmbassador
     @brief  Debug federate ambassador implementation
@@ -33,7 +35,7 @@ class DebugFederateAmbassador : public ::hla::FederateAmbassador_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DebugFederateAmbassador( dispatcher::Logger_ABC& logger );
+             DebugFederateAmbassador( dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver );
     virtual ~DebugFederateAmbassador();
     //@}
 
@@ -72,6 +74,7 @@ private:
     //! @name Member data
     //@{
     dispatcher::Logger_ABC& logger_;
+    ObjectResolver_ABC& resolver_;
     std::string time_;
     //@}
 };

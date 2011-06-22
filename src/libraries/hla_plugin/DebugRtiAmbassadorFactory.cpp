@@ -17,9 +17,10 @@ using namespace plugins::hla;
 // Name: DebugRtiAmbassadorFactory constructor
 // Created: SLI 2011-05-27
 // -----------------------------------------------------------------------------
-DebugRtiAmbassadorFactory::DebugRtiAmbassadorFactory( const RtiAmbassadorFactory_ABC& factory, dispatcher::Logger_ABC& logger )
-    : factory_( factory )
-    , logger_ ( logger )
+DebugRtiAmbassadorFactory::DebugRtiAmbassadorFactory( const RtiAmbassadorFactory_ABC& factory, dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver )
+    : factory_ ( factory )
+    , logger_  ( logger )
+    , resolver_( resolver )
 {
     // NOTHING
 }
@@ -42,5 +43,5 @@ std::auto_ptr< ::hla::RtiAmbassador_ABC > DebugRtiAmbassadorFactory::CreateAmbas
                                                                                        const std::string& host, const std::string& port ) const
 {
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador = factory_.CreateAmbassador( timeFactory, timeIntervalFactory, policy, host, port );
-    return std::auto_ptr< ::hla::RtiAmbassador_ABC >( new DebugRtiAmbassador( ambassador, logger_ ) );
+    return std::auto_ptr< ::hla::RtiAmbassador_ABC >( new DebugRtiAmbassador( ambassador, logger_, resolver_ ) );
 }

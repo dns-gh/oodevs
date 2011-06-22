@@ -9,10 +9,11 @@
 
 #include "hla_plugin_pch.h"
 #include "DebugFederateAmbassador.h"
+#include "ObjectResolver_ABC.h"
 #include "dispatcher/Logger_ABC.h"
 #include <hla/Time_ABC.h>
 #include <hla/HLA_Lib.h>
-#include <iostream>
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 using namespace hla;
@@ -21,8 +22,9 @@ using namespace hla;
 // Name: DebugFederateAmbassador constructor
 // Created: MCO 2009-01-26
 // -----------------------------------------------------------------------------
-DebugFederateAmbassador::DebugFederateAmbassador( dispatcher::Logger_ABC& logger )
-    : logger_( logger )
+DebugFederateAmbassador::DebugFederateAmbassador( dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver )
+    : logger_  ( logger )
+    , resolver_( resolver )
 {
     // NOTHING
 }
@@ -42,6 +44,7 @@ DebugFederateAmbassador::~DebugFederateAmbassador()
 // -----------------------------------------------------------------------------
 void DebugFederateAmbassador::DiscoverObjectInstance( const ClassIdentifier& classID, const ObjectIdentifier& objectID, const std::string& objectName )
 {
+    resolver_.Register( objectID.ToString(), objectName );
     logger_.LogInfo( "<- DiscoverObjectInstance class " + classID.ToString() + " object " + objectID.ToString() + " name " + objectName );
 }
 
@@ -51,16 +54,29 @@ void DebugFederateAmbassador::DiscoverObjectInstance( const ClassIdentifier& cla
 // -----------------------------------------------------------------------------
 void DebugFederateAmbassador::RemoveObjectInstance( const ObjectIdentifier& objectID )
 {
-    logger_.LogInfo( "<- RemoveObjectInstance object " + objectID.ToString() );
+    logger_.LogInfo( "<- RemoveObjectInstance object " + resolver_.Resolve( objectID.ToString() ) + " ( " + objectID.ToString() + " )" );
+    resolver_.Unregister( objectID.ToString() );
+}
+
+namespace
+{
+    template< typename T >
+    std::string ToString( const T& attributes )
+    {
+        std::string result;
+        BOOST_FOREACH( const T::value_type& attribute, attributes )
+            result += ( result.empty() ? "" : ", " ) + attribute.first.ToString();
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: DebugFederateAmbassador::ReflectAttributeValues
 // Created: MCO 2009-01-26
 // -----------------------------------------------------------------------------
-void DebugFederateAmbassador::ReflectAttributeValues( const ObjectIdentifier& objectID, const T_Attributes& /*attributes*/ )
+void DebugFederateAmbassador::ReflectAttributeValues( const ObjectIdentifier& objectID, const T_Attributes& attributes )
 {
-    logger_.LogInfo( "<- ReflectAttributeValues object " + objectID.ToString() );
+    logger_.LogInfo( "<- ReflectAttributeValues object " + resolver_.Resolve( objectID.ToString() ) + " ( " + objectID.ToString() + " ) attributes { " + ToString( attributes ) + " }" );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +94,7 @@ void DebugFederateAmbassador::EnableRegistrationForObjectClass( const ClassIdent
 // -----------------------------------------------------------------------------
 void DebugFederateAmbassador::ProvideAttributeValueUpdate( const ObjectIdentifier& objectID )
 {
-    logger_.LogInfo( "<- ProvideAttributeValueUpdate object " + objectID.ToString() );
+    logger_.LogInfo( "<- ProvideAttributeValueUpdate object " + resolver_.Resolve( objectID.ToString() ) + " ( " + objectID.ToString() + " )" );
 }
 
 // -----------------------------------------------------------------------------

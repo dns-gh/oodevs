@@ -39,6 +39,7 @@ namespace hla
     class RtiAmbassadorFactory_ABC;
     class FederateAmbassadorFactory_ABC;
     class AgentSubject_ABC;
+    class ObjectResolver_ABC;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -70,11 +71,12 @@ private:
     dispatcher::Model_ABC& model_;
     dispatcher::Logger_ABC& logger_;
     dispatcher::SimulationPublisher_ABC& publisher_;
+    std::auto_ptr< ObjectResolver_ABC > pObjectResolver_;
     std::auto_ptr< RtiAmbassadorFactory_ABC > pRtiFactory_;
     std::auto_ptr< RtiAmbassadorFactory_ABC > pDebugRtiFactory_;
     std::auto_ptr< FederateAmbassadorFactory_ABC > pFederateFactory_;
     std::auto_ptr< FederateAmbassadorFactory_ABC > pDebugFederateFactory_;
-    std::auto_ptr< rpr::EntityTypeResolver_ABC > pResolver_;
+    std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityTypeResolver_;
     std::auto_ptr< AgentSubject_ABC > pSubject_;
     std::auto_ptr< FederateFacade > federate_;
     //@}

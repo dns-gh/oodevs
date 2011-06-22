@@ -12,7 +12,6 @@
 
 #include <hla/RtiAmbassador_ABC.h>
 #include <memory>
-#include <map>
 
 namespace dispatcher
 {
@@ -23,6 +22,8 @@ namespace plugins
 {
 namespace hla
 {
+    class ObjectResolver_ABC;
+
 // =============================================================================
 /** @class  DebugRtiAmbassador
     @brief  Debug RTI ambassador implementation
@@ -34,7 +35,7 @@ class DebugRtiAmbassador : public ::hla::RtiAmbassador_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DebugRtiAmbassador( std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador, dispatcher::Logger_ABC& logger );
+             DebugRtiAmbassador( std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador, dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver );
     virtual ~DebugRtiAmbassador();
     //@}
 
@@ -99,19 +100,13 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::map< std::string, std::string > T_Objects;
-    //@}
-
-private:
     //! @name Member data
     //@{
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
     dispatcher::Logger_ABC& logger_;
+    ObjectResolver_ABC& resolver_;
     bool ticking_;
     std::string time_;
-    T_Objects objects_;
     //@}
 };
 

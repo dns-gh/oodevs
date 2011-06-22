@@ -18,9 +18,9 @@ using namespace plugins::hla;
 // Name: DebugFederateAmbassadorFactory constructor
 // Created: SLI 2011-05-27
 // -----------------------------------------------------------------------------
-DebugFederateAmbassadorFactory::DebugFederateAmbassadorFactory( const FederateAmbassadorFactory_ABC& factory, dispatcher::Logger_ABC& logger )
+DebugFederateAmbassadorFactory::DebugFederateAmbassadorFactory( const FederateAmbassadorFactory_ABC& factory, dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver )
     : factory_   ( factory )
-    , ambassador_( new DebugFederateAmbassador( logger ) )
+    , ambassador_( new DebugFederateAmbassador( logger, resolver ) )
 {
     // NOTHING
 }

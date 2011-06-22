@@ -21,6 +21,8 @@ namespace plugins
 {
 namespace hla
 {
+    class ObjectResolver_ABC;
+
 // =============================================================================
 /** @class  DebugRtiAmbassadorFactory
     @brief  DebugRtiAmbassadorFactory
@@ -32,7 +34,7 @@ class DebugRtiAmbassadorFactory : public RtiAmbassadorFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DebugRtiAmbassadorFactory( const RtiAmbassadorFactory_ABC& factory, dispatcher::Logger_ABC& logger );
+             DebugRtiAmbassadorFactory( const RtiAmbassadorFactory_ABC& factory, dispatcher::Logger_ABC& logger, ObjectResolver_ABC& resolver );
     virtual ~DebugRtiAmbassadorFactory();
     //@}
 
@@ -48,6 +50,7 @@ private:
     //@{
     const RtiAmbassadorFactory_ABC& factory_;
     dispatcher::Logger_ABC& logger_;
+    ObjectResolver_ABC& resolver_;
     //@}
 };
 
