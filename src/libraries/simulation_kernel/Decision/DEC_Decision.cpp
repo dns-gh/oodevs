@@ -912,23 +912,23 @@ bool DotationTypeListFunctionBM( directia::brain::Brain& /*brain*/, directia::to
     return false;
 }
 
-bool ResourceNetworkFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool ResourceNetworkFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_ResourceNetwork > value;
     if( element.ToResourceNetwork( value ) && value )
     {
-        refMission[ name ] = value;
+		knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.resourceNetwork" ], name, value, false );
         return true;
     }
     return false;
 }
 
-bool ResourceNetworkListFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool ResourceNetworkListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_ResourceNetwork > > value;
     if( element.ToResourceNetworkList( value ) )
     {
-        refMission[ name ] = value;
+		knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.resourceNetwork" ], name, value, true );
         return true;
     }
     return false;
