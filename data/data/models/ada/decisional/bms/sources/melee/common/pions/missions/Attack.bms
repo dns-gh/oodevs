@@ -20,11 +20,13 @@ node "MIS_Pion_MELEE_Attack"
 
     create = function( self )
         self.shots = 0 -- number of shots done by the unit
-        self.ammunition = self.params[1] -- optional parameter
+        self.ammunition = self.params.mission.ammunition_
         if self.ammunition then
-            DEC_Pion_AutoriserMunition( self._ammunition ) -- make sure we can fire with the ammo, otherwise why give it as a parameter?
+-- Note you can check with DEC_HasDotation( self.ammunition ) if the ammo is available, but you can't select in in the sword gaming ui if it is not
+-- so there is little reason to check it here
+            DEC_Pion_AutoriserMunition( self.ammunition ) -- make sure we can fire with the ammo, otherwise why give it as a parameter?
         end
-        self.enemy = self.params[2] -- optional parameter
+        self.enemy = self.params.mission.enemy_ -- optional parameter
         if not self.enemy then
             local enemies = DEC_Connaissances_UnitesEnnemiesDangereuses()
             local distance = math.huge
@@ -40,7 +42,7 @@ node "MIS_Pion_MELEE_Attack"
         end
         if not self.enemy then
             DEC_Trace( "No enemy found" )
-            DEC_RC( eMissionImpossible )
+            DEC_RC( eRC_MissionImpossible )
             Halt( self )
             do return end
         end
@@ -80,12 +82,12 @@ node "MIS_Pion_MELEE_Attack"
         end
 
         if meleeAbcPionsCommon() then
-            if self.shots > getNumberOfShotsPerTank() then
+            if self.shots >= getNumberOfShotsPerTank() then
               self:shotsDone()
             end
             Activate( self.activations.BEH_Mission_Pion_ABC_Reduire, 1, { self.enemy, M_MODELE_PION_ABC_REDUIRE_PH(), M_MODELE_PION_ABC_REDUIRE_ID() } )
         elseif meleeInfPionsCommon() then
-            if self.shots > getNumberOfShotsPerMissileLauncher() then
+            if self.shots >= getNumberOfShotsPerMissileLauncher() then
               self:shotsDone()
             end
             Activate( self.activations.BEH_Mission_Pion_VAB_Reduire, 1, { self.enemy } )
@@ -98,13 +100,13 @@ node "MIS_Pion_MELEE_Attack"
         -- What to do when one shot has been done? We could retreat to initial position. Cf. code for Reconnaissance by force for instance.
         -- I just remove the right to use the specified ammunition. I put it back in the destroy() method so next mission can use them again.
         if self.ammunition then
-            DEC_Pion_InterdireMunition( self._ammunition )
+            DEC_Pion_InterdireMunition( self.ammunition )
         end
     end,
 
     destroy = function( self )
         if self.ammunition then
-            DEC_Pion_AutoriserMunition( self._ammunition )
+            DEC_Pion_AutoriserMunition( self.ammunition )
         end
     end,
 }

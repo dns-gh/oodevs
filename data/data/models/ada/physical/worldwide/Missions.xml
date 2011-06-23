@@ -1994,7 +1994,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="ammunition_" name="Ammunition" optional="true" type="ResourceType"/>
+      <parameter dia-name="ammunition_" name="Ammunition" optional="false" type="ResourceType"/>
       <parameter dia-name="enemy_" name="Enemy" optional="true" type="AgentKnowledge"/>
     </mission>
   </units>
@@ -3422,4 +3422,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="1603142167" -->
+<!-- signature="0933744073" -->
