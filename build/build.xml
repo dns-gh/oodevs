@@ -1169,7 +1169,7 @@
     <macrodef name="pack">
         <attribute name="name"/>
         <attribute name="description"/>
-        <element name="otpack-include" implicit="yes"/>
+        <element name="elements" implicit="yes"/>
         <sequential>
             <echoxml file="${out.dir}/content.xml">
                 <content>
@@ -1179,7 +1179,7 @@
             </echoxml>
             <zip destfile="${dist.dir}/SWORD_@{name}_${version.major}.otpak" filesonly="true">
                 <fileset dir="${data.dir}">
-                    <otpack-include/>
+                    <elements/>
                 </fileset>
                 <fileset dir="${out.dir}" includes="content.xml"/>
             </zip>
@@ -1187,7 +1187,9 @@
         </sequential>
     </macrodef>
  
-    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.france,package.otpack.defense.scipio,package.otpack.security.worldwide,package.otpack.security.masa,package.otpack.lossc,package.otpack.tutosw,package.otpack.validation" description="package the exercise otpacks"/>
+    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.france,package.otpack.defense.scipio,
+                                            package.otpack.security.worldwide,package.otpack.security.masa,package.otpack.lossc,
+                                            package.otpack.tutosw,package.otpack.validation" description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
         <pack name="defense-worldwide" description="defense-worldwide exercises package">
