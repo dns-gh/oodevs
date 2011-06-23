@@ -66,4 +66,3 @@ bool LogisticSuperior::IsSameTeam( const kernel::Formation_ABC& formation ) cons
     return &entity_.Get< kernel::TacticalHierarchies >().GetTop() == &formation.Get< kernel::TacticalHierarchies >().GetTop();
 }
 
-

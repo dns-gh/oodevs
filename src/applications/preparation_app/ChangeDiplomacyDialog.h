@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #ifndef __ChangeDiplomacyDialog_h_
 #define __ChangeDiplomacyDialog_h_
 

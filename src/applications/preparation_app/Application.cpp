@@ -65,7 +65,6 @@ Application::~Application()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Application::Initialize
 // Created: SBO 2007-05-15

@@ -147,7 +147,6 @@ void DotationsEditor::OnValueChanged( int row, int col )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DotationsEditor::AddItem
 // Created: SBO 2006-11-10

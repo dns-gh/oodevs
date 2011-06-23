@@ -200,7 +200,6 @@ void InhabitantCreationPanel::NotifyCreated( const Team_ABC& team )
     teams_->AddItem( team.GetName(), &team );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: InhabitantCreationPanel::NotifyUpdated
 // Created: SLG 2010-11-25
@@ -211,7 +210,6 @@ void InhabitantCreationPanel::NotifyUpdated( const kernel::Team_ABC& team )
     if( index != -1 )
         teams_->changeItem( team.GetName(), index );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: InhabitantCreationPanel::NotifyDeleted

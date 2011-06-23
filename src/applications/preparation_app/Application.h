@@ -70,5 +70,4 @@ private:
     //@}
 };
 
-
 #endif // __Application_h_

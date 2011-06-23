@@ -42,7 +42,6 @@ void SuccessFactorActionTypes::Load( const tools::ExerciseConfig& config, const 
     config.GetLoader().LoadFile( file, boost::bind( &SuccessFactorActionTypes::Read, this, _1 ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorActionTypes::Read
 // Created: SBO 2009-06-16

@@ -93,7 +93,6 @@ void SuccessFactorActionItem::CommitTo( SuccessFactorActions& actions ) const
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SuccessFactorActionItem::EnableDeletion
 // Created: SBO 2009-06-17

@@ -30,7 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit OrderParameterValue( xml::xistream& xis );
-    explicit OrderParameterValue( int id, const std::string& name );
+             OrderParameterValue( int id, const std::string& name );
     virtual ~OrderParameterValue();
     //@}
 

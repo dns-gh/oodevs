@@ -48,7 +48,6 @@ AgentsModel::~AgentsModel()
     controllers_.Unregister( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AgentsModel::Purge
 // Created: AGE 2006-04-20

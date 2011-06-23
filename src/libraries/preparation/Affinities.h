@@ -59,7 +59,6 @@ private:
     void ReadAffinity( xml::xistream& xis );
     //@}
 
-
 protected:
     //! @name Member data
     //@{
