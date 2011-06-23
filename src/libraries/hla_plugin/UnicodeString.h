@@ -3,30 +3,30 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_AggregateMarking_h
-#define plugins_hla_AggregateMarking_h
+#ifndef plugins_hla_UnicodeString_h
+#define plugins_hla_UnicodeString_h
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  AggregateMarking
-    @brief  Aggregate marking
+/** @class  UnicodeString
+    @brief  UnicodeString
 */
-// Created: AGE 2008-02-21
+// Created: SLI 2011-06-23
 // =============================================================================
-class AggregateMarking
+class UnicodeString
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit AggregateMarking( const std::string& name );
-    virtual ~AggregateMarking();
+    explicit UnicodeString( const std::string& data );
+    virtual ~UnicodeString();
     //@}
 
     //! @name Operations
@@ -34,20 +34,20 @@ public:
     template< typename Archive >
     void Serialize( Archive& archive ) const
     {
-        archive << markingType_
-                << markingData_;
+        archive << static_cast< uint32 >( data_.size() );
+        for( std::wstring::size_type i = 0; i < data_.size(); ++i )
+            archive << static_cast< uint16 >( data_[ i ] );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    unsigned char markingType_;
-    unsigned char markingData_[31];
+    std::wstring data_;
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_AggregateMarking_h
+#endif // plugins_hla_UnicodeString_h

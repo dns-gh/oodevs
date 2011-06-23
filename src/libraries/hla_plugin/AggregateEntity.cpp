@@ -16,6 +16,7 @@
 #include "SilentEntity.h"
 #include "Formation.h"
 #include "Dimension.h"
+#include "UnicodeString.h"
 #include "UniqueId.h"
 #include "AttributesSerializer.h"
 #include "rpr/EntityIdentifier.h"
@@ -73,6 +74,7 @@ AggregateEntity::AggregateEntity( Agent_ABC& agent, unsigned short identifier,
     attributes_->Register( "Echelon", Wrapper< unsigned char >( 14 ) ); // platoon
     attributes_->Register( "UniqueID", UniqueId( "SWORD" + boost::lexical_cast< std::string >( identifier ) ) );
     attributes_->Register( "HigherHeadquarters", UniqueId( "SWORD" + boost::lexical_cast< std::string >( identifier ) ) );
+    attributes_->Register( "Callsign", UnicodeString( name ) );
     agent_.Register( *this );
 }
 
