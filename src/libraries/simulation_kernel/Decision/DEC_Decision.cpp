@@ -217,6 +217,7 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_DirectionMoyenne" ] = &DEC_GeometryFunctions::ComputeMeanDirection;
     brain[ "DEC_Geometrie_PositionAleatoireSurCercle" ] = &DEC_GeometryFunctions::ComputeRandomPointOnCircle;
     brain[ "DEC_Geometrie_PositionAleatoireDansCercle" ] = &DEC_GeometryFunctions::ComputeRandomPointInCircle;
+    brain[ "DEC_Geometrie_PositionAleatoireDansZone" ] = &DEC_GeometryFunctions::ComputeRandomPointInZone;
     brain[ "DEC_Geometrie_CreerLocalisationCercle" ] = &DEC_GeometryFunctions::CreateCircleLocalisation;
     brain[ "DEC_Geometrie_CreerLocalisationLigne" ] = &DEC_GeometryFunctions::CreateLineLocalisation;
     brain[ "DEC_Geometrie_CreerLocalisationPolyligne" ] = &DEC_GeometryFunctions::CreatePolylineLocalisation;
@@ -237,6 +238,8 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_PositionAdvanceAlongFuseau" ] = &DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseau;
     brain[ "DEC_Geometrie_DecouperLocalisation" ] = boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const TER_Localisation*, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::SplitLocalisation, _1, _2 ) );
     brain[ "DEC_IsPointInCity" ] = &DEC_GeometryFunctions::IsPointInCity;
+    brain[ "DEC_Geometrie_ComputeNearestBorder" ] = &DEC_GeometryFunctions::ComputeNearestBorder;
+    brain[ "DEC_Geometrie_FindRoadIntersectionWithZone" ] = &DEC_GeometryFunctions::GetRoadIntersectionsWithZone;
     brain[ "DEC_Geometrie_CalculerTrafficablePointPourPoint" ] =
         boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisation, _1 ) );
     brain[ "DEC_Geometrie_PositionsParRapportALocalisation" ] =

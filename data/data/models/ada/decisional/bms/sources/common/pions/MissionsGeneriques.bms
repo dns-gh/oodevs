@@ -8,6 +8,8 @@ include "Common/Pions/Missions/ReconnaissanceArea.bms"
 
 include "Common/Pions/Missions/ReconnaissanceAreaHidden.bms"
 
+include "Common/Pions/Missions/ReconnaissanceInForce.bms"
+
 include "Common/Pions/Missions/Withdraw.bms"
 
 include "Common/Pions/Missions/SuivreUnite.bms"

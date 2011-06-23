@@ -1,0 +1,86 @@
+local emptyTable = emptyTable
+
+node "MIS_Pion_Defend"
+{
+    feedbacks = { { { "done_MIS_Pion_Defend" }, "MIS_Pion_Defend" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_Defend, {value} ) end,
+    activations =
+    {
+        { "BEH_Misc_Pion_DefinirTypeMission", { "done_BEH_Misc_Pion_DefinirTypeMission" } },
+        { "BEH_MAJ_AgressiviteMission", { "done_BEH_MAJ_AgressiviteMission" } },
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Mission_Pion_INF_Defendre", { "done_BEH_Mission_Pion_INF_Defendre" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Poste_Pion_INF_TomberEnGarde", { "done_BEH_Poste_Pion_INF_TomberEnGarde" } },
+    },
+
+    create = function( self )
+        self.eEtatOrdreFinMission = eActionEnCours
+        local zone = self.params.mission.zone_ or DEC_ConnaissanceObjet_Localisation( self.params.mission.knowledge_ )
+        self.destination = DEC_Geometrie_PositionAleatoireDansZone( zone )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.ePhase = self.ePhase or eSeMettreEnPlace
+        self.eCurrentPhase = self.eCurrentPhase or ePreparerMission
+        self.eAction = self.eAction or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self.params.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
+            end
+        end
+
+        Activate( self.activations.BEH_Misc_Pion_DefinirTypeMission, 1, { eTypeContact_Defensif, } )
+        Activate( self.activations.BEH_MAJ_AgressiviteMission, 1, { eReconnu, M_TIR_PH_MISSION_STATIQUE(), } )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+        self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+                self.ePhase = eFinMission
+                self.eAction = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+        end
+
+        do
+            local switch_1 = self.ePhase
+            if switch_1 == eSeMettreEnPlace then
+                if( self.eCurrentPhase == eFinMission ) then
+                    do
+                        self.eAction = eActionEnCours
+                        self.ePhase = eFinMission
+                        do return end
+                    end
+                end
+
+                Activate( self.activations.BEH_Mission_Pion_INF_Defendre, GetMotivation( "MOT_Mission" ), { position = self.destination, } )
+                self.done_BEH_Mission_Pion_INF_Defendre = function( self, _, v ) self.eCurrentPhase = v[1] end
+            elseif switch_1 == eFinMission then
+                if( self.eAction == eActionEffectuee ) then
+                    self.eAction = eActionEnCours
+                    DEC_FinMission()
+                    self:SendFeedback( eActionEffectuee )
+                    Halt( self )
+                    do return end
+                end
+
+                Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                Activate( self.activations.BEH_Poste_Pion_INF_TomberEnGarde, 1, { true, } )
+                self.done_BEH_Poste_Pion_INF_TomberEnGarde = function( self, _, v ) self.eAction = v[1] end
+            end
+        end
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Defend = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Defend, "BEH_Misc_Pion_DefinirTypeMission", nodes.BEH_Misc_Pion_DefinirTypeMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Defend, "BEH_MAJ_AgressiviteMission", nodes.BEH_MAJ_AgressiviteMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Defend, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Defend, "BEH_Mission_Pion_INF_Defendre", nodes.BEH_Mission_Pion_INF_Defendre }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Defend, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Defend, "BEH_Poste_Pion_INF_TomberEnGarde", nodes.BEH_Poste_Pion_INF_TomberEnGarde }
+

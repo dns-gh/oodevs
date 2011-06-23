@@ -373,6 +373,8 @@
         <mission name="OOTW - secure area (against populations assault)"/>
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
+        <mission name="Common - reconnaissance by force"/>
+        <mission name="Common - defend area"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -536,6 +538,7 @@
         <mission name="OOTW - secure area (against populations assault)"/>
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
+        <mission name="Common - reconnaissance by force"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -1616,6 +1619,7 @@
         <mission name="Armor - report information"/>
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
+        <mission name="Common - reconnaissance by force"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -1729,6 +1733,7 @@
         <mission name="Engineer - reinforce"/>
         <mission name="Engineer - resume work"/>
         <mission name="Engineer - restore a route"/>
+        <mission name="Common - defend area"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -4220,4 +4225,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2724263684" -->
+<!-- signature="4179409463" -->

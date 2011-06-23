@@ -1,0 +1,107 @@
+local emptyTable = emptyTable
+
+node "MIS_Pion_Defend"
+{
+    feedbacks = { { { "done_MIS_Pion_Defend" }, "MIS_Pion_Defend" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_Defend, {value} ) end,
+    activations =
+    {
+      { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+      { "BEH_Objet_Pion_GEN_RealiserTravaux", { "done_BEH_Objet_Pion_GEN_RealiserTravaux" } },
+    },
+
+    create = function( self )
+        self.zone = self.params.mission.zone_ or DEC_ConnaissanceObjet_Localisation( self.params.mission.knowledge_ )
+        self.destination = S_Geometrie_BarycentreZone( self.zone )
+        local distanceEnemies = 3000 -- distance defining when "an enemy unit (is) close to the area"
+        self.enemyZone = DEC_Geometrie_AgrandirLocalisation( self.zone, distanceEnemies )
+        self.ePhase = eProgresser
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        -- Move inside the area
+        if self.ePhase == eProgresser then
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.destination, eProgressionDefaut, eTypeItiMouvement, } )
+            local pt = DEC_Agent_Position()
+            if DEC_Geometrie_EstPointDansLocalisation( pt, self.zone ) then 
+                -- Once inside area: Pick location:
+                -- If an enemy is detected, choose location nearest it. Otherwise, location nearest myself.
+                local enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( self.enemyZone )
+                local myposition = DEC_Agent_Position()
+                local nearPositionForBarricade = myposition
+                if #enemies > 0 then
+                    local distance = math.huge
+                    for i, enemy in pairs( enemies ) do
+                        local enemyPosition = DEC_ConnaissanceAgent_Position( enemy )
+                        local distToEnemy = DEC_Geometrie_Distance( enemyPosition, myposition )
+                        if distToEnemy < distance then
+                            distance = distToEnemy
+                            nearPositionForBarricade = enemyPosition
+                        end
+                    end
+                end
+                local barricadePosition = DEC_Geometrie_ComputeNearestBorder( nearPositionForBarricade, self.zone )
+                self.destination = barricadePosition
+                self.barricadeLocation = DEC_Geometrie_ConvertirPointEnLocalisation( barricadePosition )
+                self.ePhase = eRejoindre
+            end
+        elseif self.ePhase == eRejoindre then
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.destination, eProgressionDefaut, eTypeItiMouvement, } )
+            self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.ePhase = eRealiserObstacle end
+        elseif self.ePhase == eRealiserObstacle then
+        -- Build barricade (abattis)
+        -- If roads, build antitank ditches
+            self.barricade = self.barricade or DEC_CreateDynamicGenObject( "barricade", self.barricadeLocation, true ) -- barricade = point so maybe using an abattis = polygon instead would be better.
+            if not DEC_Agent_PeutConstruireObjet( DEC_GenObject_Type( self.barricade ) ) then
+                DEC_Trace( "Impossible to build the obstacle" )
+                DEC_RC( eRC_MissionImpossible )
+                self:SendFeedback( eActionImpossible )
+                Halt( self )
+                return
+            else
+                --ACT_Obj_Pion_GEN_RealiserTravaux( barricade )
+                Activate( self.activations.BEH_Objet_Pion_GEN_RealiserTravaux, 1, { self.barricade, } )
+                self.done_BEH_Objet_Pion_GEN_RealiserTravaux = function( self, _, v ) 
+                    self.ditchLocations = DEC_Geometrie_FindRoadIntersectionWithZone( self.zone )
+                    self.ditches = {}
+                    local ditchSize = 300 -- size of the ditch (polygon)
+                    for i, intersection in pairs( self.ditchLocations ) do
+                        local nextDitch = DEC_Geometrie_ConvertirPointEnLocalisation( intersection )
+                        self.ditches[i] = DEC_Geometrie_AgrandirLocalisation( nextDitch, ditchSize )
+                    end
+                    -- For testing
+                    --self.ditches[ #self.ditches + 1 ] = DEC_Geometrie_AgrandirLocalisation( self.barricadeLocation, ditchSize )
+                    self.ditchesToDig = #self.ditches
+                    self.ePhase = eRealiserTravaux 
+                end
+            end
+        elseif self.ePhase == eRealiserTravaux then
+            if self.ditchesToDig > 0 then
+                self.antitankDitch = self.antitankDitch or DEC_CreateDynamicGenObject( "anti tank obstacle", self.ditches[self.ditchesToDig], true ) -- polygon
+                if not DEC_Agent_PeutConstruireObjet( DEC_GenObject_Type( self.antitankDitch ) ) then
+                    DEC_Trace( "Impossible to build an anti tank ditch" )
+                else
+                    Activate( self.activations.BEH_Objet_Pion_GEN_RealiserTravaux, 1, { self.antitankDitch, } )
+                    self.done_BEH_Objet_Pion_GEN_RealiserTravaux = function( self, _, v ) 
+                        self.ditchesToDig = self.ditchesToDig - 1 
+                        self.antitankDitch = nil
+                    end
+                end
+            else
+                self.ePhase = eFinMission
+            end
+        elseif self.ePhase == eFinMission then
+            DEC_Trace( "Fin mission" )
+        end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Defend = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Defend, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Defend, "BEH_Objet_Pion_GEN_RealiserTravaux", nodes.BEH_Objet_Pion_GEN_RealiserTravaux }
+

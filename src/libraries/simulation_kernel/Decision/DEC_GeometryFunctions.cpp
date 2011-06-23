@@ -1113,6 +1113,23 @@ double DEC_GeometryFunctions::ComputeAreaSize( TER_Localisation* pLocalisation )
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestBorder
+// Created: LDC 2011-06-22
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeNearestBorder( const MT_Vector2D* position, TER_Localisation* pLocalisation )
+{
+    if( !pLocalisation )
+        throw std::runtime_error( "invalid localisation" );
+
+    boost::shared_ptr< MT_Vector2D > pResult;
+    MT_Vector2D vResult;
+    if( pLocalisation->ComputeNearestOutsidePoint( *position, vResult ) )
+        pResult.reset( new MT_Vector2D( vResult ) );
+
+    return pResult;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeAreaDiameter
 // Created: LDC 2010-09-09
 // -----------------------------------------------------------------------------
@@ -1289,6 +1306,35 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInCirc
 
     TER_World::GetWorld().ClipPointInsideWorld( *pRandomPosition );
     return pRandomPosition;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInZone
+// Created: LDC 2011-06-21
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeRandomPointInZone( const TER_Localisation* location )
+{
+    const MT_Rect& rect = location->GetBoundingBox();
+    double xMin = rect.GetLeft();
+    double xMax = rect.GetRight();
+    double yMin = rect.GetBottom();
+    double yMax = rect.GetTop();
+    boost::shared_ptr< MT_Vector2D > result;
+    result.reset( new MT_Vector2D( location->ComputeBarycenter() ) );
+    unsigned int tries = 10;
+    while ( --tries )
+    {
+        const double x = MIL_Random::rand_ii( xMin, xMax );
+        const double y = MIL_Random::rand_ii( yMin, yMax );
+        MT_Vector2D point( x, y );
+        if( location->IsInside( point ) )
+        {
+            result.reset( new MT_Vector2D( point ) );
+            break;
+        }
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -1826,6 +1872,20 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::FindSafet
     pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().FindSafetyPositionsWithinCircle( points, radius, safetyDistance );
     return points;
 }
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::GetRoadIntersectionsWithZone
+// Created: LDC 2011-06-22
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::GetRoadIntersectionsWithZone( const TER_Localisation* zone )
+{
+    std::vector< boost::shared_ptr< MT_Vector2D > > points;
+    // $$$$ LDC TODO: Needs a function to retrieve all intersections of objects of type road with the polygon.
+    // create a functor who can add points to the list and call something like
+    // const MT_Vector2D& centre = zone->GetBoundingBox().GetCenter();
+    // TER_World::GetWorld().GetPathFindManager().ApplyOnLinksWithinCircle( centre, zone->GetLength() / 2, functor );
+    return points;    
+}    
 
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeBarycenter

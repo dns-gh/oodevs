@@ -1,0 +1,109 @@
+require "math"
+
+includedFiles = includedFiles or {}
+includedFiles["sources/common/pions/missions/ReconnaissanceInForce.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_ReconnaissanceInForce
+]]--[[//
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_ReconnaissanceInForce"
+{
+    feedbacks = { { { "done_MIS_Pion_ReconnaissanceInForce" }, "MIS_Pion_ReconnaissanceInForce" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_ReconnaissanceInForce, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "ACT_MAJ_EtatPhaseMission", { "done_ACT_MAJ_EtatPhaseMission" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", { "done_BEH_Dep_SePosterFaceADirectionDangereuse" } },
+        { "BEH_MAJ_Pion_INF_AgressiviteTir", { "done_BEH_MAJ_Pion_INF_AgressiviteTir" } },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", { "done_BEH_MAJ_Pion_ABC_AgressiviteTir" } },
+    },
+
+    create = function( self )
+        F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+        DEC_SetMission( myself, self.params.mission )
+        self.initialPosition = DEC_Agent_PositionPtr( myself )
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        if not self.params.mission.knowledge_ and not self.params.mission.zone_ then
+            DEC_Trace( "Mission impossible: No area provided" )
+            self:SendFeedback( eActionImpossible )
+            Halt( self )
+            do return end
+        end
+        self.ePhase = self.ePhase or ePreparerMission
+        self.eEtat = self.eEtat or eActionEnCours
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        self.done_BEH_Ordre_Inopine = function( self, _, v ) 
+            self.eEtatOrdreFinMission = v[1] 
+        end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            self.ePhase = eFinMission
+            self.eEtat = eActionEnCours
+            self.eEtatOrdreFinMission = eActionEnCours
+        end
+
+        if self.ePhase == ePreparerMission then
+            Activate( self.activations.BEH_MAJ_Pion_INF_AgressiviteTir, 1, { 0.4, } )
+            Activate( self.activations.BEH_MAJ_Pion_ABC_AgressiviteTir, 1, { 0.4, } )
+            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+            self.zone = self.params.mission.zone_ or DEC_ConnaissanceObjet_Localisation( self.params.mission.knowledge_ )
+            self.destination = S_Geometrie_BarycentreZone( self.zone )
+            self.ePhase = eProgresser
+        elseif self.ePhase == eProgresser then
+            Activate( self.activations.BEH_MAJ_Pion_INF_AgressiviteTir, 1, { 0.4, } )
+            Activate( self.activations.BEH_MAJ_Pion_ABC_AgressiviteTir, 1, { 0.4, } )
+            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionSurAxe, } )
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.destination, eProgressionDefaut, eTypeItiMouvement, } )
+            self.done_BEH_Dep_ProgressionVers = function( self, _, v )
+                self.ePhase = eReconnaitre
+            end
+            self:manageFire()
+        elseif self.ePhase == eReconnaitre then
+            Activate( self.activations.BEH_MAJ_Pion_INF_AgressiviteTir, 1, { 0.4, } )
+            Activate( self.activations.BEH_MAJ_Pion_ABC_AgressiviteTir, 1, { 0.4, } )
+            self.destination = DEC_Geometrie_PositionAleatoireDansZone( self.zone )
+            self.ePhase = eProgresser
+            self:manageFire()
+        elseif self.ePhase == eRejoindrePosition then
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.initialPosition, eProgressionDefaut, eTypeItiMouvement, } )
+            self.done_BEH_Dep_ProgressionVers = function( self, _, v )
+                self.ePhase = eFinMission
+            end
+        elseif self.ePhase == eFinMission then
+            Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+            Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1, {} )
+        end
+    end,
+
+    destroy = function( self )
+            Activate( self.activations.BEH_MAJ_Pion_INF_AgressiviteTir, 1, { 0, } )
+    end,
+
+    manageFire = function( self )
+        if ( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
+            self.ePhase = eRejoindrePosition
+        end
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ReconnaissanceInForce = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ReconnaissanceInForce, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ReconnaissanceInForce, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ReconnaissanceInForce, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ReconnaissanceInForce, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ReconnaissanceInForce, "BEH_MAJ_Pion_INF_AgressiviteTir", nodes.BEH_MAJ_Pion_INF_AgressiviteTir }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ReconnaissanceInForce, "BEH_MAJ_Pion_ABC_AgressiviteTir", nodes.BEH_MAJ_Pion_ABC_AgressiviteTir }
+
+

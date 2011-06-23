@@ -15,12 +15,12 @@ includedFiles["sources/glaise/glaise_melee/inf/pions/common/Missions.bms"] = tru
 
 --[[// Comportements de missions communes aux differentes section INF
 ]]--[[// ----------------------------------------------------------------------------
-]]include "Data/Modeles/Sources/Melee/Inf/Pions/Common/Appuyer.bms"
+]]include "Melee/Inf/Pions/Common/Appuyer.bms"
 
-include "Data/Modeles/Sources/Melee/Inf/Pions/Common/Barrer.bms"
+include "Melee/Inf/Pions/Common/Barrer.bms"
 
-include "Data/Modeles/Sources/Melee/Inf/Pions/Common/Surveiller.bms"
+include "Melee/Inf/Pions/Common/Surveiller.bms"
 
-include "Data/Modeles/Sources/Melee/Inf/Pions/Common/Freiner.bms"
+include "Melee/Inf/Pions/Common/Freiner.bms"
 
-include "Data/Modeles/Sources/Melee/Inf/Pions/Common/Reconnaissance.bms"
+include "Melee/Inf/Pions/Common/Reconnaissance.bms"

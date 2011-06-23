@@ -14,6 +14,8 @@ include "Appui/Genie/Pions/Missions/Construire camps.bms"
 
 include "Appui/Genie/Pions/Missions/Appui a la contre mobilite/Realiser travaux contre mobilite.bms"
 
+include "Appui/Genie/Pions/Missions/Appui a la contre mobilite/MIS_Defend.bms"
+
 
 --[[// Appui a la mobilite
 ]]include "Appui/Genie/Pions/Missions/Appui a la mobilite/Retablir itineraire.bms"

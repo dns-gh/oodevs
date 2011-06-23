@@ -15,6 +15,7 @@ local emptyTable = emptyTable
 ]]--[[// *****************************************************************************
 ]]
 
+include "Melee/Inf/Pions/Common/Missions/MIS_Defend.bms"
 
 --[[//=============================================================================
 ]]--[[//							Squelette de mission
@@ -43,7 +44,7 @@ node "BEH_Mission_Pion_INF_Defendre"
         self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eSeMettreEnPlace
         self.eAction = self.eAction or eActionEnCours
-        self.locADefendre = self.locADefendre or DEC_Geometrie_ConvertirPointEnLocalisation( self.mission.pointADefendre_ )
+        self.locADefendre = self.locADefendre or self.params.position or DEC_Geometrie_ConvertirPointEnLocalisation( self.mission.pointADefendre_ )
          do
             local _continue = true
             local switch_1 = self.ePhase
@@ -64,7 +65,7 @@ node "BEH_Mission_Pion_INF_Defendre"
 
                     Activate( self.activations.BEH_Mot_Pion_Embarquer, 1, emptyTable )
                     --[[// Rejoins une position d'observation de la position a Barrer
-]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.mission.pointADefendre_, true, } )
+]]Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, { M_TEMPS_PREPARATION_MISSION(), self.params.position or self.mission.pointADefendre_, true, } )
 self.done_BEH_Dep_Pion_INF_MiseEnPlace_Mission = function( self, _, v ) self.eAction = v[1] end
                     _continue = false
                                 cases_switch_1[1] = true
@@ -74,7 +75,7 @@ elseif switch_1 == eInstallerDispositif then
                     --[[// action ACT_MAJ_EtatPhaseMission( eEtatPhaseMission_ArriveSurLocalisation );
 ]]--[[// On surveille la zone en meme temps que l'on prepare
 ]]--[[// On fait d'abord debarquer				
-]]StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.mission.pointADefendre_, self.mission.preparerTerrain_, } )
+]]StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1, { self.params.position or self.mission.pointADefendre_, self.mission.preparerTerrain_, } )
                     --[[// preparation 5min
 ]]if( self.eAction == eActionEffectuee ) then
                         do
