@@ -1,1 +1,3 @@
 include "Melee/Common/Pions/Missions/Capture.bms"
+
+include "Melee/Common/Pions/Missions/Attack.bms"

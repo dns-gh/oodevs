@@ -375,6 +375,7 @@
         <mission name="Common - prepare to (take up position)"/>
         <mission name="Common - reconnaissance by force"/>
         <mission name="Common - defend area"/>
+        <mission name="Melee - attack"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -1620,6 +1621,7 @@
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
         <mission name="Common - reconnaissance by force"/>
+        <mission name="Melee - attack"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2496,6 +2498,7 @@
         <mission name="Armor - operate a checkpoint"/>
         <mission name="Armor - operate an identification point"/>
         <mission name="Armor - recon"/>
+        <mission name="Melee - attack"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -4225,4 +4228,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4179409463" -->
+<!-- signature="2661273380" -->

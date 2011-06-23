@@ -1985,6 +1985,18 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="zone_" name="Area" optional="true" type="Polygon"/>
       <parameter dia-name="knowledge_" name="Predefined area" optional="true" type="ObjectKnowledge"/>
     </mission>
+    <mission dia-behavior="MIS_Pion_MELEE_Attack" dia-type="T_Mission_Pion_MELEE_Attack" id="4433" name="Melee - attack">
+      <description>
+        <doctrine><![CDATA[A tactical mission task that attacks an enemy or the nearest enemy]]></doctrine>
+        <usage><![CDATA[Unit moves towards its targett enemy and attacks it. It is possible to specify an ammunition which is to be used only once during the mission]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="ammunition_" name="Ammunition" optional="true" type="ResourceType"/>
+      <parameter dia-name="enemy_" name="Enemy" optional="true" type="AgentKnowledge"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirEnMesureDe" dia-type="T_Mission_Automate_SoutenirEnMesureDe" id="187" mrt-dia-behavior="MIS_Automate_MRT_SoutenirEnMesureDe" name="Common - prepare to">
@@ -3410,4 +3422,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="3738308365" -->
+<!-- signature="1603142167" -->

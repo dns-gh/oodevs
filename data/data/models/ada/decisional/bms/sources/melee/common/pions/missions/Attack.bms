@@ -1,0 +1,120 @@
+local getNumberOfShotsPerMissileLauncher = function()
+        return 1
+end
+
+local getNumberOfShotsPerTank = function()
+        return 1
+end
+
+node "MIS_Pion_MELEE_Attack"
+{
+    feedbacks = { { { "done_MIS_Pion_MELEE_Attack" }, "MIS_Pion_MELEE_Attack" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_MELEE_Attack, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Mission_Pion_ABC_Reduire", { "done_BEH_Mission_Pion_ABC_Reduire" } },
+        { "BEH_Mission_Pion_VAB_Reduire", { "done_BEH_Mission_Pion_VAB_Reduire" } },
+    },
+
+    create = function( self )
+        self.shots = 0 -- number of shots done by the unit
+        self.ammunition = self.params[1] -- optional parameter
+        if self.ammunition then
+            DEC_Pion_AutoriserMunition( self._ammunition ) -- make sure we can fire with the ammo, otherwise why give it as a parameter?
+        end
+        self.enemy = self.params[2] -- optional parameter
+        if not self.enemy then
+            local enemies = DEC_Connaissances_UnitesEnnemiesDangereuses()
+            local distance = math.huge
+            local myposition = DEC_Agent_Position()
+            for i, enemy in pairs( enemies ) do
+                local enemyPosition = DEC_ConnaissanceAgent_Position( enemy )
+                local distToEnemy = DEC_Geometrie_Distance( enemyPosition, myposition )
+                if distToEnemy < distance then
+                    self.enemy = enemy
+                    distance = distToEnemy
+                end
+            end
+        end
+        if not self.enemy then
+            DEC_Trace( "No enemy found" )
+            DEC_RC( eMissionImpossible )
+            Halt( self )
+            do return end
+        end
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        -- Handle fragmentary orders
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+        self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Unit destroyed
+]]--[[//-----------------------------------------------------------------------------
+]]
+        if( F_Pion_GeteEtatDestruction( myself ) ~= eEtatDestruction_None ) then
+            self:SendFeedback( eActionEffectuee )
+            Halt( self )
+            do return end
+        end
+
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Ambiance
+]]--[[//-----------------------------------------------------------------------------
+]]
+        F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+
+        if ( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
+            self.shots = self.shots + 1
+        end
+
+        if meleeAbcPionsCommon() then
+            if self.shots > getNumberOfShotsPerTank() then
+              self:shotsDone()
+            end
+            Activate( self.activations.BEH_Mission_Pion_ABC_Reduire, 1, { self.enemy, M_MODELE_PION_ABC_REDUIRE_PH(), M_MODELE_PION_ABC_REDUIRE_ID() } )
+        elseif meleeInfPionsCommon() then
+            if self.shots > getNumberOfShotsPerMissileLauncher() then
+              self:shotsDone()
+            end
+            Activate( self.activations.BEH_Mission_Pion_VAB_Reduire, 1, { self.enemy } )
+        else
+            DEC_Trace( "Unexpected unit model for Attack area mission" )
+        end
+    end,
+
+    shotsDone = function( self )
+        -- What to do when one shot has been done? We could retreat to initial position. Cf. code for Reconnaissance by force for instance.
+        -- I just remove the right to use the specified ammunition. I put it back in the destroy() method so next mission can use them again.
+        if self.ammunition then
+            DEC_Pion_InterdireMunition( self._ammunition )
+        end
+    end,
+
+    destroy = function( self )
+        if self.ammunition then
+            DEC_Pion_AutoriserMunition( self._ammunition )
+        end
+    end,
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_MELEE_Attack = { "mission" }
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MELEE_Attack, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MELEE_Attack, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MELEE_Attack, "BEH_Mission_Pion_ABC_Reduire", nodes.BEH_Mission_Pion_ABC_Reduire }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_MELEE_Attack, "BEH_Mission_Pion_VAB_Reduire", nodes.BEH_Mission_Pion_VAB_Reduire }
+
