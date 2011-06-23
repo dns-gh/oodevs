@@ -1692,6 +1692,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Formations</source>
         <translation>Formations</translation>
     </message>
+    <message>
+        <source>Contour Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceConsignsWidget</name>

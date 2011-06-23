@@ -85,6 +85,7 @@
 #include "clients_gui/resources.h"
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/WeatherLayer.h"
+#include "clients_gui/ContourLinesLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/ElevationPainter.h"
 #include "clients_kernel/ActionController.h"
@@ -320,12 +321,14 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     Layer_ABC& defaultLayer             = *new DefaultLayer( controllers_ );
     Layer_ABC& drawerLayer              = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
     Layer_ABC& inhabitantLayer          = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
+    Layer_ABC& contour                  = *new ::ContourLinesLayer( controllers_ );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
     glProxy_->Register( elevation2d );             preferences.AddLayer( tr( "Elevation" ), elevation2d );          elevation2d         .SetPasses( "main" );
     glProxy_->Register( raster );                  preferences.AddLayer( tr( "Raster" ), raster );                  raster              .SetPasses( "main" );
     glProxy_->Register( terrain );                 preferences.AddLayer( tr( "Terrain" ), terrain );                terrain             .SetPasses( "main" );
+    glProxy_->Register( contour );                  preferences.AddLayer( tr( "Contour Lines" ), contour );         contour             .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( urbanLayer );               /*preferences.AddLayer( tr( "Urban" ), urbanLayer );*/          urbanLayer          .SetPasses( "main" );
     glProxy_->Register( watershed );               preferences.AddLayer( tr( "Watershed" ), watershed );            watershed           .SetPasses( "main" );
     glProxy_->Register( elevation3d );

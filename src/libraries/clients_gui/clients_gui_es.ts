@@ -603,6 +603,18 @@ Please check access permissions or write protection.</source>
         <source>Show terrain profiler tool</source>
         <translation>Affiche l&apos;outil de coupe de terrain</translation>
     </message>
+    <message>
+        <source>Contour lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable/disable contour lines display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change contour lines color</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::GradientWidget</name>

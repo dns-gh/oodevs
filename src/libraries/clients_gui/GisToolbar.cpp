@@ -72,8 +72,20 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         button->setToggleButton( true );
         connect( button, SIGNAL( toggled( bool ) ), SLOT( OnToggleCut( bool ) ) );
         connect( terrainProfiler_, SIGNAL( visibilityChanged( bool ) ), button, SLOT( setOn( bool ) ) );
+
+        addSeparator();
+        QHBox* contourBox = new QHBox( this );
+        contourBoxEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Contour lines" ), contourBox );
+        QToolTip::add( contourBoxEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable contour lines display" ) );
+        colorContourLines_ = new ColorButton( this );
+        colorContourLines_->SetColor( QColor( 245, 245, 220 ) ); // $$$$ SBO 2010-03-23: default from layer
+        QToolTip::add( colorContourLines_, tools::translate( "gui::GisToolBar", "Change contour lines color" ) );
+        connect( contourBoxEnabled_, SIGNAL( toggled( bool ) ), SLOT( OnToggleContourLinesEnabled( bool ) ) );
+        connect( colorContourLines_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorContourChanged( const QColor& ) ) );
+
     }
     OnToggleWatershedEnabled( false );
+    OnToggleContourLinesEnabled( false );
     controllers_.Register( *this );
 }
 
@@ -126,6 +138,19 @@ void GisToolbar::OptionChanged( const std::string& name, const kernel::OptionVar
             color_->SetColor( color );
         color_->update();
     }
+    else if( name == "ContourLinesEnabled" )
+    {
+        const bool val = value.To< bool >();
+        if( val != contourBoxEnabled_->isChecked() )
+            contourBoxEnabled_->setChecked( val );
+    }
+    else if( name == "ContourLinesColor" )
+    {
+        QColor color( value.To< QString >() );
+        if( color != colorContourLines_->GetColor() )
+            colorContourLines_->SetColor( color );
+        colorContourLines_->update();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -138,6 +163,16 @@ void GisToolbar::OnToggleWatershedEnabled( bool toggled )
     height_->setEnabled( toggled );
     color_->setEnabled( toggled );
     controllers_.options_.Change( "WatershedEnabled", toggled );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GisToolbar::OnToggleContourLinesEnabled
+// Created: GGE 2011-06-23
+// -----------------------------------------------------------------------------
+void GisToolbar::OnToggleContourLinesEnabled( bool toggled )
+{
+    colorContourLines_->setEnabled( toggled );
+    controllers_.options_.Change( "ContourLinesEnabled", toggled );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,6 +191,15 @@ void GisToolbar::OnModeChanged( int mode )
 void GisToolbar::OnHeightChanged( int height )
 {
     controllers_.options_.Change( "WatershedHeight", height );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GisToolbar::OnColorContourChanged
+// Created: SBO 2010-03-23
+// -----------------------------------------------------------------------------
+void GisToolbar::OnColorContourChanged( const QColor& color )
+{
+    controllers_.options_.Change( "ContourLinesColor", color.name() );
 }
 
 // -----------------------------------------------------------------------------

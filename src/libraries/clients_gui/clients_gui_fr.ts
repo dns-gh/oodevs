@@ -133,7 +133,7 @@
     <name>Urban</name>
     <message>
         <source>Urban block[%1]</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloc urbain</translation>
     </message>
 </context>
 <context>
@@ -602,6 +602,18 @@ Please check access permissions or write protection.</source>
     <message>
         <source>Show terrain profiler tool</source>
         <translation>Affiche l&apos;outil de coupe de terrain</translation>
+    </message>
+    <message>
+        <source>Contour lines</source>
+        <translation>Lignes de niveau</translation>
+    </message>
+    <message>
+        <source>Enable/disable contour lines display</source>
+        <translation>Activer/Désactiver l&apos;afficher des lignes de niveau</translation>
+    </message>
+    <message>
+        <source>Change contour lines color</source>
+        <translation>Changer la couleur des lignes de niveau</translation>
     </message>
 </context>
 <context>

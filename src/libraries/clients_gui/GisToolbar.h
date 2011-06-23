@@ -54,6 +54,8 @@ private slots:
     void OnHeightChanged( int height );
     void OnColorChanged( const QColor& color );
     void OnToggleCut( bool toggled );
+    void OnToggleContourLinesEnabled( bool toggled );
+    void OnColorContourChanged( const QColor& color );
     //@}
 
 private:
@@ -79,6 +81,8 @@ private:
     QComboBox* mode_;
     QSpinBox* height_;
     ColorButton* color_;
+    QCheckBox* contourBoxEnabled_;
+    ColorButton* colorContourLines_;
     //@}
 };
 

@@ -121,6 +121,7 @@
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/GisToolbar.h"
 #include "clients_gui/WatershedLayer.h"
+#include "clients_gui/ContourLinesLayer.h"
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfilerLayer.h"
 #include "clients_gui/ElevationPainter.h"
@@ -428,12 +429,14 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     gui::Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
     gui::Layer_ABC& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
     gui::Layer_ABC& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
-
+    gui::Layer_ABC& contour              = *new gui::ContourLinesLayer( controllers_ );
+    
     // ordre de dessin
     glProxy_->Register( defaultLayer );
     glProxy_->Register( elevation2d );              preferences.AddLayer( tr( "Elevation" ), elevation2d );         elevation2d         .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( raster );                   preferences.AddLayer( tr( "Raster" ), raster );                 raster              .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( terrain );                  preferences.AddLayer( tr( "Terrain" ), terrain );               terrain             .SetPasses( "main,composition,miniviews" );
+    glProxy_->Register( contour );                  preferences.AddLayer( tr( "Contour Lines" ), contour );         contour             .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( urbanLayer );               /*preferences.AddLayer( tr( "Urban" ), urbanLayer );*/          urbanLayer          .SetPasses( "main,miniviews" );
     glProxy_->Register( watershed );                preferences.AddLayer( tr( "Watershed" ), watershed );           watershed           .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( elevation3d );

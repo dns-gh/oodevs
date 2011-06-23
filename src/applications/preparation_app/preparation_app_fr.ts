@@ -642,6 +642,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Loading...</source>
         <translation>Chargement...</translation>
     </message>
+    <message>
+        <source>Contour Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

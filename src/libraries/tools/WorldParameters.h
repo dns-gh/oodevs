@@ -58,6 +58,7 @@ public:
     float latitude_, longitude_;
     float width_, height_;
     std::string graphicsDirectory_;
+    std::string detectionDirectory_;
     std::string pathfindGraph_;
     std::string pathfindLinks_;
     std::string pathfindNodes_;

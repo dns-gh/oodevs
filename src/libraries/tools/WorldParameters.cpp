@@ -132,6 +132,7 @@ void WorldParameters::ReadTerrain( const tools::ExerciseConfig& config, xml::xis
 
     detection_ = config.BuildTerrainChildFile( detection + "/detection.dat" );
     graphicsDirectory_ = config.BuildTerrainChildFile( graphics );
+    detectionDirectory_ = config.BuildTerrainChildFile( detection );
     pathfindGraph_ = config.BuildTerrainChildFile( pathfind + "/graph.bin" );
     pathfindLinks_ = config.BuildTerrainChildFile( pathfind + "/links.bin" );
     pathfindNodes_ = config.BuildTerrainChildFile( pathfind + "/nodes.bin" );
