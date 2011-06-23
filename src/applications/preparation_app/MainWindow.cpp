@@ -253,7 +253,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new DisplayToolbar( this, controllers );
     new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
 
-    loadingDialog_ = new QDialog( this, 0, FALSE, Qt::WStyle_Customize | WStyle_NormalBorder );
+    loadingDialog_ = new QDialog( this, 0, FALSE, Qt::WStyle_Customize | WStyle_DialogBorder );
     QLabel* label = new QLabel( loadingDialog_ );
     label->setFrameStyle( QFrame::Panel | QFrame::Sunken );
     label->setText( tr( "Loading..." ) );
@@ -390,7 +390,11 @@ void MainWindow::DoLoad( QString filename )
     loadingDialog_->show();
 
     if( filename.isEmpty() )
+    {
+        loadingDialog_->hide();
         return;
+    }
+
     if( filename.startsWith( "//" ) )
         filename.replace( "/", "\\" );
 
