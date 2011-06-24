@@ -45,7 +45,7 @@ namespace
     };
 }
 
-BOOST_AUTO_TEST_CASE( event_controller_is_cool )
+BOOST_AUTO_TEST_CASE( message_handling_with_controller_and_observer )
 {
     MessageController< sword::SimToClient_Content > controller;
     ControlTickObserver receiver( controller );
