@@ -31,6 +31,11 @@ namespace rpr
     class EntityTypeResolver_ABC;
 }
 
+namespace sword
+{
+    class SimToClient_Content;
+}
+
 namespace plugins
 {
 namespace hla
@@ -40,6 +45,7 @@ namespace hla
     class FederateAmbassadorFactory_ABC;
     class AgentSubject_ABC;
     class ObjectResolver_ABC;
+    template< typename category > class MessageController;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -78,6 +84,7 @@ private:
     std::auto_ptr< FederateAmbassadorFactory_ABC > pDebugFederateFactory_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityTypeResolver_;
     std::auto_ptr< AgentSubject_ABC > pSubject_;
+    std::auto_ptr< MessageController< sword::SimToClient_Content > > pMessageController_;
     std::auto_ptr< FederateFacade > federate_;
     //@}
 };

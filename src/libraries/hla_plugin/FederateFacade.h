@@ -10,7 +10,7 @@
 #ifndef plugins_hla_FederateFacade_h
 #define plugins_hla_FederateFacade_h
 
-#include <boost/noncopyable.hpp>
+#include "MessageObserver.h"
 
 namespace xml
 {
@@ -22,6 +22,12 @@ namespace hla
     class TimeFactory_ABC;
     class TimeIntervalFactory_ABC;
     class RtiAmbassador_ABC;
+}
+
+namespace sword
+{
+    class ControlEndTick;
+    class SimToClient_Content;
 }
 
 namespace plugins
@@ -40,18 +46,19 @@ namespace hla
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-class FederateFacade : private boost::noncopyable
+    class FederateFacade : private MessageObserver< sword::ControlEndTick >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory );
+             FederateFacade( xml::xisubstream xis, MessageController_ABC< sword::SimToClient_Content >& controller, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory );
     virtual ~FederateFacade();
     //@}
 
-    //! @name Operations
+private:
+    //! @name Messages
     //@{
-    void Step();
+    virtual void Notify( const sword::ControlEndTick& message );
     //@}
 
 private:

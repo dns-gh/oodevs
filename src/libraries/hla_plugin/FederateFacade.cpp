@@ -13,6 +13,7 @@
 #include "Federate_ABC.h"
 #include "FederateAmbassadorFactory_ABC.h"
 #include "RtiAmbassadorFactory_ABC.h"
+#include "protocol/Simulation.h"
 #include <hla/SimpleTimeFactory.h>
 #include <hla/SimpleTimeIntervalFactory.h>
 #include <xeumeuleu/xml.hpp>
@@ -75,7 +76,7 @@ private:
 // Name: FederateFacade constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-FederateFacade::FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory )
+FederateFacade::FederateFacade( xml::xisubstream xis, MessageController_ABC< sword::SimToClient_Content >& controller, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory )
     : timeFactory_    ( new ::hla::SimpleTimeFactory() )
     , intervalFactory_( new ::hla::SimpleTimeIntervalFactory() )
     , ambassador_     ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )
@@ -83,7 +84,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, AgentSubject_ABC& subject,
     , destructor_     ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
     , agentClass_     ( new AggregateEntityClass( *federate_, subject ) )
 {
-    // NOTHING
+    CONNECT( controller, sword::ControlEndTick, control_end_tick );
 }
 
 // -----------------------------------------------------------------------------
@@ -96,10 +97,10 @@ FederateFacade::~FederateFacade()
 }
 
 // -----------------------------------------------------------------------------
-// Name: FederateFacade::Step
-// Created: AGE 2008-02-25
+// Name: FederateFacade::Notify
+// Created: SLI 2011-06-24
 // -----------------------------------------------------------------------------
-void FederateFacade::Step()
+void FederateFacade::Notify( const sword::ControlEndTick& /*message*/ )
 {
     federate_->Step();
 }

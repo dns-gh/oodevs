@@ -16,6 +16,7 @@
 #include "FederateAmbassadorFactory.h"
 #include "DebugFederateAmbassadorFactory.h"
 #include "ObjectResolver.h"
+#include "MessageController.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
 #include "dispatcher/Model_ABC.h"
@@ -57,7 +58,8 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublis
     , pDebugFederateFactory_( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger, *pObjectResolver_ ) )
     , pEntityTypeResolver_  ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "dis", "dis.xml" ) ) ) )
     , pSubject_             ( new AgentController( model, *pEntityTypeResolver_ ) )
-    , federate_             ( new FederateFacade( xis, *pSubject_,
+    , pMessageController_   ( new MessageController< sword::SimToClient_Content >() )
+    , federate_             ( new FederateFacade( xis, *pMessageController_, *pSubject_,
                                                   xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
                                                   config.BuildPluginDirectory( "hla" ) ) )
@@ -78,13 +80,13 @@ HlaPlugin::~HlaPlugin()
 // Name: HlaPlugin::Receive
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-void HlaPlugin::Receive( const sword::SimToClient& wrapper )
+void HlaPlugin::Receive( const sword::SimToClient& message )
 {
     try
     {
-        if( wrapper.message().has_control_end_tick() )
+        pMessageController_->Dispatch( message.message() );
+        if( message.message().has_control_end_tick() )
         {
-            federate_->Step();
             if( timeConstrained_ )
             {
                 simulation::ControlResume message;

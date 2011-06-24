@@ -9,11 +9,13 @@
 
 #include "hla_plugin_test_pch.h"
 #include "hla_plugin/FederateFacade.h"
+#include "protocol/Simulation.h"
 #include "MockAgentSubject.h"
 #include "MockRtiAmbassadorFactory.h"
 #include "MockFederateAmbassadorFactory.h"
 #include "MockFederate.h"
 #include "MockRtiAmbassador.h"
+#include "MockMessageController.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
@@ -25,11 +27,14 @@ namespace
     public:
         Fixture()
             : federate( new MockFederate() )
+            , listener( 0 )
         {}
         MockAgentSubject subject;
         MockRtiAmbassadorFactory rtiFactory;
         MockFederateAmbassadorFactory federateFactory;
         MockFederate* federate;
+        MockMessageController< sword::SimToClient_Content > controller;
+        MessageHandler_ABC< sword::SimToClient_Content >* listener;
         mock::sequence s;
     };
 }
@@ -44,8 +49,10 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_initialization_declares_publications, Fixtur
     MOCK_EXPECT( federate, Join ).once().in( s ).with( "Federation", true, true ).returns( true );
     MOCK_EXPECT( federate, RegisterClass ).once().in( s );
     MOCK_EXPECT( subject, Register ).once().in( s );
-    FederateFacade facade( xis, subject, rtiFactory, federateFactory, "directory" );
+    MOCK_EXPECT( controller, Register ).once().in( s );
+    FederateFacade facade( xis, controller, subject, rtiFactory, federateFactory, "directory" );
     MOCK_EXPECT( subject, Unregister ).once().in( s );
+    MOCK_EXPECT( controller, Unregister ).once().in( s );
 }
 
 namespace
@@ -57,6 +64,8 @@ namespace
         {
             MOCK_EXPECT( subject, Register ).once();
             MOCK_EXPECT( subject, Unregister ).once();
+            MOCK_EXPECT( controller, Register ).once().with( mock::retrieve( listener ) );
+            MOCK_EXPECT( controller, Unregister ).once();
             MOCK_EXPECT( federate, RegisterClass ).once();
             MOCK_EXPECT( federate, Connect ).once().returns( true );
         }
@@ -71,7 +80,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_xml_options_overrides_default_values, BuildF
     MOCK_EXPECT( rtiFactory, CreateAmbassador ).once().with( mock::any, mock::any, hla::RtiAmbassador_ABC::TimeStampOrder, "host", "1337" ).returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
     MOCK_EXPECT( federateFactory, Create ).once().with( mock::any, "name", 3 ).returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate, Join ).once().with( "federation", false, false ).returns( true );
-    FederateFacade facade( xis, subject, rtiFactory, federateFactory, "directory" );
+    FederateFacade facade( xis, controller, subject, rtiFactory, federateFactory, "directory" );
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation, BuildFixture )
@@ -83,7 +92,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_create_federation, BuildFixture )
     MOCK_EXPECT( federate, Join ).once().in( s ).returns( false );
     MOCK_EXPECT( federate, Create ).once().in( s ).with( "Federation", "directory/fom" ).returns( true );
     MOCK_EXPECT( federate, Join ).once().in( s ).returns( true );
-    FederateFacade facade( xis, subject, rtiFactory, federateFactory, "directory" );
+    FederateFacade facade( xis, controller, subject, rtiFactory, federateFactory, "directory" );
 }
 
 BOOST_FIXTURE_TEST_CASE( hla_plugin_can_destroy_federation, BuildFixture )
@@ -93,7 +102,7 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_can_destroy_federation, BuildFixture )
     MOCK_EXPECT( rtiFactory, CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
     MOCK_EXPECT( federateFactory, Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate, Join ).once().returns( true );
-    FederateFacade facade( xis, subject, rtiFactory, federateFactory, "directory" );
+    FederateFacade facade( xis, controller, subject, rtiFactory, federateFactory, "directory" );
     MOCK_EXPECT( federate, Destroy ).once().with( "Federation" ).returns( true );
 }
 
@@ -104,7 +113,10 @@ BOOST_FIXTURE_TEST_CASE( hla_plugin_steps, BuildFixture )
     MOCK_EXPECT( rtiFactory, CreateAmbassador ).once().returns( std::auto_ptr< hla::RtiAmbassador_ABC >( new ::hla::MockRtiAmbassador() ) );
     MOCK_EXPECT( federateFactory, Create ).once().returns( std::auto_ptr< Federate_ABC >( federate ) );
     MOCK_EXPECT( federate, Join ).once().returns( true );
-    FederateFacade facade( xis, subject, rtiFactory, federateFactory, "directory" );
+    FederateFacade facade( xis, controller, subject, rtiFactory, federateFactory, "directory" );
+    BOOST_REQUIRE( listener );
     MOCK_EXPECT( federate, Step ).once();
-    facade.Step();
+    sword::SimToClient_Content message;
+    message.mutable_control_end_tick()->set_current_tick( 3 );
+    listener->Notify( message );
 }
