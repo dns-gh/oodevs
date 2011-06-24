@@ -13,7 +13,6 @@
 #include "MessageHandler_ABC.h"
 #include "MessageObserver_ABC.h"
 #include "MessageController.h"
-#include <boost/function.hpp>
 
 namespace plugins
 {
@@ -21,7 +20,7 @@ namespace hla
 {
 // =============================================================================
 /** @class  MessageHandler
-    @brief  MessageHandler
+    @brief  Message handler
 */
 // Created: SLI 2011-06-24
 // =============================================================================
@@ -29,12 +28,19 @@ template< typename Category, typename Message >
 class MessageHandler : public MessageHandler_ABC< Category >
 {
 public:
+    //! @name Types
+    //@{
+    typedef typename bool( Category::*T_Checker )() const;
+    typedef typename const Message&( Category::*T_Retriever )() const;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
     MessageHandler( MessageController< Category >& controller,
                     MessageObserver_ABC< Message >& observer,
-                    boost::function< bool( const Category& ) > checker,
-                    boost::function< const Message&( const Category& ) > retriever )
+                    T_Checker checker,
+                    T_Retriever retriever )
         : controller_( controller )
         , observer_  ( observer )
         , checker_   ( checker )
@@ -52,8 +58,8 @@ public:
     //@{
     virtual void Notify( const Category& message )
     {
-        if( checker_( message ) )
-            observer_.Notify( retriever_( message ) );
+        if( ( message.*checker_ )() )
+            observer_.Notify( ( message.*retriever_ )() );
     }
     //@}
 
@@ -62,8 +68,8 @@ private:
     //@{
     MessageController< Category >& controller_;
     MessageObserver_ABC< Message >& observer_;
-    boost::function< bool( const Category& ) > checker_;
-    boost::function< const Message&( const Category& ) > retriever_;
+    T_Checker checker_;
+    T_Retriever retriever_;
     //@}
 };
 

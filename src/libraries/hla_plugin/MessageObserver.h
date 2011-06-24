@@ -13,7 +13,6 @@
 #include "MessageObserver_ABC.h"
 #include "MessageHandler.h"
 #include <memory>
-#include <boost/bind.hpp>
 
 #define MESSAGE_OBSERVER( category, message, name, controller ) MessageObserver< category, message >( *this, controller, &##category##::has_##name, &##category##::##name )
 
@@ -35,8 +34,8 @@ class MessageObserver : public MessageObserver_ABC< Message >
 public:
     //! @name Constructors/Destructor
     //@{
-    MessageObserver( MessageObserver_ABC< Message >& observer, MessageController< Category >& controller, bool( Category::*checker )() const, const Message&( Category::*retriever )() const )
-        : handler_( new MessageHandler< Category, Message >( controller, observer, boost::bind( checker, _1 ), boost::bind( retriever, _1 ) ) )
+    MessageObserver( MessageObserver_ABC< Message >& observer, MessageController< Category >& controller, typename MessageHandler< Category, Message >::T_Checker checker, typename MessageHandler< Category, Message >::T_Retriever retriever )
+        : handler_( new MessageHandler< Category, Message >( controller, observer, checker, retriever ) )
     {
         // NOTHING
     }
