@@ -1187,18 +1187,26 @@
         </sequential>
     </macrodef>
  
-    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.france,package.otpack.defense.scipio,
-                                            package.otpack.security.worldwide,package.otpack.security.masa,package.otpack.lossc,
-                                            package.otpack.tutosw,package.otpack.validation" description="package the exercise otpacks"/>
+    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.tutorials,package.otpack.defense.france,
+                                            package.otpack.defense.scipio,package.otpack.security.worldwide,package.otpack.security.masa,
+                                            package.otpack.lossc,package.otpack.tutosw,package.otpack.validation" description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
         <pack name="defense-worldwide" description="defense-worldwide exercises package">
             <include name="data/models/ada/physical/worldwide/**"/>
-            <include name="data/propagations/test/**"/>
             <include name="exercises/Egypt/**"/>
             <include name="exercises/Paris/**"/>
             <include name="exercises/9_cases/**"/>
             <include name="exercises/Musoria Border Defense/**"/>
+            <include name="data/terrains/Nord egypt/**"/>
+            <include name="data/terrains/Paris_Est/**"/>
+            <include name="data/terrains/Angers_x9/**"/>
+        </pack>
+    </target>
+        
+    <target name="package.otpack.defense.tutorials" description="package du defense-tutorials otpack">
+        <pack name="defense-tutorials" description="tutorials exercises package">
+            <include name="data/models/ada/physical/france/**"/>
             <include name="exercises/tutorials/01 - Generalities/**"/>
             <include name="exercises/tutorials/02 - Gaming/**"/>
             <include name="exercises/tutorials/03 - Missions/**"/>
@@ -1212,9 +1220,7 @@
             <include name="exercises/tutorials/11 - Preparation/**"/>
             <include name="exercises/tutorials/12 - AAR/**"/>
             <include name="exercises/tutorials/13 - Advanced features/**"/>
-            <include name="data/terrains/Nord egypt/**"/>
             <include name="data/terrains/Paris_Est/**"/>
-            <include name="data/terrains/Angers_x9/**"/>
         </pack>
     </target>
 
