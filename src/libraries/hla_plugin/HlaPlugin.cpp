@@ -17,15 +17,13 @@
 #include "DebugFederateAmbassadorFactory.h"
 #include "ObjectResolver.h"
 #include "MessageController.h"
+#include "Stepper.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
-#include "dispatcher/Model_ABC.h"
-#include "dispatcher/SimulationPublisher_ABC.h"
-#include "protocol/SimulationSenders.h"
+#include "protocol/Simulation.h"
 #include "rpr/EntityTypeResolver.h"
 #include <hla/HLAException.h>
 #include <xeumeuleu/xml.hpp>
-#include <boost/lexical_cast.hpp>
 
 using namespace plugins::hla;
 
@@ -47,8 +45,7 @@ namespace
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
 HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger )
-    : timeConstrained_      ( xis.attribute< bool >( "time-constrained", true ) )
-    , model_                ( model )
+    : model_                ( model )
     , logger_               ( logger )
     , publisher_            ( publisher )
     , pObjectResolver_      ( new ObjectResolver() )
@@ -63,6 +60,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublis
                                                   xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
                                                   config.BuildPluginDirectory( "hla" ) ) )
+   , pStepper_              ( new Stepper( xis, *pMessageController_, publisher ) )
 {
     // NOTHING
 }
@@ -85,15 +83,6 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
     try
     {
         pMessageController_->Dispatch( message.message() );
-        if( message.message().has_control_end_tick() )
-        {
-            if( timeConstrained_ )
-            {
-                simulation::ControlResume message;
-                message().set_tick( 1 );
-                message.Send( publisher_ );
-            }
-        }
     }
     catch( ::hla::HLAException& e )
     {

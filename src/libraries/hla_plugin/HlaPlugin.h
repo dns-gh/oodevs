@@ -11,7 +11,7 @@
 #define plugins_hla_HlaPlugin_h
 
 #include "dispatcher/Plugin_ABC.h"
-#include "protocol/Protocol.h"
+#include <memory>
 
 namespace xml
 {
@@ -46,6 +46,7 @@ namespace hla
     class AgentSubject_ABC;
     class ObjectResolver_ABC;
     template< typename category > class MessageController;
+    class Stepper;
 
 // =============================================================================
 /** @class  HlaPlugin
@@ -73,7 +74,6 @@ public:
 private:
     //! @name Member data
     //@{
-    const bool timeConstrained_;
     dispatcher::Model_ABC& model_;
     dispatcher::Logger_ABC& logger_;
     dispatcher::SimulationPublisher_ABC& publisher_;
@@ -86,6 +86,7 @@ private:
     std::auto_ptr< AgentSubject_ABC > pSubject_;
     std::auto_ptr< MessageController< sword::SimToClient_Content > > pMessageController_;
     std::auto_ptr< FederateFacade > federate_;
+    std::auto_ptr< Stepper > pStepper_;
     //@}
 };
 
