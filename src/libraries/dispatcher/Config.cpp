@@ -30,6 +30,7 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )
     , timeStep_                ( 0 )
+    , shieldLog_               ( false )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
@@ -74,7 +75,8 @@ void Config::Parse( int argc, char** argv )
                             >> xml::optional >> xml::attribute( "keyframesfreq", keyFramesFrequency_ )
                         >> xml::end
                         >> xml::optional >>xml::start( "shield" )
-                            >> xml::attribute( "server", networkShieldParameters_ );
+                            >> xml::attribute( "server", networkShieldParameters_ )
+                            >> xml::attribute( "log", shieldLog_ );
     if( networkSimulationPort_ != 0 )
         networkSimulationParameters_ =
             networkSimulationParameters_.substr( 0, networkSimulationParameters_.find( ':' ) )
@@ -135,4 +137,13 @@ unsigned int Config::GetReplayFragmentsFrequency() const
 unsigned int Config::GetTickDuration() const
 {
     return timeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetShieldLog
+// Created: MCO 2011-06-24
+// -----------------------------------------------------------------------------
+bool Config::GetShieldLog() const
+{
+    return shieldLog_;
 }

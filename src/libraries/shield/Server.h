@@ -49,6 +49,7 @@ private:
 
     virtual void Info( const std::string& message );
     virtual void Error( const std::string& from, const std::string& message );
+    virtual void Debug( const DebugInfo_ABC& info );
     //@}
 
 private:

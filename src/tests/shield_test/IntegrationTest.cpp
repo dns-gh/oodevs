@@ -30,6 +30,7 @@ namespace
     {
         MOCK_METHOD( Info, 1 )
         MOCK_METHOD( Error, 1 )
+        MOCK_METHOD( Debug, 1 )
     };
 
     template< typename C, typename F >
@@ -128,6 +129,7 @@ BOOST_FIXTURE_TEST_CASE( message_sent_from_client_is_received_on_simulation, Fix
         MsgsClientToSim::MsgClientToSim msg;
         msg.set_context( 77 );
         msg.mutable_message()->mutable_control_checkpoint_set_frequency()->set_frequency( 12 );
+        MOCK_EXPECT( listener, Debug ).once();
         client.Send( client.host, msg );
     }
     bool received = false;
@@ -162,6 +164,7 @@ BOOST_FIXTURE_TEST_CASE( message_sent_from_simulation_is_received_on_client, Fix
     }
     bool received = false;
     MOCK_EXPECT( client, Receive ).once().calls( bl::var( received ) = true );
+    MOCK_EXPECT( listener, Debug ).once();
     wait( bl::var( received ), boost::bind( &Fixture::Update, this ) );
 }
 

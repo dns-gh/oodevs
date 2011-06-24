@@ -67,6 +67,7 @@ namespace shield
     {
         MOCK_METHOD( Info, 1 )
         MOCK_METHOD( Error, 2 )
+        MOCK_METHOD( Debug, 1 )
     };
 
     struct Fixture

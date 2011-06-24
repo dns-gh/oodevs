@@ -105,3 +105,12 @@ void Server::Error( const std::string& from, const std::string& message )
     listener_.Error( message );
     tools::ServerNetworker::ConnectionError( from, message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Server::Debug
+// Created: MCO 2011-06-23
+// -----------------------------------------------------------------------------
+void Server::Debug( const DebugInfo_ABC& info )
+{
+    listener_.Debug( info );
+}

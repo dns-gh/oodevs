@@ -16,6 +16,7 @@
 namespace shield
 {
     class Server;
+    class Listener_ABC;
 }
 
 namespace dispatcher
@@ -45,6 +46,7 @@ public:
 private:
     //! @name Member data
     //@{
+    std::auto_ptr< shield::Listener_ABC > logger_;
     std::auto_ptr< shield::Server > server_;
     //@}
 };

@@ -14,6 +14,8 @@
 
 namespace shield
 {
+    class DebugInfo_ABC;
+
 // =============================================================================
 /** @class  Listener_ABC
     @brief  Listener declaration
@@ -33,6 +35,7 @@ public:
     //@{
     virtual void Info( const std::string& message ) = 0;
     virtual void Error( const std::string& message ) = 0;
+    virtual void Debug( const DebugInfo_ABC& info ) = 0;
     //@}
 };
 

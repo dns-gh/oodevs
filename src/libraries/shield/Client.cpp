@@ -9,6 +9,7 @@
 
 #include "Client.h"
 #include "ClientListener_ABC.h"
+#include "DebugInfo_ABC.h"
 #pragma warning( push, 0 )
 #include "proto/ClientToAar.pb.h"
 #include "proto/ClientToAuthentication.pb.h"
@@ -28,6 +29,55 @@
 
 using namespace shield;
 
+namespace
+{
+    template< typename T >
+    class DebugInfo : public DebugInfo_ABC
+    {
+    public:
+        DebugInfo( const char* prefix, const T& message )
+            : prefix_  ( prefix )
+            , pMessage_( &message )
+        {}
+        virtual void Serialize( std::ostream& s ) const
+        {
+            s << prefix_ << pMessage_->ShortDebugString();
+        }
+    private:
+        const char* prefix_;
+        const T* pMessage_;
+    };
+
+    template< typename T >
+    class Logger
+    {
+    private:
+        typedef boost::function< void( const std::string&, const T& ) > T_Callback;
+
+    public:
+        Logger( ClientListener_ABC& listener, T_Callback callback )
+            : pListener_( &listener )
+            , callback_ ( callback )
+        {}
+
+        void operator()( const std::string& link, const T& message ) const
+        {
+            callback_( link, message );
+            pListener_->Debug( DebugInfo< T >( "Shield received : ", message ) );
+        }
+
+    private:
+        ClientListener_ABC* pListener_;
+        T_Callback callback_;
+    };
+
+    template< typename C, typename T >
+    boost::function< void( const std::string&, const T& ) > MakeLogger( ClientListener_ABC& listener, C& instance, void (C::*callback)( const std::string&, const T& ) )
+    {
+        return Logger< T >( listener, boost::bind( callback, &instance, _1, _2 ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Client constructor
 // Created: MCO 2010-09-30
@@ -40,19 +90,19 @@ Client::Client( const std::string& host, const std::string& from, tools::Message
     , listener_ ( listener )
     , converter_( from, *this, *this, listener )
 {
-    RegisterMessage( converter_, &Converter::ReceiveSimToClient );
-    RegisterMessage( converter_, &Converter::ReceiveAuthenticationToClient );
-    RegisterMessage( converter_, &Converter::ReceiveDispatcherToClient );
-    RegisterMessage( converter_, &Converter::ReceiveMessengerToClient );
-    RegisterMessage( converter_, &Converter::ReceiveReplayToClient );
-    RegisterMessage( converter_, &Converter::ReceiveAarToClient );
-    RegisterMessage( converter_, &Converter::ReceiveLauncherToAdmin );
-    dispatcher.RegisterMessage( converter_, &Converter::ReceiveClientToAar );
-    dispatcher.RegisterMessage( converter_, &Converter::ReceiveClientToAuthentication );
-    dispatcher.RegisterMessage( converter_, &Converter::ReceiveClientToMessenger );
-    dispatcher.RegisterMessage( converter_, &Converter::ReceiveClientToReplay );
-    dispatcher.RegisterMessage( converter_, &Converter::ReceiveClientToSim );
-    dispatcher.RegisterMessage( converter_, &Converter::ReceiveAdminToLauncher );
+    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveSimToClient ) );
+    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveAuthenticationToClient ) );
+    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveDispatcherToClient ) );
+    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveMessengerToClient ) );
+    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveReplayToClient ) );
+    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveAarToClient ) );
+    RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveLauncherToAdmin ) );
+    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveClientToAar ) );
+    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveClientToAuthentication ) );
+    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveClientToMessenger ) );
+    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveClientToReplay ) );
+    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveClientToSim ) );
+    dispatcher.RegisterMessage( MakeLogger( listener, converter_, &Converter::ReceiveAdminToLauncher ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,6 +158,7 @@ void Client::DoSend( const T& message )
         callbacks_.push_back( boost::bind( &tools::MessageSender_ABC::Send< T >, this, boost::cref( host_ ), message ) );
     else
         tools::MessageSender_ABC::Send( host_, message );
+    listener_.Debug( DebugInfo< T >( "Shield sent : ", message ) );
 }
 
 // -----------------------------------------------------------------------------

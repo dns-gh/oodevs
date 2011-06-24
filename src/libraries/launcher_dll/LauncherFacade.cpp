@@ -27,6 +27,10 @@ namespace
         {
             // NOTHING
         }
+        virtual void Debug( const shield::DebugInfo_ABC& /*info*/ )
+        {
+            // NOTHING
+        }
     };
 }
 

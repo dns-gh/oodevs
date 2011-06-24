@@ -12,7 +12,7 @@
 
 #include "ObjectMessageCallback.h"
 #include "MessageIdentifierFactory.h"
-#include <memory>
+#include <boost/function.hpp>
 
 namespace tools
 {
@@ -36,6 +36,11 @@ public:
     template< typename C, typename T >
     void RegisterMessage( C& instance, void (C::*callback)( const std::string& link, const T& object ) )
     {
+        RegisterMessage< T >( boost::bind( callback, &instance, _1, _2 ) );
+    }
+    template< typename T >
+    void RegisterMessage( boost::function< void( const std::string&, const T& ) > callback )
+    {
         const unsigned int id = MessageIdentifierFactory::GetIdentifier< T >();
         ObjectMessageCallback< T >* composite = static_cast< ObjectMessageCallback< T >* >( Retrieve( id ) );
         if( ! composite )
@@ -43,7 +48,7 @@ public:
             composite = new ObjectMessageCallback< T >();
             Register( id, std::auto_ptr< ObjectMessageCallback_ABC >( composite ) );
         }
-        composite->AddCallback( boost::bind( callback, &instance, _1, _2 ) );
+        composite->AddCallback( callback );
     }
     //@}
 

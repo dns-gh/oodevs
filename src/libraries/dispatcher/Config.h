@@ -47,6 +47,7 @@ public:
     unsigned int GetKeyFramesFrequency() const;
     unsigned int GetReplayFragmentsFrequency() const;
     unsigned int GetTickDuration() const;
+    bool GetShieldLog() const;
     //@}
 
 private:
@@ -59,6 +60,7 @@ private:
     unsigned int keyFramesFrequency_;
     unsigned int replayFragmentsFrequency_;
     unsigned int timeStep_;
+    bool shieldLog_;
     //@}
 };
 
