@@ -37,10 +37,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    MessageHandler( MessageController< Category >& controller,
-                    MessageObserver_ABC< Message >& observer,
-                    T_Checker checker,
-                    T_Retriever retriever )
+    MessageHandler( MessageController< Category >& controller, MessageObserver_ABC< Message >& observer,
+                    T_Checker checker, T_Retriever retriever )
         : controller_( controller )
         , observer_  ( observer )
         , checker_   ( checker )

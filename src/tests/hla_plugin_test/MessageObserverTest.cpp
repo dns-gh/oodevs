@@ -16,14 +16,14 @@ using namespace plugins::hla;
 
 namespace
 {
-    class ControlTickObserver : private MessageObserver< sword::SimToClient_Content, sword::ControlBeginTick >
-                              , private MessageObserver< sword::SimToClient_Content, sword::ControlEndTick >
+    class ControlTickObserver : private MessageObserver< sword::ControlBeginTick >
+                              , private MessageObserver< sword::ControlEndTick >
     {
     public:
         explicit ControlTickObserver( MessageController< sword::SimToClient_Content >& controller )
-            : MESSAGE_OBSERVER( sword::SimToClient_Content, sword::ControlBeginTick, control_begin_tick, controller )
-            , MESSAGE_OBSERVER( sword::SimToClient_Content, sword::ControlEndTick, control_end_tick, controller )
         {
+            CONNECT( controller, sword::ControlBeginTick, control_begin_tick );
+            CONNECT( controller, sword::ControlEndTick  , control_end_tick );
             MOCK_EXPECT( beginTick, _ ).once().in( s );
             MOCK_EXPECT( endTick, _ ).once().in( s );
         }

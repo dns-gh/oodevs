@@ -13,8 +13,9 @@
 #include "MessageObserver_ABC.h"
 #include "MessageHandler.h"
 #include <memory>
+#include <boost/typeof/typeof.hpp>
 
-#define MESSAGE_OBSERVER( category, message, name, controller ) MessageObserver< category, message >( *this, controller, &##category##::has_##name, &##category##::##name )
+#define CONNECT( controller, message, name ) MessageObserver< message >::Connect< BOOST_TYPEOF( controller )::category_type, message >( controller, *this, &BOOST_TYPEOF( controller )::category_type::has_##name, &BOOST_TYPEOF( controller )::category_type::##name )
 
 namespace plugins
 {
@@ -28,27 +29,28 @@ namespace hla
 */
 // Created: SLI 2011-06-24
 // =============================================================================
-template< typename Category, typename Message >
+template< typename Message >
 class MessageObserver : public MessageObserver_ABC< Message >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    MessageObserver( MessageObserver_ABC< Message >& observer, MessageController< Category >& controller, typename MessageHandler< Category, Message >::T_Checker checker, typename MessageHandler< Category, Message >::T_Retriever retriever )
-        : handler_( new MessageHandler< Category, Message >( controller, observer, checker, retriever ) )
+             MessageObserver() {}
+    virtual ~MessageObserver() {}
+
+    template< typename Category, typename Message >
+    void Connect( MessageController< Category >& controller, MessageObserver_ABC< Message >& observer,
+                  typename MessageHandler< Category, Message >::T_Checker checker,
+                  typename MessageHandler< Category, Message >::T_Retriever retriever )
     {
-        // NOTHING
-    }
-    virtual ~MessageObserver()
-    {
-        // NOTHING
+        handler_.reset( new MessageHandler< Category, Message >( controller, observer, checker, retriever ) );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< MessageHandler_ABC< Category > > handler_;
+    std::auto_ptr< Handler_ABC > handler_;
     //@}
 };
 

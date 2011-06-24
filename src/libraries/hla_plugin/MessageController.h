@@ -28,6 +28,12 @@ template< typename Category >
 class MessageController : private boost::noncopyable
 {
 public:
+    //! @name Types
+    //@{
+    typedef Category category_type;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
              MessageController() {}

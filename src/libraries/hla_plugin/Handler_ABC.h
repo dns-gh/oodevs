@@ -7,38 +7,32 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_MessageHandler_ABC_h
-#define plugins_hla_MessageHandler_ABC_h
+#ifndef plugins_hla_Handler_ABC_h
+#define plugins_hla_Handler_ABC_h
 
-#include "Handler_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace plugins
 {
 namespace hla
 {
 // =============================================================================
-/** @class  MessageHandler_ABC
-    @brief  Message handler definition
+/** @class  Handler_ABC
+    @brief  Handler definition
 */
 // Created: SLI 2011-06-24
 // =============================================================================
-template< typename Category >
-class MessageHandler_ABC : public Handler_ABC
+class Handler_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageHandler_ABC() {}
-    virtual ~MessageHandler_ABC() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Notify( const Category& message ) = 0;
+             Handler_ABC() {}
+    virtual ~Handler_ABC() {}
     //@}
 };
 
 }
 }
 
-#endif // plugins_hla_MessageHandler_ABC_h
+#endif // plugins_hla_Handler_ABC_h
