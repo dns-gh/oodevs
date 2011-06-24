@@ -211,6 +211,7 @@
                       <xs:documentation xml:lang="en">Defines network port on which dispatcher proxy is to accept client connections.</xs:documentation>
                     </xs:annotation>
                   </xs:attribute>
+                  <xs:attribute name="log" type="xs:boolean" use="optional"/>
                 </xs:complexType>
               </xs:element>
               <!-- $$$TODO: Add more plugins -->
