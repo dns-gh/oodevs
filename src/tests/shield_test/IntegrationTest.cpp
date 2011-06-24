@@ -133,6 +133,7 @@ BOOST_FIXTURE_TEST_CASE( message_sent_from_client_is_received_on_simulation, Fix
         client.Send( client.host, msg );
     }
     bool received = false;
+    MOCK_EXPECT( listener, Debug ).once();
     MOCK_EXPECT( server, Receive ).once().calls( bl::var( received ) = true );
     wait( bl::var( received ), boost::bind( &Fixture::Update, this ) );
 }
