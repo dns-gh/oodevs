@@ -20,7 +20,7 @@ namespace
                               , private MessageObserver< sword::ControlEndTick >
     {
     public:
-        explicit ControlTickObserver( MessageController< sword::SimToClient_Content >& controller )
+        explicit ControlTickObserver( MessageController_ABC< sword::SimToClient_Content >& controller )
         {
             CONNECT( controller, sword::ControlBeginTick, control_begin_tick );
             CONNECT( controller, sword::ControlEndTick  , control_end_tick );
@@ -52,5 +52,5 @@ BOOST_AUTO_TEST_CASE( message_handling_with_controller_and_observer )
     sword::SimToClient message;
     message.mutable_message()->mutable_control_begin_tick()->set_current_tick( 3 );
     message.mutable_message()->mutable_control_end_tick()->set_current_tick( 3 );
-    controller.Notify( message.message() );
+    controller.Dispatch( message.message() );
 }

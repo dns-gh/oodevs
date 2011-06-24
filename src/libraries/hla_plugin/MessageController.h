@@ -10,8 +10,8 @@
 #ifndef plugins_hla_MessageController_h
 #define plugins_hla_MessageController_h
 
+#include "MessageController_ABC.h"
 #include "MessageHandler_ABC.h"
-#include <boost/noncopyable.hpp>
 #include <vector>
 
 namespace plugins
@@ -25,14 +25,8 @@ namespace hla
 // Created: SLI 2011-06-24
 // =============================================================================
 template< typename Category >
-class MessageController : private boost::noncopyable
+class MessageController : public MessageController_ABC< Category >
 {
-public:
-    //! @name Types
-    //@{
-    typedef Category category_type;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -42,15 +36,15 @@ public:
 
     //! @name Operations
     //@{
-    void Register( MessageHandler_ABC< Category >& handler )
+    virtual void Register( MessageHandler_ABC< Category >& handler )
     {
         handlers_.push_back( &handler );
     }
-    void Unregister( MessageHandler_ABC< Category >& handler )
+    virtual void Unregister( MessageHandler_ABC< Category >& handler )
     {
         handlers_.erase( std::remove( handlers_.begin(), handlers_.end(), &handler ) );
     }
-    void Notify( const Category& message )
+    virtual void Dispatch( const Category& message )
     {
         for( T_Handlers::iterator it = handlers_.begin(); it != handlers_.end(); ++it )
             (*it)->Notify( message );

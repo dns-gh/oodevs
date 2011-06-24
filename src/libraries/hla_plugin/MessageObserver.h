@@ -11,9 +11,12 @@
 #define plugins_hla_MessageObserver_h
 
 #include "MessageObserver_ABC.h"
+#include "MessageController_ABC.h"
 #include "MessageHandler.h"
 #include <memory>
+#define BOOST_TYPEOF_SILENT
 #include <boost/typeof/typeof.hpp>
+#undef BOOST_TYPEOF_SILENT
 
 #define CONNECT( controller, message, name ) MessageObserver< message >::Connect< BOOST_TYPEOF( controller )::category_type, message >( controller, *this, &BOOST_TYPEOF( controller )::category_type::has_##name, &BOOST_TYPEOF( controller )::category_type::##name )
 
@@ -21,7 +24,7 @@ namespace plugins
 {
 namespace hla
 {
-    template< typename Category > class MessageController;
+    template< typename Category > class MessageController_ABC;
 
 // =============================================================================
 /** @class  MessageObserver
@@ -39,7 +42,7 @@ public:
     virtual ~MessageObserver() {}
 
     template< typename Category, typename Message >
-    void Connect( MessageController< Category >& controller, MessageObserver_ABC< Message >& observer,
+    void Connect( MessageController_ABC< Category >& controller, MessageObserver_ABC< Message >& observer,
                   typename MessageHandler< Category, Message >::T_Checker checker,
                   typename MessageHandler< Category, Message >::T_Retriever retriever )
     {
