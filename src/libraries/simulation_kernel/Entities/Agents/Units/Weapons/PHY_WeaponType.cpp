@@ -165,9 +165,9 @@ void PHY_WeaponType::ReadDirect( xml::xistream& xis )
     assert( pDotationCategory_ );
 
     if( !pLauncherType_->CanDirectFire() )
-        xis.error( "Associated launcher can not direct fire" );
+        xis.error( "Associated launcher cannot direct fire" );
     if( !pDotationCategory_->CanBeUsedForDirectFire() )
-        xis.error( "Associated ammunition can not direct fire" );
+        xis.error( "Associated ammunition cannot direct fire" );
 
     pDirectFireData_ = new PHY_WeaponDataType_DirectFire( *this, xis );
 }
@@ -192,9 +192,9 @@ void PHY_WeaponType::ReadIndirect( xml::xistream& xis, double timeFactor )
     assert( pDotationCategory_ );
 
     if( !pLauncherType_->CanIndirectFire() )
-        xis.error( "Associated launcher can not indirect fire" );
+        xis.error( "Associated launcher cannot indirect fire" );
     if( !pDotationCategory_->CanBeUsedForIndirectFire() )
-        xis.error( "Associated ammunition can not indirect fire" );
+        xis.error( "Associated ammunition cannot indirect fire" );
 
     pIndirectFireData_ = new PHY_WeaponDataType_IndirectFire( *this, xis, timeFactor );
 }
