@@ -10,6 +10,9 @@
 #include "dispatcher_pch.h"
 #include "Shield.h"
 #include "Config.h"
+#include "RotatingLog.h"
+#include "Log_ABC.h"
+#include "LogFactory_ABC.h"
 #include "shield/Server.h"
 #include "shield/Listener_ABC.h"
 #include "shield/DebugInfo_ABC.h"
@@ -20,11 +23,42 @@ using namespace dispatcher;
 
 namespace
 {
+    class Log : public Log_ABC
+    {
+    public:
+        explicit Log( const std::string& filename )
+            : s_( filename.c_str() )
+        {
+            if( ! s_ )
+                throw std::runtime_error( "Failed to open log file '" + filename + "' for writing" );
+        }
+        virtual ~Log()
+        {}
+        virtual void Write( const std::string& s )
+        {
+            s_ << "Shield message : " << s << std::endl;
+        }
+    private:
+        std::ofstream s_;
+    };
+
+    class LogFactory : public LogFactory_ABC
+    {
+    public:
+        virtual std::auto_ptr< Log_ABC > CreateLog( const std::string& filename )
+        {
+            return std::auto_ptr< Log_ABC >( new Log( filename ) );
+        }
+    };
+
     class Logger : public shield::Listener_ABC
     {
     public:
         Logger( const Config& config )
-            : debug_( config.GetShieldLog() )
+            : log_( factory_,
+                    config.BuildSessionChildFile( "Shield.log" ),
+                    config.GetShieldLogFiles(),
+                    config.GetShieldLogSize() )
         {}
         virtual void Info( const std::string& message )
         {
@@ -36,11 +70,11 @@ namespace
         }
         virtual void Debug( const shield::DebugInfo_ABC& info )
         {
-            if( debug_ )
-                MT_LOG_INFO_MSG( "Shield message : " << info );
+            log_.Write( info );
         }
     private:
-        bool debug_;
+        LogFactory factory_;
+        RotatingLog log_;
     };
 
     shield::Server* CreateServer( const Config& config, shield::Listener_ABC& logger )

@@ -30,7 +30,8 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )
     , timeStep_                ( 0 )
-    , shieldLog_               ( false )
+    , shieldLogFiles_          ( 0 )
+    , shieldLogSize_           ( 0 )
 {
     po::options_description desc( "Dispatcher/replayer options" );
     desc.add_options()
@@ -76,7 +77,8 @@ void Config::Parse( int argc, char** argv )
                         >> xml::end
                         >> xml::optional >>xml::start( "shield" )
                             >> xml::attribute( "server", networkShieldParameters_ )
-                            >> xml::attribute( "log", shieldLog_ );
+                            >> xml::attribute( "logfiles", shieldLogFiles_ )
+                            >> xml::attribute( "logsize", shieldLogSize_ );
     if( networkSimulationPort_ != 0 )
         networkSimulationParameters_ =
             networkSimulationParameters_.substr( 0, networkSimulationParameters_.find( ':' ) )
@@ -140,10 +142,19 @@ unsigned int Config::GetTickDuration() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Config::GetShieldLog
-// Created: MCO 2011-06-24
+// Name: Config::GetShieldLogFiles
+// Created: MCO 2011-06-26
 // -----------------------------------------------------------------------------
-bool Config::GetShieldLog() const
+unsigned int Config::GetShieldLogFiles() const
 {
-    return shieldLog_;
+    return shieldLogFiles_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetShieldLogSize
+// Created: MCO 2011-06-26
+// -----------------------------------------------------------------------------
+unsigned int Config::GetShieldLogSize() const
+{
+    return shieldLogSize_;
 }
