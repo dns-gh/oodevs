@@ -87,7 +87,7 @@ void SymbolFactory::ListSymbols()
         return;
     xml::xobufferstream out;
     out << xml::start( "unit-symbols" );
-    TraverseTree( out, *symbolRule_.get() );
+    TraverseTree( out, *symbolRule_ );
     out << xml::end;
 }
 

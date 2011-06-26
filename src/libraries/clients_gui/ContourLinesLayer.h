@@ -37,21 +37,23 @@ namespace
     virtual ~ContourGraphicSetup(){};
     //@}
 
-    virtual void SetupLineGraphics  ( const Data_ABC* pData )
+    virtual void SetupLineGraphics  ( const Data_ABC* )
     {
         glLineWidth( 1. );
         const float color[4] = { r_, g_, b_, alpha_ };
         glColor4fv( color );
-    };
-    virtual void SetupBorderGraphics( const Data_ABC* pData ) {};
-    virtual void SetupAreaGraphics  ( const Data_ABC* pData ) {};
+    }
+    virtual void SetupBorderGraphics( const Data_ABC* )
+    {}
+    virtual void SetupAreaGraphics  ( const Data_ABC* )
+    {}
 
     void SetColor( float r, float g, float b )
     {
         r_ = r;
         g_ = g;
         b_ = b;
-    }      
+    }
     //@}
 
     private:
