@@ -576,6 +576,8 @@ double MIL_BurningCells::ComputePathCost( const MT_Vector2D& from, const MT_Vect
 // -----------------------------------------------------------------------------
 bool MIL_BurningCells::IsTrafficable( const MT_Vector2D& from, const MT_Vector2D& to ) const
 {
+    if( burningCellsByCoordinates_.empty() )
+        return true;
     const MT_Line line( from, to );
     int cellSize = MIL_FireClass::GetCellSize();
     MIL_BurningCellOrigin minOrigin = ComputeCellOriginFromPoint( std::min( from.rX_, to.rX_ ), std::min( from.rY_, to.rY_ ) );
