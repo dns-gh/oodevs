@@ -24,6 +24,10 @@
      Connect< BOOST_TYPEOF( sender )::category_type, boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( sender )::category_type::##name ) >::type >::type >::type >\
      ( sender, (receiver), &BOOST_TYPEOF( sender )::category_type::has_##name, &BOOST_TYPEOF( sender )::category_type::##name );
 
+#define DISCONNECT( sender, receiver, name ) \
+    (receiver).MessageObserver< boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( sender )::category_type::##name ) >::type >::type >::type >::\
+     Disconnect< BOOST_TYPEOF( sender )::category_type, boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( sender )::category_type::##name ) >::type >::type >::type >()
+
 namespace tools
 {
     template< typename Category > class MessageController_ABC;
@@ -52,6 +56,11 @@ public:
                   typename MessageHandler< Category, Message >::T_Retriever retriever )
     {
         handler_.reset( new MessageHandler< Category, Message >( controller, observer, checker, retriever ) );
+    }
+    template< typename Category, typename Message >
+    void Disconnect()
+    {
+        handler_.reset();
     }
     //@}
 

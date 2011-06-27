@@ -49,7 +49,7 @@ namespace
     };
 }
 
-BOOST_AUTO_TEST_CASE( message_handling_with_controller_and_observer )
+BOOST_AUTO_TEST_CASE( observer_connects_to_controller_and_receives_messages )
 {
     MessageController< Category > dispatcher;
     MockMessageObserver observer;
@@ -60,4 +60,51 @@ BOOST_AUTO_TEST_CASE( message_handling_with_controller_and_observer )
     MOCK_EXPECT( observer, NotifySecond ).once().in( s );
     Category category;
     dispatcher.Dispatch( category );
+}
+
+BOOST_AUTO_TEST_CASE( observer_can_explicitly_disconnect_from_controller )
+{
+    MessageController< Category > dispatcher;
+    MockMessageObserver observer;
+    CONNECT( dispatcher, observer, first_message );
+    CONNECT( dispatcher, observer, second_message );
+    DISCONNECT( dispatcher, observer, first_message );
+    MOCK_EXPECT( observer, NotifySecond ).once();
+    Category category;
+    dispatcher.Dispatch( category );
+}
+
+namespace
+{
+    template< typename Category >
+    MOCK_BASE_CLASS( MockMessageController, MessageController_ABC< Category > )
+    {
+        MOCK_METHOD_EXT_TPL( Register, 1, void( MessageHandler_ABC< Category >& ), Register )
+        MOCK_METHOD_EXT_TPL( Unregister, 1, void( MessageHandler_ABC< Category >& ), Unregister )
+        MOCK_METHOD_EXT_TPL( Dispatch, 1, void( const Category& ), Dispatch )
+    };
+    class Observer : private MessageObserver< FirstMessage >
+    {
+    public:
+        explicit Observer( MessageController_ABC< Category >& controller )
+        {
+            CONNECT( controller, *this, first_message );
+        }
+    private:
+        virtual void Notify( const FirstMessage& /*message*/ )
+        {
+            // NOTHING
+        }
+    };
+}
+
+BOOST_AUTO_TEST_CASE( observer_automatically_disconnect_at_destruction )
+{
+    MockMessageController< Category > dispatcher;
+    mock::sequence s;
+    MOCK_EXPECT( dispatcher, Register ).once().in( s );
+    MOCK_EXPECT( dispatcher, Unregister ).once().in( s );
+    {
+        Observer observer( dispatcher );
+    }
 }
