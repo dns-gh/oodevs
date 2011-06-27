@@ -180,9 +180,9 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const sword::MissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies )
 {  //@TODO MGD Try to externalize ASN when protobuff will be merged
    //@HBD : Verify later that conversion from MIL_Army to MIL_Army_ABC was right
-    if( message.elem_size() != 5 ) // type, location, name, team, attributes
+    if( !( message.elem_size() == 4 || message.elem_size() == 5 ) ) // type, location, name, team, attributes
         return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
-    
+
     MIL_Army_ABC* pArmy = 0;
     if ( message.elem( 3 ).value().Get( 0 ).has_identifier() )
         pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).identifier() );        

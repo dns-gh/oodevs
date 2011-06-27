@@ -172,8 +172,11 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const sword::MissionParameters& 
     Object* pObject = new Object( *it->second, army, &location, message.elem( 2 ).value( 0 ).acharstr() );
 
     try
-    {
-        attributes_->Create( *pObject, message.elem( 4 ) );
+    {    
+        if ( message.elem_size() < 5 )
+            attributes_->Initialize( *pObject );
+        else
+            attributes_->Create( *pObject, message.elem( 4 ) );
     }
     catch( std::runtime_error& )
     {
