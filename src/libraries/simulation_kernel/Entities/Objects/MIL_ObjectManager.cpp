@@ -182,7 +182,12 @@ sword::ObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const swo
    //@HBD : Verify later that conversion from MIL_Army to MIL_Army_ABC was right
     if( message.elem_size() != 5 ) // type, location, name, team, attributes
         return sword::ObjectMagicActionAck::error_invalid_specific_attributes;
-    MIL_Army_ABC* pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).party().id() );
+    
+    MIL_Army_ABC* pArmy = 0;
+    if ( message.elem( 3 ).value().Get( 0 ).has_identifier() )
+        pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).identifier() );        
+    else if ( message.elem( 3 ).value().Get( 0 ).has_party() )
+        pArmy = armies.Find( message.elem( 3 ).value().Get( 0 ).party().id() );
     if( !pArmy )
         return sword::ObjectMagicActionAck::error_invalid_party;
     sword::ObjectMagicActionAck_ErrorCode value = sword::ObjectMagicActionAck::no_error;
