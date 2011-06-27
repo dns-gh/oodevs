@@ -43,6 +43,7 @@ void RotatingLog::DoWrite( const std::string& line )
         ++file_;
         if( file_ > files_ )
             file_ = 1;
+        pLog_.reset();
         pLog_ = factory_.CreateLog( filename_ +
             ( file_ == 1 ? "" : ( "." + boost::lexical_cast< std::string >( file_ ) ) ) );
     }
