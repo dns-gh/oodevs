@@ -139,7 +139,6 @@ QColor ColorStrategy::FindBaseColor( const kernel::Entity_ABC& entity )
     return Qt::black;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::FindColor
 // Created: AGE 2006-10-04
@@ -221,7 +220,7 @@ void ColorStrategy::SelectColor( const Inhabitant_ABC& inhabitant )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 {
-    ApplyColor( KnowledgeColor( ApplyModifiers( knowledge, FindBaseColor( knowledge ) ) ) );
+    ApplyColor( KnowledgeColor( ApplyModifiers( knowledge, FindColor( knowledge ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
