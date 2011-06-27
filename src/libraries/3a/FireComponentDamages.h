@@ -60,9 +60,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-                 FireComponentDamages();
-    /*implicit*/ FireComponentDamages( xml::xistream& xis );
-    virtual     ~FireComponentDamages();
+             FireComponentDamages();
+    explicit FireComponentDamages( xml::xistream& xis );
+    virtual ~FireComponentDamages();
     //@}
 
     //! @name Operations
@@ -71,7 +71,7 @@ public:
     {
         return wrapper.message().has_unit_damaged_by_unit_fire();
     }
-    int Extract( const sword::SimToClient& wrapper ) const;
+    NumericValue Extract( const sword::SimToClient& wrapper ) const;
     //@}
 
 private:

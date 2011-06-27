@@ -87,6 +87,34 @@ struct InstantValue : public ContinuousValue< T >
     };
 };
 
+
+// =============================================================================
+/** @class  InstantValueIdentifier
+*/
+// Created: FPO 2011-06-27
+// =============================================================================
+template< typename T >
+struct InstantValueIdentifier : public Value< T >
+{
+    explicit InstantValueIdentifier()
+        : value_() {}
+    void Prepare()
+    {
+        // NOTHING
+    };
+
+    void Set( const Type& value )
+    {
+        value_ = value;
+    }
+
+    void Push( ValueHandler_ABC< Type >& handler )
+    {
+        handler.Handle( value_ );
+    }
+    Type value_;
+};
+
 // =============================================================================
 /** @class  PulsedValue
     @brief  "pulsed" value

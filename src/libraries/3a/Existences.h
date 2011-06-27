@@ -38,11 +38,11 @@ namespace existences
         Extractor extractor_;
     };
 
-typedef Existence< extractors::MaintenanceHandlingUnitId >   MaintenanceHandlingUnitId;
-typedef Existence< extractors::DirectFireTargetsId >         DirectFireTargetsId;
+typedef Existence< extractors::MaintenanceHandlingUnitId >    MaintenanceHandlingUnitId;
+typedef Existence< extractors::DirectFireTargetsId >          DirectFireTargetsId;
 typedef Existence< extractors::IndirectFireTargetsPositions > IndirectFireTargetsPositions;
-typedef Existence< extractors::DirectFireUnitsId >           DirectFireUnitsId;
-typedef Existence< extractors::IndirectFireUnitsId >         IndirectFireUnitsId;
+typedef Existence< extractors::DirectFireUnitsId >            DirectFireUnitsId;
+typedef Existence< extractors::IndirectFireUnitsId >          IndirectFireUnitsId;
 }
 
 #endif // __Existences_h_

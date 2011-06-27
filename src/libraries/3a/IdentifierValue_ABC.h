@@ -19,7 +19,7 @@
 */
 // Created: FPO 2011 05 03
 // =============================================================================
-struct IdentifierValue_ABC : public InstantValue< NumericValue >
+struct IdentifierValue_ABC : public InstantValueIdentifier< NumericValue >
 {
     enum { has_parameter = false };
 

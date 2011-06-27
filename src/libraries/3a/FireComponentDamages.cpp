@@ -12,24 +12,6 @@
 using namespace sword;
 using namespace extractors;
 
-// -----------------------------------------------------------------------------
-// Name: FireComponentDamages constructor
-// Created: AGE 2007-10-24
-// -----------------------------------------------------------------------------
-FireComponentDamages::FireComponentDamages()
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: FireComponentDamages destructor
-// Created: FPO 2011-04-29
-// -----------------------------------------------------------------------------
-FireComponentDamages::~FireComponentDamages()
-{
-    // NOTHING
-}
-
 namespace
 {
     const unsigned nEquipmentStates = 3;
@@ -86,6 +68,15 @@ namespace
 // Name: FireComponentDamages constructor
 // Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
+FireComponentDamages::FireComponentDamages()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireComponentDamages constructor
+// Created: AGE 2007-10-24
+// -----------------------------------------------------------------------------
 FireComponentDamages::FireComponentDamages( xml::xistream& xis )
     : componentFilter_( xis, "components" )
     , stateMask_( ReadMask( xis ) )
@@ -98,10 +89,19 @@ FireComponentDamages::FireComponentDamages( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: FireComponentDamages destructor
+// Created: FPO 2011-04-29
+// -----------------------------------------------------------------------------
+FireComponentDamages::~FireComponentDamages()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: FireComponentDamages::Extract
 // Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
-int FireComponentDamages::Extract( const sword::SimToClient& wrapper ) const
+NumericValue FireComponentDamages::Extract( const sword::SimToClient& wrapper ) const
 {
     const UnitDamagedByUnitFire& damages = wrapper.message().unit_damaged_by_unit_fire();
     if( fratricideMask_ && !damages.fratricide() )

@@ -33,9 +33,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-                 CrowdHumanDamages();
-    /*implicit*/ CrowdHumanDamages( xml::xistream& xis );
-    virtual     ~CrowdHumanDamages();
+             CrowdHumanDamages();
+    explicit CrowdHumanDamages( xml::xistream& xis );
+    virtual ~CrowdHumanDamages();
     //@}
 
     //! @name Operations

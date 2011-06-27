@@ -24,33 +24,18 @@
 namespace events
 {
     template< typename Extractor >
-    struct Event : public InstantValue< typename Extractor::Type >
-    {
-        enum { has_parameter = Extractor::has_parameter };
-
-        explicit Event( const Extractor& extractor = Extractor() )
-            : extractor_( extractor ) {}
-        void Receive( const sword::SimToClient& message )
-        {
-            if( extractor_.HasValue( message ) )
-                Set( extractor_.Extract( message ) );
-        }
-        Extractor extractor_;
-    };
-
-    template< typename Extractor >
     struct TickPeriod : public TickValue< typename Extractor::Type >
     {
         enum { has_parameter = Extractor::has_parameter };
 
-        explicit TickPeriod( const Extractor& extractor = Extractor() )
-            : extractor_( extractor ) {}
+        explicit TickPeriod()
+            : extractor_() {}
+        explicit TickPeriod( xml::xistream& xis )
+            : extractor_( xis ) {}
         void Receive( const sword::SimToClient& message )
         {
             if( extractor_.HasValue( message ) )
                 Set( extractor_.Extract( message ) );
-            else
-                Set( 0 );
         }
         Extractor extractor_;
     };

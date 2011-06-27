@@ -59,9 +59,9 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-                 FireHumanDamages();
-    /*implicit*/ FireHumanDamages( xml::xistream& xis );
-    virtual     ~FireHumanDamages();
+             FireHumanDamages();
+    explicit FireHumanDamages( xml::xistream& xis );
+    virtual ~FireHumanDamages();
     //@}
 
     //! @name Operations
