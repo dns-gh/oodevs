@@ -25,6 +25,7 @@ namespace dispatcher
     class MessageHandler_ABC;
     class Simulation;
     class Config;
+    class RotatingLog;
 
 // =============================================================================
 /** @class  SimulationNetworker
@@ -38,7 +39,9 @@ class SimulationNetworker : public tools::ClientNetworker
 public:
     //! @name Constructors/Destructor
     //@{
-             SimulationNetworker( Model& model, ClientsNetworker& clients, MessageHandler_ABC& handler, const Config& config );
+             SimulationNetworker( Model& model, ClientsNetworker& clients,
+                                  MessageHandler_ABC& handler, const Config& config,
+                                  RotatingLog& log );
     virtual ~SimulationNetworker();
     //@}
 

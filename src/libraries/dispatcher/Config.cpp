@@ -30,6 +30,8 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )
     , timeStep_                ( 0 )
+    , logFiles_                ( 0 )
+    , logSize_                 ( 0 )
     , shieldLogFiles_          ( 0 )
     , shieldLogSize_           ( 0 )
 {
@@ -70,6 +72,10 @@ void Config::Parse( int argc, char** argv )
                         >> xml::attribute( "client", networkSimulationParameters_ )
                         >> xml::attribute( "server", port )
                     >> xml::end
+                    >> xml::optional >> xml::start( "debug" )
+                        >> xml::optional >> xml::attribute( "logfiles", logFiles_ )
+                        >> xml::optional >> xml::attribute( "logsize", logSize_ )
+                    >> xml::end
                     >> xml::start( "plugins" )
                         >> xml::optional >>xml::start( "recorder" )
                             >> xml::optional >> xml::attribute( "fragmentfreq", replayFragmentsFrequency_ )
@@ -77,8 +83,8 @@ void Config::Parse( int argc, char** argv )
                         >> xml::end
                         >> xml::optional >>xml::start( "shield" )
                             >> xml::attribute( "server", networkShieldParameters_ )
-                            >> xml::attribute( "logfiles", shieldLogFiles_ )
-                            >> xml::attribute( "logsize", shieldLogSize_ );
+                            >> xml::optional >> xml::attribute( "logfiles", shieldLogFiles_ )
+                            >> xml::optional >> xml::attribute( "logsize", shieldLogSize_ );
     if( networkSimulationPort_ != 0 )
         networkSimulationParameters_ =
             networkSimulationParameters_.substr( 0, networkSimulationParameters_.find( ':' ) )
@@ -139,6 +145,24 @@ unsigned int Config::GetReplayFragmentsFrequency() const
 unsigned int Config::GetTickDuration() const
 {
     return timeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetLogFiles
+// Created: MCO 2011-06-27
+// -----------------------------------------------------------------------------
+unsigned int Config::GetLogFiles() const
+{
+    return logFiles_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Config::GetLogSize
+// Created: MCO 2011-06-27
+// -----------------------------------------------------------------------------
+unsigned int Config::GetLogSize() const
+{
+    return logSize_;
 }
 
 // -----------------------------------------------------------------------------

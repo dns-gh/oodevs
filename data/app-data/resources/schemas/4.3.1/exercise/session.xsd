@@ -93,6 +93,23 @@
             </xs:attribute>
           </xs:complexType>
         </xs:element>
+        <xs:element name="debug" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Enables message debugging.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="logfiles" type="xs:nonNegativeInteger" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Set the number of rotating log files.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="logsize" type="xs:nonNegativeInteger" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Set the maximum number of messages to log in each log file.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="plugins">
           <xs:annotation>
             <xs:documentation xml:lang="en">Additional dispatcher plugins configuration.</xs:documentation>

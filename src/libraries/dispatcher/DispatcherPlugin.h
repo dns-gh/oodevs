@@ -23,6 +23,7 @@ namespace dispatcher
     class Model;
     class SimulationPublisher_ABC;
     class LinkResolver_ABC;
+    class RotatingLog;
 
 // =============================================================================
 /** @class  DispatcherPlugin
@@ -35,7 +36,9 @@ class DispatcherPlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation, tools::MessageDispatcher_ABC& clientCommands, LinkResolver_ABC& links );
+             DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation,
+                               tools::MessageDispatcher_ABC& clientCommands,
+                               LinkResolver_ABC& links, RotatingLog& log );
     virtual ~DispatcherPlugin();
     //@}
 

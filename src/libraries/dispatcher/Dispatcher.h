@@ -12,6 +12,7 @@
 
 #include "CompositePlugin.h"
 #include "CompositeRegistrable.h"
+#include "RotatingLog.h"
 #include "clients_kernel/Application_ABC.h"
 #include <boost/shared_ptr.hpp>
 
@@ -71,6 +72,7 @@ private:
     std::auto_ptr< CompositeRegistrable > registrables_;
     std::auto_ptr< CompositePlugin >      handler_;
     std::auto_ptr< Services >             services_;
+    RotatingLog                           log_;
     boost::shared_ptr< ClientsNetworker > clientsNetworker_;
     std::auto_ptr< SimulationNetworker >  simulationNetworker_;
     std::auto_ptr< Shield >               shield_;

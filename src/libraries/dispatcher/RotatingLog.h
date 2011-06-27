@@ -11,6 +11,7 @@
 #define __dispatcher_RotatingLog_h_
 
 #include <boost/noncopyable.hpp>
+#include <boost/lexical_cast.hpp>
 #include <memory>
 
 namespace dispatcher

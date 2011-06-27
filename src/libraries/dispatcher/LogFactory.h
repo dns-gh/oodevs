@@ -7,35 +7,33 @@
 //
 // *****************************************************************************
 
-#ifndef __dispatcher_Log_ABC_h_
-#define __dispatcher_Log_ABC_h_
+#ifndef dispatcher_LogFactory_h
+#define dispatcher_LogFactory_h
 
-#include <boost/noncopyable.hpp>
-#include <string>
+#include "LogFactory_ABC.h"
+#include "Log.h"
 
 namespace dispatcher
 {
 // =============================================================================
-/** @class  Log_ABC
-    @brief  Log declaration
+/** @class  LogFactory
+    @brief  Log definition
 */
-// Created: MCO 2011-06-26
+// Created: MCO 2011-06-27
 // =============================================================================
-class Log_ABC : private boost::noncopyable
+class LogFactory : public LogFactory_ABC
 {
 public:
-    //! @name Constructors/Destructor
-    //@{
-             Log_ABC() {}
-    virtual ~Log_ABC() {}
-    //@}
-
     //! @name Operations
     //@{
-    virtual void Write( const std::string& ) = 0;
+public:
+    virtual std::auto_ptr< Log_ABC > CreateLog( const std::string& filename )
+    {
+        return std::auto_ptr< Log_ABC >( new Log( filename ) );
+    }
     //@}
 };
 
 }
 
-#endif // __dispatcher_Log_ABC_h_
+#endif // dispatcher_LogFactory_h

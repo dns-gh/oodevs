@@ -7,35 +7,50 @@
 //
 // *****************************************************************************
 
-#ifndef __dispatcher_Log_ABC_h_
-#define __dispatcher_Log_ABC_h_
+#ifndef dispatcher_Log_h
+#define dispatcher_Log_h
 
-#include <boost/noncopyable.hpp>
-#include <string>
+#include "Log_ABC.h"
 
 namespace dispatcher
 {
 // =============================================================================
-/** @class  Log_ABC
-    @brief  Log declaration
+/** @class  Log
+    @brief  Log definition
 */
-// Created: MCO 2011-06-26
+// Created: MCO 2011-06-27
 // =============================================================================
-class Log_ABC : private boost::noncopyable
+class Log : public Log_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Log_ABC() {}
-    virtual ~Log_ABC() {}
+    explicit Log( const std::string& filename )
+        : s_( filename.c_str() )
+    {
+        if( ! s_ )
+            throw std::runtime_error( "Failed to open log file '" + filename + "' for writing" );
+    }
+
+    virtual ~Log()
+    {}
     //@}
 
     //! @name Operations
     //@{
-    virtual void Write( const std::string& ) = 0;
+    virtual void Write( const std::string& s )
+    {
+        s_ << s << std::endl;
+    }
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    std::ofstream s_;
     //@}
 };
 
 }
 
-#endif // __dispatcher_Log_ABC_h_
+#endif // dispatcher_Log_h

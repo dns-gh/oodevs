@@ -14,6 +14,7 @@
 #include "Profile_ABC.h"
 #include "Model.h"
 #include "Services.h"
+#include "Logger.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
@@ -24,12 +25,13 @@ using namespace dispatcher;
 // Name: DispatcherPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-DispatcherPlugin::DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation, tools::MessageDispatcher_ABC& clientCommands, LinkResolver_ABC& links )
+DispatcherPlugin::DispatcherPlugin( Model& model, SimulationPublisher_ABC& simulation, tools::MessageDispatcher_ABC& clientCommands,
+                                    LinkResolver_ABC& links, RotatingLog& log )
     : model_     ( model )
     , simulation_( simulation )
     , links_     ( links )
 {
-    clientCommands.RegisterMessage( *this, &DispatcherPlugin::OnReceive );
+    clientCommands.RegisterMessage( MakeLogger( log, "Dispatcher received : ", *this, &DispatcherPlugin::OnReceive ) );
 }
 
 // -----------------------------------------------------------------------------

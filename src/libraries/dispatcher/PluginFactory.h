@@ -42,6 +42,7 @@ namespace dispatcher
     class Logger_ABC;
     class PluginFactory_ABC;
     class Services;
+    class RotatingLog;
 
 // =============================================================================
 /** @class  PluginFactory
@@ -54,8 +55,10 @@ class PluginFactory : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             PluginFactory( const Config& config, Model& model, const kernel::StaticModel& staticModel, SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
-                            CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services, int maxConnections );
+             PluginFactory( const Config& config, Model& model, const kernel::StaticModel& staticModel,
+                            SimulationPublisher_ABC& simulation, ClientsNetworker& clients,
+                            CompositePlugin& handler, CompositeRegistrable& registrables,
+                            const Services& services, RotatingLog& log, int maxConnections );
     virtual ~PluginFactory();
     //@}
 

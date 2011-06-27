@@ -11,8 +11,7 @@
 #include "Shield.h"
 #include "Config.h"
 #include "RotatingLog.h"
-#include "Log_ABC.h"
-#include "LogFactory_ABC.h"
+#include "LogFactory.h"
 #include "shield/Server.h"
 #include "shield/Listener_ABC.h"
 #include "shield/DebugInfo_ABC.h"
@@ -23,34 +22,6 @@ using namespace dispatcher;
 
 namespace
 {
-    class Log : public Log_ABC
-    {
-    public:
-        explicit Log( const std::string& filename )
-            : s_( filename.c_str() )
-        {
-            if( ! s_ )
-                throw std::runtime_error( "Failed to open log file '" + filename + "' for writing" );
-        }
-        virtual ~Log()
-        {}
-        virtual void Write( const std::string& s )
-        {
-            s_ << "Shield message : " << s << std::endl;
-        }
-    private:
-        std::ofstream s_;
-    };
-
-    class LogFactory : public LogFactory_ABC
-    {
-    public:
-        virtual std::auto_ptr< Log_ABC > CreateLog( const std::string& filename )
-        {
-            return std::auto_ptr< Log_ABC >( new Log( filename ) );
-        }
-    };
-
     class Logger : public shield::Listener_ABC
     {
     public:

@@ -35,7 +35,9 @@ using namespace plugins;
 // Name: PluginFactory constructor
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-PluginFactory::PluginFactory( const Config& config, Model& model, const kernel::StaticModel& staticModel, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services, int maxConnections )
+PluginFactory::PluginFactory( const Config& config, Model& model, const kernel::StaticModel& staticModel,
+                              SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler,
+                              CompositeRegistrable& registrables, const Services& services, RotatingLog& log, int maxConnections )
     : config_      ( config )
     , model_       ( model )
     , staticModel_ ( staticModel )
@@ -47,7 +49,7 @@ PluginFactory::PluginFactory( const Config& config, Model& model, const kernel::
     , services_    ( services )
 {
     handler_.Add( rights_ );
-    handler_.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights_ ) );
+    handler_.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights_, log ) );
 }
 
 // -----------------------------------------------------------------------------

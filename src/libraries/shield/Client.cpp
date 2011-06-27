@@ -62,8 +62,8 @@ namespace
 
         void operator()( const std::string& link, const T& message ) const
         {
-            callback_( link, message );
             pListener_->Debug( DebugInfo< T >( "Shield received : ", message ) );
+            callback_( link, message );
         }
 
     private:
@@ -72,7 +72,9 @@ namespace
     };
 
     template< typename C, typename T >
-    boost::function< void( const std::string&, const T& ) > MakeLogger( ClientListener_ABC& listener, C& instance, void (C::*callback)( const std::string&, const T& ) )
+    boost::function< void( const std::string&, const T& ) > MakeLogger(
+        ClientListener_ABC& listener,
+        C& instance, void (C::*callback)( const std::string&, const T& ) )
     {
         return Logger< T >( listener, boost::bind( callback, &instance, _1, _2 ) );
     }
@@ -154,11 +156,11 @@ void Client::ConnectionError( const std::string& host, const std::string& error 
 template< typename T >
 void Client::DoSend( const T& message )
 {
+    listener_.Debug( DebugInfo< T >( "Shield sent : ", message ) );
     if( host_.empty() )
         callbacks_.push_back( boost::bind( &tools::MessageSender_ABC::Send< T >, this, boost::cref( host_ ), message ) );
     else
         tools::MessageSender_ABC::Send( host_, message );
-    listener_.Debug( DebugInfo< T >( "Shield sent : ", message ) );
 }
 
 // -----------------------------------------------------------------------------

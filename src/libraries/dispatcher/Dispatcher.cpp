@@ -18,12 +18,21 @@
 #include "Services.h"
 #include "StaticModel.h"
 #include "Shield.h"
+#include "LogFactory.h"
 #include "clients_kernel/Tools.h"
+#include "MT_Tools/MT_Logger.h"
 #include <google/protobuf/message.h>
 #include <qsettings.h>
 #include <qtextcodec.h>
 
+#pragma warning( disable: 4355 )
+
 using namespace dispatcher;
+
+namespace
+{
+    LogFactory factory;
+}
 
 // -----------------------------------------------------------------------------
 // Name: Dispatcher constructor
@@ -35,10 +44,11 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , registrables_       ( new CompositeRegistrable() )
     , handler_            ( new CompositePlugin() )
     , services_           ( new Services() )
+    , log_                ( factory, config.BuildSessionChildFile( "Protobuf.log" ), config.GetLogFiles(), config.GetLogSize() )
     , clientsNetworker_   ( new ClientsNetworker( config, *handler_, *services_ ) )
-    , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config ) )
+    , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config, log_ ) )
     , shield_             ( new Shield( config ) )
-    , factory_            ( new PluginFactory( config, *model_, *staticModel_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_, *services_, maxConnections ) )
+    , factory_            ( new PluginFactory( config, *model_, *staticModel_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_, *services_, log_, maxConnections ) )
     , memoryLogger_       ( new MemoryLogger() )
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;

@@ -13,6 +13,7 @@
 #include "Simulation.h"
 #include "Model.h"
 #include "Config.h"
+#include "Logger.h"
 #include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
 
@@ -23,13 +24,15 @@ using namespace dispatcher;
 // Name: SimulationNetworker constructor
 // Created: NLD 2006-09-20
 // -----------------------------------------------------------------------------
-SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& clients, MessageHandler_ABC& handler, const Config& config )
+SimulationNetworker::SimulationNetworker( Model& model, ClientsNetworker& clients,
+                                          MessageHandler_ABC& handler, const Config& config,
+                                          RotatingLog& log )
     : ClientNetworker( config.GetNetworkSimulationParameters(), true )
     , model_  ( model )
     , clients_( clients )
     , handler_( handler )
 {
-    RegisterMessage( *this, &SimulationNetworker::OnReceiveSimToClient );
+    RegisterMessage( MakeLogger( log, "Dispatcher sent : ", *this, &SimulationNetworker::OnReceiveSimToClient ) );
 }
 
 // -----------------------------------------------------------------------------
