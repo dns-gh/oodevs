@@ -10,6 +10,7 @@
 #ifndef hla_plugin_test_Tools_h
 #define hla_plugin_test_Tools_h
 
+#include "DeserializationTools.h"
 #include <vector>
 #include <hla/Serializer.h>
 #include <hla/Deserializer.h>
@@ -33,25 +34,6 @@ namespace
             ::hla::Deserializer deserializer( &(*buffer)[0], buffer->size() );
             buffers_.push_back( buffer );
             return deserializer;
-        }
-        template< typename T >
-        T Read( ::hla::Deserializer& deserializer )
-        {
-            T result;
-            deserializer >> result;
-            return result;
-        }
-        template< unsigned N >
-        void Read( ::hla::Deserializer& deserializer )
-        {
-            for( unsigned int i = 0; i < N; ++i )
-                Read< int8 >( deserializer );
-        }
-        template< unsigned N >
-        void ReadPadding( ::hla::Deserializer& deserializer )
-        {
-            for( unsigned int i = 0; i < N; ++i )
-                BOOST_CHECK_EQUAL( 0, Read< int8 >( deserializer ) );
         }
     private:
         std::vector< boost::shared_ptr< T_Buffer > > buffers_;
