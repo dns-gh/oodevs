@@ -16,6 +16,7 @@ namespace sword
 {
     class SimToClient_Content;
     class StartUnitFire;
+    class StartFireEffect;
 }
 
 namespace hla
@@ -42,6 +43,7 @@ namespace hla
 // Created: SLI 2011-06-24
 // =============================================================================
 class MunitionDetonation : private tools::MessageObserver< sword::StartUnitFire >
+                         , private tools::MessageObserver< sword::StartFireEffect >
 {
 public:
     //! @name Constructors/Destructor
@@ -54,6 +56,7 @@ private:
     //! @name Messages
     //@{
     virtual void Notify( const sword::StartUnitFire& message );
+    virtual void Notify( const sword::StartFireEffect& message );
     //@}
 
 private:

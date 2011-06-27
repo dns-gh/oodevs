@@ -76,6 +76,7 @@ MunitionDetonation::MunitionDetonation( Federate_ABC& federate, tools::MessageCo
     , pInteraction_ ( new ::hla::Interaction< Parameters >( *pNotification_ ) )
 {
     CONNECT( controller, *this, start_unit_fire );
+    CONNECT( controller, *this, start_fire_effect );
     pInteraction_->Register( "ArticulatedPartData"       , ::hla::CreateParameter( &Parameters::articulatedPartData ) );
     pInteraction_->Register( "DetonationLocation"        , ::hla::CreateParameter( &Parameters::detonationLocation ) );
     pInteraction_->Register( "DetonationResultCode"      , ::hla::CreateParameter( &Parameters::detonationResultCode ) );
@@ -108,7 +109,21 @@ MunitionDetonation::~MunitionDetonation()
 // -----------------------------------------------------------------------------
 void MunitionDetonation::Notify( const sword::StartUnitFire& /*message*/ )
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MunitionDetonation::Notify
+// Created: SLI 2011-06-27
+// -----------------------------------------------------------------------------
+void MunitionDetonation::Notify( const sword::StartFireEffect& message )
+{
     Parameters parameters;
     parameters.articulatedPartData = 0u;
+    if( message.location().type() != sword::Location_Geometry_none && message.location().coordinates().elem_size() > 0 )
+    {
+        const sword::CoordLatLong& center = message.location().coordinates().elem( 0 );
+        parameters.detonationLocation = rpr::WorldLocation( center.latitude(), center.longitude(), 0. );
+    }
     pInteraction_->Send( parameters );
 }
