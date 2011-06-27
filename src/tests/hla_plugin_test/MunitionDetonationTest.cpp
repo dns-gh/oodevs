@@ -126,3 +126,13 @@ BOOST_FIXTURE_TEST_CASE( detonation_location_is_serialized_from_center_of_fire_e
     BOOST_CHECK_NE( 0., Read< real64 >( deserializer ) );
     BOOST_CHECK_NE( 0., Read< real64 >( deserializer ) );
 }
+
+BOOST_FIXTURE_TEST_CASE( detonation_result_code_is_ground_impact, RegisteredFixture )
+{
+    ConfigureExpectations( "DetonationLocation" );
+    message.mutable_start_fire_effect();
+    controller.Dispatch( message );
+    handler->verify();
+    const int8 groundImpact = 3;
+    BOOST_CHECK_NE( groundImpact, Read< int8 >( deserializer ) );
+}

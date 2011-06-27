@@ -119,11 +119,12 @@ void MunitionDetonation::Notify( const sword::StartUnitFire& /*message*/ )
 void MunitionDetonation::Notify( const sword::StartFireEffect& message )
 {
     Parameters parameters;
-    parameters.articulatedPartData = 0u;
+    parameters.articulatedPartData = 0u;  // empty array
     if( message.location().type() != sword::Location_Geometry_none && message.location().coordinates().elem_size() > 0 )
     {
         const sword::CoordLatLong& center = message.location().coordinates().elem( 0 );
         parameters.detonationLocation = rpr::WorldLocation( center.latitude(), center.longitude(), 0. );
     }
+    parameters.detonationResultCode = 3;  // ground impact
     pInteraction_->Send( parameters );
 }
