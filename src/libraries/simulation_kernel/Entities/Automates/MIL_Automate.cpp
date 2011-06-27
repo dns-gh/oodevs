@@ -998,7 +998,8 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
             if ( msg.parameters().elem_size() >= 4 )
             {
                 bool isPc =  msg.parameters().elem( 3 ).value().Get( 0 ).booleanvalue();
-                pion.SetPionAsPostCommand();
+                if ( isPc )
+                    pion.SetPionAsPostCommand();
             }
         }
         else
@@ -1082,14 +1083,33 @@ void MIL_Automate::OnReceiveChangeKnowledgeGroup( const sword::UnitMagicAction& 
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     if( !msg.has_parameters() || msg.parameters().elem_size() != 2 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-    if( msg.parameters().elem( 0 ).value_size() != 1 || !msg.parameters().elem( 0 ).value().Get(0).has_knowledgegroup() )
+    if( msg.parameters().elem( 0 ).value_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-    if( msg.parameters().elem( 1 ).value_size() != 1 || !msg.parameters().elem( 1 ).value().Get(0).has_party() )
+    if( msg.parameters().elem( 1 ).value_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-    MIL_Army_ABC* pNewArmy = armies.Find( msg.parameters().elem( 1 ).value().Get(0).party().id() );
+    
+    // Inversion possible des paramètres à gérer
+    bool knowledgeGroupParamFirst   = msg.parameters().elem( 0 ).value().Get( 0 ).has_knowledgegroup() && msg.parameters().elem( 1 ).value().Get( 0 ).has_party();
+    bool partyParamFirst            = msg.parameters().elem( 0 ).value().Get( 0 ).has_party() && msg.parameters().elem( 1 ).value().Get( 0 ).has_knowledgegroup();
+    if( ! ( knowledgeGroupParamFirst || partyParamFirst ) )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
+    unsigned int knowledgeGroupId = 0, partyId = 0;
+    if ( partyParamFirst )
+    {
+        partyId = msg.parameters().elem( 0 ).value().Get( 0 ).party().id();
+        knowledgeGroupId = msg.parameters().elem( 1 ).value().Get( 0 ).knowledgegroup().id();
+    }
+    else
+    {
+        knowledgeGroupId = msg.parameters().elem( 0 ).value().Get( 0 ).knowledgegroup().id();
+        partyId = msg.parameters().elem( 1 ).value().Get(0).party().id();
+    }
+
+    MIL_Army_ABC* pNewArmy = armies.Find( partyId );
     if( !pNewArmy || *pNewArmy != GetArmy() )
         throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_invalid_party );
-    MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( msg.parameters().elem( 0 ).value().Get(0).knowledgegroup().id() );
+    MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( knowledgeGroupId );
     if( !pNewKnowledgeGroup )
         throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_invalid_knowledge_group );
     if( *pKnowledgeGroup_ != *pNewKnowledgeGroup )
