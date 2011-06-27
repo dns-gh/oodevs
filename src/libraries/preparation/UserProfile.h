@@ -65,6 +65,10 @@ public:
     //@{
     void Serialize( xml::xostream& xos ) const;
     UserProfile& operator=( const UserProfile& );
+    void NotifyTeamDeleted( unsigned long teamId );
+    void NotifyFormationDeleted( unsigned long formationId );
+    void NotifyAutomatDeleted( unsigned long automatId );
+    void NotifyPopulationDeleted( unsigned long populationId );
     //@}
 
 private:

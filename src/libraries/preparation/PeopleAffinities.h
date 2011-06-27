@@ -78,7 +78,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Model& model_;
     kernel::PropertiesDictionary& dictionary_;
     T_Teams teams_;
     //@}

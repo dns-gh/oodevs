@@ -20,6 +20,8 @@ namespace xml
     class xistream;
 }
 
+class Model;
+
 // =============================================================================
 /** @class  Affinities
     @brief  Affinities declaration
@@ -32,8 +34,8 @@ class Affinities : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Affinities();
-    explicit Affinities( xml::xistream& xis );
+             Affinities( Model& model );
+    explicit Affinities( xml::xistream& xis, Model& model );
     virtual ~Affinities();
     //@}
 
@@ -63,6 +65,7 @@ protected:
     //! @name Member data
     //@{
     T_Affinities affinities_;
+    Model& model_;
     //@}
 };
 

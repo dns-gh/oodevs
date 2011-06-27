@@ -9,6 +9,8 @@
 
 #include "preparation_pch.h"
 #include "Affinities.h"
+#include "Model.h"
+#include "TeamsModel.h"
 #include "clients_kernel/Controllers.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -16,7 +18,8 @@
 // Name: Affinities constructor
 // Created: LGY 2011-03-17
 // -----------------------------------------------------------------------------
-Affinities::Affinities()
+Affinities::Affinities( Model& model )
+    : model_ ( model )
 {
     // NOTHING
 }
@@ -25,7 +28,8 @@ Affinities::Affinities()
 // Name: Affinities constructor
 // Created: LGY 2011-03-17
 // -----------------------------------------------------------------------------
-Affinities::Affinities( xml::xistream& xis )
+Affinities::Affinities( xml::xistream& xis, Model& model )
+    : model_ ( model )
 {
     xis >> xml::optional
             >> xml::start( "adhesions" )
@@ -90,10 +94,13 @@ void Affinities::SerializeAttributes( xml::xostream& xos ) const
         xos << xml::start( "adhesions" );
         for( CIT_Affinities it = affinities_.begin(); it != affinities_.end(); ++it )
         {
-            xos << xml::start( "adhesion" )
-                << xml::attribute( "party", it->first )
-                << xml::attribute( "value", it->second )
-                << xml::end;
+            if ( model_.teams_.FindTeam( it->first ) )
+            {
+                xos << xml::start( "adhesion" )
+                    << xml::attribute( "party", it->first )
+                    << xml::attribute( "value", it->second )
+                    << xml::end;
+            }
         }
         xos << xml::end;
     }

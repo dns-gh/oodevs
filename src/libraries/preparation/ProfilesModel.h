@@ -10,6 +10,8 @@
 #ifndef __ProfilesModel_h_
 #define __ProfilesModel_h_
 
+#include "tools/ElementObserver_ABC.h"
+
 namespace xml
 {
     class xistream;
@@ -17,7 +19,12 @@ namespace xml
 
 namespace kernel
 {
+    class Automat_ABC;
+    class Controllers;
     class Entity_ABC;
+    class Formation_ABC;
+    class Population_ABC;
+    class Team_ABC;
 }
 
 namespace tools
@@ -37,12 +44,16 @@ class ModelChecker_ABC;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class ProfilesModel
+class ProfilesModel : public tools::Observer_ABC
+                    , public tools::ElementObserver_ABC< kernel::Team_ABC >
+                    , public tools::ElementObserver_ABC< kernel::Formation_ABC >
+                    , public tools::ElementObserver_ABC< kernel::Automat_ABC >
+                    , public tools::ElementObserver_ABC< kernel::Population_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ProfilesModel( const ProfileFactory_ABC& factory );
+    explicit ProfilesModel( kernel::Controllers& controllers, const ProfileFactory_ABC& factory );
     virtual ~ProfilesModel();
     //@}
 
@@ -59,6 +70,11 @@ public:
 
     bool Exists( const QString& login ) const;
     const UserProfile* Find( const QString& name ) const;
+
+    virtual void NotifyDeleted( const kernel::Team_ABC& team );
+    virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
+    virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
+    virtual void NotifyDeleted( const kernel::Population_ABC& population );
     //@}
 
 private:
@@ -85,6 +101,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     const ProfileFactory_ABC& factory_;
     T_UserProfiles userProfiles_;
     //@}

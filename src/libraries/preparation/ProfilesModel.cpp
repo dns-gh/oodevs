@@ -16,6 +16,11 @@
 #include "Tools.h"
 #include "AgentsModel.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/Team_ABC.h"
 #include "tools/Iterator.h"
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter_ABC.h"
@@ -28,10 +33,11 @@
 // Name: ProfilesModel constructor
 // Created: SBO 2007-01-16
 // -----------------------------------------------------------------------------
-ProfilesModel::ProfilesModel( const ProfileFactory_ABC& factory )
-    : factory_( factory )
+ProfilesModel::ProfilesModel( kernel::Controllers& controllers, const ProfileFactory_ABC& factory )
+    : controllers_( controllers )
+    , factory_( factory )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,6 +47,7 @@ ProfilesModel::ProfilesModel( const ProfileFactory_ABC& factory )
 ProfilesModel::~ProfilesModel()
 {
     Purge();
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -217,4 +224,44 @@ const UserProfile* ProfilesModel::Find( const QString& name ) const
         if( profile->GetLogin() == name )
             return profile;
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::NotifyDeleted
+// Created: MMC 2011-06-24
+// -----------------------------------------------------------------------------
+void ProfilesModel::NotifyDeleted( const kernel::Team_ABC& team)
+{
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        (*it)->NotifyTeamDeleted( team.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::NotifyDeleted
+// Created: MMC 2011-06-24
+// -----------------------------------------------------------------------------
+void ProfilesModel::NotifyDeleted( const kernel::Formation_ABC& formation)
+{
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        (*it)->NotifyTeamDeleted( formation.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::NotifyDeleted
+// Created: MMC 2011-06-24
+// -----------------------------------------------------------------------------
+void ProfilesModel::NotifyDeleted( const kernel::Automat_ABC& automat)
+{
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        (*it)->NotifyTeamDeleted( automat.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::NotifyDeleted
+// Created: MMC 2011-06-24
+// -----------------------------------------------------------------------------
+void ProfilesModel::NotifyDeleted( const kernel::Population_ABC& population)
+{
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        (*it)->NotifyTeamDeleted( population.GetId() );
 }

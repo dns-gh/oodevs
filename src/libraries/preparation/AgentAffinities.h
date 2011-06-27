@@ -78,7 +78,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::Entity_ABC& agent_;
-    Model& model_;
     kernel::PropertiesDictionary& dictionary_;
     QString propertyName_;
     T_Teams teams_;

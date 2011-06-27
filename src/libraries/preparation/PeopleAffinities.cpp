@@ -23,9 +23,8 @@
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
 PeopleAffinities::PeopleAffinities( kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary )
-    : Affinities()
+    : Affinities( model )
     , controllers_( controllers )
-    , model_      ( model )
     , dictionary_ ( dictionary )
 {
     controllers_.Register( *this );
@@ -37,9 +36,8 @@ PeopleAffinities::PeopleAffinities( kernel::Controllers& controllers, Model& mod
 // Created: ABR 2011-01-27
 // -----------------------------------------------------------------------------
 PeopleAffinities::PeopleAffinities( xml::xistream& xis, kernel::Controllers& controllers, Model& model, kernel::PropertiesDictionary& dictionary )
-    : Affinities( xis )
+    : Affinities( xis, model )
     , controllers_( controllers )
-    , model_      ( model )
     , dictionary_ ( dictionary )
 {
     controllers_.Register( *this );

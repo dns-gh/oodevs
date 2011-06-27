@@ -55,6 +55,7 @@ public:
     void Purge();
     void CreateTeam();
     kernel::Team_ABC* FindTeam( const QString& name ) const;
+    kernel::Team_ABC* FindTeam( unsigned int id ) const;
     void Serialize( xml::xostream& xos ) const;
     tools::Iterator< const kernel::Entity_ABC& > CreateEntityIterator() const;
     bool CheckValidity( ModelChecker_ABC& checker ) const;

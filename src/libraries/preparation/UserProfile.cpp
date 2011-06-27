@@ -343,3 +343,43 @@ UserProfile& UserProfile::operator=( const UserProfile& p )
         controller_.Update( *this );
     return *this;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::NotifyTeamDeleted
+// Created: MMC 2011-06-24
+// -----------------------------------------------------------------------------
+void UserProfile::NotifyTeamDeleted( unsigned long teamId )
+{
+    SetRight( teamId, readSides_, false );
+    SetRight( teamId, writeSides_, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::NotifyTeamDeleted
+// Created: MMC 2011-06-24
+// -----------------------------------------------------------------------------
+void UserProfile::NotifyFormationDeleted( unsigned long formationId )
+{
+    SetRight( formationId, readFormations_, false );
+    SetRight( formationId, writeFormations_, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::NotifyTeamDeleted
+// Created: MMC 2011-06-24
+// -----------------------------------------------------------------------------
+void UserProfile::NotifyAutomatDeleted( unsigned long automatId )
+{
+    SetRight( automatId, readAutomats_, false );
+    SetRight( automatId, writeAutomats_, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::NotifyTeamDeleted
+// Created: MMC 2011-06-24
+// -----------------------------------------------------------------------------
+void UserProfile::NotifyPopulationDeleted( unsigned long populationId )
+{
+    SetRight( populationId, readPopulations_, false );
+    SetRight( populationId, writePopulations_, false );
+}

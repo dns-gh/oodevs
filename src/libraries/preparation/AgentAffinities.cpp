@@ -27,10 +27,9 @@
 // -----------------------------------------------------------------------------
 AgentAffinities::AgentAffinities( kernel::Entity_ABC& agent, kernel::Controllers& controllers, Model& model,
                                   kernel::PropertiesDictionary& dictionary, const QString& propertyName )
-    : Affinities()
+    : Affinities( model )
     , agent_       ( agent )
     , controllers_ ( controllers )
-    , model_       ( model )
     , dictionary_  ( dictionary )
     , propertyName_( propertyName )
 {
@@ -44,10 +43,9 @@ AgentAffinities::AgentAffinities( kernel::Entity_ABC& agent, kernel::Controllers
 // -----------------------------------------------------------------------------
 AgentAffinities::AgentAffinities( xml::xistream& xis, kernel::Entity_ABC& agent, kernel::Controllers& controllers, Model& model,
                                   kernel::PropertiesDictionary& dictionary, const QString& propertyName )
-    : Affinities( xis )
+    : Affinities( xis, model )
     , agent_       ( agent )
     , controllers_ ( controllers )
-    , model_       ( model )
     , dictionary_  ( dictionary )
     , propertyName_( propertyName )
 {

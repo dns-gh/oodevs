@@ -84,6 +84,18 @@ Team_ABC* TeamsModel::FindTeam( const QString& name ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: TeamsModel::FindTeam
+// Created: MMC 2011-06-24
+// -----------------------------------------------------------------------------
+Team_ABC* TeamsModel::FindTeam( unsigned int id ) const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        if( it->second->GetId() == id )
+            return it->second;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TeamsModel::NotifyDeleted
 // Created: SBO 2006-09-05
 // -----------------------------------------------------------------------------
