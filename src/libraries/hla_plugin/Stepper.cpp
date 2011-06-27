@@ -20,7 +20,7 @@ using namespace plugins::hla;
 // Name: Stepper constructor
 // Created: SLI 2011-06-24
 // -----------------------------------------------------------------------------
-Stepper::Stepper( xml::xistream& xis, MessageController_ABC< sword::SimToClient_Content >& controller, dispatcher::SimulationPublisher_ABC& publisher )
+Stepper::Stepper( xml::xistream& xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller, dispatcher::SimulationPublisher_ABC& publisher )
     : publisher_( publisher )
 {
     if( xis.attribute< bool >( "time-constrained", true ) )

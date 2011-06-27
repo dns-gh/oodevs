@@ -10,7 +10,7 @@
 #ifndef plugins_hla_Stepper_h
 #define plugins_hla_Stepper_h
 
-#include "MessageObserver.h"
+#include "tools/MessageObserver.h"
 
 namespace xml
 {
@@ -38,12 +38,12 @@ namespace hla
 */
 // Created: SLI 2011-06-24
 // =============================================================================
-class Stepper : private MessageObserver< sword::ControlEndTick >
+class Stepper : private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Stepper( xml::xistream& xis, MessageController_ABC< sword::SimToClient_Content >& controller, dispatcher::SimulationPublisher_ABC& publisher );
+             Stepper( xml::xistream& xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~Stepper();
     //@}
 

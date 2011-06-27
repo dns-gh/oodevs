@@ -7,14 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_MessageController_ABC_h
-#define plugins_hla_MessageController_ABC_h
+#ifndef tools_MessageController_ABC_h
+#define tools_MessageController_ABC_h
 
 #include <boost/noncopyable.hpp>
 
-namespace plugins
-{
-namespace hla
+namespace tools
 {
     template< typename Category > class MessageHandler_ABC;
 
@@ -49,6 +47,5 @@ public:
 };
 
 }
-}
 
-#endif // plugins_hla_MessageController_ABC_h
+#endif // tools_MessageController_ABC_h

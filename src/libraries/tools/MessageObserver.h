@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_MessageObserver_h
-#define plugins_hla_MessageObserver_h
+#ifndef tools_MessageObserver_h
+#define tools_MessageObserver_h
 
 #include "MessageObserver_ABC.h"
 #include "MessageHandler.h"
@@ -24,9 +24,7 @@
      Connect< BOOST_TYPEOF( sender )::category_type, boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( sender )::category_type::##name ) >::type >::type >::type >\
      ( sender, (receiver), &BOOST_TYPEOF( sender )::category_type::has_##name, &BOOST_TYPEOF( sender )::category_type::##name );
 
-namespace plugins
-{
-namespace hla
+namespace tools
 {
     template< typename Category > class MessageController_ABC;
 
@@ -65,6 +63,5 @@ private:
 };
 
 }
-}
 
-#endif // plugins_hla_MessageObserver_h
+#endif // tools_MessageObserver_h

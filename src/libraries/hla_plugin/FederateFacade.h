@@ -10,7 +10,7 @@
 #ifndef plugins_hla_FederateFacade_h
 #define plugins_hla_FederateFacade_h
 
-#include "MessageObserver.h"
+#include "tools/MessageObserver.h"
 
 namespace xml
 {
@@ -46,12 +46,12 @@ namespace hla
 */
 // Created: SBO 2008-02-18
 // =============================================================================
-    class FederateFacade : private MessageObserver< sword::ControlEndTick >
+    class FederateFacade : private tools::MessageObserver< sword::ControlEndTick >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             FederateFacade( xml::xisubstream xis, MessageController_ABC< sword::SimToClient_Content >& controller, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory );
+             FederateFacade( xml::xisubstream xis, tools::MessageController_ABC< sword::SimToClient_Content >& controller, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory );
     virtual ~FederateFacade();
     //@}
 

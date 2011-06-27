@@ -7,16 +7,14 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_MessageHandler_h
-#define plugins_hla_MessageHandler_h
+#ifndef tools_MessageHandler_h
+#define tools_MessageHandler_h
 
 #include "MessageHandler_ABC.h"
 #include "MessageObserver_ABC.h"
 #include "MessageController_ABC.h"
 
-namespace plugins
-{
-namespace hla
+namespace tools
 {
 // =============================================================================
 /** @class  MessageHandler
@@ -72,6 +70,5 @@ private:
 };
 
 }
-}
 
-#endif // plugins_hla_MessageHandler_h
+#endif // tools_MessageHandler_h

@@ -33,8 +33,8 @@ namespace
         MockRtiAmbassadorFactory rtiFactory;
         MockFederateAmbassadorFactory federateFactory;
         MockFederate* federate;
-        MockMessageController< sword::SimToClient_Content > controller;
-        MessageHandler_ABC< sword::SimToClient_Content >* listener;
+        tools::MockMessageController< sword::SimToClient_Content > controller;
+        tools::MessageHandler_ABC< sword::SimToClient_Content >* listener;
         mock::sequence s;
     };
 }

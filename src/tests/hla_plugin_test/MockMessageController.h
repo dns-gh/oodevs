@@ -10,11 +10,9 @@
 #ifndef hla_plugin_MockMessageController_h
 #define hla_plugin_MockMessageController_h
 
-#include "hla_plugin/MessageController_ABC.h"
+#include "tools/MessageController_ABC.h"
 
-namespace plugins
-{
-namespace hla
+namespace tools
 {
 // =============================================================================
 /** @class  MockMessageController
@@ -30,7 +28,6 @@ MOCK_BASE_CLASS( MockMessageController, MessageController_ABC< Category > )
     MOCK_METHOD_EXT_TPL( Dispatch, 1, void( const Category& ), Dispatch )
 };
 
-}
 }
 
 #endif // hla_plugin_MockMessageController_h
