@@ -1005,7 +1005,8 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     if( !message.has_parameters() || message.parameters().elem_size() != 4
         || message.parameters().elem( 0 ).value_size() != 1 || !message.parameters().elem( 0 ).value().Get( 0 ).has_acharstr()
         || message.parameters().elem( 1 ).value_size() != 1 || !message.parameters().elem( 1 ).value().Get( 0 ).has_point()
-        || message.parameters().elem( 2 ).value_size() != 1 || !message.parameters().elem( 2 ).value().Get( 0 ).has_areal() )
+        || message.parameters().elem( 2 ).value_size() != 1 || !( message.parameters().elem( 2 ).value().Get( 0 ).has_areal()
+                                                                || message.parameters().elem( 2 ).value().Get( 0 ).has_quantity() ) )
     {
         ack().set_error_code( MagicActionAck::error_invalid_parameter );
         return;
