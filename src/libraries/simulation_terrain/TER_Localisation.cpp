@@ -881,7 +881,8 @@ void TER_Localisation::Scale( double rDist )
         if( pointVector_.size() == 4 )
         {
             T_PointVector polygonWithAtLeastFourSides = GetVectorWithAdditionalPoint( pointVector_ );
-            polygon_.Reset( polygonWithAtLeastFourSides, true );
+            polygon_.Reset( polygonWithAtLeastFourSides, false );
+            pointVector_ = polygonWithAtLeastFourSides;
         }
         for( CIT_PointVector itPoint = pointVector_.begin(); itPoint != pointVector_.end(); ++itPoint )
         {
