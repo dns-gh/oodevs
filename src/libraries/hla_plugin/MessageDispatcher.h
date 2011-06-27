@@ -20,7 +20,7 @@ namespace hla
 {
 // =============================================================================
 /** @class  MessageDispatcher
-    @brief  Message controller
+    @brief  Message dispatcher
 */
 // Created: SLI 2011-06-24
 // =============================================================================
