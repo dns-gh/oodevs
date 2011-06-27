@@ -186,6 +186,22 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetDetectedAgentsInZone( T_ConstKno
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetEnemyAgentsInZone
+// Created: LDC 2011-06-24
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::GetEnemyAgentsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const
+{
+    container.clear();
+    const T_KnowledgeAgentVector& enemies = pKnowledgeAgentContainer_->GetEnemies();
+    for( CIT_KnowledgeAgentVector it = enemies.begin(); it != enemies.end(); ++it )
+    {
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge = *it;
+        if( zone.IsInside( knowledge->GetPosition() ) )
+            container.push_back( knowledge );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::GetFriends
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------

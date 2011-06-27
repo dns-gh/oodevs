@@ -79,6 +79,17 @@ const PHY_DotationCategory& PHY_Weapon::GetDotationCategory() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Weapon::GetNumberOfDotationPerBurst
+// Created: LDC 2011-06-23
+// -----------------------------------------------------------------------------
+int PHY_Weapon::GetNumberOfDotationPerBurst( const PHY_DotationCategory& dotation ) const
+{
+    if( dotation == GetDotationCategory() )
+        return type_.GetNbrAmmoPerBurst();
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Weapon::GetMaxRangeToFireOn
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------

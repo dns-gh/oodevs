@@ -108,7 +108,8 @@ public:
     virtual float GetIlluminatingRange( ) const;
     virtual void SetForbiddenDotation( const PHY_DotationCategory& category );
     virtual void RemoveForbiddenDotation( const PHY_DotationCategory& category );
-    virtual void AllowAllDotations();
+    virtual void AllowAllDotations();    
+    virtual bool HasDotationForFiring( const PHY_DotationCategory& category, int iterations );
     //@}
 
     //! @name Network

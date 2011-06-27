@@ -35,6 +35,7 @@ MOCK_BASE_CLASS( MockRoleDotations, dotation::PHY_RoleInterface_Dotations )
     MOCK_METHOD( SetForbiddenDotation, 1 );
     MOCK_METHOD( RemoveForbiddenDotation, 1 );
     MOCK_METHOD( AllowAllDotations, 0 );
+    MOCK_METHOD( HasDotationForFiring, 2 );
 
     MOCK_METHOD( NotifySupplyNeeded, 2 );
     MOCK_METHOD( FillSupplyRequest, 1 );

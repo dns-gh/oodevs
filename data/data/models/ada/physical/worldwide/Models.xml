@@ -497,6 +497,7 @@
         <mission name="OOTW - manage prisoners"/>
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
+        <mission name="FieldArtillery - fire support"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -1058,6 +1059,7 @@
         </mission>
         <mission name="Common - prepare to"/>
         <mission name="Common - prepare to (take up position)"/>
+        <mission name="FieldArtillery - fire support"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2081,6 +2083,7 @@
         <mission name="FieldArtillery - operate (on position)">
           <fragorder name="Fire"/>
         </mission>
+        <mission name="FieldArtillery - fire support"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -4228,4 +4231,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2661273380" -->
+<!-- signature="3406303953" -->

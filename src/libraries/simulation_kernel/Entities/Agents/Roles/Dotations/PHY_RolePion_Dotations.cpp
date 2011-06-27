@@ -21,9 +21,15 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationConsumptions.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
+
+
+#include "FireData_ABC.h"
+#include "WeaponAvailabilityComputer_ABC.h"
+#include "WeaponAvailabilityComputerFactory_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 #include "simulation_kernel/AlgorithmsFactories.h"
@@ -624,6 +630,31 @@ void PHY_RolePion_Dotations::AllowAllDotations()
      forbiddenDotations_.clear();
 }
 
+namespace
+{
+    class FireData : public firing::FireData_ABC
+    {
+    public:
+        FireData( const PHY_DotationCategory& category ) : number_( 0 ), category_( category ) {}
+        virtual void operator()( const PHY_ComposantePion& firer, PHY_Weapon& weapon )
+        {
+            number_ += weapon.GetNumberOfDotationPerBurst( category_ );
+        }
+        int number_;
+        const PHY_DotationCategory& category_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::HasDotationForFiring
+// Created: LDC 2011-06-23
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Dotations::HasDotationForFiring( const PHY_DotationCategory& category, int iterations )
+{
+    FireData firerWeapons( category );
+    std::auto_ptr< firing::WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
+    return( GetDotationNumber( category ) >= iterations * firerWeapons.number_ );
+}
 
 } // namespace dotation
 

@@ -15,10 +15,12 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Knowledge/DEC_Knowledge_Def.h"
+#include <limits>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau
@@ -45,6 +47,17 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetDetectedAgentsInZone( con
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetEnemyAgentsInZone
+// Created: LDC 2011-06-24
+// -----------------------------------------------------------------------------
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetEnemyAgentsInZone( const DEC_Decision_ABC* callerAgent, const TER_Localisation* area )
+{
+    T_ConstKnowledgeAgentVector knowledges;
+    callerAgent->GetPion().GetKnowledgeGroup().GetKnowledge().GetEnemyAgentsInZone( knowledges, *area );
+    return knowledges;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetAgentsAttacking
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
@@ -59,11 +72,65 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetAgentsAttacking( const MI
 // Name: DEC_KnowledgeFunctions::GetAgentsAttackingAlly
 // Created: DDA 2010-06-02
 // -----------------------------------------------------------------------------
-T_ConstKnowledgeAgentVector  DEC_KnowledgeFunctions::GetAgentsAttackingAlly( const DEC_Decision_ABC* agentAlly)
+T_ConstKnowledgeAgentVector  DEC_KnowledgeFunctions::GetAgentsAttackingAlly( const DEC_Decision_ABC* agentAlly )
+{
+    return DEC_KnowledgeFunctions::GetAgentsAttacking( agentAlly->GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetEnemiesAttacking
+// Created: LDC 2011-06-24
+// -----------------------------------------------------------------------------
+T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetEnemiesAttacking( const DEC_Decision_ABC* callerAgent )
 {
     T_ConstKnowledgeAgentVector attackers;
-    (*agentAlly).GetPion().GetKnowledge().GetAgentsAttacking( attackers );
+    std::set< boost::shared_ptr< DEC_Knowledge_Agent > > buffer;
+    const std::vector< MIL_Automate* >& allies = callerAgent->GetPion().GetKnowledgeGroup().GetAutomates();
+    for( std::vector< MIL_Automate* >::const_iterator it = allies.begin(); it != allies.end(); ++it )
+    {
+        const std::vector< MIL_AgentPion* >& pions = (*it)->GetPions();
+        for( std::vector< MIL_AgentPion* >::const_iterator pit = pions.begin(); pit != pions.end(); ++pit )
+        {
+            T_ConstKnowledgeAgentVector enemies = DEC_KnowledgeFunctions::GetAgentsAttacking( **pit );
+            for( CIT_ConstKnowledgeAgentVector cit = enemies.begin(); cit != enemies.end(); ++cit )
+            {
+                std::pair< std::set< boost::shared_ptr< DEC_Knowledge_Agent > >::iterator, bool> insertion = buffer.insert( *cit );
+                if( insertion.second )
+                    attackers.push_back( *cit );
+            }
+        }
+    }
     return attackers;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeFunctions::GetNearestToFriend
+// Created: LDC 2011-06-24
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeFunctions::GetNearestToFriend( const DEC_Decision_ABC* callerAgent, T_ConstKnowledgeAgentVector units )
+{
+    double minSquareDistance = std::numeric_limits< double >::max();
+    boost::shared_ptr< DEC_Knowledge_Agent > result;
+    const std::vector< MIL_Automate* >& allies = callerAgent->GetPion().GetKnowledgeGroup().GetAutomates();
+    for( std::vector< MIL_Automate* >::const_iterator it = allies.begin(); it != allies.end(); ++it )
+    {
+        const std::vector< MIL_AgentPion* >& pions = (*it)->GetPions();
+        for( std::vector< MIL_AgentPion* >::const_iterator pit = pions.begin(); pit != pions.end(); ++pit )
+        {
+            const MT_Vector2D& allyPosition = (*pit)->Get< PHY_RoleInterface_Location >().GetPosition();
+            for( CIT_ConstKnowledgeAgentVector uit = units.begin(); uit != units.end(); ++uit )
+            {
+                const MT_Vector2D& uPosition = (*uit)->GetPosition();
+                double squareDistance = allyPosition.SquareDistance( uPosition );
+                if( squareDistance < minSquareDistance )
+                {
+                    result = *uit;
+                    minSquareDistance = squareDistance;
+                }
+            }
+        }
+    }
+    return result;
 }
 
 // -----------------------------------------------------------------------------

@@ -1997,6 +1997,17 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="ammunition_" name="Ammunition" optional="false" type="ResourceType"/>
       <parameter dia-name="enemy_" name="Enemy" optional="true" type="AgentKnowledge"/>
     </mission>
+    <mission dia-behavior="MIS_Pion_FireSupport" dia-type="T_Mission_Pion_FireSupport" id="4434" name="FieldArtillery - fire support">
+      <description>
+        <doctrine><![CDATA[Fire support]]></doctrine>
+        <usage><![CDATA[Targets enemy unit already targeted by friendly fire support, or enemy unit attacking a freindly unit, or enemy unit nearest a friendly unit, in this order]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="ammunition_" name="Ammunition" optional="false" type="ResourceType"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SoutenirEnMesureDe" dia-type="T_Mission_Automate_SoutenirEnMesureDe" id="187" mrt-dia-behavior="MIS_Automate_MRT_SoutenirEnMesureDe" name="Common - prepare to">
@@ -3422,4 +3433,4 @@ overwhelming force.]]></doctrine>
     </fragorder>
   </fragorders>
 </missions>
-<!-- signature="0933744073" -->
+<!-- signature="0785619592" -->

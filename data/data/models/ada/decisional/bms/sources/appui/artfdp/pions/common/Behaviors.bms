@@ -27,6 +27,8 @@ include "Common/Pions/Behaviors.bms"
 --[[//missions génériques
 ]]include "Common/Pions/MissionsGeneriques.bms"
 
+include "Common/Pions/Missions/FireSupport.bms"
+
 
 include "Appui/ArtFdp/Pions/Common/Actions.bms"
 

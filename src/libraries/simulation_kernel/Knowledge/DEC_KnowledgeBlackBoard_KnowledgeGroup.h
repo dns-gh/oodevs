@@ -103,6 +103,7 @@ public:
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID( unsigned int nID ) const;
     void GetDetectedAgentsInZone( T_ConstKnowledgeAgentVector& container, const TER_Polygon& zone ) const;
     void GetDetectedAgentsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
+    void GetEnemyAgentsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;
 
     const T_KnowledgeAgentVector& GetFriends() const;
     void GetFriendsInZone( T_ConstKnowledgeAgentVector& container, const TER_Localisation& zone ) const;

@@ -85,6 +85,7 @@ public:
     virtual void SetForbiddenDotation( const PHY_DotationCategory& category ) = 0;
     virtual void RemoveForbiddenDotation( const PHY_DotationCategory& category ) = 0;
     virtual void AllowAllDotations() = 0;
+    virtual bool HasDotationForFiring( const PHY_DotationCategory& category, int iterations ) = 0;
 
     //@}
 

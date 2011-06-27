@@ -851,6 +851,15 @@ bool DEC_AgentFunctions::HasDotation( const MIL_Agent_ABC& callerAgent, const PH
     return callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationNumber( *category ) > 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::HasDotationForFiring
+// Created: LDC 2011-06-23
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::HasDotationForFiring( DEC_Decision_ABC* agent, const PHY_DotationCategory* category, int iterations )
+{
+    return agent->GetPion().GetRole< dotation::PHY_RoleInterface_Dotations >().HasDotationForFiring( *category , iterations );
+}
+
 namespace
 {
     class CanUseDotationComputer : public dotation::DotationComputer_ABC

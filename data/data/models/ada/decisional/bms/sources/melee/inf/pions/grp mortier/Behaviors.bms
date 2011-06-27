@@ -76,6 +76,8 @@ include "Melee/Inf/Pions/Grp Mortier/Behaviors - Dep.bms"
 
 include "Melee/Inf/Pions/Grp Mortier/Missions/Appuyer.bms"
 
+include "Common/Pions/Missions/FireSupport.bms"
+
 
 node "BEH_Misc_Pion_INF_Default"
 {

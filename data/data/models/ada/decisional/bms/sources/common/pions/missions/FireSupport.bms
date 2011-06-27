@@ -1,0 +1,156 @@
+local emptyTable = emptyTable
+
+-- The allUnitsAttackedByFireSupport table defined below is local to the file. It means it is shared between all brains of the same kind, be they friend or enemies.
+local allUnitsAttackedByFireSupport = {}
+
+local filterEnemies = function( units )
+    local result = {}
+    for unit, v in pairs( units ) do
+        if DEC_ConnaissanceAgent_EstUnEnnemi( unit ) then
+            result[#result + 1] = unit
+        end
+    end
+    return result
+end
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_FireSupport
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_FireSupport"
+{
+    feedbacks = { { { "done_MIS_Pion_FireSupport" }, "MIS_Pion_FireSupport" } },
+    SendFeedback = function( self, value ) Feedback( self.feedbacks.done_MIS_Pion_FireSupport, {value} ) end,
+    activations =
+    {
+        { "BEH_Ordre_Inopine", { "done_BEH_Ordre_Inopine" } },
+        { "BEH_Dep_ProgressionVers", { "done_BEH_Dep_ProgressionVers" } },
+        { "BEH_Pion_ASS_InstallationSurPosition", { "done_BEH_Pion_ASS_InstallationSurPosition" } },
+        { "BEH_Tir_Pion_ASS_PreparerTirSur", { "done_BEH_Tir_Pion_ASS_PreparerTirSur" } },
+        { "ACT_Dep_SePoster", { "done_ACT_Dep_SePoster" } },
+        { "ACT_Tir_Pion_ASS_SurPosition", { "done_ACT_Tir_Pion_ASS_SurPosition" } },
+        { "BEH_Ordre_Pion_Mortier_AppliquerLesFeux", { "done_BEH_Ordre_Pion_Mortier_AppliquerLesFeux" } },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+        if includedFiles["sources/melee/inf/pions/grp mortier/Model.bms"] then
+            self.isMortar = true
+        elseif includedFiles["sources/appui/artfdp/pions/common/Behaviors.bms"] then
+            self.isArtillery = true
+        else
+            DEC_Trace( "Unknown unit type for Fire Support" )
+            Halt( self )
+            do return end
+        end
+        self.numberOfShots = 1 -- $$$$ FIXME: to be read from xml
+        -- note the number of rounds is defined in Authoring Tool for the ammunition/launcher weapon system used.
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        self.ePhase = self.ePhase or eMettreEnOeuvre
+        if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mission )
+            F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+        end
+
+        -- Frag orders management
+        Activate( self.activations.BEH_Ordre_Inopine, 1, emptyTable )
+        self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission = v[1] end
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            self.ePhase = eFinMission
+            self.eEtatOrdreFinMission = eActionEnCours
+        end
+
+        if self.ePhase == eMettreEnOeuvre then
+        -- Check ammunition availability
+            if not DEC_HasDotationForFiring( myself, self._namedParams.mission.ammunition_, self.numberOfShots ) then
+                DEC_RC( eRC_TirImpossiblePlusDeMunitions )
+                Halt( self )
+                do return end
+            end
+            self.ePhase = ePreparerMission
+        elseif self.ePhase == ePreparerMission then
+        -- Define enemy
+            local enemiesList = filterEnemies( allUnitsAttackedByFireSupport )
+            if #enemiesList == 0 then
+                DEC_Trace( "No other fire support unit is targetting an enemy" )
+                enemiesList = DEC_Connaissances_UnitesPrenantAPartieUnAmi( myself ) -- N.B. This is extra slow as it must heck every friend to see if it's beign attacked.
+                 -- Limiting to a list of friends would be faster, using " DEC_Connaissances_UnitesPrenantAPartieSurAmi " on each friend.
+                if #enemiesList == 0 then
+                    DEC_Trace( "No enemy is attacking a friendly unit" )
+                    local pt = DEC_Agent_Position()
+                    local pt_location = DEC_Geometrie_ConvertirPointEnLocalisation( pt )
+                    local maxDistance = 70000 -- don't try to attack enemies too far (distance in metres)
+                    local zone = DEC_Geometrie_AgrandirLocalisation( pt_location, maxDistance )
+                    enemiesList = DEC_Connaissances_UnitesEnnemiesDansZone( myself, zone )
+                end
+            end
+            if #enemiesList == 0 then
+                DEC_Trace( "No enemy found" )
+                DEC_RC( eRC_MissionImpossible )
+                Halt( self )
+                do return end
+            end
+            self.enemy = DEC_Connaissances_UniteLaPlusProcheDunAmi( myself, enemiesList )
+            self.enemyPosition = DEC_ConnaissanceAgent_Position( self.enemy )
+            allUnitsAttackedByFireSupport[ self.enemy ] = true
+            self.ePhase = eProgresser
+        elseif self.ePhase == eProgresser then
+        -- Move to position where one can fire
+            if( not S_Tir_DistancePorteeIndirect_EstValide( self._namedParams.mission.ammunition_, self.enemyPosition ) ) then
+                -- I suppose I am too far. If I'm too near, I should actually retreat and find a position backwards.
+                Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.enemyPosition, eProgressionDirect, eTypeItiMouvement } )
+            else
+                self.positionImplantation = DEC_Agent_Position()
+                self.ePhase = ePreparerTir
+            end
+        elseif self.ePhase == ePreparerTir then
+        -- Fire self.numberOfShots times
+            if self.numberOfShots <= 0 then
+                self.ePhase = eFinMission
+            else
+                if self.isMortar then
+                    StartActivateOverride( self, self.activations.BEH_Ordre_Pion_Mortier_AppliquerLesFeux, 10, { self.enemyPosition, self.numberOfShots, self._namedParams.mission.ammunition_, } )
+                elseif self.isArtillery then
+                    Activate( self.activations.BEH_Pion_ASS_InstallationSurPosition, 1, { self.positionImplantation, } )
+                    local eNiveauInstallation = DEC_Agent_NiveauInstallation()
+                    if( ( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_PretPourConduiteTir ) or ( eNiveauInstallation_Poste == eNiveauInstallation ) or ( eNiveauInstallation_PosteAmenage == eNiveauInstallation ) ) then
+                        Activate( self.activations.BEH_Tir_Pion_ASS_PreparerTirSur, 1.1, { self.enemyPosition, M_DELAI_PREPARATION_TIR(), } )
+                        Activate( self.activations.ACT_Dep_SePoster, 0.5, emptyTable )
+                        Activate( self.activations.ACT_Tir_Pion_ASS_SurPosition, 1, { self._namedParams.mission.ammunition_, self.numberOfShots, self.enemyPosition, } )
+                        self.done_ACT_Tir_Pion_ASS_SurPosition = function( self, _, v ) self.ePhase = eFinMission end
+                    end
+                end
+            end
+        elseif self.ePhase == eFinMission then
+            DEC_RC( eRC_FinMission )
+            Halt( self )
+            do return end
+        end
+    end,
+
+    destroy = function( self )
+        -- Clean up list of units beign fired upon
+        if self.enemy then
+            allUnitsAttackedByFireSupport[ self.enemy ] = nil
+        end
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_FireSupport = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FireSupport, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FireSupport, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FireSupport, "BEH_Pion_ASS_InstallationSurPosition", nodes.BEH_Pion_ASS_InstallationSurPosition }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FireSupport, "BEH_Tir_Pion_ASS_PreparerTirSur", nodes.BEH_Tir_Pion_ASS_PreparerTirSur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FireSupport, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FireSupport, "ACT_Tir_Pion_ASS_SurPosition", nodes.ACT_Tir_Pion_ASS_SurPosition }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_FireSupport, "BEH_Ordre_Pion_Mortier_AppliquerLesFeux", nodes.BEH_Ordre_Pion_Mortier_AppliquerLesFeux }
+

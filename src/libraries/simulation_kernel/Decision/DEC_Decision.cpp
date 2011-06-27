@@ -89,6 +89,10 @@ void RegisterUnitFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Automate_PionsDeAutomateAvecPC" ] =
         boost::function< std::vector< DEC_Decision_ABC* >( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetAutomatPionsWithPC, _1 ) );
     brain.Register( "DEC_Automate_EstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
+    brain[ "DEC_Connaissances_UnitesPrenantAPartieUnAmi" ] = &DEC_KnowledgeFunctions::GetEnemiesAttacking;
+    brain[ "DEC_Connaissances_UniteLaPlusProcheDunAmi" ] = &DEC_KnowledgeFunctions::GetNearestToFriend;
+    brain[ "DEC_Connaissances_UnitesEnnemiesDansZone" ] = &DEC_KnowledgeFunctions::GetEnemyAgentsInZone;
+    
     brain[ "DEC_Agent_Renforts" ] =
         boost::function< std::vector<DEC_Decision_ABC*> ( DEC_Decision_ABC* ) >( boost::bind( &DEC_MiscFunctions::GetAgentReinforcements, _1 ) );
     brain[ "DEC_Pion_PionPCDeAutomate" ] =

@@ -81,6 +81,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_DebugPointXY" ] = &DEC_MiscFunctions::GetPointXY;
 
     // Pion accessors
+    brain[ "DEC_HasDotationForFiring" ] = &DEC_AgentFunctions::HasDotationForFiring;
     brain[ "DEC_Agent_PeutActiverObjet" ] = &DEC_AgentFunctions::CanActivateObject;
     brain[ "DEC_Agent_PeutIllumine" ] = &DEC_AgentFunctions::CanIlluminate;
 

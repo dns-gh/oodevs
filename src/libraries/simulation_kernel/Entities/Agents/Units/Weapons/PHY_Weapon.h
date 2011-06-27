@@ -54,6 +54,7 @@ public:
     double GetMinRangeToFireOn      ( const MIL_Agent_ABC& firer, const PHY_ComposanteType_ABC& targetComposanteType, double rWantedPH ) const;
     double GetMaxRangeToIndirectFire() const;
     double GetMinRangeToIndirectFire() const;
+    int    GetNumberOfDotationPerBurst( const PHY_DotationCategory& ) const;
     //@}
 
 private:
