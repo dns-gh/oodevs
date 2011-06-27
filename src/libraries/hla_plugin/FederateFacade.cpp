@@ -84,7 +84,7 @@ FederateFacade::FederateFacade( xml::xisubstream xis, MessageDispatcher_ABC< swo
     , destructor_     ( xis.attribute< bool >( "destruction", false ) ? new FederateFacade::FederationDestructor( *federate_, xis.attribute< std::string >( "federation", "Federation" ) ) : 0 )
     , agentClass_     ( new AggregateEntityClass( *federate_, subject ) )
 {
-    CONNECT( controller, sword::ControlEndTick, control_end_tick );
+    CONNECT( controller, *this, control_end_tick );
 }
 
 // -----------------------------------------------------------------------------

@@ -11,14 +11,18 @@
 #define plugins_hla_MessageObserver_h
 
 #include "MessageObserver_ABC.h"
-#include "MessageDispatcher_ABC.h"
 #include "MessageHandler.h"
 #include <memory>
 #define BOOST_TYPEOF_SILENT
 #include <boost/typeof/typeof.hpp>
+#include <boost/function_types/result_type.hpp>
+#include <boost/type_traits.hpp>
 #undef BOOST_TYPEOF_SILENT
 
-#define CONNECT( controller, message, name ) MessageObserver< message >::Connect< BOOST_TYPEOF( controller )::category_type, message >( controller, *this, &BOOST_TYPEOF( controller )::category_type::has_##name, &BOOST_TYPEOF( controller )::category_type::##name )
+#define CONNECT( sender, receiver, name ) \
+    (receiver).MessageObserver< boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( sender )::category_type::##name ) >::type >::type >::type >::\
+     Connect< BOOST_TYPEOF( sender )::category_type, boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( sender )::category_type::##name ) >::type >::type >::type >\
+     ( sender, (receiver), &BOOST_TYPEOF( sender )::category_type::has_##name, &BOOST_TYPEOF( sender )::category_type::##name );
 
 namespace plugins
 {
@@ -42,7 +46,6 @@ public:
     virtual ~MessageObserver() {}
     //@}
 
-protected:
     //! @name Operations
     //@{
     template< typename Category, typename Message >

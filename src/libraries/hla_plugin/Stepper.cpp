@@ -24,7 +24,7 @@ Stepper::Stepper( xml::xistream& xis, MessageDispatcher_ABC< sword::SimToClient_
     : publisher_( publisher )
 {
     if( xis.attribute< bool >( "time-constrained", true ) )
-        CONNECT( controller, sword::ControlEndTick, control_end_tick );
+        CONNECT( controller, *this, control_end_tick );
 }
 
 // -----------------------------------------------------------------------------
