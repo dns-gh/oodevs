@@ -40,6 +40,19 @@ BOOST_AUTO_TEST_CASE( max_files_set_to_zero_disables_log )
     log.Write( "some text" );
 }
 
+BOOST_AUTO_TEST_CASE( max_entries_set_to_zero_disables_rotation )
+{
+    MockLogFactory factory;
+    MockLog* pLog = new MockLog();
+    RotatingLog log( factory, "filename", 1, 0 );
+    MOCK_EXPECT( factory, CreateLog ).once().returns( pLog );
+    MOCK_EXPECT( pLog, Write ).exactly( 3 ).with( "some text" );
+    log.Write( "some text" );
+    log.Write( "some text" );
+    log.Write( "some text" );
+    MOCK_EXPECT( pLog, destructor );
+}
+
 BOOST_AUTO_TEST_CASE( rotating_log_first_log_is_sent_to_log )
 {
     MockLogFactory factory;
