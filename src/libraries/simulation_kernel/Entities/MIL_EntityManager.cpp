@@ -514,6 +514,21 @@ MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::CreatePion
+// Created: MMC 2011-05-27
+// -----------------------------------------------------------------------------
+MIL_AgentPion& MIL_EntityManager::CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name )
+{
+    MIL_AgentPion* pPion = agentFactory_->Create( type, automate, vPosition, name );
+    if( !pPion )
+        throw std::runtime_error( "Pion couldn't be created." );
+    pPion->SendCreation ();
+    pPion->SendFullState();
+    pPion->SendKnowledge();
+    return *pPion;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------

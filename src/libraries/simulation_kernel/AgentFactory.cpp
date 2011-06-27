@@ -94,6 +94,27 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentFactory::Create
+// Created: MMC 2011-05-27
+// -----------------------------------------------------------------------------
+MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition, const std::string& name )
+{
+    MIL_AgentPion* pPion = type.InstanciatePion( automate, *algorithmsFactories_, name );
+    try
+    {
+        type.RegisterRoles( *pPion, gcPause_, gcMult_ );
+        Initialize( *pPion, vPosition );
+        tools::Resolver< MIL_AgentPion >::Register( pPion->GetID(), *pPion );
+        return pPion;
+    }
+    catch( ... )
+    {
+        delete pPion; // $$$$ MCO : use auto_ptr
+        return 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentFactory::Initialize
 // Created: SLG 2010-01-21
 // -----------------------------------------------------------------------------

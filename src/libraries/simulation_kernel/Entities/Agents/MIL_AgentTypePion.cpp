@@ -344,6 +344,15 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentTypePion::InstanciatePion
+// Created: MMC 2011-05-27
+// -----------------------------------------------------------------------------
+MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name ) const
+{
+    return new MIL_AgentPion( *this, automate, algorithmFactories, name );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::RegisterRoles
 // Created: MGD 2009-08-13
 // @TODO REPLACE BY XML in factory

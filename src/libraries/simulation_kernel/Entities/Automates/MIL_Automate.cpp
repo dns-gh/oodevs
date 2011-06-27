@@ -954,7 +954,7 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
 {
     if( msg.type() != sword::UnitMagicAction_Type_unit_creation )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
-    if( !msg.has_parameters() || msg.parameters().elem_size() != 2)
+    if( !msg.has_parameters() || msg.parameters().elem_size() < 2 || msg.parameters().elem_size() > 4 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const sword::MissionParameter& id = msg.parameters().elem( 0 );
     if( id.value_size() != 1 || !id.value().Get(0).has_identifier() )
@@ -968,11 +968,30 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
     const sword::Point& point = location.value().Get(0).point();
     if( point.location().type() != sword::Location::point || point.location().coordinates().elem_size() != 1 )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    if ( msg.parameters().elem_size() >= 3 )
+        if( msg.parameters().elem( 2 ).value_size() != 1 || !msg.parameters().elem( 2 ).value().Get(0).has_acharstr() )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    if ( msg.parameters().elem_size() >= 4 )
+        if( msg.parameters().elem( 3 ).value_size() != 1 || !msg.parameters().elem( 3 ).value().Get(0).has_booleanvalue() )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+
     MT_Vector2D position;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), position );
     try
     {
-        MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position ); // Auto-registration
+        if ( msg.parameters().elem_size() >= 3 )
+        {
+            std::string name = msg.parameters().elem( 2 ).value().Get( 0 ).acharstr();
+            MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, name ); // Auto-registration
+
+            if ( msg.parameters().elem_size() >= 4 )
+            {
+                bool isPc =  msg.parameters().elem( 3 ).value().Get( 0 ).booleanvalue();
+                pion.SetPionAsPostCommand();
+            }
+        }
+        else
+            MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position ); // Auto-registration
     }
     catch( ... )
     {

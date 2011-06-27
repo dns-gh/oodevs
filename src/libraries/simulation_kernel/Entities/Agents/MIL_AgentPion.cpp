@@ -120,6 +120,24 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion constructor
+// Created: MMC 2011-05-27
+// -----------------------------------------------------------------------------
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string name )
+    : MIL_Agent_ABC( name )
+    , pType_               ( &type )
+    , bIsPC_               ( false )
+    , pAutomate_           ( &automate )
+    , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
+    , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
+    , algorithmFactories_  ( algorithmFactories )
+    , pAffinities_         ( 0 )
+    , pExtensions_         ( 0 )
+{
+    automate.RegisterPion( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion constructor
 // Created: LDC 2010-02-22
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
