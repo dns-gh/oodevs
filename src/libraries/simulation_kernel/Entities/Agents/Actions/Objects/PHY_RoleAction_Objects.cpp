@@ -23,6 +23,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Reinforcement/PHY_RolePion_Reinforcement.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -635,6 +636,7 @@ bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC&
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion ) const
 {
+    bool result = false;
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( objectType );
     const BuildableCapacity* capacity = type.GetCapacity< BuildableCapacity >();
     if ( capacity == 0   )
@@ -644,7 +646,10 @@ bool PHY_RoleAction_Objects::EnoughtDotationForBuilding( const std::string& obje
         return true;
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
     pion.Execute( *dotationComputer );
-    return dotationComputer->GetDotationValue( *pDotationCategory ) > 0;
+    const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
+    for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
+        result = result || EnoughtDotationForBuilding( objectType, **itReinforcement );
+    return result || dotationComputer->GetDotationValue( *pDotationCategory ) > 0;
 }
 
 // -----------------------------------------------------------------------------
