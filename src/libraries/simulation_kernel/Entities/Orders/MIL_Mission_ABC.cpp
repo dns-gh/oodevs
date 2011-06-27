@@ -220,7 +220,7 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
         boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >() ) );
         parameters_[index] = param;
     }
-    parameters_[index]->Append( MIL_MissionParameterFactory::Create( pLocation ) );
+    parameters_[index]->Append( MIL_MissionParameterFactory::CreateLocation( pLocation ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
         boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >() ) );
         parameters_[index] = param;
     }
-    parameters_[index]->Append( MIL_MissionParameterFactory::Create( pKnowledgeObject ) );
+    parameters_[index]->Append( MIL_MissionParameterFactory::CreateObjectKnowledge( pKnowledgeObject ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,7 +254,7 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
         boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ListParameter( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >() ) );
         parameters_[index] = param;
     }
-    parameters_[index]->Append(  MIL_MissionParameterFactory::Create( pGenObject ) );
+    parameters_[index]->Append(  MIL_MissionParameterFactory::CreateGenObject( pGenObject ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -71,7 +71,7 @@ template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const PHY_ComposanteTypePion& parameter )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
-    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::Create( &parameter ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateEquipmentType( &parameter ) );
     parameters.push_back( pParameter );
     PostEvent( receiver, nReport, parameters );
 }
@@ -84,7 +84,7 @@ template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const PHY_DotationCategory& parameter )
 {
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters;
-    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::Create( &parameter ) );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter( MIL_MissionParameterFactory::CreateDotationType( &parameter ) );
     parameters.push_back( pParameter );
     PostEvent( receiver, nReport, parameters );
 }
@@ -155,7 +155,7 @@ template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
 {
     std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
-    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::Create( agentKnowledge ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::CreateAgentKnowledge( agentKnowledge ) );
     parameters.push_back( pParameter );
     PostEvent( receiver, nReport, parameters );
 }

@@ -1956,15 +1956,25 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
       <parameter dia-name="position" name="Point de debarquement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.tasks.OrienterRefugiesVersCamp" dia-type="france.military.platoon.tasks.OrienterRefugiesVersCamp" id="2058" name="COMMUNES Orienter Refugies Dans un Camp">
+    <mission dia-behavior="france.military.platoon.tasks.OrienterRefugiesVersCamp" dia-type="france.military.platoon.tasks.OrienterRefugiesVersCamp" id="2058" name="COMMUNES Orienter Refugies Vers Camp">
       <parameter dia-name="dangerDirection_" name="direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
       <parameter dia-name="camp" name="Camp de refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.Decrocher" dia-type="france.military.platoon.tasks.Decrocher" id="2059" name="COMMUNES Decrocher">
@@ -4073,7 +4083,12 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="peoples" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="peoples" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
       <parameter dia-name="camp" name="Camp de refugies" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.PrendreEnComptePrisonniers" dia-type="france.military.company.tasks.PrendreEnComptePrisonniers" id="1015" mrt-dia-behavior="france.military.company.tasks.PrendreEnComptePrisonniers" name="COMMUNES Prendre en compte Prisonniers">
@@ -4580,7 +4595,12 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="peoples" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="peoples" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
       <parameter dia-name="objective" name="position" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.Construire" dia-type="france.military.company.combat.support.engineer.tasks.Construire" id="1052" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.Construire" name="GENIE Realiser Travaux">
@@ -4836,4 +4856,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_AbandonnerTravaux" id="397" name="Abandonner travaux"/>
   </fragorders>
 </missions>
-<!-- signature="0230555618" -->
+<!-- signature="4085994968" -->

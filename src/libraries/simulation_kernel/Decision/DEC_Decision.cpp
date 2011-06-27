@@ -281,7 +281,7 @@ void RegisterResourceNetworkFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ReseauRessource_Position" ] = &DEC_ResourceNetworkFunctions::GetResourceNetworkPosition;
     brain[ "DEC_ReseauRessource_DesactiverElement" ] = &DEC_ResourceNetworkFunctions::DeactivateResourceNetworkElement;
     brain[ "DEC_ReseauRessource_ActiverElement" ] = &DEC_ResourceNetworkFunctions::ActivateResourceNetworkElement;
-    brain[ "DEC_CreerLienObjetVersReseau" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLink;
+    brain[ "DEC_CreerLienObjetVersReseau" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkReturn;
     brain.Register( "GetTypeName", &DEC_ResourceNetwork::GetTypeName );
 }
 
@@ -433,26 +433,26 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_AssignMissionBoolParameter" ] = &MIL_MissionParameterFactory::SetBoolParameter;
     brain[ "DEC_AssignMissionObjectKnowledgeParameter" ] = &MIL_MissionParameterFactory::SetObjectKnowledgeParameter;
     brain[ "DEC_AssignMissionNatureAtlasTypeParameter" ] = &MIL_MissionParameterFactory::SetNatureAtlasTypeParameter;
-    brain[ "DEC_AssignMissionAutomatListParameter" ] = &MIL_MissionParameterFactory::SetAutomatListParameter;
+    brain[ "DEC_AssignMissionAutomatListParameter" ] = &MIL_MissionParameterFactory::CreateAutomat;
     brain[ "DEC_AssignMissionAgentKnowledgeParameter" ] = &MIL_MissionParameterFactory::SetAgentKnowledgeParameter;
-    brain[ "DEC_AssignMissionPathListParameter" ] = &MIL_MissionParameterFactory::SetPathListParameter;
+    brain[ "DEC_AssignMissionPathListParameter" ] = &MIL_MissionParameterFactory::CreatePathConst;
     brain[ "DEC_AssignMissionEnumereParameter" ] = &MIL_MissionParameterFactory::SetEnumereParameter;
     brain[ "DEC_AssignMissionLocationParameter" ] = &MIL_MissionParameterFactory::SetLocationParameter;
-    brain[ "DEC_AssignMissionObjectKnowledgeListParameter" ] = &MIL_MissionParameterFactory::SetObjectKnowledgeListParameter;
+    brain[ "DEC_AssignMissionObjectKnowledgeListParameter" ] = &MIL_MissionParameterFactory::CreateObjectKnowledge;
     brain[ "DEC_AssignMissionPointParameter" ] = &MIL_MissionParameterFactory::SetPointParameter;
-    brain[ "DEC_AssignMissionAgentKnowledgeListParameter" ] = &MIL_MissionParameterFactory::SetAgentKnowledgeListParameter;
+    brain[ "DEC_AssignMissionAgentKnowledgeListParameter" ] = &MIL_MissionParameterFactory::CreateAgentKnowledge;
     brain[ "DEC_AssignMissionGenObjectParameter" ] = &MIL_MissionParameterFactory::SetGenObjectParameter;
-    brain[ "DEC_AssignMissionGenObjectListParameter" ] = &MIL_MissionParameterFactory::SetGenObjectListParameter;
-    brain[ "DEC_AssignMissionPionListParameter" ] = &MIL_MissionParameterFactory::SetPionListParameter;
-    brain[ "DEC_AssignMissionLocationListParameter" ] = &MIL_MissionParameterFactory::SetLocationListParameter;
-    brain[ "DEC_AssignMissionPointListParameter" ] = &MIL_MissionParameterFactory::SetPointListParameter;
+    brain[ "DEC_AssignMissionGenObjectListParameter" ] = &MIL_MissionParameterFactory::CreateGenObject;
+    brain[ "DEC_AssignMissionPionListParameter" ] = &MIL_MissionParameterFactory::CreatePion;
+    brain[ "DEC_AssignMissionLocationListParameter" ] = &MIL_MissionParameterFactory::CreateLocation;
+    brain[ "DEC_AssignMissionPointListParameter" ] = &MIL_MissionParameterFactory::CreatePoint;
     brain[ "DEC_AssignMissionUrbanBlockParameter" ] = &MIL_MissionParameterFactory::SetUrbanBlockParameter;
-    brain[ "DEC_AssignMissionUrbanBlockListParameter" ] = &MIL_MissionParameterFactory::SetUrbanBlockListParameter;
+    brain[ "DEC_AssignMissionUrbanBlockListParameter" ] = &MIL_MissionParameterFactory::CreateUrbanBlock;
     brain[ "DEC_AssignMissionDirectionParameter" ] = &MIL_MissionParameterFactory::SetDirectionParameter;
     brain[ "DEC_AssignMissionDotationTypeParameter" ] = &MIL_MissionParameterFactory::SetDotationTypeParameter;
     brain[ "DEC_AssignMissionNumericTypeParameter" ] = &MIL_MissionParameterFactory::SetNumericTypeParameter;
     brain[ "DEC_AssignMissionResourceNetworkParameter" ] = &MIL_MissionParameterFactory::SetResourceNetworkParameter;
-    brain[ "DEC_AssignMissionResourceNetworkListParameter" ] = &MIL_MissionParameterFactory::SetResourceNetworkListParameter;
+    brain[ "DEC_AssignMissionResourceNetworkListParameter" ] = &MIL_MissionParameterFactory::CreateResourceNetwork;
     brain[ "DEC_IsMissionAvailable" ] = &DEC_OrdersFunctions::IsMissionAvailable;
     directia::tools::binders::ScriptRef initParameterFunction = brain[ "InitTaskParameter" ];
     brain[ "DEC_FillMissionParameters" ] =
@@ -465,6 +465,7 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
             boost::function< void( MIL_Fuseau* ,  boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToAutomateMission , _1, _2 ) );
     brain[ "DEC_AssignerDirectionAMissionAutomate_Mission" ] =
             boost::function< void (MT_Vector2D* ,  boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::AssignDirectionToAutomateMission , _1, _2 ) );
+    brain[ "DEC_AssignMissionListParameter" ] = &MIL_MissionParameterFactory::AssignMissionListParameter;
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterReportFunctions

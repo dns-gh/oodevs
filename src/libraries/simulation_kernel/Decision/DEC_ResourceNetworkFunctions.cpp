@@ -86,3 +86,24 @@ void DEC_ResourceNetworkFunctions::CreateResourceNetworkLink( DEC_Decision_ABC* 
     if( ResourceNetworkCapacity* capacitySource = objectSource->Retrieve< ResourceNetworkCapacity >() )
         capacitySource->CreateLink( objectTarget->GetID(), resourceType->GetId(), production );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkReturn
+// Created: GGE 2011-06-10
+// -----------------------------------------------------------------------------
+unsigned int DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkReturn( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation, boost::shared_ptr< DEC_ResourceNetwork > target, unsigned int production )
+{
+    if( !caller || !target || !pLocalisation )
+        return 0;
+    const PHY_ResourceNetworkType* resourceType = PHY_ResourceNetworkType::Find( target->GetResource() );
+    if( !resourceType )
+        return 0;
+    MIL_Object_ABC* objectTarget = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( target->GetObjectId() );
+    if( !objectTarget || !objectTarget->Retrieve< ResourceNetworkCapacity >())
+        return 0;
+    MIL_Object_ABC* objectSource = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( type, caller->GetPion().GetArmy(), *pLocalisation );
+    if( ResourceNetworkCapacity* capacitySource = objectSource->Retrieve< ResourceNetworkCapacity >() )
+        capacitySource->CreateLink( objectTarget->GetID(), resourceType->GetId(), production );
+
+    return objectSource->GetID();
+}

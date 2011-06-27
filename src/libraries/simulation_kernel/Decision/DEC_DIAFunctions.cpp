@@ -68,7 +68,10 @@ void DEC_DIAFunctions::CopyLocalisationToLocationListMission( boost::shared_ptr<
 // -----------------------------------------------------------------------------
 void DEC_DIAFunctions::CopyLocalisationListMission( const std::vector< boost::shared_ptr< TER_Localisation > >& locSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
-    MIL_MissionParameterFactory::SetPolygonListParameter( pMission, parameter, locSource );
+    std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > params;
+    for( std::vector< boost::shared_ptr< TER_Localisation > >::const_iterator it = locSource.begin(); it != locSource.end(); ++it )
+        params.push_back( MIL_MissionParameterFactory::CreateLocation( *it ) );
+    MIL_MissionParameterFactory::AssignMissionListParameter( pMission, parameter, params );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +80,7 @@ void DEC_DIAFunctions::CopyLocalisationListMission( const std::vector< boost::sh
 // -----------------------------------------------------------------------------
 void DEC_DIAFunctions::CopyPathMission( std::vector< boost::shared_ptr< MT_Vector2D > >pointList, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
-    pMission->SetParameter( parameter, MIL_MissionParameterFactory::CreatePath( pointList ) );
+    pMission->SetParameter( parameter, MIL_MissionParameterFactory::CreatePathConst( pointList ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -101,7 +104,7 @@ void DEC_DIAFunctions::CopyPoint( MT_Vector2D* pPosSource, boost::shared_ptr< MT
 void DEC_DIAFunctions::CopyPointMission( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     assert( pPosSource );
-    pMission->SetParameter( parameter, MIL_MissionParameterFactory::Create( *pPosSource ) );
+    pMission->SetParameter( parameter, MIL_MissionParameterFactory::CreatePoint( *pPosSource ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +137,7 @@ void DEC_DIAFunctions::CopyLocalisation( const TER_Localisation* pLocSource, TER
 void DEC_DIAFunctions::CopyLocalisationMission( boost::shared_ptr< TER_Localisation > pLocation, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     assert( pLocation );
-    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::Create( pLocation );
+    boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::CreateLocation( pLocation );
     pMission->SetParameter( parameter, pParameter );
 }
 
