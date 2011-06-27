@@ -282,6 +282,7 @@ void RegisterResourceNetworkFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ReseauRessource_DesactiverElement" ] = &DEC_ResourceNetworkFunctions::DeactivateResourceNetworkElement;
     brain[ "DEC_ReseauRessource_ActiverElement" ] = &DEC_ResourceNetworkFunctions::ActivateResourceNetworkElement;
     brain[ "DEC_CreerLienObjetVersReseau" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkReturn;
+    brain[ "DEC_DetruireObjetResourceSansDelais" ] = &DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink;
     brain.Register( "GetTypeName", &DEC_ResourceNetwork::GetTypeName );
 }
 

@@ -17,6 +17,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 
 // -----------------------------------------------------------------------------
@@ -106,4 +107,15 @@ unsigned int DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkReturn( DEC_
         capacitySource->CreateLink( objectTarget->GetID(), resourceType->GetId(), production );
 
     return objectSource->GetID();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink
+// Created: GGE 2011-06-27
+// -----------------------------------------------------------------------------
+void DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink (unsigned int ObjetcResourceID)
+{
+    MIL_Object_ABC* objectToDestroy = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( ObjetcResourceID );
+    if( objectToDestroy && ( *objectToDestroy )().CanBeDestroyed() )
+            ( *objectToDestroy )().Destroy();
 }
