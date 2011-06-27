@@ -13,6 +13,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 
@@ -63,6 +64,24 @@ void ColorController::NotifyCreated( const kernel::Agent_ABC& agent )
 void ColorController::NotifyDeleted( const kernel::Agent_ABC& agent )
 {
     colors_.erase( agent.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorController::NotifyCreated
+// Created: LGY 2011-06-27
+// -----------------------------------------------------------------------------
+void ColorController::NotifyCreated( const kernel::Automat_ABC& automat )
+{
+    ChangeColor( automat );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorController::NotifyDeleted
+// Created: LGY 2011-06-27
+// -----------------------------------------------------------------------------
+void ColorController::NotifyDeleted( const kernel::Automat_ABC& automat )
+{
+    colors_.erase( automat.GetId() );
 }
 
 // -----------------------------------------------------------------------------

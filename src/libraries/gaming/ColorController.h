@@ -19,6 +19,7 @@ namespace kernel
     class Agent_ABC;
     class Formation_ABC;
     class Team_ABC;
+    class Automat_ABC;
 }
 
 // =============================================================================
@@ -31,6 +32,7 @@ class ColorController : public gui::ColorModifier_ABC
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< kernel::Agent_ABC >
                       , public tools::ElementObserver_ABC< kernel::Formation_ABC >
+                      , public tools::ElementObserver_ABC< kernel::Automat_ABC >
                       , public tools::ElementObserver_ABC< kernel::Team_ABC >
 
 {
@@ -47,6 +49,8 @@ public:
 
     virtual void NotifyCreated( const kernel::Agent_ABC& agent );
     virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
+    virtual void NotifyCreated( const kernel::Automat_ABC& automat );
+    virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
     virtual void NotifyCreated( const kernel::Formation_ABC& formation );
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
