@@ -28,16 +28,27 @@ namespace
         xml::xofstream xos( file );
         xos << xml::start( "exercise" );
         tools::SchemaWriter().WriteExerciseSchema( xos, "exercise" );
-        if( keepMeta && boost::filesystem::exists( file ) )
+
+        std::string actionPlanning;
+        if( boost::filesystem::exists( file ) )
         {
             xml::xifstream xis( file );
             xis >> xml::start( "exercise" );
-            if( xis.has_child( "meta" ) )
+            if ( xis.has_child( "action-planning" ) )
+                xis >> xml::start( "action-planning" ) >> xml::attribute( "file", actionPlanning ) >> xml::end;
+            if ( keepMeta )
             {
-                xis >> xml::start( "meta" );
-                xos << xml::content( "meta", xis );
+                if( xis.has_child( "meta" ) )
+                {
+                    xis >> xml::start( "meta" );
+                    xos << xml::content( "meta", xis );
+                }
             }
         }
+
+        if ( !actionPlanning.empty() )
+            xos << xml::start( "action-planning" ) << xml::attribute( "file", actionPlanning ) << xml::end;
+
         xos     << xml::start( "profiles" )   << xml::attribute( "file", "profiles.xml" ) << xml::end
                 << xml::start( "orbat" )      << xml::attribute( "file", "orbat.xml" ) << xml::end
                 << xml::start( "urbanstate" ) << xml::attribute( "file", "urbanstate.xml" ) << xml::end
