@@ -41,7 +41,8 @@ Formation::Formation( const Model_ABC& model, const sword::FormationCreation& ms
         parent_->Register( *this );
     else
         team_.Register( *this );
-
+    if( msg.has_color() )
+        color_ = msg.color();
     if( msg.logistic_level() != sword::none )
     {
         logisticEntity_.reset( new LogisticEntity( *this, model.Formations(), model.Automats(), kernel::LogisticLevel::Resolve(  msg.logistic_level() ) ) );
@@ -130,7 +131,8 @@ void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
         logisticEntity_->Send( message() );
     else
         message().set_logistic_level( sword::none );
-
+    if( color_.IsInitialized() )
+        *message().mutable_color() = color_;
     if( parent_ )
         message().mutable_parent()->set_id( parent_->GetId() );
     message.Send( publisher );

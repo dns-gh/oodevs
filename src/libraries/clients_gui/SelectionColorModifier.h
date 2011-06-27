@@ -45,12 +45,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SelectionColorModifier( const SelectionColorModifier& );            //!< Copy constructor
-    SelectionColorModifier& operator=( const SelectionColorModifier& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* element );

@@ -54,6 +54,17 @@
     </message>
 </context>
 <context>
+    <name>ColorEditor</name>
+    <message>
+        <source>Change color</source>
+        <translation>Modifier la couleur</translation>
+    </message>
+    <message>
+        <source>Reset color</source>
+        <translation>Couleur par défaut</translation>
+    </message>
+</context>
+<context>
     <name>CommunicationListView</name>
     <message>
         <source>Create knowledge group</source>

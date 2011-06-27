@@ -21,6 +21,8 @@
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MIL_Color.h"
+
 #include "Tools/MIL_IDManager.h"
 #include "Checkpoints/SerializationTools.h"
 #include <xeumeuleu/xml.hpp>
@@ -46,6 +48,7 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     , pParent_    ( pParent )
     , pLevel_     ( 0 )
     , pExtensions_( new MIL_DictionaryExtensions( xis ) )
+    , pColor_     ( new MIL_Color( xis ) )
 {
     pLevel_ = PHY_NatureLevel::Find( xis.attribute< std::string >( "level" ) );
     if( !pLevel_ )
@@ -81,6 +84,7 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
     , pParent_    ( parent )
     , pLevel_     ( 0 )
     , pExtensions_( new MIL_DictionaryExtensions() )
+    , pColor_     ( new MIL_Color() )
 {
     pLevel_ = PHY_NatureLevel::Find( level );
     if( !pLevel_ )
@@ -113,6 +117,7 @@ MIL_Formation::MIL_Formation( const std::string& name )
     , pParent_    ( 0 )
     , pLevel_     ( 0 )
     , pExtensions_( 0 )
+    , pColor_     ( 0 )
 {
     // NOTHING
 }
@@ -212,6 +217,7 @@ namespace boost
 void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_DictionaryExtensions* pExtensions;
+    MIL_Color* pColor;
     file >> const_cast< unsigned int& >( nID_ )
          >> pArmy_
          >> pParent_;
@@ -223,8 +229,10 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> tools::Resolver< MIL_Formation >::elements_
          >> tools::Resolver< MIL_Automate >::elements_
          >> pExtensions
+         >> pColor
          >> pBrainLogistic_;
     pExtensions_.reset( pExtensions );
+    pColor_.reset( pColor );
 }
 
 // -----------------------------------------------------------------------------
@@ -234,6 +242,7 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
+    const MIL_Color* const pColor = pColor_.get();
     assert( pLevel_ );
     unsigned int level = pLevel_->GetID();
     file << nID_
@@ -243,6 +252,7 @@ void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
          << tools::Resolver< MIL_Formation >::elements_
          << tools::Resolver< MIL_Automate >::elements_
          << pExtensions
+         << pColor
          << pBrainLogistic_;
 }
 
@@ -257,6 +267,7 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "id", nID_ )
             << xml::attribute( "level", pLevel_->GetName() )
             << xml::attribute( "name", GetName() );
+    pColor_->WriteODB( xos );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref( xos ) ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::WriteODB, _1, boost::ref( xos ) ) );
     pExtensions_->WriteODB( xos );
@@ -289,6 +300,7 @@ void MIL_Formation::SendCreation( unsigned int context /*= 0*/ ) const
     message().set_name( GetName() );
     message().set_level( pLevel_->GetAsnID() );
     message().set_app6symbol( "combat" );
+    pColor_->SendFullState( message );
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     if( pParent_ )

@@ -38,7 +38,7 @@ class ColorStrategy : public ColorStrategy_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ColorStrategy( kernel::Controllers& controllers, kernel::GlTools_ABC& tools );
+             ColorStrategy( kernel::Controllers& controllers, kernel::GlTools_ABC& tools, ColorModifier_ABC& colorController );
     virtual ~ColorStrategy();
     //@}
 
@@ -58,6 +58,7 @@ public:
     virtual void SelectColor( const Drawing_ABC& drawing );
     virtual void SelectColor( const TerrainObjectProxy& proxy );
     virtual QColor FindColor( const kernel::Entity_ABC& entity );
+    virtual QColor FindBaseColor( const kernel::Entity_ABC& entity );
     virtual QColor FindColor( const kernel::Intelligence_ABC& intelligence );
     virtual QColor FindColor( const kernel::Knowledge_ABC& knowledge );
     //@}
@@ -104,6 +105,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     kernel::GlTools_ABC& tools_;
+    ColorModifier_ABC& colorController_;
     T_Modifiers modifiers_;
     T_TeamColors teamColors_;
     T_Colors friendlyAvailable_;

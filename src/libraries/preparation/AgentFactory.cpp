@@ -38,6 +38,7 @@
 #include "StaticModel.h"
 #include "Stocks.h"
 #include "TacticalLines.h"
+#include "Color.h"
 #include "AgentAffinities.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
@@ -49,6 +50,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Color_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -96,6 +98,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( commandPost )
         result->Attach( *new CommandPostAttributes( *result ) );
+    result->Attach< kernel::Color_ABC >( *new Color( parent ) );
     result->Polish();
     return result;
 }
@@ -120,6 +123,7 @@ Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, 
     result->Attach< kernel::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *result, static_.objectTypes_, dico, canHaveQuota ) );
 
     result->Attach( *new TacticalLines() );
+    result->Attach< kernel::Color_ABC >( *new Color( parent ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Polish();
     return result;
@@ -221,6 +225,7 @@ Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
     if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
+    result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Polish();
     return result;
 }
@@ -243,6 +248,7 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
 
     result->Attach( *new TacticalLines() );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
+    result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Polish();
     return result;
 }

@@ -42,6 +42,7 @@ class MIL_AffinitiesMap;
 class MIL_Army;
 class MIL_Automate;
 class MIL_DictionaryExtensions;
+class MIL_Color;
 class MIL_EntityManager;
 
 // =============================================================================
@@ -184,15 +185,16 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_AgentTypePion*                    pType_;
-    bool                                        bIsPC_;
-    std::string                                 criticalIntelligence_;
-    MIL_Automate*                               pAutomate_;
-    const AlgorithmsFactories&                  algorithmFactories_;
-    DEC_KnowledgeBlackBoard_AgentPion*          pKnowledgeBlackBoard_;
-    std::auto_ptr< MIL_PionOrderManager >       pOrderManager_;
-    std::auto_ptr< MIL_AffinitiesMap >          pAffinities_;
-    std::auto_ptr< MIL_DictionaryExtensions >   pExtensions_;
+    const MIL_AgentTypePion*                  pType_;
+    bool                                      bIsPC_;
+    std::string                               criticalIntelligence_;
+    MIL_Automate*                             pAutomate_;
+    const AlgorithmsFactories&                algorithmFactories_;
+    DEC_KnowledgeBlackBoard_AgentPion*        pKnowledgeBlackBoard_;
+    std::auto_ptr< MIL_PionOrderManager >     pOrderManager_;
+    std::auto_ptr< MIL_AffinitiesMap >        pAffinities_;
+    std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
+    std::auto_ptr< MIL_Color >                pColor_;
     //@}
 };
 

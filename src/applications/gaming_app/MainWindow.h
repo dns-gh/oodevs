@@ -62,6 +62,7 @@ class Publisher_ABC;
 class LoggerProxy;
 class Simulation;
 class RcEntityResolver_ABC;
+class ColorController;
 
 // =============================================================================
 /** @class  MainWindow
@@ -142,6 +143,7 @@ private:
     std::auto_ptr< gui::Painter_ABC > pPainter_;
     std::auto_ptr< gui::LayerFilter_ABC > simpleFilter_;
     std::auto_ptr< gui::LayerFilter_ABC > urbanFilter_;
+    std::auto_ptr< ColorController > pColorController_;
     gui::GlProxy* glProxy_;
     gui::ColorStrategy* strategy_;
     gui::LightingProxy* lighting_;

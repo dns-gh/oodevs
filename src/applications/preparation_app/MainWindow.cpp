@@ -105,6 +105,7 @@
 #include "preparation/StaticModel.h"
 #include "preparation/TeamsModel.h"
 #include "preparation/Tools.h"
+#include "preparation/ColorController.h"
 #include "tools/ExerciseConfig.h"
 #include <graphics/DragMovementLayer.h>
 #include <xeumeuleu/xml.hpp>
@@ -121,33 +122,35 @@ using namespace gui;
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
 MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, tools::ExerciseConfig& config, const QString& expiration )
-    : QMainWindow   ( 0, 0, Qt::WDestructiveClose )
-    , controllers_  ( controllers )
-    , staticModel_  ( staticModel )
-    , model_        ( model )
-    , modelBuilder_ ( new ModelBuilder( controllers, model ) )
-    , config_       ( config )
-    , forward_      ( new CircularEventStrategy() )
-    , eventStrategy_( new ExclusiveEventStrategy( *forward_ ) )
-    , pPainter_     ( new ElevationPainter( staticModel_.detection_ ) )
-    , simpleFilter_ ( new gui::SimpleFilter() )
-    , urbanFilter_  ( new gui::UrbanFilter() )
-    , glProxy_      ( 0 )
-    , menu_         ( 0 )
-    , fileToolBar_  ( 0 )
-    , needsSaving_  ( false )
-    , loading_      ( false )
+    : QMainWindow( 0, 0, Qt::WDestructiveClose )
+    , controllers_    ( controllers )
+    , staticModel_    ( staticModel )
+    , model_          ( model )
+    , modelBuilder_   ( new ModelBuilder( controllers, model ) )
+    , config_         ( config )
+    , forward_        ( new CircularEventStrategy() )
+    , eventStrategy_  ( new ExclusiveEventStrategy( *forward_ ) )
+    , pPainter_       ( new ElevationPainter( staticModel_.detection_ ) )
+    , simpleFilter_   ( new gui::SimpleFilter() )
+    , urbanFilter_    ( new gui::UrbanFilter() )
+    , colorController_( new ColorController( controllers_ ) )
+    , glProxy_        ( 0 )
+    , menu_           ( 0 )
+    , fileToolBar_    ( 0 )
+    , needsSaving_    ( false )
+    , loading_        ( false )
 {
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
 
     lighting_ = new LightingProxy( this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_, *pPainter_ );
-    new Dialogs( this, controllers, staticModel, PreparationProfile::GetProfile() );
 
     glProxy_ = new GlProxy();
-    strategy_ = new ColorStrategy( controllers, *glProxy_ );
+    strategy_ = new ColorStrategy( controllers, *glProxy_, *colorController_ );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new SelectionColorModifier( controllers, *glProxy_ ) ) );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new HighlightColorModifier( controllers ) ) );
+
+    new Dialogs( this, controllers, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_ );
 
     selector_ = new GlSelector( this, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
 

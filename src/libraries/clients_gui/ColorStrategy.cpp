@@ -38,10 +38,11 @@ using namespace gui;
 // Name: ColorStrategy constructor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools )
-    : controllers_( controllers )
-    , tools_      ( tools )
-    , alpha_      ( 1 )
+ColorStrategy::ColorStrategy( Controllers& controllers, GlTools_ABC& tools, ColorModifier_ABC& colorController )
+    : controllers_    ( controllers )
+    , tools_          ( tools )
+    , colorController_( colorController )
+    , alpha_          ( 1 )
 {
     InitializeColors();
     controllers_.Register( *this );
@@ -83,9 +84,7 @@ QColor ColorStrategy::ApplyModifiers( const kernel::Entity_ABC& entity, const QC
     size_t size = modifiers_.size();
     QColor result = color;
     for( size_t i = 0; i < size; ++i )
-    {
         result = modifiers_[i].Apply( entity, result );
-    }
     return result;
 }
 
@@ -126,10 +125,10 @@ void ColorStrategy::SelectColor( const Formation_ABC& formation )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ColorStrategy::FindColor
-// Created: AGE 2006-10-04
+// Name: ColorStrategy::FindBaseColor
+// Created: LGY 2011-06-23
 // -----------------------------------------------------------------------------
-QColor ColorStrategy::FindColor( const Entity_ABC& entity )
+QColor ColorStrategy::FindBaseColor( const kernel::Entity_ABC& entity )
 {
     const Hierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >();
     if( ! hierarchies )
@@ -138,6 +137,16 @@ QColor ColorStrategy::FindColor( const Entity_ABC& entity )
     if( dynamic_cast< const kernel::Team_ABC* >( &team ) ) // $$$$ SBO 2008-10-03: depends on extensions polishing order...
         return FindTeamColor( team );
     return Qt::black;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ColorStrategy::FindColor
+// Created: AGE 2006-10-04
+// -----------------------------------------------------------------------------
+QColor ColorStrategy::FindColor( const Entity_ABC& entity )
+{
+    return colorController_.Apply( entity, FindBaseColor( entity ) );
 }
 
 namespace
@@ -170,7 +179,7 @@ QColor ColorStrategy::FindColor( const Intelligence_ABC& intelligence )
 QColor ColorStrategy::FindColor( const Knowledge_ABC& knowledge )
 {
     if( const Team_ABC* team = knowledge.GetTeam() )
-        return FindColor( *team );
+        return FindBaseColor( *team );
     return QColor( 255, 220, 000 );
 }
 
@@ -198,7 +207,7 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Inhabitant_ABC& inhabitant )
 {
-    QColor base = FindColor( inhabitant );
+    QColor base = FindBaseColor( inhabitant );
     QColor color = ApplyModifiers( inhabitant, base );
     if( base == color )
         ApplyColor( color, 0 );
@@ -212,7 +221,7 @@ void ColorStrategy::SelectColor( const Inhabitant_ABC& inhabitant )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 {
-    ApplyColor( KnowledgeColor( ApplyModifiers( knowledge, FindColor( knowledge ) ) ) );
+    ApplyColor( KnowledgeColor( ApplyModifiers( knowledge, FindBaseColor( knowledge ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -221,7 +230,7 @@ void ColorStrategy::SelectColor( const Knowledge_ABC& knowledge )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const TacticalLine_ABC& line )
 {
-    ApplyColor( ApplyModifiers( line, FindColor( line ) ) );
+    ApplyColor( ApplyModifiers( line, FindBaseColor( line ) ) );
 }
 
 // -----------------------------------------------------------------------------

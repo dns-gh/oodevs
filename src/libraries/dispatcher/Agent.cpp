@@ -86,6 +86,8 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , order_                      ( 0 )
 {
     automat_->Register( *this );
+    if( msg.has_color() )
+        color_ = msg.color();
     RegisterSelf( *this );
 }
 
@@ -396,6 +398,8 @@ void Agent::SendCreation( ClientPublisher_ABC& publisher ) const
     message().set_name( name_ );
     message().mutable_automat()->set_id( automat_->GetId() );
     message().set_pc( bPC_ );
+    if( color_.IsInitialized() )
+        *message().mutable_color() = color_;
     message.Send( publisher );
 }
 

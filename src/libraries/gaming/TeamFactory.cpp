@@ -34,12 +34,14 @@
 #include "TeamTacticalHierarchies.h"
 #include "TeamsModel.h"
 #include "Troops.h"
+#include "Color.h"
 #include "UrbanKnowledges.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/Color_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: TeamFactory constructor
@@ -80,6 +82,8 @@ kernel::Team_ABC* TeamFactory::CreateTeam( const sword::PartyCreation& message )
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach<kernel::Dotations_ABC>( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
+    if( message.has_color() )
+        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Update( message );
     result->Polish();
     return result;
@@ -109,6 +113,8 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const sword::FormationCreat
     result->Attach( *new ConvexHulls( *result ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 4.f ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
+    if( message.has_color() )
+        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Update( message );
     result->Polish();
     return result;

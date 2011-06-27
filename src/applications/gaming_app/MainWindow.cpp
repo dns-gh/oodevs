@@ -79,6 +79,7 @@
 #include "gaming/ActionsScheduler.h"
 #include "gaming/IntelligencesModel.h"
 #include "gaming/Tools.h"
+#include "gaming/ColorController.h"
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/GraphicPreferences.h"
@@ -146,19 +147,20 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
                         Network& network, const Profile_ABC& p, tools::SessionConfig& config, LoggerProxy& logger,
                         const RcEntityResolver_ABC& rcResolver, const QString& license )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
-    , controllers_  ( controllers )
-    , staticModel_  ( staticModel )
-    , model_        ( model )
-    , network_      ( network )
-    , config_       ( config )
-    , forward_      ( new gui::CircularEventStrategy() )
-    , eventStrategy_( new gui::ExclusiveEventStrategy( *forward_ ) )
-    , pPainter_     ( new gui::ElevationPainter( staticModel_.detection_ ) )
-    , simpleFilter_ ( new gui::SimpleFilter() )
-    , urbanFilter_  ( new gui::UrbanFilter() )
-    , glProxy_      ( 0 )
-    , connected_    ( false )
-    , onPlanif_     ( false )
+    , controllers_     ( controllers )
+    , staticModel_     ( staticModel )
+    , model_           ( model )
+    , network_         ( network )
+    , config_          ( config )
+    , forward_         ( new gui::CircularEventStrategy() )
+    , eventStrategy_   ( new gui::ExclusiveEventStrategy( *forward_ ) )
+    , pPainter_        ( new gui::ElevationPainter( staticModel_.detection_ ) )
+    , simpleFilter_    ( new gui::SimpleFilter() )
+    , urbanFilter_     ( new gui::UrbanFilter() )
+    , pColorController_( new ColorController( controllers_ ) )
+    , glProxy_         ( 0 )
+    , connected_       ( false )
+    , onPlanif_        ( false )
 
 {
     setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
@@ -176,7 +178,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     new VisionConesToggler( controllers, publisher, this );
 
     glProxy_ = new gui::GlProxy();
-    strategy_ = new gui::ColorStrategy( controllers, *glProxy_ );
+    strategy_ = new gui::ColorStrategy( controllers, *glProxy_, *pColorController_ );
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_ ) ) );
     strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers ) ) );
 

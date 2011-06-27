@@ -19,10 +19,12 @@
 #include "TeamCommunications.h"
 #include "Inhabitants.h"
 #include "Objects.h"
+#include "Color.h"
 #include "Populations.h"
 #include "EntityIntelligences.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
+#include "clients_kernel/Color_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -62,6 +64,7 @@ Team_ABC* TeamFactory::CreateTeam()
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
     result->Attach< IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, 0 ) );
+    result->Attach< kernel::Color_ABC >( *new Color() );
     result->Attach( *new Populations() );
     result->Attach( *new Inhabitants() );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
@@ -82,6 +85,7 @@ Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
     result->Attach< kernel::TacticalHierarchies >( *new TeamHierarchies( controllers_.controller_, *result, 0 ) );
     result->Attach< CommunicationHierarchies >( *new TeamCommunications( controllers_.controller_, *result, 0 ) );
     result->Attach< IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, 0 ) );
+    result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Attach( *new Populations() );
     result->Attach( *new Inhabitants() );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );

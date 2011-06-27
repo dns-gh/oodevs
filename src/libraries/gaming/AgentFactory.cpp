@@ -76,6 +76,7 @@
 #include "UrbanPerceptions.h"
 #include "VisionCones.h"
 #include "Weapons.h"
+#include "Color.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/CommandPostAttributes.h"
@@ -86,6 +87,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Color_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -146,6 +148,8 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach( *new ConvexHulls( *result ) );
     result->Attach( *new DecisionalStates() );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
+    if( message.has_color() )
+        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Update( message );
     result->Polish();
 
@@ -192,6 +196,8 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new Speeds( static_.coordinateConverter_ ) );
     result->Attach( *new Weapons( controllers_, static_.objectTypes_, static_.objectTypes_ ) );
     result->Attach( *new Affinities( *result,controllers_.controller_, model_.teams_, dico ) );
+    if( message.has_color() )
+        result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
     AttachExtensions( *result );
 

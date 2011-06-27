@@ -3,6 +3,7 @@ HEADERS =
 SOURCES = AffinitiesDialog.cpp \
 AgentAffinitiesDialog.cpp \
 Application.cpp \
+ColorEditor.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
 ExerciseCreationDialog.cpp \
@@ -17,7 +18,6 @@ InitialStateDialog.cpp \
 InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \
 InitialStateTableResources.cpp \
-LogisticSuperiorEditor.inl \
 MainWindow.cpp \
 Menu.cpp \
 ModelBuilder.cpp \

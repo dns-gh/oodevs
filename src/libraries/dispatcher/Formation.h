@@ -11,6 +11,7 @@
 #define __Formation_h_
 
 #include "Formation_ABC.h"
+#include "protocol/SimulationSenders.h"
 
 namespace sword
 {
@@ -90,13 +91,14 @@ private:
 private:
     //! @name Member data
     //@{
-    const Model_ABC&                            model_;
-    const std::string                           name_;
-    dispatcher::Team_ABC&                       team_;
-    const kernel::HierarchyLevel_ABC&           level_;
-    std::string                                 symbol_;
-    std::auto_ptr< LogisticEntity >             logisticEntity_;
-    dispatcher::Formation_ABC*                  parent_;
+    const Model_ABC&                             model_;
+    const std::string                            name_;
+    dispatcher::Team_ABC&                        team_;
+    const kernel::HierarchyLevel_ABC&            level_;
+    std::string                                  symbol_;
+    sword::RgbColor                              color_;
+    std::auto_ptr< LogisticEntity >              logisticEntity_;
+    dispatcher::Formation_ABC*                   parent_;
     tools::Resolver< dispatcher::Formation_ABC > formations_;
     tools::Resolver< dispatcher::Automat_ABC >   automats_;
     std::map< std::string, std::string >         extensions_;

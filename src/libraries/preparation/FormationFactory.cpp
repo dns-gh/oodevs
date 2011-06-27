@@ -18,8 +18,10 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "StaticModel.h"
+#include "Color.h"
 
 using namespace kernel;
 
@@ -60,6 +62,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
     formation->Attach< kernel::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
     formation->Attach( *new TacticalLines() );
+    formation->Attach< kernel::Color_ABC >( *new Color( parent ) );
     formation->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
     formation->Polish();
     return formation;
@@ -78,6 +81,7 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
     formation->Attach< kernel::LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );
     formation->Attach( *new TacticalLines() );
+    formation->Attach< kernel::Color_ABC >( *new Color( xis ) );
     formation->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );
     formation->Polish();
     return formation;

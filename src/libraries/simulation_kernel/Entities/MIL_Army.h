@@ -45,6 +45,7 @@ class MIL_KnowledgeGroup;
 class MIL_ObjectManager;
 class MIL_Object_ABC;
 class MIL_Population;
+class MIL_Color;
 class PopulationFactory_ABC;
 
 // =============================================================================
@@ -179,6 +180,7 @@ private:
     DEC_KnowledgeBlackBoard_Army* pKnowledgeBlackBoard_;
     const MT_Converter< std::string, E_Diplomacy, sCaseInsensitiveLess >& diplomacyConverter_;
     std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
+    std::auto_ptr< MIL_Color > pColor_;
     //@}
 };
 

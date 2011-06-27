@@ -61,6 +61,7 @@ public:
     virtual void SelectColor( const Drawing_ABC& drawing ) = 0;
     virtual void SelectColor( const TerrainObjectProxy& proxy ) = 0;
     virtual QColor FindColor( const kernel::Entity_ABC& entity ) = 0;
+    virtual QColor FindBaseColor( const kernel::Entity_ABC& entity ) = 0;
     virtual QColor FindColor( const kernel::Intelligence_ABC& intelligence ) = 0;
     virtual QColor FindColor( const kernel::Knowledge_ABC& knowledge ) = 0;
     //@}

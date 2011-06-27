@@ -34,6 +34,7 @@ class MIL_AgentPion;
 class MIL_Automate;
 class MIL_AutomateLOG;
 class MIL_Army_ABC;
+class MIL_Color;
 class MIL_DictionaryExtensions;
 template < typename T > class PHY_ActionLogistic;
 
@@ -131,6 +132,7 @@ private:
     std::auto_ptr< MIL_AutomateLOG > pBrainLogistic_;
     boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > > pLogisticAction_;
     std::auto_ptr< MIL_DictionaryExtensions > pExtensions_;
+    std::auto_ptr< MIL_Color > pColor_;
     //@}
 };
 

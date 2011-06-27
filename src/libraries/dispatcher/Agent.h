@@ -122,6 +122,7 @@ private:
     dispatcher::Automat_ABC*                   automat_;
     const bool                                 bPC_;
     geometry::Point2d                          position_; // x = longitude, y = latitude
+    sword::RgbColor                            color_;
     unsigned int                               nDirection_;
     unsigned int                               nHeight_;
     unsigned int                               nAltitude_;

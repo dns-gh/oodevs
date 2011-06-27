@@ -12,6 +12,7 @@
 
 #include "Team_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "protocol/SimulationSenders.h"
 #include "tools/Resolver.h"
 
 namespace sword
@@ -20,6 +21,7 @@ namespace sword
     class ChangeDiplomacy;
     class ChangeDiplomacyAck;
     class PartyCreation;
+    class RgbColor;
 }
 
 namespace dispatcher
@@ -86,6 +88,7 @@ private:
     const Model_ABC& model_;
     sword::EnumDiplomacy nType_;
     kernel::Karma karma_;
+    sword::RgbColor color_;
     T_Diplomacies diplomacies_;
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups_;
     tools::Resolver< dispatcher::Formation_ABC >      formations_;

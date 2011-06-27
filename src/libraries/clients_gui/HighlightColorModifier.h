@@ -58,13 +58,6 @@ private slots:
     void OnBlink();
     //@}
 
-private:
-    //! @name Copy/Assignment
-    //@{
-    HighlightColorModifier( const HighlightColorModifier& );            //!< Copy constructor
-    HighlightColorModifier& operator=( const HighlightColorModifier& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Entity_ABC&, kernel::ContextMenu& );

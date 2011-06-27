@@ -141,7 +141,6 @@ void UnitPreviewIcon::Select( const kernel::Agent_ABC& element )
    selectedParent_ = &element;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: UnitPreviewIcon::UpdateSymbol
 // Created: SBO 2007-10-16

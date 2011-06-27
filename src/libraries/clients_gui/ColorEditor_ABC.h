@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ColorModifier_ABC_h_
-#define __ColorModifier_ABC_h_
+#ifndef gui_ColorEditor_ABC_h
+#define gui_ColorEditor_ABC_h
 
 #include <boost/noncopyable.hpp>
 
@@ -20,26 +20,27 @@ namespace kernel
 namespace gui
 {
 // =============================================================================
-/** @class  ColorModifier_ABC
-    @brief  Color modifier definition
+/** @class  ColorEditor_ABC
+    @brief  Color editor declaration
 */
-// Created: AGE 2008-05-14
+// Created: LGY 2011-06-23
 // =============================================================================
-class ColorModifier_ABC : private boost::noncopyable
+class ColorEditor_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ColorModifier_ABC() {}
-    virtual ~ColorModifier_ABC() {}
+             ColorEditor_ABC() {}
+    virtual ~ColorEditor_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base ) = 0;
+    virtual void Add( const kernel::Entity_ABC& entity, const QColor& color ) = 0;
+    virtual void Remove( const kernel::Entity_ABC& entity ) = 0;
     //@}
 };
 
 }
 
-#endif // __ColorModifier_ABC_h_
+#endif // gui_ColorEditor_ABC_h

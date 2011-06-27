@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Army.h"
-
 #include "Entities/Inhabitants/MIL_Inhabitant.h"
 #include "Entities/Objects/MIL_ObjectManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -29,6 +28,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_DictionaryExtensions.h"
+#include "Tools/MIL_Color.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/ArmyFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
@@ -80,6 +80,7 @@ MIL_Army::MIL_Army( xml::xistream& xis, ArmyFactory_ABC& armyFactory, FormationF
     , armyFactory_         ( armyFactory )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_Army( *this ) )
     , diplomacyConverter_  ( diplomacyConverter )
+    , pColor_              ( new MIL_Color( xis ) )
 {
     nType_ = diplomacyConverter_.Convert( xis.attribute< std::string >( "type" ) );
     xis >> xml::start( "communication" )
@@ -112,7 +113,8 @@ MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::strin
     , armyFactory_         ( armyFactory )
     , diplomacyConverter_  ( diplomacyConverter )
     , pKnowledgeBlackBoard_( 0 )
-    , pExtensions_       ( 0 )
+    , pExtensions_         ( 0 )
+    , pColor_              ( 0 )
 {
     // NOTHING
 }
@@ -173,12 +175,14 @@ namespace boost
 void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_DictionaryExtensions* pExtensions;
+    MIL_Color* pColor;
     file >> boost::serialization::base_object< MIL_Army_ABC >( *this );
     file >> const_cast< std::string& >( strName_ );
     file >> const_cast< unsigned int& >( nID_ );
     file >> nType_;
     file >> diplomacies_;
     file >> pExtensions;
+    file >> pColor;
     {
         std::size_t nNbr;
         file >> nNbr;
@@ -231,6 +235,7 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
     }
     file >> pKnowledgeBlackBoard_;
     pExtensions_.reset( pExtensions );
+    pColor_.reset( pColor );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,12 +245,14 @@ void MIL_Army::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_Army::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
+    const MIL_Color* const pColor = pColor_.get();
     file << boost::serialization::base_object< MIL_Army_ABC >( *this );
     file << const_cast< std::string& >( strName_ );
     file << const_cast< unsigned int& >( nID_ );
     file << nType_;
     file << diplomacies_;
     file << pExtensions;
+    file << pColor;
     {
         std::size_t size = knowledgeGroups_.size();
         file << size;
@@ -305,6 +312,7 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "name", strName_ )
             << xml::attribute( "type", diplomacyConverter_.RevertConvert( nType_ ) );
 
+    pColor_->WriteODB( xos );
     pExtensions_->WriteODB( xos );
 
     xos << xml::start( "communication" );
@@ -619,6 +627,7 @@ void MIL_Army::SendCreation() const
     asn().mutable_party()->set_id( nID_ );
     asn().set_name( strName_.c_str() );
     asn().set_type( sword::EnumDiplomacy( nType_ ) );
+    pColor_->SendFullState( asn );
     pExtensions_->SendFullState( asn );
     asn.Send( NET_Publisher_ABC::Publisher() );
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
