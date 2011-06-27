@@ -5424,6 +5424,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>A weapon using the same launcher and ammunition already exists. Please modify your choices.</source>
         <translation>Une arme utilisant le même lanceur et la même munition existe déjà. Veuillez modifier vos choix.</translation>
     </message>
+    <message>
+        <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
+        <translation>L'arme et la munition ne sont pas compatibles (direct/indirect). Veuillez modifier vos choix.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Weapons_Data</name>

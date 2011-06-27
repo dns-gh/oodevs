@@ -5413,6 +5413,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>A weapon using the same launcher and ammunition already exists. Please modify your choices.</source>
         <translation></translation>
     </message>
+    <message>
+        <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Weapons_Data</name>

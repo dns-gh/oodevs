@@ -124,6 +124,17 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapon_Wizard_Page0::CreateObject()
     ADN_Equipement_Data::CategoryInfo* pAmmo = ammoDotation.FindCategory( strAmmo );
     assert( pAmmo != 0 );
 
+    ADN_Equipement_Data::AmmoCategoryInfo& ammo = dynamic_cast< ADN_Equipement_Data::AmmoCategoryInfo& >( *pAmmo );
+    if( ammo.bDirect_.GetData() != pLauncher->bDirect_.GetData() &&
+        ammo.bIndirect_.GetData() != pLauncher->bIndirect_.GetData() )
+    {
+        QMessageBox::warning( this,
+            tr( "Warning" ),
+            tr( "The weapon and ammunition are not compatible (direct/indirect). Please modify your choices." ),
+            QMessageBox::Ok, QMessageBox::NoButton );
+        return 0;
+    }
+
     ADN_Weapons_Data::WeaponInfos* pResult = 0;
 
     if( pCopyRadioButton_->isOn() )
