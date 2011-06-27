@@ -12,7 +12,7 @@
 
 #include "MessageHandler_ABC.h"
 #include "MessageObserver_ABC.h"
-#include "MessageDispatcher_ABC.h"
+#include "MessageController_ABC.h"
 
 namespace plugins
 {
@@ -37,7 +37,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    MessageHandler( MessageDispatcher_ABC< Category >& controller, MessageObserver_ABC< Message >& observer,
+    MessageHandler( MessageController_ABC< Category >& controller, MessageObserver_ABC< Message >& observer,
                     T_Checker checker, T_Retriever retriever )
         : controller_( controller )
         , observer_  ( observer )
@@ -64,7 +64,7 @@ public:
 private:
     //! @name Member data
     //@{
-    MessageDispatcher_ABC< Category >& controller_;
+    MessageController_ABC< Category >& controller_;
     MessageObserver_ABC< Message >& observer_;
     T_Checker checker_;
     T_Retriever retriever_;

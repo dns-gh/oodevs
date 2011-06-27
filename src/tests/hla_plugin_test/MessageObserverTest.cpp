@@ -9,7 +9,7 @@
 
 #include "hla_plugin_test_pch.h"
 #include "protocol/Simulation.h"
-#include "hla_plugin/MessageDispatcher.h"
+#include "hla_plugin/MessageController.h"
 #include "hla_plugin/MessageObserver.h"
 
 using namespace plugins::hla;
@@ -27,7 +27,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE( message_handling_with_controller_and_observer )
 {
-    MessageDispatcher< sword::SimToClient_Content > dispatcher;
+    MessageController< sword::SimToClient_Content > dispatcher;
     MockMessageObserver observer;
     CONNECT( dispatcher, observer, control_begin_tick );
     CONNECT( dispatcher, observer, control_end_tick );

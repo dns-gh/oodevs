@@ -15,7 +15,7 @@
 #include "MockFederateAmbassadorFactory.h"
 #include "MockFederate.h"
 #include "MockRtiAmbassador.h"
-#include "MockMessageDispatcher.h"
+#include "MockMessageController.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::hla;
@@ -33,7 +33,7 @@ namespace
         MockRtiAmbassadorFactory rtiFactory;
         MockFederateAmbassadorFactory federateFactory;
         MockFederate* federate;
-        MockMessageDispatcher< sword::SimToClient_Content > controller;
+        MockMessageController< sword::SimToClient_Content > controller;
         MessageHandler_ABC< sword::SimToClient_Content >* listener;
         mock::sequence s;
     };

@@ -28,7 +28,7 @@ namespace plugins
 {
 namespace hla
 {
-    template< typename Category > class MessageDispatcher_ABC;
+    template< typename Category > class MessageController_ABC;
 
 // =============================================================================
 /** @class  MessageObserver
@@ -49,7 +49,7 @@ public:
     //! @name Operations
     //@{
     template< typename Category, typename Message >
-    void Connect( MessageDispatcher_ABC< Category >& controller, MessageObserver_ABC< Message >& observer,
+    void Connect( MessageController_ABC< Category >& controller, MessageObserver_ABC< Message >& observer,
                   typename MessageHandler< Category, Message >::T_Checker checker,
                   typename MessageHandler< Category, Message >::T_Retriever retriever )
     {

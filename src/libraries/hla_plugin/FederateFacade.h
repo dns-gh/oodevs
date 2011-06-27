@@ -51,7 +51,7 @@ namespace hla
 public:
     //! @name Constructors/Destructor
     //@{
-             FederateFacade( xml::xisubstream xis, MessageDispatcher_ABC< sword::SimToClient_Content >& controller, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory );
+             FederateFacade( xml::xisubstream xis, MessageController_ABC< sword::SimToClient_Content >& controller, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory );
     virtual ~FederateFacade();
     //@}
 

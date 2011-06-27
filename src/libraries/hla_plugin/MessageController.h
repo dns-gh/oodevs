@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_MessageDispatcher_h
-#define plugins_hla_MessageDispatcher_h
+#ifndef plugins_hla_MessageController_h
+#define plugins_hla_MessageController_h
 
-#include "MessageDispatcher_ABC.h"
+#include "MessageController_ABC.h"
 #include "MessageHandler_ABC.h"
 #include <vector>
 
@@ -19,19 +19,19 @@ namespace plugins
 namespace hla
 {
 // =============================================================================
-/** @class  MessageDispatcher
-    @brief  Message dispatcher
+/** @class  MessageController
+    @brief  Message controller
 */
 // Created: SLI 2011-06-24
 // =============================================================================
 template< typename Category >
-class MessageDispatcher : public MessageDispatcher_ABC< Category >
+class MessageController : public MessageController_ABC< Category >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageDispatcher() {}
-    virtual ~MessageDispatcher() {}
+             MessageController() {}
+    virtual ~MessageController() {}
     //@}
 
     //! @name Operations
@@ -67,4 +67,4 @@ private:
 }
 }
 
-#endif // plugins_hla_MessageDispatcher_h
+#endif // plugins_hla_MessageController_h
