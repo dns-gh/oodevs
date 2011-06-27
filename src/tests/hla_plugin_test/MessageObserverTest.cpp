@@ -9,7 +9,7 @@
 
 #include "hla_plugin_test_pch.h"
 #include "protocol/Simulation.h"
-#include "hla_plugin/MessageController.h"
+#include "hla_plugin/MessageDispatcher.h"
 #include "hla_plugin/MessageObserver.h"
 
 using namespace plugins::hla;
@@ -20,7 +20,7 @@ namespace
                               , private MessageObserver< sword::ControlEndTick >
     {
     public:
-        explicit ControlTickObserver( MessageController_ABC< sword::SimToClient_Content >& controller )
+        explicit ControlTickObserver( MessageDispatcher_ABC< sword::SimToClient_Content >& controller )
         {
             CONNECT( controller, sword::ControlBeginTick, control_begin_tick );
             CONNECT( controller, sword::ControlEndTick  , control_end_tick );
@@ -47,7 +47,7 @@ namespace
 
 BOOST_AUTO_TEST_CASE( message_handling_with_controller_and_observer )
 {
-    MessageController< sword::SimToClient_Content > controller;
+    MessageDispatcher< sword::SimToClient_Content > controller;
     ControlTickObserver receiver( controller );
     sword::SimToClient message;
     message.mutable_message()->mutable_control_begin_tick()->set_current_tick( 3 );

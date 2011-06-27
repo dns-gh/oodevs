@@ -76,7 +76,7 @@ private:
 // Name: FederateFacade constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-FederateFacade::FederateFacade( xml::xisubstream xis, MessageController_ABC< sword::SimToClient_Content >& controller, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory )
+FederateFacade::FederateFacade( xml::xisubstream xis, MessageDispatcher_ABC< sword::SimToClient_Content >& controller, AgentSubject_ABC& subject, const RtiAmbassadorFactory_ABC& rtiFactory, const FederateAmbassadorFactory_ABC& federateFactory, const std::string& pluginDirectory )
     : timeFactory_    ( new ::hla::SimpleTimeFactory() )
     , intervalFactory_( new ::hla::SimpleTimeIntervalFactory() )
     , ambassador_     ( rtiFactory.CreateAmbassador( *timeFactory_, *intervalFactory_, ::hla::RtiAmbassador_ABC::TimeStampOrder, xis.attribute< std::string >( "host", "localhost" ), xis.attribute< std::string >( "port", "8989" ) ) )

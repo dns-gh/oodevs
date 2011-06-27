@@ -45,7 +45,7 @@ namespace hla
     class FederateAmbassadorFactory_ABC;
     class AgentSubject_ABC;
     class ObjectResolver_ABC;
-    template< typename category > class MessageController;
+    template< typename category > class MessageDispatcher;
     class Stepper;
 
 // =============================================================================
@@ -84,7 +84,7 @@ private:
     std::auto_ptr< FederateAmbassadorFactory_ABC > pDebugFederateFactory_;
     std::auto_ptr< rpr::EntityTypeResolver_ABC > pEntityTypeResolver_;
     std::auto_ptr< AgentSubject_ABC > pSubject_;
-    std::auto_ptr< MessageController< sword::SimToClient_Content > > pMessageController_;
+    std::auto_ptr< MessageDispatcher< sword::SimToClient_Content > > pMessageDispatcher_;
     std::auto_ptr< FederateFacade > federate_;
     std::auto_ptr< Stepper > pStepper_;
     //@}

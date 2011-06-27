@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef plugins_hla_MessageController_ABC_h
-#define plugins_hla_MessageController_ABC_h
+#ifndef plugins_hla_MessageDispatcher_ABC_h
+#define plugins_hla_MessageDispatcher_ABC_h
 
 #include <boost/noncopyable.hpp>
 
@@ -19,13 +19,13 @@ namespace hla
     template< typename Category > class MessageHandler_ABC;
 
 // =============================================================================
-/** @class  MessageController_ABC
+/** @class  MessageDispatcher_ABC
     @brief  Message controller definition
 */
 // Created: SLI 2011-06-24
 // =============================================================================
 template< typename Category >
-class MessageController_ABC : private boost::noncopyable
+class MessageDispatcher_ABC : private boost::noncopyable
 {
 public:
     //! @name Types
@@ -36,8 +36,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             MessageController_ABC() {}
-    virtual ~MessageController_ABC() {}
+             MessageDispatcher_ABC() {}
+    virtual ~MessageDispatcher_ABC() {}
     //@}
 
     //! @name Operations
@@ -51,4 +51,4 @@ public:
 }
 }
 
-#endif // plugins_hla_MessageController_ABC_h
+#endif // plugins_hla_MessageDispatcher_ABC_h

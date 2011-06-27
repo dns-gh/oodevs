@@ -16,7 +16,7 @@
 #include "FederateAmbassadorFactory.h"
 #include "DebugFederateAmbassadorFactory.h"
 #include "ObjectResolver.h"
-#include "MessageController.h"
+#include "MessageDispatcher.h"
 #include "Stepper.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
@@ -55,12 +55,12 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublis
     , pDebugFederateFactory_( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger, *pObjectResolver_ ) )
     , pEntityTypeResolver_  ( new rpr::EntityTypeResolver( xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/" + xis.attribute< std::string >( "dis", "dis.xml" ) ) ) )
     , pSubject_             ( new AgentController( model, *pEntityTypeResolver_ ) )
-    , pMessageController_   ( new MessageController< sword::SimToClient_Content >() )
-    , federate_             ( new FederateFacade( xis, *pMessageController_, *pSubject_,
+    , pMessageDispatcher_   ( new MessageDispatcher< sword::SimToClient_Content >() )
+    , federate_             ( new FederateFacade( xis, *pMessageDispatcher_, *pSubject_,
                                                   xis.attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   xis.attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
                                                   config.BuildPluginDirectory( "hla" ) ) )
-   , pStepper_              ( new Stepper( xis, *pMessageController_, publisher ) )
+   , pStepper_              ( new Stepper( xis, *pMessageDispatcher_, publisher ) )
 {
     // NOTHING
 }
@@ -82,7 +82,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
 {
     try
     {
-        pMessageController_->Dispatch( message.message() );
+        pMessageDispatcher_->Dispatch( message.message() );
     }
     catch( ::hla::HLAException& e )
     {

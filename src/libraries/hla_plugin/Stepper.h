@@ -43,7 +43,7 @@ class Stepper : private MessageObserver< sword::ControlEndTick >
 public:
     //! @name Constructors/Destructor
     //@{
-             Stepper( xml::xistream& xis, MessageController_ABC< sword::SimToClient_Content >& controller, dispatcher::SimulationPublisher_ABC& publisher );
+             Stepper( xml::xistream& xis, MessageDispatcher_ABC< sword::SimToClient_Content >& controller, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~Stepper();
     //@}
 

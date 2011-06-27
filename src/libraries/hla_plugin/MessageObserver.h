@@ -11,7 +11,7 @@
 #define plugins_hla_MessageObserver_h
 
 #include "MessageObserver_ABC.h"
-#include "MessageController_ABC.h"
+#include "MessageDispatcher_ABC.h"
 #include "MessageHandler.h"
 #include <memory>
 #define BOOST_TYPEOF_SILENT
@@ -24,7 +24,7 @@ namespace plugins
 {
 namespace hla
 {
-    template< typename Category > class MessageController_ABC;
+    template< typename Category > class MessageDispatcher_ABC;
 
 // =============================================================================
 /** @class  MessageObserver
@@ -40,9 +40,13 @@ public:
     //@{
              MessageObserver() {}
     virtual ~MessageObserver() {}
+    //@}
 
+protected:
+    //! @name Operations
+    //@{
     template< typename Category, typename Message >
-    void Connect( MessageController_ABC< Category >& controller, MessageObserver_ABC< Message >& observer,
+    void Connect( MessageDispatcher_ABC< Category >& controller, MessageObserver_ABC< Message >& observer,
                   typename MessageHandler< Category, Message >::T_Checker checker,
                   typename MessageHandler< Category, Message >::T_Retriever retriever )
     {
