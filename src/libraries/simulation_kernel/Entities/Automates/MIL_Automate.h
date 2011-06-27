@@ -63,6 +63,7 @@ class MIL_DotationSupplyManager;
 class MIL_StockSupplyManager;
 class MIL_DotationSupplyManager;
 class MIL_StockSupplyManager;
+class MIL_Color;
 template < typename T > class PHY_ActionLogistic;
 
 // =============================================================================
@@ -291,6 +292,7 @@ private:
     std::auto_ptr< MIL_DotationSupplyManager >                  pDotationSupplyManager_;
     std::auto_ptr< MIL_StockSupplyManager >                     pStockSupplyManager_;
     std::auto_ptr< MIL_DictionaryExtensions >                   pExtensions_;
+    std::auto_ptr< MIL_Color > pColor_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );

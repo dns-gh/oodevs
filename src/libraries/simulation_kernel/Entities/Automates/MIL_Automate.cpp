@@ -45,6 +45,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_DictionaryExtensions.h"
 #include "Tools/MIL_Tools.h"
+#include "Tools/MIL_Color.h"
 #include "Checkpoints/SerializationTools.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/SimulationSenders.h"
@@ -112,6 +113,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pBrainLogistic_                ( 0 )
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
+    , pColor_                        ( new MIL_Color( xis ) )
 {
     Initialize( xis, gcPause, gcMult );
     if( pParentFormation_ )
@@ -143,6 +145,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
     , pExtensions_                   ( 0 )
+    , pColor_                        ( 0 )
 {
     // NOTHING
 }
@@ -173,6 +176,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
     , pExtensions_                   ( new MIL_DictionaryExtensions() )
+    , pColor_                        ( new MIL_Color() )
 {
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( knowledgeGroup );
     if( !pKnowledgeGroup_ )
@@ -272,6 +276,7 @@ namespace boost
 void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MIL_DictionaryExtensions* pExtensions;
+    MIL_Color* pColor;
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this )
          >> boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this )
          >> const_cast< unsigned int& >( nID_ );
@@ -294,6 +299,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> const_cast< MIL_Army_ABC*& >( pArmySurrenderedTo_ )
          >> nTickRcDotationSupplyQuerySent_
          >> pExtensions
+         >> pColor
          >> pLogisticHierarchy_
          >> pBrainLogistic_
          >> pDotationSupplyManager_
@@ -304,6 +310,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_.get() ) );
         RegisterAction( pLogisticAction_ );
     }
+    pColor_.reset( pColor );
     pExtensions_.reset( pExtensions );
 }
 
@@ -314,6 +321,7 @@ void MIL_Automate::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     const MIL_DictionaryExtensions* const pExtensions = pExtensions_.get();
+    const MIL_Color* const pColor = pColor_.get();
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this )
          << boost::serialization::base_object< logistic::LogisticHierarchyOwner_ABC >( *this )
          << const_cast< unsigned int& >( nID_ );
@@ -331,6 +339,7 @@ void MIL_Automate::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
          << pArmySurrenderedTo_
          << nTickRcDotationSupplyQuerySent_
          << pExtensions
+         << pColor
          << pLogisticHierarchy_
          << pBrainLogistic_
          << pDotationSupplyManager_
@@ -450,6 +459,7 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
         << xml::attribute( "engaged", bEngaged_ )
         << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetId() )
         << xml::attribute( "type", pType_->GetName() );
+    pColor_->WriteODB( xos );
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         ( **it ).WriteODB( xos );
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
@@ -862,6 +872,7 @@ void MIL_Automate::SendCreation( unsigned int context ) const
     message().set_logistic_level( pBrainLogistic_.get() ?
         (sword::EnumLogisticLevel)pBrainLogistic_->GetLogisticLevel().GetID() : sword::none );
     message().set_name( GetName() );
+    pColor_->SendFullState( message );
     assert( pParentAutomate_ || pParentFormation_ );
     if( pParentAutomate_ )
         message().mutable_parent()->mutable_automat()->set_id( pParentAutomate_->GetID() );

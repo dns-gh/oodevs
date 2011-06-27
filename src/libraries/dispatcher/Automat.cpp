@@ -51,6 +51,8 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
     if( ! parentFormation_ && ! parentAutomat_ )
         throw std::runtime_error( __FUNCTION__ ": invalid parent for automat " + msg.name() );
     knowledgeGroup_->Register( *this );
+    if( msg.has_color() )
+        color_ = msg.color();
     if( parentFormation_ )
         parentFormation_->Register( *this );
     else if( parentAutomat_ )
@@ -281,7 +283,8 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
         logisticEntity_->Send( asn() );
     else
         asn().set_logistic_level( sword::none );
-
+    if( color_.IsInitialized() )
+        *asn().mutable_color() = color_;
     asn.Send( publisher );
 }
 
