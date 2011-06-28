@@ -51,27 +51,55 @@ namespace
 
 BOOST_AUTO_TEST_CASE( observer_connects_to_controller_and_receives_messages )
 {
-    MessageController< Category > dispatcher;
+    MessageController< Category > controller;
     MockMessageObserver observer;
-    CONNECT( dispatcher, observer, first_message );
-    CONNECT( dispatcher, observer, second_message );
+    CONNECT( controller, observer, first_message );
+    CONNECT( controller, observer, second_message );
     mock::sequence s;
     MOCK_EXPECT( observer, NotifyFirst ).once().in( s );
     MOCK_EXPECT( observer, NotifySecond ).once().in( s );
     Category category;
-    dispatcher.Dispatch( category );
+    controller.Dispatch( category );
 }
 
 BOOST_AUTO_TEST_CASE( observer_can_explicitly_disconnect_from_controller )
 {
-    MessageController< Category > dispatcher;
+    MessageController< Category > controller;
     MockMessageObserver observer;
-    CONNECT( dispatcher, observer, first_message );
-    CONNECT( dispatcher, observer, second_message );
-    DISCONNECT( dispatcher, observer, first_message );
+    CONNECT( controller, observer, first_message );
+    CONNECT( controller, observer, second_message );
+    DISCONNECT( controller, observer, first_message );
     MOCK_EXPECT( observer, NotifySecond ).once();
     Category category;
-    dispatcher.Dispatch( category );
+    controller.Dispatch( category );
+}
+
+BOOST_AUTO_TEST_CASE( observer_can_connect_to_multiple_controllers )
+{
+    MessageController< Category > controller1;
+    MessageController< Category > controller2;
+    MockMessageObserver observer;
+    Category category;
+    CONNECT( controller1, observer, first_message );
+    CONNECT( controller2, observer, first_message );
+    MOCK_EXPECT( observer, NotifyFirst ).once();
+    controller1.Dispatch( category );
+    MOCK_EXPECT( observer, NotifyFirst ).once();
+    controller2.Dispatch( category );
+}
+
+BOOST_AUTO_TEST_CASE( observer_can_disconnect_from_on_controller )
+{
+    MessageController< Category > controller1;
+    MessageController< Category > controller2;
+    MockMessageObserver observer;
+    Category category;
+    CONNECT( controller1, observer, first_message );
+    CONNECT( controller2, observer, first_message );
+    DISCONNECT( controller1, observer, first_message );
+    controller1.Dispatch( category );
+    MOCK_EXPECT( observer, NotifyFirst ).once();
+    controller2.Dispatch( category );
 }
 
 namespace
@@ -100,11 +128,11 @@ namespace
 
 BOOST_AUTO_TEST_CASE( observer_automatically_disconnect_at_destruction )
 {
-    MockMessageController< Category > dispatcher;
+    MockMessageController< Category > controller;
     mock::sequence s;
-    MOCK_EXPECT( dispatcher, Register ).once().in( s );
-    MOCK_EXPECT( dispatcher, Unregister ).once().in( s );
+    MOCK_EXPECT( controller, Register ).once().in( s );
+    MOCK_EXPECT( controller, Unregister ).once().in( s );
     {
-        Observer observer( dispatcher );
+        Observer observer( controller );
     }
 }

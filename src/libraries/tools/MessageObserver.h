@@ -12,12 +12,13 @@
 
 #include "MessageObserver_ABC.h"
 #include "MessageHandler.h"
-#include <memory>
+#include <boost/shared_ptr.hpp>
 #define BOOST_TYPEOF_SILENT
 #include <boost/typeof/typeof.hpp>
 #include <boost/function_types/result_type.hpp>
 #include <boost/type_traits.hpp>
 #undef BOOST_TYPEOF_SILENT
+#include <map>
 
 #define CONNECT( sender, receiver, name ) \
     (receiver).MessageObserver< boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( sender )::category_type::##name ) >::type >::type >::type >::\
@@ -26,7 +27,7 @@
 
 #define DISCONNECT( sender, receiver, name ) \
     (receiver).MessageObserver< boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( sender )::category_type::##name ) >::type >::type >::type >::\
-     Disconnect< BOOST_TYPEOF( sender )::category_type, boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( sender )::category_type::##name ) >::type >::type >::type >()
+     Disconnect< BOOST_TYPEOF( sender )::category_type, boost::remove_const< boost::remove_reference< boost::function_types::result_type< BOOST_TYPEOF( &BOOST_TYPEOF( sender )::category_type::##name ) >::type >::type >::type >( sender )
 
 namespace tools
 {
@@ -55,19 +56,19 @@ public:
                   typename MessageHandler< Category, Message >::T_Checker checker,
                   typename MessageHandler< Category, Message >::T_Retriever retriever )
     {
-        handler_.reset( new MessageHandler< Category, Message >( controller, observer, checker, retriever ) );
+        handlers_[ &controller ].reset( new MessageHandler< Category, Message >( controller, observer, checker, retriever ) );
     }
     template< typename Category, typename Message >
-    void Disconnect()
+    void Disconnect( MessageController_ABC< Category >& controller )
     {
-        handler_.reset();
+        handlers_.erase( &controller );
     }
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< Handler_ABC > handler_;
+    std::map< void*, boost::shared_ptr< Handler_ABC > > handlers_;
     //@}
 };
 
