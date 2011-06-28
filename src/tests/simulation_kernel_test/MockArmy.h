@@ -56,6 +56,7 @@ MOCK_BASE_CLASS( MockArmy, MIL_Army_ABC )
     MOCK_METHOD( GetID, 0 )
     MOCK_METHOD( GetName, 0 )
     MOCK_METHOD( GetKnowledge, 0 )
+    MOCK_METHOD( GetColor, 0 )
     MOCK_METHOD( GetKnowledgeGroups, 0 )
 
     template< typename Archive >
