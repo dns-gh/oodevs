@@ -6035,6 +6035,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Equipment - Shall contain at least one breakdown for </source>
         <translation>Equipo - Debe tener al menos una falla</translation>
     </message>
+    <message>
+        <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Equipment_Data</name>

@@ -5426,7 +5426,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>The weapon and ammunition are not compatible (direct/indirect). Please modify your choices.</source>
-        <translation>L'arme et la munition ne sont pas compatibles (direct/indirect). Veuillez modifier vos choix.</translation>
+        <translation>L&apos;arme et la munition ne sont pas compatibles (direct/indirect). Veuillez modifier vos choix.</translation>
     </message>
 </context>
 <context>
@@ -6045,6 +6045,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Equipment - Invalid armor and/or volume</source>
         <translation>Equipement - Blindage et/ou volume invalide</translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
+        <translation>Equipement - Type de capteur invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>

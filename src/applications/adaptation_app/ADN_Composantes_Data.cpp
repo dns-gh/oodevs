@@ -893,6 +893,8 @@ void ADN_Composantes_Data::SensorInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "height", rHeight_ )
           >> xml::attribute( "type", type );
     ADN_Sensors_Data::SensorInfos* pSensor = ADN_Workspace::GetWorkspace().GetSensors().GetData().FindSensor( type );
+    if( pSensor == NULL )
+        throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).ascii(),  tools::translate( "Composante_Data", "Equipment - Invalid sensor type '%1'" ).arg( type.c_str() ).ascii() );
     ptrSensor_ = pSensor;
 }
 
