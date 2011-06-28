@@ -127,15 +127,18 @@ void FilterCommand::ComputePath()
 
     for( std::vector< std::string >::const_iterator it = valuesVector.begin(); it != valuesVector.end(); ++it )
     {
-        bfs::directory_iterator end_itr;
-        for( bfs::directory_iterator dir_it( *it ); dir_it != end_itr; ++dir_it )
-            if( !bfs::is_directory( dir_it->path() ) )
-            {
-                std::string file = dir_it->path().leaf();
-                size_t pos = file.rfind( ".exe" );
-                if( pos != std::string::npos && pos == file.size() - 4 && file == command_ )
-                    path_ = *it;
-            }
+        if( bfs::exists( *it ) && bfs::is_directory( *it ) )
+        {
+            bfs::directory_iterator end_itr;
+            for( bfs::directory_iterator dir_it( *it ); dir_it != end_itr; ++dir_it )
+                if( !bfs::is_directory( dir_it->path() ) )
+                {
+                    std::string file = dir_it->path().leaf();
+                    size_t pos = file.rfind( ".exe" );
+                    if( pos != std::string::npos && pos == file.size() - 4 && file == command_ )
+                        path_ = *it;
+                }
+        }
     }
     emit statusChanged( IsValid() );
 }
