@@ -892,7 +892,7 @@
                 <arg value="${adaptation_test.dir2}/physical.xml"/>
             </exec>
             <compare-dirs dir1="@{input}" dir2="${adaptation_test.dir2}"
-                excludes="**/Pathfind.xml,**/dis.xml,**/HumanProtections.xml,**/Fire.xml,**/MedicalTreatment.xml,**/NBCAgents.xml,**/templates.xml,**/ObjectNames.xml,**/mapping.xml,**/DrawingTemplates.xml,**/FOM.xml,**/Extensions.xml,**/scores.xml,**/symbols.xml,**/Filters,**/Filters/*"
+                excludes="**/Pathfind.xml,**/dis.xml,**/HumanProtections.xml,**/Fire.xml,**/MedicalTreatment.xml,**/NBCAgents.xml,**/templates.xml,**/ObjectNames.xml,**/mapping.xml,**/DrawingTemplates.xml,**/FOM.xml,**/Extensions.xml,**/scores.xml,**/symbols.xml,**/Filters/**"
                 includes="**/*.xml" property="adaptation_test.is-different"/>
             <if>
                 <isset property="adaptation_test.is-different"/>
