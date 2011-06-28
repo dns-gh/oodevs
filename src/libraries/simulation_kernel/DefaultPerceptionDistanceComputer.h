@@ -41,8 +41,8 @@ public:
 private:
     //! @name Member data
     //@{
-    std::vector< double > modifiers_;
     double elongation_;
+    double factor_;
     //@}
 };
 

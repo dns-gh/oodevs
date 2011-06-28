@@ -21,6 +21,7 @@ namespace detection
 // -----------------------------------------------------------------------------
 DefaultPerceptionDistanceComputer::DefaultPerceptionDistanceComputer()
     : elongation_( 0 )
+    , factor_( 1. )
 {
     // NOTHING
 }
@@ -41,7 +42,7 @@ DefaultPerceptionDistanceComputer::~DefaultPerceptionDistanceComputer()
 void DefaultPerceptionDistanceComputer::AddModifier( double modifier )
 {
     if( modifier != 0. )
-        modifiers_.push_back( modifier );
+        factor_ *= modifier;
 }
 
 // -----------------------------------------------------------------------------
@@ -60,12 +61,7 @@ void DefaultPerceptionDistanceComputer::AddElongationFactor( double modifier )
 // -----------------------------------------------------------------------------
 double DefaultPerceptionDistanceComputer::GetFactor() const
 {
-    double factor = 1.0;
-    for( std::vector< double >::const_iterator it = modifiers_.begin(); it != modifiers_.end(); it++ )
-    {
-        factor *= *it;
-    }
-    return factor;
+    return factor_;
 }
 
 // -----------------------------------------------------------------------------
