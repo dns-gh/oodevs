@@ -59,7 +59,7 @@
     <match-if non-versioned-schema="schemas/physical/Units.xsd" assign-schema="schemas/3.0/physical/Units.xsd"/>
     <match-if non-versioned-schema="schemas/physical/Objects.xsd" assign-schema="schemas/3.0/physical/Objects.xsd"/>
     <match-if non-versioned-schema="schemas/physical/Missions.xsd" assign-schema="schemas/3.0/physical/Missions.xsd"/>
-        
+
     <!-- common -->
     <match-if non-versioned-schema="schemas/common/Extensions.xsd" assign-schema="schemas/3.0/common/Extensions.xsd"/>
   </default>

@@ -50,7 +50,6 @@ class IntelligencesModel;
 class ModelChecker_ABC;
 class ObjectsModel;
 class ObjectFactory_ABC;
-class OrbatImportFilter;
 class ScoresModel;
 class ScoreFactory_ABC;
 class SuccessFactorsModel;
@@ -75,10 +74,10 @@ public:
     //! @name Operations
     //@
     void Load( const tools::ExerciseConfig& config, std::string& loadingErrors );
-    void Import( const std::string& orbat, const OrbatImportFilter& filter, std::string& loadingErrors );
     bool Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker );
     void Purge();
     QString GetName() const;
+    IdManager& GetIdManager() const;
     bool IsLoaded() const;
     //@}
 

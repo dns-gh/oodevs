@@ -10,6 +10,8 @@
 #include "preparation_app_pch.h"
 #include "Menu.h"
 #include "moc_Menu.cpp"
+#include "FilterDialog.h"
+#include "FilterDialogs.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/FourStateOption.h"
@@ -65,25 +67,25 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& exportDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
     : QMenuBar    ( pParent )
     , controllers_( controllers )
 {
-    QPopupMenu* menu = new QPopupMenu( this );
-    menu->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
-    menu->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
-    Wrap( menu->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), CTRL + Key_W ) );
-    menu->insertSeparator();
-    Wrap( menu->insertItem( tools::translate( "Menu", "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I ) );
-    Wrap( menu->insertItem( tools::translate( "Menu", "&Export..." ), &exportDialog, SLOT( exec() ), CTRL + Key_E ) );
-    menu->insertSeparator();
-    saveItem_ = menu->insertItem( MAKE_ICON( save ), tools::translate( "Menu", "&Save" )   , parent(), SLOT( Save() ),   CTRL + Key_S );
-    Wrap( menu->insertItem( MAKE_ICON( saveas ), tools::translate( "Menu", "Save &As" ), parent(), SLOT( SaveAs() ), CTRL + SHIFT + Key_S ) );
-    menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
-    insertItem( tools::translate( "Menu", "&File" ), menu );
+    fileMenu_ = new QPopupMenu( this );
+    fileMenu_->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
+    fileMenu_->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
+    Wrap( fileMenu_->insertItem( /*MAKE_ICON( refresh ),*/ tools::translate( "Menu", "&Reload" ), parent(), SLOT( ReloadExercise() ), CTRL + Key_R ) ); // $$$$ ABR 2011-06-24: Add a refresh icon
+    Wrap( fileMenu_->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), CTRL + Key_W ) );
+    fileMenu_->insertSeparator();
+    // $$$$ ABR 2011-06-24: Filters dialogs insert themselves here
+    fileMenu_->insertSeparator();
+    saveItem_ = fileMenu_->insertItem( MAKE_ICON( save ), tools::translate( "Menu", "&Save" )   , parent(), SLOT( Save() ),   CTRL + Key_S );
+    Wrap( fileMenu_->insertItem( MAKE_ICON( saveas ), tools::translate( "Menu", "Save &As" ), parent(), SLOT( SaveAs() ), CTRL + SHIFT + Key_S ) );
+    fileMenu_->insertSeparator();
+    fileMenu_->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
+    insertItem( tools::translate( "Menu", "&File" ), fileMenu_ );
 
-    menu = new QPopupMenu( this );
+    QPopupMenu* menu = new QPopupMenu( this );
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "View/Edit..." ), &profileDialog, SLOT( exec() ) );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
@@ -205,4 +207,24 @@ void Menu::EnableItems( bool status )
 void Menu::Wrap( int item )
 {
     exerciseItems_.push_back( item );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::InsertFileMenuEntry
+// Created: ABR 2011-06-24
+// -----------------------------------------------------------------------------
+int Menu::InsertFileMenuEntry( const QString& name, const QObject* receiver, const char* member, const QKeySequence& accel /*= 0*/, int index /*= -1*/ )
+{
+    int result = fileMenu_->insertItem( name, receiver, member, accel, -1, index );
+    Wrap( result );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Menu::RemoveFileMenuEntry
+// Created: ABR 2011-06-24
+// -----------------------------------------------------------------------------
+void Menu::RemoveFileMenuEntry( int index )
+{
+    fileMenu_->removeItemAt( index );
 }

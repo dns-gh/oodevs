@@ -121,11 +121,12 @@ void DrawerPanel::NotifyCreated( const DrawingCategory& category )
 // -----------------------------------------------------------------------------
 void DrawerPanel::NotifyDeleted( const DrawingCategory& category )
 {
-    T_CategoryItems::const_iterator it = categories_.find( &category );
+    T_CategoryItems::iterator it = categories_.find( &category );
     if( it != categories_.end() )
     {
         toolBox_->removeItem( it->second );
         delete it->second;
+        categories_.erase( it );
     }
 }
 

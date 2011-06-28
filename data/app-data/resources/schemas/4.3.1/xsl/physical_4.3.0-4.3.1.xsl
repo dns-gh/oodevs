@@ -15,6 +15,11 @@
                   <xsl:attribute name="file">symbols.xml</xsl:attribute>
               </xsl:element>
           </xsl:if>
+          <xsl:if test="count( ./filters ) = 0">
+              <xsl:element name="filters">
+                  <xsl:attribute name="file">Filters/Filters.xml</xsl:attribute>
+              </xsl:element>
+          </xsl:if>
       </xsl:copy>
   </xsl:template>
 

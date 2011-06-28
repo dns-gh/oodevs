@@ -33,7 +33,6 @@
               </xs:element>
             </xs:sequence>
             <xs:attribute name="id" type="T_SectionId" use="required"/>
-            <xs:attribute name="menu" type="T_SectionMenu" use="required"/>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
@@ -86,7 +85,6 @@
           <xs:enumeration value="exercise"/>
           <xs:enumeration value="profiles"/>
           <xs:enumeration value="scores"/>
-          <xs:enumeration value="drawings"/>
           <xs:enumeration value="success-factors"/>
           <xs:enumeration value="urbanstate"/>
           <xs:enumeration value="weather"/>

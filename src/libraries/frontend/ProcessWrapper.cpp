@@ -72,6 +72,40 @@ void ProcessWrapper::Run()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProcessWrapper::StartAndBlockMainThread
+// Created: ABR 2011-06-27
+// -----------------------------------------------------------------------------
+void ProcessWrapper::StartAndBlockMainThread()
+{
+    process_->Attach( shared_from_this() );
+    thread_.reset( new boost::thread( boost::bind( &ProcessWrapper::RunBlockingMainThread, this ) ) );
+    thread_->join();
+    process_.reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProcessWrapper::RunBlockingMainThread
+// Created: ABR 2011-06-27
+// -----------------------------------------------------------------------------
+void ProcessWrapper::RunBlockingMainThread()
+{
+    if( process_.get() )
+    {
+        try
+        {
+            process_->Start();
+            while( process_->Wait() ) {}
+        }
+        catch( std::exception& e )
+        {
+            Stop();
+            observer_.NotifyError( e.what() );
+            return;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProcessWrapper::Stop
 // Created: SBO 2010-11-10
 // -----------------------------------------------------------------------------

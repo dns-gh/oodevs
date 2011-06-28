@@ -31,7 +31,6 @@
 #include "SuccessFactorsModel.h"
 #include "SuccessFactorFactory.h"
 #include "IntelligencesModel.h"
-#include "OrbatReIndexer.h"
 #include "UrbanModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
@@ -202,19 +201,6 @@ void Model::Load( const tools::ExerciseConfig& config, std::string& loadingError
     SetLoaded( true );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Model::Import
-// Created: SBO 2008-04-07
-// -----------------------------------------------------------------------------
-void Model::Import( const std::string& orbat, const OrbatImportFilter& filter, std::string& loadingErrors )
-{
-    xml::xifstream xis( orbat );
-    xml::xostringstream xos;
-    OrbatReIndexer reindexer( xis, xos, idManager_, filter );
-    xml::xistringstream newXis( xos.str() );
-    teams_.Load( newXis, *this, loadingErrors );
-}
-
 namespace
 {
     template< class T >
@@ -269,6 +255,15 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
 QString Model::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetIdManager
+// Created: ABR 2011-06-22
+// -----------------------------------------------------------------------------
+IdManager& Model::GetIdManager() const
+{
+    return idManager_;
 }
 
 // -----------------------------------------------------------------------------

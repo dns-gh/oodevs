@@ -69,7 +69,7 @@ void TransformationsFactory::Transform( const std::string& name, xml::xistream& 
     else if( function == "contains" )
         Transform2< ::Contains< K > >( name, xis, result ); // bool ( zone, position )
     else if( function == "filter" )
-        Transform2< Filter< K, T > >( name, xis, result ); // T ( bool, T )
+        Transform2< aar::Filter< K, T > >( name, xis, result ); // T ( bool, T )
     else if( function == "is-one-of" )
         Transform1< IsOneOf< K, NumericValue > >( name, xis, result ); // bool ( T )
     else if( function == "derivate" )

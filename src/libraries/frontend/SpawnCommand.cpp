@@ -87,9 +87,16 @@ void SpawnCommand::Start()
         0, 0, 0
     };
     std::string debug( commandLine_.local8Bit().data() ) ;
-    if( !CreateProcessA( 0, commandLine_.local8Bit().data(),
-                0, 0, TRUE, CREATE_NEW_CONSOLE, 0,
-                workingDirectory_.c_str(), &startupInfo, &internal_->pid_) )
+    if( !CreateProcessA( 0,                                     // lpApplicationName
+                         commandLine_.local8Bit().data(),       // lpCommandLine
+                         0,                                     // lpProcessAttributes
+                         0,                                     // lpThreadAttributes
+                         TRUE,                                  // bInheritHandles
+                         CREATE_NEW_CONSOLE,                    // dwCreationFlags
+                         0,                                     // lpEnvironment
+                         workingDirectory_.c_str(),             // lpCurrentDirectory
+                         &startupInfo,                          // lpStartupInfo
+                         &internal_->pid_) )                    // lpProcessInformation
     {
         DWORD errCode = GetLastError();
         throw std::exception( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).ascii() );

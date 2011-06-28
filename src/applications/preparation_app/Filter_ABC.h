@@ -7,21 +7,23 @@
 //
 // *****************************************************************************
 
-#ifndef __mission_tester_Filter_ABC_h_
-#define __mission_tester_Filter_ABC_h_
+#ifndef __Filter_ABC_h_
+#define __Filter_ABC_h_
 
 #include <boost/noncopyable.hpp>
+#include <qobject.h>
 
-namespace mission_tester
-{
 // =============================================================================
 /** @class  Filter_ABC
     @brief  Filter_ABC
 */
-// Created: PHC 2011-03-31
+// Created: ABR 2011-06-17
 // =============================================================================
-class Filter_ABC : private boost::noncopyable
+class Filter_ABC : public QObject
+                 , private boost::noncopyable
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -31,10 +33,19 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Accepts( const std::string& criterion ) const = 0;
+    virtual void Execute() = 0;
+    virtual const std::string GetName() const = 0;
+    virtual const std::string GetDescription() const = 0;
+    virtual QWidget* CreateParametersWidget( QWidget* parent ) = 0;
+    virtual bool IsValid() const = 0;
+    virtual bool NeedToReloadExercise() const = 0;
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void statusChanged( bool valid );
     //@}
 };
 
-}
-
-#endif // __mission_tester_Filter_ABC_h_
+#endif // __Filter_ABC_h_

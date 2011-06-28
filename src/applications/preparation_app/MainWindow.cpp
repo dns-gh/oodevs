@@ -16,9 +16,10 @@
 #include "CreationPanels.h"
 #include "Dialogs.h"
 #include "ExerciseDialog.h"
-#include "ExportDialog.h"
 #include "FileToolbar.h"
-#include "ImportOrbatDialog.h"
+#include "FilterDialog.h"
+#include "FilterDialogs.h"
+#include "FilterOrbatReIndexer.h"
 #include "IntelligencesLayer.h"
 #include "LimitsLayer.h"
 #include "Menu.h"
@@ -249,8 +250,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // Dialogs
     QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_, model.teams_.InfiniteDotations() );
-    QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
-    QDialog* exportDialog = new ExportDialog( this, config_ );
     pScoreDialog_ = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_, config_ );
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     fileToolBar_ = new FileToolbar( this, controllers );
@@ -266,7 +265,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 
     // Menu
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
-    menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *exportDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
+    menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
+    filterDialogs_ = new FilterDialogs( this, config_, model, *menu_ );
 
     // Layers
     CreateLayers( *pCreationPanel_, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer, *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker );
@@ -443,6 +443,8 @@ bool MainWindow::Load()
         selector_->Close();
         selector_->Load();
         staticModel_.Load( config_ );
+        filterDialogs_->Purge();
+        filterDialogs_->Load();
         if( staticModel_.extensions_.tools::StringResolver< ExtensionType >::Find( "orbat-attributes" ) )
             setAppropriate( pExtensionsPanel_, true );
         else
@@ -475,6 +477,7 @@ void MainWindow::Close()
     model_.Purge();
     staticModel_.Purge();
     selector_->Close();
+    filterDialogs_->Purge();
     SetWindowTitle( false );
     EnableWorkspace( false );
 }
@@ -517,6 +520,17 @@ void MainWindow::LoadExercise()
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                                    , ( tr( "Error loading exercise: " ) + e.what() ).ascii() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::ReloadExercise
+// Created: ABR 2011-06-24
+// -----------------------------------------------------------------------------
+void MainWindow::ReloadExercise()
+{
+    assert( model_.IsLoaded() && !needsSaving_ );
+    Close();
+    DoLoad( config_.GetExerciseFile().c_str() );
 }
 
 namespace

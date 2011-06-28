@@ -16,6 +16,7 @@
 
 class QMainWindow;
 class QDialog;
+class FilterDialogs;
 
 namespace kernel
 {
@@ -47,9 +48,9 @@ class Menu : public QMenuBar
 public:
     //! @name Constructors/Destructor
     //@{
-             Menu( QMainWindow* pParent, kernel::Controllers& controllers
-                 , QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& exportDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog
-                 , gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help );
+             Menu( QMainWindow* pParent, kernel::Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog,
+                   QDialog& profileWizardDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog,
+                   gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help );
     virtual ~Menu();
     //@}
 
@@ -58,6 +59,8 @@ public:
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     void EnableSaveItem( bool status );
+    int InsertFileMenuEntry( const QString& name, const QObject* receiver, const char* member, const QKeySequence& accel = 0, int index = -1 );
+    void RemoveFileMenuEntry( int index );
     //@}
 
 private:
@@ -71,8 +74,9 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    std::vector< int > exerciseItems_;
-    int saveItem_;
+    std::vector< int >   exerciseItems_;
+    QPopupMenu*          fileMenu_;
+    int                  saveItem_;
     //@}
 };
 

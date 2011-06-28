@@ -205,56 +205,6 @@
     </message>
 </context>
 <context>
-    <name>ExportDialog</name>
-    <message>
-        <source>Export exercise data</source>
-        <translation>Exportar datos de ejercicio</translation>
-    </message>
-    <message>
-        <source>Select export filter:</source>
-        <translation>Seleccionar filtro de exportación:</translation>
-    </message>
-    <message>
-        <source>Select output directory:</source>
-        <translation>Seleccionar directorio de salida:</translation>
-    </message>
-    <message>
-        <source>Output to: </source>
-        <translation>Salida : </translation>
-    </message>
-    <message>
-        <source>Browse...</source>
-        <translation>Explorar...</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
-        <source>Select output directory</source>
-        <translation>Seleccionar directorio de salida</translation>
-    </message>
-    <message>
-        <source>Description:</source>
-        <translation>Descripción:</translation>
-    </message>
-    <message>
-        <source>Error exporting data</source>
-        <translation>Error exportando datos</translation>
-    </message>
-</context>
-<context>
-    <name>ExportFilter</name>
-    <message>
-        <source>No description available</source>
-        <translation>No hay descripción disponible</translation>
-    </message>
-</context>
-<context>
     <name>FileToolbar</name>
     <message>
         <source>New</source>
@@ -282,59 +232,155 @@
     </message>
 </context>
 <context>
-    <name>ImportOrbatDialog</name>
+    <name>Filter</name>
     <message>
-        <source>Import order of battle</source>
-        <translation>Importar orden de batalla</translation>
+        <source>No description available</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterCommand</name>
+    <message>
+        <source>Command overview</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select file to import:</source>
-        <translation>Seleccionar archivo a importar:</translation>
+        <source>Command:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Order of battle: </source>
-        <translation>Orden de batalla: </translation>
+        <source>Path:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation>Explorar...</translation>
+        <source>File not found, move your binary to the filters directory, or update the $PATH environment variable.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sides:</source>
-        <translation>Bandos:</translation>
+        <source>Reload exercise:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterDialog</name>
+    <message>
+        <source>Select filter:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import options:</source>
-        <translation>Opciones de importación:</translation>
-    </message>
-    <message>
-        <source>Objects</source>
-        <translation>Objetos</translation>
+        <source>Description:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Ok</translation>
+        <translation type="unfinished">Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
+        <source>Error on filter execution</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterDialogs</name>
+    <message>
+        <source>Error loading filters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown section: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterManager</name>
+    <message>
+        <source>Bad filter attribute, either &apos;command&apos; attribute or &apos;target&apos;, &apos;xsl&apos; and &apos;output&apos; attributes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterOrbatReIndexer</name>
+    <message>
         <source>Load orbat file</source>
-        <translation>Cargar archivo de orden de batalla</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error loading file</source>
-        <translation>Error cargando archivo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File does not appear to be a valid orbat file.
-Please select an other orbat file to import.</source>
-        <translation>El archivo no parece ser un orden de batalla válido.
-Por favor seleccione un archivo de orden de batalla para importar.</translation>
+        <source>Select order of battle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter path to the new orbat here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import options:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Objetos</translation>
     </message>
     <message>
         <source>Crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following entities cannot be loaded: </source>
+        <translation type="unfinished">Las siguientes entidades no pueden ser cargadas: </translation>
+    </message>
+    <message>
+        <source>File does not appear to be a valid orbat file.&lt;br&gt;Please select an other orbat file to import.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parties overview:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error loading the new orbat file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import an order of battle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import an order of battle into current exercise.&lt;br&gt;May import the populations and the objects if relative checkbox are checked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FilterXsl</name>
+    <message>
+        <source>Select output directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter output directory here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -789,10 +835,6 @@ Do you want to save anyway?</source>
         <translation>Enlaces rotos</translation>
     </message>
     <message>
-        <source>&amp;Import...</source>
-        <translation>&amp;Importar...</translation>
-    </message>
-    <message>
         <source>Help</source>
         <translation>Ayuda</translation>
     </message>
@@ -815,10 +857,6 @@ Do you want to save anyway?</source>
     <message>
         <source>Properties...</source>
         <translation>Propiedades...</translation>
-    </message>
-    <message>
-        <source>&amp;Export...</source>
-        <translation>&amp;Exportar...</translation>
     </message>
     <message>
         <source>Resource networks</source>
@@ -846,6 +884,10 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>Save &amp;As</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Reload</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

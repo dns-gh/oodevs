@@ -42,6 +42,7 @@ public:
     virtual unsigned int GetPercentage() const;
     virtual QString GetStatus() const;
     virtual std::string GetStartedExercise() const;
+    void StartAndBlockMainThread();
     void Start();
     void Stop();
     //@}
@@ -56,6 +57,7 @@ private:
     //! @name Helpers
     //@{
     void Run();
+    void RunBlockingMainThread();
     //@}
 
 private:

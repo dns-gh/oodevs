@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Filter_h_
-#define __Filter_h_
+#ifndef __mission_tester_Filter_h_
+#define __mission_tester_Filter_h_
 
 #include "Filter_ABC.h"
 
@@ -43,4 +43,4 @@ private:
 
 }
 
-#endif // __Filter_h_
+#endif // __mission_tester_Filter_h_

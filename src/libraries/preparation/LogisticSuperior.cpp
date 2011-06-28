@@ -40,7 +40,7 @@ LogisticSuperior::~LogisticSuperior()
 // Name: LogisticSuperior::IsValidSuperior
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-bool LogisticSuperior::IsValidSuperior( const LogisticBaseSuperior& superior ) const
+bool LogisticSuperior::IsValidSuperior( const LogisticBaseSuperior& /*superior*/ ) const
 {
     //const kernel::Formation_ABC* formation = (const Formation_ABC*)superior;
     //return IsSameTeam( *formation ) && formation->GetLogisticLevel()==kernel::LogisticLevel::logistic_base_;

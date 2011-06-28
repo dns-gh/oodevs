@@ -22,6 +22,7 @@
         <xs:element name="resource-natures" type="FileReference"/>
         <xs:element name="resources" type="FileReference"/>
         <xs:element name="extensions" type="FileReference" minOccurs="0"/>
+        <xs:element name="filters" type="FileReference" minOccurs="0"/>
         <xs:element name="fires" type="FileReference"/>
         <xs:element name="health" type="FileReference"/>
         <xs:element name="human-factors" type="FileReference"/>

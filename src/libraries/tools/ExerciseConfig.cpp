@@ -129,6 +129,15 @@ void ExerciseConfig::SetExerciseName( const std::string& file )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetExerciseName
+// Created: ABR 2011-06-21
+// -----------------------------------------------------------------------------
+std::string ExerciseConfig::GetExerciseName() const
+{
+    return exerciseName_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::GetExerciseFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------

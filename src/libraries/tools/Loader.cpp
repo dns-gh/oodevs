@@ -12,6 +12,7 @@
 #include "RealFileLoader.h"
 #include "SchemaVersionExtractor.h"
 #include "ExerciseConfig.h"
+#include <boost/filesystem/operations.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace tools;
@@ -70,6 +71,7 @@ std::string Loader::LoadOptionalPhysicalFile( const std::string& rootTag, T_Load
     if( childFileName.empty() )
         return "";
     childFileName = config_.BuildPhysicalChildFile( childFileName );
-    LoadFile( childFileName, loader );
+    if( boost::filesystem::exists( childFileName ) )
+        LoadFile( childFileName, loader );
     return childFileName;
 }

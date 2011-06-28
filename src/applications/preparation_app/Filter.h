@@ -3,12 +3,14 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ExportFilter_h_
-#define __ExportFilter_h_
+#ifndef __Filter_h_
+#define __Filter_h_
+
+#include "Filter_ABC.h"
 
 namespace tools
 {
@@ -20,55 +22,54 @@ namespace xml
     class xistream;
 }
 
+class QWidget;
+
 // =============================================================================
-/** @class  ExportFilter
-    @brief  ExportFilter
+/** @class  Filter
+    @brief  Filter
 */
-// Created: SBO 2010-04-22
+// Created: ABR 2011-06-17
 // =============================================================================
-class ExportFilter
+class Filter : public Filter_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ExportFilter( xml::xistream& xis, const tools::ExerciseConfig& config );
-    virtual ~ExportFilter();
+             Filter();
+    virtual ~Filter();
     //@}
 
     //! @name Operations
     //@{
-    QString GetName() const;
-    QString GetDescription() const;
-    void Execute( const std::string& outputDirectory ) const;
+    virtual const std::string GetName() const;
+    virtual const std::string GetDescription() const;
+    virtual bool NeedToReloadExercise() const;
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void ReadDescriptions( xml::xistream& xis );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ExportFilter( const ExportFilter& );            //!< Copy constructor
-    ExportFilter& operator=( const ExportFilter& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadDescription( xml::xistream& xis );
     //@}
 
+protected:
     //! @name Types
     //@{
-    typedef std::map< std::string, std::pair< QString, QString > > T_Descriptions;
+    typedef std::map< std::string, std::pair< std::string, std::string > > T_Descriptions;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
-    const tools::ExerciseConfig& config_;
-    const std::string target_;
-    const std::string xsl_;
-    const std::string output_;
     const std::string currentLanguage_;
-    T_Descriptions descriptions_;
+    T_Descriptions    descriptions_;
     //@}
 };
 
-#endif // __ExportFilter_h_
+#endif // __Filter_h_

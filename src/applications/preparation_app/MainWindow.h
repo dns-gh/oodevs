@@ -49,6 +49,7 @@ namespace gui
 class AgentsLayer;
 class CreationPanels;
 class FileToolbar;
+class FilterDialogs;
 class InhabitantCreationPanel;
 class MapLayer_ABC;
 class Menu;
@@ -88,6 +89,7 @@ public:
     //@{
     bool Load();
     kernel::Options& GetOptions() const;
+    bool CheckSaving();
     //@}
 
 public slots:
@@ -100,6 +102,7 @@ public slots:
     void SaveAs();
     void ToggleFullScreen();
     void ToggleDocks();
+    void ReloadExercise();
     //@}
 
 private:
@@ -125,7 +128,6 @@ private:
     virtual void NotifyDeleted();
     void SetWindowTitle( bool needsSaving );
     void SetNeedsSaving( bool status );
-    bool CheckSaving();
     void EnableWorkspace( bool enabled );
     //@}
 
@@ -158,6 +160,7 @@ private:
     CreationPanels* pCreationPanel_;
     ScoreDialog* pScoreDialog_;
     QDialog* loadingDialog_;
+    FilterDialogs* filterDialogs_;
     //@}
 };
 

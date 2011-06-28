@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Filter_h_
-#define __Filter_h_
+#ifndef __aar_Filter_h_
+#define __aar_Filter_h_
 
 #include "Functions.h"
 
@@ -16,6 +16,9 @@ namespace xml
 {
     class xistream;
 }
+
+namespace aar
+{
 
 // =============================================================================
 /** @class  Filter
@@ -80,4 +83,6 @@ private:
     //@}
 };
 
-#endif // __Filter_h_
+}
+
+#endif // __aar_Filter_h_

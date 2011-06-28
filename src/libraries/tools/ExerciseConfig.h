@@ -40,6 +40,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual std::string GetExerciseName() const;
     virtual std::string GetExerciseFile() const;
     virtual std::string BuildExerciseChildFile( const std::string& file ) const;
 
