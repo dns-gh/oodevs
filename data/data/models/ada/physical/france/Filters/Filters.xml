@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schemas/4.3.1/physical/Filters.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<sections model-version="4.6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schemas/4.3.1/physical/Filters.xsd">
   <section id="export">
     <descriptions>
-      <description xml:lang="en" name="Export..."/>
-      <description xml:lang="fr" name="Exporter..."/>
+      <description name="Export..." xml:lang="en"/>
+      <description name="Exporter..." xml:lang="fr"/>
     </descriptions>
     <filters>
-      <filter target="exercise" xsl="htmlBriefing" output="html">
+      <filter output="html" target="exercise" xsl="htmlBriefing">
         <descriptions>
-          <description xml:lang="en" name="Scenario extractor"><![CDATA[Extracts briefing, terrain and model information from exercise meta data.<br>Outputs an HTML file.]]></description>
-          <description xml:lang="fr" name="Export de scénario"><![CDATA[Extrait les informations de briefing, terrain et modèle à partir de l'exercice.<br>Le résultat est un fichier HTML.]]></description>
+          <description name="Scenario extractor" xml:lang="en"><![CDATA[Extracts briefing, terrain and model information from exercise meta data.<br>Outputs an HTML file.]]></description>
+          <description name="Export de scénario" xml:lang="fr"><![CDATA[Extrait les informations de briefing, terrain et modèle à partir de l'exercice.<br>Le résultat est un fichier HTML.]]></description>
         </descriptions>
       </filter>
-      <filter target="orbat" xsl="simpleOrbat" output="xml">
+      <filter output="xml" target="orbat" xsl="simpleOrbat">
         <descriptions>
-          <description xml:lang="en" name="Simplified orbat export"><![CDATA[Extracts teams, automats, units, populations and objects from orbat.<br>Outputs an XML file.]]></description>
-          <description xml:lang="fr" name="Export d'OdB simplifié"><![CDATA[Extrait les camps, automates, unités, populations et objets de l'OdB.<br>Le résultat est un fichier XML.]]></description>
+          <description name="Simplified orbat export" xml:lang="en"><![CDATA[Extracts teams, automats, units, populations and objects from orbat.<br>Outputs an XML file.]]></description>
+          <description name="Export d'OdB simplifié" xml:lang="fr"><![CDATA[Extrait les camps, automates, unités, populations et objets de l'OdB.<br>Le résultat est un fichier XML.]]></description>
         </descriptions>
       </filter>
     </filters>
   </section>
 </sections>
-<!-- signature="0352153903" -->
+<!-- signature="0792066777" -->

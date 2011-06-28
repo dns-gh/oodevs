@@ -362,7 +362,7 @@
     </message>
     <message>
         <source>Import an order of battle into current exercise.&lt;br&gt;May import the populations and the objects if relative checkbox are checked.</source>
-        <translation>Importer un ordre de bataille dans l'exercice actuel.&lt;br&gt;Peut importer les populations et les objets si les cases relatives sont cochées.</translation>
+        <translation>Importer un ordre de bataille dans l&apos;exercice actuel.&lt;br&gt;Peut importer les populations et les objets si les cases relatives sont cochées.</translation>
     </message>
 </context>
 <context>
