@@ -11,6 +11,9 @@
 #define dispatcher_Log_h
 
 #include "Log_ABC.h"
+#include <ctime>
+#pragma warning( push )
+#pragma warning( disable: 4996 )
 
 namespace dispatcher
 {
@@ -40,11 +43,22 @@ public:
     //@{
     virtual void Write( const std::string& s )
     {
-        s_ << s << std::endl;
+        s_ << "[" << GetTime() << "] " << s << std::endl;
     }
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    const char* GetTime()
+    {
+        static char buffer[256];
+        time_t nTime = time( NULL );
+        strftime( buffer, 256, "%H:%M:%S", localtime( &nTime ) );
+        return buffer;
+    }
+    //@}
+
     //! @name Member data
     //@{
     std::ofstream s_;
@@ -52,5 +66,7 @@ private:
 };
 
 }
+
+#pragma warning( pop )
 
 #endif // dispatcher_Log_h
