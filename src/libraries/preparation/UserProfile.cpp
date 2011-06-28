@@ -30,10 +30,10 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     , supervisor_     ( false )
     , isClone_        ( false )
 {
-    const ExistenceChecker< tools::Resolver< kernel::Team_ABC > >       teamChecker( model_.teams_ );
-    const ExistenceChecker< tools::Resolver< kernel::Formation_ABC > >  formationChecker( model_.formations_ );
-    const ExistenceChecker< tools::Resolver< kernel::Automat_ABC > >    automatChecker( model_.agents_ );
-    const ExistenceChecker< tools::Resolver< kernel::Population_ABC > > populationChecker( model_.agents_ );
+    const ExistenceChecker< tools::Resolver_ABC< kernel::Team_ABC > >       teamChecker( model_.GetTeamResolver() );
+    const ExistenceChecker< tools::Resolver_ABC< kernel::Formation_ABC > >  formationChecker( model_.GetFormationResolver() );
+    const ExistenceChecker< tools::Resolver_ABC< kernel::Automat_ABC > >    automatChecker( model_.GetAutomatResolver() );
+    const ExistenceChecker< tools::Resolver_ABC< kernel::Population_ABC > > populationChecker( model_.GetPopulationResolver() );
 
     std::string login, pass;
     xis >> xml::attribute( "name", login )

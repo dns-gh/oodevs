@@ -45,7 +45,7 @@ ProfilesGenerator::~ProfilesGenerator()
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateTeams( bool readonly )
 {
-    tools::Iterator< const Team_ABC& > it = static_cast< tools::Resolver_ABC< Team_ABC >& >( model_.teams_ ).CreateIterator();
+    tools::Iterator< const Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
     while( it.HasMoreElements() )
     {
         const Entity_ABC& entity = it.NextElement();
@@ -59,7 +59,7 @@ void ProfilesGenerator::GenerateTeams( bool readonly )
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateTopLevelFormations( bool readonly )
 {
-    tools::Iterator< const Team_ABC& > it = static_cast< tools::Resolver_ABC< Team_ABC >& >( model_.teams_ ).CreateIterator();
+    tools::Iterator< const Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
     while( it.HasMoreElements() )
     {
         const Entity_ABC& entity = it.NextElement();
@@ -79,7 +79,7 @@ void ProfilesGenerator::GenerateTopLevelFormations( bool readonly )
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateFormations( bool readonly )
 {
-    tools::Iterator< const Formation_ABC& > it = static_cast< tools::Resolver_ABC< Formation_ABC >& >( model_.formations_ ).CreateIterator();
+    tools::Iterator< const Formation_ABC& > it = model_.GetFormationResolver().CreateIterator();
     while( it.HasMoreElements() )
     {
         const Entity_ABC& entity = it.NextElement();

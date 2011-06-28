@@ -213,7 +213,7 @@ void ObjectFactory::Initialize()
     factory->Register( "nbc-agents"         , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( NBCAttribute, NBCAgent, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "obstacle"           , BIND_ATTACH_ATTRIBUTE( ObstacleAttribute, _1, _2, _3 ) );
     factory->Register( "supply-route"       , BIND_ATTACH_ATTRIBUTE( SupplyRouteAttribute, _1, _2, _3 ) );
-    factory->Register( "logistic-base"      , BIND_ATTACH_ATTRIBUTE_RESOLVER2( LogisticAttribute, Automat_ABC, Formation_ABC, _1, _2, boost::cref( model_.agents_ ), boost::cref( model_.formations_ ), _3, boost::ref( controllers_ ) ) );
+    factory->Register( "logistic-base"      , BIND_ATTACH_ATTRIBUTE_RESOLVER2( LogisticAttribute, Automat_ABC, Formation_ABC, _1, _2, boost::cref( model_.GetAutomatResolver() ), boost::cref( model_.GetFormationResolver() ), _3, boost::ref( controllers_ ) ) );
     factory->Register( "max-size"           , BIND_ATTACH_ATTRIBUTE( OccupantAttribute, _1, _2, _3 ) );
     factory->Register( "stock"              , BIND_ATTACH_ATTRIBUTE_STRING_RESOLVER( StockAttribute, DotationType, _1, _2, boost::cref( staticModel_.objectTypes_ ), _3 ) );
     factory->Register( "resources"          ,

@@ -17,14 +17,13 @@
 
 class QToolBox;
 
-namespace kernel {
-    class GlTools_ABC;
+namespace kernel
+{
+    class Automat_ABC;
     class Controllers;
+    class Entity_ABC;
+    class Formation_ABC;
     class ModelLoaded;
-}
-
-namespace svg {
-    class TextRenderer;
 }
 
 namespace gui
@@ -44,11 +43,14 @@ namespace gui
 // =============================================================================
 class DrawerPanel : public InfoPanel_ABC
                   , public tools::Observer_ABC
+                  , public tools::SelectionObserver_ABC
                   , public tools::ElementObserver_ABC< DrawingCategory >
                   , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                  , public tools::SelectionObserver< Drawing_ABC >
+                  , public tools::SelectionObserver_Base< Drawing_ABC >
+                  , public tools::SelectionObserver_Base< kernel::Automat_ABC >
+                  , public tools::SelectionObserver_Base< kernel::Formation_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -81,7 +83,11 @@ private:
     virtual void NotifyCreated( const DrawingCategory& category );
     virtual void NotifyDeleted( const DrawingCategory& category );
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
-    virtual void NotifySelected( const Drawing_ABC* drawing );
+    virtual void BeforeSelection();
+    virtual void AfterSelection();
+    virtual void Select( const Drawing_ABC& element );
+    virtual void Select( const kernel::Automat_ABC& element );
+    virtual void Select( const kernel::Formation_ABC& element );
     //@}
 
     //! @name Types
@@ -96,10 +102,12 @@ private:
     ParametersLayer& layer_;
     DrawerModel& model_;
     ColorButton* color_;
+    QLabel* parentLabel_;
     QToolBox* toolBox_;
     const DrawingTemplate* selectedStyle_;
     kernel::SafePointer< Drawing_ABC > selectedDrawing_;
     T_CategoryItems categories_;
+    kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}
 };
 

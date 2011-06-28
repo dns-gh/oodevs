@@ -21,10 +21,11 @@
 // Name: Drawing constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controller& controller, const sword::ShapeCreation& message, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controller, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ), QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ), proxy, converter )
-    , publisher_( publisher )
-    , converter_( converter )
+// TODO PAS BON -> mettre l'entity du message
+Drawing::Drawing( kernel::Controllers& controllers, const sword::ShapeCreation& message, const gui::DrawingTypes& types, const kernel::Entity_ABC* entity, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+    : gui::DrawerShape( controllers, message.id().id(), types.Get( message.shape().category().c_str() ).GetTemplate( message.shape().pattern() ), QColor( message.shape().color().red(), message.shape().color().green(), message.shape().color().blue() ), entity, proxy, converter )
+    , publisher_    ( publisher )
+    , converter_    ( converter )
     , publishUpdate_( true )
 {
     SetLocation( message.shape().points() );
@@ -35,8 +36,8 @@ Drawing::Drawing( kernel::Controller& controller, const sword::ShapeCreation& me
 // Name: Drawing constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controller& controller, const gui::DrawingTemplate& style, const QColor& color, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controller, 0, style, color, proxy, converter )
+Drawing::Drawing( kernel::Controllers& controllers, const gui::DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+    : gui::DrawerShape( controllers, 0, style, color, entity, proxy, converter )
     , publisher_( publisher )
     , converter_( converter )
     , publishUpdate_( true )
@@ -48,8 +49,8 @@ Drawing::Drawing( kernel::Controller& controller, const gui::DrawingTemplate& st
 // Name: Drawing constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controller& controller, xml::xistream& xis, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controller, 0, xis, types, proxy, converter )
+Drawing::Drawing( kernel::Controllers& controllers, xml::xistream& xis, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& resolver )
+    : gui::DrawerShape( controllers, 0, xis, types, proxy, converter, resolver )
     , publisher_( publisher )
     , converter_( converter )
     , publishUpdate_( true )

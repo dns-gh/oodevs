@@ -10,8 +10,8 @@
 #ifndef __Model_h_
 #define __Model_h_
 
-#include "EntityResolverFacade.h"
-#include <boost/noncopyable.hpp>
+#include "clients_kernel/EntityResolverFacade.h"
+#include "clients_kernel/Model_ABC.h"
 
 namespace tools
 {
@@ -81,14 +81,29 @@ class MeteoModel;
 */
 // Created: AGE 2006-02-15
 // =============================================================================
-class Model : public EntityResolverFacade
-            , private boost::noncopyable
+class Model : public kernel::Model_ABC
+            , public kernel::EntityResolverFacade
 {
 public:
     //! @name Constructors/Destructor
     //@{
              Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver, const tools::ExerciseConfig& config );
     virtual ~Model();
+    //@}
+
+    //! @name From Model_ABC
+    //@
+    virtual tools::Resolver_ABC< kernel::Team_ABC >& GetTeamResolver() const;
+    virtual tools::Resolver_ABC< kernel::Formation_ABC >& GetFormationResolver() const;
+    virtual tools::Resolver_ABC< kernel::Automat_ABC >& GetAutomatResolver() const;
+    virtual tools::Resolver_ABC< kernel::Agent_ABC >& GetAgentResolver() const;
+    virtual tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& GetKnowledgeGroupResolver() const;
+    virtual tools::Resolver_ABC< kernel::Object_ABC >& GetObjectResolver() const;
+    virtual tools::Resolver_ABC< kernel::Population_ABC >& GetPopulationResolver() const;
+    virtual tools::Resolver_ABC< kernel::Inhabitant_ABC >& GetInhabitantResolver() const;
+    // $$$$ _RC_ JSR 2011-06-28: Passer TerrainObjectProxy dans clients_kernel pour remplacer ces méthodes
+    virtual kernel::Object_ABC* FindUrbanObject( unsigned int id ) const;
+    virtual kernel::Object_ABC& GetUrbanObject( unsigned int id ) const;
     //@}
 
     //! @name Operations

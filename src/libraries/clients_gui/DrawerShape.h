@@ -13,11 +13,7 @@
 #include "Drawing_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
-
-namespace svg
-{
-    class RenderingContext;
-}
+#include "clients_kernel/SafePointer.h"
 
 namespace xml
 {
@@ -26,7 +22,9 @@ namespace xml
 
 namespace kernel
 {
-    class Controller;
+    class Controllers;
+    class Entity_ABC;
+    class EntityResolver_ABC;
     class LocationProxy;
     class CoordinateConverter_ABC;
 }
@@ -49,16 +47,17 @@ class DrawerShape : public kernel::EntityImplementation< Drawing_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             DrawerShape( kernel::Controller& controller, unsigned long id, const DrawingTemplate& style,
-                          const QColor& color, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter );
-             DrawerShape( kernel::Controller& controller, unsigned long id, xml::xistream& xis,
-                          const DrawingTypes& types, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter );
+             DrawerShape( kernel::Controllers& controllers, unsigned long id, const DrawingTemplate& style, const QColor& color,
+                          const kernel::Entity_ABC* entity, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter );
+             DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis, const DrawingTypes& types, kernel::LocationProxy& location,
+                          const kernel::CoordinateConverter_ABC& coordinateConverter, const kernel::EntityResolver_ABC& resolver );
     virtual ~DrawerShape();
     //@}
 
     //! @name Accessors
     //@{
     virtual QColor GetColor() const;
+    virtual QString GetParentName() const;
     //@}
 
     //! @name Operations
@@ -87,12 +86,6 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DrawerShape( const DrawerShape& );            //!< Copy constructor
-    DrawerShape& operator=( const DrawerShape& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadPoint( xml::xistream& xis );
@@ -102,17 +95,16 @@ protected:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    unsigned long id_;
     const DrawingTemplate& style_;
     kernel::LocationProxy& location_;
     QColor color_;
+    kernel::SafePointer< kernel::Entity_ABC > entity_;
     std::auto_ptr< SvgLocationDrawer > drawer_;
     //@}
 
 private:
     //! @name Static Member
     //@{
-    static unsigned long idManager_;
     const kernel::CoordinateConverter_ABC& coordinateConverter_;
     //@}
 };

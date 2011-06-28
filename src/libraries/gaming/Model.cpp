@@ -64,7 +64,7 @@
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
 Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, const Simulation& simulation, kernel::Workers& workers, Publisher_ABC& publisher, const RcEntityResolver_ABC& rcResolver, const tools::ExerciseConfig& config )
-    : EntityResolverFacade( *this )
+    : EntityResolverFacade( static_cast< kernel::Model_ABC& >( *this ) )
     , controllers_( controllers )
     , static_( staticModel )
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_ ) )
@@ -84,7 +84,7 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , actionParameterFactory_( *new actions::ActionParameterFactory( staticModel.coordinateConverter_, *this, staticModel, agentKnowledgeConverter_, objectKnowledgeConverter_, controllers_.controller_ ) )
     , actionFactory_( *new actions::ActionFactory( controllers.controller_, actionParameterFactory_, *this, staticModel, simulation ) )
     , intelligenceFactory_( *new IntelligenceFactory( controllers, staticModel.coordinateConverter_, *this, staticModel.levels_, publisher ) )
-    , drawingFactory_( *new DrawingFactory( controllers.controller_, staticModel.drawings_, publisher, staticModel.coordinateConverter_ ) )
+    , drawingFactory_( *new DrawingFactory( controllers, staticModel.drawings_, publisher, staticModel.coordinateConverter_, *this ) )
     , agents_( *new AgentsModel( agentFactory_ ) )
     , objects_( *new ObjectsModel( objectFactory_ ) )
     , teams_( *new TeamsModel( teamFactory_ ) )
@@ -111,6 +111,96 @@ Model::Model( kernel::Controllers& controllers, const StaticModel& staticModel, 
     , publisher_( publisher )
 {
     symbolsFactory_.Load( config );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetTeamResolver
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+tools::Resolver_ABC< kernel::Team_ABC >& Model::GetTeamResolver() const
+{
+    return teams_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetFormationResolver
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+tools::Resolver_ABC< kernel::Formation_ABC >& Model::GetFormationResolver() const
+{
+    return teams_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetAutomatResolver
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+tools::Resolver_ABC< kernel::Automat_ABC >& Model::GetAutomatResolver() const
+{
+    return agents_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetAgentResolver
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+tools::Resolver_ABC< kernel::Agent_ABC >& Model::GetAgentResolver() const
+{
+    return agents_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetKnowledgeGroupResolver
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+tools::Resolver_ABC< kernel::KnowledgeGroup_ABC >& Model::GetKnowledgeGroupResolver() const
+{
+    return knowledgeGroups_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetObjectResolver
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+tools::Resolver_ABC< kernel::Object_ABC >& Model::GetObjectResolver() const
+{
+    return objects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetPopulationResolver
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+tools::Resolver_ABC< kernel::Population_ABC >& Model::GetPopulationResolver() const
+{
+    return agents_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetInhabitantResolver
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+tools::Resolver_ABC< kernel::Inhabitant_ABC >& Model::GetInhabitantResolver() const
+{
+    return agents_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::FindUrbanObject
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+kernel::Object_ABC* Model::FindUrbanObject( unsigned int id ) const
+{
+    return urbanObjects_.Find( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Model::GetUrbanObject
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+kernel::Object_ABC& Model::GetUrbanObject( unsigned int id ) const
+{
+    return urbanObjects_.Get( id );
 }
 
 // -----------------------------------------------------------------------------

@@ -49,13 +49,9 @@ void DrawerModel::Load( const std::string& filename )
     xml::xifstream xis( filename );
     xis >> xml::start( "shapes" );
     const std::string schema = xis.attribute< std::string >( "xsi:noNamespaceSchemaLocation", "" );
-    if( schema.empty() )
-        ReadShapes( xis );
-    else
-    {
-        xml::xifstream xif( filename, xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ) ) );
-        ReadShapes( xif );
-    }
+    if( !schema.empty() )
+        xml::xifstream( filename, xml::external_grammar( tools::GeneralConfig::BuildResourceChildFile( schema ) ) );
+    ReadShapes( xis );
     xis >> xml::end;
 }
 
@@ -128,9 +124,9 @@ void DrawerModel::NotifyDeleted( const Drawing_ABC& shape )
 // Name: DrawerModel::Create
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-Drawing_ABC* DrawerModel::Create( const DrawingTemplate& style, const QColor& color ) const
+Drawing_ABC* DrawerModel::Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const
 {
-    return factory_.CreateShape( style, color );
+    return factory_.CreateShape( style, color, entity );
 }
 
 // -----------------------------------------------------------------------------

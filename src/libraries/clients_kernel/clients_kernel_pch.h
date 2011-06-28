@@ -28,6 +28,8 @@
 #include <map>
 #include <set>
 
+#undef GetObject
+
 #undef max
 #undef min
 

@@ -12,6 +12,7 @@
 
 #include "ShapeHandler_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -35,6 +36,7 @@ namespace gui
 // =============================================================================
 class Drawing_ABC : public kernel::Entity_ABC
                   , public ShapeHandler_ABC
+                  , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -46,6 +48,7 @@ public:
     //! @name Accessors
     //@{
     virtual QColor GetColor() const = 0;
+    virtual QString GetParentName() const = 0;
     //@}
 
     //! @name Operations
@@ -69,13 +72,6 @@ protected:
     //@{
     virtual void Create() = 0;
     virtual void Update() = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    Drawing_ABC( const Drawing_ABC& );            //!< Copy constructor
-    Drawing_ABC& operator=( const Drawing_ABC& ); //!< Assignment operator
     //@}
 };
 

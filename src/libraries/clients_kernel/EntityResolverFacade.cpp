@@ -3,25 +3,21 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2010 MASA Group
+// Copyright (c) 2011 MASA Group
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "clients_kernel_pch.h"
 #include "EntityResolverFacade.h"
-#include "AgentsModel.h"
-#include "KnowledgeGroupsModel.h"
-#include "Model.h"
-#include "clients_gui/TerrainObjectProxy.h"
-#include "ObjectsModel.h"
-#include "UrbanModel.h"
-#include "TeamsModel.h"
+#include "Model_ABC.h"
+
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade constructor
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-EntityResolverFacade::EntityResolverFacade( Model& model )
+EntityResolverFacade::EntityResolverFacade( Model_ABC& model )
     : model_( model )
 {
     // NOTHING
@@ -29,7 +25,7 @@ EntityResolverFacade::EntityResolverFacade( Model& model )
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade destructor
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
 EntityResolverFacade::~EntityResolverFacade()
 {
@@ -38,163 +34,162 @@ EntityResolverFacade::~EntityResolverFacade()
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindAgent
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Agent_ABC* EntityResolverFacade::FindAgent( unsigned int id ) const
+Agent_ABC* EntityResolverFacade::FindAgent( unsigned int id ) const
 {
-    return model_.agents_.FindAgent( id );
+    return model_.GetAgentResolver().Find( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::GetAgent
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Agent_ABC& EntityResolverFacade::GetAgent( unsigned int id ) const
+Agent_ABC& EntityResolverFacade::GetAgent( unsigned int id ) const
 {
-    return model_.agents_.GetAgent( id );
+    return model_.GetAgentResolver().Get( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindAutomat
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC* EntityResolverFacade::FindAutomat( unsigned int id ) const
+Automat_ABC* EntityResolverFacade::FindAutomat( unsigned int id ) const
 {
-    return model_.agents_.FindAutomat( id );
+    return model_.GetAutomatResolver().Find( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::GetAutomat
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Automat_ABC& EntityResolverFacade::GetAutomat( unsigned int id ) const
+Automat_ABC& EntityResolverFacade::GetAutomat( unsigned int id ) const
 {
-    return model_.agents_.GetAutomat( id );
+    return model_.GetAutomatResolver().Get( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindKnowledgeGroup
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC* EntityResolverFacade::FindKnowledgeGroup( unsigned int id ) const
+KnowledgeGroup_ABC* EntityResolverFacade::FindKnowledgeGroup( unsigned int id ) const
 {
-    return model_.knowledgeGroups_.Find( id );
+    return model_.GetKnowledgeGroupResolver().Find( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::GetKnowledgeGroup
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::KnowledgeGroup_ABC& EntityResolverFacade::GetKnowledgeGroup( unsigned int id ) const
+KnowledgeGroup_ABC& EntityResolverFacade::GetKnowledgeGroup( unsigned int id ) const
 {
-    return model_.knowledgeGroups_.Get( id );
+    return model_.GetKnowledgeGroupResolver().Get( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindObject
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Object_ABC* EntityResolverFacade::FindObject( unsigned int id ) const
+Object_ABC* EntityResolverFacade::FindObject( unsigned int id ) const
 {
-    return model_.objects_.FindObject( id );
+    return model_.GetObjectResolver().Find( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::GetObject
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Object_ABC& EntityResolverFacade::GetObject( unsigned int id ) const
+Object_ABC& EntityResolverFacade::GetObject( unsigned int id ) const
 {
-    return model_.objects_.GetObject( id );
+    return model_.GetObjectResolver().Get( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindUrbanObject
-// Created: LGY 2011-03-01
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Object_ABC* EntityResolverFacade::FindUrbanObject( unsigned int id ) const
+Object_ABC* EntityResolverFacade::FindUrbanObject( unsigned int id ) const
 {
-    return model_.urbanObjects_.FindObject( id );
+    return model_.FindUrbanObject( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::GetUrbanObject
-// Created: LGY 2011-03-01
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Object_ABC& EntityResolverFacade::GetUrbanObject( unsigned int id ) const
+Object_ABC& EntityResolverFacade::GetUrbanObject( unsigned int id ) const
 {
-
-    return model_.urbanObjects_.GetObject( id );
+    return model_.GetUrbanObject( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindPopulation
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Population_ABC* EntityResolverFacade::FindPopulation( unsigned int id ) const
+Population_ABC* EntityResolverFacade::FindPopulation( unsigned int id ) const
 {
-    return model_.agents_.FindPopulation( id );
+    return model_.GetPopulationResolver().Find( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::GetPopulation
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Population_ABC& EntityResolverFacade::GetPopulation( unsigned int id ) const
+Population_ABC& EntityResolverFacade::GetPopulation( unsigned int id ) const
 {
-    return model_.agents_.GetPopulation( id );
+    return model_.GetPopulationResolver().Get( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindInhabitant
-// Created: FPO 2011-05-30
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Inhabitant_ABC* EntityResolverFacade::FindInhabitant( unsigned int id ) const
+Inhabitant_ABC* EntityResolverFacade::FindInhabitant( unsigned int id ) const
 {
-    return model_.agents_.FindInhabitant( id );
+    return model_.GetInhabitantResolver().Find( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::GetInhabitant
-// Created: FPO 2011-05-30
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Inhabitant_ABC& EntityResolverFacade::GetInhabitant( unsigned int id ) const
+Inhabitant_ABC& EntityResolverFacade::GetInhabitant( unsigned int id ) const
 {
-    return model_.agents_.GetInhabitant( id );
+    return model_.GetInhabitantResolver().Get( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindFormation
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Formation_ABC* EntityResolverFacade::FindFormation( unsigned int id ) const
+Formation_ABC* EntityResolverFacade::FindFormation( unsigned int id ) const
 {
-    return model_.teams_.tools::Resolver< kernel::Formation_ABC >::Find( id );
+    return model_.GetFormationResolver().Find( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::GetFormation
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Formation_ABC& EntityResolverFacade::GetFormation( unsigned int id ) const
+Formation_ABC& EntityResolverFacade::GetFormation( unsigned int id ) const
 {
-    return model_.teams_.tools::Resolver< kernel::Formation_ABC >::Get( id );
+    return model_.GetFormationResolver().Get( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::FindTeam
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Team_ABC* EntityResolverFacade::FindTeam( unsigned int id ) const
+Team_ABC* EntityResolverFacade::FindTeam( unsigned int id ) const
 {
-    return model_.teams_.tools::Resolver< kernel::Team_ABC >::Find( id );
+    return model_.GetTeamResolver().Find( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityResolverFacade::GetTeam
-// Created: SBO 2010-05-10
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-kernel::Team_ABC& EntityResolverFacade::GetTeam( unsigned int id ) const
+Team_ABC& EntityResolverFacade::GetTeam( unsigned int id ) const
 {
-    return model_.teams_.tools::Resolver< kernel::Team_ABC >::Get( id );
+    return model_.GetTeamResolver().Get( id );
 }

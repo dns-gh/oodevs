@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace xml
 {
@@ -21,6 +22,7 @@ namespace xml
 namespace kernel
 {
     class Controllers;
+    class Entity_ABC;
 }
 
 namespace tools
@@ -43,6 +45,7 @@ namespace gui
 class DrawerModel : public tools::Observer_ABC
                   , public tools::ElementObserver_ABC< Drawing_ABC >
                   , public tools::Resolver< Drawing_ABC >
+                  , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -57,17 +60,11 @@ public:
     void Save( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Purge();
 
-    Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color ) const;
+    Drawing_ABC* Create( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const;
     void Delete( unsigned long id );
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    DrawerModel( const DrawerModel& );            //!< Copy constructor
-    DrawerModel& operator=( const DrawerModel& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadShapes( xml::xistream& xis );

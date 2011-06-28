@@ -19,13 +19,13 @@
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
 #include "DrawingCategoryItem.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "resources.h"
 #include "tools/SchemaWriter.h"
 #include <xeumeuleu/xml.hpp>
 #include <qtoolbox.h>
-
-#pragma warning( disable : 4355 )
 
 using namespace gui;
 
@@ -40,6 +40,7 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     , model_          ( model )
     , selectedStyle_  ( 0 )
     , selectedDrawing_( controllers )
+    , selectedEntity_ ( controllers )
 {
     QHBox* box = new QHBox( this );
     box->layout()->setAlignment( Qt::AlignCenter );
@@ -67,9 +68,6 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     connect( btn, SIGNAL( clicked() ), SLOT( Clear() ) );
 
     color_ = new ColorButton( box, "" );
-    toolBox_ = new QToolBox( this );
-    toolBox_->setMargin( 0 );
-    toolBox_->setBackgroundColor( Qt::white );
     connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChange( const QColor& ) ) );
 
     btn = new QToolButton( box );
@@ -78,6 +76,16 @@ DrawerPanel::DrawerPanel( QWidget* parent, PanelStack_ABC& panel, ParametersLaye
     btn->setFixedSize( 25, 25 );
     QToolTip::add( btn, tr( "Start drawing" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( StartDrawing() ) );
+
+    QGroupBox* group = new QGroupBox( 2, Qt::Horizontal, this );
+    {
+        new QLabel( tr( "Parent:" ), group );
+        parentLabel_ = new QLabel( "---", group );
+    }
+
+    toolBox_ = new QToolBox( this );
+    toolBox_->setMargin( 0 );
+    toolBox_->setBackgroundColor( Qt::white );
 
     controllers_.Register( *this );
 }
@@ -140,12 +148,54 @@ void DrawerPanel::NotifyUpdated( const kernel::ModelLoaded& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DrawerPanel::NotifySelected
-// Created: SBO 2008-06-09
+// Name: DrawerPanel::BeforeSelection
+// Created: JSR 2011-06-28
 // -----------------------------------------------------------------------------
-void DrawerPanel::NotifySelected( const Drawing_ABC* drawing )
+void DrawerPanel::BeforeSelection()
 {
-    selectedDrawing_ = drawing;
+    selectedDrawing_ = 0;
+    selectedEntity_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::AfterSelection
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+void DrawerPanel::AfterSelection()
+{
+    if( selectedEntity_ )
+        parentLabel_->setText( selectedEntity_->GetName() );
+    else if( selectedDrawing_ )
+        parentLabel_->setText( selectedDrawing_->GetParentName() );
+    else
+        parentLabel_->setText( "---" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::Select
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+void DrawerPanel::Select( const Drawing_ABC& element )
+{
+    selectedDrawing_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::Select
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+void DrawerPanel::Select( const kernel::Automat_ABC& element )
+{
+    selectedEntity_ = &element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerPanel::Select
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+void DrawerPanel::Select( const kernel::Formation_ABC& element )
+{
+    selectedEntity_ = &element;
 }
 
 // -----------------------------------------------------------------------------
@@ -176,7 +226,7 @@ void DrawerPanel::StartDrawing()
 {
     if( selectedStyle_ )
     {
-        Drawing_ABC* shape = model_.Create( *selectedStyle_, color_->GetColor() );
+        Drawing_ABC* shape = model_.Create( *selectedStyle_, color_->GetColor(), selectedEntity_ );
         if( selectedStyle_->GetType() == "line" )
             layer_.StartLine( *shape );
         else if( selectedStyle_->GetType() == "polygon" )

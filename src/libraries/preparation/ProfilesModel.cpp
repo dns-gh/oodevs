@@ -166,7 +166,7 @@ bool ProfilesModel::CheckValidity( const Model& model, ModelChecker_ABC& checker
     bool unWriteableUnits = false;
 
     // check that every unit is at least readable
-    tools::Iterator< const kernel::Agent_ABC& > agents = static_cast< tools::Resolver< kernel::Agent_ABC >& >( model.agents_ ).CreateIterator();
+    tools::Iterator< const kernel::Agent_ABC& > agents = model.GetAgentResolver().CreateIterator();
     while( agents.HasMoreElements() )
     {
         const kernel::Entity_ABC& entity = agents.NextElement();

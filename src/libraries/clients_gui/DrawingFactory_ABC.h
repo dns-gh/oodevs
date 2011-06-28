@@ -10,6 +10,13 @@
 #ifndef __DrawingFactory_ABC_h_
 #define __DrawingFactory_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
+namespace kernel
+{
+    class Entity_ABC;
+}
+
 namespace xml
 {
     class xistream;
@@ -26,7 +33,7 @@ namespace gui
 */
 // Created: SBO 2008-06-04
 // =============================================================================
-class DrawingFactory_ABC
+class DrawingFactory_ABC : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -37,15 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual Drawing_ABC* CreateShape( const DrawingTemplate& style, const QColor& color ) const = 0;
+    virtual Drawing_ABC* CreateShape( const DrawingTemplate& style, const QColor& color, const kernel::Entity_ABC* entity ) const = 0;
     virtual Drawing_ABC* CreateShape( xml::xistream& xis ) const = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    DrawingFactory_ABC( const DrawingFactory_ABC& );            //!< Copy constructor
-    DrawingFactory_ABC& operator=( const DrawingFactory_ABC& ); //!< Assignment operator
     //@}
 };
 

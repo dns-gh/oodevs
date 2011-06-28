@@ -14,11 +14,13 @@
 #include "DrawingCategory.h"
 #include "DrawingTemplate.h"
 #include "ParametersLayer.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/EntityResolver_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/LocationProxy.h"
-#include "clients_kernel/Positions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
-#include <svgl/svgl.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace gui;
@@ -27,15 +29,16 @@ using namespace gui;
 // Name: DrawerShape constructor
 // Created: AGE 2006-09-01
 // -----------------------------------------------------------------------------
-DrawerShape::DrawerShape( kernel::Controller& controller, unsigned long id, const DrawingTemplate& style,
-                          const QColor& color, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter )
-    : kernel::EntityImplementation< Drawing_ABC >( controller, id, style.GetName() )
-    , controller_         ( controller )
-    , coordinateConverter_( coordinateConverter )
+DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, const DrawingTemplate& style, const QColor& color,
+                          const kernel::Entity_ABC* entity, kernel::LocationProxy& location, const kernel::CoordinateConverter_ABC& coordinateConverter )
+    : kernel::EntityImplementation< Drawing_ABC >( controllers.controller_, id, style.GetName() )
+    , controller_         ( controllers.controller_ )
     , style_              ( style )
     , location_           ( location )
     , color_              ( color )
+    , entity_             ( controllers, entity )
     , drawer_             ( new SvgLocationDrawer( style ) )
+    , coordinateConverter_( coordinateConverter )
 {
     RegisterSelf( *this );
 }
@@ -61,16 +64,26 @@ namespace
 // Name: DrawerShape constructor
 // Created: SBO 2007-03-22
 // -----------------------------------------------------------------------------
-DrawerShape::DrawerShape( kernel::Controller& controller, unsigned long id, xml::xistream& xis,
-                          const DrawingTypes& types, kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& coordinateConverter )
-    : kernel::EntityImplementation< Drawing_ABC >( controller, id, ReadStyle( xis, types ).GetName() )
-    , controller_         ( controller )
-    , coordinateConverter_( coordinateConverter )
+DrawerShape::DrawerShape( kernel::Controllers& controllers, unsigned long id, xml::xistream& xis,
+                          const DrawingTypes& types, kernel::LocationProxy& proxy, const kernel::CoordinateConverter_ABC& coordinateConverter,
+                          const kernel::EntityResolver_ABC& resolver )
+    : kernel::EntityImplementation< Drawing_ABC >( controllers.controller_, id, ReadStyle( xis, types ).GetName() )
+    , controller_         ( controllers.controller_ )
     , style_              ( ReadStyle( xis, types ) )
     , location_           ( proxy )
     , color_              ( ReadColor( xis ) )
+    , entity_             ( controllers )
     , drawer_             ( new SvgLocationDrawer( style_ ) )
+    , coordinateConverter_( coordinateConverter )
 {
+    unsigned long parentId = 0;
+    xis >> xml::optional >> xml::attribute( "parent", parentId );
+    if( parentId )
+    {
+        entity_ = resolver.FindAutomat( parentId );
+        if( !entity_ )
+            entity_ = resolver.FindFormation( parentId );
+    }
     std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
     location.release();
@@ -95,6 +108,15 @@ DrawerShape::~DrawerShape()
 QColor DrawerShape::GetColor() const
 {
     return color_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DrawerShape::GetParentName
+// Created: JSR 2011-06-28
+// -----------------------------------------------------------------------------
+QString DrawerShape::GetParentName() const
+{
+    return entity_ ? entity_->GetName() : "---"; 
 }
 
 // -----------------------------------------------------------------------------
@@ -232,6 +254,8 @@ void DrawerShape::Serialize( xml::xostream& xos ) const
     {
         xos << xml::start( "shape" )
                 << xml::attribute( "color", color_.name() );
+        if( entity_ )
+            xos << xml::attribute( "parent", entity_->GetId() );
         style_.Serialize( xos );
         XmlSerializer serializer( xos, coordinateConverter_ );
         location_.Accept( serializer );
@@ -259,7 +283,7 @@ void DrawerShape::Handle( kernel::Location_ABC& location )
 // -----------------------------------------------------------------------------
 void DrawerShape::Edit( ParametersLayer& parameters )
 {
-    controller_.Delete( (Drawing_ABC&)*this );
+    controller_.Delete( *static_cast< Drawing_ABC* >( this ) );
     parameters.Start( *this, location_ );
 }
 

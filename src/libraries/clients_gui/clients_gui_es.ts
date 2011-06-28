@@ -459,6 +459,10 @@ Please check access permissions or write protection.</source>
         <source>Start drawing</source>
         <translation>Dessiner</translation>
     </message>
+    <message>
+        <source>Parent:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::EditorFactory</name>
