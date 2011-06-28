@@ -726,7 +726,6 @@
     </target>
 
     <target name="launcher_test" depends="application.launcher_dll,library.frontend">
-    <!-- $$$$ MCO : TMP
         <build-test name="launcher" depends="boost,qt,xerces,protobuf"
             libs="launcher-${platform}-mt@{suffix},tools,
                   lib${ant.project.name}_frontend-${platform}-mt,
@@ -737,7 +736,6 @@
                   lib${ant.project.name}_protocol-${platform}-mt">
             <syslibset libs="shell32"/>
         </build-test>
-        -->
     </target>
 
     <target name="mission_tester_test" depends="library.mission_tester">

@@ -24,6 +24,7 @@
 #include <tools/ElementObserver_ABC.h>
 #include <tools/ServerNetworker.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/assign.hpp>
 
 #define LAUNCHER_CHECK_MESSAGE( MSG, EXPECTED ) BOOST_CHECK_EQUAL( MSG.ShortDebugString(), EXPECTED )
@@ -221,6 +222,11 @@ namespace launcher_test
             exercise = exerciceListener.exercises_.front();
             BOOST_REQUIRE( exercise );
 
+            filePath = boost::filesystem::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/" + SESSION + "/session.xml" ) );
+            savePath = boost::filesystem::path( BOOST_RESOLVE( exercise->GetName() + "/sessions/" + SESSION + "/session.xml.save" ) );
+            std::remove( savePath.string().c_str() );
+            boost::filesystem::copy_file( filePath, savePath );
+
             MOCK_EXPECT( dispatcher, ConnectionSucceeded ).once().with( mock::retrieve( dispatcher.host ) );
             exercise->StartDispatcher( SESSION );
 
@@ -234,6 +240,9 @@ namespace launcher_test
        ~ExerciseFixture()
        {
            exercise->Stop( SESSION );
+           std::remove( filePath.string().c_str() );
+           boost::filesystem::copy_file( savePath, filePath );
+           std::remove( savePath.string().c_str() );
        }
 
         void VerifySendRequest( const std::string& expected )
@@ -263,6 +272,8 @@ namespace launcher_test
             while( !message.IsInitialized() && !timeout.Expired() )
                 Update();
         }
+        boost::filesystem::path filePath;
+        boost::filesystem::path savePath;
         ExerciseListener exerciceListener;
         const frontend::Exercise_ABC* exercise;
         const std::string SESSION;
