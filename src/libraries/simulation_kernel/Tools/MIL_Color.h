@@ -35,6 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_Color();
+    explicit MIL_Color( const MIL_Color& color );
     explicit MIL_Color( xml::xistream& xis );
     virtual ~MIL_Color();
     //@}

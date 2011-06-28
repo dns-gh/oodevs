@@ -84,7 +84,6 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
     , pParent_    ( parent )
     , pLevel_     ( 0 )
     , pExtensions_( new MIL_DictionaryExtensions() )
-    , pColor_     ( new MIL_Color() )
 {
     pLevel_ = PHY_NatureLevel::Find( level );
     if( !pLevel_ )
@@ -101,9 +100,15 @@ MIL_Formation::MIL_Formation( int level, const std::string& name, std::string lo
         RegisterAction( pLogisticAction_ );
     }
     if( pParent_ )
+    {
+        pColor_.reset( new MIL_Color( pParent_->GetColor() ) );
         pParent_->RegisterFormation( *this );
+    }
     else
+    {
+        pColor_.reset( new MIL_Color( pArmy_->GetColor() ) );
         pArmy_->RegisterFormation( *this );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -365,6 +370,15 @@ MIL_Army_ABC& MIL_Formation::GetArmy() const
 {
     assert( pArmy_ );
     return *pArmy_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::GetColor
+// Created: LGY 2011-06-27
+// -----------------------------------------------------------------------------
+const MIL_Color& MIL_Formation::GetColor() const
+{
+    return *pColor_;
 }
 
 // -----------------------------------------------------------------------------

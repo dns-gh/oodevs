@@ -136,6 +136,7 @@ public:
     // logistics
     MIL_AutomateLOG*                        GetBrainLogistic () const;
     MIL_AutomateLOG*                        FindLogisticManager() const; // Returns logistic chief
+    const MIL_Color& GetColor() const;
     //@}
 
     //! @name Visitor
@@ -268,31 +269,31 @@ private:
 private:
     //! @name Member data
     //@{
-    const MIL_AutomateType*                                     pType_;
-    const unsigned int                                          nID_;
-    MIL_Formation*                                              pParentFormation_;
-    MIL_Automate*                                               pParentAutomate_;
-    bool                                                        bEngaged_;
-    MIL_KnowledgeGroup*                                         pKnowledgeGroup_;
-    MIL_AutomateOrderManager*                                   pOrderManager_;
-    MIL_AgentPion*                                              pPionPC_;
-    T_PionVector                                                pions_; // Including pion PC
-    T_PionVector                                                recycledPions_; // Dynamic pions
-    T_AutomateVector                                            automates_;
-    bool                                                        bAutomateModeChanged_;
-    unsigned int                                                nTickRcDotationSupplyQuerySent_;
+    const MIL_AutomateType*                                    pType_;
+    const unsigned int                                         nID_;
+    MIL_Formation*                                             pParentFormation_;
+    MIL_Automate*                                              pParentAutomate_;
+    bool                                                       bEngaged_;
+    MIL_KnowledgeGroup*                                        pKnowledgeGroup_;
+    MIL_AutomateOrderManager*                                  pOrderManager_;
+    MIL_AgentPion*                                             pPionPC_;
+    T_PionVector                                               pions_; // Including pion PC
+    T_PionVector                                               recycledPions_; // Dynamic pions
+    T_AutomateVector                                           automates_;
+    bool                                                       bAutomateModeChanged_;
+    unsigned int                                               nTickRcDotationSupplyQuerySent_;
     // Knowledge
-    DEC_KnowledgeBlackBoard_Automate*                           pKnowledgeBlackBoard_;
+    DEC_KnowledgeBlackBoard_Automate*                          pKnowledgeBlackBoard_;
     // Surrendered / prisoner
-    const MIL_Army_ABC*                                         pArmySurrenderedTo_;
+    const MIL_Army_ABC*                                        pArmySurrenderedTo_;
     // Logistic
-    std::auto_ptr< logistic::LogisticHierarchy >                pLogisticHierarchy_;
-    std::auto_ptr< MIL_AutomateLOG >                            pBrainLogistic_;
-    boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > >  pLogisticAction_;
-    std::auto_ptr< MIL_DotationSupplyManager >                  pDotationSupplyManager_;
-    std::auto_ptr< MIL_StockSupplyManager >                     pStockSupplyManager_;
-    std::auto_ptr< MIL_DictionaryExtensions >                   pExtensions_;
-    std::auto_ptr< MIL_Color > pColor_;
+    std::auto_ptr< logistic::LogisticHierarchy >               pLogisticHierarchy_;
+    std::auto_ptr< MIL_AutomateLOG >                           pBrainLogistic_;
+    boost::shared_ptr< PHY_ActionLogistic< MIL_AutomateLOG > > pLogisticAction_;
+    std::auto_ptr< MIL_DotationSupplyManager >                 pDotationSupplyManager_;
+    std::auto_ptr< MIL_StockSupplyManager >                    pStockSupplyManager_;
+    std::auto_ptr< MIL_DictionaryExtensions >                  pExtensions_;
+    std::auto_ptr< MIL_Color >                                 pColor_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_Automate* role, const unsigned int /*version*/ );

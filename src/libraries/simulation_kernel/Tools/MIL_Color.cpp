@@ -26,6 +26,16 @@ MIL_Color::MIL_Color()
 // Name: MIL_Color constructor
 // Created: LGY 2011-06-27
 // -----------------------------------------------------------------------------
+MIL_Color::MIL_Color( const MIL_Color& color )
+    : color_( color.color_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Color constructor
+// Created: LGY 2011-06-27
+// -----------------------------------------------------------------------------
 MIL_Color::MIL_Color( xml::xistream& xis )
 {
     xis >> xml::optional

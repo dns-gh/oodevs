@@ -822,6 +822,15 @@ DEC_KnowledgeBlackBoard_Army& MIL_Army::GetKnowledge() const
     return *pKnowledgeBlackBoard_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::GetColor
+// Created: LGY 2011-06-27
+// -----------------------------------------------------------------------------
+const MIL_Color& MIL_Army::GetColor() const
+{
+    return *pColor_;
+}
+
 //-----------------------------------------------------------------------------
 // Name: MIL_Army::GetDiplomacy
 // Created: NLD 2004-03-24

@@ -81,6 +81,7 @@ public:
     unsigned int GetID() const;
     MIL_AutomateLOG* GetBrainLogistic() const;
     MIL_AutomateLOG* FindLogisticManager() const;
+    const MIL_Color& GetColor() const;
     //@}
 
     //! @name Visitor

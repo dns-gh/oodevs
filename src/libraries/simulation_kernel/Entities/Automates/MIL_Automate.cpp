@@ -154,7 +154,8 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID )
 // Name: MIL_Automate constructor
 // Created: LDC 2010-10-05
 // -----------------------------------------------------------------------------
-MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name, unsigned int gcPause, unsigned int gcMult, unsigned int context )
+MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_Entity_ABC& parent, unsigned int knowledgeGroup, const std::string& name,
+                            unsigned int gcPause, unsigned int gcMult, unsigned int context )
     : MIL_Entity_ABC                 ( name )
     , pType_                         ( &type )
     , nID_                           ( nID )
@@ -176,7 +177,6 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , pDotationSupplyManager_        ( new MIL_DotationSupplyManager( *this ) )
     , pStockSupplyManager_           ( new MIL_StockSupplyManager( *this ) )
     , pExtensions_                   ( new MIL_DictionaryExtensions() )
-    , pColor_                        ( new MIL_Color() )
 {
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( knowledgeGroup );
     if( !pKnowledgeGroup_ )
@@ -187,9 +187,15 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     RegisterRole( *new DEC_Representations() );
 
     if( pParentFormation_ )
+    {
+        pColor_.reset( new MIL_Color( pParentFormation_->GetColor() ) );
         pParentFormation_->RegisterAutomate( *this );
+    }
     else if( pParentAutomate_ )
+    {
+        pColor_.reset( new MIL_Color( pParentAutomate_->GetColor() ) );
         pParentAutomate_->RegisterAutomate( *this );
+    }
 
     SendCreation ( context );
     SendFullState();
@@ -1333,6 +1339,15 @@ const MIL_AutomateOrderManager& MIL_Automate::GetOrderManager() const
 MIL_AutomateOrderManager& MIL_Automate::GetOrderManager()
 {
     return *pOrderManager_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetColor
+// Created: LGY 2011-06-27
+// -----------------------------------------------------------------------------
+const MIL_Color& MIL_Automate::GetColor() const
+{
+    return *pColor_;
 }
 
 // -----------------------------------------------------------------------------

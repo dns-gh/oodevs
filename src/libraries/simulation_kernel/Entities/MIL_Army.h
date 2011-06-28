@@ -135,6 +135,7 @@ public:
     const std::string& GetName() const;
     const T_KnowledgeGroupMap& GetKnowledgeGroups() const;
     DEC_KnowledgeBlackBoard_Army& GetKnowledge() const;
+    virtual const MIL_Color& GetColor() const;
     //@}
 
     //! @name Network

@@ -116,8 +116,8 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( new MIL_AffinitiesMap() )
     , pExtensions_         ( new MIL_DictionaryExtensions() )
-    , pColor_              ( new MIL_Color() )
 {
+    pColor_.reset( new MIL_Color( automate.GetColor() ) );
     automate.RegisterPion( *this );
 }
 
@@ -135,8 +135,8 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , algorithmFactories_  ( algorithmFactories )
     , pAffinities_         ( new MIL_AffinitiesMap() )
     , pExtensions_         ( new MIL_DictionaryExtensions() )
-    , pColor_              ( new MIL_Color() )
 {
+    pColor_.reset( new MIL_Color( automate.GetColor() ) );
     automate.RegisterPion( *this );
 }
 
