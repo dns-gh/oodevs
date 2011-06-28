@@ -125,21 +125,23 @@ void FilterCommand::ComputePath()
     boost::split( valuesVector, path, boost::algorithm::is_any_of( ";" ) );
     valuesVector.insert( valuesVector.begin(), config_.BuildPhysicalChildFile( "Filters/" ) );
 
-    for( std::vector< std::string >::const_iterator it = valuesVector.begin(); it != valuesVector.end(); ++it )
-    {
+    bool founded = false;
+    for( std::vector< std::string >::const_iterator it = valuesVector.begin(); it != valuesVector.end() && !founded; ++it )
         if( bfs::exists( *it ) && bfs::is_directory( *it ) )
         {
             bfs::directory_iterator end_itr;
-            for( bfs::directory_iterator dir_it( *it ); dir_it != end_itr; ++dir_it )
+            for( bfs::directory_iterator dir_it( *it ); dir_it != end_itr && !founded; ++dir_it )
                 if( !bfs::is_directory( dir_it->path() ) )
                 {
                     std::string file = dir_it->path().leaf();
                     size_t pos = file.rfind( ".exe" );
                     if( pos != std::string::npos && pos == file.size() - 4 && file == command_ )
+                    {
                         path_ = *it;
+                        founded = true;
+                    }
                 }
         }
-    }
     emit statusChanged( IsValid() );
 }
 
