@@ -10,16 +10,39 @@
 #include "hla_plugin_pch.h"
 #include "RtiAmbassadorFactory.h"
 #include <hla/RtiAmbassador_ABC.h>
+#include <xeumeuleu/xml.hpp>
+#include <map>
+#include <boost/assign.hpp>
+#include <windows.h>
 
 using namespace plugins::hla;
+
+namespace
+{
+#ifdef _DEBUG
+    const std::string LIBRARY = "debug";
+#else
+    const std::string LIBRARY = "release";
+#endif
+}
 
 // -----------------------------------------------------------------------------
 // Name: RtiAmbassadorFactory constructor
 // Created: SLI 2011-01-10
 // -----------------------------------------------------------------------------
-RtiAmbassadorFactory::RtiAmbassadorFactory()
+RtiAmbassadorFactory::RtiAmbassadorFactory( xml::xisubstream configuration, xml::xisubstream protocols )
 {
-    // NOTHING
+    const std::string protocol = configuration.attribute< std::string >( "protocol", "hla-1516e" );
+    std::string library;
+    protocols >> xml::start( "protocols" )
+                  >> xml::start( protocol )
+                      >> xml::content( LIBRARY, library );
+    HMODULE module = LoadLibrary( library.c_str() );
+    if( !module )
+        throw std::runtime_error( "failed to load protocol library: '" + library + "'" );
+    createAmbassador = (T_CreateAmbassador)GetProcAddress( module, "CreateAmbassador" );
+    if( !createAmbassador )
+        throw std::runtime_error( "unable to find function createAmbassador function" );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,5 +62,5 @@ std::auto_ptr< ::hla::RtiAmbassador_ABC > RtiAmbassadorFactory::CreateAmbassador
                                                                                   ::hla::RtiAmbassador_ABC::E_MessagePolicy policy,
                                                                                   const std::string& host, const std::string& port ) const
 {
-    return std::auto_ptr< ::hla::RtiAmbassador_ABC >( ::hla::RtiAmbassador_ABC::CreateAmbassador( timeFactory, timeIntervalFactory, policy, host, port ) );
+    return std::auto_ptr< ::hla::RtiAmbassador_ABC >( createAmbassador( timeFactory, timeIntervalFactory, policy, host, port ) );
 }

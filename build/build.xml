@@ -124,7 +124,7 @@
 
     <target name="library.hla_plugin_dll" depends="library.hla_plugin" description="build hla_plugin dynamic library">
         <build-lib name="hla_plugin_dll" outtype="shared" depends="boost,qt,terrain,xalan,xerces,protobuf" pattern="hla_plugin-${platform}-mt@{suffix}" suffix="-gd"
-            libs="HLA,libFedTime1516e,
+            libs="HLA,
                   lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_ENT-${platform}-mt@{suffix},

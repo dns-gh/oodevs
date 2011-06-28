@@ -49,7 +49,7 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& model, dispatcher::SimulationPublis
     , logger_               ( logger )
     , publisher_            ( publisher )
     , pObjectResolver_      ( new ObjectResolver() )
-    , pRtiFactory_          ( new RtiAmbassadorFactory() )
+    , pRtiFactory_          ( new RtiAmbassadorFactory( xis, xml::xifstream( config.BuildPluginDirectory( "hla" ) + "/protocols.xml" ) ) )
     , pDebugRtiFactory_     ( new DebugRtiAmbassadorFactory( *pRtiFactory_, logger, *pObjectResolver_ ) )
     , pFederateFactory_     ( new FederateAmbassadorFactory( ReadTimeStep( config.GetSessionFile() ) ) )
     , pDebugFederateFactory_( new DebugFederateAmbassadorFactory( *pFederateFactory_, logger, *pObjectResolver_ ) )

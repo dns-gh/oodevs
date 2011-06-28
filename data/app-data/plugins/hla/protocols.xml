@@ -1,0 +1,14 @@
+<protocols>
+    <hla-13>
+        <release>libFedTime.dll</release>
+        <debug>libFedTimed.dll</debug>
+    </hla-13>
+    <hla-1516>
+        <release>hla_1516.dll</release>
+        <debug>hla_1516_d.dll</debug>
+    </hla-1516>
+    <hla-1516e>
+        <release>libFedTime1516e.dll</release>
+        <debug>libFedTime1516e_d.dll</debug>
+    </hla-1516e>
+</protocols>

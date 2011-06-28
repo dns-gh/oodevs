@@ -12,6 +12,11 @@
 
 #include "RtiAmbassadorFactory_ABC.h"
 
+namespace xml
+{
+    class xisubstream;
+}
+
 namespace plugins
 {
 namespace hla
@@ -27,7 +32,7 @@ class RtiAmbassadorFactory : public RtiAmbassadorFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RtiAmbassadorFactory();
+             RtiAmbassadorFactory( xml::xisubstream configuration, xml::xisubstream protocols );
     virtual ~RtiAmbassadorFactory();
     //@}
 
@@ -36,6 +41,18 @@ public:
     virtual std::auto_ptr< ::hla::RtiAmbassador_ABC > CreateAmbassador( ::hla::TimeFactory_ABC& timeFactory, ::hla::TimeIntervalFactory_ABC& timeIntervalFactory,
                                                                         ::hla::RtiAmbassador_ABC::E_MessagePolicy policy,
                                                                         const std::string& host, const std::string& port ) const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef ::hla::RtiAmbassador_ABC* (*T_CreateAmbassador)( ::hla::TimeFactory_ABC&, ::hla::TimeIntervalFactory_ABC&, ::hla::RtiAmbassador_ABC::E_MessagePolicy, const std::string&, const std::string& );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    T_CreateAmbassador createAmbassador;
     //@}
 };
 
