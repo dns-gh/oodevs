@@ -86,6 +86,12 @@
                 <description lang="fr" name="Paramètres avancés"><![CDATA[]]></description>
             </descriptions>
             <settings>
+                <setting attribute="@protocol" type="enumeration" default="hla-1516e;hla-1516;hla-13;">
+                    <descriptions>
+                        <description lang="en" name="Protocol"><![CDATA[]]>Select HLA protocol.</description>
+                        <description lang="fr" name="Protocole"><![CDATA[]]>Sélectionne le protocole HLA.</description>
+                    </descriptions>
+                </setting>
                 <setting attribute="@dis" type="string" default="dis.xml">
                     <descriptions>
                         <description lang="en" name="DIS"><![CDATA[]]>Entity types mapping.</description>

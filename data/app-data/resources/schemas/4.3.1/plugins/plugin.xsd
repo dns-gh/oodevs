@@ -49,6 +49,7 @@
 								<xs:enumeration value="boolean"/>
 								<xs:enumeration value="integer"/>
 								<xs:enumeration value="string"/>
+								<xs:enumeration value="enumeration"/>
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:attribute>

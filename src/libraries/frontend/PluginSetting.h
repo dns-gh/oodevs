@@ -17,6 +17,7 @@ class QLineEdit;
 class QSpinBox;
 class QTimeEdit;
 class QWidget;
+class QComboBox;
 
 namespace xml
 {
@@ -29,13 +30,12 @@ namespace frontend
 
 // =============================================================================
 /** @class  PluginSetting
-    @brief  PluginSetting
+    @brief  Plugin setting
 */
 // Created: SBO 2011-05-09
 // =============================================================================
 class PluginSetting : private boost::noncopyable
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -57,6 +57,7 @@ private:
     QSpinBox* integerValue_;
     QCheckBox* booleanValue_;
     QTimeEdit* timeValue_;
+    QComboBox* enumerationValue_;
     //@}
 };
 

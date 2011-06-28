@@ -19,7 +19,10 @@
 #include <qspinbox.h>
 #include <qtextcodec.h>
 #include <qtooltip.h>
+#include <qcombobox.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/foreach.hpp>
 
 using namespace frontend;
 
@@ -92,6 +95,16 @@ PluginSetting::PluginSetting( QWidget* parent, xml::xistream& xis )
         timeValue_->setDisplay ( QTimeEdit::Hours | QTimeEdit::Minutes | QTimeEdit::Seconds );
         timeValue_->setTime( QTime().addSecs( xis.attribute< int >( "default", 0 ) ) );
     }
+    else if( type_ == "enumeration" )
+    {
+        enumerationValue_ = Style( new QComboBox( parent ) );
+        const std::string value = xis.attribute< std::string >( "default", "" );
+        std::vector< std::string > enumerations;
+        boost::split( enumerations, value, boost::is_any_of( ";" ) );
+        BOOST_FOREACH( const std::string& enumeration , enumerations )
+            enumerationValue_->insertItem( enumeration.c_str() );
+        enumerationValue_->setCurrentItem( 0u );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -117,4 +130,6 @@ void PluginSetting::Accept( PluginSettingVisitor_ABC& visitor )
         visitor.Visit( attribute_, booleanValue_->isChecked() );
     else if( type_ == "time" )
         visitor.Visit( attribute_, std::string( QString( "%1s" ).arg( QTime().secsTo( timeValue_->time() ) ).ascii() ) );
+    else if( type_ == "enumeration" )
+        visitor.Visit( attribute_, std::string( enumerationValue_->currentText().ascii() ) );
 }
