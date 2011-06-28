@@ -16,6 +16,10 @@
 namespace kernel
 {
     class Entity_ABC;
+    class Team_ABC;
+    class Formation_ABC;
+    class Agent_ABC;
+    class Automat_ABC;
     class Controllers;
 }
 
@@ -33,7 +37,10 @@ namespace gui
 // =============================================================================
 class ColorEditor : public QObject
                   , public tools::Observer_ABC
-                  , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
+                  , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
+                  , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
+                  , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                  , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                   , private boost::noncopyable
 {
     Q_OBJECT;
@@ -48,7 +55,16 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     //@}
 
 private slots:

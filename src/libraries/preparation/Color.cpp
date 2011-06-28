@@ -11,6 +11,9 @@
 #include "Color.h"
 #include "clients_kernel/Entity_ABC.h"
 #include <xeumeuleu/xml.hpp>
+#pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 namespace
 {
@@ -27,10 +30,9 @@ namespace
 
     std::string RgbToHex( unsigned int red, unsigned int green, unsigned int blue )
     {
-        unsigned int value = red << 16 | green << 8 | blue;
-        std::stringstream res;
-        res << std::hex << value;
-        return "0x" + res.str();
+        std::string result = QColor( red, green, blue ).name().ascii();
+        boost::replace_all( result, "#", "0x" );
+        return result;
     }
 }
 

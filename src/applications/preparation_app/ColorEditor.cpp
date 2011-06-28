@@ -14,6 +14,10 @@
 #include "clients_kernel/tools.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_gui/ColorStrategy_ABC.h"
 #include "clients_gui/ColorModifier_ABC.h"
 #include "clients_gui/ColorEditor_ABC.h"
@@ -66,9 +70,45 @@ void ColorEditor::Reset()
 
 // -----------------------------------------------------------------------------
 // Name: ColorEditor::NotifyContextMenu
+// Created: LGY 2011-06-28
+// -----------------------------------------------------------------------------
+void ColorEditor::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
+{
+    Update( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorEditor::NotifyContextMenu
+// Created: LGY 2011-06-28
+// -----------------------------------------------------------------------------
+void ColorEditor::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
+{
+    Update( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorEditor::NotifyContextMenu
+// Created: LGY 2011-06-28
+// -----------------------------------------------------------------------------
+void ColorEditor::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
+{
+    Update( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorEditor::NotifyContextMenu
+// Created: LGY 2011-06-28
+// -----------------------------------------------------------------------------
+void ColorEditor::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
+{
+    Update( entity, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorEditor::Update
 // Created: LGY 2011-06-23
 // -----------------------------------------------------------------------------
-void ColorEditor::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+void ColorEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
     menu.InsertItem( "Color", tools::translate( "ColorEditor", "Change color" ), this, SLOT( Show() ) );
