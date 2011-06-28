@@ -43,7 +43,6 @@ StructuralStateAttribute.cpp \
 SuccessFactorsModel.cpp \
 SupplyRouteAttribute.cpp \
 TacticalLine_ABC.cpp \
-Tc2States.cpp \
 Team.cpp \
 TeamsModel.cpp \
 
