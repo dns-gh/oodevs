@@ -79,19 +79,23 @@ private:
     //@{
     virtual void BeginTick()
     {
-        std::for_each( next_.begin(), next_.end(), boost::bind( &Function1_ABC< K, A >::BeginTick, _1 ) );
+        for( std::vector< Function1_ABC< K, A >* >::const_iterator it = next_.begin(); it != next_.end(); ++it )
+            (*it)->BeginTick();
     }
     virtual void SetKey( const K& key )
     {
-        std::for_each( next_.begin(), next_.end(), boost::bind( &Function1_ABC< K, A >::SetKey, _1, key ) );
+        for( std::vector< Function1_ABC< K, A >* >::const_iterator it = next_.begin(); it != next_.end(); ++it )
+            (*it)->SetKey( key );
     }
     virtual void Apply( const A& arg )
     {
-        std::for_each( next_.begin(), next_.end(), boost::bind( &Function1_ABC< K, A >::Apply, _1, arg ) );
+        for( std::vector< Function1_ABC< K, A >* >::const_iterator it = next_.begin(); it != next_.end(); ++it )
+            (*it)->Apply( arg );
     }
     virtual void EndTick()
     {
-        std::for_each( next_.begin(), next_.end(), boost::bind( &Function1_ABC< K, A >::EndTick, _1 ) );
+        for( std::vector< Function1_ABC< K, A >* >::const_iterator it = next_.begin(); it!= next_.end(); ++it )
+            (*it)->EndTick();
     }
     //@}
 
@@ -130,7 +134,8 @@ private:
     //@{
     virtual void Handle( const T& value )
     {
-        std::for_each( next_.begin(), next_.end(), boost::bind( &ValueHandler_ABC< T >::Handle, _1, value ) );
+        for( std::vector< ValueHandler_ABC< T >* >::const_iterator it = next_.begin(); it != next_.end(); ++it )
+            (*it)->Handle( value );
     }
     //@}
 
