@@ -2120,6 +2120,7 @@ message KnowledgeGroupCreation {
    optional KnowledgeGroupId parent          = 3; //!< The parent group
    required string           type            = 4; //!< The group type
    optional bool             jam             = 5; //!< Whether the communication of the group is jammed or not
+   required string           name			 = 6 [default = ""]; //!< This particular knowledge group's name
 }
 
 /** @struct KnowledgeGroupUpdate

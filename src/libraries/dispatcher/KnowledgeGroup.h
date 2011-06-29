@@ -82,6 +82,7 @@ private:
     std::string type_; // LTO
     bool enabled_; // LTO
     bool jammed_; // LTO
+    std::string name_; // LTO
     tools::Resolver< dispatcher::KnowledgeGroup_ABC > knowledgeGroups_;
     tools::Resolver< dispatcher::Automat_ABC > automats_;
     //@}

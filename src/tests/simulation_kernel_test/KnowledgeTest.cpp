@@ -78,7 +78,7 @@ namespace
     std::auto_ptr< MIL_KnowledgeGroup > CreateKnowledgeGroup( MockArmy& army, MIL_KnowledgeGroup& group, unsigned int id, const std::string& type )
     {
         MockKnowledgeGroupFactory factory;
-        xml::xistringstream xis( "<root id='" + boost::lexical_cast< std::string >( id ) + "' type='" + type + "'/>" );
+        xml::xistringstream xis( "<root id='" + boost::lexical_cast< std::string >( id ) + "' type='" + type + "' name='group'/>" );
         xis >> xml::start( "root" );
 //        MOCK_EXPECT( group, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration of nested KG
         std::auto_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( xis, army, &group, factory ) );

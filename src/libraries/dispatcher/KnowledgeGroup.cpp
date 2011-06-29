@@ -31,6 +31,7 @@ KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const sword::KnowledgeGroupCre
     , type_( msg.type() ) // LTO
     , enabled_( true ) // LTO
     , jammed_( msg.has_jam() && msg.jam() )
+    , name_( msg.name() )
 {
     // LTO begin
     if( parent_ )
@@ -117,6 +118,7 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
         message().mutable_parent()->set_id( parent_->GetId() );
     if( jammed_ )
         message().set_jam( true );
+    message().set_name( name_ );
     // LTO end
     message.Send( publisher );
 }

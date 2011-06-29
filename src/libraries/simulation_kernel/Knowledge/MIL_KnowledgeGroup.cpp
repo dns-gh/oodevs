@@ -77,6 +77,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
     : id_                 ( xis.attribute< unsigned int >( "id" ) )
     , type_               ( MIL_KnowledgeGroupType::FindType( xis.attribute< std::string >( "type" ) ) )
+    , name_               ( xis.attribute< std::string >( "name" ) )
     , army_               ( &army )
     , parent_             ( parent ) // LTO
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
@@ -127,6 +128,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, MIL_KnowledgeGroup* parent )
     : type_               ( source.type_ )
     , id_                 ( idManager_.GetFreeId() )
+    , name_               ( source.name_ )
     , army_               ( source.army_ )
     , parent_             ( parent ) // LTO
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
@@ -237,6 +239,7 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
     file >> typeId;
     type_ = MIL_KnowledgeGroupType::FindType( typeId );
     file >> id_
+         >> name_
          >> army_
          >> parent_ // LTO
          >> knowledgeBlackBoard_
@@ -261,6 +264,7 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const unsigned in
     unsigned int type = type_->GetID();
     file << type
          << id_
+         << name_
          << army_
          << parent_ // LTO
          << knowledgeBlackBoard_
@@ -280,6 +284,7 @@ void MIL_KnowledgeGroup::WriteODB( xml::xostream& xos ) const
     assert( type_ );
     xos << xml::start( "knowledge-group" )
             << xml::attribute( "id", id_ )
+            << xml::attribute( "name", name_ )
             << xml::attribute( "type", type_->GetName() )
         << xml::end;
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
@@ -464,6 +469,7 @@ void MIL_KnowledgeGroup::SendCreation( unsigned int context /*= 0*/ ) const
     assert( army_ );
     client::KnowledgeGroupCreation msg;
     msg().mutable_knowledge_group()->set_id( id_ );
+    msg().set_name( name_ );
     msg().mutable_party()->set_id( army_->GetID() );
     msg().set_type(GetType().GetName());
     // LTO begin

@@ -1663,7 +1663,8 @@ BOOST_FIXTURE_TEST_CASE( knowledge_group_creation_to_client_is_converted, Contex
     content.mutable_knowledge_group_creation()->mutable_parent()->set_id( 9 );
     content.mutable_knowledge_group_creation()->set_type( "type" );
     content.mutable_knowledge_group_creation()->set_jam( true );
-    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { knowledge_group_creation { knowledge_group { id: 7 } party { id: 8 } parent { id: 9 } type: \"type\" jam: true name: \"\" } }" ) );
+    content.mutable_knowledge_group_creation()->set_name( "totogroup" );
+    MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { knowledge_group_creation { knowledge_group { id: 7 } party { id: 8 } parent { id: 9 } type: \"type\" jam: true name: \"totogroup\" } }" ) );
     converter.ReceiveSimToClient( "unused endpoint", msg );
 }
 

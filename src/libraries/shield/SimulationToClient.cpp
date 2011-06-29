@@ -2146,7 +2146,7 @@ void SimulationToClient::Convert( const sword::KnowledgeGroupCreation& from, Msg
     CONVERT_ID( parent );
     CONVERT( type );
     CONVERT( jam );
-    to->set_name( "" );
+    CONVERT( name );
 }
 
 // -----------------------------------------------------------------------------

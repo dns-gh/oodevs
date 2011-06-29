@@ -47,14 +47,14 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
     MIL_KnowledgeGroup groupArmy( kgType, 1, army );
 
     // register 1st sub knowledge group
-    xml::xistringstream xis2( "<root id='2' type='TOTO'/>" );
+    xml::xistringstream xis2( "<root id='2' type='TOTO' name='toto1'/>" );
     xis2 >> xml::start( "root" );
 //    MOCK_EXPECT( groupArmy, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group1( xis2, army, &groupArmy, mockKnowledgeGroupFactory );
 //    army.verify();
 
     // register 2nd sub knowledge group
-    xml::xistringstream xis3( "<root id='3' type='TOTO'/>" );
+    xml::xistringstream xis3( "<root id='3' type='TOTO' name='toto2'/>" );
     xis3 >> xml::start( "root" );
 //    MOCK_EXPECT( groupArmy, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group2( xis3, army, &groupArmy, mockKnowledgeGroupFactory );
@@ -103,14 +103,14 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
     MIL_KnowledgeGroup groupArmy( kgType, 10, army );
 
     // register 1st sub knowledge group
-    xml::xistringstream xis2( "<root id='12' type='TOTO'/>" );
+    xml::xistringstream xis2( "<root id='12' type='TOTO' name='toto12'/>" );
     xis2 >> xml::start( "root" );
 //    MOCK_EXPECT( groupArmy, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group1( xis2, army, &groupArmy, mockKnowledgeGroupFactory );
 //    groupArmy.verify();
 
     // register 2nd sub knowledge group
-    xml::xistringstream xis3( "<root id='13' type='TOTO'/>" );
+    xml::xistringstream xis3( "<root id='13' type='TOTO' name='toto13'/>" );
     xis3 >> xml::start( "root" );
 //    MOCK_EXPECT( group1, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group2( xis3, army, &group1, mockKnowledgeGroupFactory );
@@ -162,14 +162,14 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
     MIL_KnowledgeGroup groupArmy( kgType, 20, army );
 
     // register 1st sub knowledge group
-    xml::xistringstream xis2( "<root id='21' type='TOTO'/>" );
+    xml::xistringstream xis2( "<root id='21' type='TOTO' name='toto21'/>" );
     xis2 >> xml::start( "root" );
 //    MOCK_EXPECT( groupArmy, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group1( xis2, army, &groupArmy, mockKnowledgeGroupFactory );
 //    groupArmy.verify();
 
     // register 2nd sub knowledge group
-    xml::xistringstream xis3( "<root id='22' type='TOTO'/>" );
+    xml::xistringstream xis3( "<root id='22' type='TOTO' name='toto22'/>" );
     xis3 >> xml::start( "root" );
     MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup group2( xis3, army, 0, mockKnowledgeGroupFactory );
