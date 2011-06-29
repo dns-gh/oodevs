@@ -230,27 +230,14 @@ void MIL_StockSupplyManager::OnReceiveLogSupplyPullFlow( const sword::MissionPar
 // Name: MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg)
+void MIL_StockSupplyManager::OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg, MIL_AutomateLOG& automatLog )
 {
-    unsigned int oid_donneur = msg.elem( 0 ).value().Get(0).has_automat() ?
-            msg.elem( 0 ).value().Get(0).automat().id() : msg.elem( 0 ).value().Get(0).formation().id();
-    MIL_Formation* candidateFormation = MIL_AgentServer::GetWorkspace().GetEntityManager().FindFormation( oid_donneur );
-    MIL_Automate* candidateAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( oid_donneur );
-    if( !candidateAutomate && !candidateFormation)
-        throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
-
-    MIL_AutomateLOG* pSupplier = candidateAutomate!=0 ? candidateAutomate->GetBrainLogistic() :
-            candidateFormation->GetBrainLogistic();
-
-    if( !pSupplier )
-        throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_supplier );
-
     PHY_SupplyStockRequestContainer supplyRequests( *pAutomate_, msg.elem( 1 ), PHY_SupplyStockRequestContainer::eDownward );
     if(!supplyRequests.HasRequests())
         throw NET_AsnException< sword::LogSupplyPushFlowAck::ErrorCode >( sword::LogSupplyPushFlowAck::error_invalid_receiver );
 
     PHY_SupplyStockState* pSupplyState = 0;
-    supplyRequests.Execute( *pSupplier, pSupplyState );
+    supplyRequests.Execute( automatLog, pSupplyState );
     if( pSupplyState )
         manualSupplyStates_.insert( pSupplyState );
     else

@@ -19,6 +19,7 @@
 class PHY_DotationCategory;
 class PHY_SupplyStockState;
 class MIL_Automate;
+class MIL_AutomateLOG;
 template < typename T > class PHY_ActionLogistic;
 
 namespace sword
@@ -53,7 +54,7 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg );
+    void OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg, MIL_AutomateLOG& automatLog );
     void OnReceiveLogSupplyPullFlow( const sword::MissionParameters& msg );
 
     void SendChangedState() const;

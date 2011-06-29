@@ -1170,10 +1170,10 @@ void MIL_Automate::OnReceiveChangeSuperior( const sword::UnitMagicAction& msg, c
 // Name: MIL_Automate::OnReceiveLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg )
+void MIL_Automate::OnReceiveLogSupplyPushFlow( const sword::MissionParameters& msg, MIL_AutomateLOG& automatLog )
 {
     assert( pStockSupplyManager_.get() );
-    pStockSupplyManager_->OnReceiveLogSupplyPushFlow( msg );
+    pStockSupplyManager_->OnReceiveLogSupplyPushFlow( msg, automatLog );
 }
 
 // -----------------------------------------------------------------------------

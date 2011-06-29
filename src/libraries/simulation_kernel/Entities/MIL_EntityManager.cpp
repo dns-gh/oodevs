@@ -1436,9 +1436,15 @@ void MIL_EntityManager::ProcessLogSupplyPushFlow( const UnitMagicAction& message
     ack().set_error_code( LogSupplyPushFlowAck::no_error_pushflow );
     try
     {
-        MIL_Automate* pAutomate = TaskerToAutomat( *this, message.tasker() );
-        if( pAutomate )
-            pAutomate->OnReceiveLogSupplyPushFlow( message.parameters() );
+        MIL_AutomateLOG* pBrainLog = FindBrainLogistic( TaskerToId( message.tasker() ) );
+        if( !pBrainLog )
+            throw NET_AsnException< LogSupplyPushFlowAck::ErrorCode >( LogSupplyPushFlowAck::error_invalid_supplier );
+
+        if( message.parameters().elem_size() < 1 || !message.parameters().elem( 0 ).value().Get(0).has_automat() )
+            throw NET_AsnException< LogSupplyPushFlowAck::ErrorCode >( LogSupplyPushFlowAck::error_invalid_receiver );
+
+        if( MIL_Automate* pAutomate = FindAutomate( message.parameters().elem( 0 ).value().Get(0).automat().id() ) )
+            pAutomate->OnReceiveLogSupplyPushFlow( message.parameters(), *pBrainLog );
         else
             throw NET_AsnException< LogSupplyPushFlowAck::ErrorCode >( LogSupplyPushFlowAck::error_invalid_receiver );
     }
@@ -1845,11 +1851,9 @@ MIL_Automate* MIL_EntityManager::FindAutomate( unsigned int nID ) const
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG* MIL_EntityManager::FindBrainLogistic( unsigned int nID ) const
 {
-    MIL_Formation* pFormation = FindFormation( nID );
-    if( pFormation )
+    if( MIL_Formation* pFormation = FindFormation( nID ) )
         return pFormation->GetBrainLogistic();
-    MIL_Automate* pAutomate = FindAutomate( nID );
-    if( pAutomate  )
+    if( MIL_Automate* pAutomate = FindAutomate( nID ) )
         return pAutomate->GetBrainLogistic();
     return 0;
 }

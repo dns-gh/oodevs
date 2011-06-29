@@ -52,7 +52,6 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     , automats_( automats )
     , profile_( profile )
     , selected_( controllers )
-    , selectedAutomat_( false )
 {
     setCaption( tr( "Push supply flow" ) );
     QVBoxLayout* layout = new QVBoxLayout( this );
@@ -106,15 +105,8 @@ LogisticSupplyPushFlowDialog::~LogisticSupplyPushFlowDialog()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Automat_ABC& agent, ContextMenu& menu )
 {
-    if( profile_.CanBeOrdered( agent ) )
-    {
-        if( agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
-        {
-            selected_ = &agent;
-            selectedAutomat_ = true;
-            menu.InsertItem( "Command", tr( "Push supply flow" ), this, SLOT( Show() ) );
-        }
-    }
+    if( profile_.CanBeOrdered( agent ) && agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+        InsertMenuEntry( agent, menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,15 +115,18 @@ void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Automat_ABC& agent, 
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::NotifyContextMenu( const Formation_ABC& agent, ContextMenu& menu )
 {
-    if( profile_.CanBeOrdered( agent ) )
-    {
-        if( agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
-        {
-            selected_ = &agent;
-            selectedAutomat_ = false;
-            menu.InsertItem( "Command", tr( "Push supply flow" ), this, SLOT( Show() ) );
-        }
-    }
+    if( profile_.CanBeOrdered( agent ) && agent.GetLogisticLevel() != kernel::LogisticLevel::none_ )
+        InsertMenuEntry( agent, menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::InsertMenuEntry
+// Created: ABR 2011-06-29
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::InsertMenuEntry( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu )
+{
+    selected_ = &agent;
+    menu.InsertItem( "Command", tr( "Push supply flow" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,20 +176,11 @@ void LogisticSupplyPushFlowDialog::Validate()
     accept();
 
     // $$$$ _RC_ SBO 2010-05-17: use ActionFactory
-    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( ( selectedAutomat_ ) ? "automat_log_supply_push_flow" : "formation_log_supply_push_flow" );
-    UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Push Flow" ), true );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( ( dynamic_cast< const Automat_ABC* >( static_cast< const Entity_ABC* >( selected_ ) ) ) ? "automat_log_supply_push_flow" : "formation_log_supply_push_flow" );
+    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, tr( "Log Supply Push Flow" ), true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-    if( selectedAutomat_ )
-    {
-        assert( dynamic_cast<const Automat_ABC*>( (const Entity_ABC*)selected_) );
-        action->AddParameter( *new parameters::Automat( it.NextElement(), *dynamic_cast< const Automat_ABC* >( ( const Entity_ABC* )selected_), controllers_.controller_ ) );
-    }
-    else
-    {
-        assert( dynamic_cast<const Formation_ABC*>( (const Entity_ABC*)selected_) );
-        action->AddParameter( *new parameters::Formation( it.NextElement(), *dynamic_cast< const Formation_ABC* >( ( const Entity_ABC* )selected_), controllers_.controller_ ) );
-    }
 
+    action->AddParameter( *new parameters::Automat( it.NextElement(), *target, controllers_.controller_ ) );
     parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
     action->AddParameter( *dotations );
 
@@ -217,8 +203,47 @@ void LogisticSupplyPushFlowDialog::Validate()
         }
     }
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new ActionTasker( target, false ) );
+    action->Attach( *new ActionTasker( selected_, false ) );
     action->RegisterAndPublish( actionsModel_ );
+    //// $$$$ _RC_ SBO 2010-05-17: use ActionFactory
+    //MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( ( selectedAutomat_ ) ? "automat_log_supply_push_flow" : "formation_log_supply_push_flow" );
+    //UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, tr( "Log Supply Push Flow" ), true );
+    //tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    //if( selectedAutomat_ )
+    //{
+    //    assert( dynamic_cast<const Automat_ABC*>( (const Entity_ABC*)selected_) );
+    //    action->AddParameter( *new parameters::Automat( it.NextElement(), *dynamic_cast< const Automat_ABC* >( ( const Entity_ABC* )selected_), controllers_.controller_ ) );
+    //}
+    //else
+    //{
+    //    assert( dynamic_cast<const Formation_ABC*>( (const Entity_ABC*)selected_) );
+    //    action->AddParameter( *new parameters::Formation( it.NextElement(), *dynamic_cast< const Formation_ABC* >( ( const Entity_ABC* )selected_), controllers_.controller_ ) );
+    //}
+
+    //parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
+    //action->AddParameter( *dotations );
+
+    //unsigned int rows = 0;
+    //for( int i = 0; i < table_->numRows(); ++i )
+    //    if( !table_->item( i, 0 )->text().isEmpty() )
+    //        ++rows;
+
+    //if( rows > 0 )
+    //{
+    //    int index = 1;
+    //    for( int i = 0; i < table_->numRows(); ++i )
+    //    {
+    //        const QString text = table_->text( i, 0 );
+    //        if( text.isEmpty() )
+    //            continue;
+    //        ParameterList& dotationList = dotations->AddList( CreateName( "Dotation", index ) );
+    //        dotationList.AddIdentifier( "Type", supplies_[ text ].type_->GetId() );
+    //        dotationList.AddQuantity( "Number", table_->text( i, 1 ).toInt() );
+    //    }
+    //}
+    //action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+    //action->Attach( *new ActionTasker( target, false ) );
+    //action->RegisterAndPublish( actionsModel_ );
 }
 
 // -----------------------------------------------------------------------------

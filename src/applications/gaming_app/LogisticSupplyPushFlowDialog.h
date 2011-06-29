@@ -82,6 +82,7 @@ private:
     //@{
     void AddItem();
     void AddDotation( const SupplyStates& states );
+    void InsertMenuEntry( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
     //@}
 
     //! @name Types
@@ -102,7 +103,6 @@ private:
     gui::ValuedComboBox< const kernel::Automat_ABC* >* targetCombo_;
     QTable* table_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    bool selectedAutomat_;
     QStringList dotationTypes_;
     T_Supplies supplies_;
     //@}

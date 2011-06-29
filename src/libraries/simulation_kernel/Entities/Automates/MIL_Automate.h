@@ -202,8 +202,8 @@ public:
             void OnReceiveMagicActionMoveTo    ( const sword::UnitMagicAction&     msg );
             void OnReceiveChangeKnowledgeGroup ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Army_ABC >& armies );
             void OnReceiveChangeSuperior       ( const sword::UnitMagicAction&     msg, const tools::Resolver< MIL_Formation >& formations );
-    virtual void OnReceiveLogSupplyPushFlow    ( const sword::MissionParameters&            msg );
-    virtual void OnReceiveLogSupplyPullFlow    ( const sword::MissionParameters&            msg );
+    virtual void OnReceiveLogSupplyPushFlow    ( const sword::MissionParameters&   msg, MIL_AutomateLOG& automatLog );
+    virtual void OnReceiveLogSupplyPullFlow    ( const sword::MissionParameters&   msg );
 
     virtual void Serialize( sword::ParentEntity& message ) const;
     //@}
