@@ -90,6 +90,7 @@ private:
     void ApplyColor( const QColor& color, float alpha ) const;
     QColor FindTeamColor( const kernel::Entity_ABC& team );
     void Process( const kernel::Entity_ABC& entity );
+    void Process( const kernel::Entity_ABC& entity, QColor color );
     QColor ApplyModifiers( const kernel::Entity_ABC& entity, const QColor& color );
     //@}
 

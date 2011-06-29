@@ -98,6 +98,15 @@ void ColorStrategy::Process( const Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ColorStrategy::Process
+// Created: LGY 2011-06-29
+// -----------------------------------------------------------------------------
+void ColorStrategy::Process( const kernel::Entity_ABC& entity, QColor color )
+{
+    ApplyColor( ApplyModifiers( entity, color ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
@@ -182,13 +191,24 @@ QColor ColorStrategy::FindColor( const Knowledge_ABC& knowledge )
     return QColor( 255, 220, 000 );
 }
 
+namespace
+{
+    QColor FindSuperiorColor( const kernel::Entity_ABC& entity, ColorModifier_ABC& colorController, QColor color )
+    {
+        if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+            if( const kernel::Entity_ABC* superior = hierarchies->GetSuperior() )
+                return colorController.Apply( *superior, color );
+        return color;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ColorStrategy::SelectColor
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Object_ABC& object )
 {
-    Process( object );
+    Process( object, FindSuperiorColor( object, colorController_, FindBaseColor( object ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +217,7 @@ void ColorStrategy::SelectColor( const Object_ABC& object )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Population_ABC& population )
 {
-    Process( population );
+    Process( population, FindSuperiorColor( population, colorController_, FindBaseColor( population ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -206,7 +226,7 @@ void ColorStrategy::SelectColor( const Population_ABC& population )
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Inhabitant_ABC& inhabitant )
 {
-    QColor base = FindBaseColor( inhabitant );
+    QColor base = FindSuperiorColor( inhabitant, colorController_, FindBaseColor( inhabitant ) );
     QColor color = ApplyModifiers( inhabitant, base );
     if( base == color )
         ApplyColor( color, 0 );
